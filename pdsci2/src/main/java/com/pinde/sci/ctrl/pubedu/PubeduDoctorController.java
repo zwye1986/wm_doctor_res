@@ -5,7 +5,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pubedu.IStudyCourseBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.pubedu.CourseDetailTypeEnum;
+import com.pinde.core.common.enums.pubedu.CourseDetailTypeEnum;
 import com.pinde.sci.model.mo.StudyCourse;
 import com.pinde.sci.model.mo.StudyCourseDetail;
 import com.pinde.sci.model.mo.StudyCourseDetailInfo;
@@ -123,7 +123,7 @@ public class PubeduDoctorController extends GeneralController {
 				String path = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + courseDetail.getDetailUrl();
 				File file = new File(path);
 				if(file.isFile()) {//该路径文件存在
-					return GlobalConstant.FLAG_Y;
+                    return com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -133,10 +133,10 @@ public class PubeduDoctorController extends GeneralController {
 				String path = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + detailInfo.getDetailUrl();
 				File file = new File(path);
 				if(file.isFile()) {
-					return GlobalConstant.FLAG_Y;
+                    return com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 			}
 		}
-		return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
 	}
 }

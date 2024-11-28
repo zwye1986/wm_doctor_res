@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 /**
@@ -9,6 +10,7 @@ import com.pinde.core.util.EnumUtil;
 public enum InfoStatusEnum implements GeneralEnum<String> {
 	Edit("Edit","编辑"),
 	Passing("Passing","待审核"),
+    CityPassed("CityPassed", "市局审核通过"),
 	Passed("Passed","审核通过"),
 	NoPassed("NoPassed","审核不通过"),
 	Failure("Failure","删除")

@@ -68,41 +68,41 @@ public class JswjwWxChargeController extends GeneralController {
 
         List<Map<String,Object>> dictMapList = new ArrayList<>();
         Map<String,Object> dictMap = new HashMap<>();
-        dictMap.put("catSpeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
-        dictMap.put("catSpeName",TrainCategoryEnum.DoctorTrainingSpe.getName());
+        dictMap.put("catSpeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
+        dictMap.put("catSpeName", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getName());
         List<SysDict> dictList = new ArrayList<>();
         SysDict dict = new SysDict();
         dict.setDictId("");
         dict.setDictName("全部");
         dictList.add(dict);
-        dictList.addAll(jswjwBiz.getDictListByDictId(TrainCategoryEnum.DoctorTrainingSpe.getId()));
+        dictList.addAll(jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId()));
         dictMap.put("dictList",dictList);
         dictMapList.add(dictMap);
 
 //        dictMap = new HashMap<>();
-//        dictMap.put("catSpeId",TrainCategoryEnum.WMFirst.getId());
-//        dictMap.put("catSpeName",TrainCategoryEnum.WMFirst.getName());
+//        dictMap.put("catSpeId",com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId());
+//        dictMap.put("catSpeName",com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getName());
 //        dictList = new ArrayList<>();
 //        dictList.add(dict);
-//        dictList.addAll(jswjwBiz.getDictListByDictId(TrainCategoryEnum.WMFirst.getId()));
+//        dictList.addAll(jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId()));
 //        dictMap.put("dictList",dictList);
 //        dictMapList.add(dictMap);
 
 //        dictMap = new HashMap<>();
-//        dictMap.put("catSpeId",TrainCategoryEnum.WMSecond.getId());
-//        dictMap.put("catSpeName",TrainCategoryEnum.WMSecond.getName());
+//        dictMap.put("catSpeId",com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId());
+//        dictMap.put("catSpeName",com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getName());
 //        dictList = new ArrayList<>();
 //        dictList.add(dict);
-//        dictList.addAll(jswjwBiz.getDictListByDictId(TrainCategoryEnum.WMSecond.getId()));
+//        dictList.addAll(jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId()));
 //        dictMap.put("dictList",dictList);
 //        dictMapList.add(dictMap);
 
         dictMap = new HashMap<>();
-        dictMap.put("catSpeId",TrainCategoryEnum.AssiGeneral.getId());
-        dictMap.put("catSpeName",TrainCategoryEnum.AssiGeneral.getName());
+        dictMap.put("catSpeId", com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId());
+        dictMap.put("catSpeName", com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getName());
         dictList = new ArrayList<>();
         dictList.add(dict);
-        dictList.addAll(jswjwBiz.getDictListByDictId(TrainCategoryEnum.AssiGeneral.getId()));
+        dictList.addAll(jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId()));
         dictMap.put("dictList",dictList);
         dictMapList.add(dictMap);
         resultMap.put("dictMapList", dictMapList);

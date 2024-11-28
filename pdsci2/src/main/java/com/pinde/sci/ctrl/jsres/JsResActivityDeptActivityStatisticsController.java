@@ -13,7 +13,7 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sch.ActivityTypeEnum;
+import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
@@ -63,7 +63,7 @@ public class JsResActivityDeptActivityStatisticsController extends GeneralContro
 	/*	SysDept dept=new SysDept();
 		dept.setDeptFlow(deptFlow);
 		dept.setOrgFlow(curUser.getOrgFlow());
-		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);*/
+		dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);*/
 		PageHelper.startPage(currentPage, getPageSize(request));
 		/*List<SysDept> deptList = deptBiz.searchDept(dept);*/
 		List<Map<String, Object>> deptList = activityBiz.getDeptCountActivityStatisticsList(curUser.getOrgFlow(), deptFlow, startTime, endTime,notNull);
@@ -98,7 +98,7 @@ public class JsResActivityDeptActivityStatisticsController extends GeneralContro
 		/*SysDept dept=new SysDept();
 		dept.setDeptFlow(deptFlow);
 		dept.setOrgFlow(curUser.getOrgFlow());
-		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);*/
+		dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);*/
 //		List<SysDept> deptList = deptBiz.searchDept(dept);
 		List<Map<String, Object>> deptList = activityBiz.getDeptCountActivityStatisticsList(curUser.getOrgFlow(), deptFlow, startTime, endTime,notNull);
 		Map<String, Object> param=new HashMap<>();

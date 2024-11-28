@@ -13,7 +13,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
@@ -55,7 +54,7 @@ public class JsResUserBlackListController extends GeneralController {
 
     public List<String> searchJointOrgList(String flag,String Flow) {
         List<String> jointOrgFlowList=new ArrayList<String>();
-        if(GlobalConstant.FLAG_Y.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
             List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(Flow);
             if(resJointOrgList!=null&&!resJointOrgList.isEmpty()){
                 for(ResJointOrg jointOrg:resJointOrgList){
@@ -85,7 +84,7 @@ public class JsResUserBlackListController extends GeneralController {
         String resultPath = "";
         if (uploadFile != null && !uploadFile.isEmpty()) {
             String fileResult = blackBiz.checkImg(uploadFile);
-            if (!GlobalConstant.FLAG_Y.equals(fileResult)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fileResult)) {
                 model.addAttribute("fileErrorMsg", fileResult);
             } else {
                 resultPath = blackBiz.saveFileToDirs("", uploadFile, "blackListFile", "2022");
@@ -142,25 +141,25 @@ public class JsResUserBlackListController extends GeneralController {
         if(StringUtil.isNotBlank(sessionNumber)){
             jsresUserBalcklist.setSessionNumber(sessionNumber);
         }
-        if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL)&&StringUtil.isBlank(seeFlag)) {
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL) && StringUtil.isBlank(seeFlag)) {
             jsresUserBalcklist.setOrgFlow(user.getOrgFlow());
         }
         List<SysOrg> orgs=new ArrayList<SysOrg>();
-        if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_GLOBAL)||getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)) {
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL) || getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             SysOrg org=new SysOrg();
             SysOrg s=orgBiz.readSysOrg(user.getOrgFlow());
             org.setOrgProvId(s.getOrgProvId());
-            if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+            if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
                 jsresUserBalcklist.setOrgFlow(user.getOrgFlow());
                 org.setOrgCityId(s.getOrgCityId());
             }
-            org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             orgs=orgBiz.searchAllSysOrg(org);
             orgs.add(s);
             model.addAttribute("orgs", orgs);
         }
         List<String> orgFlowList=new ArrayList<String>();
-        if(StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())&&getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (StringUtil.isBlank(jsresUserBalcklist.getOrgFlow()) && getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             if(orgs!=null&&!orgs.isEmpty()){
                 for(SysOrg org:orgs){
                     orgFlowList.add(org.getOrgFlow());
@@ -173,7 +172,7 @@ public class JsResUserBlackListController extends GeneralController {
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         orgList.add(0,org);
 //        if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//            model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
+//            model.addAttribute("countryOrgFlag",com.pinde.core.common.GlobalConstant.FLAG_Y);
 //            if(null != jointOrg && jointOrg.equals("checked")){
 //                orgFlowList.add(jsresUserBalcklist.getOrgFlow());
 //                jsresUserBalcklist.setOrgFlow("");
@@ -215,25 +214,25 @@ public class JsResUserBlackListController extends GeneralController {
         if(StringUtil.isNotBlank(sessionNumber)){
             jsresUserBalcklist.setSessionNumber(sessionNumber);
         }
-        if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL)&&StringUtil.isBlank(seeFlag)) {
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL) && StringUtil.isBlank(seeFlag)) {
             jsresUserBalcklist.setOrgFlow(user.getOrgFlow());
         }
         List<SysOrg> orgs=new ArrayList<SysOrg>();
-        if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_GLOBAL)||getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)) {
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL) || getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             SysOrg org=new SysOrg();
             SysOrg s=orgBiz.readSysOrg(user.getOrgFlow());
             org.setOrgProvId(s.getOrgProvId());
-            if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+            if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
                 jsresUserBalcklist.setOrgFlow(user.getOrgFlow());
                 org.setOrgCityId(s.getOrgCityId());
             }
-            org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             orgs=orgBiz.searchAllSysOrg(org);
             orgs.add(s);
             model.addAttribute("orgs", orgs);
         }
         List<String> orgFlowList=new ArrayList<String>();
-        if(StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())&&getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (StringUtil.isBlank(jsresUserBalcklist.getOrgFlow()) && getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             if(orgs!=null&&!orgs.isEmpty()){
                 for(SysOrg org:orgs){
                     orgFlowList.add(org.getOrgFlow());
@@ -246,7 +245,7 @@ public class JsResUserBlackListController extends GeneralController {
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         orgList.add(0,org);
 //        if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-//            model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
+//            model.addAttribute("countryOrgFlag",com.pinde.core.common.GlobalConstant.FLAG_Y);
 //            if(null != jointOrg && jointOrg.equals("checked")){
 //                orgFlowList.add(jsresUserBalcklist.getOrgFlow());
 //                jsresUserBalcklist.setOrgFlow("");
@@ -286,7 +285,7 @@ public class JsResUserBlackListController extends GeneralController {
         SysOrg org=new SysOrg();
         SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         org.setOrgProvId(s.getOrgProvId());
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         orgs=orgBiz.searchOrgListNew(org);
         model.addAttribute("orgs", orgs);
         return "jsres/blackListInfoMain";
@@ -298,7 +297,7 @@ public class JsResUserBlackListController extends GeneralController {
         SysOrg org=new SysOrg();
         SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         org.setOrgProvId(s.getOrgProvId());
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         orgs=orgBiz.searchOrgListNew(org);
         model.addAttribute("orgs", orgs);
         return "jsres/blackListInfoMainAcc";
@@ -329,14 +328,14 @@ public class JsResUserBlackListController extends GeneralController {
         if(StringUtil.isNotBlank(cityId)){
             org.setOrgCityId(cityId);
         }
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         orgs=orgBiz.searchAllSysOrg(org);
         model.addAttribute("orgs", orgs);
 
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -349,7 +348,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -379,7 +378,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         model.addAttribute("orgFlow",orgFlow0);
         model.addAttribute("orgList",orgList);
-        if(StringUtil.isNotEmpty(roleFlag) && roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)){
+        if (StringUtil.isNotEmpty(roleFlag) && roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
             orgFlowList.add(user.getOrgFlow());
             orgFlowList = null;
         }
@@ -418,14 +417,14 @@ public class JsResUserBlackListController extends GeneralController {
         if(StringUtil.isNotBlank(cityId)){
             org.setOrgCityId(cityId);
         }
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         orgs=orgBiz.searchAllSysOrg(org);
         model.addAttribute("orgs", orgs);
 
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -438,7 +437,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -468,7 +467,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         model.addAttribute("orgFlow",orgFlow0);
         model.addAttribute("orgList",orgList);
-        if(StringUtil.isNotEmpty(roleFlag) && roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)){
+        if (StringUtil.isNotEmpty(roleFlag) && roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
             orgFlowList.add(user.getOrgFlow());
             orgFlowList = null;
         }
@@ -502,13 +501,13 @@ public class JsResUserBlackListController extends GeneralController {
         if(StringUtil.isNotBlank(cityId)){
             org.setOrgCityId(cityId);
         }
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         orgs=orgBiz.searchAllSysOrg(org);
 
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -521,7 +520,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -589,13 +588,13 @@ public class JsResUserBlackListController extends GeneralController {
         if(StringUtil.isNotBlank(cityId)){
             org.setOrgCityId(cityId);
         }
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         orgs=orgBiz.searchAllSysOrg(org);
 
         List<String> orgFlowList=new ArrayList<String>();
         if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(jsresUserBalcklist.getOrgFlow())) {
             for (SysOrg tempOrg : orgs) {
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -608,7 +607,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         if(StringUtil.isNotBlank(jsresUserBalcklist.getOrgFlow())){
             orgFlowList.add(jsresUserBalcklist.getOrgFlow());
-            if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                 List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(jsresUserBalcklist.getOrgFlow());
                 if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                     for (ResJointOrg jointOrg : resJointOrgList) {
@@ -666,22 +665,22 @@ public class JsResUserBlackListController extends GeneralController {
     @RequestMapping(value = "/removeBlack")
     public @ResponseBody String removeBlack(JsresUserBalcklist jsresUserBalcklist) throws DocumentException {
         blackBiz.saveBlack(jsresUserBalcklist);
-        if(jsresUserBalcklist.getRecordStatus().equals(GlobalConstant.FLAG_N)) {
+        if (jsresUserBalcklist.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
             String userFlow=jsresUserBalcklist.getUserFlow();
             if(StringUtil.isNotBlank(userFlow)) {
                 SysUser sysUser=userBiz.readSysUser(userFlow);
                 if(sysUser!=null) {
-                    sysUser.setRecordStatus(GlobalConstant.FLAG_Y);
+                    sysUser.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     userBiz.edit(sysUser);
                 }
                 ResDoctor resDoctor=doctorBiz.searchByUserFlow(userFlow);
                 if(resDoctor!=null) {
-                    resDoctor.setRecordStatus(GlobalConstant.FLAG_Y);
+                    resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     doctorBiz.editDoctor(resDoctor);
                 }
             }
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -694,7 +693,7 @@ public class JsResUserBlackListController extends GeneralController {
     @RequestMapping(value = "/removeBlackNew")
     public @ResponseBody String removeBlackNew(JsresUserBalcklist jsresUserBalcklist){
         blackBiz.saveBlack(jsresUserBalcklist);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -752,7 +751,7 @@ public class JsResUserBlackListController extends GeneralController {
                     return "不能添加非本市学员";
                 }
             }else{
-                return GlobalConstant.OPRE_FAIL;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             }
         }
         JsresUserBalcklist blackUser = blackBiz.searchInfoByIdNo(userIdNo);
@@ -774,21 +773,21 @@ public class JsResUserBlackListController extends GeneralController {
             String userFlow=sysUser.getUserFlow();
             if(StringUtil.isNotBlank(userFlow))
             {
-                sysUser.setRecordStatus(GlobalConstant.FLAG_N);
+                sysUser.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                 userBiz.edit(sysUser);
                 ResDoctor resDoctor=doctorBiz.searchByUserFlow(userFlow);
                 if(resDoctor!=null)
                 {
-                    resDoctor.setRecordStatus(GlobalConstant.FLAG_N);
+                    resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                     doctorBiz.editDoctor(resDoctor);
                 }
             }
         }
         if(count==1)
         {
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         }else{
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
     private int doSave(SysUser sysUser,String reason,JsresUserBalcklist black,String roleFlag){
@@ -799,11 +798,11 @@ public class JsResUserBlackListController extends GeneralController {
             black.setUserCode(sysUser.getUserCode());
             black.setUserPhone(sysUser.getUserPhone());
             black.setUserEmail(sysUser.getUserEmail());
-            black.setIsSystem(GlobalConstant.FLAG_Y);
+            black.setIsSystem(com.pinde.core.common.GlobalConstant.FLAG_Y);
         }else{
             black.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
             black.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-            black.setIsSystem(GlobalConstant.FLAG_N);
+            black.setIsSystem(com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         if(doctor!=null) {
             black.setOrgFlow(doctor.getOrgFlow());
@@ -814,7 +813,7 @@ public class JsResUserBlackListController extends GeneralController {
         }
         black.setUserName(sysUser.getUserName());
         black.setIdNo(sysUser.getIdNo());
-        if(StringUtil.isNotEmpty(roleFlag) && GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (StringUtil.isNotEmpty(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             black.setAuditStatusId("Passed");
             black.setAuditStatusName("审核通过");
         }else{
@@ -825,7 +824,7 @@ public class JsResUserBlackListController extends GeneralController {
         black.setOperTypeId("2");
         black.setOperTypeName("手动");
         black.setReasonYj("您的信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
-        black.setRecordStatus(GlobalConstant.FLAG_Y);
+        black.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
        return blackBiz.saveBlack(black);
     }
 
@@ -839,7 +838,7 @@ public class JsResUserBlackListController extends GeneralController {
         if("Remove".equals(type)){
             //是否移除黑名单
             if("Passed".equals(auditStatusId)){
-                jsresUserBalcklist.setRecordStatus(GlobalConstant.FLAG_N);
+                jsresUserBalcklist.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             }else if("NotPassed".equals(auditStatusId)){
                 //审核不通过  状态改为移除前的审核通过状态
                 jsresUserBalcklist.setAuditStatusId("Passed");
@@ -849,26 +848,26 @@ public class JsResUserBlackListController extends GeneralController {
             if ("Passed".equals(auditStatusId)) {
                 jsresUserBalcklist.setAuditStatusName("审核通过");
             } else if ("NotPassed".equals(auditStatusId)) {
-                jsresUserBalcklist.setRecordStatus(GlobalConstant.FLAG_N);
+                jsresUserBalcklist.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             }
         }
         blackBiz.saveBlack(jsresUserBalcklist);
-        if(jsresUserBalcklist.getRecordStatus().equals(GlobalConstant.FLAG_N)) {
+        if (jsresUserBalcklist.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
             String userFlow=jsresUserBalcklist.getUserFlow();
             if(StringUtil.isNotBlank(userFlow)) {
                 SysUser sysUser=userBiz.readSysUser(userFlow);
                 if(sysUser!=null) {
-                    sysUser.setRecordStatus(GlobalConstant.FLAG_Y);
+                    sysUser.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     userBiz.edit(sysUser);
                 }
                 ResDoctor resDoctor=doctorBiz.searchByUserFlow(userFlow);
                 if(resDoctor!=null) {
-                    resDoctor.setRecordStatus(GlobalConstant.FLAG_Y);
+                    resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     doctorBiz.editDoctor(resDoctor);
                 }
             }
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
     /***
      * 获取角色标识（如：global charge local 等）
@@ -905,7 +904,7 @@ public class JsResUserBlackListController extends GeneralController {
     public List<Map<String,String>> getRoles(){
         List<Map<String,String>> roles=new ArrayList<>();
         String userFlow = GlobalContext.getCurrentUser().getUserFlow();
-        List<String> currRoleList = (List<String>) GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST);
+        List<String> currRoleList = (List<String>) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST);
         for(String roleFlow : currRoleList) {
             Map<String, String> role = getRoleUrl(roleFlow);
             if (role != null) {

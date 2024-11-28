@@ -9,7 +9,7 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.form.inx.InxInfoForm;
 import com.pinde.sci.model.inx.InxInfoExt;
 import com.pinde.sci.model.mo.InxInfo;
@@ -49,9 +49,9 @@ public class InxInfoManageController extends GeneralController {
 		String imageBaseUrl = this.infoManageBiz.getImageBaseUrl();
 		model.addAttribute("imageBaseUrl", imageBaseUrl);
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		sysRole.setRoleLevelId(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		model.addAttribute("sysRoleList",sysRoleList);
 		Map<String,Object> roleFlows=gateUserManageBiz.getUserRoles(GlobalContext.getCurrentUser().getUserFlow());
@@ -70,9 +70,9 @@ public class InxInfoManageController extends GeneralController {
 			info = this.infoManageBiz.getExtByFlow(infoFlow);
 		}
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		sysRole.setRoleLevelId(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		Map<String,Object> roleFlows=gateUserManageBiz.getUserRoles(GlobalContext.getCurrentUser().getUserFlow());
 		ModelAndView mav = new ModelAndView("inx/manage/editInfo");
@@ -109,13 +109,13 @@ public class InxInfoManageController extends GeneralController {
 	 */
 	public  String addInfo(InxInfo info){
 		if(checkInput(info)){
-			info.setIsTop(GlobalConstant.RECORD_STATUS_N);
+            info.setIsTop(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int saveResult = this.infoManageBiz.save(info);
-			if(saveResult==GlobalConstant.ONE_LINE){
-				return GlobalConstant.OPRE_SUCCESSED;
+            if (saveResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	/**
 	 * 修改资讯
@@ -125,11 +125,11 @@ public class InxInfoManageController extends GeneralController {
 	public  String updateInfo(InxInfo info){
 		if(checkUpdateInput(info)){
 			int updateResult = this.infoManageBiz.update(info);
-			if(updateResult==GlobalConstant.ONE_LINE){
-				return GlobalConstant.OPRE_SUCCESSED;
+            if (updateResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	
 	/**
@@ -195,9 +195,9 @@ public class InxInfoManageController extends GeneralController {
 	@RequestMapping(value="/list")
 	public String getInfoList(Integer currentPage,InxInfoForm form,HttpServletRequest request,Model model){
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		sysRole.setRoleLevelId(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		model.addAttribute("sysRoleList",sysRoleList);
 		Map<String,Object> roleFlows=gateUserManageBiz.getUserRoles(GlobalContext.getCurrentUser().getUserFlow());
@@ -205,7 +205,7 @@ public class InxInfoManageController extends GeneralController {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		if(StringUtil.isBlank(form.getRoleFlow()))
 		{
-			if(GlobalConstant.ROOT_USER_CODE.equals(GlobalContext.getCurrentUser().getUserCode())){
+            if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(GlobalContext.getCurrentUser().getUserCode())) {
 				if(sysRoleList!=null&&sysRoleList.size()>0)
 				{
 					List<String> flows=new ArrayList<>();
@@ -248,11 +248,11 @@ public class InxInfoManageController extends GeneralController {
 		if(flows!=null&&flows.length>0){
 			List<String> infoFlows = Arrays.asList(flows);
 			int delResult = this.infoManageBiz.updateInfoStatus(infoFlows,infoStatusId);
-		  if(delResult>GlobalConstant.ZERO_LINE){
-			  return GlobalConstant.OPRE_SUCCESSED;
+            if (delResult > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		  }
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	/**
 	 * 删除标题图片
@@ -263,11 +263,11 @@ public class InxInfoManageController extends GeneralController {
 	public @ResponseBody String deleteTitleImg(String infoFlow){
 		if(StringUtil.isNotBlank(infoFlow)){
 		  int delResult = this.infoManageBiz.deleteTitleImg(infoFlow);
-		  if(delResult==GlobalConstant.ONE_LINE){
-			  return GlobalConstant.DELETE_SUCCESSED;
+            if (delResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		  }
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 	/**
 	 * 资讯失效
@@ -277,10 +277,10 @@ public class InxInfoManageController extends GeneralController {
 	@RequestMapping(value="/updateRecordStatus")
 	public @ResponseBody String updateRecordStatus(InxInfo info){
 		int updateResult =  this.infoManageBiz.update(info);
-		if(updateResult==GlobalConstant.ONE_LINE){
-			  return GlobalConstant.OPRE_SUCCESSED;
+        if (updateResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		  }
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	
 	/**
@@ -291,9 +291,9 @@ public class InxInfoManageController extends GeneralController {
 	@RequestMapping(value="/modifyInxInfo")
 	public @ResponseBody String modifyInxInfo(InxInfo info){
 		int result =  infoManageBiz.modifyInxInfo(info);
-		if(GlobalConstant.ZERO_LINE != result){
-			return GlobalConstant.OPRE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 }

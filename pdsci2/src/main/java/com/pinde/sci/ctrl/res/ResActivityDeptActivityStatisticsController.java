@@ -15,7 +15,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
@@ -63,10 +62,10 @@ public class ResActivityDeptActivityStatisticsController extends GeneralControll
 		SysUser currentUser=GlobalContext.getCurrentUser();
 		SysOrg currentOrg=orgBiz.readSysOrg(currentUser.getOrgFlow());
 		List<SysOrg> orgs = new ArrayList<>();
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 			//查询所有医院
 			SysOrg org = new SysOrg();
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs = orgBiz.searchOrg(org);
 			if(orgs!=null&&orgs.size()>0){
 				if(StringUtil.isBlank(orgFlow)){
@@ -75,7 +74,7 @@ public class ResActivityDeptActivityStatisticsController extends GeneralControll
 				}
 			}
 			model.addAttribute("orgs",orgs);
-		}else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 			//查询高校下所有医院
 			String workOrgId = currentOrg.getSendSchoolId();
 			orgs = orgExtMapper.searchOrgs4hbUniversity(workOrgId);
@@ -86,7 +85,7 @@ public class ResActivityDeptActivityStatisticsController extends GeneralControll
 				}
 			}
 			model.addAttribute("orgs",orgs);
-		}else if(GlobalConstant.USER_LIST_LOCAL.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(role)) {
 			orgFlow=currentUser.getOrgFlow();
 			orgName=currentUser.getOrgName();
 		}
@@ -107,7 +106,7 @@ public class ResActivityDeptActivityStatisticsController extends GeneralControll
 			orgFlow=curUser.getOrgFlow();
 		}
 		dept.setOrgFlow(orgFlow);
-		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysDept> deptList = deptBiz.searchDept(dept);
 		Map<String,Object> map=new HashMap<>();
@@ -132,9 +131,9 @@ public class ResActivityDeptActivityStatisticsController extends GeneralControll
 			orgFlow=curUser.getOrgFlow();
 		}
 		dept.setOrgFlow(orgFlow);
-		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> deptList = deptBiz.searchDept(dept);
-		List<SysDict> dictList=DictTypeEnum.sysListDictMap.get(DictTypeEnum.ActivityType.getId());
+        List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId());
 		if(dictList==null)
 		{
 			dictList=new ArrayList<>();

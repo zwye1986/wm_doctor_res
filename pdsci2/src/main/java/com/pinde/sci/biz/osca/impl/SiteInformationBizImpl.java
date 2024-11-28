@@ -48,7 +48,7 @@ public class SiteInformationBizImpl implements ISiteInformationBiz{
     public int updateSiteInformation(OscaOrgSpe oscaOrgSpe) {
         OscaOrgSpeExample example=new OscaOrgSpeExample();
         OscaOrgSpeExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaOrgSpe.getRecordFlow())){
             criteria.andRecordFlowEqualTo(oscaOrgSpe.getRecordFlow());
         }
@@ -69,7 +69,7 @@ public class SiteInformationBizImpl implements ISiteInformationBiz{
         OscaOrgSpeExample example=new OscaOrgSpeExample();
         example.setDistinct(true);
         OscaOrgSpeExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaOrgSpe.getOrgFlow())){
             criteria.andOrgFlowEqualTo(oscaOrgSpe.getOrgFlow());
         }
@@ -80,7 +80,7 @@ public class SiteInformationBizImpl implements ISiteInformationBiz{
     public List<SysOrg> searchOrgList(SysOrg sysOrg) {
         SysOrgExample example=new SysOrgExample();
         SysOrgExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(sysOrg.getOrgProvId())){
             criteria.andOrgProvIdEqualTo(sysOrg.getOrgProvId());
         }

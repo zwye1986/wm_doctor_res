@@ -1,8 +1,6 @@
 package com.pinde.sci.ctrl.osca;
 
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +11,7 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;
@@ -75,7 +73,7 @@ public class OscaExaminerManageController extends GeneralController{
         SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> map=new HashMap<>();
         map.put("orgProvId",sysOrg.getOrgProvId());
-        map.put("isExamOrg", GlobalConstant.RECORD_STATUS_Y);
+        map.put("isExamOrg", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<OscaOrgSpeExt> orgSpeList=new ArrayList();
         orgSpeList=siteInformationBiz.searchAllOrg(map);
         Map<String, Object> examMap=new HashMap<>();
@@ -145,7 +143,7 @@ public class OscaExaminerManageController extends GeneralController{
 //        SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 //        Map<String, Object> map=new HashMap<>();
 //        map.put("orgProvId",sysOrg.getOrgProvId());
-//        map.put("isExamOrg",GlobalConstant.RECORD_STATUS_Y);
+//        map.put("isExamOrg",com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //        List<OscaOrgSpeExt> orgSpeList=siteInformationBiz.searchAllOrg(map);
 //        model.addAttribute("orgSpeList",orgSpeList);
 //        model.addAttribute("manage",manage);
@@ -225,7 +223,7 @@ public class OscaExaminerManageController extends GeneralController{
         SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> map=new HashMap<>();
         map.put("orgProvId",sysOrg.getOrgProvId());
-        map.put("isExamOrg",GlobalConstant.RECORD_STATUS_Y);
+        map.put("isExamOrg", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<OscaOrgSpeExt> orgSpeList=siteInformationBiz.searchAllOrg(map);
         model.addAttribute("orgSpeList",orgSpeList);
         model.addAttribute("manage",manage);
@@ -269,7 +267,7 @@ public class OscaExaminerManageController extends GeneralController{
             sysUser.setSexId(oscaExaminerExt.getSexId());
             sysUser.setSexName(sexName);
             sysUser.setTitleId(oscaExaminerExt.getTitleId());
-            String titleName = DictTypeEnum.OscaUserTitle.getDictNameById(oscaExaminerExt.getTitleId());
+            String titleName = com.pinde.core.common.enums.DictTypeEnum.OscaUserTitle.getDictNameById(oscaExaminerExt.getTitleId());
             sysUser.setTitleName(titleName);
             sysUser.setUserPhone(oscaExaminerExt.getUserPhone());
             sysUser.setOrgFlow(orgFlow);
@@ -293,14 +291,14 @@ public class OscaExaminerManageController extends GeneralController{
             SysUser existsUser=userBiz.findByUserCode(sysUser.getUserCode());
             if(existsUser!=null&&!existsUser.getUserFlow().equals(userFlow))
             {
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
             String examTeaRole= InitConfig.getSysCfg("osca_examtea_role_flow");
             if(StringUtil.isBlank(userFlow)){
                 //判断用户名是否已存在
 //                List<SysUser> userList=oscaExaminerManageBiz.sysUserList(sysUser);
 //                if(userList!=null&&userList.size()>0&&userList.get(0)!=null) {
-//                    return GlobalConstant.USER_CODE_REPETE;
+//                    return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 //
 //                }
 //                    SysUserRole sysUserRole=new SysUserRole();
@@ -315,23 +313,23 @@ public class OscaExaminerManageController extends GeneralController{
 //                            if(role!=null&&"带教老师".equals(role.getRoleName())){
 //                                //如果为当前考点，则判断其重复
 //                                if(StringUtil.isNotBlank(userList.get(0).getOrgFlow())&&!userList.get(0).getOrgFlow().equals(orgFlow)){
-//                                    return GlobalConstant.USER_CODE_REPETE;
+//                                    return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 //                                }
 //                                //同时更新 user表和 osca_tea_info
 //                                sysUser.setUserFlow(userList.get(0).getUserFlow());
 //                                //设置其为 是考官的标志
-//                                sysUser.setIsExamTea(GlobalConstant.IS_EXAM_TEA_Y);
+//                                sysUser.setIsExamTea(com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_Y);
 //                                //考官信息表
 //                                oscaTeaInfo.setUserFlow(userList.get(0).getUserFlow());
 //
 //                                oscaExaminerManageBiz.updateExamAndUser(sysUser,oscaTeaInfo,typeSpeList);
 //
 //                                roleFlag=false;
-//                                return GlobalConstant.SAVE_SUCCESSED;
+//                                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 //                            }
 //                        }
 //                        if(roleFlag){
-//                            return GlobalConstant.USER_CODE_REPETE;
+//                            return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 //                        }
 //                    }
                 //设置其为 是考官的标志
@@ -352,7 +350,7 @@ public class OscaExaminerManageController extends GeneralController{
                 oscaExaminerManageBiz.updateExamAndUser(sysUser,oscaTeaInfo,typeSpeList,userRole);
             }
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**
@@ -370,7 +368,7 @@ public class OscaExaminerManageController extends GeneralController{
         sysUser.setModifyTime(DateUtil.getCurrDateTime());
         sysUser.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         userBiz.edit(sysUser);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**
@@ -394,7 +392,7 @@ public class OscaExaminerManageController extends GeneralController{
                 userBiz.edit(sysUser);
             }
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = {"/showAssignsExam"})
@@ -402,7 +400,7 @@ public class OscaExaminerManageController extends GeneralController{
         SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> map=new HashMap<>();
         map.put("orgProvId",sysOrg.getOrgProvId());
-        map.put("isExamOrg",GlobalConstant.RECORD_STATUS_Y);
+        map.put("isExamOrg", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<OscaOrgSpeExt> orgSpeList=new ArrayList();
         orgSpeList=siteInformationBiz.searchAllOrg(map);
         model.addAttribute("userFlow",userFlow);
@@ -428,7 +426,7 @@ public class OscaExaminerManageController extends GeneralController{
             sysUser.setOrgName(sysOrg.getOrgName());
         }
        userBiz.edit(sysUser);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**
@@ -444,7 +442,7 @@ public class OscaExaminerManageController extends GeneralController{
         SysOrg sysOrg = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> map=new HashMap<>();
         map.put("orgProvId",sysOrg.getOrgProvId());
-        map.put("isExamOrg",GlobalConstant.RECORD_STATUS_Y);
+        map.put("isExamOrg", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<OscaOrgSpeExt> orgSpeList=siteInformationBiz.searchAllOrg(map);
         SysUser sysUser=userBiz.findByFlow(userFlow);
         ResDoctor resDoctor=new ResDoctor();

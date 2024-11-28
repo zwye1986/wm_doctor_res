@@ -1,5 +1,6 @@
 package com.pinde.sci.common.util;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 
 /**
@@ -60,7 +61,7 @@ public class DecodeStringUtil {
             str = str.replaceAll("&#75;","K");
             str = str.replaceAll("&#76;","L");
             str = str.replaceAll("&#77;","M");
-            str = str.replaceAll("&#78;", GlobalConstant.FLAG_N);
+            str = str.replaceAll("&#78;", com.pinde.core.common.GlobalConstant.FLAG_N);
             str = str.replaceAll("&#79;","O");
             str = str.replaceAll("&#80;","P");
             str = str.replaceAll("&#81;","Q");
@@ -71,7 +72,7 @@ public class DecodeStringUtil {
             str = str.replaceAll("&#86;","V");
             str = str.replaceAll("&#87;","W");
             str = str.replaceAll("&#88;","X");
-            str = str.replaceAll("&#89;", GlobalConstant.FLAG_Y);
+            str = str.replaceAll("&#89;", com.pinde.core.common.GlobalConstant.FLAG_Y);
             str = str.replaceAll("&#90;","Z");
             str = str.replaceAll("&#91;","[");
             str = str.replaceAll("&#92;","\\");

@@ -98,7 +98,7 @@ public class JswjwAdminBizImpl implements IJswjwAdminBiz {
 	public List<ResDocotrDelayTeturn> getOrgDelayReturnInfo(Map<String, Object> param, List<String> flags) {
 
 		ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-		ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank((String) param.get("orgFlow"))){
 			criteria.andOrgFlowEqualTo((String) param.get("orgFlow"));
 		}else{
@@ -124,15 +124,15 @@ public class JswjwAdminBizImpl implements IJswjwAdminBiz {
 
 			ResOrgSpeExample example=new ResOrgSpeExample();
 			ResOrgSpeExample.Criteria criteria =example.createCriteria();
-			criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 			if (StringUtil.isNotBlank(orgFlow)) {
 				criteria.andOrgFlowEqualTo(orgFlow);
 			}
 
 			List<String>speTypeIdList=new ArrayList<String>();
-			speTypeIdList.add(DictTypeEnum.DoctorTrainingSpe.getId());
-			speTypeIdList.add(DictTypeEnum.AssiGeneral.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getId());
 			criteria.andSpeTypeIdIn(speTypeIdList);
 			example.setOrderByClause("SPE_TYPE_ID DESC,CREATE_TIME DESC");
 			return resOrgSpeMapper.selectByExample(example);

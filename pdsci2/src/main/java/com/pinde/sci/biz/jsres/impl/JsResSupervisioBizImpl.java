@@ -46,7 +46,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public ResEvaluationScore searchEvaluationOwnerScoreByItemId(ResEvaluationScore evaluationScore) {
 		ResEvaluationScoreExample example = new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(evaluationScore.getItemId())){
 			criteria.andItemIdEqualTo(evaluationScore.getItemId());
 		}
@@ -84,7 +84,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<ResEvaluationScore> searchEvaluationScore(ResEvaluationScore evaluationScore) {
 		ResEvaluationScoreExample example = new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(evaluationScore.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(evaluationScore.getOrgFlow());
 		}
@@ -116,12 +116,12 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 		if (!(mimeList.contains(fileType) && suffixList.contains(suffix.toLowerCase()))) {
 			return "请上传 " + InitConfig.getSysCfg("res_file_support_suffix") + "格式的文件";
 		}
-		return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
 	}
 
 	@Override
 	public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName, String orgFlow, String planYear, String itemId) {
-		String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if (file.getSize() > 0) {
 			//创建目录
 			String dateString = DateUtil.getCurrDate2();
@@ -183,7 +183,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<JsresSupervisioFile> searchSupervisioFile(String planYear, String orgFlow, String speId) {
 		JsresSupervisioFileExample example = new JsresSupervisioFileExample();
-		JsresSupervisioFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        JsresSupervisioFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(orgFlow)) {
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
@@ -199,7 +199,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public JsresSupervisioFile searchJsresSupervisioFileByRecordFlow(String recordFlow) {
 		JsresSupervisioFileExample example = new JsresSupervisioFileExample();
-		JsresSupervisioFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        JsresSupervisioFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(recordFlow)) {
 			criteria.andRecordFlowEqualTo(recordFlow);
 		}
@@ -218,7 +218,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<ResScheduleScore> queryScheduleList(ResScheduleScore scheduleScore) {
 		ResScheduleScoreExample example = new ResScheduleScoreExample();
-		ResScheduleScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResScheduleScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(scheduleScore.getScheduleFlow())) {
 			criteria.andScheduleFlowEqualTo(scheduleScore.getScheduleFlow());
 		}
@@ -281,7 +281,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 		ResScheduleScore resScheduleScore = queryScheduleOne(scheduleScore);
 		if (null != resScheduleScore){
 			GeneralMethod.setRecordInfo(resScheduleScore, false);
-			resScheduleScore.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            resScheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			return scheduleScoreMapper.updateByPrimaryKey(resScheduleScore);
 		}
 		return 0;
@@ -389,7 +389,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	public List<ResEvaluationIndicators> searchAll() {
 		ResEvaluationIndicatorsExample example = new ResEvaluationIndicatorsExample();
 		ResEvaluationIndicatorsExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("TABLE_PATH_NAME, CAST(ORDER_NUM AS INTEGER)");
 		return indicatorsMapper.selectByExample(example);
 	}
@@ -407,7 +407,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 				cfg.setCfgFlow(PkUtil.getUUID());
 				GeneralMethod.setRecordInfo(cfg,true);
 				if (assessmentCfgMapper.insert(cfg)>0){
-					return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 				}
 			}else if (type.equals("edit") && StringUtil.isNotBlank(cfg.getCfgFlow())){
 				HospSelfAssessmentCfg assessmentCfg = assessmentCfgMapper.selectByPrimaryKey(cfg.getCfgFlow());
@@ -415,18 +415,18 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 				assessmentCfg.setEndTime(cfg.getEndTime());
 				GeneralMethod.setRecordInfo(assessmentCfg,false);
 				if (assessmentCfgMapper.updateByPrimaryKey(assessmentCfg)>0){
-					return GlobalConstant.UPDATE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	private Integer searchAssessmentBySessionNumber(String sessionNumber){
 		HospSelfAssessmentExample example=new HospSelfAssessmentExample();
-        HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(sessionNumber)) {
 			criteria.andSessionNumberEqualTo(sessionNumber);
 		}
@@ -436,7 +436,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public HospSelfAssessment findHospSelfAssessment(String sessionNumber, String orgFlow, String speId, String subjectType) {
 		HospSelfAssessmentExample example=new HospSelfAssessmentExample();
-		HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(sessionNumber)){
 			criteria.andSessionNumberEqualTo(sessionNumber);
 		}
@@ -461,7 +461,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<HospSelfAssessment> findAllAssessmentBySpeAndYear(HospSelfAssessment assessment) {
 		HospSelfAssessmentExample example=new HospSelfAssessmentExample();
-		HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        HospSelfAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (null!=assessment){
 			if (StringUtil.isNotBlank(assessment.getOrgFlow())){
 				criteria.andOrgFlowEqualTo(assessment.getOrgFlow());
@@ -483,7 +483,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<JsresSupervisioFile> findSupervisioFile(JsresSupervisioFile supervisioFile, String subjectType) {
 		JsresSupervisioFileExample example=new JsresSupervisioFileExample();
-		JsresSupervisioFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresSupervisioFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (null!=supervisioFile){
 			if (StringUtil.isNotBlank(supervisioFile.getSubjectFlow())){
 				criteria.andSubjectFlowEqualTo(supervisioFile.getSubjectFlow());
@@ -507,7 +507,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	public ResEvaluationScore findHospSelfAssessmentScore(ResEvaluationScore score) {
 
 		ResEvaluationScoreExample example=new ResEvaluationScoreExample();
-        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (null!=score){
 			if (StringUtil.isNotBlank(score.getSubjectFlow())){
 				criteria.andSubjectFlowEqualTo(score.getSubjectFlow());
@@ -544,7 +544,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 		}
 		if (null==evaluationScore){
 			score.setScoreFlow(PkUtil.getUUID());
-            score.setRecordStatus(GlobalConstant.FLAG_Y);
+            score.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			score.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			score.setOrgName(GlobalContext.getCurrentUser().getOrgName());
 			GeneralMethod.setRecordInfo(score,true);
@@ -559,7 +559,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<ResEvaluationScore> findHospSelfAssessmentAllScore(ResEvaluationScore score,String subjectType) {
 		ResEvaluationScoreExample example=new ResEvaluationScoreExample();
-        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (null!=score){
 			if (StringUtil.isNotBlank(score.getSubjectFlow())){
 				criteria.andSubjectFlowEqualTo(score.getSubjectFlow());
@@ -612,7 +612,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	public int findCoreIndicatorsNum(String cfgFlow,String orgFlow,String speId,String subjectType) {
 
 		ResEvaluationScoreExample example=new ResEvaluationScoreExample();
-        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				.andCoreIndicatorsEqualTo("0");
 
 		if (null!=cfgFlow && StringUtil.isNotBlank(cfgFlow)){
@@ -635,7 +635,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	@Override
 	public List<HospSelfAssessmentCfg> findAllCfg(HospSelfAssessmentCfg cfg) {
 		HospSelfAssessmentCfgExample example = new HospSelfAssessmentCfgExample();
-		HospSelfAssessmentCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        HospSelfAssessmentCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (null!=cfg){
 			if (StringUtil.isNotBlank(cfg.getSessionNumber())){
 				criteria.andSessionNumberEqualTo(cfg.getSessionNumber());

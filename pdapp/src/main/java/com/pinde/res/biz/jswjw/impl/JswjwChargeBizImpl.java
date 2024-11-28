@@ -34,7 +34,7 @@ public class JswjwChargeBizImpl implements IJswjwChargeBiz {
     @Override
     public List<SysOrg> searchOrgList(String orgCityId) {
         SysOrgExample example = new SysOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgCityIdEqualTo(orgCityId).andOrgTypeIdEqualTo("Hospital");
         return orgMapper.selectByExample(example);
     }
@@ -152,7 +152,7 @@ public class JswjwChargeBizImpl implements IJswjwChargeBiz {
     @Override
     public List<SysDict> searchSpeList(String dictTypeId) {
         SysDictExample example = new SysDictExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDictTypeIdEqualTo(dictTypeId);
         return dictMapper.selectByExample(example);
     }

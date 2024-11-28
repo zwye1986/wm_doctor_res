@@ -1,13 +1,14 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.OrgLevelEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResDoctorArchiveBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.ResArchiveSequence;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
@@ -54,18 +55,18 @@ public class JsResBaseController  extends GeneralController {
         model.addAttribute("org",org);
         SysOrg sysorg =new  SysOrg();
         sysorg.setOrgProvId(org.getOrgProvId());
-        if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)) {
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             sysorg.setOrgCityId(org.getOrgCityId());
         }
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(orgCityId)){
             sysorg.setOrgCityId(orgCityId);
         }
         List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
-        sysorg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        sysorg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
         List<SysOrg>  countryList=orgBiz.searchOrg(sysorg);
-        sysorg.setOrgLevelId(OrgLevelEnum.ProvinceOrg.getId());
+        sysorg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.ProvinceOrg.getId());
         List<SysOrg>  provinceList=orgBiz.searchOrg(sysorg);
 
         List<ResJointOrg> jointOrgs=jointOrgBiz.searchJointOrgAll();
@@ -78,8 +79,8 @@ public class JsResBaseController  extends GeneralController {
         model.addAttribute("orgFlowList", orgFlowList);
         model.addAttribute("countryList", countryList);
         model.addAttribute("provinceList", provinceList);
-        if (getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL)) {
-            if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
             {
                 orgs.clear();
                 List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
@@ -95,12 +96,12 @@ public class JsResBaseController  extends GeneralController {
             model.addAttribute("isJointOrg","1");
         }
         model.addAttribute("datas",datas);
-        if(GlobalConstant.FLAG_Y.equals(isArchive)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isArchive)) {
             List<ResArchiveSequence> archiveSequenceList = archiveBiz.allResArchiveSequence();
             model.addAttribute("archiveSequenceList",archiveSequenceList);
             return  "jsres/archiveDoctorList";
         }
-        if(StringUtil.isNotBlank(userName) && GlobalConstant.FLAG_Y.equals(isBack)){
+        if (StringUtil.isNotBlank(userName) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isBack)) {
             userName = java.net.URLDecoder.decode(userName,"UTF-8");
             model.addAttribute("isBack",isBack);
         }

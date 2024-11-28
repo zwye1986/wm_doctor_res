@@ -9,7 +9,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
-import com.pinde.sci.enums.inx.InfoStatusEnum;
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.sci.form.inx.InxInfoForm;
 import com.pinde.sci.model.inx.InxInfoExt;
 import com.pinde.sci.model.mo.InxColumn;
@@ -70,11 +70,11 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 			fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-				return GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
 			}
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if(file.getSize()>limitSize*1024*1024){
-				return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M" ;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M";
 			}
 			try {
 				/*创建目录*/
@@ -92,10 +92,10 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 				return "success:"+dateString+"/"+fileName;
 			} catch (Exception e) {
 				e.printStackTrace();
-				return GlobalConstant.UPLOAD_FAIL;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	
 	@Override
@@ -128,7 +128,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 			GeneralMethod.setRecordInfo(info, false);
 			return this.inxInfoMapper.updateByPrimaryKeySelective(info);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -166,7 +166,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						return GlobalConstant.ZERO_LINE;
+                        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 					}
 					
 				}
@@ -179,23 +179,23 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 					if(file.exists()){
 						boolean delRestlt =  file.delete();
 						if(delRestlt){
-							return GlobalConstant.ONE_LINE;
+                            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					return GlobalConstant.ZERO_LINE;
+                    return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<InxInfo> getList(InxInfoForm form) {
 		InxInfoExample example = new InxInfoExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andInfoStatusIdNotEqualTo(InfoStatusEnum.Failure.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andInfoStatusIdNotEqualTo(InfoStatusEnum.Failure.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(form.getRecordStatus())){
 			criteria.andRecordStatusEqualTo(form.getRecordStatus());
 		}
@@ -233,7 +233,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 			GeneralMethod.setRecordInfo(info, false);
 			return this.inxInfoMapper.updateByPrimaryKeySelective(info);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 }

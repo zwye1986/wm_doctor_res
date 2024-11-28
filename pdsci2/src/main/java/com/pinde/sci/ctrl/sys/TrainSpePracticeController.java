@@ -46,9 +46,9 @@ public class TrainSpePracticeController extends GeneralController{
 				}
 				model.addAttribute("spePracticeMap",map);
 			}
-            model.addAttribute("canCheck", GlobalConstant.FLAG_Y);
+            model.addAttribute("canCheck", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}else{
-            model.addAttribute("canCheck", GlobalConstant.FLAG_N);
+            model.addAttribute("canCheck", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		return "sys/trainSpeContrastPractice/list";
 	}
@@ -57,10 +57,10 @@ public class TrainSpePracticeController extends GeneralController{
 	@ResponseBody
 	public String save(HttpServletRequest request, JsresSpeContrastPractice speContrastPractice) {
 		int result = spePracticeBiz.save(speContrastPractice);
-		if (GlobalConstant.ZERO_LINE != result) {
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 }
 

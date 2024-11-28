@@ -1,6 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.OrgLevelEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -17,8 +20,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
@@ -127,32 +128,32 @@ public class JsResAppUseInfoController extends GeneralController {
      */
 	@RequestMapping("/appUserTable")
 	public String appUserMain(Model model, String userListScope,HttpServletRequest request) {
-		if (GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
 			List<SysOrg> orgs = new ArrayList<>();
 			SysUser user = GlobalContext.getCurrentUser();
 			SysOrg org = orgBiz.readSysOrg(user.getOrgFlow());
 			orgs.add(org);
-			if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
 				List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				if (orgList != null && orgList.size() > 0) {
 					orgs.addAll(orgList);
 				}
 			}
 			model.addAttribute("orgs", orgs);
-		} else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
 			List<SysOrg> orgs = new ArrayList<>();SysUser sysuser=GlobalContext.getCurrentUser();
 			SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId("320000");
 			searchOrg.setOrgCityId(org.getOrgCityId());
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			List<String> orgFlows = new ArrayList<>();
 			List<SysOrg>exitOrgs =jointOrgBiz.searchCouAndProList(searchOrg);
 			for(SysOrg g:exitOrgs){
 				if (!orgFlows.contains(g.getOrgFlow())) {
 					orgFlows.add(g.getOrgFlow());
 					orgs.add(g);
-					if (OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
+                    if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
 						List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 						if (orgList != null && orgList.size() > 0) {
 							for (SysOrg j : orgList) {
@@ -173,11 +174,11 @@ public class JsResAppUseInfoController extends GeneralController {
 				}
 			}
 			model.addAttribute("orgs", orgs);
-		} else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
 			List<SysOrg> orgs = new ArrayList<>();
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId("320000");
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			List<String> orgFlows = new ArrayList<>();
 			List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 			for(SysOrg g:exitOrgs){
@@ -200,32 +201,32 @@ public class JsResAppUseInfoController extends GeneralController {
 	 */
 	@RequestMapping("/appUserTableAcc")
 	public String appUserTableAcc(Model model, String userListScope,HttpServletRequest request) {
-		if (GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
 			List<SysOrg> orgs = new ArrayList<>();
 			SysUser user = GlobalContext.getCurrentUser();
 			SysOrg org = orgBiz.readSysOrg(user.getOrgFlow());
 			orgs.add(org);
-			if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
 				List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				if (orgList != null && orgList.size() > 0) {
 					orgs.addAll(orgList);
 				}
 			}
 			model.addAttribute("orgs", orgs);
-		} else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
 			List<SysOrg> orgs = new ArrayList<>();SysUser sysuser=GlobalContext.getCurrentUser();
 			SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId("320000");
 			searchOrg.setOrgCityId(org.getOrgCityId());
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			List<String> orgFlows = new ArrayList<>();
 			List<SysOrg>exitOrgs =jointOrgBiz.searchCouAndProList(searchOrg);
 			for(SysOrg g:exitOrgs){
 				if (!orgFlows.contains(g.getOrgFlow())) {
 					orgFlows.add(g.getOrgFlow());
 					orgs.add(g);
-					if (OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
+                    if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
 						List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 						if (orgList != null && orgList.size() > 0) {
 							for (SysOrg j : orgList) {
@@ -246,11 +247,11 @@ public class JsResAppUseInfoController extends GeneralController {
 				}
 			}
 			model.addAttribute("orgs", orgs);
-		} else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
 			List<SysOrg> orgs = new ArrayList<>();
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId("320000");
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			List<String> orgFlows = new ArrayList<>();
 			List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 			for(SysOrg g:exitOrgs){
@@ -305,24 +306,24 @@ public class JsResAppUseInfoController extends GeneralController {
 
 		List<String> orgFlows = new ArrayList<>();
 		param.put("orgFlows", orgFlows);
-		if (GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
 			if (StringUtil.isBlank(orgFlow)) {
 				orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			}
 			param.put("orgFlow", orgFlow);
-		} else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
 			if (StringUtil.isBlank(orgFlow)) {
 				SysUser sysuser=GlobalContext.getCurrentUser();
 				SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
 				searchOrg.setOrgCityId(org.getOrgCityId());
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 				List<SysOrg>exitOrgs =jointOrgBiz.searchCouAndProList(searchOrg);
 				for(SysOrg g:exitOrgs){
 					if (!orgFlows.contains(g.getOrgFlow())) {
 						orgFlows.add(g.getOrgFlow());
-						if (OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
+                        if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
 							List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 							if (orgList != null && orgList.size() > 0) {
 								for (SysOrg j : orgList) {
@@ -342,11 +343,11 @@ public class JsResAppUseInfoController extends GeneralController {
 				}
 			}
 			param.put("orgFlows", orgFlows);
-		} else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
 			if (StringUtil.isBlank(orgFlow)) {
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 				List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
 					if (!orgFlows.contains(g.getOrgFlow())) {
@@ -410,24 +411,24 @@ public class JsResAppUseInfoController extends GeneralController {
 		param.put("userListScope", userListScope);
 		List<String> orgFlows = new ArrayList<>();
 		param.put("orgFlows", orgFlows);
-		if (GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {//基地
 			if (StringUtil.isBlank(orgFlow)) {
 				orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			}
 			param.put("orgFlow", orgFlow);
-		} else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
 			if (StringUtil.isBlank(orgFlow)) {
 				SysUser sysuser=GlobalContext.getCurrentUser();
 				SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
 				searchOrg.setOrgCityId(org.getOrgCityId());
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 				List<SysOrg>exitOrgs =jointOrgBiz.searchCouAndProList(searchOrg);
 				for(SysOrg g:exitOrgs){
 					if (!orgFlows.contains(g.getOrgFlow())) {
 						orgFlows.add(g.getOrgFlow());
-						if (OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
+                        if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(g.getOrgLevelId())) {
 							List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 							if (orgList != null && orgList.size() > 0) {
 								for (SysOrg j : orgList) {
@@ -447,11 +448,11 @@ public class JsResAppUseInfoController extends GeneralController {
 				}
 			}
 			param.put("orgFlows", orgFlows);
-		} else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
 			if (StringUtil.isBlank(orgFlow)) {
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 				List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
 					if (!orgFlows.contains(g.getOrgFlow())) {

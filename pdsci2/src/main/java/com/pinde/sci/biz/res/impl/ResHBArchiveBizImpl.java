@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -43,7 +44,7 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
         if (StringUtil.isNotBlank(archiveTime)) {
             ResArchiveSequenceExample example = new ResArchiveSequenceExample();
             ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime).andSessionNumberEqualTo(sessionNumber);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime).andSessionNumberEqualTo(sessionNumber);
             count = archiveSequenceMapper.countByExample(example);
 
         }
@@ -85,7 +86,7 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
     public List<ResArchiveSequence> allResArchiveSequence() {
         ResArchiveSequenceExample example = new ResArchiveSequenceExample();
         ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         example.setOrderByClause("CREATE_TIME DESC");
         return archiveSequenceMapper.selectByExample(example);
     }

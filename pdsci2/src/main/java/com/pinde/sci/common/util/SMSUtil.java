@@ -2,6 +2,7 @@ package com.pinde.sci.common.util;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.SysSmsLog;
 import com.pinde.core.model.TestPaperExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -124,7 +125,7 @@ public class SMSUtil {
      * @param relType
      * @return
      */
-    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, String relType) {
+    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, String relType) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, relType);
     }
 
@@ -135,7 +136,7 @@ public class SMSUtil {
      * @param relId
      * @return
      */
-    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId) {
+    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, null);
     }
 
@@ -146,7 +147,7 @@ public class SMSUtil {
      * @param relId
      * @return
      */
-    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, Integer code) {
+    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, Integer code) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, null,code);
     }
 
@@ -159,7 +160,7 @@ public class SMSUtil {
      * @return
      */
     @SuppressWarnings("finally")
-    private TestPaperExample.SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType) {
+    private SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType) {
         Log logger = LogFactory.getLog(SMSUtil.class);
         String result = "";
         // 创建StringBuffer对象用来操作字符串
@@ -202,7 +203,7 @@ public class SMSUtil {
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);
 
-            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
+            SysSmsLog sysSmsLog = new SysSmsLog();
             if(StringUtil.isNotBlank(smsLogFlow)){
                 sysSmsLog.setSmsLogFlow(smsLogFlow);
             }
@@ -233,7 +234,7 @@ public class SMSUtil {
      * @return
      */
     @SuppressWarnings("finally")
-    private TestPaperExample.SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType, Integer code) {
+    private SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType, Integer code) {
         Log logger = LogFactory.getLog(SMSUtil.class);
         String result = "";
         // 创建StringBuffer对象用来操作字符串
@@ -278,7 +279,7 @@ public class SMSUtil {
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);
 
-            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
+            SysSmsLog sysSmsLog = new SysSmsLog();
             if(StringUtil.isNotBlank(smsLogFlow)){
                 sysSmsLog.setSmsLogFlow(smsLogFlow);
             }
@@ -506,7 +507,7 @@ public class SMSUtil {
         String powerFlag = InitConfig.getSysCfg("sys_smsSendJob");
         String uid = InitConfig.getSysCfg("sys_sms_username");
         String pwd = InitConfig.getSysCfg("sys_sms_password");
-        if(StringUtil.isBlank(powerFlag) || powerFlag.equals(GlobalConstant.FLAG_N)){
+        if (StringUtil.isBlank(powerFlag) || powerFlag.equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
             return "短信开关未开启";
         }
         if(StringUtil.isBlank(uid) || StringUtil.isBlank(pwd)){
@@ -594,7 +595,7 @@ public class SMSUtil {
             return "返回结果异常";
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);//默认json格式
-            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
+            SysSmsLog sysSmsLog = new SysSmsLog();
             sysSmsLog.setSmsLogFlow(PkUtil.getUUID());//发送日志流水号
             sysSmsLog.setSmsUserName(this.uid);
             sysSmsLog.setSmsSendTime(DateUtil.getCurrDateTime());

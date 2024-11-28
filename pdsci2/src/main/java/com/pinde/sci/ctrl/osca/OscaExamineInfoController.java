@@ -77,8 +77,8 @@ public class OscaExamineInfoController extends GeneralController {
         map.put("userOrgFlow",userOrgFlow);
         map.put("orgCityId",orgCityId);
         SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
-        searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
+        searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);
         List<SysDict> dictList = dictBiz.searchDictList(searchDict);
         map.put("dictList",dictList);
         PageHelper.startPage(currentPage,getPageSize(request));
@@ -160,8 +160,8 @@ public class OscaExamineInfoController extends GeneralController {
         map.put("orgCityId",orgCityId);
         map.put("flag",flag);
         SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
-        searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
+        searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);
         List<SysDict> dictList = dictBiz.searchDictList(searchDict);
         map.put("dictList",dictList);
         PageHelper.startPage(currentPage,getPageSize(request));
@@ -293,8 +293,8 @@ public class OscaExamineInfoController extends GeneralController {
         map.put("isLocal",isLocal);
         map.put("clinicalName",clinicalName);
         SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
-        searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
+        searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);
         List<SysDict> dictList = dictBiz.searchDictList(searchDict);
         map.put("dictList",dictList);
         PageHelper.startPage(currentPage,getPageSize(request));
@@ -347,10 +347,10 @@ public class OscaExamineInfoController extends GeneralController {
                 info.put("percent",df.format(percent*100)+"%");
                 if(info.get("IS_LOCAL")!=null){
                     String isLocalName="";
-                    if(GlobalConstant.RECORD_STATUS_N.equals(info.get("IS_LOCAL").toString())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(info.get("IS_LOCAL").toString())) {
                         isLocalName="结业考核";
                     }
-                    if(GlobalConstant.RECORD_STATUS_Y.equals(info.get("IS_LOCAL").toString())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(info.get("IS_LOCAL").toString())) {
                         isLocalName="院内考核";
                     }
                     info.put("IS_LOCAL",isLocalName);
@@ -370,9 +370,9 @@ public class OscaExamineInfoController extends GeneralController {
         };
 
         String fileName = "";
-        if(GlobalConstant.FLAG_Y.equals(isLocal)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isLocal)) {
             fileName+="院内考核.xls";
-        }else if(GlobalConstant.FLAG_N.equals(isLocal)){
+        } else if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(isLocal)) {
             fileName+="结业考核.xls";
         }
 
@@ -436,7 +436,7 @@ public class OscaExamineInfoController extends GeneralController {
             clinicalYear = DateUtil.getYear();
         }
         if(StringUtil.isBlank(isLocal)){
-            isLocal = GlobalConstant.FLAG_Y;
+            isLocal = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
         Map<String, Object> paraMap=new HashMap<>();
         paraMap.put("clinicalYear",clinicalYear);
@@ -466,10 +466,10 @@ public class OscaExamineInfoController extends GeneralController {
                 }
                 if(result.get("IS_LOCAL")!=null){
                     String isLocalName="";
-                    if(GlobalConstant.RECORD_STATUS_N.equals(result.get("IS_LOCAL").toString())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(result.get("IS_LOCAL").toString())) {
                         isLocalName="结业考核";
                     }
-                    if(GlobalConstant.RECORD_STATUS_Y.equals(result.get("IS_LOCAL").toString())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(result.get("IS_LOCAL").toString())) {
                         isLocalName="院内考核";
                     }
                     result.put("IS_LOCAL",isLocalName);

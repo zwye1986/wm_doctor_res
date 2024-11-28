@@ -12,8 +12,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +67,7 @@ public class JsResEvaluationController extends GeneralController {
         if(jsresBaseEvaluationList==null||jsresBaseEvaluationList.size()==0){
             jsresBaseEvaluation.setPlanYear("2019");
             jsresBaseEvaluation.setTitle("江苏省住院医师规范化培训基地评估指标（2019年版）");
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             JsResBaseEvaluationBiz.saveJsResBaseEvaluation(jsresBaseEvaluation);
         }else{
             jsresBaseEvaluation = jsresBaseEvaluationList.get(0);
@@ -86,15 +84,15 @@ public class JsResEvaluationController extends GeneralController {
         jsresBaseEvaluationScoreList = JsResBaseEvaluationBiz.searchBaseEvaluationScoreList(jsresBaseEvaluation.getRecordFlow());
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-            model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("countryOrgFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         //获取是否付费
         SysUser currUser = GlobalContext.getCurrentUser();
         String cfgCode = "jsres_" + currUser.getOrgFlow() + "_guocheng";
         JsresPowerCfg cfg = jsResPowerCfgBiz.read(cfgCode);
-        if(org.getOrgLevelId().equals(OrgLevelEnum.CountryOrg.getId()))
+        if (org.getOrgLevelId().equals(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId()))
         {
-            model.addAttribute("isCountry", GlobalConstant.FLAG_Y);
+            model.addAttribute("isCountry", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         model.addAttribute("sysCfg",cfg);
         model.addAttribute("orgName",jsresBaseEvaluation.getOrgName());
@@ -118,24 +116,24 @@ public class JsResEvaluationController extends GeneralController {
         SysOrg sysOrg=new SysOrg();
         SysUser currUser=GlobalContext.getCurrentUser();
         SysOrg org=orgBiz.readSysOrg(currUser.getOrgFlow());
-        sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         sysOrg.setOrgProvId(org.getOrgProvId());
-        if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             sysOrg.setOrgCityId(org.getOrgCityId());
         }
-        sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         if(StringUtil.isNotBlank(type)){
-            if(OrgLevelEnum.CountryOrg.getId().equals(type)){
-                sysOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-            }else if(OrgLevelEnum.ProvinceOrg.getId().equals(type)){
-                sysOrg.setOrgLevelId(OrgLevelEnum.ProvinceOrg.getId());
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(type)) {
+                sysOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+            } else if (com.pinde.core.common.enums.OrgLevelEnum.ProvinceOrg.getId().equals(type)) {
+                sysOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.ProvinceOrg.getId());
             }
         }
 
         Map<String,Object> beMap=new HashMap<String,Object>();
         beMap.put("orgProvId",sysOrg.getOrgProvId());
         beMap.put("orgCityId",sysOrg.getOrgCityId());
-        if(!type.equals(OrgLevelEnum.GaugeTrainingBase.getId())){
+        if (!type.equals(com.pinde.core.common.enums.OrgLevelEnum.GaugeTrainingBase.getId())) {
             beMap.put("orgLevelId",type);
         }
         List<SysOrg> orgs=orgBiz.searchOrg(sysOrg);
@@ -173,14 +171,14 @@ public class JsResEvaluationController extends GeneralController {
         }
         model.addAttribute("orgCodeMap",orgCodeMap);
         //协同基地
-        if(type.equals(OrgLevelEnum.GaugeTrainingBase.getId())){
+        if (type.equals(com.pinde.core.common.enums.OrgLevelEnum.GaugeTrainingBase.getId())) {
             beMap.put("orgFlows",jointOrgFlows);
         }else {
             //国家基地或省级基地
             beMap.put("orgFlows",orgFlows);
         }
         List<JsresBaseEvaluation> baseEvaluationList=null;
-        if(type.equals(OrgLevelEnum.GaugeTrainingBase.getId())&&(jointOrgFlows==null||jointOrgFlows.size()==0))
+        if (type.equals(com.pinde.core.common.enums.OrgLevelEnum.GaugeTrainingBase.getId()) && (jointOrgFlows == null || jointOrgFlows.size() == 0))
         {
             baseEvaluationList=null;
         }else{
@@ -211,7 +209,7 @@ public class JsResEvaluationController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<JsresBaseEvaluation> baseEvaluationList= JsResBaseEvaluationBiz.searchJointBaseEvaluation(jointOrgFlowList);
         if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-            model.addAttribute("seeFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("seeFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         model.addAttribute("baseEvaluationList",baseEvaluationList);
         return "jsres/global/hospital/baseEvaluationList";
@@ -238,16 +236,16 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluationScore.setItemName(itemName);
             jsresBaseEvaluationScore.setPlanYear("2019");
             jsresBaseEvaluationScore.setOwnerScore(score);
-            jsresBaseEvaluationScore.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluationScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluationScore.setCreateUserFlow(user.getUserFlow());
         }else{
             jsresBaseEvaluationScore.setItemId(itemId);
             jsresBaseEvaluationScore.setItemName(itemName);
             jsresBaseEvaluationScore.setOwnerScore(score);
-            jsresBaseEvaluationScore.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluationScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         JsResBaseEvaluationBiz.saveJsresBaseEvaluationScore(jsresBaseEvaluationScore);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
     /**
      * 详情页展示评估信息
@@ -285,7 +283,7 @@ public class JsResEvaluationController extends GeneralController {
         SysOrg org =orgBiz.readSysOrg(orgFlow);
         SysOrg jointOrg =orgBiz.readSysOrg(user.getOrgFlow());
         if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-            model.addAttribute("seeFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("seeFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         model.addAttribute("orgName",org.getOrgName());
         model.addAttribute("jsresBaseEvaluation",jsresBaseEvaluation);
@@ -312,7 +310,7 @@ public class JsResEvaluationController extends GeneralController {
         SysUser user = GlobalContext.getCurrentUser();
         SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
         JsresBaseEvaluation jsresBaseEvaluation = new JsresBaseEvaluation();
-        jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+        jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         jsresBaseEvaluation.setOrgFlow(orgFlow);
         List<JsresBaseEvaluation> jsresBaseEvaluationList = JsResBaseEvaluationBiz.searchBaseEvaluationList(jsresBaseEvaluation);
         if(jsresBaseEvaluationList.size()>0){
@@ -320,7 +318,7 @@ public class JsResEvaluationController extends GeneralController {
         }else {
             jsresBaseEvaluation.setModifyTime(DateUtil.getCurrentTime());
             jsresBaseEvaluation.setModifyUserFlow(user.getUserFlow());
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluation.setOrgFlow(orgFlow);
             jsresBaseEvaluation.setOrgName(sysOrg.getOrgName());
             jsresBaseEvaluation.setPlanYear("2019");
@@ -331,7 +329,7 @@ public class JsResEvaluationController extends GeneralController {
 //        if(recordFlow == "" || recordFlow == null){
 //            jsresBaseEvaluation.setModifyTime(DateUtil.getCurrentTime());
 //            jsresBaseEvaluation.setModifyUserFlow(user.getUserFlow());
-//            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+//            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 //            jsresBaseEvaluation.setOrgFlow(orgFlow);
 //            jsresBaseEvaluation.setOrgName(sysOrg.getOrgName());
 //            jsresBaseEvaluation.setPlanYear("2019");
@@ -350,7 +348,7 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluationScore.setItemName(itemName);
             jsresBaseEvaluationScore.setPlanYear("2019");
             jsresBaseEvaluationScore.setSpeScore(speScore);
-            jsresBaseEvaluationScore.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluationScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluationScore.setCreateUserFlow(user.getUserFlow());
             jsresBaseEvaluationScore.setCreateTime(DateUtil.getCurrentTime());
             jsresBaseEvaluationScore.setSpeUserFlow(user.getUserFlow());
@@ -359,7 +357,7 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluationScore.setItemId(itemId);
             jsresBaseEvaluationScore.setItemName(itemName);
             jsresBaseEvaluationScore.setSpeScore(speScore);
-            jsresBaseEvaluationScore.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluationScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluationScore.setModifyUserFlow(user.getUserFlow());
             jsresBaseEvaluationScore.setModifyTime(DateUtil.getCurrentTime());
             jsresBaseEvaluationScore.setSpeUserFlow(user.getUserFlow());
@@ -395,7 +393,7 @@ public class JsResEvaluationController extends GeneralController {
         }
         if(evaluationList.size()>0){
             jsresBaseEvaluation=evaluationList.get(0);
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluation.setOrgFlow(orgFlow);
             jsresBaseEvaluation.setOrgName(sysOrg.getOrgName());
             jsresBaseEvaluation.setPlanYear("2019");
@@ -404,7 +402,7 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluation.setModifyUserFlow(user.getUserFlow());
         }else{
             jsresBaseEvaluation = new JsresBaseEvaluation();
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluation.setOrgFlow(orgFlow);
             jsresBaseEvaluation.setOrgName(sysOrg.getOrgName());
             jsresBaseEvaluation.setPlanYear("2019");
@@ -414,7 +412,7 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluation.setTitle("江苏省住院医师规范化培训基地评估指标（2019年版）");
         }
         JsResBaseEvaluationBiz.saveJsResBaseEvaluation(jsresBaseEvaluation);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping("/saveExpertScoreTotal")
@@ -439,7 +437,7 @@ public class JsResEvaluationController extends GeneralController {
             }
         }
         model.addAttribute("speScoreSum",speScoreSum);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -455,7 +453,7 @@ public class JsResEvaluationController extends GeneralController {
         String resultPath = "";
         if(uploadFile!=null && !uploadFile.isEmpty()){
             String fileResult = JsResBaseEvaluationBiz.checkImg(uploadFile);
-            if(!GlobalConstant.FLAG_Y.equals(fileResult)){
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fileResult)) {
                 model.addAttribute("fileErrorMsg", fileResult);
             }else{
                 resultPath = JsResBaseEvaluationBiz.saveFileToDirs("", uploadFile, "evaluationFile",user.getOrgFlow(),"2019",itemId);
@@ -469,7 +467,7 @@ public class JsResEvaluationController extends GeneralController {
         if(jsresBaseEvaluationList==null||jsresBaseEvaluationList.size()==0){
             jsresBaseEvaluation.setPlanYear("2019");
             jsresBaseEvaluation.setTitle("江苏省住院医师规范化培训基地评估指标（2019年版）");
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             JsResBaseEvaluationBiz.saveJsResBaseEvaluation(jsresBaseEvaluation);
         }else{
             jsresBaseEvaluation = jsresBaseEvaluationList.get(0);
@@ -483,7 +481,7 @@ public class JsResEvaluationController extends GeneralController {
         jsresBaseEvaluationFile.setPlanYear("2019");
         jsresBaseEvaluationFile.setFileName(uploadFile.getOriginalFilename());
         jsresBaseEvaluationFile.setFileUrl(resultPath);
-        jsresBaseEvaluationFile.setRecordStatus(GlobalConstant.FLAG_Y);
+        jsresBaseEvaluationFile.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         jsresBaseEvaluationFile.setCreateUserFlow(user.getUserFlow());
         JsResBaseEvaluationBiz.saveJsresBaseEvaluationFile(jsresBaseEvaluationFile);
         model.addAttribute("file",jsresBaseEvaluationFile);
@@ -540,7 +538,7 @@ public class JsResEvaluationController extends GeneralController {
         SysUser user = GlobalContext.getCurrentUser();
         SysOrg org =orgBiz.readSysOrg(user.getOrgFlow());
         if(null != org && null != org.getOrgLevelId() && org.getOrgLevelId().equals("CountryOrg")){
-            model.addAttribute("countryOrgFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("countryOrgFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         return "/jsres/hospital/hos/evaluationMain";
     }
@@ -555,9 +553,9 @@ public class JsResEvaluationController extends GeneralController {
         SysUser user = GlobalContext.getCurrentUser();
         JsresBaseEvaluationFile jsresBaseEvaluationFile = new JsresBaseEvaluationFile();
         jsresBaseEvaluationFile = JsResBaseEvaluationBiz.searchBaseEvaluationFileByRecordFlow(recordFlow);
-        jsresBaseEvaluationFile.setRecordStatus(GlobalConstant.FLAG_N);
+        jsresBaseEvaluationFile.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         JsResBaseEvaluationBiz.saveJsresBaseEvaluationFile(jsresBaseEvaluationFile);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
 
@@ -582,9 +580,9 @@ public class JsResEvaluationController extends GeneralController {
             JsresBaseEvaluationScore jsresBaseEvaluationScore = new JsresBaseEvaluationScore();
             List<JsresBaseEvaluationScore> scoreList = JsResBaseEvaluationBiz.searchBaseEvaluationScoreList(jsresBaseEvaluation.getRecordFlow());
             if(scoreList.size()>0 && jsresBaseEvaluation.getSpeAllScore() != null){
-                return GlobalConstant.TOTAL_SCORE_IN_INFO;
+                return com.pinde.core.common.GlobalConstant.TOTAL_SCORE_IN_INFO;
             }else {
-                jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+                jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 jsresBaseEvaluation.setOrgFlow(orgFlow);
                 jsresBaseEvaluation.setPlanYear("2019");
                 jsresBaseEvaluation.setSpeAllScore(speScore);
@@ -593,7 +591,7 @@ public class JsResEvaluationController extends GeneralController {
             }
         }else{
             jsresBaseEvaluation = new JsresBaseEvaluation();
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluation.setOrgFlow(orgFlow);
             jsresBaseEvaluation.setOrgName(org.getOrgName());
             jsresBaseEvaluation.setPlanYear("2019");
@@ -603,7 +601,7 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluation.setTitle("江苏省住院医师规范化培训基地评估指标（2019年版）");
         }
         JsResBaseEvaluationBiz.saveJsResBaseEvaluation(jsresBaseEvaluation);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -626,10 +624,10 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluation=jsresBaseEvaluationList.get(0);
             jsresBaseEvaluation.setModifyTime(DateUtil.getCurrentTime());
             jsresBaseEvaluation.setModifyUserFlow(user.getUserFlow());
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluation.setSpeContent(speContent);
         }else{
-            jsresBaseEvaluation.setRecordStatus(GlobalConstant.FLAG_Y);
+            jsresBaseEvaluation.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             jsresBaseEvaluation.setOrgFlow(orgFlow);
             jsresBaseEvaluation.setOrgName(org.getOrgName());
             jsresBaseEvaluation.setPlanYear("2019");
@@ -639,7 +637,7 @@ public class JsResEvaluationController extends GeneralController {
             jsresBaseEvaluation.setTitle("江苏省住院医师规范化培训基地评估指标（2019年版）");
         }
         JsResBaseEvaluationBiz.saveJsResBaseEvaluation(jsresBaseEvaluation);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
 }

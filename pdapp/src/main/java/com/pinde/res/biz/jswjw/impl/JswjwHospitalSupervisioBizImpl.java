@@ -188,7 +188,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName){
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(file.getSize() > 0){
             //创建目录
             String dateString = DateUtil.getCurrDate2();
@@ -239,7 +239,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
 
     @Override
     public int editSupervisioUser(SysUser user) {
-        user.setRecordStatus(GlobalConstant.FLAG_Y);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         user.setModifyTime(DateUtil.getCurrDateTime());
         user.setModifyUserFlow(user.getUserFlow());
         return sysUserMapper.updateByPrimaryKeySelective(user);

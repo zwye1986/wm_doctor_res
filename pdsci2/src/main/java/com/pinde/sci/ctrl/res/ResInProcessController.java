@@ -3,6 +3,8 @@ package com.pinde.sci.ctrl.res;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -20,7 +22,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -101,7 +102,7 @@ public class ResInProcessController extends GeneralController {
 				model.addAttribute("arrangeMap",arrangeMap);
 			}
 		}
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 			return "/res/inprocess/info4Global";
 		}
 		return "/res/inprocess/info";
@@ -131,10 +132,10 @@ public class ResInProcessController extends GeneralController {
 	@RequestMapping("/list/{role}")
 	public String list( @PathVariable String role,String orgFlow,Integer currentPage,HttpServletRequest request,Model model){
 		model.addAttribute("role",role);
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 			//查询本省所有医院并放入orgFlowList
 			SysOrg org = new SysOrg();
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			List<SysOrg> orgs = orgBiz.searchOrg(org);
 			model.addAttribute("orgs",orgs);
 			PageHelper.startPage(currentPage,getPageSize(request));
@@ -144,7 +145,7 @@ public class ResInProcessController extends GeneralController {
 			model.addAttribute("infos",infos);
 			return "/res/inprocess/list4Global";
 		}
-		if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 			//查询本高校所有医院并放入orgFlowList
 			SysUser currentUser = GlobalContext.getCurrentUser();
 			SysOrg currentOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
@@ -250,8 +251,8 @@ public class ResInProcessController extends GeneralController {
 		info.setOrgName(org.getOrgName());
 		int count=resInprocessInfoBiz.saveInfo(info);
 		if(count==0)
-			return GlobalConstant.SAVE_FAIL;
-		return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	private String checkFiles(HttpServletRequest request) {
@@ -336,7 +337,7 @@ public class ResInProcessController extends GeneralController {
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "inProcessFile" + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -369,7 +370,7 @@ public class ResInProcessController extends GeneralController {
 					String filePath = basePath + pubFile.getFilePath();
 					FileUtil.deletefile(filePath);
 				}
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				pubFileBiz.editFile(pubFile);
 			}
 		}

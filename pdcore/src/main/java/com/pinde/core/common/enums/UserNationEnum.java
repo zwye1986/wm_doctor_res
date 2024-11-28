@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.StringUtil;
 

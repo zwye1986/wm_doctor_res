@@ -19,9 +19,9 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.osca.DoctorScoreEnum;
-import com.pinde.sci.enums.osca.SignStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
@@ -108,10 +108,10 @@ public class JsResSkillTimeConfigController extends GeneralController {
     @ResponseBody
     public String insertTest(ResSkillTimeConfig resSkillTimeConfig) {
         if (skillTimeConfigBiz.checkTestExist(resSkillTimeConfig)) {
-            if (skillTimeConfigBiz.insert(resSkillTimeConfig) == GlobalConstant.ZERO_LINE) {
-                return GlobalConstant.SAVE_FAIL;
+            if (skillTimeConfigBiz.insert(resSkillTimeConfig) == com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             } else {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         } else {
             return "当前时间段有进行中的考试，请修改考试时间";
@@ -122,13 +122,13 @@ public class JsResSkillTimeConfigController extends GeneralController {
     @ResponseBody
     public String closeTest(String skillTimeFlow) {
         if (StringUtil.isNotBlank(skillTimeFlow)) {
-            if (skillTimeConfigBiz.closeTest(skillTimeFlow) == GlobalConstant.ZERO_LINE) {
-                return GlobalConstant.OPRE_FAIL;
+            if (skillTimeConfigBiz.closeTest(skillTimeFlow) == com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             } else {
-                return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
             }
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -153,14 +153,14 @@ public class JsResSkillTimeConfigController extends GeneralController {
         ResSkillTimeConfig skillTimeConfig = skillTimeConfigBiz.findOneByCurrDate(DateUtil.getCurrDateTime2());
         model.addAttribute("skillTimeConfig",skillTimeConfig);
         if(null == skillTimeConfig){
-            model.addAttribute("addFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
         }else{
             String[] split = skillTimeConfig.getCitysId().split(",");
             List<String> cityList = Arrays.asList(split);
             if(cityList.contains(cityId)) {
-                model.addAttribute("addFlag", GlobalConstant.FLAG_Y);
+                model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
             }else{
-                model.addAttribute("addFlag", GlobalConstant.FLAG_N);
+                model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
         }
         return "jsres/city/skillConfig/skillList";
@@ -176,14 +176,14 @@ public class JsResSkillTimeConfigController extends GeneralController {
         ResSkillTimeConfig skillTimeConfig = skillTimeConfigBiz.findOneByCurrDate(DateUtil.getCurrDateTime2());
         model.addAttribute("skillTimeConfig",skillTimeConfig);
         if(null == skillTimeConfig){
-            model.addAttribute("flag", GlobalConstant.FLAG_N);
+            model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_N);
         }else{
             String[] split = skillTimeConfig.getCitysId().split(",");
             List<String> cityList = Arrays.asList(split);
             if(cityList.contains(cityId)) {
-                model.addAttribute("flag", GlobalConstant.FLAG_Y);
+                model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_Y);
             }else{
-                model.addAttribute("flag", GlobalConstant.FLAG_N);
+                model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
         }
         if (StringUtil.isNotBlank(skillFlow)) {
@@ -202,7 +202,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
         }
 
         SysOrg org2 = new SysOrg();
-        org2.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        org2.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         org2.setOrgCityId(cityId);
         List<SysOrg> orgs = orgBiz.searchOrg(org2);
         model.addAttribute("orgs", orgs);
@@ -220,22 +220,22 @@ public class JsResSkillTimeConfigController extends GeneralController {
             return "当前时间段有进行中的考试，请修改考试时间";
         }
         if(num > 0) {
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping("/deleteSkillConfig")
     @ResponseBody
     public String deleteSkillConfig(String skillFlow) {
         if (StringUtil.isNotBlank(skillFlow)) {
-            if (skillConfigBiz.deleteSkillConfig(skillFlow) == GlobalConstant.ZERO_LINE) {
-                return GlobalConstant.OPRE_FAIL;
+            if (skillConfigBiz.deleteSkillConfig(skillFlow) == com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             } else {
-                return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
             }
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -261,9 +261,9 @@ public class JsResSkillTimeConfigController extends GeneralController {
             String[] split = skillTimeConfig.getCitysId().split(",");
             List<String> cityList = Arrays.asList(split);
             if(cityList.contains(cityId)) {
-                model.addAttribute("flag", GlobalConstant.FLAG_Y);
+                model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_Y);
             }else{
-                model.addAttribute("flag", GlobalConstant.FLAG_N);
+                model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
         }
         return  "jsres/city/skillConfig/doctorList";
@@ -288,17 +288,17 @@ public class JsResSkillTimeConfigController extends GeneralController {
         if (file.getSize() > 0) {
             try {
                 int result = skillTimeConfigBiz.importDocSkillExcel(file,cityId,skillTimeConfig.getTestId());
-                if (GlobalConstant.ZERO_LINE != result) {
-                    return GlobalConstant.UPLOAD_SUCCESSED;
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
                 } else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             } catch (RuntimeException re) {
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     @RequestMapping("/exportDocSkill")
@@ -387,17 +387,17 @@ public class JsResSkillTimeConfigController extends GeneralController {
         //查询当天市局技能考核配置
         ResSkillConfig skillConfig = skillConfigBiz.findOneByCurrDate(DateUtil.getCurrDateTime2(),org.getOrgCityId());
         if(null == skillConfig){
-            model.addAttribute("addFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
         }else{
             //如果是导入方式  则市局下所有基地都能新增技能考核
             if("export".equals(skillConfig.getSkillWay())){
-                model.addAttribute("addFlag", GlobalConstant.FLAG_Y);
+                model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
             }else {
                 ResSkillOrg skillOrg = skillConfigBiz.searchSkillOrg(skillConfig.getSkillFlow(), orgFlow);
                 if (null == skillOrg) {
-                    model.addAttribute("addFlag", GlobalConstant.FLAG_N);
+                    model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
                 } else {
-                    model.addAttribute("addFlag", GlobalConstant.FLAG_Y);
+                    model.addAttribute("addFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
             }
         }
@@ -462,10 +462,10 @@ public class JsResSkillTimeConfigController extends GeneralController {
             }
         }
         int num = baseBiz.saveCheckInfoNew(osa,times);
-        if (num == GlobalConstant.ONE_LINE) {
-            return GlobalConstant.SAVE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping("/checkInfoManage")
@@ -489,7 +489,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
         model.addAttribute("year",year);
         OscaSkillsAssessment oscaSkillsAssessment = baseBiz.queryDataByFlow(clinicalFlow);
         model.addAttribute("isGradeReleased",oscaSkillsAssessment.getIsGradeReleased());
-        if(StringUtil.isNotBlank(initFlag) && initFlag.equals(GlobalConstant.RECORD_STATUS_Y)){
+        if (StringUtil.isNotBlank(initFlag) && initFlag.equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
             return "jsres/hospital/skillManage/checkInfoManage";
         }
         return "jsres/hospital/skillManage/appointManage";
@@ -516,22 +516,22 @@ public class JsResSkillTimeConfigController extends GeneralController {
         }else{
             examStartTime = startTime;
             examEndTime = endTime;
-            isNewTime = GlobalConstant.FLAG_Y;
+            isNewTime = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
         if(file.getSize() > 0){
             try{
                 int result = baseBiz.importStudentsNew(file,clinicalFlow,examStartTime,examEndTime,isNewTime);
-                if(GlobalConstant.ZERO_LINE != result){
-                    return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 }else{
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     @RequestMapping("/roomManage")
@@ -567,14 +567,14 @@ public class JsResSkillTimeConfigController extends GeneralController {
         SysDict sysDict = new SysDict();
         sysDict.setDictTypeId("ExamRoom");
         sysDict.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> examRoomList = dictBiz.searchDictList(sysDict);
         List<OscaSubjectStation> stationList = baseBiz.queryStationList(subjectFlow);
         model.addAttribute("examRoomList",examRoomList);
         model.addAttribute("stationList",stationList);
         model.addAttribute("clinicalFlow",clinicalFlow);
         model.addAttribute("clinicalName",clinicalName);
-        if(GlobalConstant.RECORD_STATUS_Y.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(flag)) {
             model.addAttribute("stationFlow",stationFlow);
             return "jsres/hospital/skillManage/addRoomNew";
         }
@@ -718,7 +718,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
                                     Integer currentPage, HttpServletRequest request,Model model){
         String orgName="";
         String searchNotFull="";
-        String searchFlag = GlobalConstant.FLAG_N;
+        String searchFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(oscaSkillsAssessmentExt!=null){
             orgName=oscaSkillsAssessmentExt.getOrgName();
             searchNotFull=oscaSkillsAssessmentExt.getSearchNotFull();
@@ -795,7 +795,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
         map.put("speId",speId);
         map.put("speIdList",speIdList);
         map.put("isLocal",isLocal);
-        if(GlobalConstant.FLAG_Y.equals(isLocal)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isLocal)) {
             map.put("orgFlow",orgFlow);
         }
         PageHelper.startPage(currentPage,getPageSize(request));
@@ -821,7 +821,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
                 }
             }
             if("on".equals(searchNotFull)){
-                searchFlag = GlobalConstant.FLAG_Y;
+                searchFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 List<OscaSkillsAssessmentExt> skillsAssessmentListTemp=new ArrayList<>();
                 for (OscaSkillsAssessmentExt osae:skillsAssessmentList) {
                     if(osae!=null&&osae.getOverplus()!=null&&Integer.parseInt(osae.getOverplus())>0){
@@ -928,42 +928,42 @@ public class JsResSkillTimeConfigController extends GeneralController {
     @ResponseBody
     public String ordered(String clinicalFlow,String doctorFlow,String appointNum,String flag){
         doctorFlow = GlobalContext.getCurrentUser().getUserFlow();
-        String isAllowApply = GlobalConstant.FLAG_Y;//结业资格审核
+        String isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;//结业资格审核
         ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(doctorFlow);
-        recruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
         //在系统中是否有资格审核记录
-        String signupFlag = GlobalConstant.FLAG_Y;
+        String signupFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
         if (recruitList != null && recruitList.size() > 0) {
             ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
             JsresGraduationApply apply = jsresGraduationApplyBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
             if (apply == null) {
-                isAllowApply = GlobalConstant.FLAG_N;
+                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
             }else{
                 //如果不是当前年的资格审核记录，则需要当前年补考审核记录
                 if(!DateUtil.getYear().equals(apply.getApplyYear())){
-                    isAllowApply = GlobalConstant.FLAG_N;
-                    signupFlag = GlobalConstant.FLAG_N;
+                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+                    signupFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
                 }
             }
         }
         //当前年补考审核记录
-        if(GlobalConstant.RECORD_STATUS_N.equals(isAllowApply) && GlobalConstant.RECORD_STATUS_N.equals(signupFlag)){
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(signupFlag)) {
             JsresExamSignup examSignup = new JsresExamSignup();
-            examSignup.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            examSignup.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             examSignup.setSignupYear(DateUtil.getYear());
             examSignup.setSignupTypeId("skill");//技能考核
             examSignup.setDoctorFlow(doctorFlow);
             examSignup.setAuditStatusId("GlobalPassed");//省厅审核通过
             JsresExamSignup signup = skillTimeConfigBiz.findExamSignup(examSignup);
             if(null != signup){
-                isAllowApply = GlobalConstant.FLAG_Y;
-                signupFlag = GlobalConstant.FLAG_Y;
+                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+                signupFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
-        if(GlobalConstant.RECORD_STATUS_N.equals(isAllowApply) || GlobalConstant.RECORD_STATUS_N.equals(signupFlag)){
-            return GlobalConstant.RECORD_STATUS_N;
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply) || com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(signupFlag)) {
+            return com.pinde.core.common.GlobalConstant.RECORD_STATUS_N;
         }
         OscaDoctorAssessment odaTemp=new OscaDoctorAssessment();
         odaTemp.setClinicalFlow(clinicalFlow);
@@ -1004,10 +1004,10 @@ public class JsResSkillTimeConfigController extends GeneralController {
                     oscaDoctorAssessment.setAuditStatusId(AuditStatusEnum.Passing.getId());
                     oscaDoctorAssessment.setAuditStatusName(AuditStatusEnum.Passing.getName());
                     oscaDoctorAssessment.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-                    oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     oscaDoctorAssessment.setIsPass(DoctorScoreEnum.Miss.getId());
                     oscaDoctorAssessment.setIsPassName(DoctorScoreEnum.Miss.getName());
-                    oscaDoctorAssessment.setIsAdminAudit(GlobalConstant.FLAG_N);
+                    oscaDoctorAssessment.setIsAdminAudit(com.pinde.core.common.GlobalConstant.FLAG_N);
                     oscaDoctorOrderdeBiz.insertDoctorAssessment(oscaDoctorAssessment);
                     if("passed".equals(flag)){
                         oscaDoctorAssessment.setAuditStatusId(AuditStatusEnum.Passed.getId());
@@ -1016,12 +1016,12 @@ public class JsResSkillTimeConfigController extends GeneralController {
                         baseBiz.auditAppoint(oscaDoctorAssessment.getRecordFlow(),AuditStatusEnum.Passed.getId(),null);
                     }
                 }
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }else {
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }
         }else{
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
     }
 

@@ -16,7 +16,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
@@ -193,18 +192,18 @@ public class SchArrangeImportController extends GeneralController {
 	public String saveRostering(String doctorFlow,String resultFlow,String groupFlow,String standardDeptId,String standardDeptName,String schDeptFlow){
 		if(StringUtil.isNotBlank(doctorFlow)){
 			int result = doctorDeptBiz.saveRostering(doctorFlow,groupFlow,standardDeptId,standardDeptName,schDeptFlow,resultFlow);
-			if(GlobalConstant.ZERO_LINE!=result){
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 
 	@RequestMapping(value="/updateResultStatus",method=RequestMethod.POST)
 	@ResponseBody
 	public String updateResultStatus(SchArrangeResult result){
 		if(result!=null){
-			if(GlobalConstant.RECORD_STATUS_Y.equals(result.getRecordStatus())){
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(result.getRecordStatus())) {
 				result.setSchStartDate("");
 				result.setSchEndDate("");
 			}
@@ -212,35 +211,35 @@ public class SchArrangeImportController extends GeneralController {
 			ResDoctorSchProcess process = processBiz.searchByResultFlow(resultFlow);
 			if (process != null) {
 				//停用
-				if (GlobalConstant.RECORD_STATUS_D.equals(result.getRecordStatus())) {
+                if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_D.equals(result.getRecordStatus())) {
 					//若管理员移除了排班，则不再展示移除的科室；恢复后，学员需重新填写带教老师和科主任入科
 					process.setTeacherUserFlow("");
 					process.setTeacherUserName("");
 					process.setHeadUserFlow("");
 					process.setHeadUserName("");
-					process.setSchFlag(GlobalConstant.FLAG_N);
-					process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+                    process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                    process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 				}
 				//删除
-				if(GlobalConstant.RECORD_STATUS_N.equals(result.getRecordStatus())){
-					process.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(result.getRecordStatus())) {
+                    process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				}
 				process.setSchStartDate(result.getSchStartDate());
 				process.setSchEndDate(result.getSchEndDate());
 				processBiz.saveProcess(process);
 			}
 			int resultFlag = schArrangeResultBiz.saveSchArrangeResult(result);
-			if (resultFlag != GlobalConstant.ZERO_LINE) {
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+            if (resultFlag != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 
 	@RequestMapping(value = "/sortAndCalculateTwo", method = RequestMethod.POST)
 	@ResponseBody
 	public String sortAndCalculateTwo(String[] resultFlow, String startDate, boolean clear, Integer resultNum, boolean addOneDay, String mustDate) {
-		boolean ismust = GlobalConstant.FLAG_Y.equals(mustDate);
+        boolean ismust = com.pinde.core.common.GlobalConstant.FLAG_Y.equals(mustDate);
 
 		if (resultFlow != null && resultFlow.length > 0) {
 			String st = "";
@@ -271,9 +270,9 @@ public class SchArrangeImportController extends GeneralController {
 			}
 			if(clear){
 				int result = schArrangeResultBiz.saveSchArrangeResults(resultList);
-				if (result != GlobalConstant.ZERO_LINE) {
+                if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
 					schArrangeResultBiz.synchronizeProcessByResults(resultList);
-					return GlobalConstant.OPRE_SUCCESSED_FLAG;
+                    return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 				}
 			}
 			if (StringUtil.isNotBlank(startDate)) {
@@ -298,19 +297,19 @@ public class SchArrangeImportController extends GeneralController {
 				resultList = calculatePlanTwo(resultList, startDate, schMonthMap, ismust);
 			}
 			int result = schArrangeResultBiz.saveSchArrangeResults(resultList);
-			if (result != GlobalConstant.ZERO_LINE) {
+            if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
 				schArrangeResultBiz.synchronizeProcessByResults(resultList);
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 	@RequestMapping(value="/saveDiyDate",method=RequestMethod.POST)
 	@ResponseBody
 	public String saveDiyDate(SchArrangeResult result){
 		if(result!=null){
 			int resultFlag = schArrangeResultBiz.saveSchArrangeResult(result);
-			if(resultFlag!=GlobalConstant.ZERO_LINE){
+            if (resultFlag != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
 
 				ResDoctorSchProcess process = processBiz.searchByResultFlow(result.getResultFlow());
 
@@ -324,11 +323,11 @@ public class SchArrangeImportController extends GeneralController {
 				if(StringUtil.isNotBlank(result.getSchEndDate())){
 					return result.getSchEndDate();
 				}else{
-					return GlobalConstant.OPRE_SUCCESSED_FLAG;
+                    return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 				}
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 
 	private List<SchArrangeResult> calculatePlanTwo(List<SchArrangeResult> sortResult, String startDate, Map<String, String> schMonthMap, boolean ismust) {
@@ -337,7 +336,7 @@ public class SchArrangeImportController extends GeneralController {
 				String resultFlow = result.getResultFlow();
 				ResDoctorSchProcess process = processBiz.searchByResultFlow(resultFlow);
 
-				if (process != null && GlobalConstant.FLAG_Y.equals(process.getIsExternal())) {
+                if (process != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(process.getIsExternal())) {
 					//如果是外院轮转的开始时间和结束时间不可修改，但须记录开始和结束日期
 					startDate = DateUtil.addDate(process.getSchEndDate(), 1);
 				} else {
@@ -351,7 +350,7 @@ public class SchArrangeImportController extends GeneralController {
 						result.setSchStartDate(startDate);
 						String endDate = "";
 						try {
-							if (SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"))) {
+                            if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"))) {
 								endDate = calculateDate(startDate, step);
 							} else {
 								endDate = DateUtil.addMonthForArrange(startDate, step, ismust);
@@ -373,7 +372,7 @@ public class SchArrangeImportController extends GeneralController {
 			float stepFloat = Float.parseFloat(step);
 			int stepInt = (int) stepFloat;
 			float stepHalf = stepInt != 0 ? stepFloat % stepInt : stepFloat;
-			if (SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"))) {
+            if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"))) {
 				if (stepInt != 0) {
 					date = DateUtil.addDate(date, stepInt * 7);
 				}
@@ -538,16 +537,16 @@ public class SchArrangeImportController extends GeneralController {
 					String msg= (String) result.get("msg");
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
@@ -623,16 +622,16 @@ public class SchArrangeImportController extends GeneralController {
 					String msg= (String) result.get("msg");
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();

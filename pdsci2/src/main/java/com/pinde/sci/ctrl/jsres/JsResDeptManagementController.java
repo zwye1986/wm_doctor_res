@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.PkUtil;
@@ -132,7 +134,7 @@ public class JsResDeptManagementController {
         }
 
         // 专业基地关联标准科室，增加专业基地信息
-        if(GlobalConstant.FLAG_Y.equals(standardDeptVO.getWithSpeBaseFlag()) && StringUtils.isNotEmpty(standardDeptVO.getSpeBaseId())) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(standardDeptVO.getWithSpeBaseFlag()) && StringUtils.isNotEmpty(standardDeptVO.getSpeBaseId())) {
             ResSpeBaseStdDeptVO speBaseStdDeptVO = new ResSpeBaseStdDeptVO();
             speBaseStdDeptVO.setSpeBaseId(standardDeptVO.getSpeBaseId());
             // 1:必选，2：可选
@@ -149,7 +151,7 @@ public class JsResDeptManagementController {
             }
         }
         // 基地科室关联标准科室，增加基地科室信息
-        if(GlobalConstant.FLAG_Y.equals(standardDeptVO.getWithBaseDeptFlag()) && StringUtils.isNotEmpty(standardDeptVO.getDeptFlow())) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(standardDeptVO.getWithBaseDeptFlag()) && StringUtils.isNotEmpty(standardDeptVO.getDeptFlow())) {
             SysDeptVO sysDeptVO = new SysDeptVO();
             sysDeptVO.setDeptFlow(standardDeptVO.getDeptFlow());
             List<SysDeptVO> sysDeptVOList = deptManagementBiz.selectSysDeptRelStdDept(sysDeptVO);
@@ -158,7 +160,7 @@ public class JsResDeptManagementController {
                 if(StringUtils.isNotEmpty(tempVO.getStandardDeptFlow())) {
                     for (ResStandardDeptVO resStandardDeptVO : resStandardDeptVOList) {
                         if(resStandardDeptVO.getStandardDeptFlow().equals(tempVO.getStandardDeptFlow())) {
-                            resStandardDeptVO.setCurRelStandardDeptFlag(GlobalConstant.FLAG_Y);
+                            resStandardDeptVO.setCurRelStandardDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                             break;
                         }
                     }
@@ -238,7 +240,7 @@ public class JsResDeptManagementController {
         // 删除当前科室
         deptManagementBiz.deleteStandardDeptByDeptFlow(standardDeptVO.getStandardDeptFlow());
 
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("saveStandardDept/{operType}")
@@ -280,7 +282,7 @@ public class JsResDeptManagementController {
             deptManagementBiz.updateStandardDept(updateStandardDeptVO);
 
             if(curDept.getStandardDeptCode().equals(standardDeptVO.getStandardDeptCode())) {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
 
             // 修改了deptCode，那么所有下层的dept要更新parentCode，如果当前是最外层，topDept也要更新
@@ -350,7 +352,7 @@ public class JsResDeptManagementController {
             }
 
             // 当禁用时，与删除一样的校验
-            if(GlobalConstant.FLAG_N.equals(standardDeptVO.getDeptStatus())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(standardDeptVO.getDeptStatus())) {
                 // 当前标准科室不应关联有基地科室
                 ResDeptRelStdDeptVO deptRelStdDeptVO = new ResDeptRelStdDeptVO();
                 deptRelStdDeptVO.setStandardDeptFlow(standardDeptVO.getStandardDeptFlow());
@@ -379,7 +381,7 @@ public class JsResDeptManagementController {
             deptManagementBiz.updateStandardDept(updateStandardDeptVO);
         }
 
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     private String insertSubDept(ResStandardDeptVO standardDeptVO) {
@@ -408,11 +410,11 @@ public class JsResDeptManagementController {
         insertingDeptVO.setDeptLevel(deptLevel);
         insertingDeptVO.setParentDeptCode(parentDeptVO.getStandardDeptCode());
         insertingDeptVO.setTopLevelDeptCode(parentDeptVO.getTopLevelDeptCode());
-        insertingDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
-        insertingDeptVO.setDeptStatus(GlobalConstant.FLAG_Y);
+        insertingDeptVO.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        insertingDeptVO.setDeptStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         GeneralMethod.setRecordInfo(insertingDeptVO, true);
         deptManagementBiz.saveStandardDept(insertingDeptVO);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     private String insertTopDept(ResStandardDeptVO standardDeptVO) {
@@ -433,12 +435,12 @@ public class JsResDeptManagementController {
         standardDeptVO.setDeptLevelName("一级");
         standardDeptVO.setParentDeptCode(standardDeptVO.getStandardDeptCode());
         standardDeptVO.setTopLevelDeptCode(standardDeptVO.getStandardDeptCode());
-        standardDeptVO.setRecordStatus(GlobalConstant.FLAG_Y);
-        standardDeptVO.setDeptStatus(GlobalConstant.FLAG_Y);
+        standardDeptVO.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        standardDeptVO.setDeptStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         standardDeptVO.setStandardDeptFlow(PkUtil.getUUID());
         GeneralMethod.setRecordInfo(standardDeptVO, true);
         deptManagementBiz.saveStandardDept(standardDeptVO);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**
@@ -449,7 +451,7 @@ public class JsResDeptManagementController {
     @RequestMapping("searchSpeBaseAll")
     @ResponseBody
     public List<SysDict> searchSpeBaseByNameFuzzy(String speBaseNameFuzzy, HttpServletRequest request) {
-        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
         // id不能为50(助理全科）
         sysDictList = sysDictList.stream().filter(vo -> !"50".equals(vo.getDictId())).collect(Collectors.toList());
         Collections.sort(sysDictList, Comparator.comparing(SysDict::getDictId));
@@ -501,7 +503,7 @@ public class JsResDeptManagementController {
             return "系统内部错误，请联系运维人员";
         }
 
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("configSpeBaseDelete")
@@ -510,7 +512,7 @@ public class JsResDeptManagementController {
         // todo 逻辑校验（校验存在性等），暂不做
 
         deptManagementBiz.deleteSpeBaseStdDeptByKey(speBaseStdDeptFlow);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("baseDeptMain")
@@ -597,7 +599,7 @@ public class JsResDeptManagementController {
             }
             // 校验编码和名称不能与其它的科室重复
             SysDeptExample example = new SysDeptExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                             .andDeptNameEqualTo(deptRelStdDeptVO.getDeptName())
                     .andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
             PageHelper.startPage(1, 2, false);
@@ -608,7 +610,7 @@ public class JsResDeptManagementController {
                 }
             }
             example = new SysDeptExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                     .andDeptNameEqualTo(deptRelStdDeptVO.getDeptCode())
             .andOrgFlowEqualTo(deptRelStdDeptVO.getOrgFlow());
             PageHelper.startPage(1, 2, false);
@@ -672,7 +674,7 @@ public class JsResDeptManagementController {
             }
         }
 
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("configBaseDept")
@@ -721,7 +723,7 @@ public class JsResDeptManagementController {
         // 当前科室下没有用户
         PageHelper.startPage(1, 1, false);
         SysUserExample userExample = new SysUserExample();
-        userExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        userExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow()).andDeptFlowEqualTo(deptRelStdDeptVO.getDeptFlow());
         List<SysUser> sysUserList = userBiz.readSysUserByExample(userExample);
         if(CollectionUtils.isNotEmpty(sysUserList)) {
@@ -731,6 +733,6 @@ public class JsResDeptManagementController {
         // 硬删，慎用
         deptBiz.deleteDeptByKey(deptRelStdDeptVO.getDeptFlow());
 
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 }

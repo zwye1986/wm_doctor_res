@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
@@ -38,7 +40,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 	@Override
 	public List<SchDept> searchSchDept(String deptFlow) {
 		SchDeptExample example = new SchDeptExample();
-		example.createCriteria().andDeptFlowEqualTo(deptFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDeptFlowEqualTo(deptFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL");
 		return schDeptMapper.selectByExample(example);
 	}
@@ -84,7 +86,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 	@Override
 	public int searchMaxSchDeptOrdinal(String orgFlow) {
 		SchDeptExample schDeptExample=new SchDeptExample();
-		SchDeptExample.Criteria criteria=schDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchDeptExample.Criteria criteria = schDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(orgFlow)){
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
@@ -120,7 +122,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 				return schDeptMapper.insertSelective(dept);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -152,11 +154,11 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 			for(String standardDeptId : standardDeptIds){
 				deptRel.setRecordFlow(null);
 				deptRel.setStandardDeptId(standardDeptId);
-				deptRel.setStandardDeptName(DictTypeEnum.StandardDept.getDictNameById(standardDeptId));
+                deptRel.setStandardDeptName(com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId));
 				deptRelBiz.editDeptRel(deptRel);
 			}
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 	
 	@Override
@@ -187,7 +189,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 		deptExtBiz.delSchDeptRel(dept.getSchDeptFlow());
 		deptExtRel.setRecordFlow(null);
 		deptExtBiz.editSchDeptExtRel(deptExtRel);
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
@@ -198,7 +200,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 	@Override
 	public Map<String, List<SchDept>> searchSchDeptMap(String orgFlow) {
 		SchDeptExample example = new SchDeptExample();
-		example.createCriteria().andOrgFlowEqualTo(orgFlow);//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andOrgFlowEqualTo(orgFlow);//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		example.setOrderByClause("RECORD_STATUS DESC,ORDINAL");
 		List<SchDept> schDeptTempList = schDeptMapper.selectByExample(example);
 		
@@ -224,7 +226,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 	@Override
 	public List<SchDept> searchSchDeptList(String orgFlow) {
 		SchDeptExample example = new SchDeptExample();
-		example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL ");
 		return schDeptMapper.selectByExample(example);
 	}
@@ -232,7 +234,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 	@Override
 	public List<SchDept> searchSchExternalDeptListByDept(String deptFlow) {
 		SchDeptExample example = new SchDeptExample();
-		example.createCriteria().andDeptFlowEqualTo(deptFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andExternalEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andDeptFlowEqualTo(deptFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andExternalEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("ORDINAL ");
 		return schDeptMapper.selectByExample(example);
 	}
@@ -247,8 +249,8 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 			List<SysDept> deptList = deptBiz.searchDeptByFlows(deptFlows);
 			if(deptList!=null && deptList.size()>0){
 				SchDept dept = new SchDept();
-				dept.setIsExternal(GlobalConstant.FLAG_N);
-				dept.setExternal(GlobalConstant.FLAG_N);
+                dept.setIsExternal(com.pinde.core.common.GlobalConstant.FLAG_N);
+                dept.setExternal(com.pinde.core.common.GlobalConstant.FLAG_N);
 				dept.setOrgFlow(org.getOrgFlow());
 				dept.setOrgName(org.getOrgName());
 				for(SysDept sDept : deptList){
@@ -261,16 +263,16 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 						saveSchDept(dept);
 					}
 				}
-				return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
 	public List<SchDept> searchDeptByFlows(List<String> schDeptLists){
 		SchDeptExample example = new SchDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptLists);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptLists);
 		example.setOrderByClause("ORDINAL ");
 		return schDeptMapper.selectByExample(example);
 	}
@@ -278,7 +280,7 @@ public class SchDeptBizImpl implements ISchDeptBiz {
 	@Override
 	public List<SchDept> searchDeptByDeotFlows(List<String> deptLists){
 		SchDeptExample example = new SchDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptLists);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptLists);
 		example.setOrderByClause("ORDINAL ");
 		return schDeptMapper.selectByExample(example);
 	}

@@ -23,7 +23,7 @@ public class ResDiscipleTeacherInfoBizImpl implements IResDiscipleTeacherInfoBiz
     @Override
     public ResDiscipleTeacherInfo readResDiscipleTeacherInfo(String userFlow) {
         ResDiscipleTeacherInfoExample example=new ResDiscipleTeacherInfoExample();
-        example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDiscipleTeacherInfo> list= teacherInfoMapper.selectByExampleWithBLOBs(example);
         if(list!=null&&list.size()>0)
         {

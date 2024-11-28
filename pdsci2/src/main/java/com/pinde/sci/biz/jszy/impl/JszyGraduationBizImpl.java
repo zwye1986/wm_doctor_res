@@ -112,7 +112,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
         if (paramMap.get("certificateNumber") != null) {
             criteria.andCertificateNumberIsNotNull();
         }
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (paramMap.get("order") != null) {
             example.setOrderByClause(paramMap.get("order").toString());
         }
@@ -123,7 +123,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
     public ResDoctorGraduationInfo findGraduationInfoByIdNo(String idNo) {
         ResDoctorGraduationInfoExample example = new ResDoctorGraduationInfoExample();
         ResDoctorGraduationInfoExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(idNo);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(idNo);
         List<ResDoctorGraduationInfo> list = graduationInfoMapper.selectByExample(example);
         if (list != null && list.size() > 0) {
             return list.get(0);
@@ -135,7 +135,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
     public int modifyBatch(List<String> recordFlows, ResDoctorGraduationInfo graduationInfo) {
         ResDoctorGraduationInfoExample example = new ResDoctorGraduationInfoExample();
         ResDoctorGraduationInfoExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (recordFlows != null && recordFlows.size() > 0) {
             criteria.andRecordFlowIn(recordFlows);
         }

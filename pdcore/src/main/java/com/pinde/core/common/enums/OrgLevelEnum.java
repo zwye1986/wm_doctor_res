@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum OrgLevelEnum implements GeneralEnum<String> {
@@ -28,6 +29,6 @@ public enum OrgLevelEnum implements GeneralEnum<String> {
 		return name;
 	}
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, OrgLevelEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.OrgLevelEnum.class).getName();
 	}
 }

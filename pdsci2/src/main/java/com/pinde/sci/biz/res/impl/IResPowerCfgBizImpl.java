@@ -46,8 +46,8 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
     public List<ResPowerCfg> searchByCfgCode(String cfgCode){
 
         ResPowerCfgExample example = new ResPowerCfgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-        example.createCriteria().andCfgValueEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andCfgValueEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.createCriteria().andCfgCodeEqualTo(cfgCode);
         return resPowerCfgMapper.selectByExample(example);
     }
@@ -123,16 +123,16 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
                         Map<String, Object> data = datas.get(i);
                         ResPowerCfg webCfg = new ResPowerCfg();
                         webCfg.setCfgCode("res_doctor_web_" + data.get("userFlow"));
-                        webCfg.setCfgValue(GlobalConstant.RECORD_STATUS_Y);
+                        webCfg.setCfgValue(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         webCfg.setCfgDesc("是否开放学员web登录权限");
-                        webCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        webCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         webCfg.setPowerStartTime((String) data.get("powerStartTime"));
                         webCfg.setPowerEndTime((String) data.get("powerEndTime"));
                         ResPowerCfg appCfg = new ResPowerCfg();
                         appCfg.setCfgCode("res_doctor_app_login_" + data.get("userFlow"));
-//                        appCfg.setCfgValue(GlobalConstant.RECORD_STATUS_Y);
+//                        appCfg.setCfgValue(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         appCfg.setCfgDesc("是否开放学员app登录权限");
-                        appCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        appCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         appCfg.setPowerStartTime((String) data.get("powerStartTime"));
                         appCfg.setPowerEndTime((String) data.get("powerEndTime"));
                         count += edit(webCfg);

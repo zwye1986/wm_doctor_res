@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.base;
 
+import com.pinde.core.model.SysSmsLog;
 import com.pinde.core.model.TestPaperExample;
 import com.pinde.sci.model.mo.SysSmsLogExample;
 import org.apache.ibatis.annotations.Param;
@@ -13,19 +14,19 @@ public interface SysSmsLogMapper {
 
     int deleteByPrimaryKey(String smsLogFlow);
 
-    int insert(TestPaperExample.SysSmsLog record);
+    int insert(SysSmsLog record);
 
-    int insertSelective(TestPaperExample.SysSmsLog record);
+    int insertSelective(SysSmsLog record);
 
-    List<TestPaperExample.SysSmsLog> selectByExample(SysSmsLogExample example);
+    List<SysSmsLog> selectByExample(SysSmsLogExample example);
 
-    TestPaperExample.SysSmsLog selectByPrimaryKey(String smsLogFlow);
+    SysSmsLog selectByPrimaryKey(String smsLogFlow);
 
-    int updateByExampleSelective(@Param("record") TestPaperExample.SysSmsLog record, @Param("example") SysSmsLogExample example);
+    int updateByExampleSelective(@Param("record") SysSmsLog record, @Param("example") SysSmsLogExample example);
 
-    int updateByExample(@Param("record") TestPaperExample.SysSmsLog record, @Param("example") SysSmsLogExample example);
+    int updateByExample(@Param("record") SysSmsLog record, @Param("example") SysSmsLogExample example);
 
-    int updateByPrimaryKeySelective(TestPaperExample.SysSmsLog record);
+    int updateByPrimaryKeySelective(SysSmsLog record);
 
-    int updateByPrimaryKey(TestPaperExample.SysSmsLog record);
+    int updateByPrimaryKey(SysSmsLog record);
 }

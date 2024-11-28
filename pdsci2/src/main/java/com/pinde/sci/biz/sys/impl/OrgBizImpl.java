@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.OrgLevelEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,9 +14,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.sczyres.SczyResOrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.ResOrgLevelEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,15 +95,15 @@ public class OrgBizImpl implements IOrgBiz {
 				SysUserRole userRole = new SysUserRole();
 				userRole.setUserFlow(user.getUserFlow());
 				userRole.setOrgFlow(org.getOrgFlow());
-				userRole.setWsId((String)GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
-				userRole.setRoleFlow(InitConfig.getSysCfg(GlobalConstant.DECLARER_ROLE_FLOW));
+                userRole.setWsId((String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
+                userRole.setRoleFlow(InitConfig.getSysCfg(com.pinde.core.common.GlobalConstant.DECLARER_ROLE_FLOW));
 				userRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 				userRole.setAuthTime(DateUtil.getCurrDateTime());
 				userRoleBiz.saveSysUserRole(userRole);
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	private int save(SysOrg org){
@@ -120,7 +120,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrg(SysOrg sysorg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(sysorg.getOrgFlow())){
             criteria.andOrgFlowEqualTo(sysorg.getOrgFlow());
         }
@@ -165,7 +165,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgIsAcc(SysOrg sysorg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysorg.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(sysorg.getOrgFlow());
 		}
@@ -212,7 +212,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgList(SysOrg sysOrg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysOrg.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(sysOrg.getOrgFlow());
 		}
@@ -249,7 +249,7 @@ public class OrgBizImpl implements IOrgBiz {
 		if(StringUtil.isNotBlank(sysOrg.getIsExamOrg())){
 			criteria.andIsExamOrgEqualTo(sysOrg.getIsExamOrg());
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("ORG_CODE");
 		return sysOrgMapper.selectByExample(example);
 	}
@@ -268,7 +268,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
     public List<SysOrg> searchOrgByClause(SysOrg sysorg, String orderClause) {
         SysOrgExample example=new SysOrgExample();
-        SysOrgExample.Criteria criteria=example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(sysorg.getOrgFlow())){
             criteria.andOrgFlowEqualTo(sysorg.getOrgFlow());
         }
@@ -316,7 +316,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgWithBLOBs(SysOrg sysorg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysorg.getOrgCode())){
 			criteria.andOrgCodeEqualTo(sysorg.getOrgCode());
 		}
@@ -351,7 +351,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> queryAllSysOrg(SysOrg sysorg) {
 		SysOrgExample example = new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysorg!=null){
 			if(StringUtil.isNotBlank(sysorg.getOrgName())){
 				criteria.andOrgNameLike("%"+sysorg.getOrgName()+"%");
@@ -377,7 +377,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchAllSysOrg(SysOrg sysorg) {
 		SysOrgExample example = new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysorg!=null){
 
 					if(StringUtil.isNotBlank(sysorg.getOrgName())){
@@ -426,7 +426,7 @@ public class OrgBizImpl implements IOrgBiz {
 	public Map<String, List<SysOrg>> searchChargeAndApply(SysOrg org,String projListScope) {
 		List<SysOrg> firstGradeOrgList=null;
 		List<SysOrg> secondGradeOrgList=null;
-		org.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        org.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		Map<String,List<SysOrg>> resultMap=new HashMap<String, List<SysOrg>>();
 		SysUser currUser=GlobalContext.getCurrentUser();
 		//如果chargeOrgFlow不为空，查询该机构下所有下属机构
@@ -438,7 +438,7 @@ public class OrgBizImpl implements IOrgBiz {
 		SysOrg currOrg=new SysOrg();
 		currOrg.setChargeOrgFlow(currUser.getOrgFlow());
 		firstGradeOrgList=searchOrg(currOrg);
-		if(GlobalConstant.PROJ_STATUS_SCOPE_GLOBAL.equals(projListScope)){
+        if (com.pinde.core.common.GlobalConstant.PROJ_STATUS_SCOPE_GLOBAL.equals(projListScope)) {
 			SysOrg globalOrg=readSysOrg(currUser.getOrgFlow());
 			firstGradeOrgList.add(globalOrg);
 		}
@@ -450,7 +450,7 @@ public class OrgBizImpl implements IOrgBiz {
 	public List<SysOrg> searchOrgListByChargeOrgFlow(String chargeOrgFlow) {
 		SysOrg sysOrg = new SysOrg();
 		sysOrg.setChargeOrgFlow(chargeOrgFlow);
-		sysOrg.setRecordStatus(GlobalConstant.FLAG_Y);
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysOrg> orgList = this.searchOrg(sysOrg);
 		return orgList;
 	}
@@ -463,7 +463,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchSysOrg(SysOrg sysorg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		setCriteria(criteria,sysorg);
 		example.setOrderByClause("CREATE_TIME");
 		return sysOrgMapper.selectByExampleWithBLOBs(example);
@@ -472,7 +472,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchSysOrg() {
 		SysOrgExample example=new SysOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL");
 		return sysOrgMapper.selectByExample(example);
 	}
@@ -481,10 +481,10 @@ public class OrgBizImpl implements IOrgBiz {
 	public List<SysOrg> searchOrderBy(SysOrg sysorg){
 		SysOrgExample example=new SysOrgExample();
 		//非培养单位
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsTrainOrgNotEqualTo(GlobalConstant.FLAG_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsTrainOrgNotEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		setCriteria(criteria,sysorg);
 		//默认为培养单位
-		SysOrgExample.Criteria criteria2=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsTrainOrgIsNull();
+        SysOrgExample.Criteria criteria2 = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsTrainOrgIsNull();
 		setCriteria(criteria2,sysorg);
 		example.or(criteria2);
 		example.setOrderByClause("ORDINAL");
@@ -529,7 +529,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchByOrgNotSelf(String orgFlow,SysOrg sysorg){
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
 		setCriteria(criteria,sysorg);
 		example.setOrderByClause("ORDINAL");
 		return sysOrgMapper.selectByExample(example);
@@ -539,7 +539,7 @@ public class OrgBizImpl implements IOrgBiz {
     public List<SysOrg> searchSysOrgByName(SysOrg sysorg) {
         SysOrgExample example=new SysOrgExample();
         SysOrgExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andOrgNameEqualTo(sysorg.getOrgName());
         criteria.andIsExamOrgEqualTo(sysorg.getIsExamOrg());
 
@@ -554,7 +554,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchHbresOrgList() {
 		SysOrgExample example = new SysOrgExample();
-		example.createCriteria().andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL");
 		return sysOrgMapper.selectByExample(example);
 	}
@@ -562,14 +562,14 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgNotSelf(String orgFlow) {
 		SysOrgExample example = new SysOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
 		return sysOrgMapper.selectByExample(example);
 	}
 
 	@Override
 	public List<SysOrg> searchAllJointOrg4sczy(String orgFlow) {
 		SysOrgExample example = new SysOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow).andOrgLevelIdEqualTo(SczyResOrgLevelEnum.Joint.getId());
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow).andOrgLevelIdEqualTo(com.pinde.core.common.enums.ResOrgLevelEnum.Joint.getId());
 		return sysOrgMapper.selectByExample(example);
 	}
 
@@ -580,7 +580,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgFlowIn(List<String> orgFlows){
 		SysOrgExample example = new SysOrgExample();
-		SysOrgExample.Criteria criteria =example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(orgFlows!=null&&orgFlows.size()>0){
 			criteria.andOrgFlowIn(orgFlows);
 		}
@@ -647,7 +647,7 @@ public class OrgBizImpl implements IOrgBiz {
 	public SysOrg readSysOrgByName(String orgName) {
 		if(StringUtil.isNotBlank(orgName)) {
 			SysOrgExample example = new SysOrgExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgNameEqualTo(orgName);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgNameEqualTo(orgName);
 			example.setOrderByClause("ORDINAL");
 			List<SysOrg> list= sysOrgMapper.selectByExample(example);
 			if(list!=null&&list.size()>0)
@@ -662,7 +662,7 @@ public class OrgBizImpl implements IOrgBiz {
 	public SysOrg readSysOrgByCode(String orgCode) {
 		if(StringUtil.isNotBlank(orgCode)) {
 			SysOrgExample example = new SysOrgExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgCodeEqualTo(orgCode);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgCodeEqualTo(orgCode);
 			example.setOrderByClause("ORDINAL");
 			List<SysOrg> list= sysOrgMapper.selectByExample(example);
 			if(list!=null&&list.size()>0)
@@ -739,10 +739,10 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchTrainOrgList() {
 		SysOrgExample example = new SysOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-				.andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId()).andIsTrainOrgNotEqualTo(GlobalConstant.FLAG_Y);
-		SysOrgExample.Criteria criteria2 =example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-				.andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId()).andIsTrainOrgIsNull();
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId()).andIsTrainOrgNotEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        SysOrgExample.Criteria criteria2 = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId()).andIsTrainOrgIsNull();
 		example.or(criteria2);
 		example.setOrderByClause("ORDINAL");
 		return sysOrgMapper.selectByExample(example);
@@ -771,8 +771,8 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgNotCountryOrg(SysOrg sysorg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		criteria.andOrgLevelIdNotEqualTo(OrgLevelEnum.CountryOrg.getId());
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        criteria.andOrgLevelIdNotEqualTo(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		if(StringUtil.isNotBlank(sysorg.getOrgProvId())){
 			criteria.andOrgProvIdEqualTo(sysorg.getOrgProvId());
 		}
@@ -793,11 +793,11 @@ public class OrgBizImpl implements IOrgBiz {
     public List<SysOrg> searchSysOrgOrder(List<String> orgLevels){
         SysOrgExample example=new SysOrgExample();
         //非培养单位
-        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (orgLevels != null && orgLevels.size() > 0) {
             criteria.andOrgLevelIdIn(orgLevels);
         }
-        criteria.andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId());
+        criteria.andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         criteria.andOrgProvIdEqualTo("320000");
         example.setOrderByClause("ORDINAL");
         return sysOrgMapper.selectByExampleWithBLOBs(example);
@@ -849,7 +849,7 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchOrgNew(SysOrg sysorg) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysorg.getOrgFlow())){
 			criteria.andOrgFlowNotEqualTo(sysorg.getOrgFlow());
 //			criteria.andOrgFlowEqualTo(sysorg.getOrgFlow());
@@ -914,7 +914,7 @@ public class OrgBizImpl implements IOrgBiz {
 	public List<SysOrg> searchOrgWork() {
 		SysOrgExample example=new SysOrgExample();
 		example.createCriteria().andOrgTypeIdEqualTo("Hospital");
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL");
 		return sysOrgMapper.selectByExample(example);
 	}
@@ -961,13 +961,13 @@ public class OrgBizImpl implements IOrgBiz {
 	public List<SysOrg> searchOrgListByCityId(String cityId) {
 		SysOrgExample example = new SysOrgExample();
 		List<String> orgLevels = new ArrayList<>();
-		orgLevels.add(OrgLevelEnum.CountryOrg.getId());
+        orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		//非培养单位
-		SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (orgLevels.size() > 0) {
 			criteria.andOrgLevelIdIn(orgLevels);
 		}
-		criteria.andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId());
+        criteria.andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		criteria.andOrgProvIdEqualTo("320000");
 		criteria.andOrgCityIdEqualTo(cityId);
 		example.setOrderByClause("org_code asc");

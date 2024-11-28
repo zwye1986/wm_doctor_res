@@ -37,7 +37,7 @@ public class OscaNoticeController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<InxInfo> infos = null;
         //searchInfoByOrgBeforeDate扩展
-        if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             infos = this.noticeBiz.searchInfoByOrgBeforeDate(null,null);
         }else{
             SysUser user = GlobalContext.getCurrentUser();
@@ -52,7 +52,7 @@ public class OscaNoticeController extends GeneralController {
     @ResponseBody
     @RequestMapping("/saveNotice/{roleFlag}")
     public String saveNotice(@PathVariable String roleFlag,InxInfo info){
-        if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             SysUser user = GlobalContext.getCurrentUser();
             String userOrgFlow= user.getOrgFlow();
             String userOrgName=user.getOrgName();
@@ -61,7 +61,7 @@ public class OscaNoticeController extends GeneralController {
         }
         info.setColumnId("jinengkaohe");
         noticeBiz.editInfo(info);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping("/findNoticeByFlow")
@@ -80,7 +80,7 @@ public class OscaNoticeController extends GeneralController {
     @RequestMapping("/delNotice")
     public String delNotice(String infoFlow){
         this.noticeBiz.delNotice(infoFlow);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     /**

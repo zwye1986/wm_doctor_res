@@ -349,7 +349,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
             TjDocinfoExample example = new TjDocinfoExample();
             TjDocinfoExample.Criteria criteria = example.createCriteria();
             criteria.andIdNoEqualTo(docInfo.getIdNo());
-            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<TjDocinfo> tjDocinfos = docinfoMapper.selectByExample(example);
             if (tjDocinfos != null && tjDocinfos.size()> 0){
                 userFlow = tjDocinfos.get(0).getUserFlow();
@@ -374,7 +374,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         TjDocinfoExample example = new TjDocinfoExample();
         TjDocinfoExample.Criteria criteria = example.createCriteria();
         criteria.andIdNoEqualTo(idNo);
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<TjDocinfo> tjDocinfos = docinfoMapper.selectByExample(example);
         if(tjDocinfos!= null && tjDocinfos.size() >0){
             return tjDocinfos.get(0);
@@ -421,7 +421,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         if (StringUtil.isNotEmpty(examInfo.getRecordFlow())) {
             TjExamInfoExample tjExamInfoExample = new TjExamInfoExample();
             tjExamInfoExample.createCriteria().andRecordFlowEqualTo(examInfo.getRecordFlow());
-            examInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            examInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             examInfo.setModifyTime(DateUtil.getCurrDateTime());
             examInfo.setModifyUserFlow(docinfo.getUserFlow());
             i=examInfoMapper.updateByExampleSelective(examInfo,tjExamInfoExample);
@@ -432,7 +432,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                     examInfo.setOrgFlow(sysOrg.getOrgFlow());
                 }
             }
-            examInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            examInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             examInfo.setCreateTime(DateUtil.getCurrDateTime());
             examInfo.setCreateUserFlow(docinfo.getUserFlow());
             examInfo.setRecordFlow(PkUtil.getUUID());
@@ -571,7 +571,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         docInfo.setUserId(docInfo.getIdNo());
         docInfo.setPhonePath(docInfo.getIdNo()+".jpg");
         if (isAdd) {
-            docInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            docInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             docInfo.setCreateTime(DateUtil.getCurrDateTime());
             //判断准考证是否重复
             String ticketNum = docInfo.getTicketNum();
@@ -590,7 +590,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
             }
 //            docInfo.setCreateUserFlow(docInfo.getUserFlow());
         }
-        docInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        docInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         docInfo.setModifyTime(DateUtil.getCurrDateTime());
         docInfo.setModifyUserFlow(docInfo.getUserFlow());
 

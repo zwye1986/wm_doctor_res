@@ -53,7 +53,7 @@ public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
     public List<ResAnnualAssessmentRecord> listAssessmentRecord(String userFlow) {
         ResAnnualAssessmentRecordExample example = new ResAnnualAssessmentRecordExample();
         ResAnnualAssessmentRecordExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(userFlow)){
             criteria.andUserFlowEqualTo(userFlow);
         }
@@ -122,7 +122,7 @@ public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (file.getSize() > 0) {
             //创建目录
             String dateString = DateUtil.getCurrDate2();

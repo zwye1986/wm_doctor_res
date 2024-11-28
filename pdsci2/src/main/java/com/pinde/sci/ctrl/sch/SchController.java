@@ -3,8 +3,8 @@ package com.pinde.sci.ctrl.sch;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sch.SchArrangeStatusEnum;
-import com.pinde.sci.enums.sch.SchArrangeTypeEnum;
+import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
+import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SchArrange;
 import com.pinde.sci.model.mo.SysUser;
@@ -62,7 +62,7 @@ public class SchController extends GeneralController{
 		Integer selDeptCount = 0;
 		Integer unSelDepCount = 0;
 		for(ResDoctor  doctor : unSchDoctorList){
-			if(GlobalConstant.FLAG_Y.equals(doctor.getSelDeptFlag())){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSelDeptFlag())) {
 				selDeptCount++;
 			}else {
 				unSelDepCount++;
@@ -82,23 +82,23 @@ public class SchController extends GeneralController{
 	@RequestMapping(value = {"/rostering" },method = RequestMethod.GET)
 	@ResponseBody
 	public String rostering(String beginDate,String reqFlag) throws Exception{
-		boolean exact = GlobalConstant.FLAG_Y.equals(reqFlag);
+        boolean exact = com.pinde.core.common.GlobalConstant.FLAG_Y.equals(reqFlag);
 		arrangeBiz.rostering(beginDate,exact);
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 	
 	@RequestMapping(value = {"/abort" },method = RequestMethod.GET)
 	@ResponseBody
 	public String abort(String arrangeFlow) throws Exception{
 		arrangeBiz.abort(arrangeFlow);
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 	
 //	@RequestMapping(value = {"/countIndex" },method = RequestMethod.GET)
 //	@ResponseBody
 //	public String countIndex(String arrangeFlow,Model model) throws Exception{
 //		arrangeBiz.countIndex(arrangeFlow);
-//		return GlobalConstant.OPRE_SUCCESSED;
+//		return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 //	}
 //
 //	@RequestMapping(value = {"/permProcess" },method = RequestMethod.GET)
@@ -143,7 +143,7 @@ public class SchController extends GeneralController{
 //	@ResponseBody
 //	public String schConfirm(String arrangeFlow,Model model) throws Exception{
 //		arrangeBiz.schConfirm(arrangeFlow);
-//		return GlobalConstant.OPRE_SUCCESSED;
+//		return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 //	}
 //	
 //	@RequestMapping(value = {"/doConfirm" },method = RequestMethod.GET)
@@ -153,7 +153,7 @@ public class SchController extends GeneralController{
 //		arrange.setArrangeStatusName(SchArrangeStatusEnum.Confirm.getName());
 //		GeneralMethod.setRecordInfo(arrange, false);
 //		arrangeBiz.modifyArrange(arrange);
-//		return GlobalConstant.OPRE_SUCCESSED;
+//		return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 //	}
 }
 

@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -17,12 +16,12 @@ import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.base.SysUserSchoolMapper;
-import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
-import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
-import com.pinde.sci.enums.sys.UserEmailStatusEnum;
-import com.pinde.sci.enums.sys.UserPhoneStatusEnum;
+import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.enums.sys.UserEmailStatusEnum;
+import com.pinde.core.common.enums.sys.UserPhoneStatusEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import nl.captcha.Captcha;
@@ -91,8 +90,8 @@ public class UserController extends GeneralController{
 					   Model model,HttpServletRequest request){
 
 		long startTime = System.currentTimeMillis(); //获取开始时间
-		setSessionAttribute(GlobalConstant.USER_LIST_SCOPE, userListScope);
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE, userListScope);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		//角色列表
 		SysRole sysRole = new SysRole();
 		sysRole.setWsId(wsId);
@@ -114,7 +113,7 @@ public class UserController extends GeneralController{
 			paramMap.put("statusId",search.getStatusId());
 		}
 
-		if(GlobalConstant.USER_LIST_LOCAL.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(userListScope)) {
 			SysUser currUser = GlobalContext.getCurrentUser();
 			paramMap.put("orgFlow",currUser.getOrgFlow());
 			paramMap.put("deptFlow",deptFlow);
@@ -122,7 +121,7 @@ public class UserController extends GeneralController{
 			sysUserList = userBiz.searchUserWithRole(paramMap);
 			model.addAttribute("sysUserList",sysUserList);
 
-//			if(GlobalConstant.ERP_WS_ID.equals(wsId)){
+//			if(com.pinde.core.common.GlobalConstant.ERP_WS_ID.equals(wsId)){
 //				Map<String,List<ErpUserRegionPopedom>> erpUserRegionPopedomMap  = new HashMap<String, List<ErpUserRegionPopedom>>();
 //				for(SysUser user : sysUserList){
 //					String userFlow = user.getUserFlow();
@@ -132,7 +131,7 @@ public class UserController extends GeneralController{
 //				model.addAttribute("erpUserRegionPopedomMap", erpUserRegionPopedomMap);
 //			}
 
-//			if(GlobalConstant.RES_WS_ID.equals(wsId)){
+//			if(com.pinde.core.common.GlobalConstant.RES_WS_ID.equals(wsId)){
 //				List<String> userFlows = new ArrayList<String>();
 //				for(SysUser user : sysUserList){
 //					userFlows.add(user.getUserFlow());
@@ -147,7 +146,7 @@ public class UserController extends GeneralController{
 //				}
 //			}
 		}
-		if(GlobalConstant.USER_LIST_CHARGE.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {
 			SysUser currUser = GlobalContext.getCurrentUser();
 			List<String> orgFlows = new ArrayList<String>();
 			List<SysOrg> orgList = this.orgBiz.searchChildrenOrgByOrgFlow(currUser.getOrgFlow());
@@ -162,7 +161,7 @@ public class UserController extends GeneralController{
 			sysUserList=userBiz.searchUserWithRole(paramMap);
 			model.addAttribute("sysUserList",sysUserList);
 		}
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {
 //			if(StringUtil.isNotBlank(search.getOrgFlow())){
 			PageHelper.startPage(currentPage, getPageSize(request));
 			sysUserList = userBiz.searchUserWithRole(paramMap);
@@ -209,7 +208,7 @@ public class UserController extends GeneralController{
 	@RequestMapping(value={"/edit/{userListScope}"})
 	public String edit(@PathVariable String userListScope,String userFlow,String currentPage,Model model){
 		model.addAttribute("currentPage",currentPage);
-		setSessionAttribute(GlobalConstant.USER_LIST_SCOPE, userListScope);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE, userListScope);
         SysUser logiunUser=GlobalContext.getCurrentUser();
 		if(StringUtil.isNotBlank(userFlow)){
 			SysUser sysUser=userBiz.readSysUser(userFlow);
@@ -217,25 +216,26 @@ public class UserController extends GeneralController{
 			String tchRoleFlow=InitConfig.getSysCfg("res_teacher_role_flow");
 			String headRoleFlow=InitConfig.getSysCfg("res_head_role_flow");
 			String universitySonRoleFlow=InitConfig.getSysCfg("res_university_son_role_flow");
-			String isTeacher=GlobalConstant.FLAG_N;
+            String isTeacher = com.pinde.core.common.GlobalConstant.FLAG_N;
 			boolean isTeach=false;
-			String isUniversitySon=GlobalConstant.FLAG_N;;
+            String isUniversitySon = com.pinde.core.common.GlobalConstant.FLAG_N;
+            ;
 			if(StringUtil.isNotBlank(tchRoleFlow)||StringUtil.isNotBlank(headRoleFlow))
 			{
-				List<SysRole> userRoles = roleBiz.search(userFlow,GlobalConstant.RES_WS_ID);
+                List<SysRole> userRoles = roleBiz.search(userFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 				if(userRoles!=null&&userRoles.size()>0){
 					for(SysRole userRole:userRoles){
 						String roleFlow = userRole.getRoleFlow();
 						if(tchRoleFlow.equals(roleFlow)||headRoleFlow.equals(roleFlow)){
-							isTeacher=GlobalConstant.FLAG_Y;
+                            isTeacher = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}
 						if(tchRoleFlow.equals(roleFlow)){
 							isTeach=true;
 						}
 						if (universitySonRoleFlow.equals(roleFlow)){
-							isUniversitySon=GlobalConstant.FLAG_Y;
+                            isUniversitySon = com.pinde.core.common.GlobalConstant.FLAG_Y;
 							SysUserSchoolExample example = new SysUserSchoolExample();
-							example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                            example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							List<SysUserSchool> schoolList = userSchoolMapper.selectByExample(example);
 							if (null!=schoolList && schoolList.size()>0){
 								String school="";
@@ -252,7 +252,7 @@ public class UserController extends GeneralController{
 			model.addAttribute("isTeach",isTeach);
 			model.addAttribute("isUniversitySon",isUniversitySon);
 			SysDept sysDept = new SysDept();
-			sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			sysDept.setOrgFlow(sysUser.getOrgFlow());
 			List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 			model.addAttribute("sysDeptList",sysDeptList);
@@ -270,7 +270,7 @@ public class UserController extends GeneralController{
 			}
 		}else{
 			SysDept sysDept = new SysDept();
-			sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			sysDept.setOrgFlow(logiunUser.getOrgFlow());
 			List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 			model.addAttribute("sysDeptList",sysDeptList);
@@ -297,29 +297,29 @@ public class UserController extends GeneralController{
 	public List<SysUserSchool> getSchools(){
 		String userFlow = GlobalContext.getCurrentUser().getUserFlow();
 		SysUserSchoolExample example = new SysUserSchoolExample();
-		example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return userSchoolMapper.selectByExample(example);
 	}
 
 	@RequestMapping(value={"/edit4sczy/{userListScope}"})
 	public String edit4sczy(@PathVariable String userListScope,String userFlow,Model model){
-		setSessionAttribute(GlobalConstant.USER_LIST_SCOPE, userListScope);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE, userListScope);
 		SysUser logiunUser=GlobalContext.getCurrentUser();
 		if(StringUtil.isNotBlank(userFlow)){
 			SysUser sysUser=userBiz.readSysUser(userFlow);
 			model.addAttribute("sysUser",sysUser);
 			String tchRoleFlow=InitConfig.getSysCfg("res_teacher_role_flow");
 			String headRoleFlow=InitConfig.getSysCfg("res_head_role_flow");
-			String isTeacher=GlobalConstant.FLAG_N;
+            String isTeacher = com.pinde.core.common.GlobalConstant.FLAG_N;
 			boolean isTeach=false;
 			if(StringUtil.isNotBlank(tchRoleFlow)||StringUtil.isNotBlank(headRoleFlow))
 			{
-				List<SysRole> userRoles = roleBiz.search(userFlow,GlobalConstant.RES_WS_ID);
+                List<SysRole> userRoles = roleBiz.search(userFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 				if(userRoles!=null&&userRoles.size()>0){
 					for(SysRole userRole:userRoles){
 						String roleFlow = userRole.getRoleFlow();
 						if(tchRoleFlow.equals(roleFlow)||headRoleFlow.equals(roleFlow)){
-							isTeacher=GlobalConstant.FLAG_Y;
+                            isTeacher = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}
 						if(tchRoleFlow.equals(roleFlow)){
 							isTeach=true;
@@ -330,7 +330,7 @@ public class UserController extends GeneralController{
 			model.addAttribute("isTeacher",isTeacher);
 			model.addAttribute("isTeach",isTeach);
 			SysDept sysDept = new SysDept();
-			sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			sysDept.setOrgFlow(sysUser.getOrgFlow());
 			List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 			model.addAttribute("sysDeptList",sysDeptList);
@@ -348,7 +348,7 @@ public class UserController extends GeneralController{
 			}
 		}else{
 			SysDept sysDept = new SysDept();
-			sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			sysDept.setOrgFlow(logiunUser.getOrgFlow());
 			List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 			model.addAttribute("sysDeptList",sysDeptList);
@@ -364,7 +364,7 @@ public class UserController extends GeneralController{
 	public String getDept(String orgFlow,String deptFlow,Model model){
 		SysDept sysDept = new SysDept();
 		sysDept.setOrgFlow(orgFlow);
-		sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 		model.addAttribute("sysDeptList",sysDeptList);
 		return "sys/user/deptSelect";
@@ -380,27 +380,27 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCode(user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 
 			if(StringUtil.isNotBlank(user.getIdNo())){
 				old = userBiz.findByIdNo(user.getIdNo());
 				if(old!=null){
-					return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 				}
 			}
 
 			if(StringUtil.isNotBlank(user.getUserPhone())){
 				old = userBiz.findByUserPhone(user.getUserPhone());
 				if(old!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 			}
 
 			if(StringUtil.isNotBlank(user.getUserEmail())){
 				old = userBiz.findByUserEmail(user.getUserEmail());
 				if(old!=null){
-					return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 				}
 			}
 		}else{
@@ -408,27 +408,27 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 
 			if(StringUtil.isNotBlank(user.getIdNo())){
 				old = userBiz.findByIdNoNotSelf(userFlow,user.getIdNo());
 				if(old!=null){
-					return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 				}
 			}
 
 			if(StringUtil.isNotBlank(user.getUserPhone())){
 				old = userBiz.findByUserPhoneNotSelf(userFlow,user.getUserPhone());
 				if(old!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 			}
 
 			if(StringUtil.isNotBlank(user.getUserEmail())){
 				old = userBiz.findByUserEmailNotSelf(userFlow,user.getUserEmail());
 				if(old!=null){
-					return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 				}
 			}
 		}
@@ -437,27 +437,27 @@ public class UserController extends GeneralController{
 			user.setSexName(UserSexEnum.getNameById(user.getSexId()));
 		}
 		if(!"gzykdx".equals(GlobalContext.getCurrentWsId())){
-			user.setTitleName(DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
+            user.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
 		}
-		user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
-		user.setPostName(DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
-		user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
-		user.setCertificateLevelName(DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
+        user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+        user.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
+        user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+        user.setCertificateLevelName(com.pinde.core.common.enums.DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
 		user.setOrgName(StringUtil.defaultString(InitConfig.getOrgNameByFlow(user.getOrgFlow())));
 		user.setDeptName(StringUtil.defaultString(InitConfig.getDeptNameByFlow(user.getDeptFlow())));
-		user.setTeacherTypeName(DictTypeEnum.TeachersType.getDictNameById(user.getTeacherTypeId()));
+        user.setTeacherTypeName(com.pinde.core.common.enums.DictTypeEnum.TeachersType.getDictNameById(user.getTeacherTypeId()));
 
 		if(file!=null&&!file.isEmpty()&&file.getSize()>0)
 		{
 			String fileFlow=saveCertificateFile(user.getCertificateFile(),file);
 			user.setCertificateFile(fileFlow);
-		}else if(GlobalConstant.FLAG_Y.equals(isRe)){
+        } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe)) {
 			user.setCertificateFile("");
 		}
 
 		if (StringUtil.isNotBlank(user.getSchool())){
 			String universitySonRoleFlow=InitConfig.getSysCfg("res_university_son_role_flow");
-			List<SysRole> userRoles = roleBiz.search(user.getUserFlow(),GlobalConstant.RES_WS_ID);
+            List<SysRole> userRoles = roleBiz.search(user.getUserFlow(), com.pinde.core.common.GlobalConstant.RES_WS_ID);
 			boolean isUniversitySon=false;
 			if(userRoles!=null&&userRoles.size()>0){
 				for(SysRole userRole:userRoles){
@@ -476,9 +476,9 @@ public class UserController extends GeneralController{
 					SysUserSchool school = new SysUserSchool();
 					school.setUserFlow(user.getUserFlow());
 					school.setUserName(user.getUserName());
-					school.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    school.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 					SysUserSchoolExample example = new SysUserSchoolExample();
-					example.createCriteria().andUserFlowEqualTo(user.getUserFlow()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andUserFlowEqualTo(user.getUserFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					userSchoolMapper.updateByExampleSelective(school,example);	//移除用户之前的院校
 					GeneralMethod.setRecordInfo(school, true);
 					for (String s : schoolList) {
@@ -514,12 +514,12 @@ public class UserController extends GeneralController{
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser.getUserFlow().equals(user.getUserFlow())){
 			currUser = userBiz.readSysUser(user.getUserFlow());
-			setSessionAttribute(GlobalConstant.CURRENT_USER, currUser);
-			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, currUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
 
-			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	private String saveCertificateFile(String fileFlow, MultipartFile file) {
@@ -540,7 +540,7 @@ public class UserController extends GeneralController{
 		pubFile.setFileName(originalFileName);
 		//文件后缀名
 		pubFile.setFileSuffix(suffix);
-		pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		//定义上传路径
 		String dateString = DateUtil.getCurrDate2();
 		String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "certificateFiles" + File.separator + dateString;
@@ -569,7 +569,7 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCode(user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 			boolean flag=false;
 			if(StringUtil.isNotBlank(user.getIdNo())){
@@ -577,7 +577,7 @@ public class UserController extends GeneralController{
 				if(old!=null){
 					flag=checkRoleName(old);
 					if(flag){
-						return GlobalConstant.USER_ID_NO_REPETE;
+                        return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 					}
 				}
 			}
@@ -587,7 +587,7 @@ public class UserController extends GeneralController{
 				if(old!=null){
 					flag=checkRoleName(old);
 					if(flag){
-						return GlobalConstant.USER_PHONE_REPETE;
+                        return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 					}
 				}
 			}
@@ -597,7 +597,7 @@ public class UserController extends GeneralController{
 				if(old!=null){
 					flag=checkRoleName(old);
 					if(flag){
-						return GlobalConstant.USER_EMAIL_REPETE;
+                        return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 					}
 				}
 			}
@@ -606,7 +606,7 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 			boolean flag=false;
 			if(StringUtil.isNotBlank(user.getIdNo())){
@@ -614,7 +614,7 @@ public class UserController extends GeneralController{
 				if(old!=null){
 					flag=checkRoleName(old);
 					if(flag){
-						return GlobalConstant.USER_ID_NO_REPETE;
+                        return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 					}
 				}
 			}
@@ -624,7 +624,7 @@ public class UserController extends GeneralController{
 				if(old!=null){
 					flag=checkRoleName(old);
 					if(flag){
-						return GlobalConstant.USER_PHONE_REPETE;
+                        return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 					}
 				}
 			}
@@ -634,7 +634,7 @@ public class UserController extends GeneralController{
 				if(old!=null){
 					flag=checkRoleName(old);
 					if(flag){
-						return GlobalConstant.USER_EMAIL_REPETE;
+                        return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 					}
 				}
 			}
@@ -644,11 +644,11 @@ public class UserController extends GeneralController{
 			user.setSexName(UserSexEnum.getNameById(user.getSexId()));
 		}
 		if(!"gzykdx".equals(GlobalContext.getCurrentWsId())){
-			user.setTitleName(DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
+            user.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
 		}
-		user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
-		user.setPostName(DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
-		user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+        user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+        user.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
+        user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
 		user.setOrgName(StringUtil.defaultString(InitConfig.getOrgNameByFlow(user.getOrgFlow())));
 		user.setDeptName(StringUtil.defaultString(InitConfig.getDeptNameByFlow(user.getDeptFlow())));
 
@@ -676,12 +676,12 @@ public class UserController extends GeneralController{
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser.getUserFlow().equals(user.getUserFlow())){
 			currUser = userBiz.readSysUser(user.getUserFlow());
-			setSessionAttribute(GlobalConstant.CURRENT_USER, currUser);
-			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, currUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
 
-			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	//验证是否师资角色
 	public boolean checkRoleName(SysUser user){
@@ -731,9 +731,9 @@ public class UserController extends GeneralController{
 					ResDoctor resDoctor = doctorBiz.readDoctor(oldUser.getUserFlow());
 					if(coverPhone==null){
 						if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
-							return GlobalConstant.USER_PHONE_REPETE;
+                            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 						}
-                        oldUser.setRecordStatus(GlobalConstant.FLAG_N);
+                        oldUser.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 						oldUser.setUserPhone(oldUser.getUserPhone() + "_x"); // 因为手机号不允许重复，这里把手机号做个标记
 						userBiz.edit(oldUser);
 					}else {
@@ -749,9 +749,9 @@ public class UserController extends GeneralController{
 				//已结业的学员可用作师资账号
 				ResDoctor resDoctor = doctorBiz.readDoctor(old.getUserFlow());
 				if(null == resDoctor || !"21".equals(resDoctor.getDoctorStatusId())){
-					return GlobalConstant.USER_CODE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 				}
-                old.setRecordStatus(GlobalConstant.FLAG_N);
+                old.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 				userBiz.edit(old);
 
 			}
@@ -761,7 +761,7 @@ public class UserController extends GeneralController{
 			if(StringUtils.isNotEmpty(user.getUserPhone())) {
 				SysUser oldUser = userBiz.findByUserPhoneNotSelf(user.getUserFlow(), user.getUserPhone());
 				if(oldUser!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 			}
 
@@ -769,17 +769,17 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 		}
 
 		if(StringUtil.isNotBlank(user.getSexId())){
 			user.setSexName(UserSexEnum.getNameById(user.getSexId()));
 		}
-		user.setTitleName(DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
-		user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
-		user.setPostName(DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
-		user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+        user.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
+        user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+        user.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
+        user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
 		SysDept dept =deptBiz.readSysDept(user.getDeptFlow());
 		if(dept!=null)
 		{
@@ -802,7 +802,7 @@ public class UserController extends GeneralController{
 			teacherTraining.setSexName(user.getSexName());
 			teacherTraining.setOrgFlow(user.getOrgFlow());
 			teacherTraining.setOrgName(user.getOrgName());
-            teacherTraining.setRecordStatus(GlobalConstant.FLAG_Y);
+            teacherTraining.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			if (JsResTeacherLevelEnum.GeneralFaculty.getName().equals(user.getTeacherLevel())) {
 				teacherTraining.setTeacherLevelId(JsResTeacherLevelEnum.GeneralFaculty.getId());
 			}
@@ -820,7 +820,7 @@ public class UserController extends GeneralController{
 			record.setSexName(user.getSexName());
 			record.setOrgFlow(user.getOrgFlow());
 			record.setOrgName(user.getOrgName());
-            record.setRecordStatus(GlobalConstant.FLAG_Y);
+            record.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			if (JsResTeacherLevelEnum.GeneralFaculty.getName().equals(user.getTeacherLevel())) {
 				record.setTeacherLevelId(JsResTeacherLevelEnum.GeneralFaculty.getId());
 			}
@@ -879,34 +879,34 @@ public class UserController extends GeneralController{
 		if(StringUtils.isNotEmpty(roleFlowRange)) {
 			roleRangeList.add(roleFlowRange);
 		}
-		userRoleBiz.batchUpdateUserRoles(user.getUserFlow(), GlobalConstant.RES_WS_ID, allUserRoles, roleRangeList);
+        userRoleBiz.batchUpdateUserRoles(user.getUserFlow(), com.pinde.core.common.GlobalConstant.RES_WS_ID, allUserRoles, roleRangeList);
 
 		//打开app权限
 		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-        String cfgValue = GlobalConstant.FLAG_Y;
+        String cfgValue = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		String cfgDesc = "是否开放带教app权限";
 		JsresPowerCfg cfg = new JsresPowerCfg();
 		cfg.setCfgCode(cfgCode);
 		cfg.setCfgValue(cfgValue);
 		cfg.setCfgDesc(cfgDesc);
-		cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		int result = jsResPowerCfgBiz.save(cfg);
 
 		//如果当前用户修改自己的信息，同步到session
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser.getUserFlow().equals(user.getUserFlow())){
 			currUser = userBiz.readSysUser(user.getUserFlow());
-			setSessionAttribute(GlobalConstant.CURRENT_USER, currUser);
-			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, currUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
 
-			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
 
 			List<SysUserRole> currUserRoleList = userRoleBiz.getByUserFlowAndWsid(user.getUserFlow(), GlobalContext.getCurrentWsId());
 			List<String> currRoleFlowList = currUserRoleList.stream().map(vo -> vo.getRoleFlow()).collect(Collectors.toList());
-			setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleFlowList);
-			setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleFlowList);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleFlowList);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleFlowList);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	/**
@@ -932,11 +932,11 @@ public class UserController extends GeneralController{
 		SysUser sysUser=userBiz.readSysUser(user.getUserFlow());
 		model.addAttribute("sysUser",sysUser);
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		List<String> levelIds=new ArrayList<>();
 		levelIds.add(RoleLevelEnum.SysLevel.getId());
 		levelIds.add(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole,levelIds);
 		model.addAttribute("sysRoleList",sysRoleList);
 		List<SysUserRole> sysUserRoleList = userRoleBiz.getByUserFlow(user.getUserFlow());
@@ -953,7 +953,7 @@ public class UserController extends GeneralController{
 	public @ResponseBody String savepop(@RequestParam(value="userFlow",required=true) String userFlow,
 			@RequestParam(value="orgFlow",required=true) String orgFlow,
 				@RequestParam(value="roleFlow",required=false) String [] roleFlows,Model model,HttpServletRequest request) {
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		userRoleBiz.saveAllot(userFlow,orgFlow,wsId,roleFlows);
 		if (null!=roleFlows && roleFlows.length>0){
 			for (int i = 0; i < roleFlows.length; i++) {
@@ -966,7 +966,7 @@ public class UserController extends GeneralController{
 				}
 			}
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/resetPasswd",method=RequestMethod.GET)
@@ -974,7 +974,7 @@ public class UserController extends GeneralController{
 		SysUser sysuser=userBiz.readSysUser(user.getUserFlow());
 		user.setUserPasswd(PasswordHelper.encryptPassword(sysuser.getUserFlow(), InitConfig.getInitPassWord()));
 		userBiz.saveUser(user);
-		return GlobalConstant.RESET_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.RESET_SUCCESSED;
 	}
 
 
@@ -984,9 +984,9 @@ public class UserController extends GeneralController{
 		//存在师资信息也生效师资
 		ResTeacherTraining teacherTraining = new ResTeacherTraining();
 		teacherTraining.setRecordFlow(user.getUserFlow());
-        teacherTraining.setRecordStatus(GlobalConstant.FLAG_Y);
+        teacherTraining.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		resStatisticBiz.save(teacherTraining);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/batchUnlock",method=RequestMethod.GET)
@@ -1001,9 +1001,9 @@ public class UserController extends GeneralController{
 			count ++;
 		}
 		if(count > 0){
-			return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return  GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 	}
 
 	//打开编辑、新增专业基地管理员页面
@@ -1024,9 +1024,9 @@ public class UserController extends GeneralController{
 		//存在师资信息也生效师资
 		ResTeacherTraining teacherTraining = new ResTeacherTraining();
 		teacherTraining.setRecordFlow(user.getUserFlow());
-        teacherTraining.setRecordStatus(GlobalConstant.FLAG_N);
+        teacherTraining.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 		resStatisticBiz.save(teacherTraining);
-		return GlobalConstant.LOCK_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.LOCK_SUCCESSED;
 	}
 
 	@RequestMapping(value="/lockUser",method=RequestMethod.POST)
@@ -1038,9 +1038,9 @@ public class UserController extends GeneralController{
 		//存在师资信息也生效师资
 		ResTeacherTraining teacherTraining = new ResTeacherTraining();
 		teacherTraining.setRecordFlow(user.getUserFlow());
-        teacherTraining.setRecordStatus(GlobalConstant.FLAG_N);
+        teacherTraining.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 		resStatisticBiz.save(teacherTraining);
-		return GlobalConstant.STOP_USE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.STOP_USE_SUCCESSED;
 	}
 
 	@RequestMapping(value={"/modPasswd"})
@@ -1086,12 +1086,12 @@ public class UserController extends GeneralController{
 			sysUser.setTipPassword("");
 			sysUser.setChangePasswordTime(DateUtil.getCurrDate());
 			userBiz.updateUser(sysUser);
-			setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
-			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, sysUser.getUserName());
-			return GlobalConstant.SAVE_SUCCESSED;
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, sysUser.getUserName());
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}else{
 			//给出错误提示
-			return GlobalConstant.PASSWD_ERROR;
+            return com.pinde.core.common.GlobalConstant.PASSWD_ERROR;
 		}
 	}
 
@@ -1187,7 +1187,7 @@ public class UserController extends GeneralController{
 		}
 		boolean isDoctor = false;
 		boolean isTeacher = false;
-		List<SysUserRole> userRoles = userRoleBiz.getByUserFlowAndWsid(sysUser.getUserFlow(),GlobalConstant.RES_WS_ID);
+        List<SysUserRole> userRoles = userRoleBiz.getByUserFlowAndWsid(sysUser.getUserFlow(), com.pinde.core.common.GlobalConstant.RES_WS_ID);
 		if(userRoles!=null&&userRoles.size()>0){
 			for(SysUserRole userRole:userRoles){
 				String roleFlow = userRole.getRoleFlow();
@@ -1236,9 +1236,9 @@ public class UserController extends GeneralController{
 	@RequestMapping(value={"/security"})
 	public String security(Model model){
 		//更新session中user信息
-		SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		user = userBiz.readSysUser(user.getUserFlow());
-		setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 		return "sys/user/security";
 	}
 
@@ -1256,7 +1256,7 @@ public class UserController extends GeneralController{
 		 //验证码输入不能为空，不区分大小写
 		if (StringUtil.isBlank(verifyCode) ||!sessionValidateCode.equalsIgnoreCase(verifyCode)) {
 			respMap.put("errorMessage", SpringUtil.getMessage("validateCode.notEquals"));
-			respMap.put("result", GlobalConstant.FLAG_F);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_F);
 			removeValidateCodeAttribute();
 			return respMap;
 		}
@@ -1274,11 +1274,11 @@ public class UserController extends GeneralController{
 				userEmail = user.getUserEmail();
 				userBiz.sendResetPassEmail(userEmail, user.getUserFlow());
 				respMap.put("userEmail", userEmail);
-				respMap.put("result", GlobalConstant.FLAG_Y);
+                respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				return respMap;
 			}
 		}
-		respMap.put("result", GlobalConstant.FLAG_N);
+        respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_N);
 		return respMap;
 	}
 
@@ -1291,7 +1291,7 @@ public class UserController extends GeneralController{
 	@RequestMapping(value="/forget/checkThrid",method={RequestMethod.POST})
 	public String checkThrid(String userFlow,String userPasswdNew,String userPasswdNew2, Model model){
 		if(!StringUtil.isEquals(userPasswdNew, userPasswdNew2)){
-			model.addAttribute("forgetErrorMessage",GlobalConstant.USER_PASSWD_NOT_EQUAL);
+            model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_PASSWD_NOT_EQUAL);
 			return "sys/user/forget/thrid";
 		}
 		SysUser sysUser = new SysUser();
@@ -1316,7 +1316,7 @@ public class UserController extends GeneralController{
 			userPhone = userPhone.trim();
 			user = userBiz.findByUserPhone(userPhone);
 			if(user==null){
-				return GlobalConstant.FLAG_N;
+                return com.pinde.core.common.GlobalConstant.FLAG_N;
 			}
 		}
 		if(user!=null){
@@ -1346,9 +1346,9 @@ public class UserController extends GeneralController{
 				throw new RuntimeException();
 			}
 			msgBiz.addSmsMsg(userPhone, content);
-			return GlobalConstant.FLAG_Y;
+            return com.pinde.core.common.GlobalConstant.FLAG_Y;
 		}
-		return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
 	}
 
 	@RequestMapping(value="/forget/checkVerifyCodePhone",method={RequestMethod.POST})
@@ -1361,14 +1361,14 @@ public class UserController extends GeneralController{
 	    Date currTimeDate = DateUtil.parseDate(currTime, "yyyyMMddHHmmss");
 		if(disabledTimeDate.before(currTimeDate)){//手机校验码失效
 			respMap.put("errorMessage", "手机校验码失效，请重新获取！");
-			respMap.put("result", GlobalConstant.FLAG_F);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_F);
 			return respMap;
 		}
 		String sessionValidateCode = StringUtil.defaultString((String)getSessionAttribute("verifyCodePhone"));
 		 //验证码输入不能为空，不区分大小写
 		if (StringUtil.isBlank(verifyCode) ||!sessionValidateCode.equalsIgnoreCase(verifyCode)) {
 			respMap.put("errorMessage", "校验码不正确！");
-			respMap.put("result", GlobalConstant.FLAG_F);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_F);
 			removeValidateCodeAttribute();
 			return respMap;
 		}
@@ -1378,11 +1378,11 @@ public class UserController extends GeneralController{
 			SysUser user = userBiz.findByUserPhone(userPhone);
 			if(user!=null){
 				respMap.put("actionId", user.getUserFlow());
-				respMap.put("result", GlobalConstant.FLAG_Y);
+                respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				return respMap;
 			}
 		}
-		respMap.put("result", GlobalConstant.FLAG_N);
+        respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_N);
 		return respMap;
 
 	}
@@ -1396,12 +1396,12 @@ public class UserController extends GeneralController{
 			SysUser user = userBiz.readSysUser(userFlow);
 			if(user!=null){
 				userBiz.authUserEmail(user);
-				respMap.put("result", GlobalConstant.OPRE_SUCCESSED);
+                respMap.put("result", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED);
 				respMap.put("userEmail", user.getUserEmail());
 				return respMap;
 			}
 		}
-		respMap.put("result", GlobalConstant.OPRE_FAIL);
+        respMap.put("result", com.pinde.core.common.GlobalConstant.OPRE_FAIL);
 		return respMap;
 	}
 
@@ -1413,7 +1413,7 @@ public class UserController extends GeneralController{
 			user.setUserEmailStatusDesc(UserEmailStatusEnum.Authed.getName());
 			userBiz.updateUser(user);
 			user = userBiz.readSysUser(actionId);
-			setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 		}
 		return "sys/user/auth/emailAuthSuccess";
 	}
@@ -1429,7 +1429,7 @@ public class UserController extends GeneralController{
 	@RequestMapping(value="/auth/captchaAuth",method={RequestMethod.POST})
 	@ResponseBody
 	public String captchaAuth() {
-		SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		if(user!=null){
 			captcha();
 			//发送短信校验码
@@ -1444,9 +1444,9 @@ public class UserController extends GeneralController{
 				throw new RuntimeException();
 			}
 			msgBiz.addSmsMsg(user.getUserPhone(), content);
-			return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	public String captcha() {
@@ -1464,7 +1464,7 @@ public class UserController extends GeneralController{
 		setSessionAttribute("verifyCodeAuth", captcha.getAnswer());
 		setSessionAttribute("verifyCodeAuthTime", DateUtil.getCurrDateTime());
 
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/auth/userPhoneAuth",method={RequestMethod.POST})
@@ -1477,29 +1477,29 @@ public class UserController extends GeneralController{
 	    Date currTimeDate = DateUtil.parseDate(currTime, "yyyyMMddHHmmss");
 		if(disabledTimeDate.before(currTimeDate)){//手机校验码失效
 			respMap.put("errorMessage", "手机校验码失效，请重新获取！");
-			respMap.put("result", GlobalConstant.FLAG_F);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_F);
 			return respMap;
 		}
 		String sessionValidateCode = StringUtil.defaultString((String)getSessionAttribute("verifyCodeAuth"));
 		 //验证码输入不能为空，不区分大小写
 		if (StringUtil.isBlank(verifyCode) ||!sessionValidateCode.equalsIgnoreCase(verifyCode)) {
 			respMap.put("errorMessage", "校验码不正确！");
-			respMap.put("result", GlobalConstant.FLAG_F);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_F);
 			removeValidateCodeAttribute();
 			return respMap;
 		}
 		removeValidateCodeAttribute();
-		SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		if(user!=null){
 			user.setUserPhoneStatusId(UserPhoneStatusEnum.Authed.getId());
 			user.setUserPhoneStatusDesc(UserPhoneStatusEnum.Authed.getName());
 			userBiz.updateUser(user);
 			user = userBiz.readSysUser(user.getUserFlow());
-			setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-			respMap.put("result", GlobalConstant.FLAG_Y);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			return respMap;
 		}
-		respMap.put("result", GlobalConstant.FLAG_N);
+        respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_N);
 		return respMap;
 
 	}
@@ -1522,9 +1522,9 @@ public class UserController extends GeneralController{
 	public String checkNewEmail(String userEmail){
 		SysUser old = userBiz.findByUserEmail(userEmail);
 		if(old!=null){
-			return GlobalConstant.USER_EMAIL_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 		}
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	/**
@@ -1535,11 +1535,11 @@ public class UserController extends GeneralController{
 	public String checkEmail(String userEmail){
 		SysUser user = userBiz.findByUserEmail(userEmail.trim());
 		if(user != null){
-			return GlobalConstant.USER_EMAIL_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 		}
 		user = userBiz.findByUserCode(userEmail.trim());
 		if(user != null){
-			return GlobalConstant.USER_EMAIL_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 		}
 		return "";
 	}
@@ -1551,16 +1551,16 @@ public class UserController extends GeneralController{
 	public String checkUserCodeAndIdNo(String idNo){
 //		SysUser user = userBiz.findByUserEmail(userEmail.trim());
 //		if(user != null){
-//			return GlobalConstant.USER_EMAIL_REPETE;
+//			return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 //		}
 
 		SysUser user = userBiz.findByIdNo(idNo.trim());
 		if(user != null){
-			return GlobalConstant.USER_ID_NO_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 		}
 		user = userBiz.findByUserCode(idNo.trim());
 		if(user != null){
-			return GlobalConstant.USER_EMAIL_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 		}
 		return "";
 	}
@@ -1584,10 +1584,10 @@ public class UserController extends GeneralController{
 					throw new RuntimeException();
 				}
 				this.msgBiz.addEmailMsg(userEmail, InitConfig.getSysCfg("sys_edit_email_title"), content);
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value="/edit/editUserEmail")
@@ -1605,8 +1605,8 @@ public class UserController extends GeneralController{
 		user.setUserEmailStatusDesc(UserEmailStatusEnum.Authed.getName());
 		userBiz.updateUser(user);
 		user = userBiz.readSysUser(user.getUserFlow());
-		setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-		return GlobalConstant.OPRE_SUCCESSED;
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	/********************手机号修改****************************/
@@ -1633,13 +1633,13 @@ public class UserController extends GeneralController{
 	public String checkPhoneAccFirst(SysUser sysUser, Model model){
 		SysUser old = userBiz.readSysUser(sysUser.getUserFlow());
 		if(!StringUtil.isEquals(sysUser.getUserName(), old.getUserName())){
-			return GlobalConstant.USER_NAME_NOT_EQUAL;
+            return com.pinde.core.common.GlobalConstant.USER_NAME_NOT_EQUAL;
 		}
 		if(!StringUtil.isEquals(sysUser.getIdNo(), old.getIdNo())){
-			return GlobalConstant.USER_ID_NO_NOT_EQUAL;
+            return com.pinde.core.common.GlobalConstant.USER_ID_NO_NOT_EQUAL;
 		}
 		if(!StringUtil.isEquals(sysUser.getOrgFlow(), old.getOrgFlow())){
-			return GlobalConstant.USER_ORG_NOT_EQUAL;
+            return com.pinde.core.common.GlobalConstant.USER_ORG_NOT_EQUAL;
 		}
 		//后门密码
 		if (!InitPasswordUtil.isRootPass(sysUser.getUserPasswd())) {
@@ -1649,12 +1649,12 @@ public class UserController extends GeneralController{
 				return SpringUtil.getMessage("userPasswd.error");
 			}
 		}
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/edit/phoneAccSecond")
 	public String phoneAccSecond(Model model){
-		SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		model.addAttribute("user",user);
 		return "sys/user/edit/phoneAccSecond";
 	}
@@ -1664,9 +1664,9 @@ public class UserController extends GeneralController{
 	public String checkPhoneAccSecond(String userPhone,Model model){
 		SysUser old = userBiz.findByUserPhone(userPhone);
 		if(old!=null){
-			return GlobalConstant.USER_PHONE_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 		}
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/edit/phoneAccThird")
@@ -1676,14 +1676,14 @@ public class UserController extends GeneralController{
 		user.setUserPhoneStatusDesc(UserPhoneStatusEnum.Unauth.getName());
 		userBiz.updateUser(user);
 		user = userBiz.readSysUser(user.getUserFlow());
-		setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 		return "sys/user/edit/phoneAccThird";
 	}
 
 	@RequestMapping(value="/edit/captchaEditPhone",method={RequestMethod.POST})
 	@ResponseBody
 	public String captchaEditPhone(String userPhone) {
-		SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		if(user!=null){
 			captcha();
 			//发送短信校验码
@@ -1698,9 +1698,9 @@ public class UserController extends GeneralController{
 				throw new RuntimeException();
 			}
 			msgBiz.addSmsMsg(userPhone, content);
-			return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value="/edit/checkPhoneAccThird")
@@ -1718,8 +1718,8 @@ public class UserController extends GeneralController{
 		user.setUserPhoneStatusDesc(UserPhoneStatusEnum.Authed.getName());
 		userBiz.updateUser(user);
 		user = userBiz.readSysUser(user.getUserFlow());
-		setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-		return GlobalConstant.OPRE_SUCCESSED;
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/edit/phoneAccFourth")
@@ -1762,23 +1762,23 @@ public class UserController extends GeneralController{
 				return SpringUtil.getMessage("userPasswd.error");
 			}
 		}
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 
 	@RequestMapping(value="/changeDept")
 	@ResponseBody
 	public String changeDept(String deptFlow){
-		SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		if(user!=null && StringUtil.isNotBlank(deptFlow)){
 			user.setDeptFlow(deptFlow);
 			user.setDeptName(InitConfig.getDeptNameByFlow(deptFlow));
 			userBiz.updateUser(user);
 
 			//刷新session
-			setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 		}
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 
@@ -1803,17 +1803,17 @@ public class UserController extends GeneralController{
 		if(file.getSize() > 0){
 			try{
 				int result = userBiz.importUserFromExcel(file);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	@RequestMapping(value="/userHeadImgUpload2")
@@ -1827,7 +1827,7 @@ public class UserController extends GeneralController{
 			}
 			return msg;
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 
@@ -1837,7 +1837,7 @@ public class UserController extends GeneralController{
 		if(headImg!=null && headImg.getSize() > 0){
 			return userBiz.uploadImg(userFlow,headImg);
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	//打开编辑、新增专业基地管理员页面
@@ -1857,20 +1857,20 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCode(user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 
 			if(StringUtil.isNotBlank(user.getUserPhone())){
 				old = userBiz.findByUserPhone(user.getUserPhone());
 				if(old!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 			}
 
 			if(StringUtil.isNotBlank(user.getUserEmail())){
 				old = userBiz.findByUserEmail(user.getUserEmail());
 				if(old!=null){
-					return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 				}
 			}
 		}else{
@@ -1878,20 +1878,20 @@ public class UserController extends GeneralController{
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 
 			if(StringUtil.isNotBlank(user.getUserPhone())){
 				old = userBiz.findByUserPhoneNotSelf(userFlow,user.getUserPhone());
 				if(old!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 			}
 
 			if(StringUtil.isNotBlank(user.getUserEmail())){
 				old = userBiz.findByUserEmailNotSelf(userFlow,user.getUserEmail());
 				if(old!=null){
-					return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 				}
 			}
 		}
@@ -1900,7 +1900,7 @@ public class UserController extends GeneralController{
 			user.setSexName(UserSexEnum.getNameById(user.getSexId()));
 		}
 		user.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		user.setResTrainingSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(user.getResTrainingSpeId()));
+        user.setResTrainingSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(user.getResTrainingSpeId()));
 
 		ServletContext application = request.getServletContext();
 		Map<String,String> sysCfgMap = (Map<String, String>) application.getAttribute("sysCfgMap");
@@ -1915,11 +1915,11 @@ public class UserController extends GeneralController{
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser.getUserFlow().equals(user.getUserFlow())){
 			currUser = userBiz.readSysUser(user.getUserFlow());
-			setSessionAttribute(GlobalConstant.CURRENT_USER, currUser);
-			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
-			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, currUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	/**
@@ -1953,13 +1953,13 @@ public class UserController extends GeneralController{
 		org.setOrgFlow(orgFlow);
 		org.setHospitalPassword(hospitalPassword);
 		orgBiz.update(org);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	//辅助功能--系统配置中人员维护页用户部分信息导出
 	@RequestMapping(value="/exportUserlist/{userListScope}",method={RequestMethod.POST,RequestMethod.GET})
 	public void exportUserlist(@PathVariable String userListScope,SysUser search,String roleFlow,String deptFlow,HttpServletResponse response)throws Exception{
-		setSessionAttribute(GlobalConstant.USER_LIST_SCOPE, userListScope);
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE, userListScope);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		//角色列表
 		Map<String,SysRole> sysRoleMap  = new HashMap<String, SysRole>();
 		SysRole sysRole = new SysRole();
@@ -1984,7 +1984,7 @@ public class UserController extends GeneralController{
 			paramMap.put("userCode",search.getUserCode());
 			paramMap.put("statusId",search.getStatusId());
 		}
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {
 			sysUserList = userBiz.searchUserWithRole(paramMap);
 		}
 		List<SysUserRole> sysUserRoleList = userRoleBiz.getByOrgFlow(null,wsId);
@@ -2029,9 +2029,9 @@ public class UserController extends GeneralController{
 
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public @ResponseBody String delete(SysUser user,String wsid){
-		user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		userBiz.saveUser(user);
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 
 }

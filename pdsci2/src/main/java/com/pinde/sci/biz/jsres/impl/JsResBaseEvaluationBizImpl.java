@@ -37,7 +37,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Override
     public List<JsresBaseEvaluation> searchBaseEvaluationList(JsresBaseEvaluation jsresBaseEvaluation) {
         JsresBaseEvaluationExample example=new JsresBaseEvaluationExample();
-        JsresBaseEvaluationExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (jsresBaseEvaluation != null)
         {
             if(StringUtil.isNotBlank(jsresBaseEvaluation.getOrgFlow())){
@@ -54,7 +54,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Override
     public List<JsresBaseEvaluationFile> searchBaseEvaluationFileList(String evaluationFlow) {
         JsresBaseEvaluationFileExample fileExample = new JsresBaseEvaluationFileExample();
-        JsresBaseEvaluationFileExample.Criteria criteria = fileExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationFileExample.Criteria criteria = fileExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(evaluationFlow)){
             criteria.andEvaluationRecordFlowEqualTo(evaluationFlow);
         }
@@ -64,7 +64,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Override
     public List<JsresBaseEvaluationScore> searchBaseEvaluationScoreList(String evaluationFlow) {
         JsresBaseEvaluationScoreExample scoreExample = new JsresBaseEvaluationScoreExample();
-        JsresBaseEvaluationScoreExample.Criteria criteria = scoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationScoreExample.Criteria criteria = scoreExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(evaluationFlow)){
             criteria.andEvaluationRecordFlowEqualTo(evaluationFlow);
         }
@@ -76,7 +76,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
         JsresBaseEvaluationScore jsresBaseEvaluationScore = new JsresBaseEvaluationScore();
         jsresBaseEvaluationScore.setSpeScore(speScore);
         JsresBaseEvaluationScoreExample jsresBaseEvaluationScoreExample=new JsresBaseEvaluationScoreExample();
-        JsresBaseEvaluationScoreExample.Criteria criteria = jsresBaseEvaluationScoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationScoreExample.Criteria criteria = jsresBaseEvaluationScoreExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andEvaluationRecordFlowEqualTo(evaluationFlow);
         criteria.andItemIdEqualTo(itemId);
         return jsresBaseEvaluationScoreMapper.updateByExampleSelective(jsresBaseEvaluationScore,jsresBaseEvaluationScoreExample);
@@ -86,7 +86,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Override
     public JsresBaseEvaluationScore searchBaseEvaluationScoreByItemId(JsresBaseEvaluationScore jsresBaseEvaluationScore) {
         JsresBaseEvaluationScoreExample scoreExample = new JsresBaseEvaluationScoreExample();
-        JsresBaseEvaluationScoreExample.Criteria criteria = scoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationScoreExample.Criteria criteria = scoreExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(jsresBaseEvaluationScore.getItemId())){
             criteria.andItemIdEqualTo(jsresBaseEvaluationScore.getItemId());
         }
@@ -116,7 +116,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Override
     public List<JsresBaseEvaluationScore> searchBaseEvaluationScore(JsresBaseEvaluationScore jsresBaseEvaluationScore) {
         JsresBaseEvaluationScoreExample scoreExample = new JsresBaseEvaluationScoreExample();
-        JsresBaseEvaluationScoreExample.Criteria criteria = scoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationScoreExample.Criteria criteria = scoreExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(jsresBaseEvaluationScore.getEvaluationRecordFlow())){
             criteria.andEvaluationRecordFlowEqualTo(jsresBaseEvaluationScore.getEvaluationRecordFlow());
         }
@@ -147,14 +147,14 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
         }
 //        long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 //        if(file.getSize() > limitSize*1024*1024){
-//            return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M！" ;
+//            return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M！" ;
 //        }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName, String orgFlow,String planYear,String itemId ){
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(file.getSize() > 0){
             //创建目录
             String dateString = DateUtil.getCurrDate2();
@@ -222,7 +222,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Override
     public JsresBaseEvaluationFile searchBaseEvaluationFileByRecordFlow(String recordFlow) {
         JsresBaseEvaluationFileExample fileExample = new JsresBaseEvaluationFileExample();
-        JsresBaseEvaluationFileExample.Criteria criteria = fileExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresBaseEvaluationFileExample.Criteria criteria = fileExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(recordFlow)){
             criteria.andRecordFlowEqualTo(recordFlow);
         }

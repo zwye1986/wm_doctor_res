@@ -22,7 +22,7 @@ public class IjsresLoginInfoBizImpl implements IjsresLoginInfoBiz{
 	public List<JsresLoginInfo> search(JsresLoginInfo jsresLoginInfo) {
 		JsresLoginInfoExample example = new JsresLoginInfoExample();
 		JsresLoginInfoExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(jsresLoginInfo.getLoginDomain())){
 			criteria.andLoginDomainEqualTo(jsresLoginInfo.getLoginDomain());
 		}

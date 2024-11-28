@@ -14,8 +14,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.ResDoctorStatusEnum;
-import com.pinde.sci.enums.sch.SchStatusEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.sci.form.sch.DoctorSearchForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
@@ -80,7 +79,7 @@ public class ResPlatformController extends GeneralController {
 	 * */
 	@RequestMapping(value="/rotation",method=RequestMethod.GET)
 	public String rotation(Model model){
-		model.addAttribute("roleFlag",GlobalConstant.USER_LIST_GLOBAL);
+        model.addAttribute("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
 		
 		return "redirect:/sch/template/list";
 	}
@@ -165,7 +164,7 @@ public class ResPlatformController extends GeneralController {
 				doctor.setDoctorCategoryId(RecDocCategoryEnum.Doctor.getId());
 			}
 			if("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
-				model.addAttribute("cundang",GlobalConstant.FLAG_N);
+                model.addAttribute("cundang", com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 			model.addAttribute("doctorCategoryId",doctor.getDoctorCategoryId());
 			SysUser user=GlobalContext.getCurrentUser();
@@ -174,8 +173,8 @@ public class ResPlatformController extends GeneralController {
 			Map<String,String> doctorTypeSelectMap = new HashMap<>();
 			List<String> doctorTypeIdList = doctor.getDoctorTypeIdList();
 			SysDict sysDict = new SysDict();
-			sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-			sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+            sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 			if (doctorTypeIdList == null || doctorTypeIdList.size() < 1) {
 
@@ -198,9 +197,9 @@ public class ResPlatformController extends GeneralController {
 
 			}
 			model.addAttribute("doctorTypeSelectMap",doctorTypeSelectMap);
-			doctor.setLinkXjFlag("nfykdx".equals(InitConfig.getSysCfg("xjgl_customer"))?GlobalConstant.FLAG_Y:null);
+            doctor.setLinkXjFlag("nfykdx".equals(InitConfig.getSysCfg("xjgl_customer")) ? com.pinde.core.common.GlobalConstant.FLAG_Y : null);
 			PageHelper.startPage(currentPage,getPageSize(request));
-			doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<ResDoctorExt> doctorList = doctorBiz.searchDocUser(doctor,medicineTypeId);
 			model.addAttribute("doctorList",doctorList);
 		}
@@ -218,17 +217,17 @@ public class ResPlatformController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = doctorBiz.importStudentMainExcel(file,orgFlow);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	/**
@@ -239,7 +238,7 @@ public class ResPlatformController extends GeneralController {
 	 */
 	@RequestMapping(value = "/exportDoc")
 	public void exportDoc(ResDoctorExt doctor, HttpServletResponse response)throws Exception{
-		doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SysUser user=GlobalContext.getCurrentUser();
 		String medicineTypeId=user.getMedicineTypeId();
 		List<ResDoctorExt> doctorList = doctorBiz.searchDocUser(doctor, medicineTypeId);
@@ -259,7 +258,7 @@ public class ResPlatformController extends GeneralController {
 	 */
 	@RequestMapping(value = "/exportDoc2")
 	public void exportDoc2(ResDoctorExt doctor, HttpServletResponse response)throws Exception{
-		doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SysUser user=GlobalContext.getCurrentUser();
 		String medicineTypeId=user.getMedicineTypeId();
 		List<ResDoctorExt> doctorList = doctorBiz.searchDocUser(doctor, medicineTypeId);
@@ -274,13 +273,13 @@ public class ResPlatformController extends GeneralController {
 		if(doctor!=null){
 			if(StringUtil.isNotBlank(doctor.getDoctorCategoryId())){
 				Map<String,Object> countMap = new HashMap<String, Object>();
-				List<Map<String,Object>> planCountMap = doctorBiz.searchTrainPlanCount(doctor,GlobalConstant.FLAG_Y);
+                List<Map<String, Object>> planCountMap = doctorBiz.searchTrainPlanCount(doctor, com.pinde.core.common.GlobalConstant.FLAG_Y);
 				if(planCountMap!=null && planCountMap.size()>0){
 					for(Map<String,Object> map : planCountMap){
 						countMap.put(map.get("key")+"plan",map.get("value"));
 					}
 				}
-				List<Map<String,Object>> notPlanCountMap = doctorBiz.searchTrainPlanCount(doctor,GlobalConstant.FLAG_N);
+                List<Map<String, Object>> notPlanCountMap = doctorBiz.searchTrainPlanCount(doctor, com.pinde.core.common.GlobalConstant.FLAG_N);
 				if(notPlanCountMap!=null && notPlanCountMap.size()>0){
 					for(Map<String,Object> map : notPlanCountMap){
 						countMap.put(map.get("key")+"notPlan",map.get("value"));
@@ -332,11 +331,11 @@ public class ResPlatformController extends GeneralController {
 	@ResponseBody
 	public String allotRotation(ResDoctor doctor,Model model){
 		if(doctor!=null){
-			if(doctorBiz.modifyResDoctorRotation(doctor)!=GlobalConstant.ZERO_LINE){
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+            if (doctorBiz.modifyResDoctorRotation(doctor) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 	
 	/**
@@ -351,15 +350,15 @@ public class ResPlatformController extends GeneralController {
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<InxInfo> infos = null;
 		//searchInfoByOrgBeforeDate扩展
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
-			infos = this.noticeBiz.searchInfoByOrg(null,GlobalConstant.RES_NOTICE_TYPE_ID,GlobalConstant.RES_NOTICE_SYS_ID);
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+            infos = this.noticeBiz.searchInfoByOrg(null, com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_ID, com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID);
 		}else{
 			SysUser user = GlobalContext.getCurrentUser();
 			String userOrgFlow= user.getOrgFlow();
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("zy_hospital_zcfg"))){
-				infos = this.inxInfoExtMapper.searchInfoByOrg2(userOrgFlow,GlobalConstant.RES_NOTICE_SYS_ID);
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("zy_hospital_zcfg"))) {
+                infos = this.inxInfoExtMapper.searchInfoByOrg2(userOrgFlow, com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID);
 			}else {
-				infos = this.noticeBiz.searchInfoByOrg(userOrgFlow,GlobalConstant.RES_NOTICE_TYPE_ID,GlobalConstant.RES_NOTICE_SYS_ID);
+                infos = this.noticeBiz.searchInfoByOrg(userOrgFlow, com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_ID, com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID);
 			}
 		}
 		
@@ -370,16 +369,16 @@ public class ResPlatformController extends GeneralController {
 	@ResponseBody
 	@RequestMapping("/saveNotice/{roleFlag}")
 	public String saveNotice(@PathVariable String roleFlag,InxInfo info,String infoRoleFlows,String sessionNumber){
-		if(!GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			SysUser user = GlobalContext.getCurrentUser();
 			String userOrgFlow= user.getOrgFlow();
 			String userOrgName=user.getOrgName();
 			info.setOrgFlow(userOrgFlow);
 			info.setOrgName(userOrgName);
 		}
-		info.setRoleFlow(GlobalConstant.RES_NOTICE_SYS_ID);
+        info.setRoleFlow(com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID);
 		noticeBiz.editInfo(info,infoRoleFlows,sessionNumber);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping("/findNoticeByFlow")
 	@ResponseBody
@@ -405,7 +404,7 @@ public class ResPlatformController extends GeneralController {
 	@RequestMapping("/delNotice")
 	public String delNotice(String infoFlow){
 		this.noticeBiz.delNotice(infoFlow);
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 	
 	/**
@@ -413,7 +412,7 @@ public class ResPlatformController extends GeneralController {
 	 */
 	@RequestMapping(value={"/editDocSimple"},method={RequestMethod.GET})
 	public String editDocSimple(String doctorFlow,Model model){
-		model.addAttribute("roleFlag",GlobalConstant.USER_LIST_GLOBAL);
+        model.addAttribute("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
 		model.addAttribute("doctorFlow",doctorFlow);
 		
 		return "redirect:/res/manager/editDocSimple";
@@ -423,14 +422,14 @@ public class ResPlatformController extends GeneralController {
     @ResponseBody
     public List<SysOrg> searchSysOrg(){
 		SysOrg org = new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgList = orgBiz.searchOrderBy(org);
    		return orgList;
    	}
 	@RequestMapping(value={"/doctorStatistics"},method={RequestMethod.GET,RequestMethod.POST})
 	public String doctorStatistics(String orgName,String sessionNumber,String speId,Model model){
 		SysOrg org = new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		org.setOrgName(orgName);
 		List<SysOrg> orgList = orgBiz.searchOrderBy(org);
 		if(orgList!=null && orgList.size()>0){
@@ -459,7 +458,7 @@ public class ResPlatformController extends GeneralController {
 	@RequestMapping(value={"/baseStatistics"},method={RequestMethod.GET,RequestMethod.POST})
 	public String baseStatistics(String orgName,String sessionNumber,String speId,Model model){
 		SysOrg org = new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		org.setOrgName(orgName);
 		List<SysOrg> orgList = orgBiz.searchOrderBy(org);
 		if(orgList!=null && orgList.size()>0){
@@ -591,7 +590,7 @@ public class ResPlatformController extends GeneralController {
 		model.addAttribute("doctorCategoryId",resDoctorExt.getDoctorCategoryId());
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<ResDoctorExt> resDocExtList=null;
-		if(! GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			SysUser user=GlobalContext.getCurrentUser();
 			resDoctorExt.setOrgFlow(user.getOrgFlow());
 			resDocExtList=doctorBiz.searchDocUser(resDoctorExt, "");
@@ -680,15 +679,15 @@ public class ResPlatformController extends GeneralController {
 			for(String jointFlow : delJointFlows){
 				ResJointOrg jointOrg = new ResJointOrg();
 				jointOrg.setJointFlow(jointFlow);
-				jointOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                jointOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				jointOrgList.add(jointOrg);
 			}
 		}
 		int result=jointBiz.editJointOrgList(jointOrgList);
-		if(result!=GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	/**
 	 * 
@@ -748,10 +747,10 @@ public class ResPlatformController extends GeneralController {
 	@RequestMapping("/exportExcel")
 	public void exportExcel(String orgName,String sessionNumber,String speId,DoctorSearchForm doctorSearchForm,HttpServletResponse response) throws Exception{
 		SysOrg org = new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		org.setOrgName(orgName);
 		List<SysOrg> orgList = orgBiz.searchOrderBy(org);
-		List<SysDict> sysDictList=dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		
 		ResDoctor doctor = new ResDoctor();
 		doctor.setSessionNumber(sessionNumber);
@@ -937,10 +936,10 @@ public class ResPlatformController extends GeneralController {
 	@RequestMapping("/exportBase")
 	public void exportBase(String orgName,String sessionNumber,String speId,DoctorSearchForm doctorSearchForm,HttpServletResponse response) throws Exception{
 		SysOrg org = new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		org.setOrgName(orgName);
 		List<SysOrg> orgList = orgBiz.searchOrderBy(org);
-		List<SysDict> sysDictList=dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		ResDoctor doctor = new ResDoctor();
 		doctor.setSessionNumber(sessionNumber);
 		doctor.setTrainingSpeId(speId);
@@ -1073,8 +1072,8 @@ public class ResPlatformController extends GeneralController {
 	 */
 	@RequestMapping(value="/orgPermission", method={RequestMethod.POST,RequestMethod.GET})
 	public String orgPermission(SysOrg sysOrg, Integer currentPage, HttpServletRequest request, Model model,String orgFlag){
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg,orgFlag);
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg,orgFlag);
@@ -1090,8 +1089,8 @@ public class ResPlatformController extends GeneralController {
 	 */
 	@RequestMapping(value="/orgPermissionList", method={RequestMethod.POST,RequestMethod.GET})
 	public String orgPermissionList(SysOrg sysOrg, Integer currentPage, HttpServletRequest request, Model model,String orgFlag){
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg,orgFlag);
 		model.addAttribute("sysOrgList", sysOrgList);
@@ -1102,7 +1101,7 @@ public class ResPlatformController extends GeneralController {
 //				cfgCodeList.add("jswjw_"+so.getOrgFlow()+"_P002");
 //			}
 //			SysCfg sysCfg = new SysCfg();
-//			sysCfg.setWsId(GlobalConstant.RES_WS_ID);
+//			sysCfg.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 //			List<SysCfg> sysCfgList = cfgBiz.searchCfgByCfgCodeList(sysCfg, cfgCodeList);
 //			if(sysCfgList != null && !sysCfgList.isEmpty()){
 //				Map<String, SysCfg> sysCfgMap = new HashMap<String, SysCfg>();
@@ -1144,9 +1143,9 @@ public class ResPlatformController extends GeneralController {
 		if (sysDict == null) {
 			sysDict = new SysDict();
 		}
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysDict.setDictTypeId(DictTypeEnum.SendSchool.getId());
-		sysDict.setDictTypeName(DictTypeEnum.SendSchool.getName());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
+        sysDict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getName());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		model.addAttribute("dictList", dictList);
@@ -1175,12 +1174,12 @@ public class ResPlatformController extends GeneralController {
 		cfg.setCfgValue(recordStatues);
 		sysCfgList.add(cfg);
 		int result=cfgBiz.saveSysCfgInfo(sysCfgList);
-		if(GlobalConstant.ZERO_LINE != result){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 			ServletContext application = request.getServletContext();
 			Map<String,String> sysCfgMap = (Map<String, String>) application.getAttribute("sysCfgMap");
 			sysCfgMap.put(cfg.getCfgCode(), cfg.getCfgValue());
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	/**
@@ -1192,16 +1191,16 @@ public class ResPlatformController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = doctorBiz.importStudentMainExcel4jszy(file,orgFlow,role);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 }

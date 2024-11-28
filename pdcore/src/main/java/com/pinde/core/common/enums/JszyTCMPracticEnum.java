@@ -1,6 +1,6 @@
 package com.pinde.core.common.enums;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.GeneralEnum;
 
 /**
  * Created by pdkj on 2018/1/3.
@@ -8,7 +8,7 @@ import com.pinde.core.common.GlobalConstant;
  * 次枚举用于区分中医全科哪些标准科室下安排了基层实践或者理论学习或者未安排（单选）
  */
 public enum JszyTCMPracticEnum implements GeneralEnum<String> {
-    N(GlobalConstant.FLAG_N, "无"),
+    N(com.pinde.core.common.GlobalConstant.FLAG_N, "无"),
     BasicPractice("BasicPractice", "基层实践"),
     TheoreticalStudy("TheoreticalStudy","理论学习"),
     ;

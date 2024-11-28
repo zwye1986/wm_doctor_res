@@ -26,7 +26,7 @@ public class ResBookStudyRecordBizImpl implements IResBookStudyRecordBiz {
     public List<ResBookStudyRecord> getBookStudyRecords(String doctorFlow,String teacherFlow) {
         ResBookStudyRecordExample example=new ResBookStudyRecordExample();
         ResBookStudyRecordExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
         if(StringUtil.isNotBlank(teacherFlow))
         {
             criteria.andTeacherFlowEqualTo(teacherFlow);

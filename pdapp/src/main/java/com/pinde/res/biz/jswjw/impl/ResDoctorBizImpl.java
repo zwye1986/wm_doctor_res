@@ -29,7 +29,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz {
 	@Override
 	public	List<ResDoctor> searchDoctor(){
 		ResDoctorExample example = new ResDoctorExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return doctorMapper.selectByExample(example);
 	}
 
@@ -54,7 +54,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz {
 				return doctorMapper.updateByPrimaryKeySelective(doctor);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	private Criteria setCriteria(ResDoctor doctor, Criteria criteria){

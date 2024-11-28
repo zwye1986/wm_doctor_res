@@ -10,8 +10,8 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.OscaDoctorRegist;
 import com.pinde.sci.model.mo.OscaDoctorRegistExample;
 import com.pinde.sci.model.mo.ResDoctor;
@@ -46,7 +46,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
     @Override
     public List<OscaDoctorRegist> searchRegist(OscaDoctorRegist oscaDoctorRegist) {
         OscaDoctorRegistExample example = new OscaDoctorRegistExample();
-        OscaDoctorRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaDoctorRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaDoctorRegist.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(oscaDoctorRegist.getDoctorFlow());
         }
@@ -86,7 +86,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
 //            List<String> levelIds=new ArrayList<>();
 //            levelIds.add(RoleLevelEnum.SysLevel.getId());
 //            levelIds.add(RoleLevelEnum.GateLevel.getId());
-//            sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//            sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //            List<SysRole> sysRoleList = roleBiz.search(sysRole,levelIds);
 //            if(sysRoleList!=null&&sysRoleList.size()>0){
 //                for(SysRole sysRole1:sysRoleList){

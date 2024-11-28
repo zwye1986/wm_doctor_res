@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 import java.util.HashMap;
@@ -62,13 +63,13 @@ public enum ProvinceEnum implements GeneralEnum<String> {
 		return name;
 	}
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, ProvinceEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.ProvinceEnum.class).getName();
 	}
 
 	public static final Map<String, String> map = new HashMap();
 
 	static {
-		for (ProvinceEnum tEnum : ProvinceEnum.values()) {
+        for (ProvinceEnum tEnum : com.pinde.core.common.enums.ProvinceEnum.values()) {
 			map.put(tEnum.getId(), tEnum.getName());
 		}
 	}

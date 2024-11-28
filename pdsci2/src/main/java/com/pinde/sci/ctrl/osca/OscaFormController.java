@@ -43,7 +43,7 @@ public class OscaFormController extends GeneralController{
 			model.addAttribute("froms",froms);
 		}
 		if(roleFlag.equals("hospital")){
-            from.setIsReleased(GlobalConstant.FLAG_Y);
+            from.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			PageHelper.startPage(currentPage,getPageSize(request));
 			List<OscaFrom> froms = formCfgBiz.searchHospitalFrom(from);
 			model.addAttribute("froms",froms);
@@ -63,13 +63,13 @@ public class OscaFormController extends GeneralController{
 			from.setOrgName("江苏省厅");
 		}
 		if("disable".equals(type)){
-            from.setIsReleased(GlobalConstant.FLAG_N);
+            from.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		if("delete".equals(type)){
-			from.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            from.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		}
 		if("undisable".equals(type)){
-            from.setIsReleased(GlobalConstant.FLAG_Y);
+            from.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return formCfgBiz.editForm(from);
 	}
@@ -96,7 +96,7 @@ public class OscaFormController extends GeneralController{
 	public String copyForm(String fromFlow,String fromName,String type,Model model){
 
 		for (int i = 1; i < 10000; i++) {
-            if (formCfgBiz.checkFromName(fromName + i).equals(GlobalConstant.FLAG_Y)) {
+            if (formCfgBiz.checkFromName(fromName + i).equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 				fromName=fromName+i;
 				break;
 			}
@@ -133,13 +133,13 @@ public class OscaFormController extends GeneralController{
 			}else if (type.equals("hospital")){
 				oscaFrom.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 				oscaFrom.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-                oscaFrom.setIsReleased(GlobalConstant.FLAG_Y);
+                oscaFrom.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 		if (formCfgBiz.editForm(oscaFrom)>0){
-			return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}else {
-			return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 		}
 	}
 
@@ -195,17 +195,17 @@ public class OscaFormController extends GeneralController{
 		int sum = Integer.parseInt(titleSum);
 		while (sum>0){
 			int result = formCfgBiz.editFromCfgTitle(from, title);
-			if(GlobalConstant.ZERO_LINE  == result){
-				return GlobalConstant.SAVE_FAIL;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE == result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 			sum--;
 		}}else{
 			int result = formCfgBiz.editFromCfgTitle(from, title);
-			if(GlobalConstant.ZERO_LINE  == result){
-				return GlobalConstant.SAVE_FAIL;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE == result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	//删除考核指标标题
@@ -213,10 +213,10 @@ public class OscaFormController extends GeneralController{
 	@ResponseBody
 	public String deleteTitle(String cfgFlow, String id) throws Exception{
 			int result = formCfgBiz.deleteTitle(cfgFlow, id);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.DELETE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	//保存考核指标列表
@@ -224,10 +224,10 @@ public class OscaFormController extends GeneralController{
 	@ResponseBody
 	public String saveOscaFromItemList(@RequestBody OscaFromCfgExt form) throws Exception{
 			int result = formCfgBiz.saveFromItemList(form);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	//修改考试指标
@@ -235,10 +235,10 @@ public class OscaFormController extends GeneralController{
 	@ResponseBody
 	public String modifyItem(String cfgFlow, OscaFromCfgItemExt itemForm) throws Exception{
 			int result = formCfgBiz.modifyItem(cfgFlow, itemForm);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	//删除考核指标
@@ -246,10 +246,10 @@ public class OscaFormController extends GeneralController{
 	@ResponseBody
 	public String deleteItem(String cfgFlow, String id) throws Exception{
 			int result = formCfgBiz.deleteItem(cfgFlow, id);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.DELETE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 }
 

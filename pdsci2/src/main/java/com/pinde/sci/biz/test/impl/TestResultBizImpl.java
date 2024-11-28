@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.test.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.test.ITestResultBiz;
@@ -41,7 +42,7 @@ public class TestResultBizImpl implements ITestResultBiz{
 	@Override
 	public List<TestResult> searchResult(String userFlow, TestResult result) {
 		TestResultExample example = new TestResultExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(userFlow);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(userFlow);
 		if(StringUtil.isNotBlank(result.getTestTypeId())){
 			criteria.andTestTypeIdEqualTo(result.getTestTypeId());
 		}

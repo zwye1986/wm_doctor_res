@@ -1,6 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.OrgLevelEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,8 +17,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -121,9 +122,9 @@ public class JsResGraduationController extends GeneralController {
                 docTypeList.add(s);
             }
         } else {
-            datas = new String[JsResDocTypeEnum.values().length];
+            datas = new String[com.pinde.core.common.enums.ResDocTypeEnum.values().length];
             int i = 0;
-            for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
                 docTypeList.add(e.getId());
                 datas[i++] = e.getId();
             }
@@ -287,7 +288,7 @@ public class JsResGraduationController extends GeneralController {
             return orgBiz.searchOrgListByCityId(cityId);
         } else {
             List<String> orgLevels = new ArrayList<>();
-            orgLevels.add(OrgLevelEnum.CountryOrg.getId());
+            orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
             List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
             orgList.sort(Comparator.comparingInt(o -> o.getOrgCode().hashCode()));
             return orgList;
@@ -309,7 +310,7 @@ public class JsResGraduationController extends GeneralController {
             }
         }
         if (StringUtil.isBlank(isJointOrgIn)) {
-            isJointOrgIn = GlobalConstant.FLAG_Y;
+            isJointOrgIn = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
         model.addAttribute("graduationYear", graduationYear);
 
@@ -321,7 +322,7 @@ public class JsResGraduationController extends GeneralController {
         if(doctorType != null && doctorType.length > 0){
             docTypeList.addAll(Arrays.asList(doctorType));
         }else{
-            for(JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
                 docTypeList.add(e.getId());
             }
         }
@@ -336,7 +337,7 @@ public class JsResGraduationController extends GeneralController {
             orgList = getOrgListByCityId(cityId);
         } else {
             List<String> orgLevels = new ArrayList<>();
-            orgLevels.add(OrgLevelEnum.CountryOrg.getId());
+            orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
             // 查询基地/医院
             orgList = orgBiz.searchSysOrgOrder(orgLevels);
         }
@@ -374,7 +375,7 @@ public class JsResGraduationController extends GeneralController {
             params.put("scoreType",scoreType);
             params.put("catSpeId",catSpeId);
             List<Map<String,Object>> countryOrgTotalDoctorList = graduationBiz.searchDoctorRecruit(params);
-            if (StringUtil.isNotBlank(isJointOrgIn) && isJointOrgIn.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(isJointOrgIn) && isJointOrgIn.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 countryOrgTotalDoctorList.addAll(graduationBiz.searchJointOrgDoctorRecruit(params));
             }
             // 查询人员名单并处理数据
@@ -823,7 +824,7 @@ public class JsResGraduationController extends GeneralController {
             theoryScore = resScoreBiz.getScoreByDocFlowAndYearAndType((String) doctor.get("doctorFlow"), graduationYear, "TheoryScore");
             skillScore = resScoreBiz.getScoreByDocFlowAndYearAndType((String) doctor.get("doctorFlow"), graduationYear, "SkillScore");
         }
-        if (JsResDocTypeEnum.Graduate.getId().equals(doctor.get("doctorTypeId"))) {
+        if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctor.get("doctorTypeId"))) {
             graduateMap.put("all", (Integer) graduateMap.get("all") + 1);
             if (orgConditionMap.containsKey("all")) {
                 orgConditionMap.put("all", (Integer) orgConditionMap.get("all") + 1);
@@ -1719,7 +1720,7 @@ public class JsResGraduationController extends GeneralController {
         if(doctorType != null && doctorType.length > 0){
             docTypeList.addAll(Arrays.asList(doctorType));
         }else{
-            for(JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
                 docTypeList.add(e.getId());
             }
         }
@@ -1734,7 +1735,7 @@ public class JsResGraduationController extends GeneralController {
             orgList = getOrgListByCityId(cityId);
         } else {
             List<String> orgLevels = new ArrayList<>();
-            orgLevels.add(OrgLevelEnum.CountryOrg.getId());
+            orgLevels.add(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
             // 查询基地/医院
             orgList = orgBiz.searchSysOrgOrder(orgLevels);
         }
@@ -1769,7 +1770,7 @@ public class JsResGraduationController extends GeneralController {
             params.put("scoreType",scoreType);
             params.put("catSpeId","DoctorTrainingSpe");
             List<Map<String,Object>> countryOrgTotalDoctorList = graduationBiz.searchDoctorRecruit(params);
-            if (StringUtil.isNotBlank(isJointOrgIn) && isJointOrgIn.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(isJointOrgIn) && isJointOrgIn.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 countryOrgTotalDoctorList.addAll(graduationBiz.searchJointOrgDoctorRecruit(params));
             }
             // 查询人员名单并处理数据

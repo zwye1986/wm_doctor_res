@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.enums.ArmyTypeEnum;
+import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -25,14 +25,9 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
-import com.pinde.sci.enums.jsres.*;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.ResBaseStatusEnum;
-import com.pinde.core.common.enums.ResDocTypeEnum;
-import com.pinde.core.common.enums.ResScoreTypeEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
@@ -346,39 +341,39 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		try {
 			SysUser currUser = GlobalContext.getCurrentUser();
 			//判断是否是协同基地
-            String isJointOrg = GlobalConstant.FLAG_N;
+            String isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
 			List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currUser.getOrgFlow());
 			if (!tempJoinOrgs.isEmpty() && tempJoinOrgs.size() > 0) {
-                isJointOrg = GlobalConstant.FLAG_Y;
+                isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
 			}
-			if (GlobalConstant.RECORD_STATUS_N.equals(isJointOrg)) {//主基地审核后  省厅审核
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isJointOrg)) {//主基地审核后  省厅审核
 				if (StringUtil.isNotBlank(recruitWithBLOBs.getDoctorStatusId())) {
 					recruitWithBLOBs.setDoctorStatusName(BaseStatusEnum.getNameById(recruitWithBLOBs.getDoctorStatusId()));
-					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.Passed.getId());
-					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.Passed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.Passed.getId());
+                    recruitWithBLOBs.setAuditStatusId(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId());
+                    recruitWithBLOBs.setAuditStatusName(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getName());
+                    recruitWithBLOBs.setReviewFlag(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId());
 				}
-				if (ResBaseStatusEnum.NotPassed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
-					recruitWithBLOBs.setJointOrgAudit(ResBaseStatusEnum.NotPassed.getId());
-					recruitWithBLOBs.setOrgAudit(ResBaseStatusEnum.NotPassed.getId());
-					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.NotPassed.getId());
-					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.NotPassed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getId());
+                if (com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
+                    recruitWithBLOBs.setJointOrgAudit(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
+                    recruitWithBLOBs.setOrgAudit(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
+                    recruitWithBLOBs.setAuditStatusId(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
+                    recruitWithBLOBs.setAuditStatusName(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getName());
+                    recruitWithBLOBs.setReviewFlag(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
 				}
 			} else {
-				if (ResBaseStatusEnum.Passed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
+                if (com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
 					recruitWithBLOBs.setDoctorStatusId("OrgAuditing");//待主基地审核
 					recruitWithBLOBs.setDoctorStatusName("待主基地审核");
 					recruitWithBLOBs.setAuditStatusName("待主基地审核");
-					recruitWithBLOBs.setJointOrgAudit(ResBaseStatusEnum.Passed.getId());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.Passed.getId());
+                    recruitWithBLOBs.setJointOrgAudit(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId());
+                    recruitWithBLOBs.setReviewFlag(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId());
 				}
-				if (ResBaseStatusEnum.NotPassed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
-					recruitWithBLOBs.setJointOrgAudit(ResBaseStatusEnum.NotPassed.getId());
-					recruitWithBLOBs.setOrgAudit(ResBaseStatusEnum.NotPassed.getId());
-					recruitWithBLOBs.setAuditStatusId(ResBaseStatusEnum.NotPassed.getId());
-					recruitWithBLOBs.setAuditStatusName(ResBaseStatusEnum.NotPassed.getName());
-					recruitWithBLOBs.setReviewFlag(ResBaseStatusEnum.NotPassed.getId());
+                if (com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId().equals(recruitWithBLOBs.getDoctorStatusId())) {
+                    recruitWithBLOBs.setJointOrgAudit(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
+                    recruitWithBLOBs.setOrgAudit(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
+                    recruitWithBLOBs.setAuditStatusId(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
+                    recruitWithBLOBs.setAuditStatusName(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getName());
+                    recruitWithBLOBs.setReviewFlag(com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId());
 				}
 			}
 			ResDoctor resDoctor = resDoctorBiz.findByFlow(recruitWithBLOBs.getDoctorFlow());
@@ -391,9 +386,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			String msgTitle = "报名信息审核结果";
 			String msgContent = null;
 			ResDoctorRecruit recruit = readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
-			if(ResBaseStatusEnum.Passed.getId().equals(recruitWithBLOBs.getAuditStatusId())){
+            if (com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId().equals(recruitWithBLOBs.getAuditStatusId())) {
 				msgContent = "恭喜您已通过本院线上报名申请,请与"+ recruit.getOrgName() +"医院联系,参加后续考试。" + DateUtil.getCurrDateTime2();
-			}else if(ResBaseStatusEnum.NotPassed.getId().equals(recruitWithBLOBs.getAuditStatusId())){
+            } else if (com.pinde.core.common.enums.ResBaseStatusEnum.NotPassed.getId().equals(recruitWithBLOBs.getAuditStatusId())) {
 				msgContent = "很遗憾您未通过"+ recruit.getOrgName() +"线上报名申请，请重新报名！"+ DateUtil.getCurrDateTime2();
 			}
 			msgBiz.addSysMsg(recruitWithBLOBs.getDoctorFlow(), msgTitle , msgContent);
@@ -408,11 +403,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	public int saveAuditRecruit(ResDoctorRecruitWithBLOBs recWithBLOBs){
 		String auditStatusId =  recWithBLOBs.getAuditStatusId();
 		if(StringUtil.isNotBlank(auditStatusId) && !"WaitGlobalPass".equals(auditStatusId)){
-			recWithBLOBs.setAuditStatusName(JsResDoctorAuditStatusEnum.getNameById(auditStatusId));
+            recWithBLOBs.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.getNameById(auditStatusId));
 		}
 		String msgTitle = "培训信息审核结果";
 		String msgContent = null;
-		if(JsResDoctorAuditStatusEnum.Passed.getId().equals(auditStatusId)){
+        if (com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId().equals(auditStatusId)) {
 			//审核通过
 			if(StringUtil.isNotBlank(recWithBLOBs.getAdmitNotice())){
 				msgContent = "您的培训信息基地审核通过("+recWithBLOBs.getAdmitNotice()+")，";
@@ -426,7 +421,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);
 				recruit = readResDoctorRecruit(recruitFlow);
 				if(recruit != null && doctor != null){
-					if(!JsResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId()))
+                    if (!com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId()))
 					{
 						//自动更新学员app登录权限
 						String key="jsres_doctor_app_login_"+doctorFlow;
@@ -434,11 +429,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						if(cfg==null)
 							cfg=new JsresPowerCfg();
 						cfg.setCfgCode(key);
-                        cfg.setCfgValue(GlobalConstant.FLAG_Y);
+                        cfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
 						cfg.setCheckStatusId("Passed");
 						cfg.setCheckStatusName("审核通过");
 						cfg.setCfgDesc("是否开放学员app登录权限");
-						cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						powerCfgBiz.save(cfg);
 					}
 					doctor.setOrgFlow(recruit.getOrgFlow());
@@ -471,7 +466,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 				}
 			}
-		}else if(JsResDoctorAuditStatusEnum.NotPassed.getId().equals(auditStatusId)){//审核不通过
+        } else if (com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotPassed.getId().equals(auditStatusId)) {//审核不通过
 			if(StringUtil.isNotBlank(recWithBLOBs.getAdmitNotice())){
 				msgContent = "您的培训信息基地审核不通过("+recWithBLOBs.getAdmitNotice()+")，";
 			}else {
@@ -480,13 +475,13 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 		}
 
-		if(GlobalConstant.FLAG_Y.equals(recWithBLOBs.getRecruitFlag())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recWithBLOBs.getRecruitFlag())) {
 			if(StringUtil.isNotBlank(recWithBLOBs.getAdmitNotice())){
 				msgContent = "您的培训信息基地已录取("+recWithBLOBs.getAdmitNotice()+")，";
 			}else {
 				msgContent = "您的培训信息基地已录取，";
 			}
-		}else if(GlobalConstant.FLAG_N.equals(recWithBLOBs.getRecruitFlag())){
+        } else if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(recWithBLOBs.getRecruitFlag())) {
 			if(StringUtil.isNotBlank(recWithBLOBs.getAdmitNotice())){
 				msgContent = "您的培训信息基地未录取("+recWithBLOBs.getAdmitNotice()+")，";
 			}else {
@@ -494,10 +489,10 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			}
 		}
 		if (StringUtil.isNotBlank(auditStatusId) && auditStatusId.equals("NotPassed")){
-            recWithBLOBs.setRecruitFlag(GlobalConstant.FLAG_Y);
+            recWithBLOBs.setRecruitFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		int result = saveDoctorRecruit(recWithBLOBs);
-		if(result==1 && JsResDoctorAuditStatusEnum.Passed.getId().equals(auditStatusId))
+        if (result == 1 && com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId().equals(auditStatusId))
 		{
 			ResDoctorRecruit resDoctorRecruit=readResDoctorRecruit(recWithBLOBs.getRecruitFlow());
 			if(resDoctorRecruit!=null) {
@@ -519,7 +514,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				resDoctorBiz.insertRecruitDocInfo(recWithBLOBs.getRecruitFlow());
 				resDoctorBiz.insertRecruitInfo(recWithBLOBs.getRecruitFlow());
 			}
-		}else if(JsResDoctorAuditStatusEnum.NotPassed.getId().equals(auditStatusId)){
+        } else if (com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotPassed.getId().equals(auditStatusId)) {
             try {
                 ResDoctorRecruit resDoctorRecruit = readResDoctorRecruit(recWithBLOBs.getRecruitFlow());
                 String sessionNumber=resDoctorRecruit.getSessionNumber();
@@ -604,9 +599,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-            paramMap.put("isJointOrg", GlobalConstant.FLAG_Y);
+            paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}else{
-            paramMap.put("isJointOrg", GlobalConstant.FLAG_N);
+            paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		List<JsDoctorInfoExt> JsDoctorInfoExtList = new ArrayList<JsDoctorInfoExt>(16);
 		if(StringUtil.isNotBlank(baseFlag))
@@ -639,9 +634,9 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-            paramMap.put("isJointOrg", GlobalConstant.FLAG_Y);
+            paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}else{
-            paramMap.put("isJointOrg", GlobalConstant.FLAG_N);
+            paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		List<JsDoctorInfoExt> JsDoctorInfoExtList = new ArrayList<JsDoctorInfoExt>(16);
 		if(StringUtil.isNotBlank(baseFlag))
@@ -656,7 +651,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 	public int searchDoctorNum(ResDoctorRecruit recruit){
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-		ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(recruit.getOrgFlow());
 		}
@@ -694,10 +689,10 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	public int searchCountByCondition(ResDoctorRecruitWithBLOBs recruitWithBLOBs,String flag){
 		Map<String,Object> paramMap=new HashMap<String,Object>();
 		paramMap.put("recruit", recruitWithBLOBs);
-		if(GlobalConstant.FLAG_Y.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
 			paramMap.put("ProvFlag", flag);
 		}
-		if(GlobalConstant.FLAG_N.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(flag)) {
 			paramMap.put("UrlFlag", flag);
 		}
 		return jsResDoctorRecruitExtMapper.searchTrainInfoCount(paramMap);
@@ -707,33 +702,33 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	public int editResDoctorRecruit(ResDoctorRecruitWithBLOBs recWithBLOBs, ResDoctorRecruitWithBLOBs prevDocRec) {
 		//医师状态
 		if(StringUtil.isNotBlank(recWithBLOBs.getDoctorStatusId())){
-			recWithBLOBs.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById(recWithBLOBs.getDoctorStatusId()));
+            recWithBLOBs.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById(recWithBLOBs.getDoctorStatusId()));
 		}else{
 			recWithBLOBs.setDoctorStatusName("");
 		}
 		//医师走向
 		if(StringUtil.isNotBlank(recWithBLOBs.getDoctorStrikeId())){
-			recWithBLOBs.setDoctorStrikeName(DictTypeEnum.DoctorStrike.getDictNameById(recWithBLOBs.getDoctorStrikeId()));
+            recWithBLOBs.setDoctorStrikeName(com.pinde.core.common.enums.DictTypeEnum.DoctorStrike.getDictNameById(recWithBLOBs.getDoctorStrikeId()));
 		}else{
 			recWithBLOBs.setDoctorStrikeName("");
 		}
 		if(StringUtil.isNotBlank(recWithBLOBs.getCurrDegreeCategoryId())){
-			recWithBLOBs.setCurrDegreeCategoryName(JsResDegreeCategoryEnum.getNameById(recWithBLOBs.getCurrDegreeCategoryId()));
+            recWithBLOBs.setCurrDegreeCategoryName(com.pinde.core.common.enums.JsResDegreeCategoryEnum.getNameById(recWithBLOBs.getCurrDegreeCategoryId()));
 		}
-		recWithBLOBs.setAuditStatusId(JsResDoctorAuditStatusEnum.NotSubmit.getId());
-		recWithBLOBs.setAuditStatusName(JsResDoctorAuditStatusEnum.NotSubmit.getName());
+        recWithBLOBs.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+        recWithBLOBs.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 		String doctorFlow = recWithBLOBs.getDoctorFlow();
 		//结业审核年份
 		int year=0;
 		if(StringUtil.isNotBlank(recWithBLOBs.getSessionNumber())&&StringUtil.isNotBlank(recWithBLOBs.getTrainYear())){
 			int num=0;
-			if(JsResTrainYearEnum.OneYear.getId().equals(recWithBLOBs.getTrainYear())){
+            if (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(recWithBLOBs.getTrainYear())) {
 				num=1;
 			}
-			if(JsResTrainYearEnum.TwoYear.getId().equals(recWithBLOBs.getTrainYear())){
+            if (com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(recWithBLOBs.getTrainYear())) {
 				num=2;
 			}
-			if(JsResTrainYearEnum.ThreeYear.getId().equals(recWithBLOBs.getTrainYear())){
+            if (com.pinde.core.common.enums.JsResTrainYearEnum.ThreeYear.getId().equals(recWithBLOBs.getTrainYear())) {
 				num=3;
 			}
 			year = Integer.parseInt(recWithBLOBs.getSessionNumber())+num;
@@ -742,8 +737,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		//其中已审核通过
 		ResDoctorRecruit exitRec = new ResDoctorRecruit();
 		exitRec.setDoctorFlow(doctorFlow);
-		exitRec.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
-		exitRec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        exitRec.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
+        exitRec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		//页面字段被去除   默认
 		exitRec.setDoctorStatusId("Auditing");
@@ -760,7 +755,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			}
 		}
 		//当前为二阶段
-		if(TrainCategoryEnum.WMSecond.getId().equals(recWithBLOBs.getCatSpeId()) ){
+        if (com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId().equals(recWithBLOBs.getCatSpeId())) {
 			if(passedRecruitList.isEmpty()){//无审核通过
 //				ResDoctorRecruitWithBLOBs addWMFirst = new ResDoctorRecruitWithBLOBs();
 //				addWMFirst.setCompleteFileUrl(recWithBLOBs.getCompleteFileUrl());
@@ -768,20 +763,20 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 //				//查询状态为N的记录
 //				ResDoctorRecruit exitN = new ResDoctorRecruit();
 //				exitN.setDoctorFlow(doctorFlow);
-//				exitN.setCatSpeId(TrainCategoryEnum.WMFirst.getId());
-//				exitN.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+//				exitN.setCatSpeId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId());
+//				exitN.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 //				List<ResDoctorRecruit> exitNList = searchResDoctorRecruitList(exitN, null);
 //				if(exitNList != null && !exitNList.isEmpty()){
 //					exitN = exitNList.get(0);
 //					addWMFirst.setRecruitFlow(exitN.getRecruitFlow());
-//					addWMFirst.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//					addWMFirst.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //					saveDoctorRecruit(addWMFirst);
 //				}else{//新增
 //					addWMFirst.setDoctorFlow(doctorFlow);
-//					addWMFirst.setCatSpeId(TrainCategoryEnum.WMFirst.getId());
-//					addWMFirst.setCatSpeName(TrainCategoryEnum.WMFirst.getName());
-//					addWMFirst.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
-//					addWMFirst.setAuditStatusName(JsResDoctorAuditStatusEnum.Passed.getName());
+//					addWMFirst.setCatSpeId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId());
+//					addWMFirst.setCatSpeName(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getName());
+//					addWMFirst.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
+//					addWMFirst.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getName());
 //					//saveDoctorRecruit(addWMFirst);
 //					addWMFirst.setRecruitFlow(PkUtil.getUUID());
 //					GeneralMethod.setRecordInfo(addWMFirst, true);
@@ -799,7 +794,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			if(passedRecruitList.size() == 1 && firstIsWMSecond){//首条记录为二阶段  修改为非二阶段  ==>删除自动生成的一阶段
 				ResDoctorRecruitWithBLOBs deleWMFirst = new ResDoctorRecruitWithBLOBs();
 				deleWMFirst.setRecruitFlow(passedRecruitList.get(0).getRecruitFlow());
-				deleWMFirst.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                deleWMFirst.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				saveDoctorRecruit(deleWMFirst);
 			}
 		}
@@ -824,13 +819,13 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			if(StringUtil.isNotBlank(recruitWithBLOBs.getSessionNumber())&&StringUtil.isNotBlank(recruitWithBLOBs.getTrainYear())){
 				doctor.setSessionNumber(recruitWithBLOBs.getSessionNumber());
 				int year =0;
-				if(JsResTrainYearEnum.OneYear.getId().equals(recruitWithBLOBs.getTrainYear())){
+                if (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(recruitWithBLOBs.getTrainYear())) {
 					year=1;
 				}
-				if(JsResTrainYearEnum.TwoYear.getId().equals(recruitWithBLOBs.getTrainYear())){
+                if (com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(recruitWithBLOBs.getTrainYear())) {
 					year=2;
 				}
-				if(JsResTrainYearEnum.ThreeYear.getId().equals(recruitWithBLOBs.getTrainYear())){
+                if (com.pinde.core.common.enums.JsResTrainYearEnum.ThreeYear.getId().equals(recruitWithBLOBs.getTrainYear())) {
 					year=3;
 				}
 				int newGraduationYear=(Integer.parseInt(recruitWithBLOBs.getSessionNumber())+year);
@@ -855,12 +850,12 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					recruitWithBLOBs.setGraduationYear(oldGraduationYear+"");
 			}
 			if(StringUtil.isNotBlank(recruitWithBLOBs.getCurrDegreeCategoryId())){
-				recruitWithBLOBs.setCurrDegreeCategoryName(JsResDegreeCategoryEnum.getNameById(recruitWithBLOBs.getCurrDegreeCategoryId()));
+                recruitWithBLOBs.setCurrDegreeCategoryName(com.pinde.core.common.enums.JsResDegreeCategoryEnum.getNameById(recruitWithBLOBs.getCurrDegreeCategoryId()));
 			}
 			saveDoctorRecruit(recruitWithBLOBs);
 			return resDoctorBiz.editDoctor(doctor, null);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public ResDoctorRecruitWithBLOBs readRecruit(String recruitFlow) {
@@ -888,7 +883,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 															 List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,
 															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
-		if (GlobalConstant.FLAG_Y.equals(newFlag)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(newFlag)) {
 			if (sessionNumbers == null || sessionNumbers.size() == 0) {
 				String sessionNumberBefore = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 6);
 				doctorRecruitMap.put("sessionNumberBefore", sessionNumberBefore);
@@ -926,7 +921,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 															 List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,
 															 List<String>sessionNumbers,String baseFlag,String userOrgFlow, String newFlag,String isJointOrg,String isPostpone,String isArmy,String workOrgId, String workOrgName) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
-		if (GlobalConstant.FLAG_Y.equals(newFlag)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(newFlag)) {
 			if (sessionNumbers == null || sessionNumbers.size() == 0) {
 				String sessionNumberBefore = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 6);
 				doctorRecruitMap.put("sessionNumberBefore", sessionNumberBefore);
@@ -1037,7 +1032,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("scoreYear",scoreYear);
 		doctorRecruitMap.put("isHege",isHege);
 		doctorRecruitMap.put("testId",testId);
-		doctorRecruitMap.put("typeId", ResScoreTypeEnum.TheoryScore.getId());
+        doctorRecruitMap.put("typeId", com.pinde.core.common.enums.ResScoreTypeEnum.TheoryScore.getId());
 //		doctorRecruitMap.put("hegeScore", InitConfig.getSysCfg("res_theoryScore"));
 
 		doctorRecruitMap.put("hegeScore",hegeScore);
@@ -1066,11 +1061,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 		if(StringUtil.isNotBlank(skillIsHege))
 		{
-			if(GlobalConstant.FLAG_Y.equals(skillIsHege))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillIsHege))
 			{
 				skillIsHege="1";
 			}
-			if(GlobalConstant.FLAG_N.equals(skillIsHege))
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(skillIsHege))
 			{
 				skillIsHege="0";
 			}
@@ -1105,11 +1100,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 		if(StringUtil.isNotBlank(skillIsHege))
 		{
-			if(GlobalConstant.FLAG_Y.equals(skillIsHege))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillIsHege))
 			{
 				skillIsHege="1";
 			}
-			if(GlobalConstant.FLAG_N.equals(skillIsHege))
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(skillIsHege))
 			{
 				skillIsHege="0";
 			}
@@ -1132,7 +1127,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("docTypeList", docTypeList);
 		doctorRecruitMap.put("scoreYear",scoreYear);
 		doctorRecruitMap.put("isHege",isHege);
-		doctorRecruitMap.put("typeId", ResScoreTypeEnum.SkillScore.getId());
+        doctorRecruitMap.put("typeId", com.pinde.core.common.enums.ResScoreTypeEnum.SkillScore.getId());
 		List<JsResDoctorRecruitExt> doctorRecruitList=jsResDoctorRecruitExtMapper.searchJsDoctorSkillScoreExtList(doctorRecruitMap);
 		return doctorRecruitList;
 	}
@@ -1150,7 +1145,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("docTypeList", docTypeList);
 		doctorRecruitMap.put("scoreYear", scoreYear);
 		doctorRecruitMap.put("isHege", isHege);
-		doctorRecruitMap.put("typeId", ResScoreTypeEnum.TheoryScore.getId());
+        doctorRecruitMap.put("typeId", com.pinde.core.common.enums.ResScoreTypeEnum.TheoryScore.getId());
 		List<JsResDoctorRecruitExt> doctorRecruitList = jsResDoctorRecruitExtMapper.searchJsDoctorTheoryScoreExtList(doctorRecruitMap);
 		return doctorRecruitList;
 	}
@@ -1169,11 +1164,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("scoreYear",scoreYear);
 		if(StringUtil.isNotBlank(notAllQualified))
 		{
-			if(GlobalConstant.FLAG_Y.equals(notAllQualified))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(notAllQualified))
 			{
 				notAllQualified="1";
 			}
-			if(GlobalConstant.FLAG_N.equals(notAllQualified))
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(notAllQualified))
 			{
 				notAllQualified="0";
 			}
@@ -1190,7 +1185,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		}
 		doctorRecruitMap.put("hegeScore",hegeScore);*/
 		doctorRecruitMap.put("allQualified",allQualified);//全科是否合格
-		doctorRecruitMap.put("typeId", ResScoreTypeEnum.PublicScore.getId());
+        doctorRecruitMap.put("typeId", com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getId());
 		List<JsResDoctorRecruitExt> doctorRecruitList=jsResDoctorRecruitExtMapper.searchJsDoctorPublicScoreExtList(doctorRecruitMap);
 		return doctorRecruitList;
 	}
@@ -1209,11 +1204,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		doctorRecruitMap.put("sessionNumbers",sessionNumbers);
 		if(StringUtil.isNotBlank(notAllQualified))
 		{
-			if(GlobalConstant.FLAG_Y.equals(notAllQualified))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(notAllQualified))
 			{
 				notAllQualified="1";
 			}
-			if(GlobalConstant.FLAG_N.equals(notAllQualified))
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(notAllQualified))
 			{
 				notAllQualified="0";
 			}
@@ -1230,14 +1225,14 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		}
 		doctorRecruitMap.put("hegeScore",hegeScore);*/
 		doctorRecruitMap.put("allQualified",allQualified);//全科是否合格
-		doctorRecruitMap.put("typeId", ResScoreTypeEnum.PublicScore.getId());
+        doctorRecruitMap.put("typeId", com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getId());
 		List<JsResDoctorRecruitExt> doctorRecruitList=jsResDoctorRecruitExtMapper.searchJsDoctorPublicScoreExtList(doctorRecruitMap);
 		return doctorRecruitList;
 	}
 //	@Override
 //	public List<ResDoctorRecruit> searchRecruitByDoc(String doctorFlow,String orgFlow){
 //		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-//		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andDoctorFlowEqualTo(doctorFlow).andOrgFlowEqualTo(orgFlow);
 //		return doctorRecruitMapper.selectByExample(example);
 //	}
@@ -1245,7 +1240,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-		ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(recruit.getOrgFlow());
 		}
@@ -1285,7 +1280,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-		ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(recruit.getOrgFlow());
 		}
@@ -1328,7 +1323,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-		ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(recruit.getDoctorFlow())){
 			criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow()); 
 		}  
@@ -1355,7 +1350,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		}
 		
 		ResDoctorRecruitExample recruitExample = new ResDoctorRecruitExample();
-		recruitExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        recruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andDoctorFlowEqualTo(doctorFlow);
 		recruitExample.setOrderByClause("CREATE_TIME DESC");
 		
@@ -1522,16 +1517,16 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					jykhForm.setYszgType(resume.getPracticingCategoryName());
 					jykhForm.setYszgCertNo(resume.getQualificationMaterialCode());
 					//是否全科订单定向学员
-					if(GlobalConstant.FLAG_Y.equals(resume.getIsGeneralOrderOrientationTrainee())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resume.getIsGeneralOrderOrientationTrainee())) {
 						jykhForm.setIsQkdddxxy("是");
-					}else if(GlobalConstant.FLAG_N.equals(resume.getIsGeneralOrderOrientationTrainee())){
+                    } else if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resume.getIsGeneralOrderOrientationTrainee())) {
 						jykhForm.setIsQkdddxxy("否");
 					}
-					if(GlobalConstant.FLAG_Y.equals(resume.getIsDoctor())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resume.getIsDoctor())) {
 						jykhForm.setSchoolName(resume.getDoctorGraSchoolName());//毕业/在读院校
 						jykhForm.setSchoolSpeName(resume.getDoctorMajor());//毕业（在读）专业/二级学科
 						jykhForm.setDegreeName(resume.getDoctorDegreeName());//学位
-					}else if(GlobalConstant.FLAG_Y.equals(resume.getIsMaster())){
+                    } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resume.getIsMaster())) {
 						jykhForm.setSchoolName(resume.getMasterGraSchoolName());
 						jykhForm.setSchoolSpeName(resume.getMasterMajor());
 						jykhForm.setDegreeName(resume.getMasterDegreeName());
@@ -1551,7 +1546,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 				String doctorTypeId = ext.getDoctorTypeId();
 				//是否有工作单位
-				if(JsResDocTypeEnum.Company.getId().equals(doctorTypeId)){
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctorTypeId)) {
 					jykhForm.setIsGzdw("是");
 					jykhForm.setGzdwName(ext.getWorkOrgName());//工作单位名称
 				}else{
@@ -1559,26 +1554,26 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 				jykhForm.setRyAttributes("地方人员");
 				jykhForm.setRyType(ext.getDoctorTypeName());
-				if(GlobalConstant.FLAG_Y.equals(ext.getIsYearGraduate())){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ext.getIsYearGraduate())) {
 					jykhForm.setThisPastYear("应届");
-				}else if(GlobalConstant.FLAG_N.equals(ext.getIsYearGraduate())){
+                } else if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(ext.getIsYearGraduate())) {
 					jykhForm.setThisPastYear("往届");
 				}
 				jykhForm.setSessionNumber(ext.getSessionNumber());
 				jykhForm.setZsztName("已录取");
 				jykhForm.setTrainOrgName(ext.getOrgName());
 				jykhForm.setTrainSpeName(ext.getSpeName());
-				jykhForm.setTrainYear(JsResTrainYearEnum.getNameById(ext.getTrainYear()));
+                jykhForm.setTrainYear(com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(ext.getTrainYear()));
 				jykhForm.setTrainBeginTime(ext.getRecruitDate());
-				if(JsResTrainYearEnum.OneYear.getId().equals(ext.getTrainYear())){
+                if (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(ext.getTrainYear())) {
 					jykhForm.setTrainEndTime(DateUtil.addYear(ext.getRecruitDate(),1));
-				}else if(JsResTrainYearEnum.TwoYear.getId().equals(ext.getTrainYear())){
+                } else if (com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(ext.getTrainYear())) {
 					jykhForm.setTrainEndTime(DateUtil.addYear(ext.getRecruitDate(),2));
-				}else if(JsResTrainYearEnum.ThreeYear.getId().equals(ext.getTrainYear())){
+                } else if (com.pinde.core.common.enums.JsResTrainYearEnum.ThreeYear.getId().equals(ext.getTrainYear())) {
 					jykhForm.setTrainEndTime(DateUtil.addYear(ext.getRecruitDate(),3));
 				}
 				//是否在读
-				if(JsResDocTypeEnum.Company.getId().equals(doctorTypeId) || JsResDocTypeEnum.Social.getId().equals(doctorTypeId)){
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctorTypeId) || com.pinde.core.common.enums.ResDocTypeEnum.Social.getId().equals(doctorTypeId)) {
 					jykhForm.setIsReading("否");
 				}else{
 					jykhForm.setIsReading("是");
@@ -1715,7 +1710,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	public String getCertificateNo(ResDoctorRecruit recruit){
 		String completeNo = "";
 		//所有助理全科人员都只生成助理全科证书
-		if(recruit.getCatSpeId().equals(TrainCategoryEnum.AssiGeneral.getId()))
+        if (recruit.getCatSpeId().equals(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId()))
 		{
 //			编码规则：举例：15 02 04 0007（15年毕业，全科中医，常州市，流水号0004）
 //			共10位，第1、2位为年份，比如2016年为16；第3、4位为科目代码，01为全科西医，02为全科中医，
@@ -1761,7 +1756,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			} else if (sessionYear == 2014) {
 				SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
 				//只有国家基地使用国家证书
-				if (org.getOrgLevelId().equals(OrgLevelEnum.CountryOrg.getId())) {
+                if (org.getOrgLevelId().equals(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId())) {
 					completeNo = getCountryOrgNo(recruit);
 				} else {
 					//江苏省生成规则待定
@@ -1770,7 +1765,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			} else {
 				SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
 				//国家基地使用国家证书
-				if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
+                if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
 					completeNo = getCountryOrgNo(recruit);
 				} else {
 					List<ResJointOrg> jointOrgList = resJointBiz.searchResJointByJointOrgFlow(org.getOrgFlow());
@@ -1778,7 +1773,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						ResJointOrg resJointOrg = jointOrgList.get(0);
 						SysOrg org2 = orgBiz.readSysOrg(resJointOrg.getOrgFlow());
 						//国家基地的协同基地也使用国家证书
-						if (org2.getOrgLevelId().equals(OrgLevelEnum.CountryOrg.getId())) {
+                        if (org2.getOrgLevelId().equals(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId())) {
 							completeNo = getCountryOrgNo(recruit);
 						} else {
 							//江苏省生成规则待定
@@ -1857,7 +1852,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			city.put("321000","K");
 			city.put("321100","L");
 			city.put("321200","M");
-            city.put("321300", GlobalConstant.FLAG_N);
+            city.put("321300", com.pinde.core.common.GlobalConstant.FLAG_N);
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
 			String dishiCode= (String) city.get(org.getOrgCityId());
@@ -1940,11 +1935,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruit.setGraduationCertificateNo(getCertificateNo(recruit));
 						recruit.setCertificateDate(DateUtil.getCurrDate());
 						recruit.setDoctorStatusId("21");
-						recruit.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById("21"));
+                        recruit.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById("21"));
 						ResDoctor resDoctor=resDoctorBiz.readDoctor(recruit.getDoctorFlow());
 						if(resDoctor!=null) {
 							resDoctor.setDoctorStatusId("21");
-							resDoctor.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById("21"));
+                            resDoctor.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById("21"));
 						}
 						resDoctorBiz.editDoctor(resDoctor);
 						count+=saveDoctorRecruit(recruit);
@@ -2082,11 +2077,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruit.setGraduationCertificateType("country");
 						recruit.setCertificateDate(DateUtil.getCurrDate());
 						recruit.setDoctorStatusId("21");
-						recruit.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById("21"));
+                        recruit.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById("21"));
 						ResDoctor resDoctor=resDoctorBiz.readDoctor(recruit.getDoctorFlow());
 						if(resDoctor!=null) {
 							resDoctor.setDoctorStatusId("21");
-							resDoctor.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById("21"));
+                            resDoctor.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById("21"));
 						}
 						resDoctorBiz.editDoctor(resDoctor);
 						count+=saveDoctorRecruit(recruit);
@@ -2440,7 +2435,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
                                     skillScore = obj1.get("score").toString();
                                 }
                             }
-                            if (GlobalConstant.FLAG_Y.equals(arrResultList.get(i).getHaveAfterPic())) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(arrResultList.get(i).getHaveAfterPic())) {
                                 haveAfterPic = "已上传";
                             } else {
                                 haveAfterPic = "未上传";
@@ -2675,7 +2670,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					area = "其他";
 				}
 				String isYearGraduate = "";
-				if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
 					isYearGraduate = "应届";
 				} else {
 					isYearGraduate = "往届";
@@ -2703,14 +2698,14 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 //					qualificationFlag = "否";
 //					userResumeExt.setQualificationMaterialCode("");
 //				}
-                if (userResumeExt.getIsPassQualifyingExamination().equals(GlobalConstant.FLAG_Y)) {
+                if (userResumeExt.getIsPassQualifyingExamination().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 					qualificationFlag = "是";
 				} else {
 					qualificationFlag = "否";
 				}
 				//研究生
 				String masterFlag = "";
-				if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
 					userResumeExt.setMasterDegreeName("");
 					userResumeExt.setMasterDegreeTypeName("");
 					userResumeExt.setMasterGraSchoolName("");
@@ -2722,7 +2717,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 				//博士
 				String doctorFlag = "";
-				if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
 					userResumeExt.setDoctorDegreeName("");
 					userResumeExt.setDoctorDegreeTypeName("");
 					userResumeExt.setDoctorGraSchoolName("");
@@ -2738,7 +2733,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				String yydc="";
 				String hospitalCateName="";
 				String hospitalAttrName="";
-				if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId())) {
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId())) {
 					ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
 					if (resBase != null && jointFlag.equals("是")) {
 						property = resBase.getBaseGradeName();
@@ -2823,10 +2818,10 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 				//是否全科定向生
 				String isGeneralOrderOrientationTrainee = "";
-				if (GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 					isGeneralOrderOrientationTrainee = "是";
 				}
-				if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 					isGeneralOrderOrientationTrainee="否";
 				}
 				//规培年限
@@ -2845,11 +2840,11 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 //					if("OrgAuditing".equals(doctorInfoExt.getDoctorStatusId())){
 //						shzt = "待主基地审核";
 //					}else {
-//						shzt = JsResDoctorAuditStatusEnum.getNameById(doctorInfoExt.getDoctorStatusId());
+//						shzt = com.pinde.core.common.enums.ResDoctorAuditStatusEnum.getNameById(doctorInfoExt.getDoctorStatusId());
 //					}
 //				}
 				if(StringUtil.isNotBlank(doctorInfoExt.getAuditStatusId())){
-					shzt = JsResDoctorAuditStatusEnum.getNameById(doctorInfoExt.getAuditStatusId());
+                    shzt = com.pinde.core.common.enums.ResDoctorAuditStatusEnum.getNameById(doctorInfoExt.getAuditStatusId());
 				}
 				dataList = new String[]{
 						orgName,
@@ -3005,8 +3000,8 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					yetTrainYear = recruitExt.getYetTrainYear();
 				}
 				SysDictExample example = new SysDictExample();
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-						.andDictTypeIdEqualTo(DictTypeEnum.YetTrainYear.getId());
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                        .andDictTypeIdEqualTo(com.pinde.core.common.enums.DictTypeEnum.YetTrainYear.getId());
 				List<SysDict> dictList = sysDictMapper.selectByExample(example);
 				if(null != dictList && dictList.size()>0){
 					for (SysDict dict:dictList) {
@@ -3044,7 +3039,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 						recruitExt.getSysUser().getUserAddress(),
 						recruitExt.getWorkAddr(),
 						recruitExt.getWorkSchoolName(),
-						StringUtil.isBlank(recruitExt.getArmyType()) ? "" :	ArmyTypeEnum.getNameById(recruitExt.getArmyType())
+                        StringUtil.isBlank(recruitExt.getArmyType()) ? "" : com.pinde.core.common.enums.ArmyTypeEnum.getNameById(recruitExt.getArmyType())
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowFour.createCell(j);
@@ -3096,7 +3091,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public ResDoctorRecruitInfo findRecruitInfo(String recruitFlow) {
 		ResDoctorRecruitInfoExample example = new ResDoctorRecruitInfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
 		example.setOrderByClause("CREATE_TIME DESC");
 		List<ResDoctorRecruitInfo> resDoctorRecruitInfos = resDoctorRecruitInfoMapper.selectByExample(example);
 		if (resDoctorRecruitInfos != null && resDoctorRecruitInfos.size() > 0) {
@@ -3121,7 +3116,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	public List<ResDoctorRecruit> searchResDoctorRecruitListNew(ResDoctorRecruit recruit, String orderByClause) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		com.pinde.sci.model.mo.ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
 			criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
 		}
@@ -3212,7 +3207,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		}
 		//查询基地院长签名图片
 		JsresSignExample example = new JsresSignExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowEqualTo(orgFlow).andAuditStatusIdEqualTo("Passed");
 		List<JsresSign> signList = jsresSignMapper.selectByExample(example);
 		if(null == signList || signList.size() == 0){
@@ -3244,7 +3239,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	@Override
 	public List<ResDoctorRecruit> searchResDoctorRecruitListByFlows(List<String> recruitFlows) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecruitFlowIn(recruitFlows);
 		return doctorRecruitMapper.selectByExample(example);
 	}
@@ -3253,7 +3248,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	public int findSignupCount(String doctorFlow, String year) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecruitYearEqualTo(year)
-				.andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				.andAuditStatusIdNotEqualTo("NotPassed");
 		return doctorRecruitMapper.countByExample(example);
 	}

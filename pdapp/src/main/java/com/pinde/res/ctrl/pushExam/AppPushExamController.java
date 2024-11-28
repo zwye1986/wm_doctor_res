@@ -45,10 +45,10 @@ public class AppPushExamController {
 			SysUser user=pushExamBiz.readUserByFlow(userFlow);
 			String thisDay= DateUtil.getCurrDate();
 			//是否每日第一天登录
-            String isFirst = GlobalConstant.FLAG_N;
+            String isFirst = com.pinde.core.common.GlobalConstant.FLAG_N;
 			if(StringUtil.isBlank(user.getAppLoginTime())||!thisDay.equals(user.getAppLoginTime()))
 			{
-                isFirst = GlobalConstant.FLAG_Y;
+                isFirst = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				user.setAppLoginTime(thisDay);
 				pushExamBiz.updateUser(user);
 			}

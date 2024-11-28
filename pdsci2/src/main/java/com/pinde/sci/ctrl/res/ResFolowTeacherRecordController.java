@@ -142,15 +142,15 @@ public class ResFolowTeacherRecordController extends GeneralController {
         resDiscipleRecordInfo.setRecordFlow(recordFlow);
         resDiscipleRecordInfo = resFolowTeacherRecordBiz.searchFolowTeacherRecord(resDiscipleRecordInfo).get(0);
         if(StringUtil.isNotBlank(recordFlow)){
-            resDiscipleRecordInfo.setRecordStatus(GlobalConstant.FLAG_N);
+            resDiscipleRecordInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             int count =resFolowTeacherRecordBiz.saveResDiscipleRecordInfo(resDiscipleRecordInfo);
             if(count==0)
             {
-                return  GlobalConstant.DELETE_FAIL;
+                return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
             }
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         }else {
-            return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         }
     }
 
@@ -230,10 +230,10 @@ public class ResFolowTeacherRecordController extends GeneralController {
                 resDiscipleRecordInfo.setAuditUserName(sysUser.getUserName());
                 resFolowTeacherRecordBiz.saveResDiscipleRecordInfo(resDiscipleRecordInfo);
             }
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         } else {
             //批量通过
-            if (GlobalConstant.FLAG_Y.equals(batch)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(batch)) {
 
                 Map<String, String> paramMap = new HashMap<>();
                 SysUser currentUser = GlobalContext.getCurrentUser();
@@ -251,12 +251,12 @@ public class ResFolowTeacherRecordController extends GeneralController {
                 paramMap.put("newAuditStatusName", DiscipleStatusEnum.Qualified.getName());
                 int i = resFolowTeacherRecordBiz.batchAgreeResDiscipleRecordInfo(paramMap);
                 if (i != 0) {
-                    return GlobalConstant.OPRE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
                 } else {
                     return "该学员没有待审核记录！";
                 }
             }
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
     }
 

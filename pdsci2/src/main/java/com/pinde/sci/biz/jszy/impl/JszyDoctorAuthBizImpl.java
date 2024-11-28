@@ -29,7 +29,7 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
             if(StringUtil.isNotBlank(doctorAuth.getRecordFlow())){//修改
                 GeneralMethod.setRecordInfo(doctorAuth, false);
                 DoctorAuthExample example = new DoctorAuthExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andRecordFlowEqualTo(doctorAuth.getRecordFlow());
                 return this.doctorAuthMapper.updateByExampleSelective(doctorAuth,example);
             }else{//新增
@@ -38,13 +38,13 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
                 return this.doctorAuthMapper.insertSelective(doctorAuth);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public DoctorAuth searchAuthByOperUserFlow(String operUserFlow) {
         DoctorAuthExample example = new DoctorAuthExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOperUserFlowEqualTo(operUserFlow);
         List<DoctorAuth> doctorAuths =  doctorAuthMapper.selectByExample(example);
         if(doctorAuths != null && doctorAuths.size() > 0){
@@ -58,7 +58,7 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
         if(StringUtil.isNotBlank(operUserFlow))
         {
             DoctorAuthExample example = new DoctorAuthExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOperUserFlowEqualTo(operUserFlow);
             List<DoctorAuth> doctorAuths =  doctorAuthMapper.selectByExample(example);
             return doctorAuths;
@@ -69,7 +69,7 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
     @Override
     public Map<String, String> saveInfo(String recordFlow, MultipartFile file, String fileAddress) {
         Map<String, String> map=new HashMap<String, String>();
-        map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
         if(file!=null){
             List<String> mimeList = new ArrayList<String>();
             if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
@@ -84,13 +84,13 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
             String fileName = file.getOriginalFilename();//文件名
             String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
             if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-                map.put("error", GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
                 return  map;
 
             }
             long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
             if (file.getSize() > limitSize * 1024 * 1024) {
-                map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
                 return  map;
             }
             try {
@@ -111,7 +111,7 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
                     edit(resRec);
                     map.put("url",url);
                 }
-                map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 
                 FtpHelperUtil ftpHelperUtil=new FtpHelperUtil();
                 String localFilePath=fileDir+File.separator+fileName;

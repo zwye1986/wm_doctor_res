@@ -42,7 +42,7 @@ public class SchDoctorBizImpl implements ISchDoctorBiz {
 	@Override
 	public List<ResDoctor> searchResDoctor(String orgFlow) {
 		ResDoctorExample example = new ResDoctorExample();
-		example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("DOCTOR_CODE");
 		return doctorMapper.selectByExample(example);
 	}
@@ -50,7 +50,7 @@ public class SchDoctorBizImpl implements ISchDoctorBiz {
 //	@Override
 //	public List<ResDoctor> searchResDoctorByFlows(String orgFlow,List<String> doctorFlowList){
 //		ResDoctorExample example = new ResDoctorExample();
-//		example.createCriteria().andOrgFlowEqualTo(orgFlow).andDoctorFlowIn(doctorFlowList).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		example.createCriteria().andOrgFlowEqualTo(orgFlow).andDoctorFlowIn(doctorFlowList).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		example.setOrderByClause("DOCTOR_CODE");
 //		return doctorMapper.selectByExample(example);
 //	}
@@ -59,7 +59,7 @@ public class SchDoctorBizImpl implements ISchDoctorBiz {
 	public List<ResDoctor> searchTerminatResDoctor(String orgFlow,DoctorSearchForm doctorSearchForm){
 		ResDoctorExample example = new ResDoctorExample();
 		ResDoctorExample.Criteria criteria = example.createCriteria();
-		criteria.andOrgFlowEqualTo(orgFlow).andDoctorStatusIdEqualTo(ResDoctorStatusEnum.Terminat.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andOrgFlowEqualTo(orgFlow).andDoctorStatusIdEqualTo(ResDoctorStatusEnum.Terminat.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("DOCTOR_CODE");
 		if(doctorSearchForm == null){
 			return doctorMapper.selectByExample(example);
@@ -72,7 +72,7 @@ public class SchDoctorBizImpl implements ISchDoctorBiz {
 	@Override
 	public List<ResDoctor> searchNotTerminatResDoctor(String orgFlow){
 		ResDoctorExample example = new ResDoctorExample();
-		example.createCriteria().andOrgFlowEqualTo(orgFlow).andDoctorStatusIdNotEqualTo(ResDoctorStatusEnum.Terminat.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andOrgFlowEqualTo(orgFlow).andDoctorStatusIdNotEqualTo(ResDoctorStatusEnum.Terminat.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("DOCTOR_CODE");
 		return doctorMapper.selectByExample(example);
 	}
@@ -84,7 +84,7 @@ public class SchDoctorBizImpl implements ISchDoctorBiz {
 		}else{
 			ResDoctorExample example = new ResDoctorExample();
 			ResDoctorExample.Criteria criteria = example.createCriteria();
-			criteria.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            criteria.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			searchConditions(criteria,doctorSearchForm);
 			example.setOrderByClause("SESSION_NUMBER DESC,DOCTOR_FLOW");
 			return doctorMapper.selectByExample(example);
@@ -145,12 +145,12 @@ public class SchDoctorBizImpl implements ISchDoctorBiz {
 			}else{
 				doctor.setDoctorFlow(PkUtil.getUUID());
 				GeneralMethod.setRecordInfo(doctor, true);
-				doctor.setSelDeptFlag(GlobalConstant.FLAG_N);
-				doctor.setSchFlag(GlobalConstant.FLAG_N);
+                doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 				return doctorMapper.insertSelective(doctor);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 //	@Override

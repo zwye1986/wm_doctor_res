@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResUserBlackBiz;
@@ -39,7 +40,7 @@ public class JszyResUserBlackBizImpl implements IJszyResUserBlackBiz {
     @Override
     public List<JsresUserBalcklist> searchInfo(JsresUserBalcklist jsresUserBalcklist,List<String> userFlowList,List<String> orgFlowList){
         JsresUserBalcklistExample example = new JsresUserBalcklistExample();
-        JsresUserBalcklistExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresUserBalcklistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if(StringUtil.isNotBlank(jsresUserBalcklist.getSessionNumber())){
             criteria.andSessionNumberEqualTo(jsresUserBalcklist.getSessionNumber());
@@ -72,21 +73,21 @@ public class JszyResUserBlackBizImpl implements IJszyResUserBlackBiz {
         Map<Object, Object> countMap = new HashMap<Object, Object>();
         if (blackLists != null && !blackLists.isEmpty()) {
             for (JsresUserBalcklist black : blackLists) {
-                String result = GlobalConstant.FLAG_Y;
+                String result = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 if (StringUtil.isNotBlank(speName) && StringUtil.isNotBlank(black.getTrainingSpeName())) {
                     if (!black.getTrainingSpeName().equals(speName)) {
-                        result = GlobalConstant.FLAG_N;
+                        result = com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
                 }
-                if (GlobalConstant.FLAG_Y.equals(result)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result)) {
                     String key = black.getRecordFlow();
 
                     newRecList.add(black);
-                    countMap.put(black.getUserFlow(), GlobalConstant.FLAG_F);
+                    countMap.put(black.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_F);
                 }
             }
-            backInfoMap.put(GlobalConstant.FLAG_F, countMap);
-            backInfoMap.put(GlobalConstant.FLAG_Y, newRecList);
+            backInfoMap.put(com.pinde.core.common.GlobalConstant.FLAG_F, countMap);
+            backInfoMap.put(com.pinde.core.common.GlobalConstant.FLAG_Y, newRecList);
         }
         return backInfoMap;
     }

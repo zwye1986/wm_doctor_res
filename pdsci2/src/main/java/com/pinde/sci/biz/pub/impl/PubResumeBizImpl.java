@@ -43,7 +43,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 	@Override
 	public List<PubUserResume> findPubUserResume() {
 		PubUserResumeExample example = new PubUserResumeExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return userResumpMapper.selectByExampleWithBLOBs(example);
 	}
 
@@ -60,7 +60,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 				GeneralMethod.setRecordInfo(resume, true);
 				return userResumpMapper.insert(resume);
 			}else{
-				return GlobalConstant.ZERO_LINE;
+                return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 			}
 		}
 	}
@@ -131,7 +131,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 	public List<PubUserResume> findPubUserResumeByUserFlows(List<String> userFlows) {
 		if(userFlows != null && userFlows.size() > 0){
 			PubUserResumeExample example = new PubUserResumeExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 			.andUserFlowIn(userFlows);
 			return userResumpMapper.selectByExampleWithBLOBs(example);
 		}else {

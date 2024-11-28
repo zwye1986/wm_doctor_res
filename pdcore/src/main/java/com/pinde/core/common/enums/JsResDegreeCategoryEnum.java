@@ -1,8 +1,9 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
-public enum JsResDegreeCategoryEnum implements GeneralEnum<String>{
+public enum JsResDegreeCategoryEnum implements GeneralEnum<String> {
 	Bachelor("Bachelor","学士学位"),
 	AcademicMaster("AcademicMaster","学术型硕士"),
     AcademicDoctor("AcademicDoctor","学术型博士"),
@@ -30,7 +31,7 @@ public enum JsResDegreeCategoryEnum implements GeneralEnum<String>{
 	}
 
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, JsResDegreeCategoryEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.JsResDegreeCategoryEnum.class).getName();
 	}
 
 }

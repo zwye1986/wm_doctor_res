@@ -10,8 +10,8 @@ import com.pinde.sci.biz.lcjn.ILcjnDoctorSignBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.lcjn.LcjnAuditStatusEnum;
-import com.pinde.sci.enums.lcjn.LcjnDoctorScoreEnum;
+import com.pinde.core.common.enums.LcjnAuditStatusEnum;
+import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
 import com.pinde.sci.model.mo.LcjnCourseInfo;
 import com.pinde.sci.model.mo.LcjnCourseTime;
 import com.pinde.sci.model.mo.LcjnDoctorCourse;
@@ -192,9 +192,9 @@ public class LcjnDoctorTrainInfoController extends GeneralController{
         String courseFlow=(String)mp.get("courseFlow");
         int num=lcjnDoctorOrderInfoBiz.countOrderNum(courseFlow);
         if(null != doctors && doctors.size()>num){
-            return GlobalConstant.RECORD_STATUS_N;
+            return com.pinde.core.common.GlobalConstant.RECORD_STATUS_N;
         }
-        return GlobalConstant.RECORD_STATUS_Y;
+        return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
     }
 
     /**
@@ -207,9 +207,9 @@ public class LcjnDoctorTrainInfoController extends GeneralController{
     public String selectOrderNum(String courseFlow){
         int num=lcjnDoctorOrderInfoBiz.countOrderNum(courseFlow);
         if(num==0){
-            return GlobalConstant.RECORD_STATUS_N;
+            return com.pinde.core.common.GlobalConstant.RECORD_STATUS_N;
         }
-        return GlobalConstant.RECORD_STATUS_Y;
+        return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
     }
 
     /**
@@ -552,7 +552,7 @@ public class LcjnDoctorTrainInfoController extends GeneralController{
     public String releaseScore(String courseFlow){
         LcjnCourseInfo lcjnCourseInfo=new LcjnCourseInfo();
         lcjnCourseInfo.setCourseFlow(courseFlow);
-        lcjnCourseInfo.setIsScoreReleased(GlobalConstant.RECORD_STATUS_Y);
+        lcjnCourseInfo.setIsScoreReleased(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         GeneralMethod.setRecordInfo(lcjnCourseInfo,false);
         int num=0;
         num=lcjnDoctorOrderInfoBiz.editCourseInfo(lcjnCourseInfo);
@@ -613,6 +613,6 @@ public class LcjnDoctorTrainInfoController extends GeneralController{
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
     }
 }

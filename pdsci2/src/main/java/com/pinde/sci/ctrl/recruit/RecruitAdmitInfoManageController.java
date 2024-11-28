@@ -53,9 +53,9 @@ public class RecruitAdmitInfoManageController extends GeneralController {
         param.put("idNo",idNo);
         param.put("startDate",beginDate);
         param.put("endDate",endDate);
-        param.put("writeExamFlag", GlobalConstant.FLAG_Y);
-        param.put("examIsPass", GlobalConstant.FLAG_Y);//笔试通过
-        param.put("interviewIsPass", GlobalConstant.FLAG_Y);//面试通过
+        param.put("writeExamFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        param.put("examIsPass", com.pinde.core.common.GlobalConstant.FLAG_Y);//笔试通过
+        param.put("interviewIsPass", com.pinde.core.common.GlobalConstant.FLAG_Y);//面试通过
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
         if(recruitInfoExts!=null)
         {
@@ -123,19 +123,19 @@ public class RecruitAdmitInfoManageController extends GeneralController {
             return "已发送过录取通知，请刷新列表页面！";
         }
         RecruitInfoExt recruitInfoExt = recruitInfoBiz.searchRecruitInfoByFlow(recruitFlow);
-        if(!GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewIsPass()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewIsPass()))
         {
             return "该学员招录面试未通过，无法发送录取通知！";
         }
-        if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
         {
             return "已发送过面试通知，请刷新列表页面！";
         }
         //执行录取
         if (recruitAdmitInfoBiz.sendAdmit(recruitAdmitInfo)){
-            return GlobalConstant.SEND_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SEND_SUCCESSED;
         }
-        return GlobalConstant.SEND_FAIL;
+        return com.pinde.core.common.GlobalConstant.SEND_FAIL;
     }
     /**
      * 发送录取通知
@@ -153,11 +153,11 @@ public class RecruitAdmitInfoManageController extends GeneralController {
         for(String recruitFlow:recruitFlows)
         {
             RecruitInfoExt recruitInfoExt = recruitInfoBiz.searchRecruitInfoByFlow(recruitFlow);
-            if(!GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewIsPass()))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewIsPass()))
             {
                 return "学员【"+recruitInfoExt.getSysUser().getUserName()+"】招录面试未通过，无法发送录取通知！";
             }
-            if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
             {
                 return "学员【"+recruitInfoExt.getSysUser().getUserName()+"】已发送过面试通知，请刷新列表页面！";
             }
@@ -171,9 +171,9 @@ public class RecruitAdmitInfoManageController extends GeneralController {
         }
         //执行录取
         if (recruitAdmitInfoBiz.sendAdmitAll(recruitInfoExts,recruitAdmitInfo)){
-            return GlobalConstant.SEND_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SEND_SUCCESSED;
         }
-        return GlobalConstant.SEND_FAIL;
+        return com.pinde.core.common.GlobalConstant.SEND_FAIL;
     }
 
 
@@ -196,9 +196,9 @@ public class RecruitAdmitInfoManageController extends GeneralController {
             Map<String,String> param=new HashMap<>();
             param.put("orgFlow",orgFlow);
             param.put("recruitYear",recruitYear);
-            param.put("writeExamFlag", GlobalConstant.FLAG_Y);
-            param.put("examIsPass", GlobalConstant.FLAG_Y);//笔试通过
-            param.put("interviewIsPass", GlobalConstant.FLAG_Y);//面试通过
+            param.put("writeExamFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
+            param.put("examIsPass", com.pinde.core.common.GlobalConstant.FLAG_Y);//笔试通过
+            param.put("interviewIsPass", com.pinde.core.common.GlobalConstant.FLAG_Y);//面试通过
             List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
             if(recruitInfoExts==null||recruitInfoExts.size()==0)
             {
@@ -213,17 +213,17 @@ public class RecruitAdmitInfoManageController extends GeneralController {
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 
                     }else{
-                        if(GlobalConstant.ZERO_LINE != count){
-                            return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                         }else{
-                            return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         }
                     }
                 }else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();
@@ -245,8 +245,8 @@ public class RecruitAdmitInfoManageController extends GeneralController {
                     message ="导入文件内容为空！请确认后导入！";
                     return message;
                 }
-                if (GlobalConstant.ZERO_LINE != result) {
-                    message = GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    message = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 }
             } catch (RuntimeException re) {
                 re.printStackTrace();

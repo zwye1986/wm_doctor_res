@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.osca.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
 import com.pinde.sci.dao.base.OscaOrgMenuMapper;
@@ -66,7 +67,7 @@ public class OscaOrgMenuBizImpl implements IOscaOrgMenuBiz{
     public List<OscaOrgMenu> searchAllOrgMenu(OscaOrgMenu oscaOrgMenu) {
         OscaOrgMenuExample example=new OscaOrgMenuExample();
         OscaOrgMenuExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(oscaOrgMenu.getOrgFlow())){
             criteria.andOrgFlowEqualTo(oscaOrgMenu.getOrgFlow());
         }

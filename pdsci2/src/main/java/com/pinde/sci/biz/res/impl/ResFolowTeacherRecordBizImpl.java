@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
@@ -36,7 +37,7 @@ public class ResFolowTeacherRecordBizImpl implements IResFolowTeacherRecordBiz {
     @Override
     public List<ResStudentDiscipleTeacher> searchResStudentDiscipleTeacher(ResStudentDiscipleTeacher resStudentDiscipleTeacher) {
         ResStudentDiscipleTeacherExample example = new ResStudentDiscipleTeacherExample();
-        ResStudentDiscipleTeacherExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResStudentDiscipleTeacherExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resStudentDiscipleTeacher!=null){
             if(StringUtil.isNotBlank(resStudentDiscipleTeacher.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resStudentDiscipleTeacher.getDoctorFlow());
@@ -71,7 +72,7 @@ public class ResFolowTeacherRecordBizImpl implements IResFolowTeacherRecordBiz {
     @Override
     public List<ResDiscipleRecordInfo> searchFolowTeacherRecord(ResDiscipleRecordInfo resDiscipleRecordInfo) {
         ResDiscipleRecordInfoExample example = new ResDiscipleRecordInfoExample();
-        ResDiscipleRecordInfoExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDiscipleRecordInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resDiscipleRecordInfo!=null){
             if(StringUtil.isNotBlank(resDiscipleRecordInfo.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resDiscipleRecordInfo.getDoctorFlow());

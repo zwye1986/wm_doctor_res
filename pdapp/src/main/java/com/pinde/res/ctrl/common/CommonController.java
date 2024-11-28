@@ -30,6 +30,6 @@ public class CommonController {
     @ResponseBody
     public String reLoadCfg(){
         InitConfig.reload();
-        return GlobalConstant.FLAG_Y;
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;
     }
 }

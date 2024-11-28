@@ -27,7 +27,7 @@ public class SpePracticeBizImpl implements ISpePracticeBiz {
 	public List<JsresSpeContrastPractice> getSpePracticeBySpeId(String trainingSpeId) {
 		if(StringUtil.isNotBlank(trainingSpeId)){
 			JsresSpeContrastPracticeExample example=new JsresSpeContrastPracticeExample();
-			example.createCriteria().andSpeIdEqualTo(trainingSpeId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andSpeIdEqualTo(trainingSpeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 			return scpMapper.selectByExample(example);
 		}

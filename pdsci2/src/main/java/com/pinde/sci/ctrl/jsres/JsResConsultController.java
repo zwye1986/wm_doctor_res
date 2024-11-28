@@ -14,7 +14,7 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.jsres.ConsultRoleEnum;
+import com.pinde.core.common.enums.jsres.ConsultRoleEnum;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +64,7 @@ public class JsResConsultController extends GeneralController {
         }
         SysUserRole userRole = new SysUserRole();
         userRole.setUserFlow(currentUser.getUserFlow());
-        userRole.setWsId(GlobalConstant.RES_WS_ID);
+        userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
         List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
         SysRole role = roleBiz.read(userRoleList.get(0).getRoleFlow());
         String roleFlow = role.getRoleFlow();
@@ -104,11 +104,11 @@ public class JsResConsultController extends GeneralController {
         map.put("consultQuestionRoleId",consultQuestionRoleId);
 
         if ("on".equals(isAnswer)){
-            isAnswer = GlobalConstant.FLAG_N;
+            isAnswer = com.pinde.core.common.GlobalConstant.FLAG_N;
             map.put("isAnswer",isAnswer);
         }
         //问答专区
-        map.put("isPolicy", GlobalConstant.FLAG_N);
+        map.put("isPolicy", com.pinde.core.common.GlobalConstant.FLAG_N);
 
         //管理员所在地区
         map.put("orgCityId",sysOrg.getOrgCityId());
@@ -142,7 +142,7 @@ public class JsResConsultController extends GeneralController {
         HashMap<String, String> map = new HashMap<>();
         map.put("consultQuestion",consultQuestion);
         //政策专区
-        map.put("isPolicy", GlobalConstant.FLAG_Y);
+        map.put("isPolicy", com.pinde.core.common.GlobalConstant.FLAG_Y);
 
         //管理员所在地区
         map.put("orgCityId",sysOrg.getOrgCityId());
@@ -171,22 +171,22 @@ public class JsResConsultController extends GeneralController {
     @ResponseBody
     public String replyConsult(ConsultInfo consultInfo){
         if(StringUtil.isNotBlank(consultInfo.getIsPolicy())){
-            if (GlobalConstant.RECORD_STATUS_Y.equals(consultInfo.getIsPolicy())){
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(consultInfo.getIsPolicy())) {
                 consultInfo.setChargeName(GlobalContext.getCurrentUser().getUserName());
             }
         }
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeId())){
-            consultInfo.setConsultTypeName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()));
+            consultInfo.setConsultTypeName(com.pinde.core.common.enums.DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()));
         }
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeSonId())) {
-            consultInfo.setConsultTypeSonName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()+"."+consultInfo.getConsultTypeSonId()));
+            consultInfo.setConsultTypeSonName(com.pinde.core.common.enums.DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId() + "." + consultInfo.getConsultTypeSonId()));
         }
-        consultInfo.setIsAnswer(GlobalConstant.FLAG_Y);
+        consultInfo.setIsAnswer(com.pinde.core.common.GlobalConstant.FLAG_Y);
         int c = consultInfoBiz.saveConsultInfo(consultInfo);
         if (c == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -202,7 +202,7 @@ public class JsResConsultController extends GeneralController {
         SysUser currentUser = GlobalContext.getCurrentUser();
         SysUserRole userRole = new SysUserRole();
         userRole.setUserFlow(currentUser.getUserFlow());
-        userRole.setWsId(GlobalConstant.RES_WS_ID);
+        userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
         List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
         String roleFlow = "";
         if(userRoleList != null && userRoleList.size() > 0){
@@ -213,10 +213,10 @@ public class JsResConsultController extends GeneralController {
         consultInfo.setConsultQuestionerName(currentUser.getUserName());
         consultInfo.setConsultVisitNumber("0");
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeId())){
-            consultInfo.setConsultTypeName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()));
+            consultInfo.setConsultTypeName(com.pinde.core.common.enums.DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()));
         }
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeSonId())) {
-            consultInfo.setConsultTypeSonName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()+"."+consultInfo.getConsultTypeSonId()));
+            consultInfo.setConsultTypeSonName(com.pinde.core.common.enums.DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId() + "." + consultInfo.getConsultTypeSonId()));
         }
         if (roleFlow.equals(InitConfig.getSysCfg("res_admin_role_flow"))){
             consultInfo.setConsultQuestionRoleId(ConsultRoleEnum.Admin.getId());
@@ -241,17 +241,17 @@ public class JsResConsultController extends GeneralController {
             SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
             consultInfo.setOrgCityId(sysOrg.getOrgCityId());
             consultInfo.setOrgCityName(sysOrg.getOrgCityName());
-            consultInfo.setIsPolicy(GlobalConstant.FLAG_Y);
-            consultInfo.setIsAnswer(GlobalConstant.FLAG_Y);
+            consultInfo.setIsPolicy(com.pinde.core.common.GlobalConstant.FLAG_Y);
+            consultInfo.setIsAnswer(com.pinde.core.common.GlobalConstant.FLAG_Y);
             consultInfo.setChargeName(currentUser.getUserName());
         } else {
             return "当前登录身份角色异常";
         }
         int c = consultInfoBiz.saveConsultInfo(consultInfo);
         if (c == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -260,14 +260,14 @@ public class JsResConsultController extends GeneralController {
     public String deleteAll(@RequestParam String chkList){
         List<String> list =(List<String>) JSONArray.parse(chkList);
         consultInfoBiz.deleteAll(list);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     @RequestMapping("/delete")
     @ResponseBody
     public String delete(String consultInfoFlow){
         consultInfoBiz.delete(consultInfoFlow);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     @RequestMapping("/editConsultForm")
@@ -281,16 +281,16 @@ public class JsResConsultController extends GeneralController {
     @ResponseBody
     public String doEdit(ConsultInfo consultInfo){
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeId())){
-            consultInfo.setConsultTypeName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()));
+            consultInfo.setConsultTypeName(com.pinde.core.common.enums.DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()));
         }
         if (StringUtil.isNotBlank(consultInfo.getConsultTypeSonId())) {
-            consultInfo.setConsultTypeSonName(DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId()+"."+consultInfo.getConsultTypeSonId()));
+            consultInfo.setConsultTypeSonName(com.pinde.core.common.enums.DictTypeEnum.ConsultType.getDictNameById(consultInfo.getConsultTypeId() + "." + consultInfo.getConsultTypeSonId()));
         }
         int c = consultInfoBiz.saveConsultInfo(consultInfo);
         if (c == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -303,11 +303,11 @@ public class JsResConsultController extends GeneralController {
         HashMap<String, String> map = new HashMap<>();
         map.put("consultQuestion",consultQuestion);
         //问答专区
-        map.put("isPolicy", GlobalConstant.FLAG_N);
+        map.put("isPolicy", com.pinde.core.common.GlobalConstant.FLAG_N);
 
         //管理员所在地区
         map.put("orgCityName",orgCityName);
-        map.put("isAnswer", GlobalConstant.FLAG_Y);
+        map.put("isAnswer", com.pinde.core.common.GlobalConstant.FLAG_Y);
         map.put("orderBy",orderBy);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<ConsultInfo> consultInfos = consultInfoBiz.search2(map);
@@ -328,11 +328,11 @@ public class JsResConsultController extends GeneralController {
         HashMap<String, String> map = new HashMap<>();
         map.put("consultQuestion",consultQuestion);
         //政策专区
-        map.put("isPolicy", GlobalConstant.FLAG_Y);
+        map.put("isPolicy", com.pinde.core.common.GlobalConstant.FLAG_Y);
 
         //管理员所在地区
         map.put("orgCityName",orgCityName);
-        map.put("isAnswer", GlobalConstant.FLAG_Y);
+        map.put("isAnswer", com.pinde.core.common.GlobalConstant.FLAG_Y);
         map.put("orderBy",orderBy);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<ConsultInfo> consultInfos = consultInfoBiz.search2(map);
@@ -359,7 +359,7 @@ public class JsResConsultController extends GeneralController {
         SysUser currentUser = GlobalContext.getCurrentUser();
         SysUserRole userRole = new SysUserRole();
         userRole.setUserFlow(currentUser.getUserFlow());
-        userRole.setWsId(GlobalConstant.RES_WS_ID);
+        userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
         List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
         SysRole role = roleBiz.read(userRoleList.get(0).getRoleFlow());
         String roleFlow = role.getRoleFlow();
@@ -389,7 +389,7 @@ public class JsResConsultController extends GeneralController {
         SysUser currentUser = GlobalContext.getCurrentUser();
         SysUserRole userRole = new SysUserRole();
         userRole.setUserFlow(currentUser.getUserFlow());
-        userRole.setWsId(GlobalConstant.RES_WS_ID);
+        userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
         List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
         SysRole role = roleBiz.read(userRoleList.get(0).getRoleFlow());
         String roleFlow = role.getRoleFlow();

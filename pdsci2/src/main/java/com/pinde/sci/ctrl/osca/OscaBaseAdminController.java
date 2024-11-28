@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
@@ -23,10 +22,9 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.osca.DoctorScoreEnum;
-import com.pinde.sci.enums.osca.ExamStatusEnum;
-import com.pinde.sci.enums.osca.SignStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
@@ -86,7 +84,7 @@ public class OscaBaseAdminController extends GeneralController {
 		model.addAttribute("count",count);
 		model.addAttribute("dataList",dataList);
 		if(count > 0 && null != dataList && dataList.size() == 0){
-            return checkInfoList(null, null, null, null, null, GlobalConstant.FLAG_Y, request, model, GlobalConstant.FLAG_Y);
+            return checkInfoList(null, null, null, null, null, com.pinde.core.common.GlobalConstant.FLAG_Y, request, model, com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return "osca/base/guideInfo";
 	}
@@ -103,8 +101,8 @@ public class OscaBaseAdminController extends GeneralController {
 		param.put("clinicalName",clinicalName);
 		param.put("isLocal",isLocal);
 		SysDict searchDict = new SysDict();
-        searchDict.setRecordStatus(GlobalConstant.FLAG_Y);
-		searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
+        searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);
 		List<SysDict> dictList = dictBiz.searchDictList(searchDict);
 		param.put("dictList",dictList);
 		param.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
@@ -171,10 +169,10 @@ public class OscaBaseAdminController extends GeneralController {
 		}
 //		int num = baseBiz.saveCheckInfo(osa);
 		int num = baseBiz.saveCheckInfoNew(osa,times);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -184,10 +182,10 @@ public class OscaBaseAdminController extends GeneralController {
 	@ResponseBody
 	public String releasedInfo(String clinicalFlow){
 		int num = baseBiz.releasedInfo(clinicalFlow);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.OPERATE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 	}
 
 	/**
@@ -197,10 +195,10 @@ public class OscaBaseAdminController extends GeneralController {
 	@ResponseBody
 	public String delCheckInfo(String clinicalFlow,String isReleased){
 		int num = baseBiz.delCheckInfo(clinicalFlow,isReleased);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.DELETE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**
@@ -240,7 +238,7 @@ public class OscaBaseAdminController extends GeneralController {
 		model.addAttribute("year",year);
 		OscaSkillsAssessment oscaSkillsAssessment = baseBiz.queryDataByFlow(clinicalFlow);
 		model.addAttribute("isGradeReleased",oscaSkillsAssessment.getIsGradeReleased());
-		if(StringUtil.isNotBlank(initFlag) && initFlag.equals(GlobalConstant.RECORD_STATUS_Y)){
+        if (StringUtil.isNotBlank(initFlag) && initFlag.equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
 			return "osca/base/checkInfoManage";
 		}
 		return "osca/base/appointManage";
@@ -337,10 +335,10 @@ public class OscaBaseAdminController extends GeneralController {
 	@ResponseBody
 	public String changeSign(String recordFlow,String signStatusId){
 		int num = baseBiz.changeSign(recordFlow,signStatusId);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.OPERATE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 	}
 
 	/**
@@ -423,14 +421,14 @@ public class OscaBaseAdminController extends GeneralController {
 		SysDict sysDict = new SysDict();
 		sysDict.setDictTypeId("ExamRoom");
 		sysDict.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDict> examRoomList = dictBiz.searchDictList(sysDict);
 		List<OscaSubjectStation> stationList = baseBiz.queryStationList(subjectFlow);
 		model.addAttribute("examRoomList",examRoomList);
 		model.addAttribute("stationList",stationList);
 		model.addAttribute("clinicalFlow",clinicalFlow);
 		model.addAttribute("clinicalName",clinicalName);
-		if(GlobalConstant.RECORD_STATUS_Y.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(flag)) {
 			model.addAttribute("stationFlow",stationFlow);
 			return "/osca/base/addRoomNew";
 		}
@@ -482,11 +480,11 @@ public class OscaBaseAdminController extends GeneralController {
 			}
 		}
 		if (num > 0) {
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}else if(num == -1){
 			return "该考官已扫描学生二维码但未提交成绩，暂无法调整！";
 		}else{
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
 	}
 	/**
@@ -506,7 +504,7 @@ public class OscaBaseAdminController extends GeneralController {
 		}else if(num == -1 && StringUtil.isNotBlank(recordFlow)){
 			return "考核已开始，无法删除考场";
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**
@@ -581,7 +579,7 @@ public class OscaBaseAdminController extends GeneralController {
                     List<OscaSkillDocStation> waitDocs=new ArrayList<>();
                     for(OscaSkillDocStation docStation:docStations)
                     {
-                        if(ExamStatusEnum.StayAssessment.getId().equals(docStation.getExamStatusId()))
+                        if (com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId().equals(docStation.getExamStatusId()))
                         {
                         	if(i>0){
 								List<String> preDoctorFlows=doctorFlowsMap.get(stationList.get(i-1).getStationFlow());
@@ -593,7 +591,7 @@ public class OscaBaseAdminController extends GeneralController {
 								waitDocs.add(docStation);
 							}
                         }
-                        if(ExamStatusEnum.AssessIng.getId().equals(docStation.getExamStatusId()))
+                        if (com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId().equals(docStation.getExamStatusId()))
                         {
                         	if(i>0){
 								List<String> preDoctorFlows=doctorFlowsMap.get(stationList.get(i-1).getStationFlow());
@@ -605,7 +603,7 @@ public class OscaBaseAdminController extends GeneralController {
 								assessingDocMap.put(docStation.getStationFlow()+docStation.getRoomFlow(),docStation);
 							}
                         }
-                        if(ExamStatusEnum.Assessment.getId().equals(docStation.getExamStatusId()))
+                        if (com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId().equals(docStation.getExamStatusId()))
                         {
 							doctorFlows.add(docStation.getDoctorFlow());
                         }
@@ -640,16 +638,16 @@ public class OscaBaseAdminController extends GeneralController {
         }
         String date=DateUtil.getCurrDateTime2();
         docStation.setHoukaoTime(date);
-        docStation.setExamStatusId(ExamStatusEnum.StayAssessment.getId());
-        docStation.setExamStatusName(ExamStatusEnum.StayAssessment.getName());
+        docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+        docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
         docStation.setRoomFlow("");
         docStation.setRoomName("");
         int c=baseBiz.saveDocStation(docStation);
         if(c==0)
         {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 	@RequestMapping("/nextDoc")
     @ResponseBody
@@ -659,28 +657,28 @@ public class OscaBaseAdminController extends GeneralController {
         {
             return "请选择需要跳过的学员！";
         }
-        if(ExamStatusEnum.Assessment.getId().equals(docStation.getExamStatusId()))
+        if (com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId().equals(docStation.getExamStatusId()))
 		{
 
 			return "此学员已考核，请刷新页面！";
 		}
-		docStation.setExamStatusId(ExamStatusEnum.AssessIng.getId());
-		docStation.setExamStatusName(ExamStatusEnum.AssessIng.getName());
+        docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId());
+        docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getName());
 		docStation.setRoomFlow(roomFlow);
 		docStation.setRoomName(roomName);
 		int c=baseBiz.saveDocStation(docStation);
         if(c==0)
         {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 	@RequestMapping("/nextDocYuYin")
     @ResponseBody
 	public Map<String,String> nextDocYuYin(String clinicalFlow,String stationFlow,String recordFlow,String roomFlow,String roomName) throws IOException{
 		Map<String,String> map=new HashMap();
 		map.put("code","1");
-		map.put("msg",GlobalConstant.OPRE_SUCCESSED);
+        map.put("msg", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED);
 		OscaSubjectStation station=baseBiz.readStation(stationFlow);
 		OscaSkillDocStation assessDoc=baseBiz.getStationAssessDoc(clinicalFlow,stationFlow,roomFlow);
 		if(assessDoc!=null)
@@ -765,9 +763,9 @@ public class OscaBaseAdminController extends GeneralController {
 	public String isShowOpt(String clinicalFlow,String isShow,String flag){
 		int num = baseBiz.isShowOpt(clinicalFlow,isShow,flag);
 		if (num > 0) {
-			return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 	}
 	/**
 	 * 学员各站成绩导出操作
@@ -931,7 +929,7 @@ public class OscaBaseAdminController extends GeneralController {
 					roomDoc.setDocRoomFlow(docRoomFlowLst.get(i));
 					roomDoc.setExamScore(scoreLst.get(i));
 					roomDoc.setExamSaveScore(scoreLst.get(i));
-					roomDoc.setIsAdminAudit(GlobalConstant.RECORD_STATUS_Y);
+                    roomDoc.setIsAdminAudit(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				}else{
 					roomDoc.setDoctorFlow(doctorFlow);
 					SysUser user=userBiz.readSysUser(doctorFlow);
@@ -943,11 +941,11 @@ public class OscaBaseAdminController extends GeneralController {
 					roomDoc.setClinicalName(clinicalName);
 					roomDoc.setStationFlow(stationFlowLst.get(i));
 					roomDoc.setStationName(stationNameLst.get(i));
-					roomDoc.setExamStatusId(ExamStatusEnum.Assessment.getId());
-					roomDoc.setExamStatusName(ExamStatusEnum.Assessment.getName());
+                    roomDoc.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId());
+                    roomDoc.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getName());
 					roomDoc.setExamScore(scoreLst.get(i));
 					roomDoc.setExamSaveScore(scoreLst.get(i));
-					roomDoc.setIsAdminAudit(GlobalConstant.RECORD_STATUS_Y);
+                    roomDoc.setIsAdminAudit(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				}
 				num += baseBiz.saveGrade(roomDoc);
 			}
@@ -955,9 +953,9 @@ public class OscaBaseAdminController extends GeneralController {
 		if (num > 0) {
 			baseBiz.updateIsPass(clinicalFlow,doctorFlow,resultId);
 //			baseBiz.updateDoctorAssessment(clinicalFlow,doctorFlow,GlobalContext.getCurrentUser());
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}else{
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
 	}
 	@RequestMapping("/chekIsPass")
@@ -1011,7 +1009,7 @@ public class OscaBaseAdminController extends GeneralController {
 		if (stations != null) {
 			//如果学员所有站点都没有考核完，直接是不通过
 			if (stationScoreList.size() < stations.size()) {
-                return GlobalConstant.FLAG_N;
+                return com.pinde.core.common.GlobalConstant.FLAG_N;
 			}else {
 				//每部分的站点数量
 				Map<String, List<OscaSubjectStation>> partMap = new HashMap<>();
@@ -1036,7 +1034,7 @@ public class OscaBaseAdminController extends GeneralController {
 				//如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
 				if(allScore!=null&&allScore>examAllScore)
 				{
-                    return GlobalConstant.FLAG_N;
+                    return com.pinde.core.common.GlobalConstant.FLAG_N;
 				}else {
 					//有几部分
 					int partCount = partMap.size();
@@ -1071,19 +1069,19 @@ public class OscaBaseAdminController extends GeneralController {
 							}
 							if(stationPassCount==stations.size()) {
 
-                                return GlobalConstant.FLAG_Y;
+                                return com.pinde.core.common.GlobalConstant.FLAG_Y;
 							}else{
-                                return GlobalConstant.FLAG_N;
+                                return com.pinde.core.common.GlobalConstant.FLAG_N;
 							}
 						}else{
-                            return GlobalConstant.FLAG_N;
+                            return com.pinde.core.common.GlobalConstant.FLAG_N;
 						}
 					}
 				}
 
 			}
 		}
-        return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
 	}
 
 	/**
@@ -1095,17 +1093,17 @@ public class OscaBaseAdminController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = baseBiz.importGradeExcel(file,clinicalFlow);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	//打开预约学员导入页面
@@ -1133,22 +1131,22 @@ public class OscaBaseAdminController extends GeneralController {
 		}else{
 			examStartTime = startTime;
 			examEndTime = endTime;
-            isNewTime = GlobalConstant.FLAG_Y;
+            isNewTime = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		}
 		if(file.getSize() > 0){
 			try{
 				int result = baseBiz.importStudents(file,clinicalFlow,examStartTime,examEndTime,isNewTime);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	/**
@@ -1216,7 +1214,7 @@ public class OscaBaseAdminController extends GeneralController {
 			}
 		}
 		model.addAttribute("score",score);
-        model.addAttribute("view", GlobalConstant.FLAG_Y);//标识表单只可查看
+        model.addAttribute("view", com.pinde.core.common.GlobalConstant.FLAG_Y);//标识表单只可查看
 		return "/osca/base/formScoreDetail";
 	}
 
@@ -1249,7 +1247,7 @@ public class OscaBaseAdminController extends GeneralController {
 		dict.setOrgName(GlobalContext.getCurrentUser().getOrgName());
 		if(StringUtil.isBlank(parentDictFlow)){
 			dictTypeId = dict.getDictTypeId();
-			DictTypeEnum dictTypeEnum =  DictTypeEnum.valueOf(dictTypeId);
+            DictTypeEnum dictTypeEnum = com.pinde.core.common.enums.DictTypeEnum.valueOf(dictTypeId);
 			dict.setDictTypeName(dictTypeEnum.getName());
 		}else{
 			SysDict parentDict = this.dictBiz.readDict(parentDictFlow);
@@ -1262,7 +1260,7 @@ public class OscaBaseAdminController extends GeneralController {
 			//新增字典时判断该类型字典代码是否存在
 			SysDict sysDict=dictBiz.readDict(dictTypeId,dict.getDictId(),dict.getOrgFlow());
 			if(null!=sysDict){
-				return GlobalConstant.OPRE_FAIL_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 			}
 			this.dictBiz.addDict(dict);
 		}else{
@@ -1270,12 +1268,12 @@ public class OscaBaseAdminController extends GeneralController {
 			List<SysDict> dictList=dictBiz.searchDictListByDictTypeIdNotIncludeSelf(dict);
 			for(SysDict sysDict:dictList){
 				if(dict.getDictId().equals(sysDict.getDictId())){
-					return GlobalConstant.OPRE_FAIL_FLAG;
+                    return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 				}
 			}
 			this.dictBiz.modeDictAndSubDict(dict);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	/**
@@ -1286,9 +1284,9 @@ public class OscaBaseAdminController extends GeneralController {
 	public String isShowFroom(String clinicalFlow,String isShowFroom){
 		int num = baseBiz.isShowFroom(clinicalFlow,isShowFroom);
 		if (num > 0) {
-			return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 	}
 
 	@RequestMapping("/screenDisplay")
@@ -1395,7 +1393,7 @@ public class OscaBaseAdminController extends GeneralController {
 	public ModelAndView dictList(SysDict sysDict) {
 		ModelAndView mav = new ModelAndView("osca/base/dictList");
 		if(StringUtil.isNotBlank(sysDict.getDictTypeId())){
-			int level = DictTypeEnum.valueOf(sysDict.getDictTypeId()).getLevel();
+            int level = com.pinde.core.common.enums.DictTypeEnum.valueOf(sysDict.getDictTypeId()).getLevel();
 			if(level>1){
 				mav = new ModelAndView("osca/base/mullist");
 				mav.addObject("level" , level);
@@ -1442,10 +1440,10 @@ public class OscaBaseAdminController extends GeneralController {
 		if(old!=null)
 			differScore.setCfgFlow(old.getCfgFlow());
 		int result = baseBiz.saveExamDiffierScoreCfg(differScore);
-		if(result>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**

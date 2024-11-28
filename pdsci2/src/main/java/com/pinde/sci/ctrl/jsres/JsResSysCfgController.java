@@ -54,7 +54,7 @@ public class JsResSysCfgController extends GeneralController {
 
     @RequestMapping(value = "/edit", method = {RequestMethod.GET})
     public ModelAndView edit() {
-        String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
         ModelAndView mav = new ModelAndView("jsres/sysCfg/jsresCfg");
         SysCfg cfg = new SysCfg();
         cfg.setWsId(wsId);
@@ -77,7 +77,7 @@ public class JsResSysCfgController extends GeneralController {
     @RequestMapping(value="/save",method=RequestMethod.POST)
     @ResponseBody
     public String save(HttpServletRequest request){
-        String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
         String [] cfgCodes =request.getParameterValues("cfgCode");
         if(cfgCodes!=null){
             String nowTime= DateUtil.getCurrDateTime2();
@@ -103,7 +103,7 @@ public class JsResSysCfgController extends GeneralController {
 
                 String sysCfgBigValue=request.getParameter(cfgCode+"_big_value");
                 cfg.setCfgBigValue(sysCfgBigValue);
-                cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 sysCfgList.add(cfg);
                 //记录日志
                 if(oldCfg==null||!StringUtil.isEquals(oldCfg.getCfgValue(),cfg.getCfgValue())
@@ -126,7 +126,7 @@ public class JsResSysCfgController extends GeneralController {
                         cfgLog.setCfgOldBigValue(oldCfg.getCfgBigValue());
                     }
                     cfgLog.setSaveTime(nowTime);
-                    cfgLog.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    cfgLog.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     sysCfgLogList.add(cfgLog);
                 }
             }
@@ -143,7 +143,7 @@ public class JsResSysCfgController extends GeneralController {
             e.printStackTrace();
         }
 
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     private void RefreshMem(HttpServletRequest request) {

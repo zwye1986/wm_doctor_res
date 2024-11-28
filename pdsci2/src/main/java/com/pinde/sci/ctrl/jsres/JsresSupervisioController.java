@@ -22,9 +22,8 @@ import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sch.ActivityTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.apache.commons.lang3.StringUtils;
@@ -135,7 +134,7 @@ public class JsresSupervisioController extends GeneralController {
         param.put("userPhone", userPhone);
         param.put("userLevelId", userLevelId);
         param.put("speId", trainingSpeId);
-        if (StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             SysUser currentUser = GlobalContext.getCurrentUser();
             param.put("orgFlow",currentUser.getOrgFlow());
             param.put("suAoth",suAoth);
@@ -242,12 +241,12 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String delSupervisioUser(String userFlow) {
         SysUser user = userBiz.readSysUser(userFlow);
-        user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         int num = supervisioUserBiz.editSupervisioUser(user);
         if (num > 0) {
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
 
@@ -260,7 +259,7 @@ public class JsresSupervisioController extends GeneralController {
         //新增用户是判断
         if (StringUtil.isBlank(user.getUserFlow())) {
             //判断是否是基地创建的专家
-            if (StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 SysUser currUser = GlobalContext.getCurrentUser();
                 user.setOrgFlow(currUser.getOrgFlow());
                 user.setOrgName(currUser.getOrgName());
@@ -279,7 +278,7 @@ public class JsresSupervisioController extends GeneralController {
             if (StringUtil.isNotBlank(user.getUserPhone())) {
                 List<SysUser> userList = supervisioUserBiz.findByUserPhoneAndNotSelf(userFlow, user.getUserPhone());
                 if (null != userList && userList.size() > 0) {
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }
             //自动刷角色
@@ -287,29 +286,29 @@ public class JsresSupervisioController extends GeneralController {
                 SysUserRole sysUserRole=new SysUserRole();
                 sysUserRole.setUserFlow(user.getUserFlow());
                 sysUserRole.setRecordFlow(PkUtil.getUUID());
-                sysUserRole.setRecordStatus(GlobalConstant.FLAG_Y);
+                sysUserRole.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 sysUserRole.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime2());
                 sysUserRole.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
                 sysUserRole.setRoleFlow(InitConfig.getSysCfg("res_management_role_flow"));
                 if (sysUserRoleMapper.insert(sysUserRole)<=0){
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }else if (user.getUserLevelId().equals("expertLeader")){
                 SysUserRole sysUserRole=new SysUserRole();
                 sysUserRole.setUserFlow(user.getUserFlow());
                 sysUserRole.setRecordFlow(PkUtil.getUUID());
-                sysUserRole.setRecordStatus(GlobalConstant.FLAG_Y);
+                sysUserRole.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 sysUserRole.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime2());
                 sysUserRole.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
                 sysUserRole.setRoleFlow(InitConfig.getSysCfg("res_expertLeader_role_flow"));
                 if (sysUserRoleMapper.insert(sysUserRole)<=0){
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }
 
             int num = supervisioUserBiz.addSupervisioUser(user);
             if (num > 0) {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         } else {
             //判断电话号码是否重复
@@ -321,15 +320,15 @@ public class JsresSupervisioController extends GeneralController {
                 }
                 List<SysUser> userList = supervisioUserBiz.findByUserPhoneAndNotSelf(user.getUserFlow(), user.getUserPhone());
                 if (null != userList && userList.size() > 0) {
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }
             int num = supervisioUserBiz.editSupervisioUser(user);
             if (num > 0) {
-                return GlobalConstant.UPDATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //院级督导    保存专家
@@ -343,7 +342,7 @@ public class JsresSupervisioController extends GeneralController {
                 for (SysUser sysUser : userList) {
                     if (StringUtil.isNotBlank(sysUser.getUserLevelName()) && StringUtil.isNotBlank(sysUser.getUserLevelId())) {
                         if (sysUser.getUserLevelName().equals("评分专家") && sysUser.getUserLevelId().equals("hospitalLeader")) {
-                            return GlobalConstant.OPERATE_FAIL;
+                            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                         }
                     }
                 }
@@ -355,7 +354,7 @@ public class JsresSupervisioController extends GeneralController {
             user.setOrgName(sysUser.getOrgName());
             user.setUserCode(user.getUserPhone());
             user.setUserPasswd(PasswordHelper.encryptPassword(userFlow, "Njpd@2022!!!"));
-            user.setRecordStatus(GlobalConstant.FLAG_Y);
+            user.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             user.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime2());
             user.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
             user.setUserLevelId("hospitalLeader");
@@ -364,7 +363,7 @@ public class JsresSupervisioController extends GeneralController {
             user.setStatusDesc(UserStatusEnum.Activated.getName());
             int num = supervisioUserBiz.addSupervisioUser(user);
             if (num > 0) {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }else {
             if (StringUtil.isNotBlank(user.getUserPhone())) {
@@ -372,17 +371,17 @@ public class JsresSupervisioController extends GeneralController {
                 if (null != userList && userList.size() > 0) {
                     for (SysUser sysUser : userList) {
                         if (!sysUser.getUserName().equals(user.getUserName())) {
-                            return GlobalConstant.OPERATE_FAIL;
+                            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                         }
                     }
                 }
                 int num = supervisioUserBiz.editSupervisioUser(user);
                 if (num > 0) {
-                    return GlobalConstant.UPDATE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
                 }
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
 
@@ -412,10 +411,10 @@ public class JsresSupervisioController extends GeneralController {
                 return e.getMessage();
             }
             if (count != 0) {
-                return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
+                return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     //院级督导   导入专家信息
@@ -431,10 +430,10 @@ public class JsresSupervisioController extends GeneralController {
                 return e.getMessage();
             }
             if (count != 0) {
-                return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
+                return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
     /**
      * 省级督导    专家导出
@@ -779,7 +778,7 @@ public class JsresSupervisioController extends GeneralController {
     public String subjectMain(Model model, String roleFlag) {
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("320000");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
         model.addAttribute("orgs", orgs);
         model.addAttribute("roleFlag", roleFlag);
@@ -816,7 +815,7 @@ public class JsresSupervisioController extends GeneralController {
         }
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("320000");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
   /*      List<SysOrg> sysOrgs = orgBiz.searchAllBaseCode();  //查询拥有基地代码的基地信息
         model.addAttribute("sysOrgs", sysOrgs);*/
@@ -830,11 +829,11 @@ public class JsresSupervisioController extends GeneralController {
         SysDept dept = new SysDept();
         dept.setDeptName(speName);
         dept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        List<Map<String, String>> speList = deptBiz.searchDeptByUnion(dept, GlobalConstant.FLAG_Y);
+        List<Map<String, String>> speList = deptBiz.searchDeptByUnion(dept, com.pinde.core.common.GlobalConstant.FLAG_Y);
 
         if (null != speList && speList.size()>0){
             model.addAttribute("speList",speList);  //科室列表
-            model.addAttribute("speOnly", GlobalConstant.FLAG_Y);  //标识，表明是否有关联的科室
+            model.addAttribute("speOnly", com.pinde.core.common.GlobalConstant.FLAG_Y);  //标识，表明是否有关联的科室
         }
         model.addAttribute("speName",speName);
         model.addAttribute("activityFlows",activityFlows);
@@ -844,7 +843,7 @@ public class JsresSupervisioController extends GeneralController {
     @RequestMapping(value = "/activityList")
     public String activityList(Model model,String activityName,String userName,String startTime,String endTime,String activityFlows,
                                String deptFlow,String speName,String speOnly) {
-        if (StringUtil.isNotBlank(speOnly) && speOnly.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(speOnly) && speOnly.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             Map<String,Object> param=new HashMap<>();
             SysUser curUser = GlobalContext.getCurrentUser();
             param.put("activityTypeId","1");
@@ -864,7 +863,7 @@ public class JsresSupervisioController extends GeneralController {
                 SysDept dept = new SysDept();
                 dept.setDeptName(speName);
                 dept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-                List<Map<String, String>> speList = deptBiz.searchDeptByUnion(dept, GlobalConstant.FLAG_Y);
+                List<Map<String, String>> speList = deptBiz.searchDeptByUnion(dept, com.pinde.core.common.GlobalConstant.FLAG_Y);
                 if (null != speList && speList.size()>0){
                     ArrayList<String> list = new ArrayList<>();
                     for (Map<String, String> map : speList) {
@@ -902,7 +901,7 @@ public class JsresSupervisioController extends GeneralController {
     public String editHospitalSubject(Model model, String subjectFlow) {
         ResHospSupervSubject subject = supervisioUserBiz.selectHospSupervisioBySubjectFlow(subjectFlow);
         model.addAttribute("subject",subject);
-        model.addAttribute("edit", GlobalConstant.FLAG_Y);
+        model.addAttribute("edit", com.pinde.core.common.GlobalConstant.FLAG_Y);
         return "jsres/hospital/supervisio/editHospitalSubject";
     }
 
@@ -931,7 +930,7 @@ public class JsresSupervisioController extends GeneralController {
                 //return orgList.get(0).getOrgFlow()+"_"+orgList.get(0).getOrgName();
                 return sysOrgExts.get(0).getOrgFlow();
             }else {
-                return GlobalConstant.OPERATE_FAIL;
+                return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
             }
         }else if (orgFlow!=null){
             SysOrgExt orgExts = sysOrgExtMapper.searchOrgFlow(orgFlow);
@@ -939,7 +938,7 @@ public class JsresSupervisioController extends GeneralController {
                 return orgExts.getBaseCode();
             }
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     /**
@@ -983,7 +982,7 @@ public class JsresSupervisioController extends GeneralController {
 //                } else {
 //                    SysOrg sysorg = new SysOrg();
 //                    sysorg.setOrgProvId("320000");
-//                    sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+//                    sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 //                    List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
 //                    model.addAttribute("orgList", orgs);
 //
@@ -1060,7 +1059,7 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String saveSubjectNew(ResSupervisioSubject subject, String[] speIds, String[] userFlows, String[] orgFlows, String subjectEdit) {
         if (Integer.parseInt(supervisioUserBiz.searchSubjectNameNum(subject.getSubjectName()))>=1){
-            return GlobalConstant.CRM_CUSTOMER_NAME_EXIST;
+            return com.pinde.core.common.GlobalConstant.CRM_CUSTOMER_NAME_EXIST;
         }
         subject.setSubjectEdit(subjectEdit);
         List<String> userFlowList=new ArrayList<>();
@@ -1070,7 +1069,7 @@ public class JsresSupervisioController extends GeneralController {
         if ("allSubject".equals(subject.getSubjectEdit())){
             SysOrg sysorg = new SysOrg();
             sysorg.setOrgProvId("320000");
-            sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
             for (SysOrg org : orgs) {
                 List<ResOrgSpeAssign> speAssignList = speAssignBiz.searchSpeAssign(org.getOrgFlow(), com.pinde.core.util.DateUtil.getYear());
@@ -1083,7 +1082,7 @@ public class JsresSupervisioController extends GeneralController {
                         String subjectFlow = PkUtil.getUUID();
                         subject.setSubjectFlow(subjectFlow);
                         subject.setSpeId(assign.getSpeId());
-                        subject.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(assign.getSpeId()));
+                        subject.setSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(assign.getSpeId()));
                         //保存督导
                         if (null != userFlowList && userFlowList.size() > 0) {
                             for (String userFlow : userFlows) {
@@ -1119,7 +1118,7 @@ public class JsresSupervisioController extends GeneralController {
                     }
                 }
             }
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
         if ("orgSubject".equals(subject.getSubjectEdit())) {
             String subjectActivitiFlows = PkUtil.getUUID();
@@ -1132,7 +1131,7 @@ public class JsresSupervisioController extends GeneralController {
                     String subjectFlow = PkUtil.getUUID();
                     subject.setSubjectFlow(subjectFlow);
                     subject.setSpeId(speId);
-                    subject.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId));
+                    subject.setSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId));
                     //保存督导
                     boolean hasExpertLeader = false;
                     if (null != userFlowList && userFlowList.size() > 0) {
@@ -1154,7 +1153,7 @@ public class JsresSupervisioController extends GeneralController {
                     }
 
                     if(!hasExpertLeader) {
-                        return GlobalConstant.NOT_BASE_EXPERT;
+                        return com.pinde.core.common.GlobalConstant.NOT_BASE_EXPERT;
                     }
                     //专业基地管理员
                     /*ResSupervisioSubjectUser subjectUser = new ResSupervisioSubjectUser();
@@ -1163,7 +1162,7 @@ public class JsresSupervisioController extends GeneralController {
                     subjectUser.setSubjectName(subject.getSubjectName());
                     SysUser user = supervisioUserBiz.findUserByUserCode(baseCode + speId); //查询专业基地专家
                     if (user==null){
-                        return GlobalConstant.NOT_BASE_EXPERT;
+                        return com.pinde.core.common.GlobalConstant.NOT_BASE_EXPERT;
                     }
                     subjectUser.setUserFlow(user.getUserFlow());
                     subjectUser.setUserName(user.getUserName());
@@ -1175,9 +1174,9 @@ public class JsresSupervisioController extends GeneralController {
                     supervisioUserBiz.insertSubject(subject);
                     logger.info(speId+"的项目创建完成");
                 }
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         if ("speSubject".equals(subject.getSubjectEdit())) {
             List<String> orgFlowList = Arrays.asList(orgFlows);
@@ -1221,11 +1220,11 @@ public class JsresSupervisioController extends GeneralController {
                     subject.setSubjectActivitiFlows(subjectActivitiFlows);
                     supervisioUserBiz.insertSubject(subject);
                 }
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //院级督导  保存、修改项目
@@ -1300,9 +1299,9 @@ public class JsresSupervisioController extends GeneralController {
         hospSupervSubject.setMatching("已匹配");
         int num = supervisioUserBiz.updateHospSupervisioBySubjectFlow(hospSupervSubject);
         if (num==1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -1320,10 +1319,10 @@ public class JsresSupervisioController extends GeneralController {
         subject.setBaseCode(oldSubject.getBaseCode());
         subject.setSubjectActivitiFlows(oldSubject.getSubjectActivitiFlows());
         subject.setSubjectEdit(subjectEditFlag);
-        subject.setRecordStatus(GlobalConstant.FLAG_Y);
+        subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         //基地自己的项目修改
-        if (StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y)) {
-            subject.setSupervisioAuthority(GlobalConstant.FLAG_Y);
+        if (StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+            subject.setSupervisioAuthority(com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         List<String> userFlowList=new ArrayList<>();
         if (userFlows!=null){
@@ -1357,15 +1356,15 @@ public class JsresSupervisioController extends GeneralController {
         subjectUser.setSubjectName(subject.getSubjectName());
         SysUser user = supervisioUserBiz.findUserByUserCode(subject.getBaseCode() + subject.getSpeId());
         if (user==null){
-            return GlobalConstant.NOT_BASE_EXPERT;
+            return com.pinde.core.common.GlobalConstant.NOT_BASE_EXPERT;
         }
         subjectUser.setUserFlow(user.getUserFlow());
         subjectUser.setUserName(user.getUserName());
         int userNum = supervisioUserBiz.saveSubjectUser(subjectUser);
         if (num > 0 && userNum>0) {
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -1380,12 +1379,12 @@ public class JsresSupervisioController extends GeneralController {
         if (null != userList && userList.size() > 0) {
             supervisioUserBiz.delSubjectUserBySubjectFlow(subject.getSubjectFlow());
         }
-        subject.setRecordStatus(GlobalConstant.FLAG_N);
+        subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         int num = supervisioUserBiz.updateSubject(subject);
         if (num > 0) {
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     /**
@@ -1397,14 +1396,14 @@ public class JsresSupervisioController extends GeneralController {
         //所有专家
         List<ResSupervisioSubjectUser> userList = supervisioUserBiz.selectSupervisioUserListByFlow(subjectFlow);
         //管理专家或卫健委查看评分，可以查看所有的专家评分
-        if (roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)|| roleFlag.equals("management")){
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL) || roleFlag.equals("management")) {
             for (int i = 0; i < userList.size(); i++) {
                 SysUser user = userBiz.readSysUser(userList.get(i).getUserFlow());
                 userList.get(i).setUserName(user.getUserName());
             }
         }
         //如果是专业专家和基地查看评分，只能看专业表
-        if ((!roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL))&& (!roleFlag.equals("management"))){
+        if ((!roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) && (!roleFlag.equals("management"))) {
             for (int i = 0; i < userList.size(); i++) {
                 SysUser user = userBiz.readSysUser(userList.get(i).getUserFlow());
                 if (!user.getUserLevelId().equals("expertLeader") && !user.getUserLevelId().equals("baseExpert")){
@@ -1424,11 +1423,11 @@ public class JsresSupervisioController extends GeneralController {
             if (sysUser!=null){
                 userFlow=sysUser.getUserFlow();
                 ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(sysUser.getUserFlow(), subjectFlow);
-                model.addAttribute("userSubmit", subjectUser.getEvaluationDate() == null ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);
+                model.addAttribute("userSubmit", subjectUser.getEvaluationDate() == null ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N);
             }
         }
         ResSupervisioSubject resSupervisioSubject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
-        model.addAttribute("baseManageSubmit", resSupervisioSubject.getBaseManageSubmit() == null ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N);  //基地自己评审的管理表是否提交
+        model.addAttribute("baseManageSubmit", resSupervisioSubject.getBaseManageSubmit() == null ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N);  //基地自己评审的管理表是否提交
         model.addAttribute("userList", userList);
         model.addAttribute("subjectFlow", subjectFlow);
         model.addAttribute("userFlow", userFlow);
@@ -1488,10 +1487,10 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("orgName", org.getOrgName());
         model.addAttribute("orgCityName", org.getOrgCityName());
         model.addAttribute("roleFlag", roleFlag);
-        model.addAttribute("isRead", GlobalConstant.RECORD_STATUS_Y);
+        model.addAttribute("isRead", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         model.addAttribute("subjectFlow", subjectFlow);
         //基地管理表
-        if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             ResEvaluationScore searchLocalScore = new ResEvaluationScore();
             searchLocalScore.setSubjectFlow(subject.getSubjectActivitiFlows());
             searchLocalScore.setOrgFlow(subject.getOrgFlow());
@@ -1499,7 +1498,7 @@ public class JsresSupervisioController extends GeneralController {
             searchLocalScore.setEvaluationYear(subject.getSubjectYear());
             List<ResEvaluationScore> ownerEvaluationScoreList = supervisioUserBiz.searchEvaluationScore(searchLocalScore);
             model.addAttribute("localEvaluationScoreList", ownerEvaluationScoreList);
-            model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
             model.addAttribute("isLocalManage",isLocalManage);
             return "jsres/assess/evaluationInfo_4000";
         }
@@ -1554,7 +1553,7 @@ public class JsresSupervisioController extends GeneralController {
             }
 
             model.addAttribute("ownerScoreList", ownerScoreList);
-            model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
             //总表的标识，为了区分是总表还是单个专家的表，以便打印
             model.addAttribute("manageUserFlow",manageUserFlow);
             return "jsres/assess/evaluationInfo_4000";
@@ -1570,7 +1569,7 @@ public class JsresSupervisioController extends GeneralController {
         ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(userFlow, subjectFlow);
         model.addAttribute("subjectUser", subjectUser);
         if (null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-            model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
             model.addAttribute("evaluationDate", com.pinde.core.util.DateUtil.parseDate(subjectUser.getEvaluationDate(),"yyyy-MM-dd"));
             if (!roleFlag.equals("baseExpert")){
                 //查询专家签名
@@ -1706,9 +1705,9 @@ public class JsresSupervisioController extends GeneralController {
             }
         }
         if (num>=userFlows.size()){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     /**
@@ -1737,8 +1736,8 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("evaluationDate", com.pinde.core.util.DateUtil.parseDate(com.pinde.core.util.DateUtil.getCurrDate(), "yyyy-MM-dd"));
 
         //基地管理表
-        if ((StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y) && roleFlag.equals("local"))
-                || (roleFlag.equals(GlobalConstant.USER_LIST_LOCAL) && StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y))) {
+        if ((StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) && roleFlag.equals("local"))
+                || (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL) && StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y))) {
             model.addAttribute("isLocalManage",isLocalManage);
             ResEvaluationScore searchLocalScore = new ResEvaluationScore();
             searchLocalScore.setSubjectFlow(subjectActivitiFlows);
@@ -1749,7 +1748,7 @@ public class JsresSupervisioController extends GeneralController {
             if (null != ownerEvaluationScoreList && ownerEvaluationScoreList.size() > 0) {
                 model.addAttribute("localEvaluationScoreList", ownerEvaluationScoreList);
             }
-            if (StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 model.addAttribute("orgName", GlobalContext.getCurrentUser().getOrgName());
             }
             ResSupervisioSubject resSupervisioSubject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
@@ -1757,8 +1756,8 @@ public class JsresSupervisioController extends GeneralController {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date nowTime = sdf.parse(com.pinde.core.util.DateUtil.getCurrDateTime2());
                 Date devTime = sdf.parse(resSupervisioSubject.getDevTimeClose());
-                if ((StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y))) {
-                    model.addAttribute("editFlag",  resSupervisioSubject.getSupervisioResults()==null?"":GlobalConstant.FLAG_N);
+                if ((StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y))) {
+                    model.addAttribute("editFlag", resSupervisioSubject.getSupervisioResults() == null ? "" : com.pinde.core.common.GlobalConstant.FLAG_N);
                 }else {
                     if (nowTime.compareTo(devTime)<0){
                         model.addAttribute("editFlag", "");
@@ -1772,7 +1771,7 @@ public class JsresSupervisioController extends GeneralController {
         }
 
         model.addAttribute("userFlow", userFlow);
-        if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && !"baseExpert".equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && !"baseExpert".equals(roleFlag)) {
             //查询专家签名
             SysUser user = userBiz.readSysUser(userFlow);
             model.addAttribute("speSignUrl", user.getUserSignUrl());
@@ -1799,7 +1798,7 @@ public class JsresSupervisioController extends GeneralController {
                             Date nowTime = sdf.parse(com.pinde.core.util.DateUtil.getCurrDateTime2());
                             Date devTime = sdf.parse(subject.getClosedTime());
                             if (nowTime.compareTo(devTime)>0){
-                                model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+                                model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
                             }
                             model.addAttribute("subjectUser", subjectUser);
                             break;
@@ -1827,7 +1826,7 @@ public class JsresSupervisioController extends GeneralController {
         //有评分
         if (null != speEvaluationScoreList && speEvaluationScoreList.size() > 0) {
             model.addAttribute("speScoreList", speEvaluationScoreList);
-            if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+            if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
                 //查询专家评分是否提交  提交不能编辑
                 ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(userFlow, subjectFlow);
                 if (null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
@@ -1835,17 +1834,17 @@ public class JsresSupervisioController extends GeneralController {
                     Date nowTime = sdf.parse(com.pinde.core.util.DateUtil.getCurrDateTime2());
                     Date devTime = sdf.parse(subject.getClosedTime());
                     if (nowTime.compareTo(devTime)>0){
-                        model.addAttribute("editFlag", GlobalConstant.FLAG_N);
-                        model.addAttribute("isRead", GlobalConstant.FLAG_Y);
+                        model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
+                        model.addAttribute("isRead", com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                 }
                 model.addAttribute("subjectUser", subjectUser);
             } else {
                 ResSupervisioSubject resSupervisioSubject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
                 if (StringUtil.isNotBlank(resSupervisioSubject.getReqedit())) {
-                    model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+                    model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
                 } else {
-                    model.addAttribute("editFlag", GlobalConstant.FLAG_Y);
+                    model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
             }
         }
@@ -1862,8 +1861,8 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("orgCityName", org.getOrgCityName());
         //提前查看附件的总分（多个附表总分一起核算，如5-1、5-2）
         ResScheduleScore resScheduleScore = new ResScheduleScore();
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader") || roleFlag.equals("expert")) {
             resScheduleScore.setGrade("expert");
         }
@@ -1890,7 +1889,7 @@ public class JsresSupervisioController extends GeneralController {
         //不为空表明是管理表，为空是专业表
         if (indicatorsNum!=null){
             searchScore.setSubjectFlow(subjectActivitiFlows);
-            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 searchScore.setSpeUserFlow(orgFlow);
             }else {
                 searchScore.setSpeUserFlow(userFlow);
@@ -1911,7 +1910,7 @@ public class JsresSupervisioController extends GeneralController {
             evaluationScore.setOrgFlow(orgFlow);
             evaluationScore.setSpeId(speId);
             evaluationScore.setEvaluationYear(subject.getSubjectYear());
-            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 evaluationScore.setSpeUserFlow(orgFlow);
             }else {
                 evaluationScore.setSpeUserFlow(userFlow);
@@ -1935,7 +1934,7 @@ public class JsresSupervisioController extends GeneralController {
             evaluationScore.setCoreIndicators(coreIndicators);
         }
         supervisioUserBiz.saveScore(evaluationScore);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping(value = "/saveSpeScoreTotal")
@@ -1943,7 +1942,7 @@ public class JsresSupervisioController extends GeneralController {
     String saveSpeScoreTotal(String userFlow, String subjectFlow, String speScoreTotal, String evaluationDate, String roleFlag,
                              String subjectActivitiFlows,String isLocalManage,String suAoth,String selfTotalled) {
         //基地（自己创建的项目）的管理表
-        if (StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             //将评审结果换算等级保存到 subject表中 --督导结果
             ResEvaluationScore baseSearchScoreOwner=new ResEvaluationScore();
             baseSearchScoreOwner.setSubjectFlow(subjectActivitiFlows);
@@ -1977,22 +1976,22 @@ public class JsresSupervisioController extends GeneralController {
                         successNum++;
                     }
                     if (successNum==subjectList.size()){
-                        return GlobalConstant.SAVE_SUCCESSED;
+                        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                     }
                 }
             }
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
 
         //基地（卫健委创建的项目）的管理表
-        if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             ResSupervisioSubject resSupervisioSubject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
             List<ResSupervisioSubject> subjectList = supervisioUserBiz.selectBySubjectActivitiFlows(resSupervisioSubject.getSubjectActivitiFlows());
             if (subjectList!=null && subjectList.size()>0){
                 int num=0;
                 for (ResSupervisioSubject subject:subjectList) {
                     subject.setBaseManageScore(speScoreTotal);
-                    subject.setBaseManageSubmit(GlobalConstant.FLAG_N);
+                    subject.setBaseManageSubmit(com.pinde.core.common.GlobalConstant.FLAG_N);
                     supervisioUserBiz.updateSubject(subject);
                     num++;
                 }
@@ -2000,22 +1999,22 @@ public class JsresSupervisioController extends GeneralController {
                 supervisioUserBiz.insertRecores(subjectActivitiFlows,userFlow,"local");
 
                 if (num==subjectList.size()){
-                    return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                 }
             }
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         //基地-专业表
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
             ResSupervisioSubject resSupervisioSubject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
             //未提交
             if (StringUtil.isBlank(resSupervisioSubject.getReqedit())) {
-                resSupervisioSubject.setReqedit(GlobalConstant.RECORD_STATUS_Y);
+                resSupervisioSubject.setReqedit(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 int i = supervisioUserBiz.saveSubject(resSupervisioSubject);
                 if (i > 0) {
-                    return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                 } else {
-                    return GlobalConstant.SAVE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
                 }
             }
         }
@@ -2141,7 +2140,7 @@ public class JsresSupervisioController extends GeneralController {
                                     }
                                 }
                                 if (num.compareTo(new BigDecimal(subNum))==0){
-                                    subject.setManageAllSub(GlobalConstant.FLAG_Y);
+                                    subject.setManageAllSub(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 }
                             }
                             supervisioUserBiz.saveSubject(subject);
@@ -2149,11 +2148,11 @@ public class JsresSupervisioController extends GeneralController {
                         }
                         if (successNum==subjectList.size()){
                             supervisioUserBiz.insertRecores(subjectActivitiFlows,userFlow,roleFlag);
-                            return GlobalConstant.SAVE_SUCCESSED;
+                            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                         }
                     }
                 }
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }
             //专业基地管理员
             if (roleFlag.equals("baseExpert")){
@@ -2166,7 +2165,7 @@ public class JsresSupervisioController extends GeneralController {
                     //添加提交记录
                     ResSupervisioSubjectRecords records = new ResSupervisioSubjectRecords();
                     records.setRecordFlow(PkUtil.getUUID());
-                    records.setRecordStatus(GlobalConstant.FLAG_Y);
+                    records.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     records.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime());
                     records.setCreateUserFlow(userFlow);
                     records.setRoleFlag(roleFlag);
@@ -2179,9 +2178,9 @@ public class JsresSupervisioController extends GeneralController {
                         records.setSubNum("1");
                     }
                     subjectRecordsMapper.insert(records);
-                    return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                 }
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }
         }
 
@@ -2194,13 +2193,13 @@ public class JsresSupervisioController extends GeneralController {
             supervisioUserBiz.saveSubjectUser(subjectUser);
             //查询督导组员是否全部提交
             List<ResSupervisioSubjectUser> userList = supervisioUserBiz.selectSupervisioUserListByFlow(subjectFlow);
-            String isSubmit = GlobalConstant.FLAG_Y;
+            String isSubmit = com.pinde.core.common.GlobalConstant.FLAG_Y;
             Integer scoreTotal = 0;
             int evaNum = userList.size();
             if (null != userList && userList.size() > 0) {
                 for (ResSupervisioSubjectUser user : userList) {
                     if (StringUtil.isBlank(user.getEvaluationDate())) {
-                        isSubmit = GlobalConstant.FLAG_N;
+                        isSubmit = com.pinde.core.common.GlobalConstant.FLAG_N;
                         break;
                     } else {
                         if (user.getSpeScoreTotal() != null) {
@@ -2209,9 +2208,9 @@ public class JsresSupervisioController extends GeneralController {
                     }
                 }
             } else {
-                isSubmit = GlobalConstant.FLAG_N;
+                isSubmit = com.pinde.core.common.GlobalConstant.FLAG_N;
             }
-            if (GlobalConstant.FLAG_Y.equals(isSubmit)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSubmit)) {
                 //全部提交  计算平均分并保存
                 BigDecimal total = new BigDecimal(scoreTotal);
                 BigDecimal num = new BigDecimal(evaNum);
@@ -2221,9 +2220,9 @@ public class JsresSupervisioController extends GeneralController {
                 supervisioUserBiz.saveSubject(subject);
             }
             supervisioUserBiz.insertRecores(subjectFlow,userFlow,"expertLeader");
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping(value = "/saveSpeReason")
@@ -2242,7 +2241,7 @@ public class JsresSupervisioController extends GeneralController {
         //管理表
         if (roleFlag!=null&& (roleFlag.equals("management") || roleFlag.equals("local"))){
             searchScore.setSubjectFlow(subjectActivitiFlows);
-            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 searchScore.setSpeUserFlow(orgFlow);
             }else {
                 searchScore.setSpeUserFlow(userFlow);
@@ -2261,7 +2260,7 @@ public class JsresSupervisioController extends GeneralController {
             evaluationScore.setItemId(itemId);
             evaluationScore.setOrgFlow(orgFlow);
             evaluationScore.setEvaluationYear(subject.getSubjectYear());
-            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+            if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 evaluationScore.setSpeUserFlow(orgFlow);
             }else {
                 evaluationScore.setSpeUserFlow(userFlow);
@@ -2284,7 +2283,7 @@ public class JsresSupervisioController extends GeneralController {
             evaluationScore.setSpeReason(reason);
         }
         supervisioUserBiz.saveScore(evaluationScore);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     //评估指标
@@ -2314,7 +2313,7 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("orgFlow", orgFlow);
         model.addAttribute("speId", speId);
         model.addAttribute("roleFlag", roleFlag);
-        model.addAttribute("widthSize", GlobalConstant.FLAG_Y);
+        model.addAttribute("widthSize", com.pinde.core.common.GlobalConstant.FLAG_Y);
         model.addAttribute("indicators",indicators);//表单样式问题 ：线框对齐
         return "jsres/assess/evaluationInfo_" + speId;
     }
@@ -2348,7 +2347,7 @@ public class JsresSupervisioController extends GeneralController {
             evaluationScore.setOwnerScore(score);
         }
         supervisioUserBiz.saveScore(evaluationScore);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping("/saveSpeContent")
@@ -2359,9 +2358,9 @@ public class JsresSupervisioController extends GeneralController {
         if (null != subjectUser) {
             subjectUser.setSpeContent(speContent);
             supervisioUserBiz.saveSubjectUser(subjectUser);
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     @RequestMapping(value = "/scoreDownload")
@@ -2387,7 +2386,7 @@ public class JsresSupervisioController extends GeneralController {
         dataMap.put("orgCityName", org.getOrgCityName());
 
         //基地管理表
-        if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(isLocalManage) && isLocalManage.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             ResEvaluationScore searchLocalScore = new ResEvaluationScore();
             searchLocalScore.setSubjectFlow(subject.getSubjectActivitiFlows());
             searchLocalScore.setOrgFlow(subject.getOrgFlow());
@@ -2633,7 +2632,7 @@ public class JsresSupervisioController extends GeneralController {
         dataMap.put("speContent", subjectUser.getSpeContent());
         dataMap.put("evaluationDate", subjectUser.getEvaluationDate());
 
-        if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && !roleFlag.equals("baseExpert")) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && !roleFlag.equals("baseExpert")) {
             String speSignUrl = InitConfig.getSysCfg("upload_base_url") + "/" + user.getUserSignUrl();
             speSignUrl = "<img  src='" + speSignUrl + "' width='80' height='30'  alt='签名'/>";
             dataMap.put("speSignImg", speSignUrl);//签名
@@ -2977,7 +2976,7 @@ public class JsresSupervisioController extends GeneralController {
         String resultPath = "";
         if (uploadFile != null && !uploadFile.isEmpty()) {
             String fileResult = supervisioBiz.checkImg(uploadFile);
-            if (!GlobalConstant.FLAG_Y.equals(fileResult)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fileResult)) {
                 model.addAttribute("fileErrorMsg", fileResult);
             } else {
                 resultPath = supervisioBiz.saveFileToDirs("", uploadFile, "jsresSupervisioFile", user.getOrgFlow(), "2022", itemId);
@@ -3013,7 +3012,7 @@ public class JsresSupervisioController extends GeneralController {
     public @ResponseBody
     String removeFile(String recordFlow) throws DocumentException {
         supervisioBiz.deleteFileByPrimaryKey(recordFlow);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -3052,11 +3051,11 @@ public class JsresSupervisioController extends GeneralController {
     public String Schedule(String fileRoute, String orgName, String orgFlow, String subjectFlow, String isRead,
                            String userFlow, String speId, String roleFlag, Model model,String editFlag) {
         ResScheduleScore resScheduleScore = new ResScheduleScore();
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) || roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) || roleFlag.equals("baseExpert")) {
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")
                 || roleFlag.equals("management")
-                || roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)) {
+                || roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
             resScheduleScore.setGrade("expert");
         }
         resScheduleScore.setOrgName(orgName);
@@ -3072,7 +3071,7 @@ public class JsresSupervisioController extends GeneralController {
         }
         resScheduleScore.setSpeId(speId);
         List<ResScheduleScore> scoreList = resScheduleScoreBiz.queryScheduleList(resScheduleScore);
-        if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
             //查询专家签名
             SysUser user = null;
             if (StringUtil.isNotBlank(userFlow)) {
@@ -3113,7 +3112,7 @@ public class JsresSupervisioController extends GeneralController {
         ResSupervisioSubject subject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
         ResScheduleScore resScheduleScore = new ResScheduleScore();
         if (roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {
             resScheduleScore.setGrade("expert");
         }
@@ -3135,12 +3134,12 @@ public class JsresSupervisioController extends GeneralController {
             itemName2 = "d" + itemName.substring(1);
         }
         if (resScheduleScoreBiz.saveSchedule(resScheduleScore) <= 0) {
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
         resScheduleScore.setItemName(itemName2);
         resScheduleScore.setScore(String.valueOf(new BigDecimal(num).subtract(new BigDecimal(score))));
         resScheduleScoreBiz.saveSchedule(resScheduleScore);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -3152,7 +3151,7 @@ public class JsresSupervisioController extends GeneralController {
                                        String speId, String roleFlag, String subjectFlow, String fileRoute) {
         ResScheduleScore resScheduleScore = new ResScheduleScore();
         if (roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {
             resScheduleScore.setGrade("expert");
         }
@@ -3176,10 +3175,10 @@ public class JsresSupervisioController extends GeneralController {
                 resScheduleScore.setScore("√");
             }
             if (resScheduleScoreBiz.saveSchedule(resScheduleScore) > 0) {
-                return GlobalConstant.OPERATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
             }
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     /**
@@ -3193,7 +3192,7 @@ public class JsresSupervisioController extends GeneralController {
         resScheduleScore.setOrgFlow(orgFlow);
         SysUser sysUser = GlobalContext.getCurrentUser();
         if (roleFlag.equals("baseExpert")) {    //省级督导  专业基地专家
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {   //专业专家
             resScheduleScore.setGrade("expert");
         }else if (roleFlag.equals("hospitalLeader")){   //院级督导
@@ -3209,14 +3208,14 @@ public class JsresSupervisioController extends GeneralController {
                 if (StringUtil.isBlank(subject.getLeaderOneStartTime())){
                     subject.setLeaderOneStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                     if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)!=1){
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }else {
                 if (StringUtil.isBlank(subject.getLeaderTwoStartTime())){
                     subject.setLeaderTwoStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                     if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)!=1){
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }
@@ -3229,11 +3228,11 @@ public class JsresSupervisioController extends GeneralController {
         resScheduleScore.setOrgName(orgName);
         resScheduleScore.setSpeId(speId);
         resScheduleScore.setSubjectFlow(subjectFlow);
-        resScheduleScore.setRecordStatus(GlobalConstant.FLAG_Y);
+        resScheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (resScheduleScoreBiz.saveSchedule(resScheduleScore) <= 0) {
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -3259,7 +3258,7 @@ public class JsresSupervisioController extends GeneralController {
         ResScheduleScore resScheduleScore = new ResScheduleScore();
         SysUser sysUser = GlobalContext.getCurrentUser();
         if (roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {
             resScheduleScore.setGrade("expert");
         }else if (roleFlag.equals("hospitalLeader")){   //院级督导
@@ -3275,14 +3274,14 @@ public class JsresSupervisioController extends GeneralController {
                 if (StringUtil.isBlank(subject.getLeaderOneStartTime())){
                     subject.setLeaderOneStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                     if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)!=1){
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }else {
                 if (StringUtil.isBlank(subject.getLeaderTwoStartTime())){
                     subject.setLeaderTwoStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                     if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)!=1){
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }
@@ -3326,10 +3325,10 @@ public class JsresSupervisioController extends GeneralController {
             resScheduleScore.setScore(String.valueOf(itemScoreAll));
 
             if (resScheduleScoreBiz.saveSchedule(resScheduleScore) > 0) {
-                return GlobalConstant.OPERATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
             }
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
 
@@ -3351,7 +3350,7 @@ public class JsresSupervisioController extends GeneralController {
         ResScheduleScore resScheduleScore = new ResScheduleScore();
         SysUser sysUser = GlobalContext.getCurrentUser();
         if (roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {
             resScheduleScore.setGrade("expert");
         }else if (roleFlag.equals("hospitalLeader")){   //院级督导
@@ -3366,14 +3365,14 @@ public class JsresSupervisioController extends GeneralController {
                 if (StringUtil.isBlank(subject.getLeaderOneStartTime())){
                     subject.setLeaderOneStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                     if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)!=1){
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }else {
                 if (StringUtil.isBlank(subject.getLeaderTwoStartTime())){
                     subject.setLeaderTwoStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                     if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)!=1){
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }
@@ -3395,9 +3394,9 @@ public class JsresSupervisioController extends GeneralController {
         resScheduleScore.setItemDetailed(itemDetailed);
 
         if (resScheduleScoreBiz.saveScheduleDetailed(resScheduleScore) <= 0) {
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -3446,7 +3445,7 @@ public class JsresSupervisioController extends GeneralController {
                                            String subjectFlow, String fileRoute) {
         ResScheduleScore resScheduleScore = new ResScheduleScore();
         if (roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {
             resScheduleScore.setGrade("expert");
         }
@@ -3466,14 +3465,14 @@ public class JsresSupervisioController extends GeneralController {
                 resScheduleScore.setScore(selfTwoScore);
                 resScheduleScore.setItemId(itemIdTwo);
                 if (resScheduleScoreBiz.saveSchedule(resScheduleScore) > 0) {
-                    return GlobalConstant.OPERATE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
                 }
             } else {
-                return GlobalConstant.OPERATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
             }
 
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     /**
@@ -3485,7 +3484,7 @@ public class JsresSupervisioController extends GeneralController {
                                        String orgFlow, String speId, String subjectFlow, String fileRoute) {
         ResScheduleScore resScheduleScore = new ResScheduleScore();
         if (roleFlag.equals("baseExpert")) {
-            resScheduleScore.setGrade(GlobalConstant.USER_LIST_LOCAL);
+            resScheduleScore.setGrade(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
         } else if (roleFlag.equals("expertLeader")) {
             resScheduleScore.setGrade("expert");
         }
@@ -3501,9 +3500,9 @@ public class JsresSupervisioController extends GeneralController {
         resScheduleScore.setSubjectFlow(subjectFlow);
         resScheduleScore.setScoreType("Totalled");
         if (resScheduleScoreBiz.saveSchedule(resScheduleScore) <= 0) {
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -3514,8 +3513,8 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("roleFlag", roleFlag);
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("320000");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
             String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
             sysorg.setOrgFlow(orgFlow);
             model.addAttribute("orgFlow", orgFlow);
@@ -3559,17 +3558,17 @@ public class JsresSupervisioController extends GeneralController {
         param.put("subjectName", subjectName);
         param.put("orgFlow", orgFlow);
         param.put("baseCode", baseCode);
-        if (StringUtil.isNotBlank(roleFlag) && !GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && !roleFlag.equals("baseExpert")) {
+        if (StringUtil.isNotBlank(roleFlag) && !com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && !roleFlag.equals("baseExpert")) {
             String userFlow = GlobalContext.getCurrentUser().getUserFlow();
             param.put("userFlow", userFlow);
             model.addAttribute("userFlow", userFlow);
         }
         SysOrg org = new SysOrg();
         org.setOrgProvId("320000");
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         param.put("org", org);
         PageHelper.startPage(currentPage, getPageSize(request));
-        if (roleFlag.equals(GlobalConstant.USER_LIST_LOCAL)){
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
             list= supervisioUserBiz.selectLocalSubjectListByParam(param);
         }else if("baseExpert".equals(roleFlag)){
             param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
@@ -3675,13 +3674,13 @@ public class JsresSupervisioController extends GeneralController {
         fileMap.put("operType", uploadFile);
         if (uploadFile != null) {
             String resultPath = supervisioUserBiz.saveFileToDirs("", uploadFile, "supersivioSign");
-            model.addAttribute("result", GlobalConstant.FLAG_Y);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
             model.addAttribute("filePath", resultPath);
             SysUser user = userBiz.readSysUser(userFlow);
             user.setUserSignUrl(resultPath);
             supervisioUserBiz.editSupervisioUser(user);
         } else {
-            model.addAttribute("result", GlobalConstant.FLAG_N);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         return "jsres/hospital/supervisio/addSign";
     }
@@ -3706,7 +3705,7 @@ public class JsresSupervisioController extends GeneralController {
         fileMap.put("operType", file);
         if (file != null) {
             String resultPath = supervisioUserBiz.saveFileToDirs("", file, "subjectFeedback");
-            model.addAttribute("result", GlobalConstant.FLAG_Y);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
             model.addAttribute("filePath", resultPath);
             Map<String,Object> param = new HashMap<>();
             param.put("subjectActivitiFlows",subjectActivitiFlows);
@@ -3718,8 +3717,8 @@ public class JsresSupervisioController extends GeneralController {
             model.addAttribute("subjectActivitiFlows",subjectActivitiFlows);
             model.addAttribute("subjectFlow",subjectFlow);
             model.addAttribute("type",type);
-            model.addAttribute("result", GlobalConstant.FLAG_N);
-            model.addAttribute("fileErrorMsg", GlobalConstant.SAVE_FAIL);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_N);
+            model.addAttribute("fileErrorMsg", com.pinde.core.common.GlobalConstant.SAVE_FAIL);
         }
         return "jsres/hospital/supervisio/addFeedback";
     }
@@ -3781,21 +3780,21 @@ public class JsresSupervisioController extends GeneralController {
         SysOrg org = new SysOrg();
         org.setOrgProvId("320000");
         org.setOrgCityId(cityId);
-        org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         param.put("org", org);
         List<ResSupervisioSubject> list=new ArrayList<>();
         model.addAttribute("roleFlag", roleFlag);
-        if ((StringUtil.isNotBlank(suAoth) && suAoth.equals(GlobalConstant.FLAG_Y)) || (StringUtil.isNotBlank(localSubject) && localSubject.equals(GlobalConstant.FLAG_Y))) {
+        if ((StringUtil.isNotBlank(suAoth) && suAoth.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) || (StringUtil.isNotBlank(localSubject) && localSubject.equals(com.pinde.core.common.GlobalConstant.FLAG_Y))) {
             if (StringUtil.isBlank(localSubject)){
                 param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
             }
-            param.put("supervisioAuthority", GlobalConstant.FLAG_Y);
+            param.put("supervisioAuthority", com.pinde.core.common.GlobalConstant.FLAG_Y);
             PageHelper.startPage(currentPage, getPageSize(request));
             list = supervisioUserBiz.selectBaseSubjectList(param);
             model.addAttribute("list", list);
             return "hbres/supervisio/localBaseSubjectList";
         }else {
-            param.put("supervisioAuthority", GlobalConstant.FLAG_N);
+            param.put("supervisioAuthority", com.pinde.core.common.GlobalConstant.FLAG_N);
             if (currentPage == null) {
                 currentPage = 1;
             }
@@ -4081,9 +4080,9 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String delHospitalsubject(String subjectFlow) {
         if (supervisioUserBiz.delHospSupervisioBySubjectFlow(subjectFlow) == 1 ){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
 
@@ -4124,8 +4123,8 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("suAoth",suAoth);
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("420000");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
             String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
             sysorg.setOrgFlow(orgFlow);
             model.addAttribute("orgFlow", orgFlow);
@@ -4162,7 +4161,7 @@ public class JsresSupervisioController extends GeneralController {
         }else {
             SysOrg sysorg = new SysOrg();
             sysorg.setOrgProvId("320000");
-            sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
             model.addAttribute("orgs", orgs);
         }
@@ -4261,7 +4260,7 @@ public class JsresSupervisioController extends GeneralController {
                 model.addAttribute("expertList", expertList);
             }
         }
-        if (null!=roleFlag && (roleFlag.equals("management")||roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL))){
+        if (null != roleFlag && (roleFlag.equals("management") || roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL))) {
             List<ResSupervisioSubjectRecords> managementList = supervisioUserBiz.selectRecordBySubjectFlowAndRoleFlag(subjectActivitiFlows,"management");
             if (null !=managementList && managementList.size()>0){
                 model.addAttribute("managementList", managementList);
@@ -4280,7 +4279,7 @@ public class JsresSupervisioController extends GeneralController {
         if(StringUtil.isNotBlank(subjectFlow)){
             ResSupervisioSubject subject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
             if (null!=subject.getExpertReportSub()){
-                isRead = GlobalConstant.FLAG_Y;
+                isRead = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }else if (StringUtil.isNotBlank(subjectActivitiFlows)){
             List<ResSupervisioSubject> list = supervisioUserBiz.selectBySubjectActivitiFlows(subjectActivitiFlows);
@@ -4290,7 +4289,7 @@ public class JsresSupervisioController extends GeneralController {
                     Date nowTime = sdf.parse(com.pinde.core.util.DateUtil.getCurrDateTime2());
                     Date devTime = sdf.parse(list.get(0).getDevTimeClose());
                     if (nowTime.compareTo(devTime)>0){
-                        isRead = GlobalConstant.FLAG_Y;
+                        isRead = com.pinde.core.common.GlobalConstant.FLAG_Y;
                     }
                 }else if (null!=roleFlag && roleFlag.equals("management")){
                     //当前时间超过督导组评审时间，报告是只读的
@@ -4298,7 +4297,7 @@ public class JsresSupervisioController extends GeneralController {
                     Date nowTime = sdf.parse(com.pinde.core.util.DateUtil.getCurrDateTime2());
                     Date devTime = sdf.parse(list.get(0).getClosedTime());
                     if (nowTime.compareTo(devTime)>0){
-                        isRead = GlobalConstant.FLAG_Y;
+                        isRead = com.pinde.core.common.GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -4517,7 +4516,7 @@ public class JsresSupervisioController extends GeneralController {
         if (supervisioReport!=null){
             supervisioReport.setContentMas(contentMas);
             if (supervisioUserBiz.saveReport(supervisioReport)>0){
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }else {
             report.setRecordFlow(PkUtil.getUUID());
@@ -4527,10 +4526,10 @@ public class JsresSupervisioController extends GeneralController {
                 report.setPartofFlow("9");
             }
             if (reportMapper.insert(report)>0){
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping(value = "/subReport")
@@ -4540,7 +4539,7 @@ public class JsresSupervisioController extends GeneralController {
             ResSupervisioSubject subject = supervisioUserBiz.selectSubjectByFlow(subjectFlow);
             subject.setExpertReportSub(sub);
             if (supervisioUserBiz.updateSubject(subject)==1){
-                return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
             }
         }else if (StringUtil.isNotBlank(subjectActivitiFlows)){
             List<ResSupervisioSubject> subjectList = supervisioUserBiz.selectBySubjectActivitiFlows(subjectActivitiFlows);
@@ -4550,10 +4549,10 @@ public class JsresSupervisioController extends GeneralController {
                 num=num+supervisioUserBiz.updateSubject(subjectList.get(i));
             }
             if (num==subjectList.size()){
-                return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
             }
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     /**
@@ -4622,7 +4621,7 @@ public class JsresSupervisioController extends GeneralController {
             resSupervisioReport.setContentMas(contentMas);
             supervisioUserBiz.saveReport(resSupervisioReport);
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = "/manageSuperVisio")
@@ -4630,7 +4629,7 @@ public class JsresSupervisioController extends GeneralController {
         model.addAttribute("roleFlag", roleFlag);
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("320000");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
         model.addAttribute("orgs", orgs);
         return "jsres/hospital/supervisio/manageSuperVisio";
@@ -4756,7 +4755,7 @@ public class JsresSupervisioController extends GeneralController {
         SysUser user = GlobalContext.getCurrentUser();
         ResHospSupervSubject subject = supervisioUserBiz.selectHospSupervisioBySubjectFlow(subjectFlow);
         subject.setEndTime(DateUtil.transDateTime(DateUtil.getCurrDateTime().substring(0,12)));
-        subject.setReviewConfig(GlobalConstant.FLAG_N);
+        subject.setReviewConfig(com.pinde.core.common.GlobalConstant.FLAG_N);
         //判断提交人是哪一位专家，保存分数
         if (subject.getLeaderOneFlow().equals(user.getUserFlow())){
             if (StringUtil.isBlank(subject.getLeaderOneScore())) {
@@ -4803,7 +4802,7 @@ public class JsresSupervisioController extends GeneralController {
             subject.setLeaderFourScore(expertTotal);
             subject.setLeaderFourEndTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         //四位专家都提交分数才能计算平均分
         if (StringUtil.isNotBlank(subject.getLeaderOneScore()) && StringUtil.isNotBlank(subject.getLeaderTwoScore()) && StringUtil.isNotBlank(subject.getLeaderThreeScore()) && StringUtil.isNotBlank(subject.getLeaderFourScore())){
@@ -4812,9 +4811,9 @@ public class JsresSupervisioController extends GeneralController {
             subject.setAvgScore(avgScore.toString());
         }
         if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject)==1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
 
@@ -4845,7 +4844,7 @@ public class JsresSupervisioController extends GeneralController {
             itemName2 = "d" + itemName.substring(1);
         }
         if (resScheduleScoreBiz.saveSchedule(resScheduleScore) <= 0) {
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
         resScheduleScore.setItemName(itemName2);
         resScheduleScore.setScore(String.valueOf(new BigDecimal(num).subtract(new BigDecimal(score))));
@@ -4862,18 +4861,18 @@ public class JsresSupervisioController extends GeneralController {
             if (StringUtil.isBlank(hospSupervSubject.getLeaderOneStartTime())){
                 hospSupervSubject.setLeaderOneStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                 if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(hospSupervSubject)!=1){
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }
         }else {
             if (StringUtil.isBlank(hospSupervSubject.getLeaderTwoStartTime())){
                 hospSupervSubject.setLeaderTwoStartTime(DateUtil.transDateTime(DateUtil.getCurrDateTime()));
                 if (supervisioUserBiz.updateHospSupervisioBySubjectFlow(hospSupervSubject)!=1){
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     // **********************************************************基地自评接口开始 ******************************************************
@@ -4971,7 +4970,7 @@ public class JsresSupervisioController extends GeneralController {
                 scoreMap.put(s.getItemId(),s.getOwnerScore());
             }
             if (StringUtil.isNotBlank(s.getSpeContent())){
-                if (StringUtil.isNotBlank(type) && type.equals(GlobalConstant.FLAG_Y)) {
+                if (StringUtil.isNotBlank(type) && type.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     contentMap.put(s.getItemId(),s.getSpeContent().replaceAll("<br/>", "\n"));
                 }else {
                     contentMap.put(s.getItemId(),s.getSpeContent());
@@ -4980,7 +4979,7 @@ public class JsresSupervisioController extends GeneralController {
         }
 
         //未提及或者评分显示当前人的签名
-        if (null == assessment || StringUtil.isNotBlank(type) && type.equals(GlobalConstant.FLAG_Y)) {
+        if (null == assessment || StringUtil.isNotBlank(type) && type.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             SysUser user = userBiz.readSysUser(GlobalContext.getCurrentUser().getUserFlow());
             model.addAttribute("speSignUrl", user.getUserSignUrl());
         }else {
@@ -5003,7 +5002,7 @@ public class JsresSupervisioController extends GeneralController {
         SysDict sysDict = new SysDict();
         sysDict.setDictTypeId("DoctorTrainingSpe");
         sysDict.setDictId(speId);
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if (null!=dictList && dictList.size()>0){
             modeAssessment.setSpeId(speId);
@@ -5046,9 +5045,9 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String saveAssessmentAllScore(HospSelfAssessment assessment){
         if (supervisioBiz.saveAssessmentAllScore(assessment)>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //专业基地：专业基地自评
@@ -5074,9 +5073,9 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String saveHospitalSelfAssessmentScore(ResEvaluationScore resEvaluationScore) throws UnsupportedEncodingException {
         if (supervisioBiz.saveHospSelfAssessmentScore(resEvaluationScore)>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //基地：专业基地自评
@@ -5117,7 +5116,7 @@ public class JsresSupervisioController extends GeneralController {
         score.setOrgFlow(orgFlow);
         score.setSpeId(speId);
         score.setFileRoute(fileRoute);
-        score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResScheduleScore> scoreList = supervisioBiz.queryScheduleList(score);
         Double expertTotalled=0.0;
         Integer substandard=0;
@@ -5140,7 +5139,7 @@ public class JsresSupervisioController extends GeneralController {
                     }
                 }
                 if (StringUtil.isNotBlank(scheduleScore.getItemDetailed())){
-                    if (StringUtil.isNotBlank(type) && type.equals(GlobalConstant.FLAG_Y)) {
+                    if (StringUtil.isNotBlank(type) && type.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                         detailedMap.put(scheduleScore.getItemId(),scheduleScore.getItemDetailed().replaceAll("<br/>", "\n"));
                     }else {
                         detailedMap.put(scheduleScore.getItemId(),scheduleScore.getItemDetailed());
@@ -5155,7 +5154,7 @@ public class JsresSupervisioController extends GeneralController {
         HospSelfAssessmentCfg cfg = assessmentCfgMapper.selectByPrimaryKey(cfgFlow);
         HospSelfAssessment assessment = supervisioBiz.findHospSelfAssessment(cfg.getSessionNumber(), orgFlow, speId, "spe");
 
-        if (null == assessment || StringUtil.isNotBlank(type) && type.equals(GlobalConstant.FLAG_Y)) {
+        if (null == assessment || StringUtil.isNotBlank(type) && type.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
             SysUser user = userBiz.readSysUser(GlobalContext.getCurrentUser().getUserFlow());
             model.addAttribute("speSignUrl", user.getUserSignUrl());
         }else {
@@ -5180,7 +5179,7 @@ public class JsresSupervisioController extends GeneralController {
         SysDict sysDict = new SysDict();
         sysDict.setDictTypeId("DoctorTrainingSpe");
         sysDict.setDictId(speId);
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if (null!=dictList && dictList.size()>0){
             modeAssessment.setSpeId(speId);
@@ -5199,9 +5198,9 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String saveAssessmengtScoreOne(ResScheduleScore score) throws UnsupportedEncodingException {
         if (supervisioBiz.saveSchedule(score)>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //删除附表单项评分
@@ -5209,9 +5208,9 @@ public class JsresSupervisioController extends GeneralController {
     @ResponseBody
     public String delAssessmengtScoreOne(ResScheduleScore score) {
         if (supervisioBiz.delSchedule(score)>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //保存附表总分
@@ -5235,9 +5234,9 @@ public class JsresSupervisioController extends GeneralController {
             sucessNum=sucessNum+supervisioBiz.saveSchedule(score);
         }
         if (allNum==sucessNum){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     //专业基地：签名管理

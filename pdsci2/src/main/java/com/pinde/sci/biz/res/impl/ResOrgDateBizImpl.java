@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgDateBiz;
@@ -23,7 +24,7 @@ public class ResOrgDateBizImpl implements IResOrgDateBiz {
         if(StringUtil.isNotBlank(orgFlow)){
             ResOrgSigninDateExample example = new ResOrgSigninDateExample();
             ResOrgSigninDateExample.Criteria c= example.createCriteria().andOrgFlowEqualTo(orgFlow).
-                    andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             if(StringUtil.isNotBlank(startDate))
             {
                 c.andSigninDateGreaterThanOrEqualTo(startDate);

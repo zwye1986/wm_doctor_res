@@ -14,7 +14,7 @@ import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.TjDocinfoMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +71,10 @@ public class GateUserManageBizImpl implements IGateUserManageBiz {
 			}
 			if(userRole==null)
 				userRole=new SysUserRole();
-			userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			userRole.setUserFlow(user.getUserFlow());
 			userRole.setRoleFlow(roleFlow);
-			userRole.setWsId(GlobalConstant.RES_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 			userRole.setAuthTime(DateUtil.getCurrDateTime());
 			userRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 			userRoleBiz.saveSysUserRole(userRole);

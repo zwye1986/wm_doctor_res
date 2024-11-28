@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.res;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -21,7 +22,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.core.common.enums.NoteTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 import org.docx4j.openpackaging.io.SaveToZipFile;
@@ -82,21 +82,21 @@ public class ResDiscipleNoteController extends GeneralController {
         discipleNoteInfo.setDoctorFlow(doctorFlow);
         discipleNoteInfo.setNoteTypeId(scope);
         //如果是学员
-        if (currUser != null && roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+        if (currUser != null && roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
             ResDoctor resDoctor = doctorBiz.readDoctor(currUser.getUserFlow());
             model.addAttribute("resDoctor", resDoctor);
         }
 
         List<String> auditStatusList = new ArrayList<>();
-        if (GlobalConstant.RES_ROLE_SCOPE_ADMIN.equals(roleScope)) {
-            if (!GlobalConstant.FLAG_Y.equals(operaFlag)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN.equals(roleScope)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(operaFlag)) {
                 auditStatusList.add(DiscipleStatusEnum.Qualified.getId());
                 auditStatusList.add(DiscipleStatusEnum.UnQualified.getId());
             }
             auditStatusList.add(DiscipleStatusEnum.Submit.getId());
             model.addAttribute("doctorFlow", doctorFlow);
         }
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleScope)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleScope)) {
             auditStatusList.add(DiscipleStatusEnum.Qualified.getId());
             model.addAttribute("doctorFlow", doctorFlow);
         }
@@ -197,7 +197,7 @@ public class ResDiscipleNoteController extends GeneralController {
     public String saveDiscipleNoteInfo(@PathVariable String roleScope, @PathVariable String scope, String jsonData,
                                        ResDiscipleNoteInfoWithBLOBs discipleNoteInfo, String flag,String editAppendixFlag, HttpServletRequest request) throws UnsupportedEncodingException {
 //        学员端多图片上传
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
             //校验上传文件大小及格式
             String checkResult = checkFiles(request);
             if (!"1".equals(checkResult)) {
@@ -237,11 +237,11 @@ public class ResDiscipleNoteController extends GeneralController {
         }
         discipleNoteInfo.setNoteTypeId(scope);
         discipleNoteInfo.setNoteTypeName(NoteTypeEnum.getNameById(scope));
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
-            if (GlobalConstant.FLAG_Y.equals(flag)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
                 discipleNoteInfo.setAuditStatusId(DiscipleStatusEnum.Submit.getId());
                 discipleNoteInfo.setAuditStatusName(DiscipleStatusEnum.Submit.getName());
-            } else if(GlobalConstant.FLAG_Y.equals(editAppendixFlag)){
+            } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editAppendixFlag)) {
                 // 不更改状态
             } else {
                 discipleNoteInfo.setAuditStatusId(DiscipleStatusEnum.Apply.getId());
@@ -250,7 +250,7 @@ public class ResDiscipleNoteController extends GeneralController {
         }
         int i = discipleBiz.updateResDiscipleNoteInfoWithBLOBs(discipleNoteInfo);
 //        学员端多图片上传
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
             jsonData = java.net.URLDecoder.decode(jsonData, "UTF-8");
             Map<String, Object> mp = JSON.parseObject(jsonData, Map.class);
             //上传文件的流水号
@@ -261,9 +261,9 @@ public class ResDiscipleNoteController extends GeneralController {
             addUploadFile(discipleNoteInfo.getRecordFlow(), request, scope);
         }
         if (i != 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -296,7 +296,7 @@ public class ResDiscipleNoteController extends GeneralController {
         paramMap.put("auditContent", "该学员对本病有大致的了解，能较好的进行辨病辨证，对相关的经典理论也有一定的涉猎。");
         int i = discipleBiz.agreeRecordBatch(paramMap);
         if (i != 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         } else {
             return "该学员没有待审核记录！";
         }
@@ -315,27 +315,27 @@ public class ResDiscipleNoteController extends GeneralController {
         if (StringUtil.isNotBlank(recordFlow)) {
             int delResult = discipleBiz.delResDiscipleNoteInfo(recordFlow);
             if (delResult == 1) {
-                return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
             }
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping("/saveAnnualAssessment/{roleScope}")
     @ResponseBody
     public String saveAnnualAssessment(@PathVariable String roleScope, ResAnnualAssessmentWithBLOBs assessmentWithBLOBs, String flag,
                                        HttpServletRequest request, String editAppendixFlag,String jsonData) throws UnsupportedEncodingException {
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
             //        学员端多图片上传
-            if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+            if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
                 //校验上传文件大小及格式
                 String checkResult = checkFiles(request);
                 if (!"1".equals(checkResult)) {
                     return checkResult;
                 }
             }
-            if (!GlobalConstant.FLAG_Y.equals(editAppendixFlag)) {
-                if (GlobalConstant.FLAG_Y.equals(flag)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editAppendixFlag)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
                     assessmentWithBLOBs.setAuditStatusId(DiscipleStatusEnum.Submit.getId());
                     assessmentWithBLOBs.setAuditStatusName(DiscipleStatusEnum.Submit.getName());
                 } else {
@@ -344,8 +344,8 @@ public class ResDiscipleNoteController extends GeneralController {
                 }
             }
         }
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_ADMIN)) {
-            if (GlobalConstant.FLAG_Y.equals(flag)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
                 assessmentWithBLOBs.setAdminTime(DateUtil.getCurrDateTime());
                 assessmentWithBLOBs.setAuditStatusId(DiscipleStatusEnum.AdminAudit.getId());
                 assessmentWithBLOBs.setAuditStatusName(DiscipleStatusEnum.AdminAudit.getName());
@@ -358,7 +358,7 @@ public class ResDiscipleNoteController extends GeneralController {
         }
         int i = assessmentBiz.editAnnualAssessment(assessmentWithBLOBs);
 //        学员端多图片上传
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
             jsonData = java.net.URLDecoder.decode(jsonData, "UTF-8");
             Map<String, Object> mp = JSON.parseObject(jsonData, Map.class);
             //上传文件的流水号
@@ -369,9 +369,9 @@ public class ResDiscipleNoteController extends GeneralController {
             addUploadFile(assessmentWithBLOBs.getRecordFlow(), request, "AnnualAssessment");
         }
         if (i != 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -382,10 +382,10 @@ public class ResDiscipleNoteController extends GeneralController {
         if (StringUtil.isNotBlank(recordFlow)) {
             int delResult = assessmentBiz.delAnnualAssessment(recordFlow);
             if (delResult == 1) {
-                return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
             }
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping("/auditUserList/{roleScope}/{scope}")
@@ -411,7 +411,7 @@ public class ResDiscipleNoteController extends GeneralController {
         if(StringUtil.isNotBlank(doctor.getSessionNumber())){
             map.put("sessionNumber",doctor.getSessionNumber());
         }
-        if (roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_ADMIN)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN)) {
             map.put("auditStatusId", DiscipleStatusEnum.DiscipleAudit.getId());
             SysUser user=GlobalContext.getCurrentUser();
             map.put("orgFlow",user.getOrgFlow());
@@ -419,16 +419,16 @@ public class ResDiscipleNoteController extends GeneralController {
                 map.put("noteTypeId", scope);
             }*/
         }
-        if (roleScope.equals(GlobalConstant.USER_LIST_GLOBAL)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
             //查询所有医院
             SysOrg org = new SysOrg();
-            org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgs = orgBiz.searchOrg(org);
             model.addAttribute("orgs",orgs);
             map.put("auditStatusId", DiscipleStatusEnum.AdminAudit.getId());
             map.put("orgFlow",orgFlow);
         }
-        if (roleScope.equals(GlobalConstant.USER_LIST_UNIVERSITY)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY)) {
             String currentOrgFlow = currUser.getOrgFlow();
             if(StringUtil.isNotBlank(currentOrgFlow)){
                 SysOrg org = orgBiz.readSysOrg(currentOrgFlow);
@@ -450,8 +450,8 @@ public class ResDiscipleNoteController extends GeneralController {
         //复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIds!=null&&doctorTypeIds.size()>0){
             for (SysDict dict:dictList){
@@ -465,7 +465,7 @@ public class ResDiscipleNoteController extends GeneralController {
         PageHelper.startPage(currentPage, getPageSize(request));
         List<ResDoctorDiscioleExt> doctorList = discipleBiz.searchAuditDoctorList(map);
         model.addAttribute("doctorList", doctorList);
-        if (roleScope.equals(GlobalConstant.USER_LIST_GLOBAL)||roleScope.equals(GlobalConstant.USER_LIST_UNIVERSITY)) {
+        if (roleScope.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL) || roleScope.equals(com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY)) {
             return "res/disciple/auditUserList4Global";
         }
         return "res/disciple/auditUserList";
@@ -484,16 +484,16 @@ public class ResDiscipleNoteController extends GeneralController {
         statusList.add(DiscipleStatusEnum.Submit.getId());
         List<ResAnnualAssessment> assessmentList = assessmentBiz.findAnnualAssessmentList(assessment, statusList);
         if (null != assessmentList && assessmentList.size()>0) {
-            return GlobalConstant.FLAG_Y;
+            return com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
-        return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
     }
     @RequestMapping("/uploadImg")
     @ResponseBody
     public String uploadImg(@RequestParam(value = "file", required = false) MultipartFile file,String url,String recordFlow) throws IOException {
         if (file != null && StringUtil.isNotBlank(file.getOriginalFilename())) {
             String result = checkFile(file);
-            if(!GlobalConstant.FLAG_Y.equals(result)){
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result)) {
                 return result;
             }
             // String fileName = file.getOriginalFilename();
@@ -517,9 +517,9 @@ public class ResDiscipleNoteController extends GeneralController {
             assessment.setAssessmentImgUrl(uploadFile);
             assessment.setRecordFlow(recordFlow);
             assessmentBiz.editAnnualAssessment(assessment);
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
     /**
      * 检查文件大小及类型
@@ -539,13 +539,13 @@ public class ResDiscipleNoteController extends GeneralController {
         String fileName = file.getOriginalFilename();//文件名
         String suffix = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();//后缀名
         if(!(mimeList.contains(fileType) &&  suffixList.contains(suffix))){
-            return GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
+            return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
         }
         long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
         if(file.getSize() > limitSize*1024*1024){
-            return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M" ;
+            return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     //保存上传的附件
@@ -591,7 +591,7 @@ public class ResDiscipleNoteController extends GeneralController {
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + "discipleFiles" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
-                            pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                             pubFile.setFilePath(filePath);
                             pubFile.setFileName(oldFileName);
                             pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -624,7 +624,7 @@ public class ResDiscipleNoteController extends GeneralController {
 //                    String filePath = basePath + pubFile.getFilePath();
 //                    FileUtil.deletefile(filePath);
 //                }
-                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                 pubFileBiz.editFile(pubFile);
             }
         }

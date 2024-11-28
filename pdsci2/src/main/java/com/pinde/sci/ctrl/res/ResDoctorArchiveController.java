@@ -81,7 +81,7 @@ public class ResDoctorArchiveController extends GeneralController {
             success = archiveBiz.saveArchiveInfo4Hb(archiveTime,sessionNumber);
         }
         if(success){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
         return "存档失败";
     }
@@ -97,8 +97,8 @@ public class ResDoctorArchiveController extends GeneralController {
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         List<String> doctorTypeIdList = doctor.getDoctorTypeIdList();
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIdList!=null&&doctorTypeIdList.size()>0){
             for (SysDict dict:dictList){
@@ -176,7 +176,7 @@ public class ResDoctorArchiveController extends GeneralController {
 
 
         SysDept dept = new SysDept();
-        dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         dept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         List<SysDept> deptList = deptBiz.searchDept(dept);
         model.addAttribute("deptList", deptList);

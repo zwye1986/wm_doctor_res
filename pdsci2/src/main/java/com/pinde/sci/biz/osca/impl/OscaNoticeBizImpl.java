@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -49,7 +50,7 @@ public class OscaNoticeBizImpl implements IOscaNoticeBiz{
     public List<InxInfo> findNotice(InxInfo info) {
         InxInfoExample example = new InxInfoExample();
         example.setOrderByClause("INFO_TIME DESC");
-        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(info.getColumnId())) {
             criteria.andColumnIdEqualTo(info.getColumnId());
         }
@@ -59,7 +60,7 @@ public class OscaNoticeBizImpl implements IOscaNoticeBiz{
     @Override
     public List<InxInfo> searchNotice(InxInfo info) {
         InxInfoExample example = new InxInfoExample();
-        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("INFO_TIME DESC");
         if (StringUtil.isNotBlank(info.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(info.getOrgFlow());
@@ -72,7 +73,7 @@ public class OscaNoticeBizImpl implements IOscaNoticeBiz{
 //		String beforeSevenDay = DateUtil.addHour(DateUtil.getCurrDateTime(),-7*24).substring(0,8);
 //
 //		InxInfoExample example = new InxInfoExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andInfoTimeGreaterThanOrEqualTo(beforeSevenDay);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andInfoTimeGreaterThanOrEqualTo(beforeSevenDay);
 //		example.setOrderByClause("INFO_TIME DESC");
 //		return inxInfoMapper.selectByExample(example);
 //	}
@@ -86,7 +87,7 @@ public class OscaNoticeBizImpl implements IOscaNoticeBiz{
     public int delNotice(String flow) {
         InxInfo record = new InxInfo();
         record.setInfoFlow(flow);
-        record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         GeneralMethod.setRecordInfo(record, false);
         return this.inxInfoMapper.updateByPrimaryKeySelective(record);
     }
@@ -94,7 +95,7 @@ public class OscaNoticeBizImpl implements IOscaNoticeBiz{
     @Override
     public List<InxInfo> findNoticeWithBLOBs(InxInfo info) {
         InxInfoExample example = new InxInfoExample();
-        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(info.getColumnId())) {
             criteria.andColumnIdEqualTo(info.getColumnId());
         }

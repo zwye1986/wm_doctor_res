@@ -13,7 +13,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.osca.OscaDoctorAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaSubjectMainExtMapper;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +60,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public List<OscaSkillsAssessment> searchSkillsAssessment(OscaSkillsAssessment skillsAssessment,List<SysDict> dictList) {
         OscaSkillsAssessmentExample example = new OscaSkillsAssessmentExample();
         OscaSkillsAssessmentExample.Criteria criteria = example.createCriteria().
-                andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsReleasedEqualTo(GlobalConstant.FLAG_Y);
+                andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsReleasedEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(skillsAssessment!=null){
             if(StringUtil.isNotBlank(skillsAssessment.getSpeId())){
                 criteria.andSpeIdEqualTo(skillsAssessment.getSpeId());
@@ -71,7 +71,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
             if(StringUtil.isNotBlank(skillsAssessment.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(skillsAssessment.getOrgFlow());
             }
-            criteria.andIsLocalEqualTo(GlobalConstant.FLAG_N);
+            criteria.andIsLocalEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         if(dictList!=null&&dictList.size()>0){
         List<String> speList = new ArrayList<>();
@@ -89,7 +89,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public int queryDoctorNum(String clinicalFlow) {
         if(StringUtil.isNotBlank(clinicalFlow)){
             OscaDoctorAssessmentExample example = new OscaDoctorAssessmentExample();
-            OscaDoctorAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            OscaDoctorAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             criteria.andClinicalFlowEqualTo(clinicalFlow).andAuditStatusIdEqualTo(AuditStatusEnum.Passed.getId());
             return doctorAssessmentMapper.countByExample(example);
         }else{
@@ -110,7 +110,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     @Override
     public List<OscaSkillRoomDoc> queryDocScores(String doctorFlow, String clinicalFlow) {
         OscaSkillRoomDocExample example = new OscaSkillRoomDocExample();
-        OscaSkillRoomDocExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaSkillRoomDocExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(doctorFlow)){
             criteria.andDoctorFlowEqualTo(doctorFlow);
         }
@@ -129,7 +129,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     @Override
     public List<OscaSubjectMain> searchSubjects(OscaSubjectMain subjectMain) {
         OscaSubjectMainExample example = new OscaSubjectMainExample();
-        OscaSubjectMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaSubjectMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(subjectMain!=null){
             if(StringUtil.isNotBlank(subjectMain.getTrainingSpeId())){
                 criteria.andTrainingSpeIdEqualTo(subjectMain.getTrainingSpeId());
@@ -200,7 +200,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     @Override
     public List<OscaSubjectStationFrom> searchFromByStaion(String stationFlow,String orgFlow) {
         OscaSubjectStationFromExample example = new OscaSubjectStationFromExample();
-        OscaSubjectStationFromExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaSubjectStationFromExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(orgFlow)){
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -215,7 +215,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     @Override
     public List<OscaSubjectStation> searchSubjectStationByMain(String subjectStationFlow) {
         OscaSubjectStationExample example = new OscaSubjectStationExample();
-        OscaSubjectStationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaSubjectStationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(subjectStationFlow)){
             criteria.andSubjectFlowEqualTo(subjectStationFlow);
         }else{
@@ -281,7 +281,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                 if(!newflows.contains(oldFlow)){
                     OscaSubjectStationFrom newFrom = new OscaSubjectStationFrom();
                     newFrom.setRecordFlow(subjectStationFrom.getRecordFlow());
-                    newFrom.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    newFrom.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                     editSubjectStationFrom(newFrom);
                 }else{
                     //保留原来的
@@ -350,7 +350,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                 stationFile.setFileFlow(fileFlow);
                 stationFile.setOrgFlow(orgFlow);
                 stationFile.setOrgName(orgName);
-                stationFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                stationFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 editSubjectStationFile(stationFile);
             }
         }
@@ -410,7 +410,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                 stationFile.setOrdinal(1);
                 stationFile.setClinicalFlow(clinicalFlow);
                 stationFile.setClinicalName(skillsAssessment.getClinicalName());
-                stationFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                stationFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 editSkillsStationFile(stationFile);
             }
         }
@@ -443,7 +443,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     @Override
     public Map<String, String> uploadFile(MultipartFile file, String fileAddress) {
         Map<String, String> map=new HashMap<String, String>();
-        map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
         map.put("error", "上传文件不能为空！") ;
         if(file!=null){
             String fileName = file.getOriginalFilename();//文件名
@@ -472,11 +472,11 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                     file.transferTo(newFile);
                     String uploadFile = File.separator+fileAddress+File.separator+dateString+File.separator+saveFileName;
                     pubFile.setFilePath(uploadFile);
-                    pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     GeneralMethod.setRecordInfo(pubFile, true);
                     fileBiz.addFile(pubFile);
                     map.put("fileFlow",pubFile.getFileFlow());
-                    map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
             } catch (Exception e) {
                 map.put("error", "上传文件失败！") ;
                 return  map;
@@ -494,7 +494,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public OscaSubjectPartScore getSubjectPartScore(String subjectFlow, String partFlow) {
         OscaSubjectPartScoreExample example=new OscaSubjectPartScoreExample();
         OscaSubjectPartScoreExample.Criteria criteria =example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
         if(StringUtil.isNotBlank(partFlow))
         {
             criteria.andPartFlowEqualTo(partFlow);
@@ -513,7 +513,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public OscaSubjectStationScore getSubjectStationScore(String subjectFlow, String stationFlow) {
         OscaSubjectStationScoreExample example=new OscaSubjectStationScoreExample();
         OscaSubjectStationScoreExample.Criteria criteria =example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
         if(StringUtil.isNotBlank(stationFlow))
         {
             criteria.andStationFlowEqualTo(stationFlow);
@@ -532,7 +532,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public int savePassedInfo(OscaSubjectMain m, String allScore, JSONArray stationScoreList, JSONArray partScoreList) {
         if(m!=null)
         {
-            m.setIsResave(GlobalConstant.FLAG_N);
+            m.setIsResave(com.pinde.core.common.GlobalConstant.FLAG_N);
             if(StringUtil.isNotBlank(allScore)) {
                 m.setAllScore(Integer.valueOf(allScore));
             }else
@@ -560,7 +560,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public List<OscaSubjectPartScore> getOscaSubjectPartScores(String subjectFlow) {
         OscaSubjectPartScoreExample example=new OscaSubjectPartScoreExample();
         OscaSubjectPartScoreExample.Criteria criteria =example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
         List<OscaSubjectPartScore> list=partScoreMapper.selectByExample(example);
         if(list!=null&&list.size()>0)
         {
@@ -573,7 +573,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
     public List<OscaSubjectStationScore> getOscaSubjectStationScores(String subjectFlow) {
         OscaSubjectStationScoreExample example=new OscaSubjectStationScoreExample();
         OscaSubjectStationScoreExample.Criteria criteria =example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
         List<OscaSubjectStationScore> list=stationScoreMapper.selectByExample(example);
         if(list!=null&&list.size()>0)
         {
@@ -595,7 +595,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                     OscaSubjectStationScore score=getSubjectStationScore(subjectFlow,stationFlow);
                     if(score==null)
                         score=new OscaSubjectStationScore();
-                    score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     score.setStationFlow(stationFlow);
                     score.setSubjectFlow(subjectFlow);
                     score.setStationScore(stationScore);
@@ -649,7 +649,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                     OscaSubjectPartScore score=getSubjectPartScore(subjectFlow,partFlow);
                     if(score==null)
                         score=new OscaSubjectPartScore();
-                    score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     score.setPartFlow(partFlow);
                     score.setSubjectFlow(subjectFlow);
                     score.setPartScore(partScore);
@@ -699,7 +699,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
                         if(!newflows.contains(oldFlow)){
                             OscaSubjectStationFrom newFrom = new OscaSubjectStationFrom();
                             newFrom.setRecordFlow(subjectStationFrom.getRecordFlow());
-                            newFrom.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                            newFrom.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                             editSubjectStationFrom(newFrom);
                         }else{
                             //保留原来的

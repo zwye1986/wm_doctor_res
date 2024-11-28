@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.ResPaperBiz;
 import com.pinde.sci.dao.base.ResPaperMapper;
@@ -31,8 +32,8 @@ public class ResPaperBizImpl implements ResPaperBiz{
 		}
 		
 		ResPaperExample example = new ResPaperExample();
-		
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andSpeIdEqualTo(speId)
 		.andDeptFlowEqualTo(standardDeptId);
 		
@@ -58,7 +59,7 @@ public class ResPaperBizImpl implements ResPaperBiz{
 
 		ResPaperExample example = new ResPaperExample();
 
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andSpeIdEqualTo("0")
 		.andOrgNameEqualTo(orgName)
 		.andDeptFlowEqualTo(standardDeptId);
@@ -82,7 +83,7 @@ public class ResPaperBizImpl implements ResPaperBiz{
 
 		ResPaperExample example = new ResPaperExample();
 
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andSpeIdEqualTo(speId)
 		.andDeptFlowEqualTo("0");
 
@@ -104,8 +105,8 @@ public class ResPaperBizImpl implements ResPaperBiz{
 		}
 		
 		ResPaperExample example = new ResPaperExample();
-		
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andDeptFlowEqualTo(standardDeptId).andOrgNameIsNull()
 		.andSpeIdEqualTo("0");
 		

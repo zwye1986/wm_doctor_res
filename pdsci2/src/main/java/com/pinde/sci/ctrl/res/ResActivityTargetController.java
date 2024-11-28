@@ -81,10 +81,10 @@ public class ResActivityTargetController extends GeneralController {
 			target.setTargetFlow(targetFlow);
 			target.setTargetName(targetName.trim());
 			target.setOrgFlow(curUser.getOrgFlow());
-			target.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            target.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c = activityTargeBiz.saveTarget(target);
 			if (c == 0) {
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 		}else {
 			if (target != null) {
@@ -93,13 +93,13 @@ public class ResActivityTargetController extends GeneralController {
 			TeachingActivityTarget add = new TeachingActivityTarget();
 			add.setTargetName(targetName.trim());
 			add.setOrgFlow(curUser.getOrgFlow());
-			add.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            add.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c = activityTargeBiz.saveTarget(add);
 			if (c == 0) {
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/delTarget")
 	@ResponseBody
@@ -111,8 +111,8 @@ public class ResActivityTargetController extends GeneralController {
 		int c=activityTargeBiz.delTarget(targetFlow);
 		if(c==0)
 		{
-			return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 		}
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 }

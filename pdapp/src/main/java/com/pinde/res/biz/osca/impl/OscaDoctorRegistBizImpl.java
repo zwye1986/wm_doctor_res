@@ -37,7 +37,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
     @Override
     public List<OscaDoctorRegist> searchRegist(OscaDoctorRegist oscaDoctorRegist) {
         OscaDoctorRegistExample example = new OscaDoctorRegistExample();
-        OscaDoctorRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaDoctorRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaDoctorRegist.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(oscaDoctorRegist.getDoctorFlow());
         }
@@ -63,7 +63,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
             return oscaDoctorRegistMapper.updateByPrimaryKeySelective(oscaDoctorRegist);
         }else {
             oscaDoctorRegist.setRecordFlow(PkUtil.getUUID());
-            user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             user.setCreateUserFlow(user.getUserFlow());
             user.setCreateTime(DateUtil.getCurrDateTime());
             user.setModifyUserFlow(user.getUserFlow());

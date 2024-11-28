@@ -13,10 +13,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,7 +133,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		SysMonthlyDoctorInfo search = new SysMonthlyDoctorInfo();
 		search.setDateMonth(monthDate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo2(search);
 
@@ -189,26 +185,26 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				}
 
 				if(null==graduateMap.get(sessionNumber)){
-					if(JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						graduateMap.put(sessionNumber,1);
 					}
 				}else{
-					if(JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						graduateMap.put(sessionNumber,graduateMap.get(sessionNumber)+1);
 					}
 				}
 
 				if(null==notGraduateMap.get(sessionNumber)){
-					if(!JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (!com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						notGraduateMap.put(sessionNumber,1);
 					}
 				}else{
-					if(!JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (!com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						notGraduateMap.put(sessionNumber,notGraduateMap.get(sessionNumber)+1);
 					}
 				}
 
-				if(JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 					sumMap.put("graduate",sumMap.get("graduate")+1);
 				}else {
 					sumMap.put("notGraduate",sumMap.get("notGraduate")+1);
@@ -369,7 +365,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		SysMonthlyDoctorInfo search = new SysMonthlyDoctorInfo();
 		search.setDateMonth(monthDate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
@@ -421,26 +417,26 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				}
 
 				if(null==graduateMap.get(sessionNumber)){
-					if(JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						graduateMap.put(sessionNumber,1);
 					}
 				}else{
-					if(JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						graduateMap.put(sessionNumber,graduateMap.get(sessionNumber)+1);
 					}
 				}
 
 				if(null==notGraduateMap.get(sessionNumber)){
-					if(!JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (!com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						notGraduateMap.put(sessionNumber,1);
 					}
 				}else{
-					if(!JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                    if (!com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 						notGraduateMap.put(sessionNumber,notGraduateMap.get(sessionNumber)+1);
 					}
 				}
 
-				if(JsResDocTypeEnum.Graduate.getId().equals(doctorTypeId)){
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeId)) {
 					sumMap.put("graduate",sumMap.get("graduate")+1);
 				}else {
 					sumMap.put("notGraduate",sumMap.get("notGraduate")+1);
@@ -493,7 +489,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		SysMonthlyDoctorInfo search = new SysMonthlyDoctorInfo();
 		search.setDateMonth(monthDate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
@@ -696,8 +692,8 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		SysUser user = GlobalContext.getCurrentUser();
 		List<SysOrg> orgs = null;
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		searchOrg.setOrgProvId("320000");
 		orgs = orgBiz.searchOrg(searchOrg);
 		model.addAttribute("orgs", orgs);
@@ -718,8 +714,8 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		SysUser user = GlobalContext.getCurrentUser();
 		List<SysOrg> orgs = null;
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		orgs = orgBiz.searchOrg(searchOrg);
 
 		Map<String,Object> paramMap = new HashMap<>();
@@ -749,14 +745,14 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		search.setDateMonth(monthDate);
 		search.setDoctorStatusId("20");
 		search.setSessionNumber(sessionNumber);
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		search.setOrgFlow(orgFlow);
 
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 		if(sysMonthlyDoctorInfoList!=null&&sysMonthlyDoctorInfoList.size()>0){
 			for(SysMonthlyDoctorInfo sysMonthlyDoctorInfo:sysMonthlyDoctorInfoList){
 				String trainingYears = sysMonthlyDoctorInfo.getTrainingYears();
-				sysMonthlyDoctorInfo.setTrainingYears(JsResTrainYearEnum.getNameById(trainingYears));
+                sysMonthlyDoctorInfo.setTrainingYears(com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(trainingYears));
 			}
 		}
 
@@ -781,7 +777,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 	@RequestMapping("/exportDifference")//导出与上月差异
 	public void exportDifference(String monthDate,String sessionNumber,Model model,HttpServletResponse response) throws Exception {
 		SysMonthlyDoctorInfo search = new SysMonthlyDoctorInfo();
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		search.setSessionNumber(sessionNumber);
 
 		Map<String,Object> paramMap = new HashMap<>();
@@ -801,7 +797,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				subMap.put("orgName",sysMonthlyReturnDelayInfo.getOrgName());
 				subMap.put("trainingTypeName",sysMonthlyReturnDelayInfo.getTrainingTypeName());
 				subMap.put("trainingSpeName",sysMonthlyReturnDelayInfo.getTrainingSpeName());
-				subMap.put("trainingYears",JsResTrainYearEnum.getNameById(sysMonthlyReturnDelayInfo.getTrainingYears()));
+                subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyReturnDelayInfo.getTrainingYears()));
 				subMap.put("idNo",sysMonthlyReturnDelayInfo.getIdNo());
 				subMap.put("doctorTypeName",sysMonthlyReturnDelayInfo.getDoctorTypeName());
 				subMap.put("userPhone",sysMonthlyReturnDelayInfo.getUserPhone());
@@ -830,30 +826,30 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 
 		if(blacklistInfos!=null&&blacklistInfos.size()>0){
 			for(SysMonthlyBlacklistInfo blacklistInfo:blacklistInfos){
-				if(blacklistInfo.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_Y)){
+                if (blacklistInfo.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
 					Map<String,Object> subMap = new HashMap<>();
 					subMap.put("doctorName",blacklistInfo.getDoctorName());
 					subMap.put("sessionNumber",blacklistInfo.getSessionNumber());
 					subMap.put("orgName",blacklistInfo.getOrgName());
 					subMap.put("trainingTypeName",blacklistInfo.getTrainingTypeName());
 					subMap.put("trainingSpeName",blacklistInfo.getTrainingSpeName());
-					subMap.put("trainingYears",JsResTrainYearEnum.getNameById(blacklistInfo.getTrainingYears()));
+                    subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(blacklistInfo.getTrainingYears()));
 					subMap.put("idNo",blacklistInfo.getIdNo());
 					subMap.put("doctorTypeName",blacklistInfo.getDoctorTypeName());
 					subMap.put("userPhone",blacklistInfo.getUserPhone());
 					subMap.put("statusDetail","加入黑名单");
 					exportMapList.add(subMap);
-				}else if(blacklistInfo.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_N)){
+                } else if (blacklistInfo.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N)) {
 					String doctorFlow = blacklistInfo.getDoctorFlow();
 					SysMonthlyBlacklistInfo lastBlacklistInfo = lastBlacklistMap.get(doctorFlow);
-					if(lastBlacklistInfo!=null&&lastBlacklistInfo.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_Y)){
+                    if (lastBlacklistInfo != null && lastBlacklistInfo.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
 						Map<String,Object> subMap = new HashMap<>();
 						subMap.put("doctorName",blacklistInfo.getDoctorName());
 						subMap.put("sessionNumber",blacklistInfo.getSessionNumber());
 						subMap.put("orgName",blacklistInfo.getOrgName());
 						subMap.put("trainingTypeName",blacklistInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName",blacklistInfo.getTrainingSpeName());
-						subMap.put("trainingYears",JsResTrainYearEnum.getNameById(blacklistInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(blacklistInfo.getTrainingYears()));
 						subMap.put("idNo",blacklistInfo.getIdNo());
 						subMap.put("doctorTypeName",blacklistInfo.getDoctorTypeName());
 						subMap.put("userPhone",blacklistInfo.getUserPhone());
@@ -892,7 +888,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -905,7 +901,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -918,7 +914,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -931,7 +927,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -980,7 +976,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				subMap.put("orgName",sysMonthlyReturnDelayInfo.getOrgName());
 				subMap.put("trainingTypeName",sysMonthlyReturnDelayInfo.getTrainingTypeName());
 				subMap.put("trainingSpeName",sysMonthlyReturnDelayInfo.getTrainingSpeName());
-				subMap.put("trainingYears",JsResTrainYearEnum.getNameById(sysMonthlyReturnDelayInfo.getTrainingYears()));
+                subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyReturnDelayInfo.getTrainingYears()));
 				subMap.put("idNo",sysMonthlyReturnDelayInfo.getIdNo());
 				subMap.put("doctorTypeName",sysMonthlyReturnDelayInfo.getDoctorTypeName());
 				subMap.put("userPhone",sysMonthlyReturnDelayInfo.getUserPhone());
@@ -1025,7 +1021,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				subMap.put("orgName",sysMonthlyReturnDelayInfo.getOrgName());
 				subMap.put("trainingTypeName",sysMonthlyReturnDelayInfo.getTrainingTypeName());
 				subMap.put("trainingSpeName",sysMonthlyReturnDelayInfo.getTrainingSpeName());
-				subMap.put("trainingYears",JsResTrainYearEnum.getNameById(sysMonthlyReturnDelayInfo.getTrainingYears()));
+                subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyReturnDelayInfo.getTrainingYears()));
 				subMap.put("idNo",sysMonthlyReturnDelayInfo.getIdNo());
 				subMap.put("doctorTypeName",sysMonthlyReturnDelayInfo.getDoctorTypeName());
 				subMap.put("userPhone",sysMonthlyReturnDelayInfo.getUserPhone());
@@ -1070,7 +1066,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				subMap.put("orgName",sysMonthlyChangeInfo.getOrgName());
 				subMap.put("trainingTypeName",sysMonthlyChangeInfo.getTrainingTypeName());
 				subMap.put("trainingSpeName",sysMonthlyChangeInfo.getTrainingSpeName());
-				subMap.put("trainingYears",JsResTrainYearEnum.getNameById(sysMonthlyChangeInfo.getTrainingYears()));
+                subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyChangeInfo.getTrainingYears()));
 				subMap.put("idNo",sysMonthlyChangeInfo.getIdNo());
 				subMap.put("doctorTypeName",sysMonthlyChangeInfo.getDoctorTypeName());
 				subMap.put("userPhone",sysMonthlyChangeInfo.getUserPhone());
@@ -1117,7 +1113,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 				subMap.put("orgName",sysMonthlyChangeInfo.getOrgName());
 				subMap.put("trainingTypeName",sysMonthlyChangeInfo.getTrainingTypeName());
 				subMap.put("trainingSpeName",sysMonthlyChangeInfo.getTrainingSpeName());
-				subMap.put("trainingYears",JsResTrainYearEnum.getNameById(sysMonthlyChangeInfo.getTrainingYears()));
+                subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyChangeInfo.getTrainingYears()));
 				subMap.put("idNo",sysMonthlyChangeInfo.getIdNo());
 				subMap.put("doctorTypeName",sysMonthlyChangeInfo.getDoctorTypeName());
 				subMap.put("userPhone",sysMonthlyChangeInfo.getUserPhone());
@@ -1148,7 +1144,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 	@RequestMapping("/exportStatusChange")//导出状态变更
 	public void exportStatusChange(String monthDate,String sessionNumber,Model model,HttpServletResponse response) throws Exception {
 		SysMonthlyDoctorInfo search = new SysMonthlyDoctorInfo();
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		search.setSessionNumber(sessionNumber);
 
 		List<Map<String,Object>> exportMapList = new ArrayList<>();
@@ -1187,7 +1183,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -1200,7 +1196,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -1213,7 +1209,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -1226,7 +1222,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 						subMap.put("orgName", sysMonthlyDoctorInfo.getOrgName());
 						subMap.put("trainingTypeName", sysMonthlyDoctorInfo.getTrainingTypeName());
 						subMap.put("trainingSpeName", sysMonthlyDoctorInfo.getTrainingSpeName());
-						subMap.put("trainingYears", JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
+                        subMap.put("trainingYears", com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(sysMonthlyDoctorInfo.getTrainingYears()));
 						subMap.put("idNo", sysMonthlyDoctorInfo.getIdNo());
 						subMap.put("doctorTypeName", sysMonthlyDoctorInfo.getDoctorTypeName());
 						subMap.put("userPhone", sysMonthlyDoctorInfo.getUserPhone());
@@ -1268,8 +1264,8 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 
 		List<SysOrg> orgs = null;
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		searchOrg.setOrgProvId("320000");
 		orgs = orgBiz.searchOrg(searchOrg);
 		model.addAttribute("orgs", orgs);
@@ -1351,7 +1347,7 @@ public class JsResMonthlyReportGlobalNewController extends GeneralController {
 		if(resultMapList!=null&&resultMapList.size()>0){
 			for(SysMonthlyNotUseappInfo sysMonthlyNotUseappInfo:resultMapList){
 				String trainingYears = sysMonthlyNotUseappInfo.getTrainingYears();
-				sysMonthlyNotUseappInfo.setTrainingYears(JsResTrainYearEnum.getNameById(trainingYears));
+                sysMonthlyNotUseappInfo.setTrainingYears(com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(trainingYears));
 			}
 		}
 

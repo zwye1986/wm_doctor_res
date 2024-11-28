@@ -9,9 +9,7 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.ResDoctorAuditStatusEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.form.jsres.BackTrainForm;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
@@ -63,11 +61,11 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         resRec.setOrgName(recruit.getOrgName());
         resRec.setOperUserFlow(recruit.getDoctorFlow());
         resRec.setOperUserName(doctor.getDoctorName());
-        resRec.setRecTypeId(ResRecTypeEnum.ReturnTraining.getId());
-        resRec.setRecTypeName(ResRecTypeEnum.ReturnTraining.getName());
+        resRec.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+        resRec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getName());
         if (form != null) {
             dom = DocumentHelper.createDocument();
-            root = dom.addElement(ResRecTypeEnum.ReturnTraining.getId());
+            root = dom.addElement(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
             Element reasonNameElement = root.addElement("reasonName");
             Element policyNameElement = root.addElement("policyName");
             Element reasonElement = root.addElement("reason");
@@ -92,8 +90,8 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         //更新rec数据
         int recResult = resRecBiz.edit(resRec);
         //更新recruit数据
-        recruit.setAuditStatusId(ResDoctorAuditStatusEnum.NotSubmit.getId());
-        recruit.setAuditStatusName(ResDoctorAuditStatusEnum.NotSubmit.getName());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+        recruit.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
         //更新doctor数据
         doctor.setOrgFlow("");
         doctor.setOrgName("");
@@ -120,9 +118,9 @@ public class JsResRecBizImpl implements IJsResRecBiz {
             String msgTitle = "培训信息退培结果";
             String msgContent = "您的培训信息已被基地退回";
             msgBiz.addSysMsg(recruit.getDoctorFlow(), msgTitle, msgContent);
-            return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
         } else {
-            return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
         }
     }
 /**
@@ -149,11 +147,11 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         resRec.setOrgName(recruit.getOrgName());
         resRec.setOperUserFlow(recruit.getDoctorFlow());
         resRec.setOperUserName(doctor.getDoctorName());
-        resRec.setRecTypeId(ResRecTypeEnum.ReturnTraining.getId());
-        resRec.setRecTypeName(ResRecTypeEnum.ReturnTraining.getName());
+    resRec.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+    resRec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getName());
         if (form != null) {
             dom = DocumentHelper.createDocument();
-            root = dom.addElement(ResRecTypeEnum.ReturnTraining.getId());
+    root = dom.addElement(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
             Element reasonNameElement = root.addElement("reasonName");
             Element policyNameElement = root.addElement("policyName");
             Element reasonElement = root.addElement("reason");
@@ -183,13 +181,13 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         //更新rec数据
         int recResult = resRecBiz.editWithFiles(resRec,pubFiles);
         //更新recruit数据
-        recruit.setAuditStatusId(ResDoctorAuditStatusEnum.NotSubmit.getId());
-        recruit.setAuditStatusName(ResDoctorAuditStatusEnum.NotSubmit.getName());
+    recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+    recruit.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
         int recruitResult = recruitBiz.updateDocrecruit(recruit);
         if (recResult != 0 && recruitResult != 0) {
-            return GlobalConstant.ONE_LINE;
+    return com.pinde.core.common.GlobalConstant.ONE_LINE;
         } else {
-            return GlobalConstant.ZERO_LINE;
+    return com.pinde.core.common.GlobalConstant.ZERO_LINE;
         }
     }
  **/
@@ -206,7 +204,7 @@ public class JsResRecBizImpl implements IJsResRecBiz {
                 String content = rec.getRecContent();
                 if (StringUtil.isNotBlank(content)) {
                     dom = DocumentHelper.parseText(content);
-                    String Xpath = "//" + ResRecTypeEnum.ReturnTraining.getId();
+                    String Xpath = "//" + com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId();
                     Element root = (Element) dom.selectSingleNode(Xpath);
                     if (root != null) {
                         Element reasonNameElement = root.element("reasonName");
@@ -245,36 +243,36 @@ public class JsResRecBizImpl implements IJsResRecBiz {
                         }
                     }
                 }
-                String result = GlobalConstant.FLAG_Y;
+                String result = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 if (StringUtil.isNotBlank(sessionNumber) && StringUtil.isNotBlank(form.getSessionNumber())) {
                     if (!form.getSessionNumber().equals(sessionNumber)) {
-                        result = GlobalConstant.FLAG_N;
+                        result = com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
                 }
                 if (StringUtil.isNotBlank(reasonId) && StringUtil.isNotBlank(form.getReasonId())) {
                     if (!form.getReasonId().equals(reasonId)) {
-                        result = GlobalConstant.FLAG_N;
+                        result = com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
                 }
                 if (StringUtil.isNotBlank(policyId) && StringUtil.isNotBlank(form.getPolicyId())) {
                     if (!form.getPolicyId().equals(policyId)) {
-                        result = GlobalConstant.FLAG_N;
+                        result = com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
                 }
                 if (StringUtil.isNotBlank(speName) && StringUtil.isNotBlank(form.getTrainSpe())) {
                     if (!form.getTrainSpe().contains(speName)) {
-                        result = GlobalConstant.FLAG_N;
+                        result = com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
                 }
-                if (GlobalConstant.FLAG_Y.equals(result)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result)) {
                     String key = rec.getRecFlow();
                     backInfoMap.put(key, form);
                     newRecList.add(rec);
-                    countMap.put(rec.getOperUserFlow(), GlobalConstant.FLAG_F);
+                    countMap.put(rec.getOperUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_F);
                 }
             }
-            backInfoMap.put(GlobalConstant.FLAG_F, countMap);
-            backInfoMap.put(GlobalConstant.FLAG_Y, newRecList);
+            backInfoMap.put(com.pinde.core.common.GlobalConstant.FLAG_F, countMap);
+            backInfoMap.put(com.pinde.core.common.GlobalConstant.FLAG_Y, newRecList);
         }
         return backInfoMap;
     }
@@ -288,14 +286,14 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         resRec.setOrgName(recruit.getOrgName());
         ResDoctor doctor = resDoctorBiz.readDoctor(recruitWithBLOBs.getDoctorFlow());
         resRec.setOperUserName(doctor.getDoctorName());
-        resRec.setRecTypeId(ResRecTypeEnum.Delay.getId());
-        resRec.setRecTypeName(ResRecTypeEnum.Delay.getName());
+    resRec.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
+    resRec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getName());
         resRec.setOperUserFlow(recruit.getDoctorFlow());
         Document dom = null;
         Element root = null;
         if (backTrainForm != null) {
             dom = DocumentHelper.createDocument();
-            root = dom.addElement(ResRecTypeEnum.Delay.getId());
+    root = dom.addElement(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
             Element delayReasonElement = root.addElement("delayReason");
             Element delayPicValueFileElement = root.addElement("delayPicValueFile");
             Element graduationYearElement = root.addElement("graduationYear");
@@ -322,9 +320,9 @@ public class JsResRecBizImpl implements IJsResRecBiz {
 //			String msgTitle = "培训信息退培结果";
 //			String msgContent = "您的培训信息已被基地退回";
 //			msgBiz.addSysMsg(recruit.getDoctorFlow(), msgTitle , msgContent);
-            return GlobalConstant.ONE_LINE;
+    return com.pinde.core.common.GlobalConstant.ONE_LINE;
         } else {
-            return GlobalConstant.ZERO_LINE;
+    return com.pinde.core.common.GlobalConstant.ZERO_LINE;
         }
     }
 **/
@@ -404,11 +402,11 @@ public class JsResRecBizImpl implements IJsResRecBiz {
                 String msgTitle = "培训信息退培结果";
                 String msgContent = "您的培训信息已被基地退回";
                 msgBiz.addSysMsg(doctorRecruit.getDoctorFlow(), msgTitle, msgContent);
-                return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
             } else {
-                return GlobalConstant.ZERO_LINE;
+                return com.pinde.core.common.GlobalConstant.ZERO_LINE;
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 }

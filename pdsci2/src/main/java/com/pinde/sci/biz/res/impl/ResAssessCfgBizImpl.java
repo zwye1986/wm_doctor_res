@@ -105,7 +105,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 				return saveAssessCfg(existAssessCfg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 				return saveAssessCfg(existAssessCfg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -147,7 +147,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 	@Override
 	public List<ResAssessCfg> searchAssessCfgList(ResAssessCfg assessCfg) {
 		ResAssessCfgExample example = new ResAssessCfgExample();
-		com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		if(StringUtil.isNotBlank(assessCfg.getOrgFlow())){
 //			criteria.andOrgFlowEqualTo(assessCfg.getOrgFlow());
 //		}
@@ -171,7 +171,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 			return null;
 		}
 		ResAssessCfgExample example = new ResAssessCfgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 			.andCfgCodeIdEqualTo(cfgCodeId);
 		List<ResAssessCfg> assessCfgList = assessCfgMapper.selectByExampleWithBLOBs(example);
 		if(assessCfgList==null || assessCfgList.isEmpty()){
@@ -232,7 +232,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 			return null;
 		}
 		ResAssessCfgExample example = new ResAssessCfgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andCfgCodeIdEqualTo(cfgCodeId);
 		List<ResAssessCfg> assessCfgList = assessCfgMapper.selectByExampleWithBLOBs(example);
 		if(assessCfgList==null || assessCfgList.isEmpty()){
@@ -293,7 +293,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 	@Override
 	public List<ResAssessCfg> selectByExample(ResAssessCfg assessCfg) {
 		ResAssessCfgExample example = new ResAssessCfgExample();
-		com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (assessCfg != null) {
 			if (StringUtil.isNotBlank(assessCfg.getCfgCodeId())) {
 				criteria.andCfgCodeIdEqualTo(assessCfg.getCfgCodeId());
@@ -308,7 +308,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 	@Override
 	public List<ResAssessCfg> selectByExampleWithBLOBs(ResAssessCfg assessCfg) {
 		ResAssessCfgExample example = new ResAssessCfgExample();
-		com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (assessCfg != null) {
 			if (StringUtil.isNotBlank(assessCfg.getCfgCodeId())) {
 				criteria.andCfgCodeIdEqualTo(assessCfg.getCfgCodeId());
@@ -348,7 +348,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 				return saveAssessCfg(existAssessCfg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 
@@ -382,7 +382,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 				return saveAssessCfg(existAssessCfg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -398,7 +398,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 				return saveAssessCfg(existAssessCfg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override

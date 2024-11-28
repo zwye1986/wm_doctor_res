@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -162,11 +163,11 @@ public class ResGraduationAssessmentController extends GeneralController {
 			//处理上传文件
 			addUploadFile(graduationAssessmentWithBLOBs.getRecordFlow(), request, "GraduatAssess");
 		}
-		if(count==GlobalConstant.ONE_LINE)
+        if (count == com.pinde.core.common.GlobalConstant.ONE_LINE)
 		{
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class ResGraduationAssessmentController extends GeneralController {
 		if(graduationFile!=null && graduationFile.getSize() > 0){
 			return graduationAssessmentBiz.uploadImg(recordFlow,graduationFile);
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	//保存上传的附件
@@ -225,7 +226,7 @@ public class ResGraduationAssessmentController extends GeneralController {
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "discipleFiles" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -258,7 +259,7 @@ public class ResGraduationAssessmentController extends GeneralController {
 //					String filePath = basePath + pubFile.getFilePath();
 //					FileUtil.deletefile(filePath);
 				}
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				pubFileBiz.editFile(pubFile);
 			}
 		}

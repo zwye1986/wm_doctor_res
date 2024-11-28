@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.inx.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +11,7 @@ import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.base.ResInfoRoleMapper;
 import com.pinde.sci.dao.base.ResReadInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
-import com.pinde.sci.enums.inx.InfoStatusEnum;
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.InxInfoExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class NoticeBizImpl implements INoticeBiz {
 	
 	@Override
 	public int save(InxInfo info) {
-		info.setColumnId(GlobalConstant.RES_NOTICE_TYPE_ID);
-		info.setColumnName(GlobalConstant.RES_NOTICE_TYPE_NAME);
+        info.setColumnId(com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_ID);
+        info.setColumnName(com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_NAME);
 		return editInfo(info, "","");
 	}
 	
@@ -77,7 +78,7 @@ public class NoticeBizImpl implements INoticeBiz {
 				if(StringUtil.isNotBlank(sessionNumber)){
 					infoRole.setSessionNumber(sessionNumber);
 				}
-				infoRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                infoRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				infoRole.setInfoFlow(info.getInfoFlow());
 				infoRole.setInfoRole(roleFlow);
 				saveInfoRole(infoRole);
@@ -113,7 +114,7 @@ public class NoticeBizImpl implements INoticeBiz {
 	@Override
 	public	List<ResInfoRole> readRoleByFlow(String infoFlow) {
 		ResInfoRoleExample example=new ResInfoRoleExample();
-		example.createCriteria().andInfoFlowEqualTo(infoFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andInfoFlowEqualTo(infoFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return resInfoRoleoMapper.selectByExample(example);
 	}
 
@@ -140,7 +141,7 @@ public class NoticeBizImpl implements INoticeBiz {
 
 	public ResReadInfo getReadInfoByFlow(String infoFlow, String userFlow) {
 		ResReadInfoExample example=new ResReadInfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andInfoFlowEqualTo(infoFlow).andUserFlowEqualTo(userFlow);
 		List<ResReadInfo> list=resReadInfoMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -154,7 +155,7 @@ public class NoticeBizImpl implements INoticeBiz {
 	public List<InxInfo> findNotice(InxInfo info) {
 		InxInfoExample example = new InxInfoExample();
 		example.setOrderByClause("CREATE_TIME DESC");
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(info.getColumnId())) {
 			criteria.andColumnIdEqualTo(info.getColumnId());
 		}
@@ -168,7 +169,7 @@ public class NoticeBizImpl implements INoticeBiz {
 	@Override
 	public List<InxInfo> searchNotice(InxInfo info) {
 		InxInfoExample example = new InxInfoExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("INFO_TIME DESC");
 		if (StringUtil.isNotBlank(info.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(info.getOrgFlow());
@@ -187,7 +188,7 @@ public class NoticeBizImpl implements INoticeBiz {
 //		String beforeSevenDay = DateUtil.addHour(DateUtil.getCurrDateTime(),-7*24).substring(0,8);
 //
 //		InxInfoExample example = new InxInfoExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andInfoTimeGreaterThanOrEqualTo(beforeSevenDay);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andInfoTimeGreaterThanOrEqualTo(beforeSevenDay);
 //		example.setOrderByClause("INFO_TIME DESC");
 //		return inxInfoMapper.selectByExample(example);
 //	}
@@ -201,7 +202,7 @@ public class NoticeBizImpl implements INoticeBiz {
 	public int delNotice(String flow) {
 		InxInfo record = new InxInfo();
 		record.setInfoFlow(flow);
-		record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		GeneralMethod.setRecordInfo(record, false);
 		return this.inxInfoMapper.updateByPrimaryKeySelective(record);
 	}
@@ -209,7 +210,7 @@ public class NoticeBizImpl implements INoticeBiz {
 	@Override
 	public List<InxInfo> findNoticeWithBLOBs(InxInfo info) {
 		InxInfoExample example = new InxInfoExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(info.getColumnId())) {
 			criteria.andColumnIdEqualTo(info.getColumnId());
 		}

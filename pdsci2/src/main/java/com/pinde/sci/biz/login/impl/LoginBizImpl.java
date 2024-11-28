@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.login.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -16,7 +15,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.base.SysLoginAbilityMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,10 +52,10 @@ public class LoginBizImpl implements ILoginBiz{
 	@Override
 	public List<SysLog> getCurrWsSysLog(String startDate,String endDate,SysLog log) {
 		List<String> wsIds = new ArrayList<String>();
-		wsIds.add(GlobalConstant.SYS_WS_ID);
+        wsIds.add(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 		wsIds.add(GlobalContext.getCurrentWsId());
 		SysLogExample example = new SysLogExample();
-		SysLogExample.Criteria criteria =  example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        SysLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andWsIdIn(wsIds);
 		if(StringUtil.isNotBlank(log.getUserName())){
 			criteria.andUserNameEqualTo(log.getUserName());
@@ -103,17 +102,17 @@ public class LoginBizImpl implements ILoginBiz{
 			}
 		}
 
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
 
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_ID_LIST_BACKUP, currUserMenuIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_SET_ID_LIST_BACKUP, currUserMenuSetIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID_LIST_BACKUP, currUserModuleIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP, currUserWorkStationIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST_BACKUP, currUserMenuIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST_BACKUP, currUserMenuSetIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST_BACKUP, currUserModuleIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP, currUserWorkStationIdList);
 	}
 	@Override
 	public Map<String,Object> loadSysRole2(String userFlow){
@@ -147,11 +146,11 @@ public class LoginBizImpl implements ILoginBiz{
 		}
 
 
-		roleUrl.put(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
-		roleUrl.put(GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
-		roleUrl.put(GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
-		roleUrl.put(GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
-		roleUrl.put(GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
+        roleUrl.put(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+        roleUrl.put(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
+        roleUrl.put(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
+        roleUrl.put(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
+        roleUrl.put(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
 		return roleUrl;
 	}
 
@@ -185,17 +184,17 @@ public class LoginBizImpl implements ILoginBiz{
 				}
 			}
 		}
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
 
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_ID_LIST_BACKUP, currUserMenuIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_SET_ID_LIST_BACKUP, currUserMenuSetIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID_LIST_BACKUP, currUserModuleIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP, currUserWorkStationIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST_BACKUP, currUserMenuIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST_BACKUP, currUserMenuSetIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST_BACKUP, currUserModuleIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP, currUserWorkStationIdList);
 	}
 
 	@Override
@@ -215,16 +214,16 @@ public class LoginBizImpl implements ILoginBiz{
 			SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 			SysUser user=userBiz.findByFlow(userFlow);
 			String isAdmin="";
-			if(sysOrg!=null&&GlobalConstant.FLAG_Y.equals(sysOrg.getIsExamOrg())){
+            if (sysOrg != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sysOrg.getIsExamOrg())) {
 				for(int i=0;i<currUserMenuIdList.size();i++){
-					if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+                    if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 						if("osca-xy".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))||
 								"osca-sjbmgl".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))){
-                            isAdmin = GlobalConstant.FLAG_N;
+                            isAdmin = com.pinde.core.common.GlobalConstant.FLAG_N;
 							break;
 						}
 						if("osca-gly".equals(InitConfig.getModuleIdByMenuId(currUserMenuIdList.get(i)))){
-                            isAdmin = GlobalConstant.FLAG_Y;
+                            isAdmin = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}
 					}
 					if("osca-gly-jcxxgl-khxm".equals(currUserMenuIdList.get(i))){
@@ -237,7 +236,7 @@ public class LoginBizImpl implements ILoginBiz{
 						currUserMenuIdList.remove(i);
 					}
 				}
-                if (isAdmin.equals(GlobalConstant.FLAG_Y) && StringUtil.isNotBlank(GlobalContext.getCurrentUser().getOrgFlow())) {
+                if (isAdmin.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) && StringUtil.isNotBlank(GlobalContext.getCurrentUser().getOrgFlow())) {
 					OscaOrgMenu oscaOrgMenu=new OscaOrgMenu();
 					oscaOrgMenu.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 					List<OscaOrgMenu> oscaOrgMenus=oscaOrgMenuBiz.searchAllOrgMenu(oscaOrgMenu);
@@ -266,8 +265,8 @@ public class LoginBizImpl implements ILoginBiz{
 
 			/*****  osca非考点的基地管理员登录拦截 ****/
 			if(sysOrg!=null){
-				if(GlobalConstant.FLAG_N.equals(sysOrg.getIsExamOrg())||StringUtil.isBlank(sysOrg.getIsExamOrg())){
-					if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())&&
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(sysOrg.getIsExamOrg()) || StringUtil.isBlank(sysOrg.getIsExamOrg())) {
+                    if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode()) &&
 							currUserModuleIdList!=null&&currUserModuleIdList.size()>0){
 						for(int i=0;i<currUserModuleIdList.size();i++){
 							if("osca-gly".equals(currUserModuleIdList.get(i))){
@@ -287,17 +286,17 @@ public class LoginBizImpl implements ILoginBiz{
 
 		}
 
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST, currUserMenuIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST, currUserMenuSetIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST, currUserModuleIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST, currUserWorkStationIdList);
 
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_ID_LIST_BACKUP, currUserMenuIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MENU_SET_ID_LIST_BACKUP, currUserMenuSetIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID_LIST_BACKUP, currUserModuleIdList);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP, currUserWorkStationIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST_BACKUP, currRoleList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_ID_LIST_BACKUP, currUserMenuIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MENU_SET_ID_LIST_BACKUP, currUserMenuSetIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID_LIST_BACKUP, currUserModuleIdList);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP, currUserWorkStationIdList);
 	}
 
 	@Override
@@ -309,7 +308,7 @@ public class LoginBizImpl implements ILoginBiz{
 	public void updateLoginAbility(String userCode) {
 		SysLoginAbility record = new SysLoginAbility();
 		record.setUserCode(userCode);
-		record.setIsLock(GlobalConstant.FLAG_N);
+        record.setIsLock(com.pinde.core.common.GlobalConstant.FLAG_N);
 		record.setLoginTime(DateUtil.getCurrDateTime());
 		SysLoginAbility ability = abilityMapper.selectByPrimaryKey(userCode);
 		if(null == ability){
@@ -321,7 +320,7 @@ public class LoginBizImpl implements ILoginBiz{
 			//初次错误
 			record.setLoginNum(Integer.valueOf(ability.getLoginNum())+1+"");
 			if(Integer.valueOf(ability.getLoginNum()) == 4){
-				record.setIsLock(GlobalConstant.FLAG_Y);
+                record.setIsLock(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			GeneralMethod.setRecordInfo(record,false);
 			abilityMapper.updateByPrimaryKeySelective(record);
@@ -350,7 +349,7 @@ public class LoginBizImpl implements ILoginBiz{
 		if(StringUtil.isNotBlank(InitConfig.getSysCfg("recruit_doctor_role_flow"))){
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserFlow(user.getUserFlow());
-			String currWsId = GlobalConstant.RECRUIT_WS_ID;
+            String currWsId = com.pinde.core.common.GlobalConstant.RECRUIT_WS_ID;
 			userRole.setWsId(currWsId);
 			userRole.setRoleFlow(InitConfig.getSysCfg("recruit_doctor_role_flow"));
 			userRole.setAuthTime(DateUtil.getCurrDate());

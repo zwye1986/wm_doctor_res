@@ -40,12 +40,12 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
         if (!(mimeList.contains(fileType) && suffixList.contains(suffix.toLowerCase()))) {
             return "请上传 " + InitConfig.getSysCfg("res_file_support_suffix") + "格式的文件";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName, String orgFlow, String planYear, String itemId) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (file.getSize() > 0) {
             //创建目录
             String dateString = DateUtil.getCurrDate2();

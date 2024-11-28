@@ -46,7 +46,7 @@ public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
     @Override
     public List<ResAnnualAssessment> findAnnualAssessmentList(ResAnnualAssessment assessment,List<String> statusIdList) {
         ResAnnualAssessmentExample example = new ResAnnualAssessmentExample();
-        ResAnnualAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResAnnualAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(assessment.getDoctorFlow())) {
             criteria.andDoctorFlowEqualTo(assessment.getDoctorFlow());
         }
@@ -85,7 +85,7 @@ public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
     public int delAnnualAssessment(String recordFlow) {
         ResAnnualAssessmentWithBLOBs assessment = new ResAnnualAssessmentWithBLOBs();
         assessment.setRecordFlow(recordFlow);
-        assessment.setRecordStatus(GlobalConstant.FLAG_N);
+        assessment.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         return assessmentMapper.updateByPrimaryKeySelective(assessment);
     }
 
@@ -104,7 +104,7 @@ public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
         assessmentWithBLOBs.setAuditUserName(user.getUserName());
         assessmentWithBLOBs.setAuditTime(DateUtil.getCurrDateTime());
         GeneralMethod.setRecordInfo(assessmentWithBLOBs,false);
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andTeacherFlowEqualTo(teacherFlow).andAuditStatusIdEqualTo(DiscipleStatusEnum.Submit.getId());
 
         return  assessmentMapper.updateByExampleSelective(assessmentWithBLOBs,example);
@@ -112,7 +112,7 @@ public class AnnualAssessmentBizImpl implements IAnnualAssessmentBiz {
     }
     public List<ResAnnualAssessment> findAnnualAssessmentByDocFlow(String doctorFlow){
         ResAnnualAssessmentExample example = new ResAnnualAssessmentExample();
-        example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return assessmentMapper.selectByExample(example);
     }
 }

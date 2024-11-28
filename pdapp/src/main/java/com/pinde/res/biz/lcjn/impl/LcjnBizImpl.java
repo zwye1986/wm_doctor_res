@@ -2,6 +2,7 @@ package com.pinde.res.biz.lcjn.impl;
 
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -56,7 +57,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public SysUser readUserByCode(String userCode) {
 		SysUserExample example=new SysUserExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andUserCodeEqualTo(userCode);
 		List<SysUser> list=sysUserMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
@@ -74,14 +75,14 @@ public class LcjnBizImpl implements ILcjnBiz{
 		user.setCreateUserFlow(userFlow);
 		user.setModifyTime(DateUtil.getCurrDateTime());
 		user.setModifyUserFlow(userFlow);
-		user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return sysUserMapper.insertSelective(user);
 	}
 	//获取用户拥有的角色列表
 	@Override
 	public List<SysUserRole> getSysUserRole(String userFlow){
 		SysUserRoleExample example = new SysUserRoleExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andUserFlowEqualTo(userFlow);
 		return userRoleMapper.selectByExample(example);
 	}
@@ -115,7 +116,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 		if(StringUtil.isNotBlank(doctorTrainingSpe))
 		{
 			SysDictExample example = new SysDictExample();
-			example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysDict> sysDictList = sysDictMapper.selectByExample(example);
 
 			return sysDictList;
@@ -127,7 +128,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 		if(StringUtil.isNotBlank(doctorTrainingSpe)&&StringUtil.isNotBlank(orgFlow))
 		{
 			SysDictExample example = new SysDictExample();
-			example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 			.andOrgFlowEqualTo(orgFlow);
 			example.setOrderByClause("ordinal asc");
 			List<SysDict> sysDictList = sysDictMapper.selectByExample(example);
@@ -140,7 +141,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public SysUser readUserByIdNo(String idNo) {
 		SysUserExample example=new SysUserExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andIdNoEqualTo(idNo);
 		List<SysUser> list=sysUserMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
@@ -152,7 +153,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public SysUser readUserByPhone(String userPhone) {
 		SysUserExample example=new SysUserExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andUserPhoneEqualTo(userPhone);
 		List<SysUser> list=sysUserMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
@@ -164,7 +165,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public SysUser readUserByEmail(String userEmail) {
 		SysUserExample example=new SysUserExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andUserEmailEqualTo(userEmail);
 		List<SysUser> list=sysUserMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
@@ -189,7 +190,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 			user.setCreateUserFlow(userFlow);
 			user.setModifyTime(DateUtil.getCurrDateTime());
 			user.setModifyUserFlow(userFlow);
-			user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return sysUserMapper.insertSelective(user);
 		}
 	}
@@ -212,7 +213,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public List<LcjnDoctorSigin> getSiginListByFlow(String userFlow, String courseFlow) {
 		LcjnDoctorSiginExample example=new LcjnDoctorSiginExample();
-		example.createCriteria().andCourseFlowEqualTo(courseFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andCourseFlowEqualTo(courseFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(userFlow);
 		List<LcjnDoctorSigin> list=siginMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -228,7 +229,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 		if(!f) {
 			//课程评价
 			LcjnCourseEvaluateExample example = new LcjnCourseEvaluateExample();
-			example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<LcjnCourseEvaluate> list = courseEvaluateMapper.selectByExample(example);
 			if (list != null && list.size() > 0) {
 				f = true;
@@ -237,7 +238,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 		if(!f) {
 			//老师评价
 			LcjnTeaEvaluateExample example = new LcjnTeaEvaluateExample();
-			example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<LcjnTeaEvaluate> list = teaEvaluateMapper.selectByExample(example);
 			if (list != null && list.size() > 0) {
 				f = true;
@@ -250,7 +251,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	public LcjnCourseEvaluate getCourseEvaluate(String userFlow, String courseFlow) {
 		//课程评价
 		LcjnCourseEvaluateExample example = new LcjnCourseEvaluateExample();
-		example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<LcjnCourseEvaluate> list = courseEvaluateMapper.selectByExample(example);
 		if (list != null && list.size() > 0) {
 			return  list.get(0);
@@ -261,7 +262,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public List<LcjnCourseEvaluateDetail> getCourseEvaluateDetail(String evaluateFlow) {
 		LcjnCourseEvaluateDetailExample example = new LcjnCourseEvaluateDetailExample();
-		example.createCriteria().andEvaluateFlowEqualTo(evaluateFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andEvaluateFlowEqualTo(evaluateFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<LcjnCourseEvaluateDetail> list = courseEvaluateDetailMapper.selectByExample(example);
 		return list;
 	}
@@ -270,7 +271,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	public List<LcjnTeaEvaluate> getCourseTeaEvalByFlow(String userFlow, String courseFlow) {
 		//老师评价
 		LcjnTeaEvaluateExample example = new LcjnTeaEvaluateExample();
-		example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<LcjnTeaEvaluate> list = teaEvaluateMapper.selectByExample(example);
 		return list;
 	}
@@ -278,7 +279,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public List<LcjnTeaEvaluateDetail> getCourseTeaEvalDeatil(String teaEvaluateFlow) {
 		LcjnTeaEvaluateDetailExample example = new LcjnTeaEvaluateDetailExample();
-		example.createCriteria().andTeaEvaluateFlowEqualTo(teaEvaluateFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andTeaEvaluateFlowEqualTo(teaEvaluateFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<LcjnTeaEvaluateDetail> list = teaEvaluateDetailMapper.selectByExample(example);
 		return list;
 	}
@@ -292,7 +293,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public LcjnDoctorCourse getDoctorCourseByCourseAndDocFlow(String userFlow, String courseFlow) {
 		LcjnDoctorCourseExample example=new LcjnDoctorCourseExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(userFlow).andCourseFlowEqualTo(courseFlow);
 		List<LcjnDoctorCourse> list=doctorCourseMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -311,7 +312,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	public List<LcjnCourseTime> getCourseTimeByFlow(String courseFlow) {
 		LcjnCourseTimeExample example=new LcjnCourseTimeExample();
 		example.createCriteria().andCourseFlowEqualTo(courseFlow)
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("TRAIN_START_DATE ASC,START_TIME ASC");
 		return timeMapper.selectByExample(example);
 	}
@@ -320,7 +321,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	public List<LcjnCourseTea> getCourseTeaByFlow(String courseFlow) {
 		LcjnCourseTeaExample example=new LcjnCourseTeaExample();
 		example.createCriteria().andCourseFlowEqualTo(courseFlow)
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("CREATE_TIME ASC");
 		return teaMapper.selectByExample(example);
 	}
@@ -329,7 +330,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	public List<LcjnCourseSkill> getCourseSkillByFlow(String courseFlow) {
 		LcjnCourseSkillExample example=new LcjnCourseSkillExample();
 		example.createCriteria().andCourseFlowEqualTo(courseFlow)
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("CREATE_TIME ASC");
 		return skillMapper.selectByExample(example);
 	}
@@ -363,7 +364,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 			doctorCourse.setCreateUserFlow(userFlow);
 			doctorCourse.setModifyTime(DateUtil.getCurrDateTime());
 			doctorCourse.setModifyUserFlow(userFlow);
-			doctorCourse.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            doctorCourse.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return doctorCourseMapper.insertSelective(doctorCourse);
 		}
 	}
@@ -380,7 +381,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 			evaluate.setCreateUserFlow(userFlow);
 			evaluate.setModifyTime(DateUtil.getCurrDateTime());
 			evaluate.setModifyUserFlow(userFlow);
-			evaluate.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            evaluate.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return courseEvaluateMapper.insertSelective(evaluate);
 		}
 	}
@@ -398,7 +399,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 			evaluate.setCreateUserFlow(userFlow);
 			evaluate.setModifyTime(DateUtil.getCurrDateTime());
 			evaluate.setModifyUserFlow(userFlow);
-			evaluate.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            evaluate.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return teaEvaluateMapper.insertSelective(evaluate);
 		}
 	}
@@ -407,7 +408,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	public LcjnTeaEvaluateDetail getTeaEvaluateDetailByFlow(String teaEvaluateFlow, String dictId) {
 
 		LcjnTeaEvaluateDetailExample example = new LcjnTeaEvaluateDetailExample();
-		example.createCriteria().andTeaEvaluateFlowEqualTo(teaEvaluateFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andTeaEvaluateFlowEqualTo(teaEvaluateFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andDictIdEqualTo(dictId);
 		List<LcjnTeaEvaluateDetail> list = teaEvaluateDetailMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -420,7 +421,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 	@Override
 	public LcjnCourseEvaluateDetail getCourseEvaluateDetailByFlow( String evaluateFlow, String dictId){
 		LcjnCourseEvaluateDetailExample example = new LcjnCourseEvaluateDetailExample();
-		example.createCriteria().andEvaluateFlowEqualTo(evaluateFlow).andDictIdEqualTo(dictId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andEvaluateFlowEqualTo(evaluateFlow).andDictIdEqualTo(dictId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<LcjnCourseEvaluateDetail> list = courseEvaluateDetailMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
 			return list.get(0);
@@ -440,7 +441,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 			d.setCreateUserFlow(userFlow);
 			d.setModifyTime(DateUtil.getCurrDateTime());
 			d.setModifyUserFlow(userFlow);
-			d.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            d.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return courseEvaluateDetailMapper.insertSelective(d);
 		}
 	}
@@ -456,7 +457,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 			d.setCreateUserFlow(userFlow);
 			d.setModifyTime(DateUtil.getCurrDateTime());
 			d.setModifyUserFlow(userFlow);
-			d.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            d.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return teaEvaluateDetailMapper.insertSelective(d);
 		}
 	}
@@ -466,7 +467,7 @@ public class LcjnBizImpl implements ILcjnBiz{
 		//老师评价
 		LcjnTeaEvaluateExample example = new LcjnTeaEvaluateExample();
 		example.createCriteria().andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow)
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andUserFlowEqualTo(teaFlow);
 		List<LcjnTeaEvaluate> list = teaEvaluateMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){

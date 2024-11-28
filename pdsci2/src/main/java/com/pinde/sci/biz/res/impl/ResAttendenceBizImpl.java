@@ -109,7 +109,7 @@ public class ResAttendenceBizImpl implements IResAttendanceBiz {
     @Override
     public JsresAttendance getJsresAttendance(String nowDay, String userFlow) {
         JsresAttendanceExample example=new JsresAttendanceExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andAttendDateEqualTo(nowDay).andDoctorFlowEqualTo(userFlow);
         example.setOrderByClause("create_time desc");
         JsresAttendance bean=null;
@@ -131,7 +131,7 @@ public class ResAttendenceBizImpl implements IResAttendanceBiz {
         List<JsresAttendanceDetail> JsresAttendanceDetails =null;
         if(StringUtil.isNotBlank(jsResAttendanceFlow)){
             JsresAttendanceDetailExample example=new JsresAttendanceDetailExample();
-            example.createCriteria().andAttendanceFlowEqualTo(jsResAttendanceFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andAttendanceFlowEqualTo(jsResAttendanceFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             example.setOrderByClause("CREATE_TIME");
             JsresAttendanceDetails =jsresAttendanceDetailMapper.selectByExample(example);
         }
@@ -143,7 +143,7 @@ public class ResAttendenceBizImpl implements IResAttendanceBiz {
         List<JsresAttendanceDetail> JsresAttendanceDetails =null;
         if(jsResAttendanceFlows != null && jsResAttendanceFlows.size() > 0){
             JsresAttendanceDetailExample example=new JsresAttendanceDetailExample();
-            example.createCriteria().andAttendanceFlowIn(jsResAttendanceFlows).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andAttendanceFlowIn(jsResAttendanceFlows).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             example.setOrderByClause("CREATE_TIME");
             JsresAttendanceDetails =jsresAttendanceDetailMapper.selectByExample(example);
         }

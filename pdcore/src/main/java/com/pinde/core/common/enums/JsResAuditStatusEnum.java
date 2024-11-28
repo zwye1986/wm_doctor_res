@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum JsResAuditStatusEnum implements GeneralEnum<String> {
@@ -34,6 +35,6 @@ public enum JsResAuditStatusEnum implements GeneralEnum<String> {
 	}
 
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, JsResAuditStatusEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.JsResAuditStatusEnum.class).getName();
 	}
 }

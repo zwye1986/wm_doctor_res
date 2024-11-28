@@ -44,8 +44,8 @@ public class ResPowerCfgController  extends GeneralController{
         if(GlobalContext.getCurrentUser()!=null) {
             SysUserRoleMapper sysUserRoleMapper = SpringUtil.getBean(SysUserRoleMapper.class);
             SysUserRoleExample example = new SysUserRoleExample();
-            SysUserRoleExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-            criteria.andWsIdEqualTo(GlobalConstant.RES_WS_ID);
+            SysUserRoleExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+            criteria.andWsIdEqualTo(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             criteria.andUserFlowEqualTo(GlobalContext.getCurrentUser().getUserFlow());
             List<SysUserRole> userRoleList = sysUserRoleMapper.selectByExample(example);
             if (userRoleList != null && userRoleList.size() > 0) {
@@ -64,8 +64,8 @@ public class ResPowerCfgController  extends GeneralController{
         if(StringUtil.isNotBlank(userFlow)) {
             SysUserRoleMapper sysUserRoleMapper = SpringUtil.getBean(SysUserRoleMapper.class);
             SysUserRoleExample example = new SysUserRoleExample();
-            SysUserRoleExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-            criteria.andWsIdEqualTo(GlobalConstant.SCH_WS_ID);
+            SysUserRoleExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+            criteria.andWsIdEqualTo(com.pinde.core.common.GlobalConstant.SCH_WS_ID);
             criteria.andUserFlowEqualTo(userFlow);
             List<SysUserRole> userRoleList = sysUserRoleMapper.selectByExample(example);
             if (userRoleList != null && userRoleList.size() > 0) {
@@ -88,14 +88,14 @@ public class ResPowerCfgController  extends GeneralController{
                     cfg.setCfgCode(cfgCode);
                     cfg.setCfgValue(cfgValue);
                     cfg.setCfgDesc(cfgDesc);
-                    cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     cfgList.add(cfg);
             }
             int result = resPowerCfgBiz.saveList(cfgList);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 }

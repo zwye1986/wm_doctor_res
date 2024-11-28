@@ -107,8 +107,8 @@ public class FileController extends GeneralController {
             i = pubFileBiz.deleteFile(fileFlows);
         }
         if(i > 0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 }

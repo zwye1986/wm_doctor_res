@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum EvaluationTypeEnum implements GeneralEnum<String> {//需与ResRecTypeEnum同步添加

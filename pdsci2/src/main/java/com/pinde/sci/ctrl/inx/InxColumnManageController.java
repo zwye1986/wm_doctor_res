@@ -74,13 +74,13 @@ public class InxColumnManageController extends GeneralController {
 	@RequestMapping(value="/deleteJson")
 	public @ResponseBody String deleteJson(@RequestBody List<String> ids){
 		if(ids!=null&&!ids.isEmpty()){
-			int delResult = this.columnBiz.updateRecordStatus(ids, GlobalConstant.RECORD_STATUS_N);
+            int delResult = this.columnBiz.updateRecordStatus(ids, com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			if(delResult>0){
-				return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class InxColumnManageController extends GeneralController {
 		{
 			columnIds= Arrays.asList(ids);
 		}
-		List<InxColumn> colList = columnBiz.getAll(GlobalConstant.RECORD_STATUS_Y,columnIds);//获取所有已启用栏目
+        List<InxColumn> colList = columnBiz.getAll(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y, columnIds);//获取所有已启用栏目
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		sb.append("{\"id\":\"0\", \"pId\":\"-1\", \"name\":\"顶级栏目\",\"open\":true,\"t\":\"顶级栏目\"},");

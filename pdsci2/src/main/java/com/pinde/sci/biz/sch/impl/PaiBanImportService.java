@@ -2,6 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
@@ -126,7 +127,7 @@ public class PaiBanImportService {
      */
     public List<SchRotationDept> bzDeptList(String rotationFlow){
         SchRotationDeptExample example = new SchRotationDeptExample();
-        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull();
+        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull();
         if(StringUtil.isNotEmpty(rotationFlow)){
             criteria.andRotationFlowEqualTo(rotationFlow);
         }
@@ -158,7 +159,7 @@ public class PaiBanImportService {
             return new SchRotationDept();
         }
         SchRotationDeptExample example = new SchRotationDeptExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andRotationFlowEqualTo(rotationFlow)
                 .andStandardDeptIdEqualTo(standardId);
         List<SchRotationDept> list = rotationDeptMapper.selectByExample(example);

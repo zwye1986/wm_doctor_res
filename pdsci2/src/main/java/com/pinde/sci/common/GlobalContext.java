@@ -39,14 +39,14 @@ public class GlobalContext {
 		if (null == getSession()) {
 			return null;
 		}
-		SysUser user = (SysUser) getSession().getAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		return user;
 	}
 	public static String getCurrentWsId() {
 		if (null == getSession()) {
 			return null;
 		}
-		String cuurentWsId = (String) getSession().getAttribute(GlobalConstant.CURRENT_WS_ID);
+        String cuurentWsId = (String) getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		return cuurentWsId;
 	}
 	

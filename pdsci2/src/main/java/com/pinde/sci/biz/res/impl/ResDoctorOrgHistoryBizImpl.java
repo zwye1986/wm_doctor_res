@@ -41,7 +41,7 @@ public class ResDoctorOrgHistoryBizImpl implements IResDoctorOrgHistoryBiz{
 				return docOrgHistoryMapper.insertSelective(docOrgHistory);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class ResDoctorOrgHistoryBizImpl implements IResDoctorOrgHistoryBiz{
 	@Override
 	public List<ResDoctorOrgHistory> searchIsInDocByDocOrgHis(ResDoctorOrgHistory docOrgHistory) {
 		ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		setCriteria(docOrgHistory,criteria);
 		example.setOrderByClause("OUT_DATE");
 		return docOrgHistoryMapper.selectByExample(example);
@@ -96,7 +96,7 @@ public class ResDoctorOrgHistoryBizImpl implements IResDoctorOrgHistoryBiz{
 	@Override
 	public List<ResDoctorOrgHistory> searchHistoryByDoctorFlows(List<String> doctorFlows) {
 		ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowIn(doctorFlows);
 		example.setOrderByClause("OUT_DATE");
 		return docOrgHistoryMapper.selectByExample(example);

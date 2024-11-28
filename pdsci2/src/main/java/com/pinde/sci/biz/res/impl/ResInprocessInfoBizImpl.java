@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResInprocessInfoBiz;
@@ -41,7 +42,7 @@ public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
     @Override
     public ResInprocessInfo readByDeptFlowAndOrgFlow(String deptFlow, String orgFlow) {
         ResInprocessInfoExample example=new ResInprocessInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow).andDeptFlowEqualTo(deptFlow);
         List<ResInprocessInfo> list=inprocessInfoMapper.selectByExampleWithBLOBs(example);
         if(list!=null&&list.size()>0)
@@ -54,7 +55,7 @@ public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
     @Override
     public List<ResInprocessInfoMember> readMembersByRecordFlow(String recordFlow) {
         ResInprocessInfoMemberExample example=new ResInprocessInfoMemberExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andInfoRecordFlowEqualTo(recordFlow);
 
         return memberMapper.selectByExample(example);

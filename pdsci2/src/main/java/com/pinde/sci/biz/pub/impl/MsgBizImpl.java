@@ -9,7 +9,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.SMSUtil;
 import com.pinde.sci.dao.base.PubMsgMapper;
-import com.pinde.sci.enums.sys.MsgTypeEnum;
+import com.pinde.core.common.enums.sys.MsgTypeEnum;
 import com.pinde.sci.model.mo.PubMsg;
 import com.pinde.sci.model.mo.PubMsgExample;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class MsgBizImpl implements IMsgBiz {
 		msg.setSender(StringUtil.defaultString(InitConfig.getSysCfg("sys_mail_from")));
 		//msg.setSendTime(DateUtil.getCurrDateTime());
 		msg.setReceiver(receiver);
-		msg.setSendFlag(GlobalConstant.FLAG_N);
+        msg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(msg, true);
 		int count = pubMsgMapper.insert(msg);
 		if(count > 0){
@@ -65,7 +65,7 @@ public class MsgBizImpl implements IMsgBiz {
 		msg.setMsgContent(StringUtil.defaultString(content));
 		msg.setSender(StringUtil.defaultString(InitConfig.getSysCfg("sys_mail_from")));
 		msg.setReceiver(receiver);
-		msg.setSendFlag(GlobalConstant.FLAG_N);
+        msg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(msg, true);
 		int count = pubMsgMapper.insert(msg);
 		if(count > 0){
@@ -100,7 +100,7 @@ public class MsgBizImpl implements IMsgBiz {
 			messageHelper.setText(context,true);
 			mailSender.send(mail);
 			pubMsg.setSendResult("发送成功");
-			pubMsg.setSendFlag(GlobalConstant.FLAG_Y);
+            pubMsg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			pubMsg.setSender(StringUtil.defaultString(InitConfig.getSysCfg("sys_mail_from")));
 			pubMsg.setSendTime(DateUtil.getCurrDateTime());
 		} catch (Exception e) {
@@ -112,9 +112,9 @@ public class MsgBizImpl implements IMsgBiz {
 			errorTimes++;
 			pubMsg.setSendErrorTimes(errorTimes);
 			if(errorTimes>iMaxErrorTimes){
-				pubMsg.setSendFlag(GlobalConstant.FLAG_F);
+                pubMsg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_F);
 			}else{
-				pubMsg.setSendFlag(GlobalConstant.FLAG_N);
+                pubMsg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 			pubMsg.setSendResult("发送失败:"+e.getMessage());
 		}
@@ -133,7 +133,7 @@ public class MsgBizImpl implements IMsgBiz {
 		msg.setMsgTitle("");
 		msg.setMsgContent(StringUtil.defaultString(content));
 		msg.setReceiver(receiver);
-		msg.setSendFlag(GlobalConstant.FLAG_N);
+        msg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(msg, true);		
 		pubMsgMapper.insert(msg);
 	}
@@ -150,7 +150,7 @@ public class MsgBizImpl implements IMsgBiz {
 		msg.setMsgTitle(StringUtil.defaultString(title));
 		msg.setMsgContent(StringUtil.defaultString(content));
 		msg.setReceiver(receiver);
-		msg.setSendFlag(GlobalConstant.FLAG_N);
+        msg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(msg, true);		
 		pubMsgMapper.insert(msg);
 	}
@@ -167,7 +167,7 @@ public class MsgBizImpl implements IMsgBiz {
 		msg.setMsgTitle(StringUtil.defaultString(title));
 		msg.setMsgContent(StringUtil.defaultString(content));
 		msg.setReceiver(receiver);
-		msg.setSendFlag(GlobalConstant.FLAG_N);
+        msg.setSendFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(msg, true);		
 		pubMsgMapper.insert(msg);
 		
@@ -176,7 +176,7 @@ public class MsgBizImpl implements IMsgBiz {
 	@Override
 	public Integer countErrorMsg(String msgType) {
 		PubMsgExample example = new PubMsgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andMsgTypeIdEqualTo(msgType).andSendFlagEqualTo(GlobalConstant.FLAG_N);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andMsgTypeIdEqualTo(msgType).andSendFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N);
 		return pubMsgMapper.countByExample(example);
 	}
 

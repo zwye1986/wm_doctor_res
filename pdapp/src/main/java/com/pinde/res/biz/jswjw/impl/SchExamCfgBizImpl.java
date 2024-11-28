@@ -34,7 +34,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
     public List<SchExamArrangement> searchList(SchExamArrangement seam) {
         SchExamArrangementExample example=new SchExamArrangementExample();
         SchExamArrangementExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(seam.getArrangeFlow()))
         {
             criteria.andArrangeFlowEqualTo(seam.getArrangeFlow());
@@ -81,7 +81,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
     @Override
     public int save(SchExamDoctorArrangement result) {
-        result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         result.setCreateTime( DateUtil.getCurrDateTime());
         result.setModifyTime( DateUtil.getCurrDateTime());
         return doctorArrangementMapper.insertSelective(result);
@@ -99,7 +99,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
     @Override
     public int saveGraduationExam(ResDoctorGraduationExam result) {
-        result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         result.setCreateTime( DateUtil.getCurrDateTime());
         result.setModifyTime( DateUtil.getCurrDateTime());
         return graduationExamMapper.insertSelective(result);

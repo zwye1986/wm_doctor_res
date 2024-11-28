@@ -83,7 +83,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public List<OscaSubjectStation> getOscaSubjectStations(String subjectFlow) {
 		OscaSubjectStationExample station=new OscaSubjectStationExample();
 		OscaSubjectStationExample.Criteria criteria=station.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
 		station.setOrderByClause(" ORDINAL ASC ");
 		return stationMapper.selectByExample(station);
 	}
@@ -92,7 +92,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public List<OscaSkillRoom> getRooms(String stationFlow, String clinicalFlow) {
 		OscaSkillRoomExample station=new OscaSkillRoomExample();
 		OscaSkillRoomExample.Criteria criteria=station.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andClinicalFlowEqualTo(clinicalFlow)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andClinicalFlowEqualTo(clinicalFlow)
 		.andStationFlowEqualTo(stationFlow);
 		station.setOrderByClause(" ORDINAL ASC ");
 		return roomMapper.selectByExample(station);
@@ -149,13 +149,13 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public int updateOscaSkillRoomDoc(OscaSkillRoomDoc docStation, SysUser user) {
 		if(docStation!=null){
 			if(StringUtil.isNotBlank(docStation.getDocRoomFlow())){//修改
-				docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				docStation.setModifyUserFlow(user.getUserFlow());
 				docStation.setModifyTime(DateUtil.getCurrDateTime());
 				return this.roomDocMapper.updateByPrimaryKeySelective(docStation);
 			}else{//新增
 				docStation.setDocRoomFlow(PkUtil.getUUID());
-				docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				docStation.setCreateUserFlow(user.getUserFlow());
 				docStation.setCreateTime(DateUtil.getCurrDateTime());
 				docStation.setModifyUserFlow(user.getUserFlow());
@@ -176,7 +176,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public List<OscaSkillRoomDoc> getDocAllStation(Map<String, Object> param) {
 		OscaSkillRoomDocExample example=new OscaSkillRoomDocExample();
 		OscaSkillRoomDocExample.Criteria criteria=example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		String userFlow= (String) param.get("userFlow");
 		String clinicalFlow= (String) param.get("clinicalFlow");
 		if(StringUtil.isNotBlank(userFlow)){
@@ -193,7 +193,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public OscaDoctorAssessment getOscaDoctorAssessment(String userFlow, String clinicalFlow) {
 		OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
 		OscaDoctorAssessmentExample.Criteria criteria=example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andClinicalFlowEqualTo(clinicalFlow)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andClinicalFlowEqualTo(clinicalFlow)
 				.andDoctorFlowEqualTo(userFlow);
 		List<OscaDoctorAssessment>list= oscaDoctorAssessmentMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
@@ -206,13 +206,13 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public int editOscaDoctorAssessment(OscaDoctorAssessment oscaDoctorAssessment, SysUser user) {
 			if(oscaDoctorAssessment!=null){
 				if(StringUtil.isNotBlank(oscaDoctorAssessment.getRecordFlow())){//修改
-					oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					oscaDoctorAssessment.setModifyUserFlow(user.getUserFlow());
 					oscaDoctorAssessment.setModifyTime(DateUtil.getCurrDateTime());
 					return this.oscaDoctorAssessmentMapper.updateByPrimaryKeySelective(oscaDoctorAssessment);
 				}else{//新增
 					oscaDoctorAssessment.setRecordFlow(PkUtil.getUUID());
-					oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					oscaDoctorAssessment.setCreateUserFlow(user.getUserFlow());
 					oscaDoctorAssessment.setCreateTime(DateUtil.getCurrDateTime());
 					oscaDoctorAssessment.setModifyUserFlow(user.getUserFlow());
@@ -227,13 +227,13 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public int editJsresDoctorPaper(JsresDoctorPaper paper, SysUser user) {
 		if(paper!=null){
 			if(StringUtil.isNotBlank(paper.getRecordFlow())){//修改
-				paper.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                paper.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				paper.setModifyUserFlow(user.getUserFlow());
 				paper.setModifyTime(DateUtil.getCurrDateTime());
 				return this.paperMapper.updateByPrimaryKeySelective(paper);
 			}else{//新增
 				paper.setRecordFlow(PkUtil.getUUID());
-				paper.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                paper.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				paper.setCreateUserFlow(user.getUserFlow());
 				paper.setCreateTime(DateUtil.getCurrDateTime());
 				paper.setModifyUserFlow(user.getUserFlow());
@@ -248,13 +248,13 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public int editJsresDoctorPart(JsresDoctorParticipation part, SysUser user) {
 		if(part!=null){
 			if(StringUtil.isNotBlank(part.getRecordFlow())){//修改
-				part.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                part.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				part.setModifyUserFlow(user.getUserFlow());
 				part.setModifyTime(DateUtil.getCurrDateTime());
 				return this.partMapper.updateByPrimaryKeySelective(part);
 			}else{//新增
 				part.setRecordFlow(PkUtil.getUUID());
-				part.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                part.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				part.setCreateUserFlow(user.getUserFlow());
 				part.setCreateTime(DateUtil.getCurrDateTime());
 				part.setModifyUserFlow(user.getUserFlow());
@@ -279,7 +279,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public List<JsresDoctorPaper> readJsresDoctorPaperByDoctorFlow(String userFlow) {
 		JsresDoctorPaperExample example=new JsresDoctorPaperExample();
 		JsresDoctorPaperExample.Criteria criteria=example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(userFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(userFlow);
 		example.setOrderByClause("create_time desc");
 		return paperMapper.selectByExample(example);
 	}
@@ -288,7 +288,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public List<JsresDoctorParticipation> readJsresDoctorJsresDoctorParticipationByDoctorFlow(String userFlow) {
 		JsresDoctorParticipationExample example=new JsresDoctorParticipationExample();
 		JsresDoctorParticipationExample.Criteria criteria=example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(userFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(userFlow);
 		example.setOrderByClause("create_time desc");
 		return partMapper.selectByExample(example);
 	}
@@ -307,7 +307,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public List<ResErrorSchNotice> getResErrorNotices(Map<String, Object> param) {
 		if(StringUtil.isNotBlank((String) param.get("userFlow"))) {
 			ResErrorSchNoticeExample example = new ResErrorSchNoticeExample();
-			ResErrorSchNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            ResErrorSchNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			criteria.andUserFlowEqualTo((String) param.get("userFlow"));
 			if(StringUtil.isNotBlank((String) param.get("statusId"))) {
 				criteria.andStatusIdEqualTo((String) param.get("statusId"));
@@ -327,13 +327,13 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	public int editErrorNotice(ResErrorSchNotice notice, SysUser user) {
 		if(notice!=null){
 			if(StringUtil.isNotBlank(notice.getRecordFlow())){//修改
-				notice.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                notice.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				notice.setModifyUserFlow(user.getUserFlow());
 				notice.setModifyTime(DateUtil.getCurrDateTime());
 				return this.resErrorSchNoticeMapper.updateByPrimaryKeySelective(notice);
 			}else{//新增
 				notice.setRecordFlow(PkUtil.getUUID());
-				notice.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                notice.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				notice.setCreateUserFlow(user.getUserFlow());
 				notice.setCreateTime(DateUtil.getCurrDateTime());
 				notice.setModifyUserFlow(user.getUserFlow());
@@ -349,7 +349,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 		if(StringUtil.isNotBlank(userFlow))
 		{
 			ResDoctorRecruitExample example=new ResDoctorRecruitExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(userFlow)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(userFlow)
 					.andGraduationCertificateNoIsNotNull();
 			example.setOrderByClause("session_number desc");
 			return  recruitMapper.selectByExample(example);
@@ -376,7 +376,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 			return 0;
 		}
 		ResErrorSchNoticeExample example = new ResErrorSchNoticeExample();
-		ResErrorSchNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResErrorSchNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserFlowEqualTo(userFlow);
 		if(StringUtil.isNotBlank(statusId)) {
 			criteria.andStatusIdEqualTo(statusId);

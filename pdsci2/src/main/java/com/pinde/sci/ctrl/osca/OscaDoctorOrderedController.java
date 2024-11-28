@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.osca;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -18,10 +17,9 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.jsres.JsResAsseAuditListEnum;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.osca.DoctorScoreEnum;
-import com.pinde.sci.enums.osca.SignStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.apache.commons.collections4.CollectionUtils;
@@ -74,7 +72,7 @@ public class OscaDoctorOrderedController extends GeneralController {
             Integer currentPage, HttpServletRequest request,Model model){
         String orgName="";
         String searchNotFull="";
-        String searchFlag = GlobalConstant.FLAG_N;
+        String searchFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(oscaSkillsAssessmentExt!=null){
             orgName=oscaSkillsAssessmentExt.getOrgName();
             searchNotFull=oscaSkillsAssessmentExt.getSearchNotFull();
@@ -164,17 +162,17 @@ public class OscaDoctorOrderedController extends GeneralController {
         map.put("speId",speId);
         map.put("speIdList",speIdList);
         map.put("isLocal",isLocal);
-        if(GlobalConstant.FLAG_Y.equals(isLocal)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isLocal)) {
             map.put("orgFlow",orgFlow);
         }else {
             map.put("orgList",orgList);
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         List<OscaSkillsAssessmentExt> skillsAssessmentList=oscaDoctorOrderdeBiz.skillsAssessmentList(map);
-        if(GlobalConstant.FLAG_N.equals(isLocal) && "secondLi".equals(liId)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(isLocal) && "secondLi".equals(liId)) {
             if(StringUtil.isNotEmpty(recruitFlow)){
                 JsresGraduationApply graduationApply = resGraduationApplyBiz.searchByRecruitFlow(recruitFlow,DateUtil.getYear());
-                if(null != graduationApply && !JsResAsseAuditListEnum.GlobalPassed.getId().equals(graduationApply.getAuditStatusId())){
+                if (null != graduationApply && !com.pinde.core.common.enums.JsResAsseAuditListEnum.GlobalPassed.getId().equals(graduationApply.getAuditStatusId())) {
                     skillsAssessmentList = null;
                 }
             }
@@ -182,7 +180,7 @@ public class OscaDoctorOrderedController extends GeneralController {
                 List<JsresExamSignup> signupList = doctorRecruitBiz.readDoctorExanSignUps(GlobalContext.getCurrentUser().getUserFlow());
                 if(CollectionUtils.isNotEmpty(signupList)){
                     for (JsresExamSignup jsresExamSignup : signupList) {
-                        if(!JsResAsseAuditListEnum.GlobalPassed.getId().equals(jsresExamSignup.getAuditStatusId()) && !DateUtil.getYear().equals(jsresExamSignup.getSignupYear())){
+                        if (!com.pinde.core.common.enums.JsResAsseAuditListEnum.GlobalPassed.getId().equals(jsresExamSignup.getAuditStatusId()) && !DateUtil.getYear().equals(jsresExamSignup.getSignupYear())) {
                             skillsAssessmentList = null;
                         }
                     }
@@ -211,7 +209,7 @@ public class OscaDoctorOrderedController extends GeneralController {
                 }
             }
             if("on".equals(searchNotFull)){
-                searchFlag = GlobalConstant.FLAG_Y;
+                searchFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 List<OscaSkillsAssessmentExt> skillsAssessmentListTemp=new ArrayList<>();
                 for (OscaSkillsAssessmentExt osae:skillsAssessmentList) {
                     if(osae!=null&&osae.getOverplus()!=null&&Integer.parseInt(osae.getOverplus())>0){
@@ -309,7 +307,7 @@ public class OscaDoctorOrderedController extends GeneralController {
         model.addAttribute("graduationYear",graduationYear);
         if(resDoctor!=null){
         model.addAttribute("oscaStudentSubmit",resDoctor.getOscaStudentSubmit());//通过OSCE注册学员
-            if(GlobalConstant.FLAG_Y.equals(resDoctor.getOscaStudentSubmit())){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resDoctor.getOscaStudentSubmit())) {
                 model.addAttribute("graduationYear",resDoctor.getGraduationYear());
             }
         }
@@ -327,9 +325,9 @@ public class OscaDoctorOrderedController extends GeneralController {
                 OscaDoctorRegist doctorRegist = doctorRegistList.get(0);
                 String showTip = doctorRegist.getShowTip();
                 if(StringUtil.isBlank(showTip)){
-                    doctorRegist.setShowTip(GlobalConstant.FLAG_Y);
+                    doctorRegist.setShowTip(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     oscaDoctorRegistBiz.edit(doctorRegist);
-                    model.addAttribute("showTip", GlobalConstant.FLAG_Y);
+                    model.addAttribute("showTip", com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
             }
         }
@@ -416,7 +414,7 @@ public class OscaDoctorOrderedController extends GeneralController {
 //                if(list!=null&&list.size()>0){
 //                    oda=list.get(0);
 //                }
-//                oda.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+//                oda.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 //                oscaDoctorOrderdeBiz.updateDoctorAssessment(oda);
 //            }
 
@@ -454,10 +452,10 @@ public class OscaDoctorOrderedController extends GeneralController {
                     oscaDoctorAssessment.setAuditStatusId(AuditStatusEnum.Passing.getId());
                     oscaDoctorAssessment.setAuditStatusName(AuditStatusEnum.Passing.getName());
                     oscaDoctorAssessment.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-                    oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     oscaDoctorAssessment.setIsPass(DoctorScoreEnum.Miss.getId());
                     oscaDoctorAssessment.setIsPassName(DoctorScoreEnum.Miss.getName());
-                    oscaDoctorAssessment.setIsAdminAudit(GlobalConstant.FLAG_N);
+                    oscaDoctorAssessment.setIsAdminAudit(com.pinde.core.common.GlobalConstant.FLAG_N);
                     oscaDoctorOrderdeBiz.insertDoctorAssessment(oscaDoctorAssessment);
                     if("passed".equals(flag)){
                         oscaDoctorAssessment.setAuditStatusId(AuditStatusEnum.Passed.getId());
@@ -466,12 +464,12 @@ public class OscaDoctorOrderedController extends GeneralController {
                         baseBiz.auditAppoint(oscaDoctorAssessment.getRecordFlow(),AuditStatusEnum.Passed.getId(),null);
                     }
                 }
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }else {
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }
         }else{
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
     }
 
@@ -480,9 +478,9 @@ public class OscaDoctorOrderedController extends GeneralController {
     public String changeOrdered(String recordFlow){
         OscaDoctorAssessment oscaDoctorAssessment=new OscaDoctorAssessment();
         oscaDoctorAssessment=oscaDoctorOrderdeBiz.selectDoctorAssessmentByRecordFlow(recordFlow);
-        oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         oscaDoctorOrderdeBiz.updateDoctorAssessment(oscaDoctorAssessment);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = {"/showTicket"})
@@ -547,46 +545,46 @@ public class OscaDoctorOrderedController extends GeneralController {
         if(doctorFlow!=""){
             OscaDoctorAssessment oscaDoctorAssessment=new OscaDoctorAssessment();
             oscaDoctorAssessment.setDoctorFlow(doctorFlow);
-            oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<OscaDoctorAssessment> oscaDoctorAssessments=oscaDoctorOrderdeBiz.selectDoctorAssessment(oscaDoctorAssessment);
-            if(GlobalConstant.IS_EXAM_TEA_N.equals(isLocal)){
+            if (com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_N.equals(isLocal)) {
                 Map<String, String> doctorMap=new HashMap<>();
                 doctorMap.put("doctorFlow",doctorFlow);
                 doctorMap.put("clinicalYear",clinicalYear);//预约的考核信息年份
 //                doctorMap.put("orgFlow",orgFlow);//考核信息发布考点
                 List<OscaSkillsAssessmentExt> osaList=oscaDoctorOrderdeBiz.selectAssessmentIsNotLocalOneYear(doctorMap);
                 if(osaList!=null&&osaList.size()>0){
-                    return GlobalConstant.NOT_NULL;
+                    return com.pinde.core.common.GlobalConstant.NOT_NULL;
                 }else{
                     if(oscaDoctorAssessments!=null&&oscaDoctorAssessments.size()>0){
-                        return GlobalConstant.OPERATE_SUCCESSED;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
                     }else {
-                        return GlobalConstant.OPERATE_FAIL;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                     }
                 }
             }else{
                 if(oscaDoctorAssessments!=null&&oscaDoctorAssessments.size()>0){
-                    return GlobalConstant.OPERATE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
                 }else {
-                    return GlobalConstant.OPERATE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
                 }
             }
         }else{
             doctorFlow=GlobalContext.getCurrentUser().getUserFlow();
-            if(GlobalConstant.IS_EXAM_TEA_N.equals(isLocal)){
+            if (com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_N.equals(isLocal)) {
                 Map<String, String> doctorMap=new HashMap<>();
                 doctorMap.put("doctorFlow",doctorFlow);
                 doctorMap.put("clinicalYear",clinicalYear);//预约的考核信息年份
                 //doctorMap.put("orgFlow",orgFlow);//考核信息发布考点
                 List<OscaSkillsAssessmentExt> osaList=oscaDoctorOrderdeBiz.selectAssessmentIsNotLocalOneYear(doctorMap);
                 if(osaList!=null&&osaList.size()>0){
-                    return GlobalConstant.NOT_NULL;
+                    return com.pinde.core.common.GlobalConstant.NOT_NULL;
                 }
             }else {
-                return GlobalConstant.OPERATE_FAIL;
+                return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
             }
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     //伪删除旧数据
@@ -594,7 +592,7 @@ public class OscaDoctorOrderedController extends GeneralController {
     public void removeOldOrdered(String doctorFlow){
         OscaDoctorAssessment oscaDoctorAssessment=new OscaDoctorAssessment();
         oscaDoctorAssessment.setDoctorFlow(doctorFlow);
-        oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         oscaDoctorOrderdeBiz.updateDoctorAssessment(oscaDoctorAssessment);
     }
 
@@ -730,12 +728,12 @@ public class OscaDoctorOrderedController extends GeneralController {
                 }
             }
             if(temp>0){
-                return GlobalConstant.NOT_NULL;
+                return com.pinde.core.common.GlobalConstant.NOT_NULL;
             }else{
-                return GlobalConstant.NULL;
+                return com.pinde.core.common.GlobalConstant.NULL;
             }
         }
-        return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
     }
 
     @RequestMapping(value = {"/showScoreDetails"})

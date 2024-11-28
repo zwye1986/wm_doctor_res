@@ -69,7 +69,7 @@ public class InxNjResExamController extends GeneralController{
             sysUser.setUserName(docinfo.getUserName());
             sysUser.setOrgName(docinfo.getOrgName());
             sysUser.setIdNo(docinfo.getIdNo());
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
             setSessionAttribute("docinfo", docinfo);
             return "redirect:/res/njExam/index";
         }catch(RuntimeException re){

@@ -41,14 +41,14 @@ public class ResEvalBizImpl implements IResEvalBiz {
     @Override
     public List<ResBaseevalForm> search(ResBaseevalForm resBaseevalForm) {
         ResBaseevalFormExample example = new ResBaseevalFormExample();
-        ResBaseevalFormExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResBaseevalFormExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return baseevalFormMapper.selectByExample(example);
     }
 
     @Override
     public List<ResBaseevalFormCfg> searchCfg(ResBaseevalFormCfg resBaseevalFormCfg) {
         ResBaseevalFormCfgExample example = new ResBaseevalFormCfgExample();
-        ResBaseevalFormCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResBaseevalFormCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(resBaseevalFormCfg.getTrainingSpeId())){
             criteria.andTrainingSpeIdEqualTo(resBaseevalFormCfg.getTrainingSpeId());
         }
@@ -76,7 +76,7 @@ public class ResEvalBizImpl implements IResEvalBiz {
     @Override
     public List<ResBaseeval> searchBaseeval(ResBaseeval baseeval) {
         ResBaseevalExample example = new ResBaseevalExample();
-        ResBaseevalExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResBaseevalExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(baseeval.getFormFlow())){
             criteria.andFormFlowEqualTo(baseeval.getFormFlow());
         }
@@ -159,7 +159,7 @@ public class ResEvalBizImpl implements IResEvalBiz {
 
                 ResBaseevalDetailExample example = new ResBaseevalDetailExample();
                 ResBaseevalDetailExample.Criteria criteria = example.createCriteria().
-                        andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andBaseevalFlowEqualTo(recordFlow);
+                        andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andBaseevalFlowEqualTo(recordFlow);
                 if(StringUtil.isNotBlank(orderNumber)){
                     criteria.andOrderNumberEqualTo(orderNumber);
                 }
@@ -177,7 +177,7 @@ public class ResEvalBizImpl implements IResEvalBiz {
     @Override
     public List<ResBaseevalDetail> searchBaseevalDetail(ResBaseevalDetail baseevalDetail) {
         ResBaseevalDetailExample example = new ResBaseevalDetailExample();
-        ResBaseevalDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResBaseevalDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(baseevalDetail.getBaseevalFlow())){
             criteria.andBaseevalFlowEqualTo(baseevalDetail.getBaseevalFlow());
         }
@@ -188,7 +188,7 @@ public class ResEvalBizImpl implements IResEvalBiz {
     public int editEvalCfgs(ResBaseevalFormCfg baseevalFormCfg, String jsonData) {
         SysUser currentUser = GlobalContext.getCurrentUser();
         if(StringUtil.isNotBlank(baseevalFormCfg.getTrainingSpeId())){
-            baseevalFormCfg.setTrainingSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(baseevalFormCfg.getTrainingSpeId()));
+            baseevalFormCfg.setTrainingSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(baseevalFormCfg.getTrainingSpeId()));
         }
         Map<String,Object> dataMap = JSON.parseObject(jsonData);
         List<String> newFormFlows = (List<String>)dataMap.get("formFlows");
@@ -202,7 +202,7 @@ public class ResEvalBizImpl implements IResEvalBiz {
                 if(!newFormFlows.contains(oldFormFLow)){
                     ResBaseevalFormCfg delCfg = new ResBaseevalFormCfg();
                     delCfg.setRecordFlow(oldCfg.getRecordFlow());
-                    delCfg.setRecordStatus(GlobalConstant.FLAG_N);
+                    delCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                     editEvalCfg(delCfg);
                 }
             }

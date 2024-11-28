@@ -21,7 +21,7 @@ public class SchArrangeDoctorDeptBizImpl implements ISchArrangeDoctorDeptBiz {
 	@Override
 	public List<SchArrangeDoctorDept> searchSchArrangeDoctorDept() {
 		SchArrangeDoctorDeptExample example = new SchArrangeDoctorDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return arrangeDoctorDeptMapper.selectByExample(example);
 	}
 
@@ -42,7 +42,7 @@ public class SchArrangeDoctorDeptBizImpl implements ISchArrangeDoctorDeptBiz {
 				return arrangeDoctorDeptMapper.insertSelective(arrangeDoctorDept);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 }

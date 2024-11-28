@@ -74,12 +74,12 @@ public class JsresTeacherCfgController extends GeneralController{
 			c.setCfgCode(cfgCode);
 			c.setCfgValue(recordStatus);
 			c.setCfgDesc("是否开放带教app权限");
-			c.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            c.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			cfgList.add(c);
 		}
 		int count = jsResPowerCfgBiz.saveList(cfgList);
 		if(count > 0){
-			if(GlobalConstant.RECORD_STATUS_N.equals(recordStatus)){
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recordStatus)) {
 				List<String> flowList = Arrays.asList(userFlows);
 				if(null != flowList && flowList.size()>0){
 					for (String userFlow:flowList) {
@@ -88,7 +88,7 @@ public class JsresTeacherCfgController extends GeneralController{
 						user.setCheckStatusId("");
 						user.setCheckStatusName("");
 						JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_teacher_app_login_"+userFlow);
-						if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())) {
 							user.setIsSubmitId("NotSubmit");
 							user.setIsSubmitName("未提交");
 						}else{
@@ -97,13 +97,13 @@ public class JsresTeacherCfgController extends GeneralController{
 						}
 						userBiz.updateUser(user);
 					}
-					return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 				}
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 			userBiz.updateTeaNotSubmit(Arrays.asList(userFlows));
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/queryDeptListJson")
@@ -115,7 +115,7 @@ public class JsresTeacherCfgController extends GeneralController{
 		List<SysDept> list = null;
 		if(StringUtil.isNotBlank(orgFlow)){
 			SysDept sysDept = new SysDept();
-			sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			sysDept.setOrgFlow(orgFlow);
 			list = this.deptBiz.searchDept(sysDept);
 		}
@@ -135,17 +135,17 @@ public class JsresTeacherCfgController extends GeneralController{
 				cfg.setCfgCode(cfgCode);
 				cfg.setCfgValue(cfgValue);
 				cfg.setCfgDesc(cfgDesc);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				cfgList.add(cfg);
 			}
 			int result = jsResPowerCfgBiz.saveList(cfgList);
-			if(GlobalConstant.ZERO_LINE != result){
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 				SysUser user = new SysUser();
 				user.setUserFlow(userFlow);
 				user.setCheckStatusId("");
 				user.setCheckStatusName("");
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_teacher_app_login_"+userFlow);
-				if(null != cfg && GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())){
+                if (null != cfg && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())) {
 					user.setIsSubmitId("NotSubmit");
 					user.setIsSubmitName("未提交");
 				}else{
@@ -153,10 +153,10 @@ public class JsresTeacherCfgController extends GeneralController{
 					user.setIsSubmitName("");
 				}
 				userBiz.updateUser(user);
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 }
 

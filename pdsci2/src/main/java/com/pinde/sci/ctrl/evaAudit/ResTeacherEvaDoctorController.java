@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.evaAudit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,7 +16,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.common.enums.ResRecTypeEnum;
-import com.pinde.sci.enums.srm.AchScoreEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
@@ -121,8 +121,8 @@ public class ResTeacherEvaDoctorController extends GeneralController {
                     fileMap.put(rdsp.getProcessFlow(), file);
                 }
                 List<String> recTypeIds = new ArrayList<String>();
-                recTypeIds.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-                recTypeIds.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
                 Map<String, Object> paramMap = new HashMap();
                 paramMap.put("recTypeIds", recTypeIds);
                 paramMap.put("processFlow", rdsp.getProcessFlow());
@@ -212,7 +212,7 @@ public class ResTeacherEvaDoctorController extends GeneralController {
             }
         }
 
-        param.put("recTypeId",ResRecTypeEnum.ManageDoctorAssess360.getId());
+        param.put("recTypeId", com.pinde.core.common.enums.ResRecTypeEnum.ManageDoctorAssess360.getId());
         param.put("userFlow", GlobalContext.getCurrentUser().getUserFlow());
         param.put("roleFlag",roleFlag);
         PageHelper.startPage(currentPage, getPageSize(request));
@@ -229,7 +229,7 @@ public class ResTeacherEvaDoctorController extends GeneralController {
 
                 Map<String, Object> paramMap = new HashMap();
                 List<String> recTypeIds = new ArrayList<String>();
-                recTypeIds.add(ResRecTypeEnum.ManageDoctorAssess360.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.ManageDoctorAssess360.getId());
                 paramMap.put("recTypeIds", recTypeIds);
                 paramMap.put("processFlow", processFlow);
                 paramMap.put("roleFlag",roleFlag);
@@ -281,13 +281,13 @@ public class ResTeacherEvaDoctorController extends GeneralController {
         model.addAttribute("recruit",newRecruit);
         if(StringUtil.isNotBlank(recTypeId) && currUser!=null){
             String cfgCodeId = null;
-            if(ResRecTypeEnum.TeacherDoctorGrade.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.TeacherDoctorAssess360.getId();
             }
-            if(ResRecTypeEnum.TeacherDoctorGradeTwo.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.TeacherDoctorAssessTwo360.getId();
             }
-            if(ResRecTypeEnum.ManageDoctorAssess360.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.ManageDoctorAssess360.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.ManageDoctorAssess360.getId();
             }
 
@@ -306,7 +306,7 @@ public class ResTeacherEvaDoctorController extends GeneralController {
             }else {
                 ResAssessCfg search = new ResAssessCfg();
                 search.setCfgCodeId(cfgCodeId);
-                search.setFormStatusId(AchScoreEnum.Enable.getId());
+                search.setFormStatusId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
                 model.addAttribute("formCount",resAssessCfgList.size());
                 if(resAssessCfgList != null && !resAssessCfgList.isEmpty()){
@@ -383,7 +383,7 @@ public class ResTeacherEvaDoctorController extends GeneralController {
                 }
 
                 if(StringUtil.isNotBlank(deptTeacherGradeInfo.getRecTypeId())){
-                    deptTeacherGradeInfo.setRecTypeName(ResRecTypeEnum.getNameById(deptTeacherGradeInfo.getRecTypeId()));
+                    deptTeacherGradeInfo.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.getNameById(deptTeacherGradeInfo.getRecTypeId()));
                 }
             }
 
@@ -394,10 +394,10 @@ public class ResTeacherEvaDoctorController extends GeneralController {
         if (null!=roleFlag && StringUtil.isNotBlank(roleFlag)){
             deptTeacherGradeInfo.setOperUserRoleName(roleFlag);
         }
-        if(resGradeBiz.edit(deptTeacherGradeInfo) != GlobalConstant.ZERO_LINE){
+        if (resGradeBiz.edit(deptTeacherGradeInfo) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
             return deptTeacherGradeInfo.getRecFlow();
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     private String createGradeXml(Map<String, String[]> gradeInfo, String roleFlag){
@@ -448,15 +448,15 @@ public class ResTeacherEvaDoctorController extends GeneralController {
     @RequestMapping(value="/opreResRecForGrade",method={RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String opreResRecForGrade(DeptTeacherGradeInfo deptTeacherGradeInfo){
-        String deleteS = GlobalConstant.DELETE_SUCCESSED;
-        String deleteF = GlobalConstant.DELETE_FAIL;
+        String deleteS = com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
+        String deleteF = com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         if(deptTeacherGradeInfo != null){
             if(StringUtil.isNotBlank(deptTeacherGradeInfo.getStatusId())){
                 deptTeacherGradeInfo.setStatusName(RecStatusEnum.getNameById(deptTeacherGradeInfo.getStatusId()));
-                deleteS = GlobalConstant.OPRE_SUCCESSED;
-                deleteF = GlobalConstant.OPRE_FAIL;
+                deleteS = com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
+                deleteF = com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             }
-            if(resGradeBiz.edit(deptTeacherGradeInfo)!= GlobalConstant.ZERO_LINE){
+            if (resGradeBiz.edit(deptTeacherGradeInfo) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
                 return deleteS;
             }
         }

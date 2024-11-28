@@ -56,7 +56,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 	@Override
 	public List<SchDoctorAbsence> searchSchDoctorAbsenceByDoctor(String doctorFlow) {
 		SchDoctorAbsenceExample example = new SchDoctorAbsenceExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
 		example.setOrderByClause("START_DATE");
 		return doctorAbsenceMapper.selectByExample(example);
 	}
@@ -64,7 +64,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 	@Override
 	public List<SchDoctorAbsence> searchSchDoctorAbsenceByOrg(String orgFlow) {
 		SchDoctorAbsenceExample example = new SchDoctorAbsenceExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("START_DATE");
 		return doctorAbsenceMapper.selectByExample(example);
 	}
@@ -86,7 +86,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 				return doctorAbsenceMapper.insertSelective(doctorAbsence);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 			pubFile.setFileName(originalFileName);
 			//文件后缀名
 			pubFile.setFileSuffix(suffix);
-			pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			try {
 				pubFile.setFileContent(multipartFile.getBytes());
 				fileBiz.editFile(pubFile);
@@ -118,7 +118,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 				SysUser currUser = GlobalContext.getCurrentUser();
 				doctorAbsence.setDoctorFlow(currUser.getUserFlow());
 				doctorAbsence.setDoctorName(currUser.getUserName());
-				doctorAbsence.setIsRegister(GlobalConstant.FLAG_N);
+                doctorAbsence.setIsRegister(com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 
 			String schDeptFlow = doctorAbsence.getSchDeptFlow();
@@ -138,7 +138,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 				doctorAbsence.setTrainingSpeName(resDoctor.getTrainingSpeName());
 				doctorAbsence.setDoctorCategoryId(resDoctor.getDoctorCategoryId());
 				doctorAbsence.setDoctorCategoryName(resDoctor.getDoctorCategoryName());
-				doctorAbsence.setRepealAbsence(GlobalConstant.RECORD_STATUS_N);
+                doctorAbsence.setRepealAbsence(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				doctorAbsence.setOrgFlow(resDoctor.getOrgFlow());
 				doctorAbsence.setOrgName(resDoctor.getOrgName());
 				return saveSchDoctorAbsence(doctorAbsence);
@@ -146,12 +146,12 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 		} else {//修改
 			return saveSchDoctorAbsence(doctorAbsence);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public List<SchDoctorAbsence> searchSchDoctorAbsenceList(SchDoctorAbsence doctorAbsence) {
 		SchDoctorAbsenceExample example = new SchDoctorAbsenceExample();
-		com.pinde.sci.model.mo.SchDoctorAbsenceExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.SchDoctorAbsenceExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(doctorAbsence.getAbsenceTypeId())){
 			criteria.andAbsenceTypeIdEqualTo(doctorAbsence.getAbsenceTypeId());
 		}
@@ -209,7 +209,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 	public List<SchDoctorAbsence> searchSchDoctorAbsenceByDoctorDept(
 			String schDeptFlow, String doctorFlow) {
 		SchDoctorAbsenceExample example = new SchDoctorAbsenceExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRepealAbsenceEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow).andSchDeptFlowEqualTo(schDeptFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRepealAbsenceEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow).andSchDeptFlowEqualTo(schDeptFlow);
 		return doctorAbsenceMapper.selectByExample(example);
 	}
 

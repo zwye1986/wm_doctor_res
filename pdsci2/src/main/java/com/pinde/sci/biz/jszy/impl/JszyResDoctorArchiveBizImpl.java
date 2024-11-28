@@ -43,7 +43,7 @@ public class JszyResDoctorArchiveBizImpl implements IJszyResDoctorArchiveBiz {
         if (StringUtil.isNotBlank(archiveTime)) {
             ResArchiveSequenceExample example = new ResArchiveSequenceExample();
             ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime).andSessionNumberEqualTo(sessionNumber);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime).andSessionNumberEqualTo(sessionNumber);
             count = archiveSequenceMapper.countByExample(example);
 
         }
@@ -228,7 +228,7 @@ public class JszyResDoctorArchiveBizImpl implements IJszyResDoctorArchiveBiz {
     public List<ResArchiveSequence> allResArchiveSequence() {
         ResArchiveSequenceExample example = new ResArchiveSequenceExample();
         ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         example.setOrderByClause("SESSION_NUMBER DESC,CREATE_TIME DESC");
         return archiveSequenceMapper.selectByExample(example);
     }
@@ -252,7 +252,7 @@ public class JszyResDoctorArchiveBizImpl implements IJszyResDoctorArchiveBiz {
     public List<ResDoctorLog> searchResDoctorLogList(ResDoctorLog resDoctorLog) {
         ResDoctorLogExample example = new ResDoctorLogExample();
         ResDoctorLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(resDoctorLog.getArchiveFlow())){
             criteria.andArchiveFlowEqualTo(resDoctorLog.getArchiveFlow());
         }

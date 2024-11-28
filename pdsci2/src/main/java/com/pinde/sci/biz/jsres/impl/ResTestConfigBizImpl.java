@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -27,7 +28,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findAll() {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("CREATE_TIME DESC");
         return resTestConfigMapper.selectByExample(example);
     }
@@ -217,7 +218,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public Boolean checkTestExist(ResTestConfig resTestConfig) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         //获取出所有非关闭的考试
         List<ResTestConfig> resTestConfigs = resTestConfigMapper.selectByExample(example);
         if (StringUtil.isNotBlank(resTestConfig.getTestFlow())) {
@@ -255,7 +256,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
         List<ResTestConfig> resTestConfigs = resTestConfigMapper.selectByExample(example);
         if (resTestConfigs.size() > 0) {
             ResTestConfig resTestConfig = resTestConfigs.get(0);
-            resTestConfig.setRecordStatus(GlobalConstant.FLAG_N);
+            resTestConfig.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             GeneralMethod.setRecordInfo(resTestConfig, false);
             ResTestConfigExample resTestConfigExample = new ResTestConfigExample();
             resTestConfigExample.createCriteria().andTestFlowEqualTo(resTestConfig.getTestFlow());
@@ -267,7 +268,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findEffective(String currDateTime, String orgCityId) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
                 .andApplyEndTimeGreaterThanOrEqualTo(currDateTime).andCitysIdLike("%" + orgCityId + "%");
         return resTestConfigMapper.selectByExample(example);
     }
@@ -275,14 +276,14 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findAllEffective() {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return resTestConfigMapper.selectByExample(example);
     }
     //获取基地审核时间包含当前时间的所有非关闭的考试
     @Override
     public List<ResTestConfig> findLocalEffective(String currDateTime) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andLocalAuditStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andLocalAuditStartTimeLessThanOrEqualTo(currDateTime)
                 .andLocalAuditEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
     }
@@ -290,7 +291,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findChargeEffective(String currDateTime) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andChargeAuditStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andChargeAuditStartTimeLessThanOrEqualTo(currDateTime)
                 .andChargeAuditEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
     }
@@ -298,7 +299,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findGlobalEffective(String currDateTime) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
                 .andTestEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
     }
@@ -315,7 +316,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findEffectiveByParam(String currDateTime, String applyTime, String orgCityId) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(applyTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(applyTime)
                 .andApplyEndTimeGreaterThanOrEqualTo(applyTime).andCitysIdLike("%" + orgCityId + "%")
                 .andTestEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
@@ -324,7 +325,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
     @Override
     public List<ResTestConfig> findTestConfigByCurrYear(String year) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTestIdLike(year+"%");
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andTestIdLike(year + "%");
         return resTestConfigMapper.selectByExample(example);
     }
 }

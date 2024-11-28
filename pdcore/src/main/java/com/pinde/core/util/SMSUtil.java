@@ -1,6 +1,7 @@
 package com.pinde.core.util;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.SysSmsLog;
 import com.pinde.core.model.TestPaperExample;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -111,7 +112,7 @@ public class SMSUtil {
      * @param relType
      * @return
      */
-    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, String relType) {
+    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, String relType) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, relType);
     }
 
@@ -122,7 +123,7 @@ public class SMSUtil {
      * @param relId
      * @return
      */
-    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId) {
+    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, null);
     }
 
@@ -133,7 +134,7 @@ public class SMSUtil {
      * @param relId
      * @return
      */
-    public TestPaperExample.SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, Integer code) {
+    public SysSmsLog send(String smsLogFlow, String smsTempFlow, String relId, Integer code) {
         return sendMessage(smsLogFlow, smsTempFlow, relId, null,code);
     }
 
@@ -145,7 +146,7 @@ public class SMSUtil {
      * @return
      */
     @SuppressWarnings("finally")
-    private TestPaperExample.SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType) {
+    private SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType) {
         Log logger = LogFactory.getLog(SMSUtil.class);
         String result = "";
         // 创建StringBuffer对象用来操作字符串
@@ -183,7 +184,7 @@ public class SMSUtil {
         } finally {
             Map<String, String> map = (Map<String, String>) JSON.parse(result);
 
-            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
+            SysSmsLog sysSmsLog = new SysSmsLog();
             if(StringUtil.isNotBlank(smsLogFlow)){
                 sysSmsLog.setSmsLogFlow(smsLogFlow);
             }
@@ -214,7 +215,7 @@ public class SMSUtil {
      * @return
      */
     @SuppressWarnings("finally")
-    private TestPaperExample.SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType, Integer code) {
+    private SysSmsLog sendMessage(String smsLogFlow, String smsTempFlow, String relId, String relType, Integer code) {
         Log logger = LogFactory.getLog(SMSUtil.class);
         String result = "";
         // 创建StringBuffer对象用来操作字符串
@@ -254,7 +255,7 @@ public class SMSUtil {
         } finally {
             Map<String, String> map = (Map<String, String>) JSON.parse(result);
 
-            TestPaperExample.SysSmsLog sysSmsLog = new TestPaperExample.SysSmsLog();
+            SysSmsLog sysSmsLog = new SysSmsLog();
             if(StringUtil.isNotBlank(smsLogFlow)){
                 sysSmsLog.setSmsLogFlow(smsLogFlow);
             }

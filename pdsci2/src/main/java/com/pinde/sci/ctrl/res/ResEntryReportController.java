@@ -34,7 +34,7 @@ public class ResEntryReportController extends GeneralController {
     public String main(Model model) {
         String userFlow = GlobalContext.getCurrentUser().getUserFlow();
         SysUserDeptExample example = new SysUserDeptExample();
-        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysUserDept> deptList = sysUserDeptMapper.selectByExample(example);
         List<String> deptFlows = new ArrayList<String>();
         String deptFlowsStr = "";
@@ -54,7 +54,7 @@ public class ResEntryReportController extends GeneralController {
                              String reportDate, String trainingSpeId,Integer currentPage,HttpServletRequest request) {
         String userFlow = GlobalContext.getCurrentUser().getUserFlow();
         SysUserDeptExample example = new SysUserDeptExample();
-        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysUserDept> deptList = sysUserDeptMapper.selectByExample(example);
         List<String> deptFlows = new ArrayList<String>();
         for(SysUserDept dept: deptList){
@@ -79,7 +79,7 @@ public class ResEntryReportController extends GeneralController {
         Object val="";
         if(val==null)
         {
-            return GlobalConstant.FLAG_N;
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
         }
         return val;
     }

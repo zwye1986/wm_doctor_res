@@ -6,8 +6,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.SysOrg;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -38,8 +36,8 @@ public class OrgController extends GeneralController {
 	@RequestMapping(value="/list",method={RequestMethod.POST,RequestMethod.GET})
 	public String list(SysOrg org, Integer currentPage, HttpServletRequest request, Model model){
 		PageHelper.startPage(currentPage, getPageSize(request));
-//		org.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-//		if(this.getSessionAttribute("currWsId").toString().equals(GlobalConstant.EDC_WS_ID) && StringUtil.isBlank(org.getOrgProvId())){
+//		org.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		if(this.getSessionAttribute("currWsId").toString().equals(com.pinde.core.common.GlobalConstant.EDC_WS_ID) && StringUtil.isBlank(org.getOrgProvId())){
 //			org.setOrgProvId(InitConfig.getSysCfg("srm_default_orgProvId"));
 //		}
 		List<SysOrg> sysList=sysOrgBiz.searchOrg(org);
@@ -87,7 +85,7 @@ public class OrgController extends GeneralController {
 	public String save4sczy(SysOrg org,HttpServletRequest request) throws Exception{
 		sysOrgBiz.saveOrg(org);
 		InitConfig._loadOrg(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value = "/info",method={RequestMethod.GET})
@@ -119,9 +117,9 @@ public class OrgController extends GeneralController {
 		}
 		Map<String , String[]> datasMap = request.getParameterMap();//传orgXmlUtilMap<String , String[]>参数
 		xml = _createXmlOrg(datasMap , "orgInfo." , xml);//获取xml中的参数
-//		org.setOrgProvName(DictTypeEnum.OrgProv.getDictNameById(org.getOrgProvId()));
+//		org.setOrgProvName(com.pinde.core.common.enums.DictTypeEnum.OrgProv.getDictNameById(org.getOrgProvId()));
 		if (StringUtil.isNotBlank(org.getOrgTypeId())) {
-			org.setOrgTypeName(OrgTypeEnum.getNameById(org.getOrgTypeId()));
+            org.setOrgTypeName(com.pinde.core.common.enums.OrgTypeEnum.getNameById(org.getOrgTypeId()));
 		}
 		org.setOrgInfo(xml);//放进OrgInfo大字段
 		if(StringUtil.isNotBlank(org.getChargeOrgFlow())){
@@ -131,23 +129,23 @@ public class OrgController extends GeneralController {
 			org.setChargeOrgName("");
 		}
 		if(StringUtil.isNotBlank(org.getOrgLevelId())){
-			org.setOrgLevelName(OrgLevelEnum.getNameById(org.getOrgLevelId()));
+            org.setOrgLevelName(com.pinde.core.common.enums.OrgLevelEnum.getNameById(org.getOrgLevelId()));
 		}else{
 			org.setOrgLevelName("");
 		}
 		sysOrgBiz.saveOrg(org);
 		
 		InitConfig._loadOrg(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;		
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	@ResponseBody
 	public String delete(SysOrg org,HttpServletRequest request){
-//		org.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+//		org.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		sysOrgBiz.saveOrg(org);
 		InitConfig._loadOrg(request.getServletContext());
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	
 
@@ -156,7 +154,7 @@ public class OrgController extends GeneralController {
 	public Object loadApplyOrg(@RequestParam(value="orgFlow" , required=true)String orgFlow){
 		SysOrg sysOrg = new SysOrg();
 		sysOrg.setChargeOrgFlow(orgFlow);
-		sysOrg.setRecordStatus(GlobalConstant.FLAG_Y);
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysOrg> orgList = this.sysOrgBiz.searchOrg(sysOrg);
 		//List<SysOrg> chargeOrgList = this.sysOrgBiz.searchChargeOrg();
 		//List<SysOrg> resultOrgList = new ArrayList<SysOrg>();

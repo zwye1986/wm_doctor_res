@@ -146,14 +146,14 @@ public class LcjnBaseManagerController extends GeneralController {
 		param.put("courseFee", Arrays.asList(courseFee.length == 0?new String[]{""}:courseFee));
 		//验证：同一老师同一时间段不能添加多个课程
 		String resultInfo = baseManagerBiz.validateTeaTimeCourse(param);
-		if(!GlobalConstant.FLAG_Y.equals(resultInfo)){
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resultInfo)) {
 			return resultInfo;
 		}
 		int num = baseManagerBiz.saveCourseTrain(param);
 		if (num > 0) {
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -191,10 +191,10 @@ public class LcjnBaseManagerController extends GeneralController {
 	@ResponseBody
 	public String releasedInfo(String courseFlow){
 		int num = baseManagerBiz.releasedInfo(courseFlow);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.OPERATE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 	}
 
 	/**
@@ -204,12 +204,12 @@ public class LcjnBaseManagerController extends GeneralController {
 	@ResponseBody
 	public String delCourseTrain(String courseFlow,String isReleased){
 		int num = baseManagerBiz.delCourseTrain(courseFlow,isReleased);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.DELETE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}else if(num == -1){
 			return "此课程已在培训中，无法删除！";
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**
@@ -227,7 +227,7 @@ public class LcjnBaseManagerController extends GeneralController {
 		model.addAttribute("doctorOrderInfoList",doctorOrderInfoList);
 		model.addAttribute("courseFlow",courseFlow);
 		model.addAttribute("courseName",courseName);
-		if(StringUtil.isNotBlank(initFlag) && initFlag.equals(GlobalConstant.RECORD_STATUS_Y)){
+        if (StringUtil.isNotBlank(initFlag) && initFlag.equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
 			return "lcjn/base/courseTrainManage";
 		}
 		return "lcjn/doctorInfoManage/doctorOrderedInfo";
@@ -263,12 +263,12 @@ public class LcjnBaseManagerController extends GeneralController {
 	@ResponseBody
 	public String saveTeaInfo(SysUser user){
 		int num = baseManagerBiz.saveTeaInfo(user);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}else if(num == -1){
 			return "此用户名已维护过！";
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -280,16 +280,16 @@ public class LcjnBaseManagerController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = baseManagerBiz.importTeacherExcel(file);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(Exception re){
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	/**
@@ -318,11 +318,11 @@ public class LcjnBaseManagerController extends GeneralController {
 	@RequestMapping(value="/teacherOption")
 	@ResponseBody
 	public String teacherOption(String userFlow, String recordStatus) {
-        int num = baseManagerBiz.teacherOption(userFlow, recordStatus.equals(GlobalConstant.FLAG_Y) ? GlobalConstant.FLAG_N : GlobalConstant.FLAG_Y);
-		if (num == GlobalConstant.ONE_LINE) {
-			return GlobalConstant.OPRE_SUCCESSED;
+        int num = baseManagerBiz.teacherOption(userFlow, recordStatus.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) ? com.pinde.core.common.GlobalConstant.FLAG_N : com.pinde.core.common.GlobalConstant.FLAG_Y);
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	/**
@@ -341,9 +341,9 @@ public class LcjnBaseManagerController extends GeneralController {
 			}
 		}
 		if (num > 0) {
-			return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	/**
@@ -372,7 +372,7 @@ public class LcjnBaseManagerController extends GeneralController {
 	public String addSkillOption(String skillFlow, Model model) {
 		SysDict sysDict = new SysDict();
 		sysDict.setDictTypeId("LcjnSkill");//课程技能
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		sysDict.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		List<SysDict> skillList = dictBiz.searchDictList(sysDict);
 		if(StringUtil.isNotBlank(skillFlow)){
@@ -395,7 +395,7 @@ public class LcjnBaseManagerController extends GeneralController {
 		List<LcjnFixedAssets> assetsList = baseManagerBiz.queryFixedAssetsList();
 		SysDict sysDict = new SysDict();
 		sysDict.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		sysDict.setDictTypeId("SkillMaterial");
 		List<SysDict> startSupplies = this.dictBiz.searchDictList(sysDict);//追加需求：排除停用的耗材
 		sysDict.setDictTypeId("SkileFixedAssets");
@@ -454,11 +454,11 @@ public class LcjnBaseManagerController extends GeneralController {
 		param.put("assetsNumList", Arrays.asList(assetsNum.length == 0?new String[]{""}:assetsNum));
 		int num = baseManagerBiz.saveSkillConfig(param);
 		if (num > 0) {
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}else if(num == -1){
 			return "该技能已配置过！";
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -469,9 +469,9 @@ public class LcjnBaseManagerController extends GeneralController {
 	public String delSkillsConfig(String skillFlow){
 		int num = baseManagerBiz.delSkillsConfig(skillFlow);
 		if (num > 0) {
-			return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**
@@ -505,7 +505,7 @@ public class LcjnBaseManagerController extends GeneralController {
 			//新增字典时判断该类型字典代码是否存在
 			SysDict sysDict=dictBiz.readDict(dict.getDictTypeId(),dict.getDictId(),dict.getOrgFlow());
 			if(null!=sysDict){
-				return GlobalConstant.OPRE_FAIL_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 			}
 			this.dictBiz.addDict(dict);
 		}else{
@@ -513,12 +513,12 @@ public class LcjnBaseManagerController extends GeneralController {
 			List<SysDict> dictList=dictBiz.searchDictListByDictTypeIdNotIncludeSelf(dict);
 			for(SysDict sysDict:dictList){
 				if(dict.getDictId().equals(sysDict.getDictId())){
-					return GlobalConstant.OPRE_FAIL_FLAG;
+                    return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 				}
 			}
 			this.dictBiz.modeDictAndSubDict(dict);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/doRefresh" , method=RequestMethod.GET)
 	@ResponseBody
@@ -533,16 +533,16 @@ public class LcjnBaseManagerController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = dictBiz.importDict(file,dictTypeId);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re) {
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 }

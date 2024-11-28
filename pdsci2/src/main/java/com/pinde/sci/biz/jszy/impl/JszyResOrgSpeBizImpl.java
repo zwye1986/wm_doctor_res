@@ -1,12 +1,14 @@
 package com.pinde.sci.biz.jszy.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.TrainCategoryTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
-import com.pinde.sci.enums.jszy.JszyTrainCategoryTypeEnum;
 import com.pinde.sci.model.mo.ResOrgSpe;
 import com.pinde.sci.model.mo.ResOrgSpeExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
@@ -33,15 +35,15 @@ public class JszyResOrgSpeBizImpl implements IJszyResOrgSpeBiz {
 		ResOrgSpeExample example=new ResOrgSpeExample();
 		Criteria criteria =example.createCriteria();
 		List<String>speTypeIdList=new ArrayList<String>();
-		if (JszyTrainCategoryTypeEnum.BeforeCfgDate.getId().equals(trainCategoryTypeId)) {
-			speTypeIdList.add(DictTypeEnum.WMFirst.getId());
+        if (TrainCategoryTypeEnum.BeforeCfgDate.getId().equals(trainCategoryTypeId)) {
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.WMFirst.getId());
 		}
-		if (JszyTrainCategoryTypeEnum.AfterCfgDate.getId().equals(trainCategoryTypeId)) {
-			speTypeIdList.add(DictTypeEnum.DoctorTrainingSpe.getId());
+        if (TrainCategoryTypeEnum.AfterCfgDate.getId().equals(trainCategoryTypeId)) {
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		}
-		if (JszyTrainCategoryTypeEnum.Independent.getId().equals(trainCategoryTypeId)) {
-			speTypeIdList.add(DictTypeEnum.WMSecond.getId());
-			speTypeIdList.add(DictTypeEnum.AssiGeneral.getId());
+        if (TrainCategoryTypeEnum.Independent.getId().equals(trainCategoryTypeId)) {
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.WMSecond.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getId());
 		}
 		if (speTypeIdList!=null && !speTypeIdList.isEmpty()) {
 			criteria.andSpeTypeIdIn(speTypeIdList);
@@ -112,13 +114,13 @@ public class JszyResOrgSpeBizImpl implements IJszyResOrgSpeBiz {
 				return saveResOrgSpe(orgSpe);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<ResOrgSpe> searchSpeByCondition(ResOrgSpe resOrgSpe, String flag) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-		Criteria criteria =example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(resOrgSpe.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(resOrgSpe.getOrgFlow());
 		}
@@ -136,7 +138,7 @@ public class JszyResOrgSpeBizImpl implements IJszyResOrgSpeBiz {
 		if(StringUtil.isNotBlank(resOrgSpe.getRecordStatus())){
 			criteria.andRecordStatusEqualTo(resOrgSpe.getRecordStatus());
 		}
-		if(GlobalConstant.FLAG_Y.equals(flag)&&StringUtil.isNotBlank(resOrgSpe.getSpeTypeId())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag) && StringUtil.isNotBlank(resOrgSpe.getSpeTypeId())) {
 			criteria.andSpeTypeIdNotEqualTo(resOrgSpe.getSpeTypeId());
 		}
 		example.setOrderByClause("CREATE_TIME DESC");

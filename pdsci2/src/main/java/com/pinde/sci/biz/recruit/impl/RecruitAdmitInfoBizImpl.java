@@ -7,7 +7,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.RecruitAdmitInfoMapper;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.sci.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
 import com.pinde.sci.model.mo.RecruitAdmitInfoExample;
 import com.pinde.sci.model.mo.RecruitInfo;
@@ -57,7 +57,7 @@ public class RecruitAdmitInfoBizImpl implements IRecruitAdmitInfoBiz {
 
         RecruitInfo recruitInfo = new RecruitInfo();
         recruitInfo.setRecruitFlow(recruitAdmitInfo.getRecruitFlow());
-        recruitInfo.setAdmitFlag(GlobalConstant.FLAG_Y);
+        recruitInfo.setAdmitFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
         int c=recruitInfoBiz.saveRecruitInfo(recruitInfo);
         if (c == 1){
             saveAdmitInfo(recruitAdmitInfo);
@@ -131,7 +131,7 @@ public class RecruitAdmitInfoBizImpl implements IRecruitAdmitInfoBiz {
     @Override
     public RecruitAdmitInfo searchByExample(String recruitFlow, String orgFlow) {
         RecruitAdmitInfoExample example = new RecruitAdmitInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecruitFlowEqualTo(recruitFlow)
                 .andOrgFlowEqualTo(orgFlow);
         List<RecruitAdmitInfo> recruitInterviewInfos = recruitAdmitInfoMapper.selectByExample(example);
@@ -217,7 +217,7 @@ public class RecruitAdmitInfoBizImpl implements IRecruitAdmitInfoBiz {
                             String admitFlag = recruitInfo.getAdmitFlag();
                             String recordStatus = recruitInfo.getRecordStatus();
                             Boolean qualifyInterview = isQualifyAdmit(recruitFlow);
-                            if (!qualifyInterview || !GlobalConstant.RECORD_STATUS_Y.equals(interviewIsPass) || !GlobalConstant.RECORD_STATUS_N.equals(admitFlag) || !GlobalConstant.RECORD_STATUS_Y.equals(recordStatus)){
+                            if (!qualifyInterview || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(interviewIsPass) || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(admitFlag) || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(recordStatus)) {
                                 throw new RuntimeException("导入失败!！第" + (i + 1) + "行，考生招录状态有误!");
                             }else {
                                 recruitAdmitInfo.setRecruitFlow(recruitFlow);

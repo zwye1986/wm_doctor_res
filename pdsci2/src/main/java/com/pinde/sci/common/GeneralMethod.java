@@ -1,10 +1,9 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.enums.sys.ReqTypeEnum;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ public class GeneralMethod {
         try {
             if (isAdd) {
                 Method setRecordStatusMethod = clazz.getMethod("setRecordStatus", String.class);
-                setRecordStatusMethod.invoke(obj, GlobalConstant.RECORD_STATUS_Y);
+                setRecordStatusMethod.invoke(obj, com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 Method setCreateTime = clazz.getMethod("setCreateTime", String.class);
                 setCreateTime.invoke(obj, DateUtil.getCurrDateTime());
                 Method setCreateUserFlow = clazz.getMethod("setCreateUserFlow", String.class);
@@ -178,7 +177,7 @@ public class GeneralMethod {
     }
     public static String getWatermark(String watermarkFlag) {
         String watermark = "";
-        if (GlobalConstant.FLAG_Y.equals(watermarkFlag)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(watermarkFlag)) {
             watermark = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("srm_watermark_y"), "正式稿").trim();
         } else {
             watermark = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("srm_watermark_n"), "").trim();
@@ -204,7 +203,7 @@ public class GeneralMethod {
             result = "global".equals(InitConfig.getSysCfg("srm_for_use"));
         }
         if ("charge".equals(version)) {
-            result = "global".equals(InitConfig.getSysCfg("srm_for_use")) && GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("srm_for_charge_use"));
+            result = "global".equals(InitConfig.getSysCfg("srm_for_use")) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("srm_for_charge_use"));
         }
         if ("local".equals(version)) {
             result = "local".equals(InitConfig.getSysCfg("srm_for_use"));
@@ -218,7 +217,7 @@ public class GeneralMethod {
         }
         //徐州中心医院版科研系统
         if("local_xzzxyy".equals(version)){
-            if( "local".equals(InitConfig.getSysCfg("srm_for_use")) && GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("srm_local_type"))){
+            if ("local".equals(InitConfig.getSysCfg("srm_for_use")) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("srm_local_type"))) {
                 result = true;
             }
         }

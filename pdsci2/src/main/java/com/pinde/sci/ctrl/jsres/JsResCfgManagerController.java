@@ -56,7 +56,7 @@ public class JsResCfgManagerController extends GeneralController {
 
         ResOrgCkxzExample example = new ResOrgCkxzExample();
         ResOrgCkxzExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         example.setOrderByClause("SESSION_GRADE,SESSION_YEAR");
         List<ResOrgCkxz> orgCkxzList = orgCkxzMapper.selectByExample(example);
         model.addAttribute("orgCkxzList",orgCkxzList);
@@ -102,7 +102,7 @@ public class JsResCfgManagerController extends GeneralController {
         param.put("recordFlow",recordFlow);
         param.put("submitRole",roleFlow);
         param.put("auditRole",auditRoleFlow);
-        param.put("recordStatus", GlobalConstant.FLAG_Y);
+        param.put("recordStatus", com.pinde.core.common.GlobalConstant.FLAG_Y);
         param.put("createTime",PdUtil.getCurrDateTime2());
         param.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
         param.put("subRoleName",subRoleName);
@@ -116,9 +116,9 @@ public class JsResCfgManagerController extends GeneralController {
         }
         int i = roleBiz.addActivityCfg(param);
         if( i>0 ) {
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else{
-            return  GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
     @RequestMapping(value = {"/delActivityCfg"})
@@ -126,9 +126,9 @@ public class JsResCfgManagerController extends GeneralController {
     public String delActivityCfg(String recordFlow) {
         int i = roleBiz.delActivityCfg(recordFlow);
         if(i>0) {
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }else{
-            return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         }
     }
     @RequestMapping(value = {"/updateActivity"})
@@ -150,9 +150,9 @@ public class JsResCfgManagerController extends GeneralController {
         }
         int i = roleBiz.updActivityCfg(param);
         if (i>=1) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else{
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
     @RequestMapping(value = {"/searchActivity"})
@@ -179,10 +179,10 @@ public class JsResCfgManagerController extends GeneralController {
                 cfg.setCfgCode(cfgCode);
                 cfg.setCfgValue(sysCfgValue);
                 cfg.setCfgDesc(sysCfgDesc);
-                cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 sysCfgList.add(cfg);
 
-                if(value.equals(cfgCode) && GlobalConstant.RECORD_STATUS_Y.equals(sysCfgValue)){
+                if (value.equals(cfgCode) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sysCfgValue)) {
                     JsresDeptConfig config = jsResPowerCfgBiz.searchBaseDeptConfig(orgFlow);
                     if(null == config){
                         config = new JsresDeptConfig();
@@ -190,15 +190,15 @@ public class JsResCfgManagerController extends GeneralController {
                         config.setOrgFlow(orgFlow);
                         config.setTestNum("5");
                         config.setScorePass("60");
-                        config.setIsTestOut(GlobalConstant.FLAG_Y);
-                        config.setTeacherWrite(GlobalConstant.FLAG_N);
+                        config.setIsTestOut(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        config.setTeacherWrite(com.pinde.core.common.GlobalConstant.FLAG_N);
                         jsResPowerCfgBiz.saveDeptConfig(config);
                     }
                 }
             }
             jsResPowerCfgBiz.saveList(sysCfgList);
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = {"/addDetailConfg"})
@@ -220,9 +220,9 @@ public class JsResCfgManagerController extends GeneralController {
     public String saveDeptConfig(JsresDeptConfig deptConfig,HttpServletRequest request){
         int num = jsResPowerCfgBiz.saveDeptConfig(deptConfig);
         if(num > 0) {
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping(value = {"/saveCkxzConfig"})
@@ -233,9 +233,9 @@ public class JsResCfgManagerController extends GeneralController {
             return "该年份数据已存在，请勿重复添加！";
         }
         if(num > 0) {
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping(value = {"/searchDeptConfig"})
@@ -246,7 +246,7 @@ public class JsResCfgManagerController extends GeneralController {
 
         ResOrgCkxzExample example = new ResOrgCkxzExample();
         ResOrgCkxzExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         example.setOrderByClause("SESSION_GRADE,SESSION_YEAR");
         List<ResOrgCkxz> orgCkxzList = orgCkxzMapper.selectByExample(example);
         model.addAttribute("orgCkxzList",orgCkxzList);
@@ -272,24 +272,24 @@ public class JsResCfgManagerController extends GeneralController {
     @RequestMapping(value = {"/delDeptConfig"})
     @ResponseBody
     public String delDeptConfig(JsresDeptConfig deptConfig,HttpServletRequest request){
-        deptConfig.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        deptConfig.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         int num = jsResPowerCfgBiz.saveDeptConfig(deptConfig);
         if(num > 0) {
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping(value = {"/delCkxzConfig"})
     @ResponseBody
     public String delCkxzConfig(String recordFlow){
         ResOrgCkxz resOrgCkxz = orgCkxzMapper.selectByPrimaryKey(recordFlow);
-        resOrgCkxz.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        resOrgCkxz.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         int num = jsResPowerCfgBiz.saveCkxzConfig(resOrgCkxz);
         if(num > 0) {
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping(value = {"/saveCkshConfig"})

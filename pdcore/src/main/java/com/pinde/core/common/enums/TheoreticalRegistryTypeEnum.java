@@ -1,13 +1,13 @@
 package com.pinde.core.common.enums;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 /**
  * Created by pdkj on 2018/1/3.
  */
 public enum TheoreticalRegistryTypeEnum implements GeneralEnum<String> {
-    TheoreticalStudy("TheoreticalStudy", "理论学习", GlobalConstant.FLAG_Y, GlobalConstant.FLAG_N, GlobalConstant.FLAG_N),
+    TheoreticalStudy("TheoreticalStudy", "理论学习", com.pinde.core.common.GlobalConstant.FLAG_Y, com.pinde.core.common.GlobalConstant.FLAG_N, com.pinde.core.common.GlobalConstant.FLAG_N),
     ;
     private final String id;
     private final String name;
@@ -53,6 +53,6 @@ public enum TheoreticalRegistryTypeEnum implements GeneralEnum<String> {
         return haveItem;
     }
     public static String getNameById(String id) {
-        return EnumUtil.getById(id, ResRecTypeEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.ResRecTypeEnum.class).getName();
     }
 }

@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.CertificateTypeEnum;
 import com.pinde.core.common.enums.UserSexEnum;
 import com.pinde.core.model.*;
@@ -297,7 +298,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "请联系管理员，设置上传图片路径！");
 			return "/res/osca/success";
 		}
-		List<SysUserRole> userRoles = oscaAppBiz.getSysUserRole(sysUser.getUserFlow(),GlobalConstant.OSCA_WS_ID);
+        List<SysUserRole> userRoles = oscaAppBiz.getSysUserRole(sysUser.getUserFlow(), com.pinde.core.common.GlobalConstant.OSCA_WS_ID);
 		if(userRoles==null || userRoles.isEmpty()){
 			model.addAttribute("resultId", "3010106");
 			model.addAttribute("resultType", "用户未赋权，无权限使用！");
@@ -318,7 +319,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "用户不是学员，无权限使用！");
 			return "/res/osca/success";
 		}
-		if(GlobalConstant.FLAG_Y.equals(isNew)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isNew)) {
 			if (StringUtil.isBlank(userImg)) {
 				model.addAttribute("resultId", "010000");
 				model.addAttribute("resultType", "请上传头像图片");
@@ -448,7 +449,7 @@ public class OscaStudentController {
 			return "/res/osca/success";
 		}
 
-		List<SysDict> dicts=oscaAppBiz.getDictListByDictId(DictTypeEnum.OscaTrainingType.getId());
+        List<SysDict> dicts = oscaAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId());
 		List<SysDict> dicts2=null;
 		if(dicts==null||dicts.size()<=0)
 		{
@@ -461,7 +462,7 @@ public class OscaStudentController {
 			if(dict.getDictId().equals(doctor.getTrainingTypeId()))
 			{
 				doctor.setTrainingTypeName(dict.getDictName());
-				dicts2=oscaAppBiz.getDictListByDictId(DictTypeEnum.OscaTrainingType.getId()+"."+dict.getDictId());
+                dicts2 = oscaAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + dict.getDictId());
 				break;
 			}
 		}
@@ -623,14 +624,14 @@ public class OscaStudentController {
 		}
 		model.addAttribute("types", CertificateTypeEnum.values());
 
-		List<SysDict> dicts=oscaAppBiz.getDictListByDictId(DictTypeEnum.OscaTrainingType.getId());
+        List<SysDict> dicts = oscaAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId());
 		model.addAttribute("dicts", dicts);
 		Map<String,List<SysDict>>dictsMap=new HashMap<>();
 		if(dicts!=null&&dicts.size()>0)
 		{
 			for(SysDict dict:dicts)
 			{
-				List<SysDict> dicts2=oscaAppBiz.getDictListByDictId(DictTypeEnum.OscaTrainingType.getId()+"."+dict.getDictId());
+                List<SysDict> dicts2 = oscaAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + dict.getDictId());
 				dictsMap.put(dict.getDictId(),dicts2);
 			}
 		}
@@ -675,7 +676,7 @@ public class OscaStudentController {
 			return "用户不存在，无法使用！";
 		}
 
-		List<SysUserRole> userRoles = oscaAppBiz.getSysUserRole(user.getUserFlow(),GlobalConstant.OSCA_WS_ID);
+        List<SysUserRole> userRoles = oscaAppBiz.getSysUserRole(user.getUserFlow(), com.pinde.core.common.GlobalConstant.OSCA_WS_ID);
 		if(userRoles==null || userRoles.isEmpty()){
 			return"用户未赋权，无权限使用！" ;
 		}
@@ -786,8 +787,8 @@ public class OscaStudentController {
 				OscaSkillDocStation docStation=oscaAppBiz.getDocSkillStation(station.getStationFlow(),user.getUserFlow(),clinicalFlow);
 				if(docStation==null)
 					docStation=new OscaSkillDocStation();
-				if(!ExamStatusEnum.AssessIng.getId().equals(docStation.getExamStatusId())&&
-						!ExamStatusEnum.Assessment.getId().equals(docStation.getExamStatusId()) )
+                if (!com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId().equals(docStation.getExamStatusId()) &&
+                        !com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId().equals(docStation.getExamStatusId()))
 				{
 					docStation.setClinicalFlow(clinicalFlow);
 					docStation.setClinicalName(skillsAssessment.getClinicalName());
@@ -798,9 +799,9 @@ public class OscaStudentController {
 					String date=DateUtil.getCurrDateTime2();
 					docStation.setHoukaoTime(date);
 					docStation.setWaitingTime(date);
-					docStation.setExamStatusId(ExamStatusEnum.StayAssessment.getId());
-					docStation.setExamStatusName(ExamStatusEnum.StayAssessment.getName());
-					docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+                    docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
+                    docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					docStations.add(docStation);
 				}
 			}
@@ -902,8 +903,8 @@ public class OscaStudentController {
 					bean.put("roomRecordFlow",roomRecordFlow);
 					bean.put("roomFlow",roomTea.getRoomFlow());
 					bean.put("roomName",roomTea.getRoomName());
-					bean.put("examStatusId",ExamStatusEnum.StayAssessment.getId());
-					bean.put("examStatusName",ExamStatusEnum.StayAssessment.getName());
+                    bean.put("examStatusId", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+                    bean.put("examStatusName", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
 					if(i==0){
 						examRoomFlow=roomRecordFlow;
 					}
@@ -911,7 +912,7 @@ public class OscaStudentController {
 					OscaSkillRoomDoc docStation=oscaAppBiz.getOscaSkillRoomDocByDoc(param);
 					if(docStation!=null){
 						roomRecordFlow=docStation.getRoomRecordFlow();
-						if(ExamStatusEnum.Waiting.getId().equals(docStation.getExamStatusId())) {
+                        if (com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId().equals(docStation.getExamStatusId())) {
 							examRoomFlow = roomRecordFlow;
 						}
 					}
@@ -921,7 +922,7 @@ public class OscaStudentController {
 				//添加考官扫码学员的信息
 				SysUser user=oscaAppBiz.readSysUser(teaFlow);
 				b=new OscaTeaScanDoc();
-				b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				b.setClinicalFlow(clinicalFlow);
 				b.setClinicalName(skillsAssessment.getClinicalName());
 				b.setDoctorFlow(doctorFlow);
@@ -978,7 +979,7 @@ public class OscaStudentController {
 		//查询是否是有成功  预约考核信息
 		OscaDoctorAssessment oscaDoctorAssessment=oscaStudentBiz.getAuditOscaDocInfo(userFlow);
 		model.addAttribute("oscaDoctorAssessment",oscaDoctorAssessment);
-        String canClick = GlobalConstant.FLAG_Y;
+        String canClick = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		//如果有查询有几站并且查询有哪些房间及相应信息
 		if(oscaDoctorAssessment!=null)
 		{
@@ -1018,9 +1019,9 @@ public class OscaStudentController {
 							//站点考场排队人数最少的一个考场
 							roomExt = oscaStudentBiz.getStationBestRoom(s.getStationFlow(), oscaSkillsAssessment.getClinicalFlow());
 						}else{
-							if(roomExt.getExamStatusId().equals(ExamStatusEnum.Waiting.getId())||roomExt.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId()))
+                            if (roomExt.getExamStatusId().equals(com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId()) || roomExt.getExamStatusId().equals(com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId()))
 							{
-                                canClick = GlobalConstant.FLAG_N;
+                                canClick = com.pinde.core.common.GlobalConstant.FLAG_N;
 							}
 						}
 						roomMap.put("roomExt",roomExt);
@@ -1077,7 +1078,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "排队标识符为空");
 			return "/res/osca/success";
 		}
-        if (!waitingFlag.equals(GlobalConstant.FLAG_Y) && !waitingFlag.equals(GlobalConstant.FLAG_N))
+        if (!waitingFlag.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) && !waitingFlag.equals(com.pinde.core.common.GlobalConstant.FLAG_N))
 		{
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "排队状态只能是排队或取消排队");
@@ -1094,7 +1095,7 @@ public class OscaStudentController {
 		param.put("roomRecordFlow",roomRecordFlow);
 		param.put("clinicalFlow",clinicalFlow);
 		param.put("stationFlow",stationFlow);
-        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
+        if (waitingFlag.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 			//校验是否已经在排队 或正在考核中
 			int count = oscaStudentBiz.checkIsWait(param);
 			if(count>0){
@@ -1151,13 +1152,13 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "读取站点信息失败！");
 			return "/res/osca/success";
 		}
-        if (waitingFlag.equals(GlobalConstant.FLAG_Y)) {
-			docStation.setExamStatusId(ExamStatusEnum.Waiting.getId());
-			docStation.setExamStatusName(ExamStatusEnum.Waiting.getName());
+        if (waitingFlag.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+            docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId());
+            docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.Waiting.getName());
 			docStation.setWaitingTime(DateUtil.getCurrentTime());
 		}else{
-			docStation.setExamStatusId(ExamStatusEnum.StayAssessment.getId());
-			docStation.setExamStatusName(ExamStatusEnum.StayAssessment.getName());
+            docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+            docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
 			docStation.setWaitingTime("");
 		}
 		int count = oscaStudentBiz.updateOscaSkillRoomDoc(docStation,user);
@@ -1212,13 +1213,13 @@ public class OscaStudentController {
 		OscaSubjectStation station=oscaStudentBiz.getOscaSubjectStationsByFlow(stationFlow);
 		model.addAttribute("station",station);
 		List<OscaSkillRoomDoc> skillRoomDocs=oscaStudentBiz.getDocAllStation(param);
-        String canClick = GlobalConstant.FLAG_Y;
+        String canClick = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		if(skillRoomDocs!=null){
 			for(OscaSkillRoomDoc rd:skillRoomDocs)
 			{
-				if(rd.getExamStatusId().equals(ExamStatusEnum.Waiting.getId())||rd.getExamStatusId().equals(ExamStatusEnum.AssessIng.getId()))
+                if (rd.getExamStatusId().equals(com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId()) || rd.getExamStatusId().equals(com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId()))
 				{
-                    canClick = GlobalConstant.FLAG_N;
+                    canClick = com.pinde.core.common.GlobalConstant.FLAG_N;
 				}
 			}
 		}
@@ -1226,7 +1227,7 @@ public class OscaStudentController {
 		if(roomExt!=null)
 		{
 			roomRecordFlow=roomExt.getRecordFlow();
-            model.addAttribute("isSelect", GlobalConstant.FLAG_Y);
+            model.addAttribute("isSelect", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		model.addAttribute("canClick",canClick);
 		param.put("roomRecordFlow",roomRecordFlow);
@@ -1467,7 +1468,7 @@ public class OscaStudentController {
 		model.addAttribute("graduationYear",graduationYear);
 		if(resDoctor!=null){
 			model.addAttribute("oscaStudentSubmit",resDoctor.getOscaStudentSubmit());//通过OSCE注册学员
-			if(GlobalConstant.FLAG_Y.equals(resDoctor.getOscaStudentSubmit())){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resDoctor.getOscaStudentSubmit())) {
 				model.addAttribute("graduationYear",resDoctor.getGraduationYear());
 			}
 		}
@@ -1526,7 +1527,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "预约信息不存在");
 			return "/res/osca/success";
 		}
-		skillsAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        skillsAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		skillsAssessment.setModifyUserFlow(user.getUserFlow());
 		skillsAssessment.setModifyTime(DateUtil.getCurrDateTime());
 		int count =	oscaDoctorOrderdeBiz.updateDoctorAssessment(skillsAssessment);
@@ -1592,10 +1593,10 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "医师信息不存在");
 			return "/res/osca/success";
 		}
-		if(GlobalConstant.FLAG_Y.equals(skillsAssessment.getIsLocal()))//预约院内考核
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillsAssessment.getIsLocal()))//预约院内考核
 		{
 		}else{//预约结业
-			if(GlobalConstant.FLAG_Y.equals(doctor.getOscaStudentSubmit()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getOscaStudentSubmit()))
 			{
 				String graduationYear=doctor.getGraduationYear();
 				if(StringUtil.isBlank(graduationYear)||skillsAssessment.getClinicalYear().compareTo(graduationYear)<0)
@@ -1733,10 +1734,10 @@ public class OscaStudentController {
 					oscaDoctorAssessment.setCreateUserFlow(user.getUserFlow());
 					oscaDoctorAssessment.setModifyTime(DateUtil.getCurrentTime());
 					oscaDoctorAssessment.setModifyUserFlow(user.getUserFlow());
-					oscaDoctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    oscaDoctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					oscaDoctorAssessment.setIsPass(DoctorScoreEnum.Miss.getId());
 					oscaDoctorAssessment.setIsPassName(DoctorScoreEnum.Miss.getName());
-					oscaDoctorAssessment.setIsAdminAudit(GlobalConstant.FLAG_N);
+                    oscaDoctorAssessment.setIsAdminAudit(com.pinde.core.common.GlobalConstant.FLAG_N);
 					count =oscaDoctorOrderdeBiz.insertDoctorAssessment(oscaDoctorAssessment);
 
 				}
@@ -2029,7 +2030,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "考核信息不存在");
 			return "/res/osca/student/scoreDetail";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(skillsAssessment.getIsShow()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillsAssessment.getIsShow()))
 		{
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "考核成绩暂未发布！");
@@ -2274,7 +2275,7 @@ public class OscaStudentController {
 			model.addAttribute("resultType", "用户不存在！");
 			return "/res/osca/success";
 		}
-		String newPassword=PasswordHelper.encryptPassword(user.getUserFlow(), oldPass);
+        String newPassword = PasswordHelper.encryptPassword(user.getUserFlow(), oldPass);
 		if(!user.getUserPasswd().equalsIgnoreCase(newPassword)){
 			model.addAttribute("resultId", "010101");
 			model.addAttribute("resultType", "原密码输入不正确！");

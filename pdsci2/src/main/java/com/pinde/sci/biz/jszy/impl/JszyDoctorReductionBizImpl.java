@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
@@ -38,7 +39,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     public ResDoctorReduction findReductionByRecruitFlow(String recruitFlow) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
         List<ResDoctorReduction> reductionList = reductionMapper.selectByExample(example);
         if (reductionList != null && reductionList.size() > 0) {
             return reductionList.get(0);
@@ -51,7 +52,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     public List<ResDoctorReduction> findReductionByMap(Map<String, Object> paramMap) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDoctorReduction> reductionList = reductionMapper.selectByExample(example);
         return reductionList;
     }
@@ -119,7 +120,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     public ResDoctorReduction findReductionByRecruitFlowandStatusId(String recruitFlow, String auditStatusId) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruitFlow)){
             criteria.andRecruitFlowEqualTo(recruitFlow);
         }

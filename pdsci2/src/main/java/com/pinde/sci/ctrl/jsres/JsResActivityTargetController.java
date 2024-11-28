@@ -78,10 +78,10 @@ public class JsResActivityTargetController extends GeneralController {
 //			target.setTargetFlow(targetFlow);
 //			target.setTargetName(targetName.trim());
 //			target.setOrgFlow(curUser.getOrgFlow());
-//			target.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//			target.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //			int c = activityTargeBiz.saveTarget(target);
 //			if (c == 0) {
-//				return GlobalConstant.SAVE_FAIL;
+//				return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 //			}
 //		}else {
 //			if (target != null) {
@@ -90,13 +90,13 @@ public class JsResActivityTargetController extends GeneralController {
 //			TeachingActivityTarget add = new TeachingActivityTarget();
 //			add.setTargetName(targetName.trim());
 //			add.setOrgFlow(curUser.getOrgFlow());
-//			add.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//			add.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //			int c = activityTargeBiz.saveTarget(add);
 //			if (c == 0) {
-//				return GlobalConstant.SAVE_FAIL;
+//				return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 //			}
 //		}
-//		return GlobalConstant.SAVE_SUCCESSED;
+//		return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 //	}
 
 	@RequestMapping(value = "/saveAdd")
@@ -115,14 +115,14 @@ public class JsResActivityTargetController extends GeneralController {
 		}
 		//“JX” 为教学活动
 		activityTarget.setTargetType("JX");
-//		activityTarget.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activityTarget.getActivityTypeId()));
+//		activityTarget.setActivityTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getDictNameById(activityTarget.getActivityTypeId()));
 		activityTarget.setOrgFlow(curUser.getOrgFlow());
-		activityTarget.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        activityTarget.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		int num = activityTargeBiz.saveTargetNew2(activityTarget);
 		if (num == 0) {
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/delTarget")
@@ -133,8 +133,8 @@ public class JsResActivityTargetController extends GeneralController {
 		}
 		int c=activityTargeBiz.delTarget(targetFlow);
 		if(c==0) {
-			return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 		}
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 }

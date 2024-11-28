@@ -175,20 +175,20 @@ public class ResGradeBizImpl implements IResGradeBiz {
                 return gradeInfoMapper.updateByPrimaryKeySelective(recGrade);
             }else{//新增
                 recGrade.setRecFlow(PkUtil.getUUID());
-                if(!ResRecTypeEnum.AnnualTrainForm.getId().equals(recGrade.getRecTypeId())){//培训年度
+                if (!com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(recGrade.getRecTypeId())) {//培训年度
                     recGrade.setOperTime(DateUtil.getCurrDateTime());
                 }
                 GeneralMethod.setRecordInfo(recGrade, true);
                 return gradeInfoMapper.insertSelective(recGrade);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public List<DeptTeacherGradeInfo> searchResGradeByItems(Map<String, Object> itemsMap) {
         DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-        DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if(null!= itemsMap.get("processFlow")){
             criteria.andProcessFlowEqualTo((String) itemsMap.get("processFlow"));
@@ -306,7 +306,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 	@Override
 	public DeptTeacherGradeInfo readResGradeByProcessAndType(String processFlow, String recTypeId) {
 		DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-		DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
 		example.setOrderByClause("OPER_TIME");
 		List<DeptTeacherGradeInfo> gradeInfos = gradeInfoMapper.selectByExampleWithBLOBs(example);
@@ -320,7 +320,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     @Override
     public DeptTeacherGradeInfo readResGradeByCfgFlow(String cfgFlow) {
         DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-		DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andCfgFlowEqualTo(cfgFlow);
         example.setOrderByClause("OPER_TIME");
         List<DeptTeacherGradeInfo> gradeInfos = gradeInfoMapper.selectByExampleWithBLOBs(example);
@@ -344,7 +344,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 	public int checkHaveEval(String deptFlow, String cfgFlow) {
 		DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
 		DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andCfgFlowEqualTo(cfgFlow).andDeptFlowEqualTo(deptFlow);
 		return  gradeInfoMapper.countByExample(example);
 	}
@@ -358,14 +358,14 @@ public class ResGradeBizImpl implements IResGradeBiz {
 
 		if(StringUtil.isNotBlank(formFileName)){
 			String productType = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("res_form_category_"+rotationFlow),InitConfig.getSysCfg("res_form_category"));//与对应开关保持一致
-			productType = StringUtil.defaultIfEmpty(productType,GlobalConstant.RES_FORM_PRODUCT);
+            productType = StringUtil.defaultIfEmpty(productType, com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT);
 
 			String currVer = InitConfig.resFormRequestUtil.getVersionMap().get(productType+"_"+formFileName);
 			if(StringUtil.isBlank(currVer)){
-				currVer = InitConfig.resFormRequestUtil.getVersionMap().get(GlobalConstant.RES_FORM_PRODUCT+"_"+formFileName);
+                currVer = InitConfig.resFormRequestUtil.getVersionMap().get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + formFileName);
 			}
 			if(StringUtil.isBlank(currVer)){
-				currVer = GlobalConstant.RES_FORM_PRODUCT_VER;
+                currVer = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER;
 			}
 			String type="";
 			//获取过程flow
@@ -385,10 +385,10 @@ public class ResGradeBizImpl implements IResGradeBiz {
 			Map<String,IrbSingleForm> singleFormMap = InitConfig.resFormRequestUtil.getFormMap().get(formFileName);
 			IrbSingleForm singleForm = singleFormMap.get(productType+"_"+currVer+type);
 			if(singleForm == null){
-				singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+currVer+type);
+                singleForm = singleFormMap.get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + currVer + type);
 			}
 			if(singleForm == null){
-				throw new RuntimeException("未发现表单 模版类型:"+productType+",表单类型:"+ ResRecTypeEnum.getNameById(formFileName)+",版本号:"+currVer);
+                throw new RuntimeException("未发现表单 模版类型:" + productType + ",表单类型:" + com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName) + ",版本号:" + currVer);
 			}
 
 			if(singleForm != null){
@@ -400,9 +400,9 @@ public class ResGradeBizImpl implements IResGradeBiz {
 				if(process!=null){
 					boolean toUpdate = false;
 					//是否出科，是则更新出科标记为Y，更新当前轮转标记为N，更新实际轮转结束日期为当前日期
-					if(GlobalConstant.FLAG_Y.equals(req.getParameter("isAgree"))){
-						process.setSchFlag(GlobalConstant.FLAG_Y);
-						process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(req.getParameter("isAgree"))) {
+                        process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 //						process.setEndDate(DateUtil.getCurrDate());
 						toUpdate = true;
 					}
@@ -442,7 +442,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 //					express.setMedicineType(medicineTypeId);
 					//表单类型
 					express.setRecTypeId(formFileName);
-					express.setRecTypeName(ResRecTypeEnum.valueOf(formFileName).getTypeName());
+                    express.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.valueOf(formFileName).getTypeName());
 					//表单版本
 					express.setRecVersion(currVer);
 					express.setRecForm(productType);
@@ -487,9 +487,9 @@ public class ResGradeBizImpl implements IResGradeBiz {
 						GlobalRecTypeEnum.Appraisal.getId().equals(express.getRecTypeId())|| //实习总鉴定
 						GlobalRecTypeEnum.CourseScore.getId().equals(express.getRecTypeId())) { //实习成绩单
 					recContent = getRecContent(formFileName, singleForm, req);
-				} else if(ResRecTypeEnum.TeachRegistry.getId().equals(express.getRecTypeId())){ //教学登记
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.TeachRegistry.getId().equals(express.getRecTypeId())) { //教学登记
 					recContent = getRecContent(formFileName, singleForm.getItemList(), req,express.getRecContent());
-				} else if(ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())){ //出科考核表
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) { //出科考核表
 					String roleFlag = req.getParameter("roleFlag");
 					recContent = getEvaluationContent(
 							formFileName,
@@ -506,7 +506,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					express.setAllScore(Double.parseDouble(skillScore)+"");
 				}
 				//培训年度
-				if(ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())){
+                if (com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())) {
 					express.setOperTime(req.getParameter("trainDate"));
 				}
 				//更新大字段内容
@@ -527,7 +527,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 								itemName = "";
 							}
 							if(StringUtil.isNotBlank(xmlItemName)){
-								if(GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                                if (com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
 									itemName = regItem;
 								}
 								recContent = replaceNodeValue(useContent,xmlItemName,itemName,itemId);
@@ -543,7 +543,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					String itemId = req.getParameter("itemId");
 					String itemName = req.getParameter("itemName");
 					if(StringUtil.isNotBlank(xmlItemName)){
-						if(GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                        if (com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
 							itemName = regItem;
 						}
 						recContent = replaceNodeValue(useContent,xmlItemName,itemName,itemId);
@@ -552,10 +552,10 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					edit(express);
 				}
 
-				return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	/**
 	 * 获取表单内容
@@ -572,7 +572,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 			if(StringUtil.isNotBlank(oldContent)){
 				doc = DocumentHelper.parseText(oldContent);
 				root = doc.getRootElement();
-				roleNode = root.element(roleFlag+ResRecTypeEnum.AfterEvaluation.getId());
+                roleNode = root.element(roleFlag + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				if(roleNode != null){
 					roleNode.detach();
 				}
@@ -580,7 +580,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 				doc = DocumentHelper.createDocument();
 				root = doc.addElement(formName);
 			}
-			roleNode = DocumentHelper.createElement(roleFlag+ResRecTypeEnum.AfterEvaluation.getId());
+            roleNode = DocumentHelper.createElement(roleFlag + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 			getContent(list,req,roleNode);
 			root.add(roleNode);
 			content = root.asXML();
@@ -596,12 +596,12 @@ public class ResGradeBizImpl implements IResGradeBiz {
 		if(list !=null && list.size()>0 && rootEle!=null){
 			for(Element itemEle : list){
 				String multiple = itemEle.attributeValue("multiple");
-				if(!GlobalConstant.FLAG_Y.equals(multiple)){
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 					String name = itemEle.attributeValue("name");
 					String isSelect = itemEle.attributeValue("select");
 					String value = req.getParameter(name);
 					Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-					if(GlobalConstant.FLAG_Y.equals(isSelect)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
 						String valueName = req.getParameter(name+"_name");
 						if(StringUtil.isBlank(value)){
 							valueName = (String) req.getAttribute(name+"_name");
@@ -638,7 +638,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 			Element rootEle = doc.getRootElement();
 			Element nade = rootEle.element(nodeName);
 			if(nade!=null){
-				if(!GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                if (!com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
 					nade.addAttribute("id",itemId);
 				}
 				nade.setText(value);
@@ -676,7 +676,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					}
 				} else {//item
 					String multiple = itemEle.attributeValue("multiple");
-					if(GlobalConstant.FLAG_N.equals(multiple) || StringUtil.isBlank(multiple)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(multiple) || StringUtil.isBlank(multiple)) {
 						String name = itemEle.attributeValue("name");
 						String value = "";
 						if (dataMap.get(name) != null && dataMap.get(name).length > 0) {
@@ -761,7 +761,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 				if("itemGroup".equals(tagName)){
 					if(recordFlow!=null){
 						String delFlag = req.getParameter("delFlag");
-						if(GlobalConstant.FLAG_Y.equals(delFlag)){
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(delFlag)) {
 							Node delNode = rootEle.selectSingleNode("itemGroup[@recordFlow='"+recordFlow+"']");
 							delNode.detach();
 						}else{
@@ -789,7 +789,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 							itemEle.detach();
 						}
 						String multiple = e.attributeValue("multiple");
-						if(!GlobalConstant.FLAG_Y.equals(multiple)) {
+                        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 							String value = req.getParameter(nodeName);
 							Element element = DocumentHelper.createElement(nodeName);
 							if (StringUtil.isNotBlank(value)) {
@@ -851,7 +851,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 								file.transferTo(newFile);
 								String uploadFile = File.separator+fromName+File.separator+dateString+File.separator+saveFileName;
 								pubFile.setFilePath(uploadFile);
-								pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 								GeneralMethod.setRecordInfo(pubFile, false);
 								IFileBiz fileBiz = SpringUtil.getBean(IFileBiz.class);
 								fileBiz.addFile(pubFile);
@@ -908,7 +908,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 				//xml中的节点是否是文件
 				String isFile = itemEle.attributeValue("isFile");
 				boolean isMultipart = JspFormUtil.isMultipart(req);
-				if(GlobalConstant.FLAG_Y.equals(isFile)&&isMultipart)
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isFile) && isMultipart)
 				{
 					String name = itemEle.attributeValue("name");
 					Map<String , String[]> dataMap=getParameterMap(req,rootEle.getName(),name);
@@ -931,7 +931,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					element.addAttribute("flow",flow);
 					rootEle.add(element);
 				}else {
-					if (!GlobalConstant.FLAG_Y.equals(multiple)) {
+                    if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 						String name = itemEle.attributeValue("name");
 
 						String isSelect = itemEle.attributeValue("select");
@@ -940,7 +940,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 
 						Element element = DocumentHelper.createElement(name);
 
-						if (GlobalConstant.FLAG_Y.equals(isSelect)) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
 							String[] values = req.getParameterValues(name);
 
 							if (values != null && values.length > 0) {

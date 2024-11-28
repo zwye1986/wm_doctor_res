@@ -1,8 +1,9 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
-public enum JsResChangeTypeEnum implements GeneralEnum<String>{
+public enum JsResChangeTypeEnum implements GeneralEnum<String> {
 	BaseChange("BaseChange","变更基地"),
 	SpeChange("SpeChange","变更专业"),
 	;
@@ -26,7 +27,7 @@ public enum JsResChangeTypeEnum implements GeneralEnum<String>{
 	}
 
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, JsResChangeTypeEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.JsResChangeTypeEnum.class).getName();
 	}
 
 

@@ -3,6 +3,7 @@ package com.pinde.sci.excelListens.model;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import com.pinde.core.common.GlobalConstant;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
@@ -61,7 +62,7 @@ public class PbInfoItem implements Serializable {
     //数据来源类型：import导入的数据，db数据库存在（已排班的数据）
     private String type;
 
-    private String recordStatus = GlobalConstant.FLAG_Y;
+    private String recordStatus = com.pinde.core.common.GlobalConstant.FLAG_Y;
 
     private String chaiEnd;
     private String chaiNextStart;

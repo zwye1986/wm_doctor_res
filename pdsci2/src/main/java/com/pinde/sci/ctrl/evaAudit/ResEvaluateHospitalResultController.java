@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.evaAudit;
 
 import com.google.common.collect.Lists;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -89,7 +90,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         Map<String, Object> scoreMap = new HashMap<String, Object>();
         //查询条件
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
             List<SysUserDept> sysUserDepts = deptBiz.searchByUserFlow(currentUser.getUserFlow());
             List<String> deptFlows = new ArrayList<>();
             List<SysUserDept> deptFlows2 = new ArrayList<>();
@@ -161,9 +162,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("roleFlow", doctorRoleFlow);
 
             List<String> recTypeIdList = new ArrayList<>();
-//            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
 
             paramMap.put("userName", userName);
@@ -178,8 +179,8 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 //                param.put("orgFlow", orgFlow);
 //                param.put("doctorFlow", teacherRec.getUserFlow());
 //                List<String> recTypeIdList1 = new ArrayList<>();
-//                recTypeIdList1.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-//                recTypeIdList1.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+//                recTypeIdList1.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+//                recTypeIdList1.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
 //                param.put("recTypeIdList", recTypeIdList1);
 //                param.put("deptFlow", deptFlow);
 //                param.put("processFlow", teacherRec.getProcessFlow());
@@ -205,16 +206,16 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             model.addAttribute("studentTypes", studentType);
 
         } else if ("teacher".equals(gradeRole)) {
-            if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
                 //带教flow
-//                recType = ResRecTypeEnum.TeacherGrade.getId();
+//                recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 //                paramMap.put("recTypeId", recType);
 
                 paramMap.put("userName", userName);
                 paramMap.put("deptFlow", deptFlow);
                 paramMap.put("deptName", deptName);
 
-                List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
+                List<String> recTypeIds = Lists.newArrayList(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId(), com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
                 paramMap.put("recTypeIds", recTypeIds);
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
@@ -222,12 +223,12 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 model.addAttribute("datas", userList);
             } else {
                 //带教flow
-//                recType = ResRecTypeEnum.TeacherGrade.getId();
+//                recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 //                paramMap.put("recTypeId", recType);
                 paramMap.put("userName", userName);
                 paramMap.put("deptFlow", deptFlow);
                 paramMap.put("deptName", deptName);
-                List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
+                List<String> recTypeIds = Lists.newArrayList(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId(), com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
                 paramMap.put("recTypeIds", recTypeIds);
                 paramMap.put("cfgFlows", Lists.newArrayList("f38b2734220c4b659ddb85f9b99b82ce","0ddacbf047fc4beb9b9d94246237cbe3"));
 
@@ -240,7 +241,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("userName", userName);
             paramMap.put("deptFlow", deptFlow);
             paramMap.put("deptName", deptName);
-            recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);
             cfgCode = ResAssessTypeEnum.DeptAssess.getId();
             List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.getParsedGrade(cfgCode);
@@ -256,9 +257,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("roleFlow", doctorRoleFlow);
 
             List<String> recTypeIdList = new ArrayList<>();
-            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
 
             paramMap.put("userName", userName);
@@ -273,10 +274,10 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
         } else if ("360teacher".equals(gradeRole)) {
             List<String> recTypes = new ArrayList<>();
-            if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
                 //带教flow
-                recTypes.add(ResRecTypeEnum.TeacherAssess.getId());
-                recTypes.add(ResRecTypeEnum.TeacherGradeTwo.getId());
+                recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId());
+                recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
                 paramMap.put("recTypeIds", recTypes);
 
                 paramMap.put("userName", userName);
@@ -290,8 +291,8 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 model.addAttribute("datas", userList);
             } else {
                 //带教flow
-                recTypes.add(ResRecTypeEnum.TeacherAssess.getId());
-                recTypes.add(ResRecTypeEnum.TeacherGradeTwo.getId());
+                recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId());
+                recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
                 paramMap.put("recTypeIds", recTypes);
                 paramMap.put("userName", userName);
                 paramMap.put("deptFlow", deptFlow);
@@ -348,9 +349,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             }
         } else if ("nurse".equals(gradeRole)) {
             ResAssessCfg cfg = new ResAssessCfg();
-            cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             cfg.setCfgCodeId("NurseDoctorAssess");
-            cfg.setFormStatusId(GlobalConstant.RECORD_STATUS_Y);
+            cfg.setFormStatusId(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResAssessCfg> cfgList = assessCfgBiz.searchAssessCfgList(cfg);
             if (null != cfgList && cfgList.size() > 0) {
                 List<ResAssessCfgTitleForm> parsedGradeList = assessCfgBiz.readForm(cfgList.get(0).getCfgFlow());
@@ -378,7 +379,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             //查询该基地的科室
             SysDept sysDept = new SysDept();
             sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-            sysDept.setRecordStatus(GlobalConstant.FLAG_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<SysDept> deptList = deptBiz.searchDept(sysDept);
             model.addAttribute("deptList",deptList);
 
@@ -419,7 +420,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         //查询条件
         Map<String, Object> scoreSumMap = new HashMap<String, Object>();
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
             List<SysUserDept> sysUserDepts = deptBiz.searchByUserFlow(currentUser.getUserFlow());
             List<String> deptFlows = new ArrayList<>();
             for (SysUserDept sysUserDept : sysUserDepts) {
@@ -427,19 +428,19 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             }
             deptFlows.add(currentUser.getDeptFlow());
             paramMap.put("deptFlows", deptFlows);
-        } else if (GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 
         }
         model.addAttribute("tdFlag", gradeRole);
         paramMap.put("orgFlow", orgFlow);
 //        paramMap.put("sessionNumber",date.equals("null")?null:date);
         if ("teacher".equals(gradeRole)) {
-//            recType = ResRecTypeEnum.TeacherGrade.getId();
+//            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 //            paramMap.put("recTypeId", recType);
             paramMap.put("teacherFlow", keyCode);
             paramMap.put("sessionNumber", date);
 
-            List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
+            List<String> recTypeIds = Lists.newArrayList(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId(), com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIds);
 
             paramMap.put("cfgFlow",cfgFlow);
@@ -447,33 +448,33 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("schStartDate", schStartDate);
             paramMap.put("schEndDate", schEndDate);
         } else if ("head".equals(gradeRole)) {
-            recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);
             paramMap.put("deptFlow", keyCode);
             paramMap.put("sessionNumber", date);
         } else if ("doctor".equals(gradeRole)) {
             paramMap.put("doctorFlow", keyCode);
             List<String> recTypeIdList = new ArrayList<>();
-//            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
-//            recTypeIdList.add(ResRecTypeEnum.DeptGrade.getId());
-//            recTypeIdList.add(ResRecTypeEnum.TeacherGrade.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
             paramMap.put("deptFlow", deptFlow);
             paramMap.put("processFlow", processFlow);
         } else if ("360teacher".equals(gradeRole)) {
             List<String> recTypeIdList = new ArrayList<>();
-            recTypeIdList.add(ResRecTypeEnum.TeacherAssess.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherGradeTwo.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
             paramMap.put("teacherFlow", keyCode);
         } else if ("360doctor".equals(gradeRole)) {
             paramMap.put("doctorFlow", keyCode);
             List<String> recTypeIdList = new ArrayList<>();
-            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
             paramMap.put("deptFlow", deptFlow);
             paramMap.put("processFlow", processFlow);
@@ -494,9 +495,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             Map<String, Float> scoreMap = new HashMap<String, Float>();
             Map<String, List<ResAssessCfgTitleForm>> assessCfgLists = new HashMap<String, List<ResAssessCfgTitleForm>>();
             for (Map<String, String> map : recList) {
-                if (ResRecTypeEnum.NurseDoctorGrade.getId().equals(map.get("recTypeId"))) {
+                if (com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId().equals(map.get("recTypeId"))) {
                     map.put("roleName", "护士");
-                } else if (ResRecTypeEnum.TeacherDoctorGrade.getId().equals(map.get("recTypeId")) || ResRecTypeEnum.TeacherDoctorGradeTwo.getId().equals(map.get("recTypeId"))) {
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId().equals(map.get("recTypeId")) || com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId().equals(map.get("recTypeId"))) {
                     map.put("roleName", "带教");
                 }
                 if (null != map.get("operUserRoleName") && StringUtil.isNotBlank(map.get("operUserRoleName"))) {
@@ -673,7 +674,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         Map<String, Object> scoreMap = new HashMap<String, Object>();
         //查询条件
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
             List<SysUserDept> sysUserDepts = deptBiz.searchByUserFlow(currentUser.getUserFlow());
             List<String> deptFlows = new ArrayList<>();
             for (SysUserDept sysUserDept : sysUserDepts) {
@@ -681,7 +682,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             }
             deptFlows.add(currentUser.getDeptFlow());
             paramMap.put("deptFlows", deptFlows);
-        } else if (GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 
         }
 
@@ -698,9 +699,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("roleFlow", doctorRoleFlow);
 
             List<String> recTypeIdList = new ArrayList<>();
-//            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
 
             paramMap.put("userName", userName);
@@ -711,9 +712,9 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
         } else if ("teacher".equals(gradeRole)) {
             //带教flow
-//            recType = ResRecTypeEnum.TeacherGrade.getId();
+//            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 //            paramMap.put("recTypeId", recType);
-            List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
+            List<String> recTypeIds = Lists.newArrayList(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId(), com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
             paramMap.put("recTypeIds", recTypeIds);
             paramMap.put("userName", userName);
             paramMap.put("deptFlow", deptFlow);
@@ -726,7 +727,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("deptFlow", deptFlow);
             paramMap.put("deptName", deptName);
 
-            recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);
 //            cfgCode = ResAssessTypeEnum.DeptAssess.getId();
 //            List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.getParsedGrade(cfgCode);
@@ -749,7 +750,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             for(teacherRec user : userList) {
                 Map<String, Object> queryMap = new HashMap<String, Object>();
                 queryMap.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
-                recType = ResRecTypeEnum.DeptGrade.getId();
+                recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
                 queryMap.put("recTypeId", recType);
                 queryMap.put("deptFlow", user.getDeptFlow());
                 queryMap.put("sessionNumber", user.getSessionNumber());
@@ -1031,7 +1032,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 queryMap.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
                 queryMap.put("teacherFlow", user.getUserFlow());
                 queryMap.put("sessionNumber", user.getSessionNumber());
-                List<String> recTypeIds = Lists.newArrayList(ResRecTypeEnum.TeacherAssess.getId(),ResRecTypeEnum.TeacherGradeTwo.getId());
+                List<String> recTypeIds = Lists.newArrayList(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId(), com.pinde.core.common.enums.ResRecTypeEnum.TeacherGradeTwo.getId());
                 queryMap.put("recTypeIdList", recTypeIds);
                 queryMap.put("cfgFlow",user.getCfgFlow());
                 List<Map<String, String>> maps = resGradeBiz.getRecContentByProcess2(queryMap);
@@ -1365,8 +1366,8 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 Map<String, Object> queryMap = new HashMap<String, Object>();
                 queryMap.put("doctorFlow", user.getUserFlow());
                 List<String> recTypeIdList = new ArrayList<>();
-                recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-                recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
+                recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+                recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
                 queryMap.put("recTypeIdList", recTypeIdList);
                 queryMap.put("deptFlow", deptFlow);
                 queryMap.put("processFlow", user.getProcessFlow());
@@ -2021,7 +2022,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         //查询条件
         Map<String, Object> scoreSumMap = new HashMap<String, Object>();
         Map<String, Object> paramMap = new HashMap<String, Object>();
-        if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
             List<SysUserDept> sysUserDepts = deptBiz.searchByUserFlow(currentUser.getUserFlow());
             List<String> deptFlows = new ArrayList<>();
             for (SysUserDept sysUserDept : sysUserDepts) {
@@ -2029,26 +2030,26 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             }
             deptFlows.add(currentUser.getDeptFlow());
             paramMap.put("deptFlows", deptFlows);
-        } else if (GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 
         }
         paramMap.put("orgFlow", orgFlow);
         paramMap.put("sessionNumber", date.equals("null") ? null : date);
         if ("teacher".equals(gradeRole)) {
-            recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
             paramMap.put("recTypeId", recType);
             paramMap.put("teacherFlow", keyCode);
         } else if ("head".equals(gradeRole)) {
-            recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);
             paramMap.put("deptFlow", keyCode);
         } else if ("doctor".equals(gradeRole)) {
             paramMap.put("doctorFlow", keyCode);
             List<String> recTypeIdList = new ArrayList<>();
-            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-//            recTypeIdList.add(ResRecTypeEnum.DeptGrade.getId());
-//            recTypeIdList.add(ResRecTypeEnum.TeacherGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
+//            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
             paramMap.put("recTypeIdList", recTypeIdList);
         }
         List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.getParsedGrade(cfgCode);

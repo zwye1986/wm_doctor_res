@@ -381,8 +381,8 @@ public class JswjwAdminAppController {
 		Map<String,Object> param=new HashMap<>();
 		param.put("sessionNumber",sessionNumber);
 		param.put("orgFlow",user.getOrgFlow());
-		param.put("changeTypeId", JsResChangeTypeEnum.SpeChange.getId());
-		changeStatusIdList.add(JsResChangeApplySpeEnum.GlobalAuditPass.getId());
+        param.put("changeTypeId", com.pinde.core.common.enums.JsResChangeTypeEnum.SpeChange.getId());
+        changeStatusIdList.add(com.pinde.core.common.enums.JsResChangeApplySpeEnum.GlobalAuditPass.getId());
 		param.put("changeStatusIdList",changeStatusIdList);
 		//变更专业学员数量
 		List<JsResDoctorOrgHistoryExt> historyExtList=jswjwAdminBiz.getSpeChangeList(param);
@@ -394,8 +394,8 @@ public class JswjwAdminAppController {
 		}
 		//变更基地
 		changeStatusIdList.clear();
-		param.put("changeTypeId", JsResChangeTypeEnum.BaseChange.getId());
-		changeStatusIdList.add(JsResChangeApplyStatusEnum.InApplyPass.getId());
+        param.put("changeTypeId", com.pinde.core.common.enums.JsResChangeTypeEnum.BaseChange.getId());
+        changeStatusIdList.add(com.pinde.core.common.enums.JsResChangeApplyStatusEnum.InApplyPass.getId());
 		param.put("changeStatusIdList",changeStatusIdList);
 		historyExtList=jswjwAdminBiz.getSpeChangeList(param);
 		if(historyExtList!=null)
@@ -405,7 +405,7 @@ public class JswjwAdminAppController {
 			model.addAttribute("BaseChange",0);
 		}
 		//延期学员
-		param.put("typeId", ResRecTypeEnum.Delay.getId());
+        param.put("typeId", com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
 		List<ResDocotrDelayTeturn>  resRecList = jswjwAdminBiz.getOrgDelayReturnInfo(param,null);
 		if(resRecList!=null)
 		{
@@ -414,7 +414,7 @@ public class JswjwAdminAppController {
 			model.addAttribute("Delay",0);
 		}
 		//退培学员
-		param.put("typeId", ResRecTypeEnum.ReturnTraining.getId());
+        param.put("typeId", com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
 
 		List<String> flags = new ArrayList<>();
 		flags.add("1");
@@ -459,14 +459,14 @@ public class JswjwAdminAppController {
 		count= jswjwAdminBiz.getOrgDocCount(user.getOrgFlow(),sessionNumber,"22");//已考核待结业
 		model.addAttribute("WaitGraduationNum",count);
 
-		model.addAttribute("trainingTypes", TrainCategoryEnum.values());
-		model.addAttribute("doctorTypes", JsRecDocTypeEnum.values());
+        model.addAttribute("trainingTypes", com.pinde.core.common.enums.TrainCategoryEnum.values());
+        model.addAttribute("doctorTypes", com.pinde.core.common.enums.ResDocTypeEnum.values());
 
 		HashMap<String,Object> dictMap=new HashMap<>();
-		dictMap.put(TrainCategoryEnum.DoctorTrainingSpe.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.DoctorTrainingSpe.getId()));
-		dictMap.put(TrainCategoryEnum.WMFirst.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.WMFirst.getId()));
-		dictMap.put(TrainCategoryEnum.WMSecond.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.WMSecond.getId()));
-		dictMap.put(TrainCategoryEnum.AssiGeneral.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.AssiGeneral.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId()));
 		model.addAttribute("dictMap", dictMap);
 		return "res/jswjw/admin/statisticalQuery";
 	}
@@ -599,8 +599,8 @@ public class JswjwAdminAppController {
 		Map<String,Object> param=new HashMap<>();
 		param.put("orgFlow",user.getOrgFlow());
 		param.put("typeId",typeId);
-		param.put("changeTypeId", JsResChangeTypeEnum.BaseChange.getId());
-		changeStatusIdList.add(JsResChangeApplyStatusEnum.InApplyPass.getId());
+        param.put("changeTypeId", com.pinde.core.common.enums.JsResChangeTypeEnum.BaseChange.getId());
+        changeStatusIdList.add(com.pinde.core.common.enums.JsResChangeApplyStatusEnum.InApplyPass.getId());
 		param.put("changeStatusIdList",changeStatusIdList);
 		param.put("sessionNumber",sessionNumber);
 		//基地变更学员数量
@@ -655,8 +655,8 @@ public class JswjwAdminAppController {
 		List<String> changeStatusIdList = new ArrayList<String>();
 		Map<String,Object> param=new HashMap<>();
 		param.put("orgFlow",user.getOrgFlow());
-		param.put("changeTypeId", JsResChangeTypeEnum.SpeChange.getId());
-		changeStatusIdList.add(JsResChangeApplySpeEnum.GlobalAuditPass.getId());
+        param.put("changeTypeId", com.pinde.core.common.enums.JsResChangeTypeEnum.SpeChange.getId());
+        changeStatusIdList.add(com.pinde.core.common.enums.JsResChangeApplySpeEnum.GlobalAuditPass.getId());
 		param.put("changeStatusIdList",changeStatusIdList);
 		param.put("sessionNumber",sessionNumber);
 		//变更专业学员数量
@@ -709,7 +709,7 @@ public class JswjwAdminAppController {
 		}
 		Map<String,Object> param=new HashMap<>();
 		param.put("orgFlow",user.getOrgFlow());
-		param.put("typeId", ResRecTypeEnum.Delay.getId());
+        param.put("typeId", com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
 		param.put("sessionNumber",sessionNumber);
 		//变更专业学员数量
 		PageHelper.startPage(pageIndex, pageSize);
@@ -763,7 +763,7 @@ public class JswjwAdminAppController {
 		}
 		Map<String,Object> param=new HashMap<>();
 		param.put("orgFlow",user.getOrgFlow());
-		param.put("typeId", ResRecTypeEnum.ReturnTraining.getId());
+        param.put("typeId", com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
 		param.put("sessionNumber",sessionNumber);
 
 		List<String> flags = new ArrayList<>();

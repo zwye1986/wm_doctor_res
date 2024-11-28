@@ -29,7 +29,7 @@ public class LcjnDoctorSignBizImpl implements ILcjnDoctorSignBiz{
     public List<LcjnDoctorSigin> searchDoctorSigns(String doctorFlow, String courseFlow) {
         LcjnDoctorSiginExample example=new LcjnDoctorSiginExample();
         LcjnDoctorSiginExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(doctorFlow)){
             criteria.andDoctorFlowEqualTo(doctorFlow);
         }

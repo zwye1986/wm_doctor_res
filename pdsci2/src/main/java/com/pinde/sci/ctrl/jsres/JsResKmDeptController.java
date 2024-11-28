@@ -79,7 +79,7 @@ public class JsResKmDeptController extends GeneralController{
 		model.addAttribute("currStudentHe",currStudentHe);
 		model.addAttribute("studentNum",studentNum);*/
 		model.addAttribute("infos",infos);
-        GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE, GlobalConstant.IRB_COMMITTEE_SECRETARY);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE, com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_SECRETARY);
 		return "jsres/km/index";
 	}
 

@@ -23,13 +23,13 @@ public class ResErrorSchNoticeBizImpl implements IResErrorSchNoticeBiz {
 
         if(notice!=null){
             if(StringUtil.isNotBlank(notice.getRecordFlow())){//修改
-                notice.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                notice.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 notice.setModifyUserFlow(user.getUserFlow());
                 notice.setModifyTime(DateUtil.getCurrDateTime());
                 return this.noticeMapper.updateByPrimaryKeySelective(notice);
             }else{//新增
                 notice.setRecordFlow(PkUtil.getUUID());
-                notice.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                notice.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 notice.setCreateUserFlow(user.getUserFlow());
                 notice.setCreateTime(DateUtil.getCurrDateTime());
                 notice.setModifyUserFlow(user.getUserFlow());
@@ -37,6 +37,6 @@ public class ResErrorSchNoticeBizImpl implements IResErrorSchNoticeBiz {
                 return this.noticeMapper.insertSelective(notice);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 }

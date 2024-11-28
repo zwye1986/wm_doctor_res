@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchArrangeDoctorBiz;
@@ -21,7 +22,7 @@ public class SchArrangeDoctorBizImpl implements ISchArrangeDoctorBiz {
 	@Override
 	public List<SchArrangeDoctor> searchSchArrangeDoctor() {
 		SchArrangeDoctorExample example = new SchArrangeDoctorExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return arrangeDoctorMapper.selectByExample(example);
 	}
 
@@ -42,7 +43,7 @@ public class SchArrangeDoctorBizImpl implements ISchArrangeDoctorBiz {
 				return arrangeDoctorMapper.insertSelective(arrangeDoctor);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 }

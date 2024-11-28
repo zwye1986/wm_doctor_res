@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResTypicalCasesBiz;
@@ -33,7 +34,7 @@ public class ResTypicalCasesBizImpl implements IResTypicalCasesBiz {
     @Override
     public List<ResTypicalCases> searchTypicalCases(ResTypicalCases resTypicalCases) {
         ResTypicalCasesExample example = new ResTypicalCasesExample();
-        ResTypicalCasesExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTypicalCasesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resTypicalCases!=null){
             if(StringUtil.isNotBlank(resTypicalCases.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resTypicalCases.getDoctorFlow());

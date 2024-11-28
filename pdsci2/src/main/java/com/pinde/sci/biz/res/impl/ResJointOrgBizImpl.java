@@ -2,6 +2,8 @@ package com.pinde.sci.biz.res.impl;
 
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.OrgLevelEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
@@ -10,8 +12,6 @@ import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.dao.base.ResJointOrgMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.jszy.JszyResJointOrgExtMapper;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jszy.JszyResJointOrgExt;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.ResJointOrgExample;
@@ -59,14 +59,14 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 				save(jointOrg);
 			}
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
 	public List<ResJointOrg> searchByOrgName(String orgName) {
 		ResJointOrgExample example = new ResJointOrgExample();
 		ResJointOrgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(orgName)){
 			criteria.andOrgNameLike("%"+orgName+"%");
 		}
@@ -78,10 +78,10 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	public List<ResJointOrg> searchResJointByOrgFlow2(String orgFlow,String jointOrgName){
 		ResJointOrgExample example = new ResJointOrgExample();
 		if (StringUtil.isNotBlank(jointOrgName)) {
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgNameLike("%"+jointOrgName+"%")
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgNameLike("%" + jointOrgName + "%")
 					.andSessionNumberEqualTo(DateUtil.getYear());
 		}
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow)
 				.andSessionNumberEqualTo(DateUtil.getYear());
 		return resJointOrgMapper.selectByExample(example);
 	}
@@ -89,7 +89,7 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	@Override
 	public List<ResJointOrg> searchResJointByOrgFlow(String orgFlow){
 		ResJointOrgExample example = new ResJointOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow)
 				.andSessionNumberEqualTo(DateUtil.getYear());
 		return resJointOrgMapper.selectByExample(example);
 	}
@@ -97,7 +97,7 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	@Override
 	public List<ResJointOrg> searchResJointByOrgFlowNotSessionYear(String orgFlow){
 		ResJointOrgExample example = new ResJointOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 		return resJointOrgMapper.selectByExample(example);
 	}
 
@@ -114,7 +114,7 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	@Override
 	public List<ResJointOrg> searchResJointByJointOrgFlow(String orgFlow){
 		ResJointOrgExample example = new ResJointOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(orgFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(orgFlow)
 				.andSessionNumberEqualTo(DateUtil.getYear());
 		return resJointOrgMapper.selectByExample(example);
 	}
@@ -123,7 +123,7 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	public int checkJointOrgNotSelf(String orgFlow,String jointOrgFlow) {
 
 		ResJointOrgExample example = new ResJointOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(jointOrgFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(jointOrgFlow)
 		.andOrgFlowNotEqualTo(orgFlow).andSessionNumberEqualTo(DateUtil.getYear());
 		List<ResJointOrg> list= resJointOrgMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -136,7 +136,7 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	public List<ResJointOrg> searchResJoint(ResJointOrg joint){
 		ResJointOrgExample example = new ResJointOrgExample();
 		ResJointOrgExample.Criteria  criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andSessionNumberEqualTo(joint.getSessionNumber());
 		if(StringUtils.isNotEmpty(joint.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(joint.getOrgFlow());
@@ -155,16 +155,16 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	//	@Override
 //	public List<ResJointOrg> searResJointOrgInOrgList(List<String> orgList) {
 //		ResJointOrgExample example = new ResJointOrgExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowIn(orgList);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowIn(orgList);
 //		return resJointOrgMapper.selectByExample(example);
 //	}
 	@Override
 	public List<SysOrg> searchCouAndProList(SysOrg sysOrg) {
 		SysOrgExample example = new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		SysOrgExample.Criteria criteria2=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		criteria.andOrgLevelIdEqualTo(OrgLevelEnum.ProvinceOrg.getId()).andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId());
-		criteria2.andOrgLevelIdEqualTo(OrgLevelEnum.CountryOrg.getId()).andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId());
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria2 = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        criteria.andOrgLevelIdEqualTo(com.pinde.core.common.enums.OrgLevelEnum.ProvinceOrg.getId()).andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        criteria2.andOrgLevelIdEqualTo(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId()).andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		if(StringUtil.isNotBlank(sysOrg.getOrgProvId())){
 			criteria.andOrgProvIdEqualTo(sysOrg.getOrgProvId());
 			criteria2.andOrgProvIdEqualTo(sysOrg.getOrgProvId());
@@ -187,7 +187,7 @@ public class ResJointOrgBizImpl implements IResJointOrgBiz{
 	@Override
 	public List<ResJointOrg> selectByJointOrgFlow(String jointOrgFlow) {
 		ResJointOrgExample example = new ResJointOrgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(jointOrgFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(jointOrgFlow)
 				.andSessionNumberEqualTo(DateUtil.getYear());
 		return resJointOrgMapper.selectByExample(example);
 	}

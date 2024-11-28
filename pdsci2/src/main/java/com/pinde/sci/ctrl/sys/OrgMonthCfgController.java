@@ -4,7 +4,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.ISpePracticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.JsresSpeContrastPractice;
 import com.pinde.sci.model.mo.SysOrg;
 import org.slf4j.Logger;
@@ -34,8 +33,8 @@ public class OrgMonthCfgController extends GeneralController{
 	@RequestMapping(value = {"/main" }, method = RequestMethod.GET)
 	public String main (Model model) throws Exception{
 		SysOrg sysOrg=new SysOrg();
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg,"");
 		model.addAttribute("allSysOrgList", allSysOrgList);
 		return "sys/orgMonthCfg/main";
@@ -43,8 +42,8 @@ public class OrgMonthCfgController extends GeneralController{
 	@RequestMapping(value = {"/list" })
 	public String list (Model model, HttpServletRequest request,
 						SysOrg sysOrg, Integer currentPage) throws Exception{
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg,"");
 		model.addAttribute("sysOrgList", sysOrgList);
@@ -55,10 +54,10 @@ public class OrgMonthCfgController extends GeneralController{
 	@ResponseBody
 	public String save(HttpServletRequest request, JsresSpeContrastPractice speContrastPractice) {
 		int result = spePracticeBiz.save(speContrastPractice);
-		if (GlobalConstant.ZERO_LINE != result) {
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 }
 

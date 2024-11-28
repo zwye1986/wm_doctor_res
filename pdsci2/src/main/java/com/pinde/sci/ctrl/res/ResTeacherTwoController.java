@@ -69,12 +69,12 @@ public class ResTeacherTwoController extends GeneralController {
 	public String absenceAudit(@PathVariable String resRoleScope, SchDoctorAbsence doctorAbsence, Integer currentPage, HttpServletRequest request, Model model){
 		SysUser currUser = GlobalContext.getCurrentUser();
 		doctorAbsence.setOrgFlow(currUser.getOrgFlow());
-		doctorAbsence.setIsRegister(GlobalConstant.FLAG_N);
+        doctorAbsence.setIsRegister(com.pinde.core.common.GlobalConstant.FLAG_N);
 
-		if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)){//带教老师
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)) {//带教老师
 			doctorAbsence.setTeacherFlow(currUser.getUserFlow());
 		}
-		if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)){//科主任
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)) {//科主任
 			doctorAbsence.setHeadFlow(currUser.getUserFlow());
 		}
 		PageHelper.startPage(currentPage,getPageSize(request));
@@ -99,7 +99,7 @@ public class ResTeacherTwoController extends GeneralController {
 		model.addAttribute("resRoleScope", resRoleScope);
 
 		// 医院管理员
-		if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(resRoleScope)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(resRoleScope)) {
 			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(currUser.getOrgFlow());
 			model.addAttribute("schDeptList", schDeptList);
 		}
@@ -117,11 +117,11 @@ public class ResTeacherTwoController extends GeneralController {
 	public String saveAbsenceAudit(SchDoctorAbsence doctorAbsence){
 		if(StringUtil.isNotBlank(doctorAbsence.getAbsenceFlow())){
 			int result = schDoctorAbsenceBiz.saveSchDoctorAbsence(doctorAbsence);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -133,25 +133,25 @@ public class ResTeacherTwoController extends GeneralController {
 
 
 		SysUser currUser = GlobalContext.getCurrentUser();
-		if(!GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(resRoleScope)){
+        if (!com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(resRoleScope)) {
 			doctorAbsence.setOrgFlow(currUser.getOrgFlow());
 			doctor.setOrgFlow(currUser.getOrgFlow());
 		}
 
 		List<ResDoctor> doctorList = null;
-		if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope) || GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope) || com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)) {
 			Map<String,Object> paramMap = new HashMap<String,Object>();
-			if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)){//带教老师
+            if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)) {//带教老师
 				paramMap.put("teacherUserFlow", currUser.getUserFlow());
 			}
-			if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)){//科主任
+            if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)) {//科主任
 				paramMap.put("headUserFlow", currUser.getUserFlow());
 			}
 			paramMap.put("doctor", doctor);
 			doctorList = doctorBiz.searchDocByteacher2(paramMap);
 		} else {
 			//PageHelper.startPage(currentPage,getPageSize(request));
-			doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			doctorList = doctorBiz.searchByDoc(doctor);
 		}
 		model.addAttribute("doctorList",doctorList);
@@ -178,7 +178,7 @@ public class ResTeacherTwoController extends GeneralController {
 		}
 
 		// 医院管理员、平台管理
-		if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(resRoleScope) || GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(resRoleScope)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(resRoleScope) || com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(resRoleScope)) {
 			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(currUser.getOrgFlow());
 			model.addAttribute("schDeptList", schDeptList);
 		}

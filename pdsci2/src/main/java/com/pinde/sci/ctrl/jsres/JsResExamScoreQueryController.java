@@ -11,7 +11,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -226,9 +225,9 @@ public class JsResExamScoreQueryController extends GeneralController {
                 docTypeList.add(s);
             }
         }else{
-            datas=new String[JsResDocTypeEnum.values().length];
+            datas = new String[com.pinde.core.common.enums.ResDocTypeEnum.values().length];
             int i=0;
-            for(JsResDocTypeEnum e: JsResDocTypeEnum.values())
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values())
             {
                 docTypeList.add(e.getId());
                 datas[i++]=e.getId();
@@ -299,9 +298,9 @@ public class JsResExamScoreQueryController extends GeneralController {
                 docTypeList.add(s);
             }
         }else{
-            datas=new String[JsResDocTypeEnum.values().length];
+            datas = new String[com.pinde.core.common.enums.ResDocTypeEnum.values().length];
             int i=0;
-            for(JsResDocTypeEnum e: JsResDocTypeEnum.values())
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values())
             {
                 docTypeList.add(e.getId());
                 datas[i++]=e.getId();

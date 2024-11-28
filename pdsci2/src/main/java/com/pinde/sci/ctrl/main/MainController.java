@@ -38,21 +38,21 @@ public class MainController extends GeneralController {
 	@RequestMapping(value = {"/main" })
 	public String main(HttpServletRequest request,Model model) {
 		//清空当前选中的工作站和模块
-		setSessionAttribute(GlobalConstant.CURRENT_WS_ID, null);
-		setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID, null);
 		setSessionAttribute("currModuleView", null);	
 		setSessionAttribute("mainFrameSrc", null);
 		
 		SysUser user = GlobalContext.getCurrentUser();
-		List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP);
-		if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+        List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP);
+        if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			if (currUserWorkStationIdList != null && currUserWorkStationIdList.size() == 1) {
 				return "redirect:/main/"+currUserWorkStationIdList.get(0);
 			}
 		}
 		
 		List<WorkStation> workStationList = (List<WorkStation>) request.getServletContext().getAttribute("workStationList");
-		if (GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
+        if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			model.addAttribute("currUserWorkStationList", workStationList);
 		} else {
 			if (currUserWorkStationIdList != null && currUserWorkStationIdList.size() >0) {
@@ -80,15 +80,15 @@ public class MainController extends GeneralController {
 	@RequestMapping(value = {"/main/select" })
 	public String select(HttpServletRequest request,Model model) {
 		//清空当前选中的工作站和模块
-//		setSessionAttribute(GlobalConstant.CURRENT_WS_ID, null);
-//		setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID, null);
+//		setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, null);
+//		setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID, null);
 //		setSessionAttribute("currModuleView", null);	
 //		setSessionAttribute("mainFrameSrc", null);
 		
 		SysUser user = GlobalContext.getCurrentUser();
-		List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP);
+        List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST_BACKUP);
 		List<WorkStation> workStationList = (List<WorkStation>) request.getServletContext().getAttribute("workStationList");
-		if (GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
+        if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			model.addAttribute("currUserWorkStationList", workStationList);
 		} else {
 			if (currUserWorkStationIdList != null && currUserWorkStationIdList.size() >0) {
@@ -116,12 +116,12 @@ public class MainController extends GeneralController {
 	 */
 	@RequestMapping(value = {"/main/{workStationId}" })
 	public String main(@PathVariable String workStationId,HttpServletRequest request,Model model) {
-		setSessionAttribute(GlobalConstant.CURRENT_WS_ID, workStationId);
-		setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, workStationId);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID, null);
 		setSessionAttribute("currModuleView", null);	
 		setSessionAttribute("mainFrameSrc", null);
-		setSessionAttribute(GlobalConstant.PROJ_LIST_SCOPE, null);
-		setSessionAttribute(GlobalConstant.PROJ_CATE_SCOPE, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.PROJ_LIST_SCOPE, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.PROJ_CATE_SCOPE, null);
 
 		//当学员类型为研究生时，才显示【学员选科】功能
 		SysUser user = GlobalContext.getCurrentUser();
@@ -180,14 +180,14 @@ public class MainController extends GeneralController {
 	@RequestMapping(value = {"/main/{workStationId}/{moduleId}" })
 	public String main(@PathVariable String workStationId,@PathVariable String moduleId,HttpServletRequest request,Model model,String menuId) {
 		//换模块后，主页设置为空
-		if(!moduleId.equals(getSessionAttribute(GlobalConstant.CURRENT_MODULE_ID))){
+        if (!moduleId.equals(getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID))) {
 //			setSessionAttribute("currModuleView", null);				
 		}
-		setSessionAttribute(GlobalConstant.CURRENT_WS_ID, workStationId);
-		setSessionAttribute(GlobalConstant.CURRENT_MODULE_ID, moduleId);
-		setSessionAttribute("mainFrameSrc", null);	
-		setSessionAttribute(GlobalConstant.PROJ_LIST_SCOPE, null);
-		setSessionAttribute(GlobalConstant.PROJ_CATE_SCOPE, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, workStationId);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_MODULE_ID, moduleId);
+		setSessionAttribute("mainFrameSrc", null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.PROJ_LIST_SCOPE, null);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.PROJ_CATE_SCOPE, null);
 
 		//如果是学籍工作站且配置的南医大项目LOGO,根据要求切换LOGO文字
 		ServletContext application = request.getServletContext();
@@ -214,7 +214,7 @@ public class MainController extends GeneralController {
 		//如果是科研工作站
 		if("srm".equals(workStationId)){
 			if(checkUser(user)){
-                model.addAttribute("finishUserInfoFlag", GlobalConstant.FLAG_Y);
+                model.addAttribute("finishUserInfoFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 		String cfg13= InitConfig.getSysCfg("jswjw_"+user.getOrgFlow()+"_P013");

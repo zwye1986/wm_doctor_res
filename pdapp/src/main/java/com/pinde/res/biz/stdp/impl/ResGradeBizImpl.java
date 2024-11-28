@@ -48,7 +48,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     public DeptTeacherGradeInfo getRecByRecType(String processFlow, String recTypeId){
         if(StringUtil.isNotBlank(processFlow) && StringUtil.isNotBlank(recTypeId)){
             DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
             List<DeptTeacherGradeInfo> recs = gradeInfoMapper.selectByExampleWithBLOBs(example);
             if(recs!=null && !recs.isEmpty()){
@@ -61,7 +61,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     public List<DeptTeacherGradeInfo> getRecListByRecType(String processFlow, String recTypeId){
         if(StringUtil.isNotBlank(processFlow) && StringUtil.isNotBlank(recTypeId)){
             DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
 
             return gradeInfoMapper.selectByExampleWithBLOBs(example);
@@ -78,15 +78,15 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String content = "";
         //评分类型
         String assessType = "";
-        if(ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId) || ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)){
+        if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId) || com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)) {
             //-------------app提交后无法修改 begin--------------//
             rec.setStatusId(RecStatusEnum.Submit.getId());
             rec.setStatusName(RecStatusEnum.Submit.getName());
             //-------------app提交后无法修改 end--------------//
             //为评分类型赋值
-            if(ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)) {
                 assessType = ResAssessTypeEnum.TeacherAssess.getId();
-            }else if(ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)) {
                 assessType = ResAssessTypeEnum.DeptAssess.getId();
             }
 
@@ -145,16 +145,16 @@ public class ResGradeBizImpl implements IResGradeBiz {
             //获取表单类型名称
             if(StringUtil.isNotBlank(recTypeId)){
                 rec.setRecTypeId(recTypeId);
-                rec.setRecTypeName(ResRecTypeEnum.getNameById(recTypeId));
+                rec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.getNameById(recTypeId));
             }
 
-            rec.setRecVersion(GlobalConstant.RES_DEFAULT_FORM_VER);
+            rec.setRecVersion(com.pinde.core.common.GlobalConstant.RES_DEFAULT_FORM_VER);
             rec.setRecForm(formId);
 
             rec.setCreateTime(DateUtil.getCurrDateTime());
             rec.setCreateUserFlow(operUserFlow);
 
-            rec.setRecordStatus(GlobalConstant.FLAG_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
 
         rec.setRecFlow(recFlow);
@@ -234,13 +234,13 @@ public class ResGradeBizImpl implements IResGradeBiz {
                 rec.setRecTypeName(ResAssessTypeEnum.getNameById(recTypeId));
             }
 
-            rec.setRecVersion(GlobalConstant.RES_DEFAULT_FORM_VER);
+            rec.setRecVersion(com.pinde.core.common.GlobalConstant.RES_DEFAULT_FORM_VER);
             rec.setRecForm(formId);
 
             rec.setCreateTime(DateUtil.getCurrDateTime());
             rec.setCreateUserFlow(operUserFlow);
 
-            rec.setRecordStatus(GlobalConstant.FLAG_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
 
         rec.setRecFlow(recFlow);
@@ -265,7 +265,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
         if(StringUtil.isNotBlank(resultFlow)){
             ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
             ResDoctorSchProcessExample.Criteria criteria = example.createCriteria()
-                    .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andSchResultFlowEqualTo(resultFlow);
             List<ResDoctorSchProcess> processes = processMapper.selectByExample(example);
             if(processes!=null && !processes.isEmpty()){
@@ -282,7 +282,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
         }
         if(StringUtil.isNotBlank(doctorFlow)){
             SchArrangeResultExample example = new SchArrangeResultExample();
-            SchArrangeResultExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            SchArrangeResultExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andDoctorFlowEqualTo(doctorFlow);
             return (T)resultMapper.selectByExample(example);
         }
@@ -294,7 +294,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     public DeptTeacherGradeInfo getGradeRec(String userFlow, String deptFlow,
                               String processFlow, String recTypeId) {
         DeptTeacherGradeInfoExample example=new DeptTeacherGradeInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(userFlow).andProcessFlowEqualTo(processFlow).andSchRotationDeptFlowEqualTo(deptFlow);
         List<DeptTeacherGradeInfo> recList = gradeInfoMapper.selectByExampleWithBLOBs(example);
         if(recList.size()>0){
@@ -315,8 +315,8 @@ public class ResGradeBizImpl implements IResGradeBiz {
     @Override
     public List<ResAssessCfg> getAssCfg(String cfgCodeId) {
         ResAssessCfgExample example = new ResAssessCfgExample();
-        ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-        criteria.andFormStatusIdEqualTo(GlobalConstant.FLAG_Y);
+        ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        criteria.andFormStatusIdEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(cfgCodeId)) {
           criteria.andCfgCodeIdEqualTo(cfgCodeId);
         }
@@ -329,7 +329,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     @Override
     public ResDoctorSchProcess getProcessByResultFlow(String resultFlow) {
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
         List<ResDoctorSchProcess> processList = processMapper.selectByExample(example);
         if(processList.size()>0){
             return processList.get(0);
@@ -342,11 +342,11 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String recTypeId = "";
         String recTypeName = "";
         if("TeacherAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.TeacherGrade.getId();
-            recTypeName = ResRecTypeEnum.TeacherGrade.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getName();
         }else if("DeptAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.DeptGrade.getId();
-            recTypeName = ResRecTypeEnum.DeptGrade.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(subDeptFlow);
@@ -410,7 +410,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
             rec.setCreateUserFlow(userFlow);
             rec.setModifyTime(DateUtil.getCurrDateTime());
             rec.setModifyUserFlow(userFlow);
-            rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             rec.setProcessFlow(process.getProcessFlow());
             rec.setSchRotationDeptFlow(deptFlow);
             gradeInfoMapper.insertSelective(rec);
@@ -428,11 +428,11 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String recTypeId = "";
         String recTypeName = "";
         if("TeacherAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.TeacherGrade.getId();
-            recTypeName = ResRecTypeEnum.TeacherGrade.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getName();
         }else if("DeptAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.DeptGrade.getId();
-            recTypeName = ResRecTypeEnum.DeptGrade.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(subDeptFlow);
@@ -497,7 +497,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
             rec.setCreateUserFlow(userFlow);
             rec.setModifyTime(DateUtil.getCurrDateTime());
             rec.setModifyUserFlow(userFlow);
-            rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             rec.setProcessFlow(process.getProcessFlow());
             rec.setSchRotationDeptFlow(deptFlow);
             gradeInfoMapper.insertSelective(rec);
@@ -514,20 +514,20 @@ public class ResGradeBizImpl implements IResGradeBiz {
         String recTypeId = "";
         String recTypeName = "";
         if("TeacherDoctorAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.TeacherDoctorAssess.getId();
-            recTypeName = ResRecTypeEnum.TeacherDoctorAssess.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorAssess.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorAssess.getName();
         }else if("TeacherDoctorAssessTwo".equals(assessType)){
-            recTypeId = ResRecTypeEnum.TeacherDoctorAssessTwo.getId();
-            recTypeName = ResRecTypeEnum.TeacherDoctorAssessTwo.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorAssessTwo.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorAssessTwo.getName();
         }else if("NurseDoctorAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.NurseDoctorAssess.getId();
-            recTypeName = ResRecTypeEnum.NurseDoctorAssess.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorAssess.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorAssess.getName();
         }else if("TeacherAssess".equals(assessType)){
-            recTypeId = ResRecTypeEnum.TeacherAssess.getId();
-            recTypeName = ResRecTypeEnum.TeacherAssess.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getName();
         }else if("TeacherAssessTwo".equals(assessType)){
-            recTypeId = ResRecTypeEnum.TeacherAssessTwo.getId();
-            recTypeName = ResRecTypeEnum.TeacherAssessTwo.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssessTwo.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssessTwo.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(resultFlow);
@@ -596,7 +596,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
             rec.setCreateUserFlow(userFlow);
             rec.setModifyTime(DateUtil.getCurrDateTime());
             rec.setModifyUserFlow(userFlow);
-            rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             rec.setProcessFlow(process.getProcessFlow());
             rec.setSchRotationDeptFlow(deptFlow);
             gradeInfoMapper.insertSelective(rec);
@@ -917,7 +917,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
         if(StringUtil.isNotBlank(cfgCode)){
             ResAssessCfgExample example = new ResAssessCfgExample();
             ResAssessCfgExample.Criteria criteria = example.createCriteria()
-                    .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andCfgCodeIdEqualTo(cfgCode);
 
             List<ResAssessCfg> assessList = assessCfgMapper.selectByExampleWithBLOBs(example);
@@ -1107,7 +1107,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
     @Override
     public List<DeptTeacherGradeInfo> searchResGradeByItems(Map<String, Object> itemsMap) {
         DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-        DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        DeptTeacherGradeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if(null!= itemsMap.get("processFlow")){
             criteria.andProcessFlowEqualTo((String) itemsMap.get("processFlow"));

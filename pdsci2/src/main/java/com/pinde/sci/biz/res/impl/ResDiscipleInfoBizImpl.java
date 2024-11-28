@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDiscipleInfoBiz;
@@ -33,7 +34,7 @@ public class ResDiscipleInfoBizImpl implements IResDiscipleInfoBiz {
     @Override
     public ResDiscipleInfo readResDiscipleInfo(String userFlow) {
         ResDiscipleInfoExample example=new ResDiscipleInfoExample();
-        example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDiscipleInfo>list= resDiscipleInfoMapper.selectByExample(example);
         if(list!=null&&list.size()>0)
         {
@@ -45,7 +46,7 @@ public class ResDiscipleInfoBizImpl implements IResDiscipleInfoBiz {
     @Override
     public List<ResDiscipleInfo> readResDiscipleInfos(List<String> userFlows) {
         ResDiscipleInfoExample example=new ResDiscipleInfoExample();
-        ResDiscipleInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDiscipleInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(userFlows!=null&&userFlows.size()>0){
             criteria.andDoctorFlowIn(userFlows);
             return resDiscipleInfoMapper.selectByExample(example);
@@ -80,7 +81,7 @@ public class ResDiscipleInfoBizImpl implements IResDiscipleInfoBiz {
     public List<ResDiscipleReq> findResDiscipleReqList(ResDiscipleReq resDiscipleReq) {
         ResDiscipleReqExample example = new ResDiscipleReqExample();
         ResDiscipleReqExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(resDiscipleReq.getOrgFlow())){
             criteria.andOrgFlowEqualTo(resDiscipleReq.getOrgFlow());
         }

@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -74,7 +76,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             String currOrgName = currOrg.getOrgName();
 
             Boolean gaoxiaoFlg = false;
-            List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
             if (sendSchools != null && sendSchools.size() > 0) {
                 for (SysDict dict : sendSchools) {
                     if (currOrgName.equals(dict.getDictName())) {
@@ -112,13 +114,13 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
                 doctorOutOfficeParamPOUniversitylist = resetOrg(distinctOrgUniversity);
 
             /*searchOrg.setOrgProvId(currOrg.getOrgProvId());
-            if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+            if(role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)){
                 searchOrg.setOrgCityId(currOrg.getOrgCityId());
             }
 
-            searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-            searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-            searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+            searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             //---start--
             List<SysOrg> countryOrgs=orgBiz.searchOrg(searchOrg);//获取所有省级或者市级国家基地
             for(int i =0;i<countryOrgs.size();i++){
@@ -152,7 +154,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
                         outOfficeDoctorMap.put("docTypeList", docTypeList);
                         List<Map<String, Object>> outOfficeDoctorInfoList = monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
                         outOfficeDoctorInfoList= getUniversityInOrgStudentInfo(doctorOutOfficeParamPO,outOfficeDoctorInfoList);
-                        String cksh = GlobalConstant.FLAG_N;
+                        String cksh = com.pinde.core.common.GlobalConstant.FLAG_N;
                         JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_cksh");
                         if (cfg != null) {
                             cksh = cfg.getCfgValue();
@@ -232,7 +234,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
                         outOfficeDoctorMap.put("docTypeList", docTypeList);
                         List<Map<String, Object>> outOfficeDoctorInfoList = monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
                         outOfficeDoctorInfoList = getUniversityInOrgStudentInfo(doctorOutOfficeParamPO, outOfficeDoctorInfoList);/*获取当前搞笑在该基地的学生*/
-                        String cksh = GlobalConstant.FLAG_N;
+                        String cksh = com.pinde.core.common.GlobalConstant.FLAG_N;
                         JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_" + orgFlow + "_org_cksh");
                         if (cfg != null) {
                             cksh = cfg.getCfgValue();
@@ -392,7 +394,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             String currOrgName = currOrg.getOrgName();
 
             Boolean gaoxiaoFlg = false;
-            List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
             if (sendSchools != null && sendSchools.size() > 0) {
                 for (SysDict dict : sendSchools) {
                     if (currOrgName.equals(dict.getDictName())) {
@@ -707,7 +709,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             String currOrgName = currOrg.getOrgName();
 
             Boolean gaoxiaoFlg = false;
-            List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
             if (sendSchools != null && sendSchools.size() > 0) {
                 for (SysDict dict : sendSchools) {
                     if (currOrgName.equals(dict.getDictName())) {
@@ -1134,7 +1136,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             SysOrg currOrg = orgBiz.readSysOrg(user.getOrgFlow());
             String currOrgName = currOrg.getOrgName();
             Boolean gaoxiaoFlg = false;
-            List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
             if (sendSchools != null && sendSchools.size() > 0) {
                 for (SysDict dict : sendSchools) {
                     if (currOrgName.equals(dict.getDictName())) {
@@ -1371,7 +1373,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             String currOrgName = currOrg.getOrgName();
 
             Boolean gaoxiaoFlg = false;
-            List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
             if (sendSchools != null && sendSchools.size() > 0) {
                 for (SysDict dict : sendSchools) {
                     if (currOrgName.equals(dict.getDictName())) {
@@ -1628,7 +1630,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             String currOrgName = currOrg.getOrgName();
 
             Boolean gaoxiaoFlg = false;
-            List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
             if (sendSchools != null && sendSchools.size() > 0) {
                 for (SysDict dict : sendSchools) {
                     if (currOrgName.equals(dict.getDictName())) {

@@ -11,7 +11,7 @@ import com.pinde.sci.dao.base.LcjnFixedAssetsMapper;
 import com.pinde.sci.dao.base.LcjnSuppliesBatchMapper;
 import com.pinde.sci.dao.base.LcjnSuppliesMapper;
 import com.pinde.sci.dao.lcjn.LcjnSuppliesAndAssetsExtMapper;
-import com.pinde.sci.enums.lcjn.LcjnFixedAssetsStatusEnum;
+import com.pinde.core.common.enums.LcjnFixedAssetsStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
@@ -55,13 +55,13 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
     @Override
     public int editFixedAsset(LcjnFixedAssets lcjnFixedAssets) {
         if(StringUtil.isNotBlank(lcjnFixedAssets.getFixedFlow())){
-//            lcjnFixedAssets.setDictName(DictTypeEnum.SkileFixedAssets.getDictNameById(lcjnFixedAssets.getDictId()));
+//            lcjnFixedAssets.setDictName(com.pinde.core.common.enums.DictTypeEnum.SkileFixedAssets.getDictNameById(lcjnFixedAssets.getDictId()));
             lcjnFixedAssets.setStatusName(LcjnFixedAssetsStatusEnum.getNameById(lcjnFixedAssets.getStatusId()));
             GeneralMethod.setRecordInfo(lcjnFixedAssets, false);
             return fixedAssetsMapper.updateByPrimaryKeySelective(lcjnFixedAssets);
         }else{
             lcjnFixedAssets.setFixedFlow(PkUtil.getUUID());
-//            lcjnFixedAssets.setDictName(DictTypeEnum.SkileFixedAssets.getDictNameById(lcjnFixedAssets.getDictId()));
+//            lcjnFixedAssets.setDictName(com.pinde.core.common.enums.DictTypeEnum.SkileFixedAssets.getDictNameById(lcjnFixedAssets.getDictId()));
             lcjnFixedAssets.setStatusName(LcjnFixedAssetsStatusEnum.getNameById(lcjnFixedAssets.getStatusId()));
             GeneralMethod.setRecordInfo(lcjnFixedAssets, true);
             return fixedAssetsMapper.insert(lcjnFixedAssets);
@@ -77,7 +77,7 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
     public int deleteByFixedFlow(String fixedFlow) {
         LcjnFixedAssets fixedAssets=new LcjnFixedAssets();
         fixedAssets.setFixedFlow(fixedFlow);
-        fixedAssets.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        fixedAssets.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         GeneralMethod.setRecordInfo(fixedAssets, false);
         return fixedAssetsMapper.updateByPrimaryKeySelective(fixedAssets);
     }
@@ -95,13 +95,13 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
     public List<LcjnSupplies> selectByDictId(String dictId) {
         LcjnSuppliesExample example=new LcjnSuppliesExample();
         LcjnSuppliesExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDictIdEqualTo(dictId).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDictIdEqualTo(dictId).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         return suppliesMapper.selectByExample(example);
     }
 
     @Override
     public int addSupplies(LcjnSupplies supplies) {
-        List<SysDict> distList= DictTypeEnum.SkillMaterial.getSysDictList();
+        List<SysDict> distList = com.pinde.core.common.enums.DictTypeEnum.SkillMaterial.getSysDictList();
         if(distList!=null&&distList.size()>0){
             for(int k=0;k<distList.size();k++){
                 if(distList.get(k)!=null&&GlobalContext.getCurrentUser().getOrgFlow()!=null
@@ -127,16 +127,16 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
         int num=0;
         LcjnSupplies supplies=new LcjnSupplies();
         supplies.setSuppliesFlow(suppliesFlow);
-        supplies.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        supplies.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         GeneralMethod.setRecordInfo(supplies, false);
         suppliesMapper.updateByPrimaryKeySelective(supplies);
         LcjnSuppliesBatch suppliesBatch=new LcjnSuppliesBatch();
         suppliesBatch.setSuppliesFlow(suppliesFlow);
-        suppliesBatch.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        suppliesBatch.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         GeneralMethod.setRecordInfo(suppliesBatch, false);
         LcjnSuppliesBatchExample example=new LcjnSuppliesBatchExample();
         LcjnSuppliesBatchExample.Criteria criteria=example.createCriteria();
-        criteria.andSuppliesFlowEqualTo(suppliesFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andSuppliesFlowEqualTo(suppliesFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         num=suppliesBatchMapper.updateByExampleSelective(suppliesBatch,example);
         return num;
     }
@@ -145,7 +145,7 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
     public List<LcjnSuppliesBatch> selectSuppliesBatch(String suppliesFlow) {
         LcjnSuppliesBatchExample example=new LcjnSuppliesBatchExample();
         LcjnSuppliesBatchExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSuppliesFlowEqualTo(suppliesFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSuppliesFlowEqualTo(suppliesFlow);
         example.setOrderByClause("ADD_TIME DESC");
         return suppliesBatchMapper.selectByExample(example);
     }
@@ -257,7 +257,7 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
                                 break;
                             }
                             fixedAssets.setDictName(value);
-                            List<SysDict> distList=DictTypeEnum.SkileFixedAssets.getSysDictList();
+                            List<SysDict> distList = com.pinde.core.common.enums.DictTypeEnum.SkileFixedAssets.getSysDictList();
                             int temp=0;
                             if(distList!=null&&distList.size()>0){
                                 for(int k=0;k<distList.size();k++){
@@ -356,7 +356,7 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
                                 break;
                             }
                             supplies.setDictName(value);
-                            List<SysDict> distList=DictTypeEnum.SkillMaterial.getSysDictList();
+                            List<SysDict> distList = com.pinde.core.common.enums.DictTypeEnum.SkillMaterial.getSysDictList();
                             int temp=0;
                             if(distList!=null&&distList.size()>0){
                                 for(int k=0;k<distList.size();k++){
@@ -385,7 +385,7 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
                     }
                     //查询全部以验证
                     LcjnSuppliesExample lse = new LcjnSuppliesExample();
-                    lse.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    lse.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                             .andDictIdEqualTo(supplies.getDictId()).andDictNameEqualTo(supplies.getDictName());
                     List<LcjnSupplies> suppliesList = suppliesMapper.selectByExample(lse);
                     if(suppliesList.size() > 0){

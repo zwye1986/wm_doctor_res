@@ -77,8 +77,8 @@ public class ResNjExamPrintController extends GeneralController{
         }
         if(docinfo.getDocrole().equals("4")){//市级
             SysOrgExample sysOrgExample = new SysOrgExample();
-            sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                    .andOrgTypeIdEqualTo(OrgTypeEnum.Hospital.getId());
+            sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                    .andOrgTypeIdEqualTo(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> sysOrgs = orgMapper.selectByExample(sysOrgExample);
             if(CollectionUtils.isEmpty(sysOrgs)){
                 model.addAttribute("extList",new ArrayList<>());
@@ -103,9 +103,9 @@ public class ResNjExamPrintController extends GeneralController{
     public String deleteRecord(String userFlow,String idNo){
         int i = resExamBiz.delDocInfo(userFlow, idNo);
         if(i > 0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping("/docInfoList")
@@ -124,7 +124,7 @@ public class ResNjExamPrintController extends GeneralController{
             SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
             if (null == sysOrg) {
                 SysOrgExample sysOrgExample = new SysOrgExample();
-                sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 sysOrgs = orgMapper.selectByExample(sysOrgExample);
             } else {
                 searchDocinfo.setCreateUserFlow(docinfo.getUserFlow());
@@ -152,7 +152,7 @@ public class ResNjExamPrintController extends GeneralController{
             SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
             if (null == sysOrg) {
                 SysOrgExample sysOrgExample = new SysOrgExample();
-                sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 sysOrgs = orgMapper.selectByExample(sysOrgExample);
             } else {
                 searchDocinfo.setCreateUserFlow(docinfo.getUserFlow());
@@ -203,7 +203,7 @@ public class ResNjExamPrintController extends GeneralController{
     public String saveExamInfo(HttpServletRequest request, TjExamInfo examInfo){
         TjDocinfo docinfo = (TjDocinfo) GlobalContext.getSession().getAttribute("docinfo");
         if(examInfo==null){
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         int i = resExamBiz.editExamInfo(examInfo);
         if(i > 0){
@@ -215,7 +215,7 @@ public class ResNjExamPrintController extends GeneralController{
                 if (sysOrg == null) {
                     SysOrgExample sysOrgExample = new SysOrgExample();
                     sysOrgExample.createCriteria().andOrgCityIdEqualTo(docinfo.getCityCode())
-                            .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                            .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     sysOrgs = orgMapper.selectByExample(sysOrgExample);
                 } else {
                     tjDocinfo.setCreateUserFlow(docinfo.getUserFlow());
@@ -233,9 +233,9 @@ public class ResNjExamPrintController extends GeneralController{
                     resExamBiz.editNjDocinfo(extList, examInfo);
                 }
             }
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 
     }
 
@@ -243,7 +243,7 @@ public class ResNjExamPrintController extends GeneralController{
     public String searchDocInfos(TjDocinfo docinfo,Model model,Integer currentPage,String recordFlow){
         TjDocinfo currInfo = (TjDocinfo) GlobalContext.getSession().getAttribute("docinfo");
         SysOrgExample sysOrgExample = new SysOrgExample();
-        sysOrgExample.createCriteria().andOrgCityIdEqualTo(currInfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysOrgExample.createCriteria().andOrgCityIdEqualTo(currInfo.getCityCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysOrg> sysOrgs = orgMapper.selectByExample(sysOrgExample);
         List<String> orgFlows = new ArrayList<>();
         docinfo.setDocrole("1");
@@ -287,7 +287,7 @@ public class ResNjExamPrintController extends GeneralController{
             SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
             if (null == sysOrg) {
                 SysOrgExample sysOrgExample = new SysOrgExample();
-                sysOrgExample.createCriteria().andOrgCityIdEqualTo(currInfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                sysOrgExample.createCriteria().andOrgCityIdEqualTo(currInfo.getCityCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 sysOrgs = orgMapper.selectByExample(sysOrgExample);
             } else {
                 docinfo.setCreateUserFlow(currInfo.getUserFlow());
@@ -318,7 +318,7 @@ public class ResNjExamPrintController extends GeneralController{
             SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
             if (null == sysOrg) {
                 SysOrgExample sysOrgExample = new SysOrgExample();
-                sysOrgExample.createCriteria().andOrgCityIdEqualTo(currInfo.getCityCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                sysOrgExample.createCriteria().andOrgCityIdEqualTo(currInfo.getCityCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 sysOrgs = orgMapper.selectByExample(sysOrgExample);
             } else {
                 docinfo.setCreateUserFlow(currInfo.getCreateUserFlow());
@@ -345,9 +345,9 @@ public class ResNjExamPrintController extends GeneralController{
     public synchronized String setExamInfo(String resultFlows,String examFlow){
         int i = resExamBiz.setExamInfo(resultFlows,examFlow);
         if(i>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping(value = {"/delExamInfo" })
@@ -355,9 +355,9 @@ public class ResNjExamPrintController extends GeneralController{
     public String delExamInfo(String examFlow){
         int i = resExamBiz.delExamInfo(examFlow);
         if(i>0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping("/printCard")
@@ -428,23 +428,23 @@ public class ResNjExamPrintController extends GeneralController{
                      String msg= (String) result.get("msg");
                      if("1".equals(code))
                      {
-                         return GlobalConstant.UPLOAD_FAIL+msg;
+                         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
                      }else{
-                         if(GlobalConstant.ZERO_LINE != count){
-                             return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                         if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                             return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                          }else{
-                             return GlobalConstant.UPLOAD_FAIL;
+                             return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                          }
                      }
                  }else {
-                     return GlobalConstant.UPLOAD_FAIL;
+                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                  }
              }catch(RuntimeException re){
                  re.printStackTrace();
                  return re.getMessage();
              }
          }
-         return GlobalConstant.UPLOAD_FAIL;
+         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 
      }
 
@@ -462,23 +462,23 @@ public class ResNjExamPrintController extends GeneralController{
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
                     }else{
-                        if(GlobalConstant.ZERO_LINE != count){
-                            return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                         }else{
-                            return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         }
                     }
                 }else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 
     }
 
@@ -486,19 +486,19 @@ public class ResNjExamPrintController extends GeneralController{
      @ResponseBody
     public String saveDocInfo(HttpServletRequest request, TjDocinfo docInfo){
          if(docInfo==null){
-             return GlobalConstant.SAVE_FAIL;
+             return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
          }
          TjDocinfo tjDocinfo = resExamBiz.readDocInfo(docInfo.getIdNo());
          if (tjDocinfo != null
                  && !docInfo.getUserFlow().equalsIgnoreCase( tjDocinfo.getUserFlow())){
-                 return GlobalConstant.USER_ID_NO_REPETE;
+             return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
          }
 
          int i = resExamBiz.editDocInfo(docInfo);
          if(i == 0){
-             return GlobalConstant.SAVE_FAIL;
+             return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
          }
-         return GlobalConstant.SAVE_SUCCESSED;
+         return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 
      }
     @RequestMapping("/examCardImport")

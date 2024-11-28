@@ -114,7 +114,7 @@ public class JswjwKzrAppController {
 		//logger.debug("1========================================="+System.currentTimeMillis()+"===================");
 		//培训学员总数
 		int conut=iResDoctorProcessBiz.schProcessStudentDistinctQuery("",userFlow,"");
-        int cconut = iResDoctorProcessBiz.schProcessStudentDistinctQuery("", userFlow, GlobalConstant.FLAG_Y);
+        int cconut = iResDoctorProcessBiz.schProcessStudentDistinctQuery("", userFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
 		//logger.debug("2========================================="+System.currentTimeMillis()+"===================");
 		model.addAttribute("count",conut);
 		model.addAttribute("ccount",cconut);
@@ -122,17 +122,17 @@ public class JswjwKzrAppController {
 		String isChargeOrg=jswjwBiz.getJsResCfgCode("jsres_"+userinfo.getOrgFlow()+"_guocheng");
 		model.addAttribute("isChargeOrg",isChargeOrg);
 
-		model.addAttribute("trainingTypes", TrainCategoryEnum.values());
-		model.addAttribute("doctorTypes", JsRecDocTypeEnum.values());
+        model.addAttribute("trainingTypes", com.pinde.core.common.enums.TrainCategoryEnum.values());
+        model.addAttribute("doctorTypes", com.pinde.core.common.enums.ResDocTypeEnum.values());
 
 		HashMap<String,Object> dictMap=new HashMap<>();
-		dictMap.put(TrainCategoryEnum.DoctorTrainingSpe.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.DoctorTrainingSpe.getId()));
-		dictMap.put(TrainCategoryEnum.WMFirst.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.WMFirst.getId()));
-		dictMap.put(TrainCategoryEnum.WMSecond.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.WMSecond.getId()));
-		dictMap.put(TrainCategoryEnum.AssiGeneral.getId(),jswjwBiz.getDictListByDictId(TrainCategoryEnum.AssiGeneral.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId()));
+        dictMap.put(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId(), jswjwBiz.getDictListByDictId(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId()));
 		model.addAttribute("dictMap", dictMap);
 
-		List<Map<String,String>> infos = this.noticeBiz.searchInfoByOrgNotRead("", GlobalConstant.RES_NOTICE_TYPE5_ID, GlobalConstant.RES_NOTICE_SYS_ID, userFlow);
+        List<Map<String, String>> infos = this.noticeBiz.searchInfoByOrgNotRead("", com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_ID, com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID, userFlow);
 		if(infos!=null)
 		{
 			model.addAttribute("hasNotReadInfo",infos.size());
@@ -245,15 +245,15 @@ public class JswjwKzrAppController {
 				}
 
 				List<String> recTypeIds = new ArrayList<>();
-				recTypeIds.add(ResRecTypeEnum.DOPS.getId());
-				recTypeIds.add(ResRecTypeEnum.Mini_CEX.getId());
-				recTypeIds.add(ResRecTypeEnum.AfterEvaluation.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.DOPS.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.Mini_CEX.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				List<ResSchProcessExpress> expressList = expressBiz.getDocexpressList(map.get("processFlow"), recTypeIds);
 
 				if (expressList != null && expressList.size() > 0) {
 					for (ResSchProcessExpress express : expressList) {
 
-						if (ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) {
+                        if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) {
 							resRecMap.put(map.get("processFlow"), express);
 							Map<String, Object> formDataMap = null;
 							if (express != null) {
@@ -624,15 +624,15 @@ public class JswjwKzrAppController {
 				}
 
 				List<String> recTypeIds = new ArrayList<>();
-				recTypeIds.add(ResRecTypeEnum.DOPS.getId());
-				recTypeIds.add(ResRecTypeEnum.Mini_CEX.getId());
-				recTypeIds.add(ResRecTypeEnum.AfterEvaluation.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.DOPS.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.Mini_CEX.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				List<ResSchProcessExpress> expressList = expressBiz.getDocexpressList(map.get("processFlow"),  recTypeIds);
 
 				if (expressList != null && expressList.size() > 0) {
 					for (ResSchProcessExpress express : expressList) {
 
-						if (ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) {
+                        if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) {
 							resRecMap.put(map.get("processFlow"), express);
 							Map<String, Object> formDataMap = null;
 							if (express != null) {
@@ -908,15 +908,15 @@ public class JswjwKzrAppController {
 				}
 
 				List<String> recTypeIds = new ArrayList<>();
-				recTypeIds.add(ResRecTypeEnum.DOPS.getId());
-				recTypeIds.add(ResRecTypeEnum.Mini_CEX.getId());
-				recTypeIds.add(ResRecTypeEnum.AfterEvaluation.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.DOPS.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.Mini_CEX.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				List<ResSchProcessExpress> expressList = expressBiz.getDocexpressList(map.get("processFlow"), recTypeIds);
 
 				if (expressList != null && expressList.size() > 0) {
 					for (ResSchProcessExpress express : expressList) {
 
-						if (ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) {
+                        if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) {
 							resRecMap.put(map.get("processFlow"), express);
 							Map<String, Object> formDataMap = null;
 							if (express != null) {
@@ -1074,10 +1074,10 @@ public class JswjwKzrAppController {
 
 		Map<String,Object> resRecMap=new HashMap<String,Object>();
 		List<String> recTypeIds=new ArrayList<>();
-		recTypeIds.add(ResRecTypeEnum.DOPS.getId());
-		recTypeIds.add(ResRecTypeEnum.Mini_CEX.getId());
-		recTypeIds.add(ResRecTypeEnum.AfterEvaluation.getId());
-		recTypeIds.add(ResRecTypeEnum.AfterSummary.getId());
+        recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.DOPS.getId());
+        recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.Mini_CEX.getId());
+        recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
+        recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
 		List<ResSchProcessExpress> expressList = expressBiz.getDocexpressList(processFlow, recTypeIds);
 		for(ResSchProcessExpress express:expressList)
 		{
@@ -1097,7 +1097,7 @@ public class JswjwKzrAppController {
 			List<Map<String,String>>  dataList =  jswjwBiz.viewImage(doctorFlow,schRotationDept.getRecordFlow());
 			if(dataList!=null&&dataList.size()>0)
 			{
-                model.addAttribute("canViewImage", GlobalConstant.FLAG_Y);
+                model.addAttribute("canViewImage", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 		model.addAttribute("resRecMap", resRecMap);
@@ -1173,7 +1173,7 @@ public class JswjwKzrAppController {
 		}
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("dataCount", PageHelper.total);
-        List<ResRec> noAuditList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, doctorFlow, recTypeId, GlobalConstant.FLAG_Y);
+        List<ResRec> noAuditList = jswjwTeacherBiz.searchRecByProcessAndRecType(processFlow, doctorFlow, recTypeId, com.pinde.core.common.GlobalConstant.FLAG_Y);
 		int count=0;
 		if(noAuditList!=null){
 			count=noAuditList.size();
@@ -1224,7 +1224,7 @@ public class JswjwKzrAppController {
 		Map<String, Object> formDataMap = parseRecContent(recContent);
 		formDataMap.put("auditId",rec.getAuditStatusId());
 		model.addAttribute("resultData", formDataMap);
-		model.addAttribute("isOther", GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(cataFlow));
+        model.addAttribute("isOther", com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(cataFlow));
 		return "res/jswjw/kzr/resRecDetail";
 	}
 	private String getRecTypeId(String recType) {
@@ -1246,16 +1246,16 @@ public class JswjwKzrAppController {
 				recTypeId = RegistryTypeEnum.CampaignRegistry.getId();
 				break;
 			case "summary":
-				recTypeId = ResRecTypeEnum.AfterSummary.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId();
 				break;
 			case "dops":
-				recTypeId = ResRecTypeEnum.DOPS.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DOPS.getId();
 				break;
 			case "miniCex":
-				recTypeId = ResRecTypeEnum.Mini_CEX.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.Mini_CEX.getId();
 				break;
 			case "after":
-				recTypeId = ResRecTypeEnum.AfterEvaluation.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId();
 				break;
 			default:
 				break;
@@ -1434,7 +1434,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "用户角色ID与角色不符");
 			return "res/jswjw/kzr/evaluationSun";
 		}
-		String recTypeId=ResRecTypeEnum.AfterEvaluation.getId();
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId();
 		ResDoctor doctor=null;
 		SysUser operUser=null;
 		SysUser currUser=jswjwBiz.readSysUser(userFlow);
@@ -1499,15 +1499,15 @@ public class JswjwKzrAppController {
 		String cksh = jswjwBiz.getJsResCfgCode("jsres_"+dept.getOrgFlow()+"_org_cksh");
 		if(StringUtil.isBlank(cksh))
 		{
-            cksh = GlobalConstant.FLAG_N;
+            cksh = com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		model.addAttribute("cksh",cksh);
 		//获取不同类型并定义接受
 		if(processPerMap!=null){
-			String caseRegistryId=ResRecTypeEnum.CaseRegistry.getId();
-			String diseaseRegistryId=ResRecTypeEnum.DiseaseRegistry.getId();
-			String skillRegistryId=ResRecTypeEnum.SkillRegistry.getId();
-			String operationRegistryId=ResRecTypeEnum.OperationRegistry.getId();
+            String caseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
+            String diseaseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
+            String skillRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
+            String operationRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
 
 			String caseRegistry=(String)processPerMap.get(processFlow+caseRegistryId);
 			String caseRegistryReqNum=(String)processPerMap.get(processFlow+caseRegistryId+"ReqNum");
@@ -1525,7 +1525,7 @@ public class JswjwKzrAppController {
 			String skillAndOperationRegistryReqNum=(String)processPerMap.get(processFlow+operationRegistryId+"ReqNum");
 			String skillAndOperationRegistryFinished=(String)processPerMap.get(processFlow+operationRegistryId+"Finished");
 
-			String recTypeIdt=ResRecTypeEnum.CampaignRegistry.getId();
+            String recTypeIdt = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
 //			int teachingRounds=0;
 //			int difficult=0;
 //			int lecture=0;
@@ -1598,7 +1598,7 @@ public class JswjwKzrAppController {
 			String orgFlow = currUser.getOrgFlow();
 			JsresPowerCfg orgApprove = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 			JsresPowerCfg approve = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-            if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), GlobalConstant.FLAG_Y)) {
+            if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 				//开启必评
 				infos=jswjwTeacherBiz.searchJoinActivityByProcessFlowNotScore(processFlow);
 			}else{
@@ -1826,7 +1826,7 @@ public class JswjwKzrAppController {
 		SysUser currUser=jswjwBiz.readSysUser(userFlow);
 		model.addAttribute("currUser",currUser);
 		ResSchProcessExpress rec=expressBiz.getExpressByRecFlow(recFlow);
-		String recTypeId=ResRecTypeEnum.Mini_CEX.getId();
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.Mini_CEX.getId();
 		if(rec==null)
 			rec=expressBiz.getExpressByRecType(processFlow,recTypeId);
 		Map<String,Object> formDataMap = null;
@@ -1875,7 +1875,7 @@ public class JswjwKzrAppController {
 		SysUser currUser=jswjwBiz.readSysUser(userFlow);
 		model.addAttribute("currUser",currUser);
 		ResSchProcessExpress rec=expressBiz.getExpressByRecFlow(recFlow);
-		String recTypeId=ResRecTypeEnum.DOPS.getId();
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DOPS.getId();
 		if(rec==null)
 			rec=expressBiz.getExpressByRecType(processFlow,recTypeId);
 		Map<String,Object> formDataMap = null;
@@ -2178,7 +2178,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "评价类型为空");
 			return "res/jswjw/kzr/gradeDetail";
 		}
-		if (!ResRecTypeEnum.TeacherGrade.getId().equals(gradeType) && !ResRecTypeEnum.DeptGrade.getId().equals(gradeType)) {
+        if (!com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(gradeType) && !com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(gradeType)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "评价类型只能是TeacherGrade或DeptGrade");
 			return "res/jswjw/kzr/gradeDetail";
@@ -2199,9 +2199,9 @@ public class JswjwKzrAppController {
 		//评分模板
 		List<ResAssessCfgTitleForm> titleFormList = new ArrayList<ResAssessCfgTitleForm>();
 		String cfgCodeId =null;
-		if(ResRecTypeEnum.TeacherGrade.getId().equals(gradeType) ){
+        if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(gradeType)) {
 			cfgCodeId = ResAssessTypeEnum.TeacherAssess.getId();
-		}else if(ResRecTypeEnum.DeptGrade.getId().equals(gradeType) ){
+        } else if (com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(gradeType)) {
 			cfgCodeId = ResAssessTypeEnum.DeptAssess.getId();
 		}
 		ResAssessCfg assessCfg = jswjwBiz.getGradeTemplate(cfgCodeId);
@@ -2470,7 +2470,7 @@ public class JswjwKzrAppController {
 		List<FromTitle> titleList=null;
 		String configXml="";
 		String configFlow="";
-        String IsForm = GlobalConstant.FLAG_N;
+        String IsForm = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if(eval!=null)
 		{
 			IsForm=eval.getIsForm();
@@ -2483,16 +2483,16 @@ public class JswjwKzrAppController {
 			ResDoctorProcessEvalConfig config=jswjwBiz.getProcessEvalConfig(userinfo.getOrgFlow());
 			if(config!=null) {
 				configXml = config.getFormCfg();
-                IsForm = GlobalConstant.FLAG_Y;
+                IsForm = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				configFlow=config.getConfigFlow();
 			}
 		}
 		model.addAttribute("isAudit",eval!=null);
 		titleList=jswjwBiz.parseFromXmlForList(configXml);
 		if(titleList!=null&&titleList.size()>0){
-            IsForm = GlobalConstant.FLAG_Y;
+            IsForm = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		}else{
-            IsForm = GlobalConstant.FLAG_N;
+            IsForm = com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		model.addAttribute("titleList",titleList);
 		model.addAttribute("IsForm",IsForm);
@@ -2676,7 +2676,7 @@ public class JswjwKzrAppController {
 		}
 		String orgFlow="";
 		PageHelper.startPage(pageIndex, pageSize);
-		List<Map<String,String>> infos = this.noticeBiz.searchInfoByOrgBeforeDate(orgFlow,null, GlobalConstant.RES_NOTICE_TYPE5_ID, GlobalConstant.RES_NOTICE_SYS_ID, userFlow,null);
+        List<Map<String, String>> infos = this.noticeBiz.searchInfoByOrgBeforeDate(orgFlow, null, com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_ID, com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID, userFlow, null);
 		model.addAttribute("infoList",infos);
 
 		Map<String,Object> isReadMap=new HashMap<>();
@@ -2761,7 +2761,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "isOwner为空");
 			return "res/jswjw/kzr/activityList";
 		}
-        if (!isOwner.equals(GlobalConstant.FLAG_Y) && !isOwner.equals(GlobalConstant.FLAG_N)) {
+        if (!isOwner.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) && !isOwner.equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "isOwner只能是Y或N");
 			return "res/jswjw/kzr/activityList";
@@ -2817,7 +2817,7 @@ public class JswjwKzrAppController {
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-                        obj.put("audit", GlobalConstant.FLAG_Y);
+                        obj.put("audit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -2885,7 +2885,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/kzr/qrCode";
 		}
 		TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-		if(info==null||!GlobalConstant.RECORD_STATUS_Y.equals(info.getRecordStatus()))
+        if (info == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(info.getRecordStatus()))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -2937,7 +2937,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/success";
 		}
 
-		if(!GlobalConstant.RECORD_STATUS_Y.equals(activity.getRecordStatus()))
+        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.getRecordStatus()))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息已被删除，请刷新列表！");
@@ -2951,7 +2951,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "此活动已有学员扫码，无法删除！");
 			return "res/jswjw/success";
 		}
-		activity.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        activity.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		model.addAttribute("activity", activity);
 		int c=activityBiz.saveActivityInfo(activity,userinfo);
 		if(c==0)
@@ -2999,7 +2999,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/kzr/showActivity";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3077,7 +3077,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/kzr/activityEval";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3122,7 +3122,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/kzr/activityEvalList";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3197,7 +3197,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "typeId标识符为空");
 			return "res/jswjw/kzr/activityStuList";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(typeId)&&!GlobalConstant.FLAG_N.equals(typeId)){
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(typeId) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(typeId)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "typeId只能是Y或N");
 			return "res/jswjw/kzr/activityStuList";
@@ -3215,7 +3215,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/kzr/activityStuList";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3271,7 +3271,7 @@ public class JswjwKzrAppController {
 			model.addAttribute("resultType", "isEffective");
 			return "res/jswjw/success";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isEffective))
 		{
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "isEffective只能是Y或N");
@@ -3290,7 +3290,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/success";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3549,7 +3549,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/kzr/viewActivityImage";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3563,7 +3563,7 @@ public class JswjwKzrAppController {
 		}
 		if(userFlow.equals(activity.get("speakerFlow")))
 		{
-            model.addAttribute("canAdd", GlobalConstant.FLAG_Y);
+            model.addAttribute("canAdd", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return "res/jswjw/kzr/viewActivityImage";
 	}
@@ -3600,7 +3600,7 @@ public class JswjwKzrAppController {
 		}
 
 		Map<String, Object> activity=activityBiz.readActivity(form.getActivityFlow());
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");
@@ -3637,7 +3637,7 @@ public class JswjwKzrAppController {
 			return "res/jswjw/success";
 		}
 		Map<String, Object> activity=activityBiz.readActivity(activityFlow);
-		if(activity==null||!GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
+        if (activity == null || !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(activity.get("recordStatus")))
 		{
 			model.addAttribute("resultId", "3011107");
 			model.addAttribute("resultType", "活动信息不存在");

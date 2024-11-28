@@ -1679,18 +1679,18 @@ public class DateUtil {
 	 * @throws ParseException
 	 */
 	public static String dayCompore(String status,String day,String dayNum) throws ParseException {
-		if (null == status || StringUtil.isBlank(status) || !status.equals(GlobalConstant.FLAG_Y)
+        if (null == status || StringUtil.isBlank(status) || !status.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				|| null== day || StringUtil.isBlank(day)
 				|| null==dayNum || StringUtil.isBlank(dayNum)){
-			return GlobalConstant.FLAG_N;
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		SimpleDateFormat tempDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date parse = tempDateFormat.parse(day);
 		int distanceDay = differentDays(parse, new Date());
 		if (Integer.parseInt(dayNum)>=distanceDay){
-			return GlobalConstant.FLAG_Y;
+            return com.pinde.core.common.GlobalConstant.FLAG_Y;
 		}
-		return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
 	}
 
 	public static int differentDays(Date date1,Date date2) {

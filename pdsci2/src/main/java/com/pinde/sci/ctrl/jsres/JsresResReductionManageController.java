@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.JszyBaseStatusEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -17,12 +18,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
-import com.pinde.sci.ctrl.jszy.JszyResReductionManageController;
-import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
-import com.pinde.sci.enums.jszy.JszyBaseStatusEnum;
-import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -68,7 +63,7 @@ public class JsresResReductionManageController extends GeneralController {
     @Autowired
     private IResJointOrgBiz jointOrgBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(JszyResReductionManageController.class);
+    private static Logger logger = LoggerFactory.getLogger(JsresResReductionManageController.class);
 
     /**
      * 学员减免申请主页面
@@ -80,7 +75,7 @@ public class JsresResReductionManageController extends GeneralController {
         String doctorFlow = currUser.getUserFlow();
         ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(doctorFlow);
-        recruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
         if (recruitList != null && !recruitList.isEmpty()) {
             model.addAttribute("recruitList", recruitList);
@@ -115,21 +110,22 @@ public class JsresResReductionManageController extends GeneralController {
             if (reduction == null || StringUtil.isBlank(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.LocalUnPassed.getId().equals(reduction.getAuditStatusId())
                     || JszyBaseStatusEnum.GlobalUnPassed.getId().equals(reduction.getAuditStatusId())) {
-                model.addAttribute("canEdit", GlobalConstant.FLAG_Y);
+                model.addAttribute("canEdit", com.pinde.core.common.GlobalConstant.FLAG_Y);
             } else {
-                model.addAttribute("canEdit", GlobalConstant.FLAG_N);
+                model.addAttribute("canEdit", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             //1.助理全科2.已经减免的不可以申请减免3.只有审核通过的记录才可以减免
             //1.招录信息审核通过展示减免
-            if (JszyResDoctorAuditStatusEnum.Passed.getId().equals(doctorRecruit.getAuditStatusId())) {
+            if (com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId().equals(doctorRecruit.getAuditStatusId())) {
                 //2.助理全科不展示减免
-                if (JszyTrainCategoryEnum.TCMAssiGeneral.getId().equals(doctorRecruit.getCatSpeId())) {
-                    model.addAttribute("showReduction", GlobalConstant.FLAG_N);
+                /*if (com.pinde.core.common.enums.JsResTrainYearEnum.TCMAssiGeneral.getId().equals(doctorRecruit.getCatSpeId())) {
+                    model.addAttribute("showReduction", com.pinde.core.common.GlobalConstant.FLAG_N);
                 } else {
-                    model.addAttribute("showReduction", GlobalConstant.FLAG_Y);
-                }
+                    model.addAttribute("showReduction", com.pinde.core.common.GlobalConstant.FLAG_Y);
+                }*/
+                model.addAttribute("showReduction", com.pinde.core.common.GlobalConstant.FLAG_Y);
             } else {
-                model.addAttribute("showReduction", GlobalConstant.FLAG_N);
+                model.addAttribute("showReduction", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
 
             model.addAttribute("reduction", reduction);
@@ -184,9 +180,9 @@ public class JsresResReductionManageController extends GeneralController {
         //处理上传文件
         saveFileResult = addUploadFile(resDoctorReduction.getRecordFlow(), request, "Reduction");
         if (deleteFileResult != 0 || saveFileResult != 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -210,9 +206,9 @@ public class JsresResReductionManageController extends GeneralController {
             reductionResult = reductionBiz.edit(resDoctorReduction);
         }
         if (reductionResult != 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -236,24 +232,24 @@ public class JsresResReductionManageController extends GeneralController {
         SysOrg currentOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
             orgs=orgBiz.searchOrgListNew(sysorg4Search);
             model.addAttribute("orgs", orgs);
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             model.addAttribute("orgs",currentOrg);
         }
         model.addAttribute("operType", operType);
         model.addAttribute("roleId", roleId);
         model.addAttribute("statusFlag",statusFlag);
         //页面跳转控制
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4globalMain";
-        } else if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4Local";
         }
         return "";
@@ -284,10 +280,10 @@ public class JsresResReductionManageController extends GeneralController {
         Map<String, Object> paramMap = new HashMap<>();
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
 //            orgs = orgBiz.searchOrg(sysorg4Search);
             if(StringUtil.isNotBlank(cityId)){
@@ -319,7 +315,7 @@ public class JsresResReductionManageController extends GeneralController {
                 reductionStatusIdList.add(JszyBaseStatusEnum.LocalPassed.getId());
             }
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             orgFlowList.add(currentUser.getOrgFlow());
             if ("isQuery".equals(operType)) {
                 //查询
@@ -381,9 +377,9 @@ public class JsresResReductionManageController extends GeneralController {
             logger.info("查询附件运行时间：" + (endTimeFile - startTimeFile) + "ms");//输出程序运行时间
         }
         //页面跳转控制
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4globalMain";
-        } else if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4Local";
         }
         return "";
@@ -415,10 +411,10 @@ public class JsresResReductionManageController extends GeneralController {
         Map<String, Object> paramMap = new HashMap<>();
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
 //            orgs = orgBiz.searchOrg(sysorg4Search);
             if(StringUtil.isNotBlank(cityId)){
@@ -450,7 +446,7 @@ public class JsresResReductionManageController extends GeneralController {
                 reductionStatusIdList.add(JszyBaseStatusEnum.LocalPassed.getId());
             }
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             orgFlowList.add(currentUser.getOrgFlow());
             if ("isQuery".equals(operType)) {
                 //查询
@@ -512,9 +508,9 @@ public class JsresResReductionManageController extends GeneralController {
             logger.info("查询附件运行时间：" + (endTimeFile - startTimeFile) + "ms");//输出程序运行时间
         }
         //页面跳转控制
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4globalMainAcc";
-        } else if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4LocalAcc";
         }
         return "";
@@ -548,10 +544,10 @@ public class JsresResReductionManageController extends GeneralController {
         List<String> jointOrgFlowList=new ArrayList<String>();
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
 //            orgs = orgBiz.searchOrg(sysorg4Search);
             if(StringUtil.isNotBlank(cityId)){
@@ -561,7 +557,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -574,7 +570,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -602,7 +598,7 @@ public class JsresResReductionManageController extends GeneralController {
                 reductionStatusIdList.add(JszyBaseStatusEnum.LocalPassed.getId());
             }
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             orgFlowList.add(currentUser.getOrgFlow());
             if ("isQuery".equals(operType)) {
                 //查询
@@ -672,9 +668,9 @@ public class JsresResReductionManageController extends GeneralController {
             logger.info("查询附件运行时间：" + (endTimeFile - startTimeFile) + "ms");//输出程序运行时间
         }
         //页面跳转控制
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4globalList";
-        } else if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4Local";
         }
         return "";
@@ -708,10 +704,10 @@ public class JsresResReductionManageController extends GeneralController {
         List<String> jointOrgFlowList=new ArrayList<String>();
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
 //            orgs = orgBiz.searchOrg(sysorg4Search);
             if(StringUtil.isNotBlank(cityId)){
@@ -721,7 +717,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -734,7 +730,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -762,7 +758,7 @@ public class JsresResReductionManageController extends GeneralController {
                 reductionStatusIdList.add(JszyBaseStatusEnum.LocalPassed.getId());
             }
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             orgFlowList.add(currentUser.getOrgFlow());
             if ("isQuery".equals(operType)) {
                 //查询
@@ -832,9 +828,9 @@ public class JsresResReductionManageController extends GeneralController {
             logger.info("查询附件运行时间：" + (endTimeFile - startTimeFile) + "ms");//输出程序运行时间
         }
         //页面跳转控制
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4globalListAcc";
-        } else if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             return "jsres/reduction/reductionInfo4LocalAcc";
         }
         return "";
@@ -867,10 +863,10 @@ public class JsresResReductionManageController extends GeneralController {
         List<String> jointOrgFlowList=new ArrayList<String>();
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
 //            orgs = orgBiz.searchOrg(sysorg4Search);
             if(StringUtil.isNotBlank(cityId)){
@@ -880,7 +876,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -893,7 +889,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -921,7 +917,7 @@ public class JsresResReductionManageController extends GeneralController {
                 reductionStatusIdList.add(JszyBaseStatusEnum.LocalPassed.getId());
             }
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             orgFlowList.add(currentUser.getOrgFlow());
             if ("isQuery".equals(operType)) {
                 //查询
@@ -1068,10 +1064,10 @@ public class JsresResReductionManageController extends GeneralController {
         List<String> jointOrgFlowList=new ArrayList<String>();
 
         List<SysOrg> orgs = new ArrayList<>();
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             SysOrg sysorg4Search = new SysOrg();
             sysorg4Search.setOrgProvId(currentOrg.getOrgProvId());
-            sysorg4Search.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg4Search.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             //省里所有医院
 //            orgs = orgBiz.searchOrg(sysorg4Search);
             if(StringUtil.isNotBlank(cityId)){
@@ -1081,7 +1077,7 @@ public class JsresResReductionManageController extends GeneralController {
             model.addAttribute("orgs", orgs);
             if (orgs != null && orgs.size() > 0 && StringUtil.isBlank(doctor.getOrgFlow())) {
                 for (SysOrg tempOrg : orgs) {
-                    if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                         List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(tempOrg.getOrgFlow());
                         if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                             for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1094,7 +1090,7 @@ public class JsresResReductionManageController extends GeneralController {
             }
             if(StringUtil.isNotBlank(doctor.getOrgFlow())){
                 orgFlowList.add(doctor.getOrgFlow());
-                if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
                     List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(doctor.getOrgFlow());
                     if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
                         for (ResJointOrg jointOrg : resJointOrgList) {
@@ -1122,7 +1118,7 @@ public class JsresResReductionManageController extends GeneralController {
                 reductionStatusIdList.add(JszyBaseStatusEnum.LocalPassed.getId());
             }
         }
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             orgFlowList.add(currentUser.getOrgFlow());
             if ("isQuery".equals(operType)) {
                 //查询
@@ -1246,7 +1242,7 @@ public class JsresResReductionManageController extends GeneralController {
     @RequestMapping(value = {"/showCheckReductionInfo"})
     public String showCheckReductionInfo(String recordFlow, String roleId, Model model) {
         ResDoctorReduction reduction = reductionBiz.findReductionByPK(recordFlow);
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             model.addAttribute("agree", JszyBaseStatusEnum.LocalPassed.getId());
             model.addAttribute("disAgree", JszyBaseStatusEnum.LocalUnPassed.getId());
         } else {
@@ -1266,12 +1262,12 @@ public class JsresResReductionManageController extends GeneralController {
         ResDoctorReduction reduction = reductionBiz.findReductionByPK(recordFlow);
         reduction.setAuditStatusId(reductionAuditStatusId);
         reduction.setAuditStatusName(JszyBaseStatusEnum.getNameById(reductionAuditStatusId));
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             reduction.setLocalAuditTime(DateUtil.getCurrDateTime());
             reduction.setLocalAuditUserFlow(currentUser.getUserFlow());
             reduction.setLocalAuditOpinion(auditOpinion);
         }
-        if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
             reduction.setGlobalAuditTime(DateUtil.getCurrDateTime());
             reduction.setGlobalAuditUserFlow(currentUser.getUserFlow());
             reduction.setGlobalAuditOpinion(auditOpinion);
@@ -1282,11 +1278,11 @@ public class JsresResReductionManageController extends GeneralController {
             ResDoctor doctor = resDoctorBiz.readDoctor(docRecWithBLOBs.getDoctorFlow());
             int year = 0;
             if ("1".equals(reduction.getAfterReduceTrainYear())) {
-                docRecWithBLOBs.setTrainYear(JsResTrainYearEnum.OneYear.getId());
+                docRecWithBLOBs.setTrainYear(com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId());
                 year = 1;
             }
             if ("2".equals(reduction.getAfterReduceTrainYear())) {
-                docRecWithBLOBs.setTrainYear(JsResTrainYearEnum.TwoYear.getId());
+                docRecWithBLOBs.setTrainYear(com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId());
                 year = 2;
             }
             year = Integer.parseInt(docRecWithBLOBs.getSessionNumber()) + year;
@@ -1297,9 +1293,9 @@ public class JsresResReductionManageController extends GeneralController {
             jsResDoctorRecruitBiz.saveDoctorRecruit(docRecWithBLOBs);
         }
         if (result > 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -1348,7 +1344,7 @@ public class JsresResReductionManageController extends GeneralController {
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + productType + File.separator + dateString + File.separator + recordFlow + File.separator + originalFilename;
-                            pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                             pubFile.setFilePath(filePath);
                             pubFile.setFileName(oldFileName);
                             pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -1382,7 +1378,7 @@ public class JsresResReductionManageController extends GeneralController {
                     String filePath = basePath + pubFile.getFilePath();
                     FileUtil.deletefile(filePath);
                 }
-                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                 pubFileBiz.editFile(pubFile);
                 result++;
             }
@@ -1433,7 +1429,7 @@ public class JsresResReductionManageController extends GeneralController {
 
     @RequestMapping(value = {"/showCheckReductionInfoList"})
     public String showCheckReductionInfoList(String recordFlowList, String roleId, Model model) {
-        if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
             model.addAttribute("agree", JszyBaseStatusEnum.LocalPassed.getId());
             model.addAttribute("disAgree", JszyBaseStatusEnum.LocalUnPassed.getId());
         } else {
@@ -1456,12 +1452,12 @@ public class JsresResReductionManageController extends GeneralController {
                 ResDoctorReduction reduction = reductionBiz.findReductionByPK(recordFlow);
                 reduction.setAuditStatusId(reductionAuditStatusId);
                 reduction.setAuditStatusName(JszyBaseStatusEnum.getNameById(reductionAuditStatusId));
-                if (GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleId)) {
                     reduction.setLocalAuditTime(DateUtil.getCurrDateTime());
                     reduction.setLocalAuditUserFlow(currentUser.getUserFlow());
                     reduction.setLocalAuditOpinion(auditOpinion);
                 }
-                if (GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleId)) {
                     reduction.setGlobalAuditTime(DateUtil.getCurrDateTime());
                     reduction.setGlobalAuditUserFlow(currentUser.getUserFlow());
                     reduction.setGlobalAuditOpinion(auditOpinion);
@@ -1472,11 +1468,11 @@ public class JsresResReductionManageController extends GeneralController {
                     ResDoctor doctor = resDoctorBiz.readDoctor(docRecWithBLOBs.getDoctorFlow());
                     int year = 0;
                     if ("1".equals(reduction.getAfterReduceTrainYear())) {
-                        docRecWithBLOBs.setTrainYear(JsResTrainYearEnum.OneYear.getId());
+                        docRecWithBLOBs.setTrainYear(com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId());
                         year = 1;
                     }
                     if ("2".equals(reduction.getAfterReduceTrainYear())) {
-                        docRecWithBLOBs.setTrainYear(JsResTrainYearEnum.TwoYear.getId());
+                        docRecWithBLOBs.setTrainYear(com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId());
                         year = 2;
                     }
                     year = Integer.parseInt(docRecWithBLOBs.getSessionNumber()) + year;
@@ -1487,9 +1483,9 @@ public class JsresResReductionManageController extends GeneralController {
                     jsResDoctorRecruitBiz.saveDoctorRecruit(docRecWithBLOBs);
                 }
             }
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
-        return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
     }
 
 }

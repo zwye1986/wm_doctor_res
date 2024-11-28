@@ -25,7 +25,7 @@ public class ResPowerCfgBizImpl implements IResPowerCfgBiz {
     @Override
     public String getResPowerCfg(Map<String, String> paramMap) {
         ResPowerCfgExample example = new ResPowerCfgExample();
-        ResPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(paramMap.get("cfgCode"))) {
             criteria.andCfgCodeEqualTo(paramMap.get("cfgCode"));
         }

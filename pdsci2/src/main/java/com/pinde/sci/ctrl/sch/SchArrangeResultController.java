@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -17,7 +16,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.domain.*;
 import com.pinde.sci.ctrl.sch.plan.util.SchDateUtil;
-import com.pinde.sci.enums.sch.SchSelYearEnum;
+import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.RosterForm;
 import com.pinde.sci.form.sch.RosterTime;
 import com.pinde.sci.form.sch.SchArrangeForm;
@@ -245,7 +244,7 @@ public class SchArrangeResultController extends GeneralController {
 			return "请选择需要删除排班的学员！";
 		}
 		doctorDeptBiz.delArrangeResult(form);
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 	@RequestMapping(value = {"/saveArrange"},method = RequestMethod.POST)
 	@ResponseBody
@@ -276,7 +275,7 @@ public class SchArrangeResultController extends GeneralController {
 			form.setStartDate(DateUtil.addYear(form.getStartDate(),2));
 		}
 		SchDept searchSchDept=new SchDept();
-		searchSchDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        searchSchDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		searchSchDept.setOrgFlow(orgFlow);
 		List<SchDept> depts=schDeptBiz.searchSchDeptByExample(searchSchDept);
 		//轮转科室人员限制
@@ -330,7 +329,7 @@ public class SchArrangeResultController extends GeneralController {
 		doctorDeptBiz.saveArrangeResult(solvedCloudBalance,form);
 		long endTime = System.currentTimeMillis();    //获取结束时间
 		System.out.println("程序运行时间：" + (endTime - startTime) + "ms");
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 	@RequestMapping(value = {"/syncArrange"},method = RequestMethod.POST)
 	@ResponseBody
@@ -368,7 +367,7 @@ public class SchArrangeResultController extends GeneralController {
 			}
 		}
 		doctorDeptBiz.syncArrange(form);
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	private Plan initData(SchArrangeForm form, List<SchDept> schDepts) throws Exception {
@@ -1135,7 +1134,7 @@ public class SchArrangeResultController extends GeneralController {
 			return "请确认是否有数据提交！";
 		}
 		doctorDeptBiz.saveArrangeTime(results);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 }
 

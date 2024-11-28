@@ -33,8 +33,8 @@ public class ResRotationOrgController extends GeneralController {
 		for (ResRotationOrg resRotationOrg : resScoreList) {
 			if (StringUtil.isNotBlank(resRotationOrg.getRecordFlow())) {
 				ResRotationOrg rotationOrg=resRotationOrgBiz.searchByScoreFlow(resRotationOrg.getRecordFlow());
-				if (rotationOrg.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_N)) {
-					rotationOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                if (rotationOrg.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N)) {
+                    rotationOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					resRotationOrgBiz.save(rotationOrg);
 				}
 				list.remove(resRotationOrg.getRecordFlow());
@@ -44,9 +44,9 @@ public class ResRotationOrgController extends GeneralController {
 		}
 		for (String flow : list) {
 			ResRotationOrg resRotationOrg= resRotationOrgBiz.searchByScoreFlow(flow);
-			resRotationOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            resRotationOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			resRotationOrgBiz.save(resRotationOrg);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 }

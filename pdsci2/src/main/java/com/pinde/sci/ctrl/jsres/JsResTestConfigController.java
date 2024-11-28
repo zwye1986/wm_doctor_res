@@ -33,12 +33,12 @@ public class JsResTestConfigController extends GeneralController {
     public String main(Model model) {
         List<ResTestConfig> resTestConfigs = resTestConfigBiz.findAll();
         //当前年设置考试次数
-        String addFlag = GlobalConstant.FLAG_Y;
+        String addFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
         if(null != resTestConfigs && resTestConfigs.size()>0){
             List<ResTestConfig> testList = resTestConfigs.stream().filter(testConfig -> DateUtil.getYear().equals(testConfig.getTestId().substring(0, 4))
-                    && GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
+                    && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
             if(testList.size()>=2){
-                addFlag = GlobalConstant.FLAG_N;
+                addFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
             }
         }
         model.addAttribute("addFlag",addFlag);
@@ -77,7 +77,7 @@ public class JsResTestConfigController extends GeneralController {
         //当前年设置考试次数
         if(null != resTestConfigs && resTestConfigs.size()>0){
             List<ResTestConfig> testList = resTestConfigs.stream().filter(testConfig -> DateUtil.getYear().equals(testConfig.getTestId().substring(0, 4))
-                    && GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
+                    && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(testConfig.getRecordStatus())).collect(Collectors.toList());
             if(testList.size()==0){
                 testName = DateUtil.getYear()+"年上半年考试";
             }else if(testList.size()==1){
@@ -97,10 +97,10 @@ public class JsResTestConfigController extends GeneralController {
     @ResponseBody
     public String insertTest(ResTestConfig resTestConfig) {
         if (resTestConfigBiz.checkTestExist(resTestConfig)) {
-            if (resTestConfigBiz.insert(resTestConfig) == GlobalConstant.ZERO_LINE) {
-                return GlobalConstant.SAVE_FAIL;
+            if (resTestConfigBiz.insert(resTestConfig) == com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             } else {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         } else {
             return "当前时间段有进行中的考试，请修改考试时间";
@@ -111,13 +111,13 @@ public class JsResTestConfigController extends GeneralController {
     @ResponseBody
     public String closeTest(String testFlow) {
         if (StringUtil.isNotBlank(testFlow)) {
-            if (resTestConfigBiz.closeTest(testFlow) == GlobalConstant.ZERO_LINE) {
-                return GlobalConstant.OPRE_FAIL;
+            if (resTestConfigBiz.closeTest(testFlow) == com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             } else {
-                return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
             }
         } else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 }

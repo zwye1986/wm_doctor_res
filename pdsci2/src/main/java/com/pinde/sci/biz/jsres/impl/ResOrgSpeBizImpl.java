@@ -1,6 +1,9 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.TrainCategoryTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
@@ -8,7 +11,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
 import org.apache.commons.beanutils.BeanUtils;
@@ -43,14 +45,14 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria();
 		List<String>speTypeIdList=new ArrayList<String>();
 		if (TrainCategoryTypeEnum.BeforeCfgDate.getId().equals(trainCategoryTypeId)) {
-			speTypeIdList.add(DictTypeEnum.WMFirst.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.WMFirst.getId());
 		}
 		if (TrainCategoryTypeEnum.AfterCfgDate.getId().equals(trainCategoryTypeId)) {
-			speTypeIdList.add(DictTypeEnum.DoctorTrainingSpe.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		}
 		if (TrainCategoryTypeEnum.Independent.getId().equals(trainCategoryTypeId)) {
-			speTypeIdList.add(DictTypeEnum.WMSecond.getId());
-			speTypeIdList.add(DictTypeEnum.AssiGeneral.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.WMSecond.getId());
+            speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getId());
 		}
 		if (speTypeIdList!=null && !speTypeIdList.isEmpty()) {
 			criteria.andSpeTypeIdIn(speTypeIdList);
@@ -64,7 +66,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	public List<ResOrgSpe> searchResOrgSpeListNew(ResOrgSpe resOrgSpe,String trainCategoryTypeId,String speFlag) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
 		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria();
-		if(GlobalConstant.RECORD_STATUS_Y.equals(speFlag)) {
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(speFlag)) {
             criteria.andSpeNameEqualTo("全科");
         }
 		if(StringUtil.isNotBlank(trainCategoryTypeId) && !"undefined".equals(trainCategoryTypeId)){
@@ -115,7 +117,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 		if(StringUtil.isNotBlank(speTypeId) && StringUtil.isNotBlank(speId) && StringUtil.isNotBlank(orgSpe.getSessionYear())
 			&& CollectionUtils.isNotEmpty(orgList)){
 			ResOrgSpeExample example=new ResOrgSpeExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 							.andSpeTypeIdEqualTo(speTypeId).andSpeIdEqualTo(speId)
 							.andOrgFlowIn(orgList.stream().map(SysOrg::getOrgFlow).collect(Collectors.toList()))
 					.andSessionYearEqualTo(orgSpe.getSessionYear());
@@ -162,19 +164,19 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 
 			return res;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	private void saveUpdateAllCfg(ResOrgSpe orgSpe, String speTypeId, String speId, SysOrg sysOrg) {
-		String configCode = GlobalConstant.ORG_SPE_BASE_ALL_SETTING_PREFIX + orgSpe.getSessionYear() + sysOrg.getOrgProvId();
-		String desc = GlobalConstant.ORG_SPE_ALL_WS_ID + "_" + orgSpe.getSessionYear() + "_" + sysOrg.getOrgProvId();
-		if(GlobalContext.getSession().getAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)) {
+        String configCode = com.pinde.core.common.GlobalConstant.ORG_SPE_BASE_ALL_SETTING_PREFIX + orgSpe.getSessionYear() + sysOrg.getOrgProvId();
+        String desc = com.pinde.core.common.GlobalConstant.ORG_SPE_ALL_WS_ID + "_" + orgSpe.getSessionYear() + "_" + sysOrg.getOrgProvId();
+        if (GlobalContext.getSession().getAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			desc += "_" + sysOrg.getOrgCityId();
 			configCode += sysOrg.getOrgCityId();
 		}
 		configCode += "_" + speTypeId + speId;
 		SysCfgExample example = new SysCfgExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andCfgCodeEqualTo(configCode)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andCfgCodeEqualTo(configCode)
 				.andCfgDescEqualTo(desc);
 		List<SysCfg> sysCfgList = sysCfgMapper.selectByExample(example);
 		if(CollectionUtils.isEmpty(sysCfgList)) {
@@ -190,7 +192,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 			SysCfg sysCfg = new SysCfg();
 			sysCfg.setCfgCode(configCode);
 			sysCfg.setCfgValue(cfgValue);
-			sysCfg.setWsId(GlobalConstant.ORG_SPE_ALL_WS_ID);
+            sysCfg.setWsId(com.pinde.core.common.GlobalConstant.ORG_SPE_ALL_WS_ID);
 			sysCfg.setWsName("配置全部医院专业基地");
 			sysCfg.setCfgDesc(desc);
 			GeneralMethod.setRecordInfo(sysCfg, true);
@@ -252,7 +254,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 			exitOrgSpe.setSpeTypeId(speTypeId);
 			exitOrgSpe.setSpeId(speId);
 			exitOrgSpe.setSessionYear(orgSpe.getSessionYear());
-			exitOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            exitOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<ResOrgSpe> orgSpeList = searchResOrgSpeList(exitOrgSpe);
 			if(orgSpeList != null && !orgSpeList.isEmpty()){//修改已存在的记录
 				exitOrgSpe = orgSpeList.get(0);
@@ -267,13 +269,13 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 				return saveResOrgSpe(orgSpe);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<ResOrgSpe> searchSpeByCondition(ResOrgSpe resOrgSpe, String flag) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(resOrgSpe.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(resOrgSpe.getOrgFlow());
 		}
@@ -291,7 +293,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 		if(StringUtil.isNotBlank(resOrgSpe.getRecordStatus())){
 			criteria.andRecordStatusEqualTo(resOrgSpe.getRecordStatus());
 		}
-		if(GlobalConstant.FLAG_Y.equals(flag)&&StringUtil.isNotBlank(resOrgSpe.getSpeTypeId())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag) && StringUtil.isNotBlank(resOrgSpe.getSpeTypeId())) {
 			criteria.andSpeTypeIdNotEqualTo(resOrgSpe.getSpeTypeId());
 		}
 		example.setOrderByClause("CREATE_TIME DESC");
@@ -301,11 +303,11 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	@Override
 	public List<ResOrgSpe> searchResOrgSpeListByFlows(List<String> jointOrgFlowList) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (jointOrgFlowList!=null&&jointOrgFlowList.size()>0) {
 			criteria.andOrgFlowIn(jointOrgFlowList);
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("CREATE_TIME DESC");
 		return resOrgSpeMapper.selectByExample(example);
 	}

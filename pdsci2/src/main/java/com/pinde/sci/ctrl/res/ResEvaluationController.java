@@ -71,7 +71,7 @@ public class ResEvaluationController extends GeneralController {
                 cfgCodeId = evaluationCfgBiz.getNextCodeId(currUser.getOrgFlow(), EvaluationTypeEnum.DoctorEval.getId());
                 model.addAttribute("cfgCodeId", cfgCodeId);
                 //隐藏按钮标识
-                String flag = GlobalConstant.FLAG_Y;
+                String flag = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 model.addAttribute("flag",flag);
             }else{
                 ResEvaluationCfg search = new ResEvaluationCfg();
@@ -82,10 +82,10 @@ public class ResEvaluationController extends GeneralController {
                 if(evaluationCfgList != null && !evaluationCfgList.isEmpty()){
                     ResEvaluationCfg evaluationCfg = evaluationCfgList.get(0);
                     //根据cfg_flow查询学员是否已评分显示或隐藏按钮
-                    String flag = GlobalConstant.FLAG_N;
+                    String flag = com.pinde.core.common.GlobalConstant.FLAG_N;
                     DeptTeacherGradeInfo teacherGradeInfo = resGradeBiz.readResGradeByCfgFlow(evaluationCfg.getCfgFlow());
                     if(teacherGradeInfo == null) {//没有评分
-                        flag = GlobalConstant.FLAG_Y;
+                        flag = com.pinde.core.common.GlobalConstant.FLAG_Y;
                     }
                     model.addAttribute("flag",flag);
                     Document dom = DocumentHelper.parseText(evaluationCfg.getCfgBigValue());
@@ -200,11 +200,11 @@ public class ResEvaluationController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if(currUser != null){
             int result = evaluationCfgBiz.editEvaluationCfgTitle(evaluationCfg, titleForm);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -220,11 +220,11 @@ public class ResEvaluationController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if(currUser != null){
             int result = evaluationCfgBiz.deleteTitle(cfgFlow, id);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.DELETE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
             }
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     //*********************************************************************
@@ -241,11 +241,11 @@ public class ResEvaluationController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if(currUser != null){
             int result = evaluationCfgBiz.saveEvaluationItemList(form);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -261,11 +261,11 @@ public class ResEvaluationController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if(currUser != null){
             int result = evaluationCfgBiz.modifyItem(cfgFlow, itemForm);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -281,11 +281,11 @@ public class ResEvaluationController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if(currUser != null){
             int result = evaluationCfgBiz.deleteItem(cfgFlow, id);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.DELETE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
             }
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
 
@@ -363,7 +363,7 @@ public class ResEvaluationController extends GeneralController {
                 DeptTeacherGradeInfo teacherGradeInfo = resGradeBiz.readResGradeByCfgFlow(evaluationCfgs.get(i).getCfgFlow());
                 if(teacherGradeInfo == null) {
                    // msg = "";
-                    flagMap.put(evaluationCfgs.get(i).getCfgCodeId(), GlobalConstant.FLAG_N);
+                    flagMap.put(evaluationCfgs.get(i).getCfgCodeId(), com.pinde.core.common.GlobalConstant.FLAG_N);
                 }
                // msgMap.put(evaluationCfgs.get(i).getCfgCodeId(),msg);
             }
@@ -384,11 +384,11 @@ public class ResEvaluationController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if(currUser != null){
             int result = evaluationCfgBiz.delEvaluation(cfgFlow);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.DELETE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
             }
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     @RequestMapping("/evaluationDept")
@@ -417,7 +417,7 @@ public class ResEvaluationController extends GeneralController {
                     map.put("deptFlow", dept.getDeptFlow());
                     map.put("deptName", dept.getDeptName());
                     if (deptSet.contains(dept.getDeptFlow())) {
-                        map.put("checked", GlobalConstant.FLAG_Y);
+                        map.put("checked", com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     depts.add(map);
                 }
@@ -441,11 +441,11 @@ public class ResEvaluationController extends GeneralController {
             String cfgFlow = form.getCfgFlow();
             List<String> depts = form.getDepts();
             int result =  evaluationCfgBiz.saveEvaluationDept(cfgFlow, depts);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
     @RequestMapping("/checkHaveEval")
     @ResponseBody
@@ -453,8 +453,8 @@ public class ResEvaluationController extends GeneralController {
        int count= resGradeBiz.checkHaveEval(deptFlow,cfgFlow);
         if(count>0)
         {
-            return GlobalConstant.FLAG_N;
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
         }
-        return GlobalConstant.FLAG_Y;
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;
     }
 }

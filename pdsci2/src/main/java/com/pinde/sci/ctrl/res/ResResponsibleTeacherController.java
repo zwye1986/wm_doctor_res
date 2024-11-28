@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -14,7 +17,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
@@ -111,8 +113,8 @@ public class ResResponsibleTeacherController extends GeneralController {
 	 */
 	@RequestMapping(value = "/index")
 	public String index(Model model, Integer currentPage, HttpServletRequest request) {
-		setSessionAttribute(GlobalConstant.USER_LIST_SCOPE, GlobalConstant.RES_ROLE_SCOPE_RESPONSIBLETEACHER);
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE, GlobalConstant.RES_ROLE_SCOPE_RESPONSIBLETEACHER);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE, com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_RESPONSIBLETEACHER);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE, com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_RESPONSIBLETEACHER);
 		return "res/responsibleTeacher/index";
 	}
 
@@ -146,7 +148,7 @@ public class ResResponsibleTeacherController extends GeneralController {
 	public String saveResponsibleTeacher(ResResponsibleteacherDoctor resResponsibleteacherDoctor){
 		SysUser user=GlobalContext.getCurrentUser();
 		String recordStatus = resResponsibleteacherDoctor.getRecordStatus();
-		if(GlobalConstant.FLAG_Y.equals(recordStatus)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recordStatus)) {
 			resResponsibleteacherDoctor.setOrgFlow(user.getOrgFlow());
 			ResDoctor doctor=doctorBiz.readDoctor(resResponsibleteacherDoctor.getDoctorFlow());
 			if(doctor!=null)
@@ -155,10 +157,10 @@ public class ResResponsibleTeacherController extends GeneralController {
 		}else {
 			List<ResResponsibleteacherDoctor> resultList = resResponsibleTeacherDoctorBiz.search(resResponsibleteacherDoctor);
 			ResResponsibleteacherDoctor edit = resultList.get(0);
-			edit.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            edit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			resResponsibleTeacherDoctorBiz.edit(edit);
 		}
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	//出科成绩查询
@@ -167,7 +169,7 @@ public class ResResponsibleTeacherController extends GeneralController {
 			model.addAttribute("doctorTypeIdList",resDoctor.getDoctorTypeIdList());//上一次选中的条件传到页面上
 		if(resDoctor.getDoctorTypeIdList()==null){
 			List<String> paramList = new ArrayList<>();
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("DoctorType");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("DoctorType");
 			for(SysDict s:dictList){
 				paramList.add(s.getDictId());
 			}
@@ -229,15 +231,15 @@ public class ResResponsibleTeacherController extends GeneralController {
 
 			String tchRoleFlow=InitConfig.getSysCfg("res_teacher_role_flow");
 			String headRoleFlow=InitConfig.getSysCfg("res_head_role_flow");
-			String isTeacher=GlobalConstant.FLAG_N;
+            String isTeacher = com.pinde.core.common.GlobalConstant.FLAG_N;
 			if(StringUtil.isNotBlank(tchRoleFlow)||StringUtil.isNotBlank(headRoleFlow))
 			{
-				List<SysRole> userRoles = roleBiz.search(doctorFlow,GlobalConstant.RES_WS_ID);
+                List<SysRole> userRoles = roleBiz.search(doctorFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 				if(userRoles!=null&&userRoles.size()>0){
 					for(SysRole userRole:userRoles){
 						String roleFlow = userRole.getRoleFlow();
 						if(tchRoleFlow.equals(roleFlow)||headRoleFlow.equals(roleFlow)){
-							isTeacher=GlobalConstant.FLAG_Y;
+                            isTeacher = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}
 					}
 				}
@@ -256,9 +258,9 @@ public class ResResponsibleTeacherController extends GeneralController {
 			}
 		}
 
-		if (GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			SysOrg searchOrg = new SysOrg();
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			List<SysOrg> orgList = orgBiz.searchSysOrg(searchOrg);
 			model.addAttribute("orgList", orgList);
 			List<ResRotationOrg> orgRotationOrgs = iResRotationOrgBiz.ResRotationOrgAll();
@@ -275,14 +277,14 @@ public class ResResponsibleTeacherController extends GeneralController {
 		}
 		SysUser user = GlobalContext.getCurrentUser();
 		List<SchRotation> rotationList = schRotationtBiz.searchSchRotationByIsPublish();
-		if (!GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			rotationList = schRotationtBiz.schRotations(rotationList, user.getOrgFlow());
 		}
 		model.addAttribute("rotationList", rotationList);
 
 
 		SysDept dept = new SysDept();
-		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		dept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		List<SysDept> deptList = deptBiz.searchDept(dept);
 		model.addAttribute("deptList", deptList);
@@ -330,7 +332,7 @@ public class ResResponsibleTeacherController extends GeneralController {
 			model.addAttribute("doctorTypeIdList",Arrays.asList(doctorTypeList));
 		}else{
 			List<String> paramList = new ArrayList<>();
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("DoctorType");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("DoctorType");
 			for(SysDict s:dictList){
 				paramList.add(s.getDictId());
 			}
@@ -351,7 +353,7 @@ public class ResResponsibleTeacherController extends GeneralController {
 		}
 		doctor.setDoctorFlows(doctorFlows);
 		doctor.setGraduationYear(graduationYear);
-		doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<ResDoctorExt> list = doctorBiz.searchDocUser(doctor, "");
@@ -415,7 +417,7 @@ public class ResResponsibleTeacherController extends GeneralController {
 		}
 		List<String> recTypeIds = new ArrayList<String>();
 		for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-			if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))) {
 				recTypeIds.add(regType.getId());
 			}
 		}

@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.sys;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
@@ -40,7 +41,7 @@ public class DeptController extends GeneralController{
 			mav.addObject("sysDept",sysDept);
 		}
 		SysOrg sysOrg=new SysOrg();
-		sysOrg.setRecordStatus(GlobalConstant.FLAG_Y);
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysOrg> orgList=orgBiz.searchOrg(sysOrg);
 		mav.addObject("orgList",orgList);
 		return mav;
@@ -48,15 +49,15 @@ public class DeptController extends GeneralController{
 	
 	@RequestMapping(value = "/list/{deptListScope}",method={RequestMethod.POST,RequestMethod.GET})
 	public String list(@PathVariable String deptListScope,SysDept dept,Model model,HttpServletRequest request){
-		setSessionAttribute(GlobalConstant.DEPT_LIST_SCOPE, deptListScope);
-		if(GlobalConstant.DEPT_LIST_LOCAL.equals(deptListScope)){
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.DEPT_LIST_SCOPE, deptListScope);
+        if (com.pinde.core.common.GlobalConstant.DEPT_LIST_LOCAL.equals(deptListScope)) {
 			dept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			if(StringUtil.isNotBlank(dept.getOrgFlow())){
 				List<SysDept> deptList=deptBiz.searchDept(dept);
 				model.addAttribute("deptList",deptList);				
 			}			
 		}
-		if(GlobalConstant.DEPT_LIST_GLOBAL.equals(deptListScope)){
+        if (com.pinde.core.common.GlobalConstant.DEPT_LIST_GLOBAL.equals(deptListScope)) {
 			if(StringUtil.isNotBlank(dept.getOrgFlow())){
 				List<SysDept> deptList=deptBiz.searchDept(dept);
 				model.addAttribute("deptList",deptList);			
@@ -69,21 +70,21 @@ public class DeptController extends GeneralController{
 	public @ResponseBody  String save(SysDept dept,HttpServletRequest request){
 		deptBiz.saveDept2(dept,request);
 		InitConfig._loadDept(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value="/delete",method=RequestMethod.GET)
 	public @ResponseBody String delete(SysDept dept){
-//		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+//		dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		deptBiz.saveDept(dept);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value="/saveOrder",method=RequestMethod.POST)
 	@ResponseBody
 	public String saveOrder(String [] deptFlow,Model model,HttpServletRequest request) throws Exception{
 		deptBiz.saveOrder(deptFlow);
 		InitConfig._loadDept(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		
 	}
 

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLectureInfoBiz;
@@ -42,7 +43,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
             return null;
         ResLectureInfoExample resLectureInfoExample = new ResLectureInfoExample();
         ResLectureInfoExample.Criteria criteria = resLectureInfoExample.createCriteria().andOrgFlowEqualTo(orgFlow)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(lectureTrainDate)) {
             criteria.andLectureTrainDateEqualTo(lectureTrainDate);
         }
@@ -68,7 +69,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
             return null;
         ResLectureInfoExample resLectureInfoExample = new ResLectureInfoExample();
         ResLectureInfoExample.Criteria criteria = resLectureInfoExample.createCriteria().andOrgFlowEqualTo(orgFlow)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(lectureTrainStartDate) && StringUtil.isNotBlank(lectureTrainEndDate)) {
 //            criteria.andLectureTrainDateEqualTo(lectureTrainDate);
             criteria.andLectureTrainDateGreaterThanOrEqualTo(lectureTrainStartDate);
@@ -101,7 +102,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
                 int count = lectureInfoMapper.updateByPrimaryKeySelective(resLectureInfo);
                 if(count != 0){
                     // 如果讲座活动状态为删除 则删除对应的讲座活动评价表
-                    if(GlobalConstant.RECORD_STATUS_N.equals(resLectureInfo.getRecordStatus())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(resLectureInfo.getRecordStatus())) {
                         lectureInfoTargetExtMapper.delLectureInfoTarget(resLectureInfo);
                     }
                 }
@@ -116,7 +117,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
                 return count;
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -169,7 +170,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
                     if(infoRole==null){
                         infoRole=new ResLectureInfoRole();
                     }
-                    infoRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    infoRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     infoRole.setLectureFlow(resLectureInfo.getLectureFlow());
                     infoRole.setLectureRole(roleFlow);
                     saveLectureRole(infoRole);
@@ -183,7 +184,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
     public List<ResLectureInfoRole> readLectureRoleList(String lectureFlow) {
         if(StringUtil.isNotBlank(lectureFlow)) {
             ResLectureInfoRoleExample example = new ResLectureInfoRoleExample();
-            example.createCriteria().andLectureFlowEqualTo(lectureFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andLectureFlowEqualTo(lectureFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResLectureInfoRole> list = resLectureRoleMapper.selectByExample(example);
             return list;
         }
@@ -250,14 +251,14 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
         GeneralMethod.setRecordInfo(scanRegist, false);
         int count = lectureScanRegistMapper.updateByPrimaryKeySelective(scanRegist);
         if(count == 0){
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         // 保存讲座活动评分信息
         count = lectureEvaDetailExtMapper.saveLectureEval(paramMap);
         if(count == 0){
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum ResScoreTypeEnum implements GeneralEnum<String> {
@@ -35,6 +36,6 @@ public enum ResScoreTypeEnum implements GeneralEnum<String> {
 		return name;
 	}
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, ResScoreTypeEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.ResScoreTypeEnum.class).getName();
 	}
 }

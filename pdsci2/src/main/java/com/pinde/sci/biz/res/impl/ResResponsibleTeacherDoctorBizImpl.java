@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResResponsibleTeacherDoctorBiz;
@@ -22,7 +23,7 @@ public class ResResponsibleTeacherDoctorBizImpl implements IResResponsibleTeache
     @Override
     public List<ResResponsibleteacherDoctor> search(ResResponsibleteacherDoctor resResponsibleteacherDoctor) {
         ResResponsibleteacherDoctorExample example = new ResResponsibleteacherDoctorExample();
-        ResResponsibleteacherDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResResponsibleteacherDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resResponsibleteacherDoctor!=null){
             if(StringUtil.isNotBlank(resResponsibleteacherDoctor.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resResponsibleteacherDoctor.getDoctorFlow());

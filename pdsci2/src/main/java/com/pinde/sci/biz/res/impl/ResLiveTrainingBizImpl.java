@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLiveTrainingBiz;
@@ -48,14 +49,14 @@ public class ResLiveTrainingBizImpl implements IResLiveTrainingBiz{
                 return trainingOpinionMapper.insertSelective(trainingOpinion);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public List<ResTrainingOpinion> readByOpinionUserFlow(String opinionUserFlow) {
         ResTrainingOpinionExample example = new ResTrainingOpinionExample();
         if(StringUtil.isNotBlank(opinionUserFlow)){
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOpinionUserFlowEqualTo(opinionUserFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOpinionUserFlowEqualTo(opinionUserFlow);
             example.setOrderByClause("EVA_TIME DESC");
         }
         return trainingOpinionMapper.selectByExample(example);
@@ -64,11 +65,11 @@ public class ResLiveTrainingBizImpl implements IResLiveTrainingBiz{
     @Override
     public List<ResTrainingOpinion> searchByOpinionUserContentAndReplayStatus(String opinionUserContent, String replayStatus,String orgFlow) {
         ResTrainingOpinionExample example = new ResTrainingOpinionExample();
-        ResTrainingOpinionExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTrainingOpinionExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(opinionUserContent)){
             criteria.andOpinionUserContentLike("%"+opinionUserContent+"%");
         }
-        if(GlobalConstant.FLAG_Y.equals(replayStatus)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(replayStatus)) {
             criteria.andReplyTimeIsNull();
         }
         if(StringUtil.isNotBlank(orgFlow)){
@@ -105,7 +106,7 @@ public class ResLiveTrainingBizImpl implements IResLiveTrainingBiz{
                 return resTarinNoticeMapper.insertSelective(tarinNotice);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -113,8 +114,8 @@ public class ResLiveTrainingBizImpl implements IResLiveTrainingBiz{
         if("doctor".equals(roleFlag))
         {
             ResTarinNoticeExample example = new ResTarinNoticeExample();
-            ResTarinNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-            ResTarinNoticeExample.Criteria criteria2 = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            ResTarinNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+            ResTarinNoticeExample.Criteria criteria2 = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             if(StringUtil.isNotBlank(orgFlow)){
                 criteria.andOrgFlowEqualTo(orgFlow);
             }
@@ -129,7 +130,7 @@ public class ResLiveTrainingBizImpl implements IResLiveTrainingBiz{
 
         }else {
             ResTarinNoticeExample example = new ResTarinNoticeExample();
-            ResTarinNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            ResTarinNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             if (StringUtil.isNotBlank(orgFlow)) {
                 criteria.andOrgFlowEqualTo(orgFlow);
             } else {

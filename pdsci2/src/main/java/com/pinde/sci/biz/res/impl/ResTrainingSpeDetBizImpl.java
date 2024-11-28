@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResTrainingSpeDeptBiz;
@@ -22,7 +23,7 @@ public class ResTrainingSpeDetBizImpl implements IResTrainingSpeDeptBiz {
     @Override
     public List<ResTrainingSpeDept> search(ResTrainingSpeDept trainingSpeDept) {
         ResTrainingSpeDeptExample example = new ResTrainingSpeDeptExample();
-        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(trainingSpeDept!=null){
             if(StringUtil.isNotBlank(trainingSpeDept.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(trainingSpeDept.getOrgFlow());
@@ -55,7 +56,7 @@ public class ResTrainingSpeDetBizImpl implements IResTrainingSpeDeptBiz {
     @Override
     public List<ResTrainingSpeDept> notCurrentSpe(ResTrainingSpeDept trainingSpeDept) {
         ResTrainingSpeDeptExample example = new ResTrainingSpeDeptExample();
-        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(trainingSpeDept!=null){
             if(StringUtil.isNotBlank(trainingSpeDept.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(trainingSpeDept.getOrgFlow());

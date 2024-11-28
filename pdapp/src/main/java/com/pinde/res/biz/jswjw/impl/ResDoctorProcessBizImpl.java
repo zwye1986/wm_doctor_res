@@ -30,13 +30,13 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	public int edit(ResDoctorSchProcess process,SysUser user) {
 		if(process!=null){
 			if(StringUtil.isNotBlank(process.getProcessFlow())){//修改
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				process.setModifyUserFlow(user.getUserFlow());
 				process.setModifyTime(DateUtil.getCurrDateTime());
 				return this.resDoctorProcessMapper.updateByPrimaryKeySelective(process);
 			}else{//新增
 				process.setProcessFlow(PkUtil.getUUID());
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				process.setCreateUserFlow(user.getUserFlow());
 				process.setCreateTime(DateUtil.getCurrDateTime());
 				process.setModifyUserFlow(user.getUserFlow());
@@ -44,7 +44,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 				return this.resDoctorProcessMapper.insertSelective(process);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public ResDoctorSchProcess read(String processFlow) {
@@ -58,7 +58,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
 		return resDoctorProcessMapper.selectByExample(example);
 	}
 	

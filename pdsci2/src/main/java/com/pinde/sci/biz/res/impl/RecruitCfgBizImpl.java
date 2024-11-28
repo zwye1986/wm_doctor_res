@@ -25,7 +25,7 @@ public class RecruitCfgBizImpl implements IRecruitCfgBiz {
     @Override
     public ResRecruitCfg findRecruitCfgByYear(String year) {
         ResRecruitCfgExample example = new ResRecruitCfgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andYearEqualTo(year);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andYearEqualTo(year);
         List<ResRecruitCfg> cgfs = recruitCfgMapper.selectByExample(example);
         if (cgfs.size() == 1) {
             return cgfs.get(0);

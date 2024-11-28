@@ -37,7 +37,7 @@ public class EvalAppBizImpl implements IEvalAppBiz {
 	@Override
 	public List<SysUserRole> getSysUserRole(String userFlow){
 		SysUserRoleExample example = new SysUserRoleExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andUserFlowEqualTo(userFlow);
 		return userRoleMapper.selectByExample(example);
 	}

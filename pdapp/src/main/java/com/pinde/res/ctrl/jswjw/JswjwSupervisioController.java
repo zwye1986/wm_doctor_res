@@ -2,6 +2,7 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.InitConfig;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.UserStatusEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
@@ -64,7 +65,7 @@ public class JswjwSupervisioController {
         fileMap.put("operType", uploadFile);
         if (uploadFile != null) {
             String resultPath = supervisioUserBiz.saveFileToDirs("", uploadFile, "supersivioSign");
-            model.addAttribute("result", GlobalConstant.FLAG_Y);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
             model.addAttribute("filePath", resultPath);
             SysSupervisioUser user = supervisioUserBiz.findBySuUserFlow(userFlow);
             user.setUserSignUrl(resultPath);
@@ -325,10 +326,10 @@ public class JswjwSupervisioController {
         if(null != list && list.size()>0){
             for (Map<String,Object> map:list) {
                 //查询表单是否提交
-                String expertEdit = GlobalConstant.FLAG_Y;//未提交，可以编辑
+                String expertEdit = com.pinde.core.common.GlobalConstant.FLAG_Y;//未提交，可以编辑
                 ResSupervisioSubjectUser subjectUser = supervisioUserBiz.searchSubjectUser(userFlow,(String)map.get("subjectFlow"));
                 if(null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-                    expertEdit = GlobalConstant.FLAG_N;//已提交，不可编辑
+                    expertEdit = com.pinde.core.common.GlobalConstant.FLAG_N;//已提交，不可编辑
                 }
                 expertEditMap.put((String)map.get("subjectFlow"), expertEdit);
             }
@@ -367,7 +368,7 @@ public class JswjwSupervisioController {
         fileMap.put("operType", file);
         if (file != null) {
             String resultPath = supervisioUserBiz.saveFileToDirs("", file, "subjectFeedback");
-            model.addAttribute("result", GlobalConstant.FLAG_Y);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
             model.addAttribute("filePath", resultPath);
             Map<String,Object> param = new HashMap<>();
             param.put("subjectActivitiFlows",subjectActivitiFlows);
@@ -449,7 +450,7 @@ public class JswjwSupervisioController {
         model.addAttribute("orgName", org.getOrgName());
         model.addAttribute("orgCityName", org.getOrgCityName());
         model.addAttribute("roleFlag", roleFlag);
-        model.addAttribute("isRead", GlobalConstant.RECORD_STATUS_Y);
+        model.addAttribute("isRead", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         model.addAttribute("subjectFlow", subjectFlow);
         model.addAttribute("subjectActivitiFlows",subjectActivitiFlows);
 
@@ -469,7 +470,7 @@ public class JswjwSupervisioController {
         ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(userFlow, subjectFlow);
         model.addAttribute("subjectUser", subjectUser);
         if (null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-            model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
             model.addAttribute("evaluationDate",DateUtil.parseDate(subjectUser.getEvaluationDate(),"yyyy-MM-dd"));
         }
 
@@ -564,7 +565,7 @@ public class JswjwSupervisioController {
             //查询专家评分是否提交  提交不能编辑
             ResSupervisioSubjectUser subjectUser = supervisioUserBiz.selectSubjectUserByFlow(userFlow, subjectFlow);
             if (null != subjectUser && StringUtil.isNotBlank(subjectUser.getEvaluationDate())) {
-                model.addAttribute("editFlag", GlobalConstant.FLAG_N);
+                model.addAttribute("editFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             model.addAttribute("subjectUser", subjectUser);
         }
@@ -814,13 +815,13 @@ public class JswjwSupervisioController {
             supervisioUserBiz.saveSubjectUser(subjectUser,userFlow);
             //查询督导组员是否全部提交
             List<ResSupervisioSubjectUser> userList = supervisioUserBiz.selectSupervisioUserListByFlow(subjectFlow);
-            String isSubmit = GlobalConstant.FLAG_Y;
+            String isSubmit = com.pinde.core.common.GlobalConstant.FLAG_Y;
             Integer scoreTotal = 0;
             int evaNum = userList.size();
             if (null != userList && userList.size() > 0) {
                 for (ResSupervisioSubjectUser user : userList) {
                     if (StringUtil.isBlank(user.getEvaluationDate())) {
-                        isSubmit = GlobalConstant.FLAG_N;
+                        isSubmit = com.pinde.core.common.GlobalConstant.FLAG_N;
                         break;
                     } else {
                         if (user.getSpeScoreTotal() != null) {
@@ -829,9 +830,9 @@ public class JswjwSupervisioController {
                     }
                 }
             } else {
-                isSubmit = GlobalConstant.FLAG_N;
+                isSubmit = com.pinde.core.common.GlobalConstant.FLAG_N;
             }
-            if (GlobalConstant.FLAG_Y.equals(isSubmit)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSubmit)) {
                 //全部提交  计算平均分并保存
                 BigDecimal total = new BigDecimal(scoreTotal);
                 BigDecimal num = new BigDecimal(evaNum);
@@ -884,7 +885,7 @@ public class JswjwSupervisioController {
         String resultPath = "";
         if (uploadFile != null && !uploadFile.isEmpty()) {
             String fileResult = supervisioUserBiz.checkImg(uploadFile);
-            if (!GlobalConstant.FLAG_Y.equals(fileResult)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fileResult)) {
                 model.addAttribute("fileErrorMsg", fileResult);
             } else {
                 resultPath = supervisioUserBiz.saveFileToDirs("", uploadFile, "jsresSupervisioFile", user.getOrgFlow(), "2022", itemId);

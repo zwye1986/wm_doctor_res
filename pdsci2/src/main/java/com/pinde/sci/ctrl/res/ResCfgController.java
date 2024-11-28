@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.AchScoreEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResAssessCfgBiz;
@@ -12,7 +14,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.common.enums.ResAssessScoreTypeEnum;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
-import com.pinde.sci.enums.srm.AchScoreEnum;
 import com.pinde.sci.form.res.ResAssessCfgForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -152,11 +153,11 @@ public class ResCfgController extends GeneralController {
 					result = assessCfgBiz.updateByPrimaryKeySelective(resAssessCfg);
 				}
 			}
-			if (GlobalConstant.ZERO_LINE != result) {
-				return GlobalConstant.OPRE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 
@@ -239,10 +240,10 @@ public class ResCfgController extends GeneralController {
 		resAssessCfg.setFormStatusName(AchScoreEnum.Disable.getName());
 		resAssessCfg.setCfgCodeName(ResAssessTypeEnum.getNameById(resAssessCfg.getCfgCodeId()));
 		int result = assessCfgBiz.saveAssessCfg(resAssessCfg);
-		if (GlobalConstant.ZERO_LINE != result) {
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 
@@ -259,11 +260,11 @@ public class ResCfgController extends GeneralController {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser != null){
 			int result = assessCfgBiz.editAssessCfgTitle(assessCfg, titleForm);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	
 	/**
@@ -279,11 +280,11 @@ public class ResCfgController extends GeneralController {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser != null){
 			int result = assessCfgBiz.deleteTitle(cfgFlow, id);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.DELETE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 	
 	//*********************************************************************
@@ -300,11 +301,11 @@ public class ResCfgController extends GeneralController {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser != null){
 			int result = assessCfgBiz.saveAssessItemList(form);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	
 	/**
@@ -320,11 +321,11 @@ public class ResCfgController extends GeneralController {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser != null){
 			int result = assessCfgBiz.modifyItem(cfgFlow, itemForm);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	
 	/**
@@ -340,11 +341,11 @@ public class ResCfgController extends GeneralController {
 		SysUser currUser = GlobalContext.getCurrentUser();
 		if(currUser != null){
 			int result = assessCfgBiz.deleteItem(cfgFlow, id);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.DELETE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 
@@ -427,11 +428,11 @@ public class ResCfgController extends GeneralController {
 				cfg.setCfgCode(cfgCode);
 				cfg.setCfgValue(sysCfgValue);
 				cfg.setCfgDesc(sysCfgDesc);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				sysCfgList.add(cfg);
 			}
 			resPowerCfgBiz.saveList(sysCfgList);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 }

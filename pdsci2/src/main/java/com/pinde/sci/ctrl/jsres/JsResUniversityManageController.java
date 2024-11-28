@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -14,8 +15,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
@@ -102,14 +101,14 @@ public class JsResUniversityManageController extends GeneralController {
 		List<String> typeList = null;
 		if (teacherWorkForm.getDoctorTypeIdList() != null && teacherWorkForm.getDoctorTypeIdList().length > 0) {
 			typeList = Arrays.asList(teacherWorkForm.getDoctorTypeIdList());
-			for (JsResDocTypeEnum dict : JsResDocTypeEnum.values()) {
+            for (ResDocTypeEnum dict : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				if (typeList.contains(dict.getId())) {
 					doctorTypeSelectMap.put(dict.getId(), "checked");
 				}
 			}
 		}else{
 			typeList = new ArrayList<>();
-			for (JsResDocTypeEnum dict : JsResDocTypeEnum.values()) {
+            for (ResDocTypeEnum dict : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				typeList.add(dict.getId());
 				doctorTypeSelectMap.put(dict.getId(), "checked");
 			}
@@ -211,12 +210,12 @@ public class JsResUniversityManageController extends GeneralController {
 
 	@RequestMapping("/appUserTable")
 	public String appUserMain(Model model, String userListScope,HttpServletRequest request) {
-		if (GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//基地
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//基地
 			List<SysOrg> orgs = new ArrayList<>();
 			SysUser user = GlobalContext.getCurrentUser();
 			SysOrg org = orgBiz.readSysOrg(user.getOrgFlow());
 			orgs.add(org);
-			if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
 				List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				if (orgList != null && orgList.size() > 0) {
 					orgs.addAll(orgList);
@@ -394,14 +393,14 @@ public class JsResUniversityManageController extends GeneralController {
 		List<String> typeList = null;
 		if (teacherWorkForm.getDoctorTypeIdList() != null && teacherWorkForm.getDoctorTypeIdList().length > 0) {
 			typeList = Arrays.asList(teacherWorkForm.getDoctorTypeIdList());
-			for (JsResDocTypeEnum dict : JsResDocTypeEnum.values()) {
+            for (ResDocTypeEnum dict : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				if (typeList.contains(dict.getId())) {
 					doctorTypeSelectMap.put(dict.getId(), "checked");
 				}
 			}
 		}else{
 			typeList = new ArrayList<>();
-			for (JsResDocTypeEnum dict : JsResDocTypeEnum.values()) {
+            for (ResDocTypeEnum dict : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				typeList.add(dict.getId());
 				doctorTypeSelectMap.put(dict.getId(), "checked");
 			}

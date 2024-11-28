@@ -82,7 +82,7 @@ public class DictBizImpl implements IDictBiz {
 	public List<SysDict> searchDictList(SysDict sysDict) {
 		SysDictExample example = new SysDictExample();
 		Criteria criteria = example.createCriteria();
-//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysDict.getDictTypeId())){
 			criteria.andDictTypeIdEqualTo(sysDict.getDictTypeId());
 		}
@@ -110,7 +110,7 @@ public class DictBizImpl implements IDictBiz {
 		Criteria criteria  = example.createCriteria();
 		criteria.andDictTypeIdEqualTo(dictTypeId);
 		if(!isShowAll){
-            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		example.setOrderByClause(" ORDINAL");
 		return this.sysDictMapper.selectByExample(example);
@@ -120,7 +120,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public List<SysDict> searchDictListByDictTypeId(String dictTypeId) {
 		SysDictExample example = new SysDictExample();
-        example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("ORDINAL");
 		return this.sysDictMapper.selectByExample(example);
 		
@@ -130,7 +130,7 @@ public class DictBizImpl implements IDictBiz {
     public List<SysDict> searchDictListByDictTypeIdAndDictName(String dictTypeId, String dictName) {
         SysDictExample example = new SysDictExample();
         example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andDictNameEqualTo(dictName)
-                .andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         example.setOrderByClause("ORDINAL");
         return this.sysDictMapper.selectByExample(example);
 
@@ -139,7 +139,7 @@ public class DictBizImpl implements IDictBiz {
     @Override
 	public List<SysDict> searchDictListByDictTypeIdAndDictId(String dictTypeId,String dictId) {
 		SysDictExample example = new SysDictExample();
-        Criteria criteria = example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        Criteria criteria = example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(dictId))
 		{
 			criteria.andDictIdEqualTo(dictId);

@@ -72,11 +72,11 @@ public class ResActivityQueryController extends GeneralController {
 
 	@RequestMapping(value="/main")
 	public String main(Model model,String  roleFlag, HttpServletRequest request){
-		if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag))
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag))
 		{
 			List<SysDept> depts=deptBiz.searchDeptByOrg(GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
-		}else if(GlobalConstant.USER_LIST_SPE.equals(roleFlag))
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(roleFlag))
 		{
 			List<SysDept> depts = deptBiz.searchDeptBySpe(GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
@@ -147,7 +147,7 @@ public class ResActivityQueryController extends GeneralController {
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-                info.put("HaveImg", GlobalConstant.FLAG_N);
+                info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -156,7 +156,7 @@ public class ResActivityQueryController extends GeneralController {
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-                        info.put("HaveImg", GlobalConstant.FLAG_Y);
+                        info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				if(!"doctor".equals(roleFlag))
@@ -259,17 +259,17 @@ public class ResActivityQueryController extends GeneralController {
 //			}
 			//查询是否有报名人员已扫码
 			TeachingActivityResultExample example=new TeachingActivityResultExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow)
-					.andIsScanEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow)
+                    .andIsScanEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<TeachingActivityResult> list=resultMapper.selectByExample(example);
 			if(list!=null&&list.size()>0){
 				return "已有人员扫码，无法删除！";
 			}
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int c=activityBiz.saveActivity(info);
 			if(c==0)
-				return GlobalConstant.DELETE_FAIL;
-			return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}else
 			return "请选择需要删除的活动！";
 
@@ -283,7 +283,7 @@ public class ResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}
@@ -308,7 +308,7 @@ public class ResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}
@@ -330,7 +330,7 @@ public class ResActivityQueryController extends GeneralController {
 		if(StringUtil.isNotBlank(activityFlow))
 		{
 			TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-			if(info==null||!GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
+            if (info == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
 				return "活动信息不存在，请刷新列表页面！";
 
 			if( DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(info.getStartTime())>0)
@@ -339,7 +339,7 @@ public class ResActivityQueryController extends GeneralController {
 			}
 			SysUser user=GlobalContext.getCurrentUser();
 			TeachingActivityResult result=activityBiz.readRegistInfo(activityFlow,user.getUserFlow());
-			if(result!=null&&GlobalConstant.RECORD_STATUS_Y.equals(result.getIsRegiest()))
+            if (result != null && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(result.getIsRegiest()))
 			{
 				return "你已报名，请勿重复报名！";
 			}
@@ -353,9 +353,9 @@ public class ResActivityQueryController extends GeneralController {
 			}
 			result.setActivityFlow(activityFlow);
 			result.setUserFlow(user.getUserFlow());
-			result.setIsRegiest(GlobalConstant.FLAG_Y);
+            result.setIsRegiest(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			result.setRegiestTime(DateUtil.getCurrDateTime());
-			result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c=activityBiz.saveRegist(result);
 			if(c==0)
 				return "报名失败！";
@@ -366,7 +366,7 @@ public class ResActivityQueryController extends GeneralController {
 	}
 	@RequestMapping(value="/editActivity")
 	public String editActivity(Model model,String activityFlow,String role){
-		if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 			List<SysDept> depts = deptBiz.searchDeptBySpe(GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
 		}else {
@@ -396,7 +396,7 @@ public class ResActivityQueryController extends GeneralController {
 						}
 					}
 				}
-				if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 					userList=userBiz.readUserBySpe(activity.getDeptFlow(),professionalBaseAdminRoleFlow,GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 					if(userList!=null&&userList.size()>0)
 					{
@@ -421,7 +421,7 @@ public class ResActivityQueryController extends GeneralController {
 	@RequestMapping(value="/saveActivity")
 	@ResponseBody
 	public String saveActivity(TeachingActivityInfo activity,MultipartFile file,String isRe, String data,String role){
-        return activityBiz.editActivity(activity, file, isRe, GlobalConstant.FLAG_Y, data, role);
+        return activityBiz.editActivity(activity, file, isRe, com.pinde.core.common.GlobalConstant.FLAG_Y, data, role);
 	}
 	@RequestMapping(value="/saveActivityFile")
 	@ResponseBody
@@ -467,7 +467,7 @@ public class ResActivityQueryController extends GeneralController {
 		List<DictForm> smallForms = new ArrayList<>();
 		Map<String,Object> valueMap = new HashMap<>();
 		if(StringUtil.isNotBlank(activityTypeId)){
-			List<SysDict> dicts = dictBiz.searchDictListByDictTypeIdAndDictId(DictTypeEnum.ActivityType.getId(),activityTypeId);
+            List<SysDict> dicts = dictBiz.searchDictListByDictTypeIdAndDictId(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId(), activityTypeId);
 			SysDict dict = dicts.get(0);
 			String dictFlow = dict.getDictFlow();
 			DictForm searchForm = new DictForm();
@@ -522,7 +522,7 @@ public class ResActivityQueryController extends GeneralController {
 					}
 				}
 			}
-			if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 				userList=userBiz.readUserBySpe(deptFlow,professionalBaseAdminRoleFlow,GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 				if(userList!=null&&userList.size()>0)
 				{
@@ -600,7 +600,7 @@ public class ResActivityQueryController extends GeneralController {
 		List<Map<String,Object>> results=activityBiz.readActivityResults(activityFlow);
 		if(results!=null&&results.size()>0){
 			for (Map<String,Object> map:results) {
-				if(GlobalConstant.FLAG_Y.equals(map.get("isEffective"))){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(map.get("isEffective"))) {
 					map.put("isEffective","认可");
 				}else {
 					map.put("isEffective","不认可");
@@ -727,9 +727,9 @@ public class ResActivityQueryController extends GeneralController {
 		int count=activityBiz.saveEvalInfo(activityEvals, resultFlow);
 		if(count==0)
 		{
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping("/signUrl")
 	public String signUrl(String activityFlow,Model model){
@@ -844,12 +844,12 @@ public class ResActivityQueryController extends GeneralController {
 				delNode.detach();
 				activity.setImageUrl(document.asXML());
 				activityBiz.saveActivity(activity);
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			} else {
-				return GlobalConstant.OPRE_FAIL_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 
 	@RequestMapping(value="/regiestCancel")
@@ -858,27 +858,27 @@ public class ResActivityQueryController extends GeneralController {
 		if(StringUtil.isNotBlank(activityFlow))
 		{
 			TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-			if(info==null||!GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
+            if (info == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
 				return "活动信息不存在，请刷新列表页面！";
 			SysUser user=GlobalContext.getCurrentUser();
 			TeachingActivityResult result=activityBiz.readRegistInfo(activityFlow,user.getUserFlow());
 			if (result == null) {
 				return "你未报名，无法取消报名信息！";
 			}
-			if (!GlobalConstant.FLAG_Y.equals(result.getIsRegiest()))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsRegiest()))
 			{
 				return "你已取消报名！";
 			}
-			if(GlobalConstant.FLAG_Y.equals(result.getIsScan()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsScan()))
 			{
 				return "你已扫码签到，无法取消报名信息！";
 			}
-			result.setIsRegiest(GlobalConstant.FLAG_N);
+            result.setIsRegiest(com.pinde.core.common.GlobalConstant.FLAG_N);
 			int num=activityBiz.saveRegist(result);
 			if(num>0){
-				return GlobalConstant.OPERATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 			}
-			return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 		}else
 			return "请选择将要取消的活动！";
 

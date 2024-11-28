@@ -26,7 +26,7 @@ public class LogBizImpl implements ILogBiz {
 	@Override
 	public List<SysLog> searcherLog(SysLog log){
 		SysLogExample logExample = new SysLogExample();
-		Criteria criteria = logExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = logExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(log.getResourceFlow())) {
 			criteria.andResourceFlowEqualTo(log.getResourceFlow());
 		}

@@ -36,7 +36,7 @@ public class CommonUtilController extends GeneralController {
 		sql = customSqlMap.get(id);
 		if(StringUtil.isBlank(sql)){
 			try {
-				XmlParse commonsqlxml = new XmlParse(SpringUtil.getResource("classpath:" + GlobalConstant.COMMON_SQL + "/customSqlRes.xml").getFile());
+                XmlParse commonsqlxml = new XmlParse(SpringUtil.getResource("classpath:" + com.pinde.core.common.GlobalConstant.COMMON_SQL + "/customSqlRes.xml").getFile());
 				Element root = commonsqlxml.getRootElement();
 				Element sqle = (Element)root.selectSingleNode("//sql[@id='"+id+"']");
 				if(sqle!=null){
@@ -57,10 +57,10 @@ public class CommonUtilController extends GeneralController {
 	/**
 	 * executeIds为需执行sql的id集合
 	 * 可一次执行多条以map类型包装sql的id为key
-	 * sql执行参数接收名为 GlobalConstant.ARGUMENTS
-	 * 如果一次调用多条参数接收名格式为 (sql的id).(GlobalConstant.ARGUMENTS)
-	 * 若要执行多次相同语句但参数不同 参数可以这么传 executeIds为(sql的id)[key],arguments为(sql的id)[key].(GlobalConstant.ARGUMENTS)
-	 * 若执行不同语句参数相同则直接设置参数接收名为GlobalConstant.ARGUMENTS
+     * sql执行参数接收名为 com.pinde.core.common.GlobalConstant.ARGUMENTS
+     * 如果一次调用多条参数接收名格式为 (sql的id).(com.pinde.core.common.GlobalConstant.ARGUMENTS)
+     * 若要执行多次相同语句但参数不同 参数可以这么传 executeIds为(sql的id)[key],arguments为(sql的id)[key].(com.pinde.core.common.GlobalConstant.ARGUMENTS)
+     * 若执行不同语句参数相同则直接设置参数接收名为com.pinde.core.common.GlobalConstant.ARGUMENTS
 	 * @param executeIds
 	 * @param request
      * @return
@@ -74,7 +74,7 @@ public class CommonUtilController extends GeneralController {
 			String sql;
 			int length = executeIds.length;
 			if(length==1){//如果只有一条需执行的sql则执行以下包装方式
-				args = request.getParameterValues(GlobalConstant.ARGUMENTS);//根据预定义的参数名获取参数
+                args = request.getParameterValues(com.pinde.core.common.GlobalConstant.ARGUMENTS);//根据预定义的参数名获取参数
 				sql = getUsableSql(executeIds[0],args);//获取可执行的sql
 
 				List<Map<String,Object>> queryResult = queryMapper.commonQuery(sql);//执行
@@ -83,7 +83,7 @@ public class CommonUtilController extends GeneralController {
 			}else if(length>1){//如果需要执行一条以上的sql需要使用下面的包装方式,会将每一条sql的结果集以其sql的id为key包装进结果map内
 				Map<String,Object> rm = new HashMap<String,Object>();
 				for(String sqlKey : executeIds){//循环执行多条sql
-					args = request.getParameterValues(sqlKey+"."+GlobalConstant.ARGUMENTS);//根据sql的id获取其对应的参数
+                    args = request.getParameterValues(sqlKey + "." + com.pinde.core.common.GlobalConstant.ARGUMENTS);//根据sql的id获取其对应的参数
 
 					boolean isMap = sqlKey.endsWith("]");
 					if(isMap){//如果是同sql的id则需要如此包装,用[]内的key作为辨认标识

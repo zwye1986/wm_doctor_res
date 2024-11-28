@@ -1,8 +1,7 @@
 package com.pinde.app.common;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.IrbSingleForm;
-import com.pinde.core.common.enums.GeneralEnum;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.core.util.EnumUtil;
@@ -52,7 +51,7 @@ public class GlobalUtil {
      * @return
      */
     public static String getResRecTypeEnumNameById(String id) {
-        String result = ResRecTypeEnum.getNameById(id);
+        String result = com.pinde.core.common.enums.ResRecTypeEnum.getNameById(id);
         return result;
     }
 
@@ -69,13 +68,13 @@ public class GlobalUtil {
         }
 
         IResGradeBiz gradeBiz = SpringUtil.getBean(IResGradeBiz.class);
-        DeptTeacherGradeInfo trr = gradeBiz.getRecByRecType(processFlow, ResRecTypeEnum.TeacherGrade.getId());
+        DeptTeacherGradeInfo trr = gradeBiz.getRecByRecType(processFlow, com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
         curr = trr==null;
         if(curr){
             return curr;
         }
 
-        DeptTeacherGradeInfo drr = gradeBiz.getRecByRecType(processFlow, ResRecTypeEnum.DeptGrade.getId());
+        DeptTeacherGradeInfo drr = gradeBiz.getRecByRecType(processFlow, com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
         curr = drr==null;
         if(curr){
             return curr;
@@ -107,44 +106,44 @@ public class GlobalUtil {
     public static void setCfg(){
         idValCfg = new HashMap<String, String>();
         //参加活动-活动形式
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_way1","教学查房");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_way2","疑难病例讨论");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_way3","危重病例讨论");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_way4","学术讲座");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_way5","死亡病例讨论");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_way1", "教学查房");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_way2", "疑难病例讨论");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_way3", "危重病例讨论");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_way4", "学术讲座");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_way5", "死亡病例讨论");
         //参加活动-学时
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_period1","1");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_period2","2");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_period3","3");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_period4","4");
-        idValCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId()+"activity_period5","5");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_period1", "1");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_period2", "2");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_period3", "3");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_period4", "4");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId() + "activity_period5", "5");
         //参加活动-学时
-        idValCfg.put(ResRecTypeEnum.CampaignRegistry.getId()+"activity_period1","1");
-        idValCfg.put(ResRecTypeEnum.CampaignRegistry.getId()+"activity_period2","2");
-        idValCfg.put(ResRecTypeEnum.CampaignRegistry.getId()+"activity_period3","3");
-        idValCfg.put(ResRecTypeEnum.CampaignRegistry.getId()+"activity_period4","4");
-        idValCfg.put(ResRecTypeEnum.CampaignRegistry.getId()+"activity_period5","5");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId() + "activity_period1", "1");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId() + "activity_period2", "2");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId() + "activity_period3", "3");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId() + "activity_period4", "4");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId() + "activity_period5", "5");
         //大病例-诊断类型
-        idValCfg.put(ResRecTypeEnum.CaseRegistry.getId()+"mr_diagType1","主要诊断");
-        idValCfg.put(ResRecTypeEnum.CaseRegistry.getId()+"mr_diagType2","次要诊断");
-        idValCfg.put(ResRecTypeEnum.CaseRegistry.getId()+"mr_diagType3","并行诊断");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId() + "mr_diagType1", "主要诊断");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId() + "mr_diagType2", "次要诊断");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId() + "mr_diagType3", "并行诊断");
         //病种-诊断类型
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_diagType1","主要诊断");
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_diagType2","次要诊断");
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_diagType3","并行诊断");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_diagType1", "主要诊断");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_diagType2", "次要诊断");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_diagType3", "并行诊断");
         //病种-是否主管
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_isCharge0","否");
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_isCharge1","是");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_isCharge0", "否");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_isCharge1", "是");
         //病种-是否抢救
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_isRescue0","否");
-        idValCfg.put(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_isRescue1","是");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_isRescue0", "否");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_isRescue1", "是");
         //手术-术中职务
-        idValCfg.put(ResRecTypeEnum.OperationRegistry.getId()+"operation_operRole0","术者");
-        idValCfg.put(ResRecTypeEnum.OperationRegistry.getId()+"operation_operRole1","一助");
-        idValCfg.put(ResRecTypeEnum.OperationRegistry.getId()+"operation_operRole2","二助");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId() + "operation_operRole0", "术者");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId() + "operation_operRole1", "一助");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId() + "operation_operRole2", "二助");
         //操作技能-成功
-        idValCfg.put(ResRecTypeEnum.SkillRegistry.getId()+"skill_result0","否");
-        idValCfg.put(ResRecTypeEnum.SkillRegistry.getId()+"skill_result1","是");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId() + "skill_result0", "否");
+        idValCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId() + "skill_result1", "是");
 
 
         teacherDataListContentCfg = new HashMap<String, Map<String,String>>();
@@ -152,32 +151,32 @@ public class GlobalUtil {
         Map<String,String> vierCfgMap = new LinkedHashMap<String, String>();
         vierCfgMap.put("activity_way","活动形式");
         vierCfgMap.put("activity_speaker","主讲人");
-        teacherDataListContentCfg.put(ResRecTypeEnum.CampaignNoItemRegistry.getId(),vierCfgMap);
+        teacherDataListContentCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CampaignNoItemRegistry.getId(), vierCfgMap);
         //大病例
         vierCfgMap = new LinkedHashMap<String, String>();
         vierCfgMap.put("mr_pName","病人姓名");
         vierCfgMap.put("disease_pName","疾病名称");
-        teacherDataListContentCfg.put(ResRecTypeEnum.CaseRegistry.getId(),vierCfgMap);
+        teacherDataListContentCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId(), vierCfgMap);
         //病种
         vierCfgMap = new LinkedHashMap<String, String>();
         vierCfgMap.put("disease_pName","病人姓名");
         vierCfgMap.put("disease_diagName","病种名称");
-        teacherDataListContentCfg.put(ResRecTypeEnum.DiseaseRegistry.getId(),vierCfgMap);
+        teacherDataListContentCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId(), vierCfgMap);
         //手术
         vierCfgMap = new LinkedHashMap<String, String>();
         vierCfgMap.put("operation_pName","病人姓名");
         vierCfgMap.put("operation_operName","手术名称");
-        teacherDataListContentCfg.put(ResRecTypeEnum.OperationRegistry.getId(),vierCfgMap);
+        teacherDataListContentCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId(), vierCfgMap);
         //操作技能
         vierCfgMap = new LinkedHashMap<String, String>();
         vierCfgMap.put("skill_pName","病人姓名");
         vierCfgMap.put("skill_operName","操作名称");
-        teacherDataListContentCfg.put(ResRecTypeEnum.SkillRegistry.getId(),vierCfgMap);
+        teacherDataListContentCfg.put(com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId(), vierCfgMap);
 
         itemIdAttrCfg = new ArrayList<String>();
-        itemIdAttrCfg.add(ResRecTypeEnum.DiseaseRegistry.getId()+"disease_diagName");
-        itemIdAttrCfg.add(ResRecTypeEnum.OperationRegistry.getId()+"operation_operName");
-        itemIdAttrCfg.add(ResRecTypeEnum.SkillRegistry.getId()+"skill_operName");
+        itemIdAttrCfg.add(com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId() + "disease_diagName");
+        itemIdAttrCfg.add(com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId() + "operation_operName");
+        itemIdAttrCfg.add(com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId() + "skill_operName");
 
         sumItemMap = new HashMap();
     }
@@ -250,14 +249,14 @@ public class GlobalUtil {
             Map<String, IrbSingleForm> singleFormMap = null;
 
             //循环表单类型
-            for (GeneralEnum<String> temp : EnumUtil.toList(ResRecTypeEnum.class)) {
+            for (GeneralEnum<String> temp : EnumUtil.toList(com.pinde.core.common.enums.ResRecTypeEnum.class)) {
                 resRecTypeEnum = (ResRecTypeEnum) temp;
-                if (GlobalConstant.FLAG_N.equals(resRecTypeEnum.getIsForm())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resRecTypeEnum.getIsForm())) {
                     continue;
                 }
                 formFileName = resRecTypeEnum.getId(); //登记类型 ID  (如：CaseRegistry...)
                 //根据登记类型ID  获了XML文件
-                irbFormXp = new XmlParse(SpringUtil.getResource("classpath:" + GlobalConstant.RES_FORM_CONFIG_PATH + "/" + formFileName + ".xml").getFile());
+                irbFormXp = new XmlParse(SpringUtil.getResource("classpath:" + com.pinde.core.common.GlobalConstant.RES_FORM_CONFIG_PATH + "/" + formFileName + ".xml").getFile());
 
                 productTypeElements = irbFormXp.getRootElement().elements();//XML文件根节点下的子节点列表
                 jspPath = "";
@@ -307,7 +306,7 @@ public class GlobalUtil {
 
     public static void loadResFormDict() {
         try {
-            XmlParse formXp = new XmlParse(SpringUtil.getResource("classpath:" + GlobalConstant.RES_FORM_CONFIG_PATH + "/formDict.xml").getFile());
+            XmlParse formXp = new XmlParse(SpringUtil.getResource("classpath:" + com.pinde.core.common.GlobalConstant.RES_FORM_CONFIG_PATH + "/formDict.xml").getFile());
             List<Element> formDictElements = formXp.getRootElement().elements();
             List<Map<String, Object>> resFormDictList = new ArrayList<Map<String, Object>>();
 
@@ -352,7 +351,7 @@ public class GlobalUtil {
      * @return
      */
     public static String getFormPath(String rotationFlow, String recTypeId, String currVer, String recForm, String type, String medicineTypeId, String recordFlow){
-        // 1 如果传入使用的表单为空，则根据 "res_form_category_方案流水号" 获取表单，如没有，则根据 "res_form_category" 获取，还没有，则获取全局配置GlobalConstant.RES_FORM_PRODUCT
+        // 1 如果传入使用的表单为空，则根据 "res_form_category_方案流水号" 获取表单，如没有，则根据 "res_form_category" 获取，还没有，则获取全局配置com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT
         if(!StringUtil.isNotBlank(recForm)){
             recForm = getRecFormByCfg(rotationFlow,recordFlow,recTypeId);
         }
@@ -396,7 +395,7 @@ public class GlobalUtil {
         }
 
         if(!StringUtil.isNotBlank(recForm)){
-            recForm = GlobalConstant.RES_FORM_PRODUCT;
+            recForm = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT;
         }
 
         IrbFormRequestUtil resFormRequestUtil = InitConfig.resFormRequestUtil;
@@ -408,7 +407,7 @@ public class GlobalUtil {
                 }
             }
             if(!StringUtil.isNotBlank(ver)){
-                ver = GlobalConstant.RES_FORM_PRODUCT_VER;
+                ver = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER;
             }
 
             Map<String,Map<String,IrbSingleForm>> singleFormMapMap = resFormRequestUtil.getFormMap();
@@ -418,11 +417,11 @@ public class GlobalUtil {
                     IrbSingleForm singleForm = singleFormMap.get(recForm+"_"+ver);
 
                     if(singleForm == null){
-                        singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+GlobalConstant.RES_FORM_PRODUCT_VER);
+                        singleForm = singleFormMap.get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER);
                     }
 
                     if(singleForm == null){
-                        throw new RuntimeException("未发现表单 模版类型:"+recForm+",表单类型:"+ResRecTypeEnum.getNameById(recTypeId)+",版本号:"+ver);
+                        throw new RuntimeException("未发现表单 模版类型:" + recForm + ",表单类型:" + com.pinde.core.common.enums.ResRecTypeEnum.getNameById(recTypeId) + ",版本号:" + ver);
                     }else{
                         return singleForm;
                     }
@@ -448,7 +447,7 @@ public class GlobalUtil {
         }
 
         if(!StringUtil.isNotBlank(recForm)){
-            recForm = GlobalConstant.RES_FORM_PRODUCT;
+            recForm = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT;
         }
 
         return recForm;
@@ -465,7 +464,7 @@ public class GlobalUtil {
      * @return
      */
     public static List<Map<String,String>> getFormViews(String rotationFlow, String recTypeId, String currVer, String recForm, String medicineTypeId, String recordFlow){
-        // 1 如果传入使用的表单为空，则根据 "res_form_category_方案流水号" 获取表单，如没有，则根据 "res_form_category" 获取，还没有，则获取全局配置GlobalConstant.RES_FORM_PRODUCT
+        // 1 如果传入使用的表单为空，则根据 "res_form_category_方案流水号" 获取表单，如没有，则根据 "res_form_category" 获取，还没有，则获取全局配置com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT
         if(!StringUtil.isNotBlank(recForm)){
             recForm = getRecFormByCfg(rotationFlow,recordFlow,recTypeId);
         }

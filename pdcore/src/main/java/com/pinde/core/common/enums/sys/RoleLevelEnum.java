@@ -1,0 +1,34 @@
+package com.pinde.core.common.enums.sys;
+
+import com.pinde.core.common.GeneralEnum;
+import com.pinde.core.util.EnumUtil;
+
+public enum RoleLevelEnum implements GeneralEnum<String> {
+	
+	SysLevel("SysLevel","系统角色"),
+	ProjLevel("ProjLevel","项目角色"),
+	GateLevel("GateLevel","门户角色")
+	;
+
+	private final String id;
+	private final String name;
+	
+	RoleLevelEnum(String id,String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public static String getNameById(String id) {
+		return EnumUtil.getById(id, RoleLevelEnum.class).getName();
+	}
+}

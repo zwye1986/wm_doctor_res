@@ -90,7 +90,7 @@ public class JswjwStudentController {
             }
         }
         kq.setDoctorFlow(userFlow);
-        if (!DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId()) && !DictTypeEnum.AppealType.getId().equals(kq.getKqTypeId())) {
+        if (!com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId()) && !com.pinde.core.common.enums.DictTypeEnum.AppealType.getId().equals(kq.getKqTypeId())) {
             model.addAttribute("resultId", "30401");
             model.addAttribute("resultType", "类型标识符不正确,LeaveType，AppealType");
             return successUrl;
@@ -148,9 +148,9 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "用户标识符为空");
             return successUrl;
         }
-        List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(DictTypeEnum.LeaveType.getId());
+        List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         model.addAttribute("leaveTypes", leaveTypes);
-        List<SysDict> appealTypes = ieaveAppBiz.getDictListByDictId(DictTypeEnum.AppealType.getId());
+        List<SysDict> appealTypes = ieaveAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.AppealType.getId());
         model.addAttribute("appealTypes", appealTypes);
         List<ResDoctorSchProcess> processes = ieaveAppBiz.searchProcessByDoctor(userFlow);
         model.addAttribute("processes", processes);
@@ -171,7 +171,7 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "用户标识符为空");
             return successUrl;
         }
-        if (StringUtil.isEmpty(kqTypeId) || !DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
+        if (StringUtil.isEmpty(kqTypeId) || !com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
             model.addAttribute("resultId", "30401");
             model.addAttribute("resultType", "类型标识符不正确,LeaveType");
             return successUrl;
@@ -187,7 +187,7 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "暂未参加基地培训");
             return successUrl;
         }
-        if (DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
+        if (com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
             List<ResKgCfg> cfgs = ieaveAppBiz.readKqCfgList(doctor.getOrgFlow(), RecDocCategoryEnum.Doctor.getId());
             model.addAttribute("cfgs", cfgs);
             if (cfgs == null || cfgs.size() <= 0) {
@@ -271,7 +271,7 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "kqTypeId类型标识符为空");
             return successUrl;
         }
-        if (!DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId()) ) {
+        if (!com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
             model.addAttribute("resultId", "30401");
             model.addAttribute("resultType", "类型标识符不正确,LeaveType");
             return successUrl;
@@ -301,7 +301,7 @@ public class JswjwStudentController {
             kq.setOrgName(doctor.getOrgName());
             kq.setSessionNumberNow(sessionNumber);
         }
-        if (DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
+        if (com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
             List<ResKgCfg> cfgs = ieaveAppBiz.readKqCfgList(doctor.getOrgFlow(), RecDocCategoryEnum.Doctor.getId());
             if (cfgs == null || cfgs.size() == 0) {
                 model.addAttribute("resultId", "30201");
@@ -352,7 +352,7 @@ public class JswjwStudentController {
             daysMap.put("recordFlow",kq.getRecordFlow());
             daysMap.put("doctorFlow",kq.getDoctorFlow());
             daysMap.put("sessionNumber",sessionNumber);
-            daysMap.put("id",DictTypeEnum.LeaveType.getId());
+            daysMap.put("id", com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
             // 学员请假天数
             double userHour = Double.valueOf(kq.getIntervalDays());
             double days = ieaveAppBiz.readAllIntervalDays(daysMap);
@@ -414,8 +414,8 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "在当前请假时间内已有请假信息");
             return successUrl;
         }
-        if (DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
-            List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(DictTypeEnum.LeaveType.getId());
+        if (com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
+            List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
             if (leaveTypes != null) {
                 for (SysDict dict : leaveTypes) {
                     if (dict.getDictId().equals(kq.getTypeId())) {
@@ -441,24 +441,24 @@ public class JswjwStudentController {
 
             String auditRoleNow  = "";
             kq.setTeacherFlow(process.getTeacherUserFlow());
-            if (GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag())) {
                 // teacher 带教
-                auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_TEACHER;
+                auditRoleNow = com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER;
                 kq.setTeacherName(process.getTeacherUserName());
             } else {
                 kq.setTeacherName("-");
             }
             kq.setHeadFlow(process.getHeadUserFlow());
-            if (GlobalConstant.FLAG_Y.equals(greater.getHeadFlag())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getHeadFlag())) {
                 if (StringUtil.isBlank(auditRoleNow)) {
-                    auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_HEAD;
+                    auditRoleNow = com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD;
                 }
                 kq.setHeadName(process.getHeadUserName());
             } else {
                 kq.setHeadName("-");
             }
             kq.setTutorFlow(doctor.getTutorFlow());
-            if (GlobalConstant.FLAG_Y.equals(greater.getTutorFlag())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getTutorFlag())) {
                 kq.setTutorName(doctor.getTutorName());
             } else {
                 kq.setTutorName("-");
@@ -475,9 +475,9 @@ public class JswjwStudentController {
             }
             if (admin != null) {
                 kq.setManagerFlow(admin.getUserFlow());
-                if (GlobalConstant.FLAG_Y.equals(greater.getManagerFlag())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getManagerFlag())) {
                     if (StringUtil.isBlank(auditRoleNow)) {
-                        auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_ADMIN;
+                        auditRoleNow = com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN;
                     }
                     kq.setManagerName(admin.getUserName());
                 } else {
@@ -549,7 +549,7 @@ public class JswjwStudentController {
 
         PubFile pubFile = new PubFile();
         pubFile.setFileFlow(PkUtil.getUUID());
-        pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         pubFile.setFilePath(filePath);
         pubFile.setFileName(fileName);
         pubFile.setFileSuffix(fileName.substring(fileName.lastIndexOf(".")));
@@ -705,7 +705,7 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "图片信息不存在为空");
             return successUrl;
         }
-        pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         fileBiz.editFile(pubFile);
         return successUrl;
     }
@@ -741,9 +741,9 @@ public class JswjwStudentController {
         }
         model.addAttribute("deptList",deptList);
         //是否可以新增请假
-        String isAddLeave = GlobalConstant.FLAG_N;
+        String isAddLeave = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(null != deptList && deptList.size() > 0){
-            isAddLeave = GlobalConstant.FLAG_Y;
+            isAddLeave = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
         model.addAttribute("isAddLeave",isAddLeave);
         //请假类型
@@ -752,7 +752,7 @@ public class JswjwStudentController {
         map.put("typeId","");
         map.put("typeName","全部");
         typeList.add(map);
-        List<Map<String,Object>> typeList2 = ieaveAppBiz.searchDictList(DictTypeEnum.LeaveType.getId());
+        List<Map<String, Object>> typeList2 = ieaveAppBiz.searchDictList(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         if(null != typeList2 && typeList2.size()>0){
             typeList.addAll(typeList2);
         }
@@ -793,7 +793,7 @@ public class JswjwStudentController {
         }
         kq.setDoctorFlow(userFlow);
         kq.setOrgFlow(user.getOrgFlow());
-        kq.setKqTypeId(DictTypeEnum.LeaveType.getId());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         PageHelper.startPage(pageIndex, pageSize);
         List<Map<String,String>> kqList = ieaveAppBiz.searchDoctorKqList(kq);
         if(null != kqList && kqList.size()>0){
@@ -951,7 +951,7 @@ public class JswjwStudentController {
 
         PubFile pubFile = new PubFile();
         pubFile.setFileFlow(PkUtil.getUUID());
-        pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         pubFile.setFilePath(filePath);
         pubFile.setFileName(form.getFileName());
         pubFile.setFileSuffix(form.getFileName().substring(form.getFileName().lastIndexOf(".")));
@@ -1063,7 +1063,7 @@ public class JswjwStudentController {
                 return successUrl;
             }
         }
-        int c = ieaveAppBiz.checkLeaveTime(kqExt.getRecordFlow(),kqExt.getDoctorFlow(),kqExt.getStartDate(),kqExt.getEndDate(),DictTypeEnum.LeaveType.getId());
+        int c = ieaveAppBiz.checkLeaveTime(kqExt.getRecordFlow(), kqExt.getDoctorFlow(), kqExt.getStartDate(), kqExt.getEndDate(), com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         if(c>0) {
             model.addAttribute("resultId", "3011101");
             model.addAttribute("resultType", "在当前请假时间内已有请假信息！");
@@ -1091,9 +1091,9 @@ public class JswjwStudentController {
             setKqAuditInfo(less,kqExt,process,doctor);
         }
 
-        kqExt.setKqTypeId(DictTypeEnum.LeaveType.getId());
-        kqExt.setKqTypeName(DictTypeEnum.LeaveType.getName());
-        kqExt.setTypeName(DictTypeEnum.getDictName(DictTypeEnum.LeaveType, kqExt.getTypeId()));
+        kqExt.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
+        kqExt.setKqTypeName(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getName());
+        kqExt.setTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.LeaveType, kqExt.getTypeId()));
         kqExt.setAuditStatusId(ResDoctorKqStatusEnum.Auditing.getId());
         kqExt.setAuditStatusName(ResDoctorKqStatusEnum.Auditing.getName());
         int n = ieaveAppBiz.addResDoctorKq(kqExt,user);
@@ -1327,7 +1327,7 @@ public class JswjwStudentController {
         kq.setManagerAgreeFlag("");
         kq.setManagerAuditTime("");
         kq.setManagerAuditInfo("");
-        kq.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        kq.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         kq.setModifyTime(DateUtil.getCurrDateTime());
         kq.setModifyUserFlow(user.getUserFlow());
         ieaveAppBiz.updateResDoctorKq(kq);
@@ -1386,7 +1386,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此销假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(status)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeHeadAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeHeadAuditing.getName());
                 if ("-".equals(kq.getHeadName())) {
@@ -1397,10 +1397,10 @@ public class JswjwStudentController {
                         kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
                     }else {
                         //待科主任审核
-                        kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                        kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                     }
                 }else {
-                    kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_HEAD);
+                    kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD);
                     // 判断带教和科主任是否同一人审核，如果审批通过依次通过
                     String teacherFlow = kq.getTeacherFlow() == null ? "" : kq.getTeacherFlow();
                     if (teacherFlow.equals(kq.getHeadFlow())) {
@@ -1411,7 +1411,7 @@ public class JswjwStudentController {
                             kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerPass.getId());
                             kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
                         } else {
-                            kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                            kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                         }
                         kq.setHeadAuditTime(time);
                         kq.setHeadAgreeFlag(status);
@@ -1430,7 +1430,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此销假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(status)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerAuditing.getName());
                 if ("-".equals(kq.getManagerName())) {
@@ -1438,7 +1438,7 @@ public class JswjwStudentController {
                     kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerPass.getId());
                     kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
                 }else {
-                    kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                    kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                 }
             } else {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerUnPass.getId());
@@ -1455,7 +1455,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此销假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(status)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
                 kq.setAuditRoleNow("Pass");
@@ -1473,7 +1473,7 @@ public class JswjwStudentController {
             model.addAttribute("resultType", "该数据无法审核");
             return successUrl;
         }
-        if(!GlobalConstant.FLAG_Y.equals(status)) {
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
             // 销假审核不通过，状态变更为请假审核通过
             kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
             kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
@@ -1496,7 +1496,7 @@ public class JswjwStudentController {
                 }
             }
         }
-        kq.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        kq.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         kq.setModifyTime(DateUtil.getCurrDateTime());
         kq.setModifyUserFlow(user.getUserFlow());
         int count = ieaveAppBiz.updateResDoctorKq(kq);
@@ -1510,7 +1510,7 @@ public class JswjwStudentController {
                 kqLog.setRoleName("带教");
                 kqLog.setAuditUserFlow(kq.getTeacherFlow());
                 kqLog.setAuditUserName(kq.getTeacherName());
-                if(kq.getTeacherAgreeFlag().equals(GlobalConstant.FLAG_Y)){
+                if (kq.getTeacherAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     kqLog.setAuditStatusId(ResDoctorKqStatusEnum.RevokeTeacherPass.getId());
                     kqLog.setAuditStatusName(ResDoctorKqStatusEnum.RevokeTeacherPass.getName());
                     kqLog.setAuditRemake(auditInfo);
@@ -1531,7 +1531,7 @@ public class JswjwStudentController {
                     kqLog.setRoleName("带教");
                     kqLog.setAuditUserFlow(kq.getTeacherFlow());
                     kqLog.setAuditUserName(kq.getTeacherName());
-                    if(kq.getTeacherAgreeFlag().equals(GlobalConstant.FLAG_Y)){
+                    if (kq.getTeacherAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                         kqLog.setAuditStatusId(ResDoctorKqStatusEnum.RevokeHeadPass.getId());
                         kqLog.setAuditStatusName(ResDoctorKqStatusEnum.RevokeHeadPass.getName());
                         kqLog.setAuditRemake(auditInfo);
@@ -1549,7 +1549,7 @@ public class JswjwStudentController {
                 kqLog.setRoleName("科主任");
                 kqLog.setAuditUserFlow(kq.getHeadFlow());
                 kqLog.setAuditUserName(kq.getHeadName());
-                if (kq.getHeadAgreeFlag().equals(GlobalConstant.FLAG_Y)) {
+                if (kq.getHeadAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     kqLog.setAuditStatusId(ResDoctorKqStatusEnum.RevokeHeadPass.getId());
                     kqLog.setAuditStatusName(ResDoctorKqStatusEnum.RevokeHeadPass.getName());
                     kqLog.setAuditRemake(auditInfo);
@@ -1569,7 +1569,7 @@ public class JswjwStudentController {
                 kqLog.setRoleName("管理员");
                 kqLog.setAuditUserFlow(kq.getManagerFlow());
                 kqLog.setAuditUserName(kq.getManagerName());
-                if (kq.getManagerAgreeFlag().equals(GlobalConstant.FLAG_Y)) {
+                if (kq.getManagerAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     kqLog.setAuditStatusId(ResDoctorKqStatusEnum.RevokeManagerPass.getId());
                     kqLog.setAuditStatusName(ResDoctorKqStatusEnum.RevokeManagerPass.getName());
                     kqLog.setAuditRemake(auditInfo);
@@ -1638,17 +1638,17 @@ public class JswjwStudentController {
                     if(log.getRoleId().equals("manager")){
                         kq.setManagerAuditTime(log.getAuditTime());
                         kq.setManagerAuditInfo(log.getAuditRemake());
-                        kq.setManagerAgreeFlag(GlobalConstant.FLAG_Y);
+                        kq.setManagerAgreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     if(log.getRoleId().equals("head")){
                         kq.setHeadAuditTime(log.getAuditTime());
                         kq.setHeadAuditInfo(log.getAuditRemake());
-                        kq.setHeadAgreeFlag(GlobalConstant.FLAG_Y);
+                        kq.setHeadAgreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     if(log.getRoleId().equals("teacher")){
                         kq.setTeacherAuditTime(log.getAuditTime());
                         kq.setTeacherAuditInfo(log.getAuditRemake());
-                        kq.setTeacherAgreeFlag(GlobalConstant.FLAG_Y);
+                        kq.setTeacherAgreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                 }
             }
@@ -1815,7 +1815,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页！");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(status)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadAuditing.getName());
                 if ("-".equals(kq.getHeadName())) {
@@ -1826,10 +1826,10 @@ public class JswjwStudentController {
                         kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
                     }else {
                         //待科主任审核
-                        kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                        kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                     }
                 }else {
-                    kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_HEAD);
+                    kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD);
                     // 判断带教和科主任是否同一人审核，如果审批通过依次通过
                     String teacherFlow = kq.getTeacherFlow() == null ? "" : kq.getTeacherFlow();
                     if (teacherFlow.equals(kq.getHeadFlow())) {
@@ -1840,7 +1840,7 @@ public class JswjwStudentController {
                             kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
                             kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
                         } else {
-                            kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                            kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                         }
                         kq.setHeadAuditTime(time);
                         kq.setHeadAgreeFlag(status);
@@ -1861,7 +1861,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页！");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(status)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerAuditing.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerAuditing.getName());
                 if ("-".equals(kq.getManagerName())) {
@@ -1869,7 +1869,7 @@ public class JswjwStudentController {
                     kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
                     kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
                 }else {
-                    kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                    kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                 }
             } else {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerUnPass.getId());
@@ -1886,7 +1886,7 @@ public class JswjwStudentController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页！");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(status)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(status)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
                 kq.setAuditRoleNow("Pass");
@@ -1915,7 +1915,7 @@ public class JswjwStudentController {
                 kqLog.setRoleName("带教");
                 kqLog.setAuditUserFlow(kq.getTeacherFlow());
                 kqLog.setAuditUserName(kq.getTeacherName());
-                if(kq.getTeacherAgreeFlag().equals(GlobalConstant.FLAG_Y)){
+                if (kq.getTeacherAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     kqLog.setAuditStatusId(ResDoctorKqStatusEnum.TeacherPass.getId());
                     kqLog.setAuditStatusName(ResDoctorKqStatusEnum.TeacherPass.getName());
                     kqLog.setAuditRemake(kq.getTeacherAuditInfo());
@@ -1936,7 +1936,7 @@ public class JswjwStudentController {
                     kqLog.setRoleName("带教");
                     kqLog.setAuditUserFlow(kq.getTeacherFlow());
                     kqLog.setAuditUserName(kq.getTeacherName());
-                    if(kq.getTeacherAgreeFlag().equals(GlobalConstant.FLAG_Y)){
+                    if (kq.getTeacherAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                         kqLog.setAuditStatusId(ResDoctorKqStatusEnum.HeadPass.getId());
                         kqLog.setAuditStatusName(ResDoctorKqStatusEnum.HeadPass.getName());
                         kqLog.setAuditRemake(kq.getTeacherAuditInfo());
@@ -1954,7 +1954,7 @@ public class JswjwStudentController {
                 kqLog.setRoleName("科主任");
                 kqLog.setAuditUserFlow(kq.getHeadFlow());
                 kqLog.setAuditUserName(kq.getHeadName());
-                if (kq.getHeadAgreeFlag().equals(GlobalConstant.FLAG_Y)) {
+                if (kq.getHeadAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     kqLog.setAuditStatusId(ResDoctorKqStatusEnum.HeadPass.getId());
                     kqLog.setAuditStatusName(ResDoctorKqStatusEnum.HeadPass.getName());
                     kqLog.setAuditRemake(kq.getHeadAuditInfo());
@@ -1974,7 +1974,7 @@ public class JswjwStudentController {
                 kqLog.setRoleName("管理员");
                 kqLog.setAuditUserFlow(kq.getManagerFlow());
                 kqLog.setAuditUserName(kq.getManagerName());
-                if (kq.getManagerAgreeFlag().equals(GlobalConstant.FLAG_Y)) {
+                if (kq.getManagerAgreeFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     kqLog.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
                     kqLog.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
                     kqLog.setAuditRemake(kq.getManagerAuditInfo());

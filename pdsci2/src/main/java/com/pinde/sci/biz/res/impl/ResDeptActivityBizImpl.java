@@ -63,7 +63,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 	public List<SysDeptMonthPlanItem> readPlanItems(String planFlow) {
 		if(StringUtil.isNotBlank(planFlow)) {
 			SysDeptMonthPlanItemExample example = new SysDeptMonthPlanItemExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andPlanFlowEqualTo(planFlow);
 			example.setOrderByClause("create_time");
 			return planItemMapper.selectByExample(example);
@@ -75,7 +75,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 	public List<SysDeptMonthExamInfo> readPlanExamInfos(String planFlow) {
 		if(StringUtil.isNotBlank(planFlow)) {
 			SysDeptMonthExamInfoExample example = new SysDeptMonthExamInfoExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andPlanFlowEqualTo(planFlow);
 			example.setOrderByClause("create_time");
 			return examInfoMapper.selectByExample(example);
@@ -86,7 +86,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 	@Override
 	public SysDeptMonthPlan findPlan(String deptFlow, String planDate, String planTypeId) {
 		SysDeptMonthPlanExample example=new SysDeptMonthPlanExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDeptFlowEqualTo(deptFlow).andPlanDateEqualTo(planDate).andPlanTypeIdEqualTo(planTypeId);
 		example.setOrderByClause("create_time");
 		List<SysDeptMonthPlan>list=planMapper.selectByExample(example);
@@ -107,10 +107,10 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 		}
 		SysDeptMonthPlan plan=planForm;
 //		plan.setPlanTypeName(DeptActivityTypeEnum.getNameById(plan.getPlanTypeId()));
-		plan.setPlanTypeName(DictTypeEnum.DeptActivityType.getDictNameById(plan.getPlanTypeId()));
+        plan.setPlanTypeName(com.pinde.core.common.enums.DictTypeEnum.DeptActivityType.getDictNameById(plan.getPlanTypeId()));
 		plan.setAuditStatusId(DeptActivityStatusEnum.Save.getId());
 		plan.setAuditStatusName(DeptActivityStatusEnum.Save.getName());
-        plan.setIsReport(GlobalConstant.FLAG_N);
+        plan.setIsReport(com.pinde.core.common.GlobalConstant.FLAG_N);
 		GeneralMethod.setRecordInfo(plan,true);
 		int c=0;
 		if(isNew)
@@ -139,7 +139,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 			String typeCfg = InitConfig.getSysCfg("dept_activity_type");
 			if(DeptActivityTypeEnum.Dept.getId().equals(plan.getPlanTypeId())) {
 				for (DeptActivityItemTypeEnum e : DeptActivityItemTypeEnum.values()) {
-                    if (e.getIsCfg().equals(GlobalConstant.FLAG_Y)) {
+                    if (e.getIsCfg().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 						QingpuLectureEvalCfg cfg = cfgMap.get(e.getId());
 						if (cfg == null) {
 							throw new RuntimeException("请维护【" + e.getName() + "】活动评价指标");
@@ -147,10 +147,10 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 						deptActivityExtMapper.updateItemCfg(plan.getPlanFlow(), e.getId(), cfg.getRecordFlow());
 					}
 				}
-			}else if(GlobalConstant.FLAG_Y.equals(typeCfg)){
+            } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(typeCfg)) {
 				for(DeptActivityItemTypeEnum e:DeptActivityItemTypeEnum.values())
 				{
-                    if (e.getIsCfg().equals(GlobalConstant.FLAG_N) && !DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
+                    if (e.getIsCfg().equals(com.pinde.core.common.GlobalConstant.FLAG_N) && !DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
 							&&!DeptActivityItemTypeEnum.DSBGHAP.getId().equals(e.getId())
 							&&!DeptActivityItemTypeEnum.JYSKHAP.getId().equals(e.getId()))
 					{
@@ -174,7 +174,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 	@Override
 	public List<SysDeptMonthPlanItemEval> readPlanItemEvals(String itemFlow) {
 		SysDeptMonthPlanItemEvalExample evalExample=new SysDeptMonthPlanItemEvalExample();
-		evalExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        evalExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andItemFlowEqualTo(itemFlow);
 		evalExample.setOrderByClause("EVAL_SCORE desc");
 		return planItemEvalMapper.selectByExampleWithBLOBs(evalExample);
@@ -188,7 +188,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 	@Override
 	public SysDeptMonthPlanItemEval readPlanItemEvalByUser(String itemFlow, String userFlow) {
 		SysDeptMonthPlanItemEvalExample evalExample=new SysDeptMonthPlanItemEvalExample();
-		evalExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        evalExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andItemFlowEqualTo(itemFlow).andOperUserFlowEqualTo(userFlow);
 		evalExample.setOrderByClause("create_time desc");
 		List<SysDeptMonthPlanItemEval> list= planItemEvalMapper.selectByExampleWithBLOBs(evalExample);
@@ -243,7 +243,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 		charge.setPlanFlow(planForm.getPlanFlow());
 		charge.setExamUserFlow(planForm.getChargeFlow());
 		charge.setExamUserName(planForm.getChargeName());
-		charge.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        charge.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		charge.setUserTypeId(DeptActivityUserTypeEnum.Charge.getId());
 		charge.setUserTypeName(DeptActivityUserTypeEnum.Charge.getName());
 		saveExam(charge);
@@ -253,7 +253,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 		groupLeader.setPlanFlow(planForm.getPlanFlow());
 		groupLeader.setExamUserFlow(planForm.getGroupLeaderFlow());
 		groupLeader.setExamUserName(planForm.getGroupLeaderName());
-		groupLeader.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        groupLeader.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		groupLeader.setUserTypeId(DeptActivityUserTypeEnum.GroupLeader.getId());
 		groupLeader.setUserTypeName(DeptActivityUserTypeEnum.GroupLeader.getName());
 		saveExam(groupLeader);
@@ -263,7 +263,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 	private SysDeptMonthExamInfo getPlanCKinfo(String planFlow, String userTypeId) {
 		if(StringUtil.isNotBlank(planFlow)&&StringUtil.isNotBlank(userTypeId)) {
 			SysDeptMonthExamInfoExample example = new SysDeptMonthExamInfoExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andPlanFlowEqualTo(planFlow).andUserTypeIdEqualTo(userTypeId);
 			example.setOrderByClause("create_time");
 			List<SysDeptMonthExamInfo> list=examInfoMapper.selectByExample(example);
@@ -283,7 +283,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 			for(SysDeptMonthExamInfo item:items)
 			{
 				item.setPlanFlow(planFlow);
-				item.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                item.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				item.setUserTypeId(itemTypeId);
 				item.setUserTypeName(DeptActivityUserTypeEnum.getNameById(itemTypeId));
 				saveExam(item);
@@ -311,7 +311,7 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 			for(SysDeptMonthPlanItem item:items)
 			{
 				item.setPlanFlow(planFlow);
-				item.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                item.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				item.setItemTypeId(itemTypeId);
 				item.setItemTypeName(DeptActivityItemTypeEnum.getNameById(itemTypeId));
 				saveItem(item);
@@ -333,19 +333,19 @@ public class ResDeptActivityBizImpl implements IResDeptActivityBiz {
 
 	private void delPlanItem(String planFlow, String itemTypeId) {
 		SysDeptMonthPlanItemExample example=new SysDeptMonthPlanItemExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andPlanFlowEqualTo(planFlow).andItemTypeIdEqualTo(itemTypeId);
 		SysDeptMonthPlanItem record=new SysDeptMonthPlanItem();
-		record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		planItemMapper.updateByExampleSelective(record,example);
 	}
 
 	private void delPlanExam(String planFlow, String itemTypeId) {
 		SysDeptMonthExamInfoExample example=new SysDeptMonthExamInfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andPlanFlowEqualTo(planFlow).andUserTypeIdEqualTo(itemTypeId);
 		SysDeptMonthExamInfo record=new SysDeptMonthExamInfo();
-		record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		examInfoMapper.updateByExampleSelective(record,example);
 	}
 }

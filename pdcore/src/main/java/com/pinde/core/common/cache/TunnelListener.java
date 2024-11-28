@@ -26,7 +26,7 @@ public class TunnelListener {
     @PostConstruct
     public void init() {
         String tunnelEnable = env.getProperty("spring.redis.tunnel.enable");
-        if(!GlobalConstant.FLAG_Y.equals(tunnelEnable)) {
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tunnelEnable)) {
             log.info("[TunnelListener.initialize] SSH Tunnel not in use");
             return;
         }

@@ -95,7 +95,7 @@ public class RoleBizImpl implements IRoleBiz {
 		//查询是否有用户已使用此角色，如果有则不允许删除
 		SysUserRoleExample example = new SysUserRoleExample();
 		SysUserRoleExample.Criteria criteria = example.createCriteria().andRoleFlowEqualTo(roleFlow);
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysUserRole> sysUserRole = sysUserRoleMapper.selectByExample(example);
 		if(null != sysUserRole && sysUserRole.size() > 0){
 			return false;
@@ -108,7 +108,7 @@ public class RoleBizImpl implements IRoleBiz {
 	public List<String> getPopedom(String roleFlow) {
 		SysRolePopedomExample example = new SysRolePopedomExample();
 		com.pinde.sci.model.mo.SysRolePopedomExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRolePopedom> sysRolePopedomList = sysRolePopedomMapper.selectByExample(example);
 		List<String> menuIdList = new ArrayList<String>();
 		for(SysRolePopedom sysRolePopedom : sysRolePopedomList){
@@ -122,17 +122,17 @@ public class RoleBizImpl implements IRoleBiz {
 		//将原先该角色的功能都删除
 		SysRolePopedom update = new SysRolePopedom();
 		update.setRoleFlow(sysRole.getRoleFlow());
-		update.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        update.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		SysRolePopedomExample example = new SysRolePopedomExample();
 		com.pinde.sci.model.mo.SysRolePopedomExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		sysRolePopedomMapper.updateByExampleSelective(update, example);
 
 		for(String menuId : menuIds){
 			SysRolePopedom insert = new SysRolePopedom();
 			insert.setRoleFlow(sysRole.getRoleFlow());
 			insert.setMenuId(menuId);
-			insert.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            insert.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			insert.setRecordFlow(PkUtil.getUUID());
 			sysRolePopedomMapper.insert(insert);
 		}
@@ -143,7 +143,7 @@ public class RoleBizImpl implements IRoleBiz {
 		int result = 0;
 		SysRoleAuthGxExample example = new SysRoleAuthGxExample();
 		com.pinde.sci.model.mo.SysRoleAuthGxExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SysRoleAuthGx sysRoleAuthGx = new SysRoleAuthGx();
 		List<SysRoleAuthGx> sysRoleAuthGxes = sysRoleAuthGxMapper.selectByExample(example);
 		if(CollectionUtils.isNotEmpty(sysRoleAuthGxes)){
@@ -156,7 +156,7 @@ public class RoleBizImpl implements IRoleBiz {
 			insert.setRoleFlow(sysRole.getRoleFlow());
 			insert.setOrgFlow(orgFlow);
 			insert.setSchools(schoolNames.toString());
-			insert.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            insert.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			insert.setRecordFlow(PkUtil.getUUID());
 			result =  sysRoleAuthGxMapper.insert(insert);
 		}
@@ -168,7 +168,7 @@ public class RoleBizImpl implements IRoleBiz {
 		SysRoleAuthGx sysRoleAuthGx = new SysRoleAuthGx();
 		SysRoleAuthGxExample example = new SysRoleAuthGxExample();
 		com.pinde.sci.model.mo.SysRoleAuthGxExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRoleAuthGx> sysRoleAuthGxes = sysRoleAuthGxMapper.selectByExample(example);
 		if(CollectionUtils.isNotEmpty(sysRoleAuthGxes)){
 			sysRoleAuthGx = sysRoleAuthGxes.get(0);
@@ -193,7 +193,7 @@ public class RoleBizImpl implements IRoleBiz {
 		List<SysRole> roleList = null;
 		if(StringUtil.isNotBlank(userFlow)&&StringUtil.isNotBlank(wsId)){
 			SysUserRoleExample example = new SysUserRoleExample();
-			example.createCriteria().andUserFlowEqualTo(userFlow).andWsIdEqualTo(wsId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andUserFlowEqualTo(userFlow).andWsIdEqualTo(wsId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysUserRole> userRoleList = this.sysUserRoleMapper.selectByExample(example);
 			List<String> roleFlowList = new ArrayList<String>();
 			if(userRoleList!=null&&!userRoleList.isEmpty()){
@@ -205,7 +205,7 @@ public class RoleBizImpl implements IRoleBiz {
 			}
             if(roleFlowList!=null&&!roleFlowList.isEmpty()) {
                 SysRoleExample example2 = new SysRoleExample();
-                example2.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRoleFlowIn(roleFlowList);
+                example2.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRoleFlowIn(roleFlowList);
                 roleList = this.sysRoleMapper.selectByExample(example2);
             }
 		}
@@ -216,7 +216,7 @@ public class RoleBizImpl implements IRoleBiz {
 	public List<String> getColumn(String roleFlow) {
 		SysRoleColumnExample example = new SysRoleColumnExample();
 		SysRoleColumnExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRoleColumn> list = roleColumnMapper.selectByExample(example);
 		List<String> menuIdList = new ArrayList<String>();
 		for(SysRoleColumn sysRolePopedom : list){
@@ -230,17 +230,17 @@ public class RoleBizImpl implements IRoleBiz {
 		//将原先该角色的栏目都删除
 		SysRoleColumn update = new SysRoleColumn();
 		update.setRoleFlow(sysRole.getRoleFlow());
-		update.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        update.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		SysRoleColumnExample example = new SysRoleColumnExample();
 		com.pinde.sci.model.mo.SysRoleColumnExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		roleColumnMapper.updateByExampleSelective(update, example);
 
 		for(String menuId : columnIds){
 			SysRoleColumn insert = new SysRoleColumn();
 			insert.setRoleFlow(sysRole.getRoleFlow());
 			insert.setColumnId(menuId);
-			insert.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            insert.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			insert.setRecordFlow(PkUtil.getUUID());
 			GeneralMethod.setRecordInfo(insert,true);
 			roleColumnMapper.insert(insert);
@@ -252,7 +252,7 @@ public class RoleBizImpl implements IRoleBiz {
 	public SysRole searchByRoleName(String roleName) {
 		SysRoleExample example = new SysRoleExample();
 		SysRoleExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleNameEqualTo(roleName).andWsIdEqualTo("njmuedu").andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleNameEqualTo(roleName).andWsIdEqualTo("njmuedu").andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> roleList = sysRoleMapper.selectByExample(example);
 		return roleList.get(0);
 	}
@@ -261,7 +261,7 @@ public class RoleBizImpl implements IRoleBiz {
 	public SysRole selectByRoleName(String roleName) {
 		SysRoleExample example = new SysRoleExample();
 		SysRoleExample.Criteria criteria = example.createCriteria();
-		criteria.andRoleNameEqualTo(roleName).andWsIdEqualTo("res").andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRoleNameEqualTo(roleName).andWsIdEqualTo("res").andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> roleList = sysRoleMapper.selectByExample(example);
 		return roleList.get(0);
 	}

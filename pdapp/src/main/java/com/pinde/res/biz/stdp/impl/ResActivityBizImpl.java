@@ -112,14 +112,14 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		if (StringUtil.isNotBlank(activityFlow)){
 			criteria.andActivityFlowEqualTo(activityFlow);
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return resultMapper.countByExample(example);
 	}
 
 	@Override
 	public TeachingActivityResult readRegistInfo(String activityFlow, String userFlow) {
 		TeachingActivityResultExample example=new TeachingActivityResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow)
 				.andUserFlowEqualTo(userFlow);
 		List<TeachingActivityResult> list=resultMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -147,7 +147,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 	@Override
 	public List<TeachingActivityEval> readActivityResultEvals(String resultFlow) {
 		TeachingActivityEvalExample example=new TeachingActivityEvalExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andResultFlowEqualTo(resultFlow);
 		return activityEvalMapper.selectByExample(example);
 	}
@@ -195,7 +195,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				eval.setOrdinal(target.getOrdinal());
 				eval.setUserFlow(userFlow);
 				eval.setResultFlow(resultFlow);
-                if (eval.getIsText().equals(GlobalConstant.FLAG_N)) {
+                if (eval.getIsText().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 					sum+=eval.getEvalScore();
 				}else {
 					remarks=remarks+1;
@@ -217,14 +217,14 @@ public class ResActivityBizImpl implements IResActivityBiz {
 	public  int saveResult(TeachingActivityResult info,String userFlow) {
 		if (StringUtil.isBlank(info.getResultFlow())) {
 			info.setResultFlow(PkUtil.getUUID());
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			info.setCreateUserFlow(userFlow);
 			info.setCreateTime(DateUtil.getCurrDateTime());
 			info.setModifyUserFlow(userFlow);
 			info.setModifyTime(DateUtil.getCurrDateTime());
 			return resultMapper.insertSelective(info);
 		} else {
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			info.setModifyUserFlow(userFlow);
 			info.setModifyTime(DateUtil.getCurrDateTime());
 			return resultMapper.updateByPrimaryKeySelective(info);
@@ -235,14 +235,14 @@ public class ResActivityBizImpl implements IResActivityBiz {
 	public  int saveResultEval(TeachingActivityEval eval,String userFlow) {
 		if (StringUtil.isBlank(eval.getEvalFlow())) {
 			eval.setEvalFlow(PkUtil.getUUID());
-			eval.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            eval.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			eval.setCreateUserFlow(userFlow);
 			eval.setCreateTime(DateUtil.getCurrDateTime());
 			eval.setModifyUserFlow(userFlow);
 			eval.setModifyTime(DateUtil.getCurrDateTime());
 			return activityEvalMapper.insertSelective(eval);
 		} else {
-			eval.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            eval.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			eval.setModifyUserFlow(userFlow);
 			eval.setModifyTime(DateUtil.getCurrDateTime());
 			return activityEvalMapper.updateByPrimaryKeySelective(eval);
@@ -336,7 +336,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		if (StringUtil.isBlank(info.getActivityFlow())) {
 
 			//判断教学活动新增判断时间是否符合要求
-			if (!GlobalConstant.RECORD_STATUS_N.equals(info.getRecordStatus())) {
+            if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(info.getRecordStatus())) {
 				String startDateTime = info .getStartTime();
 				String currDate = DateUtil.getCurrDateTime("yyyy-MM-dd");
 				String currTime = DateUtil.getCurrDateTime("HH:mm:ss");
@@ -383,7 +383,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			}
 
 			info.setActivityFlow(PkUtil.getUUID());
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			info.setCreateUserFlow(user.getUserFlow());
 			info.setCreateTime(DateUtil.getCurrDateTime());
 			info.setModifyUserFlow(user.getUserFlow());
@@ -415,7 +415,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			subject.setInspectionType(info.getActivityTypeId());
 			subject.setTeachFlow(user.getUserFlow());
 			subject.setTeachName(user.getUserName());
-            subject.setRecordStatus(GlobalConstant.FLAG_Y);
+            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(info.getRealitySpeaker());
 			subject.setActivityStartTime(info.getStartTime());
 			subject.setActivityEndTime(info.getEndTime());
@@ -503,7 +503,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 
 		if (StringUtil.isBlank(info.getActivityFlow())) {
 			info.setActivityFlow(PkUtil.getUUID());
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			info.setCreateUserFlow(user.getUserFlow());
 			info.setCreateTime(DateUtil.getCurrDateTime());
 			info.setModifyUserFlow(user.getUserFlow());
@@ -535,7 +535,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			subject.setInspectionType(info.getActivityTypeId());
 			subject.setTeachFlow(user.getUserFlow());
 			subject.setTeachName(user.getUserName());
-            subject.setRecordStatus(GlobalConstant.FLAG_Y);
+            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(info.getRealitySpeaker());
 			subject.setActivityStartTime(info.getStartTime());
 			subject.setActivityEndTime(info.getEndTime());
@@ -644,7 +644,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		if (StringUtil.isBlank(info.getActivityFlow())) {
 
 			//判断教学活动新增判断时间是否符合要求
-			if (!GlobalConstant.RECORD_STATUS_N.equals(info.getRecordStatus())) {
+            if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(info.getRecordStatus())) {
 				String startDateTime = info .getStartTime();
 				String currDate = DateUtil.getCurrDateTime("yyyy-MM-dd");
 				String currTime = DateUtil.getCurrDateTime("HH:mm:ss");
@@ -696,7 +696,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			}else{
 				info.setActivityFlow(PkUtil.getUUID());
 			}
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			info.setCreateUserFlow(user.getUserFlow());
 			info.setCreateTime(DateUtil.getCurrDateTime());
 			info.setModifyUserFlow(user.getUserFlow());
@@ -728,7 +728,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			subject.setInspectionType(info.getActivityTypeId());
 			subject.setTeachFlow(user.getUserFlow());
 			subject.setTeachName(user.getUserName());
-            subject.setRecordStatus(GlobalConstant.FLAG_Y);
+            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(info.getRealitySpeaker());
 			subject.setActivityStartTime(info.getStartTime());
 			subject.setActivityEndTime(info.getEndTime());
@@ -822,7 +822,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			return activityFormValueMapper.updateByPrimaryKeySelective(formValue);
 		}else {
 			formValue.setRecordFlow(PkUtil.getUUID());
-			formValue.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            formValue.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			formValue.setCreateUserFlow(user.getUserFlow());
 			formValue.setCreateTime(DateUtil.getCurrDateTime());
 			formValue.setModifyUserFlow(user.getUserFlow());
@@ -857,7 +857,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			infoTarget.setTargetName(target.getTargetName());
 			infoTarget.setIsText(target.getIsText());
 			infoTarget.setOrdinal(i++);
-			infoTarget.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            infoTarget.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			targetBiz.saveInfoTarget(infoTarget,userinfo);
 		}
 	}
@@ -1000,7 +1000,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 	@Override
 	public List<TeachingActivityTarget> readByOrg(String activityTypeId, String orgFlow) {
 		TeachingActivityTargetExample example=new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(orgFlow);
 		// 查询评价指标活动形式和教学活动的活动形式一致的评价指标
 		if(StringUtil.isNotBlank(activityTypeId)){

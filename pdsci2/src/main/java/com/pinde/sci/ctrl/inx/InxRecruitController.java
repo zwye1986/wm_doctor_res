@@ -13,9 +13,9 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.OperTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -115,17 +115,17 @@ public class InxRecruitController extends GeneralController{
 				return "recruit/inx/login";
 			}
 			//设置当前用户
-			setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 
-			if (GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
+            if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 				return "redirect:/main?time="+new Date();
 			}
 			//设置当前用户
-			setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-			setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
-			setSessionAttribute(GlobalConstant.CURRENT_ORG, sysOrgBiz.readSysOrg(user.getOrgFlow()));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ORG, sysOrgBiz.readSysOrg(user.getOrgFlow()));
 			//设置当前用户部门列表
-			setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(user));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(user));
 
 			//加载系统权限
 			loginBiz.loadSysRole(user.getUserFlow());
@@ -133,7 +133,7 @@ public class InxRecruitController extends GeneralController{
 			
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserFlow(user.getUserFlow());
-			userRole.setWsId(GlobalConstant.RECRUIT_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RECRUIT_WS_ID);
 			List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
 			if(!userRoleList.isEmpty()){
 				userRole = userRoleList.get(0);
@@ -141,7 +141,7 @@ public class InxRecruitController extends GeneralController{
 			SysRole role = roleBiz.read(userRole.getRoleFlow()); 
 			if(role!=null) {
 
-				setSessionAttribute(GlobalConstant.CURRENT_WS_ID, GlobalConstant.RECRUIT_WS_ID);
+                setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, com.pinde.core.common.GlobalConstant.RECRUIT_WS_ID);
 
 				//在线用户功能使用
 				SessionData sessionData = new SessionData();
@@ -158,7 +158,7 @@ public class InxRecruitController extends GeneralController{
 				log.setOperId(OperTypeEnum.LogIn.getId());
 				log.setOperName(OperTypeEnum.LogIn.getName());
 				log.setLogDesc("登录IP["+request.getRemoteAddr()+"]");
-				log.setWsId(GlobalConstant.SYS_WS_ID);
+                log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 				GeneralMethod.addSysLog(log);
 				logMapper.insert(log);
 				String sysUrl=getRoleUrl(role.getRoleFlow(),user.getUserCode());
@@ -209,18 +209,18 @@ public class InxRecruitController extends GeneralController{
 		String idNo = registerUser.getIdNo();
 		SysUser user = userBiz.findByUserCode(userCode.trim());
 		if(user != null){
-			model.addAttribute("errorMsg" , GlobalConstant.USER_CODE_REPETE);
-			return GlobalConstant.USER_CODE_REPETE;
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_CODE_REPETE);
+            return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 		}
 		user = userBiz.findByUserPhone(userPhone.trim());
 		if(user != null){
-			model.addAttribute("errorMsg" , GlobalConstant.USER_PHONE_REPETE);
-			return GlobalConstant.USER_PHONE_REPETE;
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE);
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 		}
 		user = userBiz.findByIdNo(idNo.trim());
 		if(user != null){
-			model.addAttribute("errorMsg" , GlobalConstant.USER_ID_NO_REPETE);
-			return GlobalConstant.USER_ID_NO_REPETE;
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE);
+            return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 		}
 		SysOrg org=sysOrgBiz.readSysOrg(registerUser.getOrgFlow());
 		if(org!=null)
@@ -228,7 +228,7 @@ public class InxRecruitController extends GeneralController{
 		registerUser.setCretTypeName(CertificateTypeEnum.Shenfenzheng.getName());
 		registerUser.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
 		this.loginBiz.registRecruitUser(registerUser);
-		return GlobalConstant.USER_REG_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.USER_REG_SUCCESSED;
 	}
 
 	@RequestMapping("/logout")

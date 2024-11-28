@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
@@ -9,7 +12,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.SysOrg;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +89,7 @@ public class JsResBusinessTwoController extends GeneralController {
         if (StringUtil.isNotBlank(ifOpen)) {
             params.put("ifOpen", ifOpen);
             for (int i = 0; i < powerTypeId.length; i++) {
-                params.put(powerTypeId[i], GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
             }
             list = schManualBiz.userListByJsResPower(params);
         } else {
@@ -143,8 +145,8 @@ public class JsResBusinessTwoController extends GeneralController {
     @RequestMapping(value = "/hospitalChangeMain")
     public String hospitalChangeMain(Model model) {
         SysOrg sysOrg2 = new SysOrg();
-        sysOrg2.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-        sysOrg2.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg2.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg2.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg2, null);
         model.addAttribute("allSysOrgList", allSysOrgList);
         return "jsres/businessTwo/hospitalChangeMain";
@@ -155,8 +157,8 @@ public class JsResBusinessTwoController extends GeneralController {
      */
     @RequestMapping(value = {"/hospitalChangeList"})
     public String hospitalChangeList(SysOrg sysOrg, Integer currentPage, HttpServletRequest request, Model model, String orgFlag) {
-        sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-        sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         PageHelper.startPage(currentPage, getPageSize(request));
         List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg, orgFlag);
         model.addAttribute("sysOrgList", sysOrgList);
@@ -206,9 +208,9 @@ public class JsResBusinessTwoController extends GeneralController {
         if (sysDict == null) {
             sysDict = new SysDict();
         }
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-        sysDict.setDictTypeId(DictTypeEnum.SendSchool.getId());
-        sysDict.setDictTypeName(DictTypeEnum.SendSchool.getName());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
+        sysDict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getName());
         PageHelper.startPage(currentPage, getPageSize(request));
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         model.addAttribute("dictList", dictList);

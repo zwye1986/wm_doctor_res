@@ -37,12 +37,12 @@ public class HttpContextFilter implements Filter {
 		}
 		//
 		String servletPath = httpRequest.getServletPath();
-		httpRequest.setAttribute(GlobalConstant.PAGE_SERVLET_PATH, servletPath);
+        httpRequest.setAttribute(com.pinde.core.common.GlobalConstant.PAGE_SERVLET_PATH, servletPath);
 		//		logger.debug("HttpContextFilter......{}",getPath);
 		GlobalContext.setRequest((HttpServletRequest) request);
 		GlobalContext.setResponse((HttpServletResponse) response);
 		if("get".equalsIgnoreCase(httpRequest.getMethod())){
-			if(GlobalConstant.FLAG_Y.equals(request.getParameter("isMainFrame"))){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(request.getParameter("isMainFrame"))) {
 				String mainFrameSrc = httpRequest.getRequestURL().toString();
 				if(StringUtil.isNotBlank(httpRequest.getQueryString()) ){
 					mainFrameSrc = mainFrameSrc+"?"+httpRequest.getQueryString()+"&isMainFrame=Y";

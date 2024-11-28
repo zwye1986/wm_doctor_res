@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.recruit;
 
 import com.alibaba.fastjson.JSONArray;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
@@ -59,8 +60,8 @@ public class RecruitInterviewInfoManageController extends GeneralController {
         param.put("idNo",idNo);
         param.put("startDate",beginDate);
         param.put("endDate",endDate);
-        param.put("writeExamFlag", GlobalConstant.FLAG_Y);
-        param.put("examIsPass", GlobalConstant.FLAG_Y);//笔试通过
+        param.put("writeExamFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        param.put("examIsPass", com.pinde.core.common.GlobalConstant.FLAG_Y);//笔试通过
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
         if(recruitInfoExts!=null)
         {
@@ -86,7 +87,7 @@ public class RecruitInterviewInfoManageController extends GeneralController {
         {
             return "未选择面试信息";
         }
-        if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
         {
             return "已发录取通知，无法审核！";
         }
@@ -127,18 +128,18 @@ public class RecruitInterviewInfoManageController extends GeneralController {
             return "已发送过面试通知，请刷新列表页面！";
         }
         RecruitInfoExt recruitInfoExt = recruitInfoBiz.searchRecruitInfoByFlow(recruitFlow);
-        if(!GlobalConstant.FLAG_Y.equals(recruitInfoExt.getExamIsPass()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getExamIsPass()))
         {
             return "该学员招录考试未通过，无法发送面试通知！";
         }
-        if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
         {
             return "已发送过面试通知，请刷新列表页面！";
         }
         if (recruitInterviewInfoBiz.sendInterview(recruitInterviewInfo)){
-            return GlobalConstant.SEND_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SEND_SUCCESSED;
         }
-        return GlobalConstant.SEND_FAIL;
+        return com.pinde.core.common.GlobalConstant.SEND_FAIL;
     }
 
     @RequestMapping("/sendAll")
@@ -148,11 +149,11 @@ public class RecruitInterviewInfoManageController extends GeneralController {
         List<RecruitInfoExt> recruitInfoExtList = new ArrayList<RecruitInfoExt>();
         for (String recruitFlow :list) {
             RecruitInfoExt recruitInfoExt = recruitInfoBiz.searchRecruitInfoByFlow(recruitFlow);
-            if(!GlobalConstant.FLAG_Y.equals(recruitInfoExt.getExamIsPass()))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getExamIsPass()))
             {
                 return "该学员【"+recruitInfoExt.getSysUser().getUserName()+"】招录考试未通过，无法发送面试通知！";
             }
-            if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
             {
                 return "该学员【"+recruitInfoExt.getSysUser().getUserName()+"】已发送过面试通知，请刷新列表页面！";
             }
@@ -164,7 +165,7 @@ public class RecruitInterviewInfoManageController extends GeneralController {
             recruitInfoExtList.add(recruitInfoExt);
         }
         recruitInterviewInfoBiz.sendAllInterview(recruitInfoExtList);
-        return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
     }
 
     @RequestMapping("/importInterviewScore")
@@ -198,16 +199,16 @@ public class RecruitInterviewInfoManageController extends GeneralController {
             }
         }
         RecruitInfoExt recruitInfoExt=recruitInfoBiz.searchRecruitInfoByFlow(recruitInfo.getRecruitFlow());
-        if(GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
         {
             return "已发录取通知，无法修改成绩！";
         }
         int c= recruitInfoBiz.saveRecruitInfo(recruitInfo);
         if(c==0)
         {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
     @RequestMapping(value="/saveImportInterviewScore")
     @ResponseBody
@@ -223,8 +224,8 @@ public class RecruitInterviewInfoManageController extends GeneralController {
             Map<String,String> param=new HashMap<>();
             param.put("orgFlow",orgFlow);
             param.put("recruitYear",recruitYear);
-            param.put("writeExamFlag", GlobalConstant.FLAG_Y);
-            param.put("examIsPass", GlobalConstant.FLAG_Y);//笔试通过
+            param.put("writeExamFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
+            param.put("examIsPass", com.pinde.core.common.GlobalConstant.FLAG_Y);//笔试通过
             List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
             if(recruitInfoExts==null||recruitInfoExts.size()==0)
             {
@@ -239,17 +240,17 @@ public class RecruitInterviewInfoManageController extends GeneralController {
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 
                     }else{
-                        if(GlobalConstant.ZERO_LINE != count){
-                            return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                         }else{
-                            return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         }
                     }
                 }else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();

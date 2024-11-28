@@ -79,7 +79,7 @@ public class SchCfgController extends GeneralController{
 
 		SysDept dept = new SysDept();
 		dept.setOrgFlow(orgFlow);
-//		dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//		dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> deptList = deptBiz.searchDept(dept);
 		if(deptList!=null && deptList.size()>0){
 			model.addAttribute("deptList",deptList);
@@ -175,7 +175,7 @@ public class SchCfgController extends GeneralController{
 		orgFlow = StringUtil.defaultIfEmpty(orgFlow,GlobalContext.getCurrentUser().getOrgFlow());
 		SysDept searchDept = new SysDept();
 		searchDept.setOrgFlow(orgFlow);
-		searchDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        searchDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> depts = deptBiz.searchDept(searchDept);
 		return depts;
 	}
@@ -185,7 +185,7 @@ public class SchCfgController extends GeneralController{
 		orgFlow = StringUtil.defaultIfEmpty(orgFlow,GlobalContext.getCurrentUser().getOrgFlow());
 		SchDept searchSchDept = new SchDept();
 		searchSchDept.setOrgFlow(orgFlow);
-		//searchSchDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        //searchSchDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SchDept> schDepts = schDeptBiz.searchSchDeptByExample(searchSchDept);
 		return schDepts;
 	}
@@ -220,10 +220,10 @@ public class SchCfgController extends GeneralController{
 		if(resEnterOpenCfg!=null)
 			enterOpenCfg.setCfgFlow(resEnterOpenCfg.getCfgFlow());
 		int result = readResEnterOpenCfg.saveEnterOpenCfg(enterOpenCfg);
-		if(result>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value = "/modifyCfg")
@@ -234,14 +234,14 @@ public class SchCfgController extends GeneralController{
 		model.addAttribute("dept",dept);
 		List<SysDict> allDicts=new ArrayList<>();
 		SysDict sysDict = new SysDict();
-		sysDict.setDictTypeId(DictTypeEnum.StandardDept.getId());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.StandardDept.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDict> sysDictList = dictBiz.searchDictList(sysDict);
 		if(sysDictList!=null&&sysDictList.size()>0) {
 			allDicts.addAll(sysDictList);
 			for (SysDict dict : sysDictList) {
 				String typeId = dict.getDictTypeId() + "." + dict.getDictId();
-				if (DictTypeEnum.StandardDept.getLevel() > 1) {
+                if (com.pinde.core.common.enums.DictTypeEnum.StandardDept.getLevel() > 1) {
 					sysDict.setDictTypeId(typeId);
 					List<SysDict> sysDictSecondList = dictBiz.searchDictList(sysDict);
 					if (sysDictSecondList != null && sysDictSecondList.size() > 0) {
@@ -250,7 +250,7 @@ public class SchCfgController extends GeneralController{
 							String tTypeId = typeId + "." + sDict.getDictId();
 							sDict.setDictId(dict.getDictId()+"."+sDict.getDictId());
 							sDict.setDictName(dict.getDictName()+"."+sDict.getDictName());
-							if (DictTypeEnum.StandardDept.getLevel() > 2) {
+                            if (com.pinde.core.common.enums.DictTypeEnum.StandardDept.getLevel() > 2) {
 								sysDict.setDictTypeId(tTypeId);
 								List<SysDict> sysDictThirdList = dictBiz.searchDictList(sysDict);
 								if (sysDictThirdList != null && sysDictThirdList.size() > 0) {
@@ -277,11 +277,11 @@ public class SchCfgController extends GeneralController{
 		if(cfg==null)
 			cfg=new SchAndStandardDeptCfg();
 		cfg.setStandardDeptId(standardDeptId);
-		cfg.setStandardDeptName(DictTypeEnum.StandardDept.getDictNameById(standardDeptId));
+        cfg.setStandardDeptName(com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId));
 		SchDept dept=schDeptBiz.readSchDept(schDeptFlow);
 		cfg.setSchDeptFlow(schDeptFlow);
 		cfg.setSchDeptName(dept.getSchDeptName());
-		cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SysOrg org=orgBiz.readSysOrg(dept.getOrgFlow());
 		cfg.setOrgFlow(dept.getOrgFlow());
 		cfg.setOrgName(org.getOrgName());
@@ -398,7 +398,7 @@ public class SchCfgController extends GeneralController{
 //					for(int j=0;j<tempSchDepts.size();j++, rowNum++){
 //						HSSFRow rowFour = sheet.createRow(rowNum);//第二行
 //						String deptName = "";
-//						if(GlobalConstant.FLAG_Y.equals(tempSchDepts.get(j).getIsExternal())){
+//						if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempSchDepts.get(j).getIsExternal())){
 //							deptName = "*"+deptList.get(i).getDeptName()+"\n(外院名称："
 //									 + deptExtRelMap.get(tempSchDepts.get(j).getSchDeptFlow()).getOrgName()
 //									 + "\n医院科室：" +deptExtRelMap.get(tempSchDepts.get(j).getSchDeptFlow()).getRelDeptName()
@@ -418,7 +418,7 @@ public class SchCfgController extends GeneralController{
 //							}
 //						}
 //						String deptNum = tempSchDepts.get(j).getDeptNum() == null ? "0" :tempSchDepts.get(j).getDeptNum()+"";
-//						String external = GlobalConstant.FLAG_Y.equals(tempSchDepts.get(j).getExternal()) ? "是":"否";
+//						String external = com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempSchDepts.get(j).getExternal()) ? "是":"否";
 //						resultList = new String[]{
 //								rowNum-1+"",
 //								deptName,
@@ -542,7 +542,7 @@ public class SchCfgController extends GeneralController{
 				}
 				String deptNum =deptList.get(i).get("deptNum");
 				deptNum = deptNum == null ? "0" :deptNum+"";
-				String external = GlobalConstant.FLAG_Y.equals(deptList.get(i).get("external")) ? "是":"否";
+                String external = com.pinde.core.common.GlobalConstant.FLAG_Y.equals(deptList.get(i).get("external")) ? "是" : "否";
 				resultList = new String[]{
 						rowNum-1+"",
 						deptList.get(i).get("schDeptName"),
@@ -588,17 +588,17 @@ public class SchCfgController extends GeneralController{
 		if(file.getSize() > 0){
 			try{
 				int result = deptBiz.importDeptFromExcel(file,orgFlow);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	@RequestMapping(value = {"/deptList" }, method = RequestMethod.GET)
@@ -633,8 +633,8 @@ public class SchCfgController extends GeneralController{
 				}
 				model.addAttribute("deptRelMap",deptRelMap);
 			}
-			
-			if(schDept!=null && GlobalConstant.FLAG_Y.equals(schDept.getIsExternal())){
+
+            if (schDept != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schDept.getIsExternal())) {
 				SchDeptExternalRel deptExtRel = deptExtRelBiz.readSchDeptExtRelBySchDept(schDeptFlow);
 				model.addAttribute("deptExtRel",deptExtRel);
 			}
@@ -674,7 +674,7 @@ public class SchCfgController extends GeneralController{
 				SchDept searchSchDept = new SchDept();
 				searchSchDept.setSchDeptName(schDeptName);
 				searchSchDept.setOrgFlow(schDept.getOrgFlow());
-				searchSchDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchSchDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<SchDept> schDeptForNames = schDeptBiz.searchSchDeptByExample(searchSchDept);
 				if (schDeptForNames != null && schDeptForNames.size() > 0) {
 					isSchDeptNameRepeat = true;
@@ -718,8 +718,8 @@ public class SchCfgController extends GeneralController{
 				schDept.setDeptName(permissionAddSysDept.getDeptName());
 				result = saveDeptInfo(schDept, standardDeptId, deptExtRel);
 			}
-			if (result != GlobalConstant.ZERO_LINE) {
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}else {//允许新增sys_dept
 			if (null != schDept) {
@@ -742,7 +742,7 @@ public class SchCfgController extends GeneralController{
 					SchDept searchSchDept = new SchDept();
 					searchSchDept.setSchDeptName(schDeptName);
 					searchSchDept.setOrgFlow(schDept.getOrgFlow());
-					searchSchDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    searchSchDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					List<SchDept> schDeptForNames = schDeptBiz.searchSchDeptByExample(searchSchDept);
 					if (schDeptForNames != null && schDeptForNames.size() > 0) {
 						isSchDeptNameRepeat = true;
@@ -801,12 +801,12 @@ public class SchCfgController extends GeneralController{
 					result = saveDeptInfo(schDept, sysDept, standardDeptId, deptExtRel);
 				}
 
-				if (result != GlobalConstant.ZERO_LINE) {
-					return GlobalConstant.SAVE_SUCCESSED;
+                if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 				}
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	private int saveDeptInfo(SchDept schDept, String[] standardDeptId, SchDeptExternalRel deptExtRel) {
@@ -839,7 +839,7 @@ public class SchCfgController extends GeneralController{
 		deptBiz.saveDept(tempDept);
 		schDept.setDeptFlow(tempDept.getDeptFlow());
 		result = schDeptBiz.saveSchDeptAndRed(schDept, standardDeptId);
-//			if (GlobalConstant.FLAG_Y.equals(schDept.getIsExternal())) {
+//			if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schDept.getIsExternal())) {
 //				result = schDeptBiz.saveSchDeptAndRedAndExtRel(schDept, standardDeptId, deptExtRel);
 //			} else {
 //				result = schDeptBiz.saveSchDeptAndRed(schDept, standardDeptId);
@@ -851,15 +851,15 @@ public class SchCfgController extends GeneralController{
 	@ResponseBody
 	public String delDept(SchDept dept,Model model) throws Exception{
 		if(null != dept){
-			//dept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            //dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int result = schDeptBiz.delSchDept(dept);
-			if(result != GlobalConstant.ZERO_LINE){
+            if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
 				//删除关联记录
 				examCfgBiz.deleteSchExamStandardDeptByDeptId(dept.getSchDeptFlow());
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	
 	@RequestMapping(value = "/searchDeptListByOrg",method={RequestMethod.POST})
@@ -949,11 +949,11 @@ public class SchCfgController extends GeneralController{
 				}
 			}
 			if(StringUtil.isNotBlank(deptRel.getStandardDeptId())){
-				deptRel.setStandardDeptName(DictTypeEnum.StandardDept.getDictNameById(deptRel.getStandardDeptId()));
+                deptRel.setStandardDeptName(com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(deptRel.getStandardDeptId()));
 			}
 		}
-		if(!StringUtil.isNotBlank(deptRel.getStandardDeptName()) && !GlobalConstant.RECORD_STATUS_N.equals(deptRel.getRecordStatus())){
-			return GlobalConstant.FLAG_N;
+        if (!StringUtil.isNotBlank(deptRel.getStandardDeptName()) && !com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(deptRel.getRecordStatus())) {
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		deptRelBiz.editDeptRel(deptRel);
 		return deptRel.getRecordFlow();
@@ -972,11 +972,11 @@ public class SchCfgController extends GeneralController{
 				deptFlows.add(flow);
 			}
 			int result = schDeptBiz.mapDeptRel(orgFlow,deptFlows);
-			if(result!=GlobalConstant.ZERO_LINE){
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+            if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 	
 	@RequestMapping(value = "/getSchInUsedCount",method={RequestMethod.GET})

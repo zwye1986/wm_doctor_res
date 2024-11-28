@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -42,7 +43,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
     @Override
     public List<ResIdctrlMain> searchMain(ResIdctrlMain idctrlMain) {
         ResIdctrlMainExample example = new ResIdctrlMainExample();
-        ResIdctrlMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResIdctrlMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(idctrlMain.getOperUserName())){
             criteria.andOperUserNameLike("%"+idctrlMain.getOperUserName()+"%");
         }
@@ -56,7 +57,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
     @Override
     public List<ResIdctrlDetail> searchDetail(ResIdctrlDetail idctrlDetail) {
         ResIdctrlDetailExample example = new ResIdctrlDetailExample();
-        ResIdctrlDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResIdctrlDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(idctrlDetail!=null){
             if(StringUtil.isNotBlank(idctrlDetail.getIdctrlMainFlow())){
                 criteria.andIdctrlMainFlowEqualTo(idctrlDetail.getIdctrlMainFlow());
@@ -146,7 +147,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
     public int editId(ResIdctrlDetail idctrlDetail) {
         if(StringUtil.isNotBlank(idctrlDetail.getRecordFlow())){
             GeneralMethod.setRecordInfo(idctrlDetail,false);
-            if(idctrlDetail.getRecordStatus()!=null&&idctrlDetail.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_N)){
+            if (idctrlDetail.getRecordStatus() != null && idctrlDetail.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N)) {
                 ResIdctrlDetail detail = readDetail(idctrlDetail.getRecordFlow());
                 ResIdctrlMain main = idctrlMainMapper.selectByPrimaryKey(detail.getIdctrlMainFlow());
                 String idNumber = main.getIdNumber();
@@ -177,10 +178,10 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
     public int bindingID(ResIdctrlDetail detail) {
         //ResIdctrlDetail表数据
         ResIdctrlDetail oldDetail = readDetail(detail.getRecordFlow());
-        if(oldDetail!=null&&GlobalConstant.FLAG_Y.equals(oldDetail.getIsBinding())){
+        if (oldDetail != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(oldDetail.getIsBinding())) {
             return -1;
         }
-        detail.setIsBinding(GlobalConstant.FLAG_Y);
+        detail.setIsBinding(com.pinde.core.common.GlobalConstant.FLAG_Y);
         String endDate = detail.getEndDate();
         if(StringUtil.isNotBlank(endDate)){
             detail.setStartDate(endDate);
@@ -201,7 +202,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         String webCfgCode = "res_doctor_web_"+detail.getDoctorFlow();
         ResPowerCfg webCfg = powerCfgBiz.read(webCfgCode);
         if(webCfg!=null){
-            webCfg.setCfgValue(GlobalConstant.FLAG_Y);
+            webCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
             if(StringUtil.isBlank(webCfg.getPowerStartTime())){
                 webCfg.setPowerStartTime(detail.getStartDate());
             }
@@ -210,7 +211,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         }else{
             ResPowerCfg saveCfg = new ResPowerCfg();
             saveCfg.setCfgCode(webCfgCode);
-            saveCfg.setCfgValue(GlobalConstant.FLAG_Y);
+            saveCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
             saveCfg.setPowerStartTime(detail.getStartDate());
             saveCfg.setPowerEndTime(detail.getEndDate());
             saveCfg.setCfgDesc("是否开放学员web登录权限");
@@ -219,7 +220,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         String appCfgCode = "res_doctor_app_login_"+detail.getDoctorFlow();
         ResPowerCfg appCfg = powerCfgBiz.read(appCfgCode);
         if(appCfg!=null){
-            appCfg.setCfgValue(GlobalConstant.FLAG_Y);
+            appCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
             if(StringUtil.isBlank(appCfg.getPowerStartTime())){
                 appCfg.setPowerStartTime(detail.getStartDate());
             }
@@ -228,7 +229,7 @@ public class ResIdCtrlBizImpl implements IResIdCtrlBiz {
         }else{
             ResPowerCfg saveCfg = new ResPowerCfg();
             saveCfg.setCfgCode(appCfgCode);
-            saveCfg.setCfgValue(GlobalConstant.FLAG_Y);
+            saveCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
             saveCfg.setPowerStartTime(detail.getStartDate());
             saveCfg.setPowerEndTime(detail.getEndDate());
             saveCfg.setCfgDesc("是否开放学员app登录权限");

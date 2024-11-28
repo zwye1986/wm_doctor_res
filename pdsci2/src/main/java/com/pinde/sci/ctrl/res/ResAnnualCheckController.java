@@ -10,7 +10,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.jszy.JszyResDocTypeEnum;
 import com.pinde.sci.model.mo.ResAnnualAssessmentRecord;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserDept;
@@ -66,7 +65,7 @@ public class ResAnnualCheckController extends GeneralController{
     @ResponseBody
     public String changeShow(String isShow){
         setSessionAttribute("isShow", isShow);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
 
@@ -119,7 +118,7 @@ public class ResAnnualCheckController extends GeneralController{
         }
         else{
             List<String> paramList = new ArrayList<>();
-            List<SysDict> dictList= DictTypeEnum.sysListDictMap.get("DoctorType");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("DoctorType");
             for(SysDict s:dictList){
                 if("ExternalEntrust".equals(s.getDictId())){
                     continue;
@@ -132,15 +131,15 @@ public class ResAnnualCheckController extends GeneralController{
         // 本单位人取个人信息中的“所在科室”数据；委培单位人取“工作单位”数据；在校专硕取“在读院校；社会人为空”
         if(null!=doctorTypeList && doctorTypeList.length==1){
             //本单位人
-            if(JszyResDocTypeEnum.Company.getId().equals(doctorTypeList[0])){
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctorTypeList[0])) {
                 doctor.setDepartMentName(deptName);
             }
             //委培单位人
-            if(JszyResDocTypeEnum.CompanyEntrust.getId().equals(doctorTypeList[0])){
+            if (com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctorTypeList[0])) {
                 doctor.setWorkOrgName(deptName);
             }
             //在校专硕
-            if(JszyResDocTypeEnum.Graduate.getId().equals(doctorTypeList[0])){
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctorTypeList[0])) {
                 doctor.setWorkOrgName(deptName);
             }
         }
@@ -170,9 +169,9 @@ public class ResAnnualCheckController extends GeneralController{
         assessmentRecord.setAssessmentYear("2017");
         int count=resAnnualCheckBiz.saveAnnualCheck(assessmentRecord);
         if(count>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
 
@@ -198,7 +197,7 @@ public class ResAnnualCheckController extends GeneralController{
             resAnnualCheckBiz.updateByUserFlowAndYear(record);
             return resultPath;
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
 
@@ -213,10 +212,10 @@ public class ResAnnualCheckController extends GeneralController{
 
         int count= resAnnualCheckBiz.deleteMatertialUrlAndFile(assessmentRecord);
         if(count>0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
 
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     /**
@@ -249,7 +248,7 @@ public class ResAnnualCheckController extends GeneralController{
             }
         else{
             List<String> paramList = new ArrayList<>();
-            List<SysDict> dictList= DictTypeEnum.sysListDictMap.get("DoctorType");
+                List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("DoctorType");
             for(SysDict s:dictList){
                 paramList.add(s.getDictId());
             }
@@ -309,7 +308,7 @@ public class ResAnnualCheckController extends GeneralController{
         }
 //        else{
 //            List<String> paramList = new ArrayList<>();
-//            List<SysDict> dictList= DictTypeEnum.sysListDictMap.get("DoctorType");
+//            List<SysDict> dictList= com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("DoctorType");
 //            for(SysDict s:dictList){
 //                paramList.add(s.getDictId());
 //            }
@@ -342,15 +341,15 @@ public class ResAnnualCheckController extends GeneralController{
         if(file.getSize() > 0){
             try{
                 int result = resAnnualCheckBiz.importCheckExcel(file);
-                if(GlobalConstant.ZERO_LINE != result){
-                    return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 }else{
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(Exception re){
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 }

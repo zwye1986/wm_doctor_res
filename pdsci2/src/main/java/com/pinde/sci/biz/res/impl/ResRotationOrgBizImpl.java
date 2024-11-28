@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
@@ -32,7 +33,7 @@ public class ResRotationOrgBizImpl implements IResRotationOrgBiz{
 				return rotationOrgMapper.insert(rotationOrg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class ResRotationOrgBizImpl implements IResRotationOrgBiz{
 	public List<ResRotationOrg> searchByRotationFlow(String rotationFlow) {
 		ResRotationOrgExample example=new ResRotationOrgExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(rotationFlow)) {
 			criteria.andRotationFlowEqualTo(rotationFlow);
 		}
@@ -55,7 +56,7 @@ public class ResRotationOrgBizImpl implements IResRotationOrgBiz{
 	public List<ResRotationOrg> searchByRotationFlowY(String rotationFlow) {
 		ResRotationOrgExample example=new ResRotationOrgExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(rotationFlow)) {
 			criteria.andRotationFlowEqualTo(rotationFlow);
 		}
@@ -67,7 +68,7 @@ public class ResRotationOrgBizImpl implements IResRotationOrgBiz{
 			String orgFlow) {
 		ResRotationOrgExample example=new ResRotationOrgExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(rotationFlow)) {
 			criteria.andRotationFlowEqualTo(rotationFlow);
 		}
@@ -81,7 +82,7 @@ public class ResRotationOrgBizImpl implements IResRotationOrgBiz{
 	public List<ResRotationOrg> ResRotationOrgAll() {
 		ResRotationOrgExample example=new ResRotationOrgExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return rotationOrgMapper.selectByExample(example);
 	}
 	

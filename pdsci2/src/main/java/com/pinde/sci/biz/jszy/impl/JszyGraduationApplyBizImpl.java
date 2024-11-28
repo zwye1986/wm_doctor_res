@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyGraduationApplyBiz;
@@ -7,7 +8,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.JsresGraduationApplyLogMapper;
 import com.pinde.sci.dao.base.JsresGraduationApplyMapper;
 import com.pinde.sci.dao.jszy.JszyGraduationApplyExtMapper;
-import com.pinde.sci.enums.jszy.JszyResAsseAuditListEnum;
+import com.pinde.core.common.enums.JszyResAsseAuditListEnum;
 import com.pinde.sci.model.mo.JsresGraduationApply;
 import com.pinde.sci.model.mo.JsresGraduationApplyExample;
 import com.pinde.sci.model.mo.JsresGraduationApplyLog;
@@ -40,7 +41,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
         JsresGraduationApplyExample example = new JsresGraduationApplyExample();
-        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(recruitFlow)){
             criteria.andRecruitFlowEqualTo(recruitFlow);
         }
@@ -58,7 +59,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
     @Override
     public List<JsresGraduationApply> searchByRecruitFlows(List<String> recruitFlows, String applyYear) {
         JsresGraduationApplyExample example = new JsresGraduationApplyExample();
-        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(recruitFlows != null && recruitFlows.size() > 0){
             criteria.andRecruitFlowIn(recruitFlows);
         }
@@ -86,7 +87,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
                 return this.graduationApplyMapper.insertSelective(jsresGraduationApply);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -102,7 +103,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
     @Override
     public List<JsresGraduationApplyLog> getAuditLogsByApplyFlow(String applyFlow) {
         JsresGraduationApplyLogExample example=new JsresGraduationApplyLogExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andApplyFlowEqualTo(applyFlow);
         example.setOrderByClause("create_time desc");
         return graduationApplyLogMapper.selectByExample(example);
@@ -161,7 +162,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
         styleTwo.setFont(fontTwo);
         hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 20));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short) 1, 0, (short) 20));
             titles= new String[]{
@@ -278,7 +279,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
                 cell13.setCellValue("是");
                 cell13.setCellStyle(styleCenter);
                 HSSFCell cell14 = rowDepts.createCell(16);//备注
-                if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
                     if(((String)sd.get("auditStatusId")).equals(JszyResAsseAuditListEnum.LocalNotPassed.getId())){
                         cell14.setCellValue((String)sd.get("localReason"));
                     }else if(((String)sd.get("auditStatusId")).equals(JszyResAsseAuditListEnum.ChargeNotPassed.getId())){
@@ -286,7 +287,7 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
                     }else {
                         cell14.setCellValue((String)sd.get("globalReason"));
                     }
-                }else  if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+                } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
                     if(((String)sd.get("auditStatusId")).equals(JszyResAsseAuditListEnum.GlobalNotPassed.getId())){
                         cell14.setCellValue((String)sd.get("globalReason"));
                     }else if(((String)sd.get("auditStatusId")).equals(JszyResAsseAuditListEnum.LocalNotPassed.getId())){
@@ -305,43 +306,45 @@ public class JszyGraduationApplyBizImpl implements IJszyGraduationApplyBiz{
                 }
                 cell14.setCellStyle(styleCenter);
                 String makeUp="";
-                if(GlobalConstant.FLAG_Y.equals(sd.get("makeUp")))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("makeUp")))
                 {
                     makeUp="是";
                 }
-                if(GlobalConstant.FLAG_N.equals(sd.get("makeUp")))
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(sd.get("makeUp")))
                 {
                     makeUp="否";
                 }
                 String examType="";
-                if(GlobalConstant.FLAG_Y.equals(sd.get("makeUp")))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("makeUp")))
                 {
 
-                    if(GlobalConstant.FLAG_Y.equals(sd.get("isTheroy")))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isTheroy")))
                     {
                         examType+="理论补考";
-                    }if(GlobalConstant.FLAG_Y.equals(sd.get("isTheroy"))&&GlobalConstant.FLAG_Y.equals(sd.get("isSkill")))
+                    }
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isTheroy")) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isSkill")))
                     {
                         examType+="/";
                     }
-                    if(GlobalConstant.FLAG_Y.equals(sd.get("isSkill")))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isSkill")))
                     {
                         examType+="技能补考";
                     }
                 }
                 String examTime="";
-                    if(GlobalConstant.FLAG_Y.equals(sd.get("isFive")))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isFive")))
                     {
                         examTime+="五月";
-                    }if(GlobalConstant.FLAG_Y.equals(sd.get("isFive"))&&GlobalConstant.FLAG_Y.equals(sd.get("isTen")))
+                    }
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isFive")) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isTen")))
                     {
                         examTime+="/";
                     }
-                    if(GlobalConstant.FLAG_Y.equals(sd.get("isTen")))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(sd.get("isTen")))
                     {
                         examTime+="十月";
                     }
-                if(!GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
                     HSSFCell cell16= rowDepts.createCell(17);//状态
                     cell16.setCellValue((String) sd.get("auditStatusName"));
                     cell16.setCellStyle(styleCenter);

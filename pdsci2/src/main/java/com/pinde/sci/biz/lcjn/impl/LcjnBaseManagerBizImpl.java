@@ -10,7 +10,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
-import com.pinde.sci.enums.lcjn.LcjnAuditStatusEnum;
+import com.pinde.core.common.enums.LcjnAuditStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
@@ -59,7 +59,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<LcjnSkillCfg> queryCourseSkillsList() {
         LcjnSkillCfgExample example = new LcjnSkillCfgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         return lscMapper.selectByExample(example);
     }
@@ -67,7 +67,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<LcjnCourseSkill> queryCourseSkillsByFlow(String courseFlow) {
         LcjnCourseSkillExample example = new LcjnCourseSkillExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andCourseFlowEqualTo(courseFlow);
         return lcsMapper.selectByExample(example);
     }
@@ -80,7 +80,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<LcjnCourseTime> queryCourseTimeByFlow(String courseFlow) {
         LcjnCourseTimeExample example = new LcjnCourseTimeExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andCourseFlowEqualTo(courseFlow);
         return lctimeMapper.selectByExample(example);
     }
@@ -88,15 +88,15 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<SysUser> queryCourseTeachersList() {
         SysUserExample example = new SysUserExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andIsExamTeaEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andIsExamTeaEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return suMapper.selectByExample(example);
     }
 
     @Override
     public List<LcjnCourseTea> queryCourseTeachersByFlow(String courseFlow) {
         LcjnCourseTeaExample example = new LcjnCourseTeaExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andCourseFlowEqualTo(courseFlow);
         return lcteaMapper.selectByExample(example);
     }
@@ -132,7 +132,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             }else{
                 //删除历史数据（所需技能）
                 LcjnCourseSkillExample example = new LcjnCourseSkillExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andCourseFlowEqualTo(course.getCourseFlow());
                 lcsMapper.deleteByExample(example);
                 //新增课程所需技能表
@@ -150,7 +150,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             if(null != trainTimeRecordList && trainTimeRecordList.size() > 0){
                 //删除不在此次记录中的历史数据
                 LcjnCourseTimeExample example = new LcjnCourseTimeExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andCourseFlowEqualTo(course.getCourseFlow()).andRecordFlowNotIn(trainTimeRecordList);//培训时间不会太多
                 lctimeMapper.deleteByExample(example);
                 //只是基于历史数据变更培训时间
@@ -184,7 +184,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             if(null != userRecordList && userRecordList.size() > 0) {
                 //删除不在此次记录中的历史数据
                 LcjnCourseTeaExample example = new LcjnCourseTeaExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andCourseFlowEqualTo(course.getCourseFlow()).andRecordFlowNotIn(userRecordList);//任课老师不会太多
                 lcteaMapper.deleteByExample(example);
                 //只是基于历史数据变更任课老师课程费用
@@ -199,7 +199,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             }else{
                 //删除历史数据（任课老师）
                 LcjnCourseTeaExample example = new LcjnCourseTeaExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andCourseFlowEqualTo(course.getCourseFlow());
                 lcteaMapper.deleteByExample(example);
                 //新增课程任课老师表
@@ -219,8 +219,8 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             //新增培训课程表
             String pk = PkUtil.getUUID();
             course.setCourseFlow(pk);
-            course.setIsReleased(GlobalConstant.RECORD_STATUS_N);
-            course.setIsScoreReleased(GlobalConstant.RECORD_STATUS_N);
+            course.setIsReleased(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+            course.setIsScoreReleased(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             course.setCodeInfo("func://funcFlow=signin&courseFlow="+pk);//二维码规则
             course.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
             course.setOrgName(GlobalContext.getCurrentUser().getOrgName());
@@ -274,7 +274,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public int releasedInfo(String courseFlow) {
         LcjnCourseInfo lci = new LcjnCourseInfo();
-        lci.setIsReleased(GlobalConstant.RECORD_STATUS_Y);
+        lci.setIsReleased(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         lci.setCourseFlow(courseFlow);
         return lciMapper.updateByPrimaryKeySelective(lci);
     }
@@ -284,7 +284,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
         //判断是否课程已在培训中
         Boolean isTraining = false;
         LcjnCourseTimeExample lctimeExample = new LcjnCourseTimeExample();
-        lctimeExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        lctimeExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andCourseFlowEqualTo(courseFlow);
         List<LcjnCourseTime> lctimeList = lctimeMapper.selectByExample(lctimeExample);
         if(null != lctimeList && lctimeList.size() > 0){
@@ -300,13 +300,13 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
         if(!isTraining){
             LcjnCourseInfo lci = new LcjnCourseInfo();
             lci.setCourseFlow(courseFlow);
-            lci.setRecordStatus(GlobalConstant.RECORD_STATUS_N);//只对培训课程主表伪删除（学员预约状态变为失效，但依旧可以查看课程关联信息,故关联信息不删）
-            if(StringUtil.isNotBlank(isReleased) && isReleased.equals(GlobalConstant.RECORD_STATUS_Y)){//已预约学员信息审核状态变为失效
+            lci.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);//只对培训课程主表伪删除（学员预约状态变为失效，但依旧可以查看课程关联信息,故关联信息不删）
+            if (StringUtil.isNotBlank(isReleased) && isReleased.equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {//已预约学员信息审核状态变为失效
                 LcjnDoctorCourse ldc = new LcjnDoctorCourse();
                 ldc.setAuditStatusId(LcjnAuditStatusEnum.Invalid.getId());
                 ldc.setAuditStatusName(LcjnAuditStatusEnum.Invalid.getName());
                 LcjnDoctorCourseExample example = new LcjnDoctorCourseExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
                 ldcMapper.updateByExampleSelective(ldc,example);
             }
             return lciMapper.updateByPrimaryKeySelective(lci);
@@ -318,7 +318,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<SysUser> querySysUser(SysUser user) {
         SysUserExample example = new SysUserExample();
-        SysUserExample.Criteria criteria = example.createCriteria().andIsExamTeaEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserExample.Criteria criteria = example.createCriteria().andIsExamTeaEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(user.getTitleId())){
             criteria.andTitleIdEqualTo(user.getTitleId());
         }
@@ -351,7 +351,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             int num = suMapper.countByExample(example);
             if(num == 0){
                 user.setUserFlow(PkUtil.getUUID());
-                user.setIsExamTea(GlobalConstant.RECORD_STATUS_Y);//Y 老师标识
+                user.setIsExamTea(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);//Y 老师标识
                 user.setUserPasswd("123456");//无效，为解决表结构不能为空而设
                 GeneralMethod.setRecordInfo(user,true);//初始为启用状态
                 count = suMapper.insertSelective(user);
@@ -466,11 +466,11 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
                     throw new Exception("导入失败！第"+ (count+2) +"行姓名不能为空！");
                 }
                 SysUserExample example = new SysUserExample();
-                example.createCriteria().andUserCodeEqualTo(user.getUserCode()).andIsExamTeaEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                example.createCriteria().andUserCodeEqualTo(user.getUserCode()).andIsExamTeaEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 int num = suMapper.countByExample(example);
                 if(num <= 0){//新增
                     user.setUserFlow(PkUtil.getUUID());
-                    user.setIsExamTea(GlobalConstant.RECORD_STATUS_Y);//Y 老师标识
+                    user.setIsExamTea(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);//Y 老师标识
                     user.setUserPasswd("123456");//无效，为解决表结构不能为空而设
                     GeneralMethod.setRecordInfo(user,true);//初始为启用状态
                     suMapper.insertSelective(user);
@@ -508,7 +508,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<LcjnSupplies> querySuppliesList() {
         LcjnSuppliesExample example = new LcjnSuppliesExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         example.setOrderByClause("CREATE_TIME");
         return lsMapper.selectByExample(example);
     }
@@ -516,7 +516,8 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<LcjnFixedAssets> queryFixedAssetsList() {
         LcjnFixedAssetsExample example = new LcjnFixedAssetsExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());;
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+        ;
         example.setOrderByClause("CREATE_TIME");
         return lfaMapper.selectByExample(example);
     }
@@ -527,10 +528,10 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
         if(StringUtil.isNotBlank(skillFlow)){
             LcjnSkillCfg lsc = new LcjnSkillCfg();
             lsc.setSkillFlow(skillFlow);
-            lsc.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            lsc.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             count = lscMapper.updateByPrimaryKeySelective(lsc);
             LcjnSkillCfgDetail lscd = new LcjnSkillCfgDetail();
-            lscd.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            lscd.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
             example.createCriteria().andSkillFlowEqualTo(skillFlow);
             count += lscdMapper.updateByExampleSelective(lscd,example);
@@ -541,7 +542,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     @Override
     public List<LcjnSkillCfgDetail> querySkillDetailByFlow(String skillFlow) {
         LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSkillFlowEqualTo(skillFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSkillFlowEqualTo(skillFlow);
         example.setOrderByClause("CREATE_TIME");
         return lscdMapper.selectByExample(example);
     }
@@ -559,7 +560,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             if(null != suppliesRecordList && suppliesRecordList.size() > 0){//只是基于历史数据变更使用数量（耗材）
                 //删除不在此次记录中的历史数据
                 LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andTypeIdEqualTo("SUPPLIES")
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andTypeIdEqualTo("SUPPLIES")
                         .andSkillFlowEqualTo(String.valueOf(param.get("skillFlow"))).andRecordFlowNotIn(suppliesRecordList);
                 lscdMapper.deleteByExample(example);
                 LcjnSkillCfgDetail lscd = new LcjnSkillCfgDetail();
@@ -572,7 +573,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             }else{
                 //删除历史数据（耗材）
                 LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andSkillFlowEqualTo(String.valueOf(param.get("skillFlow"))).andTypeIdEqualTo("SUPPLIES");
                 lscdMapper.deleteByExample(example);
                 //新增技能配置详情表
@@ -592,7 +593,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             if(null != assetsRecordList && assetsRecordList.size() > 0){//只是基于历史数据变更使用数量（固定资产）
                 //删除不在此次记录中的历史数据
                 LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andTypeIdEqualTo("FIXED")
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andTypeIdEqualTo("FIXED")
                         .andSkillFlowEqualTo(String.valueOf(param.get("skillFlow"))).andRecordFlowNotIn(assetsRecordList);
                 lscdMapper.deleteByExample(example);
                 LcjnSkillCfgDetail lscd = new LcjnSkillCfgDetail();
@@ -605,7 +606,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             }else{
                 //删除历史数据（固定资产）
                 LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andSkillFlowEqualTo(String.valueOf(param.get("skillFlow"))).andTypeIdEqualTo("FIXED");
                 lscdMapper.deleteByExample(example);
                 //新增技能配置详情表
@@ -624,7 +625,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             }
         }else{//新增
             LcjnSkillCfgExample example = new LcjnSkillCfgExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andSkillIdEqualTo(String.valueOf(param.get("skillId"))).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
             if(lscMapper.countByExample(example) > 0){//是否已配置过同技能
                 return -1;
@@ -708,6 +709,6 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
                 }
             }
         }
-        return StringUtil.isBlank(resultStr)?GlobalConstant.FLAG_Y:resultStr;
+        return StringUtil.isBlank(resultStr) ? com.pinde.core.common.GlobalConstant.FLAG_Y : resultStr;
     }
 }

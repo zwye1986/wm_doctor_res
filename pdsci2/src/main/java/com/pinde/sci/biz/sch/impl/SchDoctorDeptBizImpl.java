@@ -33,7 +33,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 //	@Override
 //	public List<SchDoctorDept> searchSchDoctorDept() {
 //		SchDoctorDeptExample example = new SchDoctorDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		example.setOrderByClause("ORDINAL");
 //		return doctorDeptMapper.selectByExample(example);
 //	}
@@ -41,7 +41,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 	@Override
 	public List<SchDoctorDept> searchDoctorDeptByDoctorFlows(List<String> doctorFlows){
 		SchDoctorDeptExample example = new SchDoctorDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowIn(doctorFlows);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowIn(doctorFlows);
 		example.setOrderByClause("ORDINAL");
 		return doctorDeptMapper.selectByExample(example);
 	}
@@ -49,7 +49,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 	@Override
 	public List<SchDoctorDept> searchSchDoctorDept(String doctorFlow) {
 		SchDoctorDeptExample example = new SchDoctorDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
 		example.setOrderByClause("ORDINAL");
 		return doctorDeptMapper.selectByExample(example);
 	}
@@ -77,7 +77,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 //	public List<SchDoctorDept> searchDoctorDeptForReduction(String doctorFlow,String rotationFlow) {
 //		if(StringUtil.isNotBlank(doctorFlow) && StringUtil.isNotBlank(rotationFlow)){
 //			SchDoctorDeptExample example = new SchDoctorDeptExample();
-//			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+//			example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 //			.andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow);
 //			example.setOrderByClause("ORDINAL");
 //			return doctorDeptMapper.selectByExample(example);
@@ -131,7 +131,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 			}
 			//return saveSelDeptFlag(doctorDept);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -143,7 +143,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 				return save(doctorDept);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -159,7 +159,7 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 			return doctorDeptMapper.insertSelective(doctorDept);
 			//return saveSelDeptFlag(doctorDept);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -177,10 +177,10 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 		
 		ResDoctor doctor = new ResDoctor();
 		doctor.setDoctorFlow(doctorDept.getDoctorFlow());
-		doctor.setSelDeptFlag(GlobalConstant.FLAG_N);
+        doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 		
 		if(doctorDeptList != null && !doctorDeptList.isEmpty() && doctorDeptList.size() == deptNumCount){
-			doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+            doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return schDoctortBiz.saveResDoctor(doctor);
 	}
@@ -214,9 +214,9 @@ public class SchDoctorDeptBizImpl implements ISchDoctorDeptBiz {
 					}
 				}
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override

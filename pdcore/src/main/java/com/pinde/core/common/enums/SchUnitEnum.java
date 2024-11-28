@@ -1,5 +1,6 @@
 package com.pinde.core.common.enums;
 
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum SchUnitEnum implements GeneralEnum<String> {
@@ -19,7 +20,7 @@ public enum SchUnitEnum implements GeneralEnum<String> {
 	}
 
 	public static String getNameById(String id) {
-		return EnumUtil.getById(id, SchUnitEnum.class).getName();
+        return EnumUtil.getById(id, com.pinde.core.common.enums.SchUnitEnum.class).getName();
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public ResSchProcessExpress getExpressByRecType(String processFlow, String recTypeId){
         if(StringUtil.isNotBlank(processFlow) && StringUtil.isNotBlank(recTypeId)){
             ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
             List<ResSchProcessExpress> recs = processExpressMapper.selectByExampleWithBLOBs(example);
             if(recs!=null && !recs.isEmpty()){
@@ -101,7 +101,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> getDocexpressList(String processFlow, List<String> recTypeIds) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-       ResSchProcessExpressExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResSchProcessExpressExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(processFlow)){
             criteria.andProcessFlowEqualTo(processFlow);
         }
@@ -154,7 +154,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         operUserFlow = StringUtil.defaultIfEmpty(operUserFlow,userFlow);
         SysUser sysUser=readSysUser(operUserFlow);
         ResDoctorSchProcess resDoctorSchProcess=processMapper.selectByPrimaryKey(processFlow);
-        String recTypeId=ResRecTypeEnum.getNameById(formFileName);
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName);
         String currDate=DateUtil.getCurrDateTime();
         ResSchProcessExpress rec=new ResSchProcessExpress();
         rec.setRecFlow(recFlow);
@@ -178,8 +178,8 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         String recContent=getXmlByRequest(req,formFileName);
         rec.setRecContent(recContent);
         if(StringUtil.isBlank(recFlow)) {
-            if (GlobalConstant.FLAG_Y.equals(cksh)) {
-                rec.setManagerAuditUserFlow(GlobalConstant.FLAG_Y);
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(cksh)) {
+                rec.setManagerAuditUserFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
             }
         }
         //System.out.println(recContent);
@@ -191,14 +191,14 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public int editResRec(ResSchProcessExpress rec,SysUser user) {
         if(rec!=null){
             if(StringUtil.isNotBlank(rec.getRecFlow())){//修改
-                rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 rec.setModifyUserFlow(user.getUserFlow());
                 rec.setModifyTime(DateUtil.getCurrDateTime());
                 return processExpressMapper.updateByPrimaryKeySelective(rec);
             }else{//新增
                 rec.setRecFlow(PkUtil.getUUID());
                 rec.setOperTime(DateUtil.getCurrDateTime());
-                rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 rec.setCreateUserFlow(user.getUserFlow());
                 rec.setCreateTime(DateUtil.getCurrDateTime());
                 rec.setModifyUserFlow(user.getUserFlow());
@@ -206,7 +206,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 return processExpressMapper.insertSelective(rec);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
     //根据request获取这次表单的xml iaal
     private String getXmlByRequest(HttpServletRequest request,String rootName){
@@ -261,7 +261,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         ResSchProcessExpressExample.Criteria create=example.createCriteria();
-        create.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andProcessFlowEqualTo(processFlow);
         }
@@ -278,7 +278,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public List<ResSchProcessExpress> searchByUserFlowAndTypeId(String operUserFlow,
                                                                 String recTypeId) {
         ResSchProcessExpressExample example=new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(operUserFlow);
         return processExpressMapper.selectByExampleWithBLOBs(example);
     }
@@ -287,7 +287,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         if(StringUtil.isNotBlank(doctorFlow))
         {
             SchRotationDeptAfterExample example=new SchRotationDeptAfterExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow).andApplyYearEqualTo(applyYear);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow).andApplyYearEqualTo(applyYear);
             return afterMapper.selectByExampleWithBLOBs(example);
         }
         return null;

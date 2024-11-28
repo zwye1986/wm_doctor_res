@@ -34,7 +34,7 @@ public class OscaDoctorScoreBizImpl implements IOscaDoctorScoreBiz {
     @Override
     public List<OscaDoctorAssessment> queryDoctorList(String clinicalFlow) {
         OscaDoctorAssessmentExample example = new OscaDoctorAssessmentExample();
-        OscaDoctorAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        OscaDoctorAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andClinicalFlowEqualTo(clinicalFlow)
                 .andAuditStatusIdEqualTo(AuditStatusEnum.Passed.getId())
                 .andSiginStatusIdEqualTo(SignStatusEnum.SignIn.getId());
@@ -48,7 +48,7 @@ public class OscaDoctorScoreBizImpl implements IOscaDoctorScoreBiz {
     public List<OscaSkillsAssessment> selectskillsAssessmentList(OscaSkillsAssessment oscaSkillsAssessment) {
         OscaSkillsAssessmentExample example=new OscaSkillsAssessmentExample();
         OscaSkillsAssessmentExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaSkillsAssessment.getOrgName())){
             criteria.andOrgNameLike(oscaSkillsAssessment.getOrgName());
         }
@@ -87,7 +87,7 @@ public class OscaDoctorScoreBizImpl implements IOscaDoctorScoreBiz {
     @Override
     public List<OscaSubjectStation> queryStationList(String subjectFlow) {
         OscaSubjectStationExample example = new OscaSubjectStationExample();
-        example.createCriteria().andSubjectFlowEqualTo(subjectFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andSubjectFlowEqualTo(subjectFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("ORDINAL");
         return oscaSubjectStationMapper.selectByExample(example);
     }

@@ -82,9 +82,9 @@ public class ResDoctorSigninController extends GeneralController{
 		int c=resDoctorKqBiz.saveKqCfgs(timeSetFrom);
 		if(c==0)
 		{
-			return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
 		}
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	//签到列表
@@ -92,7 +92,7 @@ public class ResDoctorSigninController extends GeneralController{
 	public String main(Model model) {
 		String userFlow = GlobalContext.getCurrentUser().getUserFlow();
 		SysUserDeptExample example = new SysUserDeptExample();
-		example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		model.addAttribute("signUrl","func://funcFlow=resDoctorSingin&teacherUserFlow="+userFlow);
 		return "res/doctorSignin/report/main";
 	}
@@ -120,7 +120,7 @@ public class ResDoctorSigninController extends GeneralController{
 		Object val="";
 		if(val==null)
 		{
-			return GlobalConstant.FLAG_N;
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		return val;
 	}
@@ -144,7 +144,7 @@ public class ResDoctorSigninController extends GeneralController{
 								 String reportDate, String trainingSpeId,Integer currentPage,HttpServletRequest request){
 		String userFlow = GlobalContext.getCurrentUser().getUserFlow();
 		SysUserDeptExample example = new SysUserDeptExample();
-		example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysUserDept> deptList = sysUserDeptMapper.selectByExample(example);
 		List<String> deptFlows = new ArrayList<String>();
 		for(SysUserDept dept: deptList){
@@ -169,8 +169,8 @@ public class ResDoctorSigninController extends GeneralController{
 	public String leaveList(ResDoctorKq kq, Integer currentPage, HttpServletRequest request, Model model){
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		kq.setDoctorFlow(currentUser.getUserFlow());
-		kq.setKqTypeId(DictTypeEnum.LeaveType.getId());
-		kq.setKqTypeName(DictTypeEnum.LeaveType.getName());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
+        kq.setKqTypeName(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getName());
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<ResDoctorKq> kqList = resDoctorKqBiz.searchResDoctorKq(kq, null);
 		model.addAttribute("kqList",kqList);
@@ -184,8 +184,8 @@ public class ResDoctorSigninController extends GeneralController{
 	public String appealList(ResDoctorKq kq,Integer currentPage,HttpServletRequest request,Model model){
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		kq.setDoctorFlow(currentUser.getUserFlow());
-		kq.setKqTypeId(DictTypeEnum.AppealType.getId());
-		kq.setKqTypeName(DictTypeEnum.AppealType.getName());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.AppealType.getId());
+        kq.setKqTypeName(com.pinde.core.common.enums.DictTypeEnum.AppealType.getName());
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<ResDoctorKq> kqList = resDoctorKqBiz.searchResDoctorKq(kq, null);
 		model.addAttribute("kqList",kqList);
@@ -333,7 +333,7 @@ public class ResDoctorSigninController extends GeneralController{
 				return "此请假信息已被审核，请刷新列表页！";
 			}
 		}
-		int c=resDoctorKqBiz.checkTime(kq.getRecordFlow(),kq.getDoctorFlow(),kq.getStartDate(),kq.getEndDate(),DictTypeEnum.LeaveType.getId());
+        int c = resDoctorKqBiz.checkTime(kq.getRecordFlow(), kq.getDoctorFlow(), kq.getStartDate(), kq.getEndDate(), com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
 		if(c>0)
 		{
 			return "在当前请假时间内已有请假信息！";
@@ -343,7 +343,7 @@ public class ResDoctorSigninController extends GeneralController{
 			return "请输入请假天数";
 		}
 
-		double days=resDoctorKqBiz.readAllIntervalDays(kq.getRecordFlow(),kq.getDoctorFlow(),kq.getStartDate(),kq.getEndDate(),DictTypeEnum.LeaveType.getId());
+        double days = resDoctorKqBiz.readAllIntervalDays(kq.getRecordFlow(), kq.getDoctorFlow(), kq.getStartDate(), kq.getEndDate(), com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
 		if((days+Double.valueOf(kq.getIntervalDays()))>allDays)
 		{
 			return "请假总天数大于"+allDays+",总天数为"+(days+Double.valueOf(kq.getIntervalDays()))+",你已请假"+days+"天,本次请假天数"+kq.getIntervalDays();
@@ -367,9 +367,9 @@ public class ResDoctorSigninController extends GeneralController{
 			setKqAuditInfo(less,kq,process,doctor);
 		}
 
-		kq.setKqTypeId(DictTypeEnum.LeaveType.getId());
-		kq.setKqTypeName(DictTypeEnum.LeaveType.getName());
-		kq.setTypeName(DictTypeEnum.getDictName(DictTypeEnum.LeaveType, kq.getTypeId()));
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
+        kq.setKqTypeName(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getName());
+        kq.setTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.LeaveType, kq.getTypeId()));
 		kq.setAuditStatusId(ResDoctorKqStatusEnum.Auditing.getId());
 		kq.setAuditStatusName(ResDoctorKqStatusEnum.Auditing.getName());
 		int n=resDoctorKqBiz.editResDoctorKq(kq);
@@ -408,7 +408,7 @@ public class ResDoctorSigninController extends GeneralController{
 				return "此申诉信息已被审核，请刷新列表页！";
 			}
 		}
-		int c=resDoctorKqBiz.checkTime(kq.getRecordFlow(),kq.getDoctorFlow(),kq.getStartDate(),kq.getEndDate(),DictTypeEnum.AppealType.getId());
+        int c = resDoctorKqBiz.checkTime(kq.getRecordFlow(), kq.getDoctorFlow(), kq.getStartDate(), kq.getEndDate(), com.pinde.core.common.enums.DictTypeEnum.AppealType.getId());
 		if(c>0)
 		{
 			return "在当前申诉时间内已有申诉信息！";
@@ -419,10 +419,10 @@ public class ResDoctorSigninController extends GeneralController{
 			return checkResult;
 		}
 
-		kq.setKqTypeId(DictTypeEnum.AppealType.getId());
-		kq.setKqTypeName(DictTypeEnum.AppealType.getName());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.AppealType.getId());
+        kq.setKqTypeName(com.pinde.core.common.enums.DictTypeEnum.AppealType.getName());
 		if(StringUtil.isNotBlank(kq.getTypeId())) {
-			kq.setTypeName(DictTypeEnum.getDictName(DictTypeEnum.AppealType, kq.getTypeId()));
+            kq.setTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.AppealType, kq.getTypeId()));
 		}
 		kq.setAuditStatusId(ResDoctorKqStatusEnum.Auditing.getId());
 		kq.setAuditStatusName(ResDoctorKqStatusEnum.Auditing.getName());
@@ -433,7 +433,7 @@ public class ResDoctorSigninController extends GeneralController{
 		}
 		String adminFlow = InitConfig.getSysCfg("res_admin_role_flow");
 		Map<String,Object> paramMap = new HashMap<>();
-		String wsId = (String)GlobalContext.getSession().getAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) GlobalContext.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		paramMap.put("wsId",wsId);
 		paramMap.put("roleFlow",adminFlow);
 		paramMap.put("orgFlow",doctor.getOrgFlow());
@@ -507,7 +507,7 @@ public class ResDoctorSigninController extends GeneralController{
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath =  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -532,7 +532,7 @@ public class ResDoctorSigninController extends GeneralController{
 		if(files!=null&&files.size()>0)
 		{
 			for (PubFile pubFile : files) {
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				fileBiz.editFile(pubFile);
 			}
 		}
@@ -541,21 +541,21 @@ public class ResDoctorSigninController extends GeneralController{
 		if(greater!=null)
 		{
 			kq.setTeacherFlow(process.getTeacherUserFlow());
-			if(GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag()))
 			{
 				kq.setTeacherName(process.getTeacherUserName());
 			}else{
 				kq.setTeacherName("-");
 			}
 			kq.setHeadFlow(process.getHeadUserFlow());
-			if(GlobalConstant.FLAG_Y.equals(greater.getHeadFlag()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getHeadFlag()))
 			{
 				kq.setHeadName(process.getHeadUserName());
 			}else{
 				kq.setHeadName("-");
 			}
 			kq.setTutorFlow(doctor.getTutorFlow());
-			if(GlobalConstant.FLAG_Y.equals(greater.getTutorFlag()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getTutorFlag()))
 			{
 				kq.setTutorName(doctor.getTutorName());
 			}else{
@@ -563,7 +563,7 @@ public class ResDoctorSigninController extends GeneralController{
 			}
 			String adminFlow = InitConfig.getSysCfg("res_admin_role_flow");
 			Map<String,Object> paramMap = new HashMap<>();
-			String wsId = (String)GlobalContext.getSession().getAttribute(GlobalConstant.CURRENT_WS_ID);
+            String wsId = (String) GlobalContext.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 			paramMap.put("wsId",wsId);
 			paramMap.put("roleFlow",adminFlow);
 			paramMap.put("orgFlow",doctor.getOrgFlow());
@@ -575,7 +575,7 @@ public class ResDoctorSigninController extends GeneralController{
 			if(admin!=null)
 			{
 				kq.setManagerFlow(admin.getUserFlow());
-				if(GlobalConstant.FLAG_Y.equals(greater.getManagerFlag()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getManagerFlag()))
 				{
 					kq.setManagerName(admin.getUserName());
 				}else{
@@ -601,7 +601,7 @@ public class ResDoctorSigninController extends GeneralController{
 				return "此信息已被审核，请刷新列表页！";
 			}
 		}
-		kq.setRecordStatus(GlobalConstant.FLAG_N);
+        kq.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 		resDoctorKqBiz.editResDoctorKq(kq);
 		return "1";
 	}
@@ -638,7 +638,7 @@ public class ResDoctorSigninController extends GeneralController{
 		paramMap.put("sessionNumber",sessionNumber);
 
 		SysUser currUser = GlobalContext.getCurrentUser();
-		kq.setKqTypeId(DictTypeEnum.LeaveType.getId());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
 		kq.setOrgFlow(currUser.getOrgFlow());
 		if("teacher".equals(roleFlag)){//带教
 			kq.setTeacherFlow(currUser.getUserFlow());
@@ -663,8 +663,8 @@ public class ResDoctorSigninController extends GeneralController{
 		if(doctorTypeIdArys!=null && doctorTypeIdArys.length>0){
 			doctorTypeIdList = Arrays.asList(doctorTypeIdArys);
 		}
-		sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		if(dictList!=null&&dictList.size()>0){
 			if(doctorTypeIdList!=null&&doctorTypeIdList.size()>0){
@@ -702,7 +702,7 @@ public class ResDoctorSigninController extends GeneralController{
 		}
 		model.addAttribute("fileMap", fileMap);
 		// 医院管理员
-		if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)) {
 			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(currUser.getOrgFlow());
 			model.addAttribute("schDeptList", schDeptList);
 		}
@@ -718,7 +718,7 @@ public class ResDoctorSigninController extends GeneralController{
 	@RequestMapping(value={"/appealAuditList/{roleFlag}"},method={RequestMethod.GET,RequestMethod.POST})
 	public String appealAuditList(@PathVariable String roleFlag, ResDoctorKq kq, Integer currentPage, HttpServletRequest request,  Model model){
 		SysUser currUser = GlobalContext.getCurrentUser();
-		kq.setKqTypeId(DictTypeEnum.AppealType.getId());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.AppealType.getId());
 		kq.setOrgFlow(currUser.getOrgFlow());
 //		if("teacher".equals(roleFlag)){//带教
 //			kq.setTeacherFlow(currUser.getUserFlow());
@@ -750,7 +750,7 @@ public class ResDoctorSigninController extends GeneralController{
 		}
 		model.addAttribute("fileMap", fileMap);
 		// 医院管理员
-		if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)) {
 			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(currUser.getOrgFlow());
 			model.addAttribute("schDeptList", schDeptList);
 		}
@@ -783,7 +783,7 @@ public class ResDoctorSigninController extends GeneralController{
 		if(StringUtil.isNotBlank(kq.getRecordFlow())){
 			boolean AppealFlag = false;
 			ResDoctorKq kq0 = resDoctorKqBiz.readResDoctorKq(kq.getRecordFlow());
-			if(DictTypeEnum.AppealType.getId().equals(kq0.getKqTypeId())){
+            if (com.pinde.core.common.enums.DictTypeEnum.AppealType.getId().equals(kq0.getKqTypeId())) {
 				AppealFlag = true;
 			}
 			SimpleDateFormat sdf0 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -792,7 +792,7 @@ public class ResDoctorSigninController extends GeneralController{
 			{
 				if(StringUtil.isNotBlank(kq.getManagerAgreeFlag())){
 					kq.setManagerAuditTime(time);
-					if(GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag())) {
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
 					}else{
@@ -803,7 +803,7 @@ public class ResDoctorSigninController extends GeneralController{
 			}else{
 				if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag())){
 					kq.setTeacherAuditTime(time);
-					if(GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.TeacherPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.TeacherPass.getName());
 					}else{
@@ -813,7 +813,7 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 				if(StringUtil.isNotBlank(kq.getTutorAgreeFlag())){
 					kq.setTutorAuditTime(time);
-					if(GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())) {
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.TutorPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.TutorPass.getName());
 					}else{
@@ -823,7 +823,7 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 				if(StringUtil.isNotBlank(kq.getHeadAgreeFlag())){
 					kq.setHeadAuditTime(time);
-					if(GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())) {
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadPass.getName());
 					}else{
@@ -833,7 +833,7 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 				if(StringUtil.isNotBlank(kq.getManagerAgreeFlag())){
 					kq.setManagerAuditTime(time);
-					if(GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag())) {
 						kq.setAuditStatusId(ResDoctorKqStatusEnum.ManagerPass.getId());
 						kq.setAuditStatusName(ResDoctorKqStatusEnum.ManagerPass.getName());
 					}else{
@@ -843,11 +843,11 @@ public class ResDoctorSigninController extends GeneralController{
 				}
 			}
 			int result = resDoctorKqBiz.editResDoctorKq(kq);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	//教秘扫码签到
@@ -856,7 +856,7 @@ public class ResDoctorSigninController extends GeneralController{
 		String userFlow = GlobalContext.getCurrentUser().getUserFlow();
 		String schDeptFlow = GlobalContext.getCurrentUser().getDeptFlow();
 		SysUserDeptExample example = new SysUserDeptExample();
-		example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		//TODO 根据app接口修改
 		model.addAttribute("signUrl","func://funcFlow=");
 		model.addAttribute("roleFlag",roleFlag);
@@ -873,8 +873,8 @@ public class ResDoctorSigninController extends GeneralController{
 		//复选框勾选标识
 		Map<String,String> doctorTypeSelectMap = new HashMap<>();
 		SysDict sysDict = new SysDict();
-		sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		if(doctorTypeIdList!=null&&doctorTypeIdList.length>0){
 			typeList=Arrays.asList(doctorTypeIdList);
@@ -901,7 +901,7 @@ public class ResDoctorSigninController extends GeneralController{
 		if(!"manager".equals(roleFlag)){
 			List<String> schDeptFlows=new ArrayList<>();
 			SysUserDeptExample example = new SysUserDeptExample();
-			example.createCriteria().andUserFlowEqualTo(GlobalContext.getCurrentUser().getUserFlow()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andUserFlowEqualTo(GlobalContext.getCurrentUser().getUserFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysUserDept> deptList = sysUserDeptMapper.selectByExample(example);
 			for(SysUserDept dept: deptList){
 				schDeptFlows.add(dept.getDeptFlow());
@@ -951,7 +951,7 @@ public class ResDoctorSigninController extends GeneralController{
 		paramMap.put("startDate",startDate);
 		paramMap.put("doctorName",doctorName);
 		paramMap.put("endDate",endDate);
-		paramMap.put("dictList",DictTypeEnum.sysListDictMap.get("LeaveType"));
+        paramMap.put("dictList", com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("LeaveType"));
 		paramMap.put("orgFlow",currentUser.getOrgFlow());
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<Map<String,Object>> resultMapList = resDoctorKqBiz.getKqStatistics(paramMap);

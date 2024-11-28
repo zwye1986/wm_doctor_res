@@ -1,9 +1,6 @@
 package com.pinde.res.biz.jszy.impl;
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.JszyResTrainYearEnum;
-import com.pinde.core.common.enums.JszyTrainCategoryEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
@@ -65,7 +62,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		if(StringUtil.isNotBlank(resultFlow)){
 			ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
 			ResDoctorSchProcessExample.Criteria criteria = example.createCriteria()
-					.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andSchResultFlowEqualTo(resultFlow);
 			List<ResDoctorSchProcess> processes = processMapper.selectByExample(example);
 			if(processes!=null && !processes.isEmpty()){
@@ -205,7 +202,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 					SchDoctorDept sdd=doctorDeptMap.get(key);
 					if(sdd!=null&&srd!=null)
 					{
-						if(GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
+                        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
 							per = Double.valueOf(sdd.getSchMonth()) / Double.valueOf(srd.getSchMonth());
 							srd.setSchMonth(sdd.getSchMonth());
 						}
@@ -257,7 +254,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 					if(srd!=null){
 						double per=1.0;
 						//是否翻倍
-						if(rotation!=null&&GlobalConstant.FLAG_Y.equals(rotation.getIsDouble())&&StringUtil.isNotBlank(srd.getSchMonth()))
+                        if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(srd.getSchMonth()))
 						{
 							if(StringUtil.isNotBlank(sar.getSchMonth()))
 							{
@@ -349,7 +346,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		}
 		if(StringUtil.isNotBlank(doctorFlow)){
 			SchArrangeResultExample example = new SchArrangeResultExample();
-			SchArrangeResultExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            SchArrangeResultExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andDoctorFlowEqualTo(doctorFlow);
 			return (T)resultMapper.selectByExample(example);
 		}
@@ -363,7 +360,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		}
 		if(StringUtil.isNotBlank(doctorFlow)){
 			ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-			ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andUserFlowEqualTo(doctorFlow);
 			return (T)processMapper.selectByExample(example);
 		}
@@ -374,7 +371,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	private List<SchRotationDeptReq> searchDocReq(String rotationFlow,String recordFlow,List<String> recTypeId,String itemId){
 		SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
 		SchRotationDeptReqExample.Criteria criteria = reqExample.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(rotationFlow)){
 			criteria.andRotationFlowEqualTo(rotationFlow);
 		}
@@ -399,7 +396,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		ResRecExample example=new ResRecExample();
 		ResRecExample.Criteria criteria = example
 				.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOperUserFlowEqualTo(operUserFlow);
 		if(StringUtil.isNotBlank(processFlow)){
 			criteria.andProcessFlowEqualTo(processFlow);
@@ -421,7 +418,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		
 		if(StringUtil.isNotBlank(standardGroupFlow)){
 			criteria.andGroupFlowEqualTo(standardGroupFlow);
@@ -560,9 +557,9 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		String trainingType = doctor.getTrainingTypeId();
 		String sessionNumber = doctor.getSessionNumber();
 		String trainingYears = doctor.getTrainingYears();
-		boolean isReduction = JszyTrainCategoryEnum.ChineseMedicine.getId().equals(trainingType)||JszyTrainCategoryEnum.TCMGeneral.getId().equals(trainingType);
+		/*boolean isReduction = com.pinde.core.common.enums.JsResTrainYearEnum.ChineseMedicine.getId().equals(trainingType)||com.pinde.core.common.enums.JsResTrainYearEnum.TCMGeneral.getId().equals(trainingType);
 		isReduction = isReduction && "2015".compareTo(sessionNumber)<=0;
-		isReduction = isReduction && (JszyResTrainYearEnum.OneYear.getId().equals(trainingYears) || JszyResTrainYearEnum.TwoYear.getId().equals(trainingYears));
+		isReduction = isReduction && (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(trainingYears) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(trainingYears));
 		Map<String,SchDoctorDept> doctorDeptMap=new HashMap<>();
 		if(isReduction)
 		{
@@ -573,7 +570,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 				//获取标准科室列表以绑定要求数据
 				doctorDeptMap = transListObjToMapsSoM(false,doctorDeptList,"groupFlow","standardDeptId");
 			}
-		}
+		}*/
 
 		//通过登记数据获取所有登记过的类型
 		List<String> recTypeIds = new ArrayList<String>();
@@ -581,7 +578,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 			recTypeIds.add(recTypeId);
 		}else{
 			for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(GlobalUtil.getSysCfg("res_registry_type_"+regType.getId()))){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(GlobalUtil.getSysCfg("res_registry_type_" + regType.getId()))) {
 					if(GlobalUtil.findChineseOrWestern(user.getMedicineTypeId(),regType.getId())) {
 						recTypeIds.add(regType.getId());
 					}
@@ -600,7 +597,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 		}
 		
 		//通过标准科室将要求绑定至result 并按减免比例减少
-		Map<String,Object> reqAndItemsMap = bind4RotationDept(rotationDeptMap,reqs,doctorDeptMap,isReduction,results);
+        Map<String, Object> reqAndItemsMap = bind4RotationDept(rotationDeptMap, reqs, new HashMap<>(1), false, results);
 		Map<String,Float> reqMap = null;
 		Map<String,List<String>> itemIdsMap = null;
 		if(reqAndItemsMap!=null && !reqAndItemsMap.isEmpty()){
@@ -673,7 +670,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 				String globalUpKey = groupFlow+standardDeptId;
 				SchRotation rotation=readRotation(sar.getRotationFlow());
 				//是否翻倍
-				if(rotation!=null&&GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()))
+                if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()))
 				{
 					globalUpKey=globalUpKey+sar.getResultFlow();
 				}
@@ -856,7 +853,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
 		return resDoctorProcessMapper.selectByExample(example);
 	}
 	@Autowired
@@ -897,7 +894,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 			bean.setCreateTime(DateUtil.getCurrDateTime());
 			bean.setModifyUserFlow(user.getUserFlow());
 			bean.setModifyTime(DateUtil.getCurrDateTime());
-			bean.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            bean.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			i= graduationAssessmentMapper.insert(bean);
 		}else{
 			bean.setModifyUserFlow(user.getUserFlow());
@@ -974,7 +971,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 
 					PubFile pubFile = new PubFile();
 					pubFile.setFileFlow(fileForm.getFileFlow());
-					pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					pubFile.setFilePath(filePath);
 					pubFile.setFileName(fileName);
 					pubFile.setFileSuffix(fileName.substring(fileName.lastIndexOf(".")));
@@ -984,7 +981,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 				}else{
 					PubFile pubFile = new PubFile();
 					pubFile.setFileFlow(fileForm.getFileFlow());
-					pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					pubFile.setProductType(noteTypeId);
 					pubFile.setProductFlow(recordFlow);
 					pubFileBiz.editFile(pubFile);
@@ -998,9 +995,9 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 	//处理文件
 	private void upadteFileInfo(String recordFlow, List<String> fileFlows) {
 		PubFile pubFile=new PubFile();
-        pubFile.setRecordStatus(GlobalConstant.FLAG_N);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 		PubFileExample example=new PubFileExample();
-		PubFileExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        PubFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andProductFlowEqualTo(recordFlow);
 		if(fileFlows!=null&&fileFlows.size()>0)
 		{

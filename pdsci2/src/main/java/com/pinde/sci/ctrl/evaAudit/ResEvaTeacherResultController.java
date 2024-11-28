@@ -38,7 +38,7 @@ public class ResEvaTeacherResultController extends GeneralController {
         paramMap.put("userFlow", userFlow);
 
         paramMap.put("sessionNumber",year);
-        String recType = ResRecTypeEnum.TeacherGrade.getId();
+        String recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
         paramMap.put("recTypeId",recType);
 
         PageHelper.startPage(currentPage,getPageSize(request));

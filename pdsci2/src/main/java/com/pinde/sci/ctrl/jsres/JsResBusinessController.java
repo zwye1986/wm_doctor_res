@@ -20,7 +20,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,9 +136,9 @@ public class JsResBusinessController extends GeneralController {
 
 	@RequestMapping(value = "/accounts")
 	public String accounts(Model model) throws Exception {
-		SysUser user = (SysUser) getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		SysLogExample example = new SysLogExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(user.getUserFlow());
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(user.getUserFlow());
 		example.setOrderByClause("create_time desc");
 		List<SysLog> logs = logMapper.selectByExample(example);
 		if (logs != null && logs.size() > 0) {
@@ -185,8 +184,8 @@ public class JsResBusinessController extends GeneralController {
 		if(StringUtil.isNotBlank(ifOpen)){
 			params.put("ifOpen",ifOpen);
 			for(int i=0;i<powerTypeId.length;i++){
-				params.put(powerTypeId[i],GlobalConstant.FLAG_Y);
-				model.addAttribute(powerTypeId[i],GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
+                model.addAttribute(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			list = schManualBiz.userListByJsResPower2(params);
 		}else {
@@ -215,10 +214,10 @@ public class JsResBusinessController extends GeneralController {
 			param.put("checkTime",DateUtil.getCurrDateTime2());
 			int count = resDoctorBiz.updateCheckAll(param);
 			if(count > 0) {
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/sendBack",method= RequestMethod.POST)
@@ -228,10 +227,10 @@ public class JsResBusinessController extends GeneralController {
 			List<String> userFlowList = Arrays.asList(userFlows);
 			int count = resDoctorBiz.saveSubmitAll(userFlowList);
 			if(count > 0) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value="/checkReason",method= RequestMethod.GET)
@@ -287,10 +286,10 @@ public class JsResBusinessController extends GeneralController {
 			param.put("checkReason",checkReason);
 			int count = userBiz.updateCheckAll(param);
 			if(count > 0) {
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/sendBackTea",method= RequestMethod.POST)
@@ -300,10 +299,10 @@ public class JsResBusinessController extends GeneralController {
 			List<String> userFlowList = Arrays.asList(userFlows);
 			int count = userBiz.updateTeaNotSubmit(userFlowList);
 			if(count > 0) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value="/hospitalHead")
@@ -314,13 +313,13 @@ public class JsResBusinessController extends GeneralController {
 	@RequestMapping(value = {"/hospitalList" })
 	public String hospitalList (SysOrg sysOrg, Integer currentPage, HttpServletRequest request, Model model, String orgFlag){
 		SysOrg sysOrg2 = new SysOrg();
-		sysOrg2.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg2.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg2.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg2.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg2,null);
 		model.addAttribute("allSysOrgList", allSysOrgList);
 
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg,orgFlag);
 		model.addAttribute("sysOrgList", sysOrgList);
@@ -344,10 +343,10 @@ public class JsResBusinessController extends GeneralController {
 			param.put("checkReason",checkReason);
 			int count = sysOrgBiz.updateCheckAll(param);
 			if(count > 0) {
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/sendBackHospital",method= RequestMethod.POST)
@@ -357,10 +356,10 @@ public class JsResBusinessController extends GeneralController {
 			List<String> userFlowList = Arrays.asList(orgFlows);
 			int count = sysOrgBiz.updateHospitalNotSubmit(userFlowList);
 			if(count > 0) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value="/schoolHead")
@@ -373,9 +372,9 @@ public class JsResBusinessController extends GeneralController {
 		if (sysDict == null) {
 			sysDict = new SysDict();
 		}
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysDict.setDictTypeId(DictTypeEnum.SendSchool.getId());
-		sysDict.setDictTypeName(DictTypeEnum.SendSchool.getName());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
+        sysDict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getName());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		model.addAttribute("dictList", dictList);
@@ -399,10 +398,10 @@ public class JsResBusinessController extends GeneralController {
 			param.put("checkReason",checkReason);
 			int count = dictBiz.updateCheckAll(param);
 			if(count > 0) {
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/sendBackSchool",method= RequestMethod.POST)
@@ -412,10 +411,10 @@ public class JsResBusinessController extends GeneralController {
 			List<String> dictFlowList = Arrays.asList(dictFlows);
 			int count = dictBiz.updateSchoolNotSubmit(dictFlowList);
 			if(count > 0) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value = {"/exportDoc" })
@@ -445,7 +444,7 @@ public class JsResBusinessController extends GeneralController {
 		if (StringUtil.isNotBlank(ifOpen)) {
 			params.put("ifOpen", ifOpen);
 			for (int i = 0; i < powerTypeId.length; i++) {
-				params.put(powerTypeId[i], GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			list = schManualBiz.userListByJsResPower(params);
 		} else {

@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.osca;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +12,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.model.mo.OscaDoctorRegist;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SysOrg;
@@ -89,7 +88,7 @@ public class OscaPersonnelController extends GeneralController {
         }
         List<SysOrg> orgList = sysOrgBiz.queryAllSysOrg(null);
         model.addAttribute("orgList",orgList);
-        model.addAttribute("auditFlag", GlobalConstant.FLAG_Y);
+        model.addAttribute("auditFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         return "osca/base/audit";
     }
 
@@ -178,17 +177,17 @@ public class OscaPersonnelController extends GeneralController {
             SysUser sysUser = null;
             sysUser = userBiz.findByUserEmailNotSelf(userFlow,userEmail);
             if(sysUser != null){
-                return GlobalConstant.USER_EMAIL_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
             }
             //判断用户身份证号是否重复
             sysUser = userBiz.findByIdNoNotSelf(userFlow,user.getIdNo());
             if (sysUser != null) {
-                return  GlobalConstant.USER_ID_NO_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
             }
             //判断用户手机号是否重复
             sysUser = userBiz.findByUserPhoneNotSelf(userFlow,user.getUserPhone());
             if (sysUser != null) {
-                return GlobalConstant.USER_PHONE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
             }
             userBiz.edit(user);
             doctor.setDoctorFlow(user.getUserFlow());
@@ -200,21 +199,21 @@ public class OscaPersonnelController extends GeneralController {
             SysUser sysUser = null;
             sysUser = userBiz.findByUserEmail(userEmail);
             if(sysUser != null){
-                return GlobalConstant.USER_EMAIL_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
             }
             sysUser = userBiz.findByUserCode(userEmail);
             if(sysUser != null){
-                return GlobalConstant.USER_EMAIL_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
             }
             //判断用户身份证号是否重复
             sysUser = userBiz.findByIdNo(user.getIdNo());
             if (sysUser != null) {
-                return GlobalConstant.USER_ID_NO_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
             }
             //判断用户手机号是否重复
             sysUser = userBiz.findByUserPhone(user.getUserPhone());
             if (sysUser != null) {
-                return GlobalConstant.USER_PHONE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
             }
             iInxBiz.saveOsceRegistUser2(user,doctor);
         }
@@ -232,17 +231,17 @@ public class OscaPersonnelController extends GeneralController {
         if(file.getSize() > 0){
             try{
                 int result = oscaBaseBiz.importUserFromExcel(file);
-                if(GlobalConstant.ZERO_LINE != result){
-                    return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 }else{
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     //导出

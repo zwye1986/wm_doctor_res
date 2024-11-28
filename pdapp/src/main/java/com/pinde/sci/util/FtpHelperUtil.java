@@ -33,7 +33,7 @@ public class FtpHelperUtil {
     public void uploadFile(String localFilePath, String ftpDir, String ftpFileName) {
         try {
             init();
-            if(initFlag&& GlobalConstant.FLAG_Y.equals(ftp.ftpSwitch)) {
+            if (initFlag && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ftp.ftpSwitch)) {
                 ftpLogin();
                 if (loginFlag) {
                     long time = System.currentTimeMillis();
@@ -57,7 +57,7 @@ public class FtpHelperUtil {
     public void downloadFile(String localFilePath, String ftpDir, String ftpFileName) {
         try {
             init();
-            if(initFlag&&GlobalConstant.FLAG_Y.equals(ftp.ftpSwitch)) {
+            if (initFlag && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ftp.ftpSwitch)) {
                 ftpLogin();
                 if (loginFlag) {
                     long time = System.currentTimeMillis();

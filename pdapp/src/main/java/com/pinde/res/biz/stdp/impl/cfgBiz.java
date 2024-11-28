@@ -43,10 +43,10 @@ public class cfgBiz implements ICfgBiz {
 	@Override
 	public List<SysCfg> search(SysCfg cfg) {
 		List<String> wsIdList = new ArrayList<String>();
-		wsIdList.add(GlobalConstant.SYS_WS_ID);
+        wsIdList.add(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 		SysCfgExample example = new SysCfgExample();
 		SysCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(cfg.getWsId())) {
 			wsIdList.add(cfg.getWsId());
 			criteria.andWsIdIn(wsIdList);

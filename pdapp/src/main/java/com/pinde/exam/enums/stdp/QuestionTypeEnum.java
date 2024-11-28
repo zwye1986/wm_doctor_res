@@ -1,6 +1,6 @@
 package com.pinde.exam.enums.stdp;
 
-import com.pinde.core.common.enums.GeneralEnum;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 public enum QuestionTypeEnum implements GeneralEnum<String> {

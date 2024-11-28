@@ -30,7 +30,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 		if(StringUtil.isNotBlank(orgFlow))
 		{
 			SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOrgFlowEqualTo(orgFlow);
 			return cfgMapper.selectByExample(example);
 		}
@@ -42,7 +42,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 		if(StringUtil.isNotBlank(schDeptFlow))
 		{
 			SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andSchDeptFlowEqualTo(schDeptFlow);
 			List<SchAndStandardDeptCfg> cfgs= cfgMapper.selectByExample(example);
 			if(cfgs!=null&&cfgs.size()>0)

@@ -34,7 +34,7 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
             scheduleScore.setCreateTime(DateUtil.getCurrDate());
             scheduleScore.setScheduleFlow(PkUtil.getUUID());
             scheduleScore.setCreateUserFlow(user.getUserFlow());
-            scheduleScore.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            scheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             return resScheduleScoreMapper.insert(scheduleScore);
         }
     }

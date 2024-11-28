@@ -41,7 +41,7 @@ public class JsResUserBlackBizImpl implements IJsResUserBlackBiz {
     @Override
     public List<JsresUserBalcklist> searchInfo(JsresUserBalcklist jsresUserBalcklist,List<String> userFlowList,List<String> orgFlowList){
         JsresUserBalcklistExample example = new JsresUserBalcklistExample();
-        JsresUserBalcklistExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresUserBalcklistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if(StringUtil.isNotBlank(jsresUserBalcklist.getSessionNumber())){
             criteria.andSessionNumberEqualTo(jsresUserBalcklist.getSessionNumber());
@@ -72,7 +72,7 @@ public class JsResUserBlackBizImpl implements IJsResUserBlackBiz {
     public List<JsresUserBalcklist> searchInfo2(JsresUserBalcklist jsresUserBalcklist,List<String> userFlowList,
                                                 List<String> orgFlowList,List<String> sessionNumbers,String auditStatusId){
         JsresUserBalcklistExample example = new JsresUserBalcklistExample();
-        JsresUserBalcklistExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresUserBalcklistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if(StringUtil.isNotBlank(jsresUserBalcklist.getSessionNumber())){
             criteria.andSessionNumberEqualTo(jsresUserBalcklist.getSessionNumber());
@@ -113,21 +113,21 @@ public class JsResUserBlackBizImpl implements IJsResUserBlackBiz {
         Map<Object, Object> countMap = new HashMap<Object, Object>();
         if (blackLists != null && !blackLists.isEmpty()) {
             for (JsresUserBalcklist black : blackLists) {
-                String result = GlobalConstant.FLAG_Y;
+                String result = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 if (StringUtil.isNotBlank(speName) && StringUtil.isNotBlank(black.getTrainingSpeName())) {
                     if (!black.getTrainingSpeName().equals(speName)) {
-                        result = GlobalConstant.FLAG_N;
+                        result = com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
                 }
-                if (GlobalConstant.FLAG_Y.equals(result)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result)) {
                     String key = black.getRecordFlow();
 
                     newRecList.add(black);
-                    countMap.put(black.getUserFlow(), GlobalConstant.FLAG_F);
+                    countMap.put(black.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_F);
                 }
             }
-            backInfoMap.put(GlobalConstant.FLAG_F, countMap);
-            backInfoMap.put(GlobalConstant.FLAG_Y, newRecList);
+            backInfoMap.put(com.pinde.core.common.GlobalConstant.FLAG_F, countMap);
+            backInfoMap.put(com.pinde.core.common.GlobalConstant.FLAG_Y, newRecList);
         }
         return backInfoMap;
     }
@@ -184,12 +184,12 @@ public class JsResUserBlackBizImpl implements IJsResUserBlackBiz {
         if (!(mimeList.contains(fileType) && suffixList.contains(suffix.toLowerCase()))) {
             return "请上传 " + InitConfig.getSysCfg("res_file_support_suffix") + "格式的文件";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName, String planYear) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (file.getSize() > 0) {
             //创建目录
             String dateString = DateUtil.getCurrDate2();

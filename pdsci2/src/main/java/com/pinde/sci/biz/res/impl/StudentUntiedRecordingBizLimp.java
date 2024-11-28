@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.res.IStudentUntiedRecordingBiz;
 import com.pinde.sci.common.GeneralMethod;
@@ -43,7 +44,7 @@ public class StudentUntiedRecordingBizLimp  implements IStudentUntiedRecordingBi
     @Override
     public List<DoctorUntiedRecording> selectDoctorUntiedRecordingList(DoctorUntiedRecording recording) {
         DoctorUntiedRecordingExample example = new DoctorUntiedRecordingExample();
-        DoctorUntiedRecordingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        DoctorUntiedRecordingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(recording != null){
             String doctorFlow = recording.getDoctorFlow();
             if(StringUtil.isNotBlank(doctorFlow)){

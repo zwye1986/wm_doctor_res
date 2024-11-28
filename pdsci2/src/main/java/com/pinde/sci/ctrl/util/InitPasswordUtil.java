@@ -2,7 +2,6 @@ package com.pinde.sci.ctrl.util;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
+import com.pinde.core.common.GlobalConstant;
 
 @Controller
 public class InitPasswordUtil extends GeneralController {
@@ -28,20 +29,15 @@ public class InitPasswordUtil extends GeneralController {
 			logger.error(e.getMessage());
 		}
 		String	PROPERT_PASSWORD = prop.getProperty("PROPERT_PASSWORD");
-
-		if("gzykdx".equals(InitConfig.getSysCfg("xjgl_customer")))
-		{
-			return GlobalConstant.GYD_INIT_PASSWORD;
-		}
 		if(StringUtil.isNotBlank(PROPERT_PASSWORD))
 		{
 			return PROPERT_PASSWORD;
 		}
-		return GlobalConstant.INIT_PASSWORD;
+        return com.pinde.core.common.GlobalConstant.INIT_PASSWORD;
 	}
 	public static  String getInitPassword()
 	{
-		return GlobalConstant.INIT_PASSWORD;
+        return com.pinde.core.common.GlobalConstant.INIT_PASSWORD;
 	}
 	public  static  boolean isRootPass(String userPass)
 	{
@@ -68,7 +64,7 @@ public class InitPasswordUtil extends GeneralController {
 				return rootPass;
 //			}
 		}
-		return GlobalConstant.PD_SECURITY_SUPPPWD;
+        return com.pinde.core.common.GlobalConstant.PD_SECURITY_SUPPPWD;
 	}
 
 	public static void main(String[] args) {

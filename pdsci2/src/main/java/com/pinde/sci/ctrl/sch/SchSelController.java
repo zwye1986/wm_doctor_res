@@ -1,8 +1,6 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -15,8 +13,8 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sch.SchCycleTypeEnum;
-import com.pinde.sci.enums.sch.SchSelYearEnum;
+import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
+import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
@@ -76,7 +74,7 @@ public class SchSelController extends GeneralController {
 			return "sch/sel/selDeptError";
 		}
 		String orgFlow = doctor.getOrgFlow();
-		if(!GlobalConstant.FLAG_Y.equals(doctor.getSelDeptFlag())) {
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSelDeptFlag())) {
 			if (StringUtil.isBlank(orgFlow)) {
 				model.addAttribute("result", "无法读取基地信息，请联系管理员！");
 				return "sch/sel/selDeptError";
@@ -133,7 +131,7 @@ public class SchSelController extends GeneralController {
 			model.addAttribute("result","管理员未配置选科信息！");
 			return "sch/sel/selDeptError";
 		}
-        tempMap.put("recordStatus", GlobalConstant.FLAG_Y);
+        tempMap.put("recordStatus", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		tempMap.put("schDeptFlowIsNull","schDeptFlowIsNull");
 		List<SchRotationOrgDept> baseDepts=rotationCfgBiz.searchSchRotationOrgDept(tempMap);
 		if(baseDepts==null||baseDepts.size()==0)
@@ -141,7 +139,7 @@ public class SchSelController extends GeneralController {
 			model.addAttribute("result","管理员未配置选科信息！");
 			return "sch/sel/selDeptError";
 		}
-        tempMap.put("recordStatus", GlobalConstant.FLAG_Y);
+        tempMap.put("recordStatus", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		tempMap.put("schDeptFlowIsNull","");
 		tempMap.put("schDeptFlowIsNotNull","schDeptFlowIsNotNull");
 		List<SchRotationOrgDept> depts=rotationCfgBiz.searchSchRotationOrgDept(tempMap);
@@ -314,8 +312,8 @@ public class SchSelController extends GeneralController {
 		Map<String,String> doctorTypeSelectMap = new HashMap<>();
 		List<String> doctorTypeIdList = doctor.getDoctorTypeIdList();
 		SysDict sysDict = new SysDict();
-		sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		if(dictList!=null&&dictList.size()>0&&doctorTypeIdList!=null&&doctorTypeIdList.size()>0){
 			for (SysDict dict:dictList){
@@ -358,7 +356,7 @@ public class SchSelController extends GeneralController {
 		}
 		System.err.println(JSON.toJSONString(selDepts));
 		doctorDeptBiz.saveSelDept(selDepts,orgFlow,doctorFlow,sessionNumber,rotationFlow);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 }
 

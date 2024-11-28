@@ -75,23 +75,23 @@ public class PortalUserManageController extends GeneralController {
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCode(user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 		}else{
 			String userFlow = user.getUserFlow();
 			//判断用户id是否重复
 			SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
 			if(old!=null){
-				return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 			}
 		}
 		try {
 			gateUserManageBiz.saveUser(user, roleFlows);
 		}catch (Exception e)
 		{
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@RequestMapping(value = {"/userList" })
@@ -108,7 +108,7 @@ public class PortalUserManageController extends GeneralController {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<Map<String, Object>> list0 = gateUserManageBiz.userList(params);
 		model.addAttribute("list", list0);
-		String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		List<SysUserRole> sysUserRoleList = userRoleBiz.getByOrgFlow(null, wsId);
 		Map<String, List<String>> sysUserRoleMap = new HashMap<String, List<String>>();
 		for (SysUserRole sysUserRole : sysUserRoleList) {
@@ -139,7 +139,7 @@ public class PortalUserManageController extends GeneralController {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<Map<String, Object>> list0 = gateUserManageBiz.userList(params);
 		model.addAttribute("list", list0);
-		String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		List<SysUserRole> sysUserRoleList = userRoleBiz.getByOrgFlow(null, wsId);
 		Map<String, List<String>> sysUserRoleMap = new HashMap<String, List<String>>();
 		for (SysUserRole sysUserRole : sysUserRoleList) {

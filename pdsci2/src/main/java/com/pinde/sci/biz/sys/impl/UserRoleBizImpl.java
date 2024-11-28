@@ -42,14 +42,14 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		SysUserRoleExample example = new SysUserRoleExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andUserFlowEqualTo(userFlow);
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return sysUserRoleMapper.selectByExample(example);
 	}
 
 	@Override
 	public List<SysUserRole> searchUserRole(SysUserRole userRole){
 		SysUserRoleExample example = new SysUserRoleExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userRole.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(userRole.getOrgFlow());
 		}
@@ -73,7 +73,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
 		criteria.andWsIdEqualTo(wsId);
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return sysUserRoleMapper.selectByExample(example);
 	}
 
@@ -93,13 +93,13 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		//将原先该用户的角色都删除
 		SysUserRole update = new SysUserRole();
 //		update.setUserFlow(userFlow);
-		update.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        update.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		GeneralMethod.setRecordInfo(update, false);
 		SysUserRoleExample example = new SysUserRoleExample();
 		com.pinde.sci.model.mo.SysUserRoleExample.Criteria criteria = example.createCriteria();
 		criteria.andUserFlowEqualTo(userFlow)
 		.andWsIdEqualTo(workStationId)
-		.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		sysUserRoleMapper.updateByExampleSelective(update, example);
 
 		//重新添加角色
@@ -110,7 +110,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 				insert.setOrgFlow(orgFlow);
 				insert.setWsId(workStationId);
 				insert.setRoleFlow(rolwf);
-				insert.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                insert.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				insert.setRecordFlow(PkUtil.getUUID());
 				GeneralMethod.setRecordInfo(insert, true);
 				sysUserRoleMapper.insert(insert);
@@ -120,16 +120,16 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 					// 基地是否开通过程
 					String orgCfgCode = "jsres_" + orgFlow + "_guocheng";
 					JsresPowerCfg jsresPowerCfg = jsResPowerCfgBiz.read(orgCfgCode);
-					if(null != jsresPowerCfg && GlobalConstant.FLAG_Y.equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())){
+                    if (null != jsresPowerCfg && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())) {
 						// 带教默认APP登录权限
 						String cfgCode = "jsres_teacher_app_login_"+userFlow;
 						JsresPowerCfg jsresCfg = new JsresPowerCfg();
 						jsresCfg.setCfgCode(cfgCode);
-                        jsresCfg.setCfgValue(GlobalConstant.FLAG_Y);
+                        jsresCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
 						jsresCfg.setCfgDesc("是否开放带教app权限");
 						jsresCfg.setCheckStatusId("Passed");
 						jsresCfg.setCheckStatusName("审核通过");
-						jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						jsResPowerCfgBiz.save(jsresCfg);
 					}
 				}
@@ -150,7 +150,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 				return sysUserRoleMapper.insertSelective(userRole);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -165,13 +165,13 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 				return sysUserRoleMapper.insertSelective(userRole);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<SysUserRole> getByUserFlowAndWsid(String userFlow, String wsid) {
 		SysUserRoleExample example = new SysUserRoleExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -197,7 +197,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		if(StringUtil.isNotBlank(wisd)){
 			criteria.andWsIdEqualTo(wisd);
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return roleMapper.selectByExample(example);
 	}
 
@@ -205,7 +205,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 //	@Override
 //	public List<SysUserRole> searchUserByRoles(List<String> roleList,String orgFlow){
 //		SysUserRoleExample example = new SysUserRoleExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andRoleFlowIn(roleList).andOrgFlowEqualTo(orgFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRoleFlowIn(roleList).andOrgFlowEqualTo(orgFlow);
 //		return sysUserRoleMapper.selectByExample(example);
 //	}
 
@@ -231,20 +231,20 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		}else if(userRoleList.size()>=1){
 			SysUserRole userRole = userRoleList.get(0);
 			GeneralMethod.setRecordInfo(userRole, false);
-			if(userRole.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_Y)){
-				userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            if (userRole.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
+                userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			}else {
-				userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			}
 			return sysUserRoleMapper.updateByPrimaryKeySelective(userRole);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public SysUserRole readUserRole(String userFlow, String roleFlow){
 		SysUserRoleExample example = new SysUserRoleExample();
-		example.createCriteria().andRoleFlowEqualTo(roleFlow).andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRoleFlowEqualTo(roleFlow).andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SysUserRole role = null;
 		List<SysUserRole> userRoleList = sysUserRoleMapper.selectByExample(example);
 		if(userRoleList!=null && userRoleList.size()>0){
@@ -293,7 +293,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		userRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 		userRole.setAuthTime(DateUtil.getCurrDateTime());
 		SysUserRoleExample example = new SysUserRoleExample();
-		example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRoleFlowEqualTo(roleFlow).andWsIdEqualTo(GlobalContext.getCurrentWsId());
 		List<SysUserRole> userRoleList = sysUserRoleMapper.selectByExample(example);
 		if(userRoleList.size()==0){//学籍学生角色未绑定
@@ -305,12 +305,12 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		if(StringUtil.isNotBlank(docRole)){
 			example.clear();
 			example.createCriteria().andUserFlowEqualTo(userFlow).andRoleFlowEqualTo(docRole)
-					.andWsIdEqualTo(GlobalConstant.RES_WS_ID).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andWsIdEqualTo(com.pinde.core.common.GlobalConstant.RES_WS_ID).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysUserRole> docRoleList = sysUserRoleMapper.selectByExample(example);
 			if(docRoleList.size() == 0){
 				userRole.setRecordFlow(PkUtil.getUUID());
 				userRole.setRoleFlow(docRole);
-				userRole.setWsId(GlobalConstant.RES_WS_ID);
+                userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 				GeneralMethod.setRecordInfo(userRole, true);
 				sysUserRoleMapper.insert(userRole);
 			}
@@ -320,7 +320,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 	public boolean userExistRole(SysUser sysUser, SysRole sysRole) {
 		SysRoleExample example = new SysRoleExample();
 		SysRoleExample.Criteria sysRoleCriteria = example.createCriteria();
-		sysRoleCriteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysRoleCriteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysRole.getRoleFlow())){
 			sysRoleCriteria.andRoleFlowEqualTo(sysRole.getRoleFlow());
 		}
@@ -338,7 +338,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 			}
 			SysUserRoleExample userRoleExample = new SysUserRoleExample();
 			SysUserRoleExample.Criteria criteria = userRoleExample.createCriteria();
-			criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			criteria.andRoleFlowIn(roleFlowList);
 			criteria.andUserFlowEqualTo(sysUser.getUserFlow());
 			int count = sysUserRoleMapper.countByExample(userRoleExample);
@@ -353,7 +353,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 	@Override
 	public SysRole getByRoleName(String roleName) {
 		SysRoleExample example = new SysRoleExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRoleNameEqualTo(roleName).andWsIdEqualTo("res");
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRoleNameEqualTo(roleName).andWsIdEqualTo("res");
 		List<SysRole> roleList = roleMapper.selectByExample(example);
 		if (CollectionUtils.isNotEmpty(roleList)) {
 			return roleList.get(0);
@@ -373,7 +373,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 		currUserRoles= currUserRoles.stream().filter(vo -> roleRanges.contains(vo.getRoleFlow())).collect(Collectors.toList());
 		Map<String, SysUserRole> flowToUserRoleMap = currUserRoles.stream().collect(Collectors.toMap(vo -> vo.getUserFlow() + vo.getRoleFlow(), vo -> vo, (vo1, vo2) -> vo1));
 		// 将原来的失效掉
-		currUserRoles.stream().forEach(vo -> vo.setRecordStatus(GlobalConstant.RECORD_STATUS_N));
+        currUserRoles.stream().forEach(vo -> vo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N));
 		// 使用新的role
 		List<SysUserRole> updateUserRoleList = new ArrayList<>();
 		List<SysUserRole> insertUserRoleList = new ArrayList<>();
@@ -381,7 +381,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
 			SysUserRole sysUserRole = null;
 			if(flowToUserRoleMap.get(userFlow + userRole) != null) {
 				sysUserRole = flowToUserRoleMap.get(userFlow + userRole);
-				sysUserRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                sysUserRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				GeneralMethod.setRecordInfo(sysUserRole, false);
 				updateUserRoleList.add(sysUserRole); // 已存在，本次更新
 			}else {

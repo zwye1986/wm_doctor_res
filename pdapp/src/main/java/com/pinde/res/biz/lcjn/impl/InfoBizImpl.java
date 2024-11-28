@@ -84,7 +84,7 @@ public class InfoBizImpl implements IInfoBiz {
 			r.setCreateUserFlow(userFlow);
 			r.setModifyTime(DateUtil.getCurrDateTime());
 			r.setModifyUserFlow(userFlow);
-			r.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            r.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return lcjnReadInfoMapper.insertSelective(r);
 		}
 

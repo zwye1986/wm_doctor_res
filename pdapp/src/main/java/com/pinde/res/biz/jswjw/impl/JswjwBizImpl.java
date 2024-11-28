@@ -6,6 +6,7 @@ import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
 import com.pinde.core.model.SysUserExample.Criteria;
@@ -281,7 +282,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public SysUser findByUserCode(String userCode) {
         SysUserExample sysUserExample = new SysUserExample();
         Criteria criteria = sysUserExample.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andUserCodeEqualTo(userCode);
         List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
         if (sysUserList.size() > 0) {
@@ -298,7 +299,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResRec> searchByUserFlowAndTypeId(String userFlow, String recTypeId) {
         ResRecExample example = new ResRecExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(userFlow);
         return recMapper.selectByExampleWithBLOBs(example);
     }
@@ -314,7 +315,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
         SchArrangeResultExample example = new SchArrangeResultExample();
         example.createCriteria().andDoctorFlowEqualTo(userFlow).andStandardGroupFlowEqualTo(rotationDept.getGroupFlow()).andRotationFlowEqualTo(rotationDept.getRotationFlow())
-                .andStandardDeptIdEqualTo(rotationDept.getStandardDeptId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andStandardDeptIdEqualTo(rotationDept.getStandardDeptId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("SCH_START_DATE");
         return resultMapper.selectByExample(example);
     }
@@ -325,7 +326,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             PageHelper.startPage(pageIndex, pageSize);
         }
         SchArrangeResultExample example = new SchArrangeResultExample();
-        SchArrangeResultExample.Criteria criteria = example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchArrangeResultExample.Criteria criteria = example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(rotationFlow)) {
             criteria.andRotationFlowEqualTo(rotationFlow);
         }
@@ -364,7 +365,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         result.setCreateUserFlow(userFlow);
         result.setModifyTime(DateUtil.getCurrDateTime());
         result.setModifyUserFlow(userFlow);
-        result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         Map<String, String> map = new HashMap<>();
         map.put("startDate", result.getSchStartDate());
         map.put("endDate", result.getSchEndDate());
@@ -425,8 +426,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResLectureScanRegist> searchIsRegists(String lectureFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow).
-                andIsRegistEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow).
+                andIsRegistEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return lectureScanRegistMapper.selectByExample(example);
     }
 
@@ -451,7 +452,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             ResDoctor doctor = doctorMapper.selectByPrimaryKey(result.getDoctorFlow());
             //查看轮转计划排班设置是否开启
             JsresPowerCfg cfg = jsresPowerCfgMapper.selectByPrimaryKey("jsres_" + doctor.getOrgFlow() + "_org_process_scheduling_org");
-            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
+            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 result.setBaseAudit("Passing"); //待审核
             }
             resultMapper.updateByPrimaryKeySelective(result);
@@ -463,14 +464,14 @@ public class JswjwBizImpl implements IJswjwBiz {
                               String subDeptFlow) {
         SchArrangeResult result = resultMapper.selectByPrimaryKey(subDeptFlow);
         if (result != null) {
-            result.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             result.setModifyTime(DateUtil.getCurrDateTime());
             result.setModifyUserFlow(userFlow);
             resultMapper.updateByPrimaryKeySelective(result);
 
             ResDoctorSchProcess process = getProcessByResultFlow(result.getResultFlow());
             if (process != null) {
-                process.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                 process.setModifyTime(DateUtil.getCurrDateTime());
                 process.setModifyUserFlow(userFlow);
                 processMapper.updateByPrimaryKeySelective(process);
@@ -510,7 +511,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             paramMap.put("standardDeptId", rotationDept.getStandardDeptId());
 //			SchArrangeResultExample example = new SchArrangeResultExample();
 //			example.createCriteria().andDoctorFlowEqualTo(userFlow).andStandardGroupFlowEqualTo(rotationDept.getGroupFlow()).andRotationFlowEqualTo(rotationDept.getRotationFlow())
-//					.andStandardDeptIdEqualTo(rotationDept.getStandardDeptId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//					.andStandardDeptIdEqualTo(rotationDept.getStandardDeptId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //			List<SchArrangeResult> resultList = resultMapper.selectByExample(example);
             Map<String, String> schResultMap = resultExtMapper.getDoctorSchArrange(paramMap);
             Float realMonth = Float.valueOf(schResultMap.get("REAL_MONTH"));
@@ -520,9 +521,9 @@ public class JswjwBizImpl implements IJswjwBiz {
 //				}
 //			}
             if (Integer.valueOf(schResultMap.get("SCH_COUNT")) == 0) {
-                enterSubDeptData.put("canAdd", GlobalConstant.FLAG_N);
+                enterSubDeptData.put("canAdd", com.pinde.core.common.GlobalConstant.FLAG_N);
             } else {
-                enterSubDeptData.put("canAdd", GlobalConstant.FLAG_Y);
+                enterSubDeptData.put("canAdd", com.pinde.core.common.GlobalConstant.FLAG_Y);
             }
             Float schMonth = Float.parseFloat(rotationDept.getSchMonth());
 
@@ -730,7 +731,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
             ResSchProcessExpressExample example = new ResSchProcessExpressExample();
             example.createCriteria().andOperUserFlowEqualTo(userFlow).andSchRotationDeptFlowEqualTo(deptFlow)
-                    .andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResSchProcessExpress> records = expressMapper.selectByExampleWithBLOBs(example);
             if (records != null && records.size() > 0) {
                 try {
@@ -790,25 +791,25 @@ public class JswjwBizImpl implements IJswjwBiz {
         String recTypeId = "";
         switch (dataType) {
             case "mr":
-                recTypeId = ResRecTypeEnum.CaseRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
                 break;
             case "disease":
-                recTypeId = ResRecTypeEnum.DiseaseRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
                 break;
             case "skill":
-                recTypeId = ResRecTypeEnum.SkillRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
                 break;
             case "operation":
-                recTypeId = ResRecTypeEnum.OperationRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
                 break;
             case "activity":
-                recTypeId = ResRecTypeEnum.CampaignRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
                 break;
             case "summary":
-                recTypeId = ResRecTypeEnum.AfterSummary.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId();
                 break;
             case "languageTeaching":
-                recTypeId = ResRecTypeEnum.LanguageTeachingResearch.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.LanguageTeachingResearch.getId();
                 break;
             default:
                 break;
@@ -896,7 +897,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
             //要求数
             SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-            reqExample.createCriteria().andRotationFlowEqualTo(rotationFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            reqExample.createCriteria().andRotationFlowEqualTo(rotationFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andRelRecordFlowEqualTo(deptFlow).andRecTypeIdEqualTo(recTypeId);
             List<SchRotationDeptReq> reqList = schRotationDeptReqMapper.selectByExample(reqExample);
 
@@ -953,25 +954,25 @@ public class JswjwBizImpl implements IJswjwBiz {
         String recTypeId = "";
         switch (dataType) {
             case "mr":
-                recTypeId = ResRecTypeEnum.CaseRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
                 break;
             case "disease":
-                recTypeId = ResRecTypeEnum.DiseaseRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
                 break;
             case "skill":
-                recTypeId = ResRecTypeEnum.SkillRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
                 break;
             case "operation":
-                recTypeId = ResRecTypeEnum.OperationRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
                 break;
             case "activity":
-                recTypeId = ResRecTypeEnum.CampaignRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
                 break;
             case "summary":
-                recTypeId = ResRecTypeEnum.AfterSummary.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId();
                 break;
             case "languageTeaching":
-                recTypeId = ResRecTypeEnum.LanguageTeachingResearch.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.LanguageTeachingResearch.getId();
                 break;
             default:
                 break;
@@ -1060,7 +1061,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             //要求数
             PageHelper.startPage(pageIndex, pageSize);
             SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-            reqExample.createCriteria().andRotationFlowEqualTo(rotationFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            reqExample.createCriteria().andRotationFlowEqualTo(rotationFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andRelRecordFlowEqualTo(deptFlow).andRecTypeIdEqualTo(recTypeId);
             List<SchRotationDeptReq> reqList = schRotationDeptReqMapper.selectByExample(reqExample);
 
@@ -1149,25 +1150,25 @@ public class JswjwBizImpl implements IJswjwBiz {
         String recTypeId = "";
         switch (dataType) {
             case "mr":
-                recTypeId = ResRecTypeEnum.CaseRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
                 break;
             case "disease":
-                recTypeId = ResRecTypeEnum.DiseaseRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
                 break;
             case "skill":
-                recTypeId = ResRecTypeEnum.SkillRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
                 break;
             case "operation":
-                recTypeId = ResRecTypeEnum.OperationRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
                 break;
             case "activity":
-                recTypeId = ResRecTypeEnum.CampaignRegistry.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
                 break;
             case "summary":
-                recTypeId = ResRecTypeEnum.AfterSummary.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId();
                 break;
             case "languageTeaching":
-                recTypeId = ResRecTypeEnum.LanguageTeachingResearch.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.LanguageTeachingResearch.getId();
                 break;
             default:
                 break;
@@ -1192,7 +1193,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                                 rec.get("activityRemark") == null ? "" : String.valueOf(rec.get("activityRemark"));
                         formDataMap.put("activity_content", activity_content);
                         formDataMap.put("activity_address", rec.get("activityAddress") == null ? "" : String.valueOf(rec.get("activityAddress")));
-                        formDataMap.put("isJoin", GlobalConstant.FLAG_Y);
+                        formDataMap.put("isJoin", com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     formDataMap.put("dataFlow", String.valueOf(rec.get("recFlow")));
                     dataList.add(formDataMap);
@@ -1200,7 +1201,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         } else {
             ResRecExample recExample = new ResRecExample();
-            ResRecExample.Criteria criteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
+            ResRecExample.Criteria criteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(userFlow).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(deptFlow);
             if ("disease".equals(dataType) || "skill".equals(dataType) || "operation".equals(dataType) || "languageTeaching".equals(dataType)) {
                 criteria.andItemIdEqualTo(cataFlow);
             }
@@ -1290,13 +1291,13 @@ public class JswjwBizImpl implements IJswjwBiz {
                 recTypeId = RegistryTypeEnum.CampaignRegistry.getId();
                 break;
             case "summary":
-                recTypeId = ResRecTypeEnum.AfterSummary.getId();
+                recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId();
                 break;
             default:
                 break;
         }
         SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-        SchRotationDeptReqExample.Criteria criteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+        SchRotationDeptReqExample.Criteria criteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
                 andRelRecordFlowEqualTo(deptFlow).andRecTypeIdEqualTo(recTypeId);
         if (StringUtil.isNotBlank(catFlow)) {
             criteria.andItemIdEqualTo(catFlow);
@@ -1370,7 +1371,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             record.setItemId(cataFlow);
             //获取item
             SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-            reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRelRecordFlowEqualTo(deptFlow).andItemIdEqualTo(cataFlow);
+            reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRelRecordFlowEqualTo(deptFlow).andItemIdEqualTo(cataFlow);
             List<SchRotationDeptReq> reqList = schRotationDeptReqMapper.selectByExample(reqExample);
             if (reqList.size() > 0) {
                 record.setItemName(reqList.get(0).getItemName());
@@ -1536,7 +1537,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         record.setCreateUserFlow(userFlow);
         record.setModifyTime(DateUtil.getCurrDateTime());
         record.setModifyUserFlow(userFlow);
-        record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		if ("mr".equals(dataType)) {
 //			ResRecCaseRegistry caseRegistry = new ResRecCaseRegistry();
 //			BeanUtils.copyProperties(record, caseRegistry);
@@ -1624,7 +1625,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             record.setItemId(cataFlow);
             //获取item
             SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-            reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRelRecordFlowEqualTo(deptFlow).andItemIdEqualTo(cataFlow);
+            reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRelRecordFlowEqualTo(deptFlow).andItemIdEqualTo(cataFlow);
             List<SchRotationDeptReq> reqList = schRotationDeptReqMapper.selectByExample(reqExample);
             if (reqList.size() > 0) {
                 record.setItemName(reqList.get(0).getItemName());
@@ -2001,7 +2002,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         record.setCreateUserFlow(userFlow);
         record.setModifyTime(DateUtil.getCurrDateTime());
         record.setModifyUserFlow(userFlow);
-        record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recMapper.insert(record);
         setRotationDeptPer(docote, deptFlow);
         //设置APP使用记录
@@ -2022,14 +2023,14 @@ public class JswjwBizImpl implements IJswjwBiz {
             info.setCreateUserFlow(userFlow);
             info.setModifyTime(DateUtil.getCurrDateTime());
             info.setModifyUserFlow(userFlow);
-            info.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             appUserInfoMapper.insert(info);
         }
     }
 
     private SysAppUserInfo getUserThisMonthUse(String useMonth, String userFlow) {
         SysAppUserInfoExample example = new SysAppUserInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDocotrFlowEqualTo(userFlow).andUseMonthEqualTo(useMonth);
         List<SysAppUserInfo> list = appUserInfoMapper.selectByExample(example);
         if (list != null && list.size() > 0) {
@@ -2063,7 +2064,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             ResStandardDeptPerExample example = new ResStandardDeptPerExample();
             example.createCriteria().andDoctorFlowEqualTo(docote.getDoctorFlow()).andSchRotationDeptFlowEqualTo(deptFlow)
                     .andRotationFlowEqualTo(docote.getRotationFlow())
-                    .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             example.setOrderByClause("create_time desc");
             List<ResStandardDeptPer> pers = perMapper.selectByExample(example);
             if (pers != null && !pers.isEmpty()) {
@@ -2071,7 +2072,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
             if (per == null) {
                 per = new ResStandardDeptPer();
-                per.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                per.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 per.setDoctorFlow(docote.getDoctorFlow());
                 per.setSchRotationDeptFlow(deptFlow);
                 per.setRotationFlow(docote.getRotationFlow());
@@ -2097,7 +2098,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 per.setCreateUserFlow(docote.getDoctorFlow());
                 per.setModifyTime(DateUtil.getCurrDateTime());
                 per.setModifyUserFlow(docote.getDoctorFlow());
-                per.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                per.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 perMapper.insertSelective(per);
             }
         }
@@ -2150,7 +2151,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     formDataMap.put("activity_content", activity_content);
                     formDataMap.put("activity_address", activity.get("activityAddress") == null ? "" : String.valueOf(activity.get("activityAddress")));
                     formDataMap.put("resultFlow", activity.get("resultFlow") == null ? "" : String.valueOf(activity.get("resultFlow")));
-                    formDataMap.put("isJoin", GlobalConstant.FLAG_Y);
+                    formDataMap.put("isJoin", com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
             } else {
                 String recContent = rec.getRecContent();
@@ -3087,7 +3088,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public void delData(String dataType, String userFlow, String deptFlow, String dataFlow) {
         ResRec record = new ResRec();
         record.setRecFlow(dataFlow);
-        record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         record.setModifyTime(DateUtil.getCurrDateTime());
         record.setModifyUserFlow(userFlow);
 //		if ("mr".equals(dataType)) {
@@ -3128,7 +3129,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         List<Map<String, String>> dataList = new ArrayList<Map<String, String>>();
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         example.createCriteria().andOperUserFlowEqualTo(userFlow).andSchRotationDeptFlowEqualTo(deptFlow)
-                .andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResSchProcessExpress> recList = expressMapper.selectByExampleWithBLOBs(example);
         if (recList.size() > 0) {
             ResSchProcessExpress record = recList.get(0);
@@ -3234,7 +3235,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             //
             ResSchProcessExpressExample example = new ResSchProcessExpressExample();
             example.createCriteria().andOperUserFlowEqualTo(form.getUserFlow()).andSchRotationDeptFlowEqualTo(form.getDeptFlow())
-                    .andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResSchProcessExpress> recList = expressMapper.selectByExampleWithBLOBs(example);
             ResSchProcessExpress record = null;
             Document doc = null;
@@ -3264,11 +3265,11 @@ public class JswjwBizImpl implements IJswjwBiz {
                 record = new ResSchProcessExpress();
                 record.setRecFlow(PkUtil.getUUID());
                 record.setOperUserFlow(form.getUserFlow());
-                record.setRecTypeId(ResRecTypeEnum.AfterSummary.getId());
-                record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                record.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+                record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 record.setSchRotationDeptFlow(form.getDeptFlow());
 
-                Element rootEle = DocumentHelper.createElement(ResRecTypeEnum.AfterSummary.getId());
+                Element rootEle = DocumentHelper.createElement(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
 
                 Element imgEle = DocumentHelper.createElement("image");
                 imgEle.addAttribute("imageFlow", fileFlow);
@@ -3372,7 +3373,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             //
             ResSchProcessExpressExample example = new ResSchProcessExpressExample();
             example.createCriteria().andOperUserFlowEqualTo(form.getUserFlow()).andSchRotationDeptFlowEqualTo(form.getDeptFlow())
-                    .andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResSchProcessExpress> recList = expressMapper.selectByExampleWithBLOBs(example);
             ResSchProcessExpress record = null;
             Document doc = null;
@@ -3402,11 +3403,11 @@ public class JswjwBizImpl implements IJswjwBiz {
                 record = new ResSchProcessExpress();
                 record.setRecFlow(PkUtil.getUUID());
                 record.setOperUserFlow(form.getUserFlow());
-                record.setRecTypeId(ResRecTypeEnum.AfterSummary.getId());
-                record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                record.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+                record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 record.setSchRotationDeptFlow(form.getDeptFlow());
 
-                Element rootEle = DocumentHelper.createElement(ResRecTypeEnum.AfterSummary.getId());
+                Element rootEle = DocumentHelper.createElement(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
 
                 Element imgEle = DocumentHelper.createElement("image");
                 imgEle.addAttribute("imageFlow", fileFlow);
@@ -3633,14 +3634,14 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     public void updateResultHaveAfter(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
-        String haveAfterPic = GlobalConstant.FLAG_N;
+        String haveAfterPic = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (StringUtil.isNotBlank(recContent)) {
             Document document = DocumentHelper.parseText(recContent);
             if (document != null) {
                 Element element = document.getRootElement();
                 List<Object> elem = element.elements("image");
                 if (elem != null && elem.size() > 0) {
-                    haveAfterPic = GlobalConstant.FLAG_Y;
+                    haveAfterPic = com.pinde.core.common.GlobalConstant.FLAG_Y;
                 }
             }
         }
@@ -3651,7 +3652,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public void deleteImage(String userFlow, String deptFlow, String imageFlow) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         example.createCriteria().andOperUserFlowEqualTo(userFlow).andSchRotationDeptFlowEqualTo(deptFlow)
-                .andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResSchProcessExpress> recList = expressMapper.selectByExampleWithBLOBs(example);
         if (recList.size() > 0) {
             ResSchProcessExpress record = recList.get(0);
@@ -3676,11 +3677,11 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int temporaryOutFamily(String processFlow) {
         int num = 0;
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow);
         List<ResDoctorSchProcess> processList = processMapper.selectByExample(example);
         if (CollectionUtils.isNotEmpty(processList)) {
             ResDoctorSchProcess resDoctorSchProcess = processList.get(0);
-            resDoctorSchProcess.setTemporaryOut(GlobalConstant.FLAG_Y);
+            resDoctorSchProcess.setTemporaryOut(com.pinde.core.common.GlobalConstant.FLAG_Y);
             resDoctorSchProcess.setTemporaryAuditStatusId("Auditing");
             resDoctorSchProcess.setTemporaryAuditStatusName("待审核");
             resDoctorSchProcess.setModifyTime(DateUtil.getCurrDateTime());
@@ -3729,7 +3730,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchArrangeResult> searchSchArrangeResultPassing(String doctorFlow, String rotationFlow) {
         SchArrangeResultExample example = new SchArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow)
                 .andRotationFlowEqualTo(rotationFlow).andBaseAuditEqualTo("Passing");
         example.setOrderByClause("CREATE_TIME");
         return resultMapper.selectByExample(example);
@@ -3743,7 +3744,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public Map<String, SchRotationDept> getRotationDeptMap(String rotationFlow) {
         SchRotationDeptExample example = new SchRotationDeptExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRotationFlowEqualTo(rotationFlow).andOrgFlowIsNull();
         List<SchRotationDept> rotationDeptList = schRotationDeptMapper.selectByExample(example);
         if (rotationDeptList != null && !rotationDeptList.isEmpty()) {
@@ -3759,14 +3760,14 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchDoctorDept> searchReductionDept(String doctorFlow, String rotationFlow) {
         SchDoctorDeptExample doctorDeptExample = new SchDoctorDeptExample();
-        doctorDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        doctorDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow);
         return doctorDeptMapper.selectByExample(doctorDeptExample);
     }
 
     public List<SchDoctorDept> searchReductionDeptTwo(String doctorFlow, String rotationFlow) {
         SchDoctorDeptExample doctorDeptExample = new SchDoctorDeptExample();
-        doctorDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        doctorDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow);
         return doctorDeptExtMapper.selectByExampleTwo(doctorDeptExample);
     }
@@ -3824,7 +3825,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
             //获取所有当前方案下的轮转规则
             SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-            SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOrgFlowIsNull().andRotationFlowEqualTo(rotationFlow);
             if (StringUtil.isNotBlank(relRecordFlow)) {
                 rotationDeptCriteria.andRecordFlowEqualTo(relRecordFlow);
@@ -3866,14 +3867,14 @@ public class JswjwBizImpl implements IJswjwBiz {
 
                 //获取所有当前方案下的要求
                 SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-                SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andRotationFlowEqualTo(rotationFlow);
                 if (StringUtil.isNotBlank(relRecordFlow)) {
                     reqCriteria.andRelRecordFlowEqualTo(relRecordFlow);
                 }
                 List<String> recTypeList = new ArrayList<>();
                 for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-                    if (GlobalConstant.FLAG_Y.equals(GlobalUtil.getSysCfg("res_registry_type_" + regType.getId()))) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(GlobalUtil.getSysCfg("res_registry_type_" + regType.getId()))) {
                         if (GlobalUtil.findChineseOrWestern(user.getMedicineTypeId(), regType.getId())) {
                             recTypeList.add(regType.getId());
                         }
@@ -3937,19 +3938,19 @@ public class JswjwBizImpl implements IJswjwBiz {
                     if (recList == null) {
                         //获取当前学员的所有登记数据
 //						ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//						ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//						ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//						ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//						ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//						ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
                         ResRecExample recExample = new ResRecExample();
-                        ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+                        ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
                         if (StringUtil.isNotBlank(relRecordFlow)) {
 //							campaignRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
 //							caseRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
@@ -4162,8 +4163,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public SchRotation searchRoattion(String docCategroyId, String trainingSpeId) {
         SchRotationExample example = new SchRotationExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andSpeIdEqualTo(trainingSpeId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andSpeIdEqualTo(trainingSpeId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorCategoryIdEqualTo(docCategroyId);
         example.setOrderByClause("create_time");
         List<SchRotation> list = rotationMapper.selectByExample(example);
@@ -4176,8 +4177,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public SchRotation searchAssiGeneralRoattion(String docCategroyId, String trainingSpeId, String sessionNumber) {
         SchRotationExample example = new SchRotationExample();
-        SchRotationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andSpeIdEqualTo(trainingSpeId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        SchRotationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andSpeIdEqualTo(trainingSpeId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorCategoryIdEqualTo(docCategroyId);
         if (sessionNumber.compareTo("2020") < 0) {
             // 2020级以前学员 使用旧方案
@@ -4208,7 +4209,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         boolean appMenu = false;
         if (StringUtil.isNotBlank(userFlow)) {
             JsresPowerCfgExample example = new JsresPowerCfgExample();
-            JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             criteria.andCheckStatusIdEqualTo(CheckStatusEnum.Passed.getId());
             criteria.andCfgCodeLike("%" + userFlow);
             List<JsresPowerCfg> cfgList = jsresPowerCfgMapper.selectByExample(example);
@@ -4283,7 +4284,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         boolean appMenu = false;
         if (StringUtil.isNotBlank(userFlow)) {
             JsresPowerCfgExample example = new JsresPowerCfgExample();
-            JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             criteria.andCheckStatusIdEqualTo(CheckStatusEnum.Passed.getId());
             criteria.andCfgCodeLike("%" + userFlow);
             List<JsresPowerCfg> cfgList = jsresPowerCfgMapper.selectByExample(example);
@@ -4371,8 +4372,8 @@ public class JswjwBizImpl implements IJswjwBiz {
                 // 审核通过
                 if (CheckStatusEnum.Passed.getId().equals(sysOrg.getCheckStatusId())) {
                     JsresPowerCfgExample example = new JsresPowerCfgExample();
-                    JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-                    criteria.andCfgValueEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                    criteria.andCfgValueEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     criteria.andCfgCodeLike("%" + orgFlow);
                     List<JsresPowerCfg> cfgList = jsresPowerCfgMapper.selectByExample(example);
                     if (cfgList != null && cfgList.size() > 0) {
@@ -4418,7 +4419,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public JsresDeptConfig searchBaseDeptConfig(String orgFlow) {
         JsresDeptConfigExample example = new JsresDeptConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow).andDeptFlowIsNull();
         List<JsresDeptConfig> list = deptConfigMapper.selectByExample(example);
         if (null != list && list.size() > 0) {
@@ -4443,7 +4444,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public JsresDeptConfig searchDeptCfg(String orgFlow, String schDeptFlow) {
         JsresDeptConfigExample example = new JsresDeptConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow).andDeptFlowEqualTo(schDeptFlow);
         List<JsresDeptConfig> list = deptConfigMapper.selectByExample(example);
         if (null != list && list.size() > 0) {
@@ -4496,7 +4497,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     doctor.setTrainingYears(trainingYears);
                 }
 //				SchArrangeResultExample resultExample = new SchArrangeResultExample();
-//				com.pinde.sci.model.mo.SchArrangeResultExample.Criteria resultCriteria = resultExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//				com.pinde.sci.model.mo.SchArrangeResultExample.Criteria resultCriteria = resultExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //						.andDoctorFlowEqualTo(doctorFlow);
 //				if(StringUtil.isNotBlank(doctor.getRotationFlow())){
 //					resultCriteria.andRotationFlowEqualTo(doctor.getRotationFlow());
@@ -4513,7 +4514,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //				}
 
                 ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow);
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow);
                 example.setOrderByClause("CREATE_TIME DESC");
                 List<ResDoctorRecruit> resDoctorRecruits = recruitMapper.selectByExample(example);
                 ResDoctorRecruit resDoctorRecruit = null;
@@ -4567,7 +4568,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             String currMonth = currDateTime.substring(0, 6);
 
             SysLogExample example = new SysLogExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andLogTimeLike(currMonth + "%").andUserFlowEqualTo(userFlow).andOperIdEqualTo("AppLogin");
             List<SysLog> logList = logMapper.selectByExample(example);
 
@@ -4581,9 +4582,9 @@ public class JswjwBizImpl implements IJswjwBiz {
             log.setUserCode(user.getUserCode());
             log.setOrgFlow(user.getOrgFlow());
             log.setOrgName(user.getOrgName());
-            log.setWsId(GlobalConstant.RES_WS_ID);
+            log.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             log.setLogTime(currDateTime);
-            log.setRecordStatus(GlobalConstant.FLAG_Y);
+            log.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             log.setCreateTime(currDateTime);
             log.setCreateUserFlow(userFlow);
             log.setOperId("AppLogin");
@@ -4634,7 +4635,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             if (cfg != null) {
                 String statusId = cfg.getCheckStatusId();
                 if (CheckStatusEnum.Passed.getId().equals(statusId)) {
-                    return GlobalConstant.RECORD_STATUS_Y;
+                    return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
                 }
             }
         }
@@ -4645,7 +4646,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public String getJsResCfgAppMenu(String userFlow) {
         if (StringUtil.isNotBlank(userFlow)) {
             JsresPowerCfgExample example = new JsresPowerCfgExample();
-            JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            JsresPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             criteria.andCheckStatusIdEqualTo(CheckStatusEnum.Passed.getId());
             ArrayList arrayList = new ArrayList();
             // 付费功能
@@ -4655,7 +4656,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             criteria.andCfgCodeIn(arrayList);
             int cfgCount = jsresPowerCfgMapper.countByExample(example);
             if (cfgCount > 0) {
-                return GlobalConstant.RECORD_STATUS_Y;
+                return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
             }
         }
         return null;
@@ -4665,7 +4666,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public String getJsResCfgCheckByCode(String code) {
         if (StringUtil.isNotBlank(code)) {
             JsresPowerCfgExample example = new JsresPowerCfgExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCfgCodeEqualTo(code);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCfgCodeEqualTo(code);
             List<JsresPowerCfg> cfgList = jsresPowerCfgMapper.selectByExample(example);
             if (cfgList != null && cfgList.size() > 0) {
                 String checkStatusId = cfgList.get(0).getCheckStatusId();
@@ -4681,7 +4682,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResDoctorSchProcess> searchSchProcess(String userFlow,
                                                       String deptFlow) {
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("SCH_START_DATE DESC");
         List<ResDoctorSchProcess> processList = processMapper.selectByExample(example);
         return processList;
@@ -4690,7 +4691,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SysDept> searchSysDeptList(String orgFlow, String searchStr) {
 //		SysDeptExample example = new SysDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 //		example.setOrderByClause("ORDINAL");
 //		List<SysDept> currOrgDepts = sysDeptMapper.selectByExample(example);
 //		if(currOrgDepts!=null){
@@ -4704,7 +4705,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         if (resultDepts != null && !resultDepts.isEmpty()) {
             SysOrgExample orgExample = new SysOrgExample();
-            orgExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
+            orgExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
 
             List<SysOrg> orgs = orgMapper.selectByExample(orgExample);
             Map<String, SysOrg> orgMap = new HashMap<String, SysOrg>();
@@ -4780,7 +4781,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         result.setCreateUserFlow(userFlow);
         result.setModifyTime(DateUtil.getCurrDateTime());
         result.setModifyUserFlow(userFlow);
-        result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         Map<String, String> map = new HashMap<>();
         map.put("startDate", result.getSchStartDate());
         map.put("endDate", result.getSchEndDate());
@@ -4790,7 +4791,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         result.setBaseAudit("Passed");
 	/*	//查看轮转计划排班设置是否开启
 		JsresPowerCfg cfg = jsresPowerCfgMapper.selectByPrimaryKey("jsres_"+doctor.getOrgFlow()+"_org_process_scheduling");
-		if (null ==cfg || StringUtil.isEmpty(cfg.getCfgValue()) || cfg.getCfgValue().equals(GlobalConstant.FLAG_N) ){
+		if (null ==cfg || StringUtil.isEmpty(cfg.getCfgValue()) || cfg.getCfgValue().equals(com.pinde.core.common.GlobalConstant.FLAG_N) ){
 			result.setBaseAudit("user");	//表示是学员自己创建的且轮转计划排班设置未开启
 		}else {
 			result.setBaseAudit("Passing"); //待审核
@@ -4822,12 +4823,12 @@ public class JswjwBizImpl implements IJswjwBiz {
         process.setCreateUserFlow(userFlow);
         process.setModifyTime(DateUtil.getCurrDateTime());
         process.setModifyUserFlow(userFlow);
-        process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         processMapper.insertSelective(process);
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         example.createCriteria().andOperUserFlowEqualTo(userFlow).andSchRotationDeptFlowEqualTo(deptFlow)
-                .andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResSchProcessExpress> recList = expressMapper.selectByExampleWithBLOBs(example);
         String recContent = "";
         if (recList != null && recList.size() > 0) {
@@ -4866,7 +4867,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 					|| !result.getSchEndDate().equals(endDate)){*/
             //查看轮转计划排班设置是否开启
             JsresPowerCfg cfg = jsresPowerCfgMapper.selectByPrimaryKey("jsres_" + doctor.getOrgFlow() + "_org_process_scheduling_org");
-            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
+            if (null != cfg && StringUtil.isNotEmpty(cfg.getCfgValue()) && cfg.getCfgValue().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 result.setBaseAudit("Passing"); //待审核
             }
             /*}*/
@@ -4927,7 +4928,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 process.setCreateUserFlow(userFlow);
                 process.setModifyTime(DateUtil.getCurrDateTime());
                 process.setModifyUserFlow(userFlow);
-                process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 processMapper.insertSelective(process);
             }
         }
@@ -4936,7 +4937,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResDoctorSchProcess getProcessByResultFlow(String resultFlow) {
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
         List<ResDoctorSchProcess> processList = processMapper.selectByExample(example);
         if (processList.size() > 0) {
             return processList.get(0);
@@ -4949,7 +4950,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         ResDoctorSchProcess process = getProcessByResultFlow(subDeptFlow);
         if (process != null) {
             ResRecExample example = new ResRecExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(process.getProcessFlow());
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(process.getProcessFlow());
             return recMapper.countByExample(example);
         } else {
             return 0;
@@ -5036,10 +5037,10 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResRec> searchGrade(String userFlow, String deptFlow) {
         List<String> recTypes = new ArrayList<String>();
-        recTypes.add(ResRecTypeEnum.TeacherGrade.getId());
-        recTypes.add(ResRecTypeEnum.DeptGrade.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
         ResRecExample example = new ResRecExample();
-        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchRotationDeptFlowEqualTo(deptFlow)
+        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchRotationDeptFlowEqualTo(deptFlow)
                 .andRecTypeIdIn(recTypes);
         return recMapper.selectByExampleWithBLOBs(example);
     }
@@ -5049,7 +5050,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResRec> searchByDoctorFlow(String doctorFlow, String date) {
         ResRecExample example = new ResRecExample();
         ResRecExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(doctorFlow)) {
             criteria.andOperUserFlowEqualTo(doctorFlow);
         }
@@ -5062,10 +5063,10 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<DeptTeacherGradeInfo> searchNewGrade(String userFlow, String deptFlow) {
         List<String> recTypes = new ArrayList<String>();
-        recTypes.add(ResRecTypeEnum.TeacherGrade.getId());
-        recTypes.add(ResRecTypeEnum.DeptGrade.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
         DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchRotationDeptFlowEqualTo(deptFlow)
+        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchRotationDeptFlowEqualTo(deptFlow)
                 .andRecTypeIdIn(recTypes);
         return gradeInfoMapper.selectByExampleWithBLOBs(example);
     }
@@ -5073,10 +5074,10 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<DeptTeacherGradeInfo> searchAllGrade(String userFlow) {
         List<String> recTypes = new ArrayList<String>();
-        recTypes.add(ResRecTypeEnum.TeacherGrade.getId());
-        recTypes.add(ResRecTypeEnum.DeptGrade.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
         DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecTypeIdIn(recTypes);
         return gradeInfoMapper.selectByExampleWithBLOBs(example);
     }
@@ -5084,10 +5085,10 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<DeptTeacherGradeInfo> searchAllGradeTwo(String userFlow) {
         List<String> recTypes = new ArrayList<String>();
-        recTypes.add(ResRecTypeEnum.TeacherAssess.getId());
-        recTypes.add(ResRecTypeEnum.TeacherAssessTwo.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId());
+        recTypes.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssessTwo.getId());
         DeptTeacherGradeInfoExample example = new DeptTeacherGradeInfoExample();
-        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecTypeIdIn(recTypes);
         return gradeInfoMapper.selectByExampleWithBLOBs(example);
     }
@@ -5095,7 +5096,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResDoctorSchProcessEvalWithBLOBs getDoctorProcessEval(String processFlow, String evalMonth) {
         ResDoctorSchProcessEvalExample evalExample = new ResDoctorSchProcessEvalExample();
-        evalExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        evalExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andProcessFlowEqualTo(processFlow).andEvalMonthEqualTo(evalMonth);
         List<ResDoctorSchProcessEvalWithBLOBs> list = processEvalMapper.selectByExampleWithBLOBs(evalExample);
         if (list != null && list.size() > 0) {
@@ -5185,7 +5186,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public ResDoctorProcessEvalConfig getProcessEvalConfig(String orgFlow) {
         ResDoctorProcessEvalConfigExample example = new ResDoctorProcessEvalConfigExample();
         if (StringUtil.isNotBlank(orgFlow)) {
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOrgFlowEqualTo(orgFlow);
             List<ResDoctorProcessEvalConfig> list = evalConfigMapper.selectByExampleWithBLOBs(example);
             if (list != null && list.size() > 0) {
@@ -5259,13 +5260,13 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         if (eval != null) {
             if (StringUtil.isNotBlank(eval.getRecordFlow())) {//修改
-                eval.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                eval.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 eval.setModifyUserFlow(user.getUserFlow());
                 eval.setModifyTime(DateUtil.getCurrDateTime());
                 return this.processEvalMapper.updateByPrimaryKeySelective(eval);
             } else {//新增
                 eval.setRecordFlow(PkUtil.getUUID());
-                eval.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                eval.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 eval.setCreateUserFlow(user.getUserFlow());
                 eval.setCreateTime(DateUtil.getCurrDateTime());
                 eval.setModifyUserFlow(user.getUserFlow());
@@ -5273,7 +5274,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return this.processEvalMapper.insertSelective(eval);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -5326,7 +5327,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (StringUtil.isNotBlank(assessType)) {
             ResAssessCfgExample example = new ResAssessCfgExample();
             ResAssessCfgExample.Criteria criteria = example.createCriteria()
-                    .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andCfgCodeIdEqualTo(assessType);
 
             List<ResAssessCfg> assessList = assessCfgMapper.selectByExampleWithBLOBs(example);
@@ -5574,7 +5575,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<SysDept> getOrgDeptList(String orgFlow, String deptName) {
         SysDeptExample example = new SysDeptExample();
         SysDeptExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow);
         if (StringUtil.isNotBlank(deptName)) {
             criteria.andDeptNameLike("%" + deptName + "%");
@@ -5585,7 +5586,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResJointOrg> searchResJointByJointOrgFlow(String orgFlow) {
         ResJointOrgExample example = new ResJointOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(orgFlow);
         return resJointOrgMapper.selectByExample(example);
     }
 
@@ -5593,7 +5594,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public ResRec getGradeRec(String userFlow, String deptFlow,
                               String processFlow, String recTypeId) {
         ResRecExample example = new ResRecExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(userFlow).andProcessFlowEqualTo(processFlow).andSchRotationDeptFlowEqualTo(deptFlow);
         List<ResRec> recList = recMapper.selectByExampleWithBLOBs(example);
         if (recList.size() > 0) {
@@ -5606,7 +5607,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<SysDict> getDictListByDictId(String doctorTrainingSpe) {
         if (StringUtil.isNotBlank(doctorTrainingSpe)) {
             SysDictExample example = new SysDictExample();
-            example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<SysDict> sysDictList = sysDictMapper.selectByExample(example);
 
             return sysDictList;
@@ -5617,7 +5618,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResLectureScanRegist> searchIsScan(String lectureFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow).
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow).
                 andIsScanIsNotNull();
         return lectureScanRegistMapper.selectByExample(example);
     }
@@ -5807,11 +5808,11 @@ public class JswjwBizImpl implements IJswjwBiz {
         String recTypeId = "";
         String recTypeName = "";
         if ("TeacherAssess".equals(assessType)) {
-            recTypeId = ResRecTypeEnum.TeacherGrade.getId();
-            recTypeName = ResRecTypeEnum.TeacherGrade.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getName();
         } else if ("DeptAssess".equals(assessType)) {
-            recTypeId = ResRecTypeEnum.DeptGrade.getId();
-            recTypeName = ResRecTypeEnum.DeptGrade.getName();
+            recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
+            recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getName();
         }
 
         SchArrangeResult result = resultMapper.selectByPrimaryKey(subDeptFlow);
@@ -5856,7 +5857,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             rec.setCreateUserFlow(userFlow);
             rec.setModifyTime(DateUtil.getCurrDateTime());
             rec.setModifyUserFlow(userFlow);
-            rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             rec.setProcessFlow(process.getProcessFlow());
             rec.setSchRotationDeptFlow(deptFlow);
             recMapper.insertSelective(rec);
@@ -5929,7 +5930,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SysUserRole> getSysUserRole(String userFlow) {
         SysUserRoleExample example = new SysUserRoleExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andUserFlowEqualTo(userFlow);
         return userRoleMapper.selectByExample(example);
     }
@@ -5966,7 +5967,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         ResDoctor doctor = doctorMapper.selectByPrimaryKey(doctorFlow);
 
         ResRecExample example = new ResRecExample();
-        example.createCriteria().andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOperUserFlowEqualTo(doctorFlow).andProcessFlowEqualTo(process.getProcessFlow());
 
         List<ResRec> recList = recMapper.selectByExample(example);
@@ -5987,8 +5988,8 @@ public class JswjwBizImpl implements IJswjwBiz {
             rec.setDeptName(process.getDeptName());
             rec.setSchDeptFlow(process.getSchDeptFlow());
             rec.setSchDeptName(process.getSchDeptName());
-            rec.setRecTypeId(ResRecTypeEnum.AfterSummary.getId());
-            rec.setRecTypeName(ResRecTypeEnum.AfterSummary.getName());
+            rec.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+            rec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getName());
             //
             String medicineTypeId = "";
             if (user != null) medicineTypeId = user.getMedicineTypeId();
@@ -6005,7 +6006,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             rec.setAuditUserFlow(userFlow);
             rec.setAuditUserName(user.getUserName());
 
-            rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             rec.setCreateUserFlow(doctorFlow);
             rec.setCreateTime(DateUtil.getCurrDateTime());
             rec.setModifyUserFlow(userFlow);
@@ -6020,7 +6021,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     private String getSummaryXml(Map<String, Object> paramMap) {
-        Element rootEle = DocumentHelper.createElement(ResRecTypeEnum.AfterSummary.getId());
+        Element rootEle = DocumentHelper.createElement(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
         for (Entry<String, Object> entry : paramMap.entrySet()) {
             String key = entry.getKey();
             String value = String.valueOf(entry.getValue());
@@ -6157,7 +6158,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
 
         ResDoctorRecruitExample recruitExample = new ResDoctorRecruitExample();
-        recruitExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        recruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andDoctorFlowEqualTo(doctorFlow);
         recruitExample.setOrderByClause("CREATE_TIME DESC");
 
@@ -6175,7 +6176,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
 
         ResDoctorRecruitExample recruitExample = new ResDoctorRecruitExample();
-        recruitExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        recruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo("Passed");
         recruitExample.setOrderByClause("CREATE_TIME DESC");
 
@@ -6197,7 +6198,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResLectureRandomScan readLectureRandomScan(String userFlow, String randomFlow) {
         ResLectureRandomScanExample example = new ResLectureRandomScanExample();
-        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRandomFlowEqualTo(randomFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andOperUserFlowEqualTo(userFlow).andRandomFlowEqualTo(randomFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResLectureRandomScan> lectureRandomScans = lectureRandomScanMapper.selectByExample(example);
         if (lectureRandomScans != null && lectureRandomScans.size() > 0) {
             return lectureRandomScans.get(0);
@@ -6209,13 +6210,13 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int saveLectureRandomScan(ResLectureRandomScan scan) {
         if (scan != null) {
             if (StringUtil.isNotBlank(scan.getRecordFlow())) {
-                scan.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                scan.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 scan.setModifyUserFlow(scan.getOperUserFlow());
                 scan.setModifyTime(DateUtil.getCurrDateTime());
                 return lectureRandomScanMapper.updateByPrimaryKeySelective(scan);
             } else {
                 scan.setRecordFlow(PkUtil.getUUID());
-                scan.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                scan.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 scan.setCreateUserFlow(scan.getOperUserFlow());
                 scan.setCreateTime(DateUtil.getCurrDateTime());
                 scan.setModifyUserFlow(scan.getOperUserFlow());
@@ -6236,7 +6237,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResLectureScanRegist searchByUserFlowAndLectureFlow(String userFlow, String lectureFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
                 andLectureFlowEqualTo(lectureFlow).andOperUserFlowEqualTo(userFlow);
         List<ResLectureScanRegist> lectureScanRegists = lectureScanRegistMapper.selectByExample(example);
         if (lectureScanRegists != null && lectureScanRegists.size() > 0) {
@@ -6250,7 +6251,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResLectureScanRegist> searchByUserFLowAndRegist(String userFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
                 andOperUserFlowEqualTo(userFlow);
         example.setOrderByClause("CREATE_TIME");
         return lectureScanRegistMapper.selectByExample(example);
@@ -6270,7 +6271,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResLectureEvaDetail> searchByUserFlowLectureFlow(String userFlow, String lectureFlow) {
         ResLectureEvaDetailExample example = new ResLectureEvaDetailExample();
         if (StringUtil.isNotBlank(userFlow) && StringUtil.isNotBlank(lectureFlow)) {
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow)
                     .andOperUserFlowEqualTo(userFlow);
         }
         return lectureEvaDetailMapper.selectByExample(example);
@@ -6290,7 +6291,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (regist == null) {
             lectureScanRegist = new ResLectureScanRegist();
             lectureScanRegist.setRecordFlow(PkUtil.getUUID());
-            lectureScanRegist.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            lectureScanRegist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             lectureScanRegist.setCreateUserFlow(userFlow);
             lectureScanRegist.setCreateTime(DateUtil.getCurrDateTime());
             lectureScanRegist.setModifyUserFlow(userFlow);
@@ -6323,11 +6324,11 @@ public class JswjwBizImpl implements IJswjwBiz {
             if (StringUtil.isNotBlank(currUser.getUserName())) {
                 lectureScanRegist.setOperUserName(currUser.getUserName());
             }
-            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
+            lectureScanRegist.setIsRegist(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.insertSelective(lectureScanRegist);
         } else {
             lectureScanRegist = regist;
-            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
+            lectureScanRegist.setIsRegist(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.updateByPrimaryKey(lectureScanRegist);
         }
 
@@ -6337,13 +6338,13 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int editResLectureEvaDetail(ResLectureEvaDetail resLectureEvaDetail, String userFlow) {
         if (resLectureEvaDetail != null) {
             if (StringUtil.isNotBlank(resLectureEvaDetail.getRecordFlow())) {
-                resLectureEvaDetail.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                resLectureEvaDetail.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 resLectureEvaDetail.setModifyUserFlow(userFlow);
                 resLectureEvaDetail.setModifyTime(DateUtil.getCurrDateTime());
                 return lectureEvaDetailMapper.updateByPrimaryKeySelective(resLectureEvaDetail);
             } else {
                 resLectureEvaDetail.setRecordFlow(PkUtil.getUUID());
-                resLectureEvaDetail.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                resLectureEvaDetail.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 resLectureEvaDetail.setCreateUserFlow(userFlow);
                 resLectureEvaDetail.setCreateTime(DateUtil.getCurrDateTime());
                 resLectureEvaDetail.setModifyUserFlow(userFlow);
@@ -6358,13 +6359,13 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int scanRegist(ResLectureScanRegist regist) {
         if (regist != null) {
             if (StringUtil.isNotBlank(regist.getRecordFlow())) {
-                regist.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                regist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 regist.setModifyUserFlow(regist.getOperUserFlow());
                 regist.setModifyTime(DateUtil.getCurrDateTime());
                 return lectureScanRegistMapper.updateByPrimaryKeySelective(regist);
             } else {
                 regist.setRecordFlow(PkUtil.getUUID());
-                regist.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                regist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 regist.setCreateUserFlow(regist.getOperUserFlow());
                 regist.setCreateTime(DateUtil.getCurrDateTime());
                 regist.setModifyUserFlow(regist.getOperUserFlow());
@@ -6379,7 +6380,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int editResRec(ResRec rec, SysUser user, String recTypeId) {
         if (rec != null) {
             if (StringUtil.isNotBlank(rec.getRecFlow())) {//修改
-                rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 rec.setModifyUserFlow(user.getUserFlow());
                 rec.setModifyTime(DateUtil.getCurrDateTime());
 
@@ -6412,10 +6413,10 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return this.recMapper.updateByPrimaryKeySelective(rec);
             } else {//新增
                 rec.setRecFlow(PkUtil.getUUID());
-                if (!ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())) {//培训年度
+                if (!com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())) {//培训年度
                     rec.setOperTime(DateUtil.getCurrDateTime());
                 }
-                rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 rec.setCreateUserFlow(user.getUserFlow());
                 rec.setCreateTime(DateUtil.getCurrDateTime());
                 rec.setModifyUserFlow(user.getUserFlow());
@@ -6450,23 +6451,23 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return this.recMapper.insertSelective(rec);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public int editResRec(ResRec rec, SysUser user) {
         if (rec != null) {
             if (StringUtil.isNotBlank(rec.getRecFlow())) {//修改
-                rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 rec.setModifyUserFlow(user.getUserFlow());
                 rec.setModifyTime(DateUtil.getCurrDateTime());
                 return this.recMapper.updateByPrimaryKeySelective(rec);
             } else {//新增
                 rec.setRecFlow(PkUtil.getUUID());
-                if (!ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())) {//培训年度
+                if (!com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())) {//培训年度
                     rec.setOperTime(DateUtil.getCurrDateTime());
                 }
-                rec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                rec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 rec.setCreateUserFlow(user.getUserFlow());
                 rec.setCreateTime(DateUtil.getCurrDateTime());
                 rec.setModifyUserFlow(user.getUserFlow());
@@ -6474,7 +6475,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return this.recMapper.insertSelective(rec);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
     /**
      * 百分比及各数据统计计算START
@@ -6559,7 +6560,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             recTypeIds.add(recTypeId);
         } else {
             for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-                if (GlobalConstant.FLAG_Y.equals(GlobalUtil.getSysCfg("res_registry_type_" + regType.getId()))) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(GlobalUtil.getSysCfg("res_registry_type_" + regType.getId()))) {
                     if (GlobalUtil.findChineseOrWestern(user.getMedicineTypeId(), regType.getId())) {
                         recTypeIds.add(regType.getId());
                     }
@@ -6587,7 +6588,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             String groupFlow, String standardDeptId) {
         SchRotationDeptExample example = new SchRotationDeptExample();
         SchRotationDeptExample.Criteria criter = example.createCriteria();
-        criter.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criter.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(groupFlow)) {
             criter.andGroupFlowEqualTo(groupFlow);
         }
@@ -6605,7 +6606,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<JsresAttendanceDetail> getAttendanceDetailList(String nowDay, String userFlow) {
         JsresAttendanceDetailExample example = new JsresAttendanceDetailExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andAttendDateEqualTo(nowDay).andDoctorFlowEqualTo(userFlow);
         example.setOrderByClause("ATTEND_TIME DESC,CREATE_TIME DESC");
         return jsresAttendanceDetailMapper.selectByExample(example);
@@ -6614,7 +6615,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public JsresAttendance getJsresAttendance(String nowDay, String userFlow) {
         JsresAttendanceExample example = new JsresAttendanceExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andAttendDateEqualTo(nowDay).andDoctorFlowEqualTo(userFlow);
         example.setOrderByClause("create_time desc");
         JsresAttendance bean = null;
@@ -6669,7 +6670,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //					if (StringUtil.isNotBlank(doctor.getWorkOrgId())) {
 //						String isSendFlag = powerMap.get("STU_SEND_SCHOOL_GC");
 //						String SendCkk = powerMap.get("STU_SEND_SCHOOL_CKK");
-//						if (!GlobalConstant.FLAG_N.equals(isSendFlag) && GlobalConstant.FLAG_Y.equals(SendCkk)) {
+//						if (!com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSendFlag) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(SendCkk)) {
 //							f = true;
 //						}
 //					}
@@ -6678,7 +6679,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //						String isJDGC = powerMap.get("STU_JD_GC");
 //						String isJDZSGC = powerMap.get("STU_JDZS_GC");
 //						String isJDZSCKK = powerMap.get("STU_JDZS_CKK");
-//						if (GlobalConstant.FLAG_Y.equals(isJDGC) && GlobalConstant.FLAG_Y.equals(isJDZSGC) && GlobalConstant.FLAG_Y.equals(isJDZSCKK)) {
+//						if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isJDGC) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isJDZSGC) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isJDZSCKK)) {
 //							f = true;
 //						}
 //					}
@@ -6686,14 +6687,14 @@ public class JswjwBizImpl implements IJswjwBiz {
 //					//非在校专硕 需要基地开通过程并且出科考也开通
 //					String stuJdGc = powerMap.get("STU_JD_GC");
 //					String stuJdCkk = powerMap.get("STU_JD_CKK");
-//					if (GlobalConstant.FLAG_Y.equals(stuJdGc) && GlobalConstant.FLAG_Y.equals(stuJdCkk)) {
+//					if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(stuJdGc) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(stuJdCkk)) {
 //						f = true;
 //					}
 //				}
 //			}
             ResDoctor doctor = readResDoctor(doctorFlow);
             String ckk = getJsResCfgCode("jsres_doctor_exam_" + doctorFlow);
-            if (StringUtil.isNotBlank(ckk) && GlobalConstant.FLAG_Y.equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
+            if (StringUtil.isNotBlank(ckk) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
                 f = true;
             }
             return f;
@@ -6707,7 +6708,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             boolean f = false;
             ResDoctor doctor = readResDoctor(doctorFlow);
             String ckk = getJsResCfgCode("jsres_doctor_manual_" + doctorFlow);
-            if (StringUtil.isNotBlank(ckk) && GlobalConstant.FLAG_Y.equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
+            if (StringUtil.isNotBlank(ckk) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ckk) && "Passed".equals(doctor.getCheckStatusId())) {
                 f = true;
             }
             return f;
@@ -6719,13 +6720,13 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int saveScore(ResScore score, SysUser user) {
         if (score != null) {
             if (StringUtil.isNotBlank(score.getScoreFlow())) {//修改
-                score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 score.setModifyUserFlow(user.getUserFlow());
                 score.setModifyTime(DateUtil.getCurrDateTime());
                 return this.scoreMapper.updateByPrimaryKeySelective(score);
             } else {//新增
                 score.setScoreFlow(PkUtil.getUUID());
-                score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 score.setCreateUserFlow(user.getUserFlow());
                 score.setCreateTime(DateUtil.getCurrDateTime());
                 score.setModifyUserFlow(user.getUserFlow());
@@ -6733,14 +6734,14 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return this.scoreMapper.insertSelective(score);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public int getDoctorAuth(String userFlow) {
         if (StringUtil.isNotBlank(userFlow)) {
             DoctorAuthExample example = new DoctorAuthExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOperUserFlowEqualTo(userFlow);
             return doctorAuthMapper.countByExample(example);
         }
@@ -7036,16 +7037,16 @@ public class JswjwBizImpl implements IJswjwBiz {
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         ResRecExample recExample = new ResRecExample();
         ResRecExample.Criteria recCriteria = recExample.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(userFlow)) {
             coditionCount++;
@@ -7150,7 +7151,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
         SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(rotationFlow)) {
             coditionCount++;
@@ -7227,7 +7228,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         SchRotationDeptExample deptExample = new SchRotationDeptExample();
         SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(orgFlow)) {
             deptCriteria.andOrgFlowEqualTo(orgFlow);
@@ -7264,7 +7265,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         SchDoctorDeptExample docDeptExample = new SchDoctorDeptExample();
         SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(doctorFlow)) {
             coditionCount++;
@@ -7444,7 +7445,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public void saveUserMacid(ResUserBindMacid macid) {
         ResUserBindMacid old = readMacidByUserFlow(macid.getUserFlow());
         if (old == null) {
-            macid.setRecordStatus(GlobalConstant.FLAG_Y);
+            macid.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             macidMapper.insertSelective(macid);
         } else {
             macidMapper.updateByPrimaryKeySelective(macid);
@@ -7454,7 +7455,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResUserBindMacid readMacidByMacid(String uuid) {
         ResUserBindMacidExample example = new ResUserBindMacidExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andMacIdEqualTo(uuid);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andMacIdEqualTo(uuid);
         List<ResUserBindMacid> list = macidMapper.selectByExample(example);
         if (list != null && list.size() > 0) {
             return list.get(0);
@@ -7471,13 +7472,13 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int saveRegist(ResLectureScanRegist regist) {
         if (regist != null) {
             if (StringUtil.isNotBlank(regist.getRecordFlow())) {
-                regist.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                regist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 regist.setModifyUserFlow(regist.getOperUserFlow());
                 regist.setModifyTime(DateUtil.getCurrDateTime());
                 return lectureScanRegistMapper.updateByPrimaryKeySelective(regist);
             } else {
                 regist.setRecordFlow(PkUtil.getUUID());
-                regist.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                regist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 regist.setCreateUserFlow(regist.getOperUserFlow());
                 regist.setCreateTime(DateUtil.getCurrDateTime());
                 regist.setModifyUserFlow(regist.getOperUserFlow());
@@ -7501,7 +7502,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResAssessCfg> selectResByExampleWithBLOBs(ResAssessCfg assessCfg) {
         ResAssessCfgExample example = new ResAssessCfgExample();
-        ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResAssessCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (assessCfg != null) {
             if (StringUtil.isNotBlank(assessCfg.getCfgCodeId())) {
                 criteria.andCfgCodeIdEqualTo(assessCfg.getCfgCodeId());
@@ -7523,7 +7524,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int updateRecording(DoctorUntiedRecording recording) {
         String recordFlow = PkUtil.getUUID();
         recording.setRecordFlow(recordFlow);
-        recording.setRecordStatus(GlobalConstant.FLAG_Y);
+        recording.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         String currDateTime = DateUtil.getCurrDateTime();
         recording.setCreateTime(currDateTime);
         recording.setModifyTime(currDateTime);
@@ -7542,7 +7543,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public int queryStudenLoginLog(SysLog sysLog) {
         SysLogExample example = new SysLogExample();
-        SysLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (null != sysLog) {
             String operId = sysLog.getOperId();
             if (StringUtil.isNotBlank(operId)) {
@@ -7564,7 +7565,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public int saveForgetPasswdUser(String userPhone, String code, String codeTime) {
         SysUserExample sysUserExample = new SysUserExample();
-        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo(GlobalConstant.FLAG_Y).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
         if (sysUsers != null && sysUsers.size() > 0) {
             SysUser record = sysUsers.get(0);
@@ -7578,7 +7579,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public SysUser selectByUserPhone(String userPhone) {
         SysUserExample sysUserExample = new SysUserExample();
-        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
         if (sysUsers != null && sysUsers.size() > 0) {
             List<String> collect = sysUsers.stream().map(sysUser -> sysUser.getVerifyCodeTime()).collect(Collectors.toList());
@@ -7597,7 +7598,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (StringUtil.isNotBlank(sysUser.getUserFlow())) {
             return sysUserMapper.updateByPrimaryKeySelective(sysUser);
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -7612,7 +7613,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
     @Override
     public int saveAuthenSuccessUser(SysUser currentUser) {
-        currentUser.setIsVerify(GlobalConstant.FLAG_Y);
+        currentUser.setIsVerify(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return sysUserMapper.updateByPrimaryKey(currentUser);
     }
 
@@ -7629,8 +7630,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public SchRotation searchRoattionNew(String docCategroyId, String trainingSpeId) {
         SchRotationExample example = new SchRotationExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andSpeIdEqualTo(trainingSpeId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andSpeIdEqualTo(trainingSpeId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorCategoryIdEqualTo(docCategroyId).andCreateTimeLessThan("2019");
         example.setOrderByClause("create_time");
         List<SchRotation> list = rotationMapper.selectByExample(example);
@@ -7644,7 +7645,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResDoctorRecruit> getRecruitList(String userFlow) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(userFlow).andAuditStatusIdEqualTo("Passed");
         example.setOrderByClause("CREATE_TIME DESC");
         return recruitMapper.selectByExample(example);
@@ -7653,7 +7654,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<LectureInfoTarget> searchLectureInfoTargetList(String lectureFlow) {
         LectureInfoTargetExample example = new LectureInfoTargetExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andLectureFlowEqualTo(lectureFlow);
         example.setOrderByClause("ORDINAL");
         return lectureInfoTargetMapper.selectByExample(example);
@@ -7674,21 +7675,21 @@ public class JswjwBizImpl implements IJswjwBiz {
         // 更新讲座活动报名签到表评分信息
         int count = lectureScanRegistMapper.updateByPrimaryKeySelective(scanRegist);
         if (count == 0) {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         // 保存讲座活动评分信息
         count = lectureEvaDetailExtMapper.saveLectureEval(paramMap);
         if (count == 0) {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     //获取当前城市在当前时间存在的考试
     @Override
     public List<ResTestConfig> findEffective(String currDateTime, String orgCityId) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
                 .andApplyEndTimeGreaterThanOrEqualTo(currDateTime).andCitysIdLike("%" + orgCityId + "%");
         return resTestConfigMapper.selectByExample(example);
     }
@@ -7697,7 +7698,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<JsresExamSignup> readDoctorExanSignUps(String doctorFlow) {
         JsresExamSignupExample examSignupExample = new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow);
         examSignupExample.setOrderByClause("CREATE_TIME desc");
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
@@ -7738,7 +7739,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResTestConfig> findEffectiveByParam(String currDateTime, String applyTime, String orgCityId) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(applyTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(applyTime)
                 .andApplyEndTimeGreaterThanOrEqualTo(applyTime).andCitysIdLike("%" + orgCityId + "%")
                 .andTestEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
@@ -7747,7 +7748,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
         JsresGraduationApplyExample example = new JsresGraduationApplyExample();
-        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruitFlow)) {
             criteria.andRecruitFlowEqualTo(recruitFlow);
         }
@@ -7766,7 +7767,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResScore> selectAllScore(String userFlow, String recruitFlow) {
         ResScoreExample example = new ResScoreExample();
-        ResScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(userFlow)) {
             criteria.andDoctorFlowEqualTo(userFlow);
         }
@@ -7787,7 +7788,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         ResScoreExample example = new ResScoreExample();
         ResScoreExample.Criteria criteria = example.createCriteria();
 
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecruitFlowEqualTo(recruitFlow)
                 .andScoreTypeIdEqualTo(id);
         List<ResScore> scores = scoreMapper.selectByExampleWithBLOBs(example);
@@ -7856,7 +7857,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SysDict> searchDictListByDictTypeId(String dictTypeId) {
         SysDictExample example = new SysDictExample();
-        example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("ORDINAL");
         return this.sysDictMapper.selectByExample(example);
 
@@ -7873,7 +7874,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             SchRotation rotation = null;
 
             String trainingType = recruit.getCatSpeId();
-            if (ResTrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)) {
+            if (com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)) {
                 trainingType = RecDocCategoryEnum.Doctor.getId();
             }
 
@@ -7881,8 +7882,8 @@ public class JswjwBizImpl implements IJswjwBiz {
 
             if (StringUtil.isNotBlank(trainingType) && StringUtil.isNotBlank(speId)) {
                 SchRotationExample example = new SchRotationExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                        .andSpeIdEqualTo(speId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                        .andSpeIdEqualTo(speId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andDoctorCategoryIdEqualTo(trainingType);
                 example.setOrderByClause("create_time desc");
 
@@ -7918,7 +7919,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchRotationGroup> searchSchRotationGroup(String rotationFlow) {
         SchRotationGroupExample example = new SchRotationGroupExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
                 .andOrgFlowIsNull();
         example.setOrderByClause("ORDINAL");
         return rotationGroupMapper.selectByExample(example);
@@ -7927,7 +7928,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchRotationDept> searchSchRotationDeptTwo(String rotationFlow) {
         SchRotationDeptExample example = new SchRotationDeptExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
                 .andOrgFlowIsNull();
         example.setOrderByClause("ORDINAL");
         return rotationDeptMapper.selectByExample(example);
@@ -7938,7 +7939,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                                                           String standardDeptId, String doctorFlow) {
         SchArrangeResultExample example = new SchArrangeResultExample();
         SchArrangeResultExample.Criteria exam = example.createCriteria();
-        exam.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        exam.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(groupFlow)) {
             exam.andStandardGroupFlowEqualTo(groupFlow);
         }
@@ -7956,7 +7957,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResSchProcessExpress> searchByUserFlowAndTypeIdTwo(String operUserFlow,
                                                                    String recTypeId) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(operUserFlow);
         return expressMapper.selectByExampleWithBLOBs(example);
     }
@@ -7984,7 +7985,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 ResDoctorRecruitWithBLOBs newRecruit = new ResDoctorRecruitWithBLOBs();
                 newRecruit.setRecruitFlow(recruitFlow);
                 newRecruit.setChangeSpeId(changeSpeId);
-                newRecruit.setChangeSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(changeSpeId));
+                newRecruit.setChangeSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(changeSpeId));
                 editDoctorRecruit(newRecruit, user);
             }
             //保存提交后的证书信息，百分比，出科考核表
@@ -8003,11 +8004,11 @@ public class JswjwBizImpl implements IJswjwBiz {
                 jsresGraduationApply.setApplyFlow(PkUtil.getUUID());
                 jsresGraduationApply.setCreateTime(DateUtil.getCurrDateTime2());
                 jsresGraduationApply.setCreateUserFlow(user.getUserFlow());
-                jsresGraduationApply.setRecordStatus(GlobalConstant.FLAG_Y);
+                jsresGraduationApply.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 return this.graduationApplyMapper.insertSelective(jsresGraduationApply);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     public int editDoctorRecruit(ResDoctorRecruitWithBLOBs recruit, SysUser user) {
@@ -8018,13 +8019,13 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return doctorRecruitMapper.updateByPrimaryKeySelective(recruit);
             } else {
                 recruit.setRecruitFlow(PkUtil.getUUID());
-                recruit.setRecordStatus(GlobalConstant.FLAG_Y);
+                recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 recruit.setCreateTime(DateUtil.getCurrDateTime2());
                 recruit.setCreateUserFlow(user.getUserFlow());
                 return doctorRecruitMapper.insertSelective(recruit);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, SysUser user) throws DocumentException {
@@ -8130,8 +8131,8 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         if (StringUtil.isNotBlank(doctorFlow)) {
             ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                    .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(ResBaseStatusEnum.Passed.getId())
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                    .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId())
                     .andSessionNumberEqualTo(sessionNumber);
             example.setOrderByClause("MODIFY_TIME DESC");
             List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
@@ -8145,7 +8146,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<JsresExamSignup> getSignUpListByYear(String year, String doctorFlow, String typeId) {
         JsresExamSignupExample examSignupExample = new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andSignupYearEqualTo(year).andSignupTypeIdEqualTo(typeId);
 
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
@@ -8159,7 +8160,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             signup.setSignupFlow(PkUtil.getGUID());
             signup.setCreateTime(DateUtil.getCurrDateTime());
             signup.setCreateUserFlow(user.getUserFlow());
-            signup.setRecordStatus(GlobalConstant.FLAG_Y);
+            signup.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return jsresExamSignupMapper.insertSelective(signup);
         } else {
             signup.setModifyTime(DateUtil.getCurrDateTime());
@@ -8181,10 +8182,10 @@ public class JswjwBizImpl implements IJswjwBiz {
                 resume.setUserName(user.getUserName());
                 resume.setCreateTime(DateUtil.getCurrDateTime());
                 resume.setCreateUserFlow(user.getUserFlow());
-                resume.setRecordStatus(GlobalConstant.FLAG_Y);
+                resume.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 return userResumpMapper.insert(resume);
             } else {
-                return GlobalConstant.ZERO_LINE;
+                return com.pinde.core.common.GlobalConstant.ZERO_LINE;
             }
         }
     }
@@ -8208,7 +8209,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         Document doc = null;
         Element root = null;
         ResScore old = null;
-        if (ResScoreTypeEnum.PublicScore.getId().equals(resScore.getScoreTypeId())) {
+        if (com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getId().equals(resScore.getScoreTypeId())) {
             old = getScoreByDocFlowAndYearAndType(resScore.getDoctorFlow(), null, resScore.getScoreTypeId());
         } else {
             old = getScoreByDocFlowAndYearAndType(resScore.getDoctorFlow(), resScore.getScorePhaseId(), resScore.getScoreTypeId());
@@ -8269,7 +8270,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         ResScoreExample example = new ResScoreExample();
         ResScoreExample.Criteria criteria = example.createCriteria();
 
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow)
                 .andScoreTypeIdEqualTo(typeId);
         if (StringUtil.isNotBlank(year)) {
@@ -8293,11 +8294,11 @@ public class JswjwBizImpl implements IJswjwBiz {
                 resScore.setScoreFlow(PkUtil.getUUID());
                 resScore.setCreateTime(DateUtil.getCurrDateTime());
                 resScore.setCreateUserFlow(user.getUserFlow());
-                resScore.setRecordStatus(GlobalConstant.FLAG_Y);
+                resScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 return scoreMapper.insert(resScore);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -8307,7 +8308,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
 
         ResDoctorRecruitExample recruitExample = new ResDoctorRecruitExample();
-        recruitExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        recruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andRecruitFlowEqualTo(recruitFlow).andAuditStatusIdEqualTo("Passed");
         recruitExample.setOrderByClause("CREATE_TIME DESC");
 
@@ -8344,7 +8345,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (file.getSize() > limitSize * 1024 * 1024) {
             return "文件大小不能超过" + limitSize + "M！";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
@@ -8388,12 +8389,12 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return "文件大小不能超过" + "300K";
             }
         }
-        return GlobalConstant.RECORD_STATUS_Y;
+        return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
     }
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (file.getSize() > 0) {
             //创建目录
             SysCfg upload_base_dir = cfgMapper.selectByPrimaryKey("upload_base_dir");
@@ -8442,7 +8443,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
     @Override
     public String saveFileToDirsNew(String oldFolderName, MultipartFile file, String folderName, String fileType) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (file.getSize() > 0) {
             //创建目录
             SysCfg upload_base_dir = cfgMapper.selectByPrimaryKey("upload_base_dir");
@@ -8522,7 +8523,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<SysLog> searchSysLog(SysLog log) {
         SysLogExample example = new SysLogExample();
         SysLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (null != log) {
             if (StringUtil.isNotBlank(log.getUserFlow())) {
                 criteria.andUserFlowEqualTo(log.getUserFlow());
@@ -8543,7 +8544,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         SysUser user = new SysUser();
         String uuid = PkUtil.getUUID();
         user.setUserPhone(userPhone);
-        user.setIsVerify(GlobalConstant.FLAG_Y);
+        user.setIsVerify(com.pinde.core.common.GlobalConstant.FLAG_Y);
         user.setVerifyCode(code);
         user.setVerifyCodeTime(DateUtil.getCurrDateTime2());
         user.setUserFlow(uuid);
@@ -8551,19 +8552,19 @@ public class JswjwBizImpl implements IJswjwBiz {
         user.setUserPasswd(PasswordHelper.encryptPassword(uuid, userPasswd));
         user.setStatusId(UserStatusEnum.Added.getId());
         user.setStatusDesc(UserStatusEnum.Added.getName());
-        user.setRecordStatus(GlobalConstant.FLAG_Y);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         user.setStatusId(UserStatusEnum.Activated.getId());
         user.setStatusDesc(UserStatusEnum.Activated.getName());
         SysCfg cfg = cfgMapper.selectByPrimaryKey("res_doctor_role_flow");
         if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue())) {
             SysUserRole userRole = new SysUserRole();
             userRole.setUserFlow(user.getUserFlow());
-            String currWsId = GlobalConstant.RES_WS_ID;
+            String currWsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
             userRole.setRecordFlow(PkUtil.getUUID());
             userRole.setWsId(currWsId);
             userRole.setRoleFlow(cfg.getCfgValue());
             userRole.setAuthTime(DateUtil.getCurrDate());
-            userRole.setRecordStatus(GlobalConstant.FLAG_Y);
+            userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             userRoleMapper.insertSelective(userRole);
         }
         return sysUserMapper.insert(user);
@@ -8590,7 +8591,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         // 国籍
         String nationalityId = user.getNationalityId() == null ? "" : user.getNationalityId();
         if (StringUtil.isNotBlank(nationalityId)) {
-            user.setNationalityName(DictTypeEnum.Nationality.getDictNameById(nationalityId));
+            user.setNationalityName(com.pinde.core.common.enums.DictTypeEnum.Nationality.getDictNameById(nationalityId));
             if (user.getNationalityId().equals("QT")) {
                 user.setNationalityName(qtCountry);
             }
@@ -8599,13 +8600,13 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
         //学历
         if (StringUtil.isNotBlank(user.getEducationId())) {
-            user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+            user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
         } else {
 //			user.setEducationName("");
         }
         //学位
         if (StringUtil.isNotBlank(user.getDegreeId())) {
-            user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+            user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
         } else {
             user.setDegreeName("");
         }
@@ -8641,7 +8642,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
         //JavaBean转换成xml
         // 在读院校
-        List<SysDict> dictSchoolList = DictTypeEnum.sysListDictMap.get("GraduateSchool");
+        List<SysDict> dictSchoolList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
         String readingSchoolName = userResumeExt.getReadingSchoolName();
         if (StringUtil.isNotBlank(readingSchoolName)) {
             for (SysDict s : dictSchoolList) {
@@ -8699,7 +8700,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getDegreeId())) {//本科学位
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("UserDegree");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("UserDegree");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getDegreeId())) {
                     userResumeExt.setDegreeName(s.getDictName());
@@ -8708,7 +8709,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getMasterDegreeId())) {//硕士学位
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("UserDegree");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("UserDegree");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getMasterDegreeId())) {
                     userResumeExt.setMasterDegreeName(s.getDictName());
@@ -8717,7 +8718,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getMasterGraSchoolName())) {//硕士毕业院校
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
             for (SysDict s : dictList) {
                 if (s.getDictName().equals(userResumeExt.getMasterGraSchoolName())) {
                     userResumeExt.setMasterGraSchoolId(s.getDictId());
@@ -8726,7 +8727,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getMasterGraSchoolId())) {//硕士毕业院校
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getMasterGraSchoolId())) {
                     userResumeExt.setMasterGraSchoolName(s.getDictName());
@@ -8735,7 +8736,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getDoctorDegreeId())) {//博士学位
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("UserDegree");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("UserDegree");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getDoctorDegreeId())) {
                     userResumeExt.setDoctorDegreeName(s.getDictName());
@@ -8744,7 +8745,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getDoctorGraSchoolName())) {//博士毕业院校
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
             for (SysDict s : dictList) {
                 if (s.getDictName().equals(userResumeExt.getDoctorGraSchoolName())) {
                     userResumeExt.setDoctorGraSchoolId(s.getDictId());
@@ -8753,7 +8754,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getDoctorGraSchoolId())) {//博士毕业院校
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getDoctorGraSchoolId())) {
                     userResumeExt.setDoctorGraSchoolName(s.getDictName());
@@ -8762,7 +8763,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getMedicalHeaithOrgId())) {//医疗机构
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("MedicalHeaithOrg");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("MedicalHeaithOrg");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getMedicalHeaithOrgId())) {
                     userResumeExt.setMedicalHeaithOrgName(s.getDictName());
@@ -8771,7 +8772,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getHospitalAttrId())) {
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("HospitalAttr");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("HospitalAttr");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getHospitalAttrId())) {
                     userResumeExt.setHospitalAttrName(s.getDictName());
@@ -8780,7 +8781,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getHospitalCategoryId())) {
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("HospitalCategory");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("HospitalCategory");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getHospitalCategoryId())) {
                     userResumeExt.setHospitalCategoryName(s.getDictName());
@@ -8789,7 +8790,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getBasicHealthOrgId())) {
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("BasicHealthOrg");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("BasicHealthOrg");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getBasicHealthOrgId())) {
                     userResumeExt.setBasicHealthOrgName(s.getDictName());
@@ -8798,7 +8799,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         if (StringUtil.isNotBlank(userResumeExt.getBaseAttributeId())) {
-            List<SysDict> dictList = DictTypeEnum.sysListDictMap.get("BaseAttribute");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("BaseAttribute");
             for (SysDict s : dictList) {
                 if (s.getDictId().equals(userResumeExt.getBaseAttributeId())) {
                     userResumeExt.setBaseAttributeName(s.getDictName());
@@ -8807,7 +8808,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         // 毕业专业字典项
-        List<SysDict> dictMajorList = DictTypeEnum.sysListDictMap.get("GraduateMajor");
+        List<SysDict> dictMajorList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateMajor");
         // 在读专业
         String readingProfession = userResumeExt.getReadingProfession();
         if (StringUtil.isNotBlank(readingProfession)) {
@@ -8918,7 +8919,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         savePubUserResume(user, pubUserResume);
         //毕业院校
         if (StringUtil.isNotBlank(doctor.getGraduatedName())) {
-            Map<String, List<SysDict>> sysListDictMap = DictTypeEnum.sysListDictMap;
+            Map<String, List<SysDict>> sysListDictMap = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap;
             List<SysDict> dictList = sysListDictMap.get("GraduateSchool");
             for (SysDict s : dictList) {
                 if (s.getDictName().equals(doctor.getGraduatedName())) {
@@ -8931,7 +8932,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //		}
         //人员类型
         if (StringUtil.isNotBlank(doctor.getDoctorTypeId())) {
-            doctor.setDoctorTypeName(JsResDocTypeEnum.getNameById(doctor.getDoctorTypeId()));
+            doctor.setDoctorTypeName(com.pinde.core.common.enums.ResDocTypeEnum.getNameById(doctor.getDoctorTypeId()));
         } else {
             doctor.setDoctorTypeName("");
         }
@@ -8944,20 +8945,20 @@ public class JswjwBizImpl implements IJswjwBiz {
         //单位等级
         if (StringUtil.isNotBlank(doctor.getWorkOrgLevelId())) {
             doctor.setWorkOrgLevelId(doctor.getWorkOrgLevelId());
-            doctor.setWorkOrgLevelName(DictTypeEnum.getDictName(DictTypeEnum.BaseLevel, doctor.getWorkOrgLevelId()));
+            doctor.setWorkOrgLevelName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseLevel, doctor.getWorkOrgLevelId()));
         } else {
             doctor.setWorkOrgLevelId("");
         }
         //学位类型
         if (StringUtil.isNotBlank(doctor.getDegreeCategoryId())) {
-            doctor.setDegreeCategoryName(JsResDegreeCategoryEnum.getNameById(doctor.getDegreeCategoryId()));
+            doctor.setDegreeCategoryName(com.pinde.core.common.enums.JsResDegreeCategoryEnum.getNameById(doctor.getDegreeCategoryId()));
         } else {
             doctor.setDegreeCategoryName("");
         }
         //派送单位或者学校
         if (StringUtil.isNotBlank(doctor.getWorkOrgName())) {
-            if (JsResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())) {
-                List<SysDict> sysDictList = searchDictListByDictTypeId(DictTypeEnum.SendSchool.getId());
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())) {
+                List<SysDict> sysDictList = searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
                 if (sysDictList != null && !sysDictList.isEmpty()) {
                     for (SysDict dict : sysDictList) {
                         if (dict.getDictName().equals(doctor.getWorkOrgName())) {
@@ -8966,8 +8967,8 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             }
-            if (JsResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || JsResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
-                List<SysDict> sysDictList = searchDictListByDictTypeId(DictTypeEnum.WorkOrg.getId());
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                List<SysDict> sysDictList = searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.WorkOrg.getId());
                 if (sysDictList != null && !sysDictList.isEmpty()) {
                     for (SysDict dict : sysDictList) {
                         if (dict.getDictName().equals(doctor.getWorkOrgName())) {
@@ -8979,8 +8980,8 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
         //派送单位或者学校
         if (StringUtil.isNotBlank(doctor.getWorkOrgId())) {
-            if (JsResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())) {
-                List<SysDict> sysDictList = searchDictListByDictTypeId(DictTypeEnum.SendSchool.getId());
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())) {
+                List<SysDict> sysDictList = searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
                 if (sysDictList != null && !sysDictList.isEmpty()) {
                     for (SysDict dict : sysDictList) {
                         if (dict.getDictId().equals(doctor.getWorkOrgId())) {
@@ -8989,8 +8990,8 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             }
-            if (JsResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || JsResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
-                List<SysDict> sysDictList = searchDictListByDictTypeId(DictTypeEnum.WorkOrg.getId());
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                List<SysDict> sysDictList = searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.WorkOrg.getId());
                 if (sysDictList != null && !sysDictList.isEmpty()) {
                     for (SysDict dict : sysDictList) {
                         if (dict.getDictId().equals(doctor.getWorkOrgId())) {
@@ -9019,7 +9020,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 user.setStatusDesc(UserStatusEnum.getNameById(user.getStatusId()));
             }
             int ret = sysUserMapper.updateByPrimaryKeySelective(user);
-            if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))) {
                 //全部同步后saveUser改称update
                 user = sysUserMapper.selectByPrimaryKey(userFlow);
                 boolean result = false;
@@ -9066,7 +9067,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
             user.setCreateTime(DateUtil.getCurrDateTime());
 
-            if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))) {
                 boolean result = false;
                 if (StringUtil.isNotBlank(InitConfig.getSysCfg("sys_weixin_qiye_dept_id"))) {
                     result = WeixinQiYeUtil.createUser(InitConfig.getSysCfg("sys_weixin_qiye_corp_id"), InitConfig.getSysCfg("sys_weixin_qiye_secret"), InitConfig.getSysCfg("sys_weixin_qiye_dept_id"), user);
@@ -9097,7 +9098,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 doctor.setDoctorFlow(sysUser.getUserFlow());
                 doctor.setDoctorName(sysUser.getUserName());
             }
-            doctor.setRecordStatus(GlobalConstant.FLAG_Y);
+            doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             doctor.setCreateTime(DateUtil.getCurrDateTime());
             return doctorMapper.insert(doctor);
         }
@@ -9106,7 +9107,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(recruit.getOrgFlow());
         }
@@ -9207,7 +9208,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResOrgSpeAssign> searchSpeAssign(String orgFlow,
                                                  String assignYear) {
         ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andAssignYearEqualTo(assignYear);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andAssignYearEqualTo(assignYear);
         return speAssignMapper.selectByExample(example);
     }
 
@@ -9215,7 +9216,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int findSignupCount(String doctorFlow, String year) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecruitYearEqualTo(year)
-                .andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andAuditStatusIdNotEqualTo("NotPassed");
         return doctorRecruitMapper.countByExample(example);
     }
@@ -9254,13 +9255,13 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return onlySaveResDoctor(doctor);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     public int onlySaveResDoctor(ResDoctor resDoctor) {
         resDoctor.setCreateTime(DateUtil.getCurrDateTime());
-        resDoctor.setSelDeptFlag(GlobalConstant.FLAG_N);
-        resDoctor.setSchFlag(GlobalConstant.FLAG_N);
+        resDoctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+        resDoctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
         return doctorMapper.insertSelective(resDoctor);
     }
 
@@ -9268,7 +9269,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResDocotrDelayTeturn> searchInfo(ResDocotrDelayTeturn resDocotrDelayTeturn, List<String> orgFlowList, List<String> flags
             , List<String> docTypeList) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (resDocotrDelayTeturn != null) {
             if (StringUtil.isNotBlank(resDocotrDelayTeturn.getOrgFlow())) {
                 criteria.andOrgFlowEqualTo(resDocotrDelayTeturn.getOrgFlow());
@@ -9327,7 +9328,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResDoctorRecruit> searchRecruitList(String doctorFlow) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow);
         example.setOrderByClause("CREATE_TIME DESC");
         return doctorRecruitMapper.selectByExample(example);
@@ -9339,7 +9340,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             docRecWithBLOBs.setModifyTime(DateUtil.getCurrDateTime());
             return doctorRecruitMapper.updateByPrimaryKeySelective(docRecWithBLOBs);
         } else {
-            docRecWithBLOBs.setRecordStatus(GlobalConstant.FLAG_Y);
+            docRecWithBLOBs.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             docRecWithBLOBs.setRecruitFlow(PkUtil.getUUID());
             docRecWithBLOBs.setCreateTime(DateUtil.getCurrDateTime());
             return doctorRecruitMapper.insert(docRecWithBLOBs);
@@ -9357,7 +9358,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchRotation> searchOrgStandardRotation(SchRotation rotation) {
         SchRotationExample example = new SchRotationExample();
-        SchRotationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchRotationExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         if (StringUtil.isNotBlank(rotation.getDoctorCategoryId())) {
             criteria.andDoctorCategoryIdEqualTo(rotation.getDoctorCategoryId());
@@ -9389,7 +9390,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SysOrg> searchOrg(SysOrg sysorg) {
         SysOrgExample example = new SysOrgExample();
-        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(sysorg.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(sysorg.getOrgFlow());
         }
@@ -9434,7 +9435,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<ResOrgSpe> searchResOrgSpeListNew(ResOrgSpe resOrgSpe, String trainCategoryTypeId, String speFlag) {
         ResOrgSpeExample example = new ResOrgSpeExample();
         ResOrgSpeExample.Criteria criteria = example.createCriteria();
-        if (GlobalConstant.RECORD_STATUS_Y.equals(speFlag)) {
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(speFlag)) {
             criteria.andSpeNameEqualTo("全科");
         }
         if (StringUtil.isNotBlank(trainCategoryTypeId) && !"undefined".equals(trainCategoryTypeId)) {
@@ -9462,7 +9463,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResJointOrg> searchResJointByOrgFlow(String orgFlow) {
         ResJointOrgExample example = new ResJointOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
         return resJointOrgMapper.selectByExample(example);
     }
 
@@ -9470,33 +9471,33 @@ public class JswjwBizImpl implements IJswjwBiz {
     public int editResDoctorRecruit(ResDoctorRecruitWithBLOBs recWithBLOBs, ResDoctorRecruitWithBLOBs prevDocRec) {
         //医师状态
         if (StringUtil.isNotBlank(recWithBLOBs.getDoctorStatusId())) {
-            recWithBLOBs.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById(recWithBLOBs.getDoctorStatusId()));
+            recWithBLOBs.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById(recWithBLOBs.getDoctorStatusId()));
         } else {
             recWithBLOBs.setDoctorStatusName("");
         }
         //医师走向
         if (StringUtil.isNotBlank(recWithBLOBs.getDoctorStrikeId())) {
-            recWithBLOBs.setDoctorStrikeName(DictTypeEnum.DoctorStrike.getDictNameById(recWithBLOBs.getDoctorStrikeId()));
+            recWithBLOBs.setDoctorStrikeName(com.pinde.core.common.enums.DictTypeEnum.DoctorStrike.getDictNameById(recWithBLOBs.getDoctorStrikeId()));
         } else {
             recWithBLOBs.setDoctorStrikeName("");
         }
         if (StringUtil.isNotBlank(recWithBLOBs.getCurrDegreeCategoryId())) {
-            recWithBLOBs.setCurrDegreeCategoryName(JsResDegreeCategoryEnum.getNameById(recWithBLOBs.getCurrDegreeCategoryId()));
+            recWithBLOBs.setCurrDegreeCategoryName(com.pinde.core.common.enums.JsResDegreeCategoryEnum.getNameById(recWithBLOBs.getCurrDegreeCategoryId()));
         }
-        recWithBLOBs.setAuditStatusId(JsResDoctorAuditStatusEnum.NotSubmit.getId());
-        recWithBLOBs.setAuditStatusName(JsResDoctorAuditStatusEnum.NotSubmit.getName());
+        recWithBLOBs.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+        recWithBLOBs.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
         String doctorFlow = recWithBLOBs.getDoctorFlow();
         //结业审核年份
         int year = 0;
         if (StringUtil.isNotBlank(recWithBLOBs.getSessionNumber()) && StringUtil.isNotBlank(recWithBLOBs.getTrainYear())) {
             int num = 0;
-            if (JsResTrainYearEnum.OneYear.getId().equals(recWithBLOBs.getTrainYear())) {
+            if (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(recWithBLOBs.getTrainYear())) {
                 num = 1;
             }
-            if (JsResTrainYearEnum.TwoYear.getId().equals(recWithBLOBs.getTrainYear())) {
+            if (com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(recWithBLOBs.getTrainYear())) {
                 num = 2;
             }
-            if (JsResTrainYearEnum.ThreeYear.getId().equals(recWithBLOBs.getTrainYear())) {
+            if (com.pinde.core.common.enums.JsResTrainYearEnum.ThreeYear.getId().equals(recWithBLOBs.getTrainYear())) {
                 num = 3;
             }
             year = Integer.parseInt(recWithBLOBs.getSessionNumber()) + num;
@@ -9505,8 +9506,8 @@ public class JswjwBizImpl implements IJswjwBiz {
         //其中已审核通过
         ResDoctorRecruit exitRec = new ResDoctorRecruit();
         exitRec.setDoctorFlow(doctorFlow);
-        exitRec.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
-        exitRec.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        exitRec.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
+        exitRec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         //页面字段被去除   默认
         exitRec.setDoctorStatusId("Auditing");
@@ -9523,14 +9524,14 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
         }
         //当前为二阶段
-        if (TrainCategoryEnum.WMSecond.getId().equals(recWithBLOBs.getCatSpeId())) {
+        if (com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId().equals(recWithBLOBs.getCatSpeId())) {
             if (passedRecruitList.isEmpty()) {//无审核通过
             }
         } else {//非二阶段
             if (passedRecruitList.size() == 1 && firstIsWMSecond) {//首条记录为二阶段  修改为非二阶段  ==>删除自动生成的一阶段
                 ResDoctorRecruitWithBLOBs deleWMFirst = new ResDoctorRecruitWithBLOBs();
                 deleWMFirst.setRecruitFlow(passedRecruitList.get(0).getRecruitFlow());
-                deleWMFirst.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                deleWMFirst.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                 saveDoctorRecruit(deleWMFirst);
             }
         }
@@ -9550,8 +9551,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     public ResDocotrDelayTeturn findTeturnInfo(String recruitFlow) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
         ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andTypeIdEqualTo(ResRecTypeEnum.ReturnTraining.getId())
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId())
                 .andRecruitFlowEqualTo(recruitFlow).andAuditStatusIdEqualTo("2");
         example.setOrderByClause("CREATE_TIME DESC");
         List<ResDocotrDelayTeturn> list = resDocotrDelayTeturnMapper.selectByExample(example);
@@ -9565,7 +9566,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<DoctorAuth> searchAuthsByOperUserFlow(String operUserFlow) {
         if (StringUtil.isNotBlank(operUserFlow)) {
             DoctorAuthExample example = new DoctorAuthExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOperUserFlowEqualTo(operUserFlow);
             List<DoctorAuth> doctorAuths = doctorAuthMapper.selectByExample(example);
             return doctorAuths;
@@ -9576,7 +9577,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResDoctorOrgHistory> searchWaitingChangeOrgHistoryList(ResDoctorOrgHistory docOrgHistory, List<String> changeStatusIdList) {
         ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-        ResDoctorOrgHistoryExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorOrgHistoryExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         //Criteria criteria2 =  example.createCriteria();
         if (StringUtil.isNotBlank(docOrgHistory.getDoctorFlow())) {
             criteria.andDoctorFlowEqualTo(docOrgHistory.getDoctorFlow());
@@ -9617,7 +9618,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public ResDoctorReduction findReductionByRecruitFlow(String recruitFlow) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
         List<ResDoctorReduction> reductionList = reductionMapper.selectByExample(example);
         if (reductionList != null && reductionList.size() > 0) {
             return reductionList.get(0);
@@ -9630,9 +9631,9 @@ public class JswjwBizImpl implements IJswjwBiz {
     public String selectPowerCfg(Map<String, String> paramMap) {
         List<JsresPowerCfg> cfgList = jsResPowerCfgExtMapper.selectPowerCfg(paramMap);
         if (cfgList != null && cfgList.size() > 0) {
-            return GlobalConstant.RECORD_STATUS_Y;
+            return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
         }
-        return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
     }
 
     @Override
@@ -9641,7 +9642,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (StringUtil.isNotBlank(phone)) {
             example.createCriteria().andPhoneEqualTo(phone);
         }
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andAppSendEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andAppSendEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<VerificationCodeRecord> recordList = verificationCodeRecordMapper.selectByExample(example);
         if (recordList != null && recordList.size() > 0) {
             return recordList.get(0);
@@ -9687,7 +9688,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public ResDoctorSchProcess readSchProcessByResultFlow(String resultFlow) {
         ResDoctorSchProcessExample resDoctorSchProcessExample = new ResDoctorSchProcessExample();
-        resDoctorSchProcessExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSchResultFlowEqualTo(resultFlow);
+        resDoctorSchProcessExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSchResultFlowEqualTo(resultFlow);
         List<ResDoctorSchProcess> resDoctorSchProcesses = processMapper.selectByExample(resDoctorSchProcessExample);
         if (CollectionUtils.isEmpty(resDoctorSchProcesses)) {
             return null;
@@ -9698,7 +9699,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResOutOfficeLock> readResOutOfficeLock(String userFlow, String auditStatus) {
         ResOutOfficeLockExample resOutOfficeLockExample = new ResOutOfficeLockExample();
-        ResOutOfficeLockExample.Criteria criteria = resOutOfficeLockExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+        ResOutOfficeLockExample.Criteria criteria = resOutOfficeLockExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
         if (StringUtil.isNotEmpty(auditStatus)) {
             criteria.andAuditStatusIdEqualTo(auditStatus);
         }
@@ -9715,7 +9716,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public SysUser readSysUserByOpenId(String openId) {
         SysUserExample example = new SysUserExample();
         SysUserExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(openId)) {
             criteria.andOpenIdEqualTo(openId);
         } else {
@@ -9854,13 +9855,13 @@ public class JswjwBizImpl implements IJswjwBiz {
         resOutOfficeLock.setTrainingTypeId(resDoctor.getTrainingTypeId());
         resOutOfficeLock.setTrainingTypeName(resDoctor.getTrainingTypeName());
         resOutOfficeLock.setSessionNumber(resDoctor.getSessionNumber());
-        resOutOfficeLock.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        resOutOfficeLock.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         resOutOfficeLock.setCreateUserFlow(userFlow);
         resOutOfficeLock.setCreateTime(DateUtil.getCurrDateTime2());
         resOutOfficeLock.setModifyUserFlow(userFlow);
         resOutOfficeLock.setModifyTime(DateUtil.getCurrDateTime());
-        resOutOfficeLock.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
-        resOutOfficeLock.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
+        resOutOfficeLock.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getId());
+        resOutOfficeLock.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getName());
         String currDate = DateUtil.getCurrDate();
         int num = differentDays(outDate, currDate);
         resOutOfficeLock.setTimeOutStatus("已超时" + num + "天");
@@ -9955,7 +9956,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<SysUser> searchSysUserByuserFlows(List<String> userFlows) {
         if (userFlows != null && !userFlows.isEmpty()) {
             SysUserExample sysUserExample = new SysUserExample();
-            sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
+            sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
             return sysUserMapper.selectByExample(sysUserExample);
         }
         return null;
@@ -9964,7 +9965,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResDoctor> searchDoctorByuserFlow(List<String> userFlows) {
         ResDoctorExample example = new ResDoctorExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowIn(userFlows);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowIn(userFlows);
         return doctorMapper.selectByExample(example);
     }
 
@@ -10105,7 +10106,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<SysUserDept> getUserDept(SysUser user) {
         SysUserDeptExample example = new SysUserDeptExample();
         SysUserDeptExample.Criteria criteria = example.createCriteria().andUserFlowEqualTo(user.getUserFlow())
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(user.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(user.getOrgFlow());
         }
@@ -10131,7 +10132,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SysDept> searchDeptByOrg(String orgFlow){
         SysDeptExample example = new SysDeptExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
         example.setOrderByClause("ORDINAL");
         return sysDeptMapper.selectByExample(example);
     }
@@ -10165,7 +10166,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<SchDept> searchSchDeptList(String orgFlow) {
         SchDeptExample example = new SchDeptExample();
-        example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("ORDINAL ");
         return schDeptMapper.selectByExample(example);
     }
@@ -10180,7 +10181,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         SysUserRoleExample example = new SysUserRoleExample();
         SysUserRoleExample.Criteria criteria = example.createCriteria();
         criteria.andUserFlowEqualTo(userFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return sysUserRoleMapper.selectByExample(example);
     }
 
@@ -10238,7 +10239,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResJointOrg> selectByJointOrgFlow(String jointOrgFlow) {
         ResJointOrgExample example = new ResJointOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(jointOrgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andJointOrgFlowEqualTo(jointOrgFlow);
         return resJointOrgMapper.selectByExample(example);
     }
 
@@ -10251,7 +10252,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResTestConfig> findLocalEffective(String currDateTime) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andLocalAuditStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andLocalAuditStartTimeLessThanOrEqualTo(currDateTime)
                 .andLocalAuditEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
     }
@@ -10260,7 +10261,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResTestConfig> findChargeEffective(String currDateTime) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andChargeAuditStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andChargeAuditStartTimeLessThanOrEqualTo(currDateTime)
                 .andChargeAuditEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
     }
@@ -10269,7 +10270,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public List<ResTestConfig> findGlobalEffective(String currDateTime) {
         ResTestConfigExample example = new ResTestConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
                 .andTestEndTimeGreaterThanOrEqualTo(currDateTime);
         return resTestConfigMapper.selectByExample(example);
     }
@@ -10289,7 +10290,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         ResDoctorSchProcess process = null;
         if(StringUtil.isNotBlank(resultFlow)){
             ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
             List<ResDoctorSchProcess> processList = this.processMapper.selectByExample(example);
             if(processList!=null&&!processList.isEmpty()){
                 process = processList.get(0);
@@ -10303,7 +10304,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         if(StringUtil.isNotBlank(processFlow)){
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow);
             return expressMapper.selectByExampleWithBLOBs(example);
         }
         return  null;
@@ -10325,7 +10326,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         PubFileExample example = new PubFileExample();
         if (productFlow != null) {
             PubFileExample.Criteria crieria = example.createCriteria();
-            crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
+            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
             if (productType != null) {
                 crieria.andProductTypeEqualTo(productType);
             }
@@ -10383,7 +10384,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         try {
             if (isAdd) {
                 Method setRecordStatusMethod = clazz.getMethod("setRecordStatus", String.class);
-                setRecordStatusMethod.invoke(obj, GlobalConstant.RECORD_STATUS_Y);
+                setRecordStatusMethod.invoke(obj, com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 Method setCreateTime = clazz.getMethod("setCreateTime", String.class);
                 setCreateTime.invoke(obj, DateUtil.getCurrDateTime());
                 Method setCreateUserFlow = clazz.getMethod("setCreateUserFlow", String.class);
@@ -10408,7 +10409,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         ResSchProcessExpressExample.Criteria create=example.createCriteria();
-        create.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andSchRotationDeptFlowEqualTo(processFlow);
         }
@@ -10433,14 +10434,14 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return this.expressMapper.updateByPrimaryKeySelective(express);
             }else{//新增
                 express.setRecFlow(PkUtil.getUUID());
-                if(!ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())){//培训年度
+                if (!com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())) {//培训年度
                     express.setOperTime(DateUtil.getCurrDateTime());
                 }
                 setRecordInfo(express, true, null);
                 return this.expressMapper.insertSelective(express);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override

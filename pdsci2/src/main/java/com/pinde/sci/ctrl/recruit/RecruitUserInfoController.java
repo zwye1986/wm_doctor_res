@@ -8,7 +8,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,30 +54,30 @@ public class RecruitUserInfoController extends GeneralController {
         String idNo = registerUser.getIdNo();
         SysUser user = userBiz.findByUserCode(userCode.trim());
         if(user != null&&!user.getUserFlow().equals(registerUser.getUserFlow())){
-            model.addAttribute("errorMsg" , GlobalConstant.USER_CODE_REPETE);
-            return GlobalConstant.USER_CODE_REPETE;
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_CODE_REPETE);
+            return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
         }
         user = userBiz.findByUserPhone(userPhone.trim());
         if(user != null&&!user.getUserFlow().equals(registerUser.getUserFlow())){
-            model.addAttribute("errorMsg" , GlobalConstant.USER_PHONE_REPETE);
-            return GlobalConstant.USER_PHONE_REPETE;
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE);
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
         }
         user = userBiz.findByIdNo(idNo.trim());
         if(user != null&&!user.getUserFlow().equals(registerUser.getUserFlow())){
-            model.addAttribute("errorMsg" , GlobalConstant.USER_ID_NO_REPETE);
-            return GlobalConstant.USER_ID_NO_REPETE;
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE);
+            return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
         }
         this.userBiz.saveUser(registerUser);
         user = userBiz.readSysUser(registerUser.getUserFlow());
-        setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-        return GlobalConstant.SAVE_SUCCESSED;
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
     @RequestMapping(value={"/security"})
     public String security(Model model){
         //更新session中user信息
-        SysUser user = (SysUser)getSessionAttribute(GlobalConstant.CURRENT_USER);
+        SysUser user = (SysUser) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
         user = userBiz.readSysUser(user.getUserFlow());
-        setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
         return "recruit/user/security";
     }
 
@@ -144,27 +144,27 @@ public class RecruitUserInfoController extends GeneralController {
             //判断用户id是否重复
             SysUser old = userBiz.findByUserCode(user.getUserCode());
             if(old!=null){
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
 
             if(StringUtil.isNotBlank(user.getIdNo())){
                 old = userBiz.findByIdNo(user.getIdNo());
                 if(old!=null){
-                    return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
                 }
             }
 
             if(StringUtil.isNotBlank(user.getUserPhone())){
                 old = userBiz.findByUserPhone(user.getUserPhone());
                 if(old!=null){
-                    return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
                 }
             }
 
             if(StringUtil.isNotBlank(user.getUserEmail())){
                 old = userBiz.findByUserEmail(user.getUserEmail());
                 if(old!=null){
-                    return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
                 }
             }
         }else{
@@ -172,47 +172,47 @@ public class RecruitUserInfoController extends GeneralController {
             //判断用户id是否重复
             SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
             if(old!=null){
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
 
             if(StringUtil.isNotBlank(user.getIdNo())){
                 old = userBiz.findByIdNoNotSelf(userFlow,user.getIdNo());
                 if(old!=null){
-                    return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
                 }
             }
 
             if(StringUtil.isNotBlank(user.getUserPhone())){
                 old = userBiz.findByUserPhoneNotSelf(userFlow,user.getUserPhone());
                 if(old!=null){
-                    return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
                 }
             }
             if(StringUtil.isNotBlank(user.getUserEmail())){
                 old = userBiz.findByUserEmailNotSelf(userFlow,user.getUserEmail());
                 if(old!=null){
-                    return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
                 }
             }
         }
         if(StringUtil.isNotBlank(user.getSexId())){
             user.setSexName(UserSexEnum.getNameById(user.getSexId()));
         }
-        user.setTitleName(DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
-        user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
-        user.setPostName(DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
-        user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
-        user.setCertificateLevelName(DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
+        user.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
+        user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+        user.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
+        user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+        user.setCertificateLevelName(com.pinde.core.common.enums.DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
         user.setOrgName(StringUtil.defaultString(InitConfig.getOrgNameByFlow(user.getOrgFlow())));
         user.setDeptName(StringUtil.defaultString(InitConfig.getDeptNameByFlow(user.getDeptFlow())));
-        user.setTeacherTypeName(DictTypeEnum.TeachersType.getDictNameById(user.getTeacherTypeId()));
+        user.setTeacherTypeName(com.pinde.core.common.enums.DictTypeEnum.TeachersType.getDictNameById(user.getTeacherTypeId()));
 
         if(StringUtil.isNotBlank(roleFlow)){
             userBiz.saveUser(user,roleFlow);
         }else{
             userBiz.saveUser(user);
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
 }

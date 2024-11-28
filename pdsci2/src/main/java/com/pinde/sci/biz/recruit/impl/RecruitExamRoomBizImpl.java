@@ -52,7 +52,7 @@ public class RecruitExamRoomBizImpl implements IRecruitExamRoomBiz {
     public int addExamRoom(RecruitExamRoom recruitExamRoom) {
         recruitExamRoom.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         recruitExamRoom.setRoomFlow(PkUtil.getUUID());
-        recruitExamRoom.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruitExamRoom.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recruitExamRoom.setCreateTime(DateUtil.getCurrDateTime());
         recruitExamRoom.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         return recruitExamRoomMapper.insert(recruitExamRoom);
@@ -67,7 +67,7 @@ public class RecruitExamRoomBizImpl implements IRecruitExamRoomBiz {
 
     @Override
     public Integer updateExamRoom(RecruitExamRoom editInfo) {
-        editInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        editInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         editInfo.setModifyTime(DateUtil.getCurrDateTime());
         editInfo.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         return recruitExamRoomMapper.updateByPrimaryKeySelective(editInfo);
@@ -96,7 +96,7 @@ public class RecruitExamRoomBizImpl implements IRecruitExamRoomBiz {
         RecruitExamRoomExample.Criteria criteria = example.createCriteria();
         criteria.andRoomNameEqualTo(examRoomName);
         criteria.andOrgFlowEqualTo(orgFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<RecruitExamRoom> recruitExamRooms = recruitExamRoomMapper.selectByExample(example);
         if (recruitExamRooms != null && recruitExamRooms.size() > 0){
             return recruitExamRooms.get(0);
@@ -109,7 +109,7 @@ public class RecruitExamRoomBizImpl implements IRecruitExamRoomBiz {
     public List<RecruitExamRoom> orgExamRooms(String orgFlow) {
         RecruitExamRoomExample example = new RecruitExamRoomExample();
         RecruitExamRoomExample.Criteria criteria = example.createCriteria();
-        criteria.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return recruitExamRoomMapper.selectByExample(example);
     }
 }

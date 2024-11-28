@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jszy;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResActivityBiz;
@@ -27,12 +27,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysDeptMapper;
-import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
-import com.pinde.sci.enums.sch.SchUnitEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
@@ -133,15 +127,15 @@ public class JszyResBaseManagerController extends GeneralController {
 	public String baseAudit(String baseFlow,String status){
 		ResBase resBase=new ResBase();
 		resBase.setOrgFlow(baseFlow);
-		if (GlobalConstant.FLAG_N.equals(status)) {
-			resBase.setBaseStatusId(JszyResDoctorAuditStatusEnum.NotPassed.getId());
-			resBase.setBaseStatusName(JszyResDoctorAuditStatusEnum.NotPassed.getName());
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(status)) {
+            resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotPassed.getId());
+            resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotPassed.getName());
 		}
 		int result=baseBiz.saveResBase(resBase);
-		if (GlobalConstant.ZERO_LINE!=result) {
-			return GlobalConstant.OPRE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	/**
@@ -178,16 +172,16 @@ public class JszyResBaseManagerController extends GeneralController {
 		ModelAndView mav=new ModelAndView();
 		SysOrg sysOrg=orgBiz.readSysOrg(user.getOrgFlow());
 		sOrg.setOrgProvId(sysOrg.getOrgProvId());
-		if(GlobalConstant.USER_LIST_CHARGE.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
 			sOrg.setOrgCityId(sysOrg.getOrgCityId());
 		}
-		sOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		orgList=orgBiz.searchOrg(sOrg);
 		for(SysOrg o:orgList){
 			orgFlowList.add(o.getOrgFlow());
 		}
-		if (GlobalConstant.FLAG_Y.equals(auditFlag)) {
-			base.setBaseStatusId(JszyResDoctorAuditStatusEnum.Auditing.getId());
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(auditFlag)) {
+            base.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Auditing.getId());
 		}
 		Map<String, Object> paramMap = new HashMap<String, Object> ();
 		paramMap.put("org",org);
@@ -196,16 +190,16 @@ public class JszyResBaseManagerController extends GeneralController {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JszyResBaseExt> resBaseExtList = baseBiz.searchResBaseExtList(paramMap);
 		model.addAttribute("resBaseExtList", resBaseExtList);
-		if (GlobalConstant.USER_LIST_CHARGE.equals(role)) {
-			if (GlobalConstant.FLAG_Y.equals(auditFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(role)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(auditFlag)) {
 				mav.setViewName("jszy/city/hospital/auditHospitals");
 			}else{
 				mav.setViewName("jszy/hospitalList");
 			}
 		}
-		if (GlobalConstant.USER_LIST_PROVINCE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_PROVINCE.equals(role)) {
 			model.addAttribute("resBaseExtList", resBaseExtList);
-			if (GlobalConstant.FLAG_Y.equals(auditFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(auditFlag)) {
 				mav.setViewName("jszy/province/hospital/auditHospitals");
 			}else{
 				mav.setViewName("jszy/hospitalList");
@@ -224,7 +218,7 @@ public class JszyResBaseManagerController extends GeneralController {
 		ModelAndView mav=new ModelAndView();
 		ResOrgSpe search = new ResOrgSpe();
 		search.setOrgFlow(orgFlow);
-		search.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        search.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<ResOrgSpe> resSpesList =resOrgSpeBiz.searchResOrgSpeList(search, trainCategoryType);
 		if(resSpesList!=null && resSpesList.size()>0){
 			Map<String,ResOrgSpe> rbsMap = new HashMap<String,ResOrgSpe>();
@@ -237,14 +231,14 @@ public class JszyResBaseManagerController extends GeneralController {
 		ResBase resBase =baseBiz.readBase(orgFlow);
 		model.addAttribute("resBase", resBase);
 		if(resBase!=null){
-			if (GlobalConstant.FLAG_Y.equals(editFlag)||(StringUtil.isBlank(resBase.getBaseStatusId())&&getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_LOCAL))) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editFlag) || (StringUtil.isBlank(resBase.getBaseStatusId()) && getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL))) {
 				mav.setViewName("jszy/hospital/hos/editSpe");
 			}else{
 				model.addAttribute("baseInfoName", trainCategoryType);
 				mav.setViewName("jszy/city/hospital/speView");
 			}
 		}else{
-			if (GlobalConstant.FLAG_Y.equals(editFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editFlag)) {
 				mav.setViewName("jszy/hospital/hos/editSpe");
 			}else{
 				ResOrgSpe resOrgSpe=new ResOrgSpe();
@@ -279,24 +273,24 @@ public class JszyResBaseManagerController extends GeneralController {
 			String Xml=resBase.getBaseInfo();
 			if (StringUtil.isNotBlank(Xml)) {
 				JszyBaseExtInfoForm JszyBaseExtInfoForm=JaxbUtil.converyToJavaBean(Xml, JszyBaseExtInfoForm.class);
-				if (GlobalConstant.BASIC_INFO.equals(baseInfoName)) {
+                if (com.pinde.core.common.GlobalConstant.BASIC_INFO.equals(baseInfoName)) {
 					mav.addObject("basicInfo", JszyBaseExtInfoForm.getBasicInfo());
-				}else if (GlobalConstant.ORG_MANAGE.equals(baseInfoName)) {
+                } else if (com.pinde.core.common.GlobalConstant.ORG_MANAGE.equals(baseInfoName)) {
 					mav.addObject("organizationManage", JszyBaseExtInfoForm.getOrganizationManage());
-				}else if (GlobalConstant.TEACH_CONDITION.equals(baseInfoName)) {
+                } else if (com.pinde.core.common.GlobalConstant.TEACH_CONDITION.equals(baseInfoName)) {
 					mav.addObject("educationInfo", JszyBaseExtInfoForm.getEducationInfo());
-				}else if (GlobalConstant.SUPPORT_CONDITION.equals(baseInfoName)) {
+                } else if (com.pinde.core.common.GlobalConstant.SUPPORT_CONDITION.equals(baseInfoName)) {
 					mav.addObject("supportCondition", JszyBaseExtInfoForm.getSupportCondition());
 				}
 			}
-			if((StringUtil.isBlank(resBase.getBaseStatusId())||GlobalConstant.FLAG_Y.equals(editFlag))&&!GlobalConstant.FLAG_Y.equals(viewFlag)) {
+            if ((StringUtil.isBlank(resBase.getBaseStatusId()) || com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editFlag)) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jszy/hospital/hos/edit"+baseInfoName);
 			}else{
 				mav.addObject("baseInfoName", baseInfoName);
 				mav.setViewName("jszy/city/hospital/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}
 		}else{//无记录
-			if(GlobalConstant.FLAG_Y.equals(viewFlag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jszy/city/hospital/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}else{
 				mav.setViewName("jszy/hospital/hos/edit"+baseInfoName);
@@ -315,10 +309,10 @@ public class JszyResBaseManagerController extends GeneralController {
 	@ResponseBody
 	public String saveBase(String flag, JszyBaseInfoForm form, String index) throws Exception{
 		int  result =  baseBiz.saveBaseInfo(flag, form, index);
-		if(GlobalConstant.ZERO_LINE !=  result){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	//**********************************   基地专业管理  **************************************************
@@ -336,11 +330,11 @@ public class JszyResBaseManagerController extends GeneralController {
 			String orgName = form.getOrgName();
 			List<ResOrgSpe> resBaseSpeList = form.getOrgSpeList();
 			int result= baseBiz.saveTrainSpe(resBaseSpeList,trainCategoryTypeId, orgFlow, orgName);
-			if (GlobalConstant.ZERO_LINE != result) {
-				return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -353,13 +347,13 @@ public class JszyResBaseManagerController extends GeneralController {
 	public String submitBaseInfo(String baseFlow){
 		ResBase resBase=new ResBase();
 		resBase.setOrgFlow(baseFlow);
-		resBase.setBaseStatusId(JszyResDoctorAuditStatusEnum.Auditing.getId());
-		resBase.setBaseStatusName(JszyResDoctorAuditStatusEnum.Auditing.getName());
+        resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Auditing.getId());
+        resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Auditing.getName());
 		int result=baseBiz.saveResBase(resBase);
-		if (GlobalConstant.ZERO_LINE!=result) {
-			return GlobalConstant.OPRE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	/**
@@ -398,7 +392,7 @@ public class JszyResBaseManagerController extends GeneralController {
 		if(StringUtil.isNotBlank(orgFlow)){
 			ResOrgSpe serach = new ResOrgSpe();
 			serach.setOrgFlow(orgFlow);
-			serach.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            serach.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<ResOrgSpe> resBaseList = resOrgSpeBiz.searchResOrgSpeList(serach);
 			model.addAttribute("resBaseList", resBaseList);
 			ResBase resBase=baseBiz.readBase(orgFlow);
@@ -415,11 +409,11 @@ public class JszyResBaseManagerController extends GeneralController {
 	@RequestMapping("/orgSpeManage")
 	public String orgSpeManage(Model model){
 		SysOrg sysOrg = new SysOrg();
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		SysOrg org=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		sysOrg.setOrgProvId(org.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			sysOrg.setOrgCityId(org.getOrgCityId());
 		}
 		List<SysOrg> orgList = orgBiz.searchOrg(sysOrg);
@@ -441,7 +435,7 @@ public class JszyResBaseManagerController extends GeneralController {
 		if(StringUtil.isNotBlank(orgFlow)){
 			ResOrgSpe serach = new ResOrgSpe();
 			serach.setOrgFlow(orgFlow);
-			serach.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            serach.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<ResOrgSpe> resBaseList = resOrgSpeBiz.searchResOrgSpeList(serach);
 			model.addAttribute("resBaseList", resBaseList);
 			if(resBaseList != null && !resBaseList.isEmpty()){
@@ -465,10 +459,10 @@ public class JszyResBaseManagerController extends GeneralController {
 	@ResponseBody
 	public String saveOrgSpeManage(ResOrgSpe orgSpe){
 		int result = resOrgSpeBiz.saveOrgSpeManage(orgSpe);
-		if (GlobalConstant.ZERO_LINE != result) {
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping("/searchJOrgInfo")
@@ -494,15 +488,15 @@ public class JszyResBaseManagerController extends GeneralController {
 		SysUser currUser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(currUser.getOrgFlow());
 		sysOrg.setOrgProvId(org.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			sysOrg.setOrgCityId(org.getOrgCityId());
 		}
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		if(StringUtil.isNotBlank(type)){
-			if(OrgLevelEnum.CountryOrg.getId().equals(type)){
-				sysOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-			}else if(OrgLevelEnum.ProvinceOrg.getId().equals(type)){
-				sysOrg.setOrgLevelId(OrgLevelEnum.ProvinceOrg.getId());
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(type)) {
+                sysOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+            } else if (com.pinde.core.common.enums.OrgLevelEnum.ProvinceOrg.getId().equals(type)) {
+                sysOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.ProvinceOrg.getId());
 			}
 		}
 		PageHelper.startPage(currentPage,getPageSize(request));
@@ -528,14 +522,14 @@ public class JszyResBaseManagerController extends GeneralController {
 	public String verification(String resultFlow){
 		SysUser user=GlobalContext.getCurrentUser();
 		ResDoctorSchProcess doctorSchProcess= doctorProcessBiz.searchByResultFlow(resultFlow);
-		String afterEvaluationId=ResRecTypeEnum.AfterEvaluation.getId();
+        String afterEvaluationId = com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId();
 		if (doctorSchProcess!=null) {
 			List<ResRec> recs=resRecBiz.searchResRecWithBLOBs(afterEvaluationId,doctorSchProcess.getProcessFlow(),user.getUserFlow());
 			if (recs.size()>0) {
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 
 	}
 	
@@ -584,10 +578,10 @@ public class JszyResBaseManagerController extends GeneralController {
 		}
 		//获取不同类型并定义接受
 		if(processPerMap!=null){
-			String caseRegistryId=ResRecTypeEnum.CaseRegistry.getId();
-			String diseaseRegistryId=ResRecTypeEnum.DiseaseRegistry.getId();
-			String skillRegistryId=ResRecTypeEnum.SkillRegistry.getId();
-			String operationRegistryId=ResRecTypeEnum.OperationRegistry.getId();
+            String caseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
+            String diseaseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
+            String skillRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
+            String operationRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
 
 			String caseRegistry=(String)processPerMap.get(processFlow+caseRegistryId);
 			String caseRegistryReqNum=(String)processPerMap.get(processFlow+caseRegistryId+"ReqNum");
@@ -605,7 +599,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			String skillAndOperationRegistryReqNum=(String)processPerMap.get(processFlow+operationRegistryId+"ReqNum");
 			String skillAndOperationRegistryFinished=(String)processPerMap.get(processFlow+operationRegistryId+"Finished");
 
-			String recTypeIdt=ResRecTypeEnum.CampaignRegistry.getId();
+            String recTypeIdt = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
 			int teachingRounds=0;
 			int difficult=0;
 			int lecture=0;
@@ -673,7 +667,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			dataMap.put("lecture",String.valueOf(lecture));
 			dataMap.put("death",String.valueOf(death));
 		}
-		String afterEvaluationId=ResRecTypeEnum.AfterEvaluation.getId();
+        String afterEvaluationId = com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId();
 		List<ResRec> recs=null;
 		if (doctorSchProcess!=null) {
 			 recs=resRecBiz.searchResRecWithBLOBs(afterEvaluationId,doctorSchProcess.getProcessFlow(),user.getUserFlow());
@@ -1086,10 +1080,10 @@ public class JszyResBaseManagerController extends GeneralController {
 		Map<String,String> processPerMap=resRecBiz.getProcessPer(doctor.getDoctorFlow(),doctor.getRotationFlow(),recordFlow);
 		
 		//获取不同类型并定义接受
-		String caseRegistryId=ResRecTypeEnum.CaseRegistry.getId();
-		String diseaseRegistryId=ResRecTypeEnum.DiseaseRegistry.getId();
-		String skillRegistryId=ResRecTypeEnum.SkillRegistry.getId();
-		String operationRegistryId=ResRecTypeEnum.OperationRegistry.getId();
+        String caseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
+        String diseaseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
+        String skillRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
+        String operationRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
 		
 		String caseRegistry=processPerMap.get(recordFlow+caseRegistryId);
 		String caseRegistryReqNum=processPerMap.get(recordFlow+caseRegistryId+"ReqNum");
@@ -1106,8 +1100,8 @@ public class JszyResBaseManagerController extends GeneralController {
 		String skillAndOperationRegistry=processPerMap.get(recordFlow+operationRegistryId);
 		String skillAndOperationRegistryReqNum=processPerMap.get(recordFlow+operationRegistryId+"ReqNum");
 		String skillAndOperationRegistryFinished=processPerMap.get(recordFlow+operationRegistryId+"Finished");
-		
-		String recTypeId=ResRecTypeEnum.CampaignRegistry.getId();
+
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
 		int teachingRounds=0;
 		int difficult=0;
 		int lecture=0;
@@ -1149,7 +1143,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			}
 		}
 		//获取resrec数据
-		String afterEvaluationId=ResRecTypeEnum.AfterEvaluation.getId();
+        String afterEvaluationId = com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId();
 		List<ResRec> recs=resRecBiz.searchResRecWithBLOBsByRotationDeptFlow(afterEvaluationId,recordFlow,user.getUserFlow());
 		if (recs!=null && recs.size()>0) {
 			ResRec resRecs = recs.get(0);
@@ -1587,7 +1581,7 @@ public class JszyResBaseManagerController extends GeneralController {
 	@RequestMapping(value = {"/doc/schDept" })
 	public String schDept (String startDate,String endDate,String sessionNumber,Model model){
 		List<String> titleDate = null;
-		boolean isWeek = SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"));
+        boolean isWeek = com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"));
 		if(!StringUtil.isNotBlank(startDate)){
 			startDate = DateUtil.getCurrDate();
 			endDate = DateUtil.newDateOfAddMonths(startDate,12);
@@ -1607,7 +1601,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("schDeptList",schDeptList);
 			SysDeptExample example=new SysDeptExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
 			List<SysDept> deptList=sysDeptMapper.selectByExample(example);
 			model.addAttribute("deptList",deptList);
 			sessionNumber = "".equals(sessionNumber)?null:sessionNumber;
@@ -1665,7 +1659,7 @@ public class JszyResBaseManagerController extends GeneralController {
 	@RequestMapping("/template/exportExcel")
 	public void exportExcel(String startDate, String endDate,String schDeptFlow, String sessionNumber, HttpServletResponse response) throws IOException, Exception{
 		List<String> titleDate = null;
-		boolean isWeek = SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"));
+        boolean isWeek = com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"));
 		if(StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)){
 			if(isWeek){
 				titleDate = getWeeksByTwoDate(startDate,endDate);
@@ -1676,7 +1670,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			}
 			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(GlobalContext.getCurrentUser().getOrgFlow());
 			SysDeptExample example=new SysDeptExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
 			List<SysDept> deptList=sysDeptMapper.selectByExample(example);
 			schDeptFlow = "".equals(schDeptFlow)?null:schDeptFlow;
 			sessionNumber = "".equals(sessionNumber)?null:sessionNumber;
@@ -1935,7 +1929,7 @@ public class JszyResBaseManagerController extends GeneralController {
 	@ResponseBody
 	public List<ResOrgSpe> searchResOrgSpeList(String sessionNumber,ResOrgSpe resOrgSpe, Model model){
 		List<ResOrgSpe> speList=null;
-		resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
+        resOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		sessionNumber = ("").equals(sessionNumber)?InitConfig.getSysCfg("res_reg_year"):sessionNumber;
 		int year=Integer.parseInt(sessionNumber);
 		if(year>=2015){
@@ -2412,7 +2406,7 @@ public class JszyResBaseManagerController extends GeneralController {
 				if(group!=null){
 					if(StringUtil.isNotBlank(rotationFlow) && StringUtil.isNotBlank(standardDeptId)){
 						SchRotationDeptExample example = new SchRotationDeptExample();
-						SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+                        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 								.andRotationFlowEqualTo(rotationFlow)
 								.andStandardDeptIdEqualTo(standardDeptId)
 								.andOrgFlowIsNull()
@@ -2457,10 +2451,10 @@ public class JszyResBaseManagerController extends GeneralController {
     public String delScoreConf(String cfgYear){
 
         int result = baseBiz.delScoreConf(cfgYear);
-        if(result>GlobalConstant.ZERO_LINE){
-            return GlobalConstant.DELETE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
     /**
      * 保存年份合格线配置
@@ -2473,9 +2467,9 @@ public class JszyResBaseManagerController extends GeneralController {
     public String  saveCfg(ResPassScoreCfg resPassScoreCfg,Model model){
         int result =baseBiz.savePassScoreCfg(resPassScoreCfg);
         if(result>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
     /**
      * 查询分数配置信息
@@ -2557,9 +2551,9 @@ public class JszyResBaseManagerController extends GeneralController {
 		orgInfo.setContent(content);
 		int result = baseBiz.saveCountryOrgInfo(orgInfo);
 		if(result > 0){
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	@RequestMapping("/editJointInfo")
 	public String editJointInfo(String recordFlow,Model model){
@@ -2586,18 +2580,18 @@ public class JszyResBaseManagerController extends GeneralController {
 		}
 		int result = baseBiz.saveJointOrgInfo(unitInfo);
 		if(result > 0){
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	@RequestMapping(value="/delJointInfo")
 	@ResponseBody
 	public String delJointInfo(String recordFlow) {
 		int result = baseBiz.delJointOrgInfo(recordFlow);
 		if(result > 0){
-			return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 	@RequestMapping(value="/uploadFile")
 	@ResponseBody
@@ -2605,7 +2599,7 @@ public class JszyResBaseManagerController extends GeneralController {
 		if(file!=null && file.getSize() > 0){
 			return baseBiz.uploadFile(recordFlow,unitTypeId,file);
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	/**
 	 * 教学活动指标
@@ -2658,10 +2652,10 @@ public class JszyResBaseManagerController extends GeneralController {
 			target.setTargetFlow(targetFlow);
 			target.setTargetName(targetName.trim());
 			target.setOrgFlow(curUser.getOrgFlow());
-			target.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            target.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c = activityTargeBiz.saveTarget(target);
 			if (c == 0) {
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 		}else {
 			if (target != null) {
@@ -2670,13 +2664,13 @@ public class JszyResBaseManagerController extends GeneralController {
 			TeachingActivityTarget add = new TeachingActivityTarget();
 			add.setTargetName(targetName.trim());
 			add.setOrgFlow(curUser.getOrgFlow());
-			add.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            add.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c = activityTargeBiz.saveTarget(add);
 			if (c == 0) {
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/activityTarget/delTarget")
 	@ResponseBody
@@ -2688,14 +2682,14 @@ public class JszyResBaseManagerController extends GeneralController {
 		int c=activityTargeBiz.delTarget(targetFlow);
 		if(c==0)
 		{
-			return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 		}
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/activityQuery/main")
 	public String main(Model model,String  roleFlag, HttpServletRequest request){
-		if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag))
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag))
 		{
 			List<SysDept> depts=deptBiz.searchDeptByOrg(GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
@@ -2741,7 +2735,7 @@ public class JszyResBaseManagerController extends GeneralController {
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg", GlobalConstant.FLAG_N);
+                info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -2750,7 +2744,7 @@ public class JszyResBaseManagerController extends GeneralController {
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg", GlobalConstant.FLAG_Y);
+                        info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				if(!"doctor".equals(roleFlag))
@@ -2866,7 +2860,7 @@ public class JszyResBaseManagerController extends GeneralController {
 	@RequestMapping(value="/saveActivity")
 	@ResponseBody
 	public String saveActivity(TeachingActivityInfo activity,MultipartFile file,String isRe,String role){
-		return activityBiz.editActivity(activity, file, isRe, GlobalConstant.FLAG_N, null, role);
+        return activityBiz.editActivity(activity, file, isRe, com.pinde.core.common.GlobalConstant.FLAG_N, null, role);
 	}
 	@RequestMapping(value="/activityQuery/saveActivityFile")
 	@ResponseBody
@@ -2921,7 +2915,7 @@ public class JszyResBaseManagerController extends GeneralController {
 		if(StringUtil.isNotBlank(activityFlow))
 		{
 			TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-			if(info==null||!GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
+            if (info == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
 				return "活动信息不存在，请刷新列表页面！";
 
 			if( DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(info.getStartTime())>0)
@@ -2930,7 +2924,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			}
 			SysUser user=GlobalContext.getCurrentUser();
 			TeachingActivityResult result=activityBiz.readRegistInfo(activityFlow,user.getUserFlow());
-			if(result!=null&&GlobalConstant.RECORD_STATUS_Y.equals(result.getIsRegiest()))
+            if (result != null && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(result.getIsRegiest()))
 			{
 				return "你已报名，请勿重复报名！";
 			}
@@ -2944,9 +2938,9 @@ public class JszyResBaseManagerController extends GeneralController {
 			}
 			result.setActivityFlow(activityFlow);
 			result.setUserFlow(user.getUserFlow());
-			result.setIsRegiest(GlobalConstant.FLAG_Y);
+            result.setIsRegiest(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			result.setRegiestTime(DateUtil.getCurrDateTime());
-			result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c=activityBiz.saveRegist(result);
 			if(c==0)
 				return "报名失败！";
@@ -2980,11 +2974,11 @@ public class JszyResBaseManagerController extends GeneralController {
 			{
 				return "活动已开始，无法删除！";
 			}
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int c=activityBiz.saveActivity(info);
 			if(c==0)
-				return GlobalConstant.DELETE_FAIL;
-			return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}else
 			return "请选择需要删除的活动！";
 
@@ -3145,9 +3139,9 @@ public class JszyResBaseManagerController extends GeneralController {
 		int count=activityBiz.saveEvalInfo(activityEvals, resultFlow);
 		if(count==0)
 		{
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/activityQuery/showRegistEval")
 	public String showRegistEval(Model model,String activityFlow,String roleFlag){
@@ -3229,7 +3223,7 @@ public class JszyResBaseManagerController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!GlobalConstant.FLAG_Y.equals(isEffective)&&!GlobalConstant.FLAG_N.equals(isEffective))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}

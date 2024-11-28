@@ -16,7 +16,6 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -348,19 +347,19 @@ public class JsResLectureController extends GeneralController {
                 String period = lectureInfo.getLectureEvaPeriod();
                 String startDate = date.substring(0,4)+date.substring(5,7)+date.substring(8,10)+time.substring(0,2)+time.substring(3,5)+"00";
                 int step = 0;
-                if(SchUnitEnum.Hour.getId().equals(unitID)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Hour.getId().equals(unitID)) {
                     step = Integer.parseInt(period);
                 }
-                if(SchUnitEnum.Day.getId().equals(unitID)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Day.getId().equals(unitID)) {
                     step = Integer.parseInt(period)*24;
                 }
-                if(SchUnitEnum.Week.getId().equals(unitID)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unitID)) {
                     step = Integer.parseInt(period)*24*7;
                 }
-                if(SchUnitEnum.Month.getId().equals(unitID)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Month.getId().equals(unitID)) {
                     step = Integer.parseInt(period)*24*30;
                 }
-                if(SchUnitEnum.Year.getId().equals(unitID)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Year.getId().equals(unitID)) {
                     step = Integer.parseInt(period)*24*365;
                 }
                 String endDate = DateUtil.addHour(startDate,step);
@@ -369,12 +368,12 @@ public class JsResLectureController extends GeneralController {
                 //判断结束
                 if((lectureEndTime.compareTo(currTime)<0&&lectureTrainDate.compareTo(currDate)==0)||(lectureTrainDate.compareTo(currDate)<0)){
                     lectureInfos.add(lectureInfo);
-                    if(GlobalConstant.FLAG_Y.equals(isScan))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan))
                     {
-                        scanMap.put(lectureFlow, GlobalConstant.FLAG_Y);
+                        scanMap.put(lectureFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
-                    if(GlobalConstant.FLAG_Y.equals(isScan2)) {
-                        scan2Map.put(lectureFlow, GlobalConstant.FLAG_Y);
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan2)) {
+                        scan2Map.put(lectureFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     evaMap.put(lectureFlow,dateFlag);
                 }
@@ -440,10 +439,10 @@ public class JsResLectureController extends GeneralController {
         String orgFlow = current.getOrgFlow();
         lectureInfo.setOrgFlow(orgFlow);
         String lectureTypeId = lectureInfo.getLectureTypeId();
-        String lectureTypeName = DictTypeEnum.LectureType.getDictNameById(lectureTypeId);
+        String lectureTypeName = com.pinde.core.common.enums.DictTypeEnum.LectureType.getDictNameById(lectureTypeId);
         lectureInfo.setLectureTypeName(lectureTypeName);
         resLectureInfoBiz.addLectureInfo(lectureInfo,itemId);
-        return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 
     }
     /**
@@ -456,13 +455,13 @@ public class JsResLectureController extends GeneralController {
         List<ResLectureScanRegist> lectureScanRegists = resLectureScanRegistBiz.searchByLectureFlow(lectureFlow);
         if(lectureScanRegists!=null&&lectureScanRegists.size()>0){
             for(ResLectureScanRegist lectureScanRegist:lectureScanRegists){
-                lectureScanRegist.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                lectureScanRegist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                 resLectureScanRegistBiz.edit(lectureScanRegist);
             }
         }
-        lectureInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        lectureInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         resLectureInfoBiz.editLectureInfo(lectureInfo);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
     /**
      * 报名讲座
@@ -473,9 +472,9 @@ public class JsResLectureController extends GeneralController {
         String userFlow = currUser.getUserFlow();
 
         ResLectureScanRegist regist=resLectureScanRegistBiz.searchByUserFlowAndLectureFlow(userFlow,lectureFlow);
-        if(regist!=null&&GlobalConstant.FLAG_Y.equals(regist.getIsRegist()))
+        if (regist != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsRegist()))
         {
-            model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
+            model.addAttribute("isRegiest", com.pinde.core.common.GlobalConstant.FLAG_N);
             model.addAttribute("msg", "已经报过名了！！请刷新列表");
             return "jsres/doctor/lectureRegist";
         }
@@ -488,20 +487,20 @@ public class JsResLectureController extends GeneralController {
             if(infos!=null&&infos.size()>0)
             {
                 ResLectureInfo resLectureInfo=infos.get(0);
-                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
+                model.addAttribute("isRegiest", com.pinde.core.common.GlobalConstant.FLAG_N);
                 model.addAttribute("msg", "已报名同一时间【"+resLectureInfo.getLectureContent()+"】，不能报名！");
                 return "jsres/doctor/lectureRegist";
             }
            int count= resLectureScanRegistBiz.editLectureScanRegist(lectureFlow);
             if(count<0)
             {
-                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
+                model.addAttribute("isRegiest", com.pinde.core.common.GlobalConstant.FLAG_N);
                 model.addAttribute("msg", "该讲座报名人数已满，请刷新列表页面！");
                 return "jsres/doctor/lectureRegist";
             }
             if(count==0)
             {
-                model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
+                model.addAttribute("isRegiest", com.pinde.core.common.GlobalConstant.FLAG_N);
                 model.addAttribute("msg", "报名失败，请刷新列表页面！");
                 return "jsres/doctor/lectureRegist";
             }
@@ -517,9 +516,9 @@ public class JsResLectureController extends GeneralController {
             model.addAttribute("hour", hour);
             String min = lectureStartTime.substring(3, 5);
             model.addAttribute("min", min);
-            model.addAttribute("isRegiest", GlobalConstant.FLAG_Y);
+            model.addAttribute("isRegiest", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }else{
-            model.addAttribute("isRegiest", GlobalConstant.FLAG_N);
+            model.addAttribute("isRegiest", com.pinde.core.common.GlobalConstant.FLAG_N);
             model.addAttribute("msg", "该讲座报名人数已满，请刷新列表页面！");
         }
         return "jsres/doctor/lectureRegist";
@@ -544,15 +543,15 @@ public class JsResLectureController extends GeneralController {
             {
                 return "你未报名，无法取消报名信息！";
             }
-            if (!GlobalConstant.FLAG_Y.equals(regist.getIsRegist()))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsRegist()))
             {
                 return "你已取消报名！";
             }
-            if(GlobalConstant.FLAG_Y.equals(regist.getIsScan()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan()))
             {
                 return "你已扫码签到，无法取消报名信息！";
             }
-            regist.setIsRegist(GlobalConstant.FLAG_N);
+            regist.setIsRegist(com.pinde.core.common.GlobalConstant.FLAG_N);
             int c=resLectureScanRegistBiz.saveRegist(regist);
             if(c==0)
                 return "取消失败！";
@@ -601,7 +600,7 @@ public class JsResLectureController extends GeneralController {
             return  "已经评价过讲座信息！请刷新页面后重试！";
         }
         resLectureEvaDetailBiz.editResLectureEvaDetail(resLectureEvaDetail);
-        return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
     }
     /**
      * 打开扫码或报名页面
@@ -655,7 +654,7 @@ public class JsResLectureController extends GeneralController {
 
         //随机签到
         List<ResLectureRandomSign> randomSignList = new ArrayList<>();
-        if(GlobalConstant.FLAG_Y.equals(flag)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
             randomSignList = randomSignBiz.searchRandomByLectureFlow(lectureFlow);
         }
         model.addAttribute("randomSignList", randomSignList);
@@ -767,13 +766,13 @@ public class JsResLectureController extends GeneralController {
                     for(SysUserRole userRole:userRoles)
                     {
                         if (StringUtil.isNotBlank(roleTeacher)&&roleTeacher.equals(userRole.getRoleFlow())) {
-                            teaMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
+                            teaMap.put(user.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleHead)&&roleHead.equals(userRole.getRoleFlow())) {
-                            headMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
+                            headMap.put(user.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleSecretary) && roleSecretary.equals(userRole.getRoleFlow())) {
-                            secretaryMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
+                            secretaryMap.put(user.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -827,13 +826,13 @@ public class JsResLectureController extends GeneralController {
                     for(SysUserRole userRole:userRoles)
                     {
                         if (StringUtil.isNotBlank(roleTeacher)&&roleTeacher.equals(userRole.getRoleFlow())) {
-                            teaMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
+                            teaMap.put(user.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleHead)&&roleHead.equals(userRole.getRoleFlow())) {
-                            headMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
+                            headMap.put(user.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isNotBlank(roleSecretary) && roleSecretary.equals(userRole.getRoleFlow())) {
-                            secretaryMap.put(user.getUserFlow(), GlobalConstant.FLAG_Y);
+                            secretaryMap.put(user.getUserFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -1154,17 +1153,17 @@ public class JsResLectureController extends GeneralController {
     @RequestMapping("/saveRandomSign")
     @ResponseBody
     public String saveRandomSign(ResLectureRandomSign randomSign){
-        if(GlobalConstant.FLAG_N.equals(randomSign.getCodeStatusType())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(randomSign.getCodeStatusType())) {
             randomSign.setCodeStatusName("静态二维码");
         }
-        if(GlobalConstant.FLAG_Y.equals(randomSign.getCodeStatusType())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(randomSign.getCodeStatusType())) {
             randomSign.setCodeStatusName("动态二维码");
         }
         int i = randomSignBiz.saveRandom(randomSign);
-        if(i>GlobalConstant.ZERO_LINE){
-            return GlobalConstant.SAVE_SUCCESSED;
+        if (i > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -1239,7 +1238,7 @@ public class JsResLectureController extends GeneralController {
         if (StringUtil.isNotBlank(doctorRoleFlow)) {
             roles.add(doctorRoleFlow);
         }
-        //       if(flag.equals(GlobalConstant.FLAG_N)) {
+        //       if(flag.equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
         List<ResLectureScanRegist> lectureScanRegists = resLectureScanRegistBiz.searchIsScan(lectureFlow, roles);
         Map<String, ResLectureEvaDetail> evaDetailMap = new HashMap<>();
         if (lectureScanRegists != null && lectureScanRegists.size() > 0) {

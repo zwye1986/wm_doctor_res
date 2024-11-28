@@ -1,6 +1,6 @@
 package com.pinde.res.enums.lcjn;
 
-import com.pinde.core.common.enums.GeneralEnum;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 
 /**

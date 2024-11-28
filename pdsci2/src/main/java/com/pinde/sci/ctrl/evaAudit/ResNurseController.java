@@ -15,12 +15,10 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.enums.pub.NurseStatusEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.NurseStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
-import com.pinde.sci.enums.srm.AchScoreEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
@@ -188,15 +186,15 @@ public class ResNurseController extends GeneralController {
             model.addAttribute("sysUser", sysUser);
             String tchRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
             String headRoleFlow = InitConfig.getSysCfg("res_head_role_flow");
-            String isTeacher = GlobalConstant.FLAG_N;
+            String isTeacher = com.pinde.core.common.GlobalConstant.FLAG_N;
             boolean isTeach = false;
             if (StringUtil.isNotBlank(tchRoleFlow) || StringUtil.isNotBlank(headRoleFlow)) {
-                List<SysRole> userRoles = roleBiz.search(userFlow, GlobalConstant.RES_WS_ID);
+                List<SysRole> userRoles = roleBiz.search(userFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
                 if (userRoles != null && userRoles.size() > 0) {
                     for (SysRole userRole : userRoles) {
                         String roleFlow = userRole.getRoleFlow();
                         if (tchRoleFlow.equals(roleFlow) || headRoleFlow.equals(roleFlow)) {
-                            isTeacher = GlobalConstant.FLAG_Y;
+                            isTeacher = com.pinde.core.common.GlobalConstant.FLAG_Y;
                         }
                         if (tchRoleFlow.equals(roleFlow)) {
                             isTeach = true;
@@ -207,7 +205,7 @@ public class ResNurseController extends GeneralController {
             model.addAttribute("isTeacher", isTeacher);
             model.addAttribute("isTeach", isTeach);
             SysDept sysDept = new SysDept();
-            sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             sysDept.setOrgFlow(sysUser.getOrgFlow());
             List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
             model.addAttribute("sysDeptList", sysDeptList);
@@ -242,7 +240,7 @@ public class ResNurseController extends GeneralController {
         if (StringUtil.isNotBlank(userFlow)) {
             SysUser sysUser = userBiz.readSysUser(userFlow);
             if(StringUtil.isNotEmpty(auditFlag)){
-                if(GlobalConstant.FLAG_Y.equals(auditFlag)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(auditFlag)) {
                     sysUser.setStatusId(UserStatusEnum.Activated.getId());
                     sysUser.setStatusDesc(UserStatusEnum.Activated.getName());
                     sysUser.setAuditStatus("审核通过");
@@ -253,28 +251,28 @@ public class ResNurseController extends GeneralController {
                 }
             }
             result = userBiz.updateUser(sysUser);
-            if(GlobalConstant.FLAG_Y.equals(auditFlag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(auditFlag)) {
                 // 基地是否开通过程
                 String orgCfgCode = "jsres_" + sysUser.getOrgFlow() + "_guocheng";
                 JsresPowerCfg jsresPowerCfg = jsResPowerCfgBiz.read(orgCfgCode);
-                if(null != jsresPowerCfg && GlobalConstant.FLAG_Y.equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())){
+                if (null != jsresPowerCfg && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jsresPowerCfg.getCfgValue()) && "Passed".equals(jsresPowerCfg.getCheckStatusId())) {
                     // 带教默认APP登录权限
                     String cfgCode = "jsres_teacher_app_login_"+ sysUser.getUserFlow();
                     JsresPowerCfg jsresCfg = new JsresPowerCfg();
                     jsresCfg.setCfgCode(cfgCode);
-                    jsresCfg.setCfgValue(GlobalConstant.FLAG_Y);
+                    jsresCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     jsresCfg.setCfgDesc("是否开放带教app权限");
                     jsresCfg.setCheckStatusId("Passed");
                     jsresCfg.setCheckStatusName("审核通过");
-                    jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     jsResPowerCfgBiz.save(jsresCfg);
                 }
             }
         }
         if(result>0){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else{
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -290,9 +288,9 @@ public class ResNurseController extends GeneralController {
             result = userBiz.updateUser(sysUser);
         }
         if(result>0){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else{
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -315,15 +313,15 @@ public class ResNurseController extends GeneralController {
             model.addAttribute("sysUser", sysUser);
             String tchRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
             String headRoleFlow = InitConfig.getSysCfg("res_head_role_flow");
-            String isTeacher = GlobalConstant.FLAG_N;
+            String isTeacher = com.pinde.core.common.GlobalConstant.FLAG_N;
             boolean isTeach = false;
             if (StringUtil.isNotBlank(tchRoleFlow) || StringUtil.isNotBlank(headRoleFlow)) {
-                List<SysRole> userRoles = roleBiz.search(userFlow, GlobalConstant.RES_WS_ID);
+                List<SysRole> userRoles = roleBiz.search(userFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
                 if (userRoles != null && userRoles.size() > 0) {
                     for (SysRole userRole : userRoles) {
                         String roleFlow = userRole.getRoleFlow();
                         if (tchRoleFlow.equals(roleFlow) || headRoleFlow.equals(roleFlow)) {
-                            isTeacher = GlobalConstant.FLAG_Y;
+                            isTeacher = com.pinde.core.common.GlobalConstant.FLAG_Y;
                         }
                         if (tchRoleFlow.equals(roleFlow)) {
                             isTeach = true;
@@ -334,7 +332,7 @@ public class ResNurseController extends GeneralController {
             model.addAttribute("isTeacher", isTeacher);
             model.addAttribute("isTeach", isTeach);
             SysDept sysDept = new SysDept();
-            sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             sysDept.setOrgFlow(sysUser.getOrgFlow());
             List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
             model.addAttribute("sysDeptList", sysDeptList);
@@ -362,13 +360,13 @@ public class ResNurseController extends GeneralController {
             //判断用户id是否重复
             SysUser old = userBiz.findByUserCode(user.getUserCode());
             if (old != null) {
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
 
             if (StringUtil.isNotBlank(user.getUserPhone())) {
                 old = userBiz.findByUserPhone(user.getUserPhone());
                 if (old != null) {
-                    return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
                 }
             }
 
@@ -377,13 +375,13 @@ public class ResNurseController extends GeneralController {
             //判断用户id是否重复
             SysUser old = userBiz.findByUserCodeNotSelf(userFlow, user.getUserCode());
             if (old != null) {
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
 
             if (StringUtil.isNotBlank(user.getUserPhone())) {
                 old = userBiz.findByUserPhoneNotSelf(userFlow, user.getUserPhone());
                 if (old != null) {
-                    return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
                 }
             }
 
@@ -394,12 +392,12 @@ public class ResNurseController extends GeneralController {
         }
 
         if (!"gzykdx".equals(GlobalContext.getCurrentWsId())) {
-            user.setTitleName(DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
+            user.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
         }
-        user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
-        user.setPostName(DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
-        user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
-        user.setCertificateLevelName(DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
+        user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+        user.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
+        user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+        user.setCertificateLevelName(com.pinde.core.common.enums.DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
         user.setOrgName(StringUtil.defaultString(InitConfig.getOrgNameByFlow(user.getOrgFlow())));
         user.setDeptFlow(mulDeptFlow[0]);
         user.setDeptName(StringUtil.defaultString(InitConfig.getDeptNameByFlow(user.getDeptFlow())));
@@ -427,15 +425,15 @@ public class ResNurseController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if (currUser.getUserFlow().equals(user.getUserFlow())) {
             currUser = userBiz.readSysUser(user.getUserFlow());
-            setSessionAttribute(GlobalConstant.CURRENT_USER, currUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, currUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
 
-            setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
         }
-        String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
         String[] roleFlows = {roleFlow};
         userRoleBiz.saveAllot(user.getUserFlow(), GlobalContext.getCurrentUser().getOrgFlow(), wsId==null?"res":wsId, roleFlows);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = {"/teachingSave"}, method = RequestMethod.POST)
@@ -447,13 +445,13 @@ public class ResNurseController extends GeneralController {
             //判断用户id是否重复
             SysUser old = userBiz.findByUserCode(user.getUserCode());
             if (old != null) {
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
 
             if (StringUtil.isNotBlank(user.getUserPhone())) {
                 old = userBiz.findByUserPhone(user.getUserPhone());
                 if (old != null) {
-                    return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
                 }
             }
 
@@ -462,25 +460,25 @@ public class ResNurseController extends GeneralController {
             //判断用户id是否重复
             SysUser old = userBiz.findByUserCodeNotSelf(userFlow, user.getUserCode());
             if (old != null) {
-                return GlobalConstant.USER_CODE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
             }
 
             if (StringUtil.isNotBlank(user.getUserPhone())) {
                 old = userBiz.findByUserPhoneNotSelf(userFlow, user.getUserPhone());
                 if (old != null) {
-                    return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
                 }
             }
 
         }
 
         if (!"gzykdx".equals(GlobalContext.getCurrentWsId())) {
-            user.setTitleName(DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
+            user.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(user.getTitleId()));
         }
-        user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
-        user.setPostName(DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
-        user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
-        user.setCertificateLevelName(DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
+        user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+        user.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(user.getPostId()));
+        user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+        user.setCertificateLevelName(com.pinde.core.common.enums.DictTypeEnum.Certificatelevel.getDictNameById(user.getCertificateLevelId()));
         user.setOrgName(StringUtil.defaultString(InitConfig.getOrgNameByFlow(user.getOrgFlow())));
         user.setDeptFlow(mulDeptFlow[0]);
         user.setDeptName(StringUtil.defaultString(InitConfig.getDeptNameByFlow(user.getDeptFlow())));
@@ -511,15 +509,15 @@ public class ResNurseController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         if (currUser.getUserFlow().equals(user.getUserFlow())) {
             currUser = userBiz.readSysUser(user.getUserFlow());
-            setSessionAttribute(GlobalConstant.CURRENT_USER, currUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, currUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
 
-            setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(currUser));
         }
-        String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
         String[] roleFlows = {roleFlow};
         userRoleBiz.saveAllot(user.getUserFlow(), GlobalContext.getCurrentUser().getOrgFlow(), wsId==null?"res":wsId, roleFlows);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = "/resetPasswd", method = RequestMethod.GET)
@@ -528,7 +526,7 @@ public class ResNurseController extends GeneralController {
         SysUser sysuser = userBiz.readSysUser(user.getUserFlow());
         user.setUserPasswd(PasswordHelper.encryptPassword(sysuser.getUserFlow(), InitConfig.getInitPass()));
         userBiz.saveUser(user);
-        return GlobalConstant.RESET_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.RESET_SUCCESSED;
     }
 
 
@@ -536,7 +534,7 @@ public class ResNurseController extends GeneralController {
     public @ResponseBody
     String activate(SysUser user) {
         this.userBiz.activateUser(user);
-        return GlobalConstant.UnLOCK_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.UnLOCK_SUCCESSED;
     }
 
     @RequestMapping(value = "/lock", method = RequestMethod.GET)
@@ -546,27 +544,27 @@ public class ResNurseController extends GeneralController {
         user.setStatusId(UserStatusEnum.Locked.getId());
         user.setStatusDesc(UserStatusEnum.Locked.getName());
         userBiz.saveUser(user);
-        return GlobalConstant.LOCK_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.LOCK_SUCCESSED;
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public @ResponseBody
     String delete(SysUser user, String wsid) {
 //        if (StringUtil.isNotBlank(wsid)) {
-//            if (wsid.equals(GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")) {
+//            if (wsid.equals(com.pinde.core.common.GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")) {
 //                EduUser eduUser = eduUserBiz.findByFlow(user.getUserFlow());
 //                if (eduUser != null)
 //                    return "当前学生存在学籍信息，不允许删除！！";
 //            }
 //        }
-        user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         userBiz.saveUser(user);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     @RequestMapping(value = "/exportUserlist", method = {RequestMethod.POST, RequestMethod.GET})
     public void exportUserlist(SysUser search, String roleFlow, String deptFlow, HttpServletResponse response) throws Exception {
-        String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
         //角色列表
         Map<String, SysRole> sysRoleMap = new HashMap<String, SysRole>();
         SysRole sysRole = new SysRole();
@@ -650,17 +648,17 @@ public class ResNurseController extends GeneralController {
         if (file.getSize() > 0) {
             try {
                 int result = importNursesFromExcel(file);
-                if (GlobalConstant.ZERO_LINE != result) {
-                    return GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 } else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             } catch (RuntimeException re) {
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     public int importNursesFromExcel(MultipartFile file) {
@@ -786,7 +784,7 @@ public class ResNurseController extends GeneralController {
                 //验证惟一用户登录名
                 if(StringUtil.isNotBlank(sysUser.getUserCode())){
                     SysUserExample example=new SysUserExample();
-                    example.createCriteria().andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
                     if(sysUserList != null && !sysUserList.isEmpty()){
                         throw new RuntimeException("导入失败！第"+(count+2) +"行，当前系统已存在登录名为"+sysUser.getUserCode()+"的用户");
@@ -794,7 +792,7 @@ public class ResNurseController extends GeneralController {
                 }
                 if (StringUtil.isNotBlank(sysUser.getUserPhone())) {
                     SysUserExample example=new SysUserExample();
-                    example.createCriteria().andUserPhoneEqualTo(sysUser.getUserPhone()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andUserPhoneEqualTo(sysUser.getUserPhone()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
                     if(sysUserList != null && !sysUserList.isEmpty()){
                         throw new RuntimeException("导入失败！第"+(count+2) +"行，当前系统已存在手机号为"+sysUser.getUserPhone()+"的用户");
@@ -828,17 +826,17 @@ public class ResNurseController extends GeneralController {
         if (file.getSize() > 0) {
             try {
                 int result = userBiz.importTeachingFromExcel(file,loginUser);
-                if (GlobalConstant.ZERO_LINE != result) {
-                    return GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 } else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             } catch (RuntimeException re) {
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
 
@@ -909,7 +907,7 @@ public class ResNurseController extends GeneralController {
                     fileMap.put(rdsp.getProcessFlow(), file);
                 }
                 List<String> recTypeIds = new ArrayList<String>();
-                recTypeIds.add(ResRecTypeEnum.NurseDoctorGrade.getId());
+                recTypeIds.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
                 Map<String, Object> paramMap = new HashMap();
                 paramMap.put("recTypeIds", recTypeIds);
                 paramMap.put("processFlow", rdsp.getProcessFlow());
@@ -966,13 +964,13 @@ public class ResNurseController extends GeneralController {
         model.addAttribute("recruit",newRecruit);
         if(StringUtil.isNotBlank(recTypeId) && currUser!=null){
             String cfgCodeId = null;
-            if(ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.TeacherAssess.getId();
-            }else if(ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.DeptAssess.getId();
-            }else if(ResRecTypeEnum.ManagerGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.ManagerGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.ManagerAssess.getId();
-            }else if (ResRecTypeEnum.NurseDoctorGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.NurseDoctorAssess.getId();
             }
 
@@ -991,7 +989,7 @@ public class ResNurseController extends GeneralController {
             }else {
                 ResAssessCfg search = new ResAssessCfg();
                 search.setCfgCodeId(cfgCodeId);
-                search.setFormStatusId(AchScoreEnum.Enable.getId());
+                search.setFormStatusId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
                 model.addAttribute("formCount",resAssessCfgList.size());
                 if(resAssessCfgList != null && !resAssessCfgList.isEmpty()){
@@ -1012,13 +1010,13 @@ public class ResNurseController extends GeneralController {
         model.addAttribute("recruit",newRecruit);
         if(StringUtil.isNotBlank(recTypeId) && currUser!=null){
             String cfgCodeId = null;
-            if(ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.TeacherAssess.getId();
-            }else if(ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.DeptAssess.getId();
-            }else if(ResRecTypeEnum.ManagerGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.ManagerGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.ManagerAssess.getId();
-            }else if (ResRecTypeEnum.NurseDoctorGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId().equals(recTypeId)) {
                 cfgCodeId = ResAssessTypeEnum.NurseDoctorAssess.getId();
             }
 
@@ -1037,7 +1035,7 @@ public class ResNurseController extends GeneralController {
             }else {
                 ResAssessCfg search = new ResAssessCfg();
                 search.setCfgCodeId(cfgCodeId);
-                search.setFormStatusId(AchScoreEnum.Enable.getId());
+                search.setFormStatusId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
                 model.addAttribute("formCount",resAssessCfgList.size());
                 if(resAssessCfgList != null && !resAssessCfgList.isEmpty()){
@@ -1114,7 +1112,7 @@ public class ResNurseController extends GeneralController {
                 }
 
                 if(StringUtil.isNotBlank(deptTeacherGradeInfo.getRecTypeId())){
-                    deptTeacherGradeInfo.setRecTypeName(ResRecTypeEnum.getNameById(deptTeacherGradeInfo.getRecTypeId()));
+                    deptTeacherGradeInfo.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.getNameById(deptTeacherGradeInfo.getRecTypeId()));
                 }
             }
 
@@ -1122,10 +1120,10 @@ public class ResNurseController extends GeneralController {
         }
         String allScore = recContent.split("<totalScore>")[1].split("</totalScore>")[0];
         deptTeacherGradeInfo.setAllScore(allScore);
-        if(resGradeBiz.edit(deptTeacherGradeInfo) != GlobalConstant.ZERO_LINE){
+        if (resGradeBiz.edit(deptTeacherGradeInfo) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
             return deptTeacherGradeInfo.getRecFlow();
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     private String createGradeXml(Map<String, String[]> gradeInfo, String roleFlag){
@@ -1176,15 +1174,15 @@ public class ResNurseController extends GeneralController {
     @RequestMapping(value="/opreResRecForGrade",method={RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String opreResRecForGrade(DeptTeacherGradeInfo deptTeacherGradeInfo){
-        String deleteS = GlobalConstant.DELETE_SUCCESSED;
-        String deleteF = GlobalConstant.DELETE_FAIL;
+        String deleteS = com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
+        String deleteF = com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         if(deptTeacherGradeInfo != null){
             if(StringUtil.isNotBlank(deptTeacherGradeInfo.getStatusId())){
                 deptTeacherGradeInfo.setStatusName(RecStatusEnum.getNameById(deptTeacherGradeInfo.getStatusId()));
-                deleteS = GlobalConstant.OPRE_SUCCESSED;
-                deleteF = GlobalConstant.OPRE_FAIL;
+                deleteS = com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
+                deleteF = com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             }
-            if(resGradeBiz.edit(deptTeacherGradeInfo)!= GlobalConstant.ZERO_LINE){
+            if (resGradeBiz.edit(deptTeacherGradeInfo) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
                 return deleteS;
             }
         }

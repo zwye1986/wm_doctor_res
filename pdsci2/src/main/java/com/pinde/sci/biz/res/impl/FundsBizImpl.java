@@ -2,6 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IFundsBiz;
@@ -64,7 +65,7 @@ public class FundsBizImpl implements IFundsBiz {
     @Override
     public List<ResProvinceFund> searchResProvinceFund(String startDate, String endDate) {
         ResProvinceFundExample example = new ResProvinceFundExample();
-        ResProvinceFundExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResProvinceFundExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(startDate)){
             criteria.andReportDateGreaterThanOrEqualTo(startDate);
         }
@@ -92,7 +93,7 @@ public class FundsBizImpl implements IFundsBiz {
     @Override
     public List<ResProvinceFundDetail> searchResProvinceFundDetail(ResProvinceFundDetail resProvinceFundDetail) {
         ResProvinceFundDetailExample example = new ResProvinceFundDetailExample();
-        ResProvinceFundDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResProvinceFundDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resProvinceFundDetail!=null){
             if(StringUtil.isNotBlank(resProvinceFundDetail.getMainFlow())){
                 criteria.andMainFlowEqualTo(resProvinceFundDetail.getMainFlow());
@@ -121,9 +122,9 @@ public class FundsBizImpl implements IFundsBiz {
                 save.setMainFlow(mainFlow);
                 save.setRecordFlow(recordFlow);
                 save.setSourcesOfFundsId(sourcesOfFundsId);
-                save.setSourcesOfFundsName(DictTypeEnum.SourcesOfFunds.getDictNameById(sourcesOfFundsId));
+                save.setSourcesOfFundsName(com.pinde.core.common.enums.DictTypeEnum.SourcesOfFunds.getDictNameById(sourcesOfFundsId));
                 save.setProjectOfFundsId(projectOfFundsId);
-                save.setProjectOfFundsName(DictTypeEnum.ProjectOfFunds.getDictNameById(projectOfFundsId));
+                save.setProjectOfFundsName(com.pinde.core.common.enums.DictTypeEnum.ProjectOfFunds.getDictNameById(projectOfFundsId));
                 save.setAmountOfMoney(value);
                 editResProvinceFundDetail(save);
             }
@@ -164,7 +165,7 @@ public class FundsBizImpl implements IFundsBiz {
     @Override
     public List<ResBaseFund> searchResBaseFund(String startDate, String endDate, ResBaseFund resBaseFund) {
         ResBaseFundExample example = new ResBaseFundExample();
-        ResBaseFundExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResBaseFundExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(startDate)){
             criteria.andReportDateGreaterThanOrEqualTo(startDate);
         }
@@ -209,7 +210,7 @@ public class FundsBizImpl implements IFundsBiz {
     public List<ResBaseFundDetail> searchResBaseFundDetail(ResBaseFundDetail resBaseFundDetail) {
 
         ResBaseFundDetailExample example = new ResBaseFundDetailExample();
-        ResBaseFundDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResBaseFundDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         String mainFlow = resBaseFundDetail.getMainFlow();
         if(StringUtil.isNotBlank(mainFlow)){
             criteria.andMainFlowEqualTo(mainFlow);
@@ -253,7 +254,7 @@ public class FundsBizImpl implements IFundsBiz {
     @Override
     public List<ResSyntheticalFund> searchResSyntheticalFund(String startDate, String endDate, ResSyntheticalFund resSyntheticalFund) {
         ResSyntheticalFundExample example = new ResSyntheticalFundExample();
-        ResSyntheticalFundExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResSyntheticalFundExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(startDate)){
             criteria.andReportDateGreaterThanOrEqualTo(startDate);
         }
@@ -289,7 +290,7 @@ public class FundsBizImpl implements IFundsBiz {
     @Override
     public List<ResSyntheticalFundDetail> searchResSyntheticalFundDetail(ResSyntheticalFundDetail resSyntheticalFundDetail) {
         ResSyntheticalFundDetailExample example = new ResSyntheticalFundDetailExample();
-        ResSyntheticalFundDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResSyntheticalFundDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         String recordFlow = resSyntheticalFundDetail.getRecordFlow();
         if(StringUtil.isNotBlank(recordFlow)){

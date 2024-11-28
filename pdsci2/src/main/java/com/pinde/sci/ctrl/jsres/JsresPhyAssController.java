@@ -19,7 +19,6 @@ import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.ResTeachPlanDoctorMapper;
 import com.pinde.sci.dao.base.ResTeachQualifiedPlanMapper;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -102,9 +101,9 @@ public class JsresPhyAssController extends GeneralController {
     public String checkPlanContent(String planContent) {
         int count = phyAssBiz.checkPlanContent(planContent);    //检查培训计划名称是否重复
         if (count>0){
-            return GlobalConstant.FLAG_Y;
+            return com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
-        return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
     }
 
     /**
@@ -168,9 +167,9 @@ public class JsresPhyAssController extends GeneralController {
         ResTeachQualifiedPlanExt ext = JSON.parseObject(jsondata, ResTeachQualifiedPlanExt.class);
         boolean status = phyAssBiz.savePlannedRelease(ext, fileList, type);
         if (status==true){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -183,9 +182,9 @@ public class JsresPhyAssController extends GeneralController {
     public String delPlanFileByFlow(String fileFlow) {
         int i = pubFileBiz.deleteAfterFile(fileFlow);
         if (i>0){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
 
@@ -199,9 +198,9 @@ public class JsresPhyAssController extends GeneralController {
     public String delPhyAss(String planFlow) {
         boolean status = phyAssBiz.delPhyAss(planFlow);
         if (status==true){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
 
@@ -216,9 +215,9 @@ public class JsresPhyAssController extends GeneralController {
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
         paramMap.put("nowData",DateUtil.getCurrDateTime2());
-        paramMap.put("local", GlobalConstant.FLAG_Y);
+        paramMap.put("local", com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(type) && type.equals("import")){
-            paramMap.put("importPlan", GlobalConstant.FLAG_Y);
+            paramMap.put("importPlan", com.pinde.core.common.GlobalConstant.FLAG_Y);
             PageHelper.startPage(currentPage,getPageSize(request));
             List<Map<String, Object>> list = phyAssExtMapper.searchOrgPlanInfoList(paramMap);
             model.addAttribute("list",list);
@@ -361,10 +360,10 @@ public class JsresPhyAssController extends GeneralController {
                 return e.getMessage();
             }
             if (count != 0) {
-                return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
+                return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
 
@@ -459,7 +458,7 @@ public class JsresPhyAssController extends GeneralController {
     @ResponseBody
     public String appearUser(String planFlow) {
         phyAssExtMapper.appearUser(planFlow,GlobalContext.getCurrentUser().getOrgFlow());
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -574,13 +573,13 @@ public class JsresPhyAssController extends GeneralController {
     @ResponseBody
     public String deleteCerfiticateImg(String fileFlow) {
         PubFile pubFile = pubFileMapper.selectByPrimaryKey(fileFlow);
-        pubFile.setRecordStatus(GlobalConstant.FLAG_N);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         int count = pubFileMapper.updateByPrimaryKey(pubFile);
         if (count>0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
 
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     /**
@@ -625,9 +624,9 @@ public class JsresPhyAssController extends GeneralController {
         //修改用户表基本信息和科室信息
         boolean userStatus = phyAssBiz.saveUser(userFlow, doctorCode, doctorName, sexId, sexName, userPhone, idNo, userEmail, deptFlow);
         if (doctorNum>0 && userStatus==true){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
 
@@ -664,7 +663,7 @@ public class JsresPhyAssController extends GeneralController {
         model.addAttribute("userStatus", userStatus);
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId("320000");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
         model.addAttribute("orgs", orgs);
         return "jsres/phyAss/planApperMain";
@@ -733,10 +732,10 @@ public class JsresPhyAssController extends GeneralController {
             List<String> recordFlowList = Arrays.asList(recordFlows);
             int count = phyAssBiz.operateUser(recordFlowList,type);
             if (count > 0){
-                return GlobalConstant.OPERATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
             }
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
 
@@ -755,7 +754,7 @@ public class JsresPhyAssController extends GeneralController {
             model.addAttribute("contentList",list);
             SysOrg sysorg = new SysOrg();
             sysorg.setOrgProvId("320000");
-            sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
             model.addAttribute("orgs", orgs);
         }
@@ -775,7 +774,7 @@ public class JsresPhyAssController extends GeneralController {
             paramMap.put("gradeId",gradeId.toString());
         }
         if (StringUtil.isNotBlank(tabTag) && tabTag.equals("certificateSend")){
-            gainCertificateId = GlobalConstant.FLAG_Y;
+            gainCertificateId = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
         paramMap.put("gainCertificateId",gainCertificateId);
         paramMap.put("sendCertificateId",sendCertificateId);
@@ -852,7 +851,7 @@ public class JsresPhyAssController extends GeneralController {
         String originalFilename =recruitFlow+ ".png";
         String filePath=fileDir+  File.separator +originalFilename;
 
-        if(GlobalConstant.FLAG_Y.equals(isDown)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isDown)) {
             byte[] data = null;
             long dataLength = 0;
             /*文件是否存在*/
@@ -902,7 +901,7 @@ public class JsresPhyAssController extends GeneralController {
                     String num = phyAssExtMapper.gainPlanCertificateNo(doctor.getPlanFlow());
                     String phyNo=DateUtil.getYear()+"32"+doctor.getSpeId()+num;
                     doctor.setCertificateNo(phyNo);
-                    doctor.setGainCertificateId(GlobalConstant.FLAG_Y);
+                    doctor.setGainCertificateId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     doctor.setGainCertificateName("已生成");
                     doctor.setGradeId(gradeId);
                     doctor.setGradeName(gradeName);
@@ -913,9 +912,9 @@ public class JsresPhyAssController extends GeneralController {
             }
         }
         if (count>0){
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
 
@@ -965,7 +964,7 @@ public class JsresPhyAssController extends GeneralController {
         if (StringUtil.isNotBlank(gradeId)){
             paramMap.put("gradeId",gradeId.toString());
         }
-        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("gainCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
         paramMap.put("gradeStatus",gradeStatus);
         paramMap.put("sendCertificateId",sendCertificateId);
         List<Map<String, Object>> list = phyAssExtMapper.phyAssCertificateList(paramMap);
@@ -1009,7 +1008,7 @@ public class JsresPhyAssController extends GeneralController {
             if (null !=list && list.size()>0){
                 for (String s : list) {
                     ResTeachPlanDoctor doctor = planDoctorMapper.selectByPrimaryKey(s);
-                    doctor.setSendCertificateId(GlobalConstant.FLAG_Y);
+                    doctor.setSendCertificateId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     doctor.setSendCertificateName("已发放");
                     doctor.setSendCertificateTime(DateUtil.getCurrDate());
                     planDoctorMapper.updateByPrimaryKey(doctor);
@@ -1018,9 +1017,9 @@ public class JsresPhyAssController extends GeneralController {
             }
         }
         if (count>0){
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         }
-        return GlobalConstant.OPERATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
     }
 
     @RequestMapping(value="/sealManage")
@@ -1038,7 +1037,7 @@ public class JsresPhyAssController extends GeneralController {
         if(file!=null && !file.isEmpty()){
             String checkResult = phyAssBiz.checkImg(file);
             String resultPath = "";
-            if(!GlobalConstant.FLAG_Y.equals(checkResult)){
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(checkResult)) {
                 return checkResult;
             }else{
                 resultPath = phyAssBiz.saveFileToDirs("", file, "jsresSeal/phyAssSeal");
@@ -1049,7 +1048,7 @@ public class JsresPhyAssController extends GeneralController {
                 }else {
                     pubFile = new PubFile();
                 }
-                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 pubFile.setProductFlow(productFlow);
                 pubFile.setFilePath(resultPath);
                 pubFile.setFileName(file.getOriginalFilename());
@@ -1058,7 +1057,7 @@ public class JsresPhyAssController extends GeneralController {
                 return resultPath;
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
 
@@ -1076,8 +1075,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("speId",speId);
-        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
-        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("gainCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
 
@@ -1137,8 +1136,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("speId",speId);
-        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
-        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("gainCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
         List<Map<String, Object>> list = phyAssExtMapper.phyAssCertificateList(paramMap);
@@ -1238,8 +1237,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("certificateNo",certificateNo);
-        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
-        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("gainCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
         List<SysDict> dictList = dictBiz.searchDictListByDictTypeId("CertificateTermValidity");
@@ -1262,8 +1261,8 @@ public class JsresPhyAssController extends GeneralController {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("planFlow",planFlow);
         paramMap.put("certificateNo",certificateNo);
-        paramMap.put("gainCertificateId", GlobalConstant.FLAG_Y);
-        paramMap.put("sendCertificateId", GlobalConstant.FLAG_Y);
+        paramMap.put("gainCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        paramMap.put("sendCertificateId", com.pinde.core.common.GlobalConstant.FLAG_Y);
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
         List<SysDict> dictList = dictBiz.searchDictListByDictTypeId("CertificateTermValidity");

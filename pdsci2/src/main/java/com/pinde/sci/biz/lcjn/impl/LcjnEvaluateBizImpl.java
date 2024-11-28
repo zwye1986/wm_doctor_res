@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.lcjn.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnEvaluateBiz;
 import com.pinde.sci.dao.base.*;
@@ -39,7 +40,7 @@ public class LcjnEvaluateBizImpl implements ILcjnEvaluateBiz {
     public List<LcjnCourseEvaluate> searchByCourseFlow(String courseFlow) {
         if(StringUtil.isNotBlank(courseFlow)){
             LcjnCourseEvaluateExample example = new LcjnCourseEvaluateExample();
-            LcjnCourseEvaluateExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
+            LcjnCourseEvaluateExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
             return courseEvaluateMapper.selectByExample(example);
         }else {
             return null;
@@ -50,7 +51,7 @@ public class LcjnEvaluateBizImpl implements ILcjnEvaluateBiz {
     public List<LcjnCourseTea> searchTeaByCourseFlow(String courseFlow) {
         if(StringUtil.isNotBlank(courseFlow)){
             LcjnCourseTeaExample example = new LcjnCourseTeaExample();
-            LcjnCourseTeaExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
+            LcjnCourseTeaExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
             return courseTeaMapper.selectByExample(example);
         }else{
             return null;
@@ -61,7 +62,7 @@ public class LcjnEvaluateBizImpl implements ILcjnEvaluateBiz {
     public List<LcjnTeaEvaluateDetail> searchTeaDetailByEvaluateFlow(String teaEvaluateFlow) {
         if(StringUtil.isNotBlank(teaEvaluateFlow)){
             LcjnTeaEvaluateDetailExample example = new LcjnTeaEvaluateDetailExample();
-            LcjnTeaEvaluateDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andTeaEvaluateFlowEqualTo(teaEvaluateFlow);
+            LcjnTeaEvaluateDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andTeaEvaluateFlowEqualTo(teaEvaluateFlow);
             return teaEvaluateDetailMapper.selectByExample(example);
         }else {
             return null;
@@ -72,7 +73,7 @@ public class LcjnEvaluateBizImpl implements ILcjnEvaluateBiz {
     public List<LcjnCourseEvaluateDetail> searchDetailByEvaluateFlow(String evaluateFlow) {
         if(StringUtil.isNotBlank(evaluateFlow)){
             LcjnCourseEvaluateDetailExample example = new LcjnCourseEvaluateDetailExample();
-            LcjnCourseEvaluateDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andEvaluateFlowEqualTo(evaluateFlow);
+            LcjnCourseEvaluateDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andEvaluateFlowEqualTo(evaluateFlow);
             return courseEvaluateDetailMapper.selectByExample(example);
         }else {
             return null;
@@ -82,7 +83,7 @@ public class LcjnEvaluateBizImpl implements ILcjnEvaluateBiz {
     @Override
     public List<LcjnTeaEvaluate> searchByTeacher(String courseFlow, String teacherFlow) {
         LcjnTeaEvaluateExample example = new LcjnTeaEvaluateExample();
-        LcjnTeaEvaluateExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnTeaEvaluateExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(courseFlow)){
             criteria.andCourseFlowEqualTo(courseFlow);
         }

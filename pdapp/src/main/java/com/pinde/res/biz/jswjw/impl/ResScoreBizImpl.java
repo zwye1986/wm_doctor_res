@@ -32,7 +32,7 @@ public class ResScoreBizImpl implements IResScoreBiz {
 	public List<ResScore> searchByScoreList(String doctorFlow) {
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
 		}
@@ -42,7 +42,7 @@ public class ResScoreBizImpl implements IResScoreBiz {
 	public List<ResScore> selectByExampleWithBLOBs(String doctorFlow) {
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
 		}
@@ -58,7 +58,7 @@ public class ResScoreBizImpl implements IResScoreBiz {
 		
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andProcessFlowEqualTo(processFlow);
 		
 		List<ResScore> scores = scoreMapper.selectByExample(example);

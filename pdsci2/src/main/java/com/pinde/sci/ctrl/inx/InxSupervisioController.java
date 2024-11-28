@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.inx.INoticeBiz;
@@ -16,9 +15,9 @@ import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.OperTypeEnum;
-import com.pinde.sci.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.common.enums.sys.ReqTypeEnum;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysSupervisioUser;
@@ -71,9 +70,9 @@ public class InxSupervisioController extends GeneralController {
 
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request, Model model) {
-        String wsId = (String) GlobalContext.getSession().getAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) GlobalContext.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
         request.getSession().invalidate();
-        GlobalContext.getSession().setAttribute(GlobalConstant.CURRENT_WS_ID, wsId);
+        GlobalContext.getSession().setAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, wsId);
         // 获取公钥系数和公钥指数
         RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
         if (null != publicKey) {
@@ -102,7 +101,7 @@ public class InxSupervisioController extends GeneralController {
         if (StringUtil.isNotBlank(password)) {
             // 解密
             if (StringUtil.isNotBlank(InitConfig.weekPasswordMap.get(password.trim()))) {
-                return GlobalConstant.FLAG_Y;
+                return com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
         return "";
@@ -145,7 +144,7 @@ public class InxSupervisioController extends GeneralController {
 
     public Object getUserInfo2(SysSupervisioUser user, String loginErrorMessage, String userPasswd) {
         //root用户不判断是否锁定
-        if (!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
+        if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
             if (UserStatusEnum.Locked.getId().equals(user.getStatusId())) {
                 loginErrorMessage = SpringUtil.getMessage("userCode.locked");
                 return loginErrorMessage;
@@ -242,14 +241,14 @@ public class InxSupervisioController extends GeneralController {
                 user.setOrgFlow(supervisioUser.getOrgFlow());
                 user.setOrgName(supervisioUser.getOrgName());
             }
-            setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
         }
         //记录日志
         SysLog log = new SysLog();
         log.setOperId(OperTypeEnum.LogIn.getId());
         log.setOperName(OperTypeEnum.LogIn.getName());
         log.setLogDesc("登录IP[" + clientIp + "]");
-        log.setWsId(GlobalConstant.SYS_WS_ID);
+        log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
         log.setLogFlow(PkUtil.getUUID());
         log.setUserFlow(supervisioUser.getUserFlow());
         log.setUserCode(supervisioUser.getUserCode());
@@ -263,7 +262,7 @@ public class InxSupervisioController extends GeneralController {
             log.setWsId(GlobalContext.getCurrentWsId());
         }
         log.setWsName(InitConfig.getWorkStationName(log.getWsId()));
-        log.setRecordStatus(GlobalConstant.FLAG_Y);
+        log.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         log.setCreateTime(DateUtil.getCurrDateTime());
         log.setCreateUserFlow(supervisioUser.getUserFlow());
         log.setModifyTime(DateUtil.getCurrDateTime());

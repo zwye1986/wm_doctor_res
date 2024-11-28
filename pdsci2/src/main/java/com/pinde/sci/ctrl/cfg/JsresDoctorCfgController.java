@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -99,7 +100,7 @@ public class JsresDoctorCfgController extends GeneralController{
 		if(StringUtil.isNotBlank(ifOpen)){
 			params.put("ifOpen",ifOpen);
 			for(int i=0;i<powerTypeId.length;i++){
-				params.put(powerTypeId[i],GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			list=schManualBiz.userListByJsResPower(params);
 		}else {
@@ -134,12 +135,12 @@ public class JsresDoctorCfgController extends GeneralController{
 			}else if("jsres_doctor_manual_".equals(cfg)){
 				jsresCfg.setCfgDesc("是否开放学员手册");
 			}
-			jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			cfgList.add(jsresCfg);
 		}
 		int result = jsResPowerCfgBiz.saveList(cfgList);
-		if(GlobalConstant.ZERO_LINE != result){
-			if(GlobalConstant.RECORD_STATUS_N.equals(recordStatus)){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recordStatus)) {
 				List<String> flowList = Arrays.asList(userFlows);
 				if(null != flowList && flowList.size()>0){
 					for (String userFlow:flowList) {
@@ -148,19 +149,19 @@ public class JsresDoctorCfgController extends GeneralController{
 						doctor.setCheckStatusId("");
 						doctor.setCheckStatusName("");
 						JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_doctor_app_login_"+userFlow);
-						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
 						}
-						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_exam_"+userFlow);
 						}
-						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_graduation_exam_"+userFlow);
 						}
-						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_manual_"+userFlow);
 						}
-						if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())) {
 							doctor.setIsSubmitId("NotSubmit");
 							doctor.setIsSubmitName("未提交");
 						}else{
@@ -169,14 +170,14 @@ public class JsresDoctorCfgController extends GeneralController{
 						}
 						resDoctorBiz.updateSubmit(doctor);
 					}
-					return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 				}
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 			resDoctorBiz.saveSubmitAll(Arrays.asList(userFlows));
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -193,7 +194,7 @@ public class JsresDoctorCfgController extends GeneralController{
 			JsresPowerCfg jsresCfg = new JsresPowerCfg();
 			jsresCfg.setCfgCode(appMenu);
 			jsresCfg.setCfgValue(recordStatus);
-            jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             jsresCfg.setCfgDesc("是否开放学员付费菜单");
             cfgList.add(jsresCfg);
 
@@ -201,7 +202,7 @@ public class JsresDoctorCfgController extends GeneralController{
             jsresCfg = new JsresPowerCfg();
             jsresCfg.setCfgCode(activity);
             jsresCfg.setCfgValue(recordStatus);
-            jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             jsresCfg.setCfgDesc("是否开放学员教学活动功能");
             cfgList.add(jsresCfg);
 
@@ -209,13 +210,13 @@ public class JsresDoctorCfgController extends GeneralController{
             jsresCfg = new JsresPowerCfg();
             jsresCfg.setCfgCode(attendance);
             jsresCfg.setCfgValue(recordStatus);
-            jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             jsresCfg.setCfgDesc("是否开放学员考勤功能");
             cfgList.add(jsresCfg);
 		}
 		int result = jsResPowerCfgBiz.saveList(cfgList);
-		if(GlobalConstant.ZERO_LINE != result){
-			if(GlobalConstant.RECORD_STATUS_N.equals(recordStatus)){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recordStatus)) {
 				List<String> flowList = Arrays.asList(userFlows);
 				if(null != flowList && flowList.size()>0){
 					for (String userFlow:flowList) {
@@ -224,10 +225,10 @@ public class JsresDoctorCfgController extends GeneralController{
 						doctor.setCheckStatusId("");
 						doctor.setCheckStatusName("");
 						JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
-						if(null != jpc && GlobalConstant.FLAG_N.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 							jpc = jsResPowerCfgBiz.read("jsres_doctor_manual_"+userFlow);
 						}
-						if(null != jpc && GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())){
+                        if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())) {
 							doctor.setIsSubmitId("NotSubmit");
 							doctor.setIsSubmitName("未提交");
 						}else{
@@ -236,14 +237,14 @@ public class JsresDoctorCfgController extends GeneralController{
 						}
 						resDoctorBiz.updateSubmit(doctor);
 					}
-					return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 				}
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 			resDoctorBiz.saveSubmitAll(Arrays.asList(userFlows));
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/importExcel")
@@ -259,19 +260,19 @@ public class JsresDoctorCfgController extends GeneralController{
 					String msg= (String) result.get("msg");
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	/**
@@ -301,7 +302,7 @@ public class JsresDoctorCfgController extends GeneralController{
 		if(StringUtil.isNotBlank(ifOpen)){
 			params.put("ifOpen",ifOpen);
 			for(int i=0;i<powerTypeId.length;i++){
-				params.put(powerTypeId[i],GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			list=schManualBiz.userListByJsResPower(params);
 		}else {

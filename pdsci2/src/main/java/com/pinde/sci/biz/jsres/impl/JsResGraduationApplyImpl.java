@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
@@ -70,7 +72,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
         JsresGraduationApplyExample example = new JsresGraduationApplyExample();
-        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsresGraduationApplyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(recruitFlow)){
             criteria.andRecruitFlowEqualTo(recruitFlow);
         }
@@ -97,7 +99,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 return this.graduationApplyMapper.insertSelective(jsresGraduationApply);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -144,7 +146,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 //            double avgInComBi=0;//平均正常比例
 //            double avgAuditComBi=0;//平均审核比例
 //            for (JsresDoctorDeptDetail d : details) {
-//                if(GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
+//                if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
 //                    shortYCount++;
 //                    shortYCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
 //                    shortYOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
@@ -154,7 +156,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 //                        isShortY = 1;
 //                    }
 //                }
-//                if(GlobalConstant.FLAG_N.equals(d.getIsShort())) {
+//                if(com.pinde.core.common.GlobalConstant.FLAG_N.equals(d.getIsShort())) {
 //                    shortNCount++;
 //                    shortNCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
 //                    shortNOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
@@ -200,7 +202,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 ResDoctorRecruitWithBLOBs newRecruit=new ResDoctorRecruitWithBLOBs();
                 newRecruit.setRecruitFlow(recruitFlow);
                 newRecruit.setChangeSpeId(changeSpeId);
-                newRecruit.setChangeSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(changeSpeId));
+                newRecruit.setChangeSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(changeSpeId));
                 doctorRecruitBiz.editDoctorRecruit(newRecruit);
             }
             //保存提交后的证书信息，百分比，出科考核表
@@ -360,7 +362,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Override
     public List<JsresGraduationApplyLog> getAuditLogsByApplyFlow(String applyFlow) {
         JsresGraduationApplyLogExample example=new JsresGraduationApplyLogExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andApplyFlowEqualTo(applyFlow);
         example.setOrderByClause("create_time desc");
         return graduationApplyLogMapper.selectByExample(example);
@@ -419,7 +421,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
             styleTwo.setFont(fontTwo);
             hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 37));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short)1, 0, (short)37));
                titles= new String[]{
@@ -627,7 +629,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                     String armyType = userResumeExt.getArmyType();
                     String armyName = "否";
                     if (StringUtil.isNotBlank(armyType)) {
-                        armyName = ArmyTypeEnum.getNameById(armyType);
+                        armyName = com.pinde.core.common.enums.ArmyTypeEnum.getNameById(armyType);
                     }
                     HSSFCell cell371 = rowDepts.createCell(24);
                     cell371.setCellValue(armyName);
@@ -635,9 +637,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 
                     String westernSupportResidents = "";
                     if (StringUtil.isNotBlank(userResumeExt.getWesternSupportResidents())) {
-                        if (userResumeExt.getWesternSupportResidents().equals(GlobalConstant.FLAG_Y)) {
+                        if (userResumeExt.getWesternSupportResidents().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                             westernSupportResidents = "是";
-                        } else if (userResumeExt.getWesternSupportResidents().equals(GlobalConstant.FLAG_N)) {
+                        } else if (userResumeExt.getWesternSupportResidents().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
                             westernSupportResidents = "否";
                         }
                     }
@@ -658,7 +660,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell18.setCellValue((String) sd.get("auditReason"));
                 cell18.setCellStyle(styleCenter);
 
-               /* if(!GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
+               /* if(!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
                     HSSFCell cell19 = rowDepts.createCell(20);
                     cell19.setCellValue((String) sd.get("auditStatusName"));
                     cell19.setCellStyle(styleCenter);
@@ -804,7 +806,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         styleTwo.setFont(fontTwo);
         hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 18));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short)1, 0, (short)18));
             titles= new String[]{
@@ -1361,7 +1363,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         styleTwo.setFont(fontTwo);
         hSSFCell1.setCellStyle(styleThree);
         String[] titles =null;
-        if(GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isWaitAudit)) {
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, (short) 0, 0, (short) 37));
             sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(1, (short)1, 0, (short)37));
             titles= new String[]{
@@ -1569,7 +1571,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                     String armyType = userResumeExt.getArmyType();
                     String armyName = "否";
                     if (StringUtil.isNotBlank(armyType)) {
-                        armyName = ArmyTypeEnum.getNameById(armyType);
+                        armyName = com.pinde.core.common.enums.ArmyTypeEnum.getNameById(armyType);
                     }
                     HSSFCell cell371 = rowDepts.createCell(24);
                     cell371.setCellValue(armyName);
@@ -1577,9 +1579,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 
                     String westernSupportResidents = "";
                     if (StringUtil.isNotBlank(userResumeExt.getWesternSupportResidents())) {
-                        if (userResumeExt.getWesternSupportResidents().equals(GlobalConstant.FLAG_Y)) {
+                        if (userResumeExt.getWesternSupportResidents().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                             westernSupportResidents = "是";
-                        } else if (userResumeExt.getWesternSupportResidents().equals(GlobalConstant.FLAG_N)) {
+                        } else if (userResumeExt.getWesternSupportResidents().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
                             westernSupportResidents = "否";
                         }
                     }
@@ -1844,7 +1846,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                     String armyType = userResumeExt.getArmyType();
                     String armyName = "否";
                     if (StringUtil.isNotBlank(armyType)) {
-                        armyName = ArmyTypeEnum.getNameById(armyType);
+                        armyName = com.pinde.core.common.enums.ArmyTypeEnum.getNameById(armyType);
                     }
                     HSSFCell cell14 = rowDepts.createCell(14);
                     cell14.setCellValue(armyName);
@@ -1852,9 +1854,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 
                     String westernSupportResidents = "";
                     if (StringUtil.isNotBlank(userResumeExt.getWesternSupportResidents())) {
-                        if (userResumeExt.getWesternSupportResidents().equals(GlobalConstant.FLAG_Y)) {
+                        if (userResumeExt.getWesternSupportResidents().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                             westernSupportResidents = "是";
-                        } else if (userResumeExt.getWesternSupportResidents().equals(GlobalConstant.FLAG_N)) {
+                        } else if (userResumeExt.getWesternSupportResidents().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
                             westernSupportResidents = "否";
                         }
                     }

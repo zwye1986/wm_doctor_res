@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -21,7 +19,7 @@ import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.sch.ActivityTypeEnum;
+import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.dom4j.Document;
@@ -191,7 +189,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Override
 	public TeachingActivityResult readRegistInfo(String activityFlow, String userFlow) {
 		TeachingActivityResultExample example=new TeachingActivityResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow)
 				.andUserFlowEqualTo(userFlow);
 		List<TeachingActivityResult> list=resultMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -224,7 +222,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Override
 	public List<TeachingActivityEval> readActivityResultEvals(String resultFlow) {
 		TeachingActivityEvalExample example=new TeachingActivityEvalExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andResultFlowEqualTo(resultFlow);
 		example.setOrderByClause("ORDINAL");
 		return activityEvalMapper.selectByExample(example);
@@ -277,7 +275,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		if (StringUtil.isNotBlank(activityFlow)){
 			criteria.andActivityFlowEqualTo(activityFlow);
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return resultMapper.countByExample(example);
 	}
 
@@ -304,7 +302,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			{
 				eval.setUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 				eval.setResultFlow(resultFlow);
-				if (eval.getIsText().equals(GlobalConstant.FLAG_N)) {
+                if (eval.getIsText().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 					sum+=eval.getEvalScore();
 				}else {
 					remarks=remarks+1;
@@ -362,13 +360,13 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		{
 			String fileFlow=saveActivityFile(activity.getFileFlow(),file);
 			activity.setFileFlow(fileFlow);
-		}else if(GlobalConstant.FLAG_Y.equals(isRe)){
+        } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe)) {
 			activity.setFileFlow("");
 		}
 		if(StringUtil.isNotBlank(activity.getActivityTypeId()))
 		{
-			if(GlobalConstant.FLAG_Y.equals(isRes)) {
-				activity.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRes)) {
+                activity.setActivityTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
 			}else{
 				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
 			}
@@ -381,14 +379,14 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		List<String> userRoleList = new ArrayList();
 		// 由于科主任和教秘 前台传入role都是head 无法区分 改为获取当前登录角色
 		String roleFlow = "";
-		String currentRole = (String)GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE);
-		if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
+        String currentRole = (String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE);
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
 			userRoleList.add("res_head_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_head_role_flow");
-		}else if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)) {
 			userRoleList.add("res_teacher_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
-		}else if (GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)) {
 			userRoleList.add("res_secretary_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_secretary_role_flow");
 		}
@@ -485,10 +483,10 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}
 		}
 		if(c==0)
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		else {
 			saveActivityTarget(activity,targets);
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 	}
 	private void saveActivityTarget(TeachingActivityInfo activity, List<TeachingActivityTarget> targets) {
@@ -502,7 +500,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			infoTarget.setTargetFlow(target.getTargetFlow());
 			infoTarget.setTargetName(target.getTargetName());
 			infoTarget.setOrdinal(i++);
-			infoTarget.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            infoTarget.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			infoTarget.setIsText(target.getIsText());
 			targetBiz.saveInfoTarget(infoTarget);
 		}
@@ -530,7 +528,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		pubFile.setFileName(originalFileName);
 		//文件后缀名
 		pubFile.setFileSuffix(suffix);
-		pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		//定义上传路径
 		String dateString = DateUtil.getCurrDate2();
 		String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + "activityFile" + File.separator + dateString;
@@ -591,7 +589,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Override
 	public Map<String, String> activityImg(String activityFlow,MultipartFile file,String fileAddress) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 		if(file!=null){
 			List<String> mimeList = new ArrayList<String>();
 			if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
@@ -606,13 +604,13 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			String fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-				map.put("error", GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
 				return  map;
 
 			}
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if (file.getSize() > limitSize * 1024 * 1024) {
-				map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
 				return  map;
 			}
 			try {
@@ -648,7 +646,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 						map.put("flow",imageFlow);
 					}
 				}
-				map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -722,7 +720,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Override
 	public List<TeachActivityCfg> searchActivityCfgs(String roleFlow, String orgFlow) {
 		TeachActivityCfgExample example = new TeachActivityCfgExample();
-		TeachActivityCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        TeachActivityCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(roleFlow)){
 			criteria.andSubmitRoleEqualTo(roleFlow);
 		}
@@ -782,12 +780,12 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 //		if(file!=null&&!file.isEmpty()&&file.getSize()>0) {
 //			String fileFlow=saveActivityFile(activity.getFileFlow(),file);
 //			activity.setFileFlow(fileFlow);
-//		}else if(GlobalConstant.FLAG_Y.equals(isRe)){
+//		}else if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe)){
 //			activity.setFileFlow("");
 //		}
 		if(StringUtil.isNotBlank(activity.getActivityTypeId())) {
-			if(GlobalConstant.FLAG_Y.equals(isRes)) {
-				activity.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRes)) {
+                activity.setActivityTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
 			}else{
 				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
 			}
@@ -800,14 +798,14 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		List<String> userRoleList = new ArrayList();
 		// 由于科主任和教秘 前台传入role都是head 无法区分 改为获取当前登录角色
 		String roleFlow = "";
-		String currentRole = (String)GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE);
-		if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
+        String currentRole = (String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE);
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
 			userRoleList.add("res_head_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_head_role_flow");
-		}else if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)) {
 			userRoleList.add("res_teacher_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
-		}else if (GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)) {
 			userRoleList.add("res_secretary_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_secretary_role_flow");
 		}
@@ -844,7 +842,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		String newFlow ;
 		if (StringUtil.isBlank(activity.getActivityFlow())) {
 			newFlow = PkUtil.getUUID();
-			activity.setFileFlow(GlobalConstant.FLAG_Y);
+            activity.setFileFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			activity.setActivityFlow(newFlow);
 			GeneralMethod.setRecordInfo(activity, true);
 			c =  activityInfoMapper.insertSelective(activity);
@@ -869,7 +867,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			subject.setInspectionType(activity.getActivityTypeId());
 			subject.setTeachFlow(GlobalContext.getCurrentUser().getUserFlow());
 			subject.setTeachName(GlobalContext.getCurrentUser().getUserName());
-			subject.setRecordStatus(GlobalConstant.FLAG_Y);
+            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(activity.getRealitySpeaker());
 			subject.setActivityStartTime(activity.getStartTime());
 			subject.setActivityEndTime(activity.getEndTime());
@@ -881,7 +879,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}
 		} else {
 			newFlow = activity.getActivityFlow();
-			activity.setFileFlow(GlobalConstant.FLAG_Y);
+            activity.setFileFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			GeneralMethod.setRecordInfo(activity, false);
 			c =  activityInfoMapper.updateByPrimaryKeySelective(activity);
 
@@ -917,10 +915,10 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}
 		}
 		if(c==0)
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		else {
 			saveActivityTarget(activity,targets);
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 	}
 
@@ -974,12 +972,12 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 //		if(file!=null&&!file.isEmpty()&&file.getSize()>0) {
 //			String fileFlow=saveActivityFile(activity.getFileFlow(),file);
 //			activity.setFileFlow(fileFlow);
-//		}else if(GlobalConstant.FLAG_Y.equals(isRe)){
+//		}else if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe)){
 //			activity.setFileFlow("");
 //		}
 		if(StringUtil.isNotBlank(activity.getActivityTypeId())) {
-			if(GlobalConstant.FLAG_Y.equals(isRes)) {
-				activity.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRes)) {
+                activity.setActivityTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
 			}else{
 				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
 			}
@@ -992,14 +990,14 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		List<String> userRoleList = new ArrayList();
 		// 由于科主任和教秘 前台传入role都是head 无法区分 改为获取当前登录角色
 		String roleFlow = "";
-		String currentRole = (String)GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE);
-		if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
+        String currentRole = (String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE);
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
 			userRoleList.add("res_head_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_head_role_flow");
-		}else if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)) {
 			userRoleList.add("res_teacher_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
-		}else if (GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)) {
 			userRoleList.add("res_secretary_role_flow");
 			roleFlow = InitConfig.getSysCfg("res_secretary_role_flow");
 		}
@@ -1039,7 +1037,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		String newFlow ;
 		if (StringUtil.isBlank(activity.getActivityFlow())) {
 			newFlow = PkUtil.getUUID();
-			activity.setFileFlow(GlobalConstant.FLAG_Y);
+            activity.setFileFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			activity.setActivityFlow(newFlow);
 			GeneralMethod.setRecordInfo(activity, true);
 			c =  activityInfoMapper.insertSelective(activity);
@@ -1064,7 +1062,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			subject.setInspectionType(activity.getActivityTypeId());
 			subject.setTeachFlow(GlobalContext.getCurrentUser().getUserFlow());
 			subject.setTeachName(GlobalContext.getCurrentUser().getUserName());
-			subject.setRecordStatus(GlobalConstant.FLAG_Y);
+            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			subject.setActualSpeaker(activity.getRealitySpeaker());
 			subject.setActivityStartTime(activity.getStartTime());
 			subject.setActivityEndTime(activity.getEndTime());
@@ -1086,7 +1084,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				GeneralMethod.setRecordInfo(activitySpeaker, true);
 				activitySpeakerMapper.insert(activitySpeaker);
 			}
-			activity.setFileFlow(GlobalConstant.FLAG_Y);
+            activity.setFileFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			GeneralMethod.setRecordInfo(activity, false);
 			c =  activityInfoMapper.updateByPrimaryKeySelective(activity);
 
@@ -1130,17 +1128,17 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}
 		}
 		if(c==0)
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		else {
 			saveActivityTarget(activity,targets);
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 	}
 
 	@Override
 	public String editActivityFiles(String activityFlow, List<MultipartFile> fileList, String[] fileFlow) {
 		saveActivityFileNew(activityFlow,fileList,fileFlow);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@Override
@@ -1154,7 +1152,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				saveActivityFileNew2(activityFlow,fileList,fileFlow,s);
 			}
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@Override
@@ -1162,9 +1160,9 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		GeneralMethod.setRecordInfo(activityInfo,false);
 		int i = activityInfoMapper.updateByPrimaryKey(activityInfo);
 		if (i < 1) {
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	private void saveActivityFileNew(String productFlow, List<MultipartFile> fileList, String[] fileFlow) {
@@ -1183,7 +1181,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				pubFile.setFileName(originalFileName);
 				//文件后缀名
 				pubFile.setFileSuffix(suffix);
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				pubFile.setProductFlow(productFlow);
 				pubFile.setProductType("activity");
 				//定义上传路径
@@ -1231,7 +1229,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				pubFile.setFileName(originalFileName);
 				//文件后缀名
 				pubFile.setFileSuffix(suffix);
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				pubFile.setProductFlow(productFlow);
 				pubFile.setProductType("activity");
 				pubFile.setFileUpType(fileUpType);

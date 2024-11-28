@@ -30,7 +30,7 @@ public class RecruitExamInfoBizImpl implements IRecruitExamInfoBiz {
         RecruitExamInfoExample example = new RecruitExamInfoExample();
         RecruitExamInfoExample.Criteria criteria = example.createCriteria();
         criteria.andMainFlowEqualTo(mainFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         List<RecruitExamInfo> recruitExamInfos = recruitExamInfoMapper.selectByExample(example);
         if (recruitExamInfos != null && recruitExamInfos.size() > 0){

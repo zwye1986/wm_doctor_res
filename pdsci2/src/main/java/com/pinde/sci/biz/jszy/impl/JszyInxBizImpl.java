@@ -14,7 +14,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +121,7 @@ public class JszyInxBizImpl implements JszyInxBiz{
 		if(StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))){
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserFlow(user.getUserFlow());
-			String currWsId = GlobalConstant.RES_WS_ID;
+            String currWsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
 			userRole.setWsId(currWsId);
 			userRole.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
 			userRole.setAuthTime(DateUtil.getCurrDate());

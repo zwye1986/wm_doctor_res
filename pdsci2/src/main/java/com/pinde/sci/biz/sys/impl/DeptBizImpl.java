@@ -15,8 +15,8 @@ import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
-import com.pinde.sci.enums.sys.OperTypeEnum;
-import com.pinde.sci.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.common.enums.sys.ReqTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SysDeptExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
@@ -106,7 +106,7 @@ public class DeptBizImpl implements IDeptBiz {
 		if(StringUtil.isNotBlank(dept.getDeptFlow())){
 			GeneralMethod.setRecordInfo(dept, false);
 			int ret = sysDeptMapper.updateByPrimaryKeySelective(dept);
-//			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
+//			if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
 //				//全部同步后saveDept改称update
 //				dept = sysDeptMapper.selectByPrimaryKey(dept.getDeptFlow());
 //				boolean result = WeixinQiYeUtil.saveDept(InitConfig.getSysCfg("sys_weixin_qiye_corp_id"), InitConfig.getSysCfg("sys_weixin_qiye_secret"),dept);
@@ -121,7 +121,7 @@ public class DeptBizImpl implements IDeptBiz {
 			dept.setDeptFlow(PkUtil.getUUID());
 			GeneralMethod.setRecordInfo(dept, true);
 			int ret = sysDeptMapper.insert(dept);
-//			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
+//			if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
 //				//全部同步后saveDept改称update
 //				dept = sysDeptMapper.selectByPrimaryKey(dept.getDeptFlow());
 //				boolean result = WeixinQiYeUtil.saveDept(InitConfig.getSysCfg("sys_weixin_qiye_corp_id"), InitConfig.getSysCfg("sys_weixin_qiye_secret"),dept);
@@ -147,12 +147,12 @@ public class DeptBizImpl implements IDeptBiz {
 			log.setOperName(OperTypeEnum.LogUpdate.getName());
 			log.setReqTypeId(ReqTypeEnum.PUT.getId());
 			log.setLogDesc(user.getUserName()+OperTypeEnum.LogUpdate.getName()+"了"+dept.getDeptName()+"轮转科室，"+"登录IP["+request.getRemoteAddr()+"]");
-			log.setWsId(GlobalConstant.SYS_WS_ID);
+            log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 			GeneralMethod.addSysLog(log);
 			logMapper.insert(log);
 			GeneralMethod.setRecordInfo(dept, false);
 			int ret = sysDeptMapper.updateByPrimaryKeySelective(dept);
-//			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
+//			if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
 //				//全部同步后saveDept改称update
 //				dept = sysDeptMapper.selectByPrimaryKey(dept.getDeptFlow());
 //				boolean result = WeixinQiYeUtil.saveDept(InitConfig.getSysCfg("sys_weixin_qiye_corp_id"), InitConfig.getSysCfg("sys_weixin_qiye_secret"),dept);
@@ -170,13 +170,13 @@ public class DeptBizImpl implements IDeptBiz {
 			log.setOperName(OperTypeEnum.LogInsert.getName());
 			log.setReqTypeId(ReqTypeEnum.POST.getId());
 			log.setLogDesc(user.getUserName()+OperTypeEnum.LogInsert.getName()+"了"+dept.getDeptName()+"轮转科室，"+"登录IP["+request.getRemoteAddr()+"]");
-			log.setWsId(GlobalConstant.SYS_WS_ID);
+            log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 			GeneralMethod.addSysLog(log);
 			logMapper.insert(log);
 			dept.setDeptFlow(PkUtil.getUUID());
 			GeneralMethod.setRecordInfo(dept, true);
 			int ret = sysDeptMapper.insert(dept);
-//			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
+//			if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
 //				//全部同步后saveDept改称update
 //				dept = sysDeptMapper.selectByPrimaryKey(dept.getDeptFlow());
 //				boolean result = WeixinQiYeUtil.saveDept(InitConfig.getSysCfg("sys_weixin_qiye_corp_id"), InitConfig.getSysCfg("sys_weixin_qiye_secret"),dept);
@@ -203,7 +203,7 @@ public class DeptBizImpl implements IDeptBiz {
 	@Override
 	public List<SysDept> searchDept(SysDept sysdept) {
 		SysDeptExample sysDeptExample=new SysDeptExample();
-		Criteria criteria=sysDeptExample.createCriteria();//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = sysDeptExample.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysdept.getDeptFlow())){
 			criteria.andDeptFlowEqualTo(sysdept.getDeptFlow());
 		}
@@ -226,7 +226,7 @@ public class DeptBizImpl implements IDeptBiz {
 	@Override
 	public List<SysDept> searchDeptByOrg(String orgFlow){
 		SysDeptExample example = new SysDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("ORDINAL");
 		return sysDeptMapper.selectByExample(example);
 	}
@@ -235,7 +235,7 @@ public class DeptBizImpl implements IDeptBiz {
 	public List<SysDept> searchDeptByNameAndFlow(String deptName,String orgFlow){
 		SysDeptExample example = new SysDeptExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(orgFlow)){
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
@@ -262,7 +262,7 @@ public class DeptBizImpl implements IDeptBiz {
 			return new ArrayList<>();
 		}
 		SysDeptExample example = new SysDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptFlows);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptFlows);
 		return sysDeptMapper.selectByExample(example);
 	}
 	
@@ -278,7 +278,7 @@ public class DeptBizImpl implements IDeptBiz {
 	@Override
 	public List<SysUserDept> searchByUserFlow(String userFlow) {
 		SysUserDeptExample example = new SysUserDeptExample();
-		SysUserDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -289,7 +289,7 @@ public class DeptBizImpl implements IDeptBiz {
 	@Override
 	public List<SysUserDept> searchByUserFlow(String userFlow, String orgFlow) {
 		SysUserDeptExample example = new SysUserDeptExample();
-		SysUserDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -310,7 +310,7 @@ public class DeptBizImpl implements IDeptBiz {
 		if(StringUtil.isNotBlank(orgFlow)&&StringUtil.isNotBlank(deptName))
 		{
 			SysDeptExample example = new SysDeptExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptNameEqualTo(deptName)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptNameEqualTo(deptName)
 					.andOrgFlowEqualTo(orgFlow);
 			List<SysDept> depts=sysDeptMapper.selectByExample(example);
 			if(depts!=null&&depts.size()>0)
@@ -471,10 +471,10 @@ public class DeptBizImpl implements IDeptBiz {
 				if(StringUtil.isBlank(sysDept.getDeptFlow())) {
 					sysDept.setDeptName(deptName);
 					sysDept.setOrgFlow(org.getOrgFlow());
-					sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				}
 				String permissionAddSysDeptFlow = InitConfig.getSysCfg("permission_add_sys_dept");
-				if(GlobalConstant.FLAG_Y.equals(permissionAddSysDeptFlow)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(permissionAddSysDeptFlow)) {
 					saveDept(sysDept);
 				}else {
 					if(StringUtil.isBlank(sysDept.getDeptFlow())) {

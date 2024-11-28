@@ -52,7 +52,7 @@ public class LcjnNoticeController extends GeneralController {
             info.setOrgName(userOrgName);
         info.setColumnId("lcjn");
         noticeBiz.editInfo(info);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping("/findNoticeByFlow")
@@ -71,7 +71,7 @@ public class LcjnNoticeController extends GeneralController {
     @RequestMapping("/delNotice")
     public String delNotice(String infoFlow){
         this.noticeBiz.delNotice(infoFlow);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     /**

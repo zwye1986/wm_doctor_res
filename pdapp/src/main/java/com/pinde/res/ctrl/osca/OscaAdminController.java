@@ -105,7 +105,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/examInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -128,7 +128,7 @@ public class OscaAdminController {
 					if(doctorSkillsExt.getDoctorAssessments()!=null) {
 						allExamNum+=doctorSkillsExt.getDoctorAssessments().size();
 						for(OscaDoctorAssessment doctorAssessment:doctorSkillsExt.getDoctorAssessments()) {
-							if (GlobalConstant.FLAG_Y.equals(doctorAssessment.getIsSavePass())) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctorAssessment.getIsSavePass())) {
 								passExamNum++;
 							} else {
 								unPassExamNum++;
@@ -277,7 +277,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/perInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -517,7 +517,7 @@ public class OscaAdminController {
 						allExamNum+=doctorSkillsExt.getDoctorAssessments().size();
 						allNum+=doctorSkillsExt.getDoctorAssessments().size();
 						for(OscaDoctorAssessment doctorAssessment:doctorSkillsExt.getDoctorAssessments()) {
-							if (GlobalConstant.FLAG_Y.equals(doctorAssessment.getIsSavePass())) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctorAssessment.getIsSavePass())) {
 								passExamNum++;
 								passNum++;
 							} else {
@@ -692,7 +692,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/calendarInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -743,7 +743,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/monthInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -817,7 +817,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/roomInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -902,7 +902,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/singinInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -982,7 +982,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "请选择日期");
 			return "/res/osca/admin/scoreDetailList";
 		}
-		if(StringUtil.isNotBlank(isPass)&&!GlobalConstant.FLAG_Y.equals(isPass)&&!GlobalConstant.FLAG_N.equals(isPass)){
+        if (StringUtil.isNotBlank(isPass) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPass) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isPass)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "只能输入合格或不合格");
 			return "/res/osca/admin/scoreDetailList";
@@ -1011,7 +1011,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/scoreDetailList";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -1214,15 +1214,15 @@ public class OscaAdminController {
 			param.put("scoreFlow", scoreFlow);
 			model.addAttribute("paramMap",param);
 			//如果是没有表单的成绩就直接返回页面
-            if (score.getIsHaveFrom().equals(GlobalConstant.FLAG_N)) {
-                model.addAttribute("haveFrom", GlobalConstant.FLAG_N);
+            if (score.getIsHaveFrom().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
+                model.addAttribute("haveFrom", com.pinde.core.common.GlobalConstant.FLAG_N);
 				return "res/osca/admin/selectStationFrom";
 			}
 			//表单内容
 			OscaFrom from = oscaAppBiz.getFromByScoreFlow(scoreFlow);
 			model.addAttribute("from", from);
 			//固定表单
-            model.addAttribute("haveFrom", GlobalConstant.FLAG_Y);
+            model.addAttribute("haveFrom", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			//固定表单
 			if(score.getFromTypeId().equals("1")){
 				String url=score.getFromUrl();
@@ -1313,7 +1313,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "请选择日期");
 			return "/res/osca/admin/stationDetailList";
 		}
-		if(StringUtil.isNotBlank(isPass)&&!GlobalConstant.FLAG_Y.equals(isPass)&&!GlobalConstant.FLAG_N.equals(isPass)){
+        if (StringUtil.isNotBlank(isPass) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPass) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isPass)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "只能输入合格或不合格");
 			return "/res/osca/admin/stationDetailList";
@@ -1342,7 +1342,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/stationDetailList";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -1494,7 +1494,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/noSiginList";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -1566,7 +1566,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/teaInfo";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -1609,7 +1609,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/rooms";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");
@@ -1647,7 +1647,7 @@ public class OscaAdminController {
 			model.addAttribute("resultType", "您暂无考点信息，无权限使用");
 			return "/res/osca/admin/getRoomFile";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg()))
 		{
 			model.addAttribute("resultId", "30197");
 			model.addAttribute("resultType", "您的帐号不是考点帐号，无权限使用");

@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -76,7 +77,7 @@ public class ResIdCtrlController extends GeneralController {
 	@RequestMapping("/delId")
 	@ResponseBody
 	public int delId(ResIdctrlDetail resIdctrlDetail){
-		resIdctrlDetail.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        resIdctrlDetail.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		return idCtrlBiz.editId(resIdctrlDetail);
 	}
 
@@ -111,10 +112,10 @@ public class ResIdCtrlController extends GeneralController {
 				if(StringUtil.isNotBlank((String)map.get("END_DATE"))){
 					String year = ((String)map.get("END_DATE")).split("-")[0];
 					if(currentYear.equals(year)&&currentMonth.equals("08")){
-                        bindFlagMap.put(userFlow, GlobalConstant.FLAG_Y);
+                        bindFlagMap.put(userFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}else {
-                    bindFlagMap.put(userFlow, GlobalConstant.FLAG_Y);
+                    bindFlagMap.put(userFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}
 			}
 		}

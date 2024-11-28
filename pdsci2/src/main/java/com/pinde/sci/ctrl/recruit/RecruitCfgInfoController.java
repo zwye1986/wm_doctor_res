@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.recruit;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.biz.recruit.IRecruitCfgInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.common.GeneralController;
@@ -44,9 +45,9 @@ public class RecruitCfgInfoController extends GeneralController {
     public String updateCfgInfo(RecruitCfgInfo recruitCfgInfo){
         int i = recruitCfgInfoBiz.updateRecCfgInfo(recruitCfgInfo);
         if (i == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -63,9 +64,9 @@ public class RecruitCfgInfoController extends GeneralController {
         if (searchResult == null ){
             int i = recruitCfgInfoBiz.addRecCfgInfo(recruitCfgInfo);
             if (i == 1){
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }else{
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }
         }else{
             return "该年份已设置招录时间！";
@@ -84,9 +85,9 @@ public class RecruitCfgInfoController extends GeneralController {
     public String setCurrYear(RecruitCfgInfo recruitCfgInfo){
         int i = recruitCfgInfoBiz.RecruitCfgInfo(recruitCfgInfo.getCfgFlow(),GlobalContext.getCurrentUser().getOrgFlow());
         if (i == 1){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 }

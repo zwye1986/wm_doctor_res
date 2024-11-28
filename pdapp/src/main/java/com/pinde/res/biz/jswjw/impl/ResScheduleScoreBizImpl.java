@@ -33,7 +33,7 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
             scheduleScore.setCreateTime(DateUtil.getCurrDate());
             scheduleScore.setScheduleFlow(PkUtil.getUUID());
             scheduleScore.setCreateUserFlow(userFlow);
-            scheduleScore.setRecordStatus(GlobalConstant.FLAG_Y);
+            scheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return resScheduleScoreMapper.insert(scheduleScore);
         }
     }
@@ -53,7 +53,7 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
             scheduleScore.setEvaluationYear(DateUtil.getYear());
             scheduleScore.setScheduleFlow(PkUtil.getUUID());
             scheduleScore.setCreateUserFlow(userFlow);
-            scheduleScore.setRecordStatus(GlobalConstant.FLAG_Y);
+            scheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return resScheduleScoreMapper.insert(scheduleScore);
         }
     }

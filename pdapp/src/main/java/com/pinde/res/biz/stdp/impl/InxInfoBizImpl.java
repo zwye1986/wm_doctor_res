@@ -40,8 +40,8 @@ public class InxInfoBizImpl implements IInxInfoBiz {
 	@Override
 	public List<InxInfo> getList(InxInfoForm form) {
 		InxInfoExample example = new InxInfoExample();
-		Criteria criteria = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		Criteria criteria2 = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria2 = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(form.getColumnId())){
 			criteria.andColumnIdLike(form.getColumnId()+"%");
 			criteria2.andColumnIdLike(form.getColumnId()+"%");
@@ -60,12 +60,12 @@ public class InxInfoBizImpl implements IInxInfoBiz {
 		}
 		addCriteria(form, criteria, criteria2);
 		example.or(criteria2);
-	    if(GlobalConstant.FLAG_Y.equals(form.getOrderByViewNum())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(form.getOrderByViewNum())) {
 			example.setOrderByClause("VIEW_NUM DESC nulls last, IS_TOP DESC nulls last, INFO_TIME DESC, CREATE_TIME DESC");
 		}else{
 			example.setOrderByClause("IS_TOP DESC nulls last, INFO_TIME DESC, CREATE_TIME DESC");
 		}
-		if(GlobalConstant.FLAG_Y.equals(form.getIsWithBlobs())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(form.getIsWithBlobs())) {
 			return this.inxInfoMapper.selectByExampleWithBLOBs(example);
 		}
 		return this.inxInfoMapper.selectByExample(example);
@@ -84,7 +84,7 @@ public class InxInfoBizImpl implements IInxInfoBiz {
 			criteria.andInfoTitleLike("%"+form.getInfoKeyword()+"%");
 			criteria2.andInfoKeywordLike("%"+form.getInfoKeyword()+"%");
 		}
-		if(GlobalConstant.FLAG_Y.equals(form.getHasImage())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(form.getHasImage())) {
 			criteria.andTitleImgIsNotNull();
 			criteria2.andTitleImgIsNotNull();
 		}
@@ -93,20 +93,20 @@ public class InxInfoBizImpl implements IInxInfoBiz {
 	@Override
 	public List<InxInfo> queryClassifyList(InxInfoForm form) {
 		InxInfoExample example = new InxInfoExample();
-		Criteria criteria = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		Criteria criteria2 = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria2 = example.createCriteria().andInfoStatusIdEqualTo(InfoStatusEnum.Passed.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(form.getColumnId())){
 			criteria.andColumnIdEqualTo(form.getColumnId());
 			criteria2.andColumnIdEqualTo(form.getColumnId());
 		}
 		addCriteria(form, criteria, criteria2);
 		example.or(criteria2);
-		if(GlobalConstant.FLAG_Y.equals(form.getOrderByViewNum())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(form.getOrderByViewNum())) {
 			example.setOrderByClause("VIEW_NUM DESC nulls last, IS_TOP DESC nulls last, INFO_TIME DESC, CREATE_TIME DESC");
 		}else{
 			example.setOrderByClause("IS_TOP DESC nulls last, INFO_TIME DESC, CREATE_TIME DESC");
 		}
-		if(GlobalConstant.FLAG_Y.equals(form.getIsWithBlobs())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(form.getIsWithBlobs())) {
 			return this.inxInfoMapper.selectByExampleWithBLOBs(example);
 		}
 		return this.inxInfoMapper.selectByExample(example);
@@ -115,7 +115,7 @@ public class InxInfoBizImpl implements IInxInfoBiz {
 	@Override
 	public ResReadInfo getReadInfoByFlow(String infoFlow, String userFlow) {
 		ResReadInfoExample example=new ResReadInfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andInfoFlowEqualTo(infoFlow).andUserFlowEqualTo(userFlow);
 		List<ResReadInfo> list=resReadInfoMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -137,7 +137,7 @@ public class InxInfoBizImpl implements IInxInfoBiz {
 			d.setCreateUserFlow(userFlow);
 			d.setModifyTime(DateUtil.getCurrDateTime());
 			d.setModifyUserFlow(userFlow);
-			d.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            d.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return resReadInfoMapper.insertSelective(d);
 		}
 	}

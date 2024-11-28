@@ -6,7 +6,7 @@ import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitInfoLogMapper;
-import com.pinde.sci.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
 import com.pinde.sci.model.mo.RecruitInfoLog;
 import com.pinde.sci.model.mo.RecruitInfoLogExample;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +47,7 @@ public class RecruitInfoLogBizImpl implements IRecruitInfoLogBiz {
         example.createCriteria().andRecruitFlowEqualTo(recruitFlow)
         .andOperTypeIdEqualTo(RecruitOperEnum.Save.getId())
         .andOperTypeNameEqualTo(RecruitOperEnum.Save.getName())
-        .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<RecruitInfoLog> recruitInfoLogs = recruitInfoLogMapper.selectByExample(example);
         if (recruitInfoLogs != null && recruitInfoLogs.size() > 0){
             return recruitInfoLogs.get(0);

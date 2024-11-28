@@ -3,10 +3,9 @@ package com.pinde.sci.common;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.BaseEnum;
+import com.pinde.core.common.BaseEnum;
 import com.pinde.core.common.enums.DictTypeEnum;
-import com.pinde.core.common.enums.GeneralEnum;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.config.*;
 import com.pinde.core.license.PdLicense;
 import com.pinde.core.model.SysDict;
@@ -386,18 +385,18 @@ public class InitConfig implements ServletContextListener {
 				List<Module> moduleList = workStation.getModuleList();
 				for (Module module : moduleList) {
 					//查数据库，看模块名有没有被重新定义
-//					SysDict moduleDict = dictBiz.readDict(DictTypeEnum.SysModule.getId(), module.getModuleId());
+//					SysDict moduleDict = dictBiz.readDict(com.pinde.core.common.enums.DictTypeEnum.SysModule.getId(), module.getModuleId());
 //					if(moduleDict==null){
 //						SysDict dict = new SysDict();
-//						dict.setDictTypeId(DictTypeEnum.SysModule.getId());
-//						dict.setDictTypeName(DictTypeEnum.SysModule.getName());
+//						dict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SysModule.getId());
+//						dict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.SysModule.getName());
 //						dict.setDictId(module.getModuleId());
 //						dict.setDictName(module.getModuleName());
 //						dict.setOrdinal(imodule++);
 //						dict.setDictDesc(module.getModuleName());
 //						dictBiz.addDict(dict);
 //					}else{
-//						if(GlobalConstant.RECORD_STATUS_Y.equals(moduleDict.getRecordStatus())){
+//						if(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(moduleDict.getRecordStatus())){
 ////							module.setModuleName(moduleDict.getDictName());
 //						}
 //					}
@@ -407,10 +406,10 @@ public class InitConfig implements ServletContextListener {
 					List<MenuSet> menuSetList = module.getMenuSetList();
 					for (MenuSet menuSet : menuSetList) {
 						//查数据库，看一级菜单有没有被重新定义
-//						SysDict menuSetDict = dictBiz.readDict(DictTypeEnum.SysModule.getId()+"."+module.getModuleId(), menuSet.getSetId());
+//						SysDict menuSetDict = dictBiz.readDict(com.pinde.core.common.enums.DictTypeEnum.SysModule.getId()+"."+module.getModuleId(), menuSet.getSetId());
 //						if(menuSetDict==null){
 //							SysDict dict = new SysDict();
-//							dict.setDictTypeId(DictTypeEnum.SysModule.getId()+"."+module.getModuleId());
+//							dict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SysModule.getId()+"."+module.getModuleId());
 //							dict.setDictTypeName(menuSet.getSetName());
 //							dict.setDictId(menuSet.getSetId());
 //							dict.setDictName(menuSet.getSetName());
@@ -418,7 +417,7 @@ public class InitConfig implements ServletContextListener {
 //							dict.setDictDesc(menuSet.getSetName());
 //							dictBiz.addDict(dict);
 //						}else{
-//							if(GlobalConstant.RECORD_STATUS_Y.equals(menuSetDict.getRecordStatus())){
+//							if(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(menuSetDict.getRecordStatus())){
 ////								menuSet.setSetName(menuSetDict.getDictName());
 //							}
 //						}
@@ -428,10 +427,10 @@ public class InitConfig implements ServletContextListener {
 						List<Menu> menuList = menuSet.getMenuList();
 						for (Menu menu : menuList) {
 							//查数据库，看二级菜单名有没有被重新定义
-//							SysDict menuDict = dictBiz.readDict(DictTypeEnum.SysModule.getId()+"."+module.getModuleId()+"."+menuSet.getSetId(), menu.getMenuId());
+//							SysDict menuDict = dictBiz.readDict(com.pinde.core.common.enums.DictTypeEnum.SysModule.getId()+"."+module.getModuleId()+"."+menuSet.getSetId(), menu.getMenuId());
 //							if(menuDict==null){
 //								SysDict dict = new SysDict();
-//								dict.setDictTypeId(DictTypeEnum.SysModule.getId()+"."+module.getModuleId()+"."+menuSet.getSetId());
+//								dict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SysModule.getId()+"."+module.getModuleId()+"."+menuSet.getSetId());
 //								dict.setDictTypeName(menu.getMenuName());
 //								dict.setDictId(menu.getMenuId());
 //								dict.setDictName(menu.getMenuName());
@@ -439,7 +438,7 @@ public class InitConfig implements ServletContextListener {
 //								dict.setDictDesc(menu.getMenuName());
 //								dictBiz.addDict(dict);
 //							}else{
-//								if(GlobalConstant.RECORD_STATUS_Y.equals(menuDict.getRecordStatus())){
+//								if(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(menuDict.getRecordStatus())){
 ////									menu.setMenuName(menuDict.getDictName());
 //								}
 //							}
@@ -469,7 +468,7 @@ public class InitConfig implements ServletContextListener {
 		Map<String, List<SysDict>> sysListDictMap = new HashMap<String, List<SysDict>>();
 		Map<String, String> sysDictIdMap = new HashMap<String, String>();
 		Map<String, Map<String, String>> sysDictNameMap = new HashMap<String, Map<String, String>>();
-		List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(DictTypeEnum.class);
+		List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(com.pinde.core.common.enums.DictTypeEnum.class);
 		for (DictTypeEnum dictTypeEnum : dictTypeEnumList) {
 			String dictTypeId = dictTypeEnum.getId();
 			Map<String, String> dictNameMap = new HashMap<String, String>();
@@ -478,7 +477,7 @@ public class InitConfig implements ServletContextListener {
 
 			SysDict sysDict = new SysDict();
 			sysDict.setDictTypeId(dictTypeId);
-			sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+			sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 			List<SysDict> sysDictList = dictBiz.searchDictList(sysDict);
 			for (SysDict dict : sysDictList) {
@@ -529,8 +528,8 @@ public class InitConfig implements ServletContextListener {
 //		GlobalContext.sysDictListMap = sysListDictMap;
 		context.setAttribute("sysDictIdMap", sysDictIdMap);
 		InitConfig.sysDictNameMap = sysDictNameMap;
-		DictTypeEnum.sysDictIdMap = sysDictIdMap;
-		DictTypeEnum.sysListDictMap = sysListDictMap;
+		com.pinde.core.common.enums.DictTypeEnum.sysDictIdMap = sysDictIdMap;
+		com.pinde.core.common.enums.DictTypeEnum.sysListDictMap = sysListDictMap;
 	}
 
 	public static Map<String, String> getDictNameMap(String dictTypeId) {
@@ -541,7 +540,7 @@ public class InitConfig implements ServletContextListener {
 	}
 
 	private static void _loadEnum(ServletContext context) {
-		Set<Class<?>> set = ClassUtil.getClasses("com.pinde.sci.enums");
+		Set<Class<?>> set = ClassUtil.getClasses("com.pinde.core.common.enums");
 		for (Class<?> cls : set) {
 			if(BaseEnum.class.isAssignableFrom(cls)) {
 				Class[] innerEnums = cls.getDeclaredClasses();
@@ -609,7 +608,7 @@ public class InitConfig implements ServletContextListener {
 		Map<String, SysOrg> sysOrgNameMap = new HashMap<String, SysOrg>();
 		IOrgBiz orgBiz = SpringUtil.getBean(IOrgBiz.class);
 		SysOrg search = new SysOrg();
-		search.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		search.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysOrg> sysOrgList = orgBiz.searchOrg(search);
 		for (SysOrg sysOrg : sysOrgList) {
 			sysOrgMap.put(sysOrg.getOrgFlow(), sysOrg);
@@ -640,7 +639,7 @@ public class InitConfig implements ServletContextListener {
 		Map<String, SysDept> sysDeptMap = new HashMap<String, SysDept>();
 		IDeptBiz deptBiz = SpringUtil.getBean(IDeptBiz.class);
 		SysDept search = new SysDept();
-		search.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+		search.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> sysDeptList = deptBiz.searchDept(search);
 		for (SysDept sysDept : sysDeptList) {
 			sysDeptMap.put(sysDept.getDeptFlow(), sysDept);

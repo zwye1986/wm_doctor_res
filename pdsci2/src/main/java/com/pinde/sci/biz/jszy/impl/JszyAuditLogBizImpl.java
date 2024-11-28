@@ -41,7 +41,7 @@ public class JszyAuditLogBizImpl implements IJszyAuditLogBiz {
     public List<ResAuditLog> findAuditLogsByParentFlow(String parentRecordFlow) {
         ResAuditLogExample example = new ResAuditLogExample();
         ResAuditLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andParentRecordFlowEqualTo(parentRecordFlow);
         example.setOrderByClause("create_time desc");
         return resAuditLogMapper.selectByExample(example);
@@ -51,7 +51,7 @@ public class JszyAuditLogBizImpl implements IJszyAuditLogBiz {
     public Map<String, List<ResAuditLog>> findAuditLogsByParentFlows(List<String> parentRecordFlows) {
         ResAuditLogExample example = new ResAuditLogExample();
         ResAuditLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (parentRecordFlows != null && parentRecordFlows.size() > 0) {
             Map<String, List<ResAuditLog>> resAuditLogsMap = new HashMap<>();
             criteria.andParentRecordFlowIn(parentRecordFlows);
@@ -79,7 +79,7 @@ public class JszyAuditLogBizImpl implements IJszyAuditLogBiz {
     public List<ResAuditLog> findAuditLogByMap(Map<String, Object> paramMap) {
         ResAuditLogExample example = new ResAuditLogExample();
         ResAuditLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (paramMap.get("order") != null) {
             example.setOrderByClause(paramMap.get("order").toString());
         }
@@ -95,7 +95,7 @@ public class JszyAuditLogBizImpl implements IJszyAuditLogBiz {
     public Map<String, ResAuditLog> findLastAuditLogByParentFlows(List<String> parentRecordFlows) {
         ResAuditLogExample example = new ResAuditLogExample();
         ResAuditLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (parentRecordFlows != null && parentRecordFlows.size() > 0) {
             Map<String, ResAuditLog> resAuditLogMap = new HashMap<>();
             criteria.andParentRecordFlowIn(parentRecordFlows);

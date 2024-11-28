@@ -19,10 +19,9 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.*;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.enums.jsres.JsresSendMessageEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.OperTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.jsres.JsresSendMessageEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.jsres.LoginVo;
 import com.pinde.sci.model.jsres.ResultVo;
 import com.pinde.sci.model.mo.*;
@@ -99,7 +98,7 @@ public class InxJsResController extends GeneralController {
         List<ResMessage> messages = this.messageBiz.searchMessageByOrg(null, null);
         model.addAttribute("messages", messages);
 //		SysLogExample example = new SysLogExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperIdEqualTo(OperTypeEnum.LogIn.getId());
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperIdEqualTo(OperTypeEnum.LogIn.getId());
 //		System.out.println("Read SysLog...............");
 //		int count = logMapper.countByExample(example);
 //		model.addAttribute("count", count);
@@ -131,7 +130,7 @@ public class InxJsResController extends GeneralController {
         List<ResMessage> messages = this.messageBiz.searchMessageByOrg(null, null);
         model.addAttribute("messages", messages);
 //		SysLogExample example = new SysLogExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperIdEqualTo(OperTypeEnum.LogIn.getId());
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperIdEqualTo(OperTypeEnum.LogIn.getId());
 //		int count = logMapper.countByExample(example);
 //		model.addAttribute("count", count);
         // 获取公钥系数和公钥指数
@@ -219,7 +218,7 @@ public class InxJsResController extends GeneralController {
 
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgLevelId("CountryOrg");
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs = orgBiz.searchOrgList(sysorg);
         model.addAttribute("orgs", orgs);
         model.addAttribute("sessionNumber", sessionNumber);
@@ -288,11 +287,11 @@ public class InxJsResController extends GeneralController {
         SysUser user = userBiz.findByUserEmail(userEmail);
 
         if (user != null) {
-            return GlobalConstant.USER_EMAIL_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
         }
         user = userBiz.findByUserCode(userEmail);
         if (user != null) {
-            return GlobalConstant.USER_EMAIL_REPETE;
+            return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
         }
         return "";
     }
@@ -314,7 +313,7 @@ public class InxJsResController extends GeneralController {
                 if (roleIsExist && idNo.equals(user.getUserCode())) {
                     return "证件号码已存在，请用证件号进行登录";
                 } else {
-                    return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
                 }
             }
         }
@@ -331,7 +330,7 @@ public class InxJsResController extends GeneralController {
             userPhone = userPhone.trim();
             SysUser user = userBiz.findByUserPhone(userPhone);
             if (user != null) {
-                return GlobalConstant.USER_PHONE_REPETE;
+                return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
             }
         }
         return "";
@@ -347,7 +346,7 @@ public class InxJsResController extends GeneralController {
             // 解密
             password = RSAUtils.decryptStringByJs(password);
             if (StringUtil.isNotBlank(InitConfig.weekPasswordMap.get(password.trim()))) {
-                return GlobalConstant.FLAG_Y;
+                return com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
         return "";
@@ -381,7 +380,7 @@ public class InxJsResController extends GeneralController {
         String userEmail = registerUser.getUserEmail().trim();
         SysUser user = userBiz.findByUserEmail(userEmail);
         if (user != null) {
-            model.addAttribute("errorMsg", GlobalConstant.USER_EMAIL_REPETE);
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE);
             RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
             if (null != publicKey) {
                 //公钥-系数(n)
@@ -393,7 +392,7 @@ public class InxJsResController extends GeneralController {
         }
         user = userBiz.findByUserCode(userEmail);
         if (user != null) {
-            model.addAttribute("errorMsg", GlobalConstant.USER_EMAIL_REPETE);
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE);
             RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
             if (null != publicKey) {
                 //公钥-系数(n)
@@ -406,7 +405,7 @@ public class InxJsResController extends GeneralController {
         //判断用户身份证号是否重复
         user = userBiz.findByIdNo(registerUser.getIdNo());
         if (user != null) {
-            model.addAttribute("errorMsg", GlobalConstant.USER_ID_NO_REPETE);
+            model.addAttribute("errorMsg", com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE);
             RSAPublicKey publicKey = RSAUtils.getDefaultPublicKey();
             if (null != publicKey) {
                 //公钥-系数(n)
@@ -453,12 +452,12 @@ public class InxJsResController extends GeneralController {
             SysUser findUser = userBiz.findByUserEmail(userEmail);
             if (findUser != null) {
                 int result = inxBiz.sendEmail(findUser.getUserFlow(), userEmail);
-                if (GlobalConstant.ZERO_LINE != result) {
-                    return GlobalConstant.FLAG_Y;
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.FLAG_Y;
                 }
             }
         }
-        return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
     }
 
     /**
@@ -472,14 +471,14 @@ public class InxJsResController extends GeneralController {
 //		SysUser user = this.userBiz.readSysUser(activationCode);
 //		SysUserRole userRole = new SysUserRole();
 //		userRole.setUserFlow(user.getUserFlow());
-//		userRole.setWsId(GlobalConstant.RES_WS_ID);
+//		userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 //		List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
 //		if(!userRoleList.isEmpty()){
 //			userRole = userRoleList.get(0);
 //		}
 //		SysRole role = roleBiz.read(userRole.getRoleFlow()); 
 //		if(role!=null){
-//			setSessionAttribute(GlobalConstant.CURRENT_USER, user);	
+//			setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 //			return "redirect:"+getRoleUrl(role.getRoleFlow());
 //		}
         return "redirect:/inx/jsres/activatesucc";
@@ -962,7 +961,7 @@ public class InxJsResController extends GeneralController {
             user = (SysUser) obj;
         }
         //设置当前用户
-        setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
         loginVo.setUser(user);
         String clientIp = ClientIPUtils.getClientIp(request);
 //
@@ -981,7 +980,7 @@ public class InxJsResController extends GeneralController {
         log.setOperId(OperTypeEnum.LogIn.getId());
         log.setOperName(OperTypeEnum.LogIn.getName());
         log.setLogDesc("登录IP[" + clientIp + "]");
-        log.setWsId(GlobalConstant.SYS_WS_ID);
+        log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
         GeneralMethod.addSysLog(log);
         logMapper.insert(log);
 
@@ -990,7 +989,7 @@ public class InxJsResController extends GeneralController {
             //审核通过
             SysUserRole userRole = new SysUserRole();
             userRole.setUserFlow(user.getUserFlow());
-            userRole.setWsId(GlobalConstant.RES_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
             List<String> currRoleList = new ArrayList<String>();
             if (userRoleList == null || userRoleList.size() == 0) {
@@ -1019,7 +1018,7 @@ public class InxJsResController extends GeneralController {
                         currRoleList.add(myuserRole.getRoleFlow());
                     }
                 }
-                GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+                GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
                 String roleFlow = role.getRoleFlow();
                 if (roleFlow.equals(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                     String changePasswordTime = user.getChangePasswordTime();
@@ -1031,7 +1030,7 @@ public class InxJsResController extends GeneralController {
                         int monthDiff = DateUtil.getMonthDiff(changePasswordTime, DateUtil.getCurrDate());
                         if (monthDiff >= passwordFailureTime) {
                             model.addAttribute("userCode", userCode);
-                            model.addAttribute("flag", GlobalConstant.FLAG_Y);
+                            model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_Y);
                             if (null != publicKey) {
                                 //公钥-系数(n)
                                 model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1045,7 +1044,7 @@ public class InxJsResController extends GeneralController {
                 //科主任、带教老师 ==> 基地权限设置
 //				if (roleFlow.equals(InitConfig.getSysCfg("res_head_role_flow")) || roleFlow.equals(InitConfig.getSysCfg("res_teacher_role_flow"))) {
 //					String orgPermResult = orgPermission(user.getOrgFlow());
-//					if(GlobalConstant.FLAG_N.equals(orgPermResult)){
+//					if(com.pinde.core.common.GlobalConstant.FLAG_N.equals(orgPermResult)){
 //						//该用户带教或主任所在科室是否对外开放
 //						boolean isExt = isExternal(user.getUserFlow());
 //						if(!isExt){
@@ -1175,7 +1174,7 @@ public class InxJsResController extends GeneralController {
         }
 
         //设置当前用户
-        setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 
         SysUser userInfo = new SysUser();
         userInfo.setUserFlow(user.getUserFlow());
@@ -1200,7 +1199,7 @@ public class InxJsResController extends GeneralController {
         log.setOperId(OperTypeEnum.LogIn.getId());
         log.setOperName(OperTypeEnum.LogIn.getName());
         log.setLogDesc("登录IP[" + clientIp + "]");
-        log.setWsId(GlobalConstant.SYS_WS_ID);
+        log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
         GeneralMethod.addSysLog(log);
         logMapper.insert(log);
 
@@ -1209,7 +1208,7 @@ public class InxJsResController extends GeneralController {
             //审核通过
             SysUserRole userRole = new SysUserRole();
             userRole.setUserFlow(user.getUserFlow());
-            userRole.setWsId(GlobalConstant.RES_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
             List<String> currRoleList = new ArrayList<String>();
             if (userRoleList == null || userRoleList.size() == 0) {
@@ -1238,9 +1237,9 @@ public class InxJsResController extends GeneralController {
                         currRoleList.add(myuserRole.getRoleFlow());
                     }
                 }
-                GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+                GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
                 String roleFlow = role.getRoleFlow();
-                GlobalContext.setSessionAttribute(GlobalConstant.CURR_ROLE_OBJ, role);
+                GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURR_ROLE_OBJ, role);
                 //如果拥有带教角色  默认显示带教
                 for (SysUserRole myuserRole : userRoleList) {
                     if (myuserRole.getRoleFlow().equals(InitConfig.getSysCfg("res_teacher_role_flow"))) {
@@ -1252,10 +1251,10 @@ public class InxJsResController extends GeneralController {
 //                    boolean flag=false;
 //                    SysUser readSysUser = userBiz.readSysUser(user.getUserFlow());
 //                    ResDoctor resDoctor = resDoctorBiz.readDoctor(user.getUserFlow());
-                  /*  if (null!=readSysUser&& StringUtil.isNotBlank(readSysUser.getTrainingTypeId()) && readSysUser.getTrainingTypeId().equals(TrainCategoryEnum.DoctorTrainingSpe.getId())){
+                  /*  if (null!=readSysUser&& StringUtil.isNotBlank(readSysUser.getTrainingTypeId()) && readSysUser.getTrainingTypeId().equals(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId())){
                         flag=true;
                     }
-                    if (null!=resDoctor&& StringUtil.isNotBlank(resDoctor.getTrainingTypeId()) && resDoctor.getTrainingTypeId().equals(TrainCategoryEnum.DoctorTrainingSpe.getId())){
+                    if (null!=resDoctor&& StringUtil.isNotBlank(resDoctor.getTrainingTypeId()) && resDoctor.getTrainingTypeId().equals(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId())){
                         flag=true;
                     }
                     if (flag==false){
@@ -1271,7 +1270,7 @@ public class InxJsResController extends GeneralController {
                         int monthDiff = DateUtil.getMonthDiff(changePasswordTime, DateUtil.getCurrDate());
                         if (monthDiff >= passwordFailureTime) {
                             model.addAttribute("userCode", userCode);
-                            model.addAttribute("flag", GlobalConstant.FLAG_Y);
+                            model.addAttribute("flag", com.pinde.core.common.GlobalConstant.FLAG_Y);
                             if (null != publicKey) {
                                 //公钥-系数(n)
                                 model.addAttribute("pkModulus", new String(Hex.encode(publicKey.getModulus().toByteArray())));
@@ -1285,7 +1284,7 @@ public class InxJsResController extends GeneralController {
                 //科主任、带教老师 ==> 基地权限设置
 //				if (roleFlow.equals(InitConfig.getSysCfg("res_head_role_flow")) || roleFlow.equals(InitConfig.getSysCfg("res_teacher_role_flow"))) {
 //					String orgPermResult = orgPermission(user.getOrgFlow());
-//					if(GlobalConstant.FLAG_N.equals(orgPermResult)){
+//					if(com.pinde.core.common.GlobalConstant.FLAG_N.equals(orgPermResult)){
 //						//该用户带教或主任所在科室是否对外开放
 //						boolean isExt = isExternal(user.getUserFlow());
 //						if(!isExt){
@@ -1330,7 +1329,7 @@ public class InxJsResController extends GeneralController {
                 HttpSession session = request.getSession();
                 //查看是否是客服账号
                 if (userBiz.userISRole(user.getUserFlow(),InitConfig.getSysCfg("res_maintenance_role_flow"))){
-                    session.setAttribute("maintenance", GlobalConstant.FLAG_Y);
+                    session.setAttribute("maintenance", com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
                 return "redirect:" + getRoleUrl(roleFlow);
             }
@@ -1348,7 +1347,7 @@ public class InxJsResController extends GeneralController {
         if (StringUtil.isNotBlank(roleFlow)) {
             // 当前角色放入session
             SysRole role = roleBiz.read(roleFlow);
-            GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_NAME, role.getRoleName());
+            GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_NAME, role.getRoleName());
             return RolePathMapper.getPath(roleFlow);
         }
         return "";
@@ -1410,7 +1409,7 @@ public class InxJsResController extends GeneralController {
         }
         SysUser byUserPhone = userBiz.findByUserPhone(userPhone);
         if (null != byUserPhone) {
-            return GlobalConstant.USER_PHONE_REPEAT;
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPEAT;
         }
         String yzm = paramMap.get("yzm");
         String loginErrorMessage = "";
@@ -1427,7 +1426,7 @@ public class InxJsResController extends GeneralController {
         removeValidateCodeAttribute();
         List<SysUser> sysUsers = userBiz.selectByUserPhoneAndIsVerify(userPhone);
         if (sysUsers != null && sysUsers.size() > 0) {
-            return GlobalConstant.USER_PHONE_REPEAT;
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPEAT;
         }
         boolean b = inxBiz.checkVerificationTime(userPhone);
         if (b == true) {
@@ -1436,7 +1435,7 @@ public class InxJsResController extends GeneralController {
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
 
-        SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
+        com.pinde.core.model.SysSmsLog sSmsRecord = smsUtil.send("10001", com.pinde.core.common.GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
         userBiz.saveRegisterUser(userPhone, String.valueOf(code), currDateTime);
         setSessionAttribute("userPhone", userPhone);
@@ -1480,7 +1479,7 @@ public class InxJsResController extends GeneralController {
         String verifyCode = paramMap.get("verifyCode");
         String userPhoneBefore = StringUtil.defaultString((String) getSessionAttribute("userPhone"));
         if (StringUtil.isBlank(userPhoneBefore) || !userPhoneBefore.equals(userPhone)) {
-            return GlobalConstant.PHONE_NOT_SAME;
+            return com.pinde.core.common.GlobalConstant.PHONE_NOT_SAME;
         }
         SysUser sysUser = userBiz.selectByUserPhone(userPhone);
         if (sysUser != null) {
@@ -1490,16 +1489,16 @@ public class InxJsResController extends GeneralController {
             String userVerifyCode = sysUser.getVerifyCode();
             if (verifyCode.equals(userVerifyCode)) {
                 if (betweenTowDate > 60) {
-                    return GlobalConstant.VERIFT_CODE_TIMEOUT;
+                    return com.pinde.core.common.GlobalConstant.VERIFT_CODE_TIMEOUT;
                 }
                 GlobalContext.getSession().removeAttribute("userPhone");
-                return GlobalConstant.VERIFT_CODE_RIGHT;
+                return com.pinde.core.common.GlobalConstant.VERIFT_CODE_RIGHT;
             } else {
-                return GlobalConstant.VERIFT_CODE_ERROR;
+                return com.pinde.core.common.GlobalConstant.VERIFT_CODE_ERROR;
             }
         }
 
-        return GlobalConstant.VERIFT_CODE_REFRESH;
+        return com.pinde.core.common.GlobalConstant.VERIFT_CODE_REFRESH;
     }
 
     /**
@@ -1516,7 +1515,7 @@ public class InxJsResController extends GeneralController {
 
         String userPhoneBefore = StringUtil.defaultString((String) getSessionAttribute("userPhone"));
         if (StringUtil.isBlank(userPhoneBefore) || !userPhoneBefore.equals(userPhone)) {
-            return GlobalConstant.PHONE_NOT_SAME;
+            return com.pinde.core.common.GlobalConstant.PHONE_NOT_SAME;
         }
         SysUser sysUser = userBiz.selectByUserPhone(userPhone);
         if (sysUser != null) {
@@ -1526,16 +1525,16 @@ public class InxJsResController extends GeneralController {
             String userVerifyCode = sysUser.getVerifyCode();
             if (verifyCode.equals(userVerifyCode)) {
                 if (betweenTowDate > 60) {
-                    return GlobalConstant.VERIFT_CODE_TIMEOUT;
+                    return com.pinde.core.common.GlobalConstant.VERIFT_CODE_TIMEOUT;
                 }
                 GlobalContext.getSession().removeAttribute("userPhone");
                 return "";
             } else {
-                return GlobalConstant.VERIFT_CODE_ERROR;
+                return com.pinde.core.common.GlobalConstant.VERIFT_CODE_ERROR;
             }
         }
 
-        return GlobalConstant.VERIFT_CODE_REFRESH;
+        return com.pinde.core.common.GlobalConstant.VERIFT_CODE_REFRESH;
     }
 
     @RequestMapping(value = {"/setPasswd"}, method = {RequestMethod.POST})
@@ -1584,23 +1583,23 @@ public class InxJsResController extends GeneralController {
             sysUser.setUserPasswd(PasswordHelper.encryptPassword(sysUser.getUserFlow(), userPasswd));
             sysUser.setStatusId(UserStatusEnum.Activated.getId());
             sysUser.setStatusDesc(UserStatusEnum.Activated.getName());
-            sysUser.setIsVerify(GlobalConstant.FLAG_Y);
+            sysUser.setIsVerify(com.pinde.core.common.GlobalConstant.FLAG_Y);
             sysUser.setChangePasswordTime(DateUtil.getCurrDate());
             if (StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                 SysUserRole userRole = new SysUserRole();
                 userRole.setUserFlow(sysUser.getUserFlow());
-                String currWsId = GlobalConstant.RES_WS_ID;
+                String currWsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
                 userRole.setWsId(currWsId);
                 userRole.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
                 userRole.setAuthTime(com.pinde.core.util.DateUtil.getCurrDate());
                 userRoleBiz.saveSysUserRole(userRole);
             }
             userBiz.updateUser(sysUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
             return "200";
         } else {
             //给出错误提示
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -1627,23 +1626,23 @@ public class InxJsResController extends GeneralController {
             sysUser.setUserPasswd(PasswordHelper.encryptPassword(sysUser.getUserFlow(), userPasswd));
             sysUser.setStatusId(UserStatusEnum.Activated.getId());
             sysUser.setStatusDesc(UserStatusEnum.Activated.getName());
-            sysUser.setIsVerify(GlobalConstant.FLAG_Y);
+            sysUser.setIsVerify(com.pinde.core.common.GlobalConstant.FLAG_Y);
             sysUser.setChangePasswordTime(DateUtil.getCurrDate());
             if (StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                 SysUserRole userRole = new SysUserRole();
                 userRole.setUserFlow(sysUser.getUserFlow());
-                String currWsId = GlobalConstant.RES_WS_ID;
+                String currWsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
                 userRole.setWsId(currWsId);
                 userRole.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
                 userRole.setAuthTime(com.pinde.core.util.DateUtil.getCurrDate());
                 userRoleBiz.saveSysUserRole(userRole);
             }
             userBiz.updateUser(sysUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
-            return GlobalConstant.USER_REG_SUCCESSED;
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
+            return com.pinde.core.common.GlobalConstant.USER_REG_SUCCESSED;
         } else {
             //给出错误提示
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -1672,11 +1671,11 @@ public class InxJsResController extends GeneralController {
             sysUser.setUserPasswd(PasswordHelper.encryptPassword(sysUser.getUserFlow(), userPasswd));
             sysUser.setChangePasswordTime(DateUtil.getCurrDate());
             userBiz.updateUser(sysUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
-            return GlobalConstant.UPDATE_SUCCESSED;
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
+            return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
         } else {
             //给出错误提示
-            return GlobalConstant.UPDATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.UPDATE_FAIL;
         }
     }
 
@@ -1740,12 +1739,12 @@ public class InxJsResController extends GeneralController {
         }
         List<SysUser> sysUsers = userBiz.checkPhoneIsVerify(userPhone);
         if (sysUsers == null || sysUsers.size() == 0) {
-            return GlobalConstant.USER_PHONE_NOTAUTHEN;
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_NOTAUTHEN;
         }else{
             //带教科主任科秘督导专家 不需要判断是否付费
             SysUserRole userRole = new SysUserRole();
             userRole.setUserFlow(sysUsers.get(0).getUserFlow());
-            userRole.setWsId(GlobalConstant.RES_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
             if(CollectionUtils.isNotEmpty(userRoleList)){
                 String teacherRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");//带教
@@ -1762,7 +1761,7 @@ public class InxJsResController extends GeneralController {
                         //查询是否是付费用户
                         String userFlow = sysUsers.get(0).getUserFlow();
                         JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
-                        if (null == cfg || GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
+                        if (null == cfg || com.pinde.core.common.GlobalConstant.FLAG_N.equals(cfg.getCfgValue())) {
                             return "抱歉该功仅付费用户使用,请联系管理员！";
                         }
                     }
@@ -1771,7 +1770,7 @@ public class InxJsResController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
-        SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
+        com.pinde.core.model.SysSmsLog sSmsRecord = smsUtil.send("10001", com.pinde.core.common.GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
         userBiz.saveForgetPasswdUser(userPhone, String.valueOf(code), currDateTime);
         setSessionAttribute(userPhone, System.currentTimeMillis());
@@ -1795,7 +1794,7 @@ public class InxJsResController extends GeneralController {
         List<SysUser> sysUsers = userBiz.selectByUserPhoneAndIsVerify(userPhone);
         if (sysUsers != null && sysUsers.size() > 0) {
             if (!sysUsers.get(0).getUserFlow().equals(GlobalContext.getCurrentUser().getUserFlow())) {
-                return GlobalConstant.USER_PHONE_REPEAT;
+                return com.pinde.core.common.GlobalConstant.USER_PHONE_REPEAT;
             }
         }
         // 根据手机号码取session中的发送验证码时间
@@ -1810,7 +1809,7 @@ public class InxJsResController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
-        SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
+        com.pinde.core.model.SysSmsLog sSmsRecord = smsUtil.send("10001", com.pinde.core.common.GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
         SysUser currentUser = GlobalContext.getCurrentUser();
         currentUser.setVerifyCode(String.valueOf(code));
@@ -1829,7 +1828,7 @@ public class InxJsResController extends GeneralController {
     public String authenVerifyCode(String userPhone, String verifyCode, Model model) {
         String userPhoneBefore = StringUtil.defaultString((String) getSessionAttribute("userPhone"));
         if (StringUtil.isBlank(userPhoneBefore) || !userPhoneBefore.equals(userPhone)) {
-            return GlobalConstant.PHONE_NOT_SAME;
+            return com.pinde.core.common.GlobalConstant.PHONE_NOT_SAME;
         }
         SysUser sysUser = GlobalContext.getCurrentUser();
         String currDateTime = DateUtil.getCurrDateTime2();
@@ -1838,15 +1837,15 @@ public class InxJsResController extends GeneralController {
         String userVerifyCode = sysUser.getVerifyCode();
         if (verifyCode.equals(userVerifyCode)) {
             if (betweenTowDate > 300) {
-                return GlobalConstant.VERIFT_CODE_TIMEOUT;
+                return com.pinde.core.common.GlobalConstant.VERIFT_CODE_TIMEOUT;
             }
             GlobalContext.getSession().removeAttribute("userPhone");
             sysUser.setUserPhone(userPhone);
             userBiz.saveAuthenSuccessUser(sysUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
-            return GlobalConstant.VERIFT_CODE_RIGHT;
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
+            return com.pinde.core.common.GlobalConstant.VERIFT_CODE_RIGHT;
         } else {
-            return GlobalConstant.VERIFT_CODE_ERROR;
+            return com.pinde.core.common.GlobalConstant.VERIFT_CODE_ERROR;
         }
     }
 
@@ -1858,7 +1857,7 @@ public class InxJsResController extends GeneralController {
     public String modifyPhone(String userPhone, Model model, HttpServletRequest request) {
         List<SysUser> sysUsers = userBiz.selectByUserPhoneAndIsVerify(userPhone);
         if (sysUsers != null && sysUsers.size() > 0) {
-            return GlobalConstant.USER_PHONE_REPEAT;
+            return com.pinde.core.common.GlobalConstant.USER_PHONE_REPEAT;
         }
         // 根据手机号码取session中的发送验证码时间
         Long sendTime = (Long) getSessionAttribute(userPhone);
@@ -1872,7 +1871,7 @@ public class InxJsResController extends GeneralController {
         }
         SMSUtil smsUtil = new SMSUtil(userPhone);
         int code = (int) ((Math.random() * 9 + 1) * 100000);
-        SysSmsLog sSmsRecord = smsUtil.send("10001", GlobalConstant.JSRES_TEMPLATE, "R101", code);
+        com.pinde.core.model.SysSmsLog sSmsRecord = smsUtil.send("10001", com.pinde.core.common.GlobalConstant.JSRES_TEMPLATE, "R101", code);
         String currDateTime = DateUtil.getCurrDateTime2();
         SysUser currentUser = GlobalContext.getCurrentUser();
         currentUser.setVerifyCode(String.valueOf(code));
@@ -1891,7 +1890,7 @@ public class InxJsResController extends GeneralController {
     public String modifyPhoneVerifyCode(String userPhone, String verifyCode, Model model) {
         String userPhoneBefore = StringUtil.defaultString((String) getSessionAttribute("userPhone"));
         if (StringUtil.isBlank(userPhoneBefore) || !userPhoneBefore.equals(userPhone)) {
-            return GlobalConstant.PHONE_NOT_SAME;
+            return com.pinde.core.common.GlobalConstant.PHONE_NOT_SAME;
         }
         SysUser sysUser = GlobalContext.getCurrentUser();
         sysUser = userBiz.readSysUser(sysUser.getUserFlow());
@@ -1901,15 +1900,15 @@ public class InxJsResController extends GeneralController {
         String userVerifyCode = sysUser.getVerifyCode();
         if (verifyCode.equals(userVerifyCode)) {
             if (betweenTowDate > 300) {
-                return GlobalConstant.VERIFT_CODE_TIMEOUT;
+                return com.pinde.core.common.GlobalConstant.VERIFT_CODE_TIMEOUT;
             }
             GlobalContext.getSession().removeAttribute("userPhone");
             sysUser.setUserPhone(userPhone);
             userBiz.saveAuthenSuccessUser(sysUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
-            return GlobalConstant.VERIFT_CODE_RIGHT;
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
+            return com.pinde.core.common.GlobalConstant.VERIFT_CODE_RIGHT;
         } else {
-            return GlobalConstant.VERIFT_CODE_ERROR;
+            return com.pinde.core.common.GlobalConstant.VERIFT_CODE_ERROR;
         }
 
     }
@@ -1936,7 +1935,7 @@ public class InxJsResController extends GeneralController {
         //验证码输入不能为空，不区分大小写
         if (StringUtil.isBlank(verifyCode) || !sessionValidateCode.equalsIgnoreCase(verifyCode)) {
             respMap.put("errorMessage", SpringUtil.getMessage("validateCode.notEquals"));
-            respMap.put("result", GlobalConstant.FLAG_F);
+            respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_F);
             removeValidateCodeAttribute();
             return respMap;
         }
@@ -1954,11 +1953,11 @@ public class InxJsResController extends GeneralController {
                 userEmail = user.getUserEmail();
                 inxBiz.sendResetPassEmail(userEmail, user.getUserFlow());
                 respMap.put("userEmail", userEmail);
-                respMap.put("result", GlobalConstant.FLAG_Y);
+                respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
                 return respMap;
             }
         }
-        respMap.put("result", GlobalConstant.FLAG_N);
+        respMap.put("result", com.pinde.core.common.GlobalConstant.FLAG_N);
         return respMap;
     }
 
@@ -1980,11 +1979,11 @@ public class InxJsResController extends GeneralController {
             //更新
             sysUser.setUserPasswd(PasswordHelper.encryptPassword(sysUser.getUserFlow(), userPasswd));
             userBiz.updateUser(sysUser);
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
-            return GlobalConstant.RESET_SUCCESSED;
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
+            return com.pinde.core.common.GlobalConstant.RESET_SUCCESSED;
         } else {
             //给出错误提示
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -2062,14 +2061,14 @@ public class InxJsResController extends GeneralController {
             }
         }
         //设置当前用户
-        setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
         String clientIp = ClientIPUtils.getClientIp(request);
         //记录日志
         SysLog log = new SysLog();
         log.setOperId(OperTypeEnum.LogIn.getId());
         log.setOperName(OperTypeEnum.LogIn.getName());
         log.setLogDesc("登录IP[" + clientIp + "]");
-        log.setWsId(GlobalConstant.SYS_WS_ID);
+        log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
         GeneralMethod.addSysLog(log);
         logMapper.insert(log);
 
@@ -2078,7 +2077,7 @@ public class InxJsResController extends GeneralController {
             //审核通过
             SysUserRole userRole = new SysUserRole();
             userRole.setUserFlow(user.getUserFlow());
-            userRole.setWsId(GlobalConstant.RES_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
             List<String> currRoleList = new ArrayList<String>();
             if (userRoleList == null || userRoleList.size() == 0) {
@@ -2095,7 +2094,7 @@ public class InxJsResController extends GeneralController {
                         currRoleList.add(myuserRole.getRoleFlow());
                     }
                 }
-                GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
+                GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST, currRoleList);
                 String roleFlow = role.getRoleFlow();
                 return "redirect:" + getRoleUrl(roleFlow);
             }

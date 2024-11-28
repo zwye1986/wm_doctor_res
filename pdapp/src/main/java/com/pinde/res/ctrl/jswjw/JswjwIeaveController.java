@@ -199,12 +199,12 @@ public class JswjwIeaveController {
             model.addAttribute("resultType", "审核状态为空");
             return successUrl;
         }
-        if (isTeacher && !GlobalConstant.FLAG_Y.equals(teacherAgreeFlag) && !GlobalConstant.FLAG_N.equals(teacherAgreeFlag)) {
+        if (isTeacher && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(teacherAgreeFlag) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(teacherAgreeFlag)) {
             model.addAttribute("resultId", "3011101");
             model.addAttribute("resultType", "审核状态只能是Y通过或N不通过");
             return successUrl;
         }
-        if (GlobalConstant.FLAG_N.equals(teacherAgreeFlag) && StringUtil.isBlank(auditInfo)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(teacherAgreeFlag) && StringUtil.isBlank(auditInfo)) {
             model.addAttribute("resultId", "3011101");
             model.addAttribute("resultType", "审核信息为空");
             return successUrl;
@@ -223,17 +223,17 @@ public class JswjwIeaveController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(teacherAgreeFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(teacherAgreeFlag)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.TeacherPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.TeacherPass.getName());
                 if ("-".equals(kq.getHeadName())) {
                     if ("-".equals(kq.getManagerName())) {
                         kq.setAuditRoleNow("Pass");
                     }else {
-                        kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                        kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                     }
                 }else {
-                    kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_HEAD);
+                    kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD);
                     // 判断带教和科主任是否同一人审核，如果是审批同时通过
                     String teacherFlow = kq.getTeacherFlow() == null ? "" : kq.getTeacherFlow();
                     if(teacherFlow.equals(kq.getHeadFlow())){
@@ -242,7 +242,7 @@ public class JswjwIeaveController {
                         if ("-".equals(kq.getManagerName())) {
                             kq.setAuditRoleNow("Pass");
                         }else {
-                            kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                            kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                         }
                         kq.setHeadAuditTime(time);
                         kq.setHeadAgreeFlag(teacherAgreeFlag);
@@ -263,13 +263,13 @@ public class JswjwIeaveController {
                 model.addAttribute("resultType", "此请假信息已审核，请刷新列表页");
                 return successUrl;
             }
-            if (GlobalConstant.FLAG_Y.equals(teacherAgreeFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(teacherAgreeFlag)) {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadPass.getId());
                 kq.setAuditStatusName(ResDoctorKqStatusEnum.HeadPass.getName());
                 if ("-".equals(kq.getManagerName())) {
                     kq.setAuditRoleNow("Pass");
                 }else {
-                    kq.setAuditRoleNow(GlobalConstant.RES_ROLE_SCOPE_ADMIN);
+                    kq.setAuditRoleNow(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN);
                 }
             } else {
                 kq.setAuditStatusId(ResDoctorKqStatusEnum.HeadUnPass.getId());

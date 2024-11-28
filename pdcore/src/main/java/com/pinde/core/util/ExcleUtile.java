@@ -573,7 +573,7 @@ public class ExcleUtile {
 						 if(null == ob || ob.equals("")){
 							 result = "";
 						 }else{
-							 result = ArmyTypeEnum.getNameById(getValueByAttrs(paramId,item).toString());
+                             result = com.pinde.core.common.enums.ArmyTypeEnum.getNameById(getValueByAttrs(paramId, item).toString());
 						 }
 					 }else{
 						 result = getValueByAttrs(paramId,item);

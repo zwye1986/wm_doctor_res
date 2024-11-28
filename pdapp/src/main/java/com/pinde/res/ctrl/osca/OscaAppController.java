@@ -1,7 +1,7 @@
 package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.UserStatusEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
@@ -11,7 +11,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.osca.IOscaAppBiz;
-import com.pinde.res.enums.osca.ExamStatusEnum;
 import com.pinde.res.enums.osca.ScanDocStatusEnum;
 import com.pinde.res.enums.osca.ScoreStatusEnum;
 import com.pinde.res.enums.osca.SignStatusEnum;
@@ -122,7 +121,7 @@ public class OscaAppController {
 				model.addAttribute("resultType", "用户名或密码错误"); 
 			}
 
-			List<SysUserRole> userRoles = oscaAppBiz.getSysUserRole(userinfo.getUserFlow(),GlobalConstant.OSCA_WS_ID);
+            List<SysUserRole> userRoles = oscaAppBiz.getSysUserRole(userinfo.getUserFlow(), com.pinde.core.common.GlobalConstant.OSCA_WS_ID);
 			if(userRoles==null || userRoles.isEmpty()){
 				model.addAttribute("resultId", "3010106");
 				model.addAttribute("resultType", "用户未赋权，无权限登录！");
@@ -157,7 +156,7 @@ public class OscaAppController {
 			}
 			if(isExamTea)
 			{
-				if(StringUtil.isBlank(userinfo.getRecordStatus())||GlobalConstant.FLAG_N.equals(userinfo.getRecordStatus())){
+                if (StringUtil.isBlank(userinfo.getRecordStatus()) || com.pinde.core.common.GlobalConstant.FLAG_N.equals(userinfo.getRecordStatus())) {
 					model.addAttribute("resultId", "30197");
 					model.addAttribute("resultType", "您的帐号已被停用，请联系考点进行启用");
 					return "res/osca/login";
@@ -176,7 +175,7 @@ public class OscaAppController {
 				model.addAttribute("codeInfo",codeInfo);
 				model.addAttribute("roleFlow","ExamTea");
 				model.addAttribute("roleName","考官");
-				if(GlobalConstant.FLAG_N.equals(isPad))
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(isPad))
 				{
 					model.addAttribute("resultId", "30197");
 					model.addAttribute("resultType", "此为学员app端，你无权限登录");
@@ -186,7 +185,7 @@ public class OscaAppController {
 			}else {
 
 				//验证用户是否有角色
-				if(StringUtil.isBlank(userinfo.getRecordStatus())||GlobalConstant.FLAG_N.equals(userinfo.getRecordStatus())){
+                if (StringUtil.isBlank(userinfo.getRecordStatus()) || com.pinde.core.common.GlobalConstant.FLAG_N.equals(userinfo.getRecordStatus())) {
 					model.addAttribute("resultId", "30197");
 					model.addAttribute("resultType", "您的帐号已被停用，请联系系统管理员进行启用");
 					return "res/osca/login";
@@ -197,15 +196,15 @@ public class OscaAppController {
 					return "res/osca/login";
 				}
 				if(isDoctor) {
-                    model.addAttribute("isNew", GlobalConstant.FLAG_N);
+                    model.addAttribute("isNew", com.pinde.core.common.GlobalConstant.FLAG_N);
 					//如果是注册未审核通过的学员，进入个人信息填写页面
 					if("OSCE_NEW".equals(userinfo.getStatusId())){
-                        model.addAttribute("isNew", GlobalConstant.FLAG_Y);
+                        model.addAttribute("isNew", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 					model.addAttribute("roleFlow","Student");
 					model.addAttribute("roleName","学员");
 
-					if(!GlobalConstant.FLAG_N.equals(isPad))
+                    if (!com.pinde.core.common.GlobalConstant.FLAG_N.equals(isPad))
 					{
 						model.addAttribute("resultId", "30197");
 						model.addAttribute("resultType", "此为管理员pad端，你无权限登录");
@@ -219,14 +218,14 @@ public class OscaAppController {
 						model.addAttribute("resultType", "您暂无考点信息，无权限登录");
 						return "res/osca/login";
 					}
-					if (!GlobalConstant.FLAG_Y.equals(org.getIsExamOrg())) {
+                    if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(org.getIsExamOrg())) {
 						model.addAttribute("resultId", "30197");
 						model.addAttribute("resultType", "您的帐号不是考点帐号，无权限登录");
 						return "res/osca/login";
 					}
 					model.addAttribute("roleFlow", "Admin");
 					model.addAttribute("roleName", "管理员");
-					if(GlobalConstant.FLAG_N.equals(isPad))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(isPad))
 					{
 						model.addAttribute("resultId", "30197");
 						model.addAttribute("resultType", "此为学员app端，你无权限登录");
@@ -380,8 +379,8 @@ public class OscaAppController {
 				bean.put("roomRecordFlow",roomRecordFlow);
 				bean.put("roomFlow",roomTea.getRoomFlow());
 				bean.put("roomName",roomTea.getRoomName());
-				bean.put("examStatusId",ExamStatusEnum.StayAssessment.getId());
-				bean.put("examStatusName",ExamStatusEnum.StayAssessment.getName());
+                bean.put("examStatusId", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+                bean.put("examStatusName", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
 				if(i==0){
 					examRoomFlow=roomRecordFlow;
 				}
@@ -396,7 +395,7 @@ public class OscaAppController {
 					}
 					bean.put("examStatusId",docStation.getExamStatusId());
 					bean.put("examStatusName",docStation.getExamStatusName());
-					if(ExamStatusEnum.Waiting.getId().equals(docStation.getExamStatusId())) {
+                    if (com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId().equals(docStation.getExamStatusId())) {
 						examRoomFlow = roomRecordFlow;
 					}
 				}
@@ -441,9 +440,9 @@ public class OscaAppController {
 				//查询当前站点下，本机构是否配置了试卷
 				List<PubFile> files=oscaAppBiz.findStationFiles(s.getStationFlow(),tea.getOrgFlow());
 				if(files!=null&&files.size()>0) {
-                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_Y);
+                    stationMap.put(s.getStationFlow() + "ExamFiles", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}else{
-                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_N);
+                    stationMap.put(s.getStationFlow() + "ExamFiles", com.pinde.core.common.GlobalConstant.FLAG_N);
 				}
 			}
 			//看看考场
@@ -454,7 +453,7 @@ public class OscaAppController {
 			SysUser user=oscaAppBiz.readSysUser(userFlow);
 			if(b==null)
 				 b=new OscaTeaScanDoc();
-			b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			b.setClinicalFlow(clinicalFlow);
 			b.setClinicalName(skillsAssessment.getClinicalName());
 			b.setDoctorFlow(doctorFlow);
@@ -471,9 +470,9 @@ public class OscaAppController {
 			b.setPartnerName(user.getUserName());
 			b.setCodeInfo(codeInfo);//保存学员二维码信息
 			int num=oscaAppBiz.editTeaScanDoc(b,user);
-            model.addAttribute("showSubmit", GlobalConstant.FLAG_N);
+            model.addAttribute("showSubmit", com.pinde.core.common.GlobalConstant.FLAG_N);
 			if(count<=stations.size()&&count>0){
-                model.addAttribute("showSubmit", GlobalConstant.FLAG_Y);
+                model.addAttribute("showSubmit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			model.addAttribute("stationMap",stationMap);
 			oscaAppBiz.updateTeaScanDocStatus(doctorFlow,clinicalFlow,user);
@@ -609,8 +608,8 @@ public class OscaAppController {
 			bean.put("roomRecordFlow", roomRecordFlow);
 			bean.put("roomFlow", roomTea.getRoomFlow());
 			bean.put("roomName", roomTea.getRoomName());
-			bean.put("examStatusId", ExamStatusEnum.StayAssessment.getId());
-			bean.put("examStatusName", ExamStatusEnum.StayAssessment.getName());
+            bean.put("examStatusId", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+            bean.put("examStatusName", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
 			if (i == 0) {
 				examRoomFlow = roomRecordFlow;
 			}
@@ -625,7 +624,7 @@ public class OscaAppController {
 				}
 				bean.put("examStatusId", docStation.getExamStatusId());
 				bean.put("examStatusName", docStation.getExamStatusName());
-				if (ExamStatusEnum.Waiting.getId().equals(docStation.getExamStatusId())) {
+                if (com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId().equals(docStation.getExamStatusId())) {
 					examRoomFlow = roomRecordFlow;
 				}
 			}
@@ -670,9 +669,9 @@ public class OscaAppController {
 			//查询当前站点下，本机构是否配置了试卷
 			List<PubFile> files=oscaAppBiz.findStationFiles(s.getStationFlow(),tea.getOrgFlow());
 			if(files!=null&&files.size()>0) {
-                stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_Y);
+                stationMap.put(s.getStationFlow() + "ExamFiles", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}else{
-                stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_N);
+                stationMap.put(s.getStationFlow() + "ExamFiles", com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 		}
 		//看看考场
@@ -683,7 +682,7 @@ public class OscaAppController {
 		SysUser user = oscaAppBiz.readSysUser(userFlow);
 		if (b == null)
 			b = new OscaTeaScanDoc();
-		b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		b.setClinicalFlow(doctorAssessment.getClinicalFlow());
 		b.setClinicalName(skillsAssessment.getClinicalName());
 		b.setDoctorFlow(doctorAssessment.getDoctorFlow());
@@ -700,9 +699,9 @@ public class OscaAppController {
 		b.setPartnerName(user.getUserName());
 		b.setCodeInfo(doctorAssessment.getCodeInfo());//保存学员二维码信息
 		int num = oscaAppBiz.editTeaScanDoc(b, user);
-        model.addAttribute("showSubmit", GlobalConstant.FLAG_N);
+        model.addAttribute("showSubmit", com.pinde.core.common.GlobalConstant.FLAG_N);
 		if(count<=stations.size()&&count>0){
-            model.addAttribute("showSubmit", GlobalConstant.FLAG_Y);
+            model.addAttribute("showSubmit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		model.addAttribute("stationMap", stationMap);
 		//获取访问路径前缀
@@ -872,8 +871,8 @@ public class OscaAppController {
 					bean.put("roomFlow",roomTea.getRoomFlow());
 					bean.put("roomName",roomTea.getRoomName());
 				}
-				bean.put("examStatusId",ExamStatusEnum.StayAssessment.getId());
-				bean.put("examStatusName",ExamStatusEnum.StayAssessment.getName());
+                bean.put("examStatusId", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId());
+                bean.put("examStatusName", com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getName());
 				//当前站点信息学员排队的考场
 				OscaSkillRoomDoc docStation=oscaAppBiz.getOscaSkillRoomDocByDoc(param);
 				if(docStation!=null){
@@ -927,14 +926,14 @@ public class OscaAppController {
 				//查询当前站点下，本机构是否配置了试卷
 				List<PubFile> files=oscaAppBiz.findStationFiles(s.getStationFlow(),tea.getOrgFlow());
 				if(files!=null&&files.size()>0) {
-                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_Y);
+                    stationMap.put(s.getStationFlow() + "ExamFiles", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}else{
-                    stationMap.put(s.getStationFlow() + "ExamFiles", GlobalConstant.FLAG_N);
+                    stationMap.put(s.getStationFlow() + "ExamFiles", com.pinde.core.common.GlobalConstant.FLAG_N);
 				}
 			}
-        model.addAttribute("showSubmit", GlobalConstant.FLAG_N);
+        model.addAttribute("showSubmit", com.pinde.core.common.GlobalConstant.FLAG_N);
 			if(count<=stations.size()&&count>0){
-                model.addAttribute("showSubmit", GlobalConstant.FLAG_Y);
+                model.addAttribute("showSubmit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			model.addAttribute("stationMap",stationMap);
 			return "res/osca/assessRefresh";
@@ -1301,9 +1300,9 @@ public class OscaAppController {
 		docRoom.setClinicalName(skillsAssessment.getClinicalName());
 		docRoom.setStationFlow(stationFlow);
 		docRoom.setStationName(station.getStationName());
-		if(StringUtil.isBlank(docRoom.getExamStatusId())||ExamStatusEnum.Waiting.getId().equals(docRoom.getExamStatusId())) {
-			docRoom.setExamStatusId(ExamStatusEnum.AssessIng.getId());
-			docRoom.setExamStatusName(ExamStatusEnum.AssessIng.getName());
+        if (StringUtil.isBlank(docRoom.getExamStatusId()) || com.pinde.core.common.enums.ExamStatusEnum.Waiting.getId().equals(docRoom.getExamStatusId())) {
+            docRoom.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId());
+            docRoom.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getName());
 		}
 		docRoom.setWaitingTime(DateUtil.getCurrentTime());
 		oscaAppBiz.editOscaSkillRoomDoc(docRoom,tea);
@@ -1380,11 +1379,11 @@ public class OscaAppController {
 		{
 			for(OscaSubjectStationFrom from:froms2)
 			{
-				if(GlobalConstant.FLAG_Y.equals(from.getIsRequired()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(from.getIsRequired()))
 				{
 					requiredFroms.add(from);
 				}
-				if(GlobalConstant.FLAG_N.equals(from.getIsRequired()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(from.getIsRequired()))
 				{
 					notRequiredFroms.add(from);
 				}
@@ -1408,11 +1407,11 @@ public class OscaAppController {
 					{
 						from.setRecordFlow("NotExam");
 						froms.add(from);
-						if(GlobalConstant.FLAG_Y.equals(from.getIsRequired()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(from.getIsRequired()))
 						{
 							requiredFroms.add(from);
 						}
-						if(GlobalConstant.FLAG_N.equals(from.getIsRequired()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(from.getIsRequired()))
 						{
 							notRequiredFroms.add(from);
 						}
@@ -1426,9 +1425,9 @@ public class OscaAppController {
 		model.addAttribute("requiredFroms",requiredFroms);
 
 		if(froms!=null&&froms.size()>0){
-            model.addAttribute("haveFrom", GlobalConstant.FLAG_Y);
+            model.addAttribute("haveFrom", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			if(froms.size()==1){
-                model.addAttribute("haveOne", GlobalConstant.FLAG_Y);
+                model.addAttribute("haveOne", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				OscaSubjectStationFrom b=froms.get(0);
 				OscaFrom from=null;
 				if("NotExam".equals(b.getRecordFlow()))//未考核的话取原来的表单内容
@@ -1496,8 +1495,8 @@ public class OscaAppController {
 			}
 		}else {
 			//没有配置表单直接查询成绩
-            model.addAttribute("haveFrom", GlobalConstant.FLAG_N);
-            model.addAttribute("haveOne", GlobalConstant.FLAG_N);
+            model.addAttribute("haveFrom", com.pinde.core.common.GlobalConstant.FLAG_N);
+            model.addAttribute("haveOne", com.pinde.core.common.GlobalConstant.FLAG_N);
 			model.addAttribute("stationScore",station.getStationScore());
 		}
 		model.addAttribute("paramMap",param);
@@ -1543,7 +1542,7 @@ public class OscaAppController {
 		{
 			imageUrl="/examTeaSigin/"+dateString+"/"+siginImageName;
 		}
-		file.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		file.setFileName(siginImageName);
 		file.setFilePath(imageUrl);
 		file.setProductFlow(tea.getUserFlow());
@@ -1715,8 +1714,8 @@ public class OscaAppController {
 		score.setStationName(station.getStationName());
 		score.setStatusId(ScoreStatusEnum.Save.getId());
 		score.setStatusName(ScoreStatusEnum.Save.getName());
-        score.setIsHaveFrom(GlobalConstant.FLAG_N);
-        score.setFromTypeId(GlobalConstant.FLAG_N);
+        score.setIsHaveFrom(com.pinde.core.common.GlobalConstant.FLAG_N);
+        score.setFromTypeId(com.pinde.core.common.GlobalConstant.FLAG_N);
 		score.setFromUrl("NotHavaFrom");
 		score.setPartnerFlow(userFlow);
 		score.setPartnerName(tea.getUserName());
@@ -1735,9 +1734,9 @@ public class OscaAppController {
 		docRoom.setClinicalName(skillsAssessment.getClinicalName());
 		docRoom.setStationFlow(stationFlow);
 		docRoom.setStationName(station.getStationName());
-		if(ExamStatusEnum.AssessIng.getId().equals(docRoom.getExamStatusId())||StringUtil.isBlank(docRoom.getExamStatusId())) {
-			docRoom.setExamStatusId(ExamStatusEnum.Assessment.getId());
-			docRoom.setExamStatusName(ExamStatusEnum.Assessment.getName());
+        if (com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId().equals(docRoom.getExamStatusId()) || StringUtil.isBlank(docRoom.getExamStatusId())) {
+            docRoom.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId());
+            docRoom.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getName());
 			OscaSkillDocStation docStation=oscaAppBiz.getDocSkillStation(station.getStationFlow(),doctorFlow,clinicalFlow);
 			if(docStation==null)
 			{
@@ -1749,9 +1748,9 @@ public class OscaAppController {
 			docStation.setStationName(station.getStationName());
 			docStation.setDoctorFlow(doctorFlow);
 			docStation.setDoctorName(docUser.getUserName());
-			docStation.setExamStatusId(ExamStatusEnum.Assessment.getId());
-			docStation.setExamStatusName(ExamStatusEnum.Assessment.getName());
-			docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId());
+            docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getName());
+            docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			oscaAppBiz.saveDocStation(docStation,tea);
 			List<OscaSkillDocStation> docStations=oscaAppBiz.getDocSkillStations(doctorFlow,clinicalFlow);
 			if(docStations!=null)
@@ -1759,7 +1758,7 @@ public class OscaAppController {
 				String date=DateUtil.getCurrDateTime2();
 				for( OscaSkillDocStation ds:docStations)
 				{
-					if(ExamStatusEnum.StayAssessment.getId().equals(ds.getExamStatusId()))
+                    if (com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId().equals(ds.getExamStatusId()))
 					{
 						ds.setHoukaoTime(date);
 						oscaAppBiz.saveDocStation(ds,tea);
@@ -1848,7 +1847,7 @@ public class OscaAppController {
 			model.addAttribute("resultType", "必选标识符为空");
 			return "res/osca/success";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(isRequired)&&!GlobalConstant.FLAG_N.equals(isRequired)){
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRequired) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isRequired)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "必选标识符只能是Y或N");
 			return "res/osca/success";
@@ -1908,7 +1907,7 @@ public class OscaAppController {
 			score = oscaAppBiz.getNoFromScoreByParam(param);
 		}
 		//如果没有打分无表单的分数，并且是选填的话，则查询非必选的
-		if(GlobalConstant.FLAG_N.equals(isRequired)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(isRequired)) {
 			if (score == null) {
 				score = oscaAppBiz.getNotRequiredFromScoreByParam(param);
 			}
@@ -1961,7 +1960,7 @@ public class OscaAppController {
 		score.setStationName(station.getStationName());
 		score.setStatusId(ScoreStatusEnum.Save.getId());
 		score.setStatusName(ScoreStatusEnum.Save.getName());
-        score.setIsHaveFrom(GlobalConstant.FLAG_Y);
+        score.setIsHaveFrom(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		score.setIsRequired(isRequired);
 		score.setFromFlow(from.getFromFlow());
 		score.setFromName(from.getFromName());
@@ -2043,9 +2042,9 @@ public class OscaAppController {
 		docRoom.setClinicalName(skillsAssessment.getClinicalName());
 		docRoom.setStationFlow(stationFlow);
 		docRoom.setStationName(station.getStationName());
-		if(ExamStatusEnum.AssessIng.getId().equals(docRoom.getExamStatusId())||StringUtil.isBlank(docRoom.getExamStatusId())) {
-			docRoom.setExamStatusId(ExamStatusEnum.Assessment.getId());
-			docRoom.setExamStatusName(ExamStatusEnum.Assessment.getName());
+        if (com.pinde.core.common.enums.ExamStatusEnum.AssessIng.getId().equals(docRoom.getExamStatusId()) || StringUtil.isBlank(docRoom.getExamStatusId())) {
+            docRoom.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId());
+            docRoom.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getName());
 			OscaSkillDocStation docStation=oscaAppBiz.getDocSkillStation(station.getStationFlow(),doctorFlow,clinicalFlow);
 			if(docStation==null)
 			{
@@ -2057,9 +2056,9 @@ public class OscaAppController {
 			docStation.setStationName(station.getStationName());
 			docStation.setDoctorFlow(doctorFlow);
 			docStation.setDoctorName(docUser.getUserName());
-			docStation.setExamStatusId(ExamStatusEnum.Assessment.getId());
-			docStation.setExamStatusName(ExamStatusEnum.Assessment.getName());
-			docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            docStation.setExamStatusId(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getId());
+            docStation.setExamStatusName(com.pinde.core.common.enums.ExamStatusEnum.Assessment.getName());
+            docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			oscaAppBiz.saveDocStation(docStation,tea);
 			List<OscaSkillDocStation> docStations=oscaAppBiz.getDocSkillStations(doctorFlow,clinicalFlow);
 			if(docStations!=null)
@@ -2067,7 +2066,7 @@ public class OscaAppController {
 				String date=DateUtil.getCurrDateTime2();
 				for( OscaSkillDocStation ds:docStations)
 				{
-					if(ExamStatusEnum.StayAssessment.getId().equals(ds.getExamStatusId()))
+                    if (com.pinde.core.common.enums.ExamStatusEnum.StayAssessment.getId().equals(ds.getExamStatusId()))
 					{
 						ds.setHoukaoTime(date);
 						oscaAppBiz.saveDocStation(ds,tea);
@@ -2177,7 +2176,7 @@ public class OscaAppController {
 			model.addAttribute("resultType", "必选标识符为空");
 			return "res/osca/selectStationFrom";
 		}
-		if(!GlobalConstant.FLAG_Y.equals(isRequired)&&!GlobalConstant.FLAG_N.equals(isRequired)){
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRequired) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isRequired)) {
 			model.addAttribute("resultId", "3011101");
 			model.addAttribute("resultType", "必选标识符只能是Y或N");
 			return "res/osca/selectStationFrom";
@@ -2301,8 +2300,8 @@ public class OscaAppController {
 			param.put("scoreFlow", scoreFlow);
 			model.addAttribute("paramMap",param);
 			//如果是没有表单的成绩就直接返回页面
-            if (score.getIsHaveFrom().equals(GlobalConstant.FLAG_N)) {
-                model.addAttribute("haveFrom", GlobalConstant.FLAG_N);
+            if (score.getIsHaveFrom().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
+                model.addAttribute("haveFrom", com.pinde.core.common.GlobalConstant.FLAG_N);
 				return "res/osca/selectStationFrom";
 			}else if(StringUtil.isBlank(fromFlow)){
 				model.addAttribute("resultId", "3011101");
@@ -2313,7 +2312,7 @@ public class OscaAppController {
 			OscaFrom from = oscaAppBiz.getFromByFlow(fromFlow);
 			model.addAttribute("from", from);
 			//固定表单
-            model.addAttribute("haveFrom", GlobalConstant.FLAG_Y);
+            model.addAttribute("haveFrom", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			//固定表单
 			if(score.getFromTypeId().equals("1")){
 				String url=score.getFromUrl();

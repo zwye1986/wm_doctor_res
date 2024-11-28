@@ -137,7 +137,7 @@ public class JspFormUtil {
 								if(out!=null)
 									out.close();
 							}*/
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							GeneralMethod.setRecordInfo(pubFile, false);
 							IFileBiz fileBiz = SpringUtil.getBean(IFileBiz.class);
 							fileBiz.addFile(pubFile);
@@ -300,8 +300,8 @@ public class JspFormUtil {
 			String key = itemElement.attributeValue("name");
 			String mutiple = itemElement.attributeValue("multiple");
 			String isFile = itemElement.attributeValue("isFile");
-			if(GlobalConstant.FLAG_Y.equals(isFile)){
-				setMapData(map , key , isFile , mutiple , itemElement ,  GlobalConstant.IS_FILE);
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isFile)) {
+                setMapData(map, key, isFile, mutiple, itemElement, com.pinde.core.common.GlobalConstant.IS_FILE);
 			}else{
 				setMapData(map , key , isFile , mutiple , itemElement , null);
 			}
@@ -320,13 +320,13 @@ public class JspFormUtil {
 	 * @param itemElement
 	 */
 	private  static void setMapData(Map<String , Object> map , String key , String isFile , String mutiple , Element itemElement , String fileFlag ){
-		if(GlobalConstant.FLAG_N.equals(mutiple)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(mutiple)) {
 			String val = itemElement.element("value").getText();
 			map.put(key, val);
-			if(GlobalConstant.IS_FILE.equals(fileFlag)){
+            if (com.pinde.core.common.GlobalConstant.IS_FILE.equals(fileFlag)) {
 				map.put(fileFlag, val);
 			}
-		}else if(GlobalConstant.FLAG_Y.equals(mutiple)){
+        } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(mutiple)) {
 			Iterator itemIterator = itemElement.elementIterator();
 			List<String> values = new ArrayList<String>();
 			while(itemIterator.hasNext()){
@@ -337,7 +337,7 @@ public class JspFormUtil {
 				List<String> oldVals = (List<String>)map.get(key);
 				oldVals.addAll(values);
 			}
-			if(GlobalConstant.IS_FILE.equals(fileFlag)){
+            if (com.pinde.core.common.GlobalConstant.IS_FILE.equals(fileFlag)) {
 				if(map.containsKey(fileFlag)){
 					List<String> oldVals = (List<String>)map.get(fileFlag);
 					oldVals.addAll(values);

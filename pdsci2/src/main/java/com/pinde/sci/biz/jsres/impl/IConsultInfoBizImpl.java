@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IConsultInfoBiz;
@@ -53,7 +54,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
         if (StringUtil.isNotBlank(consultInfo.getOrgCityName())){
             criteria.andOrgCityNameEqualTo(consultInfo.getOrgCityName());
         }
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if ("time".equals(orderBy)){
             example.setOrderByClause("CONSULT_QUESTION_CREATE_TIME DESC");
         }else if ("number".equals(orderBy)){
@@ -72,7 +73,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public List<ConsultInfo> searchMyQuestion(String userFlow) {
         ConsultInfoExample example = new ConsultInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCreateUserFlowEqualTo(userFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCreateUserFlowEqualTo(userFlow);
         List<ConsultInfo> consultInfos = consultInfoMapper.selectByExample(example);
         return consultInfos;
     }
@@ -127,7 +128,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public Integer delete(String consultInfoFlow){
         ConsultInfo consultInfo = new ConsultInfo();
-        consultInfo.setRecordStatus(GlobalConstant.FLAG_N);
+        consultInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         consultInfo.setConsultInfoFlow(consultInfoFlow);
         return consultInfoMapper.updateByPrimaryKeySelective(consultInfo);
     }
@@ -135,7 +136,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public ConsultInfo read(String consultInfoFlow) {
         ConsultInfoExample example = new ConsultInfoExample();
-        example.createCriteria().andConsultInfoFlowEqualTo(consultInfoFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andConsultInfoFlowEqualTo(consultInfoFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ConsultInfo> consultInfos = consultInfoMapper.selectByExampleWithBLOBs(example);
         if (consultInfos != null && consultInfos.size() >0){
             return consultInfos.get(0);

@@ -100,8 +100,8 @@ public class ResBookStudyRecordController extends GeneralController {
 		int count=bookStudyRecordBiz.savaRecord(record);
 		if(count==1)
 		{
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return  GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 }

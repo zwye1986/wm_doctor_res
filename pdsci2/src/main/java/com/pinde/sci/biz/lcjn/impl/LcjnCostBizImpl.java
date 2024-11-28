@@ -8,7 +8,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
 import com.pinde.sci.dao.lcjn.LcjnCostManagerExtMapper;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     @Override
     public List<LcjnCourseSupplies> searchSuppliesBySkillFlowAndCourse(String skillFlow,String courseFlow) {
         LcjnCourseSuppliesExample example = new LcjnCourseSuppliesExample();
-        LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(skillFlow)&&StringUtil.isNotBlank(courseFlow)) {
             criteria.andSkillFlowEqualTo(skillFlow);
             criteria.andCourseFlowEqualTo(courseFlow);
@@ -54,7 +54,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     @Override
     public List<LcjnCourseSupplies> searchSuppliesById(String id,String skillFlow,String courseFlow) {
         LcjnCourseSuppliesExample example = new LcjnCourseSuppliesExample();
-        LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(id)) {
             criteria.andDictIdEqualTo(id);
         }
@@ -71,7 +71,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     public int countSign(String courseFlow) {
         if(StringUtil.isNotBlank(courseFlow)){
             LcjnDoctorSiginExample example = new LcjnDoctorSiginExample();
-            LcjnDoctorSiginExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
+            LcjnDoctorSiginExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
             return doctorSiginMapper.countByExample(example);
         }
         return 0;
@@ -81,7 +81,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     public int countNum(String courseFlow) {
         if(StringUtil.isNotBlank(courseFlow)){
             LcjnDoctorCourseExample example = new LcjnDoctorCourseExample();
-            LcjnDoctorCourseExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+            LcjnDoctorCourseExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
                     andCourseFlowEqualTo(courseFlow).andAuditStatusIdEqualTo(AuditStatusEnum.Passed.getId());
             return doctorCourseMapper.countByExample(example);
         }
@@ -91,7 +91,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     @Override
     public List<LcjnCourseSkill> searchByCourseFlow(String courseFlow) {
         LcjnCourseSkillExample example = new LcjnCourseSkillExample();
-        LcjnCourseSkillExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnCourseSkillExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(courseFlow)) {
             criteria.andCourseFlowEqualTo(courseFlow);
             return courseSkillMapper.selectByExample(example);
@@ -102,7 +102,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     @Override
     public List<LcjnSkillCfgDetail> searchCfgBySkillFlow(String skillFlow) {
         LcjnSkillCfgDetailExample example = new LcjnSkillCfgDetailExample();
-        LcjnSkillCfgDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnSkillCfgDetailExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(skillFlow)) {
             criteria.andSkillFlowEqualTo(skillFlow);
             return skillCfgDetailMapper.selectByExample(example);
@@ -122,7 +122,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     public List<LcjnSupplies> searchById(String id) {
         if(StringUtil.isNotBlank(id)){
             LcjnSuppliesExample example = new LcjnSuppliesExample();
-            LcjnSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDictIdEqualTo(id);
+            LcjnSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDictIdEqualTo(id);
             return suppliesMapper.selectByExample(example);
         }
         return null;
@@ -152,7 +152,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     @Override
     public List<LcjnSupplies> searchSupplyList() {
         LcjnSuppliesExample example = new LcjnSuppliesExample();
-        LcjnSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return suppliesMapper.selectByExample(example);
     }
 
@@ -167,7 +167,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     @Override
     public List<LcjnCourseSupplies> searchSuppliesByCourseFlow(String courseFlow) {
         LcjnCourseSuppliesExample example = new LcjnCourseSuppliesExample();
-        LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(courseFlow)) {
             criteria.andCourseFlowEqualTo(courseFlow);
             return courseSuppliesMapper.selectByExample(example);
@@ -183,7 +183,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
         }
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
-        paramMap.put("isReleased", GlobalConstant.FLAG_Y);
+        paramMap.put("isReleased", com.pinde.core.common.GlobalConstant.FLAG_Y);
         return baseManagerExtMapper.searchCourse(paramMap);
     }
 

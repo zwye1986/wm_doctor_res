@@ -10,8 +10,8 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.OperTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
@@ -46,9 +46,9 @@ public class InxLcjnController extends GeneralController{
 	}
 	@RequestMapping(value="logout")
 	public String logout( HttpServletRequest request){
-		String wsId = (String)GlobalContext.getSession().getAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) GlobalContext.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		request.getSession().invalidate();
-		GlobalContext.getSession().setAttribute(GlobalConstant.CURRENT_WS_ID,wsId);
+        GlobalContext.getSession().setAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, wsId);
 		return "inx/osce/index";
 	}
 
@@ -104,29 +104,29 @@ public class InxLcjnController extends GeneralController{
 			user = userBiz.findByIdNo(userCode);
 		}
 		if(user==null){
-			if(!GlobalConstant.ROOT_USER_CODE.equals(userCode)){
+            if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(userCode)) {
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("userCode.notFound"));
 				return errorLoginPage;
 			}else{//初次用root超级密码登录时，新增root用户和组织机构表
 				SysOrg org = new SysOrg();
-				org.setOrgFlow(GlobalConstant.PD_ORG_FLOW);
-				org.setOrgCode(GlobalConstant.PD_ORG_CODE);
-				org.setOrgName(GlobalConstant.PD_ORG_NAME);
-				org.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                org.setOrgFlow(com.pinde.core.common.GlobalConstant.PD_ORG_FLOW);
+                org.setOrgCode(com.pinde.core.common.GlobalConstant.PD_ORG_CODE);
+                org.setOrgName(com.pinde.core.common.GlobalConstant.PD_ORG_NAME);
+                org.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				sysOrgBiz.addOrg(org);
 				user = new SysUser();
-				user.setUserFlow(GlobalConstant.ROOT_USER_FLOW);
+                user.setUserFlow(com.pinde.core.common.GlobalConstant.ROOT_USER_FLOW);
 				user.setUserCode(userCode);
-				user.setUserName(GlobalConstant.ROOT_USER_NAME);
-				user.setOrgFlow(GlobalConstant.PD_ORG_FLOW);
-				user.setOrgName(GlobalConstant.PD_ORG_NAME);
+                user.setUserName(com.pinde.core.common.GlobalConstant.ROOT_USER_NAME);
+                user.setOrgFlow(com.pinde.core.common.GlobalConstant.PD_ORG_FLOW);
+                user.setOrgName(com.pinde.core.common.GlobalConstant.PD_ORG_NAME);
 				user.setStatusId(UserStatusEnum.Activated.getId());
 				user.setStatusDesc(UserStatusEnum.Activated.getName());
 				userBiz.addUser(user);
 			}
 		}
 		//root用户不判断是否激活
-		if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+        if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			if(!UserStatusEnum.Activated.getId().equals(user.getStatusId())){
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("userCode.unActivated"));
 				return errorLoginPage;
@@ -142,7 +142,7 @@ public class InxLcjnController extends GeneralController{
 			}
 		}
 		//唯一登录
-		if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())&&GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("unique_login_flag"))){
+        if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("unique_login_flag"))) {
 			if (SessionData.sessionDataMap.containsKey(user.getUserFlow()) &&
 					!SessionData.sessionDataMap.get(user.getUserFlow()).getIp().equals(request.getRemoteAddr())){
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("user.alreadyLogin"));
@@ -150,18 +150,18 @@ public class InxLcjnController extends GeneralController{
 			}
 		}
 		//设置当前用户
-		setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-		setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
-		setSessionAttribute(GlobalConstant.CURRENT_ORG, sysOrgBiz.readSysOrg(user.getOrgFlow()));
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ORG, sysOrgBiz.readSysOrg(user.getOrgFlow()));
 		//设置当前用户部门列表
-		setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(user));
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(user));
 		//加载系统权限
 		loginBiz.loadSysRole(user.getUserFlow());
-		if(GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+        if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			return successLoginPage;
 		}
 		//一个用户可以配置多个工作站
-		List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST);
+        List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST);
 		if (currUserWorkStationIdList != null && currUserWorkStationIdList.size() > 0) {
 			//在线用户功能使用
 			SessionData sessionData = new SessionData();
@@ -176,7 +176,7 @@ public class InxLcjnController extends GeneralController{
 			log.setOperId(OperTypeEnum.LogIn.getId());
 			log.setOperName(OperTypeEnum.LogIn.getName());
 			log.setLogDesc("登录IP["+request.getRemoteAddr()+"]");
-			log.setWsId(GlobalConstant.SYS_WS_ID);
+            log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 			GeneralMethod.addSysLog(log);
 			loginBiz.addSysLog(log);
 			return successLoginPage;

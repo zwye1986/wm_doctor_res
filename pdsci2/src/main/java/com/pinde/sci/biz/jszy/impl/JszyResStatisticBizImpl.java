@@ -69,7 +69,7 @@ public class JszyResStatisticBizImpl implements IJszyResStatisticBiz {
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(org.getOrgProvId())){
 	    	criteria.andOrgProvIdEqualTo(org.getOrgProvId());
 	    }
@@ -181,7 +181,7 @@ public class JszyResStatisticBizImpl implements IJszyResStatisticBiz {
 			    		if(typeSpeList!=null&&!typeSpeList.isEmpty()){
 		    		    	for(SysDict sd : typeSpeList){
 				    		String key = so.getOrgFlow()+trainTypeId+sd.getDictId();//确定唯一key
-				    		if(totalCountMap.get(key)!=null&&GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))){
+                                if (totalCountMap.get(key) != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))) {
 				    			count+=Integer.parseInt(totalCountMap.get(key)+"");
 				    			}
 		    		    	}
@@ -204,7 +204,7 @@ public class JszyResStatisticBizImpl implements IJszyResStatisticBiz {
 		    		    		sheet.setColumnWidth(0, 4500);
 		    		    		String key = so.getOrgFlow()+trainTypeId+sd.getDictId();//确定唯一key
 		    		    		HSSFCell orgCell = rowDepts.createCell(lie);
-		    		    		if(GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))){
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))) {
 		    		    			if(totalCountMap.get(key)!= null){
 		    		    				xiaojiCount+=Integer.parseInt(totalCountMap.get(key)+"");//算小计
 		    		    				if(joingCountMap.get(key)!= null){
@@ -335,7 +335,7 @@ public class JszyResStatisticBizImpl implements IJszyResStatisticBiz {
 								failCount++;
 							}else{
 								int result = save(teacherTraining);
-								if(GlobalConstant.ZERO_LINE!=result){
+                                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 									succCount++;
 								}else{
 									failCount++;
@@ -404,7 +404,7 @@ public class JszyResStatisticBizImpl implements IJszyResStatisticBiz {
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo(ResTeacherTraining resTeacherTraining) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -425,7 +425,7 @@ public class JszyResStatisticBizImpl implements IJszyResStatisticBiz {
 	@Override
 	public ResTeacherTraining searchTeacherInfoByPK(String recordflow) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecordFlowEqualTo(recordflow);
 		List<ResTeacherTraining> list= teacherTrainingMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){

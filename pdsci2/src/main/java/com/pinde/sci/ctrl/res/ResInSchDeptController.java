@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.SysUser;
@@ -29,10 +30,10 @@ public class ResInSchDeptController extends GeneralController {
 						   Integer currentPage,HttpServletRequest request){
 		model.addAttribute("roleFlag", roleFlag);
 		SysUser user = GlobalContext.getCurrentUser();
-		if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleFlag))//科主任
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleFlag))//科主任
 		{
 
-		}else if (GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)){//管理员
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(roleFlag)) {//管理员
 
 		}
 		return "res/teacher/view";

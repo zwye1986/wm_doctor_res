@@ -71,10 +71,10 @@ public class JsResMenuNewController extends GeneralController {
     public String asseMain(Model model, String roleFlag, String tabTag){
         SysUser currentUser = GlobalContext.getCurrentUser();
         //判断是否是协同基地
-        String isJointOrg = GlobalConstant.FLAG_N;
+        String isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
-            isJointOrg = GlobalConstant.FLAG_Y;
+            isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
             //   return "jsres/asse/hospital/auditMainForJoint";
         }
         model.addAttribute("isJointOrg", isJointOrg);

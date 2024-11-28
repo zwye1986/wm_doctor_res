@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -78,7 +79,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
     public SchAutoArrangeCfg findSessionNumberStartDate(String sessionNumber, String orgFlow) {
         SchAutoArrangeCfgExample example=new SchAutoArrangeCfgExample();
         example.createCriteria().andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SchAutoArrangeCfg> list=autoArrangeCfgMapper.selectByExample(example);
         if(list!=null&&list.size()>0)
         {
@@ -250,7 +251,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
                 SchAutoArrange arrange = getLastDeptFlow(orgFlow, sessionNumber, rotation.getRotationFlow(),"");
                 if(arrange!=null)
                 {
-                    arrange.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    arrange.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                     updateLastDeptFlow(arrange);
                 }
                 //轮转方案下是否有配置的轮转科室，有则继续
@@ -289,7 +290,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
     public List<SchArrangeResult> getArrangeResult(String startDate, String endDate, String orgFlow, String sessionNumber, List<String> doctorFlows) {
         SchArrangeResultExample example = new SchArrangeResultExample();
         SchArrangeResultExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSessionNumberEqualTo(sessionNumber);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSessionNumberEqualTo(sessionNumber);
         if(StringUtil.isNotBlank(orgFlow)){
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -313,7 +314,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
         //删除学员所有已排班的结果
         delDoctorResult(doctor.getDoctorFlow(),rotation.getRotationFlow());
         Integer index = 0;
-        SchAutoArrange arrange = getLastDeptFlow(orgFlow, sessionNumber, rotation.getRotationFlow(), GlobalConstant.FLAG_Y);
+        SchAutoArrange arrange = getLastDeptFlow(orgFlow, sessionNumber, rotation.getRotationFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(arrange!=null&&StringUtil.isNotBlank(arrange.getRotationDeptFlow()))
         {
             index=indexMap.get(arrange.getRotationDeptFlow());
@@ -346,7 +347,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
             addCycleRecord(depts.get(j),doctor,results,startDate);
         }
         //设置学员已排班
-        doctor.setSchFlag(GlobalConstant.FLAG_Y);
+        doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
         doctorBiz.editDoctor(doctor);
         index=index+1;
         if(index>=all)
@@ -354,7 +355,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
         //更新下一个学员开始轮转的科室
         if(arrange==null)
             arrange=new SchAutoArrange();
-        arrange.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        arrange.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         arrange.setOrgFlow(orgFlow);
         arrange.setSessionNumber(sessionNumber);
         arrange.setRotationDeptFlow(depts.get(index).getRecordFlow());
@@ -448,7 +449,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
             if(result!=null)
             {
                 ResDoctorSchProcess process=processBiz.searchByResultFlow(result.getResultFlow());
-                if(process!=null&&!GlobalConstant.RECORD_STATUS_N.equals(process.getRecordStatus())&&GlobalConstant.FLAG_Y.equals(process.getSchFlag()))
+                if (process != null && !com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(process.getRecordStatus()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(process.getSchFlag()))
                 {
                     isNew=false;
                 }
@@ -518,11 +519,11 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
                 }else if(rotationFlow.equals(doctor.getSecondRotationFlow())){
                     result.setRotationName(doctor.getSecondRotationName());
                 }
-                result.setIsRotation(GlobalConstant.FLAG_Y);
+                result.setIsRotation(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 result.setDoctorFlow(doctor.getDoctorFlow());
                 result.setDoctorName(doctor.getDoctorName());
             }
-            result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             if(isNew)
             {
                 resultBiz.save(result);
@@ -580,7 +581,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
                 .andOrgFlowEqualTo(orgFlow).andSessionNumberEqualTo(sessionNumber).andRotationFlowEqualTo(rotationFlow);
         if(StringUtil.isNotBlank(recordStatus))
         {
-            criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         }
         List<SchAutoArrange> list=autoArrangeMapper.selectByExample(example);
         if(list!=null&&list.size()>0)

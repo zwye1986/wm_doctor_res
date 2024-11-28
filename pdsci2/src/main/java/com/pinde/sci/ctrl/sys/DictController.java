@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
@@ -60,7 +61,7 @@ public class DictController extends GeneralController{
 	public ModelAndView selectDictList(SysDict sysDict) {
 		ModelAndView mav = new ModelAndView("sys/dict/list");
 		if(StringUtil.isNotBlank(sysDict.getDictTypeId())){
-		    int level = DictTypeEnum.valueOf(sysDict.getDictTypeId()).getLevel();	
+            int level = com.pinde.core.common.enums.DictTypeEnum.valueOf(sysDict.getDictTypeId()).getLevel();
 		    if(level>1){
 		    	mav = new ModelAndView("sys/dict/mullist");
 		    	mav.addObject("level" , level);
@@ -88,7 +89,7 @@ public class DictController extends GeneralController{
 		if(StringUtil.isNotBlank(dictFlow)){
 			SysDict dict = this.dictBiz.readDict(dictFlow);
 			String dictTypeId = dict.getDictTypeId().split("\\.")[0];
-			level = DictTypeEnum.valueOf(dictTypeId).getLevel();
+            level = com.pinde.core.common.enums.DictTypeEnum.valueOf(dictTypeId).getLevel();
 			model.addAttribute("level" , level);
 			model.addAttribute("dict" , dict);
 			List<SysDict> subdicts = this.dictBiz.searchDictListAllByDictTypeId(dict.getDictTypeId()+"."+dict.getDictId() , true);
@@ -97,7 +98,7 @@ public class DictController extends GeneralController{
 		if(StringUtil.isNotBlank(parentDictFlow)){
 			SysDict parentDict = this.dictBiz.readDict(parentDictFlow);
 			String dictTypeId = parentDict.getDictTypeId().split("\\.")[0];
-			level = DictTypeEnum.valueOf(dictTypeId).getLevel();
+            level = com.pinde.core.common.enums.DictTypeEnum.valueOf(dictTypeId).getLevel();
 			model.addAttribute("level" , level);
 			model.addAttribute("parentDict" , parentDict);
 		}
@@ -110,7 +111,7 @@ public class DictController extends GeneralController{
 		String dictTypeId = "";
 		if(StringUtil.isBlank(parentDictFlow)){
 			dictTypeId = dict.getDictTypeId();
-			DictTypeEnum dictTypeEnum =  DictTypeEnum.valueOf(dictTypeId);
+            DictTypeEnum dictTypeEnum = com.pinde.core.common.enums.DictTypeEnum.valueOf(dictTypeId);
 			dict.setDictTypeName(dictTypeEnum.getName());
 		}else{
 			SysDict parentDict = this.dictBiz.readDict(parentDictFlow);
@@ -123,7 +124,7 @@ public class DictController extends GeneralController{
 			//新增字典时判断该类型字典代码是否存在
 			SysDict sysDict=dictBiz.readDict(dictTypeId, dict.getDictId());
 			if(null!=sysDict){
-				 return GlobalConstant.OPRE_FAIL_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 			}
 			this.dictBiz.addDict(dict);				
 		}else{
@@ -131,12 +132,12 @@ public class DictController extends GeneralController{
 			List<SysDict> dictList=dictBiz.searchDictListByDictTypeIdNotIncludeSelf(dict);
 			for(SysDict sysDict:dictList){
 				 if(dict.getDictId().equals(sysDict.getDictId())){
-					 return GlobalConstant.OPRE_FAIL_FLAG;
+                     return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 				 }
 			}
 			this.dictBiz.modeDictAndSubDict(dict);
-		}	
-		return GlobalConstant.SAVE_SUCCESSED;
+		}
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value="/saveSubDict" , method=RequestMethod.POST)
@@ -147,13 +148,13 @@ public class DictController extends GeneralController{
             e.printStackTrace();
 			return e.getMessage();
 		}
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 	
 	@RequestMapping(value="/delete" , method=RequestMethod.GET)
 	public @ResponseBody String delDict(@RequestParam(value="dictFlow",required=true) String dictFlow,@RequestParam(value="recordStatus",required=true) String recordStatus) {		
-		this.dictBiz.delDictAndSubDict(dictFlow,recordStatus);		
-		return GlobalConstant.OPERATE_SUCCESSED;
+		this.dictBiz.delDictAndSubDict(dictFlow,recordStatus);
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	
 	@RequestMapping(value="/refresh" , method=RequestMethod.GET)
@@ -297,7 +298,7 @@ public class DictController extends GeneralController{
 	public String saveOrder(String[] dictFlow , HttpServletRequest request){
 		this.dictBiz.saveOrder(dictFlow);
 		InitConfig._loadDept(request.getServletContext());
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	
 	@RequestMapping("/getChildDict")
@@ -305,7 +306,7 @@ public class DictController extends GeneralController{
 		dict = this.dictBiz.readDict(dict.getDictFlow());
 		List<SysDict> dicts = this.dictBiz.searchDictListAllByDictTypeId(dict.getDictTypeId()+"."+dict.getDictId() , true);
 		String dictType = dict.getDictTypeId().split("\\.")[0];
-		int level = DictTypeEnum.valueOf(dictType).getLevel();
+        int level = com.pinde.core.common.enums.DictTypeEnum.valueOf(dictType).getLevel();
 		if(level>2){
 			Map<String , List<SysDict>> subDictMap = new HashMap<String, List<SysDict>>();
 			//查询再下一级的节点
@@ -349,17 +350,17 @@ public class DictController extends GeneralController{
 		if(file.getSize() > 0){
 			try{
 				int result = dictBiz.importDict(file,"GzykdxSpe");
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re) {
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	//打开编辑字典表单页面
@@ -407,7 +408,7 @@ public class DictController extends GeneralController{
 			return -1;
 		}
 		if(StringUtil.isNotBlank(dictForm.getRecordFlow())){
-			dictForm.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            dictForm.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			dictBiz.editDictForm(dictForm);
 		}
 		return 1;

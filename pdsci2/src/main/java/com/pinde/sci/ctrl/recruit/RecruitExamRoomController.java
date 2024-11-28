@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
@@ -47,10 +48,10 @@ public class RecruitExamRoomController extends GeneralController {
         Map<String,String> map=new  HashMap<String,String>();
         for (RecruitExamRoom examRoom : recruitExamRoomList) {
             String roomFlow = examRoom.getRoomFlow();
-            if (GlobalConstant.RECORD_STATUS_N.equals(recruitExamRoomInfoBiz.IsExamRoomUsed(roomFlow,orgFlow))&&GlobalConstant.RECORD_STATUS_N.equals(recruitExamTeacherBiz.IsExamRoomUsed(roomFlow,orgFlow))){
-                map.put(roomFlow,GlobalConstant.RECORD_STATUS_N);
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamRoomInfoBiz.IsExamRoomUsed(roomFlow, orgFlow)) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamTeacherBiz.IsExamRoomUsed(roomFlow, orgFlow))) {
+                map.put(roomFlow, com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             }else {
-                map.put(roomFlow,GlobalConstant.RECORD_STATUS_Y);
+                map.put(roomFlow, com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             }
         }
         model.addAttribute("examRoomList",recruitExamRoomList);
@@ -78,10 +79,10 @@ public class RecruitExamRoomController extends GeneralController {
         Map<String,String> map=new  HashMap<String,String>();
         for (RecruitExamRoom examRoom : recruitExamRoomList) {
             String roomFlow = examRoom.getRoomFlow();
-            if (GlobalConstant.RECORD_STATUS_N.equals(recruitExamRoomInfoBiz.IsExamRoomUsed(roomFlow,orgFlow))&&GlobalConstant.RECORD_STATUS_N.equals(recruitExamTeacherBiz.IsExamRoomUsed(roomFlow,orgFlow))){
-                map.put(roomFlow,GlobalConstant.RECORD_STATUS_N);
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamRoomInfoBiz.IsExamRoomUsed(roomFlow, orgFlow)) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamTeacherBiz.IsExamRoomUsed(roomFlow, orgFlow))) {
+                map.put(roomFlow, com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             }else {
-                map.put(roomFlow,GlobalConstant.RECORD_STATUS_Y);
+                map.put(roomFlow, com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             }
         }
 
@@ -103,13 +104,13 @@ public class RecruitExamRoomController extends GeneralController {
     @ResponseBody
     public String addExamRoom(RecruitExamRoom examRoom){
         if (recruitExamRoomBiz.searchExamRoomByName(examRoom.getRoomName(), GlobalContext.getCurrentUser().getOrgFlow()) != null){
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         int i = recruitExamRoomBiz.addExamRoom(examRoom);
         if (i == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -131,9 +132,9 @@ public class RecruitExamRoomController extends GeneralController {
         }else {
             int i = recruitExamRoomBiz.updateExamRoom(editInfo);
             if (i == 1){
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }else {
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }
         }
 
@@ -145,17 +146,17 @@ public class RecruitExamRoomController extends GeneralController {
     @ResponseBody
     public String changeExamRoomStatus(String roomFlow,String recordStatus){
         String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
-        if (GlobalConstant.RECORD_STATUS_N.equals(recruitExamRoomInfoBiz.IsExamRoomUsed(roomFlow,orgFlow))&&GlobalConstant.RECORD_STATUS_N.equals(recruitExamTeacherBiz.IsExamRoomUsed(roomFlow,orgFlow))){
-            recordStatus = GlobalConstant.RECORD_STATUS_Y.equals(recordStatus)?GlobalConstant.RECORD_STATUS_Y:GlobalConstant.RECORD_STATUS_N;
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamRoomInfoBiz.IsExamRoomUsed(roomFlow, orgFlow)) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamTeacherBiz.IsExamRoomUsed(roomFlow, orgFlow))) {
+            recordStatus = com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(recordStatus) ? com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y : com.pinde.core.common.GlobalConstant.RECORD_STATUS_N;
             int i = recruitExamRoomBiz.changeExamRoomStatus(roomFlow,recordStatus);
             if (i == 1){
-                return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
             }
             else {
-                return GlobalConstant.OPRE_FAIL;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
             }
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 

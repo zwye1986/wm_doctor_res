@@ -263,7 +263,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
 
         ResOrgCkxzExample example = new ResOrgCkxzExample();
         ResOrgCkxzExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andOrgFlowEqualTo(orgCkxz.getOrgFlow())
                 .andSessionGradeEqualTo(orgCkxz.getSessionGrade());
         List<ResOrgCkxz> list = resOrgCkxzMapper.selectByExample(example);
@@ -289,7 +289,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
     @Override
     public List<JsresDeptConfig> searchDeptConfigs(String orgFlow) {
         JsresDeptConfigExample example = new JsresDeptConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow);
         example.setOrderByClause("DEPT_FLOW DESC,CREATE_TIME DESC");
         return deptConfigMapper.selectByExample(example);
@@ -303,7 +303,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
     @Override
     public JsresDeptConfig searchBaseDeptConfig(String orgFlow) {
         JsresDeptConfigExample example = new JsresDeptConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow).andDeptFlowIsNull();
         List<JsresDeptConfig> list = deptConfigMapper.selectByExample(example);
         if(null != list && list.size() >0){
@@ -315,7 +315,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
     @Override
     public JsresDeptConfig searchDeptCfg(String orgFlow, String schDeptFlow) {
         JsresDeptConfigExample example = new JsresDeptConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow).andDeptFlowEqualTo(schDeptFlow);
         List<JsresDeptConfig> list = deptConfigMapper.selectByExample(example);
         if(null != list && list.size() >0){
@@ -347,7 +347,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
                 }
             }
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @Override
@@ -375,9 +375,9 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
                         Map<String,Object> data=datas.get(i);
                         JsresPowerCfg cfg=new JsresPowerCfg();
                         cfg.setCfgCode("jsres_doctor_data_time_"+data.get("userFlow"));
-                        cfg.setCfgValue(GlobalConstant.RECORD_STATUS_Y);
+                        cfg.setCfgValue(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         cfg.setCfgDesc("学员数据审核权限期限");
-                        cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         cfg.setPowerStartTime((String) data.get("powerStartTime"));
                         cfg.setPowerEndTime((String) data.get("powerEndTime"));
                         count+=save(cfg);
@@ -504,7 +504,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
         //批量废止
         JsresPowerCfgExample example = new JsresPowerCfgExample();
         JsresPowerCfgExample.Criteria criteria = example.createCriteria();
-        criteria.andCfgValueEqualTo(GlobalConstant.FLAG_Y)
+        criteria.andCfgValueEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andCfgCodeLike("%jsres_cksh_"+orgFlow+"_%");
         jsresPowerCfgMapper.deleteByExample(example);
 
@@ -512,7 +512,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
         if (null!=mulDeptFlow){
             List<String> list = Arrays.asList(mulDeptFlow);
             JsresPowerCfg cfg = new JsresPowerCfg();
-            cfg.setCfgValue(GlobalConstant.FLAG_Y);
+            cfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
             cfg.setCfgDesc("科主任审核学员技能出科成绩-科室限制");
             GeneralMethod.setRecordInfo(cfg,true);
             int count=0;
@@ -521,17 +521,17 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
                 count = jsresPowerCfgMapper.insert(cfg)+count;
             }
             if (count==list.size()){
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @Override
     public List<JsresPowerCfg> selectLikeCode(String code) {
         JsresPowerCfgExample example = new JsresPowerCfgExample();
         JsresPowerCfgExample.Criteria criteria = example.createCriteria();
-        criteria.andCfgValueEqualTo(GlobalConstant.FLAG_Y)
+        criteria.andCfgValueEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andCfgCodeLike(code);
         return jsresPowerCfgMapper.selectByExample(example);
     }

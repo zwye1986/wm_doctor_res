@@ -1,8 +1,7 @@
 package com.pinde.app.common;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.DictTypeEnum;
-import com.pinde.core.common.enums.GeneralEnum;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.ClassUtil;
@@ -105,7 +104,7 @@ public class InitConfig implements ServletContextListener {
             Map<String, List<SysDict>> sysListDictMap = new HashMap<String, List<SysDict>>();
             Map<String, String> sysDictIdMap = new HashMap<String, String>();
             Map<String, Map<String, String>> sysDictNameMap = new HashMap<String, Map<String, String>>();
-            List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(DictTypeEnum.class);
+            List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(com.pinde.core.common.enums.DictTypeEnum.class);
             for (DictTypeEnum dictTypeEnum : dictTypeEnumList) {
                 String dictTypeId = dictTypeEnum.getId();
                 Map<String, String> dictNameMap = new HashMap<String, String>();
@@ -113,7 +112,7 @@ public class InitConfig implements ServletContextListener {
                 IDictBiz dictBiz = SpringUtil.getBean(IDictBiz.class);
                 SysDict sysDict = new SysDict();
                 sysDict.setDictTypeId(dictTypeId);
-                sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 List<SysDict> sysDictList = dictBiz.searchDictList(sysDict);
                 for (SysDict dict : sysDictList) {
                     String typeId = dict.getDictTypeId() + "." + dict.getDictId();
@@ -150,15 +149,15 @@ public class InitConfig implements ServletContextListener {
             }
             context.setAttribute("sysDictIdMap", sysDictIdMap);
             InitConfig.sysDictNameMap = sysDictNameMap;
-            DictTypeEnum.sysDictIdMap = sysDictIdMap;
-            DictTypeEnum.sysListDictMap = sysListDictMap;
+            com.pinde.core.common.enums.DictTypeEnum.sysDictIdMap = sysDictIdMap;
+            com.pinde.core.common.enums.DictTypeEnum.sysListDictMap = sysListDictMap;
         }catch (Exception e) {
             logger.error("", e);
         }
     }
 
     private static void _loadEnum(ServletContext context) {
-        Set<Class<?>> set = ClassUtil.getClasses("com.pinde.res.enums");
+        Set<Class<?>> set = ClassUtil.getClasses("com.pinde.core.common.enums");
         for (Class<?> cls : set) {
             List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
             context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
