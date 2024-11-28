@@ -49,6 +49,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Example;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -1913,15 +1914,36 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		List<ResDoctorSchProcess> processList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(resultFlowList)) {
 			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
-			processExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowIn(resultFlowList);
-			processList = processBiz.readResDoctorSchProcessByExample(processExample);
+//			processExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowIn(resultFlowList);
+//			processList = processBiz.readResDoctorSchProcessByExample(processExample);
+			int chunkSize = 1000;
+			for (int i = 0; i < resultFlowList.size(); i += chunkSize) {
+				List<String> chunk = resultFlowList.subList(i, Math.min(i + chunkSize, resultFlowList.size()));
+				processExample.createCriteria()
+						.andRecordStatusEqualTo("Y")
+						.andSchResultFlowIn(chunk);
+
+				List<ResDoctorSchProcess> chunkProcessList = processBiz.readResDoctorSchProcessByExample(processExample);
+				processList.addAll(chunkProcessList);
+			}
+
 		}
 		List<String> processFlowList = processList.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
 		List<ResDoctorSchProcess> schProcessList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(processFlowList)) {
 			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
-			processExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
-			schProcessList = doctorSchProcessMapper.selectByExample(processExample);
+//			processExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
+//			schProcessList = doctorSchProcessMapper.selectByExample(processExample);
+			int chunkSize = 1000;
+			for (int i = 0; i < processFlowList.size(); i += chunkSize) {
+				List<String> chunk = processFlowList.subList(i, Math.min(i + chunkSize, processFlowList.size()));
+				processExample.createCriteria()
+						.andRecordStatusEqualTo("Y")
+						.andProcessFlowIn(chunk);
+
+				List<ResDoctorSchProcess> chunkProcessList = doctorSchProcessMapper.selectByExample(processExample);
+				schProcessList.addAll(chunkProcessList);
+			}
 		}
 		Map<String, ResDoctorSchProcess> processFlowToEntityMap = schProcessList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
 		Map<String, List<ResDoctorSchProcess>> doctorFlowToEntityMap = schProcessList.stream().collect(Collectors.groupingBy(vo -> vo.getUserFlow()));
