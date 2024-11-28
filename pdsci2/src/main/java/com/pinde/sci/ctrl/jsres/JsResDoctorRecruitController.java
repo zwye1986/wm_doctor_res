@@ -17,6 +17,7 @@ import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.*;
+import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.enums.jsres.*;
@@ -135,6 +136,9 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 	@Autowired
 	private ResScoreMapper scoreMapper;
+
+	@Autowired
+	private ResDoctorSchProcessMapper doctorSchProcessMapper;
 
 	private static Logger logger = LoggerFactory.getLogger(JsResDoctorRecruitController.class);
 
@@ -2041,13 +2045,13 @@ public class JsResDoctorRecruitController extends GeneralController {
 					}
 				}
 				if(CollectionUtils.isNotEmpty(noneTheoryScoreList)) {
-					ResScoreExample scoreExample = new ResScoreExample();
-					scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(noneTheoryScoreList);
-					List<ResScore> scoreList = scoreMapper.selectByExample(scoreExample);
-					if (CollectionUtil.isNotEmpty(scoreList)) {
-						for (ResScore resScore : scoreList) {
-							if (resScore.getTheoryScore() != null) {
-								lilun = lilun.add(resScore.getTheoryScore());
+					ResDoctorSchProcessExample processExampleExample = new ResDoctorSchProcessExample();
+					processExampleExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(noneTheoryScoreList);
+					List<ResDoctorSchProcess> schProcessList = doctorSchProcessMapper.selectByExample(processExampleExample);
+					if (CollectionUtil.isNotEmpty(schProcessList)) {
+						for (ResDoctorSchProcess process : schProcessList) {
+							if (process.getSchScore() != null) {
+								lilun = lilun.add(process.getSchScore());
 								lilunCount++;
 							}
 						}

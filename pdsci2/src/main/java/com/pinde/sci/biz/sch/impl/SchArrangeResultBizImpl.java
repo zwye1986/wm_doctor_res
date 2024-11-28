@@ -1917,27 +1917,27 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			processList = processBiz.readResDoctorSchProcessByExample(processExample);
 		}
 		List<String> processFlowList = processList.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
-		List<ResScore> scoreList = new ArrayList<>();
+		List<ResDoctorSchProcess> schProcessList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(processFlowList)) {
-			ResScoreExample scoreExample = new ResScoreExample();
-			scoreExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
-			scoreList = scoreMapper.selectByExample(scoreExample);
+			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
+			processExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
+			schProcessList = doctorSchProcessMapper.selectByExample(processExample);
 		}
-		Map<String, ResScore> processFlowToEntityMap = scoreList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
-		Map<String, List<ResScore>> doctorFlowToEntityMap = scoreList.stream().collect(Collectors.groupingBy(vo -> vo.getDoctorFlow()));
+		Map<String, ResDoctorSchProcess> processFlowToEntityMap = schProcessList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
+		Map<String, List<ResDoctorSchProcess>> doctorFlowToEntityMap = schProcessList.stream().collect(Collectors.groupingBy(vo -> vo.getUserFlow()));
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
 				itemMap = new HashMap<>();
 				itemMap.put(ll,new BigDecimal("0"));
 				itemMap.put(jn,new BigDecimal("0"));
-				List<ResScore> doctorScoreList = doctorFlowToEntityMap.get(doctorFlow);
-				if(CollectionUtils.isNotEmpty(doctorScoreList)) {
+				List<ResDoctorSchProcess> doctorProcessList = doctorFlowToEntityMap.get(doctorFlow);
+				if(CollectionUtils.isNotEmpty(doctorProcessList)) {
 					BigDecimal totalScore = BigDecimal.ZERO;
 					int count = 0;
-					for (ResScore resScore : doctorScoreList) {
-						if(resScore.getTheoryScore() != null) {
-							totalScore = totalScore.add(resScore.getTheoryScore());
+					for (ResDoctorSchProcess process : doctorProcessList) {
+						if(process.getSchScore() != null) {
+							totalScore = totalScore.add(process.getSchScore());
 							count++;
 						}
 					}
@@ -1956,13 +1956,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				continue;
 			}
 			itemMap = new HashMap<>();
-			itemMap.put(ll,new BigDecimal("0"));
-			itemMap.put(jn,new BigDecimal("0"));
+			List<String> useProcessList = new ArrayList<>();
 			List<ResSchProcessExpress> itemList = expMap.get(doctorFlow);
-			if (CollectionUtil.isEmpty(itemList)) {
-				result.put(doctorFlow,itemMap);
-				continue;
-			}
 			itemMap = new HashMap<>();
 			BigDecimal lilunScore = new BigDecimal("0");
 			int llCount = 0;
@@ -1970,52 +1965,53 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			BigDecimal jinengScore = new BigDecimal("0");
 			int jnCount = 0;
 			itemMap.put(jn,new BigDecimal("0"));
-			List<String> useProcessList = new ArrayList<>();
-			for (ResSchProcessExpress item : itemList) {
-				useProcessList.add(item.getProcessFlow());
-				String recContent = item.getRecContent();
-				if (StringUtils.isEmpty(recContent)) {
-					continue;
-				}
-				Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
-				if (CollectionUtil.isEmpty(stringObjectMap)) {
-					continue;
-				}
-				//理论成绩
-				Object theoreResult = stringObjectMap.get("theoreResult");
-				if (ObjectUtil.isNotEmpty(theoreResult)) {
-					try{
-						BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
-						lilunScore = lilunScore.add(bigDecimal);
-						llCount++;
-					}catch (Exception e) {
-
+			if (CollectionUtil.isNotEmpty(itemList)) {
+				for (ResSchProcessExpress item : itemList) {
+					useProcessList.add(item.getProcessFlow());
+					String recContent = item.getRecContent();
+					if (StringUtils.isEmpty(recContent)) {
+						continue;
 					}
-				}else {
-					ResScore processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResScore());
-					BigDecimal theoryScore = processItem.getTheoryScore();
-					if (theoryScore != null) {
-						lilunScore = lilunScore.add(theoryScore);
-						llCount++;
+					Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
+					if (CollectionUtil.isEmpty(stringObjectMap)) {
+						continue;
 					}
-				}
-				//技能成绩
-				Object score = stringObjectMap.get("score");
-				if (ObjectUtil.isNotEmpty(score)) {
-					try{
-						BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
-						jinengScore = jinengScore.add(bigDecimal);
-						jnCount++;
-					}catch (Exception e) {
+					//理论成绩
+					Object theoreResult = stringObjectMap.get("theoreResult");
+					if (ObjectUtil.isNotEmpty(theoreResult)) {
+						try{
+							BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
+							lilunScore = lilunScore.add(bigDecimal);
+							llCount++;
+						}catch (Exception e) {
 
+						}
+					}else {
+						ResDoctorSchProcess processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResDoctorSchProcess());
+						BigDecimal theoryScore = processItem.getSchScore();
+						if (theoryScore != null) {
+							lilunScore = lilunScore.add(theoryScore);
+							llCount++;
+						}
+					}
+					//技能成绩
+					Object score = stringObjectMap.get("score");
+					if (ObjectUtil.isNotEmpty(score)) {
+						try{
+							BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
+							jinengScore = jinengScore.add(bigDecimal);
+							jnCount++;
+						}catch (Exception e) {
+
+						}
 					}
 				}
 			}
-			List<ResScore> doctorScoreList = doctorFlowToEntityMap.get(doctorFlow);
-			if(CollectionUtils.isNotEmpty(doctorScoreList)) {
-				for (ResScore resScore : doctorScoreList) {
-					if(!useProcessList.contains(resScore.getProcessFlow()) && resScore.getTheoryScore() != null) {
-						lilunScore = lilunScore.add(resScore.getTheoryScore());
+			List<ResDoctorSchProcess> doctorProcessList = doctorFlowToEntityMap.get(doctorFlow);
+			if(CollectionUtils.isNotEmpty(doctorProcessList)) {
+				for (ResDoctorSchProcess process : doctorProcessList) {
+					if(!useProcessList.contains(process.getProcessFlow()) && process.getSchScore() != null) {
+						lilunScore = lilunScore.add(process.getSchScore());
 						llCount++;
 					}
 				}
