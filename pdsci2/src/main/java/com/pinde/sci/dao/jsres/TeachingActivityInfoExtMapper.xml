@@ -642,7 +642,7 @@
         <if test='isUploadImg!=null and isUploadImg=="N" '>
             and (IMAGE_URL is null OR IMAGE_URL NOT LIKE '%imageUrl%')
         </if>
-        order by START_TIME,END_TIME desc, RESULT.EVAL_SCORE desc
+        order by START_TIME DESC,END_TIME desc, RESULT.EVAL_SCORE desc
     </select>
     <select id="getActivitys" resultMap="activityMap">
         SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME
