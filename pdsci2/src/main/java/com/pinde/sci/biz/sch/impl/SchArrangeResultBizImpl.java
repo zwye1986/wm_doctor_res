@@ -11,6 +11,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import com.pinde.core.entyties.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
@@ -1913,40 +1914,16 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		List<String> resultFlowList = arrangeResultList.stream().map(vo -> vo.getResultFlow()).collect(Collectors.toList());
 		List<ResDoctorSchProcess> processList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(resultFlowList)) {
-			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
-//			processExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowIn(resultFlowList);
-//			processList = processBiz.readResDoctorSchProcessByExample(processExample);
-			int chunkSize = 1000;
-			for (int i = 0; i < resultFlowList.size(); i += chunkSize) {
-				List<String> chunk = resultFlowList.subList(i, Math.min(i + chunkSize, resultFlowList.size()));
-				processExample.createCriteria()
-						.andRecordStatusEqualTo("Y")
-						.andSchResultFlowIn(chunk);
-
-				List<ResDoctorSchProcess> chunkProcessList = processBiz.readResDoctorSchProcessByExample(processExample);
-				processList.addAll(chunkProcessList);
-			}
+			Lists.partition(resultFlowList, 1000).forEach(subList -> {
+				ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
+				processExample.createCriteria().andRecordStatusEqualTo("Y").andSchResultFlowIn(subList);
+				processList.addAll(processBiz.readResDoctorSchProcessByExample(processExample));
+			});
 
 		}
-		List<String> processFlowList = processList.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
-		List<ResDoctorSchProcess> schProcessList = new ArrayList<>();
-		if(CollectionUtils.isNotEmpty(processFlowList)) {
-			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
-//			processExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowIn(processFlowList);
-//			schProcessList = doctorSchProcessMapper.selectByExample(processExample);
-			int chunkSize = 1000;
-			for (int i = 0; i < processFlowList.size(); i += chunkSize) {
-				List<String> chunk = processFlowList.subList(i, Math.min(i + chunkSize, processFlowList.size()));
-				processExample.createCriteria()
-						.andRecordStatusEqualTo("Y")
-						.andProcessFlowIn(chunk);
 
-				List<ResDoctorSchProcess> chunkProcessList = doctorSchProcessMapper.selectByExample(processExample);
-				schProcessList.addAll(chunkProcessList);
-			}
-		}
-		Map<String, ResDoctorSchProcess> processFlowToEntityMap = schProcessList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
-		Map<String, List<ResDoctorSchProcess>> doctorFlowToEntityMap = schProcessList.stream().collect(Collectors.groupingBy(vo -> vo.getUserFlow()));
+		Map<String, ResDoctorSchProcess> processFlowToEntityMap = processList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
+		Map<String, List<ResDoctorSchProcess>> doctorFlowToEntityMap = processList.stream().collect(Collectors.groupingBy(vo -> vo.getUserFlow()));
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
