@@ -295,7 +295,7 @@ public class JsResActivityQueryController extends GeneralController {
 				"userName:主讲人",
 				"userCode:用户名",
 				"realitySpeaker:实际主讲人",
-				"realitySpeakerUserCode:用户名",
+				//"realitySpeakerUserCode:用户名",
 				"deptName:所在科室",
 				"startTime:活动开始时间",
 				"endTime:活动结束时间",
