@@ -120,34 +120,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!--<filter>
-	    <filter-name>DruidWebStatFilter</filter-name>
-	    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
-	    <init-param>
-	        <param-name>exclusions</param-name>
-	        <param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
-	    </init-param>
-	    <init-param>
-		    <param-name>profileEnable</param-name>
-		    <param-value>true</param-value>
-		</init-param>
-	    <init-param>
-	        <param-name>sessionStatEnable</param-name>
-	        <param-value>true</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>sessionStatMaxCount</param-name>
-	        <param-value>1000</param-value>
-	    </init-param>
-	    <init-param>
-	        <param-name>principalSessionName</param-name>
-	        <param-value>currUserName</param-value>
-	    </init-param>
-	</filter>
-	<filter-mapping>
-	    <filter-name>DruidWebStatFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
-  	</filter-mapping>-->
+
 
 	<filter>
 		<filter-name>AnyChart Resources</filter-name>
@@ -166,37 +139,6 @@
 		<filter-name>httpContextFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!--<filter>
-		<filter-name>edcAppLogFilter</filter-name>
-		<filter-class>com.pinde.sci.common.EdcAppLogFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>edcAppLogFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>-->
-	<!--<filter>
-		<filter-name>CAS Filter</filter-name>
-		&lt;!&ndash;<filter-class>com.pinde.sci.filter.CASFilter</filter-class>&ndash;&gt;
-		<filter-class>com.neusoft.education.tp.sso.client.filter.CASFilter</filter-class>
-		<init-param>
-			<param-name>com.neusoft.education.tp.sso.client.filter.loginUrl</param-name>
-			<param-value>http://210.38.57.81:7001/cas/login</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.neusoft.education.tp.sso.client.filter.validateUrl</param-name>
-			<param-value>http://210.38.57.81:7001/cas/serviceValidate</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.neusoft.education.tp.sso.client.filter.serverName</param-name>
-			<param-value>localhost:8090</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>CAS Filter</filter-name>
-		<url-pattern>/inx/gzykdx</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-	</filter-mapping>-->
 	<!--url字符过滤-->
 	<filter>
 		<filter-name>urlFilter</filter-name>
@@ -249,29 +191,7 @@
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
-	</servlet-mapping>	
-	<!-- Druid Sql 监控 -->
-	<!--<servlet>
-      	<servlet-name>DruidStatView</servlet-name>
-      	<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-      	&lt;!&ndash; <init-param>
-	        <param-name>allow</param-name>
-	        <param-value>127.0.0.1</param-value>
-	    </init-param>
-	    &ndash;&gt;
-		<init-param>
-			<param-name>loginUsername</param-name>
-			<param-value>pdma</param-value>
-		</init-param>
-		<init-param>
-			<param-name>loginPassword</param-name>
-			<param-value>pdma123!@#</param-value>
-		</init-param>
-	</servlet>
-  	<servlet-mapping>
-      	<servlet-name>DruidStatView</servlet-name>
-      	<url-pattern>/druid/*</url-pattern>
-  	</servlet-mapping>-->
+    </servlet-mapping>
 	<jsp-config>
 		<taglib>  
 	        <taglib-uri>http://www.njpdkj.com/pdfn</taglib-uri>  

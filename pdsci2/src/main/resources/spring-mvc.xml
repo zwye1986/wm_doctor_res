@@ -90,8 +90,6 @@
             <mvc:exclude-mapping path="/jsp/hbres/js/**" />
             <mvc:exclude-mapping path="/weixin/**" />
             <mvc:exclude-mapping path="/app/**" />
-            <mvc:exclude-mapping path="/druid/**" />
-            <mvc:exclude-mapping path="/pddruid/**" />
             <mvc:exclude-mapping path="/sys/dict/doRefresh" />
             <mvc:exclude-mapping path="/sys/dict/doRemoteRefresh" />
             <mvc:exclude-mapping path="/sys/cfg/getErrorMsg" />

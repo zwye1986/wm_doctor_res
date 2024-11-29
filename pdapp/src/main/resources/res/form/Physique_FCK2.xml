@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/Physique_FCK2_{1}{2}"></jsp>
+    <!--上海奉贤表单-->
+    <shfx ver="1.0">
+        <page ver="1.0">
+            <item name="studentName" remark="考生姓名" multiple="N"></item>
+            <item name="orgName" remark="所属培训基地" multiple="N"></item>
+            <item name="studentSid" remark="工号" multiple="N"></item>
+            <item name="deptName" remark="考核科室" multiple="N"></item>
+            <item name="part00" remark="评价0" multiple="N"></item>
+            <item name="part01" remark="评价1" multiple="N"></item>
+            <item name="part02" remark="评价2" multiple="N"></item>
+            <item name="part03" remark="评价3" multiple="N"></item>
+            <item name="part04" remark="评价4" multiple="N"></item>
+            <item name="part05" remark="评价5" multiple="N"></item>
+            <item name="part06" remark="评价6" multiple="N"></item>
+            <item name="part07" remark="评价7" multiple="N"></item>
+            <item name="part08" remark="评价8" multiple="N"></item>
+            <item name="part09" remark="评价9" multiple="N"></item>
+            <item name="part10" remark="评价10" multiple="N"></item>
+            <item name="skillScore" remark="总分" multiple="N"></item>
+            <item name="teacherName" remark="考官姓名" multiple="N"></item>
+            <item name="date" remark="日期" multiple="N"></item>
+        </page>
+    </shfx>
+</jspForm>
+

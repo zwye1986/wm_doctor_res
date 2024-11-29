@@ -8,7 +8,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.res.dao.osca.ext.OscaDoctorRegistExtMapper;
-import com.pinde.res.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.core.model.OscaDoctorRegist;
 import com.pinde.core.model.OscaDoctorRegistExample;

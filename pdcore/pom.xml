@@ -62,17 +62,6 @@
             <systemPath>${lib.dir}/axis.jar</systemPath>
         </dependency>
 
-<!--        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.23</version>
-        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.zaxxer</groupId>-->
-<!--            <artifactId>HikariCP</artifactId>-->
-<!--        </dependency>-->
-
         <dependency>
             <groupId>bonecp-0.8.0.RELEASE</groupId>
             <artifactId>bonecp-0.8.0.RELEASE</artifactId>

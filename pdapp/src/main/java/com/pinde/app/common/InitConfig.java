@@ -1,5 +1,6 @@
 package com.pinde.app.common;
 
+import com.pinde.core.common.BaseEnum;
 import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.model.SysCfg;
@@ -56,7 +57,11 @@ public class InitConfig implements ServletContextListener {
         if("oracle".equals(GlobalUtil.getLocalCfgMap().get("dbType")) ){
             //加载字典及枚举
             _loadDict(servletContextEvent.getServletContext());
-            _loadEnum(servletContextEvent.getServletContext());
+            try {
+                _loadEnum(servletContextEvent.getServletContext());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             _loadSysCfg(servletContextEvent.getServletContext());
         }
         //读取弱密码
@@ -159,10 +164,22 @@ public class InitConfig implements ServletContextListener {
     private static void _loadEnum(ServletContext context) {
         Set<Class<?>> set = ClassUtil.getClasses("com.pinde.core.common.enums");
         for (Class<?> cls : set) {
-            List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
-            context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
-            for (GeneralEnum genum : enumList) {
-                context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + genum.name(), genum);
+            if (BaseEnum.class.isAssignableFrom(cls)) {
+                Class[] innerEnums = cls.getDeclaredClasses();
+                if (innerEnums != null) {
+                    for (int i = 0; i < innerEnums.length; i++) {
+                        if (Enum.class.isAssignableFrom(innerEnums[i])) {
+                            String mixName = innerEnums[i].getSimpleName();
+                            context.setAttribute(StringUtil.uncapitalize(mixName.substring(mixName.lastIndexOf("$") + 1)) + "List", EnumUtil.toList((Class<? extends GeneralEnum>) innerEnums[i]));
+                        }
+                    }
+                }
+            } else if (GeneralEnum.class.isAssignableFrom(cls)) {
+                List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
+                context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
+                for (GeneralEnum genum : enumList) {
+                    context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + genum.name(), genum);
+                }
             }
         }
     }

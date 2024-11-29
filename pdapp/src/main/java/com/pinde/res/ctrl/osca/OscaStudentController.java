@@ -13,7 +13,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IJsResBaseBiz;
 import com.pinde.res.biz.osca.*;
-import com.pinde.res.enums.osca.*;
+import com.pinde.core.common.enums.osca.*;
 import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
 import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
 import org.slf4j.Logger;

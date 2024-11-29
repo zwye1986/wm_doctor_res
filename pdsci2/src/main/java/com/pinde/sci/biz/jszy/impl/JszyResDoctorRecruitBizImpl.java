@@ -55,10 +55,6 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	private ResBaseMapper resBaseMapper;
 	@Autowired
 	private IUserBiz userBiz;
-	@Autowired
-	private IOrgBiz orgBiz;
-	@Autowired
-	private IJszyGraduationBiz graduationBiz;
 
 	/**
 	 * 根据recruitFlow获取相对应的一条记录
