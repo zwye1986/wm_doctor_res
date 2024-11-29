@@ -15,6 +15,7 @@ import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.core.model.SysDict;
+import com.google.common.collect.Lists;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.excelUtils.enums.NumberEngEnum;
@@ -1911,32 +1912,29 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		List<String> resultFlowList = arrangeResultList.stream().map(vo -> vo.getResultFlow()).collect(Collectors.toList());
 		List<ResDoctorSchProcess> processList = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(resultFlowList)) {
-			ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
-            processExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSchResultFlowIn(resultFlowList);
-			processList = processBiz.readResDoctorSchProcessByExample(processExample);
+			Lists.partition(resultFlowList, 1000).forEach(subList -> {
+				ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
+				processExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSchResultFlowIn(subList);
+				processList.addAll(processBiz.readResDoctorSchProcessByExample(processExample));
+			});
+
 		}
-		List<String> processFlowList = processList.stream().map(vo -> vo.getProcessFlow()).collect(Collectors.toList());
-		List<ResScore> scoreList = new ArrayList<>();
-		if(CollectionUtils.isNotEmpty(processFlowList)) {
-			ResScoreExample scoreExample = new ResScoreExample();
-            scoreExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andProcessFlowIn(processFlowList);
-			scoreList = scoreMapper.selectByExample(scoreExample);
-		}
-		Map<String, ResScore> processFlowToEntityMap = scoreList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
-		Map<String, List<ResScore>> doctorFlowToEntityMap = scoreList.stream().collect(Collectors.groupingBy(vo -> vo.getDoctorFlow()));
+
+		Map<String, ResDoctorSchProcess> processFlowToEntityMap = processList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
+		Map<String, List<ResDoctorSchProcess>> doctorFlowToEntityMap = processList.stream().collect(Collectors.groupingBy(vo -> vo.getUserFlow()));
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
 				itemMap = new HashMap<>();
 				itemMap.put(ll,new BigDecimal("0"));
 				itemMap.put(jn,new BigDecimal("0"));
-				List<ResScore> doctorScoreList = doctorFlowToEntityMap.get(doctorFlow);
-				if(CollectionUtils.isNotEmpty(doctorScoreList)) {
+				List<ResDoctorSchProcess> doctorProcessList = doctorFlowToEntityMap.get(doctorFlow);
+				if(CollectionUtils.isNotEmpty(doctorProcessList)) {
 					BigDecimal totalScore = BigDecimal.ZERO;
 					int count = 0;
-					for (ResScore resScore : doctorScoreList) {
-						if(resScore.getTheoryScore() != null) {
-							totalScore = totalScore.add(resScore.getTheoryScore());
+					for (ResDoctorSchProcess process : doctorProcessList) {
+						if(process.getSchScore() != null) {
+							totalScore = totalScore.add(process.getSchScore());
 							count++;
 						}
 					}
@@ -1955,13 +1953,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				continue;
 			}
 			itemMap = new HashMap<>();
-			itemMap.put(ll,new BigDecimal("0"));
-			itemMap.put(jn,new BigDecimal("0"));
+			List<String> useProcessList = new ArrayList<>();
 			List<ResSchProcessExpress> itemList = expMap.get(doctorFlow);
-			if (CollectionUtil.isEmpty(itemList)) {
-				result.put(doctorFlow,itemMap);
-				continue;
-			}
 			itemMap = new HashMap<>();
 			BigDecimal lilunScore = new BigDecimal("0");
 			int llCount = 0;
@@ -1969,52 +1962,53 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			BigDecimal jinengScore = new BigDecimal("0");
 			int jnCount = 0;
 			itemMap.put(jn,new BigDecimal("0"));
-			List<String> useProcessList = new ArrayList<>();
-			for (ResSchProcessExpress item : itemList) {
-				useProcessList.add(item.getProcessFlow());
-				String recContent = item.getRecContent();
-				if (StringUtils.isEmpty(recContent)) {
-					continue;
-				}
-				Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
-				if (CollectionUtil.isEmpty(stringObjectMap)) {
-					continue;
-				}
-				//理论成绩
-				Object theoreResult = stringObjectMap.get("theoreResult");
-				if (ObjectUtil.isNotEmpty(theoreResult)) {
-					try{
-						BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
-						lilunScore = lilunScore.add(bigDecimal);
-						llCount++;
-					}catch (Exception e) {
-
+			if (CollectionUtil.isNotEmpty(itemList)) {
+				for (ResSchProcessExpress item : itemList) {
+					useProcessList.add(item.getProcessFlow());
+					String recContent = item.getRecContent();
+					if (StringUtils.isEmpty(recContent)) {
+						continue;
 					}
-				}else {
-					ResScore processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResScore());
-					BigDecimal theoryScore = processItem.getTheoryScore();
-					if (theoryScore != null) {
-						lilunScore = lilunScore.add(theoryScore);
-						llCount++;
+					Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
+					if (CollectionUtil.isEmpty(stringObjectMap)) {
+						continue;
 					}
-				}
-				//技能成绩
-				Object score = stringObjectMap.get("score");
-				if (ObjectUtil.isNotEmpty(score)) {
-					try{
-						BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
-						jinengScore = jinengScore.add(bigDecimal);
-						jnCount++;
-					}catch (Exception e) {
+					//理论成绩
+					Object theoreResult = stringObjectMap.get("theoreResult");
+					if (ObjectUtil.isNotEmpty(theoreResult)) {
+						try{
+							BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
+							lilunScore = lilunScore.add(bigDecimal);
+							llCount++;
+						}catch (Exception e) {
 
+						}
+					}else {
+						ResDoctorSchProcess processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResDoctorSchProcess());
+						BigDecimal theoryScore = processItem.getSchScore();
+						if (theoryScore != null) {
+							lilunScore = lilunScore.add(theoryScore);
+							llCount++;
+						}
+					}
+					//技能成绩
+					Object score = stringObjectMap.get("score");
+					if (ObjectUtil.isNotEmpty(score)) {
+						try{
+							BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
+							jinengScore = jinengScore.add(bigDecimal);
+							jnCount++;
+						}catch (Exception e) {
+
+						}
 					}
 				}
 			}
-			List<ResScore> doctorScoreList = doctorFlowToEntityMap.get(doctorFlow);
-			if(CollectionUtils.isNotEmpty(doctorScoreList)) {
-				for (ResScore resScore : doctorScoreList) {
-					if(!useProcessList.contains(resScore.getProcessFlow()) && resScore.getTheoryScore() != null) {
-						lilunScore = lilunScore.add(resScore.getTheoryScore());
+			List<ResDoctorSchProcess> doctorProcessList = doctorFlowToEntityMap.get(doctorFlow);
+			if(CollectionUtils.isNotEmpty(doctorProcessList)) {
+				for (ResDoctorSchProcess process : doctorProcessList) {
+					if(!useProcessList.contains(process.getProcessFlow()) && process.getSchScore() != null) {
+						lilunScore = lilunScore.add(process.getSchScore());
 						llCount++;
 					}
 				}
@@ -3348,7 +3342,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				}
 //				ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
 //				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-//				example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
+//				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
 //				example.setOrderByClause("CREATE_TIME DESC");
 //				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
 //				if (null== recruitList ||  recruitList.size()==0){
@@ -3401,7 +3395,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //					resultExtMapper.updateResDoctorSchProcessToDel(list);
 //				}
 //				SysCfg jsres_is_process = cfgBiz.read("jsres_is_process");
-//				if (null != jsres_is_process && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(jsres_is_process.getCfgValue())){
+//				if (null != jsres_is_process && GlobalConstant.RECORD_STATUS_Y.equals(jsres_is_process.getCfgValue())){
 //					// 获取当前入科时间填写系统限制
 //					CheckRotationTime(doctor.getDoctorFlow(), dept.getRecordFlow(), startDate, endDate, "1", "", dept.getSchMonth(), i);
 //				}
@@ -3493,12 +3487,12 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				process.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 //				process.setModifyTime(DateUtil.getCurrDateTime());
 //				process.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-//				process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 //
 //				doctorSchProcessMapper.insertSelective(process);
 //				ResSchProcessExpressExample proExample = new ResSchProcessExpressExample();
 //				proExample.createCriteria().andOperUserFlowEqualTo(user.getUserFlow()).andSchRotationDeptFlowEqualTo(dept.getRecordFlow())
-//						.andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//						.andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
 //				List<ResSchProcessExpress> recList = schProcessExpressMapper.selectByExampleWithBLOBs(proExample);
 //				String recContent="";
 //				if(recList!=null&&recList.size()>0)
