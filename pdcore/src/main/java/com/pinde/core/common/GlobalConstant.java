@@ -150,6 +150,19 @@ public class GlobalConstant {
     public static final String EVAL_WS_ID = "eval";
     public static final String PORTALS_WS_ID = "portals";
 
+    //工作站名称
+    public static final String IRB_WS_ID = "irb";
+    public static final String GCP_WS_ID = "gcp";
+    public static final String AEM_WS_ID = "aem";
+    public static final String LCJN_WS_ID = "lcjn";
+    public static final String EDU_WS_ID = "edu";
+    public static final String ERP_WS_ID = "erp";
+    public static final String CMIS_WS_ID = "cmis";//学籍工作站ID
+    public static final String NJMUEDU_WS_ID = "njmuedu";
+    public static final String GZYKDX_WS_ID = "gzykdx";
+    public static final String FSTU_WS_ID = "fstu";
+    public static final String STUDY_WS_ID = "study";
+
     //判断USER是否位考官
     public static final String IS_EXAM_TEA_Y = com.pinde.core.common.GlobalConstant.FLAG_Y;
     public static final String IS_EXAM_TEA_N = com.pinde.core.common.GlobalConstant.FLAG_N;
