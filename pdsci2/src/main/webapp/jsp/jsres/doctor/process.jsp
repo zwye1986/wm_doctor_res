@@ -397,6 +397,8 @@ function universityback()
 }
 
 function afterTest(processFlow,f){
+	jboxTip("出科考试请关注微信公众号：“江苏住培”后，在微信公众号中进行考试！");
+	return;
 	if(f){
 		jboxConfirm("上次考试分数已计算,确定参加考试？",function(){
 			toTest(processFlow);
