@@ -1,7 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import org.apache.commons.collections4.CollectionUtils;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -718,9 +716,9 @@ public class ResDoctorSchProcessExample {
         }
 
         public Criteria andSchResultFlowIn(List<String> values) {
-            if (CollectionUtils.isNotEmpty(values) && values.size() > 100) {
+            /*if (CollectionUtils.isNotEmpty(values) && values.size() > 100) {
                 values = values.subList(0, 100);
-            }
+            }*/
             addCriterion("SCH_RESULT_FLOW in", values, "schResultFlow");
             return (Criteria) this;
         }
