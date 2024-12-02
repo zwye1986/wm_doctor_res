@@ -2019,6 +2019,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			int lilunCount = 0;
 			BigDecimal jineng = new BigDecimal("0");
 			int jinengCount = 0;
+			List<String> noneTheoryScoreList = new ArrayList<>();
 			if (CollectionUtil.isNotEmpty(skillMap)) {
 				for (String processFlow : skillMap.keySet()) {
 					try {
@@ -2028,6 +2029,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 						if (StringUtils.isNotEmpty(ll)) {
 							lilun = lilun.add(new BigDecimal(ll));
 							lilunCount ++;
+						}else {
+							noneTheoryScoreList.add(processFlow);
 						}
 						if (StringUtils.isNotEmpty(jn)) {
 							jineng = jineng.add(new BigDecimal(jn));
@@ -2041,7 +2044,6 @@ public class JsResDoctorRecruitController extends GeneralController {
 			}
 
 			if(CollectionUtils.isNotEmpty(processList)) {
-				List<String> noneTheoryScoreList = new ArrayList<>();
 				for (String processFlow : processList) {
 					if(!skillMap.containsKey(processFlow)) {
 						noneTheoryScoreList.add(processFlow);
