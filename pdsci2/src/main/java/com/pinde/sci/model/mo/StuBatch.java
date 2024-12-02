@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class StuBatch extends MybatisObject {
+public class StuBatch extends TeachingActivitySpeakerExample.MybatisObject {
     private String batchFlow;
 
     private String batchNo;

@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ActivityCfgExt;
-import com.pinde.sci.model.mo.TeachingActivityEval;
-import com.pinde.sci.model.mo.TeachingActivityEvalExample;
+import com.pinde.core.model.ActivityCfgExt;
+import com.pinde.core.model.TeachingActivityEval;
+import com.pinde.core.model.TeachingActivityEvalExample;
 import java.util.List;
 import java.util.Map;
 

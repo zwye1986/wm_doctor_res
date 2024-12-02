@@ -4,13 +4,11 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.RecruitExamRoomInfoMapper;
 import com.pinde.sci.model.mo.RecruitExamRoomInfo;
 import com.pinde.sci.model.mo.RecruitExamRoomInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,13 +26,13 @@ public class RecruitExamRoomInfoBizImpl implements IRecruitExamRoomInfoBiz {
 
         criteria.andRoomFlowEqualTo(roomFlow);
         criteria.andOrgFlowEqualTo(orgFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
         List<RecruitExamRoomInfo> recruitExamRoomInfos = recruitExamRoomInfoMapper.selectByExample(example);
         if (recruitExamRoomInfos!=null&&!recruitExamRoomInfos.isEmpty()) {
-            return GlobalConstant.RECORD_STATUS_Y;
+            return com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
         }else {
-            return GlobalConstant.RECORD_STATUS_N;
+            return com.pinde.core.common.GlobalConstant.RECORD_STATUS_N;
         }
     }
 
@@ -44,7 +42,7 @@ public class RecruitExamRoomInfoBizImpl implements IRecruitExamRoomInfoBiz {
         RecruitExamRoomInfoExample.Criteria criteria = example.createCriteria();
 
         criteria.andExamFlowEqualTo(examFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return recruitExamRoomInfoMapper.selectByExample(example);
     }
 

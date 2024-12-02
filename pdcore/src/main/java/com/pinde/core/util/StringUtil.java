@@ -14,12 +14,10 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Clob;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -381,29 +379,7 @@ public class StringUtil {
 	 		return strSource;
 	 	}
 	 	
-		/**
-		 * 生成指定位数的随机码
-		 * @param length 随机码的位数
-		 * @return 指定位数的随机码
-		 */
-		public static String getRandomCode(int length)
-		{
-			//Remove O and I confuse with zero(0) and one(1);
-			String[] source={"0","1","2","3","4","5","6","7","8","9",
-					"A","B","C","D","E","F","G","H","J","K","L","M","N",
-					"P","Q","R","S","T","U","V","W","X","Y","Z"};
-	/*		String[] source={"0","1","2","3","4","5","6","7","8","9",
-					"A","B","C","D","E","F","G","H","I","J","K","L","M","N",
-					"O","P","Q","R","S","T","U","V","W","X","Y","Z"};*/
-			String code="";
-			Random rd = new Random();
-			for(int i=0;i<length;i++)
-			{
-				code+=source [rd.nextInt(source.length)];
-			}
-			return code;
 
-		}
 		
 		/**
 	     * 去除html代码

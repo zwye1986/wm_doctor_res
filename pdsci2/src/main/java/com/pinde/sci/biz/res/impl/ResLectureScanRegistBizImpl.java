@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResLectureScanRegistBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.LectureInfoTargetMapper;
@@ -19,7 +19,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -53,7 +52,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     public List<ResLectureScanRegist> searchRegistByLectureFlow(String lectureFlow, List<String> roles) {
 //        ResLectureScanRegistExample example = new ResLectureScanRegistExample();
 //        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andLectureFlowEqualTo(lectureFlow).andIsRegistIsNotNull()
-//                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //        example.setOrderByClause("CREATE_TIME");
         return lectureinfoExtMapper.searchRegistByLectureFlow(lectureFlow,roles);
     }
@@ -73,7 +72,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     @Override
     public ResLectureScanRegist searchByUserFlowAndLectureFlow(String userFlow,String lectureFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+        ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
                 andLectureFlowEqualTo(lectureFlow).andOperUserFlowEqualTo(userFlow);
         List<ResLectureScanRegist> lectureScanRegists = lectureScanRegistMapper.selectByExample(example);
         if(lectureScanRegists!=null&&lectureScanRegists.size()>0){
@@ -129,12 +128,12 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
             if (StringUtil.isNotBlank(currUser.getUserName())) {
                 lectureScanRegist.setOperUserName(currUser.getUserName());
             }
-            lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.insertSelective(lectureScanRegist);
         }
         else{
             GeneralMethod.setRecordInfo(lectureScanRegist, false);
-            lectureScanRegist.setIsRegist("Y");
+            lectureScanRegist.setIsRegist(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return lectureScanRegistMapper.updateByPrimaryKeySelective(lectureScanRegist);
         }
 
@@ -142,7 +141,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
 
     private ResLectureScanRegist getRegistByFlow(String userFlow, String lectureFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
         .andLectureFlowEqualTo(lectureFlow).andOperUserFlowEqualTo(userFlow);
         List<ResLectureScanRegist>list =lectureScanRegistMapper.selectByExample(example);
         if(list!=null&&list.size()>0)
@@ -156,8 +155,8 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     public int editLectureScanRegist(String lectureFlow, String limitNum){
         SysUser currUser = GlobalContext.getCurrentUser();
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andIsRegistEqualTo(GlobalConstant.FLAG_Y).andLectureFlowEqualTo(lectureFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andIsRegistEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andLectureFlowEqualTo(lectureFlow);
         if(StringUtil.isNotBlank(limitNum) && lectureScanRegistMapper.countByExample(example)>=Integer.valueOf(limitNum)){
             return 0;
         }else{
@@ -174,7 +173,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
                 lectureScanRegist.setTrainingSpeId(doctor.getTrainingSpeId());
                 lectureScanRegist.setTrainingSpeName(doctor.getTrainingSpeName());
             }
-            lectureScanRegist.setIsRegist(GlobalConstant.FLAG_Y);
+            lectureScanRegist.setIsRegist(com.pinde.core.common.GlobalConstant.FLAG_Y);
             GeneralMethod.setRecordInfo(lectureScanRegist,true);
             return lectureScanRegistMapper.insertSelective(lectureScanRegist);
         }
@@ -184,14 +183,14 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     public List<ResLectureScanRegist> searchByUserFLowAndRegist(String userFlow){
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
         ResLectureScanRegistExample.Criteria criteria = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
-                andOperUserFlowEqualTo(userFlow).andIsRegistEqualTo(GlobalConstant.FLAG_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
+                andOperUserFlowEqualTo(userFlow).andIsRegistEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         ResLectureScanRegistExample.Criteria criteria2 = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
                         andOperUserFlowEqualTo(userFlow).andIsRegistIsNull();
         ResLectureScanRegistExample.Criteria criteria3 = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
-                        andOperUserFlowEqualTo(userFlow).andIsScanEqualTo("Y");
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
+                andOperUserFlowEqualTo(userFlow).andIsScanEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         example.or(criteria2);
         example.or(criteria3);
         example.setOrderByClause("CREATE_TIME");
@@ -202,7 +201,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     public List<ResLectureScanRegist> searchByLectureFlow(String lectureFlow) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
         ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andLectureFlowEqualTo(lectureFlow)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("CREATE_TIME");
         return lectureScanRegistMapper.selectByExample(example);
     }
@@ -216,11 +215,11 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     public List<ResLectureScanRegist> queryScanRegistDocList(String lectureFlow, String flag) {
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
         ResLectureScanRegistExample.Criteria criteria = example.createCriteria().andLectureFlowEqualTo(lectureFlow)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if("scan".equals(flag)){
             criteria.andIsScanIsNotNull();
         }else{
-            criteria.andIsRegistEqualTo(GlobalConstant.FLAG_Y);
+            criteria.andIsRegistEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         return lectureScanRegistMapper.selectByExample(example);
     }
@@ -248,7 +247,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     @Override
     public Map<String, String> registImg(String registFlow, MultipartFile file, String fileAddress) {
         Map<String, String> map=new HashMap<String, String>();
-        map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
         if(file!=null){
             List<String> mimeList = new ArrayList<String>();
             if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
@@ -263,13 +262,13 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
             String fileName = file.getOriginalFilename();//文件名
             String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
             if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-                map.put("error", GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
                 return  map;
 
             }
             long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
             if (file.getSize() > limitSize * 1024 * 1024) {
-                map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
                 return  map;
             }
             try {
@@ -305,7 +304,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
                         map.put("flow",imageFlow);
                     }
                 }
-                map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -321,8 +320,8 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     @Override
     public int delLectureScanRegist(String lectureFlow, String userFlow){
         ResLectureScanRegistExample example = new ResLectureScanRegistExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andIsRegistEqualTo(GlobalConstant.FLAG_Y).andLectureFlowEqualTo(lectureFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andIsRegistEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andLectureFlowEqualTo(lectureFlow)
                 .andOperUserFlowEqualTo(userFlow);
         List<ResLectureScanRegist> list=lectureScanRegistMapper.selectByExample(example);
         if(list!=null&&list.size()>0){
@@ -353,7 +352,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     @Override
     public List<LectureInfoTarget> searchLectureInfoTargetList(String lectureFlow) {
         LectureInfoTargetExample example = new LectureInfoTargetExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andLectureFlowEqualTo(lectureFlow);
         example.setOrderByClause("ORDINAL");
         return lectureInfoTargetMapper.selectByExample(example);

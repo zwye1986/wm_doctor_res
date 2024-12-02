@@ -1,7 +1,5 @@
 package com.transfer.ws;
 
-import com.pinde.sci.util.PasswordHelper;
-
 /**
  * Created by Administrator on 2017/11/6.
  */

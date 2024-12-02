@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SchArrangeDoctorDept extends MybatisObject {
+public class SchArrangeDoctorDept extends TeachingActivitySpeakerExample.MybatisObject {
     private String arrDocDeptFlow;
 
     private String arrangeFlow;

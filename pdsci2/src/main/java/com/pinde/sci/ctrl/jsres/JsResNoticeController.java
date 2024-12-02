@@ -1,10 +1,10 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.model.mo.InxInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,8 +47,8 @@ public class JsResNoticeController extends GeneralController {
 
 		PageHelper.startPage(currentPage,getPageSize(request));
 		Map<String,String> param=new HashMap<>();
-		param.put("resNoticeTypeId",GlobalConstant.RES_NOTICE_TYPE_ID);
-		param.put("resNoticeSysId",GlobalConstant.RES_NOTICE_SYS_ID);
+        param.put("resNoticeTypeId", com.pinde.core.common.GlobalConstant.RES_NOTICE_TYPE5_ID);
+        param.put("resNoticeSysId", com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID);
 		param.put("noticeTitle",noticeTitle);
 		param.put("orgFlow",null);
 		List<InxInfo> infos =   this.noticeBiz.searchInfoByOrg(param);
@@ -60,7 +60,7 @@ public class JsResNoticeController extends GeneralController {
 	@RequestMapping("/delNotice")
 	public String delNotice(String infoFlow){
 		this.noticeBiz.delNotice(infoFlow);
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 	@RequestMapping("/edit")
 	public String edit(String infoFlow,  Model model){
@@ -74,8 +74,8 @@ public class JsResNoticeController extends GeneralController {
 	@RequestMapping("/saveNotice/{roleFlag}")
 	public String saveNotice(@PathVariable String roleFlag, InxInfo info, String sessionNumber){
 
-		info.setRoleFlow(GlobalConstant.RES_NOTICE_SYS_ID);
+        info.setRoleFlow(com.pinde.core.common.GlobalConstant.RES_NOTICE_SYS_ID);
 		noticeBiz.editInfo(info,null,sessionNumber);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 }

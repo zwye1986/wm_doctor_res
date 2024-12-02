@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.util.List;
 
-public class ResJointOrg extends MybatisObject {
+public class ResJointOrg extends TeachingActivitySpeakerExample.MybatisObject {
     private String jointFlow;
 
     private String orgFlow;

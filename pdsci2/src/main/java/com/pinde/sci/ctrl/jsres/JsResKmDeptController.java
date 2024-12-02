@@ -10,7 +10,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysUser;
@@ -80,7 +79,7 @@ public class JsResKmDeptController extends GeneralController{
 		model.addAttribute("currStudentHe",currStudentHe);
 		model.addAttribute("studentNum",studentNum);*/
 		model.addAttribute("infos",infos);
-        GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_ROLE, GlobalConstant.IRB_COMMITTEE_SECRETARY);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE, com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_SECRETARY);
 		return "jsres/km/index";
 	}
 

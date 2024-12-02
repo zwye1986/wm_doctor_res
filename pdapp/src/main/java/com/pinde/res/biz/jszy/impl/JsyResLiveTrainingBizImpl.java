@@ -1,6 +1,7 @@
 package com.pinde.res.biz.jszy.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,10 +9,8 @@ import com.pinde.res.biz.jszy.IJszyResLiveTrainingBiz;
 import com.pinde.res.dao.jszy.ext.JszyRestarinNoticeExtMapper;
 import com.pinde.sci.dao.base.ResTarinNoticeMapper;
 import com.pinde.sci.dao.base.ResTrainingOpinionMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -54,7 +53,7 @@ public class JsyResLiveTrainingBizImpl implements IJszyResLiveTrainingBiz {
     public List<ResTrainingOpinion> readByOpinionUserFlow(String opinionUserFlow) {
         ResTrainingOpinionExample example = new ResTrainingOpinionExample();
         if(StringUtil.isNotBlank(opinionUserFlow)){
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOpinionUserFlowEqualTo(opinionUserFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOpinionUserFlowEqualTo(opinionUserFlow);
             example.setOrderByClause("EVA_TIME DESC");
         }
         return trainingOpinionMapper.selectByExample(example);
@@ -63,11 +62,11 @@ public class JsyResLiveTrainingBizImpl implements IJszyResLiveTrainingBiz {
     @Override
     public List<ResTrainingOpinion> searchByOpinionUserContentAndReplayStatus(String opinionUserContent, String replayStatus,String orgFlow) {
         ResTrainingOpinionExample example = new ResTrainingOpinionExample();
-        ResTrainingOpinionExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTrainingOpinionExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(opinionUserContent)){
             criteria.andOpinionUserContentLike("%"+opinionUserContent+"%");
         }
-        if("Y".equals(replayStatus)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(replayStatus)) {
             criteria.andReplyTimeIsNull();
         }
         if(StringUtil.isNotBlank(orgFlow)){
@@ -99,13 +98,13 @@ public class JsyResLiveTrainingBizImpl implements IJszyResLiveTrainingBiz {
                 return resTarinNoticeMapper.insertSelective(tarinNotice);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public List<ResTarinNotice> searchByTitleOrgFlow(String resNoticeTitle, String orgFlow) {
         ResTarinNoticeExample example = new ResTarinNoticeExample();
-        ResTarinNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTarinNoticeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(orgFlow)){
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -124,7 +123,7 @@ public class JsyResLiveTrainingBizImpl implements IJszyResLiveTrainingBiz {
         try {
             if (isAdd) {
                 Method setRecordStatusMethod = clazz.getMethod("setRecordStatus", String.class);
-                setRecordStatusMethod.invoke(obj, GlobalConstant.RECORD_STATUS_Y);
+                setRecordStatusMethod.invoke(obj, com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 Method setCreateTime = clazz.getMethod("setCreateTime", String.class);
                 setCreateTime.invoke(obj, DateUtil.getCurrDateTime());
                 Method setCreateUserFlow = clazz.getMethod("setCreateUserFlow", String.class);

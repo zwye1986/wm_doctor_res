@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SchRotationOrgGroup extends MybatisObject {
+public class SchRotationOrgGroup extends TeachingActivitySpeakerExample.MybatisObject {
     private String groupFlow;
 
     private String rotationFlow;

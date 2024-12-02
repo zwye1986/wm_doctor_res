@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.ISchExamCfgBiz;
@@ -8,13 +8,12 @@ import com.pinde.sci.dao.base.ResDoctorGraduationExamMapper;
 import com.pinde.sci.dao.base.SchExamArrangementExtMapper;
 import com.pinde.sci.dao.base.SchExamArrangementMapper;
 import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
-import com.pinde.sci.model.mo.ResDoctorGraduationExam;
-import com.pinde.sci.model.mo.SchExamArrangement;
-import com.pinde.sci.model.mo.SchExamArrangementExample;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
+import com.pinde.core.model.ResDoctorGraduationExam;
+import com.pinde.core.model.SchExamArrangement;
+import com.pinde.core.model.SchExamArrangementExample;
+import com.pinde.core.model.SchExamDoctorArrangement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
     public List<SchExamArrangement> searchList(SchExamArrangement seam) {
         SchExamArrangementExample example=new SchExamArrangementExample();
         SchExamArrangementExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(seam.getArrangeFlow()))
         {
             criteria.andArrangeFlowEqualTo(seam.getArrangeFlow());
@@ -82,7 +81,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
     @Override
     public int save(SchExamDoctorArrangement result) {
-        result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         result.setCreateTime( DateUtil.getCurrDateTime());
         result.setModifyTime( DateUtil.getCurrDateTime());
         return doctorArrangementMapper.insertSelective(result);
@@ -100,7 +99,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
     @Override
     public int saveGraduationExam(ResDoctorGraduationExam result) {
-        result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         result.setCreateTime( DateUtil.getCurrDateTime());
         result.setModifyTime( DateUtil.getCurrDateTime());
         return graduationExamMapper.insertSelective(result);

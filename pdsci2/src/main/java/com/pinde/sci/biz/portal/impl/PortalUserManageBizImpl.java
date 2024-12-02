@@ -9,11 +9,10 @@ import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -61,10 +60,10 @@ public class PortalUserManageBizImpl implements IPortalUserManageBiz {
 //			}
 //			if(userRole==null)
 //				userRole=new SysUserRole();
-//			userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//			userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //			userRole.setUserFlow(user.getUserFlow());
 //			userRole.setRoleFlow(roleFlow);
-//			userRole.setWsId(GlobalConstant.PORTALS_WS_ID);
+//			userRole.setWsId(com.pinde.core.common.GlobalConstant.PORTALS_WS_ID);
 //			userRole.setAuthTime(DateUtil.getCurrDateTime());
 //			userRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 //			userRoleBiz.saveSysUserRole(userRole);

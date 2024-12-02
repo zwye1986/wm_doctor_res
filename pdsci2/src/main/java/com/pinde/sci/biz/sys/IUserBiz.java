@@ -127,9 +127,7 @@ public interface IUserBiz {
      */
     List<SysUser> findUserByOrgFlowAndRoleFlow(String orgFlow, String roleFlow);
 
-    List<SysUser> teacherUserByOrgFlowAndRoleFlow(String orgFlow, String roleFlow, SysUser sysUser);
 
-    List<SysUser> headUserByOrgFlowAndRoleFlow(String orgFlow, String roleFlow, SysUser sysUser);
 
 
 //	List<SysUser> findUserByRoleFlow(String orgFlow , String roleFlow);

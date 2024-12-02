@@ -12,10 +12,8 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.slf4j.Logger;
@@ -259,7 +257,7 @@ public class SchExtDeptController extends GeneralController{
 					String unit = InitConfig.getSysCfg("res_rotation_unit");
 					//默认按月计算
 					int step = 30;
-					if (SchUnitEnum.Week.getId().equals(unit)) {
+                    if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unit)) {
 						//如果是周按7天算/没配置或者选择月按30天
 						step = 7;
 						BigDecimal realMonth = BigDecimal.valueOf(0);
@@ -284,10 +282,10 @@ public class SchExtDeptController extends GeneralController{
 				}
 			}
 		int result = this.processBiz.edit(process);
-		if(result==GlobalConstant.ONE_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 }
 

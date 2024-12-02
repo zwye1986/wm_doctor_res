@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResExamRoomMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResExamRoom" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResExamRoom" >
     <id column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
     <result column="SITE_FLOW" property="siteFlow" jdbcType="VARCHAR" />
     <result column="SITE_CODE" property="siteCode" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
     ROOM_FLOW, SITE_FLOW, SITE_CODE, ROOM_CODE, SEAT_NUM, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResExamRoomExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResExamRoomExample" >
     select
     <if test="distinct" >
       distinct
@@ -99,13 +99,13 @@
     delete from PDSCI.RES_EXAM_ROOM
     where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResExamRoomExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResExamRoomExample" >
     delete from PDSCI.RES_EXAM_ROOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResExamRoom" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResExamRoom" >
     insert into PDSCI.RES_EXAM_ROOM (ROOM_FLOW, SITE_FLOW, SITE_CODE, 
       ROOM_CODE, SEAT_NUM, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +115,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResExamRoom" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResExamRoom" >
     insert into PDSCI.RES_EXAM_ROOM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roomFlow != null" >
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResExamRoomExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResExamRoomExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_EXAM_ROOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -242,7 +242,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResExamRoom" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResExamRoom" >
     update PDSCI.RES_EXAM_ROOM
     <set >
       <if test="siteFlow != null" >
@@ -275,7 +275,7 @@
     </set>
     where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResExamRoom" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResExamRoom" >
     update PDSCI.RES_EXAM_ROOM
     set SITE_FLOW = #{siteFlow,jdbcType=VARCHAR},
       SITE_CODE = #{siteCode,jdbcType=VARCHAR},

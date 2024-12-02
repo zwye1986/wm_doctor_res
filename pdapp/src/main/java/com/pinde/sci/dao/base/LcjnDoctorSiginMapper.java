@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LcjnDoctorSigin;
-import com.pinde.sci.model.mo.LcjnDoctorSiginExample;
+import com.pinde.core.model.LcjnDoctorSigin;
+import com.pinde.core.model.LcjnDoctorSiginExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

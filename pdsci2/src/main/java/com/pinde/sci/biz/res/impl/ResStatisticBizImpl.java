@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -10,7 +10,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResStatisticBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.ResBaseMapper;
@@ -21,20 +20,15 @@ import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.dao.res.ResChartExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +72,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(org.getOrgProvId())){
 	    	criteria.andOrgProvIdEqualTo(org.getOrgProvId());
 	    }
@@ -262,7 +256,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 			    		if(typeSpeList!=null&&!typeSpeList.isEmpty()){
 		    		    	for(SysDict sd : typeSpeList){
 				    		String key = so.getOrgFlow()+trainTypeId+sd.getDictId();//确定唯一key
-				    		if(totalCountMap.get(key)!=null&&GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))){
+                                if (totalCountMap.get(key) != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))) {
 				    			count+=Integer.parseInt(totalCountMap.get(key)+"");
 				    			}
 		    		    	}
@@ -285,7 +279,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 		    		    		sheet.setColumnWidth(0, 4500);
 		    		    		String key = so.getOrgFlow()+trainTypeId+sd.getDictId();//确定唯一key
 		    		    		HSSFCell orgCell = rowDepts.createCell(lie);
-		    		    		if(GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))){
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))) {
 		    		    			if(totalCountMap.get(key)!= null){
 		    		    				xiaojiCount+=Integer.parseInt(totalCountMap.get(key)+"");//算小计
 		    		    				if(joingCountMap.get(key)!= null){
@@ -340,11 +334,11 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
 		List<String> typeId=new ArrayList<>();
-		typeId.add(JsResDocTypeEnum.Company.getId());
-		typeId.add(JsResDocTypeEnum.Social.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Social.getId());
 		if(StringUtil.isNotBlank(graduate))
 		{
-			typeId.add(JsResDocTypeEnum.Graduate.getId());
+            typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId());
 		}
 		paramMap.put("docTypes", typeId);
 		return recruitExtMapper.statisticDocCountByOrg(paramMap);
@@ -358,11 +352,11 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 		paramMap.put("startTime", startTime);
 		paramMap.put("delTypeList", delTypeList);
 		List<String> typeId=new ArrayList<>();
-		typeId.add(JsResDocTypeEnum.Company.getId());
-		typeId.add(JsResDocTypeEnum.Social.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Social.getId());
 		if(StringUtil.isNotBlank(graduate))
 		{
-			typeId.add(JsResDocTypeEnum.Graduate.getId());
+            typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId());
 		}
 		paramMap.put("docTypes", typeId);
 		return recruitExtMapper.statisticAppCountByOrg(paramMap);
@@ -398,11 +392,11 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		List<String> typeId=new ArrayList<>();
-		typeId.add(JsResDocTypeEnum.Company.getId());
-		typeId.add(JsResDocTypeEnum.Social.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Social.getId());
 		if(StringUtil.isNotBlank(graduate))
 		{
-			typeId.add(JsResDocTypeEnum.Graduate.getId());
+            typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId());
 		}
 		paramMap.put("docTypes", typeId);
 		return recruitExtMapper.statisticNoAppUser(paramMap);
@@ -440,7 +434,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 								failCount++;
 							}else{
 								int result = save(teacherTraining);
-								if(GlobalConstant.ZERO_LINE!=result){
+                                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 									succCount++;
 								}else{
 									failCount++;
@@ -509,7 +503,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo(ResTeacherTraining resTeacherTraining) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -548,7 +542,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 	@Override
 	public ResTeacherTraining searchTeacherInfoByPK(String recordflow) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecordFlowEqualTo(recordflow);
 		List<ResTeacherTraining> list= teacherTrainingMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){

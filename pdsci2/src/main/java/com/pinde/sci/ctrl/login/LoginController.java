@@ -11,8 +11,8 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.DESUtil;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.OperTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysLoginAbility;
 import com.pinde.sci.model.mo.SysOrg;
@@ -140,33 +140,33 @@ public class LoginController extends GeneralController {
 			user = userBiz.findByIdNo(userCode);
 		}
 		if(user==null){
-			if(!GlobalConstant.ROOT_USER_CODE.equals(userCode)){
+            if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(userCode)) {
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("userCode.notFound"));
 				return errorLoginPage;
 			}else{
 				SysOrg org = new SysOrg();
-				org.setOrgFlow(GlobalConstant.PD_ORG_FLOW);
-				org.setOrgCode(GlobalConstant.PD_ORG_CODE);
-				org.setOrgName(GlobalConstant.PD_ORG_NAME);
-				org.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                org.setOrgFlow(com.pinde.core.common.GlobalConstant.PD_ORG_FLOW);
+                org.setOrgCode(com.pinde.core.common.GlobalConstant.PD_ORG_CODE);
+                org.setOrgName(com.pinde.core.common.GlobalConstant.PD_ORG_NAME);
+                org.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				try{
 					sysOrgBiz.addOrg(org);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
 				user = new SysUser();
-				user.setUserFlow(GlobalConstant.ROOT_USER_FLOW);
+                user.setUserFlow(com.pinde.core.common.GlobalConstant.ROOT_USER_FLOW);
 				user.setUserCode(userCode);
-				user.setUserName(GlobalConstant.ROOT_USER_NAME);
-				user.setOrgFlow(GlobalConstant.PD_ORG_FLOW);
-				user.setOrgName(GlobalConstant.PD_ORG_NAME);
+                user.setUserName(com.pinde.core.common.GlobalConstant.ROOT_USER_NAME);
+                user.setOrgFlow(com.pinde.core.common.GlobalConstant.PD_ORG_FLOW);
+                user.setOrgName(com.pinde.core.common.GlobalConstant.PD_ORG_NAME);
 				user.setStatusId(UserStatusEnum.Activated.getId());
 				user.setStatusDesc(UserStatusEnum.Activated.getName());
 				userBiz.addUser(user);
 			}
 		}
 		//root用户不判断是否锁定
-		if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+        if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			if(UserStatusEnum.Locked.getId().equals(user.getStatusId())){
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("userCode.stoped"));
 				return errorLoginPage;
@@ -192,7 +192,7 @@ public class LoginController extends GeneralController {
 		if(gzFlag){
 			SysLoginAbility ability = loginBiz.readAbility(userCode);
 			//输入密码超过5次错误，锁定10分钟
-			if(null != ability && GlobalConstant.FLAG_Y.equals(ability.getIsLock())){
+            if (null != ability && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ability.getIsLock())) {
 				try {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 					Long diff = System.currentTimeMillis()-sdf.parse(ability.getLoginTime()).getTime();
@@ -241,7 +241,7 @@ public class LoginController extends GeneralController {
 		String clientIp = ClientIPUtils.getClientIp(request);
 
 		//唯一登录
-		if(!GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())&&GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("unique_login_flag"))){
+        if (!com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("unique_login_flag"))) {
 			if (SessionData.sessionDataMap.containsKey(user.getUserFlow()) && SessionData.sessionDataMap.get(user.getUserFlow()).getIp().equals(clientIp)){
 				model.addAttribute("loginErrorMessage",SpringUtil.getMessage("user.alreadyLogin"));
 				return errorLoginPage;
@@ -250,12 +250,12 @@ public class LoginController extends GeneralController {
 
 
 		//设置当前用户
-		setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 
-		setSessionAttribute(GlobalConstant.CURRENT_USER_NAME, user.getUserName());
-		setSessionAttribute(GlobalConstant.CURRENT_ORG, sysOrgBiz.readSysOrg(user.getOrgFlow()));
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER_NAME, user.getUserName());
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ORG, sysOrgBiz.readSysOrg(user.getOrgFlow()));
 		//设置当前用户部门列表
-		setSessionAttribute(GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(user));
+        setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_DEPT_LIST, userBiz.getUserDept(user));
 
 		//加载系统权限
 		loginBiz.loadSysRole(user.getUserFlow());
@@ -264,12 +264,12 @@ public class LoginController extends GeneralController {
 //		//加载EDC项目权限
 //      loginEdcBiz.loadEDCProjRole(user.getUserFlow(), null);
 
-		if(GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+        if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
 			return successLoginPage;
 		}
 
 
-		List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WORKSTATION_ID_LIST);
+        List<String> currUserWorkStationIdList = (List<String>) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WORKSTATION_ID_LIST);
 		if (currUserWorkStationIdList != null && currUserWorkStationIdList.size() > 0) {
 			//在线用户功能使用
 			SessionData sessionData = new SessionData();
@@ -286,7 +286,7 @@ public class LoginController extends GeneralController {
 			log.setOperId(OperTypeEnum.LogIn.getId());
 			log.setOperName(OperTypeEnum.LogIn.getName());
 			log.setLogDesc("登录IP["+clientIp+"]");
-			log.setWsId(GlobalConstant.SYS_WS_ID);
+            log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 			GeneralMethod.addSysLog(log);
 			loginBiz.addSysLog(log);
 
@@ -300,12 +300,12 @@ public class LoginController extends GeneralController {
 	@RequestMapping("/logout")
 	public String logout(String wsId, HttpServletRequest request) {
 		//记录日志
-		if(GlobalContext.getCurrentUser()!=null && !GlobalConstant.ROOT_USER_CODE.equals(GlobalContext.getCurrentUser().getUserCode())){
+        if (GlobalContext.getCurrentUser() != null && !com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(GlobalContext.getCurrentUser().getUserCode())) {
 			SysLog log = new SysLog();
 			//log.setReqTypeId(ReqTypeEnum.GET.getId());
 			log.setOperId(OperTypeEnum.LogOut.getId());
 			log.setOperName(OperTypeEnum.LogOut.getName());
-			log.setWsId(GlobalConstant.SYS_WS_ID);
+            log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 			GeneralMethod.addSysLog(log);
 			loginBiz.addSysLog(log);
 		}
@@ -364,7 +364,7 @@ public class LoginController extends GeneralController {
 			userSession.invalidate();
 		}
 		SessionData.sessionMap.remove(userFlow);
-		return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 	}
 
 	@RequestMapping("/timeout")

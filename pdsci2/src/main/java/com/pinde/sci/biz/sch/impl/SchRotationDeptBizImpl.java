@@ -2,7 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -19,10 +19,9 @@ import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationDeptExtMapper;
 import com.pinde.sci.dao.sch.SchRotationDeptReqExtMapper;
 import com.pinde.sci.dao.sch.SchRotationExtendMapper;
-import com.pinde.sci.enums.res.RegistryTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sch.SchSelTypeEnum;
-import com.pinde.sci.enums.sch.SchStageEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
+import com.pinde.core.common.enums.sch.SchSelTypeEnum;
+import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
@@ -30,12 +29,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.BeanUtils;
@@ -95,28 +90,28 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	//	@Override
 //	public List<SchRotationDept> searchSchRotationDept() {
 //		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		example.setOrderByClause("ORDINAL");
 //		return rotationDeptMapper.selectByExample(example);
 //	}
 //	@Override
 //	public List<SchRotationDept> searchSchRotationDeptByCurrFlow(String currRelRecordFlow) {
 //		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecordFlowEqualTo(currRelRecordFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecordFlowEqualTo(currRelRecordFlow);
 //		example.setOrderByClause("ORDINAL");
 //		return rotationDeptMapper.selectByExample(example);
 //	}
 	@Override
 	public List<SchRotationDept> searchAllSchRotationDept() {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull();
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull();
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
 	}
 	@Override
 	public List<SchRotationDept> searchSchRotationDept(String rotationFlow) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull();
+        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull();
 		if(StringUtil.isNotEmpty(rotationFlow)){
 			criteria.andRotationFlowEqualTo(rotationFlow);
 		}
@@ -127,7 +122,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchOrgSchRotationDept(String rotationFlow,String orgFlow) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
 		.andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
@@ -136,7 +131,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchSchRotationDeptByItems(Map<String,String> paramMap) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(paramMap.get("rotationFlow"))){
 			criteria.andRotationFlowEqualTo(paramMap.get("rotationFlow"));
 		}
@@ -159,7 +154,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchSchRotationDeptGroup(String rotationFlow) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(GlobalConstant.FLAG_N)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N)
 		.andRotationFlowEqualTo(rotationFlow).andOrgFlowIsNull();
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
@@ -168,7 +163,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchOrgSchRotationDeptGroup(String rotationFlow,String orgFlow) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(GlobalConstant.FLAG_N)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N)
 		.andRotationFlowEqualTo(rotationFlow).andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
@@ -177,7 +172,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchRotationDeptByFlows(List<String> recordFlows) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andRecordFlowIn(recordFlows);
 		return rotationDeptMapper.selectByExample(example);
 	}
@@ -186,7 +181,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	public List<SchRotationDept> searchSchRotationDeptMust(String rotationFlow) {
 //		SchRotationDeptExample example = new SchRotationDeptExample();
 //		Criteria criteria = example.createCriteria();
-//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(GlobalConstant.FLAG_Y)
+//		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 //			.andRotationFlowEqualTo(rotationFlow).andOrgFlowIsNull();
 //		example.setOrderByClause("ORDINAL");
 //		return rotationDeptMapper.selectByExample(example);
@@ -196,7 +191,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	public List<SchRotationDept> searchSchRotationDeptMustWithBLOBs(String rotationFlow) {
 //		SchRotationDeptExample example = new SchRotationDeptExample();
 //		Criteria criteria = example.createCriteria();
-//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(GlobalConstant.FLAG_Y)
+//		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 //		.andRotationFlowEqualTo(rotationFlow).andOrgFlowIsNull();
 //		example.setOrderByClause("ORDINAL");
 //		return rotationDeptMapper.selectByExampleWithBLOBs(example);
@@ -206,7 +201,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	public List<SchRotationDept> searchOrgSchRotationDeptMust(String rotationFlow,String orgFlow) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(GlobalConstant.FLAG_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andRotationFlowEqualTo(rotationFlow).andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
@@ -216,7 +211,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	public List<SchRotationDept> searchRotationDeptByRecordFlows(List<String> recordFlows) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecordFlowIn(recordFlows);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecordFlowIn(recordFlows);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
 	}
@@ -229,7 +224,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchDeptByStandard(String rotationFlow,String groupFlow,String standardDeptId,String orgFlow){
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(standardDeptId)){
 			criteria.andStandardDeptIdEqualTo(standardDeptId);
 		}
@@ -242,14 +237,14 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		if(StringUtil.isNotBlank(groupFlow)){
 			criteria.andGroupFlowEqualTo(groupFlow);
 		}else{
-			criteria.andIsRequiredEqualTo(GlobalConstant.FLAG_Y);
+            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return rotationDeptMapper.selectByExample(example);
 	}
 	@Override
 	public List<SchRotationDept> searchDeptByMap(Map<String,String> parameMap){
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(parameMap.get("rotationFlow"))){
 			criteria.andRotationFlowEqualTo(parameMap.get("rotationFlow"));
 		}
@@ -269,7 +264,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	public SchRotationDept readSchRotationDept(String schDeptFlow,String rotationFlow){
 //		SchRotationDept rotationDept = null;
 //		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowEqualTo(schDeptFlow).andRotationFlowEqualTo(rotationFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowEqualTo(schDeptFlow).andRotationFlowEqualTo(rotationFlow);
 //		List<SchRotationDept> rotationDeptList = rotationDeptMapper.selectByExampleWithBLOBs(example);
 //		if(rotationDeptList!=null && rotationDeptList.size()>0){
 //			rotationDept = rotationDeptList.get(0);
@@ -289,7 +284,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				return rotationDeptMapper.insertSelective(rotationDept);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -304,9 +299,9 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 					saveSchRotationDept(rotationDept);
 				}
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -320,18 +315,18 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	private void delRelRotationDept(String rotationFlow){
 		if(StringUtil.isNotBlank(rotationFlow)){
 			SchRotation rotation = rotationBiz.readSchRotation(rotationFlow);
-			if(GlobalConstant.FLAG_Y.equals(rotation.getPublishFlag())){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getPublishFlag())) {
 				SchRotationDept rotationDept = new SchRotationDept();
-				rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				SchRotationDeptExample example = new SchRotationDeptExample();
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowIsNotNull().andRotationFlowEqualTo(rotationFlow);
 				rotationDeptMapper.updateByExampleSelective(rotationDept,example);
 				
 				SchRotationGroup group = new SchRotationGroup();
-				group.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                group.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				SchRotationGroupExample gExample = new SchRotationGroupExample();
-				gExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                gExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowIsNotNull().andRotationFlowEqualTo(rotationFlow);
 				rotationGroupMapper.updateByExampleSelective(group,gExample);
 			}
@@ -375,7 +370,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				SchRotationDept srd = rotationDeptMap.get(key);//页面中已经存在于
 				//判断已保存的规则是否被取消,如果取消则禁用该记录
 				if(srd==null){
-					rotationDeptDb.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    rotationDeptDb.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 					saveSchRotationDept(rotationDeptDb);
 					//同步至各机构
 					delOrgGroupOrRotationDept(rotationDeptDb.getRecordFlow(),null);
@@ -399,8 +394,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			}
 		}
-		
-		int result = GlobalConstant.ZERO_LINE;
+
+        int result = com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		if(StringUtil.isNotBlank(rotationGroup.getGroupFlow())){
 			//先更新标准组合
 			result = rotationGroupBiz.update(rotationGroup);
@@ -419,7 +414,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 
 			//将标准组合为该组合的机构组合更新
 			SchRotationGroupExample groupExample = new SchRotationGroupExample();
-			groupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            groupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 			.andStandardGroupFlowEqualTo(rotationGroup.getGroupFlow());
 			rotationGroupMapper.updateByExampleSelective(tempGroup,groupExample);
 
@@ -460,8 +455,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			}
 		}
-		if(result == GlobalConstant.ZERO_LINE){
-			return  GlobalConstant.ZERO_LINE;
+        if (result == com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		//编辑当前配置的规则
@@ -479,7 +474,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 					rotationDept.setDeptFlow(schDept.getDeptFlow());
 					rotationDept.setDeptName(schDept.getDeptName());
 				}else{
-					return GlobalConstant.ZERO_LINE; 
+                    return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 				}
 			}
 
@@ -519,7 +514,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 						rotationDeptOrg.setRotationFlow(rotationFlow);
 						
 						if(deptRelList!=null && deptRelList.size()>0){
-							if(group!=null && GlobalConstant.FLAG_N.equals(group.getIsRequired())){
+                            if (group != null && com.pinde.core.common.GlobalConstant.FLAG_N.equals(group.getIsRequired())) {
 								if(SchSelTypeEnum.Free.getId().equals(group.getSelTypeId())){
 									Integer standardMax = rotationGroup.getMaxDeptNum();
 									standardMax+=(deptRelList.size()-1);
@@ -559,7 +554,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			}
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 //	@Override
@@ -576,11 +571,11 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //		List<String> recordFlows = new ArrayList<String>();
 //		for(SchRotationDept rotationDept : rotationDeptList){
 //			if(StringUtil.isNotBlank(rotationDept.getRecordFlow())){
-//				rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+//				rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 //				recordFlows.add(rotationDept.getRecordFlow());
 //			}
 //		}
-//		return GlobalConstant.ONE_LINE;
+//		return com.pinde.core.common.GlobalConstant.ONE_LINE;
 //	}
 	
 	@Override
@@ -612,26 +607,26 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 					doctorDept.setOrdinal(rotationDept.getOrdinal());
 					doctorDeptBiz.editDoctorDept(doctorDept);
 				}
-				
-				doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+
+                doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				doctorBiz.editDoctor(doctor);
-				return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
 	public int saveSelDeptsAndResult(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor){
 		saveSelDepts(recordFlows,schMonthMap,doctor);
-		//doctor.setSchFlag(GlobalConstant.FLAG_Y);
+        //doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return schArrangeResultBiz.saveResultByDoctor(doctor);
 	}
 	
 	@Override
 	public List<SchRotationDept> searchDeptByRotations(List<String> rotationFlows){
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andRotationFlowIn(rotationFlows)
 		.andOrgFlowIsNull();
 		example.setOrderByClause("ORDINAL");
@@ -641,16 +636,16 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	@Override
 //	public List<SchRotationDept> searchSelDeptByRotations(List<String> rotationFlows){
 //		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowIn(rotationFlows)
-//		.andIsRequiredEqualTo(GlobalConstant.FLAG_N).andOrgFlowIsNull();
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowIn(rotationFlows)
+//		.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N).andOrgFlowIsNull();
 //		return rotationDeptMapper.selectByExample(example);
 //	}
 	
 	@Override
 	public List<SchRotationDept> searchOrgSelDeptByRotations(List<String> rotationFlows,String orgFlow){
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowIn(rotationFlows)
-		.andIsRequiredEqualTo(GlobalConstant.FLAG_N).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowIn(rotationFlows)
+                .andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N).andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
 	}
@@ -663,13 +658,13 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		if(group!=null){
 			rotationGroupBiz.saveSchRotationGroup(group);
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 	
 	@Override
 	public SchRotationDept readStandardRotationDeptByLocal(String rotationFlow,String groupFlow,String standardDeptId){
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		com.pinde.sci.model.mo.SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        com.pinde.sci.model.mo.SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowIsNull();
 		if(StringUtil.isNotBlank(groupFlow)){
 			SchRotationGroup group = rotationGroupBiz.readSchRotationGroup(groupFlow);
@@ -678,7 +673,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			}
 			criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
 		}else{
-			criteria.andIsRequiredEqualTo(GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
+            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
 		}
 		List<SchRotationDept> rotationDeptList = rotationDeptMapper.selectByExample(example);
 		SchRotationDept rotationDept = null;
@@ -691,7 +686,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	@Override
 //	public List<SchRotationDept> searchRotationDeptByGroupFlow(String groupFlow){
 //		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andGroupFlowEqualTo(groupFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andGroupFlowEqualTo(groupFlow);
 //		return rotationDeptMapper.selectByExample(example);
 //	}
 	
@@ -699,7 +694,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	public List<SchRotationDept> searchRotationDeptByGroupFlowWithBLOBs(String groupFlow){
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(groupFlow)){
 			criteria.andGroupFlowEqualTo(groupFlow);
 		}
@@ -715,21 +710,21 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		String oldGroupFlow = groupFlow;
 		//删除原区域数据
 		SchRotationDept rotationDept = new SchRotationDept();
-		rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		com.pinde.sci.model.mo.SchRotationDeptExample.Criteria criteria = example.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowEqualTo(org.getOrgFlow());
 		if(StringUtil.isNotBlank(groupFlow)){
 			criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
 		}else{
-			criteria.andIsRequiredEqualTo(GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
+            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
 		}
 		int oldDeptNum = rotationDeptMapper.updateByExampleSelective(rotationDept,example);
 
 		//找到原区域标准数据
 		example.clear();
-		criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowIsNull();
 		SchRotationGroup group = null;
 		if(StringUtil.isNotBlank(groupFlow)){
@@ -739,7 +734,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			}
 			criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
 		}else{
-			criteria.andIsRequiredEqualTo(GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
+            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
 		}
 		List<SchRotationDept> standardRotationDept = rotationDeptMapper.selectByExample(example);
 		if(standardRotationDept!=null && standardRotationDept.size()>0){
@@ -747,7 +742,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			if(rotationDept!=null && org!=null){
 				List<SchDeptRel> deptRelList = deptRelBiz.searchRelByStandard(org.getOrgFlow(),standardDeptId);
 				if(deptRelList!=null && deptRelList.size()>0){
-					if(group!=null && GlobalConstant.FLAG_N.equals(group.getIsRequired())){
+                    if (group != null && com.pinde.core.common.GlobalConstant.FLAG_N.equals(group.getIsRequired())) {
 						int newDeptNum = deptRelList.size();
 						if(SchSelTypeEnum.Free.getId().equals(group.getSelTypeId())){
 							int currNum = group.getMaxDeptNum();
@@ -786,8 +781,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			}
 		}
-		
-		return GlobalConstant.ONE_LINE;
+
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	/*******************************************************
@@ -798,7 +793,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	public List<SchRotationDeptReq> searchDeptReq(String rotationFlow,String schDeptFlow,String recTypeId){
 //		if(StringUtil.isNotBlank(rotationFlow) && StringUtil.isNotBlank(schDeptFlow) && StringUtil.isNotBlank(recTypeId)){
 //			SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-//			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+//			example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
 //			.andRecTypeIdEqualTo(recTypeId)
 //			.andStandardDeptIdEqualTo(schDeptFlow);
 //			return deptReqMapper.selectByExample(example);
@@ -809,7 +804,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow,String recTypeId){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andRecTypeIdEqualTo(recTypeId)
 		.andRelRecordFlowEqualTo(relRecordFlow);
 		example.setOrderByClause("CREATE_TIME DESC");
@@ -826,8 +821,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 					break;
 				}
 			}
-			if(regType!=null && regType.getHaveItem().equals(GlobalConstant.FLAG_Y)){
-				List<SchRotationDeptReq> reqList = searchDeptReqByRel(relRecordFlow,recTypeId,GlobalConstant.RES_REQ_OTHER_ITEM_ID);
+            if (regType != null && regType.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                List<SchRotationDeptReq> reqList = searchDeptReqByRel(relRecordFlow, recTypeId, com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID);
 				if(reqList==null || reqList.size()<=0){
 					SchRotationDept rotationDept = readSchRotationDept(relRecordFlow);
 					if(rotationDept!=null){
@@ -838,8 +833,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 						req.setRelRecordFlow(relRecordFlow);
 						req.setRecTypeId(regType.getId());
 						req.setRecTypeName(regType.getName());
-						req.setItemId(GlobalConstant.RES_REQ_OTHER_ITEM_ID);
-						req.setItemName(GlobalConstant.RES_REQ_OTHER_ITEM_NAME);
+                        req.setItemId(com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID);
+                        req.setItemName(com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_NAME);
 						req.setOrgFlow(rotationDept.getOrgFlow());
 						req.setOrgName(rotationDept.getOrgName());
 						req.setReqNum(BigDecimal.ZERO);
@@ -848,13 +843,13 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
 	public List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andRelRecordFlowEqualTo(relRecordFlow);
 		return deptReqMapper.selectByExample(example);
 	}
@@ -875,7 +870,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow,String recTypeId,String itemId){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andRelRecordFlowEqualTo(relRecordFlow);
 		if(StringUtil.isNotBlank(recTypeId)){
 			criteria.andRecTypeIdEqualTo(recTypeId);
@@ -891,7 +886,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	public List<SchRotationDeptReq> searchDeptReq(String rotationFlow,String schDeptFlow){
 		if(StringUtil.isNotBlank(rotationFlow) && StringUtil.isNotBlank(schDeptFlow)){
 			SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
 			.andStandardDeptIdEqualTo(schDeptFlow);
 			return deptReqMapper.selectByExample(example);
 		}
@@ -902,7 +897,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	public List<SchRotationDeptReq> searchDeptReqByItemId(String rotationFlow,String schDeptFlow,String itemId){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
 		com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria criteria = example.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
 				.andStandardDeptIdEqualTo(schDeptFlow);
 		if(StringUtil.isNotBlank(itemId)){
 			criteria.andItemIdEqualTo(itemId);
@@ -928,7 +923,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				return deptReqMapper.insertSelective(deptReq);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -944,8 +939,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	@Override
 //	public List<SchRotationDeptReq> searchStandardReqByMust(String rotationFlow,String standardDeptId){
 //		SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-//		rotationDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-//		.andIsRequiredEqualTo(GlobalConstant.FLAG_Y)
+//		rotationDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+//		.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 //		.andRotationFlowEqualTo(rotationFlow)
 //		.andStandardDeptIdEqualTo(standardDeptId)
 //		.andOrgFlowIsNull();
@@ -965,7 +960,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			return null;
 		}
 		SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-		rotationDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        rotationDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andGroupFlowEqualTo(standardGroupFlow)
 		.andStandardDeptIdEqualTo(standardDeptId)
 		.andOrgFlowIsNull();
@@ -1026,7 +1021,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		if(StringUtil.isNotBlank(standardDeptId)){
 			SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
 			SchRotationDeptExample.Criteria criteria = rotationDeptExample.createCriteria();
-			criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andStandardDeptIdEqualTo(standardDeptId).andOrgFlowIsNull();
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andStandardDeptIdEqualTo(standardDeptId).andOrgFlowIsNull();
 				if(StringUtil.isNotBlank(standardGroupFlow)){
 					criteria.andGroupFlowEqualTo(standardGroupFlow);
 				}
@@ -1060,7 +1055,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			return null;
 		}
 		SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-		rotationDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        rotationDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andGroupFlowEqualTo(standardGroupFlow)
 				.andStandardDeptIdEqualTo(standardDeptId)
 				.andOrgFlowEqualTo(orgFlow).andSessionNumberEqualTo(sessionNumber);
@@ -1087,21 +1082,21 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDeptReq> searchStandardReqByRelFlows(List<String> relRecordFlows){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRelRecordFlowIn(relRecordFlows);
 		return deptReqMapper.selectByExample(example);
 	}
 	@Override
 	public List<SchRotationDeptReq> searchSchRotationDeptReq(String relRecordFlow){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRelRecordFlowEqualTo(relRecordFlow);
 		return deptReqMapper.selectByExampleWithBLOBs(example);
 	}
 	@Override
 	public List<SchRotationDeptReq> searchRotationDeptReq(String relRecordFlow, String recTypeId) {
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRelRecordFlowEqualTo(relRecordFlow).andRecTypeIdEqualTo(recTypeId);
 		return deptReqMapper.selectByExampleWithBLOBs(example);
 	}
@@ -1127,7 +1122,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		SchRotationDept dept = readSchRotationDept(currRelRecordFlow);
 		for(SchRotationDeptReq req: schRotationDeptReqList){
 			if(StringUtil.isNotBlank(req.getItemId())){
-				if(! GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(req.getItemId())){
+                if (!com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(req.getItemId())) {
 					req.setRotationFlow(dept.getRotationFlow());
 					req.setRelRecordFlow(currRelRecordFlow);
 					req.setStandardDeptId(dept.getStandardDeptId());
@@ -1156,7 +1151,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			}
 		}
-			return GlobalConstant.ONE_LINE ;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 	/**=====================================================================================================*/
 	
@@ -1168,18 +1163,18 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		if(StringUtil.isNotBlank(recordFlow)){
 			SchRotationDept rotationDept = new SchRotationDept();
 			rotationDept.setRecordFlow(recordFlow);
-			rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			result = saveSchRotationDept(rotationDept);
 		}else if(StringUtil.isNotBlank(groupFlow)){
 			SchRotationGroup rotationGroup = new SchRotationGroup();
 			rotationGroup.setGroupFlow(groupFlow);
-			rotationGroup.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            rotationGroup.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			rotationGroupBiz.saveSchRotationGroup(rotationGroup);
 			
 			SchRotationDept rotationDept = new SchRotationDept();
-			rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			SchRotationDeptExample example = new SchRotationDeptExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andGroupFlowEqualTo(groupFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andGroupFlowEqualTo(groupFlow);
 			result = rotationDeptMapper.updateByExampleSelective(rotationDept,example);
 		}
 		return result;
@@ -1194,7 +1189,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		if(StringUtil.isNotBlank(recordFlow)){
 			SchRotationDept standardDept = readSchRotationDept(recordFlow);//查询标准的轮转科室
 			String standardGroupFlow = standardDept.getGroupFlow();
-			groupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            groupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 			.andStandardGroupFlowEqualTo(standardGroupFlow);
 			List<SchRotationGroup> localGroupList = rotationGroupMapper.selectByExample(groupExample);//查询科室所属组合的信息
 			if(localGroupList!=null && localGroupList.size()>0){
@@ -1204,17 +1199,17 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 				
 				SchRotationDept rotationDept = new SchRotationDept();
-				rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-				deptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+                deptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andGroupFlowIn(groupFlows).andStandardDeptIdEqualTo(standardDept.getStandardDeptId())
 				.andOrgFlowIsNotNull();
 				result = rotationDeptMapper.updateByExampleSelective(rotationDept,deptExample);//同步已经本地化机构
 			}
 		}else if(StringUtil.isNotBlank(groupFlow)){
 			SchRotationGroup group = new SchRotationGroup();
-			group.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-			
-			groupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            group.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+
+            groupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 			.andStandardGroupFlowEqualTo(groupFlow);
 			List<SchRotationGroup> localGroupList = rotationGroupMapper.selectByExample(groupExample);
 			if(localGroupList!=null && localGroupList.size()>0){
@@ -1226,8 +1221,8 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 				
 				SchRotationDept rotationDept = new SchRotationDept();
-				rotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-				deptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+                deptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andGroupFlowIn(groupFlows).andOrgFlowIsNotNull();
 				result = rotationDeptMapper.updateByExampleSelective(rotationDept,deptExample);
 			}
@@ -1253,7 +1248,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 					if(group!=null){
 						if(StringUtil.isNotBlank(rotationFlow) && StringUtil.isNotBlank(standardDeptId)){
 							SchRotationDeptExample example = new SchRotationDeptExample();
-							SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+                            SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 									.andRotationFlowEqualTo(rotationFlow)
 									.andStandardDeptIdEqualTo(standardDeptId)
 									.andOrgFlowIsNull()
@@ -1303,7 +1298,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDept> searchRotationDeptByFlows() {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andOrgFlowIsNull();
 		return rotationDeptMapper.selectByExampleWithBLOBs(example);
 	}
@@ -1311,7 +1306,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDeptReq> searchSchRotationDeptReqOrgNull() {
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return 	deptReqMapper.selectByExampleWithBLOBs(example);
 	
 	}
@@ -1320,7 +1315,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			String groupFlow, String standardDeptId) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criter=example.createCriteria();
-		criter.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criter.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(groupFlow)) {
 			criter.andGroupFlowEqualTo(groupFlow);
 		}
@@ -1339,7 +1334,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			String groupFlow, String standardDeptId) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criter=example.createCriteria();
-		criter.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criter.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(groupFlow)) {
 			criter.andGroupFlowEqualTo(groupFlow);
 		}
@@ -1362,7 +1357,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		}
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criter=example.createCriteria();
-		criter.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criter.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criter.andRotationFlowEqualTo(rotationFlow);
 		criter.andOrgFlowEqualTo(orgFlow);
 		criter.andSessionNumberEqualTo(sessionNumber);
@@ -1392,7 +1387,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			SchRotationDept rotationDept = readSchRotationDept(relRecordFlow);
 			RegistryTypeEnum rte = EnumUtil.getById(recTypeId,RegistryTypeEnum.class);
 			List<SchRotationDeptReq> deptReqList = searchDeptReqByRel(relRecordFlow,recTypeId);
-			if(rte!=null && GlobalConstant.FLAG_Y.equals(rte.getHaveItem())){
+            if (rte != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rte.getHaveItem())) {
 				boolFlag = true;
 				if(null != deptReqList && !deptReqList.isEmpty()){
 					for(SchRotationDeptReq req : deptReqList){
@@ -1609,18 +1604,18 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			String productType = getRecFormByCfg(rotationFlow,recordFlow,formFileName);
 			String currVer = InitConfig.resFormRequestUtil.getVersionMap().get(productType+"_"+formFileName);
 			if(StringUtil.isBlank(currVer)){
-				currVer = InitConfig.resFormRequestUtil.getVersionMap().get(GlobalConstant.RES_FORM_PRODUCT+"_"+formFileName);
+                currVer = InitConfig.resFormRequestUtil.getVersionMap().get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + formFileName);
 			}
 			if(StringUtil.isBlank(currVer)){
-				currVer = GlobalConstant.RES_FORM_PRODUCT_VER;
+                currVer = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER;
 			}
 			Map<String,IrbSingleForm> singleFormMap = InitConfig.resFormRequestUtil.getFormMap().get(formFileName);
 			IrbSingleForm singleForm = singleFormMap.get(productType+"_"+currVer);
 			if(singleForm == null){
-				singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+currVer);
+                singleForm = singleFormMap.get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + currVer);
 			}
 			if(singleForm == null){
-				throw new RuntimeException("未发现表单 模版类型:"+productType+",表单类型:"+ResRecTypeEnum.getNameById(formFileName)+",版本号:"+currVer);
+                throw new RuntimeException("未发现表单 模版类型:" + productType + ",表单类型:" + com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName) + ",版本号:" + currVer);
 			}
 			ResRec rec = new ResRec();
 			//轮转科室信息
@@ -1635,7 +1630,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			rec.setMedicineType(user.getMedicineTypeId());
 			//表单类型
 			rec.setRecTypeId(formFileName);
-			rec.setRecTypeName(ResRecTypeEnum.valueOf(formFileName).getTypeName());
+            rec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.valueOf(formFileName).getTypeName());
 			//表单版本
 			rec.setRecVersion(currVer);
 			rec.setRecForm(productType);
@@ -1651,9 +1646,9 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			//更新大字段内容
 			rec.setRecContent(recContent);
 			edit(rec);
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	public int edit(ResRec rec) {
 		if(rec!=null){
@@ -1666,7 +1661,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				return resRecMapper.insertSelective(rec);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	private String getRecContent(String formName, List<Element> list,Map<String,Object> map){
 		Element rootEle = DocumentHelper.createElement(formName);
@@ -1686,12 +1681,12 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	}
 	private void func(Element itemEle,Element rootEle,Map<String,Object> map) {
 		String multiple = itemEle.attributeValue("multiple");
-		if (GlobalConstant.FLAG_N.equals(multiple)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(multiple)) {
 			String name = itemEle.attributeValue("name");
 			String isSelect = itemEle.attributeValue("select");
 			String value = "";
 			Element element = DocumentHelper.createElement(name);
-			if (GlobalConstant.FLAG_Y.equals(isSelect)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
 				value = (String) map.get(name);
 				String recTypeId = (String)map.get("formFileName");
 				if(RegistryTypeEnum.CaseRegistry.getId().equals(recTypeId)){
@@ -1725,7 +1720,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		}
 
 		if(!StringUtil.isNotBlank(recForm)){
-			recForm = GlobalConstant.RES_FORM_PRODUCT;
+            recForm = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT;
 		}
 
 		return recForm;
@@ -2019,7 +2014,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		for (SchRotation schRotationNew : schRotationList) {
 			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 			schRotationNew.setRotationFlow(uuid);
-			schRotationNew.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            schRotationNew.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			schRotationNew.setCreateUserFlow(user.getUserFlow());
 			schRotationNew.setCreateTime(DateUtil.getCurrDateTime());
 			if(null == sysDoctorTrainingSpeMap.get(schRotationNew.getSpeName())){
@@ -2029,7 +2024,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			schRotationNew.setSpeId(sysDoctorTrainingSpeMap.get(schRotationNew.getSpeName()).getDictId());
 			schRotationNew.setDoctorCategoryId("Doctor");
 			schRotationNew.setDoctorCategoryName("住院医师");
-			schRotationNew.setPublishFlag(GlobalConstant.FLAG_Y);
+            schRotationNew.setPublishFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			rotationMapper.insertSelective(schRotationNew);
 			schRotationNew.setRotationFlow(uuid);
 		}
@@ -2040,7 +2035,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			int sumMonth = 0;
 			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 			rotationGroupNew.setGroupFlow(uuid);
-			rotationGroupNew.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            rotationGroupNew.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			rotationGroupNew.setCreateUserFlow(user.getUserFlow());
 			switch (rotationGroupNew.getSchStageName()) {
 				case "第一阶段":
@@ -2085,13 +2080,13 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			rotationGroupNew.setCreateTime(DateUtil.getCurrDateTime());
 			if (StringUtil.isNotEmpty(rotationGroupNew.getIsRequired())) {
 				if ("是".equals(rotationGroupNew.getIsRequired())) {
-					rotationGroupNew.setIsRequired(GlobalConstant.FLAG_N);
+                    rotationGroupNew.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_N);
 					if(StringUtil.isEmpty(rotationGroupNew.getSchMonth()) || StringUtil.isEmpty(rotationGroupNew.getSelTypeName())){
 						hintList.add("轮转时间,科室选择类型未填写！");
 						return hintList;
 					}
 				} else {
-					rotationGroupNew.setIsRequired(GlobalConstant.FLAG_Y);
+                    rotationGroupNew.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}
 				if (null != schRotationNewMap.get(rotationGroupNew.getRotationFlow())) {
 					rotationGroupNew.setRotationFlow(schRotationNewMap.get(rotationGroupNew.getRotationFlow()).getRotationFlow());
@@ -2107,7 +2102,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		//保存科室
 		for (SchRotationDept schRotationDept : schRotationDeptList) {
 			schRotationDept.setRecordFlow(PkUtil.getUUID());
-			schRotationDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            schRotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			schRotationDept.setCreateTime(DateUtil.getCurrDateTime());
 			schRotationDept.setCreateUserFlow(user.getUserFlow());
 			if (null != sysStandardDeptMap.get(schRotationDept.getStandardDeptName())) {
@@ -2134,9 +2129,9 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			}
 			if (StringUtil.isNotEmpty(schRotationDept.getIsRequired())) {
 				if ("是".equals(schRotationDept.getIsRequired())) {
-					schRotationDept.setIsRequired(GlobalConstant.FLAG_N);
+                    schRotationDept.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_N);
 				} else {
-					schRotationDept.setIsRequired(GlobalConstant.FLAG_Y);
+                    schRotationDept.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}
 				//轮转时间为空则默认为0
 				schRotationDept.setSchMonth(StringUtil.defaultIfEmpty(schRotationDept.getSchMonth(), "0"));

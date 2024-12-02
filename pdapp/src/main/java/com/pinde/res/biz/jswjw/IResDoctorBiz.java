@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 
 import java.util.List;
 

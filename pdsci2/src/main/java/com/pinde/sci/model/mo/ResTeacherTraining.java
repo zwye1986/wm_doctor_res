@@ -1,12 +1,12 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public class ResTeacherTraining extends MybatisObject {
+public class ResTeacherTraining extends TeachingActivitySpeakerExample.MybatisObject {
     private String recordFlow;
 
     private String doctorName;

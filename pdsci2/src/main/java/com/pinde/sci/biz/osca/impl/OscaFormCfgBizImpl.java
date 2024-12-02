@@ -5,7 +5,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaFormCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.OscaFromMapper;
 import com.pinde.sci.dao.osca.OscaFromExtMapper;
@@ -21,7 +20,6 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,7 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
         orgFlows.add(currOrgFlow);
         orgFlows.add("jsst");
         OscaFromExample example = new OscaFromExample();
-        OscaFromExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        OscaFromExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowIn(orgFlows)
                 ;
         if(from!=null){
@@ -62,7 +60,7 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
     @Override
     public List<OscaFrom> searchForm(OscaFrom from) {
         OscaFromExample example = new OscaFromExample();
-        OscaFromExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaFromExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(from!=null){
             if(StringUtil.isNotBlank(from.getFromTypeId())){
                 criteria.andFromTypeIdEqualTo(from.getFromTypeId());
@@ -119,7 +117,7 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
                 return editForm(existFrom);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -201,7 +199,7 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
                 return editForm(existFrom);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     private void setFromScore(OscaFrom existFrom, Document dom) {
@@ -245,7 +243,7 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
                 return editForm(existFrom);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -262,20 +260,20 @@ public class OscaFormCfgBizImpl implements IOscaFormCfgBiz{
                 return editForm(existFrom);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public String checkFromName(String fromName) {
         if (StringUtil.isNotBlank(fromName)){
             OscaFromExample example = new OscaFromExample();
-            example.createCriteria().andFromNameEqualTo(fromName).andRecordStatusEqualTo("Y");
+            example.createCriteria().andFromNameEqualTo(fromName).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<OscaFrom> list = fromMapper.selectByExample(example);
             if (list==null || list.size()==0){
-                return GlobalConstant.FLAG_Y;
+                return com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
-        return GlobalConstant.FLAG_N;
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
     }
 
     @Override

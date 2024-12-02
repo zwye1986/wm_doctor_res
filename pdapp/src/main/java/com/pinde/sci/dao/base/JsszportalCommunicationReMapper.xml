@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsszportalCommunicationReMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsszportalCommunicationRe" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsszportalCommunicationRe" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
     <result column="DISEASE_ID" property="diseaseId" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.JsszportalCommunicationRe" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.JsszportalCommunicationRe" extends="BaseResultMap" >
     <result column="CONTENT" property="content" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -87,7 +87,7 @@
   <sql id="Blob_Column_List" >
     CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationReExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.JsszportalCommunicationReExample" >
     select
     <if test="distinct" >
       distinct
@@ -103,7 +103,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationReExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsszportalCommunicationReExample" >
     select
     <if test="distinct" >
       distinct
@@ -129,13 +129,13 @@
     delete from PDSCI.JSSZPORTAL_COMMUNICATION_RE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationReExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsszportalCommunicationReExample" >
     delete from PDSCI.JSSZPORTAL_COMMUNICATION_RE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationRe" >
+  <insert id="insert" parameterType="com.pinde.core.model.JsszportalCommunicationRe" >
     insert into PDSCI.JSSZPORTAL_COMMUNICATION_RE (RECORD_FLOW, MAIN_FLOW, DISEASE_ID, 
       DISEASE_NAME, UPLOAD_TIME, TITLE, 
       UPLOAD_USER_FLOW, UPLOAD_USER_NAME, REPLAY_TIMES, 
@@ -149,7 +149,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{content,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationRe" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsszportalCommunicationRe" >
     insert into PDSCI.JSSZPORTAL_COMMUNICATION_RE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -252,7 +252,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationReExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.JsszportalCommunicationReExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.JSSZPORTAL_COMMUNICATION_RE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -357,7 +357,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationRe" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsszportalCommunicationRe" >
     update PDSCI.JSSZPORTAL_COMMUNICATION_RE
     <set >
       <if test="mainFlow != null" >
@@ -408,7 +408,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationRe" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.JsszportalCommunicationRe" >
     update PDSCI.JSSZPORTAL_COMMUNICATION_RE
     set MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
       DISEASE_ID = #{diseaseId,jdbcType=VARCHAR},
@@ -427,7 +427,7 @@
       CONTENT = #{content,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsszportalCommunicationRe" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsszportalCommunicationRe" >
     update PDSCI.JSSZPORTAL_COMMUNICATION_RE
     set MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
       DISEASE_ID = #{diseaseId,jdbcType=VARCHAR},

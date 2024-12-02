@@ -15,12 +15,10 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivitySpeakerMapper;
-import com.pinde.sci.enums.sch.ActivityTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
@@ -79,14 +77,14 @@ public class JsResActivityQueryController extends GeneralController {
 	@RequestMapping(value="/main")
 	public String main(Model model,String  roleFlag, HttpServletRequest request){
 		model.addAttribute("roleFlag",roleFlag);
-		if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			List<SysDept> depts=deptBiz.searchDeptByOrg(GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
 		}else if("teach".equals(roleFlag)||"head".equals(roleFlag) ||"secretary".equals(roleFlag)) {
 			List<Map<String, Object>> depts = deptBiz.queryDeptListByFlow(GlobalContext.getCurrentUser().getUserFlow());
 			model.addAttribute("depts",depts);
 			//判断角色是否可以新增
-			String addFlag = "N"; //是否可以新增标识，‘N’ 不可以新增
+            String addFlag = com.pinde.core.common.GlobalConstant.FLAG_N; //是否可以新增标识，‘N’ 不可以新增
 			String roleFlow = "";
 			if("teach".equals(roleFlag)){
 				roleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
@@ -97,7 +95,7 @@ public class JsResActivityQueryController extends GeneralController {
 			}
 			List<TeachActivityCfg> cfgList = activityBiz.searchActivityCfgs(roleFlow,GlobalContext.getCurrentUser().getOrgFlow());
 			if(null != cfgList && cfgList.size()>0){
-				addFlag = "Y";
+                addFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 			}
 			model.addAttribute("addFlag",addFlag);
 		}else if("doctor".equals(roleFlag)) {
@@ -185,7 +183,7 @@ public class JsResActivityQueryController extends GeneralController {
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+                        obj.put("audit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -194,7 +192,7 @@ public class JsResActivityQueryController extends GeneralController {
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg","N");
+                info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -203,7 +201,7 @@ public class JsResActivityQueryController extends GeneralController {
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg","Y");
+                        info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				if(!"doctor".equals(roleFlag))
@@ -266,9 +264,9 @@ public class JsResActivityQueryController extends GeneralController {
 
 		for (Map<String, Object> map : list) {
 			if (map.containsKey("IS_EFFECTIVE")) {
-				if (map.get("IS_EFFECTIVE").equals("Y")) {
+                if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 					map.put("effectiveName", "认可");
-				} else if (map.get("IS_EFFECTIVE").equals("N")) {
+                } else if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 					map.put("effectiveName", "不认可");
 				} else {
 					map.put("effectiveName", "未操作");
@@ -297,7 +295,7 @@ public class JsResActivityQueryController extends GeneralController {
 				"userName:主讲人",
 				"userCode:用户名",
 				"realitySpeaker:实际主讲人",
-				"realitySpeakerUserCode:用户名",
+				//"realitySpeakerUserCode:用户名",
 				"deptName:所在科室",
 				"startTime:活动开始时间",
 				"endTime:活动结束时间",
@@ -324,7 +322,7 @@ public class JsResActivityQueryController extends GeneralController {
 
 		TeachingActivitySpeakerExample example = new TeachingActivitySpeakerExample();
 		TeachingActivitySpeakerExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andActivityFlowEqualTo(activityFlow);
 		example.setOrderByClause("CREATE_TIME DESC");
 		List<TeachingActivitySpeaker> list = activitySpeakerMapper.selectByExample(example);
 		if (null!=list && list.size()>0){
@@ -332,7 +330,7 @@ public class JsResActivityQueryController extends GeneralController {
 		}
 		TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(activityFlow);
 		if (StringUtil.isBlank(activityInfo.getIsLook())){
-			activityInfo.setIsLook(GlobalConstant.FLAG_Y);
+            activityInfo.setIsLook(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			activityBiz.saveActivity(activityInfo);
 		}
 		model.addAttribute("roleFlag", roleFlag);
@@ -351,11 +349,11 @@ public class JsResActivityQueryController extends GeneralController {
 //			{
 //				return "此活动已有学员扫码，无法删除！";
 //			}
-			info.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            info.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int c=activityBiz.saveActivity(info);
 			if(c==0)
-				return GlobalConstant.DELETE_FAIL;
-			return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}else
 			return "请选择需要删除的活动！";
 
@@ -369,7 +367,7 @@ public class JsResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}
@@ -377,7 +375,7 @@ public class JsResActivityQueryController extends GeneralController {
 			if(info==null)
 				return "活动信息不存在，请刷新列表页面！";
 			info.setIsEffective(isEffective);
-			if ("Y".equals(isEffective))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective))
 				info.setReasonForDisagreement("");
 			int c=activityBiz.saveActivity(info);
 			if(c==0)
@@ -417,8 +415,8 @@ public class JsResActivityQueryController extends GeneralController {
 				info.setReasonForDisagreement(reasonForDisagreement);
 			int c=activityBiz.saveActivity(info);
 			if(c==0)
-				return GlobalConstant.SAVE_FAIL;
-			return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 		return "请选择需要审核的活动！";
 	}
@@ -434,7 +432,7 @@ public class JsResActivityQueryController extends GeneralController {
 			{
 				return "请选择需要审核的类型！";
 			}
-			if(!"Y".equals(isEffective)&&!"N".equals(isEffective))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEffective) && !com.pinde.core.common.GlobalConstant.FLAG_N.equals(isEffective))
 			{
 				return "请选择【认可】还是【不认可】！";
 			}
@@ -456,7 +454,7 @@ public class JsResActivityQueryController extends GeneralController {
 		if(StringUtil.isNotBlank(activityFlow))
 		{
 			TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-			if(info==null||!GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
+            if (info == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
 				return "活动信息不存在，请刷新列表页面！";
 
 			if( DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(info.getStartTime())>0)
@@ -465,7 +463,7 @@ public class JsResActivityQueryController extends GeneralController {
 			}
 			SysUser user=GlobalContext.getCurrentUser();
 			TeachingActivityResult result=activityBiz.readRegistInfo(activityFlow,user.getUserFlow());
-			if(result!=null&&GlobalConstant.FLAG_Y.equals(result.getIsRegiest()))
+            if (result != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsRegiest()))
 			{
 				return "你已报名，请勿重复报名！";
 			}
@@ -479,9 +477,9 @@ public class JsResActivityQueryController extends GeneralController {
 				result = new TeachingActivityResult();
 			result.setActivityFlow(activityFlow);
 			result.setUserFlow(user.getUserFlow());
-			result.setIsRegiest(GlobalConstant.FLAG_Y);
+            result.setIsRegiest(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			result.setRegiestTime(DateUtil.getCurrDateTime());
-			result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int c=activityBiz.saveRegist(result);
 			if(c==0)
 				return "报名失败！";
@@ -495,22 +493,22 @@ public class JsResActivityQueryController extends GeneralController {
 	public String cannelRegiest(Model model,String activityFlow,String resultFlow){
 		if(StringUtil.isNotBlank(activityFlow)) {
 			TeachingActivityInfo info = activityBiz.readActivityInfo(activityFlow);
-			if (info == null || !GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
+            if (info == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(info.getRecordStatus()))
 				return "活动信息不存在，请刷新列表页面！";
 			SysUser user = GlobalContext.getCurrentUser();
 			TeachingActivityResult result = activityBiz.readRegistInfo(activityFlow, user.getUserFlow());
 			if (result == null) {
 				return "你未报名，无法取消报名信息！";
 			}
-			if (!GlobalConstant.FLAG_Y.equals(result.getIsRegiest()))
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsRegiest()))
 			{
 				return "你已取消报名！";
 			}
-			if(GlobalConstant.FLAG_Y.equals(result.getIsScan()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsScan()))
 			{
 				return "你已扫码签到，无法取消报名信息！";
 			}
-			result.setIsRegiest(GlobalConstant.FLAG_N);
+            result.setIsRegiest(com.pinde.core.common.GlobalConstant.FLAG_N);
 			int c=activityBiz.saveRegist(result);
 			if(c==0)
 				return "取消失败！";
@@ -525,18 +523,18 @@ public class JsResActivityQueryController extends GeneralController {
 		String editZjr="";
 		if (StringUtil.isNotBlank(scanNum) && Integer.parseInt(scanNum)>0){
 			JsresPowerCfg teachCfg = jsResPowerCfgBiz.read("jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_activity_teach");
-			if (null !=teachCfg && GlobalConstant.FLAG_Y.equals(teachCfg.getCfgValue())){
-				editTeach=GlobalConstant.FLAG_Y;
+            if (null != teachCfg && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(teachCfg.getCfgValue())) {
+                editTeach = com.pinde.core.common.GlobalConstant.FLAG_Y;
 			}else {
-				editTeach=GlobalConstant.FLAG_N;
+                editTeach = com.pinde.core.common.GlobalConstant.FLAG_N;
 			}
 			model.addAttribute("editTeach",editTeach);
 			JsresPowerCfg zjrCfg = jsResPowerCfgBiz.read("jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_activity_kzr");
-			if (null !=zjrCfg && GlobalConstant.FLAG_Y.equals(zjrCfg.getCfgValue())){
-				editZjr=GlobalConstant.FLAG_Y;
+            if (null != zjrCfg && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(zjrCfg.getCfgValue())) {
+                editZjr = com.pinde.core.common.GlobalConstant.FLAG_Y;
 
 			}else {
-				editZjr=GlobalConstant.FLAG_N;
+                editZjr = com.pinde.core.common.GlobalConstant.FLAG_N;
 			}
 			model.addAttribute("editZjr",editZjr);
 			model.addAttribute("scanNum",scanNum);
@@ -552,7 +550,7 @@ public class JsResActivityQueryController extends GeneralController {
 				Map<String,Object> activity=activityBiz.readActivity(activityFlow);
 				model.addAttribute("activity",activity);
 				if (StringUtil.isNotBlank(scanNum) && Integer.parseInt(scanNum)>0
-						&& (editZjr.equals(GlobalConstant.FLAG_Y )|| editTeach.equals(GlobalConstant.FLAG_Y))){
+                        && (editZjr.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) || editTeach.equals(com.pinde.core.common.GlobalConstant.FLAG_Y))) {
 					model.addAttribute("nowTime",DateUtil.getCurrDateTime2());
 					model.addAttribute("role",role);
 					model.addAttribute("action",action);
@@ -628,7 +626,7 @@ public class JsResActivityQueryController extends GeneralController {
 	@RequestMapping(value="/saveActivity")
 	@ResponseBody
 	public String saveActivity(TeachingActivityInfo activity,MultipartFile file,String isRe,String role,Integer currentPage){
-		return activityBiz.editActivity(activity,file,isRe, "N",null,role);
+        return activityBiz.editActivity(activity, file, isRe, com.pinde.core.common.GlobalConstant.FLAG_N, null, role);
 	}
 
 	@RequestMapping(value="/saveActivityNew")
@@ -648,13 +646,13 @@ public class JsResActivityQueryController extends GeneralController {
 			if (s.equals("zp")){
 				for (int i = 0; i < fileList.size(); i++) {
 					if (fileList.get(i).getSize() >  2*1024*1024 ){
-						return GlobalConstant.UPLOAD_IMG_SIZE_ERROR+2+"M";
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + 2 + "M";
 					}
 				}
 			}
 			fileMap.put(s,fileList);
 		}
-		return activityBiz.editActivityNew2(activity,"N", fileMap,data,fileFlow);
+        return activityBiz.editActivityNew2(activity, com.pinde.core.common.GlobalConstant.FLAG_N, fileMap, data, fileFlow);
 	}
 
 	@RequestMapping(value="/saveActivityForAdmin")
@@ -705,7 +703,7 @@ public class JsResActivityQueryController extends GeneralController {
 
 	@RequestMapping(value="/editActivityFile")
 	public String editActivityFile(Model model,String activityFlow,String role){
-		if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 			List<SysDept> depts = deptBiz.searchDeptBySpe(GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
 		}else {
@@ -731,7 +729,7 @@ public class JsResActivityQueryController extends GeneralController {
 						}
 					}
 				}
-				if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 					userList=userBiz.readUserBySpe(activity.getDeptFlow(),professionalBaseAdminRoleFlow,GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 					if(userList!=null&&userList.size()>0) {
 						for (SysUser su:userList ) {
@@ -754,7 +752,7 @@ public class JsResActivityQueryController extends GeneralController {
 
 	@RequestMapping(value="/lookSearchFile")
 	public String lookSearchFile(Model model,String activityFlow,String role){
-		if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 			List<SysDept> depts = deptBiz.searchDeptBySpe(GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 			model.addAttribute("depts",depts);
 		}else {
@@ -780,7 +778,7 @@ public class JsResActivityQueryController extends GeneralController {
 						}
 					}
 				}
-				if(GlobalConstant.USER_LIST_SPE.equals(role)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_SPE.equals(role)) {
 					userList=userBiz.readUserBySpe(activity.getDeptFlow(),professionalBaseAdminRoleFlow,GlobalContext.getCurrentUser().getResTrainingSpeId(),GlobalContext.getCurrentUser().getOrgFlow());
 					if(userList!=null&&userList.size()>0) {
 						for (SysUser su:userList ) {
@@ -812,7 +810,7 @@ public class JsResActivityQueryController extends GeneralController {
 			if (s.equals("zp")){
 				for (int i = 0; i < fileList.size(); i++) {
 					if (fileList.get(i).getSize() >  2*1024*1024 ){
-						return GlobalConstant.UPLOAD_IMG_SIZE_ERROR+2+"M";
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + 2 + "M";
 					}
 				}
 			}
@@ -868,8 +866,8 @@ public class JsResActivityQueryController extends GeneralController {
 		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 		JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-		if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")){
-			model.addAttribute("approve","Y");
+        if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+            model.addAttribute("approve", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return "jsres/activity/activityQuery/showEval";
 	}
@@ -1023,9 +1021,9 @@ public class JsResActivityQueryController extends GeneralController {
 		int count=activityBiz.saveEvalInfo(activityEvals, resultFlow);
 		if(count==0)
 		{
-			return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping("/signUrl")
 	public String signUrl(String activityFlow,Model model){
@@ -1141,12 +1139,12 @@ public class JsResActivityQueryController extends GeneralController {
 				delNode.detach();
 				activity.setImageUrl(document.asXML());
 				activityBiz.saveActivity(activity);
-				return GlobalConstant.OPRE_SUCCESSED_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 			} else {
-				return GlobalConstant.OPRE_FAIL_FLAG;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 
 	@RequestMapping(value="/activityMain")
@@ -1187,7 +1185,7 @@ public class JsResActivityQueryController extends GeneralController {
 			Date dt = sdf.parse(month);
 			Calendar time = Calendar.getInstance();
 			time.setTime(dt);
-			if(flag.equals("Y")){
+            if (flag.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 				time.add(Calendar.MONTH, 1);
 			}else{
 				time.add(Calendar.MONTH, -1);
@@ -1335,7 +1333,7 @@ public class JsResActivityQueryController extends GeneralController {
 	public String activityStatistics(Model model){
 		SysOrg sysorg = new SysOrg();
 		sysorg.setOrgProvId("320000");
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
 		model.addAttribute("orgs", orgs);
 		return "jsres/activity/activityQuery/activityMain";

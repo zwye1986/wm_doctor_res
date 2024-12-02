@@ -4,7 +4,6 @@ package com.pinde.sci.ctrl.osca;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.osca.IOscaNoticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysUser;
@@ -38,7 +37,7 @@ public class OscaNoticeController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<InxInfo> infos = null;
         //searchInfoByOrgBeforeDate扩展
-        if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             infos = this.noticeBiz.searchInfoByOrgBeforeDate(null,null);
         }else{
             SysUser user = GlobalContext.getCurrentUser();
@@ -53,7 +52,7 @@ public class OscaNoticeController extends GeneralController {
     @ResponseBody
     @RequestMapping("/saveNotice/{roleFlag}")
     public String saveNotice(@PathVariable String roleFlag,InxInfo info){
-        if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             SysUser user = GlobalContext.getCurrentUser();
             String userOrgFlow= user.getOrgFlow();
             String userOrgName=user.getOrgName();
@@ -62,7 +61,7 @@ public class OscaNoticeController extends GeneralController {
         }
         info.setColumnId("jinengkaohe");
         noticeBiz.editInfo(info);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping("/findNoticeByFlow")
@@ -81,7 +80,7 @@ public class OscaNoticeController extends GeneralController {
     @RequestMapping("/delNotice")
     public String delNotice(String infoFlow){
         this.noticeBiz.delNotice(infoFlow);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     /**

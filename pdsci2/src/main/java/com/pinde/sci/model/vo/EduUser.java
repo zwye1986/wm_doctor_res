@@ -1,8 +1,8 @@
 package com.pinde.sci.model.vo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class EduUser extends MybatisObject {
+public class EduUser extends TeachingActivitySpeakerExample.MybatisObject {
     private String userFlow;
 
     private String majorId;

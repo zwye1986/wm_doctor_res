@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResRecruitCfg extends MybatisObject {
+public class ResRecruitCfg extends TeachingActivitySpeakerExample.MybatisObject {
     private String cfgFlow;
 
     private String year;

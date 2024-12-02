@@ -2,12 +2,12 @@ package com.pinde.sci.biz.res.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.INjResExamBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.impl.UserBizImpl;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
@@ -24,13 +24,9 @@ import org.apache.log4j.Logger;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -353,7 +349,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
             TjDocinfoExample example = new TjDocinfoExample();
             TjDocinfoExample.Criteria criteria = example.createCriteria();
             criteria.andIdNoEqualTo(docInfo.getIdNo());
-            criteria.andRecordStatusEqualTo("Y");
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<TjDocinfo> tjDocinfos = docinfoMapper.selectByExample(example);
             if (tjDocinfos != null && tjDocinfos.size()> 0){
                 userFlow = tjDocinfos.get(0).getUserFlow();
@@ -378,7 +374,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         TjDocinfoExample example = new TjDocinfoExample();
         TjDocinfoExample.Criteria criteria = example.createCriteria();
         criteria.andIdNoEqualTo(idNo);
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<TjDocinfo> tjDocinfos = docinfoMapper.selectByExample(example);
         if(tjDocinfos!= null && tjDocinfos.size() >0){
             return tjDocinfos.get(0);
@@ -425,7 +421,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         if (StringUtil.isNotEmpty(examInfo.getRecordFlow())) {
             TjExamInfoExample tjExamInfoExample = new TjExamInfoExample();
             tjExamInfoExample.createCriteria().andRecordFlowEqualTo(examInfo.getRecordFlow());
-            examInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            examInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             examInfo.setModifyTime(DateUtil.getCurrDateTime());
             examInfo.setModifyUserFlow(docinfo.getUserFlow());
             i=examInfoMapper.updateByExampleSelective(examInfo,tjExamInfoExample);
@@ -436,7 +432,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                     examInfo.setOrgFlow(sysOrg.getOrgFlow());
                 }
             }
-            examInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            examInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             examInfo.setCreateTime(DateUtil.getCurrDateTime());
             examInfo.setCreateUserFlow(docinfo.getUserFlow());
             examInfo.setRecordFlow(PkUtil.getUUID());
@@ -575,7 +571,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
         docInfo.setUserId(docInfo.getIdNo());
         docInfo.setPhonePath(docInfo.getIdNo()+".jpg");
         if (isAdd) {
-            docInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            docInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             docInfo.setCreateTime(DateUtil.getCurrDateTime());
             //判断准考证是否重复
             String ticketNum = docInfo.getTicketNum();
@@ -594,7 +590,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
             }
 //            docInfo.setCreateUserFlow(docInfo.getUserFlow());
         }
-        docInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        docInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         docInfo.setModifyTime(DateUtil.getCurrDateTime());
         docInfo.setModifyUserFlow(docInfo.getUserFlow());
 

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class QingpuDoctorSignin extends MybatisObject {
+public class QingpuDoctorSignin extends TeachingActivitySpeakerExample.MybatisObject {
     private String reportFlow;
 
     private String codeInfo;

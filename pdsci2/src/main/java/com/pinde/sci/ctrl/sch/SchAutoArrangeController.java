@@ -8,15 +8,12 @@ import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchAutoArrangeBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchAutoArrangeCfg;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SysUser;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -443,7 +440,7 @@ public class SchAutoArrangeController extends GeneralController{
 		SysUser currUser =GlobalContext.getCurrentUser();
 		String orgFlow=currUser.getOrgFlow();
 		cfg.setOrgFlow(orgFlow);
-		cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		int c=autoArrangeBiz.saveSessionNumberStartDate(cfg);
 		if(c==0)
 		{
@@ -547,7 +544,7 @@ public class SchAutoArrangeController extends GeneralController{
 		SysUser currUser =GlobalContext.getCurrentUser();
 		String orgFlow=currUser.getOrgFlow();
 		//校验当前是否有学员信息
-		int c=autoArrangeBiz.checkOrgDoctorCount(orgFlow,sessionNumber,"Y");
+        int c = autoArrangeBiz.checkOrgDoctorCount(orgFlow, sessionNumber, com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(c<=0)
 		{
 			return "当前年级暂无需要排班的学员信息！";
@@ -559,20 +556,20 @@ public class SchAutoArrangeController extends GeneralController{
 			return "请完成方案配置后，再开始排班！";
 		}
 		//校验当前基地下学员是否都已分配轮转方案
-		int doctorCount=autoArrangeBiz.checkDoctorCount(orgFlow,sessionNumber,"Y");
+        int doctorCount = autoArrangeBiz.checkDoctorCount(orgFlow, sessionNumber, com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(doctorCount>0)
 		{
 			return "请为当前年级所有学员，分配方案后，再开始排班！";
 		}
 		//如果是中医的话需要校验二级轮转方案
 		if ("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
-			doctorCount=autoArrangeBiz.checkDoctorSecondCount(orgFlow,sessionNumber,"Y");
+            doctorCount = autoArrangeBiz.checkDoctorSecondCount(orgFlow, sessionNumber, com.pinde.core.common.GlobalConstant.FLAG_Y);
 			if(doctorCount>0)
 			{
 				return "请为当前年级所有学员，分配二级方案后，再开始排班！";
 			}
 		}
-		int count=autoArrangeBiz.checkDoctorCycleCount(orgFlow,sessionNumber,"Y");
+        int count = autoArrangeBiz.checkDoctorCycleCount(orgFlow, sessionNumber, com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(count>0)
 		{
 			return count+"";

@@ -4,14 +4,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgAddressBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResOrgAddressMapper;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.model.mo.ResOrgAddress;
 import com.pinde.sci.model.mo.ResOrgAddressExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class ResOrgAddressBizImpl implements IResOrgAddressBiz{
     public List<ResOrgAddress> readOrgAddress(String orgFlow) {
         if(StringUtil.isNotBlank(orgFlow)){
             ResOrgAddressExample example = new ResOrgAddressExample();
-            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResOrgAddress> list = orgAddressMapper.selectByExample(example);
             if(list.size()>0){
                 return list;
@@ -60,7 +58,7 @@ public class ResOrgAddressBizImpl implements IResOrgAddressBiz{
     public ResOrgAddress readOrgOneAddress(String orgFlow) {
         if(StringUtil.isNotBlank(orgFlow)){
             ResOrgAddressExample example = new ResOrgAddressExample();
-            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResOrgAddress> list = orgAddressMapper.selectByExample(example);
             if(list.size()>0){
                 return list.get(0);
@@ -89,9 +87,9 @@ public class ResOrgAddressBizImpl implements IResOrgAddressBiz{
 //            {
 //                ResOrgAddressExample example = new ResOrgAddressExample();
 //                example.createCriteria().andOrgFlowEqualTo(bean.getOrgFlow())
-//                        .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecordFlowNotIn(recordFlows);
+//                        .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecordFlowNotIn(recordFlows);
 //                ResOrgAddress address=new ResOrgAddress();
-//                address.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+//                address.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 //                orgAddressMapper.updateByExampleSelective(address,example);
 //
 //            }

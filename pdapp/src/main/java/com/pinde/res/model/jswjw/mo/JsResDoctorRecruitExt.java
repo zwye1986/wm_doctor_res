@@ -1,9 +1,9 @@
 package com.pinde.res.model.jswjw.mo;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResScore;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.SysUser;
 
 public class JsResDoctorRecruitExt extends ResDoctorRecruit{
 

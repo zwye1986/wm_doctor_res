@@ -13,9 +13,6 @@ public class BaseInitConfig implements ServletContextListener {
     private final static Logger logger = LoggerFactory.getLogger(BaseInitConfig.class);
 
     private static ServletContextEvent servletContext;
-    //住院医师
-    public static IrbFormRequestUtil resFormRequestUtil;
-
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         servletContext = servletContextEvent;

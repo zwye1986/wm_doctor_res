@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResOrgRotationCfg extends MybatisObject {
+public class ResOrgRotationCfg extends TeachingActivitySpeakerExample.MybatisObject {
     private String rotationCfgFlow;
 
     private String orgFlow;

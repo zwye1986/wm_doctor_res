@@ -2,18 +2,16 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorScoreBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSubjectStationMapper;
 import com.pinde.sci.dao.osca.OscaDoctorAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaDoctorScoreInfoMapper;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.osca.SignStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -35,7 +33,7 @@ public class OscaDoctorScoreBizImpl implements IOscaDoctorScoreBiz{
     @Override
     public List<OscaDoctorAssessment> queryDoctorList(String clinicalFlow) {
         OscaDoctorAssessmentExample example = new OscaDoctorAssessmentExample();
-        OscaDoctorAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        OscaDoctorAssessmentExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andClinicalFlowEqualTo(clinicalFlow)
                 .andAuditStatusIdEqualTo(AuditStatusEnum.Passed.getId())
                 .andSiginStatusIdEqualTo(SignStatusEnum.SignIn.getId());
@@ -49,7 +47,7 @@ public class OscaDoctorScoreBizImpl implements IOscaDoctorScoreBiz{
     public List<OscaSkillsAssessment> selectskillsAssessmentList(OscaSkillsAssessment oscaSkillsAssessment) {
         OscaSkillsAssessmentExample example=new OscaSkillsAssessmentExample();
         OscaSkillsAssessmentExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaSkillsAssessment.getOrgName())){
             criteria.andOrgNameLike(oscaSkillsAssessment.getOrgName());
         }
@@ -88,7 +86,7 @@ public class OscaDoctorScoreBizImpl implements IOscaDoctorScoreBiz{
     @Override
     public List<OscaSubjectStation> queryStationList(String subjectFlow) {
         OscaSubjectStationExample example = new OscaSubjectStationExample();
-        example.createCriteria().andSubjectFlowEqualTo(subjectFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andSubjectFlowEqualTo(subjectFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("ORDINAL");
         return oscaSubjectStationMapper.selectByExample(example);
     }

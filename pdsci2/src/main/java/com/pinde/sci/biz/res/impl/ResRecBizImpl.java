@@ -22,11 +22,7 @@ import com.pinde.sci.dao.res.ResAppealExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
-import com.pinde.sci.enums.jszy.JszyResTrainYearEnum;
-import com.pinde.sci.enums.jszy.JszyTrainCategoryEnum;
-import com.pinde.sci.enums.res.*;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.form.res.ResRecForm;
+import com.pinde.core.common.enums.*;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResAppealExample.Criteria;
@@ -44,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -79,32 +74,8 @@ public class ResRecBizImpl implements IResRecBiz {
 	final static private String TOTAL = "Total";
 	@Autowired
 	private ResRecMapper resRecMapper;
-	/*@Autowired
-	private ResRecCampaignRegistryMapper campaignRegistryMapper;
-	@Autowired
-	private ResRecCaseRegistryMapper caseRegistryMapper;
-	@Autowired
-	private ResRecDiseaseRegistryMapper diseaseRegistryMapper;
-	@Autowired
-	private ResRecLanguageRegistryMapper languageRegistryMapper;
-	@Autowired
-	private ResRecOperationRegistryMapper operationRegistryMapper;
-	@Autowired
-	private ResRecSkillRegistryMapper skillRegistryMapper;*/
 	@Autowired
 	private ResRecExtMapper resRecExtMapper;
-	/*@Autowired
-	private ResRecCampaignRegistryExtMapper campaignRegistryExtMapper;
-	@Autowired
-	private ResRecCaseRegistryExtMapper caseRegistryExtMapper;
-	@Autowired
-	private ResRecDiseaseRegistryExtMapper diseaseRegistryExtMapper;
-	@Autowired
-	private ResRecLanguageRegistryExtMapper languageRegistryExtMapper;
-	@Autowired
-	private ResRecOperationRegistryExtMapper operationRegistryExtMapper;
-	@Autowired
-	private ResRecSkillRegistryExtMapper skillRegistryExtMapper;*/
 	@Autowired
 	private ResAppealExtMapper resAppealExtMapper;
 	@Autowired
@@ -148,29 +119,6 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Autowired
 	private ISchRotationDeptBiz schRotationDeptBiz;
 
-//	private IrbSingleForm findTheForm(String currVer,String recTypeId,String recForm){
-//		String productType = StringUtil.defaultIfEmpty(recForm,InitConfig.getSysCfg("res_form_category"));//与对应开关保持一致
-//		productType = StringUtil.defaultIfEmpty(productType,GlobalConstant.RES_FORM_PRODUCT);
-//
-//		if (StringUtil.isBlank(currVer)){
-//			currVer = InitConfig.resFormRequestUtil.getVersionMap().get(productType+"_"+recTypeId);
-//		}
-//		if(StringUtil.isBlank(currVer)){
-//			currVer = InitConfig.resFormRequestUtil.getVersionMap().get(GlobalConstant.RES_FORM_PRODUCT+"_"+recTypeId);
-//		}
-//
-//		currVer = StringUtil.defaultIfEmpty(currVer,GlobalConstant.RES_FORM_PRODUCT_VER);
-//
-//		Map<String,IrbSingleForm> singleFormMap = InitConfig.resFormRequestUtil.getFormMap().get(recTypeId);
-//		IrbSingleForm singleForm = singleFormMap.get(productType+"_"+currVer);
-//		if(singleForm==null){
-//			singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+currVer);
-//		}
-//		if(singleForm == null){
-//			throw new RuntimeException("未发现表单 模版类型:"+productType+",表单类型:"+ResRecTypeEnum.getNameById(recTypeId)+",版本号:"+currVer);
-//		}
-//		return singleForm;
-//	}
 
 	/**
 	 * 获取匹配的itemGroup name的item索引
@@ -227,115 +175,16 @@ public class ResRecBizImpl implements IResRecBiz {
 				return this.resRecMapper.updateByPrimaryKeySelective(rec);
 			}else{//新增
 				rec.setRecFlow(PkUtil.getUUID());
-				if(!ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())){//培训年度
+                if (!com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())) {//培训年度
 					rec.setOperTime(DateUtil.getCurrDateTime());
 				}
 				GeneralMethod.setRecordInfo(rec, true);
 				return this.resRecMapper.insertSelective(rec);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
-	@Override
-	public int editByType(ResRec rec, String recTypeId) {
-//		if(rec!=null){
-//			if(StringUtil.isNotBlank(rec.getRecFlow())){//修改
-//				GeneralMethod.setRecordInfo(rec, false);
-//				if (recTypeId.equals(RegistryTypeEnum.CampaignRegistry.getId())) {
-//					ResRecCampaignRegistry campaignRegistry = new ResRecCampaignRegistry();
-//					BeanUtils.copyProperties(rec, campaignRegistry);
-//					return campaignRegistryMapper.updateByPrimaryKeySelective(campaignRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.CaseRegistry.getId())) {
-//					ResRecCaseRegistry caseRegistry = new ResRecCaseRegistry();
-//					BeanUtils.copyProperties(rec, caseRegistry);
-//					return caseRegistryMapper.updateByPrimaryKeySelective(caseRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.DiseaseRegistry.getId())) {
-//					ResRecDiseaseRegistry diseaseRegistry = new ResRecDiseaseRegistry();
-//					BeanUtils.copyProperties(rec, diseaseRegistry);
-//					return diseaseRegistryMapper.updateByPrimaryKeySelective(diseaseRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.LanguageTeachingResearch.getId())) {
-//					ResRecLanguageRegistry languageRegistry = new ResRecLanguageRegistry();
-//					BeanUtils.copyProperties(rec, languageRegistry);
-//					return languageRegistryMapper.updateByPrimaryKeySelective(languageRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.OperationRegistry.getId())) {
-//					ResRecOperationRegistry operationRegistry = new ResRecOperationRegistry();
-//					BeanUtils.copyProperties(rec, operationRegistry);
-//					return operationRegistryMapper.updateByPrimaryKeySelective(operationRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.SkillRegistry.getId())) {
-//					ResRecSkillRegistry skillRegistry = new ResRecSkillRegistry();
-//					BeanUtils.copyProperties(rec, skillRegistry);
-//					return skillRegistryMapper.updateByPrimaryKeySelective(skillRegistry);
-//				}
-//			}else{//新增
-//				rec.setRecFlow(PkUtil.getUUID());
-//				if(!ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())){//培训年度
-//					rec.setOperTime(DateUtil.getCurrDateTime());
-//				}
-//				GeneralMethod.setRecordInfo(rec, true);
-//				if (recTypeId.equals(RegistryTypeEnum.CampaignRegistry.getId())) {
-//					ResRecCampaignRegistry campaignRegistry = new ResRecCampaignRegistry();
-//					BeanUtils.copyProperties(rec, campaignRegistry);
-//					return campaignRegistryMapper.insertSelective(campaignRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.CaseRegistry.getId())) {
-//					ResRecCaseRegistry caseRegistry = new ResRecCaseRegistry();
-//					BeanUtils.copyProperties(rec, caseRegistry);
-//					return caseRegistryMapper.insertSelective(caseRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.DiseaseRegistry.getId())) {
-//					ResRecDiseaseRegistry diseaseRegistry = new ResRecDiseaseRegistry();
-//					BeanUtils.copyProperties(rec, diseaseRegistry);
-//					return diseaseRegistryMapper.insertSelective(diseaseRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.LanguageTeachingResearch.getId())) {
-//					ResRecLanguageRegistry languageRegistry = new ResRecLanguageRegistry();
-//					BeanUtils.copyProperties(rec, languageRegistry);
-//					return languageRegistryMapper.insertSelective(languageRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.OperationRegistry.getId())) {
-//					ResRecOperationRegistry operationRegistry = new ResRecOperationRegistry();
-//					BeanUtils.copyProperties(rec, operationRegistry);
-//					return operationRegistryMapper.insertSelective(operationRegistry);
-//				} else if (recTypeId.equals(RegistryTypeEnum.SkillRegistry.getId())) {
-//					ResRecSkillRegistry skillRegistry = new ResRecSkillRegistry();
-//					BeanUtils.copyProperties(rec, skillRegistry);
-//					return skillRegistryMapper.insertSelective(skillRegistry);
-//				}
-//			}
-//		}
-		return GlobalConstant.ZERO_LINE;
-	}
-
-	@Override
-	public int editWithFiles(ResRec rec,List<PubFile> pubFiles) {
-		if(rec!=null){
-			if(StringUtil.isNotBlank(rec.getRecFlow())){//修改
-				GeneralMethod.setRecordInfo(rec, false);
-				if(pubFiles!=null&&pubFiles.size()>0){
-					for(PubFile file : pubFiles){
-						file.setFileFlow(PkUtil.getUUID());
-						file.setProductFlow(rec.getRecFlow());
-						GeneralMethod.setRecordInfo(file, true);
-						fileBiz.addFile(file);
-					}
-				}
-				return this.resRecMapper.updateByPrimaryKeySelective(rec);
-			}else{//新增
-				rec.setRecFlow(PkUtil.getUUID());
-				if(pubFiles!=null&&pubFiles.size()>0){
-					for(PubFile file : pubFiles){
-						file.setFileFlow(PkUtil.getUUID());
-						file.setProductFlow(rec.getRecFlow());
-						GeneralMethod.setRecordInfo(file, true);
-						fileBiz.addFile(file);
-					}
-				}
-				if(!ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())){//培训年度
-					rec.setOperTime(DateUtil.getCurrDateTime());
-				}
-				GeneralMethod.setRecordInfo(rec, true);
-				return this.resRecMapper.insertSelective(rec);
-			}
-		}
-		return GlobalConstant.ZERO_LINE;
-	}
 
 	@Override
 	public int editRec(ResRec rec) {
@@ -393,18 +242,18 @@ public class ResRecBizImpl implements IResRecBiz {
 
 			String currVer = InitConfig.resFormRequestUtil.getVersionMap().get(productType+"_"+formFileName);
 			if(StringUtil.isBlank(currVer)){
-				currVer = InitConfig.resFormRequestUtil.getVersionMap().get(GlobalConstant.RES_FORM_PRODUCT+"_"+formFileName);
+                currVer = InitConfig.resFormRequestUtil.getVersionMap().get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + formFileName);
 			}
 			if(StringUtil.isBlank(currVer)){
-				currVer = GlobalConstant.RES_FORM_PRODUCT_VER;
+                currVer = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER;
 			}
 			Map<String,IrbSingleForm> singleFormMap = InitConfig.resFormRequestUtil.getFormMap().get(formFileName);
 			IrbSingleForm singleForm = singleFormMap.get(productType+"_"+currVer);
 			if(singleForm == null){
-				singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+currVer);
+                singleForm = singleFormMap.get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + currVer);
 			}
 			if(singleForm == null){
-				throw new RuntimeException("未发现表单 模版类型:"+productType+",表单类型:"+ResRecTypeEnum.getNameById(formFileName)+",版本号:"+currVer);
+                throw new RuntimeException("未发现表单 模版类型:" + productType + ",表单类型:" + com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName) + ",版本号:" + currVer);
 			}
 
 			if(singleForm != null){
@@ -415,9 +264,9 @@ public class ResRecBizImpl implements IResRecBiz {
 				if(process!=null){
 					boolean toUpdate = false;
 					//是否出科，是则更新出科标记为Y，更新当前轮转标记为N，更新实际轮转结束日期为当前日期
-					if(GlobalConstant.FLAG_Y.equals(req.getParameter("isAgree"))){
-						process.setSchFlag(GlobalConstant.FLAG_Y);
-						process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(req.getParameter("isAgree"))) {
+                        process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 //						process.setEndDate(DateUtil.getCurrDate());
 						toUpdate = true;
 					}
@@ -464,7 +313,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					rec.setMedicineType(medicineTypeId);
 					//表单类型
 					rec.setRecTypeId(formFileName);
-					rec.setRecTypeName(ResRecTypeEnum.valueOf(formFileName).getTypeName());
+                    rec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.valueOf(formFileName).getTypeName());
 					//表单版本
 					rec.setRecVersion(currVer);
 					rec.setRecForm(productType);
@@ -501,9 +350,9 @@ public class ResRecBizImpl implements IResRecBiz {
 						GlobalRecTypeEnum.Appraisal.getId().equals(rec.getRecTypeId())|| //实习总鉴定
 						GlobalRecTypeEnum.CourseScore.getId().equals(rec.getRecTypeId())) { //实习成绩单
 					recContent = getRecContent(formFileName, singleForm, req);
-				} else if(ResRecTypeEnum.TeachRegistry.getId().equals(rec.getRecTypeId())){ //教学登记
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.TeachRegistry.getId().equals(rec.getRecTypeId())) { //教学登记
 					recContent = getRecContent(formFileName, singleForm.getItemList(), req,rec.getRecContent());
-				} else if(ResRecTypeEnum.AfterEvaluation.getId().equals(rec.getRecTypeId())){ //出科考核表
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(rec.getRecTypeId())) { //出科考核表
 					String roleFlag = req.getParameter("roleFlag");
 					recContent = getEvaluationContent(
 							formFileName,
@@ -554,13 +403,13 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 
 				//培训年度
-				if(ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())){
+                if (com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(rec.getRecTypeId())) {
 					rec.setOperTime(req.getParameter("trainDate"));
 				}
 
 				//更新大字段内容
 				rec.setRecContent(recContent);
-				if(!GlobalConstant.FLAG_Y.equals(canEditAppendix)){
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(canEditAppendix)) {
 					rec.setAuditStatusId("");
 					rec.setAuditStatusName("");
 				}
@@ -584,7 +433,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							rec.setItemName(itemName);
 
 							if(StringUtil.isNotBlank(xmlItemName)){
-								if(GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                                if (com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
 									itemName = regItem;
 								}
 								recContent = replaceNodeValue(useContent,xmlItemName,itemName,itemId);
@@ -602,7 +451,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					String itemName = req.getParameter("itemName");
 					rec.setItemName(itemName);
 					if(StringUtil.isNotBlank(xmlItemName)){
-						if(GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                        if (com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
 							itemName = regItem;
 						}
 						recContent = replaceNodeValue(useContent,xmlItemName,itemName,itemId);
@@ -612,10 +461,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					edit(rec);
 				}
 
-				return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	private String replaceNodeValue(String content,String nodeName,String value,String itemId){
@@ -625,7 +474,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			Element rootEle = doc.getRootElement();
 			Element nade = rootEle.element(nodeName);
 			if(nade!=null){
-				if(!GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                if (!com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
 					nade.addAttribute("id",itemId);
 				}
 				nade.setText(value);
@@ -657,7 +506,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				if("itemGroup".equals(tagName)){
 					if(recordFlow!=null){
 						String delFlag = req.getParameter("delFlag");
-						if(GlobalConstant.FLAG_Y.equals(delFlag)){
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(delFlag)) {
 							Node delNode = rootEle.selectSingleNode("itemGroup[@recordFlow='"+recordFlow+"']");
 							delNode.detach();
 						}else{
@@ -685,7 +534,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							itemEle.detach();
 						}
 						String multiple = e.attributeValue("multiple");
-						if(!GlobalConstant.FLAG_Y.equals(multiple)) {
+                        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 							String value = req.getParameter(nodeName);
 							Element element = DocumentHelper.createElement(nodeName);
 							if (StringUtil.isNotBlank(value)) {
@@ -730,7 +579,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				{
 					String name = itemEle.attributeValue("name");
 					Element element = DocumentHelper.createElement(name);
-					element.addAttribute("isGroup","Y");
+                    element.addAttribute("isGroup", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					List<Element> igItemList = itemEle.elements();//查找itemGroup所有item子节点
 					if (igItemList != null && igItemList.size() > 0) {
 						String itemName = igItemList.get(0).attributeValue("name");;//查找itemGroup第一个item子节点的name
@@ -761,7 +610,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		//xml中的节点是否是文件
 		String isFile = itemEle.attributeValue("isFile");
 		boolean isMultipart = JspFormUtil.isMultipart(req);
-		if(GlobalConstant.FLAG_Y.equals(isFile)&&isMultipart)
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isFile) && isMultipart)
 		{
 			String name = itemEle.attributeValue("name");
 			String isRe = "";
@@ -773,7 +622,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			if (values != null && values.length > 0) {
 				isRe = values[0];
 			}
-			if(GlobalConstant.FLAG_Y.equals(isRe)||StringUtil.isBlank(isRe)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe) || StringUtil.isBlank(isRe)) {
 				Map<String, String[]> dataMap = getParameterMap(req, rootEle.getName(), name);
 				Element element = DocumentHelper.createElement(name);
 				Element elementFlow = DocumentHelper.createElement(name + "_Flow");
@@ -846,7 +695,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				rootEle.add(newElementFlow);
 			}
 		}else {
-			if (!GlobalConstant.FLAG_Y.equals(multiple)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 				String name = itemEle.attributeValue("name");
 
 				String isSelect = itemEle.attributeValue("select");
@@ -855,7 +704,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				Element element = DocumentHelper.createElement(name);
 
-				if (GlobalConstant.FLAG_Y.equals(isSelect)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
 					String[] values = req.getParameterValues(name);
 
 					if (values != null && values.length > 0) {
@@ -900,7 +749,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			//xml中的节点是否是文件
 			String isFile = itemEle.attributeValue("isFile");
 			boolean isMultipart = JspFormUtil.isMultipart(req);
-			if (GlobalConstant.FLAG_Y.equals(isFile) && isMultipart) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isFile) && isMultipart) {
 				String name = itemEle.attributeValue("name");
 				String isRe = "";
 
@@ -911,7 +760,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				if (values != null && values.length > 0&& values.length > index) {
 					isRe = values[index];
 				}
-				if (GlobalConstant.FLAG_Y.equals(isRe) || StringUtil.isBlank(isRe)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe) || StringUtil.isBlank(isRe)) {
 					Map<String, String[]> dataMap = getParameterMap(req, rootEle.getName(), name,index);
 					Element element = DocumentHelper.createElement(name);
 					Element elementFlow = DocumentHelper.createElement(name + "_Flow");
@@ -984,7 +833,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					rootEle.add(newElementFlow);
 				}
 			} else {
-				if (!GlobalConstant.FLAG_Y.equals(multiple)) {
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 					String name = itemEle.attributeValue("name");
 
 					String isSelect = itemEle.attributeValue("select");
@@ -993,7 +842,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 					Element element = DocumentHelper.createElement(name);
 
-					if (GlobalConstant.FLAG_Y.equals(isSelect)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
 						String[] values = req.getParameterValues(name);
 
 						if (values != null && values.length > 0&& values.length > index) {
@@ -1080,7 +929,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								file.transferTo(newFile);
 								String uploadFile = File.separator+fromName+File.separator+dateString+File.separator+saveFileName;
 								pubFile.setFilePath(uploadFile);
-								pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 								GeneralMethod.setRecordInfo(pubFile, false);
 								IFileBiz fileBiz = SpringUtil.getBean(IFileBiz.class);
 								fileBiz.addFile(pubFile);
@@ -1165,7 +1014,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							file.transferTo(newFile);
 							String uploadFile = File.separator+fromName+File.separator+dateString+File.separator+saveFileName;
 							pubFile.setFilePath(uploadFile);
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							GeneralMethod.setRecordInfo(pubFile, false);
 							IFileBiz fileBiz = SpringUtil.getBean(IFileBiz.class);
 							fileBiz.addFile(pubFile);
@@ -1238,7 +1087,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			if(StringUtil.isNotBlank(oldContent)){
 				doc = DocumentHelper.parseText(oldContent);
 				root = doc.getRootElement();
-				roleNode = root.element(roleFlag+ResRecTypeEnum.AfterEvaluation.getId());
+                roleNode = root.element(roleFlag + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				if(roleNode != null){
 					roleNode.detach();
 				}
@@ -1246,7 +1095,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				doc = DocumentHelper.createDocument();
 				root = doc.addElement(formName);
 			}
-			roleNode = DocumentHelper.createElement(roleFlag+ResRecTypeEnum.AfterEvaluation.getId());
+            roleNode = DocumentHelper.createElement(roleFlag + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 			getContent(list,req,roleNode);
 			root.add(roleNode);
 			content = root.asXML();
@@ -1267,7 +1116,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		if(list !=null && list.size()>0 && rootEle!=null){
 			for(Element itemEle : list){
 				String multiple = itemEle.attributeValue("multiple");
-				if(!GlobalConstant.FLAG_Y.equals(multiple)){
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
 					String name = itemEle.attributeValue("name");
 					String isSelect = itemEle.attributeValue("select");
 
@@ -1275,7 +1124,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 					Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
 
-					if(GlobalConstant.FLAG_Y.equals(isSelect)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
 						String valueName = req.getParameter(name+"_name");
 						if(StringUtil.isBlank(value)){
 							valueName = (String) req.getAttribute(name+"_name");
@@ -1445,37 +1294,11 @@ public class ResRecBizImpl implements IResRecBiz {
 		return rec;
 	}
 
-	@Override
-	public ResRec readResRecByType(String recFlow, String recTypeId) {
-		ResRec rec = new ResRec();
-//		if(StringUtil.isNotBlank(recFlow)){
-//			if (recTypeId.equals(RegistryTypeEnum.CampaignRegistry.getId())) {
-//				ResRecCampaignRegistry campaignRegistry = campaignRegistryMapper.selectByPrimaryKey(recFlow);
-//				BeanUtils.copyProperties(campaignRegistry, rec);
-//			} else if (recTypeId.equals(RegistryTypeEnum.CaseRegistry.getId())) {
-//				ResRecCaseRegistry caseRegistry = caseRegistryMapper.selectByPrimaryKey(recFlow);
-//				BeanUtils.copyProperties(caseRegistry, rec);
-//			} else if (recTypeId.equals(RegistryTypeEnum.DiseaseRegistry.getId())) {
-//				ResRecDiseaseRegistry diseaseRegistry = diseaseRegistryMapper.selectByPrimaryKey(recFlow);
-//				BeanUtils.copyProperties(diseaseRegistry, rec);
-//			} else if (recTypeId.equals(RegistryTypeEnum.LanguageTeachingResearch.getId())) {
-//				ResRecLanguageRegistry languageRegistry = languageRegistryMapper.selectByPrimaryKey(recFlow);
-//				BeanUtils.copyProperties(languageRegistry, rec);
-//			} else if (recTypeId.equals(RegistryTypeEnum.OperationRegistry.getId())) {
-//				ResRecOperationRegistry operationRegistry = operationRegistryMapper.selectByPrimaryKey(recFlow);
-//				BeanUtils.copyProperties(operationRegistry, rec);
-//			} else if (recTypeId.equals(RegistryTypeEnum.SkillRegistry.getId())) {
-//				ResRecSkillRegistry skillRegistry = skillRegistryMapper.selectByPrimaryKey(recFlow);
-//				BeanUtils.copyProperties(skillRegistry, rec);
-//			}
-//		}
-		return rec;
-	}
 
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(String recTypeId,String schDeptFlow,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1484,7 +1307,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchRecByProcessWithBLOBs(String processFlow,String recTypeId){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdEqualTo(recTypeId).andProcessFlowEqualTo(processFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1493,7 +1316,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByDeptWithBLOBs(String recTypeId,List<String> schDeptFlows){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowIn(schDeptFlows);
 		example.setOrderByClause("OPER_USER_FLOW,OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1502,7 +1325,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(String recTypeId,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1511,7 +1334,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public List<ResRec> searchByRecWithBLOBsBySchRotationFlows(String recTypeId,String operUserFlow, List<String> schRotationDeptFlows){
 		if(schRotationDeptFlows!=null&&schRotationDeptFlows.size()>0) {
 			ResRecExample example = new ResRecExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 					.andOperUserFlowEqualTo(operUserFlow).andSchRotationDeptFlowIn(schRotationDeptFlows);
 			example.setOrderByClause("OPER_TIME");
 			return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1522,7 +1345,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(ResRec resRec, String trainYear){
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(resRec.getRecTypeId())
+        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(resRec.getRecTypeId())
 				.andOperUserFlowEqualTo(resRec.getOperUserFlow());
 		if(StringUtil.isNotBlank(trainYear)){
 			criteria.andOperTimeLike(trainYear + "%");
@@ -1534,7 +1357,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //	@Override
 //	public List<ResRec> searchByUserFlowsWithBLOBs(String recTypeId,String schDeptFlow,List<String> operUserFlows){
 //		ResRecExample example = new ResRecExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 //		.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowIn(operUserFlows);
 //		example.setOrderByClause("OPER_TIME");
 //		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1543,7 +1366,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(String recTypeId,String schDeptFlow,String operUserFlow,String itemId){
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		if(StringUtil.isNotBlank(itemId)){
 			criteria.andItemIdEqualTo(itemId);
@@ -1555,7 +1378,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchFinishRec(List<String> recTypeIds,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
 				.andOperUserFlowEqualTo(operUserFlow);//.andAuditStatusIdEqualTo(RecStatusEnum.TeacherAuditY.getId());
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExample(example);
@@ -1576,7 +1399,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRec(String recTypeId,String schDeptFlow,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExample(example);
@@ -1585,14 +1408,14 @@ public class ResRecBizImpl implements IResRecBiz {
 	//	@Override
 //	public List<ResRec> searchByUserFlows(String recTypeId,String schDeptFlow,List<String> operUserFlows){
 //		ResRecExample example = new ResRecExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 //		.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowIn(operUserFlows);
 //		example.setOrderByClause("OPER_TIME");
 //		return resRecMapper.selectByExample(example);
 //	}
 	public List<ResRec> searchRecInfo(ResRec resRec,List<String> operUserFlows){
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
 			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
 		}
@@ -1615,44 +1438,11 @@ public class ResRecBizImpl implements IResRecBiz {
 		return resRecMapper.selectByExampleWithBLOBs(example);
 	}
 
-//	@Override
-//	public List<ResRec> searchByRec(List<String> recTypeIds,String schDeptFlow,String operUserFlow){
-//		ResRecExample example = new ResRecExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
-//			.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
-//		example.setOrderByClause("OPER_TIME");
-//		return resRecMapper.selectByExample(example);
-//	}
-
-	@Override
-	public List<ResRec> searchByUserFlows(String recTypeId,List<String> operUserFlows){
-		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
-				.andOperUserFlowIn(operUserFlows);
-		example.setOrderByClause("OPER_TIME");
-		return resRecMapper.selectByExample(example);
-	}
-
-	@Override
-	public List<ResRec> searchByUserFlowsWithBLOBs(String recTypeId,List<String> operUserFlows){
-		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
-				.andOperUserFlowIn(operUserFlows);
-		example.setOrderByClause("OPER_TIME");
-		return resRecMapper.selectByExampleWithBLOBs(example);
-	}
-
 	@Override
 	public List<ResRec> searchByRecForAudit(String processFlow, String recTypeId){
 		return resRecExtMapper.searchByRecForAudit(processFlow, recTypeId);
 	}
 
-//	@Override
-//	public List<ResRec> searchByRecWithBLOBs(List<String> recFlows){
-//		ResRecExample example = new ResRecExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecFlowIn(recFlows);
-//		return resRecMapper.selectByExampleWithBLOBs(example);
-//	}
 
 	@Override
 	public List<Map<String,Object>> searchDoctorNotAuditCount(String schDeptFlow,String teacherUserFlow,String isAudit,List<String> recTypeIds){
@@ -1671,12 +1461,12 @@ public class ResRecBizImpl implements IResRecBiz {
 		rec.setAuditUserName(user.getUserName());
 		rec.setAuditTime(DateUtil.getCurrDateTime());
 		GeneralMethod.setRecordInfo(rec,false);
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow).andAuditStatusIdIsNull();
 		resRecMapper.updateByExampleSelective(rec,example);
 
 		ResAppealExample appealExample = new ResAppealExample();
-		appealExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        appealExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow).andAuditStatusIdIsNull();
 		ResAppeal appeal = new ResAppeal();
 		appeal.setAuditStatusId(RecStatusEnum.TeacherAuditY.getId());
@@ -1686,27 +1476,27 @@ public class ResRecBizImpl implements IResRecBiz {
 		appeal.setAuditTime(DateUtil.getCurrDateTime());
 		GeneralMethod.setRecordInfo(appeal,false);
 		resAppealMapper.updateByExampleSelective(appeal, appealExample);
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 	@Override
 	public int oneKeyAuditAll( String type){
 		List<String> regTypeIds = new ArrayList<String>();
 		if("resRec".equals(type)){
 			for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 						&& !(regType.getId().equals("CampaignNoItemRegistry") && "shrjyy".equals(InitConfig.getSysCfg("res_form_category")))){//培训数据审核，上海瑞金医院“参与活动”无需带教审核
 					regTypeIds.add(regType.getId());
 				}
 			}
 		}else if("resAppeal".equals(type)){
 			for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))) {
 					regTypeIds.add(regType.getId());
 				}
 			}
 		}else if("practicRegistry".equals(type)){//社会实践
 			for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))) {
 					regTypeIds.add(regType.getId());
 				}
 			}
@@ -1730,51 +1520,15 @@ public class ResRecBizImpl implements IResRecBiz {
 		appeal.setAuditTime(DateUtil.getCurrDateTime());
 		GeneralMethod.setRecordInfo(appeal,false);
 		resAppealExtMapper.oneKeyAudit(appeal, regTypeIds,user.getUserFlow());
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
 	public  int oneKeyAuditByOrg(String orgFlow,String userFlow){
 		resRecExtMapper.oneKeyAuditByOrg(orgFlow,userFlow);
 		resAppealExtMapper.oneKeyAuditByOrg(orgFlow,userFlow);
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
-//	@Override
-//	public Map<String, BigDecimal> searchAuditCount(String userFlow, String roleFlag) {
-//		Map<String, BigDecimal> countMap = null;
-//		if(StringUtil.isNotBlank(userFlow) && StringUtil.isNotBlank(roleFlag)){
-//			countMap = new HashMap<String, BigDecimal>();
-//			List<Map<String,Object>> mapList = this.resRecExtMapper.searchAuditCount(userFlow, roleFlag);
-//			if(mapList!=null&&!mapList.isEmpty()){
-//				for (Map<String, Object> map : mapList) {
-//					String key = null;
-//					BigDecimal value = null;
-//					for(String myKey:map.keySet() ) {
-//						if("key".equals(myKey)){
-//							key = (String)map.get(myKey);
-//						}else if("value".equals(myKey)){
-//							value = (BigDecimal)map.get(myKey);
-//						}
-//					}
-//					countMap.put(key, value);
-//				}
-//			}
-//		}
-//		return countMap;
-//	}
-
-//	@Override
-//	public List<ResRecExt> searchAuditList(String userFlow,
-//			String roleFlag,
-//			String recTypeId,
-//			String doctorFlow,
-//			String isCurrentFlag) {
-//		List<ResRecExt> auditList = null;
-//		if(StringUtil.isNotBlank(userFlow)&&StringUtil.isNotBlank(roleFlag)&&StringUtil.isNotBlank(recTypeId)){
-//			auditList = this.resRecExtMapper.searchAuditList(userFlow, roleFlag, recTypeId,doctorFlow,isCurrentFlag);
-//		}
-//		return auditList;
-//	}
 
 	@Override
 	public List<ResRec> searchRecByProcessWithBLOBs(List<String> recTypeIds,String processFlow,String operUserFlow){
@@ -1782,7 +1536,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //		for (String recTypeId : recTypeIds) {
 //			if (recTypeId.equals(RegistryTypeEnum.CampaignRegistry.getId())) {
 //				ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//				campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//				campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //				campaignRegistryExample.setOrderByClause("OPER_TIME");
 //				List<ResRecCampaignRegistry> campaignRegistryList = campaignRegistryMapper.selectByExampleWithBLOBs(campaignRegistryExample);
 //				resRecList.addAll(campaignRegistryList.stream().map(e -> {
@@ -1792,7 +1546,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //				}).collect(Collectors.toList()));
 //			} else if (recTypeId.equals(RegistryTypeEnum.CaseRegistry.getId())) {
 //				ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//				caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//				caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //				caseRegistryExample.setOrderByClause("OPER_TIME");
 //				List<ResRecCaseRegistry> caseRegistryList = caseRegistryMapper.selectByExampleWithBLOBs(caseRegistryExample);
 //				resRecList.addAll(caseRegistryList.stream().map(e -> {
@@ -1802,7 +1556,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //				}).collect(Collectors.toList()));
 //			} else if (recTypeId.equals(RegistryTypeEnum.DiseaseRegistry.getId())) {
 //				ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//				diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//				diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //				diseaseRegistryExample.setOrderByClause("OPER_TIME");
 //				List<ResRecDiseaseRegistry> diseaseRegistryList = diseaseRegistryMapper.selectByExampleWithBLOBs(diseaseRegistryExample);
 //				resRecList.addAll(diseaseRegistryList.stream().map(e -> {
@@ -1812,7 +1566,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //				}).collect(Collectors.toList()));
 //			} else if (recTypeId.equals(RegistryTypeEnum.LanguageTeachingResearch.getId())) {
 //				ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//				languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//				languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //				languageRegistryExample.setOrderByClause("OPER_TIME");
 //				List<ResRecLanguageRegistry> languageRegistryList = languageRegistryMapper.selectByExampleWithBLOBs(languageRegistryExample);
 //				resRecList.addAll(languageRegistryList.stream().map(e -> {
@@ -1822,7 +1576,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //				}).collect(Collectors.toList()));
 //			} else if (recTypeId.equals(RegistryTypeEnum.OperationRegistry.getId())) {
 //				ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//				operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//				operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //				operationRegistryExample.setOrderByClause("OPER_TIME");
 //				List<ResRecOperationRegistry> operationRegistryList = operationRegistryMapper.selectByExampleWithBLOBs(operationRegistryExample);
 //				resRecList.addAll(operationRegistryList.stream().map(e -> {
@@ -1832,7 +1586,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //				}).collect(Collectors.toList()));
 //			} else if (recTypeId.equals(RegistryTypeEnum.SkillRegistry.getId())) {
 //				ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//				skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//				skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //				skillRegistryExample.setOrderByClause("OPER_TIME");
 //				List<ResRecSkillRegistry> skillRegistryList = skillRegistryMapper.selectByExampleWithBLOBs(skillRegistryExample);
 //				resRecList.addAll(skillRegistryList.stream().map(e -> {
@@ -1843,7 +1597,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}
 //		}
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
 				.andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1853,7 +1607,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchRecAuditByProcessWithBLOBs(List<String> recTypeIds,String processFlow,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
 				.andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow).andAuditStatusIdEqualTo("TeacherAuditY");
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1862,7 +1616,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchRecByProcess(String recTypeId,String rotationDeptFlow,String operUserFlow){
 //		ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
+//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 //		campaignRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecCampaignRegistry> campaignRegistryList = campaignRegistryMapper.selectByExampleWithBLOBs(campaignRegistryExample);
 //		List<ResRec> resRecList = campaignRegistryList.stream().map(e -> {
@@ -1871,7 +1625,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList());
 //		ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
+//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 //		caseRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecCaseRegistry> caseRegistryList = caseRegistryMapper.selectByExampleWithBLOBs(caseRegistryExample);
 //		resRecList.addAll(caseRegistryList.stream().map(e -> {
@@ -1880,7 +1634,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
+//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 //		diseaseRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecDiseaseRegistry> diseaseRegistryList = diseaseRegistryMapper.selectByExampleWithBLOBs(diseaseRegistryExample);
 //		resRecList.addAll(diseaseRegistryList.stream().map(e -> {
@@ -1889,7 +1643,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
+//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 //		languageRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecLanguageRegistry> languageRegistryList = languageRegistryMapper.selectByExampleWithBLOBs(languageRegistryExample);
 //		resRecList.addAll(languageRegistryList.stream().map(e -> {
@@ -1898,7 +1652,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
+//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 //		operationRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecOperationRegistry> operationRegistryList = operationRegistryMapper.selectByExampleWithBLOBs(operationRegistryExample);
 //		resRecList.addAll(operationRegistryList.stream().map(e -> {
@@ -1907,7 +1661,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
+//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 //		skillRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecSkillRegistry> skillRegistryList = skillRegistryMapper.selectByExampleWithBLOBs(skillRegistryExample);
 //		resRecList.addAll(skillRegistryList.stream().map(e -> {
@@ -1919,7 +1673,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1927,7 +1681,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	public List<ResRec> searchByRecWithBLOBs(List<String> recTypeIds,String schDeptFlow,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -1936,7 +1690,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRec(String recTypeId,List<String> schDeptFlows,String operUserFlow){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowIn(schDeptFlows).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -2045,12 +1799,12 @@ public class ResRecBizImpl implements IResRecBiz {
 				Element root = doc.getRootElement();
 				if(root!=null){
 
-					Element gradeinfo = root.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+"GradeInfo");
+                    Element gradeinfo = root.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER + "GradeInfo");
 					if(gradeinfo==null){
-						gradeinfo = root.element(GlobalConstant.RES_ROLE_SCOPE_HEAD+"GradeInfo");
+                        gradeinfo = root.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD + "GradeInfo");
 					}
 					if(gradeinfo==null){
-						gradeinfo = root.element(GlobalConstant.RES_ROLE_SCOPE_TEACHER+"GradeInfo");
+                        gradeinfo = root.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER + "GradeInfo");
 					}
 					if(gradeinfo!=null) {
 						List<Element> items = gradeinfo.elements("grade");
@@ -2121,11 +1875,11 @@ public class ResRecBizImpl implements IResRecBiz {
 			eu.put("msg", "请联系系统管理员维护【操作名称】！！");
 			return eu;
 		}
-		if(ResRecTypeEnum.SkillRegistry.getId().equals(recTypeId))
+        if (com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId().equals(recTypeId))
 		{
 			return importJsresSkillData(file, recordFlow,  processFlow,  doctorFlow,  recTypeId,reqs);
 		}
-		if(ResRecTypeEnum.DiseaseRegistry.getId().equals(recTypeId))
+        if (com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId().equals(recTypeId))
 		{
 			return importJsresDiseaseData(file, recordFlow,  processFlow,  doctorFlow,  recTypeId,reqs);
 		}
@@ -2319,7 +2073,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					record.setCreateUserFlow(doctorFlow);
 					record.setModifyTime(DateUtil.getCurrDateTime());
 					record.setModifyUserFlow(doctorFlow);
-					record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					data.put("rec",record);
 					return null;
 				}
@@ -2495,7 +2249,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					record.setCreateUserFlow(doctorFlow);
 					record.setModifyTime(DateUtil.getCurrDateTime());
 					record.setModifyUserFlow(doctorFlow);
-					record.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					data.put("rec",record);
 					return null;
 				}
@@ -2520,7 +2274,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			String key = entry.getKey();
 			String value =  String.valueOf(entry.getValue());
 			Element element = DocumentHelper.createElement(key);
-			if (ResRecTypeEnum.SkillRegistry.getId().equals(recTypeId)) {
+            if (com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId().equals(recTypeId)) {
 				if ("itemName".equals(entry.getKey())) {
 					Element element1 = DocumentHelper.createElement("skill_operName");
 					if ("其他".equals(value)) {
@@ -2543,7 +2297,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				} else {
 					element.setText(value);
 				}
-			} else if (ResRecTypeEnum.DiseaseRegistry.getId().equals(recTypeId)) {
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId().equals(recTypeId)) {
 				if ("itemName".equals(entry.getKey())) {
 					Element element1 = DocumentHelper.createElement("disease_diagName");
 					if ("其他".equals(value)) {
@@ -2623,15 +2377,15 @@ public class ResRecBizImpl implements IResRecBiz {
 			try {
 				Document document = DocumentHelper.parseText(content);
 				Element rootElement = document.getRootElement();
-				Element afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+ResRecTypeEnum.AfterEvaluation.getId());
+                Element afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				if(afterEvaluation==null){
-					afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_PROFESSIONALBASE+ResRecTypeEnum.AfterEvaluation.getId());
+                    afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_PROFESSIONALBASE + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				}
 				if(afterEvaluation==null){
-					afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_HEAD+ResRecTypeEnum.AfterEvaluation.getId());
+                    afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				}
 				if(afterEvaluation==null){
-					afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_TEACHER+ResRecTypeEnum.AfterEvaluation.getId());
+                    afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				}
 				List<Element> elements = null;
 				if(afterEvaluation!=null){
@@ -2657,7 +2411,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 					}else {
 						String isGroup = element.attributeValue("isGroup");
-						if (GlobalConstant.FLAG_Y.equals(isGroup)) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isGroup)) {
 							List<Map<String, Object>> items = new ArrayList<>();
 							List<Element> subList = element.elements();
 							if (subList != null && subList.size() > 0) {
@@ -2750,7 +2504,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchRecByUserFlows(List<String> userFlows,String recTypeId){
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andOperUserFlowIn(userFlows);
 		return resRecMapper.selectByExample(example);
 	}
@@ -2775,11 +2529,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		return resRecExtMapper.searchTeacherAuditCount(headUserFlow,isAudit);
 	}
 
-	/******************************************************获取百分比和数量**************************************************************/
-	@Override
-	public Map<String,String> getStandardDeptFinishPer(List<SchRotationDept> depts){
-		return getStandardDeptFinishPer(depts,GlobalContext.getCurrentUser().getUserFlow());
-	}
+
 	@Override
 	public Map<String,String> getStandardDeptFinishPer(List<SchRotationDept> depts,String doctorFlow) {
 
@@ -2791,19 +2541,19 @@ public class ResRecBizImpl implements IResRecBiz {
 			medicineTypeId=user.getMedicineTypeId();
 		List<String> recTypeIds = new ArrayList<String>();
 		for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-			if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
 				recTypeIds.add(regType.getId());
 			}
 		}
 		for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 			}
 		}
 		for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 			}
@@ -2818,9 +2568,9 @@ public class ResRecBizImpl implements IResRecBiz {
 			String trainingType = doctor.getTrainingTypeId();
 			String sessionNumber = doctor.getSessionNumber();
 			String trainingYears = doctor.getTrainingYears();
-			boolean isReduction = JszyTrainCategoryEnum.ChineseMedicine.getId().equals(trainingType) || JszyTrainCategoryEnum.TCMGeneral.getId().equals(trainingType);
+			/*boolean isReduction = com.pinde.core.common.enums.ResTrainYearEnum.ChineseMedicine.getId().equals(trainingType) || com.pinde.core.common.enums.JsResTrainYearEnum.TCMGeneral.getId().equals(trainingType);
 			isReduction = isReduction && "2015".compareTo(sessionNumber) <= 0;
-			isReduction = isReduction && (JszyResTrainYearEnum.OneYear.getId().equals(trainingYears) || JszyResTrainYearEnum.TwoYear.getId().equals(trainingYears));
+			isReduction = isReduction && (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(trainingYears) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(trainingYears));
 			Map<String, SchDoctorDept> doctorDeptMap = new HashMap<>();
 			if (isReduction) {
 				//获取所有缩减的调整科室
@@ -2829,7 +2579,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					//获取标准科室列表以绑定要求数据
 					doctorDeptMap = transListObjToMapsSoM(false, doctorDeptList, "groupFlow", "standardDeptId");
 				}
-			}
+			}*/
 
 			Map<String, String> processMap = new HashMap<String, String>();
 			Map<String, SchArrangeResult> proResultMap = new HashMap<String, SchArrangeResult>();
@@ -2933,17 +2683,17 @@ public class ResRecBizImpl implements IResRecBiz {
 				SchRotation rotation = rotationBiz.readSchRotation(dept.getRotationFlow());
 				double per = 1;
 				String baseSchMonth = dept.getSchMonth();
-				if (isReduction) {
+				/*if (isReduction) {
 					SchDoctorDept sdd = doctorDeptMap.get(standardKey);
 					if (sdd != null) {
-						if (GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
+						if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
 							per = Double.valueOf(sdd.getSchMonth()) / Double.valueOf(dept.getSchMonth());
 							baseSchMonth = sdd.getSchMonth();
 						}
 					}
-				}
+				}*/
 				//是否翻倍
-				if (rotation != null && GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
+                if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
 					List<SchArrangeResult> results = resultMap.get(standardKey);
 					if (results != null && results.size() > 0) {
 						double allMonth = 0;
@@ -2964,7 +2714,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				reqNumMap.put("reqSum", 0);
 				if (deptReqList != null && deptReqList.size() > 0) {
 					for (SchRotationDeptReq deptReq : deptReqList) {
-						if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
 							int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
@@ -2985,7 +2735,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								reqNumMap.put(deptReq.getRecTypeId() + deptReq.getItemId(), reqNumMap.get(deptReq.getRecTypeId() + deptReq.getItemId()) + (num));
 							}
 							RegistryTypeEnum rectype = RegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-							if (rectype != null && rectype.getHaveItem().equals(GlobalConstant.FLAG_Y)) {
+                            if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 								if (StringUtil.isNotBlank(deptReq.getItemId())) {
 									List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
 									if (itemIds == null) {
@@ -2996,7 +2746,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								}
 							}
 						}
-						if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
 							int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
@@ -3017,7 +2767,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								reqNumMap.put(deptReq.getRecTypeId() + deptReq.getItemId(), reqNumMap.get(deptReq.getRecTypeId() + deptReq.getItemId()) + (num));
 							}
 							PracticRegistryTypeEnum rectype = PracticRegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-							if (rectype != null && rectype.getHaveItem().equals(GlobalConstant.FLAG_Y)) {
+                            if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 								if (StringUtil.isNotBlank(deptReq.getItemId())) {
 									List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
 									if (itemIds == null) {
@@ -3028,7 +2778,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								}
 							}
 						}
-						if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
 							int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
@@ -3049,7 +2799,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								reqNumMap.put(deptReq.getRecTypeId() + deptReq.getItemId(), reqNumMap.get(deptReq.getRecTypeId() + deptReq.getItemId()) + (num));
 							}
 							TheoreticalRegistryTypeEnum rectype = TheoreticalRegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-							if (rectype != null && rectype.getHaveItem().equals(GlobalConstant.FLAG_Y)) {
+                            if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 								if (StringUtil.isNotBlank(deptReq.getItemId())) {
 									List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
 									if (itemIds == null) {
@@ -3066,10 +2816,10 @@ public class ResRecBizImpl implements IResRecBiz {
 				finishPerMap.put(standardKey + "req", defaultString(reqNumMap.get("reqSum")));
 
 				for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-					if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 							&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
 						finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-						if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 							finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 						}
 
@@ -3077,10 +2827,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 				for (PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()) {
-					if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 							&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
 						finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-						if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 							finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 						}
 
@@ -3088,10 +2838,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 				for (TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()) {
-					if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 							&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
 						finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-						if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 							finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 						}
 
@@ -3105,379 +2855,6 @@ public class ResRecBizImpl implements IResRecBiz {
 		return finishPerMap;
 	}
 
-	@Override
-	public Map<String,String> getFinishPer2(List<SchArrangeResult> arrResultList, ResDoctor resDoctor, SysUser user, Map<String, SchArrangeResult> arrangeResultMap, Map<String, SchRotationGroup> rotationGroupFlowToEntityMap) {
-		String doctorFlow = resDoctor.getDoctorFlow();
-		Map<String,String> processMap = new HashMap<String, String>();
-		Map<String,SchArrangeResult> proResultMap = new HashMap<String,SchArrangeResult>();
-		if(arrResultList!=null&&arrResultList.size()>0){
-			List<String> resultFlowList = arrResultList.stream().map(vo -> vo.getResultFlow()).collect(Collectors.toList());
-			ResDoctorSchProcessExample resDoctorSchProcessExample = new ResDoctorSchProcessExample();
-			resDoctorSchProcessExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-					.andSchResultFlowIn(resultFlowList);
-			List<ResDoctorSchProcess> resDoctorSchProcessList = processBiz.readResDoctorSchProcessByExample(resDoctorSchProcessExample);
-			Map<String, ResDoctorSchProcess> schResultFlowToDoctorSchProcessMap = resDoctorSchProcessList.stream().collect(Collectors.toMap(vo -> vo.getSchResultFlow(), Function.identity(), (vo1, vo2) -> vo1));
-
-			for (SchArrangeResult result : arrResultList) {
-				String resultFlow = result.getResultFlow();
-				if(StringUtil.isNotBlank(resultFlow)){
-					ResDoctorSchProcess process = schResultFlowToDoctorSchProcessMap.get(resultFlow);
-					if(process!=null){
-						String processFlow = process.getProcessFlow();
-						processMap.put(resultFlow,process.getProcessFlow());
-						processMap.put(processFlow,resultFlow);
-						proResultMap.put(processFlow,result);
-					}
-				}
-			}
-		}
-		String medicineTypeId="";
-		if(user!=null)
-			medicineTypeId=user.getMedicineTypeId();
-		Map<String,List<String>> recTypeMap=new HashMap<>();
-		List<String> recTypeIds = new ArrayList<String>();
-		List<String> nowRecTypeIds1 = new ArrayList<String>();
-		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
-					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-				recTypeIds.add(regType.getId());
-				nowRecTypeIds1.add(regType.getId());
-			}
-			recTypeMap.put("N",nowRecTypeIds1);
-		}
-		List<String> nowRecTypeIds2 = new ArrayList<String>();
-		for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
-					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-				recTypeIds.add(regType.getId());
-				nowRecTypeIds2.add(regType.getId());
-			}
-			recTypeMap.put("BasicPractice",nowRecTypeIds2);
-		}
-		List<String> nowRecTypeIds3 = new ArrayList<String>();
-		for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
-					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-				recTypeIds.add(regType.getId());
-				nowRecTypeIds3.add(regType.getId());
-			}
-			recTypeMap.put("TheoreticalStudy",nowRecTypeIds3);
-		}
-		if(recTypeIds==null || recTypeIds.size()<=0){
-			return null;
-		}
-
-		Map<String,String> finishPerMap = new HashMap<String, String>();
-		Map<String, List<SchArrangeResult>> resultMap = new HashMap<String,List<SchArrangeResult>>();
-		List<ResRec> recList = searchFinishRec(recTypeIds,doctorFlow);
-		Map<String,Integer> recFinishMap = new HashMap<String, Integer>();
-		Map<String,SchRotationDept> resultSchRotationDeptMap = new HashMap<>();
-		for (SchArrangeResult result : arrResultList) {
-			SchRotationDept schRotationDept = null;
-			if(rotationGroupFlowToEntityMap.get(result.getStandardGroupFlow()) != null) {
-				schRotationDept = readStandardRotationDept(result);
-			}
-
-			resultSchRotationDeptMap.put(result.getResultFlow(),schRotationDept);
-		}
-		if(recList!=null && recList.size()>0){
-			for(ResRec rec : recList){
-				String processFlow = rec.getProcessFlow();
-				String schDeptFlow = rec.getSchDeptFlow();
-				String recTypeId = rec.getRecTypeId();
-				String itemId = rec.getItemId();
-				SchArrangeResult result = proResultMap.get(processFlow);
-
-				if(result != null){
-
-
-					SchRotationDept schRotationDepttemp = resultSchRotationDeptMap.get(result.getResultFlow());
-					List<String> recTypeIds4Ever = new ArrayList<String>();
-					if (schRotationDepttemp == null || JszyTCMPracticEnum.N.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-						recTypeIds4Ever = recTypeMap.get("N");
-					} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-						recTypeIds4Ever = recTypeMap.get("BasicPractice");
-					} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-						recTypeIds4Ever = recTypeMap.get("TheoreticalStudy");
-					}
-					if(recTypeIds4Ever.contains(recTypeId)){
-						countFinshFuc(recTypeId, schDeptFlow, result, recFinishMap, itemId, processFlow);
-					}
-				}
-
-			}
-		}
-		boolean isReduction =false;
-		Map<String,SchDoctorDept> doctorDeptMap=new HashMap<>();
-		if(arrResultList!=null&&arrResultList.size()>0){
-			//判断学员是否需要减免
-			String trainingType = resDoctor.getTrainingTypeId();
-			String sessionNumber = resDoctor.getSessionNumber();
-			String trainingYears = resDoctor.getTrainingYears();
-			isReduction=JszyTrainCategoryEnum.ChineseMedicine.getId().equals(trainingType)||JszyTrainCategoryEnum.TCMGeneral.getId().equals(trainingType);
-			isReduction = isReduction && "2015".compareTo(sessionNumber)<=0;
-			isReduction = isReduction && (JszyResTrainYearEnum.OneYear.getId().equals(trainingYears) || JszyResTrainYearEnum.TwoYear.getId().equals(trainingYears));
-
-			if(isReduction)
-			{
-				//获取所有缩减的调整科室
-				List<SchDoctorDept> doctorDeptList = searchReductionDept(doctorFlow,resDoctor.getRotationFlow(),resDoctor.getSecondRotationFlow());
-				if(doctorDeptList!=null&&doctorDeptList.size()>0)
-				{
-					//获取标准科室列表以绑定要求数据
-					doctorDeptMap = transListObjToMapsSoM(false,doctorDeptList,"groupFlow","standardDeptId");
-				}
-			}
-			List<String> rotationFlowList = arrResultList.stream().map(vo -> vo.getRotationFlow()).collect(Collectors.toList());
-			SchRotationExample schRotationExample = new SchRotationExample();
-			schRotationExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-					.andRotationFlowIn(rotationFlowList);
-			List<SchRotation> schRotationList = rotationBiz.readSchRotationByExample(schRotationExample);
-			Map<String, SchRotation> rotationFlowToEntityMap = schRotationList.stream().collect(Collectors.toMap(vo -> vo.getRotationFlow(), Function.identity(), (vo1, vo2) -> vo1));
-			for (SchArrangeResult result : arrResultList) {
-
-				String key = result.getStandardGroupFlow()+result.getStandardDeptId();
-				List<SchArrangeResult> resultList= resultMap.get(key);
-				if(resultList==null){
-					resultList = new ArrayList<SchArrangeResult>();
-					resultMap.put(key, resultList);
-				}
-				resultList.add(result);
-
-				String resultFlow = result.getResultFlow();
-				//schDeptFlows.add(result.getSchDeptFlow());
-				SchRotation rotation=rotationFlowToEntityMap.get(result.getRotationFlow());
-				SchRotationDept srd=resultSchRotationDeptMap.get(resultFlow);
-
-				double per=1;
-				String baseSchMonth="";
-				if(srd!=null)
-				{
-					baseSchMonth=srd.getSchMonth();
-				}
-				if(isReduction&&srd!=null)
-				{
-					SchDoctorDept sdd=doctorDeptMap.get(srd.getGroupFlow()+srd.getStandardDeptId());
-					if(sdd!=null)
-					{
-						if(GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus()))
-						{
-							per=Double.valueOf(sdd.getSchMonth())/Double.valueOf(srd.getSchMonth());
-							baseSchMonth=sdd.getSchMonth();
-						}
-					}
-				}
-				//是否翻倍
-				if(rotation!=null&&GlobalConstant.FLAG_Y.equals(rotation.getIsDouble())&&StringUtil.isNotBlank(baseSchMonth))
-				{
-					if(StringUtil.isNotBlank(result.getSchMonth()))
-					{
-						per=Double.valueOf(result.getSchMonth())/Double.valueOf(baseSchMonth)*per;
-					}
-				}
-				//要求数 todo 双重循环查数据库
-				List<SchRotationDeptReq> deptReqList = rotationDeptBiz.searchStandardReqByResult(result,resDoctor);
-				Map<String,Integer> reqNumMap = new HashMap<String, Integer>();
-				Map<String,List<String>> itemMap = new HashMap<String, List<String>>();
-				reqNumMap.put("reqSum",0);
-				if(deptReqList!=null && deptReqList.size()>0){
-					for(SchRotationDeptReq deptReq : deptReqList){
-						if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
-							if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+deptReq.getRecTypeId()))
-									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())){
-								countReqFuc(deptReq,per,reqNumMap,itemMap,"N");
-							}
-						} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
-									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
-								countReqFuc(deptReq,per,reqNumMap,itemMap,"BasicPractice");
-							}
-						} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(srd.getPracticOrTheory())) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
-									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
-								countReqFuc(deptReq,per,reqNumMap,itemMap,"TheoreticalStudy");
-							}
-						}
-					}
-				}
-				String processFlow = processMap.get(resultFlow);
-				String globalUpKey = result.getResultFlow()+result.getStandardGroupFlow()+result.getStandardDeptId();
-				finishPerMap.put(resultFlow+"finish",defaultString(recFinishMap.get(globalUpKey)));
-				finishPerMap.put(resultFlow+"finishSingle",defaultString(recFinishMap.get(processFlow)));
-				finishPerMap.put(resultFlow+"req",defaultString(reqNumMap.get("reqSum")));
-
-				if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
-					for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
-								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-							finishPerMap.put(resultFlow+regType.getId()+"finish",defaultString(recFinishMap.get(processFlow+regType.getId())));
-							if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
-								finishPerMap.put(resultFlow+regType.getId()+"req",defaultString(reqNumMap.get(regType.getId())));
-							}
-
-							finishPerMap.put(resultFlow+regType.getId()+"itemCount",defaultString(reqNumMap.get(regType.getId()+"itemCount")));
-						}
-					}
-				} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
-					for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
-								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-							finishPerMap.put(resultFlow+regType.getId()+"finish",defaultString(recFinishMap.get(processFlow+regType.getId())));
-							if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
-								finishPerMap.put(resultFlow+regType.getId()+"req",defaultString(reqNumMap.get(regType.getId())));
-							}
-
-							finishPerMap.put(resultFlow+regType.getId()+"itemCount",defaultString(reqNumMap.get(regType.getId()+"itemCount")));
-						}
-					}
-				} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(srd.getPracticOrTheory())) {
-					for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
-								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-							finishPerMap.put(resultFlow+regType.getId()+"finish",defaultString(recFinishMap.get(processFlow+regType.getId())));
-							if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
-								finishPerMap.put(resultFlow+regType.getId()+"req",defaultString(reqNumMap.get(regType.getId())));
-							}
-
-							finishPerMap.put(resultFlow+regType.getId()+"itemCount",defaultString(reqNumMap.get(regType.getId()+"itemCount")));
-						}
-					}
-
-				}
-				setFinishPerMap(finishPerMap,result,itemMap,recFinishMap,reqNumMap,medicineTypeId);
-			}
-
-//			List<ResRec> eRecList = searchByRec(ResRecTypeEnum.AfterEvaluation.getId(),schDeptFlows,GlobalContext.getCurrentUser().getUserFlow());
-//			if(eRecList!=null && eRecList.size()>0){
-//				for(ResRec eRec : eRecList){
-//					Map<String,String> recContent = parseRecContent(eRec.getRecContent());
-//					if(recContent!=null){
-//						finishPerMap.put(eRec.getSchDeptFlow(),recContent.get("totalScore"));
-//					}
-//				}
-//			}
-		}
-
-		List<SchRotationDept> allDeptList=new ArrayList<>();	//轮转科室
-		List<SchRotationDept> deptList=null;	//轮转科室
-		//PPbear
-		if(StringUtil.isNotBlank(resDoctor.getRotationFlow())){
-			deptList=rotationDeptBiz.searchSchRotationDept(resDoctor.getRotationFlow());
-			if(deptList!=null && !deptList.isEmpty() ){
-				allDeptList.addAll(deptList);
-			}
-		}
-		//第二专业
-		if(StringUtil.isNotBlank(resDoctor.getSecondRotationFlow())){
-			deptList=rotationDeptBiz.searchSchRotationDept(resDoctor.getSecondRotationFlow());
-			if(deptList!=null && !deptList.isEmpty() ){
-				allDeptList.addAll(deptList);
-			}
-		}
-		if(allDeptList.size()>0) {
-			List<String> recordFlowList = allDeptList.stream().map(vo -> vo.getRecordFlow()).collect(Collectors.toList());
-			SchRotationDeptReqExample schRotationDeptReqExample = new SchRotationDeptReqExample();
-			schRotationDeptReqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-					.andRelRecordFlowIn(recordFlowList);
-			List<SchRotationDeptReq> schRotationDeptReqList = rotationDeptBiz.searchDeptReqByExample(schRotationDeptReqExample);
-			Map<String, List<SchRotationDeptReq>> relRecordFlowToListEntityMap = schRotationDeptReqList.stream().collect(Collectors.groupingBy(vo -> vo.getRelRecordFlow()));
-
-			List<String> rotationFlowList = allDeptList.stream().map(vo -> vo.getRotationFlow()).collect(Collectors.toList());
-			SchRotationExample schRotationExample = new SchRotationExample();
-			schRotationExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-							.andRotationFlowIn(rotationFlowList);
-			List<SchRotation> schRotationList = rotationBiz.readSchRotationByExample(schRotationExample);
-			Map<String, SchRotation> rotationFlowToEntityMap = schRotationList.stream().collect(Collectors.toMap(vo -> vo.getRotationFlow(), Function.identity(), (vo1, vo2) -> vo1));
-			for(SchRotationDept dept:allDeptList) {
-
-				String standardKey = dept.getGroupFlow() + dept.getStandardDeptId();
-
-				SchRotation rotation = rotationFlowToEntityMap.get(dept.getRotationFlow());
-				double per = 1;
-				String baseSchMonth = dept.getSchMonth();
-				if (isReduction) {
-					SchDoctorDept sdd = doctorDeptMap.get(standardKey);
-					if (sdd != null) {
-						if (GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
-							per = Double.valueOf(sdd.getSchMonth()) / Double.valueOf(dept.getSchMonth());
-							baseSchMonth = sdd.getSchMonth();
-						}
-					}
-				}
-				//是否翻倍
-				if (rotation != null && GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
-					List<SchArrangeResult> results=resultMap.get(standardKey);
-					if(results!=null&&results.size()>0) {
-						double allMonth = 0;
-						for (SchArrangeResult result : results) {
-							if (StringUtil.isNotBlank(result.getSchMonth())) {
-								allMonth+=Double.valueOf(result.getSchMonth());
-							}
-						}
-						if(allMonth>0)
-						{
-							per = allMonth / Double.valueOf(baseSchMonth) * per;
-						}
-					}
-				}
-				//要求数
-				List<SchRotationDeptReq> deptReqList = relRecordFlowToListEntityMap.get(dept.getRecordFlow());
-				Map<String, Integer> reqNumMap = new HashMap<String, Integer>();
-				Map<String, List<String>> itemMap = new HashMap<String, List<String>>();
-				reqNumMap.put("reqSum", 0);
-				if (deptReqList != null && deptReqList.size() > 0) {
-					for (SchRotationDeptReq deptReq : deptReqList) {
-						setStarndrdDeptReqMap(dept,deptReq,per,reqNumMap,itemMap,medicineTypeId);
-					}
-				}
-				finishPerMap.put(standardKey + "finish", defaultString(recFinishMap.get(standardKey)));
-				finishPerMap.put(standardKey + "req", defaultString(reqNumMap.get("reqSum")));
-
-				if(JszyTCMPracticEnum.N.getId().equals(dept.getPracticOrTheory())){
-					for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
-								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-							finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-							if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
-								finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
-							}
-
-							finishPerMap.put(standardKey + regType.getId() + "itemCount", defaultString(reqNumMap.get(regType.getId() + "itemCount")));
-						}
-					}
-				}else if(JszyTCMPracticEnum.BasicPractice.getId().equals(dept.getPracticOrTheory())){
-					for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
-								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-							finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-							if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
-								finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
-							}
-
-							finishPerMap.put(standardKey + regType.getId() + "itemCount", defaultString(reqNumMap.get(regType.getId() + "itemCount")));
-						}
-					}
-				}else if(JszyTCMPracticEnum.TheoreticalStudy.getId().equals(dept.getPracticOrTheory())){
-					for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
-								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-							finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-							if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
-								finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
-							}
-
-							finishPerMap.put(standardKey + regType.getId() + "itemCount", defaultString(reqNumMap.get(regType.getId() + "itemCount")));
-						}
-					}
-				}
-
-
-				setStarndrdDeptFinishPerMap(finishPerMap, dept, itemMap, recFinishMap, reqNumMap,medicineTypeId);
-			}
-		}
-		return finishPerMap;
-	}
 
 	/**
 	 * 原来单个医生的操作改为多个医生
@@ -3538,16 +2915,16 @@ public class ResRecBizImpl implements IResRecBiz {
 			List<String> recTypeIds = new ArrayList<String>();
 			List<String> nowRecTypeIds1 = new ArrayList<String>();
 			for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-				if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(resDoctor.getDoctorFlow()), regType.getId())) {
 					recTypeIds.add(regType.getId());
 					nowRecTypeIds1.add(regType.getId());
 				}
-				recTypeMap.put("N", nowRecTypeIds1);
+                recTypeMap.put(com.pinde.core.common.GlobalConstant.FLAG_N, nowRecTypeIds1);
 			}
 			List<String> nowRecTypeIds2 = new ArrayList<String>();
 			for (PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()) {
-				if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(resDoctor.getDoctorFlow()), regType.getId())) {
 					recTypeIds.add(regType.getId());
 					nowRecTypeIds2.add(regType.getId());
@@ -3557,7 +2934,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			List<String> nowRecTypeIds3 = new ArrayList<String>();
 			for (TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()) {
 
-				if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(resDoctor.getDoctorFlow()), regType.getId())) {
 					recTypeIds.add(regType.getId());
 					nowRecTypeIds3.add(regType.getId());
@@ -3609,7 +2986,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						SchRotationDept schRotationDepttemp = resultSchRotationDeptMap.get(result.getResultFlow());
 						List<String> recTypeIds4Ever = new ArrayList<String>();
 						if (schRotationDepttemp == null || JszyTCMPracticEnum.N.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-							recTypeIds4Ever = recTypeMap.get("N");
+                            recTypeIds4Ever = recTypeMap.get(com.pinde.core.common.GlobalConstant.FLAG_N);
 						} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
 							recTypeIds4Ever = recTypeMap.get("BasicPractice");
 						} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
@@ -3633,13 +3010,13 @@ public class ResRecBizImpl implements IResRecBiz {
 				String trainingType = resDoctor.getTrainingTypeId();
 				String sessionNumber = resDoctor.getSessionNumber();
 				String trainingYears = resDoctor.getTrainingYears();
-				isReduction=JszyTrainCategoryEnum.ChineseMedicine.getId().equals(trainingType)||JszyTrainCategoryEnum.TCMGeneral.getId().equals(trainingType);
+				/*isReduction=com.pinde.core.common.enums.JsResTrainYearEnum.ChineseMedicine.getId().equals(trainingType)||com.pinde.core.common.enums.JsResTrainYearEnum.TCMGeneral.getId().equals(trainingType);
 				isReduction = isReduction && "2015".compareTo(sessionNumber)<=0;
-				isReduction = isReduction && (JszyResTrainYearEnum.OneYear.getId().equals(trainingYears) || JszyResTrainYearEnum.TwoYear.getId().equals(trainingYears));
+				isReduction = isReduction && (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(trainingYears) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(trainingYears));
 
 				if(isReduction) {
 					reductionDoctorList.add(resDoctor);
-				}
+				}*/
 				isReductionMap.put(resDoctor.getDoctorFlow(), isReduction);
 			}
 
@@ -3707,14 +3084,14 @@ public class ResRecBizImpl implements IResRecBiz {
 					if (isReduction && srd != null) {
 						SchDoctorDept sdd = doctorDeptMap.get(entry.getKey() + srd.getGroupFlow() + srd.getStandardDeptId());
 						if (sdd != null) {
-							if (GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
+                            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
 								per = Double.valueOf(sdd.getSchMonth()) / Double.valueOf(srd.getSchMonth());
 								baseSchMonth = sdd.getSchMonth();
 							}
 						}
 					}
 					//是否翻倍
-					if (rotation != null && GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
+                    if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
 						if (StringUtil.isNotBlank(result.getSchMonth())) {
 							per = Double.valueOf(result.getSchMonth()) / Double.valueOf(baseSchMonth) * per;
 						}
@@ -3727,17 +3104,17 @@ public class ResRecBizImpl implements IResRecBiz {
 					if (deptReqList != null && deptReqList.size() > 0) {
 						for (SchRotationDeptReq deptReq : deptReqList) {
 							if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
-								if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 										&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), deptReq.getRecTypeId())) {
-									countReqFuc(deptReq, per, reqNumMap, itemMap, "N");
+                                    countReqFuc(deptReq, per, reqNumMap, itemMap, com.pinde.core.common.GlobalConstant.FLAG_N);
 								}
 							} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
-								if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
 										&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), deptReq.getRecTypeId())) {
 									countReqFuc(deptReq, per, reqNumMap, itemMap, "BasicPractice");
 								}
 							} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(srd.getPracticOrTheory())) {
-								if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
 										&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), deptReq.getRecTypeId())) {
 									countReqFuc(deptReq, per, reqNumMap, itemMap, "TheoreticalStudy");
 								}
@@ -3753,10 +3130,10 @@ public class ResRecBizImpl implements IResRecBiz {
 
 					if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
 						for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 									&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), regType.getId())) {
 								finishPerMap.put(resultFlow + regType.getId() + "finish", defaultString(recFinishMap.get(processFlow + regType.getId())));
-								if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 									finishPerMap.put(resultFlow + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 								}
 
@@ -3765,10 +3142,10 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 					} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
 						for (PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 									&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), regType.getId())) {
 								finishPerMap.put(resultFlow + regType.getId() + "finish", defaultString(recFinishMap.get(processFlow + regType.getId())));
-								if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 									finishPerMap.put(resultFlow + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 								}
 
@@ -3777,10 +3154,10 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 					} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(srd.getPracticOrTheory())) {
 						for (TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 									&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(entry.getKey()), regType.getId())) {
 								finishPerMap.put(resultFlow + regType.getId() + "finish", defaultString(recFinishMap.get(processFlow + regType.getId())));
-								if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 									finishPerMap.put(resultFlow + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 								}
 
@@ -3872,14 +3249,14 @@ public class ResRecBizImpl implements IResRecBiz {
 					if (isReduction) {
 						SchDoctorDept sdd = doctorDeptMap.get(standardKey);
 						if (sdd != null) {
-							if (GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
+                            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
 								per = Double.valueOf(sdd.getSchMonth()) / Double.valueOf(dept.getSchMonth());
 								baseSchMonth = sdd.getSchMonth();
 							}
 						}
 					}
 					//是否翻倍
-					if (rotation != null && GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
+                    if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
 						List<SchArrangeResult> results = resultMap.get(standardKey);
 						if (results != null && results.size() > 0) {
 							double allMonth = 0;
@@ -3908,10 +3285,10 @@ public class ResRecBizImpl implements IResRecBiz {
 
 					if (JszyTCMPracticEnum.N.getId().equals(dept.getPracticOrTheory())) {
 						for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 									&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(resDoctor.getDoctorFlow()), regType.getId())) {
 								finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-								if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 									finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 								}
 
@@ -3920,10 +3297,10 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 					} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(dept.getPracticOrTheory())) {
 						for (PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 									&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(resDoctor.getDoctorFlow()), regType.getId())) {
 								finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-								if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 									finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 								}
 
@@ -3932,10 +3309,10 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 					} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(dept.getPracticOrTheory())) {
 						for (TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 									&& PdUtil.findChineseOrWestern(doctorFlowToMedicineTypeIdMap.get(resDoctor.getDoctorFlow()), regType.getId())) {
 								finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-								if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 									finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 								}
 
@@ -3960,7 +3337,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			String standardDeptId = result.getStandardDeptId();
 			if(StringUtil.isNotBlank(rotationFlow) && StringUtil.isNotBlank(standardDeptId)){
 				SchRotationDeptExample example = new SchRotationDeptExample();
-				SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+                SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 						.andRotationFlowEqualTo(rotationFlow)
 						.andStandardDeptIdEqualTo(standardDeptId)
 						.andOrgFlowIsNull()
@@ -4005,16 +3382,16 @@ public class ResRecBizImpl implements IResRecBiz {
 		List<String> recTypeIds = new ArrayList<String>();
 		List<String> nowRecTypeIds1 = new ArrayList<String>();
 		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 				nowRecTypeIds1.add(regType.getId());
 			}
-			recTypeMap.put("N",nowRecTypeIds1);
+            recTypeMap.put(com.pinde.core.common.GlobalConstant.FLAG_N, nowRecTypeIds1);
 		}
 		List<String> nowRecTypeIds2 = new ArrayList<String>();
 		for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 				nowRecTypeIds2.add(regType.getId());
@@ -4024,7 +3401,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		List<String> nowRecTypeIds3 = new ArrayList<String>();
 		for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
 
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 				nowRecTypeIds3.add(regType.getId());
@@ -4058,7 +3435,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					SchRotationDept schRotationDepttemp = resultSchRotationDeptMap.get(result.getResultFlow());
 					List<String> recTypeIds4Ever = new ArrayList<String>();
 					if (schRotationDepttemp == null || JszyTCMPracticEnum.N.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
-						recTypeIds4Ever = recTypeMap.get("N");
+                        recTypeIds4Ever = recTypeMap.get(com.pinde.core.common.GlobalConstant.FLAG_N);
 					} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
 						recTypeIds4Ever = recTypeMap.get("BasicPractice");
 					} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(schRotationDepttemp.getPracticOrTheory())) {
@@ -4079,9 +3456,9 @@ public class ResRecBizImpl implements IResRecBiz {
 			String trainingType = doctor.getTrainingTypeId();
 			String sessionNumber = doctor.getSessionNumber();
 			String trainingYears = doctor.getTrainingYears();
-			isReduction=JszyTrainCategoryEnum.ChineseMedicine.getId().equals(trainingType)||JszyTrainCategoryEnum.TCMGeneral.getId().equals(trainingType);
+			/*isReduction=com.pinde.core.common.enums.JsResTrainYearEnum.ChineseMedicine.getId().equals(trainingType)||com.pinde.core.common.enums.JsResTrainYearEnum.TCMGeneral.getId().equals(trainingType);
 			isReduction = isReduction && "2015".compareTo(sessionNumber)<=0;
-			isReduction = isReduction && (JszyResTrainYearEnum.OneYear.getId().equals(trainingYears) || JszyResTrainYearEnum.TwoYear.getId().equals(trainingYears));
+			isReduction = isReduction && (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(trainingYears) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(trainingYears));
 
 			if(isReduction)
 			{
@@ -4092,7 +3469,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					//获取标准科室列表以绑定要求数据
 					doctorDeptMap = transListObjToMapsSoM(false,doctorDeptList,"groupFlow","standardDeptId");
 				}
-			}
+			}*/
 			//List<String> schDeptFlows = new ArrayList<String>();
 
 			for (SchArrangeResult result : arrResultList) {
@@ -4121,7 +3498,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					SchDoctorDept sdd=doctorDeptMap.get(srd.getGroupFlow()+srd.getStandardDeptId());
 					if(sdd!=null)
 					{
-						if(GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus()))
+                        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus()))
 						{
 							per=Double.valueOf(sdd.getSchMonth())/Double.valueOf(srd.getSchMonth());
 							baseSchMonth=sdd.getSchMonth();
@@ -4129,7 +3506,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 				//是否翻倍
-				if(rotation!=null&&GlobalConstant.FLAG_Y.equals(rotation.getIsDouble())&&StringUtil.isNotBlank(baseSchMonth))
+                if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth))
 				{
 					if(StringUtil.isNotBlank(result.getSchMonth()))
 					{
@@ -4144,17 +3521,17 @@ public class ResRecBizImpl implements IResRecBiz {
 				if(deptReqList!=null && deptReqList.size()>0){
 					for(SchRotationDeptReq deptReq : deptReqList){
 						if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
-							if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+deptReq.getRecTypeId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())){
-								countReqFuc(deptReq,per,reqNumMap,itemMap,"N");
+                                countReqFuc(deptReq, per, reqNumMap, itemMap, com.pinde.core.common.GlobalConstant.FLAG_N);
 							}
 						} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
 									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 								countReqFuc(deptReq,per,reqNumMap,itemMap,"BasicPractice");
 							}
 						} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(srd.getPracticOrTheory())) {
-							if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
 									&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 								countReqFuc(deptReq,per,reqNumMap,itemMap,"TheoreticalStudy");
 							}
@@ -4169,10 +3546,10 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				if (srd == null || JszyTCMPracticEnum.N.getId().equals(srd.getPracticOrTheory())) {
 					for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 							finishPerMap.put(resultFlow+regType.getId()+"finish",defaultString(recFinishMap.get(processFlow+regType.getId())));
-							if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 								finishPerMap.put(resultFlow+regType.getId()+"req",defaultString(reqNumMap.get(regType.getId())));
 							}
 
@@ -4181,10 +3558,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(srd.getPracticOrTheory())) {
 					for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 							finishPerMap.put(resultFlow+regType.getId()+"finish",defaultString(recFinishMap.get(processFlow+regType.getId())));
-							if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 								finishPerMap.put(resultFlow+regType.getId()+"req",defaultString(reqNumMap.get(regType.getId())));
 							}
 
@@ -4193,10 +3570,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(srd.getPracticOrTheory())) {
 					for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 							finishPerMap.put(resultFlow+regType.getId()+"finish",defaultString(recFinishMap.get(processFlow+regType.getId())));
-							if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 								finishPerMap.put(resultFlow+regType.getId()+"req",defaultString(reqNumMap.get(regType.getId())));
 							}
 
@@ -4208,7 +3585,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				setFinishPerMap(finishPerMap,result,itemMap,recFinishMap,reqNumMap,medicineTypeId);
 			}
 
-//			List<ResRec> eRecList = searchByRec(ResRecTypeEnum.AfterEvaluation.getId(),schDeptFlows,GlobalContext.getCurrentUser().getUserFlow());
+//			List<ResRec> eRecList = searchByRec(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId(),schDeptFlows,GlobalContext.getCurrentUser().getUserFlow());
 //			if(eRecList!=null && eRecList.size()>0){
 //				for(ResRec eRec : eRecList){
 //					Map<String,String> recContent = parseRecContent(eRec.getRecContent());
@@ -4246,14 +3623,14 @@ public class ResRecBizImpl implements IResRecBiz {
 				if (isReduction) {
 					SchDoctorDept sdd = doctorDeptMap.get(standardKey);
 					if (sdd != null) {
-						if (GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
+                        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(sdd.getRecordStatus())) {
 							per = Double.valueOf(sdd.getSchMonth()) / Double.valueOf(dept.getSchMonth());
 							baseSchMonth = sdd.getSchMonth();
 						}
 					}
 				}
 				//是否翻倍
-				if (rotation != null && GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
+                if (rotation != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsDouble()) && StringUtil.isNotBlank(baseSchMonth)) {
 					List<SchArrangeResult> results=resultMap.get(standardKey);
 					if(results!=null&&results.size()>0) {
 						double allMonth = 0;
@@ -4283,10 +3660,10 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				if(JszyTCMPracticEnum.N.getId().equals(dept.getPracticOrTheory())){
 					for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 							finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-							if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 								finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 							}
 
@@ -4295,10 +3672,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}else if(JszyTCMPracticEnum.BasicPractice.getId().equals(dept.getPracticOrTheory())){
 					for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 							finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-							if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 								finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 							}
 
@@ -4307,10 +3684,10 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}else if(JszyTCMPracticEnum.TheoreticalStudy.getId().equals(dept.getPracticOrTheory())){
 					for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-						if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 							finishPerMap.put(standardKey + regType.getId() + "finish", defaultString(recFinishMap.get(standardKey + regType.getId())));
-							if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 								finishPerMap.put(standardKey + regType.getId() + "req", defaultString(reqNumMap.get(regType.getId())));
 							}
 
@@ -4427,7 +3804,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		}
 		if (JszyTCMPracticEnum.N.getId().equals(typeId)) {
 			RegistryTypeEnum rectype=RegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-			if(rectype!=null&&rectype.getHaveItem().equals(GlobalConstant.FLAG_Y))
+            if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y))
 			{
 				if(StringUtil.isNotBlank(deptReq.getItemId())){
 					List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
@@ -4440,7 +3817,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			}
 		} else if (JszyTCMPracticEnum.BasicPractice.getId().equals(typeId)) {
 			PracticRegistryTypeEnum rectype=PracticRegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-			if(rectype!=null&&rectype.getHaveItem().equals(GlobalConstant.FLAG_Y))
+            if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y))
 			{
 				if(StringUtil.isNotBlank(deptReq.getItemId())){
 					List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
@@ -4453,7 +3830,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			}
 		} else if (JszyTCMPracticEnum.TheoreticalStudy.getId().equals(typeId)) {
 			TheoreticalRegistryTypeEnum rectype=TheoreticalRegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-			if(rectype!=null&&rectype.getHaveItem().equals(GlobalConstant.FLAG_Y))
+            if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y))
 			{
 				if(StringUtil.isNotBlank(deptReq.getItemId())){
 					List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
@@ -4471,7 +3848,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	private void setStarndrdDeptReqMap(SchRotationDept dept, SchRotationDeptReq deptReq, double per, Map<String, Integer> reqNumMap, Map<String, List<String>> itemMap, String medicineTypeId){
 		if(JszyTCMPracticEnum.N.getId().equals(dept.getPracticOrTheory())){
-			if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 				int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 				reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
@@ -4491,7 +3868,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					reqNumMap.put(deptReq.getRecTypeId() + deptReq.getItemId(), reqNumMap.get(deptReq.getRecTypeId() + deptReq.getItemId()) + (num));
 				}
 				RegistryTypeEnum rectype = RegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-				if (rectype != null && rectype.getHaveItem().equals(GlobalConstant.FLAG_Y)) {
+                if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 					if (StringUtil.isNotBlank(deptReq.getItemId())) {
 						List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
 						if (itemIds == null) {
@@ -4504,7 +3881,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			}
 		}
 		if(JszyTCMPracticEnum.BasicPractice.getId().equals(dept.getPracticOrTheory())){
-			if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
 				int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
@@ -4525,7 +3902,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					reqNumMap.put(deptReq.getRecTypeId() + deptReq.getItemId(), reqNumMap.get(deptReq.getRecTypeId() + deptReq.getItemId()) + (num));
 				}
 				PracticRegistryTypeEnum rectype = PracticRegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-				if (rectype != null && rectype.getHaveItem().equals(GlobalConstant.FLAG_Y)) {
+                if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 					if (StringUtil.isNotBlank(deptReq.getItemId())) {
 						List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
 						if (itemIds == null) {
@@ -4538,7 +3915,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			}
 		}
 		if(JszyTCMPracticEnum.TheoreticalStudy.getId().equals(dept.getPracticOrTheory())){
-			if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
 				int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
@@ -4559,7 +3936,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					reqNumMap.put(deptReq.getRecTypeId() + deptReq.getItemId(), reqNumMap.get(deptReq.getRecTypeId() + deptReq.getItemId()) + (num));
 				}
 				TheoreticalRegistryTypeEnum rectype = TheoreticalRegistryTypeEnum.valueOf(deptReq.getRecTypeId());
-				if (rectype != null && rectype.getHaveItem().equals(GlobalConstant.FLAG_Y)) {
+                if (rectype != null && rectype.getHaveItem().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 					if (StringUtil.isNotBlank(deptReq.getItemId())) {
 						List<String> itemIds = itemMap.get(deptReq.getRecTypeId());
 						if (itemIds == null) {
@@ -4591,9 +3968,9 @@ public class ResRecBizImpl implements IResRecBiz {
 
 //			Float count = 0f;
 			for (RegistryTypeEnum regType : RegistryTypeEnum.values()) {
-				if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
-					if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 //						Float reqCount = 0f;
 //						Float itemInReqCount = 0f;
 
@@ -4670,9 +4047,9 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			}
 			for (PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()) {
-				if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
-					if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 //						Float reqCount = 0f;
 //						Float itemInReqCount = 0f;
 
@@ -4749,9 +4126,9 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			}
 			for (TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()) {
-				if (GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())) {
-					if (GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 //						Float reqCount = 0f;
 //						Float itemInReqCount = 0f;
 
@@ -4852,9 +4229,9 @@ public class ResRecBizImpl implements IResRecBiz {
 			Float deptPer = 0f;
 			//轮转记录完成百分比
 			for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 						&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
-					if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 						String recTypeId = regType.getId();
 
 						Float typePer = 0f;
@@ -4930,8 +4307,8 @@ public class ResRecBizImpl implements IResRecBiz {
 			}
 
 			for(PracticRegistryTypeEnum regType : PracticRegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_"+regType.getId()))){
-					if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + regType.getId()))) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 						String recTypeId = regType.getId();
 
 						Float typePer = 0f;
@@ -5006,8 +4383,8 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			}
 			for(TheoreticalRegistryTypeEnum regType : TheoreticalRegistryTypeEnum.values()){
-				if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_"+regType.getId()))){
-					if(GlobalConstant.FLAG_Y.equals(regType.getHaveReq())){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + regType.getId()))) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regType.getHaveReq())) {
 						String recTypeId = regType.getId();
 
 						Float typePer = 0f;
@@ -5119,27 +4496,19 @@ public class ResRecBizImpl implements IResRecBiz {
 	}
 
 	@Override
-	public List<ResRec> searchByProcessFlowAndRecTypeId(String processFlow,String recTypeId){
-		ResRecExample example = new ResRecExample();
-		if(StringUtil.isNotBlank(processFlow)&&StringUtil.isNotBlank(recTypeId)){
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
-		}
-		return resRecMapper.selectByExample(example);
-	}
-	@Override
 	public List<ResRec> searchByProcessFlowAndRecTypeIdClob(String processFlow,String recTypeId){
 //		ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		ResRecExample example = new ResRecExample();
 		if(StringUtil.isNotBlank(processFlow)&&StringUtil.isNotBlank(recTypeId)){
 //			campaignRegistryCriteria.andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
@@ -5148,7 +4517,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			languageRegistryCriteria.andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
 //			operationRegistryCriteria.andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
 //			skillRegistryCriteria.andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
 		}
 //		List<ResRec> recList;
 //		List<ResRecCampaignRegistry> campaignRegistryList = campaignRegistryMapper.selectByExampleWithBLOBs(campaignRegistryExample);
@@ -5194,107 +4563,15 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecAndProcess(String recTypeId, String operUserFlow, String processFlow) {
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andOperUserFlowEqualTo(operUserFlow).andProcessFlowEqualTo(processFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId).andOperUserFlowEqualTo(operUserFlow).andProcessFlowEqualTo(processFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExampleWithBLOBs(example);
 	}
 
-//	@Override
-//	public List<ResAppeal> searchAppeal(ResAppeal appeal){
-//		ResAppealExample example = new ResAppealExample();
-//		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//
-//		createAppealCriteria(criteria,appeal);
-//
-//		example.setOrderByClause("OPER_TIME");
-//
-//		return resAppealMapper.selectByExample(example);
-//	}
-
-	/******************************************************
-	 * 获取百分比和数量
-	 **************************************************************/
-
-//	@Override
-//	public int saveRecContentForm(String recFlow, String recTypeId,String roleFlag, String processFlow , Object form) {
-//		if(StringUtil.isNotBlank(recFlow)&&StringUtil.isNotBlank(recTypeId)&&form!=null){
-//			ResRec rec = this.readResRec(recFlow);
-//			if(rec!=null){
-//				Document dom = null;
-//				try {
-//					dom = DocumentHelper.parseText(rec.getRecContent());
-//				} catch (DocumentException e) {
-//					e.printStackTrace();
-//					throw new RuntimeException("resRec Xml转换成dom出错，resTypeId："+recTypeId+"，recFlow："+recFlow);
-//				}
-//				Element root = dom.getRootElement();
-//				if(ResRecTypeEnum.AfterEvaluation.getId().equals(recTypeId)){//出科考核表
-//
-//					}else{
-//						ResAfterSummaryForm myForm = (ResAfterSummaryForm) form;
-//						String userName = GlobalContext.getCurrentUser().getUserName();
-//						String userFlow = GlobalContext.getCurrentUser().getUserFlow();
-//						String auditResult = myForm.getAuditResult();
-//						if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleFlag)){//带教老师
-//							Element deptAppraiseEl = root.element("deptAppraise");
-//							if(deptAppraiseEl==null){
-//								deptAppraiseEl = root.addElement("deptAppraise");
-//							}
-//							deptAppraiseEl.setText(myForm.getDeptAppraise());
-//							rec.setAuditTime(DateUtil.getCurrDateTime());
-//							rec.setAuditUserFlow(userFlow);
-//							rec.setAuditUserName(userName);
-//							rec.setAuditStatusId(auditResult);
-//							rec.setAuditStatusName(RecStatusEnum.getNameById(auditResult));
-////							if(RecStatusEnum.TeacherAuditN.getId().equals(auditResult)){
-////								rec.setStatusId(RecStatusEnum.Edit.getId());
-////								rec.setStatusName(RecStatusEnum.Edit.getName());
-////							}
-//						}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleFlag)){//科主任
-//							Element deptHeadAutograthEl = root.element("deptHeadAutograth");
-//							if(deptHeadAutograthEl==null){
-//								deptHeadAutograthEl = root.addElement("deptHeadAutograth");
-//							}
-//							deptHeadAutograthEl.setText(myForm.getDeptHeadAutograth());
-//							if(StringUtil.isNotBlank(myForm.getIsAgree())){
-//								Element isAgreeEl = root.element("isAgree");
-//								if(isAgreeEl==null){
-//									isAgreeEl = root.addElement("isAgree");
-//								}
-//								/*修改process出科标记*/
-//								isAgreeEl.setText(myForm.getIsAgree());
-//								if(GlobalConstant.FLAG_Y.equals(myForm.getIsAgree())){
-//									ResDoctorSchProcess process = this.resDoctorProcessMapper.selectByPrimaryKey(processFlow);
-//									if(process!=null){
-//										process.setSchFlag(GlobalConstant.FLAG_Y);
-//										process.setIsCurrentFlag(GlobalConstant.FLAG_N);
-//										process.setEndDate(DateUtil.getCurrDate());
-//										this.resDoctorProcessMapper.updateByPrimaryKeySelective(process);
-//									}
-//								}
-//							}
-//							rec.setHeadAuditStatusId(auditResult);
-//							rec.setHeadAuditStatusName(RecStatusEnum.getNameById(auditResult));
-//							rec.setHeadAuditTime(DateUtil.getCurrDateTime());
-//							rec.setHeadAuditUserFlow(userFlow);
-//							rec.setHeadAuditUserName(userName);
-////							if(RecStatusEnum.HeadAuditN.getId().equals(auditResult)){
-////								rec.setStatusId(RecStatusEnum.Edit.getId());
-////								rec.setStatusName(RecStatusEnum.Edit.getName());
-////							}
-//					}
-//				}
-//				rec.setRecContent(root.asXML());
-//				return this.edit(rec);
-//			}
-//		}
-//		return GlobalConstant.ZERO_LINE;
-//	}
-
 	@Override
 	public List<ResRec> searchResRec(List<String> schDeptFlows,ResRec rec){
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
+        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
 		if(rec!=null){
 			if(StringUtil.isNotBlank(rec.getSchDeptName())){
 				criteria.andSchDeptNameLike("%"+rec.getSchDeptName()+"%");
@@ -5331,7 +4608,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}
 		}
 		example.setOrderByClause("OPER_TIME");
-		if(StringUtil.isNotBlank(rec.getRecTypeId()) && (ResRecTypeEnum.AfterEvaluation.getId().equals(rec.getRecTypeId()))){
+        if (StringUtil.isNotBlank(rec.getRecTypeId()) && (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(rec.getRecTypeId()))) {
 			return resRecMapper.selectByExampleWithBLOBs(example);
 		}
 		return resRecMapper.selectByExample(example);
@@ -5366,13 +4643,13 @@ public class ResRecBizImpl implements IResRecBiz {
 				return resAppealMapper.insertSelective(appeal);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<ResAppeal> searchAppeal(String recTypeId,String schDeptFlow,String operUserFlow,String processFlow){
 		ResAppealExample example = new ResAppealExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow).andProcessFlowEqualTo(processFlow);
 		example.setOrderByClause("AUDIT_STATUS_ID ,OPER_TIME");
 		return resAppealMapper.selectByExample(example);
@@ -5381,7 +4658,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResAppeal> searchAppeal(ResAppeal appeal,String startTime,String endTime){
 		ResAppealExample example = new ResAppealExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		createAppealCriteria(criteria,appeal);
 
@@ -5416,7 +4693,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResAppeal> searchAppeal(List<String> schDeptFlows,ResAppeal appeal){
 		ResAppealExample example = new ResAppealExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
 		if(appeal!=null){
 			if(StringUtil.isNotBlank(appeal.getSchDeptName())){
 				criteria.andSchDeptNameLike("%"+appeal.getSchDeptName()+"%");
@@ -5478,170 +4755,13 @@ public class ResRecBizImpl implements IResRecBiz {
 		return appealExtMapper.searchNotAuditAppealCount(schDeptFlow,teacherUserFlow,isAudit);
 	}
 
-	/**********************************************申述*********************************************/
 
-
-	@Override
-	public int saveResRecContent(ResRecForm form) throws Exception {
-		SysUser currUser = GlobalContext.getCurrentUser();
-		String teachTypeId = StringUtil.defaultIfEmpty(form.getTeachTypeId(),"");
-		String teachTypeName = "";
-		if(StringUtil.isNotBlank(teachTypeId)){
-			teachTypeName = DictTypeEnum.TeachType.getDictNameById(teachTypeId);
-		}
-		String teachAddress = StringUtil.defaultIfEmpty(form.getTeachAddress(),"");
-		String teachDate = StringUtil.defaultIfEmpty(form.getTeachDate(),"");
-		String teachExplain = StringUtil.defaultIfEmpty(form.getTeachExplain(),"");
-		Document dom = null;
-		Element root = null;
-		ResRec resRec = readResRec(form.getRecFlow());
-		if(resRec == null){//新增XML
-			resRec = new ResRec();
-			dom = DocumentHelper.createDocument();
-			root = dom.addElement("content");
-			Element teachElement = root.addElement("teach");
-			Element teachTypeElement = teachElement.addElement("teachType");
-			Element teachAddressElement = teachElement.addElement("teachAddress");
-			Element teachDateElement = teachElement.addElement("teachDate");
-			Element teachExplainElement = teachElement.addElement("teachExplain");
-			teachTypeElement.addAttribute("id", teachTypeId);
-			teachTypeElement.setText(teachTypeName);
-			teachAddressElement.setText(teachAddress);
-			teachDateElement.setText(teachDate);
-			teachExplainElement.setText(teachExplain);
-
-			ResDoctor resDoctor = resDoctorBiz.readDoctor(currUser.getUserFlow());
-			//SysUser sysUser = userBiz.readSysUser(GlobalContext.getCurrentUser().getUserFlow());
-			if(resDoctor != null){
-				resRec.setOrgFlow(resDoctor.getOrgFlow());
-				resRec.setOrgName(resDoctor.getOrgName());
-				resRec.setDeptFlow(resDoctor.getDeptFlow());
-				resRec.setDeptName(resDoctor.getDeptName());
-				//resRec.setSchDeptFlow();
-				//resRec.setSchDeptName();
-				//教学活动
-				resRec.setRecTypeId(ResRecTypeEnum.TeachRegistry.getId());
-				resRec.setRecTypeName(ResRecTypeEnum.TeachRegistry.getName());
-				//resRec.setItemName();
-				//resRec.setRecVersion();
-			}
-		}else{
-			String content = resRec.getRecContent();
-			if(StringUtil.isNotBlank(content)){
-				dom = DocumentHelper.parseText(content);
-				String teachXpath = "//teach";
-				Element teachElement = (Element) dom.selectSingleNode(teachXpath);
-				if(teachElement != null){
-					Element teachTypeElement = teachElement.element("teachType");
-					if(teachTypeElement != null){
-						teachTypeElement.attribute("id").setValue(teachTypeId);
-						teachTypeElement.setText(teachTypeName);
-					}
-					Element teachAddressElement = teachElement.element("teachAddress");
-					if(teachAddressElement != null){
-						teachAddressElement.setText(teachAddress);
-					}
-					Element teachDateElement = teachElement.element("teachDate");
-					if(teachDateElement != null){
-						teachDateElement.setText(teachDate);
-					}
-					Element teachExplainElement = teachElement.element("teachExplain");
-					if(teachExplainElement != null){
-						teachExplainElement.setText(teachExplain);
-					}
-				}
-			}
-		}
-		resRec.setRecContent(dom.asXML());
-		return edit(resRec);
-	}
-
-	@Override
-	public List<ResRecForm> searchResRecFormList(ResRec resRec) throws Exception {
-		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-		if(StringUtil.isNotBlank(resRec.getOrgFlow())){
-			criteria.andOrgFlowEqualTo(resRec.getOrgFlow());
-		}
-		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
-			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
-		}
-		if(StringUtil.isNotBlank(resRec.getOperUserFlow())){
-			criteria.andOperUserFlowEqualTo(resRec.getOperUserFlow());
-		}
-		example.setOrderByClause("CREATE_TIME DESC");
-		List<ResRec> resRecList = resRecMapper.selectByExampleWithBLOBs(example);
-		List<ResRecForm> resRecFormList = new ArrayList<ResRecForm>();
-		if(resRecList != null && !resRecList.isEmpty()){
-			for(ResRec rec : resRecList){
-				ResRecForm form = new ResRecForm();
-				form.setRecFlow(rec.getRecFlow());
-				if(StringUtil.isNotBlank(rec.getRecContent())){
-					Document dom = DocumentHelper.parseText(rec.getRecContent());
-					String teachXpath = "//teach";
-					Element teachElement = (Element) dom.selectSingleNode(teachXpath);
-					if(teachElement != null){
-						Element teachTypeElement = teachElement.element("teachType");
-						if(teachTypeElement != null){
-							form.setTeachTypeId(teachTypeElement.attributeValue("id"));
-						}
-						Element teachAddressElement = teachElement.element("teachAddress");
-						if(teachAddressElement != null){
-							form.setTeachAddress(teachAddressElement.getText());
-						}
-						Element teachDateElement = teachElement.element("teachDate");
-						if(teachDateElement != null){
-							form.setTeachDate(teachDateElement.getText());
-						}
-						Element teachExplainElement = teachElement.element("teachExplain");
-						if(teachExplainElement != null){
-							form.setTeachExplain(teachExplainElement.getText());
-						}
-					}
-				}
-				resRecFormList.add(form);
-			}
-		}
-		return resRecFormList;
-	}
-
-	@Override
-	public ResRecForm getRecContentByRecFlow(String recFlow) throws Exception {
-		ResRecForm form = null;
-		ResRec resRec = readResRec(recFlow);
-		if(resRec != null){
-			form = new ResRecForm();
-			form.setRecFlow(resRec.getRecFlow());
-			Document dom = DocumentHelper.parseText(resRec.getRecContent());
-			String teachXpath = "//teach";
-			Element teachElement = (Element) dom.selectSingleNode(teachXpath);
-			if(teachElement != null){
-				Element teachTypeElement = teachElement.element("teachType");
-				if(teachTypeElement != null){
-					form.setTeachTypeId(teachTypeElement.attributeValue("id"));
-				}
-				Element teachAddressElement = teachElement.element("teachAddress");
-				if(teachAddressElement != null){
-					form.setTeachAddress(teachAddressElement.getText());
-				}
-				Element teachDateElement = teachElement.element("teachDate");
-				if(teachDateElement != null){
-					form.setTeachDate(teachDateElement.getText());
-				}
-				Element teachExplainElement = teachElement.element("teachExplain");
-				if(teachExplainElement != null){
-					form.setTeachExplain(teachExplainElement.getText());
-				}
-			}
-		}
-		return form;
-	}
 
 	@Override
 	public ResRec searchRecWithBLOBs(String recTypeId,String operUserFlow){
 		ResRec rec = null;
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		List<ResRec> list = resRecMapper.selectByExampleWithBLOBs(example);
@@ -5678,7 +4798,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				} else {//item
 					String multiple = itemEle.attributeValue("multiple");
-					if(GlobalConstant.FLAG_N.equals(multiple) || StringUtil.isBlank(multiple)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(multiple) || StringUtil.isBlank(multiple)) {
 						String name = itemEle.attributeValue("name");
 						String value = "";
 						if (dataMap.get(name) != null && dataMap.get(name).length > 0) {
@@ -5710,7 +4830,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 //	@Override
 //	public int editSpeAbilityAccess(String recFlow,String resultFlow,String roleFlag,HttpServletRequest req){
-//		ResRec rec = getRec(recFlow,roleFlag,resultFlow,ResRecTypeEnum.PreTrainForm.getId());
+//		ResRec rec = getRec(recFlow,roleFlag,resultFlow,com.pinde.core.common.enums.ResRecTypeEnum.PreTrainForm.getId());
 //		String content=getSpeAbilityAccessXml(roleFlag,rec.getRecContent(),req);
 //		rec.setRecContent(content);
 //		return edit(rec);
@@ -5730,7 +4850,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					if ("itemGroup".equals(element.getName())) {//itemGroup
 						String key = element.attributeValue("name");
 						Map<String , Object> itemGroupDataMap = null;
-						if(ResRecTypeEnum.TeachRegistry.getId().equals(rootElement.getName())){
+                        if (com.pinde.core.common.enums.ResRecTypeEnum.TeachRegistry.getId().equals(rootElement.getName())) {
 							itemGroupDataMap = new HashMap<String, Object>();
 							List<Element> items = element.elements();
 							for(Element item : items){
@@ -5830,7 +4950,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	@Override
 	public int editPreTrainForm(String recFlow,String resultFlow,String roleFlag,HttpServletRequest req){
-		ResRec rec = getRec(recFlow,roleFlag,resultFlow,ResRecTypeEnum.PreTrainForm.getId());
+        ResRec rec = getRec(recFlow, roleFlag, resultFlow, com.pinde.core.common.enums.ResRecTypeEnum.PreTrainForm.getId());
 		String contet = getPreTrainXml(roleFlag,rec.getRecContent(),req);
 		rec.setRecContent(contet);
 		return edit(rec);
@@ -5838,7 +4958,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	@Override
 	public int editAnnualTrainForm(String recFlow,String roleFlag,HttpServletRequest req){
-		ResRec rec = getRec(recFlow,roleFlag,null,ResRecTypeEnum.AnnualTrainForm.getId());
+        ResRec rec = getRec(recFlow, roleFlag, null, com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId());
 
 		String contet = getAnnualTrainXml(req);
 		rec.setRecContent(contet);
@@ -6020,7 +5140,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		if(StringUtil.isNotBlank(recFlow)){
 			rec = readResRec(recFlow);
-			if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleFlag)){
+            if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleFlag)) {
 				rec.setAuditStatusId(RecStatusEnum.TeacherAuditY.getId());
 				rec.setAuditStatusName(RecStatusEnum.TeacherAuditY.getName());
 				rec.setAuditTime(DateUtil.getCurrDateTime());
@@ -6046,90 +5166,18 @@ public class ResRecBizImpl implements IResRecBiz {
 			rec.setOperUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 			rec.setOperUserName(GlobalContext.getCurrentUser().getUserName());
 			rec.setRecTypeId(recTypeId);
-			rec.setRecTypeName(ResRecTypeEnum.getNameById(recTypeId));
+            rec.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.getNameById(recTypeId));
 		}
 		return rec;
 	}
 
-	@Override
-	public Map<String,Map<String,String>> getPreTrainFormDataMap(String recContent){
-		Map<String,Map<String,String>> dataMap = null;
-		if(StringUtil.isNotBlank(recContent)){
-			try{
-				dataMap = new HashMap<String, Map<String,String>>();
-				Document document = DocumentHelper.parseText(recContent);
-				if(document != null){
-					Element root = document.getRootElement();
-					if(root != null){
-						List<Element> roleEles = root.elements();
-						if(roleEles!=null && roleEles.size()>0){
-							for(Element roleEle : roleEles){
-								Map<String,String> itemMap = new HashMap<String, String>();
-								dataMap.put(roleEle.getName(),itemMap);
-								List<Element> items = roleEle.elements();
-								if(items!=null && items.size()>0){
-									for(Element item : items){
-										itemMap.put(item.getName(),item.getText());
-									}
-								}
-							}
-						}
-					}
-				}
 
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		return dataMap;
-	}
-
-	@Override
-	public Map<String,Object> getAnnualTrainFormDataMap(String recContent){
-		Map<String,Object> dataMap = null;
-		if(StringUtil.isNotBlank(recContent)){
-			try{
-				dataMap = new HashMap<String, Object>();
-				Document document = DocumentHelper.parseText(recContent);
-				if(document != null){
-					Element root = document.getRootElement();
-					if(root != null){
-						List<Element> baseEles = root.elements();
-						if(baseEles!=null && baseEles.size()>0){
-							for(Element base : baseEles){
-								String name = base.getName();
-								if("dept".equals(name)){
-									List<Map<String,String>> itemMaps = new ArrayList<Map<String,String>>();
-									List<Element> items = base.elements();
-									String id = base.attributeValue("id");
-									for(Element item : items){
-										Map<String,String> data = new HashMap<String, String>();
-										List<Element> values = item.elements();
-										for(Element value : values){
-											data.put(value.attributeValue("name"),value.getText());
-										}
-										itemMaps.add(data);
-									}
-									dataMap.put(id,itemMaps);
-								}else{
-									dataMap.put(name,base.getText());
-								}
-							}
-						}
-					}
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		return dataMap;
-	}
 
 	@Override
 	public List<ResRec> searchByUserFlowAndTypeId(String operUserFlow,
 												  String recTypeId) {
 		ResRecExample example=new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andOperUserFlowEqualTo(operUserFlow);
 		return resRecMapper.selectByExampleWithBLOBs(example);
 	}
@@ -6162,7 +5210,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //	@Override
 //	public List<ResRec> searchRecByOrgWithBLOBs(String orgFlow,String recTypeId) {
 //		ResRecExample example = new ResRecExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdEqualTo(recTypeId).andOrgFlowEqualTo(orgFlow);
 //		example.setOrderByClause("OPER_TIME");
 //		return resRecMapper.selectByExampleWithBLOBs(example);
@@ -6188,14 +5236,14 @@ public class ResRecBizImpl implements IResRecBiz {
 			example.createCriteria().andRecFlowIn(recFlowList);
 			return resRecMapper.updateByExampleSelective(rec,example);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<ResSchProcessExpress> searchRecByProcessWithBLOBs(String processFlow,
 																  List<String> recTypeIds) {
 		ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resSchProcessExpressMapper.selectByExampleWithBLOBs(example);
@@ -6244,7 +5292,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
 			com.pinde.sci.model.mo.SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample
 					.createCriteria()
-					.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOrgFlowIsNull().andRotationFlowEqualTo(rotationFlow);
 			if(StringUtil.isNotBlank(relRecordFlow)){
 				rotationDeptCriteria.andRecordFlowEqualTo(relRecordFlow);
@@ -6281,7 +5329,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				//获取所有当前方案下的要求
 				SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-				com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andRotationFlowEqualTo(rotationFlow);
 				if(StringUtil.isNotBlank(relRecordFlow)){
 					reqCriteria.andRelRecordFlowEqualTo(relRecordFlow);
@@ -6289,7 +5337,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				List<String> recTypeList=new ArrayList<>();
 				for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-					if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 							&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 						recTypeList.add(regType.getId());
 					}
@@ -6355,19 +5403,19 @@ public class ResRecBizImpl implements IResRecBiz {
 					if(recList==null){
 						//获取当前学员的所有登记数据
 //						ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//						ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//						ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//						ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//						ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//						ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+//						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 						ResRecExample recExample = new ResRecExample();
-						com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+                        com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						if(StringUtil.isNotBlank(relRecordFlow)){
 //							campaignRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
 //							caseRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
@@ -6592,7 +5640,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	private List<SchDoctorDept> searchReductionDept(String doctorFlow,String rotationFlow){
 		SchDoctorDeptExample doctorDeptExample = new SchDoctorDeptExample();
-		doctorDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        doctorDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow);
 		return docDeptMapper.selectByExample(doctorDeptExample);
 	}
@@ -6604,7 +5652,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		ResRec rec=null;
 		ResRecExample example = new ResRecExample();
 		com.pinde.sci.model.mo.ResRecExample.Criteria create=example.createCriteria();
-		create.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(processFlow)) {
 			create.andSchRotationDeptFlowEqualTo(processFlow);
 		}
@@ -6624,7 +5672,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public Map<String, String> resRecImg(String recFlow,MultipartFile file,String fileAddress) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 		if(file!=null){
 			List<String> mimeList = new ArrayList<String>();
 			if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
@@ -6639,13 +5687,13 @@ public class ResRecBizImpl implements IResRecBiz {
 			String fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-				map.put("error", GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
 				return  map;
 
 			}
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if (file.getSize() > limitSize * 1024 * 1024) {
-				map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
 				return  map;
 			}
 			try {
@@ -6689,7 +5737,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				String ftpDir= fileAddress+File.separator +dateString ;
 				String ftpFileName=fileName;
 				ftpHelperUtil.uploadFile(localFilePath,ftpDir,ftpFileName);
-				map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -6699,7 +5747,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 	@Override
 	public void updateResultHaveAfter(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
-		String haveAfterPic="N";
+        String haveAfterPic = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if(StringUtil.isNotBlank(recContent))
 		{
 			Document document=DocumentHelper.parseText(recContent);
@@ -6708,7 +5756,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				List<Object> elem=element.elements("image");
 				if(elem!=null&&elem.size()>0)
 				{
-					haveAfterPic="Y";
+                    haveAfterPic = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -6718,7 +5766,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public Map<String, String> resRecImgs(String recFlow,MultipartFile file,String fileAddress) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 		if(file!=null){
 			List<String> mimeList = new ArrayList<String>();
 			if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
@@ -6733,13 +5781,13 @@ public class ResRecBizImpl implements IResRecBiz {
 			String fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-				map.put("error", GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
 				return  map;
 
 			}
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if (file.getSize() > limitSize * 1024 * 1024) {
-				map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
 				return  map;
 			}
 			try {
@@ -6760,7 +5808,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					edit(resRec);
 					map.put("url",url);
 				}
-				map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -6773,7 +5821,7 @@ public class ResRecBizImpl implements IResRecBiz {
 												String schRotationDeptFlow, String operUserFlow, String itemId) {
 		ResRecExample example = new ResRecExample();
 		ResRecExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchRotationDeptFlowEqualTo(schRotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		if (StringUtil.isNotBlank(itemId)) {
 			criteria.andItemIdEqualTo(itemId);
@@ -6787,7 +5835,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //		List<ResRec> resRecList;
 //		if (recTypeId.equals(RegistryTypeEnum.CampaignRegistry.getId())) {
 //			ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//			campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//			campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //			campaignRegistryExample.setOrderByClause("AUDIT_STATUS_ID ,item_id");
 //			List<ResRecCampaignRegistry> campaignRegistryList = campaignRegistryMapper.selectByExampleWithBLOBs(campaignRegistryExample);
 //			resRecList = campaignRegistryList.stream().map(e -> {
@@ -6797,7 +5845,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}).collect(Collectors.toList());
 //		} else if (recTypeId.equals(RegistryTypeEnum.CaseRegistry.getId())) {
 //			ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//			caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//			caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //			caseRegistryExample.setOrderByClause("AUDIT_STATUS_ID ,item_id");
 //			List<ResRecCaseRegistry> caseRegistryList = caseRegistryMapper.selectByExampleWithBLOBs(caseRegistryExample);
 //			resRecList = caseRegistryList.stream().map(e -> {
@@ -6807,7 +5855,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}).collect(Collectors.toList());
 //		} else if (recTypeId.equals(RegistryTypeEnum.DiseaseRegistry.getId())) {
 //			ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//			diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//			diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //			diseaseRegistryExample.setOrderByClause("AUDIT_STATUS_ID ,item_id");
 //			List<ResRecDiseaseRegistry> diseaseRegistryList = diseaseRegistryMapper.selectByExampleWithBLOBs(diseaseRegistryExample);
 //			resRecList = diseaseRegistryList.stream().map(e -> {
@@ -6817,7 +5865,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}).collect(Collectors.toList());
 //		} else if (recTypeId.equals(RegistryTypeEnum.LanguageTeachingResearch.getId())) {
 //			ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//			languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//			languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //			languageRegistryExample.setOrderByClause("AUDIT_STATUS_ID ,item_id");
 //			List<ResRecLanguageRegistry> languageRegistryList = languageRegistryMapper.selectByExampleWithBLOBs(languageRegistryExample);
 //			resRecList = languageRegistryList.stream().map(e -> {
@@ -6827,7 +5875,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}).collect(Collectors.toList());
 //		} else if (recTypeId.equals(RegistryTypeEnum.OperationRegistry.getId())) {
 //			ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//			operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//			operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //			operationRegistryExample.setOrderByClause("AUDIT_STATUS_ID ,item_id");
 //			List<ResRecOperationRegistry> operationRegistryList = operationRegistryMapper.selectByExampleWithBLOBs(operationRegistryExample);
 //			resRecList = operationRegistryList.stream().map(e -> {
@@ -6837,7 +5885,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			}).collect(Collectors.toList());
 //		} else if (recTypeId.equals(RegistryTypeEnum.SkillRegistry.getId())) {
 //			ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//			skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+//			skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //			skillRegistryExample.setOrderByClause("AUDIT_STATUS_ID ,item_id");
 //			List<ResRecSkillRegistry> skillRegistryList = skillRegistryMapper.selectByExampleWithBLOBs(skillRegistryExample);
 //			resRecList = skillRegistryList.stream().map(e -> {
@@ -6852,7 +5900,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //		return resRecList;
 
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdEqualTo(recTypeId)
 				.andProcessFlowEqualTo(processFlow)
 				.andOperUserFlowEqualTo(operUserFlow);
@@ -6868,7 +5916,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			return new ArrayList<>();
 		}
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdEqualTo(recTypeId)
 				.andProcessFlowEqualTo(processFlow)
 				.andOperUserFlowEqualTo(operUserFlow)
@@ -6881,7 +5929,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public List<ResRec> searchResRecWithBLOBsByRotationDeptFlow(String recTypeId,
 																String recordFlow, String operUserFlow) {
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecTypeIdEqualTo(recTypeId)
 				.andSchRotationDeptFlowEqualTo(recordFlow)
 				.andOperUserFlowEqualTo(operUserFlow);
@@ -6890,20 +5938,20 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByUserFlow(String operUserFlow) {
 		ResRecExample example=new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(operUserFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(operUserFlow);
 		return resRecMapper.selectByExampleWithBLOBs(example);
 	}
 
 	@Override
 	public Map<String, String> upload(MultipartFile file,String fileAddress) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 		if(file!=null){
 			String fileName = file.getOriginalFilename();//文件名
 			map.put("fileName",fileName);
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if (file.getSize() > limitSize * 1024 * 1024) {
-				map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
 				return  map;
 			}
 			try {
@@ -6919,7 +5967,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				file.transferTo(newFile);
 				String url ="/"+fileAddress+"/"+dateString+"/"+fileName;
 				map.put("fileUrl",url);
-				map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -6930,7 +5978,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchRecByProcess(String processFlow,String doctorFlow) {
 //		ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		campaignRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecCampaignRegistry> campaignRegistryList = campaignRegistryMapper.selectByExample(campaignRegistryExample);
 //		List<ResRec> resRecList = campaignRegistryList.stream().map(e -> {
@@ -6939,7 +5987,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList());
 //		ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		caseRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecCaseRegistry> caseRegistryList = caseRegistryMapper.selectByExample(caseRegistryExample);
 //		resRecList.addAll(caseRegistryList.stream().map(e -> {
@@ -6948,7 +5996,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		diseaseRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecDiseaseRegistry> diseaseRegistryList = diseaseRegistryMapper.selectByExample(diseaseRegistryExample);
 //		resRecList.addAll(diseaseRegistryList.stream().map(e -> {
@@ -6957,7 +6005,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		languageRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecLanguageRegistry> languageRegistryList = languageRegistryMapper.selectByExample(languageRegistryExample);
 //		resRecList.addAll(languageRegistryList.stream().map(e -> {
@@ -6966,7 +6014,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		operationRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecOperationRegistry> operationRegistryList = operationRegistryMapper.selectByExample(operationRegistryExample);
 //		resRecList.addAll(operationRegistryList.stream().map(e -> {
@@ -6975,7 +6023,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		skillRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecSkillRegistry> skillRegistryList = skillRegistryMapper.selectByExample(skillRegistryExample);
 //		resRecList.addAll(skillRegistryList.stream().map(e -> {
@@ -6986,7 +6034,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //		return resRecList;
 
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 		example.setOrderByClause("OPER_TIME");
 		return resRecMapper.selectByExample(example);
 	}
@@ -6995,7 +6043,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	//	@Override
 //	public int searchByDeptFlow(String deptFlow) {
 //		ResRecExample example=new ResRecExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptFlowEqualTo(deptFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowEqualTo(deptFlow);
 //		return resRecMapper.countByExample(example);
 //	}
 	@Override
@@ -7236,16 +6284,16 @@ public class ResRecBizImpl implements IResRecBiz {
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-//		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		ResRecExample recExample = new ResRecExample();
 		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			coditionCount++;
 			recCriteria.andOperUserFlowEqualTo(userFlow);
@@ -7334,7 +6382,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		ResRecExample recExample = new ResRecExample();
 		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			coditionCount++;
 			recCriteria.andOperUserFlowEqualTo(userFlow);
@@ -7371,7 +6419,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
 		com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(rotationFlow)){
 			coditionCount++;
@@ -7451,7 +6499,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		SchRotationDeptExample deptExample = new SchRotationDeptExample();
 		com.pinde.sci.model.mo.SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(orgFlow)){
 			deptCriteria.andOrgFlowEqualTo(orgFlow);
@@ -7487,7 +6535,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		SchDoctorDeptExample docDeptExample = new SchDoctorDeptExample();
 		com.pinde.sci.model.mo.SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(doctorFlow)){
 			coditionCount++;
@@ -7747,7 +6795,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		//获取所有登记数据类型 并且后台开通的数据类型
 		List<String> recTypeIds = new ArrayList<String>();
 		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 			}
@@ -7839,7 +6887,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		//获取所有登记数据类型 并且后台开通的数据类型
 		List<String> recTypeIds = new ArrayList<String>();
 		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,regType.getId())){
 				recTypeIds.add(regType.getId());
 			}
@@ -7985,7 +7033,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public List<ResAppeal> searResAppeal(String processFlow,
 										 String recTypeId, String userFlow, String itemId) {
 		ResAppealExample example = new ResAppealExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow)
 				.andRecTypeIdEqualTo(recTypeId).andOperUserFlowEqualTo(userFlow).andItemIdEqualTo(itemId);
 		return resAppealMapper.selectByExample(example);
 	}
@@ -7993,7 +7041,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public int searResRecWan(String processFlow, String recTypeId,
 							 String itemId) {
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(processFlow)) {
 			criteria.andProcessFlowEqualTo(processFlow);
 		}
@@ -8006,7 +7054,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchInfo(ResRec resRec, List<String> operUserFlows,List<String> orgFlowList) {
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
 			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
 		}
@@ -8114,7 +7162,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		}
 
 		if(!StringUtil.isNotBlank(recForm)){
-			recForm = GlobalConstant.RES_FORM_PRODUCT;
+            recForm = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT;
 		}
 
 		return recForm;
@@ -8123,7 +7171,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	/**
 	 * 获取表单信息
 	 * @param recForm 使用的表单 (如:product、sczyfy...)
-	 * @param recTypeId 登记类型ID  (ResRecTypeEnum.id  如：CaseRegistry...)
+     * @param recTypeId 登记类型ID  (com.pinde.core.common.enums.ResRecTypeEnum.id  如：CaseRegistry...)
 	 * @param ver 使用的版本号
 	 * @return
 	 */
@@ -8133,7 +7181,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		}
 
 		if(!StringUtil.isNotBlank(recForm)){
-			recForm = GlobalConstant.RES_FORM_PRODUCT;
+            recForm = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT;
 		}
 
 		IrbFormRequestUtil resFormRequestUtil = InitConfig.resFormRequestUtil;
@@ -8145,7 +7193,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			}
 			if(!StringUtil.isNotBlank(ver)){
-				ver = GlobalConstant.RES_FORM_PRODUCT_VER;
+                ver = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER;
 			}
 
 			Map<String,Map<String,IrbSingleForm>> singleFormMapMap = resFormRequestUtil.getFormMap();
@@ -8155,11 +7203,11 @@ public class ResRecBizImpl implements IResRecBiz {
 					IrbSingleForm singleForm = singleFormMap.get(recForm+"_"+ver);
 
 					if(singleForm == null){
-						singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+GlobalConstant.RES_FORM_PRODUCT_VER);
+                        singleForm = singleFormMap.get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER);
 					}
 
 					if(singleForm == null){
-						throw new RuntimeException("未发现表单 模版类型:"+recForm+",表单类型:"+ResRecTypeEnum.getNameById(recTypeId)+",版本号:"+ver);
+                        throw new RuntimeException("未发现表单 模版类型:" + recForm + ",表单类型:" + com.pinde.core.common.enums.ResRecTypeEnum.getNameById(recTypeId) + ",版本号:" + ver);
 					}else{
 						return singleForm;
 					}
@@ -8205,7 +7253,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	 */
 	@Override
 	public String getFormPath(String rotationFlow, String recTypeId, String currVer, String recForm, String type,String medicineTypeId,String recordFlow){
-		// 1 如果传入使用的表单为空，则根据 "res_form_category_方案流水号" 获取表单，如没有，则根据 "res_form_category" 获取，还没有，则获取全局配置GlobalConstant.RES_FORM_PRODUCT
+        // 1 如果传入使用的表单为空，则根据 "res_form_category_方案流水号" 获取表单，如没有，则根据 "res_form_category" 获取，还没有，则获取全局配置com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT
 		if(!StringUtil.isNotBlank(recForm)){
 			recForm = getRecFormByCfg(rotationFlow,recordFlow,recTypeId);
 		}
@@ -8243,7 +7291,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			}else{
 				root = dom.getRootElement();
 			}
-			if(GlobalConstant.FLAG_Y.equals(roleMark)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(roleMark)) {
 				String roleEleName = roleFlag+recTypeId;
 				Element roleEle = root.element(roleEleName);
 				if(roleEle!=null){
@@ -8270,10 +7318,6 @@ public class ResRecBizImpl implements IResRecBiz {
 		return recContent;
 	}
 
-	@Override
-	public List<ResRec> searchByRecWithBLOBsByMap4Hb(Map paramMap) {
-		return resRecExtMapper.searchByRecWithBLOBsByMap4Hb(paramMap);
-	}
 
 	/****************************高******校******管******理******员******角******色************************************************/
 
@@ -8316,7 +7360,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				//xml中的节点是否是文件
 				String isFile = itemEle.attributeValue("isFile");
 				boolean isMultipart = JspFormUtil.isMultipart(req);
-				if(GlobalConstant.FLAG_Y.equals(isFile)&&isMultipart)
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isFile) && isMultipart)
 				{
 					String name = itemEle.attributeValue("name");
 					Map<String , String[]> dataMap=getParameterMap(req,rootEle.getName(),name);
@@ -8358,17 +7402,6 @@ public class ResRecBizImpl implements IResRecBiz {
 	}
 
 	@Override
-	public List<ResRec> getAllAfterSummary(String id) {
-		if(StringUtil.isNotBlank(id))
-		{
-			ResRecExample example=new ResRecExample();
-			example.createCriteria().andRecTypeIdEqualTo(id);
-			return resRecMapper.selectByExampleWithBLOBs(example);
-		}
-		return null;
-	}
-
-	@Override
 	public List<SchDoctorDept> searchReductionDept(String userFlow, String rotationFlow, String secondRotationFlow) {
 
 		SchDoctorDeptExample doctorDeptExample = new SchDoctorDeptExample();
@@ -8381,10 +7414,11 @@ public class ResRecBizImpl implements IResRecBiz {
 		{
 			flows.add(secondRotationFlow);
 		}
-		doctorDeptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        doctorDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(userFlow).andRotationFlowIn(flows);
 		return docDeptMapper.selectByExample(doctorDeptExample);
 	}
+
 
 	@Override
 	public List<SchDoctorDept> searchReductionDept2(List<ResDoctor> resDoctorList) {
@@ -8416,7 +7450,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		ResStandardDeptPerExample example=new ResStandardDeptPerExample();
 		example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andSchRotationDeptFlowEqualTo(recordFlow)
 				.andRotationFlowEqualTo(rotationFlow)
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("create_time desc");
 		List<ResStandardDeptPer> pers= perMapper.selectByExample(example);
 		if(pers!=null&&!pers.isEmpty())
@@ -8463,7 +7497,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public List<ResRec> searchByRecWithBLOBsByRotationDeptFlows(String operUserFlow, List<String> schRotationDeptFlows) {
 		if(schRotationDeptFlows!=null&&schRotationDeptFlows.size()>0) {
 			ResRecExample example = new ResRecExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOperUserFlowEqualTo(operUserFlow).andSchRotationDeptFlowIn(schRotationDeptFlows);
 			example.setOrderByClause("OPER_TIME");
 			return resRecMapper.selectByExampleWithBLOBs(example);
@@ -8471,10 +7505,6 @@ public class ResRecBizImpl implements IResRecBiz {
 		return null;
 	}
 
-	@Override
-	public List<Map<String, Object>> searchRecActivity(Map<String, Object> paramMap) {
-		return resRecMapper.searchRecActivity(paramMap);
-	}
 
 	/**
 	 * @param paramMap
@@ -8523,8 +7553,8 @@ public class ResRecBizImpl implements IResRecBiz {
 
 //	@Override
 //	public int saveTheRecForm(HttpServletRequest req){
-//		int fail = GlobalConstant.ZERO_LINE;
-//		int sucess = GlobalConstant.ONE_LINE;
+//		int fail = com.pinde.core.common.GlobalConstant.ZERO_LINE;
+//		int sucess = com.pinde.core.common.GlobalConstant.ONE_LINE;
 //
 //		//角色标识获取验证
 //		String roleFlag = req.getParameter("roleFlag");
@@ -8617,7 +7647,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //			rec.setSchDeptFlow(process.getSchDeptFlow());
 //			rec.setSchDeptName(process.getSchDeptName());
 //
-//			String recTypeName = ResRecTypeEnum.getNameById(recTypeId);
+//			String recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.getNameById(recTypeId);
 //			rec.setRecTypeId(recTypeId);
 //			rec.setRecTypeName(recTypeName);
 //

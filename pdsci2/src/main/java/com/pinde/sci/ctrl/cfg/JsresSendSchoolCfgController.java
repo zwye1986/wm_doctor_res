@@ -1,12 +1,10 @@
 package com.pinde.sci.ctrl.cfg;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,9 +34,9 @@ public class JsresSendSchoolCfgController extends GeneralController{
 		if (sysDict == null) {
 			sysDict = new SysDict();
 		}
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysDict.setDictTypeId(DictTypeEnum.SendSchool.getId());
-		sysDict.setDictTypeName(DictTypeEnum.SendSchool.getName());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
+        sysDict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getName());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		model.addAttribute("dictList", dictList);
@@ -49,9 +47,9 @@ public class JsresSendSchoolCfgController extends GeneralController{
 		if (sysDict == null) {
 			sysDict = new SysDict();
 		}
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysDict.setDictTypeId(DictTypeEnum.SendSchool.getId());
-		sysDict.setDictTypeName(DictTypeEnum.SendSchool.getName());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
+        sysDict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getName());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		model.addAttribute("dictList", dictList);
@@ -76,24 +74,24 @@ public class JsresSendSchoolCfgController extends GeneralController{
 				cfg.setCfgCode(cfgCode);
 				cfg.setCfgValue(cfgValue);
 				cfg.setCfgDesc(cfgDesc);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				cfgList.add(cfg);
 			}
 			int result = jsResPowerCfgBiz.saveList(cfgList);
-			if(GlobalConstant.ZERO_LINE != result){
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 				Map<String,Object> map = new HashMap<>();
 				map.put("dictFlow",dictFlow);
 				JsresPowerCfg cfg = jsResPowerCfgBiz.read(Arrays.asList(cfgCodes).get(0));
-				if(null != cfg && "Y".equals(cfg.getCfgValue())){
-					map.put("isSubmitId","Y");
+                if (null != cfg && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(cfg.getCfgValue())) {
+                    map.put("isSubmitId", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}else{
-					map.put("isSubmitId","N");
+                    map.put("isSubmitId", com.pinde.core.common.GlobalConstant.FLAG_N);
 				}
 				dictBiz.updateSchoolSubmit(map);
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/updateSchoolSubmit",method= RequestMethod.POST)
@@ -103,10 +101,10 @@ public class JsresSendSchoolCfgController extends GeneralController{
 			List<String> dictFlowList = Arrays.asList(dictFlows);
 			int count = dictBiz.saveSchoolSubmit(dictFlowList);
 			if(count > 0) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 }
 

@@ -1,20 +1,19 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresExamSignupLogMapper;
 import com.pinde.sci.dao.base.JsresExamSignupMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.sci.enums.res.ResBaseStatusEnum;
+import com.pinde.core.common.enums.ResBaseStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -22,7 +21,6 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -52,8 +50,8 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     public ResDoctorRecruit getNewRecruit(String doctorFlow) {
         if (StringUtil.isNotBlank(doctorFlow)) {
             ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                    .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(ResBaseStatusEnum.Passed.getId());
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                    .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId());
             example.setOrderByClause("MODIFY_TIME DESC");
             List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
             if (recruitList != null && !recruitList.isEmpty()) {
@@ -68,7 +66,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
         String content = retestNotice;
         ResDoctorRecruitWithBLOBs recruit = new ResDoctorRecruitWithBLOBs();
         recruit.setRecruitFlow(recruitFlow);
-        recruit.setRetestFlag(GlobalConstant.FLAG_Y);
+        recruit.setRetestFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
         recruit.setRetestNotice(retestNotice);
         editDoctorRecruit(recruit);
         ResDoctorRecruit rdr = readResDoctorRecruit(recruitFlow);
@@ -82,10 +80,10 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
         ResDoctorRecruitWithBLOBs recruit = new ResDoctorRecruitWithBLOBs();
         recruit.setRecruitFlow(recruitFlow);
         if("fs".equals(flag)){
-            recruit.setRetestFlag(GlobalConstant.FLAG_N);
+            recruit.setRetestFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         if("lq".equals(flag)){
-            recruit.setAdmitFlag(GlobalConstant.FLAG_N);
+            recruit.setAdmitFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
             recruit.setRecruitFlag("");
         }
         editDoctorRecruit(recruit);
@@ -103,7 +101,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
                 return doctorRecruitMapper.insertSelective(recruit);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -136,7 +134,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
         ResDoctorRecruit docRecruit = new ResDoctorRecruit();
         docRecruit.setRecruitYear(year);
         docRecruit.setDoctorFlow(doctorFlow);
-        docRecruit.setRecordStatus(GlobalConstant.FLAG_Y);
+        docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         ResDoctorRecruitExample example = createResDoctorRecruitExample(docRecruit);
         example.setOrderByClause("CREATE_TIME DESC");
         List<ResDoctorRecruit> recruits = this.doctorRecruitMapper.selectByExample(example);
@@ -164,7 +162,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<ResDoctorRecruit> searchDoctorRecruit(ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
             criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
         }
@@ -192,7 +190,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<ResDoctorRecruit> searchDoctorRecruits(ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
             criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
         }
@@ -209,7 +207,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     public List<ResDoctorRecruit> searchRecruitByDoctor(String doctorFlow) {
         if (StringUtil.isNotBlank(doctorFlow)) {
             ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andDoctorFlowEqualTo(doctorFlow);
             return doctorRecruitMapper.selectByExample(example);
         }
@@ -219,7 +217,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public ResDoctorRecruit searchRecruitByResDoctor(ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(null!=recruit){
             if(StringUtil.isNotBlank(recruit.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
@@ -422,8 +420,8 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public boolean queryIsConfirmFlag(String doctorFlow) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andRecruitFlagEqualTo(GlobalConstant.FLAG_Y).andConfirmFlagEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andRecruitFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andConfirmFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andDoctorFlowEqualTo(doctorFlow);
         return doctorRecruitMapper.countByExample(example)>0?true:false;
     }
@@ -461,8 +459,8 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
 
         if (StringUtil.isNotBlank(doctorFlow)) {
             ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                    .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(ResBaseStatusEnum.Passed.getId())
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                    .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId())
             .andSessionNumberEqualTo(sessionNumber);
             example.setOrderByClause("MODIFY_TIME DESC");
             List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
@@ -476,7 +474,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public JsresExamSignup getSignUpByYear(String year, String doctorFlow, String typeId) {
         JsresExamSignupExample examSignupExample=new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andSignupYearEqualTo(year).andSignupTypeIdEqualTo(typeId);
 
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
@@ -489,7 +487,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<JsresExamSignup> getSignUpListByYear(String year, String doctorFlow, String typeId) {
         JsresExamSignupExample examSignupExample=new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andSignupYearEqualTo(year).andSignupTypeIdEqualTo(typeId);
 
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
@@ -500,7 +498,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<JsresExamSignup> getSignUpListByYear(String year, String doctorFlow) {
         JsresExamSignupExample examSignupExample = new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andSignupYearEqualTo(year);
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
         return recruitList;
@@ -509,7 +507,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<JsresExamSignup> readDoctorExanSignUps( String doctorFlow, String typeId) {
         JsresExamSignupExample examSignupExample=new JsresExamSignupExample();
-        JsresExamSignupExample.Criteria criteria = examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+        JsresExamSignupExample.Criteria criteria = examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
         if(StringUtil.isNotEmpty(typeId)){
             criteria.andSignupTypeIdEqualTo(typeId);
         }
@@ -545,7 +543,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<JsresExamSignup> readDoctorExanSignUps(String doctorFlow) {
         JsresExamSignupExample examSignupExample = new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow);
         examSignupExample.setOrderByClause("CREATE_TIME desc");
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
@@ -556,7 +554,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<ResScore> selectAllScore(String userFlow, String recruitFlow) {
         ResScoreExample example = new ResScoreExample();
-        ResScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(userFlow)) {
             criteria.andDoctorFlowEqualTo(userFlow);
         }
@@ -584,7 +582,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     @Override
     public List<JsresExamSignupLog> getAuditLogsBySignupFlow(String signupFlow) {
         JsresExamSignupLogExample example = new JsresExamSignupLogExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSignupFlowEqualTo(signupFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSignupFlowEqualTo(signupFlow);
         example.setOrderByClause("create_time desc");
         return jsresExamSignupLogMapper.selectByExample(example);
     }
@@ -616,7 +614,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     public ResDoctorRecruit getNewRecruitByDoctorFlow(String doctorFlow) {
         if (StringUtil.isNotBlank(doctorFlow)) {
             ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
             example.setOrderByClause("MODIFY_TIME DESC");
             List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
             if (recruitList != null && !recruitList.isEmpty()) {

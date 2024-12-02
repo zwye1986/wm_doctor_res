@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysLoginAbility extends MybatisObject {
+public class SysLoginAbility extends TeachingActivitySpeakerExample.MybatisObject {
     private String userCode;
 
     private String loginNum;

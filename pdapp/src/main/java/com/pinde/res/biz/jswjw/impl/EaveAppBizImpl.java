@@ -1,7 +1,8 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +11,6 @@ import com.pinde.res.dao.jswjw.ext.StudentExtMapper;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +50,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public List<ResKgCfg> readKqCfgList(String orgFlow, String doctorCategoryId) {
         ResKgCfgExample example=new ResKgCfgExample();
-        ResKgCfgExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        ResKgCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow);
         if(StringUtil.isNotBlank(doctorCategoryId))
         {
@@ -107,7 +107,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public List<SysDict> getDictListByDictId(String id) {
         SysDictExample example = new SysDictExample();
-        SysDictExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysDictExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(id))
         {
             criteria.andDictTypeIdEqualTo(id);
@@ -120,7 +120,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     public int editResDoctorKq(ResDoctorKq kq, SysUser sysUser, ResDoctorKq old) {
         if(old==null)
         {
-            kq.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            kq.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             kq.setCreateTime(DateUtil.getCurrDateTime());
             kq.setCreateUserFlow(sysUser.getUserFlow());
             kq.setModifyTime(DateUtil.getCurrDateTime());
@@ -135,7 +135,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
 
     @Override
     public int updateResDoctorKq(ResDoctorKq kq) {
-        /*kq.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        /*kq.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         kq.setModifyTime(DateUtil.getCurrDateTime());
         kq.setModifyUserFlow(sysUser.getUserFlow());*/
         return resDoctorKqMapper.updateByPrimaryKeySelective(kq);
@@ -153,7 +153,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
 
         ResDoctorKqExample example = new ResDoctorKqExample();
         ResDoctorKqExample.Criteria criteria = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(kq.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(kq.getDoctorFlow());
         }
@@ -198,7 +198,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
         example.setOrderByClause("sch_start_date");
         return resDoctorProcessMapper.selectByExample(example);
     }
@@ -240,7 +240,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public List<ResDoctorSchProcess> searchProcessByDoctorFlow(String userFlow) {
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(userFlow)){
             criteria.andUserFlowEqualTo(userFlow);
         }
@@ -261,7 +261,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public int addResDoctorKq(ResDoctorKqExt kqExt,SysUser user) {
         ResDoctorKq kq = kqExt;
-        kq.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        kq.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         kq.setCreateTime(DateUtil.getCurrDateTime());
         kq.setCreateUserFlow(user.getUserFlow());
         kq.setModifyTime(DateUtil.getCurrDateTime());
@@ -273,7 +273,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public List<ResDoctorKqLog> searchKqLogList(String kqRecordFlow, String typeId) {
         ResDoctorKqLogExample example = new ResDoctorKqLogExample();
-        ResDoctorKqLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResDoctorKqLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(kqRecordFlow)){
             criteria.andKqRecordFlowEqualTo(kqRecordFlow);
         }
@@ -299,7 +299,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public ResDoctorKqLog searchKqLog(String kqRecordFlow, String typeId,String roleId) {
         ResDoctorKqLogExample example = new ResDoctorKqLogExample();
-        ResDoctorKqLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResDoctorKqLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(kqRecordFlow)){
             criteria.andKqRecordFlowEqualTo(kqRecordFlow);
         }
@@ -320,7 +320,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
     @Override
     public int addResDoctorKqLog(ResDoctorKqLog log,SysUser user) {
         log.setRecordFlow(PkUtil.getUUID());
-        log.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        log.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         log.setCreateTime(DateUtil.getCurrDateTime());
         log.setCreateUserFlow(user.getUserFlow());
         log.setModifyTime(DateUtil.getCurrDateTime());
@@ -341,7 +341,7 @@ public class EaveAppBizImpl implements IIeaveAppBiz {
             return kqLogMapper.updateByPrimaryKeySelective(kqLog);
         }else{
             kqLog.setRecordFlow(PkUtil.getUUID());
-            kqLog.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            kqLog.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             kqLog.setCreateTime(DateUtil.getCurrDateTime());
             kqLog.setCreateUserFlow(user.getUserFlow());
             kqLog.setModifyTime(DateUtil.getCurrDateTime());

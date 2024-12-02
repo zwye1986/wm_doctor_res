@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sch.SchRotationExtendMapper" >
-  <resultMap id="SysDictMap" type="com.pinde.core.entyties.SysDict" >
+  <resultMap id="SysDictMap" type="com.pinde.core.model.SysDict">
     <id column="DICT_FLOW" property="dictFlow" jdbcType="VARCHAR" />
     <result column="DICT_TYPE_ID" property="dictTypeId" jdbcType="VARCHAR" />
     <result column="DICT_TYPE_NAME" property="dictTypeName" jdbcType="VARCHAR" />

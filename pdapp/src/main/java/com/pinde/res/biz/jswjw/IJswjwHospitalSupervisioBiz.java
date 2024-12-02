@@ -1,9 +1,9 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResHospSupervSubject;
-import com.pinde.sci.model.mo.ResScheduleScore;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResHospSupervSubject;
+import com.pinde.core.model.ResScheduleScore;
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

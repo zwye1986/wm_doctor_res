@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysCfgLogMapper;
@@ -16,7 +16,6 @@ import com.pinde.sci.model.mo.SysCfgExample.Criteria;
 import com.pinde.sci.model.mo.SysCfgLogWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -59,10 +58,10 @@ public class CfgBizImpl implements ICfgBiz {
 	@Override
 	public List<SysCfg> search(SysCfg cfg) {
 		List<String> wsIdList = new ArrayList<String>();
-		wsIdList.add(GlobalConstant.SYS_WS_ID);
+        wsIdList.add(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 		SysCfgExample example = new SysCfgExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(cfg.getWsId())) {
 			wsIdList.add(cfg.getWsId());
 			criteria.andWsIdIn(wsIdList);
@@ -92,7 +91,7 @@ public class CfgBizImpl implements ICfgBiz {
 			String sessionValue = (String) GlobalContext.getSessionAttribute(cfgCode);
 			if(StringUtil.isNotBlank(sessionValue)){
 				cfgValue = sessionValue;
-			}else if(StringUtil.isEquals(InitConfig.getSysCfg("sys_page_size_cfg"),GlobalConstant.FLAG_Y)) {//从数据库取值
+            } else if (StringUtil.isEquals(InitConfig.getSysCfg("sys_page_size_cfg"), com.pinde.core.common.GlobalConstant.FLAG_Y)) {//从数据库取值
 				SysCfg cfg = this.read(cfgCode);
 				if(cfg!=null){
 					cfgValue = cfg.getCfgValue();
@@ -102,20 +101,20 @@ public class CfgBizImpl implements ICfgBiz {
 		}
 		
 		if(StringUtil.isBlank(cfgValue)){
-			cfgValue = GlobalConstant.DEFAULT_PAGE_SIZE+"";
+            cfgValue = com.pinde.core.common.GlobalConstant.DEFAULT_PAGE_SIZE + "";
 		}
 		return cfgValue;
 	}
 
 	@Override
 	public void savePageSize(HttpServletRequest request) {
-		String cfgValue = request.getParameter(GlobalConstant.PAGE_SIZE);
+        String cfgValue = request.getParameter(com.pinde.core.common.GlobalConstant.PAGE_SIZE);
 		if(StringUtil.isBlank(cfgValue)){
-			cfgValue = GlobalConstant.DEFAULT_PAGE_SIZE+"";
+            cfgValue = com.pinde.core.common.GlobalConstant.DEFAULT_PAGE_SIZE + "";
 		}
-		String getPath = request.getParameter(GlobalConstant.PAGE_SERVLET_PATH);
+        String getPath = request.getParameter(com.pinde.core.common.GlobalConstant.PAGE_SERVLET_PATH);
 		String cfgCode = getPath + "/" +GlobalContext.getCurrentUser().getUserFlow();
-		if(StringUtil.isEquals(InitConfig.getSysCfg("sys_page_size_cfg"),GlobalConstant.FLAG_Y)){
+        if (StringUtil.isEquals(InitConfig.getSysCfg("sys_page_size_cfg"), com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 			SysCfg cfg = this.read(cfgCode);
 			if(cfg==null){
 				cfg = new SysCfg();
@@ -163,7 +162,7 @@ public class CfgBizImpl implements ICfgBiz {
 //	@Override
 //	public List<SysCfg> searchCfgByCfgCodeList(SysCfg sysCfg, List<String> cfgCodeList) {
 //		SysCfgExample example = new SysCfgExample();
-//		Criteria criteria = example.createCriteria().andCfgCodeIn(cfgCodeList).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		Criteria criteria = example.createCriteria().andCfgCodeIn(cfgCodeList).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		if(StringUtil.isNotBlank(sysCfg.getWsId())){
 //			criteria.andWsIdEqualTo(sysCfg.getWsId());
 //		}
@@ -181,7 +180,7 @@ public class CfgBizImpl implements ICfgBiz {
 				return mod(sysCfg);
 			}
 		}else{
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 	}
 

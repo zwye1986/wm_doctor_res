@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,9 +14,7 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.OscaOrgMenu;
 import com.pinde.sci.model.mo.OscaOrgSpe;
 import com.pinde.sci.model.mo.SysOrg;
@@ -82,9 +82,9 @@ public class OscaOrgSpeGlobalController extends GeneralController {
         map.put("orgName",orgName);
         map.put("orgProvId",orgProvId);
         map.put("orgCityId",orgCityId);
-        map.put("withN","Y");
+        map.put("withN", com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(oscaOrgSpeExt!=null&&oscaOrgSpeExt.isSearchSite()){
-            map.put("isExamOrg",GlobalConstant.IS_EXAM_TEA_Y);
+            map.put("isExamOrg", com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_Y);
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         oscaOrgSpeExtList=siteInformationBiz.searchAllOrg(map);
@@ -94,9 +94,9 @@ public class OscaOrgSpeGlobalController extends GeneralController {
                 os.setOrgFlow(oose.getOrgFlow());
                 List<OscaOrgSpe> listTemp=siteInformationBiz.searchOscaOrgSpeList(os);
                 if (listTemp!=null&&listTemp.size()>0){
-                    oose.setToSite(GlobalConstant.FLAG_Y);
+                    oose.setToSite(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }else {
-                    oose.setToSite(GlobalConstant.FLAG_N);
+                    oose.setToSite(com.pinde.core.common.GlobalConstant.FLAG_N);
                 }
             }
         }
@@ -125,10 +125,10 @@ public class OscaOrgSpeGlobalController extends GeneralController {
         org.setOrgFlow(orgFlow);
         org.setRecordStatus(recordStatus);
         int num = orgBiz.update(org);
-        if (num == GlobalConstant.ONE_LINE) {
-            return GlobalConstant.OPRE_SUCCESSED;
+        if (num == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
-        return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
     }
 
 
@@ -138,9 +138,9 @@ public class OscaOrgSpeGlobalController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         SysOrg sysOrg=orgBiz.readSysOrg(orgFlow);
         if(checked){
-            sysOrg.setIsExamOrg(GlobalConstant.IS_EXAM_TEA_Y);
+            sysOrg.setIsExamOrg(com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_Y);
         }else {
-            sysOrg.setIsExamOrg(GlobalConstant.IS_EXAM_TEA_N);
+            sysOrg.setIsExamOrg(com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_N);
             Map<String, Object> map=new HashMap<>();
             map.put("orgFlow",orgFlow);
             map.put("modifyUserFlow",GlobalContext.getCurrentUser().getUserFlow());
@@ -154,7 +154,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
                 for(int i=0;i<oscaOrgMenuTemp.size();i++){
                     oscaOrgMenu=oscaOrgMenuTemp.get(i);
                     if(oscaOrgMenu!=null){
-                        oscaOrgMenu.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                        oscaOrgMenu.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                         oscaOrgMenuBiz.updateOscaOrgMenu(oscaOrgMenu);
                     }
                 }
@@ -163,7 +163,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
         sysOrg .setModifyUserFlow(currUser.getOrgFlow());
         sysOrg.setModifyTime(DateUtil.getCurrentTime());
         orgBiz.update(sysOrg);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("/editInfo")
@@ -172,13 +172,13 @@ public class OscaOrgSpeGlobalController extends GeneralController {
         oscaOrgSpe.setOrgFlow(orgFlow);
         List<OscaOrgSpe> oscaOrgSpeList=siteInformationBiz.searchOscaOrgSpeList(oscaOrgSpe);
         List<OscaOrgSpeExt> oscaOrgSpeExtList=new ArrayList<>();
-        List<SysDict> speList=DictTypeEnum.CheckSpe.getSysDictList();
+        List<SysDict> speList = com.pinde.core.common.enums.DictTypeEnum.CheckSpe.getSysDictList();
             for (SysDict sd:speList) {
                 OscaOrgSpeExt oscaOrgSpeExt=new OscaOrgSpeExt();
                 if(oscaOrgSpeList!=null&&oscaOrgSpeList.size()>0){
                     for (OscaOrgSpe oos:oscaOrgSpeList) {
                         if(sd.getDictId().equals(oos.getSpeId())){
-                            oscaOrgSpeExt.setAsMajor(GlobalConstant.RECORD_STATUS_Y);
+                            oscaOrgSpeExt.setAsMajor(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         }
                         oscaOrgSpeExt.setSpeId(sd.getDictId());
                         oscaOrgSpeExt.setSpeName(sd.getDictName());
@@ -228,14 +228,14 @@ public class OscaOrgSpeGlobalController extends GeneralController {
                     oscaOrgSpe.setOrgFlow(orgFlow);
                     oscaOrgSpe.setOrgName(orgName);
                     oscaOrgSpe.setSpeId(deptCords[i]);
-                    oscaOrgSpe.setSpeName(DictTypeEnum.CheckSpe.getDictNameById(deptCords[i]));
-                    oscaOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                oscaOrgSpe.setSpeName(com.pinde.core.common.enums.DictTypeEnum.CheckSpe.getDictNameById(deptCords[i]));
+                oscaOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     oscaOrgSpe.setCreateTime(DateUtil.getCurrentTime());
                     oscaOrgSpe.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
                     siteInformationBiz.saveSiteInformation(oscaOrgSpe);
             }
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = {"/saveEditInfo2"})
@@ -266,7 +266,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
                     }
                 }
                 if(deleteFlag){
-                    oscaOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    oscaOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                     siteInformationBiz.saveSiteInformation(oscaOrgSpe);
                 }
             }
@@ -300,7 +300,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
                 }
             }
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("/goAddOrg")
@@ -348,9 +348,9 @@ public class OscaOrgSpeGlobalController extends GeneralController {
             SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
             String provId = sysOrg.getOrgProvId();
             SysOrg search = new SysOrg();
-            search.setIsExamOrg("Y");
+            search.setIsExamOrg(com.pinde.core.common.GlobalConstant.FLAG_Y);
             search.setOrgProvId(provId);
-            search.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            search.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<SysOrg> sysOrgList = orgBiz.searchOrg(search);
             model.addAttribute("sysOrgList",sysOrgList);
         }
@@ -361,7 +361,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
     @ResponseBody
     public String saveManager(SysUser sysUser,String newFlag){
         SysUser user = null;
-        if("Y".equals(newFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(newFlag)) {
             user = userBiz.findByUserCode(sysUser.getUserCode());
             if(user != null){
                 return "用户名重复！";
@@ -395,7 +395,7 @@ public class OscaOrgSpeGlobalController extends GeneralController {
             sysOrg.setOsceTeacherShow(isShow);
         }
         orgBiz.update(sysOrg);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
 }

@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.biz.jsres.IJsResRecruitDoctorInfoBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.JsresRecruitDocInfoMapper;
 import com.pinde.sci.dao.base.JsresRecruitInfoMapper;
@@ -16,7 +16,6 @@ import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	@Override
 	public JsresRecruitInfo getRecruitInfoBysessionNumber(String userFlow, String sessionNumber) {
 		JsresRecruitInfoExample example=new JsresRecruitInfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(userFlow).andSessionNumberEqualTo(sessionNumber);
 		List<JsresRecruitInfo> list=recruitInfoMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -140,7 +139,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	public List<ResDoctorRecruit> searchRecruitList(String doctorFlow) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow);
 		example.setOrderByClause("CREATE_TIME DESC");
 		return resDoctorRecruitMapper.selectByExample(example);
@@ -160,7 +159,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	public List<ResDoctorRecruit> searchRecruitListNew(String doctorFlow) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andOrgAuditEqualTo("Passed")
 				.andJointOrgAuditEqualTo("Passed");
 		example.setOrderByClause("CREATE_TIME DESC");
@@ -185,7 +184,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	@Override
 	public List<ResRecruitHistory> getRecruitHistoryInfo(String photoTime, String orgFlow, String speId) {
 		ResRecruitHistoryExample recruitHistoryExample = new ResRecruitHistoryExample();
-		ResRecruitHistoryExample.Criteria criteria = recruitHistoryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResRecruitHistoryExample.Criteria criteria = recruitHistoryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(photoTime)) {
 			criteria.andPhotoTimeEqualTo(photoTime);
 		}
@@ -206,7 +205,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	@Override
 	public List<ResRecruitHistory> getRecruitHistoryBySessionNumber(String sessionNumber) {
 		ResRecruitHistoryExample recruitHistoryExample = new ResRecruitHistoryExample();
-		ResRecruitHistoryExample.Criteria criteria = recruitHistoryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andPhotoTimeLike(sessionNumber);
+        ResRecruitHistoryExample.Criteria criteria = recruitHistoryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andPhotoTimeLike(sessionNumber);
 		return recruitHistoryMapper.selectByExample(recruitHistoryExample);
 	}
 

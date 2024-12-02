@@ -213,7 +213,7 @@ public interface ResDoctorExtMapper {
     List<Map<String,Object>> searchDocSysRecords(Map<String, Object> beMap);
 
 	/**
-	 * 此方法用于查已退赔的学员故未将record_status="Y"考虑在内
+     * 此方法用于查已退赔的学员故未将record_status=com.pinde.core.common.GlobalConstant.FLAG_Y考虑在内
 	 * @param doctorFlows
 	 * @return
      */

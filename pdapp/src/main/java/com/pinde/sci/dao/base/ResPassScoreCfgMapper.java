@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResPassScoreCfg;
-import com.pinde.sci.model.mo.ResPassScoreCfgExample;
+import com.pinde.core.model.ResPassScoreCfg;
+import com.pinde.core.model.ResPassScoreCfgExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

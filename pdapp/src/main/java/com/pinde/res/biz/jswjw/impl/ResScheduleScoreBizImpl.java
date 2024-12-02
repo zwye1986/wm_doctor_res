@@ -1,16 +1,15 @@
 package com.pinde.res.biz.jswjw.impl;
 
+import com.pinde.core.model.ResScheduleScore;
+import com.pinde.core.model.ResScheduleScoreExample;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResScheduleScoreBiz;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
-import com.pinde.sci.model.mo.ResScheduleScore;
-import com.pinde.sci.model.mo.ResScheduleScoreExample;
-import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
             scheduleScore.setCreateTime(DateUtil.getCurrDate());
             scheduleScore.setScheduleFlow(PkUtil.getUUID());
             scheduleScore.setCreateUserFlow(userFlow);
-            scheduleScore.setRecordStatus("Y");
+            scheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return resScheduleScoreMapper.insert(scheduleScore);
         }
     }
@@ -54,7 +53,7 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
             scheduleScore.setEvaluationYear(DateUtil.getYear());
             scheduleScore.setScheduleFlow(PkUtil.getUUID());
             scheduleScore.setCreateUserFlow(userFlow);
-            scheduleScore.setRecordStatus("Y");
+            scheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return resScheduleScoreMapper.insert(scheduleScore);
         }
     }

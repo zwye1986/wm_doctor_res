@@ -45,10 +45,7 @@
     </bean>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-	<!-- 引入mybatis配置文件	 -->
-	<import resource="classpath:/spring-mybatis.xml" />
-	<!-- 引入shiro配置文件 -->
-    <!-- 扫描文件（自动将biz层注入） -->
+
     <context:component-scan base-package="com.pinde.*.biz"/>
     <!-- spring context -->
     <bean id="springUtil" class="com.pinde.core.util.ApplicationContextRegister" />

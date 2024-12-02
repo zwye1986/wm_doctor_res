@@ -13,15 +13,11 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.enums.jsres.JsResTrainYearEnum;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.RegistryTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -97,10 +93,10 @@ public class JsResDoctorWorkController extends GeneralController {
 		SysOrg sysorg =new  SysOrg();
 		sysorg.setOrgProvId(org.getOrgProvId());
 		//市局角色
-		if(StringUtil.isNotBlank(roleFlag)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			sysorg.setOrgCityId(org.getOrgCityId());
 		}
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
 		List<ResJointOrg> jointOrgs=jointOrgBiz.searchJointOrgAll();
 		List<String> orgFlowList=new ArrayList<String>();
@@ -131,10 +127,10 @@ public class JsResDoctorWorkController extends GeneralController {
 		SysOrg sysorg =new  SysOrg();
 		sysorg.setOrgProvId(org.getOrgProvId());
 		//市局角色
-		if(StringUtil.isNotBlank(roleFlag)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			sysorg.setOrgCityId(org.getOrgCityId());
 		}
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
 		List<ResJointOrg> jointOrgs=jointOrgBiz.searchJointOrgAll();
 		List<String> orgFlowList=new ArrayList<String>();
@@ -164,7 +160,7 @@ public class JsResDoctorWorkController extends GeneralController {
 		}
 		List<String> recTypeIds = new ArrayList<String>();
 		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))) {
 				recTypeIds.add(regType.getId());
 			}
 		}
@@ -197,7 +193,7 @@ public class JsResDoctorWorkController extends GeneralController {
 		parMp.put("idNo", idNo);
 		parMp.put("graduationYear", graduationYear);
 		parMp.put("recTypeIds",recTypeIds);
-		if(StringUtil.isNotBlank(roleFlag)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			parMp.put("orgCityId",org.getOrgCityId());
 		}
 		PageHelper.startPage(currentPage,getPageSize(request));
@@ -218,12 +214,12 @@ public class JsResDoctorWorkController extends GeneralController {
 		parMp.put("orgFlow", recruit.getOrgFlow());
 		//住院医师缩减调整
 		boolean isReduction = false;
-		if (TrainCategoryEnum.DoctorTrainingSpe.getId().equals(recruit.getCatSpeId())) {
+        if (com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(recruit.getCatSpeId())) {
 			String sessionNumber = recruit.getSessionNumber();
 			String trainingYears = recruit.getTrainYear();
-			isReduction = TrainCategoryEnum.DoctorTrainingSpe.getId().equals(recruit.getCatSpeId());
+            isReduction = com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(recruit.getCatSpeId());
 			isReduction = isReduction && "2015".compareTo(sessionNumber) <= 0;
-			isReduction = isReduction && (JsResTrainYearEnum.OneYear.getId().equals(trainingYears) || JsResTrainYearEnum.TwoYear.getId().equals(trainingYears));
+            isReduction = isReduction && (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(trainingYears) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(trainingYears));
 		}
 		String rotation_flow=recruit.getRotationFlow();
 		if(StringUtil.isNotBlank(rotation_flow)) {
@@ -234,7 +230,7 @@ public class JsResDoctorWorkController extends GeneralController {
 				if(count==0)
 					isReduction=false;
 			}
-			parMp.put("isReduction",isReduction?GlobalConstant.FLAG_Y:GlobalConstant.FLAG_N);
+            parMp.put("isReduction", isReduction ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N);
 			List<Map<String, Object>> rltLst = processBiz.workDetail(parMp);
 			if(rltLst!=null&&rltLst.size()>0)
 			{
@@ -248,7 +244,7 @@ public class JsResDoctorWorkController extends GeneralController {
 					else
 						count++;
 					countMap.put(recordFlow, count);
-					afterMap.put(recordFlow, "N");
+                    afterMap.put(recordFlow, com.pinde.core.common.GlobalConstant.FLAG_N);
 					List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
 //					ResRec rec = resRecBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
 					ResSchProcessExpress rec = expressBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
@@ -272,7 +268,7 @@ public class JsResDoctorWorkController extends GeneralController {
 						}
 					}
 					if (imagelist.size() > 0) {
-						afterMap.put(recordFlow, "Y");
+                        afterMap.put(recordFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				model.addAttribute("afterMap",afterMap);

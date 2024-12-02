@@ -9,9 +9,8 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sch.SchSelYearEnum;
+import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchRotationOrgGroupForm;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
@@ -59,8 +58,8 @@ public class SchRotationCfgController extends GeneralController{
 	@RequestMapping(value="/local",method=RequestMethod.GET)
 	public String local(String orgFlow,String currRoleFlag,Model model){
 		model.addAttribute("currRoleFlag",currRoleFlag);
-		model.addAttribute("roleFlag",GlobalConstant.USER_LIST_LOCAL);
-		model.addAttribute("publishFlag",GlobalConstant.FLAG_Y);
+        model.addAttribute("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL);
+        model.addAttribute("publishFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		orgFlow = StringUtil.defaultIfEmpty(orgFlow,GlobalContext.getCurrentUser().getOrgFlow());
 		model.addAttribute("orgFlow",orgFlow);
 		return "redirect:/sch/rotationCfg/list";
@@ -76,7 +75,7 @@ public class SchRotationCfgController extends GeneralController{
 		//获取轮转方案（如果是对指定机构展示，则只显示非指定机构和指定本机构的）
 		List<SchRotation> rotationList = schRotationtBiz.searchOrgStandardRotation(rotation);
 		orgFlow = StringUtil.defaultIfEmpty(orgFlow,GlobalContext.getCurrentUser().getOrgFlow());
-		if (!GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			rotationList=schRotationtBiz.schRotations(rotationList,orgFlow);
 		}
 		//轮转方案轮转科室统计轮转时间，按轮转方案分组统计
@@ -249,7 +248,7 @@ public class SchRotationCfgController extends GeneralController{
 			paramMap2.put("sessionNumber",sessionNumber);
 			paramMap2.put("selectYear",selectYear);
 			paramMap2.put("schDeptFlowIsNotNull","schDeptFlowIsNotNull");
-			paramMap2.put("recordStatus","Y");
+            paramMap2.put("recordStatus", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			List<SchRotationOrgDept> rotationDeptList = rotationCfgBiz.searchSchRotationOrgDept(paramMap2);
 			if(rotationDeptList!=null && rotationDeptList.size()>0){
 				Map<String,List<SchRotationOrgDept>> localRotationDeptListMap = new HashMap<String, List<SchRotationOrgDept>>();
@@ -330,7 +329,7 @@ public class SchRotationCfgController extends GeneralController{
 	public Object saveCycleCfg(String orgFlow, String sessionNumber, String rotationFlow, String cycleTypeId){
 		orgFlow = StringUtil.defaultIfEmpty(orgFlow,GlobalContext.getCurrentUser().getOrgFlow());
 		rotationCfgBiz.saveCycleCfg(orgFlow, sessionNumber, rotationFlow, cycleTypeId);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@RequestMapping(value = {"/saveRotationCfg"},method = RequestMethod.POST)
@@ -355,7 +354,7 @@ public class SchRotationCfgController extends GeneralController{
 		}
 		System.err.println(JSON.toJSONString(groupForms));
 		rotationCfgBiz.saveCfg(groupForms,orgFlow,selectYear,sessionNumber,rotationFlow);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	public static String[] source = { "1", "2", "3" };//源数据
@@ -421,10 +420,10 @@ public class SchRotationCfgController extends GeneralController{
 		if(resEnterOpenCfg!=null)
 			enterOpenCfg.setCfgFlow(resEnterOpenCfg.getCfgFlow());
 		int result = enterOpenCfgBiz.saveEnterOpenCfg(enterOpenCfg);
-		if(result>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -441,9 +440,9 @@ public class SchRotationCfgController extends GeneralController{
 			for (SchArrangeTime time : times) {
 				int count = doctorDeptBiz.findSesssionNumberResults(time.getSessionNumber(), time.getOrgFlow());
 				if (count > 0) {
-					canEditMap.put(time.getRecordFlow(), "N");
+                    canEditMap.put(time.getRecordFlow(), com.pinde.core.common.GlobalConstant.FLAG_N);
 				} else {
-					canEditMap.put(time.getRecordFlow(), "Y");
+                    canEditMap.put(time.getRecordFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}
 			}
 		}
@@ -457,13 +456,13 @@ public class SchRotationCfgController extends GeneralController{
 		SchArrangeTime time=enterOpenCfgBiz.getArrangeTime(recordFlow);
 		String orgFlow =GlobalContext.getCurrentUser().getOrgFlow();
 		model.addAttribute("orgFlow",orgFlow);
-		model.addAttribute("canEdit","Y");
+        model.addAttribute("canEdit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(time!=null)
 		{
 			int count=doctorDeptBiz.findSesssionNumberResults(time.getSessionNumber(),time.getOrgFlow());
 			if(count>0)
 			{
-				model.addAttribute("canEdit","N");
+                model.addAttribute("canEdit", com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 		}
 		model.addAttribute("time",time);
@@ -508,10 +507,10 @@ public class SchRotationCfgController extends GeneralController{
 		}
 		time.setOrgFlow(orgFlow);
 		int result = enterOpenCfgBiz.saveSchArrangeTime(time);
-		if(result>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 }

@@ -1,14 +1,13 @@
 package com.pinde.res.biz.common.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;
-import com.pinde.sci.model.mo.ResPowerCfg;
-import com.pinde.sci.model.mo.ResPowerCfgExample;
+import com.pinde.core.model.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class ResPowerCfgBizImpl implements IResPowerCfgBiz {
     @Override
     public String getResPowerCfg(Map<String, String> paramMap) {
         ResPowerCfgExample example = new ResPowerCfgExample();
-        ResPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResPowerCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(paramMap.get("cfgCode"))) {
             criteria.andCfgCodeEqualTo(paramMap.get("cfgCode"));
         }

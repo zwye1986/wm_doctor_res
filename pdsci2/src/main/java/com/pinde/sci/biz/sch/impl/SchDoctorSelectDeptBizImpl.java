@@ -8,7 +8,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
@@ -18,8 +17,7 @@ import com.pinde.sci.ctrl.sch.plan.domain.SchDeptPlanAssignment;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchOrgArrangeResultExtMapper;
 import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
-import com.pinde.sci.enums.sch.SchSelYearEnum;
-import com.pinde.sci.enums.sch.SchUnitEnum;
+import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchArrangeForm;
 import com.pinde.sci.form.sch.SchDoctorForm;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
@@ -28,7 +26,6 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -84,7 +81,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
         if(StringUtil.isNotBlank(doctorFlow))
         {
             SchDoctorSelectDeptExample example = new SchDoctorSelectDeptExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
             example.setOrderByClause("ORDINAL");
             return doctorDeptMapper.selectByExample(example);
         }
@@ -96,7 +93,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
         if(StringUtil.isNotBlank(doctorFlow))
         {
             SchOrgArrangeResultExample example = new SchOrgArrangeResultExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
             example.setOrderByClause("SCH_START_DATE");
             return schResultMapper.selectByExample(example);
         }
@@ -106,7 +103,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
     @Override
     public List<SchDoctorSelectDept> readSelectDepts(String doctorFlow, String sessionNumber, String rotationFlow, String orgFlow, String cycleType) {
         SchDoctorSelectDeptExample example = new SchDoctorSelectDeptExample();
-        SchDoctorSelectDeptExample.Criteria criteria=  example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+        SchDoctorSelectDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
                 .andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow).andDoctorFlowEqualTo(doctorFlow);
         if(StringUtil.isNotBlank(cycleType))
         {
@@ -147,7 +144,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                 if(selectDept==null)
                     selectDept=new SchDoctorSelectDept();
                 BeanUtil.mergeNotSameClassObject(dept,selectDept);
-                selectDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                selectDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 selectDept.setSelectYear(selectDeptForm.getSelectYear());
                 selectDept.setSchMonth(selectDeptForm.getSchMonth());
                 selectDept.setDoctorFlow(doctorFlow);
@@ -157,22 +154,22 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
         }
 
         for(SchDoctorSelectDept selectDept:news) {
-            selectDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            selectDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             saveSelectDept(selectDept);
         }
         doctor =new ResDoctor();
         doctor.setDoctorFlow(doctorFlow);
-        doctor.setSelAllFlag("Y");
-        doctor.setSelOneFlag("Y");
-        doctor.setSelTwoFlag("Y");
-        doctor.setSelThreeFlag("Y");
+        doctor.setSelAllFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        doctor.setSelOneFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        doctor.setSelTwoFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        doctor.setSelThreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
         doctorMapper.updateByPrimaryKeySelective(doctor);
     }
 
     @Override
     public List<SchOrgArrangeResult> readArrangeResults(String doctorFlow, String sessionNumber, String rotationFlow, String orgFlow) {
         SchOrgArrangeResultExample example = new SchOrgArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
                 .andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow).andDoctorFlowEqualTo(doctorFlow);
         example.setOrderByClause("SCH_START_DATE");
         return schResultMapper.selectByExample(example);
@@ -181,7 +178,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
     @Override
     public int findSesssionNumberResults(String sessionNumber, String orgFlow) {
         SchOrgArrangeResultExample example = new SchOrgArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow);
         return schResultMapper.countByExample(example);
     }
@@ -194,11 +191,11 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
             schResultExtMapper.delSchInfoByCycle(doctor.getDoctorFlow(),doctor.getOrgFlow(),doctor.getSessionNumber(),doctor.getRotationFlow(),form.getCycleYear());
             schResultExtMapper.updateDoctorSchFlag(doctor.getDoctorFlow(),form.getCycleYear());
             doctor=doctorMapper.selectByPrimaryKey(doctorForm.getUserFlow());
-            if("N".equals(doctor.getSchOneFlag())&&
-                    "N".equals(doctor.getSchTwoFlag())&&
-                    "N".equals(doctor.getSchThreeFlag()))
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(doctor.getSchOneFlag()) &&
+                    com.pinde.core.common.GlobalConstant.FLAG_N.equals(doctor.getSchTwoFlag()) &&
+                    com.pinde.core.common.GlobalConstant.FLAG_N.equals(doctor.getSchThreeFlag()))
             {
-                doctor.setSchAllFlag("N");
+                doctor.setSchAllFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             doctorMapper.updateByPrimaryKeySelective(doctor);
         }
@@ -258,26 +255,26 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
             for(String doctorFlow:doctorflows) {
                 ResDoctor doctor = doctorBiz.readDoctor(doctorFlow);
                 if (SchSelYearEnum.One.getId().equals(form.getCycleYear())) {
-                    doctor.setSchOneFlag("Y");
+                    doctor.setSchOneFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
                 if (SchSelYearEnum.Two.getId().equals(form.getCycleYear())) {
-                    doctor.setSchTwoFlag("Y");
+                    doctor.setSchTwoFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
                 if (SchSelYearEnum.Three.getId().equals(form.getCycleYear())) {
-                    doctor.setSchThreeFlag("Y");
+                    doctor.setSchThreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
                 if("All".equals(form.getCycleYear()))
                 {
-                    doctor.setSchAllFlag("Y");
-                    doctor.setSchOneFlag("Y");
-                    doctor.setSchTwoFlag("Y");
-                    doctor.setSchThreeFlag("Y");
+                    doctor.setSchAllFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    doctor.setSchOneFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    doctor.setSchTwoFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    doctor.setSchThreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
-                if("Y".equals(doctor.getSchOneFlag())||
-                        "Y".equals(doctor.getSchTwoFlag())||
-                        "Y".equals(doctor.getSchThreeFlag()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSchOneFlag()) ||
+                        com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSchTwoFlag()) ||
+                        com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSchThreeFlag()))
                 {
-                    doctor.setSchAllFlag("Y");
+                    doctor.setSchAllFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
                 doctorMapper.updateByPrimaryKeySelective(doctor);
             }
@@ -344,8 +341,8 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                         result.setStandardGroupFlow(group.getGroupFlow());
 
                         //不是方案配置下的轮转记录
-                        result.setIsRotation(GlobalConstant.FLAG_N);
-                        doctor.setIsSchFlag("Y");
+                        result.setIsRotation(com.pinde.core.common.GlobalConstant.FLAG_N);
+                        doctor.setIsSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         doctorBiz.editDoctor(doctor);
                        return schArrangeResultBiz.saveSchArrangeResult(result);
                     }
@@ -353,7 +350,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
             }
         }
 
-        return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
     }
 
     @Override
@@ -450,7 +447,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                         ResDoctor resDoctor=doctorMap.get(doctorFlow);
                         schResultExtMapper.delCycleResultByYear(doctorFlow,resDoctor.getOrgFlow(),resDoctor.getSessionNumber(),resDoctor.getRotationFlow(),"");
                         schResultExtMapper.delCycleProcessByResult(doctorFlow,resDoctor.getOrgFlow(),resDoctor.getSessionNumber(),resDoctor.getRotationFlow(),"");
-                        resDoctor.setIsSchFlag("Y");
+                        resDoctor.setIsSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         doctorMapper.updateByPrimaryKeySelective(resDoctor);
                     }
                     for(int i=0;i<datas.size();i++)
@@ -503,7 +500,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                         String unit = InitConfig.getSysCfg("res_rotation_unit");
                         //默认按月计算
                         int step = 30;
-                        if(SchUnitEnum.Week.getId().equals(unit)){
+                        if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unit)) {
                             //如果是周按7天算/没配置或者选择月按30天
                             step = 7;
                             BigDecimal realMonth = BigDecimal.valueOf(0);
@@ -548,8 +545,8 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                             process.setHeadUserFlow(head.getUserFlow());
                             process.setHeadUserName(head.getUserName());
 
-                            process.setSchFlag(GlobalConstant.FLAG_N);
-                            process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
+                            process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                            process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                             process.setSchResultFlow(resultFlow);
                             process.setUserFlow(result.getDoctorFlow());
                             processBiz.edit(process);
@@ -1079,7 +1076,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                         List<Map<String,String>> schDeptDates= (List<Map<String, String>>) data.get("schDeptDates");
                         if(schDeptDates!=null)
                         {
-                            resDoctor.setIsSchFlag("Y");
+                            resDoctor.setIsSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                             doctorMapper.updateByPrimaryKeySelective(resDoctor);
                             for(Map<String,String> schDeptDate:schDeptDates)
                             {
@@ -1110,7 +1107,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                                 result.setDeptName(schDept.getDeptName());
                                 result.setSchDeptFlow(schDept.getSchDeptFlow());
                                 result.setSchDeptName(schDept.getSchDeptName());
-                                result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                                result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
                                 if(schRotationDept!=null)
                                 {

@@ -1,14 +1,13 @@
 package com.pinde.res.biz.stdp.impl;
 
 
+import com.pinde.core.model.ExamResults;
+import com.pinde.core.model.ExamResultsExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IExamResultsBiz;
 import com.pinde.sci.dao.base.ExamResultsMapper;
-import com.pinde.sci.model.mo.ExamResults;
-import com.pinde.sci.model.mo.ExamResultsExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,7 +21,7 @@ public class ExamResultsBizImpl implements IExamResultsBiz {
 	@Override
 	public ExamResults getByProcessFlowAndScore(String processFlow, BigDecimal theoryScore) {
 		ExamResultsExample examResultsExample=new ExamResultsExample();
-		examResultsExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowEqualTo(processFlow)
+        examResultsExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andProcessFlowEqualTo(processFlow)
 				.andTheoryScoreEqualTo(theoryScore);
 		examResultsExample.setOrderByClause("SUBMIT_TIME DESC");
 		List<ExamResults> list=resultsMapper.selectByExample(examResultsExample);
@@ -38,7 +37,7 @@ public class ExamResultsBizImpl implements IExamResultsBiz {
 		if(StringUtil.isNotBlank(processFlow))
 		{
 			ExamResultsExample examResultsExample=new ExamResultsExample();
-			examResultsExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowEqualTo(processFlow);
+            examResultsExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andProcessFlowEqualTo(processFlow);
 			examResultsExample.setOrderByClause("SUBMIT_TIME DESC");
 			return resultsMapper.selectByExample(examResultsExample);
 		}

@@ -5,7 +5,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorOrgHistoryBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.mo.ResDoctor;
@@ -14,7 +13,6 @@ import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample;
 import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +41,7 @@ public class ResDoctorOrgHistoryBizImpl implements IResDoctorOrgHistoryBiz{
 				return docOrgHistoryMapper.insertSelective(docOrgHistory);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -60,7 +58,7 @@ public class ResDoctorOrgHistoryBizImpl implements IResDoctorOrgHistoryBiz{
 	@Override
 	public List<ResDoctorOrgHistory> searchIsInDocByDocOrgHis(ResDoctorOrgHistory docOrgHistory) {
 		ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		setCriteria(docOrgHistory,criteria);
 		example.setOrderByClause("OUT_DATE");
 		return docOrgHistoryMapper.selectByExample(example);
@@ -98,7 +96,7 @@ public class ResDoctorOrgHistoryBizImpl implements IResDoctorOrgHistoryBiz{
 	@Override
 	public List<ResDoctorOrgHistory> searchHistoryByDoctorFlows(List<String> doctorFlows) {
 		ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowIn(doctorFlows);
 		example.setOrderByClause("OUT_DATE");
 		return docOrgHistoryMapper.selectByExample(example);

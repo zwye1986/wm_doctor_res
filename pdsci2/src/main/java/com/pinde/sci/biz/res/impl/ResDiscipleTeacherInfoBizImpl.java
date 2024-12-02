@@ -4,13 +4,11 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDiscipleTeacherInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResDiscipleTeacherInfoMapper;
 import com.pinde.sci.model.mo.ResDiscipleTeacherInfo;
 import com.pinde.sci.model.mo.ResDiscipleTeacherInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class ResDiscipleTeacherInfoBizImpl implements IResDiscipleTeacherInfoBiz
     @Override
     public ResDiscipleTeacherInfo readResDiscipleTeacherInfo(String userFlow) {
         ResDiscipleTeacherInfoExample example=new ResDiscipleTeacherInfoExample();
-        example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDoctorFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDiscipleTeacherInfo> list= teacherInfoMapper.selectByExampleWithBLOBs(example);
         if(list!=null&&list.size()>0)
         {

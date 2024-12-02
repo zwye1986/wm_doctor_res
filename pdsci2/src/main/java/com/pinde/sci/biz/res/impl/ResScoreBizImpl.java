@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,7 +9,6 @@ import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResScoreBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
@@ -21,15 +21,10 @@ import com.pinde.sci.model.mo.ResScoreExample.Criteria;
 import com.pinde.sci.model.res.GradeDetail4ShiYan;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -73,7 +68,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 				return scoreMapper.insert(resScore);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -85,7 +80,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 	public List<ResScore> searchByScoreList(String doctorFlow) {
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
 		}
@@ -95,7 +90,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 	public List<ResScore> selectByExampleWithBLOBs(String doctorFlow) {
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
 		}
@@ -109,7 +104,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 		types.add("SkillScore");
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andScoreTypeIdIn(types);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
@@ -120,12 +115,12 @@ public class ResScoreBizImpl implements IResScoreBiz{
 	public List<ResScore> selectByExampleWithBLOBs2(String doctorFlow,String flag) {
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
 		}
-		if(StringUtil.isNotBlank(flag) && "Y".equals(flag)){
-			criteria.andIsAffirmIdEqualTo("Y");
+        if (StringUtil.isNotBlank(flag) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
+            criteria.andIsAffirmIdEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return scoreMapper.selectByExampleWithBLOBs(example);
 	}
@@ -134,7 +129,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 //	public boolean haveScore(String processFlow){
 //		ResScoreExample example=new ResScoreExample();
 //		Criteria criteria= example.createCriteria();
-//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //		.andProcessFlowEqualTo(processFlow);
 //		int count = scoreMapper.countByExample(example);
 //		return count>0;
@@ -148,7 +143,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 		
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andProcessFlowEqualTo(processFlow);
 		
 		List<ResScore> scores = scoreMapper.selectByExample(example);
@@ -168,7 +163,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andProcessFlowEqualTo(processFlow);
 
 		List<ResScore> scores = scoreMapper.selectByExample(example);
@@ -192,7 +187,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andResultFlowEqualTo(resultFlow).andScoreTypeIdEqualTo("SkillUpload");
 
 		List<ResScore> scores = scoreMapper.selectByExample(example);
@@ -214,7 +209,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
 
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow)
 		.andScoreTypeIdEqualTo(typeId);
 		if(StringUtil.isNotBlank(year))
@@ -265,7 +260,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 		ResScoreExample example=new ResScoreExample();
 		Criteria criteria= example.createCriteria();
 
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecruitFlowEqualTo(recruitFlow)
 				.andScoreTypeIdEqualTo(id);
 		List<ResScore> scores = scoreMapper.selectByExampleWithBLOBs(example);
@@ -278,7 +273,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 		if(StringUtil.isNotBlank(paramMap.get("scoreTypeId"))){
 			ResScoreExample example=new ResScoreExample();
 			Criteria criteria= example.createCriteria();
-			criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andScoreTypeIdEqualTo(paramMap.get("scoreTypeId"));
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andScoreTypeIdEqualTo(paramMap.get("scoreTypeId"));
 			example.setOrderByClause("score_phase_id desc");
 			List<ResScore> scores = scoreMapper.selectByExample(example);
 			if(scores != null && scores.size() > 0){
@@ -336,7 +331,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 					if("学号".equals(colnames.get(j))) {
 						userCode = value;
 						SysUserExample example = new SysUserExample();
-						SysUserExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                        SysUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						if(StringUtil.isNotBlank(userCode)){
 							criteria.andUserCodeEqualTo(userCode);
 						}
@@ -345,7 +340,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 							sysUser = sysUsers.get(0);
 						}
 						ResScoreExample resScoreExample = new ResScoreExample();
-						Criteria scorecCriteria=resScoreExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                        Criteria scorecCriteria = resScoreExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						if(StringUtil.isNotBlank(sysUser.getUserFlow())){
 							scorecCriteria.andDoctorFlowEqualTo(sysUser.getUserFlow());
 						}
@@ -650,7 +645,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 				//执行保存
 				ResScoreExample example = new ResScoreExample();
 				example.createCriteria().andDoctorFlowEqualTo(score.getDoctorFlow()).andScoreTypeIdEqualTo(score.getScoreTypeId()).
-						andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                        andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<ResScore> old = scoreMapper.selectByExample(example);
 				//转大字段
 				String xmlContent = JaxbUtil.convertToXml(gradeDetail);
@@ -786,7 +781,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 				//查询是否有该排班
 				SchArrangeResultExample example = new SchArrangeResultExample();
 				example.createCriteria().andDoctorFlowEqualTo(score.getDoctorFlow()).andSchStartDateEqualTo(schStartDate).
-					andSchDeptNameEqualTo(schDeptName).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                        andSchDeptNameEqualTo(schDeptName).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<SchArrangeResult> resultList = schArrangeResultMapper.selectByExample(example);
 				if(resultList==null||resultList.size()==0){
 					throw new RuntimeException("导入失败！，第" + (count+2) + "行，该学员无此轮转科室记录！");
@@ -795,7 +790,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 					//执行保存
 					ResScoreExample example2 = new ResScoreExample();
 					example2.createCriteria().andDoctorFlowEqualTo(score.getDoctorFlow()).andResultFlowEqualTo(score.getResultFlow()).
-							andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andScoreTypeIdEqualTo("SkillUpload");
+                            andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andScoreTypeIdEqualTo("SkillUpload");
 					List<ResScore> old = scoreMapper.selectByExample(example2);
 					score.setScoreTypeId("SkillUpload");
 					if(old==null||old.size()==0){

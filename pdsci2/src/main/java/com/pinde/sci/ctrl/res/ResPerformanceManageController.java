@@ -1,6 +1,9 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,12 +14,9 @@ import com.pinde.sci.biz.res.IResPerformanceManageBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.res.FormulaForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResAllowancePayment;
@@ -62,10 +62,10 @@ public class ResPerformanceManageController extends GeneralController {
         SysUser currentUser= GlobalContext.getCurrentUser();
         SysOrg currentOrg=orgBiz.readSysOrg(currentUser.getOrgFlow());
         List<SysOrg> orgs = new ArrayList<>();
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
             //查询所有医院
             SysOrg org = new SysOrg();
-            org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             orgs = orgBiz.searchOrg(org);
             if(orgs!=null&&orgs.size()>0){
                 if(StringUtil.isBlank(orgFlow)){
@@ -73,7 +73,7 @@ public class ResPerformanceManageController extends GeneralController {
                 }
             }
             model.addAttribute("orgs",orgs);
-        }else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
             //查询高校下所有医院
             String workOrgId = currentOrg.getSendSchoolId();
             orgs = orgExtMapper.searchOrgs4hbUniversity(workOrgId);
@@ -83,7 +83,7 @@ public class ResPerformanceManageController extends GeneralController {
                 }
             }
             model.addAttribute("orgs",orgs);
-        }else if(GlobalConstant.USER_LIST_LOCAL.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(role)) {
             orgFlow=currentUser.getOrgFlow();
         }
         List<SysDept> depts=deptBiz.searchDeptByOrg(orgFlow);
@@ -101,7 +101,7 @@ public class ResPerformanceManageController extends GeneralController {
             orgFlow=curUser.getOrgFlow();
         }
         dept.setOrgFlow(orgFlow);
-        dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         PageHelper.startPage(currentPage, getPageSize(request));
         List<SysDept> deptList = deptBiz.searchDept(dept);
 
@@ -169,9 +169,9 @@ public class ResPerformanceManageController extends GeneralController {
             orgFlow=curUser.getOrgFlow();
         }
         dept.setOrgFlow(orgFlow);
-        dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDept> deptList = deptBiz.searchDept(dept);
-        List<SysDict> dictList= DictTypeEnum.sysListDictMap.get(DictTypeEnum.ActivityType.getId());
+        List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId());
         if(dictList==null) {
             dictList = new ArrayList<>();
         }
@@ -377,7 +377,7 @@ public class ResPerformanceManageController extends GeneralController {
         }
         List<Map<String,String>> speDeptList = activityBiz.searchSpeDept(orgFlow,resTrainingSpeId);
         List<String> list = new ArrayList<>();
-        List<SysDict> dictList= DictTypeEnum.sysListDictMap.get(DictTypeEnum.ActivityType.getId());
+        List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId());
         if(dictList==null) {
             dictList = new ArrayList<>();
         }
@@ -507,12 +507,12 @@ public class ResPerformanceManageController extends GeneralController {
             costCfgMain.setEndDate(endDate);
         }
         costCfgMain.setOrgFlow(orgFlow);
-        if(typeId.equals(DictTypeEnum.ActivityType.getId())) {
-            costCfgMain.setTypeId(DictTypeEnum.ActivityType.getId());
-        }else if(typeId.equals(DictTypeEnum.LectureType.getId())){
-            costCfgMain.setTypeId(DictTypeEnum.LectureType.getId());
+        if (typeId.equals(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId())) {
+            costCfgMain.setTypeId(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId());
+        } else if (typeId.equals(com.pinde.core.common.enums.DictTypeEnum.LectureType.getId())) {
+            costCfgMain.setTypeId(com.pinde.core.common.enums.DictTypeEnum.LectureType.getId());
         }else{
-            costCfgMain.setTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+            costCfgMain.setTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
         }
         PageHelper.startPage(currentPage, getPageSize(request));
         List<ResCostCfgMain> costCfgMainList = costCfgMainBiz.search(costCfgMain);
@@ -559,10 +559,10 @@ public class ResPerformanceManageController extends GeneralController {
             SysUser user = GlobalContext.getCurrentUser();
             main.setOrgFlow(user.getOrgFlow());
             main.setOrgName(user.getOrgName());
-            if(main.getTypeId().equals(DictTypeEnum.ActivityType.getId())) {
-                main.setTypeName(DictTypeEnum.ActivityType.getName());
-            }else if(main.getTypeId().equals(DictTypeEnum.LectureType.getId())){
-                main.setTypeName(DictTypeEnum.LectureType.getName());
+            if (main.getTypeId().equals(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId())) {
+                main.setTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getName());
+            } else if (main.getTypeId().equals(com.pinde.core.common.enums.DictTypeEnum.LectureType.getId())) {
+                main.setTypeName(com.pinde.core.common.enums.DictTypeEnum.LectureType.getName());
             }else{
                 main.setTypeName("专业基地");
             }
@@ -583,11 +583,11 @@ public class ResPerformanceManageController extends GeneralController {
                         costCfgDetailBiz.saveDetail(detail);
                     }
                 }
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
             return "时间段不可重复！";
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @RequestMapping(value="/allowanceMain")

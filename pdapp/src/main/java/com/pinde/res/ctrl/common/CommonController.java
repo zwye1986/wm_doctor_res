@@ -1,6 +1,6 @@
 package com.pinde.res.ctrl.common;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +30,6 @@ public class CommonController {
     @ResponseBody
     public String reLoadCfg(){
         InitConfig.reload();
-        return GlobalConstant.FLAG_Y;
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;
     }
 }

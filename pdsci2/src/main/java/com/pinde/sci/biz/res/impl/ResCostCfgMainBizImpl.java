@@ -46,7 +46,7 @@ public class ResCostCfgMainBizImpl implements IResCostCfgMainBiz {
             if(StringUtil.isNotBlank(costCfgMain.getTypeId())){
                 criteria.andTypeIdEqualTo(costCfgMain.getTypeId());
             }
-            criteria.andRecordStatusEqualTo("Y");
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
             return costCfgMainMapper.selectByExample(example);
         }
         return null;

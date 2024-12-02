@@ -131,7 +131,7 @@ public class LcjnCostController extends GeneralController {
 				courseSupplies.setCourseName(courseName);
 			}
 			String dictId = courseSupplies.getDictId();
-//			String dictName = DictTypeEnum.SkillMaterial.getDictNameById(dictId);
+//			String dictName = com.pinde.core.common.enums.DictTypeEnum.SkillMaterial.getDictNameById(dictId);
 //			courseSupplies.setDictName(dictName);
 			if(StringUtil.isBlank(courseSupplies.getRecordFlow())){//合并相同耗材
 				List<LcjnCourseSupplies> oldSupplyList = costBiz.searchSuppliesById(dictId,courseSupplies.getSkillFlow(),courseFlow);

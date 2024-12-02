@@ -10,7 +10,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +68,9 @@ public class JsResExamCfgController extends GeneralController {
         }
         model.addAttribute("depts",depts);
         SysDept dept=new SysDept();
-        dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         dept.setOrgFlow(currentUser.getOrgFlow());
-        List<Map<String,String>> list=deptBiz.searchDeptByUnion(dept,"Y");
+        List<Map<String, String>> list = deptBiz.searchDeptByUnion(dept, com.pinde.core.common.GlobalConstant.FLAG_Y);
         model.addAttribute("all",list);
         if(StringUtil.isBlank(arrangeFlow))
         {
@@ -83,7 +82,7 @@ public class JsResExamCfgController extends GeneralController {
     public String list(Model model,Integer currentPage ,HttpServletRequest request,
                        SchExamArrangement schExamArrangement  ){
         SysUser sysuser=GlobalContext.getCurrentUser();
-        schExamArrangement.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        schExamArrangement.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         schExamArrangement.setOrgFlow(sysuser.getOrgFlow());
         PageHelper.startPage(currentPage,getPageSize(request));
         List<SchExamArrangement> list=examCfgBiz.searchList(schExamArrangement);
@@ -98,7 +97,7 @@ public class JsResExamCfgController extends GeneralController {
         {
             return "cannotInsert";
         }
-        int result=examCfgBiz.updateArrangement(schExamArrangement,standardDeptId,"N");
+        int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_N);
         if(result==0)
         {
             return "操作失败！";
@@ -132,7 +131,7 @@ public class JsResExamCfgController extends GeneralController {
     @ResponseBody
     public String updateCfg(Model model,  SchExamArrangement schExamArrangement  ){
         //删除时，校验是否已有学生考过试，并有成绩的，无法删除
-        if(GlobalConstant.RECORD_STATUS_N.equals(schExamArrangement.getRecordStatus()))
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(schExamArrangement.getRecordStatus()))
         {
             int checkCount=examCfgBiz.checkHaveExam(schExamArrangement.getArrangeFlow());
             if(checkCount>0)
@@ -182,7 +181,7 @@ public class JsResExamCfgController extends GeneralController {
             {
                 // 判断是否开放成绩查看权限，未开放则将学员成绩以**展示
                 SchExamArrangement examArrangement = examCfgBiz.readByFlow(da.getArrangeFlow());
-                if (StringUtil.isNotBlank(examArrangement.getIsOpenResult()) && examArrangement.getIsOpenResult().equals(GlobalConstant.FLAG_N)) {
+                if (StringUtil.isNotBlank(examArrangement.getIsOpenResult()) && examArrangement.getIsOpenResult().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
                     da.setExamScore(new BigDecimal(-20));
                 }
                 doctorArrangementMap.put(da.getArrangeFlow(),da);
@@ -202,16 +201,16 @@ public class JsResExamCfgController extends GeneralController {
                         Map<String,String> paramTempMap = new HashMap<>();
                         paramTempMap.put("countNum",tempMap.get("COUNTNUM"));
                         paramTempMap.put("maxScore",tempMap.get("MAXSCORE"));
-                        if(GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen())&&GlobalConstant.FLAG_Y.equals(tempExam.getIsWeb()) &&
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempExam.getIsWeb()) &&
                                 Integer.parseInt(tempExam.getExamNumber()) > Integer.parseInt(tempMap.get("COUNTNUM"))){
-                            paramTempMap.put("canExam",GlobalConstant.FLAG_Y);
+                            paramTempMap.put("canExam", com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                         examLogMaps.put(tempMap.get("ARRANGEFLOW"),paramTempMap);
                     }
                 }else {
-                    if(GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen())&&GlobalConstant.FLAG_Y.equals(tempExam.getIsWeb())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempExam.getIsWeb())) {
                         Map<String,String> paramTempMap = new HashMap<>();
-                        paramTempMap.put("canExam",GlobalConstant.FLAG_Y);
+                        paramTempMap.put("canExam", com.pinde.core.common.GlobalConstant.FLAG_Y);
                         examLogMaps.put(tempExam.getArrangeFlow(),paramTempMap);
                     }
                 }

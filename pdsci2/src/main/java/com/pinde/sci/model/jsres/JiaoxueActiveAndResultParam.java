@@ -1,6 +1,6 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 import com.pinde.sci.model.mo.TeachingActivityResult;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 基地---教学活动和教学结果
  */
-public class JiaoxueActiveAndResultParam extends MybatisObject {
+public class JiaoxueActiveAndResultParam extends TeachingActivitySpeakerExample.MybatisObject {
     private String activityFlow;
 
     private String activityName;

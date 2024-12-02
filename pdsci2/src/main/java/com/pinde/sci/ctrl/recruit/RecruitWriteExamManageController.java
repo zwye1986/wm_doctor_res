@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitCfgInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.RecruitInfo;
@@ -48,7 +48,7 @@ public class RecruitWriteExamManageController extends GeneralController {
         param.put("idNo",idNo);
         param.put("startDate",beginDate);
         param.put("endDate",endDate);
-        param.put("writeExamFlag","Y");
+        param.put("writeExamFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
 
         model.addAttribute("recruitInfoExts",recruitInfoExts);
@@ -85,16 +85,16 @@ public class RecruitWriteExamManageController extends GeneralController {
             }
         }
         RecruitInfoExt recruitInfoExt=recruitInfoBiz.searchRecruitInfoByFlow(recruitInfo.getRecruitFlow());
-        if("Y".equals(recruitInfoExt.getInterviewFlag()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
         {
             return "已发面试通知，无法修改成绩！";
         }
         int c= recruitInfoBiz.saveRecruitInfo(recruitInfo);
         if(c==0)
         {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
     @RequestMapping("/auditWriteExam")
     @ResponseBody
@@ -105,7 +105,7 @@ public class RecruitWriteExamManageController extends GeneralController {
         {
             return "未选择考试信息";
         }
-        if("Y".equals(recruitInfoExt.getInterviewFlag()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
         {
             return "已发面试通知，无法审核！";
         }
@@ -126,7 +126,7 @@ public class RecruitWriteExamManageController extends GeneralController {
             Map<String,String> param=new HashMap<>();
             param.put("orgFlow",orgFlow);
             param.put("recruitYear",recruitYear);
-            param.put("writeExamFlag","Y");
+            param.put("writeExamFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.searchCanExamRecruitInfo(param);
             if(recruitInfoExts==null||recruitInfoExts.size()==0)
             {
@@ -141,16 +141,16 @@ public class RecruitWriteExamManageController extends GeneralController {
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
                     }else{
-                        if(GlobalConstant.ZERO_LINE != count){
-                            return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                         }else{
-                            return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         }
                     }
                 }else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();

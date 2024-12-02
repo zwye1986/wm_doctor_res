@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysDeptMonthPlanItem;
-import com.pinde.sci.model.mo.SysDeptMonthPlanItemExample;
+import com.pinde.core.model.SysDeptMonthPlanItem;
+import com.pinde.core.model.SysDeptMonthPlanItemExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

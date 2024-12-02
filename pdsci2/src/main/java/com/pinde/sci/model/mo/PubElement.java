@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubElement extends MybatisObject {
+public class PubElement extends TeachingActivitySpeakerExample.MybatisObject {
     private String elementFlow;
 
     private String elementName;

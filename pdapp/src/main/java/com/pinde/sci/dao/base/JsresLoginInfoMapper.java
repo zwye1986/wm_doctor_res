@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresLoginInfo;
-import com.pinde.sci.model.mo.JsresLoginInfoExample;
+import com.pinde.core.model.JsresLoginInfo;
+import com.pinde.core.model.JsresLoginInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

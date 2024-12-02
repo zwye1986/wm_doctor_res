@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResUserSpe;
-import com.pinde.sci.model.mo.ResUserSpeExample;
+import com.pinde.core.model.ResUserSpe;
+import com.pinde.core.model.ResUserSpeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

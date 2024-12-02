@@ -4,7 +4,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResSkillConfigBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.ResDoctorSkillMapper;
@@ -14,7 +13,6 @@ import com.pinde.sci.dao.jsres.ResSkillOrgExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,7 +35,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
     public List<ResSkillConfig> searchSkillList(Map<String, String> param) {
         ResSkillConfigExample example = new ResSkillConfigExample();
         ResSkillConfigExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(param.get("testName"))){
             criteria.andTestNameLike("%"+param.get("testName")+"%");
         }
@@ -59,7 +57,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
     @Override
     public List<ResSkillOrg> searchSkillOrgs(String skillFlow) {
         ResSkillOrgExample example = new ResSkillOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andSkillFlowEqualTo(skillFlow);
         return skillOrgMapper.selectByExample(example);
     }
@@ -94,7 +92,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
                 int count = orgExtMapper.delSkillOrgBySkillFlow(skillConfig.getSkillFlow());
                 Map<String,Object> map = new HashMap<>();
                 map.put("skillFlow",skillConfig.getSkillFlow());
-                map.put("recordStatus",GlobalConstant.RECORD_STATUS_Y);
+                map.put("recordStatus", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 map.put("createTime",DateUtil.getCurrDateTime());
                 map.put("createUserFlow",GlobalContext.getCurrentUser().getUserFlow());
                 map.put("modifyTime",DateUtil.getCurrDateTime());
@@ -114,7 +112,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
         List<ResSkillConfig> resSkillConfigs = skillConfigMapper.selectByExample(example);
         if (resSkillConfigs.size() > 0) {
             ResSkillConfig skillConfig = resSkillConfigs.get(0);
-            skillConfig.setRecordStatus(GlobalConstant.FLAG_N);
+            skillConfig.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             GeneralMethod.setRecordInfo(skillConfig, false);
             ResSkillConfigExample skillConfigExample = new ResSkillConfigExample();
             skillConfigExample.createCriteria().andSkillTimeFlowEqualTo(skillConfig.getSkillFlow());
@@ -128,7 +126,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
         ResDoctorSkillExample example = new ResDoctorSkillExample();
         ResDoctorSkillExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("TEST_ID DESC, CREATE_TIME DESC");
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(param.get("cityId"))){
             criteria.andCityIdEqualTo(param.get("cityId"));
         }
@@ -144,7 +142,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
     @Override
     public ResSkillConfig findOneByCurrDate(String currTime,String cityId) {
         ResSkillConfigExample example = new ResSkillConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andCityIdEqualTo(cityId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andCityIdEqualTo(cityId)
                 .andSkillStartTimeLessThan(currTime).andSkillEndTimeGreaterThan(currTime);
         List<ResSkillConfig> lists = skillConfigMapper.selectByExample(example);
         if(null != lists && lists.size()>0){
@@ -156,7 +154,7 @@ public class ResSkillConfigBizImpl implements IResSkillConfigBiz {
     @Override
     public ResSkillOrg searchSkillOrg(String skillFlow, String orgFlow) {
         ResSkillOrgExample example = new ResSkillOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andSkillFlowEqualTo(skillFlow).andOrgFlowEqualTo(orgFlow);
         List<ResSkillOrg> orgList = skillOrgMapper.selectByExample(example);
         if(null != orgList && orgList.size()>0){

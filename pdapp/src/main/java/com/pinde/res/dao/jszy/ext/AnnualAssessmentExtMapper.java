@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jszy.ext;
 
 import com.pinde.res.model.jszy.mo.AnnualAssessmentExt;
-import com.pinde.sci.model.mo.ResAnnualAssessment;
+import com.pinde.core.model.ResAnnualAssessment;
 
 import java.util.Map;
 

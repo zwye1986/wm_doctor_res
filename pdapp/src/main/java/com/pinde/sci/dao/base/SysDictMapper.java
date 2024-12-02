@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysDictExample;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysDictExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

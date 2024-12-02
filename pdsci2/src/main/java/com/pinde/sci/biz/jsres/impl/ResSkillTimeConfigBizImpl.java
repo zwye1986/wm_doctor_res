@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,12 +11,10 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.JsresExamSignupMapper;
 import com.pinde.sci.dao.base.ResDoctorSkillMapper;
 import com.pinde.sci.dao.base.ResSkillTimeConfigMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Cell;
@@ -23,7 +23,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -243,7 +242,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public Boolean checkTestExist(ResSkillTimeConfig skillTimeConfig) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         //获取出所有非关闭的考试
         List<ResSkillTimeConfig> skillTimeConfigs = skillTimeConfigMapper.selectByExample(example);
         if (StringUtil.isNotBlank(skillTimeConfig.getSkillTimeFlow())) {
@@ -281,7 +280,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
         List<ResSkillTimeConfig> resSkillTimeConfigs = skillTimeConfigMapper.selectByExample(example);
         if (resSkillTimeConfigs.size() > 0) {
             ResSkillTimeConfig skillTimeConfig = resSkillTimeConfigs.get(0);
-            skillTimeConfig.setRecordStatus(GlobalConstant.FLAG_N);
+            skillTimeConfig.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             GeneralMethod.setRecordInfo(skillTimeConfig, false);
             ResSkillTimeConfigExample skillTimeConfigExample = new ResSkillTimeConfigExample();
             skillTimeConfigExample.createCriteria().andSkillTimeFlowEqualTo(skillTimeConfig.getSkillTimeFlow());
@@ -293,7 +292,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public List<ResSkillTimeConfig> findEffective(String currDateTime, String orgCityId) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
                 .andApplyEndTimeGreaterThanOrEqualTo(currDateTime).andCitysIdLike("%" + orgCityId + "%");
         return skillTimeConfigMapper.selectByExample(example);
     }
@@ -301,14 +300,14 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public List<ResSkillTimeConfig> findAllEffective() {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return skillTimeConfigMapper.selectByExample(example);
     }
     //获取基地审核时间包含当前时间的所有非关闭的考试
     @Override
     public List<ResSkillTimeConfig> findLocalEffective(String currDateTime) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andLocalAuditStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andLocalAuditStartTimeLessThanOrEqualTo(currDateTime)
                 .andLocalAuditEndTimeGreaterThanOrEqualTo(currDateTime);
         return skillTimeConfigMapper.selectByExample(example);
     }
@@ -316,7 +315,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public List<ResSkillTimeConfig> findChargeEffective(String currDateTime) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andChargeAuditStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andChargeAuditStartTimeLessThanOrEqualTo(currDateTime)
                 .andChargeAuditEndTimeGreaterThanOrEqualTo(currDateTime);
         return skillTimeConfigMapper.selectByExample(example);
     }
@@ -324,7 +323,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public List<ResSkillTimeConfig> findGlobalEffective(String currDateTime) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(currDateTime)
                 .andTestEndTimeGreaterThanOrEqualTo(currDateTime);
         return skillTimeConfigMapper.selectByExample(example);
     }
@@ -341,7 +340,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public List<ResSkillTimeConfig> findEffectiveByParam(String currDateTime, String applyTime, String orgCityId) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(applyTime)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andApplyStartTimeLessThanOrEqualTo(applyTime)
                 .andApplyEndTimeGreaterThanOrEqualTo(applyTime).andCitysIdLike("%" + orgCityId + "%")
                 .andTestEndTimeGreaterThanOrEqualTo(currDateTime);
         return skillTimeConfigMapper.selectByExample(example);
@@ -350,7 +349,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
     @Override
     public ResSkillTimeConfig findOneByCurrDate(String currTime) {
         ResSkillTimeConfigExample example = new ResSkillTimeConfigExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                 .andSkillStartTimeLessThan(currTime).andSkillEndTimeGreaterThan(currTime);
         List<ResSkillTimeConfig> lists = skillTimeConfigMapper.selectByExample(example);
         if(null != lists && lists.size()>0){
@@ -410,13 +409,13 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
         int sheetNum = wb.getNumberOfSheets();
         //查询基地
         SysOrg org2 = new SysOrg();
-        org2.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        org2.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         org2.setOrgCityId(cityId);
         List<SysOrg> orgs = orgBiz.searchOrg(org2);
         //查询专业
         SysDict dict = new SysDict();
-        dict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-        dict.setDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+        dict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        dict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
         List<SysDict> dictList = dictBiz.searchDictList(dict);
 
         if (sheetNum > 0) {

@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,12 +13,11 @@ import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchExamCfgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.ResSchProcessExpressMapper;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -136,7 +136,7 @@ public class ResTestController extends GeneralController {
 			//禅道201 更改
 			JsresPowerCfg jsresPowerCfg= jsResPowerCfgBiz.read("out_test_check_" + process.getOrgFlow());
 			if(jsresPowerCfg!=null && StringUtil.isNotBlank(jsresPowerCfg.getCfgValue()) &&
-					GlobalConstant.RECORD_STATUS_Y.equals(jsresPowerCfg.getCfgValue())) {
+                    com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(jsresPowerCfg.getCfgValue())) {
 				//查询科室是否单独配置出科考核参数
 				JsresDeptConfig deptConfig = jsResPowerCfgBiz.searchDeptCfg(process.getOrgFlow(),process.getSchDeptFlow());
 				if(null != deptConfig){
@@ -152,7 +152,7 @@ public class ResTestController extends GeneralController {
 						}
 					}
 					//是否允许学员轮转时间结束后考试
-					if(StringUtil.isNotBlank(deptConfig.getIsTestOut()) && GlobalConstant.RECORD_STATUS_N.equals(deptConfig.getIsTestOut())){
+                    if (StringUtil.isNotBlank(deptConfig.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(deptConfig.getIsTestOut())) {
 						//不允许  则判断时间是否在轮转时间内
 						String currDate = DateUtil.getCurrDate();
 						String endDate = process.getSchEndDate();
@@ -165,7 +165,7 @@ public class ResTestController extends GeneralController {
 						}catch (Exception e){
 							e.printStackTrace();
 						}
-					}else if(StringUtil.isNotBlank(deptConfig.getIsTestOut()) && GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getIsTestOut())){
+                    } else if (StringUtil.isNotBlank(deptConfig.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getIsTestOut())) {
 						String currDate = DateUtil.getCurrDate();
 						String endDate = process.getSchEndDate();
 						if(StringUtil.isNotBlank(deptConfig.getTestOutTime())) {
@@ -198,7 +198,7 @@ public class ResTestController extends GeneralController {
 							}
 						}
 						//是否允许学员轮转时间结束后考试
-						if(StringUtil.isNotBlank(config.getIsTestOut()) && GlobalConstant.RECORD_STATUS_N.equals(config.getIsTestOut())){
+                        if (StringUtil.isNotBlank(config.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(config.getIsTestOut())) {
 							//不允许  则判断时间是否在轮转时间内
 							String currDate = DateUtil.getCurrDate();
 							String endDate = process.getSchEndDate();
@@ -211,7 +211,7 @@ public class ResTestController extends GeneralController {
 							}catch (Exception e){
 								e.printStackTrace();
 							}
-						}else if(StringUtil.isNotBlank(config.getIsTestOut()) && GlobalConstant.RECORD_STATUS_Y.equals(config.getIsTestOut())){
+                        } else if (StringUtil.isNotBlank(config.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(config.getIsTestOut())) {
 							String currDate = DateUtil.getCurrDate();
 							String endDate = process.getSchEndDate();
 							if(StringUtil.isNotBlank(config.getTestOutTime())) {
@@ -290,8 +290,8 @@ public class ResTestController extends GeneralController {
 		if(score==null){
 			score = new ResScore();
 			score.setDoctorFlow(userFlow);
-			score.setScoreTypeId(ResScoreTypeEnum.DeptScore.getId());
-			score.setScoreTypeName(ResScoreTypeEnum.DeptScore.getName());
+            score.setScoreTypeId(com.pinde.core.common.enums.ResScoreTypeEnum.DeptScore.getId());
+            score.setScoreTypeName(com.pinde.core.common.enums.ResScoreTypeEnum.DeptScore.getName());
 			score.setResultFlow(resultFlow);
 			score.setProcessFlow(processFlow);
 			score.setSchDeptFlow(result.getSchDeptFlow());
@@ -301,7 +301,7 @@ public class ResTestController extends GeneralController {
 		score.setPaperFlow(ExamSoluID);
 		
 		int saveResult = scoreBiz.save(score);
-		if(GlobalConstant.ZERO_LINE>=saveResult){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE >= saveResult) {
 			model.addAttribute("errorMeg","分数信息创建出错！");
 			return errorPage;
 		}
@@ -402,7 +402,7 @@ public class ResTestController extends GeneralController {
 		result.setDoctorFlow(userFlow);
 		result.setExamYear(DateUtil.getYear());
 		int saveResult = examCfgBiz.saveGraduationExam(result);
-		if(GlobalConstant.ZERO_LINE>=saveResult){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE >= saveResult) {
 			model.addAttribute("errorMeg","考核结果信息创建出错！");
 			return errorPage;
 		}
@@ -431,7 +431,7 @@ public class ResTestController extends GeneralController {
 			return errorPage;
 		}
 		//校验考核是否开放
-		if(!GlobalConstant.FLAG_Y.equals(ment.getIsOpen()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ment.getIsOpen()))
 		{
 			model.addAttribute("errorMeg","该考核暂未开放，无法参加考试！");
 			return errorPage;
@@ -577,7 +577,7 @@ public class ResTestController extends GeneralController {
 		result.setSessionNumber(doctor.getSessionNumber());
 
 		int saveResult = examCfgBiz.save(result);
-		if(GlobalConstant.ZERO_LINE>=saveResult){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE >= saveResult) {
 			model.addAttribute("errorMeg","考核结果信息创建出错！");
 			return errorPage;
 		}
@@ -636,7 +636,7 @@ public class ResTestController extends GeneralController {
 			}
 			//未审核出科考核表时，同步成绩至ResDoctorSchProcess
 			ResSchProcessExpressExample expressExample = new ResSchProcessExpressExample();
-			expressExample.createCriteria().andRecordStatusEqualTo("Y").andProcessFlowEqualTo(processFlow)
+            expressExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andProcessFlowEqualTo(processFlow)
 					.andRecTypeIdEqualTo("AfterEvaluation");
 			List<ResSchProcessExpress> expresses = expressMapper.selectByExample(expressExample);
 			if (expresses != null && expresses.size() > 0) {

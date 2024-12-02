@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,35 +14,27 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.ChartExtMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -88,7 +80,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
 		SysOrgExample example=new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(org.getOrgProvId())){
 	    	criteria.andOrgProvIdEqualTo(org.getOrgProvId());
 	    }
@@ -233,7 +225,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 
 	@Override
 	public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName){
-		String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if(file.getSize() > 0){
 			//创建目录
 			String dateString = DateUtil.getCurrDate2();
@@ -306,7 +298,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -333,7 +325,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -413,7 +405,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public ResTeacherTraining searchTeacherInfoByCertificateNoNotSelf(String certificateNo, String doctorName) {
 		ResTeacherTrainingExample example = new ResTeacherTrainingExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andCertificateNoEqualTo(certificateNo)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andCertificateNoEqualTo(certificateNo)
 				.andDoctorNameNotEqualTo(doctorName);
 		List<ResTeacherTraining> list = teacherTrainingMapper.selectByExample(example);
 		if(null != list && list.size()>0){
@@ -501,7 +493,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				if(StringUtil.isBlank(training.getCertificateNo())){
 					throw new Exception("导入失败！第"+ (count+2) +"行证书编号不能为空！");
 				}
-				if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 					if (StringUtil.isBlank(training.getOrgName())) {
 						throw new Exception("导入失败！第" + (count + 2) + "行基地名称不能为空！");
 					} else {
@@ -535,7 +527,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				}else {
 					//判断基地是否存在科室
 					SysDeptExample deptExample = new SysDeptExample();
-					deptExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    deptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 							.andOrgFlowEqualTo(training.getOrgFlow()).andDeptNameEqualTo(training.getDeptName());
 					List<SysDept> deptList = deptMapper.selectByExample(deptExample);
 					if(null == deptList || deptList.size() == 0)
@@ -546,8 +538,8 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 					throw new Exception("导入失败！第"+ (count+2) +"行专业不能为空！");
 				}else{
 					SysDictExample dictExample = new SysDictExample();
-					dictExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-							.andDictTypeIdEqualTo(DictTypeEnum.DoctorTrainingSpe.getId())
+                    dictExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                            .andDictTypeIdEqualTo(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId())
 							.andDictNameEqualTo(training.getSpeName());
 					List<SysDict> dictList = dictMapper.selectByExample(dictExample);
 					if(null == dictList || dictList.size() == 0)
@@ -572,7 +564,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 					throw new Exception("导入失败！第"+ (count+2) +"行,手机号码不能为空！");
 				} else {
 					SysUserExample example=new SysUserExample();
-					example.createCriteria().andUserPhoneEqualTo(training.getUserPhone()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andUserPhoneEqualTo(training.getUserPhone()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 					if(sysUserList != null && !sysUserList.isEmpty()){
 						throw new Exception("导入失败！第"+ (count+2) +"行,手机号码重复！");
@@ -619,13 +611,13 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				}
 				//打开app权限
 				String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-				String cfgValue = "Y";
+                String cfgValue = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				String cfgDesc = "是否开放带教app权限";
 				JsresPowerCfg cfg = new JsresPowerCfg();
 				cfg.setCfgCode(cfgCode);
 				cfg.setCfgValue(cfgValue);
 				cfg.setCfgDesc(cfgDesc);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				jsResPowerCfgBiz.save(cfg);
 
 				SysRole sysRole = userRoleBiz.getByRoleName("带教老师");
@@ -634,7 +626,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 					List<String> allRoleFlows = new ArrayList<String>();
 					allRoleFlows.add(sysRole.getRoleFlow());
 					for (String roleFlow : allRoleFlows) {
-						userRoleBiz.saveSysUserRole(user.getUserFlow(), roleFlow, GlobalConstant.RES_WS_ID);
+                        userRoleBiz.saveSysUserRole(user.getUserFlow(), roleFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 					}
 				}
 
@@ -734,7 +726,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			    		if(typeSpeList!=null&&!typeSpeList.isEmpty()){
 		    		    	for(SysDict sd : typeSpeList){
 				    		String key = so.getOrgFlow()+trainTypeId+sd.getDictId();//确定唯一key
-				    		if(totalCountMap.get(key)!=null&&GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))){
+                                if (totalCountMap.get(key) != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))) {
 				    			count+=Integer.parseInt(totalCountMap.get(key)+"");
 				    			}
 		    		    	}
@@ -757,7 +749,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		    		    		sheet.setColumnWidth(0, 4500);
 		    		    		String key = so.getOrgFlow()+trainTypeId+sd.getDictId();//确定唯一key
 		    		    		HSSFCell orgCell = rowDepts.createCell(lie);
-		    		    		if(GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))){
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(key))) {
 		    		    			if(totalCountMap.get(key)!= null){
 		    		    				xiaojiCount+=Integer.parseInt(totalCountMap.get(key)+"");//算小计
 		    		    				if(joingCountMap.get(key)!= null){
@@ -812,12 +804,12 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
 		List<String> typeId=new ArrayList<>();
-		typeId.add(JsResDocTypeEnum.Company.getId());
-		typeId.add(JsResDocTypeEnum.CompanyEntrust.getId());
-		typeId.add(JsResDocTypeEnum.Social.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Social.getId());
 		if(StringUtil.isNotBlank(graduate))
 		{
-			typeId.add(JsResDocTypeEnum.Graduate.getId());
+            typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId());
 		}
 		paramMap.put("docTypes", typeId);
 		return recruitExtMapper.statisticDocCountByOrg(paramMap);
@@ -831,12 +823,12 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		paramMap.put("startTime", startTime);
 		paramMap.put("delTypeList", delTypeList);
 		List<String> typeId=new ArrayList<>();
-		typeId.add(JsResDocTypeEnum.Company.getId());
-		typeId.add(JsResDocTypeEnum.CompanyEntrust.getId());
-		typeId.add(JsResDocTypeEnum.Social.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Social.getId());
 		if(StringUtil.isNotBlank(graduate))
 		{
-			typeId.add(JsResDocTypeEnum.Graduate.getId());
+            typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId());
 		}
 		paramMap.put("docTypes", typeId);
 		return recruitExtMapper.statisticAppCountByOrg(paramMap);
@@ -872,12 +864,12 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		paramMap.put("startDate", startDate);
 		paramMap.put("endDate", endDate);
 		List<String> typeId=new ArrayList<>();
-		typeId.add(JsResDocTypeEnum.Company.getId());
-		typeId.add(JsResDocTypeEnum.CompanyEntrust.getId());
-		typeId.add(JsResDocTypeEnum.Social.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId());
+        typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Social.getId());
 		if(StringUtil.isNotBlank(graduate))
 		{
-			typeId.add(JsResDocTypeEnum.Graduate.getId());
+            typeId.add(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId());
 		}
 		paramMap.put("docTypes", typeId);
 		return recruitExtMapper.statisticNoAppUser(paramMap);
@@ -915,7 +907,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 								failCount++;
 							}else{
 								int result = save(teacherTraining);
-								if(GlobalConstant.ZERO_LINE!=result){
+                                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 									succCount++;
 								}else{
 									failCount++;
@@ -984,7 +976,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo(ResTeacherTraining resTeacherTraining) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1017,7 +1009,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public ResTeacherTraining searchTeacherInfoByPK(String recordflow) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRecordFlowEqualTo(recordflow);
 		List<ResTeacherTraining> list= teacherTrainingMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
@@ -1034,7 +1026,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo2(ResTeacherTraining resTeacherTraining,String dataFlag) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1074,7 +1066,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo3(ResTeacherTraining resTeacherTraining,String dataFlag) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1123,7 +1115,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfoByCharge(ResTeacherTraining resTeacherTraining, String dataFlag, List<String> orgFlows) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1165,7 +1157,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfoByCharge2(ResTeacherTraining resTeacherTraining, String dataFlag, List<String> orgNames) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-		com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}

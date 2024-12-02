@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.ResSupervisioSubject;
-import com.pinde.sci.model.mo.ResSupervisioSubjectUser;
+import com.pinde.core.model.ResSupervisioSubject;
+import com.pinde.core.model.ResSupervisioSubjectUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

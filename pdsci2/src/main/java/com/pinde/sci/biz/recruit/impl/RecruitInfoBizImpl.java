@@ -7,14 +7,12 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.sci.enums.recruit.RecruitOperEnum;
-import com.pinde.sci.enums.recruit.RecruitStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoExample;
 import com.pinde.sci.model.mo.RecruitInfoLog;
@@ -24,7 +22,6 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -57,7 +54,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
     @Override
     public String auditWriteExam(String recordStatus, String recruitFlow) {
         RecruitInfo recruitInfo = new RecruitInfo();
-        recruitInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruitInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recruitInfo.setExamIsPass(recordStatus);
         recruitInfo.setRecruitFlow(recruitFlow);
         int i = recruitInfoMapper.updateByPrimaryKeySelective(recruitInfo);
@@ -66,7 +63,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
             log.setRecruitFlow(recruitInfo.getRecruitFlow());
             log.setOperTypeId(RecruitOperEnum.ExamResult.getId());
             log.setOperTypeName(RecruitOperEnum.ExamResult.getName());
-            if("Y".equals(recordStatus)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recordStatus)) {
                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
             }else{
@@ -74,16 +71,16 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 log.setAuditStatusName(RecruitStatusEnum.NoPassed.getName());
             }
             recruitInfoLogBiz.saveRecruitLog(log);
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
     @Override
     public String auditInterview(String recordStatus, String recruitFlow) {
         RecruitInfo recruitInfo = new RecruitInfo();
-        recruitInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruitInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recruitInfo.setRecruitFlow(recruitFlow);
         recruitInfo.setInterviewIsPass(recordStatus);
         int i = recruitInfoMapper.updateByPrimaryKeySelective(recruitInfo);
@@ -92,7 +89,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
             log.setRecruitFlow(recruitInfo.getRecruitFlow());
             log.setOperTypeId(RecruitOperEnum.InterViewResult.getId());
             log.setOperTypeName(RecruitOperEnum.InterViewResult.getName());
-            if("Y".equals(recordStatus)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recordStatus)) {
                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
             }else{
@@ -100,16 +97,16 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 log.setAuditStatusName(RecruitStatusEnum.NoPassed.getName());
             }
             recruitInfoLogBiz.saveRecruitLog(log);
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
     @Override
     public String auditAdmit(String recordStatus, String recruitFlow) {
         RecruitInfo recruitInfo = new RecruitInfo();
-        recruitInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruitInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recruitInfo.setRecruitFlow(recruitFlow);
         recruitInfo.setAdmitIsPass(recordStatus);
         int i = recruitInfoMapper.updateByPrimaryKeySelective(recruitInfo);
@@ -118,7 +115,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
             log.setRecruitFlow(recruitInfo.getRecruitFlow());
             log.setOperTypeId(RecruitOperEnum.AdmitResult.getId());
             log.setOperTypeName(RecruitOperEnum.AdmitResult.getName());
-            if("Y".equals(recordStatus)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recordStatus)) {
                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
             }else{
@@ -126,9 +123,9 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 log.setAuditStatusName(RecruitStatusEnum.NoPassed.getName());
             }
             recruitInfoLogBiz.saveRecruitLog(log);
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -143,7 +140,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
         RecruitInfoExample example = new RecruitInfoExample();
         example.createCriteria().andCreateUserFlowEqualTo(userFlow)
                 .andRecruitYearEqualTo(recruitYear)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<RecruitInfo> recruitInfos = recruitInfoMapper.selectByExample(example);
         if (recruitInfos != null && recruitInfos.size() > 0){
             return recruitInfos.get(0);
@@ -265,7 +262,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                             log.setRecruitFlow(recruitInfo.getRecruitFlow());
                             log.setOperTypeId(RecruitOperEnum.ExamResult.getId());
                             log.setOperTypeName(RecruitOperEnum.ExamResult.getName());
-                            if("Y".equals(recruitInfo.getExamIsPass())){
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfo.getExamIsPass())) {
                                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
                             }else{
@@ -312,7 +309,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行证件号为【"+value+"】的学员未填写招录或招录未审核通过，请确认后提交！！");
                             }
                             RecruitInfoExt recruitInfoExt2=searchRecruitInfoByFlow(recruitInfoExt.getRecruitFlow());
-                            if("Y".equals(recruitInfoExt.getInterviewFlag()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员已发面试通知，无法修改，请确认后提交！！");
                             }
@@ -341,12 +338,12 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
 
                             if("通过".equals(value))
                             {
-                                examIsPass="Y";
+                                examIsPass = com.pinde.core.common.GlobalConstant.FLAG_Y;
                             }
                             if("不通过".equals(value))
                             {
 
-                                examIsPass="N";
+                                examIsPass = com.pinde.core.common.GlobalConstant.FLAG_N;
                             }
                         }
                     }
@@ -422,7 +419,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                             log.setRecruitFlow(recruitInfo.getRecruitFlow());
                             log.setOperTypeId(RecruitOperEnum.InterViewResult.getId());
                             log.setOperTypeName(RecruitOperEnum.InterViewResult.getName());
-                            if("Y".equals(recruitInfo.getInterviewIsPass())){
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfo.getInterviewIsPass())) {
                                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
                             }else{
@@ -469,11 +466,11 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行证件号为【"+value+"】的学员未填写招录或招录未审核通过，请确认后提交！！");
                             }
                             RecruitInfoExt recruitInfoExt2=searchRecruitInfoByFlow(recruitInfoExt.getRecruitFlow());
-                            if(!"Y".equals(recruitInfoExt.getInterviewFlag()))
+                            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getInterviewFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员未发送面试通知，无法添加成绩，请确认后提交！！");
                             }
-                            if("Y".equals(recruitInfoExt.getAdmitFlag()))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员已发录取通知，无法修改，请确认后提交！！");
                             }
@@ -502,11 +499,11 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
 
                             if("通过".equals(value))
                             {
-                                interviewIsPass="Y";
+                                interviewIsPass = com.pinde.core.common.GlobalConstant.FLAG_Y;
                             }
                             if("不通过".equals(value))
                             {
-                                interviewIsPass="N";
+                                interviewIsPass = com.pinde.core.common.GlobalConstant.FLAG_N;
                             }
                         }
                     }
@@ -581,7 +578,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                             log.setRecruitFlow(recruitInfo.getRecruitFlow());
                             log.setOperTypeId(RecruitOperEnum.AdmitResult.getId());
                             log.setOperTypeName(RecruitOperEnum.AdmitResult.getName());
-                            if("Y".equals(recruitInfo.getAdmitFlag())){
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfo.getAdmitFlag())) {
                                 log.setAuditStatusId(RecruitStatusEnum.Passed.getId());
                                 log.setAuditStatusName(RecruitStatusEnum.Passed.getName());
                             }else{
@@ -627,7 +624,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行证件号为【"+value+"】的学员未填写招录或招录未审核通过，请确认后提交！！");
                             }
                             RecruitInfoExt recruitInfoExt2=searchRecruitInfoByFlow(recruitInfoExt.getRecruitFlow());
-                            if(!"Y".equals(recruitInfoExt.getAdmitFlag()))
+                            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitInfoExt.getAdmitFlag()))
                             {
                                 return ExcelUtile.errorMsg(eu, "导入文件第" + (rowNum + 1) + "行学员未发录取通知，无法修改，请确认后提交！！");
                             }
@@ -644,11 +641,11 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
 
                             if("是".equals(value))
                             {
-                                admitIsPass="Y";
+                                admitIsPass = com.pinde.core.common.GlobalConstant.FLAG_Y;
                             }
                             if("否".equals(value))
                             {
-                                admitIsPass="N";
+                                admitIsPass = com.pinde.core.common.GlobalConstant.FLAG_N;
                             }
                         }
                     }
@@ -694,7 +691,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
     public Integer updateRecruitInfo(RecruitInfo recruitInfo) {
         recruitInfo.setTrainingTypeId("Doctor");
         recruitInfo.setTrainingTypeName("住院医师");
-        String trainingSpeName = DictTypeEnum.DoctorTrainingSpe.getDictNameById(recruitInfo.getTrainingSpeId());
+        String trainingSpeName = com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(recruitInfo.getTrainingSpeId());
         recruitInfo.setTrainingSpeName(trainingSpeName);
         if ("01".equals(recruitInfo.getDoctorTypeId())){
             recruitInfo.setDoctorTypeName("单位人");

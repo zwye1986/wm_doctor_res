@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.ResDoctorKq;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResDoctorKq;
+import com.pinde.core.model.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResBaseevalForm extends MybatisObject {
+public class ResBaseevalForm extends TeachingActivitySpeakerExample.MybatisObject {
     private String formFlow;
 
     private String formName;

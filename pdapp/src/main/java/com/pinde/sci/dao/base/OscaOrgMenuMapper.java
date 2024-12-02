@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaOrgMenu;
-import com.pinde.sci.model.mo.OscaOrgMenuExample;
+import com.pinde.core.model.OscaOrgMenu;
+import com.pinde.core.model.OscaOrgMenuExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

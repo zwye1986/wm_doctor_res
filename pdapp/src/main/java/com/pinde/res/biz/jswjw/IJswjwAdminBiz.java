@@ -1,10 +1,10 @@
 package com.pinde.res.biz.jswjw;
 
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
-import com.pinde.sci.model.mo.ResOrgSpe;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResDocotrDelayTeturn;
+import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
 
 import java.util.List;
 import java.util.Map;

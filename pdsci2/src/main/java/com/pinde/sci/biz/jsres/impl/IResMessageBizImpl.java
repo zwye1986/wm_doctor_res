@@ -3,7 +3,6 @@ package com.pinde.sci.biz.jsres.impl;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResMessageBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.ResMessageMapper;
@@ -13,7 +12,6 @@ import com.pinde.sci.model.mo.ResMessageExample;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +31,7 @@ public class IResMessageBizImpl implements IResMessageBiz {
 		ResMessageExample example = new ResMessageExample();
 		ResMessageExample.Criteria criteria = example.createCriteria();
 		example.setOrderByClause("MODIFY_TIME DESC");
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(orgFlow)){
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
@@ -47,7 +45,7 @@ public class IResMessageBizImpl implements IResMessageBiz {
 	public ResMessage findMessageByFlow(String messageFlow) {
 		ResMessageExample example = new ResMessageExample();
 		ResMessageExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(messageFlow)){
 			criteria.andMessageFlowEqualTo(messageFlow);
 			return messageMapper.selectByPrimaryKey(messageFlow);
@@ -82,7 +80,7 @@ public class IResMessageBizImpl implements IResMessageBiz {
 	public int delMessage(String messageFlow) {
 		ResMessage record = new ResMessage();
 		record.setMessageFlow(messageFlow);
-		record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		GeneralMethod.setRecordInfo(record, false);
 		return this.messageMapper.updateByPrimaryKeySelective(record);
 	}
@@ -91,7 +89,7 @@ public class IResMessageBizImpl implements IResMessageBiz {
 	public List<ResMessage> findMessage(ResMessage message) {
 		ResMessageExample example = new ResMessageExample();
 		example.setOrderByClause("MODIFY_TIME DESC");
-		ResMessageExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResMessageExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return messageMapper.selectByExampleWithBLOBs(example);
 	}
 

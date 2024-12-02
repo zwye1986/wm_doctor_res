@@ -11,20 +11,18 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,7 +143,7 @@ public class InxBizImpl implements IInxBiz{
 		user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), user.getUserPasswd()));
 		user.setStatusId(UserStatusEnum.Added.getId());
 		user.setStatusDesc(UserStatusEnum.Added.getName());
-		user.setIsForeign(GlobalConstant.FLAG_Y);
+        user.setIsForeign(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		GeneralMethod.setRecordInfo(user, true);
 		userMapper.insert(user);
 	}
@@ -189,7 +187,7 @@ public class InxBizImpl implements IInxBiz{
 		List<String> levelIds=new ArrayList<>();
 		levelIds.add(RoleLevelEnum.SysLevel.getId());
 		levelIds.add(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole,levelIds);
 		if(sysRoleList!=null&&sysRoleList.size()>0){
 			for(SysRole sysRole1:sysRoleList){
@@ -221,7 +219,7 @@ public class InxBizImpl implements IInxBiz{
 		List<String> levelIds=new ArrayList<>();
 		levelIds.add(RoleLevelEnum.SysLevel.getId());
 		levelIds.add(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole,levelIds);
 		if(sysRoleList!=null&&sysRoleList.size()>0){
 			for(SysRole sysRole1:sysRoleList){
@@ -238,7 +236,7 @@ public class InxBizImpl implements IInxBiz{
 		}
 		userMapper.insert(user);
 		doctor.setDoctorFlow(userFlow);
-		doctor.setOscaStudentSubmit("Y");
+        doctor.setOscaStudentSubmit(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		GeneralMethod.setRecordInfo(doctor,true);
 		resDoctorMapper.insert(doctor);
 	}
@@ -258,7 +256,7 @@ public class InxBizImpl implements IInxBiz{
 		List<String> levelIds=new ArrayList<>();
 		levelIds.add(RoleLevelEnum.SysLevel.getId());
 		levelIds.add(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole,levelIds);
 		if(sysRoleList!=null&&sysRoleList.size()>0){
 			for(SysRole sysRole1:sysRoleList){
@@ -281,9 +279,9 @@ public class InxBizImpl implements IInxBiz{
 		GeneralMethod.setRecordInfo(user, false);
 		userMapper.updateByPrimaryKeySelective(user);
 		doctor.setDoctorFlow(user.getUserFlow());
-		doctor.setOscaStudentSubmit("Y");
+        doctor.setOscaStudentSubmit(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		ResDoctorExample example = new ResDoctorExample();
-		ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(user.getUserFlow());
+        ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow());
 		int count = resDoctorMapper.countByExample(example);
 		if(count>0){
 			GeneralMethod.setRecordInfo(doctor,false);
@@ -320,7 +318,7 @@ public class InxBizImpl implements IInxBiz{
 		if(StringUtil.isNotBlank(InitConfig.getSysCfg("res_doctor_role_flow"))){
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserFlow(user.getUserFlow());
-			String currWsId = GlobalConstant.RES_WS_ID;
+            String currWsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
 			userRole.setWsId(currWsId);
 			userRole.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
 			userRole.setAuthTime(DateUtil.getCurrDate());
@@ -392,7 +390,7 @@ public class InxBizImpl implements IInxBiz{
         userName = StringUtil.defaultIfEmpty(userName, "").trim();
         idNo = StringUtil.defaultIfEmpty(idNo, idNo).trim();
         TjDocinfoExample example = new TjDocinfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserNameEqualTo(userName).andIdNoEqualTo(idNo.toUpperCase());
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserNameEqualTo(userName).andIdNoEqualTo(idNo.toUpperCase());
         List<TjDocinfo> docinfos = docinfoMapper.selectByExample(example);
         TjDocinfo docinfo = null;
         if(null != docinfos && docinfos.size() > 0){
@@ -417,11 +415,11 @@ public class InxBizImpl implements IInxBiz{
         userCode = StringUtil.defaultIfEmpty(userCode, "").trim();
         passwd = StringUtil.defaultIfEmpty(passwd, passwd).trim();
         TjDocinfoExample example = new TjDocinfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserIdEqualTo(userCode);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserIdEqualTo(userCode);
         List<TjDocinfo> docinfos = docinfoMapper.selectByExample(example);
         if(null == docinfos || docinfos.isEmpty()){
             TjDocinfoExample example2 = new TjDocinfoExample();
-            example2.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(userCode);
+            example2.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(userCode);
             docinfos = docinfoMapper.selectByExample(example2);
         }
         TjDocinfo docinfo = null;
@@ -474,7 +472,7 @@ public class InxBizImpl implements IInxBiz{
 				user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), userPasswd));
 				user.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
 				userBiz.updateUser(user);
-				return GlobalConstant.UPDATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
 			} else {
 				return "您的身份证号或者手机号或者姓名有误";
 			}
@@ -489,19 +487,19 @@ public class InxBizImpl implements IInxBiz{
 				userNew.setUserPasswd(PasswordHelper.encryptPassword(userNew.getUserFlow(), userPasswd));
 				userNew.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
 				userBiz.updateUser(userNew);
-				return GlobalConstant.UPDATE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
 			} else {
 				return "您的身份证号或者手机号或者姓名有误";
 			}
 		}
-		return GlobalConstant.UPDATE_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPDATE_FAIL;
 	}
 
 	@Override
 	public boolean checkVerificationTime(String phone) {
 		boolean flag = false;
 		VerificationCodeRecordExample verificationCodeRecordExample = new VerificationCodeRecordExample();
-		verificationCodeRecordExample.createCriteria().andPhoneEqualTo(phone).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        verificationCodeRecordExample.createCriteria().andPhoneEqualTo(phone).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<VerificationCodeRecord> verificationCodeRecords = CodeRecordMap.selectByExample(verificationCodeRecordExample);
 		if(CollectionUtils.isNotEmpty(verificationCodeRecords)){
 			VerificationCodeRecord verificationCodeRecord = verificationCodeRecords.get(0);
@@ -524,7 +522,7 @@ public class InxBizImpl implements IInxBiz{
 	@Override
 	public void saveVerificationCodeRecord(String phone) {
 		VerificationCodeRecordExample verificationCodeRecordExample = new VerificationCodeRecordExample();
-		verificationCodeRecordExample.createCriteria().andPhoneEqualTo(phone).andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        verificationCodeRecordExample.createCriteria().andPhoneEqualTo(phone).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<VerificationCodeRecord> verificationCodeRecords = CodeRecordMap.selectByExample(verificationCodeRecordExample);
 		if(CollectionUtils.isNotEmpty(verificationCodeRecords)){
 			VerificationCodeRecord verificationCodeRecord = verificationCodeRecords.get(0);
@@ -534,7 +532,7 @@ public class InxBizImpl implements IInxBiz{
 			VerificationCodeRecord verificationCodeRecord = new VerificationCodeRecord();
 			verificationCodeRecord.setPhone(phone);
 			verificationCodeRecord.setDateTime(System.currentTimeMillis()+"");
-			verificationCodeRecord.setRecordStatus(GlobalConstant.FLAG_Y);
+            verificationCodeRecord.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			verificationCodeRecord.setCreateTime(DateUtil.getCurrDateTime());
 			verificationCodeRecord.setRecordFlow(PkUtil.getUUID());
 			CodeRecordMap.insert(verificationCodeRecord);

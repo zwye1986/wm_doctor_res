@@ -2,30 +2,24 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPhyAssBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,7 +88,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         int msgCount=0;
         if (type.equals("add")){ //新增
             plan.setPlanFlow(planFlow);
-            plan.setRecordStatus("Y");
+            plan.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             plan.setCreateTime(DateUtil.getCurrDateTime2());
             plan.setCreateUserFlow(user.getUserFlow());
             planCount = planMapper.insert(plan);
@@ -106,7 +100,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             planCount = planMapper.updateByPrimaryKey(qualifiedPlan);
             List<ResQualifiedPlanMsg> oldMsgList = searchByPlanFlow(planFlow); //删除之前的记录
             for (ResQualifiedPlanMsg msg : oldMsgList) {
-                msg.setRecordStatus("N");
+                msg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                 planMsgMapper.updateByPrimaryKey(msg);
             }
         }
@@ -116,7 +110,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             msg.setPlanFlow(planFlow);
             msg.setCreateTime(DateUtil.getCurrDateTime2());
             msg.setCreateUserFlow(user.getUserFlow());
-            msg.setRecordStatus("Y");
+            msg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             msgCount=msgCount+planMsgMapper.insert(msg);
         }
         if (planCount>0 && msgCount==msgList.size()){
@@ -138,8 +132,8 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                 List<PubFile> phyAssUser = pubFileBiz.findFileByTypeFlow("phyAssUser", planFlow);
                 if (null != phyAssUser && phyAssUser.size()>0){
                      pubFile = phyAssUser.get(0);
-                    if (StringUtil.isNotBlank(fileFlow) && fileFlow.equals("Y")){
-                        pubFile.setRecordStatus("N");
+                    if (StringUtil.isNotBlank(fileFlow) && fileFlow.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                         GeneralMethod.setRecordInfo(pubFile, false);
                         pubFileMapper.updateByPrimaryKeySelective(pubFile);
                         return true;
@@ -154,7 +148,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                 pubFile.setFileName(originalFileName);
                 //文件后缀名
                 pubFile.setFileSuffix(suffix);
-                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 pubFile.setProductFlow(planFlow);
                 pubFile.setProductType("phyAssUser");
                 //定义上传路径
@@ -197,7 +191,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         if (StringUtil.isNotBlank(planFlow)){
             criteria.andPlanFlowEqualTo(planFlow);
         }
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return planMsgMapper.selectByExample(example);
     }
 
@@ -206,12 +200,12 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public boolean delPhyAss(String planFlow) {
         ResTeachQualifiedPlan plan = planMapper.selectByPrimaryKey(planFlow);
-        plan.setRecordStatus("N");
+        plan.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         int planCount = planMapper.updateByPrimaryKey(plan);
         List<ResQualifiedPlanMsg> msgList = searchByPlanFlow(planFlow);
         int msgCount=0;
         for (ResQualifiedPlanMsg msg : msgList) {
-            msg.setRecordStatus("N");
+            msg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             msgCount =msgCount+ planMsgMapper.updateByPrimaryKey(msg);
         }
         pubFileBiz.deleteFileByTypeFlow("phyAss",planFlow);
@@ -225,7 +219,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public int checkPlanContent(String planContent) {
         ResTeachQualifiedPlanExample example = new ResTeachQualifiedPlanExample();
-        ResTeachQualifiedPlanExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        ResTeachQualifiedPlanExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(planContent)){
             criteria.andPlanContentEqualTo(planContent);
         }
@@ -282,24 +276,24 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             planDoctor.setDoctorName(user[2]);
             planDoctor.setDoctorRoleFlow(user[3]);
             planDoctor.setDoctorRoleName(user[4]);
-            planDoctor.setGainCertificateId("N");
+            planDoctor.setGainCertificateId(com.pinde.core.common.GlobalConstant.FLAG_N);
             planDoctor.setGainCertificateName("未生成");
-            planDoctor.setSendCertificateId("N");
+            planDoctor.setSendCertificateId(com.pinde.core.common.GlobalConstant.FLAG_N);
             planDoctor.setSendCertificateName("未发放");
             planCount =planCount+ planDoctorMapper.insert(planDoctor);
         }
 
         if (planCount==allCount){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @Override
     public List<ResTeachPlanDoctor> searchPlanDoctorByPlanFlow(String planFlow,String speId,String orgFlow) {
         ResTeachPlanDoctorExample example = new ResTeachPlanDoctorExample();
         ResTeachPlanDoctorExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(planFlow)){
             criteria.andPlanFlowEqualTo(planFlow);
         }
@@ -316,7 +310,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public List<ResTeachPlanDoctor> searchPlanDoctor(ResTeachPlanDoctor doctor) {
         ResTeachPlanDoctorExample example = new ResTeachPlanDoctorExample();
-        ResTeachPlanDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y");
+        ResTeachPlanDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (null !=doctor){
             if (StringUtil.isNotBlank(doctor.getRecordFlow())){
                 criteria.andRecordFlowEqualTo(doctor.getRecordFlow());
@@ -409,7 +403,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                     userDept.setDeptName(sysDept.getDeptName());
                     userDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
                     userDept.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-                    userDept.setRecordStatus("Y");
+                    userDept.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     userDept.setCreateTime(DateUtil.getCurrDateTime());
                     userDept.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
                     deptSuccess=deptSuccess+sysUserDeptMapper.insert(userDept);
@@ -513,7 +507,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
 
                 // 查询人员是否存在
                 SysUserExample example = new SysUserExample();
-                example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andUserCodeEqualTo((String)map.get("userCode"));
                 int count = sysUserMapper.countByExample(example);
                 if(count > 0){
@@ -551,7 +545,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                     user.setUserEmail((String)map.get("userEmail"));
                     String speName = (String)map.get("speName");
                     user.setResTrainingSpeName(speName);
-                    user.setResTrainingSpeId(getDictId(speName, DictTypeEnum.DoctorTrainingSpe.getId()));
+                    user.setResTrainingSpeId(getDictId(speName, com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()));
                     SysOrg sysOrg = orgBiz.readSysOrgByName((String) map.get("orgName"));
                     if (null != sysOrg){
                         user.setOrgFlow(sysOrg.getOrgFlow());
@@ -586,7 +580,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                         planDoctor.setOrgFlow(user.getOrgFlow());
                         planDoctor.setOrgName(user.getOrgName());
                         String speName = (String)map.get("speName");
-                        planDoctor.setSpeId(getDictId(speName, DictTypeEnum.DoctorTrainingSpe.getId()));
+                        planDoctor.setSpeId(getDictId(speName, com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()));
                         planDoctor.setSpeName(speName);
                         planDoctor.setDoctorCode(user.getUserCode());
                         planDoctor.setDoctorName(user.getUserName());
@@ -652,7 +646,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     private SysUser searchByUserCode(String userCode){
         SysUserExample example = new SysUserExample();
         SysUserExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(userCode)){
             criteria.andUserCodeEqualTo(userCode);
         }
@@ -705,7 +699,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     public int selectPlanDoctorByUserCode(String userCode,String orgName,String planFlow) {
         // 查询人员是否存在
         ResTeachPlanDoctorExample example=new ResTeachPlanDoctorExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorCodeEqualTo(userCode).andOrgNameEqualTo(orgName)
                 .andPlanFlowEqualTo(planFlow);
         return planDoctorMapper.countByExample(example);
@@ -714,7 +708,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     @Override
     public int countPlanApperNum(String planFlow) {
         ResTeachPlanDoctorExample example=new ResTeachPlanDoctorExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andPlanFlowEqualTo(planFlow)
                 .andAppearFlagIsNotNull();
         return planDoctorMapper.countByExample(example);
@@ -724,19 +718,19 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
     public int operateUser(List<String> recordFlows,String type) {
         int count=0;
         ResTeachPlanDoctorExample example=new ResTeachPlanDoctorExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecordFlowIn(recordFlows);
         List<ResTeachPlanDoctor> doctorList = planDoctorMapper.selectByExample(example);
         if (null != doctorList && doctorList.size()>0){
             if (type.equals("del")){    //删除
                 for (ResTeachPlanDoctor doctor : doctorList) {
-                    doctor.setPlanRemove("Y");
+                    doctor.setPlanRemove(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     planDoctorMapper.updateByPrimaryKey(doctor);
                     count++;
                 }
             }else { //确认
                 for (ResTeachPlanDoctor doctor : doctorList) {
-                    doctor.setAffirmFlag("Y");
+                    doctor.setAffirmFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     planDoctorMapper.updateByPrimaryKey(doctor);
                     count++;
                 }
@@ -765,14 +759,14 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         }
         long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
         if(file.getSize() > limitSize*1024*1024){
-            return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M！" ;
+            return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M！";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName){
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(file.getSize() > 0){
             //创建目录
             String dateString = DateUtil.getCurrDate2();

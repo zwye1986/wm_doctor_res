@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.app.common.NfyyGlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.exam.biz.stdp.IExamStdpBiz;
 import com.pinde.exam.enums.stdp.QuestionTypeEnum;
-import com.pinde.core.commom.enums.ResultEnum;
+import com.pinde.core.common.enums.ResultEnum;
 
 @Controller
 @RequestMapping("/exam/stdp")
@@ -85,8 +84,8 @@ public class ExamStdpController{
 			model.addAttribute("resultType", ResultEnum.ErrorUser.getName());
 			return result;
 		}
-		model.addAttribute("resultId", NfyyGlobalConstant.RESULT_CODE_SUCCESS);
-		model.addAttribute("resultType", NfyyGlobalConstant.RESULT_NAME_SUCCESS);
+		model.addAttribute("resultId", ResultEnum.Success.getId());
+		model.addAttribute("resultType", ResultEnum.Success.getName());
 		model.addAttribute("user" , user);
 		return result;
 	}

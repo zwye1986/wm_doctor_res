@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSkillsAssessment" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSkillsAssessment" >
     <id column="CLINICAL_FLOW" property="clinicalFlow" jdbcType="VARCHAR" />
     <result column="CLINICAL_NAME" property="clinicalName" jdbcType="VARCHAR" />
     <result column="CLINICAL_YEAR" property="clinicalYear" jdbcType="CHAR" />
@@ -96,7 +96,7 @@
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_GRADE_RELEASED, IS_SHOW_FROOM, 
     SKILL_ORDER, REMARKS
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" >
     select
     <if test="distinct" >
       distinct
@@ -120,13 +120,13 @@
     delete from PDSCI.OSCA_SKILLS_ASSESSMENT
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" >
     delete from PDSCI.OSCA_SKILLS_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessment" >
+  <insert id="insert" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
     insert into PDSCI.OSCA_SKILLS_ASSESSMENT (CLINICAL_FLOW, CLINICAL_NAME, CLINICAL_YEAR, 
       SPE_ID, SPE_NAME, ACTION_TYPE_ID, 
       ACTION_TYPE_NAME, SUBJECT_FLOW, SUBJECT_NAME, 
@@ -148,7 +148,7 @@
       #{isGradeReleased,jdbcType=CHAR}, #{isShowFroom,jdbcType=CHAR}, #{skillOrder,jdbcType=VARCHAR}, 
       #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessment" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
     insert into PDSCI.OSCA_SKILLS_ASSESSMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="clinicalFlow != null" >
@@ -323,7 +323,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.OSCA_SKILLS_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -455,7 +455,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessment" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
     update PDSCI.OSCA_SKILLS_ASSESSMENT
     <set >
       <if test="clinicalName != null" >
@@ -542,7 +542,7 @@
     </set>
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessment" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
     update PDSCI.OSCA_SKILLS_ASSESSMENT
     set CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
       CLINICAL_YEAR = #{clinicalYear,jdbcType=CHAR},

@@ -5,13 +5,11 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.NumTrans;
 import com.pinde.sci.dao.base.ResDoctorSchProcessEvalMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
-import com.pinde.sci.enums.sch.SchUnitEnum;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResDoctorSchProcessExample.Criteria;
@@ -26,7 +24,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
@@ -50,7 +47,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 		List<ResDoctorSchProcess> processList = null;
 		if(schResultFlows!=null&&!schResultFlows.isEmpty()){
 			ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchResultFlowIn(schResultFlows);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchResultFlowIn(schResultFlows);
 			processList = this.resDoctorProcessMapper.selectByExample(example);
 		}
 		return processList;
@@ -67,14 +64,14 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 				return this.resDoctorProcessMapper.insertSelective(process);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public ResDoctorSchProcess searchByResultFlow(String resultFlow) {
 		ResDoctorSchProcess process = null;
 		if(StringUtil.isNotBlank(resultFlow)){
 			ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(resultFlow);
 			List<ResDoctorSchProcess> processList = this.resDoctorProcessMapper.selectByExample(example);
 			if(processList!=null&&!processList.isEmpty()){
 				process = processList.get(0);
@@ -99,7 +96,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchCurrProcessByUserFlows(List<String> userFlows){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIsCurrentFlagEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsCurrentFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andUserFlowIn(userFlows);
 		return resDoctorProcessMapper.selectByExample(example);
 	}
@@ -127,7 +124,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public ResDoctorSchProcess searchProcessByRec(String doctorFlow,String schDeptFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow).andSchDeptFlowEqualTo(schDeptFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow).andSchDeptFlowEqualTo(schDeptFlow);
 		List<ResDoctorSchProcess> processList = resDoctorProcessMapper.selectByExample(example);
 		ResDoctorSchProcess process = null;
 		if(processList!=null && processList.size()>0){
@@ -139,7 +136,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchProcessByOrg(String orgFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andIsCurrentFlagEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andIsCurrentFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("START_DATE DESC");
 		return resDoctorProcessMapper.selectByExample(example);
 	}
@@ -147,7 +144,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
 		example.setOrderByClause("sch_start_date");
 		return resDoctorProcessMapper.selectByExample(example);
 	}
@@ -155,7 +152,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchProcessByDoctor(ResDoctorSchProcess resDoctorSchProcess) {
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(resDoctorSchProcess!=null){
 			if(StringUtil.isNotBlank(resDoctorSchProcess.getUserFlow())){
 				criteria.andUserFlowEqualTo(resDoctorSchProcess.getUserFlow());
@@ -195,13 +192,13 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public ResDoctorSchProcess searchCurrDept(SysUser sysUser){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysUser!=null){
 			if(StringUtil.isNotBlank(sysUser.getUserFlow())){
 				criteria.andUserFlowEqualTo(sysUser.getUserFlow());
 			}
 		}
-		criteria.andIsCurrentFlagEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andIsCurrentFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<ResDoctorSchProcess> processes=this.resDoctorProcessMapper.selectByExample(example);
 		if(processes!=null && !processes.isEmpty()){
 			return processes.get(0);
@@ -241,7 +238,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public ResDoctorSchProcess searchProcess(String userFlow,String orgFlow,String groupFlow, String deptId) {
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y); 
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserFlowEqualTo(userFlow).andDeptFlowEqualTo(deptId).andOrgFlowEqualTo(orgFlow).andSchDeptFlowEqualTo(groupFlow);
 		List<ResDoctorSchProcess> processes=this.resDoctorProcessMapper.selectByExample(example);
 		if(processes!=null && !processes.isEmpty()){
@@ -390,7 +387,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	public List<ResDoctorSchProcess> searchBySchResultFlow(String schResultFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
 			if(StringUtil.isNotBlank(schResultFlow)){
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(schResultFlow);
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchResultFlowEqualTo(schResultFlow);
 			}
 		return resDoctorProcessMapper.selectByExample(example);
 	}
@@ -563,7 +560,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public ResDoctorSchProcessEvalWithBLOBs getDoctorProcessEval(String processFlow, String startTime,String endTime) {
 		ResDoctorSchProcessEvalExample evalExample=new ResDoctorSchProcessEvalExample();
-		evalExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        evalExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andProcessFlowEqualTo(processFlow).andStartTimeEqualTo(startTime).andEndTimeEqualTo(endTime);
 		List<ResDoctorSchProcessEvalWithBLOBs> list=evalMapper.selectByExampleWithBLOBs(evalExample);
 		if(list!=null&&list.size()>0)
@@ -577,7 +574,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	public List<ResDoctorSchProcess> searchByDeptFlow(String deptFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
 		if(StringUtil.isNotBlank(deptFlow)){
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptFlowEqualTo(deptFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowEqualTo(deptFlow);
 		}
 		return resDoctorProcessMapper.selectByExample(example);
 	}
@@ -706,10 +703,10 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 				if(StringUtil.isBlank(per)) per="0";
 				per=NumTrans.transPercent(per,2)+"%";
 				String schMonth=result.getSchMonth();
-				if(SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"))){
-					schMonth = schMonth+SchUnitEnum.Week.getName();
+                if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(InitConfig.getSysCfg("res_rotation_unit"))) {
+                    schMonth = schMonth + com.pinde.core.common.enums.SchUnitEnum.Week.getName();
 				}else{
-					schMonth = schMonth+SchUnitEnum.Month.getName();
+                    schMonth = schMonth + com.pinde.core.common.enums.SchUnitEnum.Month.getName();
 				}
 				dataList = new String[]{
 						result.getStandardDeptName()+"["+result.getSchDeptName()+"]",
@@ -746,7 +743,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcessEval> queryEvalListByFlow() {
 		ResDoctorSchProcessEvalExample example = new ResDoctorSchProcessEvalExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("PROCESS_FLOW,START_TIME");
 		return evalMapper.selectByExample(example);
 	}
@@ -754,7 +751,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcessEval> queryEvalListByProcessFlow(List<String> processFlows) {
 		ResDoctorSchProcessEvalExample example = new ResDoctorSchProcessEvalExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowIn(processFlows);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowIn(processFlows);
 		example.setOrderByClause("PROCESS_FLOW,START_TIME");
 		return evalMapper.selectByExample(example);
 	}
@@ -772,7 +769,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 			String curTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 			eval.setEvalTime(curTime);
 			eval.setEvalMonth(eval.getStartTime().substring(0,7));
-			if(GlobalConstant.FLAG_Y.equals(eval.getIsForm())){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(eval.getIsForm())) {
 				eval.setFormCfg((String)dataList.get(0).get("formCfg"));
 				List<String> scoreIdList = (List<String>)param.get("scoreIdList");
 				List<String> scoreList = (List<String>)param.get("scoreList");
@@ -784,12 +781,12 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 				}
 				eval.setEvalResult(dom.asXML());
 			}else{
-				eval.setIsForm(GlobalConstant.FLAG_N);
+                eval.setIsForm(com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 			GeneralMethod.setRecordInfo(eval,true);
 			return evalMapper.insertSelective(eval);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresExamSignup;
-import com.pinde.sci.model.mo.JsresExamSignupExample;
+import com.pinde.core.model.JsresExamSignup;
+import com.pinde.core.model.JsresExamSignupExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

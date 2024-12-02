@@ -1,16 +1,16 @@
 package com.pinde.sci.ctrl.lcjn;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnSuppliesAndAssetsBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.LcjnFixedAssets;
 import com.pinde.sci.model.mo.LcjnSupplies;
 import com.pinde.sci.model.mo.LcjnSuppliesBatch;
@@ -48,7 +48,7 @@ public class LcjnSuppliesAssetsController extends GeneralController {
         List<Map<String,Object>> fixedAssetsList=suppliesAndAssetsBiz.selectFixedAssetsList(dictName,statusId);
         if(fixedAssetsList!=null&&fixedAssetsList.size()>0){
             for(int i=0;i<fixedAssetsList.size();i++){
-                SysDict sysDict=dictBiz.readDict(DictTypeEnum.SkileFixedAssets.getId(),(String)fixedAssetsList.get(i).get("DICT_ID"),GlobalContext.getCurrentUser().getOrgFlow());
+                SysDict sysDict = dictBiz.readDict(com.pinde.core.common.enums.DictTypeEnum.SkileFixedAssets.getId(), (String) fixedAssetsList.get(i).get("DICT_ID"), GlobalContext.getCurrentUser().getOrgFlow());
                 if(sysDict!=null){
                     fixedAssetsList.get(i).put("record",sysDict.getRecordStatus());
                 }
@@ -82,7 +82,7 @@ public class LcjnSuppliesAssetsController extends GeneralController {
         fixedAssets.setStatusId(statusId);
         fixedAssets.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         fixedAssets.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-        List<SysDict> distList= DictTypeEnum.SkileFixedAssets.getSysDictList();
+        List<SysDict> distList = com.pinde.core.common.enums.DictTypeEnum.SkileFixedAssets.getSysDictList();
         if(distList!=null&&distList.size()>0){
             for(int k=0;k<distList.size();k++){
                 if(distList.get(k)!=null&&GlobalContext.getCurrentUser().getOrgFlow()!=null
@@ -144,7 +144,7 @@ public class LcjnSuppliesAssetsController extends GeneralController {
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
     }
 
     @RequestMapping(value="importSupplies")
@@ -157,7 +157,7 @@ public class LcjnSuppliesAssetsController extends GeneralController {
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
     }
 
     /**
@@ -176,7 +176,7 @@ public class LcjnSuppliesAssetsController extends GeneralController {
             for (int i=0;i<suppliesList.size();i++){
                 List<LcjnSuppliesBatch> list=suppliesAndAssetsBiz.selectSuppliesBatch((String)suppliesList.get(i).get("SUPPLIES_FLOW"));
                 suppliesList.get(i).put("batchList",list);
-                SysDict sysDict=dictBiz.readDict(DictTypeEnum.SkillMaterial.getId(),(String)suppliesList.get(i).get("DICT_ID"),GlobalContext.getCurrentUser().getOrgFlow());
+                SysDict sysDict = dictBiz.readDict(com.pinde.core.common.enums.DictTypeEnum.SkillMaterial.getId(), (String) suppliesList.get(i).get("DICT_ID"), GlobalContext.getCurrentUser().getOrgFlow());
                 if(sysDict!=null){
                     suppliesList.get(i).put("record",sysDict.getRecordStatus());
                 }

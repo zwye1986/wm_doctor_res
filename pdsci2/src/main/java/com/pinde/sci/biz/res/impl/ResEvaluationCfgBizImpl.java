@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEvaluationCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResEvaluationCfgMapper;
 import com.pinde.sci.dao.base.ResEvaluationDeptExtMapper;
@@ -17,7 +16,6 @@ import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -104,7 +102,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 return saveEvaluationCfg(existEvaluationCfg);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -140,7 +138,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 return saveEvaluationCfg(existEvaluationCfg);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -162,7 +160,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Override
     public List<ResEvaluationCfg> searchEvaluationCfgList(ResEvaluationCfg evaluationCfg) {
         ResEvaluationCfgExample example = new ResEvaluationCfgExample();
-        com.pinde.sci.model.mo.ResEvaluationCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        com.pinde.sci.model.mo.ResEvaluationCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(evaluationCfg.getAssessTypeId())){
 			criteria.andAssessTypeIdEqualTo(evaluationCfg.getAssessTypeId());
 		}
@@ -184,7 +182,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
             return null;
         }
         ResEvaluationCfgExample example = new ResEvaluationCfgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andCfgCodeIdEqualTo(cfgCodeId);
         List<ResEvaluationCfg> evaluationCfgList = evaluationCfgMapper.selectByExampleWithBLOBs(example);
         if(evaluationCfgList==null || evaluationCfgList.isEmpty()){
@@ -265,7 +263,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Override
     public List<ResEvaluationDeptExt> readEvaluationDeptList(String cfgFlow) {
         ResEvaluationDept record = new ResEvaluationDept();
-        record.setRecordStatus("Y");
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         record.setCfgFlow(cfgFlow);
         return evaluationDeptExtMapper.selectByRecord(record);
     }
@@ -284,20 +282,20 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     public int delEvaluation(String cfgFlow) {
         if(StringUtil.isNotEmpty(cfgFlow)){
             ResEvaluationCfg cfg = new ResEvaluationCfg();
-            cfg.setRecordStatus("N");
+            cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             GeneralMethod.setRecordInfo(cfg, false);
             ResEvaluationCfgExample example = new ResEvaluationCfgExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y) .andCfgFlowEqualTo(cfgFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCfgFlowEqualTo(cfgFlow);
             int result = evaluationCfgMapper.updateByExampleSelective(cfg, example);
             ResEvaluationDept dept = new ResEvaluationDept();
-            dept.setRecordStatus("N");
+            dept.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
             ResEvaluationDeptExample example2 = new ResEvaluationDeptExample();
-            example2.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y) .andCfgFlowEqualTo(cfgFlow);
+            example2.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCfgFlowEqualTo(cfgFlow);
             GeneralMethod.setRecordInfo(dept, false);
             evaluationDeptMapper.updateByExampleSelective(dept, example2);
             return result;
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -324,7 +322,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 return saveEvaluationCfg(existEvaluationCfg);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
 
@@ -351,7 +349,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 return saveEvaluationCfg(existEvaluationCfg);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -367,7 +365,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 return saveEvaluationCfg(existEvaluationCfg);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
     /**
      * 保存评分科室关联表
@@ -409,7 +407,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
             ResEvaluationDeptExample.Criteria criteria = example.createCriteria();
             criteria.andCfgFlowIn(oldDeptList);
             ResEvaluationDept record =new ResEvaluationDept();
-            record.setRecordStatus("Y");
+            record.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             GeneralMethod.setRecordInfo(record, false);
             count +=evaluationDeptMapper.updateByExampleSelective(record,example);
         }
@@ -421,7 +419,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 record.setRecordFlow( PkUtil.getUUID());
                 record.setCfgFlow(cfgFlow);
                 record.setDeptFlow(s);
-                record.setRecordStatus("Y");
+                record.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                 GeneralMethod.setRecordInfo(record, true);
                 count += evaluationDeptMapper.insert(record);
             }
@@ -439,7 +437,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
         ResEvaluationDeptExample.Criteria criteria = example.createCriteria();
         criteria.andCfgFlowEqualTo(cfgFlow);
         ResEvaluationDept record =new ResEvaluationDept();
-        record.setRecordStatus("N");
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         GeneralMethod.setRecordInfo(record, false);
         return evaluationDeptMapper.updateByExampleSelective(record,example);
     }
@@ -448,7 +446,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     public ResEvaluationCfg read(String cfgFlow) {
         ResEvaluationCfgExample example = new ResEvaluationCfgExample();
         ResEvaluationCfgExample.Criteria criteria = example.createCriteria();
-        criteria.andCfgFlowEqualTo(cfgFlow).andRecordStatusEqualTo("Y");
+        criteria.andCfgFlowEqualTo(cfgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<ResEvaluationCfg> evaluationCfgs = evaluationCfgMapper.selectByExample(example);
         if(evaluationCfgs !=null && evaluationCfgs.size()> 0 ){
             return evaluationCfgs.get(0);

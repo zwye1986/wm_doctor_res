@@ -5,7 +5,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResDoctorArchiveBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.base.*;
@@ -17,7 +16,6 @@ import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,7 +49,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
         if (StringUtil.isNotBlank(archiveTime)) {
             ResArchiveSequenceExample example = new ResArchiveSequenceExample();
             ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime);
             count = archiveSequenceMapper.countByExample(example);
 
         }
@@ -224,7 +222,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     public List<ResArchiveSequence> allResArchiveSequence() {
         ResArchiveSequenceExample example = new ResArchiveSequenceExample();
         ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         example.setOrderByClause("CREATE_TIME DESC");
         return archiveSequenceMapper.selectByExample(example);
     }
@@ -276,7 +274,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     public List<SysUserLog> searchSysUserLogList(SysUserLog sysUserLog) {
         SysUserLogExample example = new SysUserLogExample();
         SysUserLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(sysUserLog.getArchiveFlow())){
             criteria.andArchiveFlowEqualTo(sysUserLog.getArchiveFlow());
         }
@@ -290,7 +288,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     public List<ResDoctorLog> searchResDoctorLogList(ResDoctorLog resDoctorLog) {
         ResDoctorLogExample example = new ResDoctorLogExample();
         ResDoctorLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(resDoctorLog.getArchiveFlow())){
             criteria.andArchiveFlowEqualTo(resDoctorLog.getArchiveFlow());
         }
@@ -304,7 +302,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     public List<ResUserResumeLog> searchResUserResumeLog(ResUserResumeLog userResumeLog) {
         ResUserResumeLogExample example = new ResUserResumeLogExample();
         ResUserResumeLogExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(userResumeLog.getArchiveFlow())){
             criteria.andArchiveFlowEqualTo(userResumeLog.getArchiveFlow());
         }

@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.model.mo.ResRotationOrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +33,8 @@ public class ResRotationOrgController extends GeneralController {
 		for (ResRotationOrg resRotationOrg : resScoreList) {
 			if (StringUtil.isNotBlank(resRotationOrg.getRecordFlow())) {
 				ResRotationOrg rotationOrg=resRotationOrgBiz.searchByScoreFlow(resRotationOrg.getRecordFlow());
-				if (rotationOrg.getRecordStatus().equals(GlobalConstant.RECORD_STATUS_N)) {
-					rotationOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                if (rotationOrg.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N)) {
+                    rotationOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					resRotationOrgBiz.save(rotationOrg);
 				}
 				list.remove(resRotationOrg.getRecordFlow());
@@ -45,9 +44,9 @@ public class ResRotationOrgController extends GeneralController {
 		}
 		for (String flow : list) {
 			ResRotationOrg resRotationOrg= resRotationOrgBiz.searchByScoreFlow(flow);
-			resRotationOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            resRotationOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			resRotationOrgBiz.save(resRotationOrg);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 }

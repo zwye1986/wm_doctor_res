@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.TdxlEmployTutorMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TdxlEmployTutor" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.TdxlEmployTutor" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
@@ -40,7 +40,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.TdxlEmployTutor" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.TdxlEmployTutor" extends="BaseResultMap" >
     <result column="CONTENT" property="content" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -112,7 +112,7 @@
   <sql id="Blob_Column_List" >
     CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.TdxlEmployTutorExample" >
     select
     <if test="distinct" >
       distinct
@@ -128,7 +128,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.TdxlEmployTutorExample" >
     select
     <if test="distinct" >
       distinct
@@ -154,13 +154,13 @@
     delete from PDSCI.TDXL_EMPLOY_TUTOR
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.TdxlEmployTutorExample" >
     delete from PDSCI.TDXL_EMPLOY_TUTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+  <insert id="insert" parameterType="com.pinde.core.model.TdxlEmployTutor" >
     insert into PDSCI.TDXL_EMPLOY_TUTOR (RECORD_FLOW, USER_FLOW, USER_NAME, 
       STUDENT_ID, SEX_ID, SEX_NAME, 
       ID_NUMBER, SPE_NAME, WORK_UNIT, 
@@ -188,7 +188,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{content,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.TdxlEmployTutor" >
     insert into PDSCI.TDXL_EMPLOY_TUTOR
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -423,7 +423,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TdxlEmployTutorExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.TdxlEmployTutorExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.TDXL_EMPLOY_TUTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -638,7 +638,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TdxlEmployTutor" >
     update PDSCI.TDXL_EMPLOY_TUTOR
     <set >
       <if test="userFlow != null" >
@@ -755,7 +755,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.TdxlEmployTutor" >
     update PDSCI.TDXL_EMPLOY_TUTOR
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
@@ -796,7 +796,7 @@
       CONTENT = #{content,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.TdxlEmployTutor" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TdxlEmployTutor" >
     update PDSCI.TDXL_EMPLOY_TUTOR
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},

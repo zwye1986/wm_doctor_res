@@ -1,7 +1,8 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -9,10 +10,8 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.ISysSupervisioUserBiz;
 import com.pinde.res.dao.jswjw.ext.JsresSupervisioSubjectExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -46,7 +45,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	public SysSupervisioUser findBySuUserCode(String userCode) {
 		SysSupervisioUserExample sysUserExample=new SysSupervisioUserExample();
 		SysSupervisioUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserCodeEqualTo(userCode);
 		List<SysSupervisioUser> sysUserList = supervisioUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -59,7 +58,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	public SysSupervisioUser findBySuUserCodeNew(String userCode) {
 		SysUserExample sysUserExample = new SysUserExample();
 		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserLevelIdEqualTo("expertLeader");
 		criteria.andUserCodeEqualTo(userCode);
 
@@ -82,14 +81,14 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Override
 	public int addSupervisioUser(SysSupervisioUser user) {
 		user.setCreateTime(DateUtil.getCurrDateTime());
-		user.setRecordStatus("Y");
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return supervisioUserMapper.insert(user);
 	}
 
 	@Override
 	public List<SysSupervisioUser> findByUserPhoneAndNotSelf(String userFlow, String userPhone) {
 		SysSupervisioUserExample example = new SysSupervisioUserExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andUserPhoneEqualTo(userPhone).andUserFlowNotEqualTo(userFlow);
 		return supervisioUserMapper.selectByExample(example);
 	}
@@ -105,7 +104,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	public SysSupervisioUser findBySuUserFlow(String userFlow) {
 		SysUserExample sysUserExample = new SysUserExample();
 		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserLevelIdEqualTo("expertLeader");
 		criteria.andUserFlowEqualTo(userFlow);
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
@@ -130,7 +129,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	public SysSupervisioUser findByUserCode(String userCode) {
 		SysSupervisioUserExample sysUserExample=new SysSupervisioUserExample();
 		SysSupervisioUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserCodeEqualTo(userCode);
 		List<SysSupervisioUser> sysUserList = supervisioUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -143,7 +142,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	public SysSupervisioUser findByUserPhone(String userPhone) {
 		SysSupervisioUserExample sysUserExample=new SysSupervisioUserExample();
 		SysSupervisioUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		List<SysSupervisioUser> sysUserList = supervisioUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -153,9 +152,9 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	}
 
 	@Override
-	public ResSupervisioSubjectUser searchSubjectUser(String userFlow,String subjectFlow) {
+	public ResSupervisioSubjectUser searchSubjectUser(String userFlow, String subjectFlow) {
 		ResSupervisioSubjectUserExample example = new ResSupervisioSubjectUserExample();
-		ResSupervisioSubjectUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResSupervisioSubjectUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -181,7 +180,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 
 	@Override
 	public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName){
-		String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if(file.getSize() > 0){
 			//创建目录
 			String dateString = DateUtil.getCurrDate2();
@@ -235,7 +234,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Override
 	public List<ResSupervisioSubjectUser> selectSupervisioUserListByFlow(String subjectFlow) {
 		ResSupervisioSubjectUserExample example = new ResSupervisioSubjectUserExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				.andSubjectFlowEqualTo(subjectFlow);
 		return subjectUserMapper.selectByExample(example);
 	}
@@ -248,7 +247,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Override
 	public ResSupervisioSubjectUser selectSubjectUserByFlow(String userFlow, String subjectFlow) {
 		ResSupervisioSubjectUserExample example = new ResSupervisioSubjectUserExample();
-		ResSupervisioSubjectUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResSupervisioSubjectUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -265,7 +264,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Override
 	public List<ResEvaluationScore> searchEvaluationScore(ResEvaluationScore evaluationScore) {
 		ResEvaluationScoreExample example = new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(evaluationScore.getSubjectFlow())){
 			criteria.andSubjectFlowEqualTo(evaluationScore.getSubjectFlow());
 		}
@@ -293,7 +292,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Override
 	public ResEvaluationScore searchEvaluationOwnerScoreByItemId(ResEvaluationScore evaluationScore) {
 		ResEvaluationScoreExample example = new ResEvaluationScoreExample();
-		ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(evaluationScore.getSubjectFlow())){
 			criteria.andSubjectFlowEqualTo(evaluationScore.getSubjectFlow());
 		}
@@ -332,7 +331,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			evaluationScore.setScoreFlow(PkUtil.getUUID());
 			evaluationScore.setCreateUserFlow(userFlow);
 			evaluationScore.setCreateTime(DateUtil.getCurrDateTime());
-			evaluationScore.setRecordStatus("Y");
+            evaluationScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			return evaluationScoreMapper.insert(evaluationScore);
 		}
 	}
@@ -353,12 +352,12 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 		if (!(mimeList.contains(fileType) && suffixList.contains(suffix.toLowerCase()))) {
 			return "请上传 " + InitConfig.getSysCfg("res_file_support_suffix") + "格式的文件";
 		}
-		return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
 	}
 
 	@Override
 	public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName, String orgFlow, String planYear, String itemId) {
-		String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if (file.getSize() > 0) {
 			//创建目录
 			String dateString = DateUtil.getCurrDate2();
@@ -398,7 +397,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	}
 
 	@Override
-	public int saveJsresSupervisioFile(JsresSupervisioFile supervisioFile,String userFlow) {
+	public int saveJsresSupervisioFile(JsresSupervisioFile supervisioFile, String userFlow) {
 		if (com.pinde.core.util.StringUtil.isNotBlank(supervisioFile.getRecordFlow())) {
 			supervisioFile.setModifyUserFlow(userFlow);
 			supervisioFile.setModifyTime(DateUtil.getCurrDateTime());
@@ -443,7 +442,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			subject.setSubjectFlow(PkUtil.getUUID());
 			subject.setCreateUserFlow(userFlow);
 			subject.setCreateTime(DateUtil.getCurrDateTime());
-			subject.setRecordStatus("Y");
+            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			return subjectMapper.insert(subject);
 		}
 	}
@@ -458,7 +457,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			subjectUser.setRecordFlow(PkUtil.getUUID());
 			subjectUser.setCreateUserFlow(userFlow);
 			subjectUser.setCreateTime(DateUtil.getCurrDateTime());
-			subjectUser.setRecordStatus("Y");
+            subjectUser.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			return subjectUserMapper.insert(subjectUser);
 		}
 	}

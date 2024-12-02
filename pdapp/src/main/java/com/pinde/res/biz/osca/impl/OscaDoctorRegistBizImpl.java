@@ -1,22 +1,21 @@
 package com.pinde.res.biz.osca.impl;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.UserStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.UserStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.res.dao.osca.ext.OscaDoctorRegistExtMapper;
-import com.pinde.res.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
-import com.pinde.sci.model.mo.OscaDoctorRegist;
-import com.pinde.sci.model.mo.OscaDoctorRegistExample;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.OscaDoctorRegist;
+import com.pinde.core.model.OscaDoctorRegistExample;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
     @Override
     public List<OscaDoctorRegist> searchRegist(OscaDoctorRegist oscaDoctorRegist) {
         OscaDoctorRegistExample example = new OscaDoctorRegistExample();
-        OscaDoctorRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        OscaDoctorRegistExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaDoctorRegist.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(oscaDoctorRegist.getDoctorFlow());
         }
@@ -64,7 +63,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
             return oscaDoctorRegistMapper.updateByPrimaryKeySelective(oscaDoctorRegist);
         }else {
             oscaDoctorRegist.setRecordFlow(PkUtil.getUUID());
-            user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             user.setCreateUserFlow(user.getUserFlow());
             user.setCreateTime(DateUtil.getCurrDateTime());
             user.setModifyUserFlow(user.getUserFlow());

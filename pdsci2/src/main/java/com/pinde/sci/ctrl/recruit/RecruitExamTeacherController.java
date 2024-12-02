@@ -5,7 +5,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamTeacherBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.RecruitExamRoom;
 import com.pinde.sci.model.mo.RecruitExamTeacher;
@@ -124,14 +123,14 @@ public class RecruitExamTeacherController extends GeneralController {
         SysUser currentUser = GlobalContext.getCurrentUser();
         RecruitExamRoom examRoom = recruitExamRoomBiz.searchExamRoomByName(roomName,currentUser.getOrgFlow());
         if (examRoom == null){
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         examTeacher.setRoomFlow(examRoom.getRoomFlow());
         int i = recruitExamTeacherBiz.addExamTeacher(examTeacher);
         if (i == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -161,14 +160,14 @@ public class RecruitExamTeacherController extends GeneralController {
         SysUser currentUser = GlobalContext.getCurrentUser();
         RecruitExamRoom examRoom = recruitExamRoomBiz.searchExamRoomByName(roomName, currentUser.getOrgFlow());
         if (examRoom == null ){
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         editInfo.setRoomFlow(examRoom.getRoomFlow());
         int i = recruitExamTeacherBiz.updateExamTeacher(editInfo);
         if (i == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -177,9 +176,9 @@ public class RecruitExamTeacherController extends GeneralController {
     public String deleteExamTeacher(String teacherFlow){
         int i = recruitExamTeacherBiz.deleteExamTeacherByFlow(teacherFlow);
         if (i == 1){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }else {
-            return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         }
     }
 

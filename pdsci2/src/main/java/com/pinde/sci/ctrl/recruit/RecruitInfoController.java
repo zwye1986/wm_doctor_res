@@ -6,10 +6,9 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.recruit.RecruitOperEnum;
-import com.pinde.sci.enums.recruit.RecruitStatusEnum;
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.model.mo.RecruitCfgInfo;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoLog;
@@ -53,7 +52,7 @@ public class RecruitInfoController extends GeneralController {
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.selectRecruitByUserFlow(currentUser.getUserFlow(), currentUser.getOrgFlow());
         if (recruitInfoExts != null&& recruitInfoExts.size() > 0){
             for (RecruitInfoExt recruitInfoExt:recruitInfoExts) {
-                if (GlobalConstant.RECORD_STATUS_Y.equals(recruitInfoExt.getAdmitIsPass())){
+                if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(recruitInfoExt.getAdmitIsPass())) {
                     model.addAttribute("recruitInfo", recruitInfoExt);
                     return "recruit/doctor/recruitInfoReadonly";
                 }
@@ -144,9 +143,9 @@ public class RecruitInfoController extends GeneralController {
                 }
                 userBiz.saveUser(currentUser);
             }
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 
@@ -217,7 +216,7 @@ public class RecruitInfoController extends GeneralController {
                 }
                 userBiz.saveUser(currentUser);
             }
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
         return "提交失败";
     }

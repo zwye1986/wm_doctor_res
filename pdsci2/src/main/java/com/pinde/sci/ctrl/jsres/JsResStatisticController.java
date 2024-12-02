@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -18,14 +18,9 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -113,19 +108,19 @@ public class JsResStatisticController extends GeneralController {
 		ResDoctorRecruit recruit=new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		//查询所有国家基地
 		List<SysOrg> sysOrgList=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(s.getOrgCityId());
 		}
 		if(StringUtil.isNotBlank(orgLevel)){
 			org.setOrgLevelId(orgLevel);
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			sysOrgList=orgBiz.searchAllSysOrg(org);
 		}else{
 				sysOrgList=resJointOrgBiz.searchCouAndProList(org);
@@ -136,11 +131,11 @@ public class JsResStatisticController extends GeneralController {
 				jointOrgFlowList=new ArrayList<String>();
 				ResOrgSpe resOrgSpe=new ResOrgSpe();
 				resOrgSpe.setOrgFlow(o.getOrgFlow());
-				resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
+                resOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				List<ResOrgSpe> orgSpeList=resOrgSpeBiz.searchResOrgSpeList(resOrgSpe);
 				if(orgSpeList!=null&&!orgSpeList.isEmpty()){//每家主基地的专业
 					for(ResOrgSpe r:orgSpeList){
-						orgSpeFlagMap.put(o.getOrgFlow()+r.getSpeTypeId()+r.getSpeId(),GlobalConstant.FLAG_Y);
+                        orgSpeFlagMap.put(o.getOrgFlow() + r.getSpeTypeId() + r.getSpeId(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				orgFlowList.add(o.getOrgFlow());//查询每家基地及其协同基地的总数
@@ -362,19 +357,19 @@ public class JsResStatisticController extends GeneralController {
 		ResDoctorRecruit recruit=new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		//查询所有国家基地
 		List<SysOrg> sysOrgList=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(s.getOrgCityId());
 		}
 		if(StringUtil.isNotBlank(orgLevel)){
 			org.setOrgLevelId(orgLevel);
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			sysOrgList=orgBiz.searchAllSysOrg(org);
 		}else{
 			sysOrgList=resJointOrgBiz.searchCouAndProList(org);
@@ -385,11 +380,11 @@ public class JsResStatisticController extends GeneralController {
 				jointOrgFlowList=new ArrayList<String>();
 				ResOrgSpe resOrgSpe=new ResOrgSpe();
 				resOrgSpe.setOrgFlow(o.getOrgFlow());
-				resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
+                resOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				List<ResOrgSpe> orgSpeList=resOrgSpeBiz.searchResOrgSpeList(resOrgSpe);
 				if(orgSpeList!=null&&!orgSpeList.isEmpty()){//每家主基地的专业
 					for(ResOrgSpe r:orgSpeList){
-						orgSpeFlagMap.put(o.getOrgFlow()+r.getSpeTypeId()+r.getSpeId(),GlobalConstant.FLAG_Y);
+                        orgSpeFlagMap.put(o.getOrgFlow() + r.getSpeTypeId() + r.getSpeId(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				orgFlowList.add(o.getOrgFlow());//查询每家基地及其协同基地的总数
@@ -740,10 +735,10 @@ public class JsResStatisticController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();//存放所有的协同基地的orglist
 		List<String>docTypeList=new ArrayList<String>();
 		SysOrg org=new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		SysOrg ss=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(ss.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(ss.getOrgCityId());
 		}
 		if(StringUtil.isBlank(orgLevel)){
@@ -758,7 +753,7 @@ public class JsResStatisticController extends GeneralController {
 			}
 		}
 		recruit.setCatSpeId(trainTypeId);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		String sessionNumber = recruit.getSessionNumber();
 		if(StringUtil.isBlank(sessionNumber)){
 			int year = 0;
@@ -785,11 +780,11 @@ public class JsResStatisticController extends GeneralController {
 					for(ResJointOrg re:jointOrgList){//循环协同基地
 						String flag="";
 						if(c==0){
-							flag=GlobalConstant.FLAG_Y;
+                            flag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}else if(c==1){
-							flag=GlobalConstant.FLAG_F;
+                            flag = com.pinde.core.common.GlobalConstant.FLAG_F;
 						}else if(c==2){
-							flag=GlobalConstant.FLAG_N;
+                            flag = com.pinde.core.common.GlobalConstant.FLAG_N;
 						}//标记
 						jointOrgListMap.put(s.getOrgFlow()+flag, re);//以当前的国家基地标记key   Map
 						jointOrgFlowList.add(re.getJointOrgFlow());
@@ -807,11 +802,11 @@ public class JsResStatisticController extends GeneralController {
 				if(StringUtil.isNotBlank(trainTypeId)){
 					resOrgSpe.setSpeTypeId(trainTypeId);
 				}else if(StringUtil.isNotBlank(recruit.getSessionNumber())){
-					type=GlobalConstant.FLAG_Y;
+                    type = com.pinde.core.common.GlobalConstant.FLAG_Y;
 					if(Integer.parseInt(recruit.getSessionNumber())<2015){
-						resOrgSpe.setSpeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+                        resOrgSpe.setSpeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 					}else{
-						resOrgSpe.setSpeTypeId(TrainCategoryEnum.WMFirst.getId());
+                        resOrgSpe.setSpeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId());
 					}
 				}
 				List<ResOrgSpe> speList=resOrgSpeBiz.searchSpeByCondition(resOrgSpe,type);
@@ -859,10 +854,10 @@ public class JsResStatisticController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();//存放所有的协同基地的orglist
 		List<String>docTypeList=new ArrayList<String>();
 		SysOrg org=new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		SysOrg ss=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(ss.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(ss.getOrgCityId());
 		}
 		if(StringUtil.isBlank(orgLevel)){
@@ -877,7 +872,7 @@ public class JsResStatisticController extends GeneralController {
 			}
 		}
 		recruit.setCatSpeId(trainTypeId);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		String sessionNumber = recruit.getSessionNumber();
 		if(StringUtil.isBlank(sessionNumber)){
 			int year = 0;
@@ -904,11 +899,11 @@ public class JsResStatisticController extends GeneralController {
 					for(ResJointOrg re:jointOrgList){//循环协同基地
 						String flag="";
 						if(c==0){
-							flag=GlobalConstant.FLAG_Y;
+                            flag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}else if(c==1){
-							flag=GlobalConstant.FLAG_F;
+                            flag = com.pinde.core.common.GlobalConstant.FLAG_F;
 						}else if(c==2){
-							flag=GlobalConstant.FLAG_N;
+                            flag = com.pinde.core.common.GlobalConstant.FLAG_N;
 						}//标记
 						jointOrgListMap.put(s.getOrgFlow()+flag, re);//以当前的国家基地标记key   Map
 						jointOrgFlowList.add(re.getJointOrgFlow());
@@ -926,11 +921,11 @@ public class JsResStatisticController extends GeneralController {
 				if(StringUtil.isNotBlank(trainTypeId)){
 					resOrgSpe.setSpeTypeId(trainTypeId);
 				}else if(StringUtil.isNotBlank(recruit.getSessionNumber())){
-					type=GlobalConstant.FLAG_Y;
+                    type = com.pinde.core.common.GlobalConstant.FLAG_Y;
 					if(Integer.parseInt(recruit.getSessionNumber())<2015){
-						resOrgSpe.setSpeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+                        resOrgSpe.setSpeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 					}else{
-						resOrgSpe.setSpeTypeId(TrainCategoryEnum.WMFirst.getId());
+                        resOrgSpe.setSpeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId());
 					}
 				}
 				List<ResOrgSpe> speList=resOrgSpeBiz.searchSpeByCondition(resOrgSpe,type);
@@ -984,10 +979,10 @@ public class JsResStatisticController extends GeneralController {
 			typeSpeList=dictBiz.searchDictListByDictTypeId(trainTypeId);//每个培训类别对应的专业
 		}
 		SysOrg org=new SysOrg();
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		SysOrg ss=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(ss.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(ss.getOrgCityId());
 		}
 		if(StringUtil.isBlank(orgLevel)){
@@ -1004,18 +999,18 @@ public class JsResStatisticController extends GeneralController {
 		ResDoctorRecruit recruit=new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		if(sysOrgList!=null&&!sysOrgList.isEmpty()){
 			for(SysOrg o:sysOrgList){
 				orgFlowList=new ArrayList<String>();
 				jointOrgFlowList=new ArrayList<String>();
 				ResOrgSpe resOrgSpe=new ResOrgSpe();
 				resOrgSpe.setOrgFlow(o.getOrgFlow());
-				resOrgSpe.setRecordStatus(GlobalConstant.FLAG_Y);
+                resOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				List<ResOrgSpe> orgSpeList=resOrgSpeBiz.searchResOrgSpeList(resOrgSpe);
 				if(orgSpeList!=null&&!orgSpeList.isEmpty()){//每家主基地的专业
 					for(ResOrgSpe r:orgSpeList){
-						orgSpeFlagMap.put(o.getOrgFlow()+r.getSpeTypeId()+r.getSpeId(),GlobalConstant.FLAG_Y);
+                        orgSpeFlagMap.put(o.getOrgFlow() + r.getSpeTypeId() + r.getSpeId(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				orgFlowList.add(o.getOrgFlow());//查询每家基地及其协同基地的总数
@@ -1094,7 +1089,7 @@ public class JsResStatisticController extends GeneralController {
 			}
 		}
 		model.addAttribute("sessionNumber",sessionNumber);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		if(StringUtil.isNotBlank(sessionNumber)) {
 			recruit.setSessionNumber(sessionNumber);
 		}
@@ -1102,11 +1097,11 @@ public class JsResStatisticController extends GeneralController {
 			recruit.setCatSpeId(catSpeId);
 		}
 		List<String> delTypeList = new ArrayList<String>();
-		delTypeList.add(ResRecTypeEnum.Delay.getId());
-		delTypeList.add(ResRecTypeEnum.ReturnTraining.getId());
-		delTypeList.add(ResRecTypeEnum.DoctorAuth.getId());
-		delTypeList.add(ResRecTypeEnum.AfterSummary.getId());
-		delTypeList.add(ResRecTypeEnum.AfterEvaluation.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 		List<Map<String, Object>> docCountByOrg = resStatisticBiz.statisticDocCountByOrg(recruit,null,graduate);//每家医院的人数总数
 		List<Map<String, Object>> appCountByOrg = resStatisticBiz.statisticAppCountByOrg(recruit,resRec,endTime,startTime,delTypeList,graduate);//统计每家医院实际使用app的人数
 
@@ -1190,7 +1185,7 @@ public class JsResStatisticController extends GeneralController {
 			}
 		}
 		model.addAttribute("sessionNumber",sessionNumber);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		if(StringUtil.isNotBlank(sessionNumber)) {
 			recruit.setSessionNumber(sessionNumber);
 		}
@@ -1198,11 +1193,11 @@ public class JsResStatisticController extends GeneralController {
 			recruit.setCatSpeId(catSpeId);
 		}
 		List<String> delTypeList = new ArrayList<String>();
-		delTypeList.add(ResRecTypeEnum.Delay.getId());
-		delTypeList.add(ResRecTypeEnum.ReturnTraining.getId());
-		delTypeList.add(ResRecTypeEnum.DoctorAuth.getId());
-		delTypeList.add(ResRecTypeEnum.AfterSummary.getId());
-		delTypeList.add(ResRecTypeEnum.AfterEvaluation.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 		List<Map<String, Object>> docCountByOrg = resStatisticBiz.statisticDocCountByOrg(recruit,null,graduate);//每家医院的人数总数
 		List<Map<String, Object>> appCountByOrg = resStatisticBiz.statisticAppCountByOrg(recruit,resRec,endTime,startTime,delTypeList,graduate);//统计每家医院实际使用app的人数
 
@@ -1270,13 +1265,13 @@ public class JsResStatisticController extends GeneralController {
 			recruit.setOrgFlow("");
 		}
 		model.addAttribute("sessionNumber",sessionNumber);
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		List<String> delTypeList = new ArrayList<String>();
-		delTypeList.add(ResRecTypeEnum.Delay.getId());
-		delTypeList.add(ResRecTypeEnum.ReturnTraining.getId());
-		delTypeList.add(ResRecTypeEnum.DoctorAuth.getId());
-		delTypeList.add(ResRecTypeEnum.AfterSummary.getId());
-		delTypeList.add(ResRecTypeEnum.AfterEvaluation.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JsDoctorInfoExt> docInfoExtsList =resStatisticBiz.statisticNoAppUser(recruit, resRec, delTypeList,startDate,endDate,graduate);
 		model.addAttribute("docInfoExtsList", docInfoExtsList);
@@ -1294,7 +1289,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg org=new SysOrg();
 		SysOrg ss=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(ss.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(ss.getOrgCityId());
 		}
 		sysOrgList=resJointOrgBiz.searchCouAndProList(org);//省级基地和国家基地
@@ -1330,12 +1325,12 @@ public class JsResStatisticController extends GeneralController {
 			recruit.setCatSpeId(catSpeId);
 		}
 		List<String> delTypeList = new ArrayList<String>();
-		delTypeList.add(ResRecTypeEnum.DoctorAuth.getId());
-		delTypeList.add(ResRecTypeEnum.Delay.getId());
-		delTypeList.add(ResRecTypeEnum.ReturnTraining.getId());
-		delTypeList.add(ResRecTypeEnum.AfterSummary.getId());
-		delTypeList.add(ResRecTypeEnum.AfterEvaluation.getId());
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		List<Map<String, Object>> docCountByOrg = resStatisticBiz.statisticDocCountByOrgForTime(null, orgFlowList, startTime, endTime,recruit);//主基地每家医院的人数总数
 		List<Map<String, Object>> appCountByOrg = resStatisticBiz.statisticRealAppCount(delTypeList,recruit,endTime, startTime, orgFlowList, null,month);//统计主基地每家医院实际使用app的人数
 		DecimalFormat df = new DecimalFormat("0.00%");
@@ -1361,8 +1356,8 @@ public class JsResStatisticController extends GeneralController {
 			}
 		}
 		if(jointOrgFlowList!=null &&!jointOrgFlowList.isEmpty()){//所有的协同基地
-			List<Map<String, Object>> jointDocCountByOrg = resStatisticBiz.statisticDocCountByOrgForTime(GlobalConstant.FLAG_Y, orgFlowList, startTime, endTime,recruit);//协同基地基地每家医院的人数总数
-			List<Map<String, Object>> JointAppCountByOrg = resStatisticBiz.statisticRealAppCount(delTypeList,recruit,endTime, startTime, orgFlowList, GlobalConstant.FLAG_Y,month);//统计协同基地每家医院实际使用app的人数
+            List<Map<String, Object>> jointDocCountByOrg = resStatisticBiz.statisticDocCountByOrgForTime(com.pinde.core.common.GlobalConstant.FLAG_Y, orgFlowList, startTime, endTime, recruit);//协同基地基地每家医院的人数总数
+            List<Map<String, Object>> JointAppCountByOrg = resStatisticBiz.statisticRealAppCount(delTypeList, recruit, endTime, startTime, orgFlowList, com.pinde.core.common.GlobalConstant.FLAG_Y, month);//统计协同基地每家医院实际使用app的人数
 			for(String s:jointOrgFlowList){//循环list
 				double t=0;double r=0;
 				for(Map<String, Object> en:jointDocCountByOrg){
@@ -1402,7 +1397,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg org=new SysOrg();
 		SysOrg ss=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(ss.getOrgProvId());
-		if(getSessionAttribute(GlobalConstant.USER_LIST_SCOPE).equals(GlobalConstant.USER_LIST_CHARGE)){
+        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(ss.getOrgCityId());
 		}
 		sysOrgList=resJointOrgBiz.searchCouAndProList(org);//省级基地和国家基地
@@ -1438,12 +1433,12 @@ public class JsResStatisticController extends GeneralController {
 			recruit.setCatSpeId(catSpeId);
 		}
 		List<String> delTypeList = new ArrayList<String>();
-		delTypeList.add(ResRecTypeEnum.DoctorAuth.getId());
-		delTypeList.add(ResRecTypeEnum.Delay.getId());
-		delTypeList.add(ResRecTypeEnum.ReturnTraining.getId());
-		delTypeList.add(ResRecTypeEnum.AfterSummary.getId());
-		delTypeList.add(ResRecTypeEnum.AfterEvaluation.getId());
-		recruit.setAuditStatusId(JsResDoctorAuditStatusEnum.Passed.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+        delTypeList.add(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 		List<Map<String, Object>> docCountByOrg = resStatisticBiz.statisticDocCountByOrgForTime(null, orgFlowList, startTime, endTime,recruit);//主基地每家医院的人数总数
 		List<Map<String, Object>> appCountByOrg = resStatisticBiz.statisticRealAppCount(delTypeList,recruit,endTime, startTime, orgFlowList, null,month);//统计主基地每家医院实际使用app的人数
 		DecimalFormat df = new DecimalFormat("0.00%");
@@ -1469,8 +1464,8 @@ public class JsResStatisticController extends GeneralController {
 			}
 		}
 		if(jointOrgFlowList!=null &&!jointOrgFlowList.isEmpty()){//所有的协同基地
-			List<Map<String, Object>> jointDocCountByOrg = resStatisticBiz.statisticDocCountByOrgForTime(GlobalConstant.FLAG_Y, orgFlowList, startTime, endTime,recruit);//协同基地基地每家医院的人数总数
-			List<Map<String, Object>> JointAppCountByOrg = resStatisticBiz.statisticRealAppCount(delTypeList,recruit,endTime, startTime, orgFlowList, GlobalConstant.FLAG_Y,month);//统计协同基地每家医院实际使用app的人数
+            List<Map<String, Object>> jointDocCountByOrg = resStatisticBiz.statisticDocCountByOrgForTime(com.pinde.core.common.GlobalConstant.FLAG_Y, orgFlowList, startTime, endTime, recruit);//协同基地基地每家医院的人数总数
+            List<Map<String, Object>> JointAppCountByOrg = resStatisticBiz.statisticRealAppCount(delTypeList, recruit, endTime, startTime, orgFlowList, com.pinde.core.common.GlobalConstant.FLAG_Y, month);//统计协同基地每家医院实际使用app的人数
 			for(String s:jointOrgFlowList){//循环list
 				double t=0;double r=0;
 				for(Map<String, Object> en:jointDocCountByOrg){
@@ -1688,8 +1683,8 @@ public class JsResStatisticController extends GeneralController {
 
 		Map<String,Object> nationalOrgMap = new HashMap<>();//国家基地MAP
 		SysOrg sysOrg=new SysOrg();
-		sysOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		sysOrg.setOrgProvId("320000");
 		//所有国家基地
 		List<SysOrg> sysOrgs=orgBiz.searchAllSysOrg(sysOrg);
@@ -2110,11 +2105,11 @@ public class JsResStatisticController extends GeneralController {
 		List<SysOrg> orgs=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(s);
 		}else {
 			org.setOrgProvId(s.getOrgProvId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs=orgBiz.searchAllSysOrg(org);
 		}
 		model.addAttribute("orgs", orgs);
@@ -2134,12 +2129,12 @@ public class JsResStatisticController extends GeneralController {
 		List<SysOrg> orgs=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			teacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			orgs.add(s);
 		}else {
 			org.setOrgProvId(s.getOrgProvId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs=orgBiz.searchAllSysOrg(org);
 		}
 		model.addAttribute("orgs", orgs);
@@ -2152,7 +2147,7 @@ public class JsResStatisticController extends GeneralController {
 
 	@RequestMapping("/auditTeacherApplication")
 	public String auditTeacherApplication(Model model,ResTeacherTraining teacherTraining,HttpServletRequest request,Integer currentPage, String roleFlag, String dataFlag){
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			teacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		}
 		PageHelper.startPage(currentPage, getPageSize(request));
@@ -2173,15 +2168,15 @@ public class JsResStatisticController extends GeneralController {
 	@RequestMapping("/saveAuditDetails")
 	@ResponseBody
 	public String saveAuditDetails(String roleFlag, ResTeacherTraining teacherTraining){
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			if (StringUtil.isBlank(teacherTraining.getApplicationAuditStatus())) {
 				return "请选择审核通过或者不通过！";
 			} else {
-				if (teacherTraining.getApplicationAuditStatus().equals(JsResDoctorAuditStatusEnum.Passed.getId())) {
+                if (teacherTraining.getApplicationAuditStatus().equals(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId())) {
 					teacherTraining = resStatisticBiz.searchTeacherInfoByPK(teacherTraining.getRecordFlow());
 					teacherTraining.setTeacherLevelId(teacherTraining.getApplicationTeacherLevelId());
 					teacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(teacherTraining.getApplicationTeacherLevelId()));
-					teacherTraining.setApplicationAuditStatus(JsResDoctorAuditStatusEnum.Passed.getId());
+                    teacherTraining.setApplicationAuditStatus(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 				}
 				resStatisticBiz.save(teacherTraining);
 				List<String> allDeptFlows = new ArrayList<String>();
@@ -2196,23 +2191,23 @@ public class JsResStatisticController extends GeneralController {
 				}
 				ResDoctor resDoctor = resDoctorBiz.findByFlow(teacherTraining.getRecordFlow());
 				if (resDoctor != null) {
-					resDoctor.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 					resDoctorBiz.editDoctor(resDoctor);
 				}
 				//打开app权限
 				String cfgCode = "jsres_teacher_app_login_"+teacherTraining.getRecordFlow();
-				String cfgValue = "Y";
+                String cfgValue = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				String cfgDesc = "是否开放带教app权限";
 				JsresPowerCfg cfg = new JsresPowerCfg();
 				cfg.setCfgCode(cfgCode);
 				cfg.setCfgValue(cfgValue);
 				cfg.setCfgDesc(cfgDesc);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				jsResPowerCfgBiz.save(cfg);
 				SysRole sysRole1 = userRoleBiz.getByRoleName("学员");
 				SysUserRole sysUserRole1 = userRoleBiz.readUserRole(teacherTraining.getRecordFlow(), sysRole1.getRoleFlow());
 				if (sysUserRole1 != null) {
-					sysUserRole1.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    sysUserRole1.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 					userRoleBiz.saveSysUserRole(sysUserRole1);
 				}
 				SysRole sysRole = userRoleBiz.getByRoleName("带教老师");
@@ -2221,17 +2216,17 @@ public class JsResStatisticController extends GeneralController {
 					List<String> allRoleFlows = new ArrayList<String>();
 					allRoleFlows.add(sysRole.getRoleFlow());
 					for (String roleFlow : allRoleFlows) {
-						userRoleBiz.saveSysUserRole(teacherTraining.getRecordFlow(), roleFlow, GlobalConstant.RES_WS_ID);
+                        userRoleBiz.saveSysUserRole(teacherTraining.getRecordFlow(), roleFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 					}
 				}
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		} else if (StringUtil.isNotBlank(roleFlag) && "head".equals(roleFlag)) {
 			if (StringUtil.isBlank(teacherTraining.getApplicationAuditStatus())) {
 				return "请选择审核通过或者不通过！";
 			} else {
 				resStatisticBiz.save(teacherTraining);
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		} else {
 			return "角色未赋权！";
@@ -2249,17 +2244,17 @@ public class JsResStatisticController extends GeneralController {
 	@RequestMapping("/saveBatchAudit")
 	@ResponseBody
 	public String saveBatchAudit(String[] recordFlowList, String applicationAuditStatus, String applicationAuditMessage, String roleFlag){
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			if (StringUtil.isBlank(applicationAuditStatus)) {
 				return "请选择审核通过或者不通过！";
 			} else {
-				if (applicationAuditStatus.equals(JsResDoctorAuditStatusEnum.Passed.getId())) {
+                if (applicationAuditStatus.equals(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId())) {
 					for (String recordFlow : recordFlowList) {
 						recordFlow = recordFlow.replace("[", "").replace("]", "");
 						ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
 						teacherTraining.setTeacherLevelId(teacherTraining.getApplicationTeacherLevelId());
 						teacherTraining.setTeacherLevelName(JsResTeacherLevelEnum.getNameById(teacherTraining.getApplicationTeacherLevelId()));
-						teacherTraining.setApplicationAuditStatus(JsResDoctorAuditStatusEnum.Passed.getId());
+                        teacherTraining.setApplicationAuditStatus(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
 						resStatisticBiz.save(teacherTraining);
 						List<String> allDeptFlows = new ArrayList<String>();
 						if(StringUtil.isNotBlank(teacherTraining.getDeptFlow())&&!allDeptFlows.contains(teacherTraining.getDeptFlow())){
@@ -2273,23 +2268,23 @@ public class JsResStatisticController extends GeneralController {
 						}
 						ResDoctor resDoctor = resDoctorBiz.findByFlow(teacherTraining.getRecordFlow());
 						if (resDoctor != null) {
-							resDoctor.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                            resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 							resDoctorBiz.editDoctor(resDoctor);
 						}
 						//打开app权限
 						String cfgCode = "jsres_teacher_app_login_"+teacherTraining.getRecordFlow();
-						String cfgValue = "Y";
+                        String cfgValue = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						String cfgDesc = "是否开放带教app权限";
 						JsresPowerCfg cfg = new JsresPowerCfg();
 						cfg.setCfgCode(cfgCode);
 						cfg.setCfgValue(cfgValue);
 						cfg.setCfgDesc(cfgDesc);
-						cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						jsResPowerCfgBiz.save(cfg);
 						SysRole sysRole1 = userRoleBiz.getByRoleName("学员");
 						SysUserRole sysUserRole1 = userRoleBiz.readUserRole(teacherTraining.getRecordFlow(), sysRole1.getRoleFlow());
 						if (sysUserRole1 != null) {
-							sysUserRole1.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                            sysUserRole1.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 							userRoleBiz.saveSysUserRole(sysUserRole1);
 						}
 						SysRole sysRole = userRoleBiz.getByRoleName("带教老师");
@@ -2298,7 +2293,7 @@ public class JsResStatisticController extends GeneralController {
 							List<String> allRoleFlows = new ArrayList<String>();
 							allRoleFlows.add(sysRole.getRoleFlow());
 							for (String roleFlow : allRoleFlows) {
-								userRoleBiz.saveSysUserRole(teacherTraining.getRecordFlow(), roleFlow, GlobalConstant.RES_WS_ID);
+                                userRoleBiz.saveSysUserRole(teacherTraining.getRecordFlow(), roleFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 							}
 						}
 					}
@@ -2306,12 +2301,12 @@ public class JsResStatisticController extends GeneralController {
 					for (String recordFlow : recordFlowList) {
 						recordFlow = recordFlow.replace("[", "").replace("]", "");
 						ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
-						teacherTraining.setApplicationAuditStatus(JsResDoctorAuditStatusEnum.NotPassed.getId());
+                        teacherTraining.setApplicationAuditStatus(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotPassed.getId());
 						teacherTraining.setApplicationAuditMessage(applicationAuditMessage);
 						resStatisticBiz.save(teacherTraining);
 					}
 				}
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		} else if (StringUtil.isNotBlank(roleFlag) && "head".equals(roleFlag)) {
 			if (StringUtil.isBlank(applicationAuditStatus)) {
@@ -2324,7 +2319,7 @@ public class JsResStatisticController extends GeneralController {
 					teacherTraining.setApplicationAuditMessage(applicationAuditMessage);
 					resStatisticBiz.save(teacherTraining);
 				}
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		} else {
 			return "角色未赋权！";
@@ -2337,7 +2332,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		model.addAttribute("orgs", orgs);
 		model.addAttribute("roleFlag", roleFlag);
@@ -2350,7 +2345,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		model.addAttribute("orgs", orgs);
 		List<String> orgFlows = new ArrayList<>();
@@ -2373,12 +2368,12 @@ public class JsResStatisticController extends GeneralController {
 		List<SysOrg> orgs=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			teacherTraining.setOrgName(s.getOrgName());
 			orgs.add(s);
 		}else {
 			org.setOrgProvId(s.getOrgProvId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs=orgBiz.searchAllSysOrg(org);
 		}
 		model.addAttribute("orgs", orgs);
@@ -2397,7 +2392,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		model.addAttribute("orgs", orgs);
 		List<String> orgNames = new ArrayList<>();
@@ -2431,8 +2426,8 @@ public class JsResStatisticController extends GeneralController {
 					message ="导入文件内容为空！请确认后导入！";
 					return message;
 				}
-				if (GlobalConstant.ZERO_LINE != result) {
-					message = GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    message = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}
 			} catch (RuntimeException re) {
 				re.printStackTrace();
@@ -2448,24 +2443,24 @@ public class JsResStatisticController extends GeneralController {
 		if(StringUtil.isNotBlank(recordFlow)) {
 			ResTeacherTraining teacherTraining = resStatisticBiz.searchTeacherInfoByPK(recordFlow);
 			if(teacherTraining!=null) {
-				teacherTraining.setRecordStatus(GlobalConstant.FLAG_N);
+                teacherTraining.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 				int count = resStatisticBiz.editTeacherInfo(teacherTraining);
-				if(count==GlobalConstant.ONE_LINE) {
-					return GlobalConstant.DELETE_SUCCESSED;
+                if (count == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                    return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 				}
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	@RequestMapping("/saveTeacher")
 	@ResponseBody
 	public String saveTeacher(ResTeacherTraining teacherTraining){
 		int count=resStatisticBiz.save(teacherTraining);
-		if(count==GlobalConstant.ONE_LINE) {
-			return GlobalConstant.OPERATE_SUCCESSED;
+        if (count == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping("/checkUserPhone")
@@ -2474,25 +2469,25 @@ public class JsResStatisticController extends GeneralController {
 		//判断手机号是否重复
 		if (StringUtil.isNotBlank(recordFlow)) {
 			SysUserExample example=new SysUserExample();
-			example.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 			if(sysUserList != null && !sysUserList.isEmpty()){
 				if (sysUserList.get(0).getUserFlow().equals(recordFlow)) {
-					return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 				} else {
 					return "手机号码重复，请确认！";
 				}
 			} else {
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		} else {
 			SysUserExample example=new SysUserExample();
-			example.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 			if(sysUserList != null && !sysUserList.isEmpty()){
 				return "手机号码重复，请确认！";
 			}
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 	}
 
@@ -2507,7 +2502,7 @@ public class JsResStatisticController extends GeneralController {
 			ResTeacherTraining training = resStatisticBiz.searchTeacherInfoByCertificateNoNotSelf(teacherTraining.getCertificateNo(),teacherTraining.getDoctorName());
 			if(null == training){
 				String resultPath = resStatisticBiz.saveFileToDirs("", uploadFile, "teacherTrain");
-				if(GlobalConstant.FLAG_N.equals(resultPath)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resultPath)) {
 					teacherTraining.setCertificateUrl(certificateUrl);
 				}else {
 					teacherTraining.setCertificateUrl(resultPath);
@@ -2522,12 +2517,12 @@ public class JsResStatisticController extends GeneralController {
 				List<SysDept> deptList=deptBiz.searchDeptByOrg(teacherTraining.getOrgFlow());
 				model.addAttribute("deptList",deptList);
 				model.addAttribute("teacher",teacherTraining);
-				model.addAttribute("certificateNoFlag", GlobalConstant.FLAG_N);
+                model.addAttribute("certificateNoFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 		}
 		if (uploadFileOne != null) {
 			String resultPath = resStatisticBiz.saveFileToDirs("", uploadFileOne, "teacherTrain");
-			if(GlobalConstant.FLAG_N.equals(resultPath)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resultPath)) {
 				teacherTraining.setAchievementUrl(achievementUrl);
 			}else {
 				teacherTraining.setAchievementUrl(resultPath);
@@ -2552,7 +2547,7 @@ public class JsResStatisticController extends GeneralController {
 		if ("student".equals(roleId)) {
 			return "redirect:/jsres/doctor/index";
 		} else {
-			model.addAttribute("pageFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("pageFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			return "jsres/teacher/index";
 		}
 	}
@@ -2563,7 +2558,7 @@ public class JsResStatisticController extends GeneralController {
 		model.addAttribute("roleId", roleId);
 		model.addAttribute("teacher", teacherTraining);
 		if ("HeadAuditing".equals(teacherTraining.getApplicationAuditStatus()) || "HeadPassed".equals(teacherTraining.getApplicationAuditStatus())) {
-			model.addAttribute("applicationFlag", GlobalConstant.FLAG_N);
+            model.addAttribute("applicationFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		return "jsres/global/statistics/teacherApplication";
 	}
@@ -2572,22 +2567,22 @@ public class JsResStatisticController extends GeneralController {
 	public String saveTeacherApplication(ResTeacherTraining teacherTraining, MultipartFile uploadFile, Model model) {
 		String keyOfHeadAudit = "jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_head_audit";
 		String isHeadAudit = JsresPowerCfgController.jsresPowerCfgMap(keyOfHeadAudit);
-		if (StringUtil.isNotBlank(isHeadAudit) && isHeadAudit.equals(GlobalConstant.FLAG_Y)) {
+        if (StringUtil.isNotBlank(isHeadAudit) && isHeadAudit.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 			teacherTraining.setApplicationAuditStatus("HeadAuditing");
 		}
-		if (StringUtil.isBlank(isHeadAudit) || isHeadAudit.equals(GlobalConstant.FLAG_N)) {
+        if (StringUtil.isBlank(isHeadAudit) || isHeadAudit.equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 			teacherTraining.setApplicationAuditStatus("HeadPassed");
 		}
 		if (uploadFile != null) {
 			String resultPath = resStatisticBiz.saveFileToDirs("", uploadFile, "teacherTrain");
-			if (GlobalConstant.FLAG_N.equals(resultPath)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resultPath)) {
 				teacherTraining.setApplicationProvalUrl(null);
 			} else {
 				teacherTraining.setApplicationProvalUrl(resultPath);
 			}
 			resStatisticBiz.save(teacherTraining);
 		}
-		model.addAttribute("pageFlag",GlobalConstant.FLAG_Y);
+        model.addAttribute("pageFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return "jsres/global/statistics/teacherApplication";
 	}
 
@@ -2609,9 +2604,9 @@ public class JsResStatisticController extends GeneralController {
 			ResTeacherTraining training = resStatisticBiz.searchTeacherInfoByCertificateNoNotSelf(teacherTraining.getCertificateNo(),teacherTraining.getDoctorName());
 			if(null == training){
 				String resultPath = resStatisticBiz.saveFileToDirs("", uploadFile, "teacherTrain");
-				model.addAttribute("result", GlobalConstant.FLAG_Y);
+                model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				model.addAttribute("filePath", resultPath);
-				if(GlobalConstant.FLAG_N.equals(resultPath)){
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resultPath)) {
 					teacherTraining.setCertificateUrl(certificateUrl);
 				}else {
 					teacherTraining.setCertificateUrl(resultPath);
@@ -2621,35 +2616,35 @@ public class JsResStatisticController extends GeneralController {
 				List<SysOrg> orgs=new ArrayList<SysOrg>();
 				SysOrg org=new SysOrg();
 				SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-				if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+                if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 					teacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 					orgs.add(s);
 				}else {
 					org.setOrgProvId(s.getOrgProvId());
-					org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                    org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 					orgs=orgBiz.searchAllSysOrg(org);
 				}
 				model.addAttribute("orgs", orgs);
 				List<SysDept> deptList=deptBiz.searchDeptByOrg(teacherTraining.getOrgFlow());
 				model.addAttribute("deptList",deptList);
 				model.addAttribute("teacher",teacherTraining);
-				model.addAttribute("certificateNoFlag", GlobalConstant.FLAG_N);
+                model.addAttribute("certificateNoFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 		}else{
-			model.addAttribute("result", GlobalConstant.FLAG_N);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		if (uploadFileOne != null) {
 			String resultPath = resStatisticBiz.saveFileToDirs("", uploadFileOne, "teacherTrain");
-			model.addAttribute("result", GlobalConstant.FLAG_Y);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			model.addAttribute("filePath", resultPath);
-			if(GlobalConstant.FLAG_N.equals(resultPath)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resultPath)) {
 				teacherTraining.setAchievementUrl(achievementUrl);
 			}else {
 				teacherTraining.setAchievementUrl(resultPath);
 			}
 			resStatisticBiz.save(teacherTraining);
 		}else{
-			model.addAttribute("result", GlobalConstant.FLAG_N);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 
 		SysUser user = new SysUser();
@@ -2689,13 +2684,13 @@ public class JsResStatisticController extends GeneralController {
 		}
 		//打开app权限
 		String cfgCode = "jsres_teacher_app_login_"+user.getUserFlow();
-		String cfgValue = "Y";
+        String cfgValue = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		String cfgDesc = "是否开放带教app权限";
 		JsresPowerCfg cfg = new JsresPowerCfg();
 		cfg.setCfgCode(cfgCode);
 		cfg.setCfgValue(cfgValue);
 		cfg.setCfgDesc(cfgDesc);
-		cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		jsResPowerCfgBiz.save(cfg);
 
 		SysRole sysRole = userRoleBiz.getByRoleName("带教老师");
@@ -2704,7 +2699,7 @@ public class JsResStatisticController extends GeneralController {
 			List<String> allRoleFlows = new ArrayList<String>();
 			allRoleFlows.add(sysRole.getRoleFlow());
 			for (String roleFlow : allRoleFlows) {
-				userRoleBiz.saveSysUserRole(user.getUserFlow(), roleFlow, GlobalConstant.RES_WS_ID);
+                userRoleBiz.saveSysUserRole(user.getUserFlow(), roleFlow, com.pinde.core.common.GlobalConstant.RES_WS_ID);
 			}
 		}
 
@@ -2716,11 +2711,11 @@ public class JsResStatisticController extends GeneralController {
 	public String deleteCerfiticateImg(String recordFlow){
 		if(StringUtil.isNotBlank(recordFlow)){
 			int result = resStatisticBiz.deleteCerfiticateImg(recordFlow);
-			if(result != GlobalConstant.ZERO_LINE){
-				return GlobalConstant.DELETE_SUCCESSED;
+            if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	@RequestMapping("/deleteAchievementImg")
@@ -2728,11 +2723,11 @@ public class JsResStatisticController extends GeneralController {
 	public String deleteAchievementImg(String recordFlow){
 		if(StringUtil.isNotBlank(recordFlow)){
 			int result = resStatisticBiz.deleteAchievementImg(recordFlow);
-			if(result != GlobalConstant.ZERO_LINE){
-				return GlobalConstant.DELETE_SUCCESSED;
+            if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	@RequestMapping("/editInfo")
@@ -2766,16 +2761,16 @@ public class JsResStatisticController extends GeneralController {
 		List<SysOrg> orgs=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(s);
-		}else if(GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			org.setOrgProvId(s.getOrgProvId());
 			org.setOrgCityId(s.getOrgCityId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs = orgBiz.searchAllSysOrg(org);
 		}else {
 			org.setOrgProvId(s.getOrgProvId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs = orgBiz.searchAllSysOrg(org);
 		}
 		model.addAttribute("roleFlag",roleFlag);
@@ -2788,11 +2783,11 @@ public class JsResStatisticController extends GeneralController {
 		List<SysOrg> orgs=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(s);
 		}else {
 			org.setOrgProvId(s.getOrgProvId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs=orgBiz.searchAllSysOrg(org);
 		}
 		model.addAttribute("orgs", orgs);
@@ -2804,12 +2799,12 @@ public class JsResStatisticController extends GeneralController {
 		List<SysOrg> orgs=new ArrayList<SysOrg>();
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			teacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			orgs.add(s);
 		}else {
 			org.setOrgProvId(s.getOrgProvId());
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs=orgBiz.searchAllSysOrg(org);
 		}
 		model.addAttribute("orgs", orgs);
@@ -2825,7 +2820,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		model.addAttribute("orgs", orgs);
 		model.addAttribute("roleFlag", roleFlag);
@@ -2838,7 +2833,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		model.addAttribute("orgs", orgs);
 		List<String> orgFlows = new ArrayList<>();
@@ -2855,13 +2850,13 @@ public class JsResStatisticController extends GeneralController {
 
 	@RequestMapping("/exportTeachTrainList")
 	public void exportTeachTrainList(ResTeacherTraining teacherTraining,HttpServletResponse response,String roleFlag) throws Exception{
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			teacherTraining.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		}
 		List<ResTeacherTraining> teacherTrainingList = resStatisticBiz.searchTeacherInfo2(teacherTraining,"newData");
 		if (null!=teacherTrainingList && !teacherTrainingList.isEmpty()){
 			for (ResTeacherTraining training : teacherTrainingList) {
-				if (StringUtil.isNotBlank(training.getIsTrain()) && training.getIsTrain().equals(GlobalConstant.RECORD_STATUS_Y)){
+                if (StringUtil.isNotBlank(training.getIsTrain()) && training.getIsTrain().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)) {
 					training.setIsTrain("有");
 				}else {
 					training.setIsTrain("无");
@@ -2907,7 +2902,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		List<String> orgFlows = new ArrayList<>();
 		if(null != orgs && orgs.size()>0){
@@ -2937,7 +2932,7 @@ public class JsResStatisticController extends GeneralController {
 	public void exportOldTeachTrainList(ResTeacherTraining teacherTraining,HttpServletResponse response,String roleFlag) throws Exception{
 		teacherTraining.setOrgFlow(null);
 		SysOrg s = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
-		if(StringUtil.isNotBlank(roleFlag) && GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			teacherTraining.setOrgName(s.getOrgName());
 		}
 		List<ResTeacherTraining> teacherTrainingList = resStatisticBiz.searchTeacherInfo2(teacherTraining,"oldData");
@@ -2962,7 +2957,7 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
 		org.setOrgCityId(s.getOrgCityId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
 		List<String> orgNames = new ArrayList<>();
 		if(null != orgs && orgs.size()>0){
@@ -3000,8 +2995,8 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)){
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(s.getOrgCityId());
 		}
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
@@ -3018,8 +3013,8 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)){
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(s.getOrgCityId());
 		}
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
@@ -3056,13 +3051,13 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg searchOrg = new SysOrg();
 		SysOrg s = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		searchOrg.setOrgProvId(s.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_LOCAL)) {
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
 			param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)) {
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			searchOrg.setOrgCityId(s.getOrgCityId());
 			param.put("orgFlow",orgFlow);
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)){
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
@@ -3098,13 +3093,13 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg searchOrg = new SysOrg();
 		SysOrg s = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		searchOrg.setOrgProvId(s.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_LOCAL)) {
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
 			param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)) {
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			searchOrg.setOrgCityId(s.getOrgCityId());
 			param.put("orgFlow",orgFlow);
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)){
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
@@ -3147,13 +3142,13 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg searchOrg = new SysOrg();
 		SysOrg s = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		searchOrg.setOrgProvId(s.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_LOCAL)) {
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
 			param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)) {
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			searchOrg.setOrgCityId(s.getOrgCityId());
 			param.put("orgFlow",orgFlow);
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)){
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
@@ -3212,13 +3207,13 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg searchOrg = new SysOrg();
 		SysOrg s = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		searchOrg.setOrgProvId(s.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_LOCAL)) {
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
 			param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)) {
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			searchOrg.setOrgCityId(s.getOrgCityId());
 			param.put("orgFlow",orgFlow);
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)){
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
@@ -3263,8 +3258,8 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg org=new SysOrg();
 		SysOrg s=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		org.setOrgProvId(s.getOrgProvId());
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)){
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			org.setOrgCityId(s.getOrgCityId());
 		}
 		List<SysOrg> orgs = orgBiz.searchAllSysOrg(org);
@@ -3299,13 +3294,13 @@ public class JsResStatisticController extends GeneralController {
 		SysOrg searchOrg = new SysOrg();
 		SysOrg s = orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		searchOrg.setOrgProvId(s.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		if(roleFlag.equals(GlobalConstant.USER_LIST_LOCAL)) {
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
 			param.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)) {
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 			searchOrg.setOrgCityId(s.getOrgCityId());
 			param.put("orgFlow",orgFlow);
-		}else if(roleFlag.equals(GlobalConstant.USER_LIST_GLOBAL)) {
+        } else if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class JsresDeptConfig extends MybatisObject {
+public class JsresDeptConfig extends TeachingActivitySpeakerExample.MybatisObject {
     private String cfgFlow;
 
     private String orgFlow;

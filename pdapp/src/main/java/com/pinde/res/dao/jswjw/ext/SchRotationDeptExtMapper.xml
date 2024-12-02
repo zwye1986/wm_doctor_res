@@ -13,7 +13,7 @@
 		<result column="is_current" property="isCurrent" javaType="java.lang.String" />
 		<result column="RESULT_FLOW" property="resultFlow" javaType="java.lang.String" />
 	</resultMap>
-	<resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationDept">
+	<resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationDept">
 		<id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
 		<result column="ROTATION_FLOW" jdbcType="VARCHAR" property="rotationFlow" />
 		<result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
@@ -407,7 +407,7 @@
 		AND ROTATION_FLOW = #{rotationFlow}
 	</select>
 
-	<select id="selectByExampleTwo" parameterType="com.pinde.sci.model.mo.SchRotationDeptExample" resultMap="BaseResultMap">
+	<select id="selectByExampleTwo" parameterType="com.pinde.core.model.SchRotationDeptExample" resultMap="BaseResultMap">
 		select
 		<if test="distinct">
 			distinct

@@ -1,15 +1,16 @@
 package com.pinde.app.common;
 
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.BaseEnum;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.GeneralEnum;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.ClassUtil;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IDictBiz;
 import com.pinde.res.biz.stdp.ICfgBiz;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysDict;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,14 +30,15 @@ public class InitConfig implements ServletContextListener {
     private final static Logger logger = LoggerFactory.getLogger(InitConfig.class);
 
     private static ServletContextEvent servletContext;
-    //住院医师
-    public static IrbFormRequestUtil resFormRequestUtil;
 
     private static Map<String,Map<String,String>> sysDictNameMap;
     private static Map<String, String> sysCfgMap = new HashMap<String, String>();
     private static Map<String, String> sysCfgDescMap;
 
     public static Map<String,String> weekPasswordMap;
+
+    //住院医师
+    public static IrbFormRequestUtil resFormRequestUtil;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -55,7 +57,11 @@ public class InitConfig implements ServletContextListener {
         if("oracle".equals(GlobalUtil.getLocalCfgMap().get("dbType")) ){
             //加载字典及枚举
             _loadDict(servletContextEvent.getServletContext());
-            _loadEnum(servletContextEvent.getServletContext());
+            try {
+                _loadEnum(servletContextEvent.getServletContext());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             _loadSysCfg(servletContextEvent.getServletContext());
         }
         //读取弱密码
@@ -103,7 +109,7 @@ public class InitConfig implements ServletContextListener {
             Map<String, List<SysDict>> sysListDictMap = new HashMap<String, List<SysDict>>();
             Map<String, String> sysDictIdMap = new HashMap<String, String>();
             Map<String, Map<String, String>> sysDictNameMap = new HashMap<String, Map<String, String>>();
-            List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(DictTypeEnum.class);
+            List<DictTypeEnum> dictTypeEnumList = (List<DictTypeEnum>) EnumUtil.toList(com.pinde.core.common.enums.DictTypeEnum.class);
             for (DictTypeEnum dictTypeEnum : dictTypeEnumList) {
                 String dictTypeId = dictTypeEnum.getId();
                 Map<String, String> dictNameMap = new HashMap<String, String>();
@@ -111,7 +117,7 @@ public class InitConfig implements ServletContextListener {
                 IDictBiz dictBiz = SpringUtil.getBean(IDictBiz.class);
                 SysDict sysDict = new SysDict();
                 sysDict.setDictTypeId(dictTypeId);
-                sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 List<SysDict> sysDictList = dictBiz.searchDictList(sysDict);
                 for (SysDict dict : sysDictList) {
                     String typeId = dict.getDictTypeId() + "." + dict.getDictId();
@@ -148,20 +154,32 @@ public class InitConfig implements ServletContextListener {
             }
             context.setAttribute("sysDictIdMap", sysDictIdMap);
             InitConfig.sysDictNameMap = sysDictNameMap;
-            DictTypeEnum.sysDictIdMap = sysDictIdMap;
-            DictTypeEnum.sysListDictMap = sysListDictMap;
+            com.pinde.core.common.enums.DictTypeEnum.sysDictIdMap = sysDictIdMap;
+            com.pinde.core.common.enums.DictTypeEnum.sysListDictMap = sysListDictMap;
         }catch (Exception e) {
             logger.error("", e);
         }
     }
 
     private static void _loadEnum(ServletContext context) {
-        Set<Class<?>> set = ClassUtil.getClasses("com.pinde.res.enums");
+        Set<Class<?>> set = ClassUtil.getClasses("com.pinde.core.common.enums");
         for (Class<?> cls : set) {
-            List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
-            context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
-            for (GeneralEnum genum : enumList) {
-                context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + genum.name(), genum);
+            if (BaseEnum.class.isAssignableFrom(cls)) {
+                Class[] innerEnums = cls.getDeclaredClasses();
+                if (innerEnums != null) {
+                    for (int i = 0; i < innerEnums.length; i++) {
+                        if (Enum.class.isAssignableFrom(innerEnums[i])) {
+                            String mixName = innerEnums[i].getSimpleName();
+                            context.setAttribute(StringUtil.uncapitalize(mixName.substring(mixName.lastIndexOf("$") + 1)) + "List", EnumUtil.toList((Class<? extends GeneralEnum>) innerEnums[i]));
+                        }
+                    }
+                }
+            } else if (GeneralEnum.class.isAssignableFrom(cls)) {
+                List<GeneralEnum> enumList = (List<GeneralEnum>) EnumUtil.toList((Class<? extends GeneralEnum>) cls);
+                context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + "List", enumList);
+                for (GeneralEnum genum : enumList) {
+                    context.setAttribute(StringUtil.uncapitalize(cls.getSimpleName()) + genum.name(), genum);
+                }
             }
         }
     }

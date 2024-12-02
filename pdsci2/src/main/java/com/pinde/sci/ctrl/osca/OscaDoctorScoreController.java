@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,12 +9,10 @@ import com.pinde.sci.biz.osca.IOscaDoctorScoreBiz;
 import com.pinde.sci.biz.osca.ISiteInformationBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.osca.AuditStatusEnum;
-import com.pinde.sci.enums.osca.DoctorScoreEnum;
-import com.pinde.sci.enums.osca.SignStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -60,13 +58,13 @@ public class OscaDoctorScoreController extends GeneralController{
         }
         if(speId==null) {
             speId="";
-            List<SysDict> speList=DictTypeEnum.CheckSpe.getSysDictList();
+            List<SysDict> speList = com.pinde.core.common.enums.DictTypeEnum.CheckSpe.getSysDictList();
             if(speList!=null&&speList.size()>0){
                 speId=speList.get(0).getDictId();
             }
             OscaSkillsAssessment oscaSkillsAssessment1=new OscaSkillsAssessment();
             oscaSkillsAssessment1.setSpeId(speId);
-            oscaSkillsAssessment1.setIsLocal(GlobalConstant.RECORD_STATUS_Y);
+            oscaSkillsAssessment1.setIsLocal(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             oscaSkillsAssessment1.setClinicalYear(clinicalYear);
             oscaSkillsAssessment1.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
             List<OscaSkillsAssessment> osas=oscaDoctorScoreBiz.selectskillsAssessmentList(oscaSkillsAssessment1);
@@ -85,7 +83,7 @@ public class OscaDoctorScoreController extends GeneralController{
         OscaSkillsAssessment oscaSkillsAssessment=new OscaSkillsAssessment();
         oscaSkillsAssessment.setSpeId(speId);
         oscaSkillsAssessment.setClinicalYear(clinicalYear);
-        oscaSkillsAssessment.setIsLocal(isLocal==null?GlobalConstant.RECORD_STATUS_Y:isLocal);
+        oscaSkillsAssessment.setIsLocal(isLocal == null ? com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y : isLocal);
         oscaSkillsAssessment.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         List<OscaSkillsAssessment> osaList=oscaDoctorScoreBiz.selectskillsAssessmentList(oscaSkillsAssessment);
         if(speId==""){
@@ -141,11 +139,11 @@ public class OscaDoctorScoreController extends GeneralController{
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("isPass","Passed");
         paramMap.put("year",clinicalYear==null?currYear:clinicalYear);
-        paramMap.put("isLocal","N");
+        paramMap.put("isLocal", com.pinde.core.common.GlobalConstant.FLAG_N);
         paramMap.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
         Map<String,Object> paramMap2 = new HashMap<>();
         paramMap2.put("year",clinicalYear==null?currYear:clinicalYear);
-        paramMap2.put("isLocal","N");
+        paramMap2.put("isLocal", com.pinde.core.common.GlobalConstant.FLAG_N);
         paramMap2.put("orgFlow",GlobalContext.getCurrentUser().getOrgFlow());
         paramMap2.put("range","1");
         String allPercent = oscaDoctorScoreBiz.getPassPercent(paramMap,paramMap2);
@@ -164,11 +162,11 @@ public class OscaDoctorScoreController extends GeneralController{
            oscaSkillsAssessment.setSpeId(speId);
            oscaSkillsAssessment.setActionTypeId(actionTypeId);
            oscaSkillsAssessment.setClinicalYear(clinicalYear);
-           oscaSkillsAssessment.setIsReleased(GlobalConstant.RECORD_STATUS_Y);
+           oscaSkillsAssessment.setIsReleased(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
            oscaSkillsAssessment.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
            if("city".equals(flag)){
-               if(StringUtil.isNotBlank(isLocal)&&"N".equals(isLocal)){
-                   oscaSkillsAssessment.setIsGradeReleased(GlobalConstant.IS_EXAM_TEA_N);
+               if (StringUtil.isNotBlank(isLocal) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isLocal)) {
+                   oscaSkillsAssessment.setIsGradeReleased(com.pinde.core.common.GlobalConstant.IS_EXAM_TEA_N);
                }
                oscaSkillsAssessment.setOrgFlow(orgFlow2);
            }
@@ -290,7 +288,7 @@ public class OscaDoctorScoreController extends GeneralController{
         //考点：
         SysOrg org = new SysOrg();
         org.setOrgCityId(orgCityId);
-        org.setIsExamOrg("Y");
+        org.setIsExamOrg(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<SysOrg> examOrgList = orgBiz.queryAllSysOrg(org);
         if(examOrgList!=null&&examOrgList.size()>0){
             for (SysOrg so:examOrgList) {
@@ -328,7 +326,7 @@ public class OscaDoctorScoreController extends GeneralController{
         titleLst.add("第九站");
         titleLst.add("总分");
         titleLst.add("考试结果");
-        String typeName="Y".equals(isLocal)?"院内考核":"结业考核";
+        String typeName = com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isLocal) ? "院内考核" : "结业考核";
         String fileName = clinicalYear+typeName+"学员成绩信息.xls";
         String[] titles = titleLst.toArray(new String[titleLst.size()]);
         //创建工作簿

@@ -4,17 +4,15 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.sch.ISchArrangeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
-import com.pinde.sci.enums.sch.SchArrangeStatusEnum;
-import com.pinde.sci.enums.sch.SchArrangeTypeEnum;
+import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
+import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +47,7 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 		SchArrangeExample example = new SchArrangeExample();
 		example.createCriteria()
 		.andOrgFlowEqualTo(orgFLow)
-		.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("OPER_TIME DESC");
 		return arrangeMapper.selectByExample(example);
 	}
@@ -83,7 +81,7 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 	
 	private void _arrangeDoctorAndDept(SchArrange arrange,List<ResDoctor> doctorList,SysUser currUser){
 		SchRotationGroupExample exampleSRG = new SchRotationGroupExample();
-		exampleSRG.createCriteria().andOrgFlowEqualTo(currUser.getOrgFlow());//.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        exampleSRG.createCriteria().andOrgFlowEqualTo(currUser.getOrgFlow());//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SchRotationGroup> schRotationGroupList = rotationGroupMapper.selectByExample(exampleSRG);
 		Map<String,SchRotationGroup>schRotationGroupMap = new HashMap<String,SchRotationGroup>();
 		for(SchRotationGroup schRotationGroup : schRotationGroupList){
@@ -108,7 +106,7 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 			//记录必轮科室留痕
 			String rotationFlow = doctor.getRotationFlow();
 			SchRotationDeptExample srdExample = new SchRotationDeptExample();
-			srdExample.createCriteria().andOrgFlowEqualTo(currUser.getOrgFlow()).andRotationFlowEqualTo(rotationFlow).andIsRequiredEqualTo(GlobalConstant.FLAG_Y).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            srdExample.createCriteria().andOrgFlowEqualTo(currUser.getOrgFlow()).andRotationFlowEqualTo(rotationFlow).andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			
 			List<SchRotationDept> rotationDeptList = rotationDeptMapper.selectByExample(srdExample);
 			for(SchRotationDept rotationDept :rotationDeptList){
@@ -145,7 +143,7 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 			SchDoctorDeptExample example = new SchDoctorDeptExample();
 			example.createCriteria()
 			.andDoctorFlowEqualTo(doctor.getDoctorFlow())
-			.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			
 			List<SchDoctorDept> doctorDeptList = doctorDeptMapper.selectByExample(example);
 			if(doctorDeptList!=null){
@@ -187,13 +185,13 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 	public List<ResDoctor> searchUnSchDoctor(String orgFlow) {
 		ResDoctorExample example = new ResDoctorExample();
 		com.pinde.sci.model.mo.ResDoctorExample.Criteria creater = example.createCriteria();
-		creater.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchFlagEqualTo(GlobalConstant.FLAG_N);
+        creater.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N);
 		return doctorMapper.selectByExample(example); 
 	}
 	@Override
 	public List<ResDoctor> searchCouldSchDoctor(String orgFlow) {
 		ResDoctorExample example = new ResDoctorExample();
-		example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchFlagEqualTo(GlobalConstant.FLAG_N).andSelDeptFlagEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N).andSelDeptFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return doctorMapper.selectByExample(example);
 	}
 
@@ -222,7 +220,7 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 		for(SchArrangeDoctor arrangeDoctor : schArrangeDoctorList){
 			String doctorFlow = arrangeDoctor.getDoctorFlow();
 			ResDoctor resDoctor = doctorMapper.selectByPrimaryKey(doctorFlow);
-			if(GlobalConstant.FLAG_Y.equals(resDoctor.getSchFlag())){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resDoctor.getSchFlag())) {
 				result.add(resDoctor);
 			}
 		}

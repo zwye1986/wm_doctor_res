@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResHospSupervSubject extends MybatisObject {
+public class ResHospSupervSubject extends TeachingActivitySpeakerExample.MybatisObject {
     private String subjectFlow;
 
     private String subjectName;

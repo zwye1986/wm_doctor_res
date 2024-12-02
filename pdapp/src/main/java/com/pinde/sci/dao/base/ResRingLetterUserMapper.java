@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResRingLetterUser;
-import com.pinde.sci.model.mo.ResRingLetterUserExample;
+import com.pinde.core.model.ResRingLetterUser;
+import com.pinde.core.model.ResRingLetterUserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

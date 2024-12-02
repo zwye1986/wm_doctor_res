@@ -13,7 +13,6 @@ import com.pinde.sci.model.mo.ResLectureRandomSign;
 import com.pinde.sci.model.mo.ResLectureRandomSignExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class IResLectureRandomSignBizImpl implements IResLectureRandomSignBiz {
         ResLectureRandomSignExample example = new ResLectureRandomSignExample();
         ResLectureRandomSignExample.Criteria criteria = example.createCriteria();
         example.setOrderByClause("modify_time ASC");
-        criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(lectureFlow)) {
             criteria.andLectureFlowEqualTo(lectureFlow);
         }
@@ -63,7 +62,7 @@ public class IResLectureRandomSignBizImpl implements IResLectureRandomSignBiz {
     public List<ResLectureRandomScan> searchRandomScan(String operUserFlow,String lectureFlow,String randomFlow) {
         ResLectureRandomScanExample example = new ResLectureRandomScanExample();
         ResLectureRandomScanExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y").andIsScanEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andIsScanEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(randomFlow)){
             criteria.andRandomFlowEqualTo(randomFlow);
         }
@@ -85,7 +84,7 @@ public class IResLectureRandomSignBizImpl implements IResLectureRandomSignBiz {
     public List<ResLectureRandomScan> searchByOperUserFlow(String operUserFlow,String lectureFlow) {
         ResLectureRandomScanExample example = new ResLectureRandomScanExample();
         ResLectureRandomScanExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y").andIsScanEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andIsScanEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(operUserFlow)){
             criteria.andOperUserFlowEqualTo(operUserFlow);
         }
@@ -99,7 +98,7 @@ public class IResLectureRandomSignBizImpl implements IResLectureRandomSignBiz {
     public List<ResLectureRandomScan> getRandomScanList(List<String> randomFlows, String lectureFlow) {
         ResLectureRandomScanExample example = new ResLectureRandomScanExample();
         ResLectureRandomScanExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo("Y").andIsScanEqualTo("Y")
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andIsScanEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
             .andRandomFlowIn(randomFlows).andLectureFlowEqualTo(lectureFlow);
         return randomScanMapper.selectByExample(example);
     }

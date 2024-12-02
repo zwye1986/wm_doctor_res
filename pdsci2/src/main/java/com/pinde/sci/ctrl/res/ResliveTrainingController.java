@@ -7,10 +7,8 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResLiveTrainingBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,9 +49,9 @@ public class ResliveTrainingController extends GeneralController {
     @ResponseBody
     public String delOpinions(String trainingOpinionFlow){
         ResTrainingOpinion trainingOpinion = resLiveTrainingBiz.read(trainingOpinionFlow);
-        trainingOpinion.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        trainingOpinion.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         resLiveTrainingBiz.edit(trainingOpinion);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     @RequestMapping(value = "/opinions")
@@ -83,10 +81,10 @@ public class ResliveTrainingController extends GeneralController {
                                          String orgFlow,String roleFlag,Integer currentPage){
         SysUser currentUser = GlobalContext.getCurrentUser();
         String currentOrgFlow = currentUser.getOrgFlow();
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
             //查询所有医院
             SysOrg orgTemp = new SysOrg();
-            orgTemp.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            orgTemp.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgList = orgBiz.searchOrg(orgTemp);
             model.addAttribute("orgList",orgList);
             if(currentPage==null){
@@ -135,7 +133,7 @@ public class ResliveTrainingController extends GeneralController {
         String currTime = DateUtil.getCurrDateTime();
         trainingOpinion.setReplyTime(currTime);
         resLiveTrainingBiz.edit(trainingOpinion);
-        return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
     }
 
     @RequestMapping(value="/saveOpinions")
@@ -170,7 +168,7 @@ public class ResliveTrainingController extends GeneralController {
         String currTime = DateUtil.getCurrDateTime();
         trainingOpinion.setEvaTime(currTime);
         resLiveTrainingBiz.edit(trainingOpinion);
-        return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
     }
 
     @RequestMapping(value = "/director/{roleFlag}")
@@ -178,10 +176,10 @@ public class ResliveTrainingController extends GeneralController {
         if(currentPage==null){
             currentPage=1;
         }
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
             //查询所有医院
             SysOrg orgTemp = new SysOrg();
-            orgTemp.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            orgTemp.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgList = orgBiz.searchOrg(orgTemp);
             model.addAttribute("orgs",orgList);
             Map<String,Object> paramMap = new HashMap<>();
@@ -253,16 +251,16 @@ public class ResliveTrainingController extends GeneralController {
         tarinNotice.setOrgName(orgName);
         tarinNotice.setOrgFlow(orgFlow);
         resLiveTrainingBiz.edit(tarinNotice);
-        return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
     }
 
     @RequestMapping(value = "/delDirector")
     @ResponseBody
     public String delDirector(String recordFlow){
         ResTarinNotice tarinNotice = resLiveTrainingBiz.readNotice(recordFlow);
-        tarinNotice.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        tarinNotice.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         resLiveTrainingBiz.edit(tarinNotice);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.pinde.res.biz.stdp;
 
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.ResInfoRole;
+import com.pinde.core.model.InxInfo;
+import com.pinde.core.model.ResInfoRole;
 
 import java.util.List;
 import java.util.Map;

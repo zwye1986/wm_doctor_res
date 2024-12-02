@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.sci.biz.sch.ISchExamScoreQueryBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
@@ -15,7 +14,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -138,7 +136,7 @@ public class SchExamScoreQueryBizImpl implements ISchExamScoreQueryBiz {
         List<ResScore> scoreList=new ArrayList<>();
         List<String> userFlows=(List<String>)param.get("userFlows");
         ResScoreExample example=new ResScoreExample();
-        ResScoreExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(userFlows!=null&&userFlows.size()>0){
             criteria.andDoctorFlowIn(userFlows);
             criteria.andScoreTypeIdEqualTo("SkillScore");

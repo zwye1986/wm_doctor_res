@@ -1,6 +1,6 @@
 package com.pinde.sci.form;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 public class JsRecruitDocInfoExt extends JsresRecruitDocInfo {
 	

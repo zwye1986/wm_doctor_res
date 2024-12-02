@@ -1,17 +1,16 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResSupervisioFileBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
 import com.pinde.sci.model.mo.JsresSupervisioFile;
 import com.pinde.sci.model.mo.JsresSupervisioFileExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -41,12 +40,12 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
         if (!(mimeList.contains(fileType) && suffixList.contains(suffix.toLowerCase()))) {
             return "请上传 " + InitConfig.getSysCfg("res_file_support_suffix") + "格式的文件";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName, String orgFlow, String planYear, String itemId) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if (file.getSize() > 0) {
             //创建目录
             String dateString = DateUtil.getCurrDate2();

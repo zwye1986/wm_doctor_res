@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.recruit.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.recruit.IRecruitCfgInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitCfgInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitCfgInfoExtMapper;
@@ -12,7 +12,6 @@ import com.pinde.sci.model.mo.RecruitCfgInfo;
 import com.pinde.sci.model.mo.RecruitCfgInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class RecruitCfgInfoBizImpl implements IRecruitCfgInfoBiz {
         RecruitCfgInfoExample.Criteria criteria = example.createCriteria();
         criteria.andRecruitYearEqualTo(year);
         criteria.andOrgFlowEqualTo(orgFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<RecruitCfgInfo> recruitCfgInfos = recruitCfgInfoMapper.selectByExample(example);
         if (recruitCfgInfos != null && !recruitCfgInfos.isEmpty() && recruitCfgInfos.size()>0){
             return recruitCfgInfos.get(0);
@@ -53,7 +52,7 @@ public class RecruitCfgInfoBizImpl implements IRecruitCfgInfoBiz {
     public Integer addRecCfgInfo(RecruitCfgInfo recruitCfgInfo) {
         recruitCfgInfo.setCfgFlow(PkUtil.getUUID());
         recruitCfgInfo.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        recruitCfgInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruitCfgInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recruitCfgInfo.setCreateTime(DateUtil.getCurrDateTime());
         recruitCfgInfo.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         recruitCfgInfo.setModifyTime(DateUtil.getCurrDateTime());
@@ -89,7 +88,7 @@ public class RecruitCfgInfoBizImpl implements IRecruitCfgInfoBiz {
     @Override
     public List<RecruitCfgInfo> cfgs(String orgFlow) {
         RecruitCfgInfoExample example= new RecruitCfgInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow);
         example.setOrderByClause("RECRUIT_YEAR desc");
         return recruitCfgInfoMapper.selectByExample(example);
@@ -105,7 +104,7 @@ public class RecruitCfgInfoBizImpl implements IRecruitCfgInfoBiz {
         recruitCfgInfoExtMapper.changeIsRecruit(orgFlow);
         RecruitCfgInfo recruitCfgInfo = new RecruitCfgInfo();
         recruitCfgInfo.setCfgFlow(cfgFlow);
-        recruitCfgInfo.setIsRecruit(GlobalConstant.RECORD_STATUS_Y);
+        recruitCfgInfo.setIsRecruit(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         GeneralMethod.setRecordInfo(recruitCfgInfo,false);
         return recruitCfgInfoMapper.updateByPrimaryKeySelective(recruitCfgInfo);
     }
@@ -117,8 +116,8 @@ public class RecruitCfgInfoBizImpl implements IRecruitCfgInfoBiz {
     @Override
     public RecruitCfgInfo getCurrYearCfgInfo(String orgFlow) {
         RecruitCfgInfoExample example = new RecruitCfgInfoExample();
-        example.createCriteria().andIsRecruitEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andIsRecruitEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow);
         List<RecruitCfgInfo> recruitCfgInfos = recruitCfgInfoMapper.selectByExample(example);
         if (recruitCfgInfos != null && recruitCfgInfos.size() > 0){

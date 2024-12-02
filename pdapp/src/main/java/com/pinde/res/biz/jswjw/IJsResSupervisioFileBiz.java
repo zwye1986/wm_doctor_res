@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.JsresSupervisioFile;
+import com.pinde.core.model.JsresSupervisioFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

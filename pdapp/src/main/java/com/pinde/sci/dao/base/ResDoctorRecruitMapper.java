@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitExample;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruitExample;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

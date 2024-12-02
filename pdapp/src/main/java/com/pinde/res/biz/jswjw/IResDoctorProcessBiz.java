@@ -1,8 +1,8 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.SysUser;
 
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.evaAudit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -7,12 +8,10 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.srm.AchScoreEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.hbres.teacherRec;
@@ -68,25 +67,25 @@ public class ResEvaDoctorResultController extends GeneralController {
         paramMap.put("startTime",startTime);
         paramMap.put("endTime",endTime);
         paramMap.put("deptFlow",deptFlow);
-        if (GlobalConstant.RECORD_STATUS_Y.equals(status)){
-            paramMap.put("schFlag","N");
-            paramMap.put("isCurrentFlag","Y");
-        }else if (GlobalConstant.RECORD_STATUS_N.equals(status)){
-            paramMap.put("schFlag","Y");
-            paramMap.put("isCurrentFlag","N");
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(status)) {
+            paramMap.put("schFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
+            paramMap.put("isCurrentFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
+        } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(status)) {
+            paramMap.put("schFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
+            paramMap.put("isCurrentFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         String doctorRoleFlow = InitConfig.getSysCfg("res_doctor_role_flow");
         paramMap.put("roleFlow",doctorRoleFlow);
         List<String> recTypeIdList = new ArrayList<>();
         if (StringUtil.isEmpty(recTypeId)){
-            recTypeIdList.add(ResRecTypeEnum.NurseDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.TeacherDoctorGrade.getId());
-            recTypeIdList.add(ResRecTypeEnum.ManageDoctorAssess360.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.NurseDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
+            recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.ManageDoctorAssess360.getId());
         }else {
             recTypeIdList.add(recTypeId);
         }
-//        recTypeIdList.add(ResRecTypeEnum.TeacherGrade.getId());
-//        recTypeIdList.add(ResRecTypeEnum.DeptGrade.getId());
+//        recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId());
+//        recTypeIdList.add(com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId());
         paramMap.put("recTypeIdList",recTypeIdList);
 
         model.addAttribute("userFlow",userFlow);
@@ -111,7 +110,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         //查询该基地的科室
         SysDept sysDept = new SysDept();
         sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDept.setRecordStatus("Y");
+        sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<SysDept> deptList = deptBiz.searchDept(sysDept);
         model.addAttribute("deptList",deptList);
 
@@ -150,7 +149,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         if (rec == null) {
             ResAssessCfg search = new ResAssessCfg();
             search.setCfgCodeId(recTypeId);
-            search.setFormStatusId(AchScoreEnum.Enable.getId());
+            search.setFormStatusId(com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
             model.addAttribute("formCount",resAssessCfgList.size());
             if (resAssessCfgList != null && resAssessCfgList.size() > 0) {
@@ -196,7 +195,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         if (rec == null) {
             ResAssessCfg search = new ResAssessCfg();
             search.setCfgCodeId(recTypeId);
-            search.setFormStatusId(AchScoreEnum.Enable.getId());
+            search.setFormStatusId(com.pinde.core.common.GlobalConstant.FLAG_Y);
             List<ResAssessCfg> resAssessCfgList = assessCfgBiz.selectByExampleWithBLOBs(search);
             model.addAttribute("formCount",resAssessCfgList.size());
             if (resAssessCfgList != null && resAssessCfgList.size() > 0) {
@@ -283,7 +282,7 @@ public class ResEvaDoctorResultController extends GeneralController {
                 }
 
                 if(StringUtil.isNotBlank(deptTeacherGradeInfo.getRecTypeId())){
-                    deptTeacherGradeInfo.setRecTypeName(ResRecTypeEnum.getNameById(deptTeacherGradeInfo.getRecTypeId()));
+                    deptTeacherGradeInfo.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.getNameById(deptTeacherGradeInfo.getRecTypeId()));
                 }
             }
 
@@ -291,10 +290,10 @@ public class ResEvaDoctorResultController extends GeneralController {
         }
         String allScore = recContent.split("<totalScore>")[1].split("</totalScore>")[0];
         deptTeacherGradeInfo.setAllScore(allScore);
-        if(resGradeBiz.edit(deptTeacherGradeInfo) != GlobalConstant.ZERO_LINE){
+        if (resGradeBiz.edit(deptTeacherGradeInfo) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
             return deptTeacherGradeInfo.getRecFlow();
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     private void getForm(Model model, ResAssessCfg assessCfg) throws DocumentException {
@@ -376,7 +375,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         //查询该基地的科室
         SysDept sysDept = new SysDept();
         sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDept.setRecordStatus("Y");
+        sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<SysDept> deptList = deptBiz.searchDept(sysDept);
         model.addAttribute("deptList",deptList);
 
@@ -454,7 +453,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         //查询该基地的科室
         SysDept sysDept = new SysDept();
         sysDept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        sysDept.setRecordStatus("Y");
+        sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         List<SysDept> deptList = deptBiz.searchDept(sysDept);
         model.addAttribute("deptList",deptList);
 

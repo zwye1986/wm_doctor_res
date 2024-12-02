@@ -4,7 +4,6 @@ package com.pinde.sci.ctrl.lcjn;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.lcjn.ILcjnNoticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysUser;
@@ -53,7 +52,7 @@ public class LcjnNoticeController extends GeneralController {
             info.setOrgName(userOrgName);
         info.setColumnId("lcjn");
         noticeBiz.editInfo(info);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping("/findNoticeByFlow")
@@ -72,7 +71,7 @@ public class LcjnNoticeController extends GeneralController {
     @RequestMapping("/delNotice")
     public String delNotice(String infoFlow){
         this.noticeBiz.delNotice(infoFlow);
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
     /**

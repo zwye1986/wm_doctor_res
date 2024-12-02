@@ -1,11 +1,12 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.RecDocCategoryEnum;
-import com.pinde.core.commom.enums.RecStatusEnum;
-import com.pinde.core.commom.enums.ResDoctorKqStatusEnum;
-import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,7 +15,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
-import com.pinde.res.enums.lcjn.DictTypeEnum;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
@@ -22,7 +22,6 @@ import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +97,7 @@ public class JswjwWxStudentController extends GeneralController {
             }
         }
         kq.setDoctorFlow(userFlow);
-        if (!DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId()) && !DictTypeEnum.AppealType.getId().equals(kq.getKqTypeId())) {
+        if (!com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId()) && !com.pinde.core.common.enums.DictTypeEnum.AppealType.getId().equals(kq.getKqTypeId())) {
             return ResultDataThrow("类型标识符不正确,LeaveType，AppealType");
         }
         if (pageIndex == null) {
@@ -152,7 +151,7 @@ public class JswjwWxStudentController extends GeneralController {
         }
 
         List<Map<String,String>> leaveTypeList = new ArrayList<>();
-        List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(DictTypeEnum.LeaveType.getId());
+        List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         if(null != leaveTypes && leaveTypes.size()>0){
             for (SysDict dict:leaveTypes) {
                 Map<String,String> map = new HashMap<>();
@@ -163,7 +162,7 @@ public class JswjwWxStudentController extends GeneralController {
         }
         resultMap.put("leaveTypeList",leaveTypeList);
 
-        List<SysDict> appealTypes = ieaveAppBiz.getDictListByDictId(DictTypeEnum.AppealType.getId());
+        List<SysDict> appealTypes = ieaveAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.AppealType.getId());
         resultMap.put("appealTypes", appealTypes);
         List<ResDoctorSchProcess> processes = ieaveAppBiz.searchProcessByDoctor(userFlow);
         resultMap.put("processes", processes);
@@ -184,7 +183,7 @@ public class JswjwWxStudentController extends GeneralController {
         if (StringUtil.isEmpty(userFlow)) {
             return ResultDataThrow("用户标识符为空");
         }
-        if (StringUtil.isEmpty(kqTypeId) || !DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
+        if (StringUtil.isEmpty(kqTypeId) || !com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
             return ResultDataThrow("类型标识符不正确,LeaveType");
         }
         ResDoctor doctor = doctorMapper.selectByPrimaryKey(userFlow);
@@ -194,7 +193,7 @@ public class JswjwWxStudentController extends GeneralController {
         if (StringUtil.isBlank(doctor.getOrgFlow())) {
             return ResultDataThrow("暂未参加基地培训");
         }
-        if (DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
+        if (com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kqTypeId)) {
             List<ResKgCfg> cfgs = ieaveAppBiz.readKqCfgList(doctor.getOrgFlow(), RecDocCategoryEnum.Doctor.getId());
             resultMap.put("cfgs", cfgs);
             if (cfgs == null || cfgs.size() <= 0) {
@@ -270,7 +269,7 @@ public class JswjwWxStudentController extends GeneralController {
         if (StringUtil.isEmpty(kq.getKqTypeId())) {
             return ResultDataThrow("kqTypeId类型标识符为空");
         }
-        if (!DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId()) ) {
+        if (!com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
             return ResultDataThrow("类型标识符不正确,LeaveType");
         }
         ResDoctor doctor = doctorMapper.selectByPrimaryKey(userFlow);
@@ -292,7 +291,7 @@ public class JswjwWxStudentController extends GeneralController {
             kq.setOrgName(doctor.getOrgName());
             kq.setSessionNumberNow(sessionNumber);
         }
-        if (DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
+        if (com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
             List<ResKgCfg> cfgs = ieaveAppBiz.readKqCfgList(doctor.getOrgFlow(), RecDocCategoryEnum.Doctor.getId());
             if (cfgs == null || cfgs.size() == 0) {
                 return ResultDataThrow("请联系基地管理员维护请假审核流程");
@@ -337,7 +336,7 @@ public class JswjwWxStudentController extends GeneralController {
             daysMap.put("recordFlow",kq.getRecordFlow());
             daysMap.put("doctorFlow",kq.getDoctorFlow());
             daysMap.put("sessionNumber",sessionNumber);
-            daysMap.put("id",DictTypeEnum.LeaveType.getId());
+            daysMap.put("id", com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
             // 学员请假天数
             double userHour = Double.valueOf(kq.getIntervalDays());
             double days = ieaveAppBiz.readAllIntervalDays(daysMap);
@@ -385,8 +384,8 @@ public class JswjwWxStudentController extends GeneralController {
         if (c > 0) {
             return ResultDataThrow("在当前请假时间内已有请假信息");
         }
-        if (DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
-            List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(DictTypeEnum.LeaveType.getId());
+        if (com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId().equals(kq.getKqTypeId())) {
+            List<SysDict> leaveTypes = ieaveAppBiz.getDictListByDictId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
             if (leaveTypes != null) {
                 for (SysDict dict : leaveTypes) {
                     if (dict.getDictId().equals(kq.getTypeId())) {
@@ -410,24 +409,24 @@ public class JswjwWxStudentController extends GeneralController {
 
             String auditRoleNow  = "";
             kq.setTeacherFlow(process.getTeacherUserFlow());
-            if ("Y".equals(greater.getTeacherFlag())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getTeacherFlag())) {
                 // teacher 带教
-                auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_TEACHER;
+                auditRoleNow = com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER;
                 kq.setTeacherName(process.getTeacherUserName());
             } else {
                 kq.setTeacherName("-");
             }
             kq.setHeadFlow(process.getHeadUserFlow());
-            if ("Y".equals(greater.getHeadFlag())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getHeadFlag())) {
                 if (StringUtil.isBlank(auditRoleNow)) {
-                    auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_HEAD;
+                    auditRoleNow = com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD;
                 }
                 kq.setHeadName(process.getHeadUserName());
             } else {
                 kq.setHeadName("-");
             }
             kq.setTutorFlow(doctor.getTutorFlow());
-            if ("Y".equals(greater.getTutorFlag())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getTutorFlag())) {
                 kq.setTutorName(doctor.getTutorName());
             } else {
                 kq.setTutorName("-");
@@ -444,9 +443,9 @@ public class JswjwWxStudentController extends GeneralController {
             }
             if (admin != null) {
                 kq.setManagerFlow(admin.getUserFlow());
-                if ("Y".equals(greater.getManagerFlag())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(greater.getManagerFlag())) {
                     if (StringUtil.isBlank(auditRoleNow)) {
-                        auditRoleNow  = GlobalConstant.RES_ROLE_SCOPE_ADMIN;
+                        auditRoleNow = com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN;
                     }
                     kq.setManagerName(admin.getUserName());
                 } else {
@@ -510,7 +509,7 @@ public class JswjwWxStudentController extends GeneralController {
 
         PubFile pubFile = new PubFile();
         pubFile.setFileFlow(PkUtil.getUUID());
-        pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         pubFile.setFilePath(filePath);
         pubFile.setFileName(fileName);
         pubFile.setFileSuffix(fileName.substring(fileName.lastIndexOf(".")));
@@ -589,7 +588,7 @@ public class JswjwWxStudentController extends GeneralController {
 
         List<Map<String,String>> logList = new ArrayList<>();
         Map<String,String> logMap = new HashMap<>();
-        logMap.put("isShow","Y");
+        logMap.put("isShow", com.pinde.core.common.GlobalConstant.FLAG_Y);
         logMap.put("statusId","Revoke".equals(kq.getAuditStatusId()) ? "Revoke" : "Start");
         logMap.put("statusName","Revoke".equals(kq.getAuditStatusId()) ? "已撤销" : "发起审核");
         logMap.put("operUserName",kq.getDoctorName());
@@ -599,9 +598,9 @@ public class JswjwWxStudentController extends GeneralController {
 
         if(!"Revoke".equals(kq.getAuditStatusId())){
             logMap = new HashMap<>();
-            logMap.put("isShow","-".equals(kq.getTeacherName()) ? "N" : "Y");
-            logMap.put("statusId",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "Auditing" : "Y".equals(kq.getTeacherAgreeFlag()) ? "Passed" : "UnPassed");
-            logMap.put("statusName",StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "待审核" : "Y".equals(kq.getTeacherAgreeFlag()) ? "审核通过" : "审核不通过");
+            logMap.put("isShow", "-".equals(kq.getTeacherName()) ? com.pinde.core.common.GlobalConstant.FLAG_N : com.pinde.core.common.GlobalConstant.FLAG_Y);
+            logMap.put("statusId", StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "Auditing" : com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag()) ? "Passed" : "UnPassed");
+            logMap.put("statusName", StringUtil.isBlank(kq.getTeacherAgreeFlag()) ? "待审核" : com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getTeacherName());
             logMap.put("operTime",kq.getTeacherAuditTime());
             logMap.put("auditInfo",kq.getTeacherAuditInfo());
@@ -616,7 +615,7 @@ public class JswjwWxStudentController extends GeneralController {
                 if("-".equals(kq.getTeacherName())){
                     audit = true;
                 }else if(!"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
+                    if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getTeacherAgreeFlag())){
@@ -627,9 +626,9 @@ public class JswjwWxStudentController extends GeneralController {
         }
         if(audit){
             logMap = new HashMap<>();
-            logMap.put("isShow","-".equals(kq.getHeadName()) ? "N" : "Y");
-            logMap.put("statusId",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "Auditing" : "Y".equals(kq.getHeadAgreeFlag()) ? "Passed" : "UnPassed");
-            logMap.put("statusName",StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "待审核" : "Y".equals(kq.getHeadAgreeFlag()) ? "审核通过" : "审核不通过");
+            logMap.put("isShow", "-".equals(kq.getHeadName()) ? com.pinde.core.common.GlobalConstant.FLAG_N : com.pinde.core.common.GlobalConstant.FLAG_Y);
+            logMap.put("statusId", StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "Auditing" : com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag()) ? "Passed" : "UnPassed");
+            logMap.put("statusName", StringUtil.isBlank(kq.getHeadAgreeFlag()) ? "待审核" : com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getHeadName());
             logMap.put("operTime",kq.getHeadAuditTime());
             logMap.put("auditInfo",kq.getHeadAuditInfo());
@@ -645,7 +644,7 @@ public class JswjwWxStudentController extends GeneralController {
                     audit = true;
                 }
                 if("-".equals(kq.getHeadName()) && "-".equals(kq.getTutorName()) && !"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())) {
+                    if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getTeacherAgreeFlag())){
@@ -653,7 +652,7 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTeacherName()) && "-".equals(kq.getTutorName()) && !"-".equals(kq.getHeadName())){
-                    if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())) {
+                    if (StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getHeadAgreeFlag())){
@@ -661,7 +660,7 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTeacherName()) && "-".equals(kq.getHeadName()) && !"-".equals(kq.getTutorName())){
-                    if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())) {
+                    if (StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())) {
                         audit = true;
                     }
                     if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -669,9 +668,9 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if(!"-".equals(kq.getTeacherName()) && !"-".equals(kq.getHeadName()) && !"-".equals(kq.getTutorName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())){
-                            if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())){
+                    if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
+                        if (StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())) {
+                            if (StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())) {
                                 audit = true;
                             }
                             if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -687,8 +686,8 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTutorName()) && !"-".equals(kq.getHeadName()) && !"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())){
+                    if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
+                        if (StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())) {
                             audit = true;
                         }
                         if(StringUtil.isBlank(kq.getHeadAgreeFlag())){
@@ -700,8 +699,8 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getHeadName()) && !"-".equals(kq.getTutorName()) && !"-".equals(kq.getTeacherName())){
-                    if(StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && "Y".equals(kq.getTeacherAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())){
+                    if (StringUtil.isNotBlank(kq.getTeacherAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTeacherAgreeFlag())) {
+                        if (StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())) {
                             audit = true;
                         }
                         if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -713,8 +712,8 @@ public class JswjwWxStudentController extends GeneralController {
                     }
                 }
                 if("-".equals(kq.getTeacherName()) && !"-".equals(kq.getTutorName()) && !"-".equals(kq.getHeadName())){
-                    if(StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && "Y".equals(kq.getHeadAgreeFlag())){
-                        if(StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && "Y".equals(kq.getTutorAgreeFlag())){
+                    if (StringUtil.isNotBlank(kq.getHeadAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getHeadAgreeFlag())) {
+                        if (StringUtil.isNotBlank(kq.getTutorAgreeFlag()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getTutorAgreeFlag())) {
                             audit = true;
                         }
                         if(StringUtil.isBlank(kq.getTutorAgreeFlag())){
@@ -729,9 +728,9 @@ public class JswjwWxStudentController extends GeneralController {
         }
         if(audit){
             logMap = new HashMap<>();
-            logMap.put("isShow","-".equals(kq.getManagerName()) ? "N" : "Y");
-            logMap.put("statusId",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "Auditing" : "Y".equals(kq.getManagerAgreeFlag()) ? "Passed" : "UnPassed");
-            logMap.put("statusName",StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "待审核" : "Y".equals(kq.getManagerAgreeFlag()) ? "审核通过" : "审核不通过");
+            logMap.put("isShow", "-".equals(kq.getManagerName()) ? com.pinde.core.common.GlobalConstant.FLAG_N : com.pinde.core.common.GlobalConstant.FLAG_Y);
+            logMap.put("statusId", StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "Auditing" : com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag()) ? "Passed" : "UnPassed");
+            logMap.put("statusName", StringUtil.isBlank(kq.getManagerAgreeFlag()) ? "待审核" : com.pinde.core.common.GlobalConstant.FLAG_Y.equals(kq.getManagerAgreeFlag()) ? "审核通过" : "审核不通过");
             logMap.put("operUserName",kq.getManagerName());
             logMap.put("operTime",kq.getManagerAuditTime());
             logMap.put("auditInfo",kq.getManagerAuditInfo());
@@ -801,7 +800,7 @@ public class JswjwWxStudentController extends GeneralController {
         if (pubFile == null) {
             return ResultDataThrow("图片信息不存在为空");
         }
-        pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         fileBiz.editFile(pubFile);
         return resultMap;
     }
@@ -842,7 +841,7 @@ public class JswjwWxStudentController extends GeneralController {
         }
         kq.setDoctorFlow(userFlow);
         kq.setOrgFlow(user.getOrgFlow());
-        kq.setKqTypeId(DictTypeEnum.LeaveType.getId());
+        kq.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         PageHelper.startPage(pageIndex, pageSize);
         List<Map<String,String>> kqList = ieaveAppBiz.searchDoctorKqList(kq);
         if(null != kqList && kqList.size()>0){
@@ -895,9 +894,9 @@ public class JswjwWxStudentController extends GeneralController {
         }
         resultMap.put("deptList",deptList);
         //是否可以新增请假
-        String isAddLeave = "N";
+        String isAddLeave = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(null != deptList && deptList.size() > 0){
-            isAddLeave = "Y";
+            isAddLeave = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
         resultMap.put("isAddLeave",isAddLeave);
         //请假类型
@@ -906,7 +905,7 @@ public class JswjwWxStudentController extends GeneralController {
         map.put("typeId","");
         map.put("typeName","全部");
         typeList.add(map);
-        List<Map<String,Object>> typeList2 = ieaveAppBiz.searchDictList(DictTypeEnum.LeaveType.getId());
+        List<Map<String, Object>> typeList2 = ieaveAppBiz.searchDictList(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         if(null != typeList2 && typeList2.size()>0){
             typeList.addAll(typeList2);
         }
@@ -1062,7 +1061,7 @@ public class JswjwWxStudentController extends GeneralController {
                 return ResultDataThrow("此请假信息已被审核，请刷新列表页！");
             }
         }
-        int c = ieaveAppBiz.checkLeaveTime(kqExt.getRecordFlow(),kqExt.getDoctorFlow(),kqExt.getStartDate(),kqExt.getEndDate(),DictTypeEnum.LeaveType.getId());
+        int c = ieaveAppBiz.checkLeaveTime(kqExt.getRecordFlow(), kqExt.getDoctorFlow(), kqExt.getStartDate(), kqExt.getEndDate(), com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
         if(c>0) {
             return ResultDataThrow("在当前请假时间内已有请假信息！");
         }
@@ -1084,9 +1083,9 @@ public class JswjwWxStudentController extends GeneralController {
             setKqAuditInfo(less,kqExt,process,doctor);
         }
 
-        kqExt.setKqTypeId(DictTypeEnum.LeaveType.getId());
-        kqExt.setKqTypeName(DictTypeEnum.LeaveType.getName());
-        kqExt.setTypeName(DictTypeEnum.getDictName(DictTypeEnum.LeaveType, kqExt.getTypeId()));
+        kqExt.setKqTypeId(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getId());
+        kqExt.setKqTypeName(com.pinde.core.common.enums.DictTypeEnum.LeaveType.getName());
+        kqExt.setTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.LeaveType, kqExt.getTypeId()));
         kqExt.setAuditStatusId(ResDoctorKqStatusEnum.Auditing.getId());
         kqExt.setAuditStatusName(ResDoctorKqStatusEnum.Auditing.getName());
         int n = ieaveAppBiz.addResDoctorKq(kqExt,user);
@@ -1139,7 +1138,7 @@ public class JswjwWxStudentController extends GeneralController {
 
         PubFile pubFile = new PubFile();
         pubFile.setFileFlow(PkUtil.getUUID());
-        pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         pubFile.setFilePath(filePath);
         pubFile.setFileName(form.getFileName());
         pubFile.setFileSuffix(form.getFileName().substring(form.getFileName().lastIndexOf(".")));
@@ -1384,7 +1383,7 @@ public class JswjwWxStudentController extends GeneralController {
         kq.setManagerAgreeFlag("");
         kq.setManagerAuditTime("");
         kq.setManagerAuditInfo("");
-        kq.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        kq.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         kq.setModifyTime(DateUtil.getCurrDateTime());
         kq.setModifyUserFlow(user.getUserFlow());
         ieaveAppBiz.updateResDoctorKq(kq);
@@ -1434,17 +1433,17 @@ public class JswjwWxStudentController extends GeneralController {
                     if(log.getRoleId().equals("manager")){
                         kq.setManagerAuditTime(log.getAuditTime());
                         kq.setManagerAuditInfo(log.getAuditRemake());
-                        kq.setManagerAgreeFlag(GlobalConstant.FLAG_Y);
+                        kq.setManagerAgreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     if(log.getRoleId().equals("head")){
                         kq.setHeadAuditTime(log.getAuditTime());
                         kq.setHeadAuditInfo(log.getAuditRemake());
-                        kq.setHeadAgreeFlag(GlobalConstant.FLAG_Y);
+                        kq.setHeadAgreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                     if(log.getRoleId().equals("teacher")){
                         kq.setTeacherAuditTime(log.getAuditTime());
                         kq.setTeacherAuditInfo(log.getAuditRemake());
-                        kq.setTeacherAgreeFlag(GlobalConstant.FLAG_Y);
+                        kq.setTeacherAgreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                 }
             }
@@ -1510,7 +1509,7 @@ public class JswjwWxStudentController extends GeneralController {
             return resultMap;
         }
         resultMap.put("resultUser", user);
-        List<ResAssessCfg> resAssessCfgList = gradeBiz.getAssCfg(ResRecTypeEnum.PatientDoctorAssess360.getId());
+        List<ResAssessCfg> resAssessCfgList = gradeBiz.getAssCfg(com.pinde.core.common.enums.ResRecTypeEnum.PatientDoctorAssess360.getId());
         if (null == resAssessCfgList || resAssessCfgList.isEmpty()) {
             resultMap.put("resultId", "202");
             resultMap.put("resultType", "无对应的评价表单");
@@ -1628,8 +1627,8 @@ public class JswjwWxStudentController extends GeneralController {
         gradeInfo.setSchRotationDeptFlow(resDoctorSchProcess.getSchDeptFlow());
         gradeInfo.setSchDeptFlow(resDoctorSchProcess.getSchDeptFlow());
         gradeInfo.setSchDeptName(resDoctorSchProcess.getSchDeptName());
-        gradeInfo.setRecTypeId(ResRecTypeEnum.PatientDoctorAssess360.getId());
-        gradeInfo.setRecTypeName(ResRecTypeEnum.PatientDoctorAssess360.getName());
+        gradeInfo.setRecTypeId(com.pinde.core.common.enums.ResRecTypeEnum.PatientDoctorAssess360.getId());
+        gradeInfo.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.PatientDoctorAssess360.getName());
         gradeInfo.setAllScore(allScore);
         gradeInfo.setCfgFlow(cfgFlow);
         String content="";
@@ -1652,7 +1651,7 @@ public class JswjwWxStudentController extends GeneralController {
         gradeInfo.setCreateUserFlow(userFlow);
         gradeInfo.setModifyTime(DateUtil.getCurrDateTime());
         gradeInfo.setModifyUserFlow(userFlow);
-        gradeInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        gradeInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         int count = gradeInfoMapper.insertSelective(gradeInfo);
         if (count>0){
             resultMap.put("resultId", "200");

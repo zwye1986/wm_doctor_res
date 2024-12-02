@@ -1,9 +1,9 @@
 package com.pinde.res.dao.jswjw.ext;
 
 
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturnExample;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDocotrDelayTeturn;
+import com.pinde.core.model.ResDocotrDelayTeturnExample;
+import com.pinde.core.model.ResDoctor;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

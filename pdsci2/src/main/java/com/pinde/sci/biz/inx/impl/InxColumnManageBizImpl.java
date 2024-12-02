@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.InxColumnMapper;
 import com.pinde.sci.dao.inx.InxColumnExtMapper;
 import com.pinde.sci.model.mo.InxColumn;
@@ -12,7 +11,6 @@ import com.pinde.sci.model.mo.InxColumnExample;
 import com.pinde.sci.model.mo.InxColumnExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -62,7 +60,7 @@ public class InxColumnManageBizImpl implements IinxColumnManageBiz {
 		}else{
 			criteria.andParentColumnIdIsNull();
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("column_id desc ");
 		List<InxColumn> list = this.inxColumnMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){//已有子栏目
@@ -104,7 +102,7 @@ public class InxColumnManageBizImpl implements IinxColumnManageBiz {
 	public InxColumn getById(String columnId) {
 		if(StringUtil.isNotBlank(columnId)){
 			InxColumnExample example = new InxColumnExample();
-			example.createCriteria().andColumnIdEqualTo(columnId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andColumnIdEqualTo(columnId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<InxColumn> list = this.inxColumnMapper.selectByExample(example);
 			if(list!=null && list.size()>0){
 				return list.get(0);
@@ -136,7 +134,7 @@ public class InxColumnManageBizImpl implements IinxColumnManageBiz {
 //	@Override
 //	public List<InxColumn> queryChildColumn(String columnId) {
 //		InxColumnExample example = new InxColumnExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andParentColumnIdEqualTo(columnId);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andParentColumnIdEqualTo(columnId);
 //		return inxColumnMapper.selectByExample(example);
 //	}
 

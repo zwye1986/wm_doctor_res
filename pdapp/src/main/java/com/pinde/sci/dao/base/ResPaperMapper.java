@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResPaper;
-import com.pinde.sci.model.mo.ResPaperExample;
+import com.pinde.core.model.ResPaper;
+import com.pinde.core.model.ResPaperExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

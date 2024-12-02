@@ -8,16 +8,14 @@ import com.pinde.sci.biz.inx.IInxHbresBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +40,7 @@ public class InxHbresBizImpl implements IInxHbresBiz{
 			SysUserRole userRole = new SysUserRole();
 			userRole.setUserFlow(user.getUserFlow());
 			//userRole.setOrgFlow(user.getOrgFlow());
-			String currWsId = GlobalConstant.RES_WS_ID;
+            String currWsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
 			userRole.setWsId(currWsId);
 			userRole.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
 			userRole.setAuthTime(DateUtil.getCurrDate());

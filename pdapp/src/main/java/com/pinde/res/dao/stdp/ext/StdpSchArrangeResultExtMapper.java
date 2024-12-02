@@ -1,6 +1,6 @@
 package com.pinde.res.dao.stdp.ext;
 
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResult;
 
 import java.util.List;
 import java.util.Map;

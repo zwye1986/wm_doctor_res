@@ -1,6 +1,6 @@
 package com.pinde.res.biz.hbres;
 
-import com.pinde.sci.model.mo.PubFile;
+import com.pinde.core.model.PubFile;
 
 import java.util.List;
 

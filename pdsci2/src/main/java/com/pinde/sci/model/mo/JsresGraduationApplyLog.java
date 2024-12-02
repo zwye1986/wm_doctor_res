@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class JsresGraduationApplyLog extends MybatisObject {
+public class JsresGraduationApplyLog extends TeachingActivitySpeakerExample.MybatisObject {
     private String recordFlow;
 
     private String applyFlow;

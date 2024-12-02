@@ -1,21 +1,13 @@
 package com.pinde.res.biz.jszy;
 
+import com.pinde.core.model.*;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
 public interface IJszyAppBiz {
-
-	/**
-	 * 根据用户名查询用户
-	 * @param userCode
-	 * @return
-	 */
-	SysUser getUserByCode(String userCode);
 
 	/**
 	 * 获取医师信息
@@ -45,26 +37,7 @@ public interface IJszyAppBiz {
 	 */
 	String getCfgByCode(String code);
 
-	/**
-	 * 获取该医师轮转计划的开始时间和结束时间
-	 * @param doctorFlow
-	 * @return
-	 */
-	Map<String, Object> getDocResultArea(String doctorFlow);
 
-	/**
-	 * 获取该医师实际轮转的开始时间和结束时间
-	 * @param doctorFlow
-	 * @return
-	 */
-	Map<String, Object> getDocProcessArea(String doctorFlow);
-
-	/**
-	 * 获取登记数据
-	 * @param recFlow
-	 * @return
-	 */
-	ResRec getRecByRecFlow(String recFlow);
 
 	/**
 	 * 解析登记数据xml
@@ -94,68 +67,6 @@ public interface IJszyAppBiz {
 	 */
 	List<Map<String,String>> parseDocGradeXml(String content);
 
-	/**
-	 * 获取登记数据及解析后数据
-	 * @param paramMap
-	 * @return
-	 */
-	List<Map<String, Object>> getParsedRecs(Map<String, Object> paramMap);
-
-	/**
-	 * 根据科室和类型获取一条登记信息
-	 * @param processFlow
-	 * @param recTypeId
-	 * @return
-	 */
-	ResRec getRecByRecType(String processFlow, String recTypeId);
-
-	/**
-	 * 根据标准组和标准科室获取一条标准规则
-	 * @param standardGroupFlow
-	 * @param standardDeptId
-	 * @return
-	 */
-	SchRotationDept getRotationDeptByResult(String standardGroupFlow,
-											String standardDeptId);
-
-	/**
-	 * 根据条件获取要求
-	 * @param paramMap
-	 * @return
-	 */
-	List<Map<String, Object>> getReqByResult(Map<String, Object> paramMap);
-
-	/**
-	 * 编辑一条登记数据
-	 * @param recFlow
-	 * @param operUserFlow
-	 * @param resultFlow
-	 * @param recTypeId
-	 * @param itemId
-	 * @param request
-	 * @param oldContent
-	 */
-	String editRec(String recFlow,
-				   String operUserFlow,
-				   String resultFlow,
-				   String recTypeId,
-				   String itemId,
-				   HttpServletRequest request, String oldContent);
-
-	/**
-	 * 根据reqFlow读取一条req
-	 * @param reqFlow
-	 * @param relRecordFlow
-	 * @param itemId
-	 * @return
-	 */
-	SchRotationDeptReq readReq(String reqFlow, String relRecordFlow, String itemId);
-
-	/**
-	 * 删除一条rec
-	 * @param recFlow
-	 */
-	void delRec(String recFlow);
 
 	/**
 	 * 验证签到信息并且签到
@@ -165,52 +76,6 @@ public interface IJszyAppBiz {
 	 * @return
 	 */
 	boolean signin(String userFlow, String deptFlow, String signinType);
-
-	/**
-	 * 教师端的登记数据列表
-	 * @param paramMap
-	 * @return
-	 */
-	List<Map<String, Object>> getTeacherParsedRecs(Map<String, Object> paramMap);
-
-	/**
-	 * 获取该科室最签到记录
-	 * @param userFlow
-	 * @return
-	 */
-	List<ResSignin> getSignin(String userFlow);
-
-	//获取该科室最签到记录
-	List<ResSignin> getSignin(String userFlow, String deptFlow);
-
-	/**
-	 * 根据机构查找轮转科室
-	 * @param orgFlow
-	 * @return
-     */
-	List<SchDept> getSchDeptListByOrg(String orgFlow,String deptName);
-
-	List<SchDeptRel> searchRelByStandard(String orgFlow, String standardDeptId, String deptName);
-
-	/**
-	 * 根据轮转科室查询该科室下的所有带教或科主任
-	 * @param schDeptFlow
-	 * @return
-     */
-	List<SysUser> getUserListBySchDept(String schDeptFlow,String roleFlow,String userName);
-
-	/**
-	 * 读取一条轮转科室信息
-	 * @param deptFlow
-	 * @return
-     */
-	SchDept readSchDept(String deptFlow);
-	/**
-	 * 更新医师表
-	 */
-	int editResDoctor(ResDoctor doctor);
-	String groupContent(String recTypeId,Map<String,String> dataMap,String mapStr,String separator);
-
 	/**
 	 * 查询子项
 	 * @param userFlow
@@ -247,7 +112,7 @@ public interface IJszyAppBiz {
 	/**
 	 * 通过学员流水号和讲座流水号查询评价记录
 	 */
-	List<ResLectureEvaDetail> searchByUserFlowLectureFlow(String userFlow,String lectureFlow );
+	List<ResLectureEvaDetail> searchByUserFlowLectureFlow(String userFlow, String lectureFlow );
 	/**
 	 * 学生讲座报名
 	 * @param lectureFlow
@@ -307,7 +172,6 @@ public interface IJszyAppBiz {
 	 */
 	List<SchDoctorDept> searchReductionDept(String doctorFlow,	String rotationFlow, String secondRotationFlow);
 
-	int editUser(SysUser user);
 
 	List<DeptTeacherGradeInfo> searchAllGrade(String userFlow);
 
@@ -318,24 +182,27 @@ public interface IJszyAppBiz {
 	ResScore readScoreByProcessFlow(String processFlow);
 
 	String getCfgCode(String code);
+
 	List<SysDept> getHeadDeptList(String userFlow, String deptFlow);
+
 	void addActivityImage(ActivityImageFileForm form, SysUser user);
+
 	void deleteActivityImage(SysUser user, String activityFlow, String imageFlow) throws DocumentException;
+
 	List<ResLectureInfo> SearchNewLectures(String orgFlow, String roleId, String roleFlow);
+
 	List<ResLectureScanRegist> searchIsScan(String lectureFlow);
-	List<ResLectureScanRegist> searchIsRegist(String lectureFlow);
+
 	int editLectureScanRegist(String lectureFlow, SysUser currUser, ResLectureScanRegist regist, ResDoctor doctor);
+
 	List<SchArrangeResult> getSchArrangeResult(String userFlow, String orgFlow, Integer pageIndex, Integer pageSize);
+
 	String getJsResCfgCode(String code);
-	ResDoctorRecruit getNewesRecruit(String doctorFlow);
+
 	List<SysDict> getDictListByDictId(String dictTypeId);
-	String getDictNameByTypeId(String dictId,String dictTypeId);
-	String getResCfgCode(String s);
+
 	List<ResLectureInfo> checkJoinList(String lectureFlow, String userFlow);
 
-	List<DictForm> readDictFormsByFlow(String dictFlow);
-
-	SysDict getDictByTypeId(String activityType, String activityTypeId);
 
 	int saveLectureRandomScan(ResLectureRandomScan scan);
 

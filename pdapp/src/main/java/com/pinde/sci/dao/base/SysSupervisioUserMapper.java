@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysSupervisioUser;
-import com.pinde.sci.model.mo.SysSupervisioUserExample;
+import com.pinde.core.model.SysSupervisioUser;
+import com.pinde.core.model.SysSupervisioUserExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

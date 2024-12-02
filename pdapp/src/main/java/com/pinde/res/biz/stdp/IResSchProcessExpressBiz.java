@@ -1,8 +1,8 @@
 package com.pinde.res.biz.stdp;
 
-import com.pinde.sci.model.mo.ResSchProcessExpress;
-import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResSchProcessExpress;
+import com.pinde.core.model.SchRotationDeptAfterWithBLOBs;
+import com.pinde.core.model.SysUser;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -15,30 +15,7 @@ public interface IResSchProcessExpressBiz {
     ResSchProcessExpress getExpressByRecType(String processFlow, String funcFlow);
 
     ResSchProcessExpress getExpressByRecFlow(String dataFlow);
-    /**
-     * 编辑一条登记数据
-     * @param recFlow
-     * @param operUserFlow
-     * @param resultFlow
-     * @param recTypeId
-     * @param formId
-     * @param request
-     * @param version
-     */
-    String editExpress(String recFlow,
-                       String operUserFlow,
-                       String resultFlow,
-                       String recTypeId,
-                       String formId,
-                       HttpServletRequest request, String roleFlag, String oldContent, String version);
 
-
-    String editZseyExpress(String recFlow,
-                   String operUserFlow,
-                   String resultFlow,
-                   String recTypeId,
-                   String formId,
-                   HttpServletRequest request,String roleFlag,String oldContent,String version);
 
     /**
      * 审核一条登记数据
@@ -48,10 +25,6 @@ public interface IResSchProcessExpressBiz {
     void auditDate(String userFlow, String dataFlow);
 
     List<ResSchProcessExpress> getDocexpressList(String processFlow, List<String> recTypeIds);
-
-    String editJszyExpress(String dataFlow, String operUserFlow, String resultFlow, String funcFlow, String resJszyDefaultForm, HttpServletRequest request);
-
-    String editSxsExpress(String dataFlow, String operUserFlow, String resultFlow, String funcFlow, String resHbresDefaultForm, HttpServletRequest request,String roleId);
 
     /**
      * 江苏西医 DOPS MINI_SEX 出科考核表 大字段

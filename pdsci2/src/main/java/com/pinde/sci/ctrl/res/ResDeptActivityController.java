@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -11,18 +13,10 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
-import com.pinde.sci.enums.res.DeptActivityStatusEnum;
-import com.pinde.sci.enums.res.DeptActivityTypeEnum;
-import com.pinde.sci.enums.res.DeptActivityUserTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.res.ResDeptPlanForm;
 import com.pinde.sci.model.mo.*;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import org.apache.poi.ss.usermodel.*;
@@ -108,13 +102,13 @@ public class ResDeptActivityController extends GeneralController {
 		{
 			return "科室活动信息不存在，请刷新页面！";
 		}
-		plan.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        plan.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		int count=deptActivityBiz.save(plan);
-		if(count==GlobalConstant.ZERO_LINE)
+        if (count == com.pinde.core.common.GlobalConstant.ZERO_LINE)
 		{
-			return GlobalConstant.OPRE_FAIL_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 		}
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 	@RequestMapping(value = "/subPlan")
 	@ResponseBody
@@ -131,11 +125,11 @@ public class ResDeptActivityController extends GeneralController {
 		plan.setAuditStatusId(DeptActivityStatusEnum.Submit.getId());
 		plan.setAuditStatusName(DeptActivityStatusEnum.Submit.getName());
 		int count=deptActivityBiz.save(plan);
-		if(count==GlobalConstant.ZERO_LINE)
+        if (count == com.pinde.core.common.GlobalConstant.ZERO_LINE)
 		{
-			return GlobalConstant.OPRE_FAIL_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 		}
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 	@RequestMapping(value = "/reportPlan")
 	@ResponseBody
@@ -155,7 +149,7 @@ public class ResDeptActivityController extends GeneralController {
 		{
 			for(DeptActivityItemTypeEnum e:DeptActivityItemTypeEnum.values())
 			{
-				if(e.getIsCfg().equals("Y"))
+                if (e.getIsCfg().equals(com.pinde.core.common.GlobalConstant.FLAG_Y))
 				{
 					QingpuLectureEvalCfg searchCfg = new QingpuLectureEvalCfg();
 					searchCfg.setTypeId(e.getId());
@@ -168,10 +162,10 @@ public class ResDeptActivityController extends GeneralController {
 					cfgMap.put(e.getId(),lectureEvalCfgList.get(0));
 				}
 			}
-		}else if(GlobalConstant.FLAG_Y.equals(typeCfg)){
+        } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(typeCfg)) {
 			for(DeptActivityItemTypeEnum e:DeptActivityItemTypeEnum.values())
 			{
-				if(e.getIsCfg().equals("N")&&!DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
+                if (e.getIsCfg().equals(com.pinde.core.common.GlobalConstant.FLAG_N) && !DeptActivityItemTypeEnum.CKKHAP.getId().equals(e.getId())
 						&&!DeptActivityItemTypeEnum.DSBGHAP.getId().equals(e.getId())
 						&&!DeptActivityItemTypeEnum.JYSKHAP.getId().equals(e.getId()))
 				{
@@ -187,13 +181,13 @@ public class ResDeptActivityController extends GeneralController {
 				}
 			}
 		}
-		plan.setIsReport(GlobalConstant.FLAG_Y);
+        plan.setIsReport(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		int count=deptActivityBiz.reportPlan(plan,cfgMap);
-		if(count==GlobalConstant.ZERO_LINE)
+        if (count == com.pinde.core.common.GlobalConstant.ZERO_LINE)
 		{
-			return GlobalConstant.OPRE_FAIL_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 		}
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 	@RequestMapping(value = "/auditPlan")
 	@ResponseBody
@@ -225,11 +219,11 @@ public class ResDeptActivityController extends GeneralController {
 		plan.setAuditStatusName(DeptActivityStatusEnum.getNameById(auditStatusId));
 		plan.setAuditUserFlow(sysuser.getUserFlow());
 		int count=deptActivityBiz.save(plan);
-		if(count==GlobalConstant.ZERO_LINE)
+        if (count == com.pinde.core.common.GlobalConstant.ZERO_LINE)
 		{
-			return GlobalConstant.OPRE_FAIL_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 		}
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 	@RequestMapping(value = "/showPlan")
 	public  String showPlan(String planFlow,String isAudit, Model model) {
@@ -1294,7 +1288,7 @@ public class ResDeptActivityController extends GeneralController {
 			model.addAttribute("otherMembers", otherMembers);
 		}
 		if(StringUtil.isNotBlank(planTypeId)){
-			model.addAttribute("planTypeName", DictTypeEnum.DeptActivityType.getDictNameById(planTypeId));
+            model.addAttribute("planTypeName", com.pinde.core.common.enums.DictTypeEnum.DeptActivityType.getDictNameById(planTypeId));
 		}
 		model.addAttribute("planDate", planDate);
 		model.addAttribute("deptFlow", deptFlow);
@@ -1329,7 +1323,7 @@ public class ResDeptActivityController extends GeneralController {
 
 			return dept.getDeptName()+"科室"+plan.getPlanTypeName()+planDate+"月教学工作安排已存在";
 		}
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 
 	@RequestMapping(value="/savePlan")
@@ -1360,9 +1354,9 @@ public class ResDeptActivityController extends GeneralController {
 			}
 		}
 		int result = deptActivityBiz.savePlan(planForm);
-		if(GlobalConstant.ZERO_LINE != result){
-			return GlobalConstant.OPRE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 }

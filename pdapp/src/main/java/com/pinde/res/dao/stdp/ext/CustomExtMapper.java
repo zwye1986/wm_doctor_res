@@ -1,6 +1,6 @@
 package com.pinde.res.dao.stdp.ext;
 
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import org.apache.ibatis.annotations.Param;
 
 public interface CustomExtMapper {

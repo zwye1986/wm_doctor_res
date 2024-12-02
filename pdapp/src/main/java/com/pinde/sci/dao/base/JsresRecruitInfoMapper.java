@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresRecruitInfo;
-import com.pinde.sci.model.mo.JsresRecruitInfoExample;
+import com.pinde.core.model.JsresRecruitInfo;
+import com.pinde.core.model.JsresRecruitInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

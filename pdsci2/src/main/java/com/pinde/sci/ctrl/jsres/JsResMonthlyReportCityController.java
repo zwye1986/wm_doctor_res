@@ -5,11 +5,8 @@ import com.pinde.sci.biz.jsres.IJsResMonthlyReportBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,7 +113,7 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		search.setDateMonth(monthDate);
 		search.setDoctorTypeId(isGraduate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
@@ -126,8 +123,8 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		SysOrg sysorg = new SysOrg();
 		sysorg.setOrgProvId(org.getOrgProvId());
 		sysorg.setOrgCityId(org.getOrgCityId());
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		orgs = orgBiz.searchOrg(sysorg);
 		if(!orgs.isEmpty()){
 			for(SysOrg sysOrg:orgs){
@@ -200,8 +197,8 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		SysOrg sysorg = new SysOrg();
 		sysorg.setOrgProvId(org.getOrgProvId());
 		sysorg.setOrgCityId(org.getOrgCityId());
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		orgs = orgBiz.searchOrg(sysorg);
 		if(!orgs.isEmpty()){
 			for(SysOrg sysOrg:orgs){
@@ -282,8 +279,8 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		sysorg.setOrgProvId(org.getOrgProvId());
 		sysorg.setOrgCityId(org.getOrgCityId());
 		sysorg.setOrgProvId("320000");
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		orgs = orgBiz.searchOrg(sysorg);
 		if(!orgs.isEmpty()){
 			for(SysOrg sysOrg:orgs){
@@ -315,8 +312,8 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		sysorg.setOrgProvId(org.getOrgProvId());
 		sysorg.setOrgCityId(org.getOrgCityId());
 		sysorg.setOrgProvId("320000");
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		orgs = orgBiz.searchOrg(sysorg);
 		if(!orgs.isEmpty()){
 			for(SysOrg sysOrg:orgs){
@@ -345,8 +342,8 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		sysorg.setOrgProvId(org.getOrgProvId());
 		sysorg.setOrgCityId(org.getOrgCityId());
 		sysorg.setOrgProvId("320000");
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		orgs = orgBiz.searchOrg(sysorg);
 		if(!orgs.isEmpty()){
 			for(SysOrg sysOrg:orgs){
@@ -363,7 +360,7 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		search.setDateMonth(monthDate);
 		search.setDoctorTypeId(isGraduate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
 		List<SysMonthlyDoctorInfo> doctorInfoListFinal = new ArrayList<>();
@@ -435,8 +432,8 @@ public class JsResMonthlyReportCityController extends GeneralController {
 		sysorg.setOrgProvId(org.getOrgProvId());
 		sysorg.setOrgCityId(org.getOrgCityId());
 		sysorg.setOrgProvId("320000");
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		orgs = orgBiz.searchOrg(sysorg);
 		if(!orgs.isEmpty()){
 			for(SysOrg sysOrg:orgs){

@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLectureEvaDetailBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.LectureInfoTargetMapper;
 import com.pinde.sci.dao.base.ResLectureEvaDetailMapper;
 import com.pinde.sci.dao.res.ResLectureEvaDetailExtMapper;
@@ -14,7 +14,6 @@ import com.pinde.sci.model.mo.ResLectureEvaDetail;
 import com.pinde.sci.model.mo.ResLectureEvaDetailExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class ResLectureEvaDetailBizImpl implements IResLectureEvaDetailBiz {
     public List<ResLectureEvaDetail> SearchByLectureFlow(String lectureFlow){
        ResLectureEvaDetailExample example = new ResLectureEvaDetailExample();
        if(StringUtil.isNotBlank(lectureFlow)) {
-           example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow);
+           example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow);
        }
        return lectureEvaDetailMapper.selectByExample(example);
    }
@@ -41,7 +40,7 @@ public class ResLectureEvaDetailBizImpl implements IResLectureEvaDetailBiz {
     public List<ResLectureEvaDetail> searchByUserFlowLectureFlow(String userFlow, String lectureFlow) {
         ResLectureEvaDetailExample example = new ResLectureEvaDetailExample();
         if(StringUtil.isNotBlank(userFlow)&&StringUtil.isNotBlank(lectureFlow)){
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow)
                     .andOperUserFlowEqualTo(userFlow);
         }
         example.setOrderByClause("ORDINAL");
@@ -60,7 +59,7 @@ public class ResLectureEvaDetailBizImpl implements IResLectureEvaDetailBiz {
                 return lectureEvaDetailMapper.insertSelective(resLectureEvaDetail);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
     @Override
     public List<ResLectureEvaDetail> searchByLectureFlow(String lectureFlow){
@@ -92,7 +91,7 @@ public class ResLectureEvaDetailBizImpl implements IResLectureEvaDetailBiz {
     @Override
     public List<LectureInfoTarget> searchLectureInfoTargetList(String lectureFlow) {
         LectureInfoTargetExample example = new LectureInfoTargetExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andLectureFlowEqualTo(lectureFlow);
         example.setOrderByClause("ORDINAL");
         return lectureInfoTargetMapper.selectByExample(example);
     }

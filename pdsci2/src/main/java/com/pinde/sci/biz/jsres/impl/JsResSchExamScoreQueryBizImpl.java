@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.IJsResSchExamScoreQueryBiz;
 import com.pinde.sci.common.GlobalContext;
@@ -41,13 +42,13 @@ public class JsResSchExamScoreQueryBizImpl implements IJsResSchExamScoreQueryBiz
     @Override
     public int clearScore(List<String> userFlows, String sessionNumber, String assessmentYear, String orgFlow) {
         SchExamDoctorArrangement record = new SchExamDoctorArrangement();
-        record.setRecordStatus("N");
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         record.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         record.setModifyTime(DateUtil.getCurrentTime());
 
         SchExamDoctorArrangementExample example = new SchExamDoctorArrangementExample();
         SchExamDoctorArrangementExample.Criteria criteria = example.createCriteria();
-        criteria.andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow).andAssessmentYearEqualTo(assessmentYear).andDoctorFlowIn(userFlows).andRecordStatusEqualTo("Y");
+        criteria.andSessionNumberEqualTo(sessionNumber).andOrgFlowEqualTo(orgFlow).andAssessmentYearEqualTo(assessmentYear).andDoctorFlowIn(userFlows).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         return doctorArrangementMapper.updateByExampleSelective(record, example);
     }
 

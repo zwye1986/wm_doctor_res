@@ -1,14 +1,14 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResDiscipleRecordInfoMapper;
 import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfo;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfoExample;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
@@ -16,7 +16,6 @@ import com.pinde.sci.model.mo.ResStudentDiscipleTeacherExample;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class ResFolowTeacherRecordBizImpl implements IResFolowTeacherRecordBiz {
     @Override
     public List<ResStudentDiscipleTeacher> searchResStudentDiscipleTeacher(ResStudentDiscipleTeacher resStudentDiscipleTeacher) {
         ResStudentDiscipleTeacherExample example = new ResStudentDiscipleTeacherExample();
-        ResStudentDiscipleTeacherExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResStudentDiscipleTeacherExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resStudentDiscipleTeacher!=null){
             if(StringUtil.isNotBlank(resStudentDiscipleTeacher.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resStudentDiscipleTeacher.getDoctorFlow());
@@ -73,7 +72,7 @@ public class ResFolowTeacherRecordBizImpl implements IResFolowTeacherRecordBiz {
     @Override
     public List<ResDiscipleRecordInfo> searchFolowTeacherRecord(ResDiscipleRecordInfo resDiscipleRecordInfo) {
         ResDiscipleRecordInfoExample example = new ResDiscipleRecordInfoExample();
-        ResDiscipleRecordInfoExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDiscipleRecordInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resDiscipleRecordInfo!=null){
             if(StringUtil.isNotBlank(resDiscipleRecordInfo.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resDiscipleRecordInfo.getDoctorFlow());

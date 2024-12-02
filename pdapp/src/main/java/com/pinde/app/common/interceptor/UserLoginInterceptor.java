@@ -1,6 +1,6 @@
 package com.pinde.app.common.interceptor;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +43,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
 //            }
 //        }
 
-        String sysUser = (String) httpServletRequest.getSession().getAttribute(GlobalConstant.CURR_USER);
+        String sysUser = (String) httpServletRequest.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURR_USER);
         if (sysUser == null) {
             httpServletResponse.setContentType("application/json;charset=utf-8");
             PrintWriter writer = httpServletResponse.getWriter();

@@ -1,8 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysSmsLog;
-import com.pinde.sci.model.mo.SysSmsLogExample;
+import com.pinde.core.model.SysSmsLog;
+import com.pinde.core.model.SysSmsLogExample;
 import java.util.List;
+
+import com.pinde.core.model.TestPaperExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysSmsLogMapper {

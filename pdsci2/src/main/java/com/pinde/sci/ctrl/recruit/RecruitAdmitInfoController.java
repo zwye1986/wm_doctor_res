@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.biz.recruit.IRecruitAdmitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
 import com.pinde.sci.model.mo.RecruitInfo;
@@ -42,7 +42,7 @@ public class RecruitAdmitInfoController extends GeneralController {
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.selectRecruitByUserFlow(currentUser.getUserFlow(), currentUser.getOrgFlow());
         if (recruitInfoExts != null && recruitInfoExts.size() > 0){
             for (int i = recruitInfoExts.size() - 1 ; i >= 0 ; i--){
-                if (recruitInfoExts.get(i).getAdmitFlag().equals(GlobalConstant.RECORD_STATUS_N)){
+                if (recruitInfoExts.get(i).getAdmitFlag().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N)) {
                     recruitInfoExts.remove(i);
                 }
             }

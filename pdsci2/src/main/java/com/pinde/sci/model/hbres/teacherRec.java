@@ -1,8 +1,8 @@
 package com.pinde.sci.model.hbres;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class teacherRec extends MybatisObject {
+public class teacherRec extends TeachingActivitySpeakerExample.MybatisObject {
     private String avg;
     private String sessionNumber;
     private String userName;

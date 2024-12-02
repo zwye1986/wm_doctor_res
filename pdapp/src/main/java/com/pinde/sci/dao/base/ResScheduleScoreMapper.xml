@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResScheduleScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResScheduleScore" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResScheduleScore" >
     <id column="SCHEDULE_FLOW" property="scheduleFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -87,7 +87,7 @@
     SCORE, ITEM_DETAILED, GRADE, SCORE_TYPE, FILE_ROUTE, USER_FLOW, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResScheduleScoreExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResScheduleScoreExample" >
     select
     <if test="distinct" >
       distinct
@@ -111,13 +111,13 @@
     delete from PDSCI.RES_SCHEDULE_SCORE
     where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResScheduleScoreExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResScheduleScoreExample" >
     delete from PDSCI.RES_SCHEDULE_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResScheduleScore" >
     insert into PDSCI.RES_SCHEDULE_SCORE (SCHEDULE_FLOW, ORG_FLOW, ORG_NAME, 
       SPE_ID, SPE_NAME, ITEM_ID, 
       ITEM_NAME, EVALUATION_YEAR, SCORE, 
@@ -135,7 +135,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResScheduleScore" >
     insert into PDSCI.RES_SCHEDULE_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scheduleFlow != null" >
@@ -268,7 +268,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResScheduleScoreExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResScheduleScoreExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_SCHEDULE_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -372,7 +372,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResScheduleScore" >
     update PDSCI.RES_SCHEDULE_SCORE
     <set >
       <if test="orgFlow != null" >
@@ -438,7 +438,7 @@
     </set>
     where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResScheduleScore" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResScheduleScore" >
     update PDSCI.RES_SCHEDULE_SCORE
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

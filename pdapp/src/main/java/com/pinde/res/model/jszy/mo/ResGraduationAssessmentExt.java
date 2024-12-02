@@ -1,6 +1,6 @@
 package com.pinde.res.model.jszy.mo;
 
-import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
+import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 
 public class ResGraduationAssessmentExt extends ResGraduationAssessmentWithBLOBs {
 

@@ -69,9 +69,9 @@
 		AND RECORD_STATUS = 'Y'
 		GROUP BY DOCTOR_FLOW
 	</select>
-	<resultMap id="resultExtMap" type="com.pinde.sci.model.mo.SchArrangeResultExt"
+	<resultMap id="resultExtMap" type="com.pinde.core.model.SchArrangeResultExt"
 			   extends="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
-		<association property="process" javaType="com.pinde.sci.model.mo.ResDoctorSchProcess"
+		<association property="process" javaType="com.pinde.core.model.ResDoctorSchProcess"
 					 resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"></association>
 	</resultMap>
 	<select id="getResults" resultMap="resultExtMap">

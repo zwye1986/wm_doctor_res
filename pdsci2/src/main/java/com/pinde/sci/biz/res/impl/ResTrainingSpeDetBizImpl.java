@@ -1,16 +1,15 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResTrainingSpeDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResTrainingSpeDeptMapper;
 import com.pinde.sci.model.mo.ResTrainingSpeDept;
 import com.pinde.sci.model.mo.ResTrainingSpeDeptExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ResTrainingSpeDetBizImpl implements IResTrainingSpeDeptBiz {
     @Override
     public List<ResTrainingSpeDept> search(ResTrainingSpeDept trainingSpeDept) {
         ResTrainingSpeDeptExample example = new ResTrainingSpeDeptExample();
-        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(trainingSpeDept!=null){
             if(StringUtil.isNotBlank(trainingSpeDept.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(trainingSpeDept.getOrgFlow());
@@ -57,7 +56,7 @@ public class ResTrainingSpeDetBizImpl implements IResTrainingSpeDeptBiz {
     @Override
     public List<ResTrainingSpeDept> notCurrentSpe(ResTrainingSpeDept trainingSpeDept) {
         ResTrainingSpeDeptExample example = new ResTrainingSpeDeptExample();
-        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTrainingSpeDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(trainingSpeDept!=null){
             if(StringUtil.isNotBlank(trainingSpeDept.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(trainingSpeDept.getOrgFlow());

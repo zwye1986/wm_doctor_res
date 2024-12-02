@@ -4,14 +4,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchAndStandardDeptCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.dao.sch.SchAndStandardDeptCfgExtMapper;
 import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
 import com.pinde.sci.model.mo.SchAndStandardDeptCfgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -49,7 +47,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 		if(StringUtil.isNotBlank(orgFlow))
 		{
 			SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOrgFlowEqualTo(orgFlow);
 			return cfgMapper.selectByExample(example);
 		}
@@ -61,7 +59,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 		if(StringUtil.isNotBlank(schDeptFlow))
 		{
 			SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andSchDeptFlowEqualTo(schDeptFlow);
 			List<SchAndStandardDeptCfg> cfgs= cfgMapper.selectByExample(example);
 			if(cfgs!=null&&cfgs.size()>0)
@@ -113,7 +111,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 	public SchAndStandardDeptCfg readBySchDeptFlowAndOrgFlow(String schDeptFlow, String orgFlow) {
 		SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
 		SchAndStandardDeptCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(schDeptFlow)){
 			criteria.andSchDeptFlowEqualTo(schDeptFlow);
 		}
@@ -131,7 +129,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 	public List<SchAndStandardDeptCfg> selectByStandardDeptId(String orgFlow, String standardDeptId) {
 		SchAndStandardDeptCfgExample example=new SchAndStandardDeptCfgExample();
 		SchAndStandardDeptCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(standardDeptId)){
 			criteria.andStandardDeptIdEqualTo(standardDeptId);
 		}
@@ -149,7 +147,7 @@ public class SchAndStandardDeptCfgBizImpl implements ISchAndStandardDeptCfgBiz {
 	public List<SchAndStandardDeptCfg> getListByOrgFlow(String orgFlow, List<String> schDeptFlowList) {
 		SchAndStandardDeptCfgExample example = new SchAndStandardDeptCfgExample();
 		SchAndStandardDeptCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(orgFlow)) {
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}

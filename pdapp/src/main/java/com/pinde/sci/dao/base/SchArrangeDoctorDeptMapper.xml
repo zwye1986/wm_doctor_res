@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchArrangeDoctorDept" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchArrangeDoctorDept" >
     <id column="ARR_DOC_DEPT_FLOW" property="arrDocDeptFlow" jdbcType="VARCHAR" />
     <result column="ARRANGE_FLOW" property="arrangeFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -91,7 +91,7 @@
     SCH_DEPT_NAME, SCH_MONTH, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW, STANDARD_GROUP_FLOW, IS_REQUIRED, STANDARD_DEPT_ID, STANDARD_DEPT_NAME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDeptExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchArrangeDoctorDeptExample" >
     select
     <if test="distinct" >
       distinct
@@ -115,13 +115,13 @@
     delete from PDSCI.SCH_ARRANGE_DOCTOR_DEPT
     where ARR_DOC_DEPT_FLOW = #{arrDocDeptFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDeptExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SchArrangeDoctorDeptExample" >
     delete from PDSCI.SCH_ARRANGE_DOCTOR_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDept" >
+  <insert id="insert" parameterType="com.pinde.core.model.SchArrangeDoctorDept" >
     insert into PDSCI.SCH_ARRANGE_DOCTOR_DEPT (ARR_DOC_DEPT_FLOW, ARRANGE_FLOW, DOCTOR_FLOW, 
       DOCTOR_NAME, DEPT_FLOW, DEPT_NAME, 
       ORG_FLOW, ORG_NAME, GROUP_FLOW, 
@@ -141,7 +141,7 @@
       #{isRequired,jdbcType=VARCHAR}, #{standardDeptId,jdbcType=VARCHAR}, #{standardDeptName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDept" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SchArrangeDoctorDept" >
     insert into PDSCI.SCH_ARRANGE_DOCTOR_DEPT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="arrDocDeptFlow != null" >
@@ -292,7 +292,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDeptExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SchArrangeDoctorDeptExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SCH_ARRANGE_DOCTOR_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -408,7 +408,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDept" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchArrangeDoctorDept" >
     update PDSCI.SCH_ARRANGE_DOCTOR_DEPT
     <set >
       <if test="arrangeFlow != null" >
@@ -483,7 +483,7 @@
     </set>
     where ARR_DOC_DEPT_FLOW = #{arrDocDeptFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchArrangeDoctorDept" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchArrangeDoctorDept" >
     update PDSCI.SCH_ARRANGE_DOCTOR_DEPT
     set ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

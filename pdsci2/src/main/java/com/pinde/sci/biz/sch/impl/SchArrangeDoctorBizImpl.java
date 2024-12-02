@@ -1,16 +1,15 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchArrangeDoctorBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchArrangeDoctorMapper;
 import com.pinde.sci.model.mo.SchArrangeDoctor;
 import com.pinde.sci.model.mo.SchArrangeDoctorExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class SchArrangeDoctorBizImpl implements ISchArrangeDoctorBiz {
 	@Override
 	public List<SchArrangeDoctor> searchSchArrangeDoctor() {
 		SchArrangeDoctorExample example = new SchArrangeDoctorExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return arrangeDoctorMapper.selectByExample(example);
 	}
 
@@ -44,7 +43,7 @@ public class SchArrangeDoctorBizImpl implements ISchArrangeDoctorBiz {
 				return arrangeDoctorMapper.insertSelective(arrangeDoctor);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 }

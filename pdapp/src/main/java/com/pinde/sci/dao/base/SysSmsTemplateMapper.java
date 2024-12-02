@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysSmsTemplate;
-import com.pinde.sci.model.mo.SysSmsTemplateExample;
+import com.pinde.core.model.SysSmsTemplate;
+import com.pinde.core.model.SysSmsTemplateExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ISpePracticeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresSpeContrastPracticeMapper;
 import com.pinde.sci.model.mo.JsresSpeContrastPractice;
 import com.pinde.sci.model.mo.JsresSpeContrastPracticeExample;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class SpePracticeBizImpl implements ISpePracticeBiz {
 	public List<JsresSpeContrastPractice> getSpePracticeBySpeId(String trainingSpeId) {
 		if(StringUtil.isNotBlank(trainingSpeId)){
 			JsresSpeContrastPracticeExample example=new JsresSpeContrastPracticeExample();
-			example.createCriteria().andSpeIdEqualTo(trainingSpeId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andSpeIdEqualTo(trainingSpeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 			return scpMapper.selectByExample(example);
 		}

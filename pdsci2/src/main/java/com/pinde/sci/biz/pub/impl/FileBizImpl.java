@@ -7,7 +7,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.base.PubFileMapper;
@@ -16,7 +15,6 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.PubFileExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +46,7 @@ public class FileBizImpl implements IFileBiz {
 		String suffix =originalFileName.substring(originalFileName.lastIndexOf(".")+1);
 		PubFile file  = new PubFile();
 		file.setFileFlow(PkUtil.getUUID());
-		file.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		file.setCreateTime(DateUtil.getCurrDateTime());
 		file.setCreateUserFlow(userFlow);
 		file.setFileSuffix(suffix);
@@ -71,7 +69,7 @@ public class FileBizImpl implements IFileBiz {
 //	@Override
 //	public List<PubFile> searchFile(PubFile file) {
 //		PubFileExample docExample  = new PubFileExample();
-//		Criteria crieria =  docExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		Criteria crieria =  docExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		if(StringUtil.isNotBlank(file.getFileName())){
 //			crieria.andFileNameLike("%"+file.getFileName()+"%");
 //		}
@@ -205,7 +203,7 @@ public class FileBizImpl implements IFileBiz {
 	public List<PubFile> searchFile(List<String> fileFlows) {
 		PubFileExample docExample  = new PubFileExample();
 		Criteria crieria =  docExample.createCriteria();
-		crieria.andFileFlowIn(fileFlows).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        crieria.andFileFlowIn(fileFlows).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		docExample.setOrderByClause("CREATE_TIME");
 		return this.pubFileMapper.selectByExample(docExample);
 
@@ -305,7 +303,7 @@ public class FileBizImpl implements IFileBiz {
 				return this.pubFileMapper.insertSelective(file);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -380,10 +378,10 @@ public class FileBizImpl implements IFileBiz {
             boolean delSuccess = false;
         PubFile file = new PubFile();
         String basePath = InitConfig.getSysCfg("srm_apply_file");
-        file.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         PubFileExample docExample = new PubFileExample();
         Criteria crieria = docExample.createCriteria();
-        crieria.andFileFlowIn(fileFlows).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            crieria.andFileFlowIn(fileFlows).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         docExample.setOrderByClause("CREATE_TIME");
         List<PubFile> pubFileList = pubFileMapper.selectByExample(docExample);
             delFile(pubFileList);
@@ -396,7 +394,7 @@ public class FileBizImpl implements IFileBiz {
         PubFile file = readFile(fileFlow);
 		if(file!=null)
 		{
-			file.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             delAfterFile(file);
             return pubFileMapper.updateByPrimaryKeySelective(file);
         }
@@ -414,7 +412,7 @@ public class FileBizImpl implements IFileBiz {
         PubFileExample example = new PubFileExample();
         if (productFlow != null) {
             Criteria crieria = example.createCriteria();
-            crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
+            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
             if (productType != null) {
                 crieria.andProductTypeEqualTo(productType);
             }
@@ -427,7 +425,7 @@ public class FileBizImpl implements IFileBiz {
         PubFileExample example = new PubFileExample();
         if (productFlow != null) {
             Criteria crieria = example.createCriteria();
-            crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
+            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
             if (productType != null) {
                 crieria.andProductTypeLike(productType+"%");
             }
@@ -445,10 +443,10 @@ public class FileBizImpl implements IFileBiz {
     public void deleteFileByTypeFlow(String productType, String productFlow) {
         PubFileExample example = new PubFileExample();
         PubFile file = new PubFile();
-        file.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         if (productFlow != null) {
             Criteria crieria = example.createCriteria();
-            crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
+            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
             if (productType != null) {
                 crieria.andProductTypeEqualTo(productType);
             }
@@ -461,7 +459,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public List<PubFile> searchByProductFlow(String productFlow) {
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(productFlow)){
 			criteria.andProductFlowEqualTo(productFlow);
 		}else{
@@ -473,7 +471,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public PubFile readDocGraduationFile(PubFile search) {
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(search.getProductType())){
 			criteria.andProductTypeEqualTo(search.getProductType());
 		}
@@ -498,7 +496,7 @@ public class FileBizImpl implements IFileBiz {
 		PubFileExample example = new PubFileExample();
 		if (productFlow != null) {
 			Criteria crieria = example.createCriteria();
-			crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
+            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
 			if (fileFlows != null && fileFlows.size()>0) {
 				crieria.andFileFlowNotIn(fileFlows);
 			}
@@ -552,7 +550,7 @@ public class FileBizImpl implements IFileBiz {
 				throw new RuntimeException("保存文件失败！");
 			}
 			String filePath = File.separator + fileType + File.separator + dateString + File.separator + originalFilename;
-			pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			pubFile.setFilePath(filePath);
 			pubFile.setFileName(oldFileName);
 			pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -595,7 +593,7 @@ public class FileBizImpl implements IFileBiz {
 				throw new RuntimeException("保存文件失败！");
 			}
 			String filePath = File.separator + fileType + File.separator + dateString + File.separator + originalFilename;
-			pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			pubFile.setFilePath(filePath);
 			pubFile.setFileName(oldFileName);
 			pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -623,7 +621,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public List<PubFile> findFileByTypeFlows(String productType, List<String> productFlows) {
 		PubFileExample example = new PubFileExample();
-		PubFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        PubFileExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(productFlows!=null&&productFlows.size()>0)
 		{
 			criteria.andProductFlowIn(productFlows);
@@ -638,7 +636,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public PubFile readProductFile(String resultFlow, String fileType) {
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andProductTypeEqualTo(fileType);
 		criteria.andProductFlowEqualTo(resultFlow);
 		List<PubFile> list=pubFileMapper.selectByExampleWithBLOBs(example);
@@ -652,7 +650,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public List<PubFile> findFileByType(String productType,String productFlow,String testId) {
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andProductTypeEqualTo(productType);
 		if(StringUtil.isNotBlank(productFlow)){
 			criteria.andProductFlowEqualTo(productFlow);
@@ -688,7 +686,7 @@ public class FileBizImpl implements IFileBiz {
 		PubFileExample example = new PubFileExample();
 		if (productFlow != null) {
 			Criteria crieria = example.createCriteria();
-			crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).
+            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).
 					andProductFlowEqualTo(productFlow)
 			.andProductTypeEqualTo(type);
 			if (fileFlows != null && fileFlows.size()>0) {
@@ -703,7 +701,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public List<PubFile> findFileByDoctorFlow(String doctorFlow) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andDoctorStatusNameEqualTo("在培");
 		List<ResDoctorRecruit> recruitList = recruitMapper.selectByExample(example);
 		if(null != recruitList && !recruitList.isEmpty()){

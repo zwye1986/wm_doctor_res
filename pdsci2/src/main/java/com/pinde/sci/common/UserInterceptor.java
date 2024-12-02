@@ -1,5 +1,6 @@
 package com.pinde.sci.common;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;
@@ -67,7 +68,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		if("get".equalsIgnoreCase(request.getMethod())){
 			request.getSession().setAttribute("goPath", getPath);
 		}
-		SysUser sysUser = (SysUser) request.getSession().getAttribute(GlobalConstant.CURRENT_USER);
+        SysUser sysUser = (SysUser) request.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
 		if (sysUser == null) {
 			request.getRequestDispatcher("/timeout").forward(request, response);
 			return false;
@@ -112,7 +113,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		String hospitalLeaderAccessAuthority = (String) request.getServletContext().getAttribute("hospitalLeaderAccessAuthority");//督导-评分专家  院级
 		String phyAssAccessAuthority = (String) request.getServletContext().getAttribute("phyAssAccessAuthority");//师资-医师协会
 
-		List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
+        List<String> currRoleList = (List<String>) request.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST);
 		if (currRoleList != null && currRoleList.size() > 0) {
 			for (String roleFlow : currRoleList) {
 				if (StringUtil.isNotBlank(roleFlow)) {

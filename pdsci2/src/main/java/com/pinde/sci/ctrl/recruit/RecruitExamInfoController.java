@@ -6,7 +6,6 @@ import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.form.recruit.ExamInfoForm;
@@ -85,7 +84,7 @@ public class RecruitExamInfoController extends GeneralController {
         model.addAttribute("mainFlow",mainFlow);
         model.addAttribute("examInfo",examInfo);
         model.addAttribute("roomInfoMap",roomInfoMap);
-        if(GlobalConstant.FLAG_Y.equals(recruitExamMain.getIsPublish()))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitExamMain.getIsPublish()))
         {
             return "recruit/exam/showExamInfo";
         }
@@ -147,36 +146,36 @@ public class RecruitExamInfoController extends GeneralController {
         {
             return result;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("/delExamInfo")
     @ResponseBody
     public String delExamInfo(Model model,String examFlow, HttpServletRequest request){
         RecruitExamInfo examInfo=recruitExamInfoBiz.readByFlow(examFlow);
-        if(examInfo==null||GlobalConstant.RECORD_STATUS_N.equals(examInfo.getRecordStatus()))
+        if (examInfo == null || com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(examInfo.getRecordStatus()))
         {
             return "考试信息不存在";
         }
         RecruitExamMain recruitExamMain=recruitExamMainBiz.readByFlow(examInfo.getMainFlow());
-        if(recruitExamMain==null||GlobalConstant.RECORD_STATUS_N.equals(recruitExamMain.getRecordStatus()))
+        if (recruitExamMain == null || com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamMain.getRecordStatus()))
         {
             return "考试信息不存在";
         }
-        if(GlobalConstant.RECORD_STATUS_Y.equals(recruitExamMain.getIsPublish()))
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(recruitExamMain.getIsPublish()))
         {
             return "考试信息已发布，无法删除，请返回前一页面";
         }
-        examInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        examInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         int c=recruitExamInfoBiz.saveExamInfo(examInfo);
         if(c==0)
         {
-            return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         }else{
             //删除子表配置信息
             recruitExamInfoBiz.delExamDetail(examInfo.getExamFlow());
         }
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 
 }

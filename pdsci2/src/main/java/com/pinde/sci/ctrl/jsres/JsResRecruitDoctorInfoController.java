@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -17,15 +17,8 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ArmyTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
@@ -104,15 +97,15 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
 		model.addAttribute("orgs", orgs);
@@ -136,15 +129,15 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
 		model.addAttribute("orgs", orgs);
@@ -196,7 +189,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		if(StringUtil.isNotBlank(orgLevel)){
 			org.setOrgLevelId(orgLevel);
 		}
-		org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		param.put("sysOrg",org);
 		param.put("doctorStatusId",doctorStatusId);
 		param.put("trainingTypeId",trainingTypeId);
@@ -205,7 +198,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("idNo",idNo);
 		param.put("userName",userName);
 		param.put("docTypeList",docTypeList);
-//		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+//		param.put("orgTypeId",com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("doctorSignupFlag",doctorSignupFlag);//报名方式
 		param.put("orgFlow",orgFlow);
@@ -213,15 +206,15 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		SysCfg sysCfg = sysCfgMapper.selectByPrimaryKey("jsres_is_train");
 		if (null !=sysCfg && StringUtil.isNotBlank(sysCfg.getCfgValue())){	//查看省厅是否开启招录
 			String cfgValue = sysCfg.getCfgValue();
-			if (cfgValue.equals("Y")){		//省厅开启招录（关闭时无数据：院级招录流程优化 ）
+            if (cfgValue.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {        //省厅开启招录（关闭时无数据：院级招录流程优化 ）
 				PageHelper.startPage(currentPage,getPageSize(request));
 				recruitList = recruitDoctorInfoBiz.searchRecruitExtList(param);
 				for (JsResDoctorRecruitExt recruitExt : recruitList) {
 					if(StringUtil.isNotEmpty(recruitExt.getIsRetrain())){
-						if(GlobalConstant.FLAG_Y.equals(recruitExt.getIsRetrain())){
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitExt.getIsRetrain())) {
 							recruitExt.setIsRetrain("是");
 						}
-						if(GlobalConstant.FLAG_N.equals(recruitExt.getIsRetrain())){
+                        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(recruitExt.getIsRetrain())) {
 							recruitExt.setIsRetrain("否");
 						}
 					}
@@ -257,20 +250,20 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(org);
-			if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				orgs.addAll(joinOrgs);
@@ -279,7 +272,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		//协同基地地市归属于主基地所在地市
 //        for (SysOrg sysOrg : orgs) {
-//            if(!OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())){
+//            if(!com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())){
 //                List<ResJointOrg> jointOrgs = jointOrgBiz.selectByJointOrgFlow(sysOrg.getOrgFlow());
 //                if(jointOrgs != null && jointOrgs.size()>0){
 //                    SysOrg sysOrgTemp = orgBiz.readSysOrg(jointOrgs.get(0).getOrgFlow());//查询主基地
@@ -301,7 +294,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 			}
 		}
 		model.addAttribute("orgFlowList",orgFlowList);
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)||GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) || com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 		    if("UnPassed".equals(source)){
                 return  "jsres/recruit/mainGlobalunPassed";
             }else{
@@ -320,20 +313,20 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(org);
-			if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				orgs.addAll(joinOrgs);
@@ -342,7 +335,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		//协同基地地市归属于主基地所在地市
 //        for (SysOrg sysOrg : orgs) {
-//            if(!OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())){
+//            if(!com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())){
 //                List<ResJointOrg> jointOrgs = jointOrgBiz.selectByJointOrgFlow(sysOrg.getOrgFlow());
 //                if(jointOrgs != null && jointOrgs.size()>0){
 //                    SysOrg sysOrgTemp = orgBiz.readSysOrg(jointOrgs.get(0).getOrgFlow());//查询主基地
@@ -364,7 +357,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 			}
 		}
 		model.addAttribute("orgFlowList",orgFlowList);
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)||GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) || com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			if("UnPassed".equals(source)){
 				return  "jsres/recruit/mainGlobalunPassedAcc";
 			}else{
@@ -409,13 +402,13 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		}
 
 		Map<String,Object> param=new HashMap<>();
-		if(StringUtil.isBlank(orgCityId)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+        if (StringUtil.isBlank(orgCityId) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			orgCityId=sysOrg.getOrgCityId();
 		}
 		model.addAttribute("orgCityId",orgCityId);
 //		param.put("orgCityId", orgCityId);
 		//禅道3386 改动   查询协同基地不分地市
-//		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+//		if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 //			param.put("orgCityId", "");
 //		}else{
 //			param.put("orgCityId", orgCityId);
@@ -437,16 +430,16 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("workOrgName",workOrgName);
 		param.put("docTypeList",docTypeList);
 		param.put("trainYearList",trainYearList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("auditStatusId",auditStatusId);
 		param.put("studentType",studentType);
-//		if(OrgLevelEnum.CountryOrg.getId().equals(orgLevel)){
+//		if(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(orgLevel)){
 //			orgLevel = "";
 //		}
 
 		if(StringUtil.isNotBlank(workOrgName)){
-			List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 			if(sendSchools!=null && sendSchools.size()>0){
 				for(SysDict dict :sendSchools){
 					if(workOrgName.equals(dict.getDictName())){
@@ -458,16 +451,16 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		if (StringUtil.isBlank(orgFlow)) {
-			if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+                jointOrgFlowList = searchJointOrgList(com.pinde.core.common.GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
-					|| GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
-//				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
+                    || com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+//				if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 					SysOrg searchOrg=new SysOrg();
 					searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-					searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 					if(StringUtil.isNotBlank(orgCityId)){
 						searchOrg.setOrgCityId(orgCityId);
 					}
@@ -507,12 +500,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					}
 				}
 			}
-//			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+//			if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 //				List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(orgFlow);
 //				if(resJointOrgList!=null&&!resJointOrgList.isEmpty()){
 //					for(ResJointOrg jointOrg:resJointOrgList){
 //						//禅道3386 改动
-////						if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+////						if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 ////							String cityId = orgBiz.readSysOrg(jointOrg.getJointOrgFlow()).getOrgCityId();
 ////							if(StringUtil.isNotBlank(cityId)&&cityId.equals(orgCityId)){
 ////								jointOrgFlowList.add(jointOrg.getJointOrgFlow());
@@ -524,7 +517,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 //				}
 //			}
 		}
-		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			orgLevel="";
 		}
 		if(StringUtil.isNotBlank(joinOrgFlow)){
@@ -546,7 +539,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 //				String armyType = userResumeExt.getArmyType();
 //				String armyName = "否";
 //				if (StringUtil.isNotBlank(armyType)) {
-//					armyName = ArmyTypeEnum.getNameById(armyType);
+//					armyName = com.pinde.core.common.enums.ArmyTypeEnum.getNameById(armyType);
 //				}
 //				map.put("armyName",armyName);
 //			}
@@ -558,7 +551,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 	}
 	public List<String> searchJointOrgList(String flag,String Flow) {
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if(GlobalConstant.FLAG_Y.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
 			List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(Flow);
 			if(resJointOrgList!=null&&!resJointOrgList.isEmpty()){
 				for(ResJointOrg jointOrg:resJointOrgList){
@@ -607,7 +600,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				resDoctor.setDoctorTypeName(recruitInfo.getDoctorTypeName());
 			}
 			if(StringUtil.isNotBlank(resDoctor.getGraduatedId())){
-				List<SysDict> sysDictList=dictBiz.searchDictListByDictTypeId(DictTypeEnum.GraduateSchool.getId());
+                List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.GraduateSchool.getId());
 				if(sysDictList!=null && !sysDictList.isEmpty()){
 					for(SysDict dict:sysDictList){
 						if(dict.getDictId().equals(resDoctor.getGraduatedId())){
@@ -616,9 +609,9 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					}
 				}
 			}
-			if(StringUtil.isNotBlank(resDoctor.getDoctorTypeId())&& JsResDocTypeEnum.Graduate.getId().equals(resDoctor.getDoctorTypeId())){
+            if (StringUtil.isNotBlank(resDoctor.getDoctorTypeId()) && com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(resDoctor.getDoctorTypeId())) {
 				if(StringUtil.isNotBlank(resDoctor.getWorkOrgId())){
-					List<SysDict> sysDictList=dictBiz.searchDictListByDictTypeId(DictTypeEnum.SendSchool.getId());
+                    List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 					if(sysDictList!=null && !sysDictList.isEmpty()){
 						for(SysDict dict:sysDictList){
 							if(dict.getDictId().equals(resDoctor.getWorkOrgId())){
@@ -640,7 +633,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				userResumeExt=userResumeBiz.converyToJavaBean(xmlContent,UserResumeExtInfoForm.class);
 				if(userResumeExt!=null){
 					if(StringUtil.isNotBlank(userResumeExt.getGraduatedId())){
-						List<SysDict> sysDictList=dictBiz.searchDictListByDictTypeId(DictTypeEnum.GraduateSchool.getId());
+                        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.GraduateSchool.getId());
 						if(sysDictList!=null && !sysDictList.isEmpty()){
 							for(SysDict dict:sysDictList){
 								if(StringUtil.isNotBlank(userResumeExt.getGraduatedId())){
@@ -661,7 +654,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 	@RequestMapping(value="/zltjCityMain")
 	public String zltjCityMain(Model model,String roleFlag,String tabId) throws UnsupportedEncodingException {
-		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        model.addAttribute("trainingTypeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		//国家基地
 		List<ResJointOrg> jointOrgs=jointOrgBiz.searchJointOrgAll();
 		List<String> orgFlowList=new ArrayList<String>();
@@ -676,7 +669,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 	@RequestMapping(value="/zltjCityMainAcc")
 	public String zltjCityMainAcc(Model model,String roleFlag,String tabId) throws UnsupportedEncodingException {
-		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        model.addAttribute("trainingTypeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		//国家基地
 		List<ResJointOrg> jointOrgs=jointOrgBiz.searchJointOrgAll();
 		List<String> orgFlowList=new ArrayList<String>();
@@ -729,12 +722,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			if(StringUtil.isNotBlank(orgCityId)){
 				searchOrg.setOrgCityId(orgCityId);
 			}
@@ -984,12 +977,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			if(StringUtil.isNotBlank(orgCityId)){
 				searchOrg.setOrgCityId(orgCityId);
 			}
@@ -1103,7 +1096,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		List<String> titleList=new ArrayList<>();
 		titleList.add("地市");
-		for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+        for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 			titleList.add(e.getName());
 		}
 		titleList.add("合计");
@@ -1164,7 +1157,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 					int k = 1;
 					int sum = 0;
-					for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+                    for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 						String key = cityId + e.getId();
 						Integer num = (Integer) cityTypeNumMap.get(key);
 						if (num == null)
@@ -1193,7 +1186,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 			//宽度自适应
 			ExcleUtile.setColumnWidth("合计".toString().getBytes().length, k++, columnWidth);
 			int hjsum = 0;
-			for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				Integer num = (Integer) typeNumMap.get(e.getId());
 				if (num == null)
 					num = 0;
@@ -1257,12 +1250,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			if(StringUtil.isNotBlank(orgCityId)){
 				searchOrg.setOrgCityId(orgCityId);
 			}
@@ -1323,7 +1316,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		List<Map<String,String>> citys = getCitys();
 		model.addAttribute("citys",citys);
-		List<SysDict> spes= DictTypeEnum.sysListDictMap.get(trainingTypeId);
+        List<SysDict> spes = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(trainingTypeId);
 		model.addAttribute("spes",spes);
 		return  "jsres/zltjCity/speType";
 	}
@@ -1366,12 +1359,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			SysOrg searchOrg=new SysOrg();
 			searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			if(StringUtil.isNotBlank(orgCityId)){
 				searchOrg.setOrgCityId(orgCityId);
 			}
@@ -1484,7 +1477,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		city.put("cityName", "宿迁市");
 		citys.add(city);
 		model.addAttribute("citys",citys);
-		List<SysDict> spes= DictTypeEnum.sysListDictMap.get(trainingTypeId);
+        List<SysDict> spes = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(trainingTypeId);
 		model.addAttribute("spes",spes);
 		int s=15;
 		if(StringUtil.isNotBlank(orgCityId))
@@ -1624,25 +1617,25 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 	@RequestMapping(value="/zltjOrgMain")
 	public String zltjOrgMain(Model model,String roleFlag,String tabId) throws UnsupportedEncodingException {
-		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        model.addAttribute("trainingTypeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(org);
-			if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				orgs.addAll(joinOrgs);
@@ -1665,25 +1658,25 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 	@RequestMapping(value="/zltjOrgMainAcc")
 	public String zltjOrgMainAcc(Model model,String roleFlag,String tabId) throws UnsupportedEncodingException {
-		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        model.addAttribute("trainingTypeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(org);
-			if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				orgs.addAll(joinOrgs);
@@ -1732,14 +1725,14 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		if(StringUtil.isBlank(orgCityId)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+        if (StringUtil.isBlank(orgCityId) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 		{
 			orgCityId=sysOrg.getOrgCityId();
 		}
 
 		SysOrg searchOrg=new SysOrg();
 		searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		if(StringUtil.isNotBlank(orgCityId)){
 			searchOrg.setOrgCityId(orgCityId);
 		}
@@ -1752,7 +1745,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		List<SysOrg>exitOrgs=orgBiz.searchOrg(searchOrg);
 		for (SysOrg g : exitOrgs) {
-			if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 				if (joinOrgs != null && !joinOrgs.isEmpty()) {
 					for (SysOrg jointOrg : joinOrgs) {
@@ -1788,7 +1781,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				if("JointOrg".equals(orgLevelId)) {
 					String orgCityId2 = (String) org.get("orgCityId");
 					String countryOrgCityId = (String) org.get("countryOrgCityId");
-					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgFlow)&&StringUtil.isBlank(orgLevel)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgFlow) && StringUtil.isBlank(orgLevel)) {
 						if (StringUtil.isNotBlank(orgCityId) && orgCityId2.equals(countryOrgCityId)
 								|| StringUtil.isBlank(orgCityId)) {
 							String countryOrgFlow = (String) org.get("countryOrgFlow");
@@ -1827,8 +1820,8 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
-		if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			orgLevel = "";
 		}
 		param.put("orgLevel",orgLevel);
@@ -1957,14 +1950,14 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		if(StringUtil.isBlank(orgCityId)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+        if (StringUtil.isBlank(orgCityId) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 		{
 			orgCityId=sysOrg.getOrgCityId();
 		}
 
 		SysOrg searchOrg=new SysOrg();
 		searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		if(StringUtil.isNotBlank(orgCityId)){
 			searchOrg.setOrgCityId(orgCityId);
 		}
@@ -1977,7 +1970,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		List<SysOrg>exitOrgs=orgBiz.searchOrg(searchOrg);
 		for (SysOrg g : exitOrgs) {
-			if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 				if (joinOrgs != null && !joinOrgs.isEmpty()) {
 					for (SysOrg jointOrg : joinOrgs) {
@@ -2013,7 +2006,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				if("JointOrg".equals(orgLevelId)) {
 					String orgCityId2 = (String) org.get("orgCityId");
 					String countryOrgCityId = (String) org.get("countryOrgCityId");
-					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgFlow)&&StringUtil.isBlank(orgLevel)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgFlow) && StringUtil.isBlank(orgLevel)) {
 						if (StringUtil.isNotBlank(orgCityId) && orgCityId2.equals(countryOrgCityId) || StringUtil.isBlank(orgCityId)) {
 							String countryOrgFlow = (String) org.get("countryOrgFlow");
 							List<Map<String, Object>> jointOrgs = jointOrgsMap.get(countryOrgFlow);
@@ -2051,9 +2044,9 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		String orgLevel2=orgLevel;
-		if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			orgLevel2 = "";
 		}
 		param.put("orgLevel",orgLevel2);
@@ -2149,11 +2142,11 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		List<String> titleList=new ArrayList<>();
 
-		if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			titleList.add("地市");
 		}
 		titleList.add("基地名称");
-		for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+        for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 			titleList.add(e.getName());
 		}
 		titleList.add("合计");
@@ -2209,7 +2202,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					int rowspan=orgs.size();
 					for(int n=0;n<orgs.size();n++)
 					{
-						if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgLevel)) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgLevel)) {
 							List<Map<String,Object>>  jointOrgFlows=jointOrgsMap.get(orgs.get(n).get("orgFlow"));
 							if(jointOrgFlows!=null)
 								rowspan+=jointOrgFlows.size();
@@ -2221,7 +2214,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 						String orgFlow2 = (String) orgs.get(j).get("orgFlow");
 						String orgName=(String) orgs.get(j).get("orgName");
 						int n=0;
-						if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+                        if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 						{
 							if (j == 0) {
 								rowCell = row.createCell(n++);
@@ -2241,7 +2234,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 						ExcleUtile.setColumnWidth(orgName.toString().getBytes().length, n-1, columnWidth);
 						int k = n;
 						int sum = 0;
-						for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+                        for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 							String key = orgFlow2+ e.getId();
 							Integer num = (Integer) cityOrgNumMap.get(key);
 							if (num == null)
@@ -2260,7 +2253,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 						//宽度自适应
 						ExcleUtile.setColumnWidth(String.valueOf(sum).toString().getBytes().length, k, columnWidth);
 						List<Map<String,Object>>  jointOrgs=jointOrgsMap.get(orgFlow2);
-						if(jointOrgs!=null&&GlobalConstant.FLAG_Y.equals(jointOrgFlag))
+                        if (jointOrgs != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag))
 						{
 							for(int m=0;m<jointOrgs.size();m++)
 							{
@@ -2268,7 +2261,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 								String jointOrgFlow = (String) jointOrgs.get(m).get("orgFlow");
 								orgName=(String) jointOrgs.get(m).get("orgName")+"(协同基地)";
 								int n2=0;
-								if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+                                if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 								{
 									n2=1;
 								}
@@ -2279,7 +2272,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 								ExcleUtile.setColumnWidth(orgName.toString().getBytes().length, n2-1, columnWidth);
 								int k2 = n2;
 								int sum2 = 0;
-								for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+                                for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 									String key = jointOrgFlow + e.getId();
 									Integer num = (Integer) cityOrgNumMap.get(key);
 									if (num == null)
@@ -2307,7 +2300,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 			int k = 0;
 			rowCell = row.createCell(k);
 			rowCell.setCellStyle(styleTwo);
-			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgFlow)&&StringUtil.isBlank(orgLevel))
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgFlow) && StringUtil.isBlank(orgLevel))
 			{
 				rowCell.setCellValue("合计(已包含协同)");
 				//宽度自适应
@@ -2317,12 +2310,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				//宽度自适应
 				ExcleUtile.setColumnWidth("合计".toString().getBytes().length, k++, columnWidth);
 			}
-			if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sheet.addMergedRegion(new CellRangeAddress(rowNum - 1, rowNum - 1, 0, 1));
 				k++;
 			}
 			int sum = 0;
-			for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				String key = e.getId();
 				Integer num = (Integer) typeNumMap.get(key);
 				if (num == null)
@@ -2381,14 +2374,14 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		if(StringUtil.isBlank(orgCityId)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+        if (StringUtil.isBlank(orgCityId) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 		{
 			orgCityId=sysOrg.getOrgCityId();
 		}
 
 		SysOrg searchOrg=new SysOrg();
 		searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		if(StringUtil.isNotBlank(orgCityId)){
 			searchOrg.setOrgCityId(orgCityId);
 		}
@@ -2401,7 +2394,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		List<SysOrg>exitOrgs=orgBiz.searchOrg(searchOrg);
 		for (SysOrg g : exitOrgs) {
-			if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 				if (joinOrgs != null && !joinOrgs.isEmpty()) {
 					for (SysOrg jointOrg : joinOrgs) {
@@ -2437,7 +2430,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				if("JointOrg".equals(orgLevelId)) {
 					String orgCityId2 = (String) org.get("orgCityId");
 					String countryOrgCityId = (String) org.get("countryOrgCityId");
-					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgFlow)&&StringUtil.isBlank(orgLevel)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgFlow) && StringUtil.isBlank(orgLevel)) {
 						if (StringUtil.isNotBlank(orgCityId) && orgCityId2.equals(countryOrgCityId) || StringUtil.isBlank(orgCityId)) {
 							String countryOrgFlow = (String) org.get("countryOrgFlow");
 							List<Map<String, Object>> jointOrgs = jointOrgsMap.get(countryOrgFlow);
@@ -2471,7 +2464,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<ResOrgSpe> orgSpeList=resOrgSpeBiz.searchResOrgSpeListByFlows(jointOrgFlowList);
 		if(orgSpeList!=null&&!orgSpeList.isEmpty()){//每家基地的专业
 			for(ResOrgSpe r:orgSpeList){
-				orgSpeFlagMap.put(r.getOrgFlow()+r.getSpeTypeId()+r.getSpeId(),GlobalConstant.FLAG_Y);
+                orgSpeFlagMap.put(r.getOrgFlow() + r.getSpeTypeId() + r.getSpeId(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 		model.addAttribute("orgSpeFlagMap",orgSpeFlagMap);
@@ -2484,8 +2477,8 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
-		if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			orgLevel = "";
 		}
 		param.put("orgLevel",orgLevel);
@@ -2617,14 +2610,14 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		if(StringUtil.isBlank(orgCityId)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+        if (StringUtil.isBlank(orgCityId) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 		{
 			orgCityId=sysOrg.getOrgCityId();
 		}
 
 		SysOrg searchOrg=new SysOrg();
 		searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-		searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		if(StringUtil.isNotBlank(orgCityId)){
 			searchOrg.setOrgCityId(orgCityId);
 		}
@@ -2637,7 +2630,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		List<SysOrg>exitOrgs=orgBiz.searchOrg(searchOrg);
 		for (SysOrg g : exitOrgs) {
-			if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
 				if (joinOrgs != null && !joinOrgs.isEmpty()) {
 					for (SysOrg jointOrg : joinOrgs) {
@@ -2673,7 +2666,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				if("JointOrg".equals(orgLevelId)) {
 					String orgCityId2 = (String) org.get("orgCityId");
 					String countryOrgCityId = (String) org.get("countryOrgCityId");
-					if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgFlow)&&StringUtil.isBlank(orgLevel)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgFlow) && StringUtil.isBlank(orgLevel)) {
 						if (StringUtil.isNotBlank(orgCityId) && orgCityId2.equals(countryOrgCityId) || StringUtil.isBlank(orgCityId)) {
 							String countryOrgFlow = (String) org.get("countryOrgFlow");
 							List<Map<String, Object>> jointOrgs = jointOrgsMap.get(countryOrgFlow);
@@ -2707,7 +2700,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		List<ResOrgSpe> orgSpeList=resOrgSpeBiz.searchResOrgSpeListByFlows(jointOrgFlowList);
 		if(orgSpeList!=null&&!orgSpeList.isEmpty()){//每家基地的专业
 			for(ResOrgSpe r:orgSpeList){
-				orgSpeFlagMap.put(r.getOrgFlow()+r.getSpeTypeId()+r.getSpeId(),GlobalConstant.FLAG_Y);
+                orgSpeFlagMap.put(r.getOrgFlow() + r.getSpeTypeId() + r.getSpeId(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 		model.addAttribute("orgSpeFlagMap",orgSpeFlagMap);
@@ -2720,8 +2713,8 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
-		if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			orgLevel = "";
 		}
 		param.put("orgLevel",orgLevel);
@@ -2847,7 +2840,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		if (StringUtil.isNotBlank(trainingTypeId)) {
 			dicts = dictBiz.searchDictListByDictTypeIdAndDictId(trainingTypeId,trainingSpeId);//每个培训类别对应的专业
 			List<String> titleList=new ArrayList<>();
-			if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				titleList.add("地市名称");
 			}
 			titleList.add("基地名称");
@@ -2889,7 +2882,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 						for(int n=0;n<orgs.size();n++)
 						{
 
-							if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 								List<Map<String,Object>> jointOrgFlows = jointOrgsMap.get(orgs.get(n).get("orgFlow"));
 								if (jointOrgFlows != null)
 									rowspan += jointOrgFlows.size();
@@ -2900,7 +2893,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 							String orgFlow2 = (String) orgs.get(j).get("orgFlow");
 							String orgName = (String) orgs.get(j).get("orgName");
 							int n=0;
-							if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+                            if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 							{
 								if (j == 0) {
 									rowCell = row.createCell(n++);
@@ -2924,7 +2917,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 								String key =  orgFlow2 + e.getDictId();
 								String flow =  orgFlow2 + trainingTypeId +e.getDictId();
 								String result="--";
-								if("Y".equals(orgSpeFlagMap.get(flow)))
+                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(flow)))
 								{
 									Integer num = (Integer) cityOrgNumMap.get(key);
 									if (num == null)
@@ -2945,7 +2938,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 							//宽度自适应
 							ExcleUtile.setColumnWidth(String.valueOf(sum).toString().getBytes().length, k, columnWidth);
 
-							if (GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 								List<Map<String,Object>> jointOrgs = jointOrgsMap.get(orgFlow2);
 								if (jointOrgs != null) {
 									for (int m = 0; m < jointOrgs.size(); m++) {
@@ -2953,7 +2946,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 										String jointOrgFlow = (String) jointOrgs.get(m).get("orgFlow");
 										 orgName = (String) jointOrgs.get(m).get("orgName")+"(协同基地)";
 										int n2=0;
-										if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+                                        if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 										{
 											n2=1;
 										}
@@ -2968,7 +2961,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 											String key =  jointOrgFlow + e.getDictId();
 											String flow = jointOrgFlow + trainingTypeId + e.getDictId();
 											String result = "--";
-											if ("Y".equals(orgSpeFlagMap.get(flow))) {
+                                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgSpeFlagMap.get(flow))) {
 												Integer num = (Integer) cityOrgNumMap.get(key);
 												if (num == null)
 													num = 0;
@@ -2998,7 +2991,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				int k = 0;
 				rowCell = row.createCell(k);
 				rowCell.setCellStyle(styleTwo);
-				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)||StringUtil.isBlank(orgFlow)&&StringUtil.isBlank(orgLevel)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag) || StringUtil.isBlank(orgFlow) && StringUtil.isBlank(orgLevel)) {
 					rowCell.setCellValue("合计(已包含协同)");
 					//宽度自适应
 					ExcleUtile.setColumnWidth("合计(已包含协同)".toString().getBytes().length, k++, columnWidth);
@@ -3007,7 +3000,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					//宽度自适应
 					ExcleUtile.setColumnWidth("合计".toString().getBytes().length, k++, columnWidth);
 				}
-				if(!GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
+                if (!com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag))
 				{
 					sheet.addMergedRegion(new CellRangeAddress(rowNum - 1,rowNum - 1, 0, 1));
 					k++;
@@ -3046,26 +3039,26 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 	@RequestMapping(value="/zltjOrgLocal")
 	public String zltjOrgLocal(Model model,String roleFlag) throws UnsupportedEncodingException {
-		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        model.addAttribute("trainingTypeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(org);
-			if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				orgs.addAll(joinOrgs);
@@ -3096,7 +3089,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		if(StringUtil.isNotBlank(docType)){
 			docTypeList.add(docType);
 		}else{
-			for(JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				docTypeList.add(e.getId());
 			}
 		}
@@ -3165,7 +3158,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 	 * @Author xieyh
 	 */
 	private void calculateRecruitStudentForReport(HashMap<String, Integer> doctorTrainingMap, HashMap<String, Integer> graduateMap, Map<String, Integer> speAll, Map<String, Integer> speInfos, Map<String, Object> info) {
-		if (JsResDocTypeEnum.Graduate.getId().equals(info.get("doctorTypeId"))) {
+        if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(info.get("doctorTypeId"))) {
 			// 做大数据在校专硕各项的分开统计
 			graduateMap.put("all", graduateMap.get("all") + 1); // 在校专硕总人数+1
 			// 此处的key用的是各学员在校状态的ID
@@ -3234,7 +3227,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		//列宽自适应
 		HSSFRow rowOne = sheet.createRow(0);//第1行
 
-		List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
+        List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		List<String> titles = new ArrayList<>();
 		titles.add("专业基地");
 		titles.add("本单位人");
@@ -3255,7 +3248,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		if(StringUtil.isNotBlank(docType)){
 			docTypeList.add(docType);
 		}else{
-			for(JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				docTypeList.add(e.getId());
 			}
 		}
@@ -3370,26 +3363,26 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 	@RequestMapping(value="/zltjOrgLocalAcc")
 	public String zltjOrgLocalAcc(Model model,String roleFlag) throws UnsupportedEncodingException {
-		model.addAttribute("trainingTypeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        model.addAttribute("trainingTypeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
 		List<SysOrg> orgs=new ArrayList<>();
-		if (!GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			SysOrg sysorg = new SysOrg();
 			sysorg.setOrgProvId(org.getOrgProvId());
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 				sysorg.setOrgCityId(org.getOrgCityId());
 				model.addAttribute("orgCityId", org.getOrgCityId());
 			}
-			sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			orgs = orgBiz.searchOrg(sysorg);
 		}
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgs.add(org);
-			if(OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 				orgs.addAll(joinOrgs);
@@ -3438,13 +3431,13 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		param.put("statusId",statusId);
 
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)&&StringUtil.isBlank(orgFlow)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && StringUtil.isBlank(orgFlow)) {
 			jointOrgFlowList.add(sysOrg.getOrgFlow());
-			if(OrgLevelEnum.CountryOrg.getId().equals(sysOrg.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(sysOrg.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(sysOrg.getOrgFlow());
 				if(joinOrgs!=null&&joinOrgs.size()>0)
@@ -3461,7 +3454,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				param.put("orgFlow1",orgFlow);
 			}else {
 				param.put("orgFlow1",jointOrgList.get(0).getOrgFlow());
-				param.put("isJointOrg","Y");
+                param.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 //		List<Map<String,Object>> list=recruitDoctorInfoBiz.zltjOrgLocalList(param);
@@ -3497,7 +3490,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		model.addAttribute("speNumMap",speNumMap);
 		model.addAttribute("typeNumMap",typeNumMap);
 
-		List<SysDict> spes= DictTypeEnum.sysListDictMap.get(trainingTypeId);
+        List<SysDict> spes = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(trainingTypeId);
 		model.addAttribute("spes",spes);
 		return  "jsres/zltjOrg/zltjOrgLocalList";
 	}
@@ -3533,12 +3526,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("sessionNumber",sessionNumber);
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("docTypeList",docTypeList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 
 		List<String> jointOrgFlowList=new ArrayList<String>();
-		if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)&&StringUtil.isBlank(orgFlow)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag) && StringUtil.isBlank(orgFlow)) {
 			jointOrgFlowList.add(sysOrg.getOrgFlow());
-			if(OrgLevelEnum.CountryOrg.getId().equals(sysOrg.getOrgLevelId()))
+            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(sysOrg.getOrgLevelId()))
 			{
 				List<SysOrg> joinOrgs=orgBiz.searchJointOrgsByOrg(sysOrg.getOrgFlow());
 				if(joinOrgs!=null&&joinOrgs.size()>0)
@@ -3582,7 +3575,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		model.addAttribute("speNumMap",speNumMap);
 		model.addAttribute("typeNumMap",typeNumMap);
 
-		List<SysDict> spes= DictTypeEnum.sysListDictMap.get(trainingTypeId);
+        List<SysDict> spes = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(trainingTypeId);
 		model.addAttribute("spes",spes);
 
 		String fileName = titleYear+"招录学员统计表.xls";
@@ -3614,7 +3607,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		if (StringUtil.isNotBlank(trainingTypeId)) {
 			List<String> titleList=new ArrayList<>();
 			titleList.add("专业");
-			for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 				titleList.add(e.getName());
 			}
 			titleList.add("小计");
@@ -3652,7 +3645,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 						//宽度自适应
 						ExcleUtile.setColumnWidth(spe.getDictName().toString().getBytes().length, 0, columnWidth);
 
-						for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+                        for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 							String id = e.getId();
 								String key = id + spe.getDictId();
 								Integer num = (Integer) typeSpeNumMap.get(key);
@@ -3682,7 +3675,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 				ExcleUtile.setColumnWidth("合计".toString().getBytes().length, k++, columnWidth);
 				int hjsum = 0;
 
-				for (JsResDocTypeEnum e : JsResDocTypeEnum.values()) {
+                for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values()) {
 						String key = e.getId();
 						Integer num = (Integer) typeNumMap.get(key);
 						if (num == null)
@@ -3752,7 +3745,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		}
 
 		Map<String,Object> param=new HashMap<>();
-		if(StringUtil.isBlank(orgCityId)&&GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+        if (StringUtil.isBlank(orgCityId) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 			orgCityId=sysOrg.getOrgCityId();
 		}
 		if(StringUtil.isNotBlank(joinOrgFlow)){
@@ -3772,12 +3765,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 		param.put("workOrgName",workOrgName);
 		param.put("docTypeList",docTypeList);
 		param.put("trainYearList",trainYearList);
-		param.put("orgTypeId",OrgTypeEnum.Hospital.getId());
+        param.put("orgTypeId", com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		param.put("sessionNumbers",sessionNumbers);
 		param.put("signupWay",signupWay);
 
 		if(StringUtil.isNotBlank(workOrgName)){
-			List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+            List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 			if(sendSchools!=null && sendSchools.size()>0){
 				for(SysDict dict :sendSchools){
 					if(workOrgName.equals(dict.getDictName())){
@@ -3790,16 +3783,16 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 
 		List<String> jointOrgFlowList=new ArrayList<String>();
 		if (StringUtil.isBlank(orgFlow)) {
-			if (GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
-				jointOrgFlowList=searchJointOrgList("Y",sysuser.getOrgFlow());
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
+                jointOrgFlowList = searchJointOrgList(com.pinde.core.common.GlobalConstant.FLAG_Y, sysuser.getOrgFlow());
 				jointOrgFlowList.add(sysuser.getOrgFlow());
 			}
-			if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
-					|| GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
-//				if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)
+                    || com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+//				if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 				if(StringUtil.isNotBlank(orgCityId)){
 					searchOrg.setOrgCityId(orgCityId);
 				}
@@ -3839,12 +3832,12 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 					}
 				}
 			}
-//			if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+//			if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
 //				List<ResJointOrg> resJointOrgList=jointOrgBiz.searchResJointByOrgFlow(orgFlow);
 //				if(resJointOrgList!=null&&!resJointOrgList.isEmpty()){
 //					for(ResJointOrg jointOrg:resJointOrgList){
 //						//禅道3386 改动
-////						if (GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
+////						if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
 ////							String cityId = orgBiz.readSysOrg(jointOrg.getJointOrgFlow()).getOrgCityId();
 ////							if(StringUtil.isNotBlank(cityId)&&cityId.equals(orgCityId)){
 ////								jointOrgFlowList.add(jointOrg.getJointOrgFlow());
@@ -3856,7 +3849,7 @@ public class JsResRecruitDoctorInfoController extends GeneralController {
 //				}
 //			}
 		}
-		if(GlobalConstant.FLAG_Y.equals(jointOrgFlag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
 			orgLevel="";
 		}
 		if(StringUtil.isNotBlank(joinOrgFlow)){

@@ -1,9 +1,9 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.RecruitInterviewInfo;
 import com.pinde.sci.model.mo.SysUser;
@@ -31,7 +31,7 @@ public class RecruitInterviewInfoController extends GeneralController {
         List<RecruitInfoExt> recruitInfoExts = recruitInfoBiz.selectRecruitByUserFlow(currentUser.getUserFlow(), currentUser.getOrgFlow());
         if (recruitInfoExts != null && recruitInfoExts.size() > 0){
             for (int i = recruitInfoExts.size() - 1 ; i >= 0 ; i--){
-                if (recruitInfoExts.get(i).getInterviewFlag().equals(GlobalConstant.RECORD_STATUS_N)){
+                if (recruitInfoExts.get(i).getInterviewFlag().equals(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N)) {
                     recruitInfoExts.remove(i);
                 }
             }

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ExpertEvalOpinion extends MybatisObject {
+public class ExpertEvalOpinion extends TeachingActivitySpeakerExample.MybatisObject {
     private String opinionFlow;
 
     private String evalYear;

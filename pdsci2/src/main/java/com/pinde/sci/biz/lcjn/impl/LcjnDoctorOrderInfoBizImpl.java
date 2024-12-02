@@ -3,29 +3,22 @@ package com.pinde.sci.biz.lcjn.impl;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnDoctorOrderInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.LcjnCourseInfoMapper;
 import com.pinde.sci.dao.base.LcjnCourseTimeMapper;
 import com.pinde.sci.dao.base.LcjnDoctorCourseMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.lcjn.LcjnDoctorTrainExtMapper;
-import com.pinde.sci.enums.lcjn.LcjnAuditStatusEnum;
-import com.pinde.sci.enums.lcjn.LcjnDoctorScoreEnum;
+import com.pinde.core.common.enums.LcjnAuditStatusEnum;
+import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -83,7 +76,7 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
         auditStatus.add(LcjnAuditStatusEnum.Passing.getId());
         LcjnDoctorCourseExample example=new LcjnDoctorCourseExample();
         LcjnDoctorCourseExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow)
                 .andAuditStatusIdIn(auditStatus);
         int num=lcjnDoctorCourseMapper.countByExample(example);
         LcjnCourseInfo lcjnCourseInfo=lcjnCourseInfoMapper.selectByPrimaryKey(courseFlow);
@@ -115,7 +108,7 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
     public List<LcjnCourseTime> selectCourseTime(String courseFlow) {
         LcjnCourseTimeExample example=new LcjnCourseTimeExample();
         LcjnCourseTimeExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow);
         return lcjnCourseTimeMapper.selectByExample(example);
     }
 
@@ -123,7 +116,7 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
     public int updateDoctorCourse(LcjnDoctorCourse lcjnDoctorCourse,List<String> courseFlows) {
         LcjnDoctorCourseExample example = new LcjnDoctorCourseExample();
         LcjnDoctorCourseExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(lcjnDoctorCourse.getDoctorFlow());
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(lcjnDoctorCourse.getDoctorFlow());
         if(StringUtil.isNotBlank(lcjnDoctorCourse.getCourseFlow())){
             criteria.andCourseFlowEqualTo(lcjnDoctorCourse.getCourseFlow());
         }
@@ -137,7 +130,7 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
     public List<LcjnDoctorCourse> selectDoctorCourse(String courseFlow, String doctorFlow) {
         LcjnDoctorCourseExample example=new LcjnDoctorCourseExample();
         LcjnDoctorCourseExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(doctorFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(doctorFlow);
         return lcjnDoctorCourseMapper.selectByExample(example);
     }
 
@@ -280,7 +273,7 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
                     if(StringUtil.isNotBlank(user.getUserCode())&&StringUtil.isNotBlank(user.getUserName())){
                         SysUserExample example=new SysUserExample();
                         SysUserExample.Criteria criteria=example.createCriteria();
-                        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserCodeEqualTo(user.getUserCode()).andUserNameEqualTo(user.getUserName());
+                        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserCodeEqualTo(user.getUserCode()).andUserNameEqualTo(user.getUserName());
                         List<SysUser> userList=sysUserMapper.selectByExample(example);
                         if(userList!=null&&userList.size()>0&&userList.get(0)!=null){
                             userFlow=userList.get(0).getUserFlow();
@@ -291,7 +284,7 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
                                 doctorCourse.setCourseFlow(courseFlow);
                                 LcjnDoctorCourseExample example1=new LcjnDoctorCourseExample();
                                 LcjnDoctorCourseExample.Criteria criteria1=example1.createCriteria();
-                                criteria1.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow);
+                                criteria1.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCourseFlowEqualTo(courseFlow).andDoctorFlowEqualTo(userFlow);
                                 List<LcjnDoctorCourse> courseList=lcjnDoctorCourseMapper.selectByExample(example1);
                                 if(courseList!=null&&courseList.size()>0&&courseList.get(0)!=null){
                                     doctorCourse=courseList.get(0);

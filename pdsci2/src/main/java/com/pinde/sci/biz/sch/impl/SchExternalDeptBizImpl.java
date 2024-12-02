@@ -9,7 +9,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchExternalDeptMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SchRotationMapper;
@@ -19,7 +18,6 @@ import com.pinde.sci.model.mo.SchExternalDeptExample.Criteria;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -44,7 +42,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 	public List<SchExternalDept> getSchDeptExtDepts(String orgFlow, String schDeptFlow) {
 		if(StringUtil.isNotBlank(schDeptFlow)) {
 			SchExternalDeptExample example = new SchExternalDeptExample();
-			Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andSchDeptFlowEqualTo(schDeptFlow);
 			if(StringUtil.isNotBlank(orgFlow))
 			{
@@ -59,7 +57,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 	public List<SchExternalDept> getStandardSchDeptExtDepts(String standardDeptId, String schDeptFlow) {
 		if(StringUtil.isNotBlank(schDeptFlow)) {
 			SchExternalDeptExample example = new SchExternalDeptExample();
-			Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andSchDeptFlowEqualTo(schDeptFlow);
 			if(StringUtil.isNotBlank(standardDeptId))
 			{
@@ -92,11 +90,11 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 		{
 			return "学员已入科，不得删除！";
 		}
-		process.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
-		result.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		processBiz.edit(process);
 		resultBiz.saveSchArrangeResult(result);
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 
 	@Autowired
@@ -206,7 +204,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 					ResDoctorSchProcess process = new ResDoctorSchProcess();
 					process.setStartDate(startDate);
 					process.setEndDate(endDate);
-					process.setIsExternal(GlobalConstant.FLAG_Y);
+                    process.setIsExternal(com.pinde.core.common.GlobalConstant.FLAG_Y);
 					process.setSchStartDate(startDate);
 					process.setSchEndDate(endDate);
 
@@ -216,8 +214,8 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 					process.setSchDeptFlow(schDeptFlow);
 					process.setSchResultFlow(String.valueOf(month));
 					process.setSchResultFlow(resultFlow);
-					process.setSchFlag(GlobalConstant.FLAG_N);
-					process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+                    process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                    process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 					process.setSchResultFlow(resultFlow);
 					process.setUserFlow(user.getUserFlow());
 
@@ -225,9 +223,9 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 					process.setOrgName(extDept.getOrgName());
 
 					String schFlag = doctor.getSchFlag();
-					if(!GlobalConstant.FLAG_Y.equals(schFlag)){
-						doctor.setSchFlag(GlobalConstant.FLAG_Y);
-						doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+                    if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schFlag)) {
+                        doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 						doctorBiz.editDoctor(doctor);
 					}
 					resultBiz.save(result);
@@ -235,15 +233,15 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 				}
 
 			}
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@Override
 	public List<SchRotationDept> getSchRotationDepts(String rotationFlow, String orgFlow, String sessionNumber) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRotationFlowEqualTo(rotationFlow).andOrgFlowEqualTo(orgFlow).andSessionNumberEqualTo(sessionNumber);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);
@@ -253,7 +251,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 	private List<SchExternalDept> getSchDeptExtDeptsByFlows(List<String> recordFlows) {
 		if(recordFlows!=null&&recordFlows.size()>0) {
 			SchExternalDeptExample example = new SchExternalDeptExample();
-			Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andRecordFlowIn(recordFlows);
 			example.setOrderByClause(" STANDARD_DEPT_ID,START_DATE ");
 			return externalDeptMapper.selectByExample(example);
@@ -317,7 +315,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 			{
 
 				SchExternalDept schExternalDept=readByFlow(recordFlow);
-				schExternalDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                schExternalDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				count+=save(schExternalDept);
 			}
 		}
@@ -327,15 +325,15 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 	@Override
 	public List<SchRotation> changRotation(String trainingSpeId) {
 		SchRotationExample example=new SchRotationExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-				.andPublishFlagEqualTo(GlobalConstant.FLAG_Y).andSpeIdEqualTo(trainingSpeId);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSpeIdEqualTo(trainingSpeId);
 		return rotationMapper.selectByExample(example);
 	}
 
 	@Override
 	public List<SchRotationDept> getSchRotationDepts(String rotationFlow) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull()
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowIsNull()
 		.andRotationFlowEqualTo(rotationFlow);
 		example.setOrderByClause("ORDINAL");
 		return rotationDeptMapper.selectByExample(example);

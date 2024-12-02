@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.login;
 import com.pinde.core.license.PdLicense;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.model.mo.SysCfg;
@@ -52,18 +51,18 @@ public class LicenseController extends GeneralController {
 	@ResponseBody
 	public String upload(MultipartFile licenseFile,HttpServletRequest request) {
 		if(!"license.key".equals(licenseFile.getOriginalFilename())){
-			return GlobalConstant.SAVE_FAIL+":文件名不对！";
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL + ":文件名不对！";
 		}
 		String content = "";
 		try {
 			content = new String(licenseFile.getBytes(),"GBK");
 			boolean check = PdLicense.checkLicense(content);
 			if(check==false){
-				return GlobalConstant.SAVE_FAIL+":不是有效的license.key！";
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL + ":不是有效的license.key！";
 			}
 		} catch (Exception e) {
 			logger.error("license内容有误",e);
-			return GlobalConstant.SAVE_FAIL+":不是有效的license.key！";
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL + ":不是有效的license.key！";
 		} 
 		SysCfg cfg = cfgBiz.read("license.key");
 		if (cfg == null) {
@@ -73,18 +72,18 @@ public class LicenseController extends GeneralController {
 			cfg.setWsId("sys");
 			cfg.setCfgDesc("授权文件");
 			GeneralMethod.setRecordInfo(cfg, true);
-			cfg.setRecordStatus("Y");
+            cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			sysCfgMapper.insert(cfg);
 		} else {
 			cfg.setCfgBigValue(content);
 			cfg.setWsId("sys");
 			cfg.setCfgDesc("授权文件");
 			GeneralMethod.setRecordInfo(cfg, false);
-			cfg.setRecordStatus("Y");
+            cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			sysCfgMapper.updateByPrimaryKeySelective(cfg);
 		}
 		InitConfig.refresh(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 }

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubAttrCode extends MybatisObject {
+public class PubAttrCode extends TeachingActivitySpeakerExample.MybatisObject {
     private String codeFlow;
 
     private String codeValue;

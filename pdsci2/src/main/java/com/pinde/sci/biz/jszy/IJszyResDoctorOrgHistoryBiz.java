@@ -32,11 +32,6 @@ public interface IJszyResDoctorOrgHistoryBiz {
     List<JszyResDoctorOrgHistoryExt> searchDoctorOrgHistoryExtList(ResDoctorOrgHistory docOrgHistory, List<String> changeStatusIdList, ResDoctor resDoctor, List<String> orgFlowList);
 
     /**
-     * 查询byorgFlowList
-     */
-    List<JszyResDoctorOrgHistoryExt> seearchInfoByFlow(ResDoctorOrgHistory docOrgHistory, List<String> changeStatusIdList, ResDoctor resDoctor, List<String> orgFlowList);
-
-    /**
      * 变更培训基地
      */
     int auditTurnInOrg(String recordFlow, String changeStatusId, String doctorFlow, String time, String chooseFlag);
@@ -56,26 +51,6 @@ public interface IJszyResDoctorOrgHistoryBiz {
      */
     int changeStatus(ResDoctorOrgHistory history, ResDoctorRecruit recruit);
 
-    /**
-     * 根据条件查询已送申请记录
-     * @param paramMap
-     * @return
-     */
-    List<Map<String,String>> searchChangeOrgInfoByParamMap(Map<String, Object> paramMap);
 
     String checkFile(MultipartFile file);
-
-    String saveCheckFileToDirs(MultipartFile file, String changeRecruitFile, String changeTypeId);
-
-
-    /**
-     * 省厅审核基地变更如果同意则同步res_doctor 和 res_doctor_recruit
-     * @param history
-     * @return
-     */
-    int auditChangeOrg(ResDoctorOrgHistory history);
-
-    List<Map<String,String>> searchChangeSpeInfoByParamMap(Map<String, Object> paramMap);
-
-    int auditChangeSpe(ResDoctorOrgHistory history,ResDoctorRecruit doctorRecruit);
 }

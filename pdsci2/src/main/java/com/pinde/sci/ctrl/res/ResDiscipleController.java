@@ -6,10 +6,9 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
@@ -119,9 +118,9 @@ public class ResDiscipleController extends GeneralController {
 		int count=discipleInfoBiz.savaResDiscipleInfo(bean);
 		if(count==1)
 		{
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return  GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	/**
 	 * 保存手册封面
@@ -138,9 +137,9 @@ public class ResDiscipleController extends GeneralController {
 		int count=teacherInfoBiz.savaResDiscipleTeacherInfo(bean);
 		if(count==1)
 		{
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return  GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	/**
 	 * 跟师指导老师简况
@@ -169,7 +168,7 @@ public class ResDiscipleController extends GeneralController {
 	public List<SysUser> searchTeachers(String orgFlow,String userName, HttpServletRequest request) {
 		ServletContext application = request.getServletContext();
 		Map<String,String> sysCfgMap = (Map<String, String>) application.getAttribute("sysCfgMap");
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		orgFlow = StringUtil.defaultIfEmpty(orgFlow,GlobalContext.getCurrentUser().getOrgFlow());
 		List<SysUser> sysUserList=null;//初始化查询结果
 		Map<String,Object> paramMap = new HashMap<>();
@@ -214,7 +213,7 @@ public class ResDiscipleController extends GeneralController {
 		SysUser user = GlobalContext.getCurrentUser();
 		if(uploadFile!=null && !uploadFile.isEmpty()){
 			String fileResult = graduationAssessmentBiz.checkFile(uploadFile);
-			if(!GlobalConstant.FLAG_Y.equals(fileResult)){
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fileResult)) {
 				return fileResult;
 			}else{
 				return graduationAssessmentBiz.saveFileToDirs(fileFlow,productType, uploadFile,user);
@@ -246,7 +245,7 @@ public class ResDiscipleController extends GeneralController {
         SysUser currUser = GlobalContext.getCurrentUser();
         List<String> statusIdList = new ArrayList<>();
         //如果是学员
-        if(currUser != null && roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DOCTOR)){
+        if (currUser != null && roleScope.equals(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR)) {
             ResDoctor resDoctor=doctorBiz.readDoctor(currUser.getUserFlow());
             model.addAttribute("resDoctor",resDoctor);
         }
@@ -254,18 +253,8 @@ public class ResDiscipleController extends GeneralController {
         assessment.setDoctorFlow(doctorFlow);
         List<ResAnnualAssessment> assessmentList ;
 
-        if(roleScope.equals(GlobalConstant.RES_ROLE_SCOPE_DISCIPLE)){
-            assessment.setTeacherFlow(currUser.getUserFlow());
-            if(!GlobalConstant.FLAG_Y.equals(operaFlag)){
-                statusIdList.add(DiscipleStatusEnum.DiscipleAudit.getId());
-                statusIdList.add(DiscipleStatusEnum.DiscipleBack.getId());
-                statusIdList.add(DiscipleStatusEnum.AdminAudit.getId());
-                statusIdList.add(DiscipleStatusEnum.AdminBack.getId());
-            }
-            statusIdList.add(DiscipleStatusEnum.Submit.getId());
-        }
-        if(GlobalConstant.RES_ROLE_SCOPE_ADMIN.equals(roleScope)){
-            if(!GlobalConstant.FLAG_Y.equals(operaFlag)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_ADMIN.equals(roleScope)) {
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(operaFlag)) {
                 statusIdList.add(DiscipleStatusEnum.DiscipleAudit.getId());
                 statusIdList.add(DiscipleStatusEnum.DiscipleBack.getId());
                 statusIdList.add(DiscipleStatusEnum.AdminAudit.getId());
@@ -274,7 +263,7 @@ public class ResDiscipleController extends GeneralController {
 //			statusIdList.add(DiscipleStatusEnum.Submit.getId());
             statusIdList.add(DiscipleStatusEnum.DiscipleAudit.getId());
         }
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleScope)) {
 			statusIdList.add(DiscipleStatusEnum.AdminAudit.getId());
         }
         assessmentList = assessmentBiz.findAnnualAssessmentList(assessment,statusIdList);
@@ -321,7 +310,7 @@ public class ResDiscipleController extends GeneralController {
         model.addAttribute("recordYear",recordYear);
         model.addAttribute("discipleStartDate",discipleStartDate);
         model.addAttribute("discipleEndDate",discipleEndDate);
-		if (GlobalConstant.USER_LIST_GLOBAL.equals(roleScope)) {
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleScope)) {
 			return "res/disciple/doctor/annualAssessmentDetail4Global";
 		}
 		return "res/disciple/doctor/annualAssessmentDetail";
@@ -334,7 +323,7 @@ public class ResDiscipleController extends GeneralController {
             teacherFlow =  GlobalContext.getCurrentUser().getUserFlow();
         }
         int result = assessmentBiz.oneKeyAudit(teacherFlow);
-        return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
     }
 
     @RequestMapping("/isDateOverlapped")
@@ -353,9 +342,9 @@ public class ResDiscipleController extends GeneralController {
         }
 
         if(flag){
-            return GlobalConstant.OPRE_SUCCESSED_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
         }else{
-            return GlobalConstant.OPRE_FAIL_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
         }
     }
 

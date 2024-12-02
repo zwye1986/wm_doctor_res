@@ -1,13 +1,13 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.TeachingActivityTarget;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,6 @@ public class ResLectureTargetController extends GeneralController {
 
     @RequestMapping(value = "/list")
     public String list(Model model, Integer currentPage, String targetName, String targetType, String activityTypeId, HttpServletRequest request) {
-        List<SysDict> dictList = DictTypeEnum.ActivityType.getSysDictList();
         SysUser curUser = GlobalContext.getCurrentUser();
         Map<String, String> param = new HashMap<>();
         param.put("activityTypeId", activityTypeId);
@@ -81,14 +80,14 @@ public class ResLectureTargetController extends GeneralController {
                 return "指标名称已存在，请修改后保存！";
             }
         }
-        activityTarget.setActivityTypeName(DictTypeEnum.ActivityType.getDictNameById(activityTarget.getActivityTypeId()));
+        activityTarget.setActivityTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getDictNameById(activityTarget.getActivityTypeId()));
         activityTarget.setOrgFlow(curUser.getOrgFlow());
-        activityTarget.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        activityTarget.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         int num = activityTargeBiz.saveTargetNew(activityTarget);
         if (num == 0) {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping(value = "/delTarget")
@@ -99,8 +98,8 @@ public class ResLectureTargetController extends GeneralController {
         }
         int c = activityTargeBiz.delTarget(targetFlow);
         if (c == 0) {
-            return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         }
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
 }

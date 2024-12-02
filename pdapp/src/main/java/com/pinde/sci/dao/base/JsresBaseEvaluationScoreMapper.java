@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresBaseEvaluationScore;
-import com.pinde.sci.model.mo.JsresBaseEvaluationScoreExample;
+import com.pinde.core.model.JsresBaseEvaluationScore;
+import com.pinde.core.model.JsresBaseEvaluationScoreExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

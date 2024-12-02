@@ -2,7 +2,11 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.JsResAuditStatusEnum;
+import com.pinde.core.common.enums.OrgTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,12 +19,8 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -100,7 +100,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         model.addAttribute("org",org);
         SysOrg sysorg =new  SysOrg();
         sysorg.setOrgProvId(org.getOrgProvId());
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
         model.addAttribute("orgs", orgs);
         List<String> speIds=getSpeIds(sysuser);
@@ -128,7 +128,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
             return  speIds;
         }else if("stzyy".equals(user.getUserCode())){
             List<String> newSpeIds=new ArrayList<>();
-            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
+            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
             if(sysDictList!=null){
                 for(SysDict dict:sysDictList)
                 {
@@ -138,7 +138,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                     }
                 }
             }
-            sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.WMFirst.getId()); //一阶段
+            sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.WMFirst.getId()); //一阶段
             if(sysDictList!=null){
                 for(SysDict dict:sysDictList)
                 {
@@ -148,7 +148,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                     }
                 }
             }
-            sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.WMSecond.getId()); //二阶段
+            sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.WMSecond.getId()); //二阶段
             if(sysDictList!=null){
                 for(SysDict dict:sysDictList)
                 {
@@ -158,7 +158,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                     }
                 }
             }
-            sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.AssiGeneral.getId()); //助理全科
+            sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getId()); //助理全科
             if(sysDictList!=null){
                 for(SysDict dict:sysDictList)
                 {
@@ -233,7 +233,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         param.put("auditBi",auditBi);
         param.put("isNotMatch",isNotMatch);
         param.put("isNotEqual",isNotEqual);
-        param.put("auditStatusId",JsResAuditStatusEnum.WaitGlobalPass.getId());
+        param.put("auditStatusId", com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getId());
         param.put("applyYear",applyYear);
         param.put("testId",testId);
         /*if(StringUtil.isBlank(trainingSpeId))
@@ -250,11 +250,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if (resTestConfigList.size() > 0) {
             if (applyYear.equals(DateUtil.getYear())) {
-                f = "Y";
+                f = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -359,11 +359,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if (resTestConfigList.size() > 0) {
             if (applyYear.equals(DateUtil.getYear())) {
-                f = "Y";
+                f = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -443,11 +443,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if(resTestConfigList.size() > 0){
             if(applyYear.equals(DateUtil.getYear())){
-                f="Y";
+                f = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -576,11 +576,11 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
 //        List<JsresGraduationInfo> list = graduationApplyBiz.queryGraduationInfoList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
         model.addAttribute("list",list);
-        String f="N";
+        String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
         if(resTestConfigList.size() > 0){
             if(applyYear.equals(DateUtil.getYear())){
-                f="Y";
+                f = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
         }
         model.addAttribute("f",f);
@@ -799,7 +799,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         JsresGraduationApply apply=graduationApplyBiz.readByFlow(applyFlow);
         if(apply!=null)
         {
-            if(JsResAuditStatusEnum.NotPassed.getId().equals(apply.getCityAuditStatusId()))
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(apply.getCityAuditStatusId()))
             {
                 return "市局已退回该学员考核资格申请信息，无法审核！";
             }
@@ -807,29 +807,29 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
             {
                 return "请选择审核结果！";
             }
-            if(JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId)&&StringUtil.isBlank(auditReason))
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId) && StringUtil.isBlank(auditReason))
             {
                 return "请输入原因！";
             }
             apply.setGlobalAuditStatusId(auditStatusId);
-            apply.setGlobalAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+            apply.setGlobalAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
             apply.setGlobalReason(auditReason);
-            if(JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//省厅审核不通过 直接不通过
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//省厅审核不通过 直接不通过
             {
-                apply.setAuditStatusId(JsResAuditStatusEnum.GlobalNotPassed.getId());
-                apply.setAuditStatusName(JsResAuditStatusEnum.GlobalNotPassed.getName());
+                apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalNotPassed.getId());
+                apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalNotPassed.getName());
             }else{//省厅审核通过
-                apply.setAuditStatusId(JsResAuditStatusEnum.GlobalPassed.getId());
-                apply.setAuditStatusName(JsResAuditStatusEnum.GlobalPassed.getName());
+                apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalPassed.getId());
+                apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalPassed.getName());
             }
             String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
             JsresGraduationApplyLog log=new JsresGraduationApplyLog();
             log.setApplyFlow(applyFlow);
-            log.setAuditRoleId(GlobalConstant.USER_LIST_GLOBAL);
+            log.setAuditRoleId(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
             log.setAuditRoleName("省厅");
             log.setAuditReason(auditReason);
             log.setAuditStatusId(auditStatusId);
-            log.setAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+            log.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
             log.setAuditTime(nowTime);
             SysUser sysuser=GlobalContext.getCurrentUser();
             log.setUserFlow(sysuser.getUserFlow());
@@ -854,7 +854,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         JsresGraduationApply apply=graduationApplyBiz.readByFlow(applyFlow);
         if(apply!=null)
         {
-            if(JsResAuditStatusEnum.NotPassed.getId().equals(apply.getLocalAuditStatusId()))
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(apply.getLocalAuditStatusId()))
             {
                 return "基地已退回该学员考核资格申请信息，无法审核！";
             }
@@ -862,29 +862,29 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
             {
                 return "请选择审核结果！";
             }
-            if(JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId)&&StringUtil.isBlank(auditReason))
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId) && StringUtil.isBlank(auditReason))
             {
                 return "请输入原因！";
             }
             apply.setCityAuditStatusId(auditStatusId);
-            apply.setCityAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+            apply.setCityAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
             apply.setCityReason(auditReason);
-            if(JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//市局审核不通过 显示市局审核不通过
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//市局审核不通过 显示市局审核不通过
             {
-                apply.setAuditStatusId(JsResAuditStatusEnum.ChargeNotPassed.getId());
-                apply.setAuditStatusName(JsResAuditStatusEnum.ChargeNotPassed.getName());
+                apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.ChargeNotPassed.getId());
+                apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.ChargeNotPassed.getName());
             }else{//市局审核通过,直接交由省厅进行审核
-                apply.setAuditStatusId(JsResAuditStatusEnum.WaitGlobalPass.getId());
-                apply.setAuditStatusName(JsResAuditStatusEnum.WaitGlobalPass.getName());
+                apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getId());
+                apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
             }
             String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
             JsresGraduationApplyLog log=new JsresGraduationApplyLog();
             log.setApplyFlow(applyFlow);
-            log.setAuditRoleId(GlobalConstant.USER_LIST_CHARGE);
+            log.setAuditRoleId(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE);
             log.setAuditRoleName("市局");
             log.setAuditReason(auditReason);
             log.setAuditStatusId(auditStatusId);
-            log.setAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+            log.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
             log.setAuditTime(nowTime);
             SysUser sysuser=GlobalContext.getCurrentUser();
             log.setUserFlow(sysuser.getUserFlow());
@@ -902,7 +902,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
             if (StringUtil.isBlank(auditStatusId)) {
                 return "请选择审核结果！";
             }
-            if (JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId) && StringUtil.isBlank(auditReason)) {
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId) && StringUtil.isBlank(auditReason)) {
                 return "请输入原因！";
             }
             List<JsresGraduationApply> applies=new ArrayList<>();
@@ -911,24 +911,24 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                 JsresGraduationApply apply = graduationApplyBiz.readByFlow(applyFlow);
                 if (apply != null) {
                     apply.setCityAuditStatusId(auditStatusId);
-                    apply.setCityAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+                    apply.setCityAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
                     apply.setCityReason(auditReason);
-                    if (JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//市局审核不通过 显示市局不通过
+                    if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//市局审核不通过 显示市局不通过
                     {
-                        apply.setAuditStatusId(JsResAuditStatusEnum.ChargeNotPassed.getId());
-                        apply.setAuditStatusName(JsResAuditStatusEnum.ChargeNotPassed.getName());
+                        apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.ChargeNotPassed.getId());
+                        apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.ChargeNotPassed.getName());
                     }else{//市局审核通过,直接交由省厅进行审核
-                        apply.setAuditStatusId(JsResAuditStatusEnum.WaitGlobalPass.getId());
-                        apply.setAuditStatusName(JsResAuditStatusEnum.WaitGlobalPass.getName());
+                        apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getId());
+                        apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
                     }
                     String nowTime = DateUtil.transDateTime(DateUtil.getCurrentTime());
                     JsresGraduationApplyLog log = new JsresGraduationApplyLog();
                     log.setApplyFlow(applyFlow);
-                    log.setAuditRoleId(GlobalConstant.USER_LIST_CHARGE);
+                    log.setAuditRoleId(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE);
                     log.setAuditRoleName("市局");
                     log.setAuditReason(auditReason);
                     log.setAuditStatusId(auditStatusId);
-                    log.setAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+                    log.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
                     log.setAuditTime(nowTime);
                     SysUser sysuser=GlobalContext.getCurrentUser();
                     log.setUserFlow(sysuser.getUserFlow());
@@ -953,7 +953,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
             if (StringUtil.isBlank(auditStatusId)) {
                 return "请选择审核结果！";
             }
-            if (JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId) && StringUtil.isBlank(auditReason)) {
+            if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId) && StringUtil.isBlank(auditReason)) {
                 return "请输入原因！";
             }
             List<JsresGraduationApply> applies=new ArrayList<>();
@@ -961,30 +961,30 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
             for(String applyFlow:applyFlows) {
                 JsresGraduationApply apply = graduationApplyBiz.readByFlow(applyFlow);
                 if (apply != null) {
-//                    if (JsResAuditStatusEnum.NotPassed.getId().equals(apply.getCityAuditStatusId())) {
+//                    if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(apply.getCityAuditStatusId())) {
 //                        ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
 //                        SysUser doc=userBiz.findByFlow(recruit.getDoctorFlow());
 //                        return "市局已退回学员【"+doc.getUserName()+"】考核资格申请信息，无法审核！";
 //                    }
                     apply.setGlobalAuditStatusId(auditStatusId);
-                    apply.setGlobalAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+                    apply.setGlobalAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
                     apply.setGlobalReason(auditReason);
-                    if (JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//省厅审核不通过 直接不通过
+                    if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(auditStatusId))//省厅审核不通过 直接不通过
                     {
-                        apply.setAuditStatusId(JsResAuditStatusEnum.GlobalNotPassed.getId());
-                        apply.setAuditStatusName(JsResAuditStatusEnum.GlobalNotPassed.getName());
+                        apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalNotPassed.getId());
+                        apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalNotPassed.getName());
                     } else {//省厅审核通过
-                        apply.setAuditStatusId(JsResAuditStatusEnum.GlobalPassed.getId());
-                        apply.setAuditStatusName(JsResAuditStatusEnum.GlobalPassed.getName());
+                        apply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalPassed.getId());
+                        apply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.GlobalPassed.getName());
                     }
                     String nowTime = DateUtil.transDateTime(DateUtil.getCurrentTime());
                     JsresGraduationApplyLog log = new JsresGraduationApplyLog();
                     log.setApplyFlow(applyFlow);
-                    log.setAuditRoleId(GlobalConstant.USER_LIST_GLOBAL);
+                    log.setAuditRoleId(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
                     log.setAuditRoleName("省厅");
                     log.setAuditReason(auditReason);
                     log.setAuditStatusId(auditStatusId);
-                    log.setAuditStatusName(JsResAuditStatusEnum.getNameById(auditStatusId));
+                    log.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.getNameById(auditStatusId));
                     log.setAuditTime(nowTime);
                     SysUser sysuser = GlobalContext.getCurrentUser();
                     log.setUserFlow(sysuser.getUserFlow());
@@ -1008,7 +1008,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         model.addAttribute("org",org);
         SysOrg sysorg =new  SysOrg();
         sysorg.setOrgProvId(org.getOrgProvId());
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         sysorg.setOrgLevelId("CountryOrg");//国家基地
 //        List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
         List<SysOrg> orgs=orgBiz.searchOrgListNew(sysorg);

@@ -4,15 +4,11 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchExamCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchExamArrangementExtMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +34,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 	public List<SchExamArrangement> searchList(SchExamArrangement seam) {
 		SchExamArrangementExample example=new SchExamArrangementExample();
 		SchExamArrangementExample.Criteria criteria=example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(seam.getArrangeFlow()))
 		{
 			criteria.andArrangeFlowEqualTo(seam.getArrangeFlow());
@@ -90,7 +86,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		if(StringUtil.isNotBlank(arrangeFlow))
 		{
 			SchExamStandardDeptExample example=new SchExamStandardDeptExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andArrangeFlowEqualTo(arrangeFlow);
 			return deptMapper.selectByExample(example);
 		}
@@ -102,7 +98,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		String uuid = PkUtil.getUUID();
 		int result = 0;
 		if(StringUtil.isBlank(schExamArrangement.getIsOpen())){
-			schExamArrangement.setIsOpen(GlobalConstant.RECORD_STATUS_N);
+            schExamArrangement.setIsOpen(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		}
 		if(StringUtil.isNotBlank(schExamArrangement.getArrangeFlow()))
 		{
@@ -123,7 +119,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			List<SchExamStandardDept> deptsForStatus = deptMapper.selectByExample(example);
 			if(deptsForStatus != null && deptsForStatus.size() > 0){
 				for(SchExamStandardDept tempDept : deptsForStatus){
-					tempDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    tempDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 					GeneralMethod.setRecordInfo(tempDept,false);
 					deptMapper.updateByPrimaryKey(tempDept);
 				}
@@ -137,7 +133,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 				List<SchExamStandardDept> depts = deptMapper.selectByExample(example);
 				if(depts != null && depts.size() > 0){
 					schExamStandardDept = depts.get(0);
-					schExamStandardDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    schExamStandardDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					GeneralMethod.setRecordInfo(schExamStandardDept,false);
 					deptMapper.updateByPrimaryKey(schExamStandardDept);
 				}else {
@@ -146,7 +142,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 					schExamStandardDept.setArrangeFlow(arrangeFlow);
 					schExamStandardDept.setOrgFlow(schExamArrangement.getOrgFlow());
 					schExamStandardDept.setOrgName(schExamArrangement.getOrgName());
-					if(GlobalConstant.FLAG_Y.equals(isProduct))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isProduct))
 					{
 						SchDept dept=schDeptMapper.selectByPrimaryKey(tempDeptId);
 						if(dept!=null) {
@@ -235,27 +231,27 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 	@Override
 	public int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers) {
 		int c=0;
-		DictTypeEnum e=null;
-		if(TrainCategoryEnum.AssiGeneral.getId().equals(schExamArrangement.getTrainingTypeId()))
+        com.pinde.core.common.enums.DictTypeEnum e = null;
+        if (com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId().equals(schExamArrangement.getTrainingTypeId()))
 		{
-			e=DictTypeEnum.AssiGeneral;
+            e = com.pinde.core.common.enums.DictTypeEnum.AssiGeneral;
 
-			schExamArrangement.setTrainingTypeName(TrainCategoryEnum.AssiGeneral.getName());
+            schExamArrangement.setTrainingTypeName(com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getName());
 		}
-		if(TrainCategoryEnum.DoctorTrainingSpe.getId().equals(schExamArrangement.getTrainingTypeId()))
+        if (com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(schExamArrangement.getTrainingTypeId()))
 		{
-			e=DictTypeEnum.DoctorTrainingSpe;
-			schExamArrangement.setTrainingTypeName(TrainCategoryEnum.DoctorTrainingSpe.getName());
+            e = com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe;
+            schExamArrangement.setTrainingTypeName(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getName());
 		}
-		if(TrainCategoryEnum.WMFirst.getId().equals(schExamArrangement.getTrainingTypeId()))
+        if (com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId().equals(schExamArrangement.getTrainingTypeId()))
 		{
-			e=DictTypeEnum.WMFirst;
-			schExamArrangement.setTrainingTypeName(TrainCategoryEnum.WMFirst.getName());
+            e = com.pinde.core.common.enums.DictTypeEnum.WMFirst;
+            schExamArrangement.setTrainingTypeName(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getName());
 		}
-		if(TrainCategoryEnum.WMSecond.getId().equals(schExamArrangement.getTrainingTypeId()))
+        if (com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId().equals(schExamArrangement.getTrainingTypeId()))
 		{
-			e=DictTypeEnum.WMSecond;
-			schExamArrangement.setTrainingTypeName(TrainCategoryEnum.WMSecond.getName());
+            e = com.pinde.core.common.enums.DictTypeEnum.WMSecond;
+            schExamArrangement.setTrainingTypeName(com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getName());
 		}
 		for(String speId:speIds)
 		{
@@ -264,8 +260,8 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 				schExamArrangement.setArrangeFlow("");
 				schExamArrangement.setSessionNumber(sessionNumber);
 				schExamArrangement.setTrainingSpeId(speId);
-				schExamArrangement.setTrainingSpeName(DictTypeEnum.getDictName(e,speId));
-				c+=updateArrangement(schExamArrangement,standardDeptId,"N");
+                schExamArrangement.setTrainingSpeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(e, speId));
+                c += updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 		}
 		return c;

@@ -29,13 +29,13 @@ public class IResExamSiteBizImpl implements IResExamSiteBiz{
 //		if(examSiteList != null && !examSiteList.isEmpty()){
 //			for(ResExamSite es : examSiteList){
 //				int result = saveExamSite(es);
-//				if(GlobalConstant.ZERO_LINE != result){
+//				if(com.pinde.core.common.GlobalConstant.ZERO_LINE != result){
 //					count ++;
 //				}
 //			}
 //			return count;
 //		}
-//		return GlobalConstant.ZERO_LINE;
+//		return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 //	}
 
 	@Override
@@ -70,7 +70,7 @@ public class IResExamSiteBizImpl implements IResExamSiteBiz{
 //	@Override
 //	public ResExamSite getExamSite(String examFlow, String siteCode) {
 //		ResExamSiteExample example = new ResExamSiteExample();
-//		example.createCriteria().andExamFlowEqualTo(examFlow).andSiteCodeEqualTo(siteCode).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		example.createCriteria().andExamFlowEqualTo(examFlow).andSiteCodeEqualTo(siteCode).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		List<ResExamSite> resExamSiteList= examSiteMapper.selectByExample(example);
 //		if(resExamSiteList != null && !resExamSiteList.isEmpty()){
 //			return resExamSiteList.get(0);

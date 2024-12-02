@@ -1,5 +1,6 @@
 package com.pinde.sci.common;
 
+import com.pinde.core.common.CodeValues;
 import org.dom4j.Element;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class IrbSingleForm implements Serializable{
 	private String category;    // yw、ky、qx
 	private String version;    
 	private List<Element> itemList;
-	private Map<String,Map<String,CodeValues>> itemCodeMap;
+	private Map<String,Map<String, CodeValues>> itemCodeMap;
 	
 	public String getProductType() {
 		return productType;

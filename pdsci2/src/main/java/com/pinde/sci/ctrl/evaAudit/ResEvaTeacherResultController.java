@@ -4,7 +4,7 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.res.IResGradeBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.hbres.teacherRec;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class ResEvaTeacherResultController extends GeneralController {
         paramMap.put("userFlow", userFlow);
 
         paramMap.put("sessionNumber",year);
-        String recType = ResRecTypeEnum.TeacherGrade.getId();
+        String recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
         paramMap.put("recTypeId",recType);
 
         PageHelper.startPage(currentPage,getPageSize(request));

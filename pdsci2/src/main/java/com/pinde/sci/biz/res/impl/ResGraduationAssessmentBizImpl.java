@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResGraduationAssessmentBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResGraduationAssessmentMapper;
 import com.pinde.sci.dao.res.ResGraduationAssessmentExtMapper;
@@ -16,7 +16,6 @@ import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -72,12 +71,12 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
         if(!(mimeList.contains(fileType) &&  suffixList.contains(suffix.toLowerCase()))){
             return "请上传 "+InitConfig.getSysCfg("jszy_file_support_suffix")+"格式的文件";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
 
     @Override
     public String saveFileToDirs(String fileFlow, String productType, MultipartFile file, SysUser user) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(file.getSize() > 0){
             PubFile search=pubFileBiz.readFile(fileFlow);
             if(search==null) {
@@ -135,9 +134,9 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
             search.setFileRemark(user.getUserName()+"结业论文");
             int count=pubFileBiz.editFile(search);
             if(count==0){
-                return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
             }else{
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
         return path;
@@ -163,7 +162,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
             }
             long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
             if(file.getSize()>limitSize*1024*1024*2){
-                return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize*2 +"M" ;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize * 2 + "M";
             }
             try {
 				/*创建目录*/
@@ -188,10 +187,10 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
                 return "success:"+url;
             } catch (Exception e) {
                 e.printStackTrace();
-                return GlobalConstant.UPLOAD_FAIL;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     @Override

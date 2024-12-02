@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class GcpContract extends MybatisObject {
+public class GcpContract extends TeachingActivitySpeakerExample.MybatisObject {
     private String contractFlow;
 
     private String contractName;

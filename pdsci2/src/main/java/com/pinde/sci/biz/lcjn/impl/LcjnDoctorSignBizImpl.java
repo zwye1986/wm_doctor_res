@@ -2,14 +2,12 @@ package com.pinde.sci.biz.lcjn.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnDoctorSignBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.LcjnDoctorSiginMapper;
 import com.pinde.sci.dao.lcjn.LcjnDoctorTrainExtMapper;
 import com.pinde.sci.model.mo.LcjnDoctorSigin;
 import com.pinde.sci.model.mo.LcjnDoctorSiginExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +29,7 @@ public class LcjnDoctorSignBizImpl implements ILcjnDoctorSignBiz{
     public List<LcjnDoctorSigin> searchDoctorSigns(String doctorFlow, String courseFlow) {
         LcjnDoctorSiginExample example=new LcjnDoctorSiginExample();
         LcjnDoctorSiginExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(doctorFlow)){
             criteria.andDoctorFlowEqualTo(doctorFlow);
         }

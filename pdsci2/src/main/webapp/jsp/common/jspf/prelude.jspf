@@ -11,7 +11,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="pd"%>
 
 
-<pdfn:constantsMap className="com.pinde.sci.common.GlobalConstant" var="GlobalConstant" scope="page"/>
+<pdfn:constantsMap className="com.pinde.core.common.GlobalConstant" var="GlobalConstant" scope="page"/>
 
 <c:choose>
 	<c:when test="${not empty applicationScope.sysCfgMap['sys_skin']}">

@@ -3,10 +3,9 @@ package com.pinde.res.biz.jswjw.impl;
 
 import com.pinde.res.biz.jswjw.ISchExamScoreQueryBiz;
 import com.pinde.sci.dao.base.JsResSchExamScoreQueryMapper;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
+import com.pinde.core.model.SchExamDoctorArrangement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;

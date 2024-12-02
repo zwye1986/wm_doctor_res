@@ -1,8 +1,8 @@
 package com.pinde.res.biz.stdp;
 
 
-import com.pinde.sci.model.mo.ResOrgAddress;
-import com.pinde.sci.model.mo.ResOrgTime;
+import com.pinde.core.model.ResOrgAddress;
+import com.pinde.core.model.ResOrgTime;
 
 import java.util.List;
 

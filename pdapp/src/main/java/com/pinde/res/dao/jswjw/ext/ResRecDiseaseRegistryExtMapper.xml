@@ -1976,7 +1976,7 @@
 		group by p.TEACHER_USER_FLOW,rr.oper_user_name
 	</select>
 
-	<select id="searchRecAndActivityByProcess" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResRecExample" >
+	<select id="searchRecAndActivityByProcess" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResRecExample" >
 		select * from (
 		SELECT
 		distinct '1' QUERY_TYPE, INFO.ACTIVITY_FLOW REC_FLOW,INFO.ACTIVITY_NAME SCH_DEPT_NAME,SU.USER_NAME  AUDIT_USER_NAME,

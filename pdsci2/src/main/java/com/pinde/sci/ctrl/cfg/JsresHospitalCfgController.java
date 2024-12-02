@@ -8,8 +8,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
@@ -47,16 +45,16 @@ public class JsresHospitalCfgController extends GeneralController{
 	@RequestMapping(value = {"/main" }, method = RequestMethod.GET)
 	public String main (Model model){
 		SysOrg sysOrg = new SysOrg();
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg,null);
 		model.addAttribute("allSysOrgList", allSysOrgList);
 		return "jsres/cfg/hospitalCfg/main";
 	}
 	@RequestMapping(value = {"/hospitalList" })
 	public String hospitalList (SysOrg sysOrg, Integer currentPage, HttpServletRequest request, Model model, String orgFlag){
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg,orgFlag);
 		model.addAttribute("sysOrgList", sysOrgList);
@@ -77,7 +75,7 @@ public class JsresHospitalCfgController extends GeneralController{
 				cfg.setCfgValue(sysCfgValue);
 				cfg.setCfgDesc(sysCfgDesc);
 
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				cfgList.add(cfg);
 			}
 			int count = jsResPowerCfgBiz.saveList(cfgList);
@@ -85,25 +83,25 @@ public class JsresHospitalCfgController extends GeneralController{
 				Map<String,Object> map = new HashMap<>();
 				map.put("orgFlow",orgFlow);
 				JsresPowerCfg jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_guocheng");
-				if(null != jpc && "N".equals(jpc.getCfgValue())){
+                if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_daoru");
 				}
-				if(null != jpc && "N".equals(jpc.getCfgValue())){
+                if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_downExamFile");
 				}
-				if(null != jpc && "N".equals(jpc.getCfgValue())){
+                if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_N.equals(jpc.getCfgValue())) {
 					jpc = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_createExam");
 				}
-				if(null != jpc && "Y".equals(jpc.getCfgValue())){
-					map.put("isSubmitId","Y");
+                if (null != jpc && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jpc.getCfgValue())) {
+                    map.put("isSubmitId", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}else{
-					map.put("isSubmitId","N");
+                    map.put("isSubmitId", com.pinde.core.common.GlobalConstant.FLAG_N);
 				}
 				orgBiz.updateOrgSubmit(map);
-				return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value="/getOrgDate")
@@ -137,17 +135,17 @@ public class JsresHospitalCfgController extends GeneralController{
 			List<String> orgFlowList = Arrays.asList(orgFlows);
 			int count = orgBiz.saveOrgSubmit(orgFlowList);
 			if(count > 0) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping(value = {"/autoMain" }, method = RequestMethod.GET)
 	public String autoMain (Model model) throws Exception{
 		SysOrg sysOrg = new SysOrg();
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg,null);
 		model.addAttribute("allSysOrgList", allSysOrgList);
 		return "jsres/cfg/hospitalCfg/autoMain";
@@ -155,8 +153,8 @@ public class JsresHospitalCfgController extends GeneralController{
 
 	@RequestMapping(value = {"/autoList" })
 	public String autoList (SysOrg sysOrg, Integer currentPage, HttpServletRequest request, Model model, String orgFlag){
-		sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<SysOrg> sysOrgList = orgBiz.searchOrgs(sysOrg,orgFlag);
 		model.addAttribute("sysOrgList", sysOrgList);
@@ -173,18 +171,18 @@ public class JsresHospitalCfgController extends GeneralController{
 		cfg.setCfgCode(cfgCode);
 		cfg.setCfgValue(cfgValue);
 		cfg.setCfgDesc(cfgDesc);
-		cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		// 状态
 		cfg.setCheckStatusId("Passed");
 		cfg.setCheckStatusName("审核通过");
 
 		int result = jsResPowerCfgBiz.save(cfg);
-		if(GlobalConstant.ZERO_LINE != result){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 			//判断基地是否为协同基地
-			String isJointOrg = "N";
+            String isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
 			List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(orgFlow);
 			if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-				isJointOrg = "Y";
+                isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
 			}
 			List<String> doctorFlowList = resDoctorBiz.searchRecruitListByOrgFlow(orgFlow,isJointOrg);
 			Map<String,String> param = new HashMap<>();
@@ -214,10 +212,10 @@ public class JsresHospitalCfgController extends GeneralController{
 				param.put("cfgValue",cfgValue);
 			}
 			jsResPowerCfgBiz.saveCfgDoctorFlows(param,doctorFlowList);
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value = "/saveNew", method = RequestMethod.POST)
@@ -242,15 +240,15 @@ public class JsresHospitalCfgController extends GeneralController{
 			}else if("jsres_org_attendance_".equals(cfg)){
 				jsresCfg.setCfgDesc("是否开放基地考勤功能");
 			}
-			jsresCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			int result = jsResPowerCfgBiz.save(jsresCfg);
 
-			if(GlobalConstant.ZERO_LINE != result) {
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 				//判断基地是否为协同基地
-				String isJointOrg = "N";
+                String isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
 				List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(orgFlow);
 				if (!tempJoinOrgs.isEmpty() && tempJoinOrgs.size() > 0) {//是协同基地
-					isJointOrg = "Y";
+                    isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 				List<String> doctorFlowList = resDoctorBiz.searchRecruitListByOrgFlow(orgFlow, isJointOrg);
 				Map<String, String> param = new HashMap<>();
@@ -283,17 +281,17 @@ public class JsresHospitalCfgController extends GeneralController{
 				count++;
 			}
 		}
-		if(GlobalConstant.ZERO_LINE < count){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE < count) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
     @RequestMapping(value = {"/statisticsMain" }, method = RequestMethod.GET)
     public String statisticsMain (Model model){
         SysOrg sysOrg = new SysOrg();
-        sysOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-        sysOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> allSysOrgList = orgBiz.searchOrgs(sysOrg,null);
         model.addAttribute("allSysOrgList", allSysOrgList);
         return "jsres/cfg/hospitalCfg/statisticsMain";

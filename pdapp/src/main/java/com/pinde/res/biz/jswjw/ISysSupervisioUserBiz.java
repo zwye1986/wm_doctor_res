@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public interface ISysSupervisioUserBiz {
 
     String saveFileToDirs(String oldFolderName, MultipartFile uploadFile, String folderName, String orgFlow, String planYear, String itemId);
 
-    int saveJsresSupervisioFile(JsresSupervisioFile jsresSupervisioFile,String userFlow);
+    int saveJsresSupervisioFile(JsresSupervisioFile jsresSupervisioFile, String userFlow);
 
     int deleteFileByPrimaryKey(String recordFlow);
 

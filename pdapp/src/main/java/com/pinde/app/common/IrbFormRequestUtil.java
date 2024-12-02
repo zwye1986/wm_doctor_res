@@ -1,5 +1,7 @@
 package com.pinde.app.common;
 
+import com.pinde.core.common.IrbSingleForm;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

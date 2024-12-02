@@ -1,5 +1,6 @@
 package com.pinde.core.util;
 
+import com.pinde.core.common.GlobalConstant;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
@@ -1678,18 +1679,18 @@ public class DateUtil {
 	 * @throws ParseException
 	 */
 	public static String dayCompore(String status,String day,String dayNum) throws ParseException {
-		if (null== status || StringUtil.isBlank(status) || !status.equals("Y")
+        if (null == status || StringUtil.isBlank(status) || !status.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				|| null== day || StringUtil.isBlank(day)
 				|| null==dayNum || StringUtil.isBlank(dayNum)){
-			return "N";
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		SimpleDateFormat tempDateFormat =new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date parse = tempDateFormat.parse(day);
 		int distanceDay = differentDays(parse, new Date());
 		if (Integer.parseInt(dayNum)>=distanceDay){
-			return "Y";
+            return com.pinde.core.common.GlobalConstant.FLAG_Y;
 		}
-		return "N";
+        return com.pinde.core.common.GlobalConstant.FLAG_N;
 	}
 
 	public static int differentDays(Date date1,Date date2) {

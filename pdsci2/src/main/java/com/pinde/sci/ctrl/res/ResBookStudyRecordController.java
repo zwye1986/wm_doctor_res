@@ -5,7 +5,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResBookStudyRecordBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.ResBookStudyRecord;
 import com.pinde.sci.model.mo.ResDoctor;
@@ -101,8 +100,8 @@ public class ResBookStudyRecordController extends GeneralController {
 		int count=bookStudyRecordBiz.savaRecord(record);
 		if(count==1)
 		{
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return  GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 }

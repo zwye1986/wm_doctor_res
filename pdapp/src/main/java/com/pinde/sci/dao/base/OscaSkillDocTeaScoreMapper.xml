@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.OscaSkillDocTeaScoreMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSkillDocTeaScore">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSkillDocTeaScore">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
     <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName" />
@@ -84,7 +84,7 @@
     CLINICAL_NAME, STATION_FLOW, STATION_NAME, PARTNER_FLOW, PARTNER_NAME, EXAM_SCORE, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScoreExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.OscaSkillDocTeaScoreExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -108,13 +108,13 @@
     delete from PDSCI.OSCA_SKILL_DOC_TEA_SCORE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScoreExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillDocTeaScoreExample">
     delete from PDSCI.OSCA_SKILL_DOC_TEA_SCORE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScore">
+  <insert id="insert" parameterType="com.pinde.core.model.OscaSkillDocTeaScore">
     insert into PDSCI.OSCA_SKILL_DOC_TEA_SCORE (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
       ROOM_RECORD_FLOW, ROOM_FLOW, ROOM_NAME, 
       CLINICAL_FLOW, CLINICAL_NAME, STATION_FLOW, 
@@ -130,7 +130,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScore">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillDocTeaScore">
     insert into PDSCI.OSCA_SKILL_DOC_TEA_SCORE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -245,7 +245,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScoreExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillDocTeaScoreExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_SKILL_DOC_TEA_SCORE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -337,7 +337,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScore">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillDocTeaScore">
     update PDSCI.OSCA_SKILL_DOC_TEA_SCORE
     <set>
       <if test="doctorFlow != null">
@@ -394,7 +394,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSkillDocTeaScore">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillDocTeaScore">
     update PDSCI.OSCA_SKILL_DOC_TEA_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
