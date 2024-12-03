@@ -141,7 +141,7 @@
     $(function () {
         if ('${gradeRole}'=='patient'){
             debugger
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
                 <c:forEach items="${docType}" var="data">
                 if("${data}"=="${type.id}"){
                     $("#"+"${data}").attr("checked","checked");
@@ -523,7 +523,7 @@
                                 <div class="form_item">
                                     <div class="form_label">人员类型：</div>
                                     <div class="form_content">
-                                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                        <c:forEach items="${resDocTypeEnumList}" var="type">
                                             <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="docType" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
                                         </c:forEach>
                                     </div>
@@ -727,7 +727,7 @@
 <%--                                            人员类型：--%>
 <%--                                        </td>--%>
 <%--                                        <td colspan="3">--%>
-<%--                                            <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                                            <c:forEach items="${resDocTypeEnumList}" var="type">--%>
 <%--                                                <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="docType" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>--%>
 <%--                                            </c:forEach>--%>
 <%--                                        </td>--%>

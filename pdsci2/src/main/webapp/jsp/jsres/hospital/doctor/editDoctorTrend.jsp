@@ -328,13 +328,13 @@ function endFunction(){
 	             <th>审核状态：</th>
 				   <c:set var="modifyTime" value="${pdfn:transDateTime(jsresRecruitDocInfo.modifyTime)}"></c:set>
 				   <c:set var="modifyTime2" value="${pdfn:transDateTime(doctorRecruit.modifyTime)}"></c:set>
-				   <c:if test="${jsResDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
+				   <c:if test="${resDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
 					   <td>${doctorRecruit.auditStatusName}</td>
 				   </c:if>
-				   <c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
-					   <td>${doctorRecruit.auditStatusName}<label>&#12288;${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
+				   <c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
+					   <td>${doctorRecruit.auditStatusName}<label>&#12288;${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
 				   </c:if>
 	           </tr>
 	           <tr>

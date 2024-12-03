@@ -615,7 +615,7 @@ function applyChangeSpe(){
 	            </c:if>
 	            
 	            <!-- 审核意见 -->
-<%-- 	           <c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}"> --%>
+<%-- 	           <c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}"> --%>
 		           <c:if test="${not empty doctorRecruit.admitNotice}">
 			           <tr>
 			               <th style="color: red;"><c:if test="${GlobalConstant.USER_LIST_PERSONAL != sessionScope.userListScope}">历史</c:if>审核意见：</th>

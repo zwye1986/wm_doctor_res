@@ -266,7 +266,7 @@
                 <tr>
                     <td class="td_left">人员类型：</td>
                     <td colspan="3">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <label><input type="checkbox" name="doctorTypeIdList" value="${type.id}"
                                 ${doctorTypeSelectMap[type.id]}>${type.name}&nbsp;</label>
                         </c:forEach>

@@ -45,7 +45,7 @@
             minViewMode: 2,
             format: 'yyyy'
         });
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         <c:forEach items="${datas}" var="data">
         if ("${data}" == "${type.id}") {
             $("#" + "${data}").attr("checked", "checked");
@@ -73,7 +73,7 @@
             return false;
         }
         var data = "";
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         if ($("#" + "${type.id}").attr("checked")) {
             data += "&datas=" + $("#" + "${type.id}").val();
         }
@@ -515,7 +515,7 @@
             <c:if test="${param.roleFlag!=GlobalConstant.RES_ROLE_SCOPE_SCHOOL}">
                 <div class="searchCss">
                     &#12288;&#12288;人员类型：
-                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                    <c:forEach items="${resDocTypeEnumList}" var="type">
                         <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"/>${type.name}&nbsp;</label>
                         <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
                     </c:forEach>

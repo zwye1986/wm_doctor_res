@@ -41,7 +41,7 @@ $(function(){
 <div class="div_table">
 	     <input type="hidden" id="upFileId"/>
         <h4>培训信息</h4>
-        	<c:set var="auditNotPassed" value="${jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
+        	<c:set var="auditNotPassed" value="${resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
 			<form id="infoForm" style="position: relative;" method="post">
 			<table border="0" cellpadding="0" cellspacing="0" class="base_info">
             <colgroup>
@@ -68,7 +68,7 @@ $(function(){
 	               <td>${doctorRecruit.placeName}</td>
 	               <th>
 	               		<!--培训记录 ： 最新 && 审核通过 -->
-	               		<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
+	               		<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
     		          		<!-- 变更申请记录 -->
     		          		<c:if test="${!empty docOrgHistoryList}">
  		          			<div class="pxxx" id="changInfo" style="display:none; ">
@@ -115,7 +115,7 @@ $(function(){
 	               <th>培训类别：</th>
 	               <td id="catSpeNameTd">${doctorRecruit.catSpeName}</td>
 	               <th class="trainSpe">
-	               		<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
+	               		<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
     		          		<c:if test="${!empty changeSpeList}">
  		          			<div class="pyyy" id="changSpe" style="display:none; ">
 								<div class="changeinfoContent">
@@ -206,7 +206,7 @@ $(function(){
 	           		<td colspan="3">${doctorRecruit.graduationYear}&#12288;<font color="red">(结业考核年份=当前届别+培养年限)</font></td>
 	           </tr>
 	           <!-- 审核通过 && 非二阶段 -->
-	           <c:if test="${doctorRecruit.auditStatusId eq jsResDoctorAuditStatusEnumPassed.id && not empty doctorRecruit.completeFileUrl && not empty doctorRecruit.completeCertNo}">
+	           <c:if test="${doctorRecruit.auditStatusId eq resDoctorAuditStatusEnumPassed.id && not empty doctorRecruit.completeFileUrl && not empty doctorRecruit.completeCertNo}">
 		           <tr>
 		             <th>结业证书附件：</th>
 	                   <td>

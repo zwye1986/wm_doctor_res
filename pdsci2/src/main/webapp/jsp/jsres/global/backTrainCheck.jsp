@@ -6,7 +6,7 @@
             minViewMode: 2,
             format: 'yyyy'
         });
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         <c:forEach items="${datas}" var="data">
         if("${data}"=="${type.id}"){
             $("#"+"${data}").attr("checked","checked");
@@ -229,7 +229,7 @@
                                 </select>
                             </td>
                             <td colspan="2">&#12288;人员类型：
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
                                 </c:forEach>
                             </td>

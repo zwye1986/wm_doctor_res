@@ -43,7 +43,7 @@
                 <div class="form_content">
                     <select name="doctorTypeId" class="select" style="width: 150px;">
                         <option value="">请选择</option>
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <option value="${type.id}" ${type.id eq doctorTypeId?'selected':'' }>${type.name}</option>
                         </c:forEach>
                     </select>
@@ -96,7 +96,7 @@
 <%--                <td class="td_right">--%>
 <%--                    <select name="doctorTypeId" class="select" style="width: 150px;">--%>
 <%--                        <option value="">请选择</option>--%>
-<%--                        <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                        <c:forEach items="${resDocTypeEnumList}" var="type">--%>
 <%--                            <option value="${type.id}" ${type.id eq doctorTypeId?'selected':'' }>${type.name}</option>--%>
 <%--                        </c:forEach>--%>
 <%--                    </select>--%>

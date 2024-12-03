@@ -49,7 +49,7 @@ $(function(){
 		changeView("${param.viewBox}");
 	}
 // 	year();
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data"> 
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -68,7 +68,7 @@ function searchInfo(sessionNumber,trainTypeId){
 	}
 	var trainTypeId=$("#trainTypeId").val();
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -145,7 +145,7 @@ function changeView(obj){
 					</c:forEach>--%>
 				</select>&#12288;
 				人员类型：
-				<c:forEach items="${jsResDocTypeEnumList}" var="type">
+				<c:forEach items="${resDocTypeEnumList}" var="type">
 					<label><input type="checkbox" id="${type.id}" name="${type.id}" value="${type.id}"/>${type.name}&nbsp;</label>
 				</c:forEach>
 				<br><br>

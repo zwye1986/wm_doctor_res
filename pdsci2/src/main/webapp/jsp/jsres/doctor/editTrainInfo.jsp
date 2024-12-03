@@ -527,7 +527,7 @@
 		<input type="hidden" id="proveFileUrlFlag"/>
 		<input type="hidden" id="completeFileUrlFlag"/>
 		<input type="hidden" id="upFileId"/>
-		<c:set var="auditNotPassed" value="${jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
+		<c:set var="auditNotPassed" value="${resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
 		<form id="editForm" style="position: relative;" method="post">
 			<input type="hidden" name="recruitFlow" value="${doctorRecruit.recruitFlow}"/>
 			<input type="hidden" name="doctorFlow"  id="doctorFlow" value="${sessionScope.currUser.userFlow}"/>
@@ -720,7 +720,7 @@
 				</tr>
 
 				<!-- 审核意见 -->
-				<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}">
+				<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}">
 					<c:if test="${not empty doctorRecruit.admitNotice}">
 						<tr>
 							<th style="color: red;">审核意见：</th>
@@ -808,7 +808,7 @@
 		</form>
 
 		<div align="center" style="margin-top: 20px; margin-bottom:20px;">
-			<c:if test="${empty doctorRecruit.auditStatusId or jsResDoctorAuditStatusEnumNotSubmit.id eq  doctorRecruit.auditStatusId or jsResDoctorAuditStatusEnumNotPassed.id eq  doctorRecruit.auditStatusId}">
+			<c:if test="${empty doctorRecruit.auditStatusId or resDoctorAuditStatusEnumNotSubmit.id eq  doctorRecruit.auditStatusId or resDoctorAuditStatusEnumNotPassed.id eq  doctorRecruit.auditStatusId}">
 				<input type="button" id="saveBtn" class="btn_green" onclick="validate();" value="保存"/>&nbsp;
 			</c:if>
 

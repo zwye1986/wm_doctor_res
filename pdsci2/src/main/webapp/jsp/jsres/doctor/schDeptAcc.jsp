@@ -34,7 +34,7 @@
 			return;
 		}
 		var data = "";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if ($("#" + "${type.id}").attr("checked")) {
 			data += "&datas=" + $("#" + "${type.id}").val();
 		}
@@ -54,7 +54,7 @@
 		$("#deptFixed,#topTitle").css("left",$(div).scrollLeft()+"px");
 	}
 	$(function(){
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data">
 		if ("${data}" == "${type.id}") {
 			$("#" + "${data}").attr("checked", "checked");
@@ -106,7 +106,7 @@
 			return;
 		}
 		var data = "";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if ($("#" + "${type.id}").attr("checked")) {
 			data += "&datas=" + $("#" + "${type.id}").val();
 		}
@@ -155,7 +155,7 @@
 				<tr>
 					<td class="td_left ">人员类型：</td>
 					<td colspan="3">
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<c:forEach items="${resDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}" value="${type.id}"
 										  class="docType"/>${type.name}&nbsp;
 							</label>
