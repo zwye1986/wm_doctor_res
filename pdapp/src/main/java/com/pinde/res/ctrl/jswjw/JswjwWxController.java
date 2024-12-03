@@ -3734,7 +3734,7 @@ public class JswjwWxController extends GeneralController {
     @RequestMapping(value = {"/qrCode"}, method = {RequestMethod.POST})
     @ResponseBody
     public synchronized Object qrCode(String userFlow, String roleId, String funcTypeId, String funcFlow, String codeInfo, String scanTime,
-                                      HttpServletRequest request) {
+                                      HttpServletRequest request) throws ParseException {
         logger.debug("=========二维码扫码成功", JSON.toJSONString(codeInfo));
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
@@ -4219,6 +4219,16 @@ public class JswjwWxController extends GeneralController {
 //            }
             TeachingActivityResult result = activityBiz.readRegistInfo(activityFlow, userFlow);
             if (result != null) {
+                // 如果扫码时间在开始时间和配置时间之间 成功 否则失败
+                Date scanDateTime = simpleDateFormat.parse(DateUtil.getCurrDateTime());
+                Date startDateDateTime = simpleDateFormat.parse(startDate);
+                Date startTimeDateTime = simpleDateFormat.parse(info.getStartTime());
+
+                // 检查 scanTime 是否在 startDate 和 info.getStartTime() 之间
+                if (!scanDateTime.after(startDateDateTime) && !scanDateTime.before(startTimeDateTime)) {
+                    return ResultDataThrow("未在时间范围内签到！");
+                }
+
                 if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsScan())) {
                     return ResultDataThrow("你已扫码签到成功！");
                 }
@@ -4285,6 +4295,7 @@ public class JswjwWxController extends GeneralController {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Date date;
             String startDate = info.getEndTime();
+            String startDate1 = info.getEndTime();
             String endDate = info.getEndTime();
             try {
                 date = simpleDateFormat.parse(info.getEndTime());
@@ -4292,6 +4303,9 @@ public class JswjwWxController extends GeneralController {
                 calender.setTime(date);
                 calender.add(Calendar.MINUTE, -endTime);
                 startDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
+                // 教学活动配置的结束后的一段时间
+                calender.add(Calendar.MINUTE, +endTime);
+                startDate1 = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
 
                 calender.add(Calendar.MINUTE, endTime * 2);
                 endDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
@@ -4314,6 +4328,16 @@ public class JswjwWxController extends GeneralController {
             if (nowDate.compareTo(endDate) > 0) {
                 return ResultDataThrow("活动签退已结束，无法签退！");
             }
+            // 如果签退时间不在startDate1和info.getEndTime()之间，不允许签退
+            Date scanDateTime = simpleDateFormat.parse(nowDate);
+            Date startDateDateTime = simpleDateFormat.parse(startDate1);
+            Date endTimeDateTime = simpleDateFormat.parse(info.getEndTime());
+
+            // 检查 scanTime 是否在 startDate 和 info.getStartTime() 之间
+            if (!scanDateTime.after(endTimeDateTime) && !scanDateTime.before(startDateDateTime)) {
+                return ResultDataThrow("未在时间范围内签退！");
+            }
+            
             if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsScan2())) {
                 return ResultDataThrow("你已扫码签退成功！");
             }
