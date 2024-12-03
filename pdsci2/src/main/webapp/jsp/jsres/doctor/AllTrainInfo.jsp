@@ -13,10 +13,10 @@
 		var globalNotice = $("#globalNotice").val().trim();
 
 		var	title = "通过";
-		var	auditStatusId = "${jsResDoctorAuditStatusEnumPassed.id}";
+		var	auditStatusId = "${resDoctorAuditStatusEnumPassed.id}";
 		if("${GlobalConstant.FLAG_N}" == auditFlag){
 			title = "不通过";
-			auditStatusId = "${jsResDoctorAuditStatusEnumNotPassed.id}";
+			auditStatusId = "${resDoctorAuditStatusEnumNotPassed.id}";
 			if("" == globalNotice || undefined==globalNotice){
 				jboxTip("请填写审核意见！");
 				return false;

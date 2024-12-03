@@ -66,7 +66,7 @@
             }
 
             var data="";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if($("#"+"${type.id}").attr("checked")){
                 data+="&datas="+$("#"+"${type.id}").val();
             }
@@ -81,7 +81,7 @@
         }
         function exportOut() {
             var data="";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if($("#"+"${type.id}").attr("checked")){
                 data+="&datas="+$("#"+"${type.id}").val();
             }
@@ -135,7 +135,7 @@
                         <tr>
                             <td style="text-align: left;width: 7%">学员类型：</td>
                             <td style="text-align: left">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas"  checked/>${type.name}</label>
                                 </c:forEach>
                             </td>
@@ -181,7 +181,7 @@
                         </div>
                         <div class="inputDiv" style="/*min-width: 160px;max-width: 160px;*/">
                             <label class="qlable">学员类型：</label>
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas"  checked/>${type.name}</label>
                             </c:forEach>
                         </div>

@@ -62,7 +62,7 @@
         function exportOutCheck() {
             $("#arrayIds").val("");
             var data="";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if($("#"+"${type.id}").attr("checked")){
                 data+="&datas="+$("#"+"${type.id}").val();
             }
@@ -165,7 +165,7 @@
                     <td style="text-align: left">
                         <c:choose>
                             <c:when test="${fn:length(dataType)==2}">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label>
                                         <input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas"  checked />
                                             ${type.name}</label>
@@ -173,7 +173,7 @@
                             </c:when><c:otherwise>
                             <c:choose>
                                  <c:when test="${dataType[0]=='Graduate'}">
-                                     <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                     <c:forEach items="${resDocTypeEnumList}" var="type">
                                          <c:if test="${type.id eq 'Graduate'}">
                                              <label>
                                                  <input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" <c:if test="${type.id=='Graduate'}">checked</c:if> />
@@ -182,7 +182,7 @@
                                      </c:forEach>
                                  </c:when>
                                 <c:otherwise>
-                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <c:forEach items="${resDocTypeEnumList}" var="type">
                                         <c:if test="${type.id ne 'Graduate'}">
                                             <label>
                                                 <input type="checkbox" id="${type.id}"value="${type.id}"class="docType"

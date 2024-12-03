@@ -705,7 +705,7 @@ function shouye(){
 						 <a href="javascript:void(0);">
 						<span class="tap_inner tab_second" style="margin-top: -10px;">
 							<%--<c:set var="yearpl" value="${sysCfgMap['jsres_doctorCount_sessionNumber']}pl"></c:set>--%>
-							<%--<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+							<%--<c:forEach items="${resDocTypeEnumList}" var="type">--%>
 								<%--<c:set value="0"  var="keyll"></c:set>--%>
 								<%--<c:if test="${not empty sysCfgMap['jsres_doctorCount_sessionNumber'] }">--%>
 									<%--<c:set value="${doctorCountExtMap[yearpl][type.id]}"  var="keyll"></c:set>--%>

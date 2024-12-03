@@ -60,7 +60,7 @@
             minViewMode: 2,
             format: 'yyyy'
         });
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         <c:forEach items="${datas}" var="data">
         if ("${data}" == "${type.id}") {
             $("#" + "${data}").attr("checked", "checked");
@@ -74,7 +74,7 @@
     });
     function toPage(page) {
         var data = "";
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         if ($("#" + "${type.id}").attr("checked")) {
             data += "&datas=" + $("#" + "${type.id}").val();
         }

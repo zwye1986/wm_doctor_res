@@ -67,7 +67,7 @@ function exportExcel(){
 			   <tr>
 				   <th>地市名称</th>
 				   <th>年份</th>
-				   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+				   <c:forEach items="${resDocTypeEnumList}" var="type">
 					   <th>${type.name}</th>
 				   </c:forEach>
 				   <th>小计</th>
@@ -89,7 +89,7 @@ function exportExcel(){
 										${sessionNumber}
 									</td>
 									<c:set var="sum" value="0"></c:set>
-									<c:forEach items="${jsResDocTypeEnumList}" var="type">
+									<c:forEach items="${resDocTypeEnumList}" var="type">
 										<c:set var="key" value="${city.cityId}${sessionNumber}${type.id}"></c:set>
 										<c:set var="sum" value="${sum+citySessionNumMap[key]}"></c:set>
 										<%--<td>${empty citySessionNumMap[key]}${key}</td>--%>
@@ -111,7 +111,7 @@ function exportExcel(){
 								   		${sessionNumber}
 								   </td>
 								   <c:set var="sum" value="0"></c:set>
-								   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+								   <c:forEach items="${resDocTypeEnumList}" var="type">
 									   <c:set var="key" value="${city.cityId}${sessionNumber}${type.id}"></c:set>
 									   <c:set var="sum" value="${sum+citySessionNumMap[key]}"></c:set>
 									   <td>${empty citySessionNumMap[key]?0:citySessionNumMap[key]}</td>
@@ -129,7 +129,7 @@ function exportExcel(){
 			   <tr>
 				   <td>合计</td>
 				   <td></td>
-				   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+				   <c:forEach items="${resDocTypeEnumList}" var="type">
 					   <td>${empty typeNumMap[type.id]?0:typeNumMap[type.id]}</td>
 				   </c:forEach>
 				   <td>${xjsum}</td>

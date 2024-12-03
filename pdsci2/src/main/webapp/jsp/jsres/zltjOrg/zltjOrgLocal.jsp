@@ -81,7 +81,7 @@ function showProve()
 function toPage(page) {
 	
 	<%--var data="";--%>
-	<%--<c:forEach items="${jsResDocTypeEnumList}" var="type"> --%>
+	<%--<c:forEach items="${resDocTypeEnumList}" var="type"> --%>
 		<%--if($("#"+"${type.id}").attr("checked")){--%>
 			<%--data+="&datas="+$("#"+"${type.id}").val();--%>
 			<%--}--%>
@@ -347,7 +347,7 @@ function tabClick(tag,type){
 			<div class="form_item form_item_hide" style="width: 400px">
 				<div class="form_label">人员类型：</div>
 				<div class="form_content">
-					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
 					</c:forEach>
 				</div>
@@ -419,7 +419,7 @@ function tabClick(tag,type){
 <%--		<div id="hideForm" style="display: none;justify-content: flex-start; column-gap: 65px;  margin-top: 15px">--%>
 <%--			<div>--%>
 <%--				<label class="form_label">人员类型：</label>--%>
-<%--				<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--				<c:forEach items="${resDocTypeEnumList}" var="type">--%>
 <%--					<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>--%>
 <%--				</c:forEach>--%>
 <%--			</div>--%>

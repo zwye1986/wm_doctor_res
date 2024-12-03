@@ -75,7 +75,7 @@ function toPage(page) {
 	if("speType"=="${param.tabId}")
 	{
 		var data="";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 		}
@@ -207,7 +207,7 @@ function tabClick(tag,type){
 					<c:if test="${'speType' eq param.tabId}">
 					<td class="td_left">人员类型：</td>
 					<td colspan="3">
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<c:forEach items="${resDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
 						</c:forEach>
 					</td>

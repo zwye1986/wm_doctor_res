@@ -32,7 +32,7 @@ $(document).ready(function(){
 		minViewMode:2,
 		format:'yyyy'
 	});
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data"> 
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -48,7 +48,7 @@ $(document).ready(function(){
 function toPage(page) {
 	
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -108,7 +108,7 @@ function exportExcel(){
 		return false;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -129,7 +129,7 @@ function exportForDetail(){
 		return false;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -334,7 +334,7 @@ function InformationQuery(doctorFlow,roleFlag){
 	  	 届&#12288;&#12288;别：
 		<input type="text" id="sessionNumber" name="sessionNumber"  <c:if test="${empty param.sessionNumber }">value="${pdfn:getCurrYear()}"</c:if>value="${param.sessionNumber}" class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>&#12288;
 			人员类型：
-			<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+			<c:forEach items="${resDocTypeEnumList}" var="type">
 				<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
 				<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
 			</c:forEach>&nbsp;&nbsp;

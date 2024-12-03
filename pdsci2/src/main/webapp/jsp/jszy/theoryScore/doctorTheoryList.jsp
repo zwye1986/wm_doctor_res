@@ -53,7 +53,7 @@
             var year=date.getFullYear();
             $("#scoreYear").val(year);
         }
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         <c:forEach items="${datas}" var="data">
         if ("${data}" == "${type.id}") {
             $("#" + "${data}").attr("checked", "checked");
@@ -74,7 +74,7 @@
             return;
         }
         var data = "";
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         if ($("#" + "${type.id}").attr("checked")) {
             data += "&datas=" + $("#" + "${type.id}").val();
         }
@@ -99,7 +99,7 @@
             return;
         }
         var data = "";
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         if ($("#" + "${type.id}").attr("checked")) {
             data += "&datas=" + $("#" + "${type.id}").val();
         }
@@ -534,7 +534,7 @@
             <c:if test="${sessionScope.userListScope!=GlobalConstant.RES_ROLE_SCOPE_SCHOOL}">
                 <div class="searchCss">
                     &#12288;&#12288;人员类型：
-                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                    <c:forEach items="${resDocTypeEnumList}" var="type">
                         <label><input type="checkbox" id="${type.id}" value="${type.id}"
                                       class="docType"/>${type.name}&nbsp;
                         </label>

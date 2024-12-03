@@ -42,7 +42,7 @@ $(document).ready(function(){
 });
 function toPage(page) {
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -307,7 +307,7 @@ function changeOrgFlow(obj){
 				<td><input type="text" name="userName" class="input"  style="width: 130px;margin-left: 0px;"/></td>
 				<td style="text-align: right">人员类型：</td>
 				<td colspan="5">
-					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
 					</c:forEach>
 					&nbsp;

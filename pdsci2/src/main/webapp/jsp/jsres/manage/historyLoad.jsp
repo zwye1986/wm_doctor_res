@@ -35,7 +35,7 @@
             <div>人员类型 :&nbsp;</div>
             <select name="docType" id="docType_history" class="notBlank city select" style="width: 128px;margin-left: 0px;">
                 <option value="">全部</option>
-                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                <c:forEach items="${resDocTypeEnumList}" var="type">
                     <option value="${type.id}"
                             <c:if test="${docType eq type.id}">selected</c:if>>${type.name}</option>
                 </c:forEach>

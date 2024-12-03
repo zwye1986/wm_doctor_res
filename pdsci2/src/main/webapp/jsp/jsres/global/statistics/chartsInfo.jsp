@@ -304,7 +304,7 @@ require(['echarts','echarts/chart/pie'],function(ec){
 	var myChart = ec.init(document.getElementById('pie1'));
 	var data=[];
 	var legend=[];
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		var bean={};
 		bean.value="${empty pieMap[type.id].docNum ?'0':pieMap[type.id ].docNum}";
 		bean.name="${type.name}";

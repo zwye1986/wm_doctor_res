@@ -2,7 +2,7 @@
 		   <table border="0" cellpadding="0" cellspacing="0" class="grid">
 			   <tr>
 				   <th>地市</th>
-				   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+				   <c:forEach items="${resDocTypeEnumList}" var="type">
 					   <th>${type.name}</th>
 				   </c:forEach>
 				   <th>合计</th>
@@ -15,7 +15,7 @@
 								${city.cityName}
 							</td>
 							<c:set var="sum" value="0"></c:set>
-							<c:forEach items="${jsResDocTypeEnumList}" var="type">
+							<c:forEach items="${resDocTypeEnumList}" var="type">
 								<c:set var="key" value="${city.cityId}${type.id}"></c:set>
 								<c:set var="sum" value="${sum+cityTypeNumMap[key]}"></c:set>
 								<td>${empty cityTypeNumMap[key]?0:cityTypeNumMap[key]}</td>
@@ -29,7 +29,7 @@
 			   </c:forEach>
 			   <tr>
 				   <td>合计</td>
-				   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+				   <c:forEach items="${resDocTypeEnumList}" var="type">
 					   <td>${empty typeNumMap[type.id]?0:typeNumMap[type.id]}</td>
 				   </c:forEach>
 				   <td>${hjsum}</td>

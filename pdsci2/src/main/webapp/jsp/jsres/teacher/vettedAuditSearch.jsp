@@ -21,7 +21,7 @@
         $(document).ready(function () {
             $('#startDate').datepicker();
             $('#endDate').datepicker();
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             <c:forEach items="${datas}" var="data">
             if("${data}"=="${type.id}"){
                 $("#"+"${data}").attr("checked","checked");
@@ -120,7 +120,7 @@
             <!-- <font style="float: right;margin-right: 10px;color:green;font-weight: bold;">已完成</font> -->
             <br/>
             人员类型：
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
             </c:forEach>
             &#12288;
