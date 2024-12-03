@@ -32,7 +32,7 @@ $(document).ready(function(){
 		minViewMode:2,
 		format:'yyyy'
 	});
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data"> 
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -98,7 +98,7 @@ function showProve()
 function toPage(page) {
 	
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -281,7 +281,7 @@ function exportForDetail(){
 		return false;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	if($("#"+"${type.id}").attr("checked")){
 		data+="&datas="+$("#"+"${type.id}").val();
 	}
@@ -315,7 +315,7 @@ function auditRecruit(recruitFlow, doctorFlow, exType){
 
 function allAuditRecruit(exType) {
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	if($("#"+"${type.id}").attr("checked")){
 		data+=","+$("#"+"${type.id}").val();
 	}
@@ -440,7 +440,7 @@ function allAuditRecruit(exType) {
 				<tr>
 					<td class="td_left">人员类型：</td>
 					<td colspan="3">
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<c:forEach items="${resDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}"value="${type.id}" class="docType" name="datas"/>${type.name}&nbsp;</label>
 						</c:forEach>
 					</td>

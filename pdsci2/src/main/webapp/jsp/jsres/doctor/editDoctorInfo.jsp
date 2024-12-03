@@ -1649,7 +1649,7 @@
 								   checked style="display: none" value="${doctor.doctorTypeId }">
 						</c:if>
 						<c:if test="${!isPassed}">
-							<c:forEach items="${jsResDocTypeEnumList}" var="doctorType">
+							<c:forEach items="${resDocTypeEnumList}" var="doctorType">
 
 								<input type="radio" id="doctorType_${doctorType.id }" name="doctor.doctorTypeId"
 									   class="validate[required]" onchange="changeWorkAdress(this.value);"

@@ -40,7 +40,7 @@ $(document).ready(function(){
 		minViewMode:2,
 		format:'yyyy'
 	});
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data">
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -64,7 +64,7 @@ function toPage() {
 		return;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	if($("#"+"${type.id}").attr("checked")){
 		data+="&datas="+$("#"+"${type.id}").val();
 	}
@@ -88,7 +88,7 @@ function exportExcel(){
 		return;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	if($("#"+"${type.id}").attr("checked")){
 		data+="&datas="+$("#"+"${type.id}").val();
 	}
@@ -230,7 +230,7 @@ function showSubList(obj){
 					<td class="td_left">人员类型：</td>
 					<td colspan="3">
 						<label><input type="checkbox" id="all"value="all"  name="all" checked onclick="checkAll(this);"/>全部&nbsp;</label>
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<c:forEach items="${resDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
 						</c:forEach>
 					</td>

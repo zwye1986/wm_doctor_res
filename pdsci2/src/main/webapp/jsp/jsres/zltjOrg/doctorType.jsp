@@ -78,7 +78,7 @@
 					</c:if>
 					<th style="width: 18%;border: 1px solid #e7e7eb;" class="toFiexdDept">基地名称</th>
 
-					<c:forEach items="${jsResDocTypeEnumList}" var="dict">
+					<c:forEach items="${resDocTypeEnumList}" var="dict">
 							<th style="min-width: 110px;max-width: 150px;border: 1px solid #e7e7eb;"class="fixedBy">
 								${dict.name}
 							</th>
@@ -168,7 +168,7 @@
 					</c:if>
 					<th style="width: 18%;border: 1px solid #e7e7eb;">基地名称</th>
 
-					<c:forEach items="${jsResDocTypeEnumList}" var="dict">
+					<c:forEach items="${resDocTypeEnumList}" var="dict">
 							<th style="min-width: 110px;max-width: 150px;border: 1px solid #e7e7eb;"class="fixedBy">
 									${dict.name}
 							</th>
@@ -194,7 +194,7 @@
 											${org.orgName}
 									</td>
 									<c:set var="sum" value="0"></c:set>
-									<c:forEach items="${jsResDocTypeEnumList}" var="dict">
+									<c:forEach items="${resDocTypeEnumList}" var="dict">
 											<c:set var="key" value="${org.orgFlow}${dict.id}"></c:set>
 												<c:set var="sum" value="${sum+cityOrgNumMap[key]}"></c:set>
 												<td>${empty cityOrgNumMap[key]?0:cityOrgNumMap[key]}</td>
@@ -211,7 +211,7 @@
 											${org.orgName}
 									</td>
 									<c:set var="sum" value="0"></c:set>
-									<c:forEach items="${jsResDocTypeEnumList}" var="dict">
+									<c:forEach items="${resDocTypeEnumList}" var="dict">
 											<c:set var="key" value="${org.orgFlow}${dict.id}"></c:set>
 												<c:set var="sum" value="${sum+cityOrgNumMap[key]}"></c:set>
 												<td>${empty cityOrgNumMap[key]?0:cityOrgNumMap[key]}</td>
@@ -228,7 +228,7 @@
 											${jointOrg.orgName}
 									</th>
 									<c:set var="sum" value="0"></c:set>
-									<c:forEach items="${jsResDocTypeEnumList}" var="dict">
+									<c:forEach items="${resDocTypeEnumList}" var="dict">
 										<c:set var="key" value="${jointOrg.orgFlow}${dict.id}"></c:set>
 										<c:set var="sum" value="${sum+cityOrgNumMap[key]}"></c:set>
 										<th style="border: 1px solid #e7e7eb;font-weight: normal;">${empty cityOrgNumMap[key]?0:cityOrgNumMap[key]}</th>
@@ -241,7 +241,7 @@
 				</c:forEach>
 				<tr class="fixTrTh">
 					<td <c:if test="${sessionScope.userListScope!=GlobalConstant.USER_LIST_CHARGE}">colspan="2"</c:if>>${ (empty param.orgFlow and empty param.orgLevel or param.jointOrgFlag eq 'Y' )?'合计(已包含协同)':'合计'}</td>
-					<c:forEach items="${jsResDocTypeEnumList}" var="dict">
+					<c:forEach items="${resDocTypeEnumList}" var="dict">
 						<td>${empty typeNumMap[dict.id]?0:typeNumMap[dict.id]}</td>
 					</c:forEach>
 					<td>${zongji}</td>

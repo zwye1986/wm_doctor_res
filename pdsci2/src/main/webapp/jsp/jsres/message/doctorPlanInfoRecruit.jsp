@@ -211,7 +211,7 @@
 <div class="infoAudit" style="height: 450px;">
 	<div class="div_table">
 		<h4>报考信息(<font color="red">培训专业慎重选择，一经审核不可更改</font>)</h4>
-		<c:set var="auditNotPassed" value="${jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
+		<c:set var="auditNotPassed" value="${resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
 		<form id="editForm" style="position: relative;" method="post">
 			<input type="hidden" name="doctorFlow"  id="doctorFlow"value="${sessionScope.currUser.userFlow}"/>
 			<input type="hidden" id="orgName" name="orgName" value="${orgName}"/>
@@ -296,7 +296,7 @@
 		</form>
 
 		<div align="center" style="margin-top: 20px; margin-bottom:20px;">
-			<c:if test="${empty doctorRecruit.auditStatusId or jsResDoctorAuditStatusEnumNotSubmit.id eq  doctorRecruit.auditStatusId or jsResDoctorAuditStatusEnumNotPassed.id eq  doctorRecruit.auditStatusId}">
+			<c:if test="${empty doctorRecruit.auditStatusId or resDoctorAuditStatusEnumNotSubmit.id eq  doctorRecruit.auditStatusId or resDoctorAuditStatusEnumNotPassed.id eq  doctorRecruit.auditStatusId}">
 				<input type="button" id="saveBtn" class="btn_green" onclick="saveRecruit();" value="保存"/>&nbsp;
 			</c:if>
 			<c:if test="${param.openType eq 'open'}">

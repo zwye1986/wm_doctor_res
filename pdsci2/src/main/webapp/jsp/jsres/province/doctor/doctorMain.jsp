@@ -63,10 +63,10 @@ function delay(userFlow){
         <c:if test="${GlobalConstant.FLAG_Y != studyFlag }">
             <li><a onclick="doctorInfo('${param.doctorFlow}');">基本信息</a></li>
              <c:forEach items="${recruitList}" var="recruit" varStatus="status">
-             	<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq recruit.auditStatusId }">
+             	<c:if test="${resDoctorAuditStatusEnumPassed.id eq recruit.auditStatusId }">
 	           		 <li <c:if test="${param.recruitFlow ==recruit.recruitFlow }">class="tab_select"</c:if>id="${recruit.recruitFlow}" onclick="getDoctorRecruit('${recruit.recruitFlow}','${param.doctorFlow}','${status.last}');"><a>${recruit.catSpeName}（${empty recruit.speName?'--':recruit.speName}）</a></li>
             	</c:if>
-             	<c:if test="${jsResDoctorAuditStatusEnumNotSubmit.id eq recruit.auditStatusId and (not empty param.isRetrunShow)}">
+             	<c:if test="${resDoctorAuditStatusEnumNotSubmit.id eq recruit.auditStatusId and (not empty param.isRetrunShow)}">
 	           		 <li <c:if test="${param.recruitFlow ==recruit.recruitFlow }">class="tab_select"</c:if>id="${recruit.recruitFlow}" onclick="getDoctorRecruit('${recruit.recruitFlow}','${param.doctorFlow}','${status.last}');"><a>${recruit.catSpeName}（${empty recruit.speName?'--':recruit.speName}）</a></li>
             	</c:if>
             </c:forEach>

@@ -250,7 +250,7 @@ function saveDoctorInfo(){
 			<th>人员类型：</th>
 			<td id="doctorTypeNameTd">
 				<select id="doctorTypeId" name="doctor.doctorTypeId" class="select validate[required]" onclick="changeWorkAdress(this.value);"style="width: 160px">
-				  <c:forEach items="${jsResDocTypeEnumList}" var="doctorType">
+				  <c:forEach items="${resDocTypeEnumList}" var="doctorType">
 				  	<option value="${doctorType.id }"<c:if test="${doctor.doctorTypeId eq doctorType.id}">selected="selected"</c:if>>${doctorType.name}</option>
 				 </c:forEach>
 				 </select>&nbsp;&#12288;<span class="red">*</span>

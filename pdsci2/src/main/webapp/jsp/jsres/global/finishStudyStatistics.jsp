@@ -377,7 +377,7 @@
                 <div class="row-item">
                     <div>人员类型 :&nbsp;</div>
                     <select name="doctorType" id="doctorType" multiple="multiple" data-actions-box="true">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <option value="${type.id}">${type.name}</option>
                         </c:forEach>
                     </select>

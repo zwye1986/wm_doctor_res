@@ -134,7 +134,7 @@
         }
 
         function init() {
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             $("#" + "${type.id}").attr("checked", true);
             </c:forEach>
             getSpeInitData(getDocInitData);
@@ -154,7 +154,7 @@
                 return;
             }
             var data = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if ($("#" + "${type.id}").attr("checked")) {
                 data += "&datas=" + $("#" + "${type.id}").val();
             }
@@ -225,7 +225,7 @@
                 return;
             }
             var data = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if ($("#" + "${type.id}").attr("checked")) {
                 data += "&datas=" + $("#" + "${type.id}").val();
             }
@@ -465,7 +465,7 @@
 
         function cycle(data) {
             var docTypes = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if (docTypes == "") {
                 docTypes += "docTypes=" + "${type.id}";
             } else {
@@ -1479,7 +1479,7 @@
                                             <a href="javascript:void(0);">
                   	<span class="tap_inner tab_second">
 						<c:set var="yearpl" value="${sysCfgMap['jsres_doctorCount_sessionNumber']}pl"></c:set>
-					  	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					  	<c:forEach items="${resDocTypeEnumList}" var="type">
                             <c:set value="0" var="keyll"></c:set>
                             <c:if test="${not empty sysCfgMap['jsres_doctorCount_sessionNumber'] }">
                                 <c:set value="${doctorCountExtMap[yearpl][type.id]}" var="keyll"></c:set>
@@ -1651,7 +1651,7 @@
                                                         </td>
                                                         <td>&#12288;人员类型：</td>
                                                         <td colspan="2">
-                                                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                                                 <label><input onchange="searchInfo();" name="docType"
                                                                               type="checkbox" id="${type.id}"
                                                                               name="${type.id}"

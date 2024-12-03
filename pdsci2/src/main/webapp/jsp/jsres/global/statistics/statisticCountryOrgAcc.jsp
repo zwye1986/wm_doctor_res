@@ -101,7 +101,7 @@ $(function(){
 	}else{
 		changeView("${param.viewBox}");
 	}
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data"> 
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -124,7 +124,7 @@ function searchInfo(sessionNumber,trainTypeId){
 		return;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -179,7 +179,7 @@ function exportExcel(){
 		return;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -224,7 +224,7 @@ function exportExcel(){
 				<input type="text" id="sessionNumber" name="sessionNumber"  <c:if test="${empty param.sessionNumber }">value="${sessionNumber}"</c:if>value="${param.sessionNumber}" class="input" readonly="readonly" style="width: 100px;margin-left: 0px" />
 				&#12288;
 				人员类型：
-					<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}" name="${type.id}" value="${type.id}"/>${type.name}&nbsp;</label>
 					</c:forEach>&nbsp;&nbsp;
 				<input class="btn_green" type="button" value="查&#12288;询" onclick="searchInfo();"/>&#12288;&nbsp;&nbsp;

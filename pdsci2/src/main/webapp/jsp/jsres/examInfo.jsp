@@ -32,7 +32,7 @@ $(document).ready(function(){
 		minViewMode:2,
 		format:'yyyy'
 	});
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data"> 
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -89,7 +89,7 @@ function changeTrainSpes(){
 }
 function searchExamInfo(){
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -123,7 +123,7 @@ function toPage(page){
 	   	 	 届&#12288;&#12288;别：
 			<input type="text" id="sessionNumber" name="sessionNumber"  <c:if test="${empty param.sessionNumber }">value="${pdfn:getCurrYear()}"</c:if>value="${param.sessionNumber}" class="input" readonly="readonly" style="width: 100px;margin-left: 0px"/>&#12288;
 	    	人员类型：
-			<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+			<c:forEach items="${resDocTypeEnumList}" var="type">
 				<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
 			</c:forEach>&nbsp;&nbsp;<br>
 			姓&#12288;&#12288;名：<input type="text" name="userName" value="${param.userName}" class="input" style="width: 100px;"/>&#12288;

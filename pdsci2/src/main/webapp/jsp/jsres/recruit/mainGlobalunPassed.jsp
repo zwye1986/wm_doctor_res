@@ -21,7 +21,7 @@ $(document).ready(function(){
 	<c:if test="${sessionScope.userListScope != GlobalConstant.USER_LIST_LOCAL}">
 		//getCityArea();
    	</c:if>
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	<c:forEach items="${datas}" var="data">
 	if("${data}"=="${type.id}"){
 		$("#"+"${data}").attr("checked","checked");
@@ -392,11 +392,11 @@ function exportRecruitList(){
 				<td colspan="3">
 					<%--					<select name="studentType" class="select" style="width: 134px">--%>
 					<%--						<option  value="">全部</option>--%>
-					<%--						<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+					<%--						<c:forEach items="${resDocTypeEnumList}" var="type">--%>
 					<%--							<option value="${type.id}" ${param.studentType eq type.id?'selected':''}>${type.name}</option>--%>
 					<%--						</c:forEach>--%>
 					<%--					</select>--%>
-					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}" class="docType" name="datas"/>${type.name}&nbsp;</label>
 					</c:forEach>
 				</td>

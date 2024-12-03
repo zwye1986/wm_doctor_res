@@ -102,7 +102,7 @@
 			}else{
 				jboxConfirm("确认提交？提交后培训信息将不可修改",  function(){
 					$("#submitBtn").attr("disabled",true);
-					var url = "<s:url value='/jsres/doctor/submitResDoctorRecruit'/>?auditStatusId=${jsResDoctorAuditStatusEnumAuditing.id}&recruitFlow="+recruitFlow;
+					var url = "<s:url value='/jsres/doctor/submitResDoctorRecruit'/>?auditStatusId=${resDoctorAuditStatusEnumAuditing.id}&recruitFlow="+recruitFlow;
 					jboxPost(url, null, function(resp){
 						if("${GlobalConstant.OPRE_FAIL}" != resp){
 							jboxTip("${GlobalConstant.OPRE_SUCCESSED}");
@@ -144,10 +144,10 @@
 
 	function resetStatus(recruitFlow,doctorFlow,flag){
 		var info = "修改";
-		var auditStatusId = "${jsResDoctorAuditStatusEnumNotPassed.id}";
+		var auditStatusId = "${resDoctorAuditStatusEnumNotPassed.id}";
 		if(flag=='Y'){
 			info="基地重新审核";
-			auditStatusId = "${jsResDoctorAuditStatusEnumAuditing.id}";
+			auditStatusId = "${resDoctorAuditStatusEnumAuditing.id}";
 		}
 		jboxConfirm("确认将该学员退回"+info+"?",  function(){
 			var url = "<s:url value='/jsres/doctor/backResDoctorRecruit'/>?recruitFlow="+recruitFlow +"&auditStatusId=" + auditStatusId+"&doctorFlow="+doctorFlow;
@@ -171,7 +171,7 @@
 			if(""==$.trim(globalNotice)){
 				jboxTip("请填写退回意见！");return false;
 			}
-			var auditStatusId="${jsResDoctorAuditStatusEnumAuditing.id}";
+			var auditStatusId="${resDoctorAuditStatusEnumAuditing.id}";
 			jboxConfirm("确认将该学员退回重审?",  function(){
 				var url = "<s:url value='/jsres/doctor/backResDoctorRecruit'/>?autitType=1&doctorFlow="+doctorFlow+"&auditStatusId="+auditStatusId+"&recruitFlow="+recruitFlow ;
 				jboxPost(url, {"globalNotice":globalNotice}, function(resp){
@@ -194,7 +194,7 @@
 			if(""==$.trim(globalNotice)){
 				jboxTip("请填写退回意见！");return false;
 			}
-			var auditStatusId="${jsResDoctorAuditStatusEnumNotPassed.id}";
+			var auditStatusId="${resDoctorAuditStatusEnumNotPassed.id}";
 			jboxConfirm("确认将该学员退回修改?",  function(){
 				var url = "<s:url value='/jsres/doctor/backResDoctorRecruit'/>?autitType=2&doctorFlow="+doctorFlow+"&auditStatusId="+auditStatusId+"&recruitFlow="+recruitFlow ;
 				jboxPost(url,  {"globalNotice":globalNotice}, function(resp){
@@ -265,10 +265,10 @@
 	function saveAuditRecruit(recruitFlow, doctorFlow, auditFlag){
 		var admitNotice = $("#admitNotice").val().trim();
 		var	title = "通过";
-		var	auditStatusId = "${jsResDoctorAuditStatusEnumPassed.id}";
+		var	auditStatusId = "${resDoctorAuditStatusEnumPassed.id}";
 		if("${GlobalConstant.FLAG_N}" == auditFlag){
 			title = "不通过";
-			auditStatusId = "${jsResDoctorAuditStatusEnumNotPassed.id}";
+			auditStatusId = "${resDoctorAuditStatusEnumNotPassed.id}";
 			if("" == admitNotice){
 				jboxTip("请填写审核意见！");
 				return false;
@@ -296,10 +296,10 @@
     function saveGlobalAuditRecruit(recruitFlow, doctorFlow, auditFlag){
         var globalNotice = $("#globalNotice").val().trim();
         var	title = "通过";
-        var	auditStatusId = "${jsResDoctorAuditStatusEnumPassed.id}";
+        var	auditStatusId = "${resDoctorAuditStatusEnumPassed.id}";
         if("${GlobalConstant.FLAG_N}" == auditFlag){
             title = "不通过";
-            auditStatusId = "${jsResDoctorAuditStatusEnumNotPassed.id}";
+            auditStatusId = "${resDoctorAuditStatusEnumNotPassed.id}";
             if("" == globalNotice){
                 jboxTip("请填写审核意见！");
                 return false;
@@ -520,7 +520,7 @@
 					</c:if>
 				</c:if>
 			</h4>
-			<c:set var="auditNotPassed" value="${jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
+			<c:set var="auditNotPassed" value="${resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
 			<form id="infoForm" style="position: relative;" method="post">
 				<table border="0" cellpadding="0" cellspacing="0" class="base_info">
 					<colgroup>
@@ -537,13 +537,13 @@
 							<th style="${auditNotPassed?'color: red':'' }">审核状态：</th>
 							<c:set var="modifyTime" value="${pdfn:transDateTime(jsresRecruitDocInfo.modifyTime)}"></c:set>
 							<c:set var="modifyTime2" value="${pdfn:transDateTime(doctorRecruit.modifyTime)}"></c:set>
-							<c:if test="${jsResDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
+							<c:if test="${resDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
 								<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}</td>
 							</c:if>
-							<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
-								<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
+							<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
+								<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
 							</c:if>
 							<c:if test="${'WaitGlobalPass' eq doctorRecruit.auditStatusId}">
 								<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${'WaitGlobalPass' eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
@@ -555,13 +555,13 @@
 							<th style="${auditNotPassed?'color: red':'' }">审核状态：</th>
 							<c:set var="modifyTime" value="${pdfn:transDateTime(jsresRecruitDocInfo.modifyTime)}"></c:set>
 							<c:set var="modifyTime2" value="${pdfn:transDateTime(doctorRecruit.modifyTime)}"></c:set>
-							<c:if test="${jsResDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
+							<c:if test="${resDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
 								<td colspan="3" class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}</td>
 							</c:if>
-							<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
-								<td colspan="3" class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
+							<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
+								<td colspan="3" class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
 							</c:if>
 							<c:if test="${'WaitGlobalPass' eq doctorRecruit.auditStatusId}">
 								<td colspan="3" class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${'WaitGlobalPass' eq doctorRecruit.auditStatusId ?modifyTime:modifyTime2}</label></td>
@@ -580,7 +580,7 @@
 						<td>${doctorRecruit.placeName}</td>
 						<th>
 							<!--培训记录 ： 最新 && 审核通过 -->
-							<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
+							<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
 								<!-- 变更申请记录 -->
 								<c:if test="${!empty docOrgHistoryList}">
 									<div class="pxxx" id="changInfo" style="display:none; ">
@@ -623,7 +623,7 @@
 							<c:if test="${!empty doctorRecruit.jointOrgFlow}">${doctorRecruit.jointOrgName}</c:if>
 							<c:if test="${empty doctorRecruit.jointOrgFlow}">${doctorRecruit.orgName}</c:if>
 							<!--培训记录 ： 最新 && 审核通过 -->
-							<c:if test="${isLatest && jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow &&( applyFlag )}">
+							<c:if test="${isLatest && resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow &&( applyFlag )}">
 								<!-- 最新变更记录：  (非待转出审核 && 非待转入审核) && 当前用户-->
 								<c:set var="showChangBtn" value="${((jsResChangeApplyStatusEnumOutApplyWaiting.id != latestDocOrgHistory.changeStatusId
 								&& jsResChangeApplyStatusEnumInApplyWaiting.id != latestDocOrgHistory.changeStatusId
@@ -638,7 +638,7 @@
 						<th>培训类别：</th>
 						<td id="catSpeNameTd">${doctorRecruit.catSpeName}</td>
 						<th class="trainSpe">
-							<c:if test="${ jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
+							<c:if test="${ resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
 								<c:if test="${!empty changeSpeList}">
 									<div class="pyyy" id="changSpe" style="display:none; ">
 										<div class="changeinfoContent">
@@ -681,7 +681,7 @@
 							培训专业：</th>
 						<td id="speNameTd">
 							${doctorRecruit.speName}
-							<c:if test="${isLatest && jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow &&( applyFlag )}">
+							<c:if test="${isLatest && resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow &&( applyFlag )}">
 								<c:set var="showChangBtn" value="${((jsResChangeApplySpeEnumBaseWaitingAudit.id != lastChangeSpe.changeStatusId
     		          		&& jsResChangeApplySpeEnumGlobalWaitingAudit.id != lastChangeSpe.changeStatusId) )
     		          		&& doctorRecruit.doctorFlow == sessionScope.currUser.userFlow}"/>
@@ -775,7 +775,7 @@
 						<td>${doctorRecruit.graduationYear}</td>
 					</tr>
 					<!-- 审核通过 && 非二阶段 -->
-					<c:if test="${doctorRecruit.auditStatusId eq jsResDoctorAuditStatusEnumPassed.id && not empty doctorRecruit.completeFileUrl && not empty doctorRecruit.completeCertNo}">
+					<c:if test="${doctorRecruit.auditStatusId eq resDoctorAuditStatusEnumPassed.id && not empty doctorRecruit.completeFileUrl && not empty doctorRecruit.completeCertNo}">
 						<tr>
 							<th>结业证书附件：</th>
 							<td>
@@ -791,7 +791,7 @@
 					</c:if>
 
 					<!-- 审核意见 -->
-					<%-- 	           <c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}"> --%>
+					<%-- 	           <c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}"> --%>
 					<c:if test="${not empty doctorRecruit.admitNotice}">
 						<tr>
 							<th style="color: red;">基地<c:if test="${GlobalConstant.USER_LIST_PERSONAL != sessionScope.userListScope}">历史</c:if>审核意见：</th>
@@ -807,8 +807,8 @@
 					<%-- 	           </c:if> --%>
 
 					<!-- 填写审核意见 -->
-					<%--<c:if test="${param.auditFlag == GlobalConstant.FLAG_Y and ((jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId and param.exType ne 'view') or param.exType eq 'reExamine') and doctorRecruit.orgFlow eq sessionScope.currUser.orgFlow}">--%>
-					<c:if test="${param.auditFlag == GlobalConstant.FLAG_Y and ((jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId and param.exType ne 'view') or param.exType eq 'reExamine')
+					<%--<c:if test="${param.auditFlag == GlobalConstant.FLAG_Y and ((resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId and param.exType ne 'view') or param.exType eq 'reExamine') and doctorRecruit.orgFlow eq sessionScope.currUser.orgFlow}">--%>
+					<c:if test="${param.auditFlag == GlobalConstant.FLAG_Y and ((resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId and param.exType ne 'view') or param.exType eq 'reExamine')
 									and GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope }">
 						<tr>
 							<th>基地审核意见：</th>
@@ -971,7 +971,7 @@
 						</div>
 					</c:if>
 				</c:if>
-				<c:if test="${(empty doctorRecruit.auditStatusId or jsResDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId or auditNotPassed )and (haveReturn != 'Y')and param.change != GlobalConstant.FLAG_Y}">
+				<c:if test="${(empty doctorRecruit.auditStatusId or resDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId or auditNotPassed )and (haveReturn != 'Y')and param.change != GlobalConstant.FLAG_Y}">
 					<div align="center" style="margin-top: 20px; margin-bottom:20px;">
 						<c:if test="${param.exType ne 'view'}">
 							<c:if test="${sessionNumber == doctorRecruit.sessionNumber && doctorRecruit.doctorStatusId != '24' && sysCfgMap['jsres_is_train'] ne 'N'}">
@@ -987,8 +987,8 @@
 						</c:if>
 					</div>
 				</c:if>
-				<%--<c:if test="${jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId and GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope and doctorRecruit.orgFlow eq sessionScope.currUser.orgFlow}">--%>
-				<c:if test="${(jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId or 'WaitGlobalPass' eq doctorRecruit.auditStatusId)
+				<%--<c:if test="${resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId and GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope and doctorRecruit.orgFlow eq sessionScope.currUser.orgFlow}">--%>
+				<c:if test="${(resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId or 'WaitGlobalPass' eq doctorRecruit.auditStatusId)
 									and GlobalConstant.USER_LIST_LOCAL eq sessionScope.userListScope}">
 					<div class="btn_info">
 						<c:if test="${param.exType eq 'examine'}">
@@ -1028,7 +1028,7 @@
 				<div id="auditDiv">
 					<c:if test="${!(doctor.graduationStatusId eq 'GrantCertf')}">
 						<c:if test="${GlobalConstant.FLAG_Y eq sysCfgMap['jsres_global_return']}">
-							<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId and GlobalConstant.USER_LIST_GLOBAL eq sessionScope.userListScope && param.backFlag == 'true'}">
+							<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId and GlobalConstant.USER_LIST_GLOBAL eq sessionScope.userListScope && param.backFlag == 'true'}">
 								<div class="btn_info">
 									<input type="button" style="width:100px;" onmouseout="" class="btn_green" onclick="chargeResetOrg('${doctorRecruit.recruitFlow}','${doctorRecruit.doctorFlow}')" value="退回重审"></input>
 									&nbsp;&nbsp;
@@ -1037,7 +1037,7 @@
 							</c:if>
 						</c:if>
 						<c:if test="${GlobalConstant.FLAG_Y eq sysCfgMap['jsres_charge_return']}">
-							<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId and GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope && param.backFlag == 'true'}">
+							<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId and GlobalConstant.USER_LIST_CHARGE eq sessionScope.userListScope && param.backFlag == 'true'}">
 								<div class="btn_info">
 									<input type="button" style="width:100px;" onmouseout="" class="btn_green" onclick="chargeResetOrg('${doctorRecruit.recruitFlow}','${doctorRecruit.doctorFlow}')" value="退回重审"></input>
 									&nbsp;&nbsp;

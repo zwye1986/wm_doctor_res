@@ -408,7 +408,7 @@ function getCityArea(){
 }
 function init()
 {
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		$("#"+"${type.id}").attr("checked",true);
 	</c:forEach>
 	getCityArea();
@@ -429,7 +429,7 @@ function getDocInitData(fun)
 		return;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	if($("#"+"${type.id}").attr("checked")){
 		data+="&datas="+$("#"+"${type.id}").val();
 	}
@@ -554,7 +554,7 @@ function searchInfo2()
 			return;
 		}
 		var data="";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 		}
@@ -838,7 +838,7 @@ function searchBlackInfo(){
 									</td>
 									<td>&#12288;人员类型：</td>
 									<td colspan="2">
-										<c:forEach items="${jsResDocTypeEnumList}" var="type">
+										<c:forEach items="${resDocTypeEnumList}" var="type">
 											<label><input name="datas" type="checkbox" id="${type.id}" name="${type.id}" value="${type.id}"/>${type.name}&nbsp;</label>
 										</c:forEach>
 									</td>

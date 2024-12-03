@@ -164,7 +164,7 @@
                 }
             });
         }
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
             <c:forEach items="${datas}" var="data">
             if("${data}"=="${type.id}"){
                 $("#"+"${data}").attr("checked","checked");
@@ -378,7 +378,7 @@
                         <div class="form_item" style="width: 400px">
                             <div class="form_label">人员类型：</div>
                             <div class="form_content">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                                 </c:forEach>
                             </div>
@@ -451,7 +451,7 @@
                         <div class="form_item" style="width: 400px">
                             <div class="form_label">人员类型：</div>
                             <div class="form_content">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                                 </c:forEach>
                             </div>
@@ -459,7 +459,7 @@
 
                         <div class="form_item">
                             <div class="form_content">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                                 </c:forEach>
                             </div>
@@ -497,7 +497,7 @@
                      <div class="form_item" style="width: 400px">
                         <div class="form_label">人员类型：</div>
                         <div class="form_content">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>
 
@@ -572,7 +572,7 @@
                     <div class="form_item" style="width: 400px">
                         <div class="form_label">人员类型：</div>
                         <div class="form_content">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>
                         </div>
@@ -607,7 +607,7 @@
                 <div class="form_item" style="width: 400px">
                     <div class="form_label">人员类型：</div>
                     <div class="form_content">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                         </c:forEach>
                     </div>

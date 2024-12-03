@@ -162,7 +162,7 @@
                         </td>
                         <td colspan="2">
                             人员类型：
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}" onclick="showSendSchool(this);" class="docType" name="datas" />${type.name}&nbsp;</label>
                             </c:forEach>
                         </td>

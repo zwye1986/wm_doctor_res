@@ -48,7 +48,7 @@ $(document).ready(function(){
 		minViewMode:2,
 		format:'yyyy'
 	});
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		<c:forEach items="${datas}" var="data"> 
 			if("${data}"=="${type.id}"){
 				$("#"+"${data}").attr("checked","checked");
@@ -83,7 +83,7 @@ $(document).ready(function(){
 function toPage(page) {
 	
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -203,7 +203,7 @@ function exportExcel(){
 		return false;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -235,7 +235,7 @@ function exportExcelMessage(){
 		return false;
 	}*/
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	if($("#"+"${type.id}").attr("checked")){
 		data+="&datas="+$("#"+"${type.id}").val();
 	}
@@ -267,7 +267,7 @@ function exportForDetail(){
 		return false;
 	}
 	var data="";
-	<c:forEach items="${jsResDocTypeEnumList}" var="type"> 
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 			}
@@ -513,7 +513,7 @@ function changeOrgFlow(obj){
 	}
 	function changeOrgCityId(obj){
 		var data="";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 		}
@@ -708,7 +708,7 @@ function changeOrgFlow(obj){
 							</td>
 							<td class="td_left">人员类型：</td>
 							<td colspan="3">
-								<c:forEach items="${jsResDocTypeEnumList}" var="type">
+								<c:forEach items="${resDocTypeEnumList}" var="type">
 									<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
 									<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
 								</c:forEach>
@@ -794,7 +794,7 @@ function changeOrgFlow(obj){
 					<tr>
 						<td class="td_left">人员类型：</td>
 						<td colspan="3">
-							<c:forEach items="${jsResDocTypeEnumList}" var="type">
+							<c:forEach items="${resDocTypeEnumList}" var="type">
 								<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
 								<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
 							</c:forEach>
@@ -909,7 +909,7 @@ function changeOrgFlow(obj){
 							</td>
 							<td class="td_left">人员类型：</td>
 							<td colspan="3">
-								<c:forEach items="${jsResDocTypeEnumList}" var="type">
+								<c:forEach items="${resDocTypeEnumList}" var="type">
 									<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeCheckBox(this);"/>${type.name}&nbsp;</label>
 									<c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
 								</c:forEach>

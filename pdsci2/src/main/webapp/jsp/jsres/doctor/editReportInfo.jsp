@@ -494,7 +494,7 @@
 		<input type="hidden" id="proveFileUrlFlag"/>
 		<input type="hidden" id="completeFileUrlFlag"/>
 		<input type="hidden" id="upFileId"/>
-		<c:set var="auditNotPassed" value="${jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
+		<c:set var="auditNotPassed" value="${resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
 		<form id="editForm" style="position: relative;" method="post">
 			<input type="hidden" name="recruitFlow" value="${doctorRecruit.recruitFlow}"/>
 			<input type="hidden" name="doctorFlow"  id="doctorFlow"value="${sessionScope.currUser.userFlow}"/>
