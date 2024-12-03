@@ -334,12 +334,18 @@ function showTime2(flag){
 			    <tr>
 			    	<th>人员类型：</th>
 			        <td id="doctorTypeNameTd">${doctor.doctorTypeName}</td>
-			         <th class="school">派送学校：</th>
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumGraduate.id}">
+						<th class="school">派送学校：</th>
 			        <td class="school" colspan="2">
 			        	<label>${doctor.workOrgName}</label>
 			        </td>
+					</c:if>
+
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumCompanyEntrust.id}">
 			        <th class="address">派送单位：</th>
 			        <td colspan="2" class="address">${doctor.workOrgName}</td>
+					</c:if>
+
 			    </tr>
 				<tr class="workUniteCreditCode">
 					<th>工作单位统一信用代码(15或18位)：</th>
