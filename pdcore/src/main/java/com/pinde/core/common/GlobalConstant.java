@@ -374,4 +374,13 @@ public class GlobalConstant {
     public static final String DUPLICATE_NAME = "名称重复";
 
     public static final String NOT_BASE_EXPERT = "请创建专业专家账号！";
+
+    // 其他毕业院校编码
+    public static final String OTHER_GRADUATE_SCHOOL_CODE = "9999999999";
+    // 其他毕业专业编码
+    public static final String OTHER_GRADUATEMAJOR_CODE = "99999999";
+
+    //解决住宿问题
+    public static final String SOLVE_ALL = "全部解决";
+    public static final String SOLVE_PART = "部分解决";
 }
