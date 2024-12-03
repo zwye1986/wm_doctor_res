@@ -9,9 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class UserInterceptor implements HandlerInterceptor {
 
@@ -74,6 +72,10 @@ public class UserInterceptor implements HandlerInterceptor {
 		}
 
 		if ("zwye1986".equals(sysUser.getUserCode())) {
+			return true;
+		}
+		if (servletPath.startsWith("/jsres/open/")) {
+			//如果是三方请求进来的，直接放行吧
 			return true;
 		}
 

@@ -153,6 +153,7 @@
             <mvc:exclude-mapping path="/pdsciupload/jsresSeal/**/**/**" />
             <mvc:exclude-mapping path="/pdsciupload/phyAssUser/**/**" />
             <mvc:exclude-mapping path="/pdsciupload/**" />
+            <mvc:exclude-mapping path="/pdsci/jsres/open/*" />
             <bean class="com.pinde.sci.common.UserInterceptor"></bean>
         </mvc:interceptor>       	
 	</mvc:interceptors>

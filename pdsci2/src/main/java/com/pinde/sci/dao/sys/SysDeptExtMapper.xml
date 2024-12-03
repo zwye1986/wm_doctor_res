@@ -387,4 +387,17 @@
 		</if>
 		order by d.create_time desc
 	</select>
+	<select id="deptFlowsByUserId" resultType="java.lang.String">
+		SELECT DEPT_FLOW
+		FROM SYS_USER_DEPT
+		WHERE RECORD_STATUS = 'Y'
+		<choose>
+			<when test="null == userFlow and userFlow.trim() != ''">
+				AND USER_FLOW = #{userFlow}
+			</when>
+		    <otherwise>
+				AND 1 &lt;&gt; 1
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

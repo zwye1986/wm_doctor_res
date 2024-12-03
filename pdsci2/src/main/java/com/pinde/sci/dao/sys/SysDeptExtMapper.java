@@ -71,6 +71,8 @@ public interface SysDeptExtMapper {
 
 	SchAndStandardDeptCfg getBzDeptByDeptFlow(@Param("deptFlow") String deptFlow);
 
+	List<String> deptFlowsByUserId(@Param("userFlow")String userFlow);
+
 }
 
 
