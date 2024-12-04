@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -19,7 +20,6 @@ import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.dom4j.Document;

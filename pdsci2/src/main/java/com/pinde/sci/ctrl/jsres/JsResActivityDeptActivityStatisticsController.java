@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +14,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;

@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -18,10 +19,11 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivitySpeakerMapper;
-import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;

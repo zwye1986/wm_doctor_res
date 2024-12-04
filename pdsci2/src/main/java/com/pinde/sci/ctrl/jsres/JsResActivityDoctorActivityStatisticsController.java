@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -12,7 +13,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;

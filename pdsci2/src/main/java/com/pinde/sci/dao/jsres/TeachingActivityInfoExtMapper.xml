@@ -642,7 +642,32 @@
         <if test='isUploadImg!=null and isUploadImg=="N" '>
             and (IMAGE_URL is null OR IMAGE_URL NOT LIKE '%imageUrl%')
         </if>
-        order by START_TIME DESC,END_TIME desc, RESULT.EVAL_SCORE desc
+        order by
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderByClo)">
+            <choose>
+                <when test="orderByClo == 'activityType'">
+                    activity_type_id
+                </when>
+                <when test="orderByClo == 'activityName'">
+                    NLSSORT(activity_name,'NLS_SORT = SCHINESE_PINYIN_M')
+                </when>
+                <when test="orderByClo == 'userName'">
+                    NLSSORT(user_name,'NLS_SORT = SCHINESE_PINYIN_M')
+                </when>
+                <when test="orderByClo == 'deptName'">
+                    NLSSORT(dept_name,'NLS_SORT = SCHINESE_PINYIN_M')
+                </when>
+                <otherwise>
+
+                </otherwise>
+            </choose>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderByFall)">
+                #{orderByFall}
+            </if>
+            ,
+        </if>
+
+        START_TIME DESC,END_TIME desc, RESULT.EVAL_SCORE desc
     </select>
     <select id="getActivitys" resultMap="activityMap">
         SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME
