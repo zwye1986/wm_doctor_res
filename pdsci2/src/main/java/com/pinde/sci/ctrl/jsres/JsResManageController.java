@@ -3,6 +3,11 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.common.enums.sys.ReqTypeEnum;
 import com.pinde.core.model.SysDict;
@@ -23,7 +28,10 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
 import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
@@ -32,9 +40,6 @@ import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.*;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
@@ -6053,21 +6058,21 @@ public class JsResManageController extends GeneralController {
 		orgList = orgBiz.searchJointOrgsByOrg(GlobalContext.getCurrentUser().getOrgFlow());
 		model.addAttribute("JointOrgCount", orgList.size());
 		orgList.add(0, doctorOrg);
-		List<String> orgFlowList = new ArrayList<>();
+//		List<String> orgFlowList = new ArrayList<>();
 		if (StringUtil.isBlank(orgFlow0)) {
 //			orgFlowList.add(doctorOrg.getOrgFlow());
 			orgFlow0 = doctorOrg.getOrgFlow();
 		} else if ("all".equals(orgFlow0)) {
-			orgFlowList.add(docOrgHistory.getOrgFlow());
+//			orgFlowList.add(docOrgHistory.getOrgFlow());
 			docOrgHistory.setOrgFlow("");
 			if (orgList != null && orgList.size() > 0) {
 				for (SysOrg so : orgList) {
-					orgFlowList.add(so.getOrgFlow());
+//					orgFlowList.add(so.getOrgFlow());
 				}
 			}
-		} else {
+		} /*else {
 			orgFlowList.add(orgFlow0);
-		}
+		}*/
 		model.addAttribute("orgFlow", orgFlow0);
 		model.addAttribute("orgList", orgList);
 		List<String> docTypeList = new ArrayList<String>();
@@ -6086,6 +6091,8 @@ public class JsResManageController extends GeneralController {
 		}
 		resDoctor.setTrainingTypeId("DoctorTrainingSpe");
 		PageHelper.startPage(currentPage, getPageSize(request));
+		List<String> orgFlowList = new ArrayList<String>();
+		orgList.stream().forEach(e -> orgFlowList.add(e.getOrgFlow()));
 		List<JsResDoctorOrgHistoryExt> docOrgHistoryExtList = jsDocOrgHistoryBiz.searchDoctorOrgHistoryExtList(docOrgHistory, changeStatusIdList, resDoctor, orgFlowList, docTypeList);
 		model.addAttribute("docOrgHistoryExtList", docOrgHistoryExtList);
 		ResDoctorOrgHistory history = new ResDoctorOrgHistory();
@@ -11843,7 +11850,7 @@ public class JsResManageController extends GeneralController {
 	}
 
 	@RequestMapping(value = {"/baseMain"})
-	public String baseMain() {
+	public String baseMain(Model model) {
 		return "jsres/global/hospital/changeBaseMain";
 	}
 
