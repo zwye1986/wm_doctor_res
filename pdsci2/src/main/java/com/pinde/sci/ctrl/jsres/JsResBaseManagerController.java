@@ -1,14 +1,16 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
 import com.pinde.core.pdf.utils.ResourceLoader;
-import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
@@ -18,15 +20,16 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.SysOrgBatchMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.TrainingForm;
@@ -3846,7 +3849,10 @@ public class JsResBaseManagerController extends GeneralController {
 							}
 						}
 						//合并单元格
-						sheet.addMergedRegion(new CellRangeAddress(rownum, rownum + j - 1, 0, 0));
+						if (j > 1) {
+							sheet.addMergedRegion(new CellRangeAddress(rownum, rownum + j - 1, 0, 0));
+						}
+//						sheet.addMergedRegion(new CellRangeAddress(rownum, rownum + j - 1, 0, 0));
 						deptFLowList.clear();
 //						HSSFCell cell = rowDept.createCell(0);
 //						cell.setCellValue(rd.getDeptName());
