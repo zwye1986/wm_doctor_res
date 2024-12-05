@@ -762,6 +762,14 @@ public class JsResBaseManagerController extends GeneralController {
 		model.addAttribute("sessionNumber", sessionNumber);
 
 		Map<String, String> paramMap=new HashMap<>();
+
+		if(StringUtils.isEmpty(standardDeptId)) {
+			SchAndStandardDeptCfg schAndStandardDeptCfg = deptCfgBiz.readBySchDeptFlowAndOrgFlow(deptFlow, orgFlow);
+			if(null != schAndStandardDeptCfg) {
+				standardDeptId = schAndStandardDeptCfg.getStandardDeptId();
+			}
+		}
+
 		paramMap.put("standardDeptId",standardDeptId);
 		paramMap.put("orgFlow",orgFlow);
 		paramMap.put("speFlow",speFlow);
