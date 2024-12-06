@@ -84,7 +84,7 @@
 					jboxClose();
 				}, 1000);
 			}else if('${GlobalConstant.USER_PHONE_REPETE}'==data) {
-				jboxConfirm("改手机号已绑定用户，是否绑定新的账号？", function () {
+				jboxConfirm("该手机号已绑定用户，是否绑定新的账号？", function () {
 					var url = "<s:url value='/sys/user/save4jsresteacher'/>";
 					var data = $('#excelForm').serialize();
 					data = data + "&coverPhone=Y"
