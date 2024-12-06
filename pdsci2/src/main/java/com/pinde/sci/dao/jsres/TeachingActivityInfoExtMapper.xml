@@ -661,8 +661,8 @@
 
                 </otherwise>
             </choose>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderByFall)">
-                #{orderByFall}
+            <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderByFall) and 'DESC' == orderByFall">
+                desc
             </if>
             ,
         </if>

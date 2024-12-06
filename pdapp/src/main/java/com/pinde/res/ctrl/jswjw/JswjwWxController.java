@@ -908,6 +908,39 @@ public class JswjwWxController extends GeneralController {
             return ResultDataThrow("轮转科室标识符为空！");
         }
         List<ExamResults> results = examResultsBiz.getByProcessFlow(processFlow);
+
+        for (ExamResults result : results) {
+
+            if(!result.getExamTime().contains("-")){
+
+                String time = result.getExamTime();
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for (int i = 0; i < time.toCharArray().length; i++) {
+
+                    if(i==4||i==6){
+                        stringBuilder.append("-");
+                    }
+
+                    if(i==8){
+                        stringBuilder.append(" ");
+                    }
+
+                    if(i==10||i==12){
+                        stringBuilder.append(":");
+                    }
+
+                    stringBuilder.append(time.charAt(i));
+
+                }
+
+                result.setExamTime(stringBuilder.toString());
+
+            }
+
+        }
+
         resultMap.put("results", results);
         return resultMap;
     }
@@ -5683,33 +5716,7 @@ public class JswjwWxController extends GeneralController {
             //评价的指标
             TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(result.getActivityFlow());
             List<TeachingActivityInfoTarget> infoTargets = activityTargeBiz.readActivityTargets(result.getActivityFlow());
-            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), sysUser.getOrgFlow());
-            //查询是否有协同基地
-            List<String> jointOrgFlow = activityTargeBiz.selectJointOrgFlow(userFlow);
-
-            if(jointOrgFlow!=null&& !jointOrgFlow.isEmpty()){
-
-                for (String orgFlow : jointOrgFlow) {
-                    List<TeachingActivityTarget> jointTargetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), orgFlow);
-                    if(!jointTargetList.isEmpty()){
-                        targetList.addAll(jointTargetList);
-                    }
-                }
-
-            }
-            //查询主基地
-            List<String>  mainOrgFlow = activityTargeBiz.selectMainOrgFlow(userFlow);
-            if(mainOrgFlow!=null&& !mainOrgFlow.isEmpty()){
-
-                for (String orgFlow : mainOrgFlow) {
-                    List<TeachingActivityTarget> jointTargetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), orgFlow);
-                    if(!jointTargetList.isEmpty()){
-                        targetList.addAll(jointTargetList);
-                    }
-                }
-
-            }
-
+            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), activityInfo.getOrgFlow());
             List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
             for (TeachingActivityInfoTarget infoTarget : infoTargets) {
                 if (!targetFlowList.contains(infoTarget.getTargetFlow())) {
