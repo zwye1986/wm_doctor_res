@@ -40,7 +40,7 @@ public class EdcAppAspectJLogger {
 		try {
 			obj = joinPoint.proceed(args);
 		} catch (Throwable e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		logger.debug("logAround结束:现在时间是:"+new Date());  //方法执行后的代理处理
 		return obj;

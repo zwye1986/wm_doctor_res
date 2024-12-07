@@ -3,7 +3,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.biz.jsres.IJsResRecruitDoctorInfoBiz;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.JsresRecruitDocInfoMapper;
 import com.pinde.sci.dao.base.JsresRecruitInfoMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;

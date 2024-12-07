@@ -3,17 +3,21 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.jsres.impl.JsResSupervisioBizImpl;
 import com.pinde.sci.biz.res.INjResExamBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
+import com.pinde.sci.ctrl.evaAudit.ResNurseController;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.jsres.SysUserJsresMapper;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -439,9 +443,9 @@ public class ResNjExamPrintController extends GeneralController{
                  }else {
                      return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                  }
-             }catch(RuntimeException re){
-                 re.printStackTrace();
-                 return re.getMessage();
+             } catch (RuntimeException e) {
+                 logger.error("", e);
+                 return e.getMessage();
              }
          }
          return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -473,9 +477,9 @@ public class ResNjExamPrintController extends GeneralController{
                 }else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -506,5 +510,6 @@ public class ResNjExamPrintController extends GeneralController{
          return "/njresexam/examCardImport";
      }
 
+    private static Logger logger = LoggerFactory.getLogger(ResNurseController.class);
 
 }

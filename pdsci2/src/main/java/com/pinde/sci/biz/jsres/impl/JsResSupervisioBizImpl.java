@@ -7,10 +7,12 @@ import com.pinde.sci.biz.jsres.IJsResSupervisioBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,6 +44,9 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	private HospSelfAssessmentMapper assessmentMapper;
 	@Autowired
 	private HospSelfAssessmentCfgMapper assessmentCfgMapper;
+    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioBizImpl.class);
+
+
 
 	@Override
 	public ResEvaluationScore searchEvaluationOwnerScoreByItemId(ResEvaluationScore evaluationScore) {
@@ -138,7 +143,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 
@@ -151,7 +156,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 					throw new RuntimeException("删除文件失败！");
 				}
 			}

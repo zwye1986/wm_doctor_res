@@ -6,6 +6,7 @@ import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -43,6 +44,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -134,6 +137,9 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 
 	private static final String EXT_INFO_ROOT = "extInfo";
 	private static final String EXT_INFO_ELE = "extInfoForm";
+
+	private static Logger logger = LoggerFactory.getLogger(ResDoctorBizImpl.class);
+
 
 	public static String _doubleTrans(double d) {
 		if ((double) Math.round(d) - d == 0.0D)
@@ -682,7 +688,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException("保存图片失败！");
 			}
 			//删除原图片
@@ -694,7 +700,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("", e);
 					throw new RuntimeException("删除图片失败！");
 				}
 			}
@@ -1114,7 +1120,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerExcel(wb, orgFlow);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			try {
@@ -1137,7 +1143,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerStudentExcel(wb, orgFlow);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			try {
@@ -2002,7 +2008,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return filedMap;
@@ -2031,7 +2037,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return extInfo;
@@ -2048,7 +2054,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Method setMethod = objClass.getMethod(methedName,new Class[] {String.class});
 			setMethod.invoke(obj,new Object[] {attrValue});
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 	@Override
@@ -2239,7 +2245,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			}
 			return excelUtile;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2408,7 +2414,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						try {
 							extScore = convertMapToXml(extScoreMap,resScore);
 						} catch (Exception e) {
-							e.printStackTrace();
+							 logger.error("",e);
 						}
 						resScore.setExtScore(extScore);*/
 						resScoreList.add(resScore);
@@ -2518,7 +2524,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			}
 			return excelUtile;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2624,7 +2630,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						try {
 							extScore = convertMapToXml(extScoreMap,resScore);
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.error("", e);
 						}
 						resScore.setExtScore(extScore);
 						count+=savePublic(resScore);
@@ -2762,7 +2768,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -5276,7 +5282,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerExcel4jszy(wb, orgFlow,role);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			try {
@@ -5949,7 +5955,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				if (bis != null) {
@@ -5959,7 +5965,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					httpUrl.disconnect();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return count;
@@ -6013,7 +6019,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				wb.write(fos);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				if (bis != null) {
@@ -6024,7 +6030,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					httpUrl.disconnect();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}

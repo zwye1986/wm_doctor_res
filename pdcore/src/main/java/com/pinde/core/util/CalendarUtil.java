@@ -142,7 +142,7 @@ public class CalendarUtil {
 //        } catch ( Exception e) {
 //            // TODO: handle exception
 //            System.out.println(e.getClass());
-//            e.printStackTrace();
+//             logger.error("",e);
 //        }
 //
 //    }

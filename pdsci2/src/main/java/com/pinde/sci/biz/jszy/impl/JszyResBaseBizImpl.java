@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 
 import com.pinde.core.util.*;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jszy.IJszyResBaseBiz;
 import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
@@ -18,6 +19,8 @@ import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +56,9 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 	private CountryOrgInfoMapper coiMapper;
 	@Autowired
 	private AttachedUnitInfoMapper auiMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(JszyResBaseBizImpl.class);
+
 	/**
 	 * 保存基地的基本信息
 	 * @throws IOException 
@@ -283,7 +289,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 					return deptList;
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return null;
@@ -297,7 +303,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 			Method setMethod = objClass.getMethod(methedName, new Class[]{String.class});
 			setMethod.invoke(obj, new Object[]{attrValue});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 
@@ -343,7 +349,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return filedMap;
@@ -436,7 +442,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 				ftpHelperUtil.uploadFile(localFilePath,ftpDir,ftpFileName);
 				return "success:"+url;
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
                 return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}

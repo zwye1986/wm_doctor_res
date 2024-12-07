@@ -140,7 +140,7 @@ public class JsResSysCfgController extends GeneralController {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
@@ -210,7 +210,7 @@ public class JsResSysCfgController extends GeneralController {
                 return "刷新远程失败！";
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return "刷新远程失败！";
         }
     }

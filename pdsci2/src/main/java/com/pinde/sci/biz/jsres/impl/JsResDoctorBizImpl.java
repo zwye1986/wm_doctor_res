@@ -825,7 +825,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 					throw new RuntimeException("删除文件失败！");
 				}
 			}
@@ -3858,7 +3858,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
                 try {
                     userResumeExt = userResumeBiz.converyToJavaBean(xml, UserResumeExtInfoForm.class);
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 if(userResumeExt == null ){
                     userResumeExt = new UserResumeExtInfoForm();
@@ -4095,16 +4095,16 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			book.write(bufferedOutputStreamCache);
 			bufferedOutputStreamCache.flush();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}finally{
 			try {
 				if(bufferedOutputStreamCache!=null){
 					bufferedOutputStreamCache.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 	}
@@ -4148,9 +4148,9 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			}
 			bouts.flush();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}finally{
 			try {
 				if(bins!=null){
@@ -4161,7 +4161,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				}
 				cacheFile.delete();
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 	}

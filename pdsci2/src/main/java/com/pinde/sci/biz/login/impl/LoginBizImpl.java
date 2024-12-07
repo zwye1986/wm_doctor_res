@@ -12,7 +12,7 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.base.SysLoginAbilityMapper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;

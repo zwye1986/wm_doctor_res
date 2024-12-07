@@ -5,7 +5,7 @@ import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResBaseSpeDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.ResBaseSpeDeptMapper;
 import com.pinde.sci.model.mo.ResBaseSpeDept;
 import com.pinde.sci.model.mo.ResBaseSpeDeptExample;

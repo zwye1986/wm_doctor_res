@@ -22,7 +22,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
@@ -338,7 +338,7 @@ public class JsResDoctorController extends GeneralController {
                         try {
                             cd.setTime(sdf.parse(recruitDate));
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                         cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                         String format = sdf.format(cd.getTime());
@@ -488,7 +488,7 @@ public class JsResDoctorController extends GeneralController {
                             try {
                                 file.transferTo(newFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + "returnImg" + File.separator + dateString + File.separator + originalFilename;
@@ -2437,7 +2437,7 @@ public class JsResDoctorController extends GeneralController {
 //			backResult = jsResRecBiz.checkBackTrain(resRec,backTrainForm,recruit);
             backResult = resDoctorDelayTeturnBiz.checkBackTrain(docotrDelayTeturn, recruit);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         if (com.pinde.core.common.GlobalConstant.ZERO_LINE == backResult) {
             return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
@@ -2975,7 +2975,7 @@ public class JsResDoctorController extends GeneralController {
                     try {
                         form = JaxbUtil.converyToJavaBean(content, UserResumeExtInfoForm.class);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                     if (form == null) {
                         form = new UserResumeExtInfoForm();
@@ -4790,7 +4790,7 @@ public class JsResDoctorController extends GeneralController {
                             try {
                                 cd.setTime(sdf.parse(recruitDate));
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                             String format = sdf.format(cd.getTime());
@@ -5742,7 +5742,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("recruitList", recruitList);
             recruit = recruitList.get(0);
             String recruitFlow = recruit.getRecruitFlow();
-            String applyYear = com.pinde.sci.common.util.DateUtil.getYear();
+            String applyYear = com.pinde.core.util.DateUtil.getYear();
 
             model.addAttribute("auditStatusId", recruit.getAuditStatusId());
             model.addAttribute("doctorRecruit", recruit);
@@ -6077,7 +6077,7 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("recruitList", recruitList);
             recruit = recruitList.get(0);
             String recruitFlow = recruit.getRecruitFlow();
-            String applyYear = com.pinde.sci.common.util.DateUtil.getYear();
+            String applyYear = com.pinde.core.util.DateUtil.getYear();
 
             model.addAttribute("auditStatusId", recruit.getAuditStatusId());
             model.addAttribute("doctorRecruit", recruit);
@@ -7161,7 +7161,7 @@ public class JsResDoctorController extends GeneralController {
                 try {
                     extScore = resDoctorBiz.convertMapToXml(extScoreMap, resScore);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 if (StringUtil.isNotBlank(extScore)) {
                     resScore.setExtScore(extScore);
@@ -9085,9 +9085,9 @@ public class JsResDoctorController extends GeneralController {
                 } else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            } catch (RuntimeException re) {
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
 
         }

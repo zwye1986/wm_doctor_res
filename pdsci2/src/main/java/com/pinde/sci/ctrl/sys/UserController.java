@@ -11,7 +11,7 @@ import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
@@ -1342,7 +1342,7 @@ public class UserController extends GeneralController{
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException();
 			}
 			msgBiz.addSmsMsg(userPhone, content);
@@ -1440,7 +1440,7 @@ public class UserController extends GeneralController{
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException();
 			}
 			msgBiz.addSmsMsg(user.getUserPhone(), content);
@@ -1580,7 +1580,7 @@ public class UserController extends GeneralController{
 				try {
 					content = VelocityUtil.evaluate(content, dataMap);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 					throw new RuntimeException();
 				}
 				this.msgBiz.addEmailMsg(userEmail, InitConfig.getSysCfg("sys_edit_email_title"), content);
@@ -1694,7 +1694,7 @@ public class UserController extends GeneralController{
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException();
 			}
 			msgBiz.addSmsMsg(userPhone, content);
@@ -1808,9 +1808,9 @@ public class UserController extends GeneralController{
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

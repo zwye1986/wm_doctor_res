@@ -74,7 +74,7 @@ public class QQMapUtil {
             pojo = OBJECT_MAPPER.readValue(json, type);
         } catch (IOException e) {
             throw new RuntimeException(e);
-            //e.printStackTrace();
+            // logger.error("",e);
         }
         return pojo;
 

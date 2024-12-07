@@ -3142,7 +3142,7 @@ public class SchDocTwoController extends GeneralController{
             String endWeek = year2+"-"+week2 +"~" +sdf2.format(startTime) + "—" + sdf2.format(endTime);
             weekTime.add(endWeek);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return weekTime;

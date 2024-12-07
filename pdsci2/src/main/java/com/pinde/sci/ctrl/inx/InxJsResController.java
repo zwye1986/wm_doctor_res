@@ -2,8 +2,10 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ClientIPUtils;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
@@ -1023,7 +1025,7 @@ public class InxJsResController extends GeneralController {
                 if (roleFlow.equals(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                     String changePasswordTime = user.getChangePasswordTime();
                     if (StringUtil.isBlank(changePasswordTime)) {
-                        user.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
+                        user.setChangePasswordTime(com.pinde.core.util.DateUtil.getCurrDate());
                         userBiz.updateUser(user);
                     } else {
                         int passwordFailureTime = Integer.valueOf(StringUtil.isBlank(InitConfig.getSysCfg("Password_Failure_Time")) ? "6" : InitConfig.getSysCfg("Password_Failure_Time"));
@@ -1263,7 +1265,7 @@ public class InxJsResController extends GeneralController {
                     }*/
                     String changePasswordTime = user.getChangePasswordTime();
                     if (StringUtil.isBlank(changePasswordTime)) {
-                        user.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
+                        user.setChangePasswordTime(com.pinde.core.util.DateUtil.getCurrDate());
                         userBiz.updateUser(user);
                     } else {
                         int passwordFailureTime = Integer.valueOf(StringUtil.isBlank(InitConfig.getSysCfg("Password_Failure_Time")) ? "6" : InitConfig.getSysCfg("Password_Failure_Time"));

@@ -648,7 +648,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				}
                 map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return map;

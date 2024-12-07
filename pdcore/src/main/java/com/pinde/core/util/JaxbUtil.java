@@ -1,6 +1,8 @@
 package com.pinde.core.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,6 +12,8 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
 public class JaxbUtil {
+    private static Logger logger = LoggerFactory.getLogger(JaxbUtil.class);
+
 
 	private final static String ENCODING = "UTF-8";
 
@@ -85,8 +89,8 @@ public class JaxbUtil {
             StringWriter writer = new StringWriter();  
             marshaller.marshal(obj, writer);  
             result = writer.toString();  
-        } catch (Exception e) {  
-            e.printStackTrace();  
+        } catch (Exception e) {
+            logger.error("", e);
         }  
   
         return result;  
@@ -104,8 +108,8 @@ public class JaxbUtil {
             JAXBContext context = JAXBContext.newInstance(c);  
             Unmarshaller unmarshaller = context.createUnmarshaller();  
             t = (T) unmarshaller.unmarshal(new StringReader(xml));  
-        } catch (Exception e) {  
-            e.printStackTrace();  
+        } catch (Exception e) {
+            logger.error("", e);
         }  
   
         return t;  

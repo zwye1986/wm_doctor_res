@@ -23,6 +23,8 @@ import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -736,7 +738,7 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 			}
 			return "res/platform/monthlyReport/doctorOutOfficeInfo";
 		}catch (RuntimeException e){
-			e.printStackTrace();
+			logger.error("", e);
 			return "res/platform/monthlyReport/doctorOutOfficeInfo";
 		}
 
@@ -1057,7 +1059,7 @@ if("isContain".equals(isContain)){
 }
 			return doctorOutOfficeParamPOList;
 		}catch (RuntimeException e){
-			e.printStackTrace();
+			logger.error("", e);
 			List<Map<String,String>> list1=new ArrayList<>();
 			Map<String,String> map=new HashMap<>();
 			if(e.getMessage()==null){
@@ -1618,7 +1620,7 @@ if("isContain".equals(isContain)){
 			}
 			return orgInfoList;
 		}catch (RuntimeException e){
-			e.printStackTrace();
+			logger.error("", e);
 			List<Map<String,String>> list=new ArrayList<>();
 			Map<String,String> map=new HashMap<>();
 			if(e.getMessage()==null){
@@ -1629,7 +1631,7 @@ if("isContain".equals(isContain)){
 			list.add(map);
 			return list;
 		} catch (ParseException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			List<Map<String,String>> list=new ArrayList<>();
 			Map<String,String> map=new HashMap<>();
 			if(e.getMessage()==null){
@@ -1681,7 +1683,7 @@ if("isContain".equals(isContain)){
 				bigList.add(changjunshichang);
 				return bigList;
 			}catch (Exception e){
-				e.printStackTrace();
+				logger.error("", e);
 				return li;
 			}
 		}else{
@@ -1724,7 +1726,7 @@ if("isContain".equals(isContain)){
 				bigList.add(changjunshichang);
 				return bigList;
 			}catch (Exception e){
-				e.printStackTrace();
+				logger.error("", e);
 				return li;
 			}
 		}else{
@@ -1804,7 +1806,7 @@ if("isContain".equals(isContain)){
 			}
 			return "res/platform/monthlyReport/appUseInfo";
 		}catch (RuntimeException e){
-			e.printStackTrace();
+			logger.error("", e);
 			return "res/platform/monthlyReport/appUseInfo";
 		}
 	}
@@ -2313,7 +2315,7 @@ if("isContain".equals(isContain)){
 
 			}
 		}catch (RuntimeException e){
-			e.printStackTrace();
+			logger.error("", e);
 			if(null==e.getMessage()){
 				model.addAttribute("error","null");
 			}else{
@@ -2678,7 +2680,7 @@ if("isContain".equals(isContain)){
 
             }
         }catch (RuntimeException e){
-            e.printStackTrace();
+			logger.error("", e);
             if(null==e.getMessage()){
                 model.addAttribute("error","null");
             }else{
@@ -3563,4 +3565,7 @@ if("isContain".equals(isContain)){
 			return list;
 		}
 	}
+
+	private static Logger logger = LoggerFactory.getLogger(ResMonthlyReportGlobalController.class);
+
 }

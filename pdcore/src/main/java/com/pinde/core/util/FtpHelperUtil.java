@@ -1,6 +1,8 @@
 package com.pinde.core.util;
 
 import com.pinde.core.common.GlobalConstant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,6 +16,8 @@ public class FtpHelperUtil {
     FtpHelper ftp = null;
     boolean loginFlag = false;
     boolean initFlag = false;
+    private static Logger logger = LoggerFactory.getLogger(FtpHelperUtil.class);
+
 
     public void init() {
         ftp = FtpHelper.getInstance();
@@ -53,7 +57,7 @@ public class FtpHelperUtil {
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             if (loginFlag) {
                 finish();
@@ -75,7 +79,7 @@ public class FtpHelperUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             if (loginFlag) {
                 finish();

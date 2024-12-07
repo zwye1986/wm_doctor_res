@@ -4,6 +4,7 @@ import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
+import com.pinde.sci.biz.recruit.impl.RecruitAdmitInfoBizImpl;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.*;
@@ -14,6 +15,8 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +48,9 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     private JsresSignMapper signMapper;
     @Autowired
     private JsresDoctorSpeMapper doctorSpeMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(ResOrgSpeAssignBizImpl.class);
+
 
     @Override
     public List<ResOrgSpeAssign> searchSpeAssign(String assignYear) {
@@ -316,13 +322,13 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
             return parseOperExcel(wb);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException(e.getMessage());
             }
         }
@@ -338,13 +344,13 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
             return parseOperExcel(wb);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException(e.getMessage());
             }
         }
@@ -360,13 +366,13 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
             return parseOperExcel(wb);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException(e.getMessage());
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException(e.getMessage());
             }
         }
@@ -976,7 +982,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         try{
             return WorkbookFactory.create(inS);
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new IOException("不能解析的excel版本");
         }
 

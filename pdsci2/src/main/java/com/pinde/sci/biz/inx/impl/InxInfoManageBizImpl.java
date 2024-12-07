@@ -16,6 +16,8 @@ import com.pinde.sci.model.mo.InxColumn;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.InxInfoExample;
 import com.pinde.sci.model.mo.InxInfoExample.Criteria;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -91,7 +93,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 				file.transferTo(newFile);
 				return "success:"+dateString+"/"+fileName;
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
                 return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
@@ -165,7 +167,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 							}
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
                         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 					}
 					
@@ -183,7 +185,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
                     return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 				}
 			}
@@ -235,5 +237,8 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
 		}
         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(InxInfoManageBizImpl.class);
+
 
 }

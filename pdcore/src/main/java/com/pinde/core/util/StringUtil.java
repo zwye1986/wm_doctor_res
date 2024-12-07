@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +24,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtil {
-	
+    private static Logger logger = LoggerFactory.getLogger(StringUtil.class);
+
+
 //	public final static String MD5(String s) {
 //		try {
 //			byte[] btInput = s.getBytes();
@@ -500,8 +504,8 @@ public class StringUtil {
 	    	            if(byteLength<text.getBytes("GBK").length){//getBytes("GBK")每个汉字长2，getBytes("UTF-8")每个汉字长度为3   
 	    	                returnStr.append(endWith);   
 	    	            }   
-	    	        } catch (UnsupportedEncodingException e) {   
-	    	            e.printStackTrace();   
+	    	        } catch (UnsupportedEncodingException e) {
+                        logger.error("", e);
 	    	        }   
 	    	        return returnStr.toString();   
 	    	    } 
@@ -547,7 +551,7 @@ public class StringUtil {
 				}
 			}
 			catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			return ret;
 		}
@@ -682,7 +686,7 @@ public class StringUtil {
 				int i = (int) (f/1);
 				return i;
 			}catch(Exception e){
-				e.printStackTrace();
+                logger.error("", e);
 				return 0;	
 			}
 			

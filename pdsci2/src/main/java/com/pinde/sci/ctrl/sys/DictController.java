@@ -145,7 +145,7 @@ public class DictController extends GeneralController{
 		try {
 			this.dictBiz.saveSubDict(subDictEditForm);
 		} catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
 			return e.getMessage();
 		}
         return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
@@ -235,7 +235,7 @@ public class DictController extends GeneralController{
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		model.addAttribute("hostPortMapList", hostPortMapList);
@@ -288,7 +288,7 @@ public class DictController extends GeneralController{
 				return "刷新远程失败！";
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			return "刷新远程失败！";
 		}
 	}
@@ -355,9 +355,9 @@ public class DictController extends GeneralController{
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re) {
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

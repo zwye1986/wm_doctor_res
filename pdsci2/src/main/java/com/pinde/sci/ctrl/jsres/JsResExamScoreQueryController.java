@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResSchExamScoreQueryBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
@@ -13,6 +14,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 import com.pinde.sci.model.mo.SysUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/jsres/examScoreQuery")
 public class JsResExamScoreQueryController extends GeneralController {
+    private static Logger logger = LoggerFactory.getLogger(JsResExamScoreQueryController.class);
+
+
 
     @Autowired
     private IJsResSchExamScoreQueryBiz scoreQueryBiz;
@@ -119,7 +125,7 @@ public class JsResExamScoreQueryController extends GeneralController {
                     }
                     httpUrl.disconnect();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             }
         }
@@ -155,7 +161,7 @@ public class JsResExamScoreQueryController extends GeneralController {
                 }
                 httpUrl.disconnect();
             } catch (IOException e) {
-            e.printStackTrace();
+                logger.error("", e);
         }
         }
         map.put("result","1");
@@ -209,7 +215,7 @@ public class JsResExamScoreQueryController extends GeneralController {
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }

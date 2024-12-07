@@ -344,7 +344,7 @@ public class WeixinQiYeUtil {
 			}  
 			request.releaseConnection();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			if (in != null) {  
 				try {  
 					in.close();  
@@ -377,7 +377,7 @@ public class WeixinQiYeUtil {
 			}  
 			request.releaseConnection();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			if (in != null) {  
 				try {  
 					in.close();  

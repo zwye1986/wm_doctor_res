@@ -544,7 +544,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                     String scoreS = dataMap.get("score");
                                     score = Float.valueOf(scoreS);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                                 putMapVal(scoreMap, operUserFlow + gk, score);
                             }
@@ -553,7 +553,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                 String scoreS = (String) gradeMap.get("totalScore");
                                 score = Float.valueOf(scoreS);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             scoreMap.put(operUserFlow, score);
 //                            putMapVal(scoreMap,operUserFlow,score);
@@ -603,7 +603,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                 String scoreS = dataMap.get("score");
                                 score = Float.valueOf(scoreS);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             putMapVal(avgMap, key + "_" + gk, score);
                         }
@@ -613,7 +613,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                             String scoreS = (String) o;
                             score = Float.valueOf(scoreS);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                         putMapVal(avgMap, key + "_" + total, score);
                     }
@@ -782,7 +782,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                         String scoreS = dataMap.get("score");
                                         result.put(gk, scoreS);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        logger.error("", e);
                                     }
                                 }
                             } else {
@@ -790,7 +790,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                     String scoreS = (String) gradeMap.get("totalScore");
                                     result.put("doctorTotalScore", scoreS);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                             }
                         }
@@ -1067,7 +1067,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                         String scoreS = dataMap.get("score");
                                         result.put(gk,scoreS);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        logger.error("", e);
                                     }
                                 }
                             } else {
@@ -1075,7 +1075,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                     String scoreS = (String) gradeMap.get("totalScore");
                                     result.put("doctorTotalScore",scoreS);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                             }
                         }
@@ -1401,7 +1401,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                         String scoreS = dataMap.get("score");
                                         result.put(gk,scoreS);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        logger.error("", e);
                                     }
                                 }
                             } else {
@@ -1409,7 +1409,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                     String scoreS = (String) gradeMap.get("totalScore");
                                     result.put("doctorTotalScore",scoreS);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                             }
                         }
@@ -1945,7 +1945,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                         String scoreS = dataMap.get("score");
                                         result.put(gk, scoreS);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        logger.error("", e);
                                     }
                                 }
                             } else {
@@ -1953,7 +1953,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                     String scoreS = (String) gradeMap.get("totalScore");
                                     result.put("doctorTotalScore", scoreS);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                             }
                         }
@@ -2090,7 +2090,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                     String scoreS = dataMap.get("score");
                                     score = Float.valueOf(scoreS);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
 
                                 putMapVal(scoreMap, operUserFlow + gk, score);
@@ -2100,7 +2100,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                                 String scoreS = (String) gradeMap.get("totalScore");
                                 score = Float.valueOf(scoreS);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
 
                             putMapVal(scoreMap, operUserFlow, score);

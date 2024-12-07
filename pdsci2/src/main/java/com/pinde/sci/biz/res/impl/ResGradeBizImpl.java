@@ -4,6 +4,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
@@ -27,6 +28,8 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,12 +62,8 @@ public class ResGradeBizImpl implements IResGradeBiz {
 	private IResSchProcessExpressBiz expressBiz;
 	@Autowired
 	private ResRecExtMapper resRecExtMapper;
-	@Resource
-	private SchArrangeResultMapper resultMapper;
-	@Resource
-	private ResDoctorSchProcessMapper processMapper;
-	@Resource
-	private SchRotationDeptMapper schRotationDeptMapper;
+	private static Logger logger = LoggerFactory.getLogger(ResGradeBizImpl.class);
+
 
 	@Override
 	public List<DeptTeacherGradeInfo> searchProssFlowRec(String teacherUserFlow, String startDate, String endDate, List<String> typeList) {
@@ -585,7 +584,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 			root.add(roleNode);
 			content = root.asXML();
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		return content;
 	}
@@ -645,7 +644,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 			}
 			resultContent = doc.asXML();
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		return resultContent;
 	}
@@ -747,7 +746,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 			try {
 				rootEle = DocumentHelper.parseText(recContent).getRootElement();
 			} catch (DocumentException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}else{
 			rootEle = DocumentHelper.createElement(formName);
@@ -891,7 +890,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException(e);
 			}
 			return dataMap;

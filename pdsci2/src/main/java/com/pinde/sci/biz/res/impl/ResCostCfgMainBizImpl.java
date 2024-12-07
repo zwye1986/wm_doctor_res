@@ -3,7 +3,7 @@ package com.pinde.sci.biz.res.impl;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.res.IResCostCfgMainBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.ResCostCfgMainMapper;
 import com.pinde.sci.dao.res.ResCostCfgExtMapper;
 import com.pinde.sci.model.mo.ResCostCfgMain;

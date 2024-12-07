@@ -9,6 +9,9 @@ import com.pinde.res.biz.jswjw.IJsResSupervisioFileBiz;
 import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
 import com.pinde.core.model.JsresSupervisioFile;
 import com.pinde.core.model.JsresSupervisioFileExample;
+import com.pinde.sci.util.DateTimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +24,8 @@ import java.util.List;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
+    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioFileBizImpl.class);
+
     @Autowired
     private JsresSupervisioFileMapper supervisioFileMapper;
 
@@ -62,7 +67,7 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -75,7 +80,7 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }

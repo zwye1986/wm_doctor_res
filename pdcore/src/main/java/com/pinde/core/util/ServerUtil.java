@@ -4,11 +4,15 @@ import com.pinde.lic.util.LibraryUtil;
 import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.util.UUID;
 
 public class ServerUtil {
+    private static Logger logger = LoggerFactory.getLogger(ServerUtil.class);
+
     private static Sigar sigar = new Sigar();
     public static String getMachineId() {
 
@@ -41,7 +45,7 @@ public class ServerUtil {
             }
         } catch (SigarException var5) {
             SigarException e = var5;
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return sb.toString();

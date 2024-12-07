@@ -1933,7 +1933,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			resOutOfficeLock.setModifyTime(DateUtil.getCurrDate());
 			count = schArrangeResultBiz.saveAuditLockInfo(resOutOfficeLock);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw e;
 		}
 		if(count>0){
@@ -2585,14 +2585,14 @@ public class JsResDoctorRecruitController extends GeneralController {
 			wb.write(fos);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				if (fos != null) {
 					fos.close();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 	}
@@ -2630,7 +2630,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				if (bis != null) {
@@ -2641,7 +2641,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 					httpUrl.disconnect();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 	}
@@ -2701,7 +2701,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				if (bis != null) {
@@ -2711,7 +2711,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 					httpUrl.disconnect();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return urlMap;
@@ -3574,7 +3574,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			// 导出学员出科信息和技能评估信息
 			resDoctorBiz.exportDoctorRecruitResultList(resDoctor, response, papersFlag);
 		} catch (Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 
@@ -3631,8 +3631,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		String firstDayOfMonth = "";
 		String lastDayOfMonth = "";
 		if(StringUtils.isBlank(searchTime)){
-			firstDayOfMonth = com.pinde.sci.common.util.DateUtil.getFirstDayOfMonth();
-			lastDayOfMonth = com.pinde.sci.common.util.DateUtil.getLastDayOfMonth();
+            firstDayOfMonth = com.pinde.core.util.DateUtil.getFirstDayOfMonth();
+            lastDayOfMonth = com.pinde.core.util.DateUtil.getLastDayOfMonth();
 		}else{
 			// 正则表达式，匹配YYYY-MM格式
 			String regex = "^(\\d{4})-(0[1-9]|1[0-2])$";
@@ -3669,8 +3669,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		String firstDayOfMonth = "";
 		String lastDayOfMonth = "";
 		if(StringUtils.isBlank(searchTime)){
-			firstDayOfMonth = com.pinde.sci.common.util.DateUtil.getFirstDayOfMonth();
-			lastDayOfMonth = com.pinde.sci.common.util.DateUtil.getLastDayOfMonth();
+            firstDayOfMonth = com.pinde.core.util.DateUtil.getFirstDayOfMonth();
+            lastDayOfMonth = com.pinde.core.util.DateUtil.getLastDayOfMonth();
 		}else{
 			// 正则表达式，匹配YYYY-MM格式
 			String regex = "^(\\d{4})-(0[1-9]|1[0-2])$";
@@ -3708,8 +3708,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		String firstDayOfMonth = "";
 		String lastDayOfMonth = "";
 		if(StringUtils.isBlank(searchTime)){
-			firstDayOfMonth = com.pinde.sci.common.util.DateUtil.getFirstDayOfMonth();
-			lastDayOfMonth = com.pinde.sci.common.util.DateUtil.getLastDayOfMonth();
+            firstDayOfMonth = com.pinde.core.util.DateUtil.getFirstDayOfMonth();
+            lastDayOfMonth = com.pinde.core.util.DateUtil.getLastDayOfMonth();
 		}else{
 			// 正则表达式，匹配YYYY-MM格式
 			String regex = "^(\\d{4})-(0[1-9]|1[0-2])$";
@@ -3746,8 +3746,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		String firstDayOfMonth = "";
 		String lastDayOfMonth = "";
 		if(StringUtils.isBlank(searchTime)){
-			firstDayOfMonth = com.pinde.sci.common.util.DateUtil.getFirstDayOfMonth();
-			lastDayOfMonth = com.pinde.sci.common.util.DateUtil.getLastDayOfMonth();
+            firstDayOfMonth = com.pinde.core.util.DateUtil.getFirstDayOfMonth();
+            lastDayOfMonth = com.pinde.core.util.DateUtil.getLastDayOfMonth();
 		}else{
 			// 正则表达式，匹配YYYY-MM格式
 			String regex = "^(\\d{4})-(0[1-9]|1[0-2])$";
@@ -3787,8 +3787,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 		String firstDayOfMonth = "";
 		String lastDayOfMonth = "";
 		if(StringUtils.isBlank(searchTime)){
-			firstDayOfMonth = com.pinde.sci.common.util.DateUtil.getFirstDayOfMonth();
-			lastDayOfMonth = com.pinde.sci.common.util.DateUtil.getLastDayOfMonth();
+            firstDayOfMonth = com.pinde.core.util.DateUtil.getFirstDayOfMonth();
+            lastDayOfMonth = com.pinde.core.util.DateUtil.getLastDayOfMonth();
 		}else{
 			// 正则表达式，匹配YYYY-MM格式
 			String regex = "^(\\d{4})-(0[1-9]|1[0-2])$";
@@ -4207,7 +4207,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 					msg = resultMap.get("msg").toString();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				return e.getMessage();
 			}
 			if (count != 0) {
@@ -4250,7 +4250,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			session.setAttribute("map",map);
 			return "success";
 		}catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}finally {
 //			return map;
 			return "success";
@@ -4301,7 +4301,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 					msg = resultMap.get("msg").toString();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				return e.getMessage();
 			}
 			if (count != 0) {

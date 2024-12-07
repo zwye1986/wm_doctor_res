@@ -1,6 +1,8 @@
 package com.pinde.core.util;
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,6 +17,8 @@ import java.util.*;
  */
 
 public class TimeUtil {
+    private static Logger logger = LoggerFactory.getLogger(TimeUtil.class);
+
     /**
      * 判断两个日期之间相差是否是自然月的整数倍，如果是则返回倍数，否则返回-1
      * @param time
@@ -341,7 +345,7 @@ public class TimeUtil {
             System.out.println("getMonthsBetween:"+JSON.toJSONString(getMonthsBetween(map)));
             System.out.println("getMonthsBetweenNew:"+JSON.toJSONString(getMonthsBetweenNew(map)));
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("", e);
         }
         System.out.println(JSON.toJSONString(findDates2("2017-12")));
         System.out.println(JSON.toJSONString(getMonthsByTwoMonth("2017-12","2017-12")));

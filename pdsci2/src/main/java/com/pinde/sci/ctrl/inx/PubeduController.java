@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.inx;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
+import com.pinde.sci.biz.jsres.impl.JsResSupervisioBizImpl;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
@@ -14,6 +15,8 @@ import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -116,8 +119,8 @@ public class PubeduController extends GeneralController {
                 }
             }
             loginErrorMessage = "未赋权";
-        }catch(RuntimeException re){
-            loginErrorMessage = re.getMessage();
+        } catch (RuntimeException e) {
+            logger.error("", e);
         }
         model.addAttribute("loginErrorMessage" , loginErrorMessage);
         return "inx/pubedu/login";
@@ -128,5 +131,9 @@ public class PubeduController extends GeneralController {
         request.getSession().invalidate();
         return "redirect:/inx/pubedu";
     }
+
+    private static Logger logger = LoggerFactory.getLogger(PubeduController.class);
+
+
 
 }

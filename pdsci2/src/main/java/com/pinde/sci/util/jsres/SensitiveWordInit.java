@@ -1,6 +1,9 @@
 package com.pinde.sci.util.jsres;
 
 import com.pinde.core.util.SpringUtil;
+import com.pinde.sci.biz.recruit.impl.RecruitAdmitInfoBizImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +17,8 @@ import java.util.Set;
  * 过滤敏感词-初始化敏感词库
  */
 public class SensitiveWordInit {
+    private static Logger logger = LoggerFactory.getLogger(SensitiveWordInit.class);
+
 
 	// 字符编码
 	private static final String ENCODING = "UTF-8";
@@ -50,7 +55,7 @@ public class SensitiveWordInit {
 			// 关闭文件流
 			read.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return wordSet;
 	}

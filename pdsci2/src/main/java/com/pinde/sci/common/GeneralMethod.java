@@ -37,7 +37,7 @@ public class GeneralMethod {
                 setModifyUserFlow.invoke(obj, currUser.getUserFlow());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 

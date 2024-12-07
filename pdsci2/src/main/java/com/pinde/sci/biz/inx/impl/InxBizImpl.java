@@ -7,13 +7,14 @@ import com.pinde.core.util.VelocityUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
 import com.pinde.sci.biz.osca.impl.OscaDoctorRegistBizImpl;
 import com.pinde.sci.biz.pub.IMsgBiz;
+import com.pinde.sci.biz.recruit.impl.RecruitAdmitInfoBizImpl;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
@@ -21,6 +22,8 @@ import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +57,8 @@ public class InxBizImpl implements IInxBiz{
 	@Autowired
 	private VerificationCodeRecordMapper CodeRecordMap;
 
-	private static String GZYKDX="gzykdx";
+    private static Logger logger = LoggerFactory.getLogger(InxBizImpl.class);
+
 
 	@Override
 	public SysUser login(String userCode, String passwd) {
@@ -338,7 +342,7 @@ public class InxBizImpl implements IInxBiz{
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException();
 			}
 			this.msgBiz.addEmailMsg(userEmail, InitConfig.getSysCfg("res_resetpasswd_email_title"), content,"");
@@ -357,7 +361,7 @@ public class InxBizImpl implements IInxBiz{
 			title = VelocityUtil.evaluate(title, dataMap);
 			content = VelocityUtil.evaluate(content, dataMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException();
 		}
 		return msgBiz.addEmailMsg(userEmail, title, content);
@@ -374,7 +378,7 @@ public class InxBizImpl implements IInxBiz{
 			title = VelocityUtil.evaluate(title, dataMap);
 			content = VelocityUtil.evaluate(content, dataMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException();
 		}
 		return msgBiz.addEmailMsg(userEmail, title, content,flag);
@@ -470,7 +474,7 @@ public class InxBizImpl implements IInxBiz{
 			if (StringUtil.isNotBlank(ideentityCheck) && (ideentityCheck.equals(user.getIdNo()) || ideentityCheck.equals(user.getUserPhone())
 					|| ideentityCheck.equals(user.getUserName()))) {
 				user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), userPasswd));
-				user.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
+                user.setChangePasswordTime(com.pinde.core.util.DateUtil.getCurrDate());
 				userBiz.updateUser(user);
                 return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
 			} else {
@@ -485,7 +489,7 @@ public class InxBizImpl implements IInxBiz{
 			if (StringUtil.isNotBlank(ideentityCheck) && (ideentityCheck.equals(userNew.getIdNo()) || ideentityCheck.equals(userNew.getUserPhone())
 					|| ideentityCheck.equals(userNew.getUserName()))) {
 				userNew.setUserPasswd(PasswordHelper.encryptPassword(userNew.getUserFlow(), userPasswd));
-				userNew.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
+                userNew.setChangePasswordTime(com.pinde.core.util.DateUtil.getCurrDate());
 				userBiz.updateUser(userNew);
                 return com.pinde.core.common.GlobalConstant.UPDATE_SUCCESSED;
 			} else {

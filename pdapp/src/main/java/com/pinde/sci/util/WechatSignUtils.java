@@ -49,7 +49,7 @@ public class WechatSignUtils {
             return hexStr.toString();
 
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return null;
     }

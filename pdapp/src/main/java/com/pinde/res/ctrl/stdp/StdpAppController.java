@@ -204,7 +204,7 @@ public class StdpAppController{
 			try {
 				searchData = new String(searchData.getBytes("ISO8859-1") , "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			@SuppressWarnings("unchecked")
 			Map<String , String> searchMap = (Map<String, String>) JSON.parse(searchData);
@@ -268,7 +268,7 @@ public class StdpAppController{
 			try {
 				searchData = new String(searchData.getBytes("ISO8859-1") , "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			@SuppressWarnings("unchecked")
 			Map<String , String> searchMap = (Map<String, String>) JSON.parse(searchData);

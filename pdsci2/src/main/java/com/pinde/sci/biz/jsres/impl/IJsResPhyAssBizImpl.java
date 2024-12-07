@@ -11,7 +11,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
@@ -20,6 +20,8 @@ import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -364,7 +366,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         planDoctor.setSpeName(speName);
         planDoctor.setDoctorCode(doctorCode);
         planDoctor.setDoctorName(doctorName);
-        planDoctor.setModifyTime(com.pinde.sci.common.util.DateUtil.getCurrDateTime2());
+        planDoctor.setModifyTime(com.pinde.core.util.DateUtil.getCurrDateTime2());
         planDoctor.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         return planDoctorMapper.updateByPrimaryKey(planDoctor);
     }
@@ -453,7 +455,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                 Map<String, Object> map = new HashMap<>();
                 for (int j = 0; j < colnames.size(); j++) {
                     Cell cell = r.getCell(j);
-                    if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
+                    if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
                         continue;
                     }
                     if (r.getCell((short) j).getCellType().getCode() == 1) {
@@ -485,23 +487,23 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                         map.put("userEmail",value);
                     }
                 }
-                if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("planContent")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("planContent")))) {
                     throw new RuntimeException("导入失败！第" + i + "行，培训计划为空！");
                 }
                 String content = map.get("planContent").toString();
                 if (!planContent.equals(content)) {
                     throw new RuntimeException("导入失败！导入的文件不是该培训方案的模板！");
                 }
-                if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("speName")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("speName")))) {
                     throw new RuntimeException("导入失败！第" + i + "行，培训专业为空！");
                 }
-                if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("orgName")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("orgName")))) {
                     throw new RuntimeException("导入失败！第" + i + "行，基地为空！");
                 }
-                if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorCode")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("doctorCode")))) {
                     throw new RuntimeException("导入失败！第" + i + "行，登录名为空！");
                 }
-                if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
                     throw new RuntimeException("导入失败！第" + i + "行，姓名为空！");
                 }
 
@@ -782,7 +784,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -795,7 +797,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }
@@ -811,5 +813,8 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         }
         return path;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(IJsResPhyAssBizImpl.class);
+
 }
 

@@ -542,7 +542,7 @@ public class JswjwStudentController {
         try {
             generateImage(imageContent, fileDir + File.separator + originalFilename);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException("保存文件失败！");
         }
         String filePath = File.separator + "ResDoctorKqFile" + File.separator + dateString + File.separator + recordFlow + File.separator + originalFilename;
@@ -944,7 +944,7 @@ public class JswjwStudentController {
         try {
             generateImage(form.getImageContent(), fileDir + File.separator + originalFilename);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException("保存文件失败！");
         }
         String filePath = File.separator + "ResDoctorKqFile" + File.separator + dateString + File.separator + form.getRecordFlow() + File.separator + originalFilename;

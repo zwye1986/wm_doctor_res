@@ -10,7 +10,7 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
@@ -171,8 +171,8 @@ public class InxRecruitController extends GeneralController{
 				return "redirect:"+sysUrl;
 			}
 			loginErrorMessage = "未赋权";
-		}catch(RuntimeException re){
-			loginErrorMessage = re.getMessage();
+        } catch (RuntimeException e) {
+            loginErrorMessage = e.getMessage();
 		}
 		model.addAttribute("loginErrorMessage" , loginErrorMessage);
 		return "recruit/inx/login";

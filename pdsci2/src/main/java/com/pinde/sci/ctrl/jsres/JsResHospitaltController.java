@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.*;
@@ -15,6 +16,8 @@ import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,20 +36,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/hospital")
 public class JsResHospitaltController extends GeneralController{
-	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
-	private IUserBiz iUserBiz;
-	@Autowired
-	private IResDoctorProcessBiz resDoctorProcessBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
-	@Autowired
-	private IResDoctorBiz resDoctorBiz;
-	@Autowired
-	private IResScoreBiz resScoreBiz;
-	@Autowired
-	private IResAssessCfgBiz assessCfgBiz;
+    private static Logger logger = LoggerFactory.getLogger(JsResHospitaltController.class);
+
 	@Autowired
 	private IResDoctorProcessBiz iResDoctorProcessBiz;
 	@Autowired
@@ -57,8 +48,6 @@ public class JsResHospitaltController extends GeneralController{
 	private IResOrgSpeAssignBiz speAssignBiz;
 	@Autowired
 	private IJsResDoctorBiz jsResDoctorBiz;
-	@Autowired
-	private IResJointOrgBiz jointOrgBiz;
 
 	/**
 	 * 学员考评  住院医师
@@ -530,7 +519,7 @@ public class JsResHospitaltController extends GeneralController{
 			try {
 				return speAssignBiz.impInterviewExcel(file);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				Map<String, Object> resultMap = new HashMap<String, Object>() {{
 					this.put("errorInfo", e.getMessage());
 					this.put("errorInfoNum", "1");
@@ -555,7 +544,7 @@ public class JsResHospitaltController extends GeneralController{
 			try {
 				return speAssignBiz.impSkillExcel(file);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				Map<String, Object> resultMap = new HashMap<String, Object>() {{
 					this.put("errorInfo", e.getMessage());
 					this.put("errorInfoNum", "1");
@@ -579,7 +568,7 @@ public class JsResHospitaltController extends GeneralController{
 			try {
 				return speAssignBiz.impSkillExcel(file);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				Map<String, Object> resultMap = new HashMap<String, Object>() {{
 					this.put("errorInfo", e.getMessage());
 					this.put("errorInfoNum", "1");
@@ -615,7 +604,7 @@ public class JsResHospitaltController extends GeneralController{
 		try {
 			count = jsResDoctorRecruitBiz.modifyResult(docRecWithBLOBs);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw e;
 		}
 		if(count>0){
@@ -636,7 +625,7 @@ public class JsResHospitaltController extends GeneralController{
 		try {
 			count = jsResDoctorRecruitBiz.saveAuditResult(docRecWithBLOBs);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw e;
 		}
 		if(count>0){
@@ -693,7 +682,7 @@ public class JsResHospitaltController extends GeneralController{
 		try {
 			count = jsResDoctorRecruitBiz.saveAuditRecruitInfo(docRecWithBLOBs);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw e;
 		}
 		if(count>0){
@@ -723,7 +712,7 @@ public class JsResHospitaltController extends GeneralController{
 		try {
 			count = jsResDoctorRecruitBiz.saveAuditRecruit(docRecWithBLOBs);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw e;
 		}
 		if(count>0){
@@ -864,7 +853,7 @@ public class JsResHospitaltController extends GeneralController{
 			response.setContentType("application/octet-stream;charset=UTF-8");
 			ExcleUtile.exportSimpleExcleByObjs(titles, recruitList, response.getOutputStream());
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 

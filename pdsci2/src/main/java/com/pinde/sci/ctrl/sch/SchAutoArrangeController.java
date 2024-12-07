@@ -41,8 +41,6 @@ public class SchAutoArrangeController extends GeneralController{
 	private ISchAutoArrangeBiz autoArrangeBiz;
 	@Autowired
 	private ISchDeptBiz schDeptBiz;
-	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
 
 	@RequestMapping(value = {"/scheduling" })
 	public String scheduling (Model model) throws Exception{

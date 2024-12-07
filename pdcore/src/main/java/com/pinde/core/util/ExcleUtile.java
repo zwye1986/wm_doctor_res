@@ -4,6 +4,8 @@ import com.pinde.core.common.enums.ArmyTypeEnum;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ExcleUtile {
+	private static Logger logger = LoggerFactory.getLogger(ExcleUtile.class);
 
 	 public static <T> void exportSimpleExcle(String[] titles , List<T> dataList , Class<T> cless , OutputStream os) throws Exception{
 		 HSSFWorkbook wb = new HSSFWorkbook();  
@@ -147,7 +150,7 @@ public class ExcleUtile {
              }
 			 wb.write(os);
 		 } catch (Exception e) {
-			 e.printStackTrace();
+			 logger.error("", e);
 		 }
 	 }
 
@@ -853,18 +856,18 @@ public class ExcleUtile {
 					in.close();
 					srcfile[i].delete();//删除服务器上文件
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("", e);
 				}
 			}
 			out.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}finally {
 			if(out!=null)
 				try {
 					out.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("", e);
 				}
 		}
 	}
@@ -1040,7 +1043,7 @@ public class ExcleUtile {
 			}
 			wb.write(os);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 }

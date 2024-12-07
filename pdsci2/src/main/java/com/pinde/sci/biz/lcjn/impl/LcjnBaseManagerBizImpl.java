@@ -8,6 +8,7 @@ import com.pinde.sci.biz.lcjn.ILcjnBaseManagerBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.ctrl.lcjn.LcjnBaseManagerController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
 import com.pinde.core.common.enums.LcjnAuditStatusEnum;
@@ -15,6 +16,8 @@ import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,6 +53,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     private LcjnFixedAssetsMapper lfaMapper;
     @Autowired
     private SysUserMapper suMapper;
+    private static Logger logger = LoggerFactory.getLogger(LcjnBaseManagerController.class);
 
     @Override
     public List<Map<String, Object>> queryCourseList(Map<String, String> map) {
@@ -372,7 +376,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
             return parseExcel(wb);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new Exception(e.getMessage());
         } finally {
             is.close();

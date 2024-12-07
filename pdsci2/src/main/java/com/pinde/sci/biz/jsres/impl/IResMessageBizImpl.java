@@ -4,7 +4,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResMessageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.ResMessageMapper;
 import com.pinde.sci.dao.res.ResMessageExtMapper;
 import com.pinde.sci.model.mo.ResMessage;

@@ -4,6 +4,7 @@ package com.pinde.sci.biz.pub.impl;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
@@ -13,6 +14,8 @@ import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.PubFileExample.Criteria;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -546,7 +549,7 @@ public class FileBizImpl implements IFileBiz {
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 			String filePath = File.separator + fileType + File.separator + dateString + File.separator + originalFilename;
@@ -589,7 +592,7 @@ public class FileBizImpl implements IFileBiz {
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 			String filePath = File.separator + fileType + File.separator + dateString + File.separator + originalFilename;
@@ -712,4 +715,7 @@ public class FileBizImpl implements IFileBiz {
 		}
 		return null;
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(FileBizImpl.class);
+
 }

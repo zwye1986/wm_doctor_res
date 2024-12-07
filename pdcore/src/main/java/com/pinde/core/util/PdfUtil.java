@@ -1,14 +1,10 @@
 package com.pinde.core.util;
 import com.jacob.activeX.ActiveXComponent;
 import com.jacob.com.Dispatch;
-import com.lowagie.text.pdf.BaseFont;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xhtmlrenderer.pdf.ITextFontResolver;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.*;
-import java.net.MalformedURLException;
 
 
 public class PdfUtil {
@@ -56,7 +52,7 @@ public class PdfUtil {
 	                    while (br.readLine() != null)
 	                        ;
 	                } catch (IOException e) {
-	                    e.printStackTrace();
+                        logger.error("", e);
 	                }
 	            }
 	        }).start(); // 启动单独的线程来清空process.getInputStream()的缓冲区
@@ -74,12 +70,12 @@ public class PdfUtil {
 	        try {
 	            process.waitFor();
 	        } catch (InterruptedException e) {
-	            e.printStackTrace();
+                logger.error("", e);
 	        }
 
 			System.out.println("ffmpeg输出内容为：" + buf.toString());
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			return false;
 		}
 		return true;
@@ -187,36 +183,5 @@ public class PdfUtil {
 		}
 	}
 
-	public static void html2pdf(String htmlFile, String pdfFile, String chineseFontPath) throws Exception  {
-		String url;
-		OutputStream os = null;
-		try {
-			url = new File(htmlFile).toURI().toURL().toString();
-			logger.info("url: {}", url);
-			os = new FileOutputStream(pdfFile);
-			ITextRenderer renderer = new ITextRenderer();
-			renderer.setDocument(url);
-			// 解决中文不显示问题
-			ITextFontResolver fontResolver = renderer.getFontResolver();
-			fontResolver.addFont("E:/Download/FZDHTJW.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-			fontResolver.addFont("E:/Download/simsun.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 
-			renderer.layout();
-			renderer.createPDF(os);
-		} catch (MalformedURLException e) {
-			logger.warn(e.toString(), e);
-		} catch (FileNotFoundException e) {
-			logger.warn(e.toString(), e);
-		} catch (IOException e) {
-			logger.warn(e.toString(), e);
-		} finally {
-			if(os != null) {
-				try {
-					os.close();
-				} catch (IOException e) {
-					logger.warn(e.toString(), e);
-				}
-			}
-		}
-	}
 }

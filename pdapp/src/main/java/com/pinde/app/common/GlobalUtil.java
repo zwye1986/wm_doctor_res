@@ -11,7 +11,10 @@ import com.pinde.core.util.XmlParse;
 import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.dao.stdp.ext.CustomExtMapper;
+import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,27 +26,8 @@ import java.util.*;
  * Created by jiayf on 2016/3/30.
  */
 public class GlobalUtil {
-    /**
-     * 根据方法名及flow获取对象
-     * @param sqlId
-     * @param premaryKey
-     * @return
-     */
-    public static Object getObjByFlow(String sqlId,String premaryKey){
-        Object o = null;
-        if(StringUtil.isNotBlank(sqlId) && StringUtil.isNotBlank(premaryKey)){
-            CustomExtMapper cem = SpringUtil.getBean(CustomExtMapper.class);
-            try{
-                Method m = CustomExtMapper.class.getMethod(sqlId,String.class);
-                if(m!=null){
-                    o = m.invoke(cem,premaryKey);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return o;
-    }
+
+    private static Logger logger = LoggerFactory.getLogger(GlobalUtil.class);
 
     /**
      * 根据表单类型id获取表单类型name
@@ -510,7 +494,7 @@ public class GlobalUtil {
                                         a = Integer.parseInt(map0.get("isView"));
                                         b = Integer.parseInt(map1.get("isView"));
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        logger.error("", e);
                                     }
                                     return a-b;
                                 }

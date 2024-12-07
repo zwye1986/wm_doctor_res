@@ -12,7 +12,10 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResGradeBiz;
 import com.pinde.res.dao.jswjw.ext.DeptTeacherGradeInfoExtMapper;
 import com.pinde.sci.dao.base.*;
+import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,9 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class ResGradeBizImpl implements IResGradeBiz {
+    private static Logger logger = LoggerFactory.getLogger(ResGradeBizImpl.class);
+
+
 
     @Autowired
     private SysCfgMapper cfgMapper;
@@ -175,7 +181,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         rec.setModifyTime(DateUtil.getCurrDateTime());
@@ -384,7 +390,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         if(rec==null){
@@ -470,7 +476,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         if(rec==null){
@@ -564,7 +570,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         if(rec==null){
@@ -653,7 +659,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return null;
@@ -966,7 +972,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return null;
@@ -1055,7 +1061,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return null;
@@ -1099,7 +1105,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return gradeMap;

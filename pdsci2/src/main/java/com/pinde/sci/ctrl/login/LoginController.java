@@ -9,7 +9,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.common.util.DESUtil;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
@@ -152,7 +152,7 @@ public class LoginController extends GeneralController {
 				try{
 					sysOrgBiz.addOrg(org);
 				}catch(Exception e){
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				user = new SysUser();
                 user.setUserFlow(com.pinde.core.common.GlobalConstant.ROOT_USER_FLOW);

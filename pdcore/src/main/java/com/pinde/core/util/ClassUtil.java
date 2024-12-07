@@ -1,5 +1,8 @@
 package com.pinde.core.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ClassUtil {
+    private static Logger logger = LoggerFactory.getLogger(ClassUtil.class);
 
 	/**
 	 * package中获取所有的Class
@@ -99,7 +103,7 @@ public class ClassUtil {
 										} catch (ClassNotFoundException e) {
 											// log
 											// .error("添加用户自定义视图类错误 找不到此类的.class文件");
-											e.printStackTrace();
+                                            logger.error("", e);
 										}
 									}
 								}
@@ -107,12 +111,12 @@ public class ClassUtil {
 						}
 					} catch (IOException e) {
 						// log.error("在扫描用户定义视图时从jar包获取文件出错");
-						e.printStackTrace();
+                        logger.error("", e);
 					}
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 
 		return classes;
@@ -163,7 +167,7 @@ public class ClassUtil {
 							.loadClass(packageName + '.' + className));
 				} catch (ClassNotFoundException e) {
 					// log.error("添加用户自定义视图类错误 找不到此类的.class文件");
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 		}
@@ -208,118 +212,5 @@ public class ClassUtil {
 					+ method.getReturnType() + "\t"+ "方法参数类型:"
 					+ Arrays.toString(method.getParameterTypes()));
 		}
-	}
-	
-	/**
-	 * 
-	 * @param obj 访问对象
-	 * @param filedname  对象的属性
-	 * @return 返回对象的属性值
-	 * @throws Exception
-	 */
-	public static Object getFieldValue(Object obj,String filedname) throws Exception{
-		//反射出类型
-		Class<?> cls = obj.getClass();
-		Field field = null;
-		//反射出类型字段
-		try {
-			field = cls.getDeclaredField(filedname);//获取属性时，压制Java对访问修饰符的检查 
-			field.setAccessible(true);
-			//在对象obj上读取field属性的值
-			Object val = field.get(obj);
-			return val;
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("没有这个字段："+filedname);
-	   }
-		 return null;
-		
-		
-	}
-	
-	/**
-	 * 
-	 * @param obj 访问对象
-	 * @param filedname  对象的属性
-	 * @return 返回对象的属性值
-	 * @throws Exception
-	 */
-	public static Object setIdKeyValue(Object obj,String filedname,String value) throws Exception{
-		//反射出类型
-		Class<?> cls = obj.getClass();
-		Field field = null;
-		//反射出类型字段
-		 try {
-			  field = cls.getDeclaredField(filedname);
-		   } catch (Exception e) {
-			   e.printStackTrace();
-			   System.out.println("没有这个字段："+filedname);
-		   }
-		if(field==null){
-			return null;
-		}
-		//获取属性时，压制Java对访问修饰符的检查 
-		field.setAccessible(true);
-		//---------------------------------------------------
-		//针对表主键为字符类型进行赋值UUID,如果为int类型采用自增方式
-		if(!field.getType().getName().contains("Integer")){
-			field.set(obj, value);		
-		}
-		//---------------------------------------------------
-		//在对象obj上读取field属性的值
-		Object val = field.get(obj);
-		field.setAccessible(false);
-		return val;
-	}
-	
-	
-	
-	/**
-	 * 
-	 * @param obj 访问对象
-	 * @param filedname  对象的属性
-	 * @return 返回对象的属性值
-	 * @throws Exception
-	 */
-	public static Object setFieldValue(Object obj,String filedname,String value) throws Exception{
-		//反射出类型
-		Class<?> cls = obj.getClass();
-		Field field = null;
-		//反射出类型字段
-		 try {
-			  field = cls.getDeclaredField(filedname);
-		   } catch (Exception e) {
-			   e.printStackTrace();
-			   System.out.println("没有这个字段："+filedname);
-		   }
-		if(field==null){
-			return null;
-		}
-		//获取属性时，压制Java对访问修饰符的检查 
-		field.setAccessible(true);
-		//在对象obj上读取field属性的值
-		Object val = field.get(obj);
-		field.setAccessible(false);
-		return val;
-	}
-	
-	/**
-	 * 反射调用对象的方法
-	 * @param obj 对象 
-	 * @param methodName  方法名称 
-	 * @param 参数类型    new Class[]{int.class,double.class}
-	 * @param params 参数值     new Object[]{2,3.5}
-	 * @return
-	 * @throws Exception 
-	 */
-	public static Object readObjMethod(Object obj,String methodName,Class<?>[] paramTypes,Object[] params) throws  Exception{
-		//发现类型
-		Class<?> cls = obj.getClass();
-		//发现方法
-		Method method = cls.getDeclaredMethod(methodName, paramTypes);
-		//访问方法时,压制Java对访问修饰符的检查
-		method.setAccessible(true);
-		Object val = method.invoke(obj, params);
-		return val;
 	}
 }

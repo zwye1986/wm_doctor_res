@@ -4,7 +4,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.jsres.IResScheduleScoreBiz;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
 import com.pinde.sci.model.mo.ResScheduleScore;
 import com.pinde.sci.model.mo.ResScheduleScoreExample;

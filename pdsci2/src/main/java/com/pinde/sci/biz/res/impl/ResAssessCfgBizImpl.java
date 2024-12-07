@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResAssessCfgBiz;
@@ -17,6 +18,8 @@ import com.pinde.sci.model.mo.ResAssessCfg;
 import com.pinde.sci.model.mo.ResAssessCfgExample;
 import com.pinde.sci.model.mo.SysUser;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +38,10 @@ import java.util.Map;
 public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 	@Autowired
 	private ResAssessCfgMapper assessCfgMapper;
-	
+
+	private static Logger logger = LoggerFactory.getLogger(ResAssessCfgBizImpl.class);
+
+
 	@Override
 	public int editAssessCfgTitle(ResAssessCfg assesscfg, ResAssessCfgTitleForm titleForm) throws Exception {
 		SysUser currUser = GlobalContext.getCurrentUser();
@@ -219,7 +225,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		
 		return null;
@@ -279,7 +285,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return map;
@@ -446,7 +452,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return null;

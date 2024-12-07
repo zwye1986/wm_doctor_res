@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.lcjn;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.util.ClassUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,6 +16,8 @@ import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
 import com.pinde.sci.model.mo.LcjnCourseInfo;
 import com.pinde.sci.model.mo.LcjnCourseTime;
 import com.pinde.sci.model.mo.LcjnDoctorCourse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -608,11 +611,14 @@ public class LcjnDoctorTrainInfoController extends GeneralController{
         if(file.getSize() > 0){
             try{
                 lcjnDoctorOrderInfoBiz.importScoreFromExcel(file,courseFlow);
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(LcjnDoctorTrainInfoController.class);
+
 }

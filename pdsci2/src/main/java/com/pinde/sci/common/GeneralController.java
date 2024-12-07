@@ -20,10 +20,10 @@ public class GeneralController {
 		logger.error(this.getClass().getCanonicalName()+" some error happened",e);
 		boolean isAjax = AjaxUtil.isAjaxRequest(request);
 		if(isAjax){
-			e.printStackTrace();
+            logger.error("", e);
 			return e.getMessage();
 		}else{
-	        e.printStackTrace();
+            logger.error("", e);
 	        request.setAttribute("exception", e);
 	        return "error/500";
 		}

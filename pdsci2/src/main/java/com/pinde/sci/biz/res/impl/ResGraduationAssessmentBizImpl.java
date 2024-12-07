@@ -14,6 +14,8 @@ import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +40,9 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
 
     @Autowired
     private IFileBiz pubFileBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(ResGraduationAssessmentBizImpl.class);
+
     @Override
     public ResGraduationAssessmentExt getDocGraduationAssessment(String userFlow) {
         return graduationAssessmentExtMapper.getDocGraduationAssessment(userFlow);
@@ -105,7 +110,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -118,7 +123,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }
@@ -186,7 +191,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
                 }
                 return "success:"+url;
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
             }
         }

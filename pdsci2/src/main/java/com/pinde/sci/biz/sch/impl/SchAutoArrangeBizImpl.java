@@ -17,6 +17,8 @@ import com.pinde.sci.dao.base.SchAutoArrangeCfgMapper;
 import com.pinde.sci.dao.base.SchAutoArrangeMapper;
 import com.pinde.sci.dao.sch.SchAutoArrangeExtMapper;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -550,7 +552,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
                 try {
                     month = TimeUtil.getMonthsBetween(map);
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 String schMonth = String.valueOf(Double.parseDouble(month + ""));
                 m.put("nextSchMonth",schMonth);
@@ -605,4 +607,7 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
     private List<SchRotation> getSchRotations(String orgFlow) {
         return autoArrangeExtMapper.getSchRotations(orgFlow);
     }
+
+    private static Logger logger = LoggerFactory.getLogger(SchAutoArrangeBizImpl.class);
+
 }

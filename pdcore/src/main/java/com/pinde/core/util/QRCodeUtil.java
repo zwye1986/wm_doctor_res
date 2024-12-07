@@ -4,6 +4,8 @@ import com.google.zxing.*;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -23,6 +25,8 @@ import java.util.Map;
  * @Date 2019/7/18
  */
 public class QRCodeUtil extends LuminanceSource {
+    private static Logger logger = LoggerFactory.getLogger(QRCodeUtil.class);
+
 
     // 二维码颜色
     private static final int BLACK = 0xFF000000;
@@ -241,7 +245,7 @@ public class QRCodeUtil extends LuminanceSource {
             String content = parseQRCode(pathName);
             System.out.println("解析出二维码的图片的内容为： " + content);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 }

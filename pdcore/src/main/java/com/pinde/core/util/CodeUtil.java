@@ -1,34 +1,15 @@
 package com.pinde.core.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Reader;
 import java.security.MessageDigest;
 import java.sql.Clob;
 
 public class CodeUtil {
 
-	public static String sha1(String inStr) {
-		String outStr = null;
-		try {
-            MessageDigest digest = java.security.MessageDigest.getInstance("SHA-1");
-            digest.update(inStr.getBytes("UTF-8"));
-            byte messageDigest[] = digest.digest();
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            // 字节数组转换为 十六进制 数
-            for (int i = 0; i < messageDigest.length; i++) {
-                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
-                if (shaHex.length() < 2) {
-                    hexString.append(0);
-                }
-                hexString.append(shaHex);
-            }
-            return hexString.toString();
-		} catch (Exception nsae) {
-			nsae.printStackTrace();
-		}
-		return outStr;
-	}
-	
+    private static Logger logger = LoggerFactory.getLogger(CodeUtil.class);
 	public static String md5(String inStr) {
 		String outStr = null;
 		try {
@@ -47,7 +28,7 @@ public class CodeUtil {
             }
             return hexString.toString();
 		} catch (Exception nsae) {
-			nsae.printStackTrace();
+            logger.error("", nsae);
 		}
 		return outStr;
 	}

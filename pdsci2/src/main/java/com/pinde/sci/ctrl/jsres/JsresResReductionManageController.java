@@ -1340,7 +1340,7 @@ public class JsresResReductionManageController extends GeneralController {
                             try {
                                 file.transferTo(newFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + productType + File.separator + dateString + File.separator + recordFlow + File.separator + originalFilename;

@@ -119,7 +119,7 @@ public class InitConfig implements ServletContextListener {
 			weekPasswordMap = weekPasswords;
 
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		logger.debug("读取弱密码结束...");
 	}
@@ -744,9 +744,9 @@ public class InitConfig implements ServletContextListener {
 				cityMap.put(v, cityIdList);
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		InitConfig.cityMap = cityMap;
 	}
@@ -848,7 +848,7 @@ public class InitConfig implements ServletContextListener {
 					file.createNewFile();
 				}catch (Exception e) {
 					logger.debug("创建文件失败(About jacob-1.17-M2-x64.dll)...");
-//					e.printStackTrace();
+//					 logger.error("",e);
 				}
 
 			}
@@ -863,7 +863,7 @@ public class InitConfig implements ServletContextListener {
 						file.createNewFile();
 					}catch (Exception e) {
 						logger.debug("创建文件失败(About jacob-1.17-M2-x64.dll)...");
-						e.printStackTrace();
+                        logger.error("", e);
 					}
 
 				}
@@ -888,7 +888,7 @@ public class InitConfig implements ServletContextListener {
 
 		} catch (Exception e) {
 			logger.debug("文件复制失败，请将jacob-1.17-M2-x64.dll文件放在 %JAVA_HOME%\\bin 目录下...");
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 

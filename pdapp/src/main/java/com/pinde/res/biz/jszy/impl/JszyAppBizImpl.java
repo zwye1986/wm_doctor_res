@@ -2,12 +2,11 @@ package com.pinde.res.biz.jszy.impl;
 
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.core.common.enums.SigninTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
@@ -19,8 +18,10 @@ import com.pinde.res.dao.jswjw.ext.ResLectureInfoExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysDeptExtMapper;
 import com.pinde.res.dao.jszy.ext.JszyResLectureInfoExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.util.FtpHelperUtil;
+import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
@@ -38,6 +39,9 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class JszyAppBizImpl implements IJszyAppBiz {
+
+	private static Logger logger = LoggerFactory.getLogger(JszyAppBizImpl.class);
+
 
 	@Autowired
 	private ResLectureRandomScanMapper lectureRandomScanMapper;
@@ -210,7 +214,7 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return null;
@@ -271,7 +275,7 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return null;
@@ -361,7 +365,7 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return null;
@@ -731,7 +735,7 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 					gradeMap.put(rec.getProcessFlow() + "_" + rec.getRecTypeId(), totalScore);
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return gradeMap;
@@ -864,12 +868,12 @@ public class JszyAppBizImpl implements IJszyAppBiz {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 

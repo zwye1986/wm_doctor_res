@@ -15,7 +15,7 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
@@ -307,7 +307,7 @@ public class UserBizImpl implements IUserBiz {
 				try{
 					user.setCretTypeName(CertificateTypeEnum.getNameById(user.getCretTypeId()));
 				}catch(Exception e){
-					e.printStackTrace();
+                    logger.error("", e);
 				}finally{
 					user.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
 					user.setCretTypeName(CertificateTypeEnum.Shenfenzheng.getName());
@@ -714,7 +714,7 @@ public class UserBizImpl implements IUserBiz {
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException();
 			}
 			this.msgBiz.addEmailMsg(userEmail, InitConfig.getSysCfg("sys_resetpasswd_email_title"), content);
@@ -733,7 +733,7 @@ public class UserBizImpl implements IUserBiz {
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException();
 			}
 			this.msgBiz.addEmailMsg(userEmail, InitConfig.getSysCfg("user_email_auth_email_title"), content);
@@ -958,14 +958,14 @@ public class UserBizImpl implements IUserBiz {
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerExcel(wb,roles);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			if(is!=null){
 				try {
 					is.close();
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 		}
@@ -984,14 +984,14 @@ public class UserBizImpl implements IUserBiz {
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseDiscAndResponExcel(wb,type);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			if(is!=null){
 				try {
 					is.close();
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 		}
@@ -1933,7 +1933,7 @@ public class UserBizImpl implements IUserBiz {
 				ftpHelperUtil.uploadFile(localFilePath,ftpDir,ftpFileName);
 				return url;
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
                 return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
@@ -1995,7 +1995,7 @@ public class UserBizImpl implements IUserBiz {
 //				}
 //				return "success:"+url;
 //			} catch (Exception e) {
-//				e.printStackTrace();
+//				 logger.error("",e);
 //				return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 //			}
 //		}
@@ -2020,7 +2020,7 @@ public class UserBizImpl implements IUserBiz {
 //
 //        } catch (IOException e) {
 //
-//            e.printStackTrace();
+//             logger.error("",e);
 //
 //        } finally {
 //
@@ -2032,7 +2032,7 @@ public class UserBizImpl implements IUserBiz {
 //
 //            } catch (IOException e) {
 //
-//                e.printStackTrace();
+//                 logger.error("",e);
 //            }
 //        }
 //    }

@@ -89,9 +89,9 @@ public class UploadFileController {
 					fos.flush();
 					fos.close();
 				} catch (FileNotFoundException e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				} catch (IOException e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ public class UploadFileController {
 		try {
 			uploadFile.transferTo(file);
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return JSON.toJSONString(map);
 	}

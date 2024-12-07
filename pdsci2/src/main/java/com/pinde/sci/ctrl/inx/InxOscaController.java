@@ -6,6 +6,7 @@ import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
 import com.pinde.sci.biz.inx.INoticeBiz;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.login.ILoginBiz;
 import com.pinde.sci.biz.osca.IOscaBaseBiz;
 import com.pinde.sci.biz.osca.IOscaDoctorRegistBiz;
@@ -13,12 +14,14 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +37,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/inx/osce")
 public class InxOscaController extends GeneralController{
-	
+
+    private static Logger logger = LoggerFactory.getLogger(InxOscaController.class);
+
+
 	@Autowired
 	private INoticeBiz noticeBiz;
 	@Autowired
@@ -153,7 +159,7 @@ public class InxOscaController extends GeneralController{
 				try{
 					sysOrgBiz.addOrg(org);
 				}catch(Exception e){
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				user = new SysUser();
                 user.setUserFlow(com.pinde.core.common.GlobalConstant.ROOT_USER_FLOW);

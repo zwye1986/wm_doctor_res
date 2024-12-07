@@ -16,6 +16,10 @@
 
 package com.pinde.core.pdf.utils;
 
+import com.pinde.core.util.SMSUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
@@ -47,6 +51,8 @@ public abstract class ObjectUtils {
 	private static final String ARRAY_END = "}";
 	private static final String EMPTY_ARRAY = ARRAY_START + ARRAY_END;
 	private static final String ARRAY_ELEMENT_SEPARATOR = ", ";
+    private static Logger logger = LoggerFactory.getLogger(ObjectUtils.class);
+
 	/**
 	 * 判断数组对象是否为空值 , 如果是 ""," ","null",null 则返回true, 对于Collection.size<1也空
 	 * 
@@ -919,9 +925,9 @@ public abstract class ObjectUtils {
 				obj = clazz.newInstance();
 				return obj;
 			} catch (InstantiationException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 

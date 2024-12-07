@@ -3,6 +3,9 @@ package com.pinde.sci.common.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.pinde.core.util.DateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -66,10 +69,13 @@ public class RegionUtil {
 				read.close();
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return refMap;
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(RegionUtil.class);
+
 }

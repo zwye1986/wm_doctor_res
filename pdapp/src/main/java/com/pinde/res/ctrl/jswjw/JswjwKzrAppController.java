@@ -1305,7 +1305,7 @@ public class JswjwKzrAppController {
 					}
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -1377,7 +1377,7 @@ public class JswjwKzrAppController {
 					formDataMap.put(element.getName(), element.getText());
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -1970,7 +1970,7 @@ public class JswjwKzrAppController {
 					f1=Float.valueOf(s1);
 					f2=Float.valueOf(s2);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				Float result=f2-f1;
 				return result>0?1:result==0?0:-1;
@@ -2144,7 +2144,7 @@ public class JswjwKzrAppController {
 					f1=Float.valueOf(s1);
 					f2=Float.valueOf(s2);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				Float result=f2-f1;
 				return result>0?1:result==0?0:-1;

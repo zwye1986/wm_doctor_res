@@ -1,5 +1,8 @@
 package com.pinde.sci.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.MessageDigest;
 
 /**
@@ -10,6 +13,7 @@ import java.security.MessageDigest;
 public class MD5Util {
     private final static String[] hexDigits = {"0", "1", "2", "3", "4", "5", "6", "7",
             "8", "9", "a", "b", "c", "d", "e", "f"};
+    private static Logger logger = LoggerFactory.getLogger(MD5Util.class);
 
     /**
      * 字符串MD5加密
@@ -25,7 +29,7 @@ public class MD5Util {
             md.update(resultString.getBytes("UTF-8"));
             resultString = byteArrayToHexString(md.digest());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return resultString.toUpperCase();
     }

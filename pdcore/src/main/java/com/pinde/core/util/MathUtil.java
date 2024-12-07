@@ -1,9 +1,6 @@
 package com.pinde.core.util;
 
 import java.math.BigDecimal;
-//import org.paukov.combinatorics.Factory;
-//import org.paukov.combinatorics.Generator;
-//import org.paukov.combinatorics.ICombinatoricsVector;
 
 public class MathUtil {
 	

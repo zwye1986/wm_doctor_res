@@ -1018,7 +1018,7 @@ public class ResRecController extends GeneralController {
 				}
 				content = doc.asXML();
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return content;
@@ -2898,7 +2898,7 @@ public class ResRecController extends GeneralController {
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                         throw new RuntimeException(e);
                     } finally {
                         try {
@@ -2906,7 +2906,7 @@ public class ResRecController extends GeneralController {
                                 out.close();
                             }
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                     }
                 }

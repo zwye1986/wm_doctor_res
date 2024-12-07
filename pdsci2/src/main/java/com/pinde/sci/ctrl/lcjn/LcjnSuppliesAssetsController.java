@@ -5,6 +5,7 @@ import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnSuppliesAndAssetsBiz;
@@ -14,6 +15,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.LcjnFixedAssets;
 import com.pinde.sci.model.mo.LcjnSupplies;
 import com.pinde.sci.model.mo.LcjnSuppliesBatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +36,8 @@ public class LcjnSuppliesAssetsController extends GeneralController {
     private ILcjnSuppliesAndAssetsBiz suppliesAndAssetsBiz;
     @Autowired
     private IDictBiz dictBiz;
+    private static Logger logger = LoggerFactory.getLogger(LcjnSuppliesAssetsController.class);
+
     /**
      * 固定资产列表
      * @param dictName
@@ -139,9 +144,9 @@ public class LcjnSuppliesAssetsController extends GeneralController {
         if(file.getSize() > 0){
             try{
                 suppliesAndAssetsBiz.importAssetsFromExcel(file);
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
@@ -152,9 +157,9 @@ public class LcjnSuppliesAssetsController extends GeneralController {
         if(file.getSize() > 0){
             try{
                 suppliesAndAssetsBiz.importSuppliesFromExcel(file);
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;

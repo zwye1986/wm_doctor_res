@@ -17,6 +17,8 @@ import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -306,7 +308,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
                 }
                 map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return map;
@@ -369,5 +371,8 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
     public ResLectureScanRegist getLectureScanRegistInfoByFlow(String recordFlow) {
         return lectureScanRegistMapper.selectByPrimaryKey(recordFlow);
     }
+
+    private static Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
+
 
 }

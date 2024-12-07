@@ -163,7 +163,7 @@ public class ResTestController extends GeneralController {
 								return errorPage;
 							}
 						}catch (Exception e){
-							e.printStackTrace();
+                            logger.error("", e);
 						}
                     } else if (StringUtil.isNotBlank(deptConfig.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getIsTestOut())) {
 						String currDate = DateUtil.getCurrDate();
@@ -178,7 +178,7 @@ public class ResTestController extends GeneralController {
 									return errorPage;
 								}
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 						}
 					}
@@ -209,7 +209,7 @@ public class ResTestController extends GeneralController {
 									return errorPage;
 								}
 							}catch (Exception e){
-								e.printStackTrace();
+                                logger.error("", e);
 							}
                         } else if (StringUtil.isNotBlank(config.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(config.getIsTestOut())) {
 							String currDate = DateUtil.getCurrDate();
@@ -224,7 +224,7 @@ public class ResTestController extends GeneralController {
 										return errorPage;
 									}
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 							}
 						}

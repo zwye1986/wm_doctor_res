@@ -16,7 +16,8 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.sci.ctrl.jsres.JsResHeadDeptController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TempMapper;
 import com.pinde.core.common.enums.osca.DoctorScoreEnum;
@@ -32,6 +33,8 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -79,6 +82,8 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     private  OscaTeaScanDocMapper scanDocMapper;
     @Autowired
     private IOrgBiz orgBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(SchRotationDeptAfterBizImpl.class);
     @Override
     public List<SchRotationDeptAfterWithBLOBs> getAll() {
         SchRotationDeptAfterExample example=new SchRotationDeptAfterExample();
@@ -211,7 +216,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                     fs.close();
                                 }catch (Exception e) {
                                     System.out.println(idNo + "复制单个文件操作出错");
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                                 count++;
                             }
@@ -248,7 +253,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -289,7 +294,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
     private static void copyImage(File oldFile, File newFile, File tempFile) throws Exception {
@@ -618,7 +623,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -821,7 +826,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1010,7 +1015,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1230,7 +1235,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1362,7 +1367,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1417,7 +1422,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 //                }
 //            });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1468,7 +1473,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 //                }
 //            });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1597,7 +1602,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();

@@ -2,10 +2,10 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResSkillConfigBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.ResDoctorSkillMapper;
 import com.pinde.sci.dao.base.ResSkillConfigMapper;
 import com.pinde.sci.dao.base.ResSkillOrgMapper;

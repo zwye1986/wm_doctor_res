@@ -309,7 +309,7 @@ public class ExcelUtile extends HashMap{
 			Method setMethod = objClass.getMethod(methedName,new Class[] {String.class});
 			setMethod.invoke(obj,new Object[] {attrValue});
 		}catch(Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
     public static String _doubleTrans(double d) {

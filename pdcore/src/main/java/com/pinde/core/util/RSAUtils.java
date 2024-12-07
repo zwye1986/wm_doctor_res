@@ -3,6 +3,8 @@ package com.pinde.core.util;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import java.io.UnsupportedEncodingException;
@@ -30,7 +32,8 @@ public class RSAUtils {
      */
     private static final Provider DEFAULT_PROVIDER = new BouncyCastleProvider();
     private static KeyPairGenerator keyPairGen = null;
-    private static KeyFactory keyFactory = null;
+    private static Logger logger = LoggerFactory.getLogger(RSAUtils.class);
+
     /**
      * 缓存的密钥对。
      */
@@ -43,7 +46,7 @@ public class RSAUtils {
     static {
         try {
             keyPairGen = KeyPairGenerator.getInstance(ALGORITHOM, DEFAULT_PROVIDER);
-            keyFactory = KeyFactory.getInstance(ALGORITHOM, DEFAULT_PROVIDER);
+//            keyFactory = KeyFactory.getInstance(ALGORITHOM, DEFAULT_PROVIDER);
         } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
         }
@@ -130,7 +133,7 @@ public class RSAUtils {
             decode = URLDecoder.decode(reverse, "UTF-8");
             System.out.println("解密后文字：" + decode);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return decode;
     }

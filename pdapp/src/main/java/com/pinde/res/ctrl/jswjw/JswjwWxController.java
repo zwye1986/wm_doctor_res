@@ -566,7 +566,7 @@ public class JswjwWxController extends GeneralController {
                                     }
                                 }
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                         } else {
                             flag = true;
@@ -605,7 +605,7 @@ public class JswjwWxController extends GeneralController {
                                 return false;
                             }
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
 
                     }
@@ -1130,7 +1130,7 @@ public class JswjwWxController extends GeneralController {
                             return ResultDataThrow("轮转时间结束,无法参加考试!");
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                 } else if (StringUtil.isNotBlank(deptConfig.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getIsTestOut())) {
                     String currDate = DateUtil.getCurrDate();
@@ -1144,7 +1144,7 @@ public class JswjwWxController extends GeneralController {
                                 return ResultDataThrow("超出轮转时间结束后" + testOutDate + "天,无法参加考试!");
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                     }
                 }
@@ -1173,7 +1173,7 @@ public class JswjwWxController extends GeneralController {
                                 return ResultDataThrow("轮转时间结束,无法参加考试!");
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                     } else if (StringUtil.isNotBlank(config.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(config.getIsTestOut())) {
                         String currDate = DateUtil.getCurrDate();
@@ -1187,7 +1187,7 @@ public class JswjwWxController extends GeneralController {
                                     return ResultDataThrow("超出轮转时间结束后" + testOutDate + "天,无法参加考试!");
                                 }
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                         }
                     }
@@ -1524,7 +1524,7 @@ public class JswjwWxController extends GeneralController {
                     formDataMap.put(element.getName(), element.getText());
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return formDataMap;
@@ -2278,7 +2278,7 @@ public class JswjwWxController extends GeneralController {
                             return true;
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                 }
 
@@ -2474,7 +2474,7 @@ public class JswjwWxController extends GeneralController {
 //        try {
 //            generateImage(form.getImageContent(), fileDir + File.separator + fileName);
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//             logger.error("",e);
 //            throw new RuntimeException("保存文件失败！");
 //        }
 //        String urlCfg = jswjwBiz.getCfgCode("upload_base_url");
@@ -3464,7 +3464,7 @@ public class JswjwWxController extends GeneralController {
                 String content = URLDecoder.decode(trainingOpinion.getOpinionUserContent(), "UTF-8");
                 trainingOpinion.setOpinionUserContent(content);
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         SysUser currentUser = jswjwBiz.readSysUser(userFlow);
@@ -6178,7 +6178,7 @@ public class JswjwWxController extends GeneralController {
                     }
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return ResultDataThrow("服务器发生错误");
             }
         }
@@ -6259,7 +6259,7 @@ public class JswjwWxController extends GeneralController {
                     return ResultDataThrow("验证次数过多，请1小时后再尝试");
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return ResultDataThrow("服务器发生错误");
             }
         }
@@ -8434,7 +8434,7 @@ public class JswjwWxController extends GeneralController {
                 try {
                     extScore = jswjwBiz.convertMapToXml(extScoreMap, resScore);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 if (StringUtil.isNotBlank(extScore)) {
                     resScore.setExtScore(extScore);
@@ -9191,7 +9191,7 @@ public class JswjwWxController extends GeneralController {
             resDoctor.setDoctorStatusName("报名审核中");
             jswjwBiz.editDoctor(resDoctor);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return ResultDataThrow("操作失败！");
         }
         docRecWithBLOBs.setIsRetrain(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
@@ -9232,7 +9232,7 @@ public class JswjwWxController extends GeneralController {
                             try {
                                 cd.setTime(sdf.parse(recruitDate));
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                             String format = sdf.format(cd.getTime());
@@ -9630,7 +9630,7 @@ public class JswjwWxController extends GeneralController {
                         try {
                             cd.setTime(sdf.parse(recruitDate));
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                         cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                         String format = sdf.format(cd.getTime());
@@ -9924,7 +9924,7 @@ public class JswjwWxController extends GeneralController {
                             try {
                                 cd.setTime(sdf.parse(recruitDate));
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                             String format = sdf.format(cd.getTime());

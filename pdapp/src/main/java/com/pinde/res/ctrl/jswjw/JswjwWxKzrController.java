@@ -1452,7 +1452,7 @@ public class JswjwWxKzrController extends GeneralController {
 					}
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -1518,7 +1518,7 @@ public class JswjwWxKzrController extends GeneralController {
 					formDataMap.put(element.getName(), element.getText());
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -2686,7 +2686,7 @@ public class JswjwWxKzrController extends GeneralController {
 					f1=Float.valueOf(s1);
 					f2=Float.valueOf(s2);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				Float result=f2-f1;
 				return result>0?1:result==0?0:-1;
@@ -2906,7 +2906,7 @@ public class JswjwWxKzrController extends GeneralController {
 					f1=Float.valueOf(s1);
 					f2=Float.valueOf(s2);
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				Float result=f2-f1;
 				return result>0?1:result==0?0:-1;
@@ -5395,7 +5395,7 @@ public class JswjwWxKzrController extends GeneralController {
 		try {
 			generateImage(form.getImageContent(), fileDir + File.separator + originalFilename);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException("保存文件失败！");
 		}
 		String filePath = File.separator + "activityFile" + File.separator + dateString + File.separator + form.getRecordFlow() + File.separator + originalFilename;
@@ -5451,7 +5451,7 @@ public class JswjwWxKzrController extends GeneralController {
 		try {
 			generateImage(form.getImageContent(), fileDir + File.separator + originalFilename);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException("保存文件失败！");
 		}
 		String filePath = File.separator + "activityFile" + File.separator + dateString + File.separator + form.getRecordFlow() + File.separator + originalFilename;
@@ -5508,7 +5508,7 @@ public class JswjwWxKzrController extends GeneralController {
 		try {
 			generateImage(form.getImageContent(), fileDir + File.separator + originalFilename);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException("保存文件失败！");
 		}
 		String filePath = File.separator + "activityFile" + File.separator + dateString + File.separator + form.getRecordFlow() + File.separator + originalFilename;

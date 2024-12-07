@@ -1,6 +1,8 @@
 package com.pinde.sci.util;
 
 import com.pinde.core.util.SpringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +19,9 @@ import java.util.Properties;
  */
 public class PropertiesUtils {
 
+    private static Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
+
+
     public static Properties getProperties() {
         Properties prop = new Properties();
         try {
@@ -25,7 +30,7 @@ public class PropertiesUtils {
 //            prop.load(new FileInputStream(PropertiesUtils.class.getResource("/").getPath() + "wxConfig.properties"));
 //            prop.load(PropertiesUtils.class.getResourceAsStream("/wxConfig.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return prop;

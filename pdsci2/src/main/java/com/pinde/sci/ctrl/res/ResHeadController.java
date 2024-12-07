@@ -1620,7 +1620,7 @@ public class ResHeadController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 
 								putMapVal(scoreMap,operUserFlow+gk,score);
@@ -1630,7 +1630,7 @@ public class ResHeadController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 
 							putMapVal(scoreMap,operUserFlow,score);
@@ -1758,7 +1758,7 @@ public class ResHeadController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 
 								putMapVal(scoreMap,operUserFlow+gk,score);
@@ -1768,7 +1768,7 @@ public class ResHeadController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 
 							putMapVal(scoreMap,operUserFlow,score);
@@ -1874,7 +1874,7 @@ public class ResHeadController extends GeneralController {
 							f1=Float.valueOf(s1);
 							f2=Float.valueOf(s2);
 						} catch (Exception e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 						Float result=f2-f1;
 						return result>0?1:result==0?0:-1;
@@ -2009,7 +2009,7 @@ public class ResHeadController extends GeneralController {
 						f1=Float.valueOf(s1.toString());
 						f2=Float.valueOf(s2.toString());
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 					}
 					Float result=f2-f1;
 					return result>0?1:result==0?0:-1;
@@ -2173,7 +2173,7 @@ public class ResHeadController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 
 								putMapVal(scoreMap,operUserFlow+gk,score);
@@ -2183,7 +2183,7 @@ public class ResHeadController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 
 							putMapVal(scoreMap,operUserFlow,score);
@@ -2269,7 +2269,7 @@ public class ResHeadController extends GeneralController {
 								String scoreS = dataMap.get("score");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 
 							putMapVal(avgMap,key+"_"+gk,score);
@@ -2280,7 +2280,7 @@ public class ResHeadController extends GeneralController {
 							String scoreS = (String)o;
 							score = Float.valueOf(scoreS);
 						} catch (Exception e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 
 						putMapVal(avgMap,key+"_"+total,score);

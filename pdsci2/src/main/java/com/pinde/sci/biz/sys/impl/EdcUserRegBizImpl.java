@@ -3,7 +3,7 @@ package com.pinde.sci.biz.sys.impl;
 import com.pinde.sci.biz.sys.IEdcUserRegBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;

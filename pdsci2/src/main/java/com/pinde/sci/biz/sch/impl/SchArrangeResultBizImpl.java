@@ -298,7 +298,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			try {
 				month = TimeUtil.getMonthsBetween(map);
 			} catch (ParseException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			String schMonth = String.valueOf(Double.parseDouble(month + ""));
 			result.setSchMonth(schMonth);
@@ -1520,7 +1520,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
                     map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return map;
@@ -2721,7 +2721,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					}
 
 				}catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 					continue;
 				}
 			}
@@ -3283,7 +3283,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				Map<String, Object> map = new HashMap<>();
 //				for (int j = 0; j < colnames.size(); j++) {
 //					Cell cell = r.getCell(j);
-//					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
+//					if (null == cell ||  StringUtil.isBlank(cell.toString().trim())) {
 //						continue;
 //					}
 //					if (r.getCell((short) j).getCellType().getCode() == 1) {
@@ -3309,32 +3309,32 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //						map.put("teacherName",value);
 //					}
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，学员姓名为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，身份证号为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("deptName")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("deptName")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，标准科室为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schDeptName")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("schDeptName")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，轮转科室为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schStartDate")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("schStartDate")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，开始时间为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schEndDate")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("schEndDate")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，结束时间为空！");
 //				}
 //				if (map.get("schStartDate").toString().compareTo(map.get("schEndDate").toString())>0){
 //					throw new RuntimeException("导入失败！第" + i + "行，轮转开始时间必须早于结束时间！");
 //				}
 //				//禅道3299 科主任带教老师非必填
-////				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("headName")))) {
+////				if ( StringUtil.isBlank(String.valueOf(map.get("headName")))) {
 ////					throw new RuntimeException("导入失败！第" + i + "行，科主任为空！");
 ////				}
-////				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("teacherName")))) {
+////				if ( StringUtil.isBlank(String.valueOf(map.get("teacherName")))) {
 ////					throw new RuntimeException("导入失败！第" + i + "行，带教老师为空！");
 ////				}
 //				SysUser user = userBiz.findByIdNo(map.get("idNo").toString());
@@ -3503,7 +3503,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				try {
 //					updateResultHaveAfter2(dept.getRecordFlow(),user.getUserFlow(),recContent);
 //				} catch (DocumentException e) {
-//					e.printStackTrace();
+//					 logger.error("",e);
 //				}
 //				succCount++;
 //			}
@@ -3555,7 +3555,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				List<Map<String, Object>> deptList = new ArrayList<>();
 				for (int j = 0; j < colnames.size(); j++) {
 					Cell cell = r.getCell(j);
-					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
+                    if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
 						continue;
 					}
 					if (r.getCell((short) j).getCellType().getCode() == 1) {
@@ -3625,11 +3625,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						}
 					}
 				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
 					msg = msg+"第" + i + "行导入失败！学员姓名为空！<br>";
 					continue;
 				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
 					msg = msg+"第" + i + "行导入失败！身份证号为空！<br>";
 					continue;
 				}
@@ -3799,7 +3799,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						try {
 							updateResultHaveAfter2(dept.getRecordFlow(), user.getUserFlow(), recContent);
 						} catch (DocumentException e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 						checkSuccess = true;
 					}
@@ -3948,7 +3948,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				try {
 //					updateResultHaveAfter2(dept.getRecordFlow(), item.getUserFlow(), recContent);
 //				} catch (DocumentException e) {
-//					e.printStackTrace();
+//					 logger.error("",e);
 //				}
 			}
 		}

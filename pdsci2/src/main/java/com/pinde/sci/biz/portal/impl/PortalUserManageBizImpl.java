@@ -5,7 +5,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalUserManageBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;

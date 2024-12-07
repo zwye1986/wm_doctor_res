@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
@@ -19,6 +20,8 @@ import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +62,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
     private IJsResStatisticBiz resStatisticBiz;
     @Autowired
     private JsResManageController jsResManageController;
+    private static Logger logger = LoggerFactory.getLogger(ResMonthlyReportGlobalControllerClass.class);
 
     /**
      * 学院出科
@@ -285,7 +289,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             }
                return doctorOutOfficeParamPOUniversitylist;
             }catch(RuntimeException e){
-                e.printStackTrace();
+            logger.error("", e);
                 List<Map<String, String>> list1 = new ArrayList<>();
                 Map<String, String> map = new HashMap<>();
                 if (null == e.getMessage()) {
@@ -590,7 +594,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             }
             return teachActiveParamPOUniversitylist;
         }catch (RuntimeException e){
-            e.printStackTrace();
+            logger.error("", e);
             List<Map<String,String>> list=new ArrayList<>();
             Map<String,String> map=new HashMap<>();
             if(e.getMessage()==null){
@@ -601,7 +605,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
             list.add(map);
             return list;
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("", e);
             List<Map<String,String>> list=new ArrayList<>();
             Map<String,String> map=new HashMap<>();
             if(e.getMessage()==null){

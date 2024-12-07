@@ -4,6 +4,7 @@ package com.pinde.sci.ctrl.osca;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.jsres.impl.JsResSupervisioBizImpl;
 import com.pinde.sci.biz.osca.IOscaExaminerManageBiz;
 import com.pinde.sci.biz.osca.ISiteInformationBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -21,6 +22,8 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -733,9 +736,9 @@ public class OscaExaminerManageController extends GeneralController{
         if(file.getSize() > 0){
             try{
                 oscaExaminerManageBiz.importExamFromExcel(file);
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return "导入成功！";
@@ -751,11 +754,14 @@ public class OscaExaminerManageController extends GeneralController{
         if(file.getSize() > 0){
             try{
                 oscaExaminerManageBiz.importExamFromExcel1(file);
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return "导入成功！";
     }
+
+    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioBizImpl.class);
+
 }

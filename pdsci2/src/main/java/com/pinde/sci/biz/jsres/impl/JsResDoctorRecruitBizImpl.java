@@ -393,7 +393,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			}
 			msgBiz.addSysMsg(recruitWithBLOBs.getDoctorFlow(), msgTitle , msgContent);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		int result = saveDoctorRecruit(recruitWithBLOBs);
 		return result;
@@ -535,7 +535,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				resDoctorBiz.insertRecruitInfoNotPass(recWithBLOBs.getRecruitFlow());
 				doctorRecruitMapper.updateByPrimaryKeySelective(recWithBLOBs);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
 		String modifyTime = DateUtil.transDateTime(recWithBLOBs.getModifyTime());
@@ -836,7 +836,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
                     try {
                         oldGraduationYear = Integer.parseInt(recruit.getGraduationYear());
                     } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                 }
 				ResDocotrDelayTeturn ret=resDoctorDelayTeturnBiz.findDelayInfo(recruitWithBLOBs.getRecruitFlow());
@@ -2025,7 +2025,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2241,7 +2241,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				is.close();

@@ -5,6 +5,8 @@ import com.pinde.core.model.SysSmsLog;
 import com.pinde.core.model.TestPaperExample;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.util.Map;
  *
  */
 public class SMSUtil {
+    private static Logger logger = LoggerFactory.getLogger(SMSUtil.class);
+
     /** 用户名常量 */
     public static final String UID = "njpdxx-test";
     /** 用户密码常量 */
@@ -402,13 +406,13 @@ public class SMSUtil {
             // 返回发送结果
             result = in.readLine().toString();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("编码转换异常");
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("协议使用异常");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("返回结果异常");
         } finally {
             if (result.startsWith("{\"stat\":\"100")) {
@@ -483,7 +487,7 @@ public class SMSUtil {
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));//构建缓存阅读器
             result = in.readLine();//返回信息
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return -2;//返回结果异常
         } finally {
             if (result.startsWith("{\"stat\":\"100")) {

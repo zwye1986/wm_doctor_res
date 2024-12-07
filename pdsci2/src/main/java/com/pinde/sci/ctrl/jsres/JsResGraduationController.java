@@ -23,6 +23,8 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,6 +71,7 @@ public class JsResGraduationController extends GeneralController {
         return "jsres/hospital/graduation/queryMain";
     }
 
+    private static Logger logger = LoggerFactory.getLogger(JsResGraduationController.class);
     /**
      * 下载远程文件并保存到本地
      */
@@ -106,7 +109,7 @@ public class JsResGraduationController extends GeneralController {
                 if (bis != null)
                     bis.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }

@@ -6,9 +6,12 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResSupervisioFileBiz;
 import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.ctrl.jsres.JsResHeadDeptController;
 import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
 import com.pinde.sci.model.mo.JsresSupervisioFile;
 import com.pinde.sci.model.mo.JsresSupervisioFileExample;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +26,7 @@ import java.util.List;
 public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
     @Autowired
     private JsresSupervisioFileMapper supervisioFileMapper;
-
+    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioFileBizImpl.class);
     @Override
     public String checkImg(MultipartFile file) {
         List<String> mimeList = new ArrayList<String>();
@@ -62,7 +65,7 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -75,7 +78,7 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }

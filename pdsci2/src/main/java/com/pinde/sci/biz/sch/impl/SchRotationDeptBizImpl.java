@@ -6,13 +6,13 @@ import com.pinde.core.model.SysDict;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.recruit.impl.RecruitAdmitInfoBizImpl;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
@@ -33,6 +33,8 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,20 +89,9 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Autowired
 	private SchRotationExtendMapper rotationExtendMapper;
 
-	//	@Override
-//	public List<SchRotationDept> searchSchRotationDept() {
-//		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-//		example.setOrderByClause("ORDINAL");
-//		return rotationDeptMapper.selectByExample(example);
-//	}
-//	@Override
-//	public List<SchRotationDept> searchSchRotationDeptByCurrFlow(String currRelRecordFlow) {
-//		SchRotationDeptExample example = new SchRotationDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecordFlowEqualTo(currRelRecordFlow);
-//		example.setOrderByClause("ORDINAL");
-//		return rotationDeptMapper.selectByExample(example);
-//	}
+    private static Logger logger = LoggerFactory.getLogger(SchRotationDeptBizImpl.class);
+
+    //	}
 	@Override
 	public List<SchRotationDept> searchAllSchRotationDept() {
 		SchRotationDeptExample example = new SchRotationDeptExample();
@@ -1460,7 +1451,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			});
 		}catch(Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 		}finally {
 			try {
 				is.close();
@@ -1559,7 +1550,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				}
 			});
 		}catch(Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 		}finally {
 			try {
 				is.close();
@@ -2016,7 +2007,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 			schRotationNew.setRotationFlow(uuid);
             schRotationNew.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			schRotationNew.setCreateUserFlow(user.getUserFlow());
-			schRotationNew.setCreateTime(DateUtil.getCurrDateTime());
+            schRotationNew.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime());
 			if(null == sysDoctorTrainingSpeMap.get(schRotationNew.getSpeName())){
 				hintList.add("未找到此专业: "+schRotationNew.getSpeName()+" 请先在系统内添加！");
 				return hintList;
@@ -2077,7 +2068,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 					}
 				}
 			}
-			rotationGroupNew.setCreateTime(DateUtil.getCurrDateTime());
+            rotationGroupNew.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime());
 			if (StringUtil.isNotEmpty(rotationGroupNew.getIsRequired())) {
 				if ("是".equals(rotationGroupNew.getIsRequired())) {
                     rotationGroupNew.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_N);
@@ -2103,7 +2094,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		for (SchRotationDept schRotationDept : schRotationDeptList) {
 			schRotationDept.setRecordFlow(PkUtil.getUUID());
             schRotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-			schRotationDept.setCreateTime(DateUtil.getCurrDateTime());
+            schRotationDept.setCreateTime(com.pinde.core.util.DateUtil.getCurrDateTime());
 			schRotationDept.setCreateUserFlow(user.getUserFlow());
 			if (null != sysStandardDeptMap.get(schRotationDept.getStandardDeptName())) {
 				schRotationDept.setStandardDeptId(sysStandardDeptMap.get(schRotationDept.getStandardDeptName()).getDictId());

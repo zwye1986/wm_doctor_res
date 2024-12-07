@@ -14,10 +14,13 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.ctrl.jsres.JsResHeadDeptController;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
 import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
 import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
 import org.springframework.stereotype.Controller;
@@ -54,6 +57,8 @@ public class ResDoctorSigninController extends GeneralController{
 	private IResDoctorKqBiz resDoctorKqBiz;
 	@Autowired
 	private SysUserDeptMapper sysUserDeptMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(ResExamCfgController.class);
 
 	@RequestMapping(value="/timeSet")
 	public String timeSet(Model model) {
@@ -503,7 +508,7 @@ public class ResDoctorSigninController extends GeneralController{
 							try {
 								file.transferTo(newFile);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath =  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;

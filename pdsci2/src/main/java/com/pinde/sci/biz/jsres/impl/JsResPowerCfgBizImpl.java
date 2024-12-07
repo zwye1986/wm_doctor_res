@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
@@ -18,6 +19,8 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +37,10 @@ import java.util.*;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
+
+
+    private static Logger logger = LoggerFactory.getLogger(JsResPowerCfgBizImpl.class);
+
 
     @Autowired
     private JsresPowerCfgMapper jsresPowerCfgMapper;
@@ -487,7 +494,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();

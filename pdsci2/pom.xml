@@ -36,24 +36,6 @@
             <groupId>com.pinde</groupId>
             <artifactId>pdcore</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api-1.6.6</artifactId>
-                    <groupId>slf4j-api-1.6.6</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-log4j12-1.6.6</artifactId>
-                    <groupId>slf4j-log4j12-1.6.6</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>log4j-1.2.12</artifactId>
-                    <groupId>log4j-1.2.12</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>log4jdbc4-1.2</artifactId>
-                    <groupId>log4jdbc4-1.2</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- redis连接配置 -->
@@ -69,128 +51,11 @@
         </dependency>
 
         <dependency>
-            <groupId>optaplanner-benchmark-7.7.0.Final</groupId>
-            <artifactId>optaplanner-benchmark-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-benchmark-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-core-7.7.0.Final</groupId>
-            <artifactId>optaplanner-core-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-core-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-examples-7.7.0.Final</groupId>
-            <artifactId>optaplanner-examples-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-examples-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-common-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-common-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-common-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-jackson-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-jackson-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-jackson-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-jaxb-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-jaxb-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-jaxb-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-jpa-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-jpa-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-jpa-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-xstream-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-xstream-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-xstream-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-test-7.7.0.Final</groupId>
-            <artifactId>optaplanner-test-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-test-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>xstream-1.4.10</groupId>
             <artifactId>xstream-1.4.10</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/xstream-1.4.10.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>AnyChart6.2.0</groupId>
-            <artifactId>AnyChart6.2.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/AnyChart6.2.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>aopalliance-1.0</groupId>
-            <artifactId>aopalliance-1.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/aopalliance-1.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>axis</groupId>
-            <artifactId>axis</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/axis.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>bonecp-0.8.0.RELEASE</groupId>
-            <artifactId>bonecp-0.8.0.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/bonecp-0.8.0.RELEASE.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>bonecp-spring-0.8.0.RELEASE</groupId>
-            <artifactId>bonecp-spring-0.8.0.RELEASE</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/bonecp-spring-0.8.0.RELEASE.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -212,22 +77,6 @@
         </dependency>
 
         <dependency>
-            <groupId>easy-captcha-1.6.2</groupId>
-            <artifactId>easy-captcha-1.6.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/easy-captcha-1.6.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>ecj-4.4.2</groupId>
-            <artifactId>ecj-4.4.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/ecj-4.4.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>ehcache-core-2.5.3</groupId>
             <artifactId>ehcache-core-2.5.3</artifactId>
             <version>1.0</version>
@@ -235,21 +84,6 @@
             <systemPath>${lib.dir}/ehcache-core-2.5.3.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>flying-saucer-core-9.0.3-RC1</groupId>
-            <artifactId>flying-saucer-core-9.0.3-RC1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/flying-saucer-core-9.0.3-RC1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>flying-saucer-pdf-itext5-9.0.3-RC1</groupId>
-            <artifactId>flying-saucer-pdf-itext5-9.0.3-RC1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/flying-saucer-pdf-itext5-9.0.3-RC1.jar</systemPath>
-        </dependency>
 
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -271,32 +105,6 @@
             <scope>system</scope>
             <systemPath>${lib.dir}/gson-2.7.jar</systemPath>
         </dependency>
-
-
-
-        <!--<dependency>
-            <groupId>httpclient-4.5.5</groupId>
-            <artifactId>httpclient-4.5.5</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/httpclient-4.5.5.jar</systemPath>
-        </dependency>-->
-
-        <dependency>
-            <groupId>itext-2.1.7</groupId>
-            <artifactId>itext-2.1.7</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/itext-2.1.7.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>itextpdf-5.4.4</groupId>
-            <artifactId>itextpdf-5.4.4</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/itextpdf-5.4.4.jar</systemPath>
-        </dependency>
         <dependency>
             <groupId>jacob</groupId>
             <artifactId>jacob</artifactId>
@@ -314,59 +122,11 @@
         </dependency>
 
         <dependency>
-            <groupId>jave-1.0</groupId>
-            <artifactId>jave-1.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jave-1.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jaxb-xmldsig-core-1.0.0</groupId>
-            <artifactId>jaxb-xmldsig-core-1.0.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jaxb-xmldsig-core-1.0.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jaxen-1.1.1</groupId>
-            <artifactId>jaxen-1.1.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jaxen-1.1.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jaxrpc</groupId>
-            <artifactId>jaxrpc</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jaxrpc.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jcaptcha-1.0-all</groupId>
-            <artifactId>jcaptcha-1.0-all</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jcaptcha-1.0-all.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>json_simple-1.1</groupId>
             <artifactId>json_simple-1.1</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/json_simple-1.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>jsoup-1.9.2</groupId>
-            <artifactId>jsoup-1.9.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/jsoup-1.9.2.jar</systemPath>
         </dependency>
 
 
@@ -379,18 +139,6 @@
             <systemPath>${lib.dir}/jtidy-r938.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
-        <!--<dependency>
-            <groupId>license3j-1.0.3</groupId>
-            <artifactId>license3j-1.0.3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/license3j-1.0.3.jar</systemPath>
-        </dependency>-->
 
         <dependency>
             <groupId>com.verhas</groupId>
@@ -398,136 +146,9 @@
             <version>2.0.0-JVM8</version>
         </dependency>
 
-        <!--<dependency>
-            <groupId>log4j-1.2.12</groupId>
-            <artifactId>log4j-1.2.12</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/log4j-1.2.12.jar</systemPath>
-        </dependency>-->
-
-        <!--<dependency>
-            <groupId>log4jdbc4-1.2</groupId>
-            <artifactId>log4jdbc4-1.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/log4jdbc4-1.2.jar</systemPath>
-        </dependency>-->
-
-        <!--<dependency>
-            <groupId>mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/mail.jar</systemPath>
-        </dependency>-->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>javax.mail-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.protobuf</groupId>
-                    <artifactId>protobuf-java</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>okio-1.6.0</groupId>
-            <artifactId>okio-1.6.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/okio-1.6.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>opdevelop</groupId>
-            <artifactId>opdevelop</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/opdevelop.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-benchmark-7.7.0.Final</groupId>
-            <artifactId>optaplanner-benchmark-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-benchmark-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-core-7.7.0.Final</groupId>
-            <artifactId>optaplanner-core-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-core-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-examples-7.7.0.Final</groupId>
-            <artifactId>optaplanner-examples-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-examples-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-common-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-common-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-common-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-jackson-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-jackson-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-jackson-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-jaxb-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-jaxb-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-jaxb-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-jpa-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-jpa-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-jpa-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-persistence-xstream-7.7.0.Final</groupId>
-            <artifactId>optaplanner-persistence-xstream-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-persistence-xstream-7.7.0.Final.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>optaplanner-test-7.7.0.Final</groupId>
-            <artifactId>optaplanner-test-7.7.0.Final</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/optaplanner-test-7.7.0.Final.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -633,14 +254,6 @@
 <!--        </dependency>-->
 
         <dependency>
-            <groupId>quartz-all-1.8.6</groupId>
-            <artifactId>quartz-all-1.8.6</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/quartz-all-1.8.6.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>reflections-0.9.10</groupId>
             <artifactId>reflections-0.9.10</artifactId>
             <version>1.0</version>
@@ -654,46 +267,6 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/serializer-2.7.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>shiro-core-1.2.3</groupId>
-            <artifactId>shiro-core-1.2.3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/shiro-core-1.2.3.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>shiro-ehcache-1.2.3</groupId>
-            <artifactId>shiro-ehcache-1.2.3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/shiro-ehcache-1.2.3.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>shiro-quartz-1.2.3</groupId>
-            <artifactId>shiro-quartz-1.2.3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/shiro-quartz-1.2.3.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>shiro-spring-1.2.3</groupId>
-            <artifactId>shiro-spring-1.2.3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/shiro-spring-1.2.3.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>shiro-web-1.2.3</groupId>
-            <artifactId>shiro-web-1.2.3</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/shiro-web-1.2.3.jar</systemPath>
         </dependency>
 
         <dependency>

@@ -1,15 +1,12 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.itextpdf.text.DocumentException;
+import com.lowagie.text.DocumentException;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.Docx4jUtil;
-import com.pinde.core.util.ExcleUtile;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.ZipUtil;
+import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
@@ -19,9 +16,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.DateUtil;
-import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.model.mo.*;
@@ -409,7 +404,7 @@ public class JsresSupervisioController extends GeneralController {
             try {
                 count = supervisioUserBiz.importSupervisioUser(file);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return e.getMessage();
             }
             if (count != 0) {
@@ -428,7 +423,7 @@ public class JsresSupervisioController extends GeneralController {
             try {
                 count = supervisioUserBiz.importHospitalLeader(file);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return e.getMessage();
             }
             if (count != 0) {
@@ -3879,7 +3874,7 @@ public class JsresSupervisioController extends GeneralController {
                 fileList.add(docxFile);
             }
         } catch (RuntimeException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 if (out != null) {
@@ -3887,7 +3882,7 @@ public class JsresSupervisioController extends GeneralController {
                     out.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }

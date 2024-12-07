@@ -3,9 +3,12 @@ package com.pinde.sci.common.ueditor;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.common.InitConfig;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -84,7 +87,7 @@ public class KindeditorUpload extends HttpServlet {
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 			// 重写后的文件路径
@@ -109,4 +112,7 @@ public class KindeditorUpload extends HttpServlet {
 		obj.put("message", message);
 		return obj.toJSONString();
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(KindeditorUpload.class);
+
 }

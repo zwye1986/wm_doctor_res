@@ -1,14 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.OrgLevelEnum;
-import com.pinde.core.common.enums.OrgTypeEnum;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.dao.base.ResJointOrgMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.jszy.JszyResJointOrgExtMapper;

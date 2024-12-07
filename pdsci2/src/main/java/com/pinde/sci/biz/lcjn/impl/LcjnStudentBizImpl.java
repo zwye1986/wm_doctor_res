@@ -9,7 +9,7 @@ import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
