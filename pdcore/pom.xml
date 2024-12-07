@@ -32,11 +32,12 @@
 
     <dependencies>
 
-
-
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>com.oreilly</groupId>
+            <artifactId>cos</artifactId>
+            <version>12.2008</version>
+            <scope>system</scope>
+            <systemPath>${lib.dir}/cos-26Dec2008.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -82,103 +83,12 @@
         </dependency>
 
         <dependency>
-            <groupId>pdlic</groupId>
-            <artifactId>pdlic</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/pdlic.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>pinyin4j-2.5.0</groupId>
             <artifactId>pinyin4j-2.5.0</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${lib.dir}/pinyin4j-2.5.0.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>pjl-comp-filter-1.8.1</groupId>
-            <artifactId>pjl-comp-filter-1.8.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/pjl-comp-filter-1.8.1.jar</systemPath>
-        </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>poi-3.10-FINAL-20140208</groupId>-->
-<!--            <artifactId>poi-3.10-FINAL-20140208</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/poi-3.10-FINAL-20140208.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>poi-examples-3.10-FINAL-20140208</groupId>-->
-<!--            <artifactId>poi-examples-3.10-FINAL-20140208</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/poi-examples-3.10-FINAL-20140208.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>poi-excelant-3.10-FINAL-20140208</groupId>-->
-<!--            <artifactId>poi-excelant-3.10-FINAL-20140208</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/poi-excelant-3.10-FINAL-20140208.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>poi-ooxml-3.10-FINAL-20140208</groupId>-->
-<!--            <artifactId>poi-ooxml-3.10-FINAL-20140208</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/poi-ooxml-3.10-FINAL-20140208.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>poi-ooxml-schemas-3.10-FINAL-20140208</groupId>-->
-<!--            <artifactId>poi-ooxml-schemas-3.10-FINAL-20140208</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/poi-ooxml-schemas-3.10-FINAL-20140208.jar</systemPath>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>poi-scratchpad-3.10-FINAL-20140208</groupId>-->
-<!--            <artifactId>poi-scratchpad-3.10-FINAL-20140208</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/poi-scratchpad-3.10-FINAL-20140208.jar</systemPath>-->
-<!--        </dependency>-->
-
-
-        <dependency>
-            <groupId>reflections-0.9.10</groupId>
-            <artifactId>reflections-0.9.10</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/reflections-0.9.10.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>serializer-2.7.1</groupId>
-            <artifactId>serializer-2.7.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/serializer-2.7.1.jar</systemPath>
-        </dependency>
-
-
-        <dependency>
-            <groupId>sigar-1.6.4</groupId>
-            <artifactId>sigar-1.6.4</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/sigar-1.6.4.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>simplecaptcha-1.2.1</groupId>
             <artifactId>simplecaptcha-1.2.1</artifactId>
@@ -188,139 +98,11 @@
         </dependency>
 
         <dependency>
-            <groupId>slf4j-api-1.6.6</groupId>
-            <artifactId>slf4j-api-1.6.6</artifactId>
+            <groupId>sigar-1.6.4</groupId>
+            <artifactId>sigar-1.6.4</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${lib.dir}/slf4j-api-1.6.6.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>slf4j-log4j12-1.6.6</groupId>
-            <artifactId>slf4j-log4j12-1.6.6</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/slf4j-log4j12-1.6.6.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>ssoClient</groupId>
-            <artifactId>ssoClient</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/ssoClient.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>standard-1.1.2</groupId>
-            <artifactId>standard-1.1.2</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/standard-1.1.2.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>velocity-1.7</groupId>
-            <artifactId>velocity-1.7</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/velocity-1.7.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>velocity-tools-2.0</groupId>
-            <artifactId>velocity-tools-2.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/velocity-tools-2.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>xalan-2.7.1</groupId>
-            <artifactId>xalan-2.7.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xalan-2.7.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>xhtmlrenderer-3.0.0</groupId>
-            <artifactId>xhtmlrenderer-3.0.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xhtmlrenderer-3.0.0.jar</systemPath>
-        </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>xmlbeans-2.6.0</groupId>-->
-<!--            <artifactId>xmlbeans-2.6.0</artifactId>-->
-<!--            <version>1.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${lib.dir}/xmlbeans-2.6.0.jar</systemPath>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
-        <dependency>
-            <groupId>org.apache.xmlbeans</groupId>
-            <artifactId>xmlbeans</artifactId>
-            <version>5.2.1</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>xmlgraphics-commons-1.5</groupId>
-            <artifactId>xmlgraphics-commons-1.5</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xmlgraphics-commons-1.5.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>xmlpull-1.1.3.1</groupId>
-            <artifactId>xmlpull-1.1.3.1</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xmlpull-1.1.3.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>xpp3_min-1.1.4c</groupId>
-            <artifactId>xpp3_min-1.1.4c</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xpp3_min-1.1.4c.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>xstream-1.4.10</groupId>
-            <artifactId>xstream-1.4.10</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/xstream-1.4.10.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>zxing-core-3.1.0</groupId>
-            <artifactId>zxing-core-3.1.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/zxing-core-3.1.0.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>zxing-javase-3.1.0</groupId>
-            <artifactId>zxing-javase-3.1.0</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/zxing-javase-3.1.0.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.pinde</groupId>
-            <artifactId>excelModel</artifactId>
+            <systemPath>${lib.dir}/sigar-1.6.4.jar</systemPath>
         </dependency>
     </dependencies>
     <!-- 多项目（子父项目）中方便依赖管理，保证版本一致，父项目中使用，声明依赖，但不引用，子项目中可以不加版本，使用父项目中配置 -->

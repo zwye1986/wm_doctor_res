@@ -5,11 +5,9 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ServerUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.lic.hardware.MechineInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

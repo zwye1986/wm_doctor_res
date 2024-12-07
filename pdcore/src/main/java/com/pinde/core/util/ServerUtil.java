@@ -1,6 +1,5 @@
 package com.pinde.core.util;
 
-import com.pinde.lic.util.LibraryUtil;
 import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;

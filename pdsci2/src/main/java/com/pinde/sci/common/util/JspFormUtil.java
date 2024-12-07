@@ -4,7 +4,6 @@ import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.ParamPart;
 import com.oreilly.servlet.multipart.Part;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.jspform.Item;
 import com.pinde.core.jspform.ItemGroup;
 import com.pinde.core.jspform.ItemGroupData;
@@ -22,7 +21,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
