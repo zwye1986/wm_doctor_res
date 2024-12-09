@@ -1,8 +1,8 @@
 package com.pinde.sci.YuYinUtil;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 
 import javax.sound.sampled.*;
@@ -42,7 +42,7 @@ public class TtsUtil {
     public static Map<String,String>  run(String text) throws IOException, DemoException {
         Map<String,String> map=new HashMap();
         map.put("code","1");
-        map.put("msg",GlobalConstant.OPRE_SUCCESSED);
+        map.put("msg", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED);
 
         TokenHolder holder = new TokenHolder(appKey, secretKey, TokenHolder.ASR_SCOPE);
         holder.refresh();
@@ -85,7 +85,7 @@ public class TtsUtil {
             os.write(bytes);
             os.close();
             System.out.println("audio file write to " + file.getAbsolutePath());
-            map.put("msg",GlobalConstant.OPRE_SUCCESSED);
+            map.put("msg", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED);
             map.put("url",url+filePath);
             return map;
         } else {

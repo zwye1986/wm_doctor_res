@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class InxColumn extends MybatisObject {
+public class InxColumn extends TeachingActivitySpeakerExample.MybatisObject {
     private String columnFlow;
 
     private String columnId;

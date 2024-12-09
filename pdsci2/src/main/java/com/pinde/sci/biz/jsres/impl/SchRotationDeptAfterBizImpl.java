@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.commom.enums.GeneralEnum;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GeneralEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,22 +13,19 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.osca.DoctorScoreEnum;
-import com.pinde.sci.enums.osca.ScanDocStatusEnum;
-import com.pinde.sci.enums.osca.ScoreStatusEnum;
-import com.pinde.sci.enums.pub.UserNationEnum;
-import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.ScoreStatusEnum;
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.image.codec.jpeg.ImageFormatException;
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -37,7 +34,6 @@ import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.*;
@@ -50,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 
     @Autowired
@@ -96,7 +92,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
         SchRotationDeptAfterExample example=new SchRotationDeptAfterExample();
         example.createCriteria().andApplyYearEqualTo(applyYear);
         SchRotationDeptAfterWithBLOBs record=new SchRotationDeptAfterWithBLOBs();
-        record.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         afterMapper.updateByExampleWithBLOBs(record,example);
     }
 
@@ -116,7 +112,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
         if(StringUtil.isNotBlank(doctorFlow))
         {
             SchRotationDeptAfterExample example=new SchRotationDeptAfterExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow).andApplyYearEqualTo(applyYear);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow).andApplyYearEqualTo(applyYear);
             return afterMapper.selectByExampleWithBLOBs(example);
         }
         return null;
@@ -668,7 +664,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                     "培训年限:trainigYears",
                     "学员类型:doctorTypeName",
             };
-            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
+            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
 
             Map<String,SysOrg> orgMap=new HashMap<>();
             return  ExcelUtile.importDataExcel2(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
@@ -705,7 +701,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                             user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), InitConfig.getInitPassWord()));
                             user.setStatusId(UserStatusEnum.Activated.getId());
                             user.setStatusDesc(UserStatusEnum.Activated.getName());
-                            user.setRecordStatus("Y");
+                            user.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                             user.setCreateUserFlow("TempAdd");
                             user.setCreateTime("20180918000000");
                             user.setUserPhone(userPhone);
@@ -737,7 +733,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                         recruitDocInfo.setDoctorFlow(user.getUserFlow());
                         recruitDocInfo.setAuditStatusId("Passed");
                         recruitDocInfo.setAuditStatusName("审核通过");
-                        recruitDocInfo.setRecordStatus("Y");
+                        recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         recruitDocInfo.setCreateUserFlow("TempAdd");
                         recruitDocInfo.setCreateTime("20180918000000");
                         recruitDocInfo.setOrgName(orgName);
@@ -790,14 +786,14 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 
                         doctorInfo.setRecordFlow(PkUtil.getUUID());
                         doctorInfo.setDoctorFlow(user.getUserFlow());
-                        doctorInfo.setRecordStatus("Y");
+                        doctorInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         doctorInfo.setCreateUserFlow("TempAdd");
                         doctorInfo.setCreateTime("20180918000000");
                         doctorInfo.setOrgFlow(recruitDocInfo.getOrgFlow());
                         doctorInfo.setOrgName(recruitDocInfo.getOrgName());
                         doctorInfo.setDoctorTypeName(doctorTypeName);
                         if (StringUtil.isNotBlank(doctorTypeName)) {
-                            Object  typeId = parseEnumId(JsResDocTypeEnum.values(),doctorTypeName);
+                            Object typeId = parseEnumId(com.pinde.core.common.enums.ResDocTypeEnum.values(), doctorTypeName);
                             if(typeId!=null){
                                 doctorInfo.setDoctorTypeId(typeId.toString());
                             }
@@ -862,7 +858,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                     "培训年限:trainigYears",
                     "学员类型:doctorTypeName",
             };
-            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
+            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
             Map<String,SysOrg> orgMap=new HashMap<>();
             return  ExcelUtile.importDataExcel2(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
 
@@ -908,11 +904,11 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModify");
                                 recruitDocInfo.setCreateTime("20180918000000");
                             }else{
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setModifyUserFlow("TempModify");
                                 recruitDocInfo.setModifyTime("20180918000000");
                             }
@@ -968,7 +964,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 doctorInfo = new JsresRecruitInfo();
 
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModify");
                                 doctorInfo.setCreateTime("20180918000000");
                             }else{
@@ -979,7 +975,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                             doctorInfo.setOrgName(recruitDocInfo.getOrgName());
                             doctorInfo.setDoctorTypeName(doctorTypeName);
                             if (StringUtil.isNotBlank(doctorTypeName)) {
-                                Object  typeId = parseEnumId(JsResDocTypeEnum.values(),doctorTypeName);
+                                Object typeId = parseEnumId(com.pinde.core.common.enums.ResDocTypeEnum.values(), doctorTypeName);
                                 if(typeId!=null){
                                     doctorInfo.setDoctorTypeId(typeId.toString());
                                 }
@@ -1041,7 +1037,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                     "证件号:idNo",
                     "培训专业:speName"
             };
-            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
+            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
             Map<String,SysOrg> orgMap=new HashMap<>();
             return  ExcelUtile.importDataExcel2(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
 
@@ -1089,7 +1085,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModifyReturn");
                                 recruitDocInfo.setCreateTime("20180918000000");
 
@@ -1104,8 +1100,8 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 }
                                 if("助理全科".equals(speName))
                                 {
-                                    recruitDocInfo.setCatSpeId(DictTypeEnum.AssiGeneral.getId());
-                                    recruitDocInfo.setCatSpeName(DictTypeEnum.AssiGeneral.getName());
+                                    recruitDocInfo.setCatSpeId(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getId());
+                                    recruitDocInfo.setCatSpeName(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getName());
                                     recruitDocInfo.setSpeId("50");
                                     recruitDocInfo.setSpeName(speName);
                                 }else {
@@ -1146,7 +1142,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 doctorInfo = new JsresRecruitInfo();
 
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModifyReturn");
                                 doctorInfo.setCreateTime("20180918000000");
 
@@ -1190,8 +1186,8 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                     if(!speName.equals(resDoctorRecruit.getSpeName())) {
                                         if ("助理全科".equals(speName)) {
 
-                                            recruitDocInfo.setCatSpeId(DictTypeEnum.AssiGeneral.getId());
-                                            recruitDocInfo.setCatSpeName(DictTypeEnum.AssiGeneral.getName());
+                                            recruitDocInfo.setCatSpeId(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getId());
+                                            recruitDocInfo.setCatSpeName(com.pinde.core.common.enums.DictTypeEnum.AssiGeneral.getName());
                                             recruitDocInfo.setSpeId("50");
                                             recruitDocInfo.setSpeName(speName);
                                         } else {
@@ -1272,7 +1268,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                     "年级:sessionNumber",
                     "培训专业:speName"
             };
-            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
+            List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId()); //住院医师的
             Map<String,SysOrg> orgMap=new HashMap<>();
             return  ExcelUtile.importDataExcel2(HashMap.class, 1, wb, keys, new IExcelUtil<HashMap>() {
 
@@ -1308,11 +1304,11 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModify");
                                 recruitDocInfo.setCreateTime("20180918000000");
                             }else{
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setModifyUserFlow("TempModify");
                                 recruitDocInfo.setModifyTime("20180918000000");
                             }
@@ -1335,7 +1331,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 doctorInfo = new JsresRecruitInfo();
 
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModify");
                                 doctorInfo.setCreateTime("20180918000000");
                             }else{
@@ -1550,11 +1546,11 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                 recruitDocInfo.setDoctorFlow(user.getUserFlow());
                                 recruitDocInfo.setAuditStatusId("Passed");
                                 recruitDocInfo.setAuditStatusName("审核通过");
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setCreateUserFlow("TempModifyOrg");
                                 recruitDocInfo.setCreateTime("20180918000000");
                             }else{
-                                recruitDocInfo.setRecordStatus("Y");
+                                recruitDocInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 recruitDocInfo.setModifyUserFlow("TempModifyOrg");
                                 recruitDocInfo.setModifyTime("20180918000000");
                             }
@@ -1571,7 +1567,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                             if(doctorInfo==null) {
                                 doctorInfo = new JsresRecruitInfo();
                                 doctorInfo.setDoctorFlow(user.getUserFlow());
-                                doctorInfo.setRecordStatus("Y");
+                                doctorInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 doctorInfo.setCreateUserFlow("TempModifyOrg");
                                 doctorInfo.setCreateTime("20180918000000");
                             }else{
@@ -1644,7 +1640,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 
     private JsresRecruitInfo readRecruitInfo(String doctorFlow, String sessionNumber) {
         JsresRecruitInfoExample example=new JsresRecruitInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andSessionNumberEqualTo(sessionNumber);
         List<JsresRecruitInfo> list=docMapper.selectByExample(example);
         if(list!=null&&list.size()>0)
@@ -1656,7 +1652,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
 
     private JsresRecruitDocInfoWithBLOBs readRecruitDocInfo(String doctorFlow, String sessionNumber) {
         JsresRecruitDocInfoExample example=new JsresRecruitDocInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDoctorFlowEqualTo(doctorFlow).andSessionNumberEqualTo(sessionNumber);
         List<JsresRecruitDocInfoWithBLOBs> list=recruitInfoMapper.selectByExampleWithBLOBs(example);
         if(list!=null&&list.size()>0)
@@ -1723,7 +1719,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                     param.put("stationFlow", stationFlow);
                     ////设置当前站点学员已经考核
                     OscaSkillRoomDoc docRoom=getOscaSkillRoomDocByDoc(param);
-                    if(docRoom!=null&&docRoom.getIsAdminAudit().equals(GlobalConstant.FLAG_N)) {
+                    if (docRoom != null && docRoom.getIsAdminAudit().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
                         //获取所有站点老师提交的总成绩，以及有多少老师提交了成绩
                         Map<String,Object> map=getDocStationAllScore(param);
                         String avgScore=(String) map.get("STATION_AVG_SCORE");
@@ -1747,7 +1743,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public OscaDoctorAssessment getOscaDoctorAssessment(String clinicalFlow, String doctorFlow) {
         OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
         OscaDoctorAssessmentExample.Criteria criteria=example.createCriteria();
-        criteria.andDoctorFlowEqualTo(doctorFlow).andClinicalFlowEqualTo(clinicalFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andDoctorFlowEqualTo(doctorFlow).andClinicalFlowEqualTo(clinicalFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<OscaDoctorAssessment> list=doctorAssessmentMapper.selectByExample(example);
         if(list!=null&&list.size()>0){
             return  list.get(0);
@@ -1760,7 +1756,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public List<OscaSkillRoomDoc> getOscaSkillRoomDocs(String clinicalFlow, String doctorFlow) {
         OscaSkillRoomDocExample example=new OscaSkillRoomDocExample();
         OscaSkillRoomDocExample.Criteria criteria=example.createCriteria();
-        criteria.andClinicalFlowEqualTo(clinicalFlow).andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andClinicalFlowEqualTo(clinicalFlow).andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return roomDocMapper.selectByExample(example);
     }
     public OscaSubjectMain getOscaSubjectMain(String subjectFlow) {
@@ -1772,7 +1768,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
         {
             OscaSubjectPartScoreExample example=new OscaSubjectPartScoreExample();
             OscaSubjectPartScoreExample.Criteria criteria =example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
             List<OscaSubjectPartScore> list=partScoreMapper.selectByExample(example);
             return list;
         }
@@ -1783,7 +1779,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
         {
             OscaSubjectStationScoreExample example=new OscaSubjectStationScoreExample();
             OscaSubjectStationScoreExample.Criteria criteria =example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
             List<OscaSubjectStationScore> list=stationScoreMapper.selectByExample(example);
             return list;
         }
@@ -1793,7 +1789,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public List<OscaSubjectStation> getOscaSubjectStations(String subjectFlow) {
         OscaSubjectStationExample station=new OscaSubjectStationExample();
         OscaSubjectStationExample.Criteria criteria=station.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
         station.setOrderByClause(" ORDINAL ASC ");
         return stationMapper.selectByExample(station);
     }
@@ -1835,7 +1831,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                 if (stations != null) {
                     //如果学员所有站点都没有考核完，直接是不通过
                     if (roomDocs.size() < stations.size()) {
-                        doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                         f=true;
@@ -1864,7 +1860,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                         //如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
                         if(allScore!=null&&allScore>examAllScore)
                         {
-                            doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
                             doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                             doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                             f=true;
@@ -1901,18 +1897,18 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
                                         }
                                     }
                                     if(stationPassCount==stations.size()) {
-                                        doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                         doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
                                         doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
                                         f = true;
                                     }else{
-                                        doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
                                         doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                                         doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                                         f=true;
                                     }
                                 }else{
-                                    doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
                                     doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
                                     doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
                                     f=true;
@@ -1932,13 +1928,13 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public int editOscaDoctorAssessment(OscaDoctorAssessment doctorAssessment, SysUser user) {
         if(doctorAssessment!=null){
             if(StringUtil.isNotBlank(doctorAssessment.getRecordFlow())){//修改
-                doctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 doctorAssessment.setModifyUserFlow(user.getUserFlow());
                 doctorAssessment.setModifyTime(DateUtil.getCurrDateTime());
                 return this.doctorAssessmentMapper.updateByPrimaryKeySelective(doctorAssessment);
             }else{//新增
                 doctorAssessment.setRecordFlow(PkUtil.getUUID());
-                doctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 doctorAssessment.setCreateUserFlow(user.getUserFlow());
                 doctorAssessment.setCreateTime(DateUtil.getCurrDateTime());
                 doctorAssessment.setModifyUserFlow(user.getUserFlow());
@@ -1951,13 +1947,13 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public int editOscaSkillRoomDoc(OscaSkillRoomDoc docStation, SysUser user) {
         if(docStation!=null){
             if(StringUtil.isNotBlank(docStation.getDocRoomFlow())){//修改
-                docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 docStation.setModifyUserFlow(user.getUserFlow());
                 docStation.setModifyTime(DateUtil.getCurrDateTime());
                 return this.roomDocMapper.updateByPrimaryKeySelective(docStation);
             }else{//新增
                 docStation.setDocRoomFlow(PkUtil.getUUID());
-                docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 docStation.setCreateUserFlow(user.getUserFlow());
                 docStation.setCreateTime(DateUtil.getCurrDateTime());
                 docStation.setModifyUserFlow(user.getUserFlow());
@@ -1984,13 +1980,13 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public int editOscaSkillDocScore(OscaSkillDocScore score, SysUser user) {
         if(score!=null){
             if(StringUtil.isNotBlank(score.getScoreFlow())){//修改
-                score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 score.setModifyUserFlow(user.getUserFlow());
                 score.setModifyTime(DateUtil.getCurrDateTime());
                 return this.scoreMapper.updateByPrimaryKeySelective(score);
             }else{//新增
                 score.setScoreFlow(PkUtil.getUUID());
-                score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 score.setCreateUserFlow(user.getUserFlow());
                 score.setCreateTime(DateUtil.getCurrDateTime());
                 score.setModifyUserFlow(user.getUserFlow());
@@ -2113,13 +2109,13 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     public int editTeaScanDoc(OscaTeaScanDoc b, SysUser user) {
         if(b!=null){
             if(StringUtil.isNotBlank(b.getRecordFlow())){//修改
-                b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 b.setModifyUserFlow(user.getUserFlow());
                 b.setModifyTime(DateUtil.getCurrDateTime());
                 return this.scanDocMapper.updateByPrimaryKeySelective(b);
             }else{//新增
                 b.setRecordFlow(PkUtil.getUUID());
-                b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 b.setCreateUserFlow(user.getUserFlow());
                 b.setCreateTime(DateUtil.getCurrDateTime());
                 b.setModifyUserFlow(user.getUserFlow());

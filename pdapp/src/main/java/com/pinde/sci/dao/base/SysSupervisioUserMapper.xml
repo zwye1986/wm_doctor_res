@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysSupervisioUserMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysSupervisioUser" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysSupervisioUser" >
     <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="USER_PASSWD" property="userPasswd" jdbcType="VARCHAR" />
     <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
@@ -85,7 +85,7 @@
     ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, USER_SIGN_URL, STATUS_ID, WORK_COMPANY, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysSupervisioUserExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysSupervisioUserExample" >
     select
     <if test="distinct" >
       distinct
@@ -109,13 +109,13 @@
     delete from PDSCI.SYS_SUPERVISIO_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysSupervisioUserExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysSupervisioUserExample" >
     delete from PDSCI.SYS_SUPERVISIO_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysSupervisioUser" >
+  <insert id="insert" parameterType="com.pinde.core.model.SysSupervisioUser" >
     insert into PDSCI.SYS_SUPERVISIO_USER (USER_FLOW, USER_PASSWD, USER_CODE, 
       USER_NAME, USER_PHONE, USER_LEVEL_ID, 
       USER_LEVEL_NAME, ORG_FLOW, ORG_NAME, 
@@ -131,7 +131,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysSupervisioUser" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysSupervisioUser" >
     insert into PDSCI.SYS_SUPERVISIO_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
@@ -252,7 +252,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysSupervisioUserExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SysSupervisioUserExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SYS_SUPERVISIO_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -348,7 +348,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysSupervisioUser" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysSupervisioUser" >
     update PDSCI.SYS_SUPERVISIO_USER
     <set >
       <if test="userPasswd != null" >
@@ -408,7 +408,7 @@
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysSupervisioUser" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysSupervisioUser" >
     update PDSCI.SYS_SUPERVISIO_USER
     set USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
       USER_CODE = #{userCode,jdbcType=VARCHAR},

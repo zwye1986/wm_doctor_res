@@ -2,19 +2,18 @@ package com.pinde.res.biz.pushExam.impl;
 
 
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.pushExam.IPushExamBiz;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysUser;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class PushExamBizImpl implements IPushExamBiz {
 
 	@Resource

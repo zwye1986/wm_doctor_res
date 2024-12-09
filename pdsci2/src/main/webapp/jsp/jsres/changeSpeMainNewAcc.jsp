@@ -163,7 +163,7 @@
                 }
             });
         }
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
             <c:forEach items="${datas}" var="data">
             if("${data}"=="${type.id}"){
                 $("#"+"${data}").attr("checked","checked");
@@ -349,7 +349,7 @@
                             </td>
                             <td class="td_left">人员类型：</td>
                             <td colspan="3">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                                 </c:forEach>
                             </td>
@@ -400,7 +400,7 @@
                             </td>
                             <td class="td_left">人员类型：</td>
                             <td colspan="3">
-                                <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
                                     <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                                 </c:forEach>
                             </td>
@@ -433,7 +433,7 @@
                         </td>
                         <td class="td_left">人员类型：</td>
                         <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>
                         </td>
@@ -483,7 +483,7 @@
                         </c:if>
                         <td class="td_left">人员类型：</td>
                         <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                            <c:forEach items="${resDocTypeEnumList}" var="type">
                                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                             </c:forEach>
                             <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
@@ -505,7 +505,7 @@
                     </td>
                     <td class="td_left">人员类型：</td>
                     <td colspan="3">
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
                         </c:forEach>
                     </td>

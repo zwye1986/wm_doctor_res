@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -14,13 +14,10 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.RegistryTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
@@ -66,15 +63,15 @@ public class ResActivityDoctorActivityStatisticsController extends GeneralContro
 		SysUser currentUser=GlobalContext.getCurrentUser();
 		SysOrg currentOrg=orgBiz.readSysOrg(currentUser.getOrgFlow());
 		List<SysOrg> orgs = new ArrayList<>();
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(role)) {
 			//查询所有医院
 			SysOrg org = new SysOrg();
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgs = orgBiz.searchOrg(org);
 			model.addAttribute("orgs",orgs);
-		}else if(GlobalConstant.USER_LIST_LOCAL.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(role)) {
 
-		}else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 			//查询高校下所有医院
 			String workOrgId = currentOrg.getSendSchoolId();
 			orgs = orgExtMapper.searchOrgs4hbUniversity(workOrgId);
@@ -97,11 +94,11 @@ public class ResActivityDoctorActivityStatisticsController extends GeneralContro
 			}
 		}
 		Map<String, Object> parMp = new HashMap<String, Object>();
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 
-		}else if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgFlow=currentUser.getOrgFlow();
-		}else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
 			SysOrg currentOrg=orgBiz.readSysOrg(currentUser.getOrgFlow());
 			String workOrgId = currentOrg.getSendSchoolId();
 			parMp.put("workOrgId",workOrgId);
@@ -143,16 +140,16 @@ public class ResActivityDoctorActivityStatisticsController extends GeneralContro
 		}
 		List<String> recTypeIds = new ArrayList<String>();
 		for(RegistryTypeEnum regType : RegistryTypeEnum.values()){
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_"+regType.getId()))){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + regType.getId()))) {
 				recTypeIds.add(regType.getId());
 			}
 		}
 		Map<String, Object> parMp = new HashMap<String, Object>();
-		if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 
-		}else if(GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {
 			orgFlow=currentUser.getOrgFlow();
-		}else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
 			SysOrg currentOrg=orgBiz.readSysOrg(currentUser.getOrgFlow());
 			String workOrgId = currentOrg.getSendSchoolId();
 			parMp.put("workOrgId",workOrgId);
@@ -170,7 +167,7 @@ public class ResActivityDoctorActivityStatisticsController extends GeneralContro
 		parMp.put("endTime",endTime);
 		List<Map<String,Object>> list = activityBiz.getResDoctorActivityStatistics(parMp);
 
-		List<SysDict> dictList= DictTypeEnum.sysListDictMap.get(DictTypeEnum.ActivityType.getId());
+        List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getId());
 		if(dictList==null)
 		{
 			dictList=new ArrayList<>();

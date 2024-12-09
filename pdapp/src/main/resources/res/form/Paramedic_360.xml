@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!-- 360评价临床护理人员对住院医师规范化培训学员的评价表 -->
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/360_paramedic_{1}{2}"></jsp>
+    <!--上海奉贤表单-->
+    <shfx ver="1.0">
+        <page ver="1.0">
+            <item name="studentName" remark="住院医师姓名" multiple="N"></item>
+            <item name="stuDeptName" remark="所在科室" multiple="N"></item>
+            <item name="year" select="Y" remark="培训第几年" multiple="N"></item>
+            <item name="evlUserName" remark="评价人姓名" multiple="N"></item>
+            <item name="deptName" remark="所在科室" multiple="N"></item>
+            <item name="workYear" select="Y" remark="工作年限" multiple="N"></item>
+            <item name="part1" remark="评价1" multiple="N"></item>
+            <item name="part2" remark="评价2" multiple="N"></item>
+            <item name="part3" remark="评价3" multiple="N"></item>
+            <item name="part4" remark="评价4" multiple="N"></item>
+            <item name="part5" remark="评价5" multiple="N"></item>
+            <item name="part6" remark="评价6" multiple="N"></item>
+            <item name="part7" remark="评价7" multiple="N"></item>
+            <item name="part8" remark="评价8" multiple="N"></item>
+            <item name="part9" remark="评价9" multiple="N"></item>
+            <item name="part10" remark="评价10" multiple="N"></item>
+            <item name="part11" remark="总得分" multiple="N"></item>
+        </page>
+    </shfx>
+</jspForm>
+

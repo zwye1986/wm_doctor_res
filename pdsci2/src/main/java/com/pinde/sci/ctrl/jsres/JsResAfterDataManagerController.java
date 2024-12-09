@@ -11,10 +11,9 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResSchProcessExpress;
@@ -195,7 +194,7 @@ public class JsResAfterDataManagerController extends GeneralController {
         }else{
             afterBiz.delProcessType(processFlow,recTypeId);
         }
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -212,7 +211,7 @@ public class JsResAfterDataManagerController extends GeneralController {
             return "请选择轮转记录";
         }
         int count=afterBiz.delProcess(processFlow);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     /**
@@ -281,7 +280,7 @@ public class JsResAfterDataManagerController extends GeneralController {
             return "请选择轮转记录";
         }
         int count=afterBiz.backProcess(processFlow);
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 
     @RequestMapping(value="/backProcessType", method={RequestMethod.POST})
@@ -306,7 +305,7 @@ public class JsResAfterDataManagerController extends GeneralController {
         }
         int count=afterBiz.backProcessTypeByFlow(recFlow);
 
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
     /**
      *签到考勤退回审核
@@ -361,7 +360,7 @@ public class JsResAfterDataManagerController extends GeneralController {
 
                     if((doctor.getOrgFlow().equals(orgFlow1)) || (orgFlow1.equals(secondOrgFlow) && "1".equals(baseFlag))) {
                         int count=afterBiz.backAttend(userCode,startDate,endDate);
-                        return GlobalConstant.OPERATE_SUCCESSED;
+                        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
                     }else{
                         return"此学员的培训基地非当前登录人所在的基地！";
                     }
@@ -382,7 +381,7 @@ public class JsResAfterDataManagerController extends GeneralController {
                              String attendanceFlow   ){
         if(StringUtil.isNotBlank(attendanceFlow)) {
             int c= afterBiz.backAttendByFlow(attendanceFlow);
-            return GlobalConstant.OPERATE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
         }else{
             return"请选择轮需要退回的考勤记录！";
         }

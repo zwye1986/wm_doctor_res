@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.sch;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IDiscipleBiz;
@@ -11,12 +11,10 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;
@@ -73,8 +71,8 @@ public class SchManagerController extends GeneralController {
 		Map<String,String> doctorTypeSelectMap = new HashMap<>();
 		List<String> doctorTypeIdList = doctor.getDoctorTypeIdList();
 		SysDict sysDict = new SysDict();
-		sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-		sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDict> dictList = dictBiz.searchDictList(sysDict);
 		if(dictList!=null&&dictList.size()>0&&doctorTypeIdList!=null&&doctorTypeIdList.size()>0){
 			for (SysDict dict:dictList){
@@ -90,7 +88,7 @@ public class SchManagerController extends GeneralController {
 	}
 	@RequestMapping(value = "/exportDoc")
 	public void exportDoc(ResDoctorExt doctor, HttpServletResponse response)throws Exception{
-		doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		List<ResDoctorExt> doctorList = doctorBiz.searchDocUser(doctor, "");
 		doctorBiz.exportSchDocDetail(doctorList,response);
@@ -121,7 +119,7 @@ public class SchManagerController extends GeneralController {
 		}
 		SysUser user = GlobalContext.getCurrentUser();
 		List<SchRotation> rotationList = schRotationtBiz.searchSchRotationByIsPublish();
-		if (!GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
+        if (!com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
 			rotationList = schRotationtBiz.schRotations(rotationList, user.getOrgFlow());
 		}
 		model.addAttribute("rotationList", rotationList);
@@ -137,7 +135,7 @@ public class SchManagerController extends GeneralController {
 			SysUser user = userBiz.readSysUser(doctorFlow);
 			model.addAttribute("user", user);
 		}
-		if("Y".equals(InitConfig.getSysCfg("sch_inRes_flag")))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sch_inRes_flag")))
 		{
 			model.addAttribute("roleFlag", roleFlag);
 			model.addAttribute("doctorFlow", doctorFlow);
@@ -157,7 +155,7 @@ public class SchManagerController extends GeneralController {
 			SysUser user = userBiz.readSysUser(doctorFlow);
 			model.addAttribute("user", user);
 		}
-		if("Y".equals(InitConfig.getSysCfg("sch_inRes_flag")))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sch_inRes_flag")))
 		{
 			return "redirect:/sys/user/view?editFlag=Y";
 		}
@@ -186,37 +184,37 @@ public class SchManagerController extends GeneralController {
 			if(StringUtil.isBlank(user.getUserFlow())){
 				SysUser old = userBiz.findByUserCode(user.getUserCode());
 				if(old!=null){
-					return GlobalConstant.USER_CODE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 				}
 				old = userBiz.findByIdNo(user.getIdNo());
 				if(old!=null){
-					return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 				}
 				old = userBiz.findByUserPhone(user.getUserPhone());
 				if(old!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 				old = userBiz.findByUserEmail(user.getUserEmail());
 				if(old!=null){
-					return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 				}
 			}else{
 				String userFlow = user.getUserFlow();
 				SysUser old = userBiz.findByUserCodeNotSelf(userFlow,user.getUserCode());
 				if(old!=null){
-					return GlobalConstant.USER_CODE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_CODE_REPETE;
 				}
 				old = userBiz.findByIdNoNotSelf(userFlow,user.getIdNo());
 				if(old!=null){
-					return GlobalConstant.USER_ID_NO_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_ID_NO_REPETE;
 				}
 				old = userBiz.findByUserPhoneNotSelf(userFlow,user.getUserPhone());
 				if(old!=null){
-					return GlobalConstant.USER_PHONE_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_PHONE_REPETE;
 				}
 				old = userBiz.findByUserEmailNotSelf(userFlow,user.getUserEmail());
 				if(old!=null){
-					return GlobalConstant.USER_EMAIL_REPETE;
+                    return com.pinde.core.common.GlobalConstant.USER_EMAIL_REPETE;
 				}
 			}
 			user.setSexName(UserSexEnum.getNameById(user.getSexId()));
@@ -227,11 +225,11 @@ public class SchManagerController extends GeneralController {
 			doctor.setOrgFlow(orgFlow);
 			doctor.setOrgName(orgName);
 			if(StringUtil.isNotBlank(doctor.getDoctorTypeId())){
-				doctor.setDoctorTypeName(DictTypeEnum.DoctorType.getDictNameById(doctor.getDoctorTypeId()));
+                doctor.setDoctorTypeName(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getDictNameById(doctor.getDoctorTypeId()));
 			}else{
 				doctor.setDoctorTypeName("");
 			}
-			doctor.setTrainingSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(doctor.getTrainingSpeId()));
+            doctor.setTrainingSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(doctor.getTrainingSpeId()));
 			if(StringUtil.isNotBlank(doctor.getTrainingTypeId())){
 				doctor.setDoctorCategoryId(doctor.getTrainingTypeId());
 				doctor.setDoctorCategoryName(RecDocCategoryEnum.getNameById(doctor.getTrainingTypeId()));
@@ -244,7 +242,7 @@ public class SchManagerController extends GeneralController {
 			}
 
 			if(StringUtil.isNotBlank(doctor.getSecondSpeId())) {
-				doctor.setSecondSpeName(DictTypeEnum.SecondTrainingSpe.getDictNameById(doctor.getSecondSpeId()));
+                doctor.setSecondSpeName(com.pinde.core.common.enums.DictTypeEnum.SecondTrainingSpe.getDictNameById(doctor.getSecondSpeId()));
 			}
 			SchRotation rotation = schRotationtBiz.readSchRotation(doctor.getRotationFlow());
 			SchRotation rotation2 = schRotationtBiz.readSchRotation(doctor.getSecondRotationFlow());
@@ -261,31 +259,31 @@ public class SchManagerController extends GeneralController {
 				doctor.setSecondRotationName(rotation2.getRotationName());
 			}
 			if(StringUtil.isNotBlank(doctor.getDoctorStatusId())){
-				doctor.setDoctorStatusName(DictTypeEnum.DoctorStatus.getDictNameById(doctor.getDoctorStatusId()));
+                doctor.setDoctorStatusName(com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getDictNameById(doctor.getDoctorStatusId()));
 			}else{
 				doctor.setDoctorStatusName("");
 			}
 			if(!StringUtil.isNotBlank(doctor.getRecordStatus())){
-				doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			}
 
 		}
-		if(GlobalConstant.ZERO_LINE!=doctorBiz.editSchDocUser(doctor, user)){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != doctorBiz.editSchDocUser(doctor, user)) {
 
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value={"/delete"})
 	@ResponseBody
 	public String delete(String userFlow){
 
-		if(GlobalConstant.ZERO_LINE!=doctorBiz.deleteSchDocUser(userFlow)){
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != doctorBiz.deleteSchDocUser(userFlow)) {
 
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -297,17 +295,17 @@ public class SchManagerController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = doctorBiz.importStudentExcel(file,orgFlow);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 }
 

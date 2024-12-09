@@ -5,7 +5,7 @@
         $(document).ready(function () {
             $('#startDate').datepicker();
             $('#endDate').datepicker();
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             <c:forEach items="${datas}" var="data">
             if("${data}"=="${type.id}"){
                 $("#"+"${data}").attr("checked","checked");
@@ -100,7 +100,7 @@
             &#12288;<label><input type="checkbox" name="evalFlag" ${param.evalFlag eq 'on'?'checked':''}/>待考评</label>
             <br/>
             人员类型：
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
                 <label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" onclick="changeAllBox();"/>${type.name}&nbsp;</label>
             </c:forEach>
             &#12288;<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>

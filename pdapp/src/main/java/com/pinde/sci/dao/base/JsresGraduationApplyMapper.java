@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresGraduationApply;
-import com.pinde.sci.model.mo.JsresGraduationApplyExample;
+import com.pinde.core.model.JsresGraduationApply;
+import com.pinde.core.model.JsresGraduationApplyExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

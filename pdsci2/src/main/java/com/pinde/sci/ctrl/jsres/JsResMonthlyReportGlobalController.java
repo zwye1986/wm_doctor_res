@@ -8,13 +8,9 @@ import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -136,13 +132,13 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		search.setDateMonth(monthDate);
 		search.setDoctorTypeId(isGraduate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
 		Map<String,String> jointOrgMap = new HashMap<>();
@@ -233,8 +229,8 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
 		if(!countryOrgList.isEmpty()){
@@ -319,8 +315,8 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		List<Map<String,String>> resultMapList = new ArrayList<>();
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<String> countryOrgFlowList = new ArrayList<>();//所有国家基地Flow
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
@@ -400,8 +396,8 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		List<Map<String,String>> resultMapList = new ArrayList<>();
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<String> countryOrgFlowList = new ArrayList<>();//所有国家基地Flow
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
@@ -475,8 +471,8 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		searchOrg.setOrgProvId("320000");
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 
@@ -570,8 +566,8 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		searchOrg.setOrgProvId("320000");
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 
@@ -598,7 +594,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		search.setDateMonth(monthDate);
 		search.setDoctorTypeId(isGraduate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
 		List<SysMonthlyDoctorInfo> doctorInfoListFinal = new ArrayList<>();
@@ -701,8 +697,8 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		searchOrg.setOrgProvId("320000");
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 
@@ -729,7 +725,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		search.setDateMonth(monthDate);
 		search.setDoctorTypeId(isGraduate);
 		search.setDoctorStatusId("20");
-		search.setChangeTypeId(TrainCategoryEnum.DoctorTrainingSpe.getId());
+        search.setChangeTypeId(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		List<SysMonthlyDoctorInfo> sysMonthlyDoctorInfoList = monthlyReportBiz.getMonthlyDoctorInfo(search,null);
 
 		List<SysMonthlyDoctorInfo> doctorInfoListFinal = new ArrayList<>();
@@ -1093,7 +1089,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 						area = "其他";
 					}
 					String isYearGraduate = "";
-					if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
 						isYearGraduate = "应届";
 					} else {
 						isYearGraduate = "往届";
@@ -1116,7 +1112,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//研究生
 					String masterFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
 						userResumeExt.setMasterDegreeName("");
 						userResumeExt.setMasterDegreeTypeName("");
 						userResumeExt.setMasterGraSchoolName("");
@@ -1128,7 +1124,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//博士
 					String doctorFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
 						userResumeExt.setDoctorDegreeName("");
 						userResumeExt.setDoctorDegreeTypeName("");
 						userResumeExt.setDoctorGraSchoolName("");
@@ -1144,7 +1140,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					String yydc = "";
 					String hospitalCateName = "";
 					String hospitalAttrName = "";
-					if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
 						ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
 						if (resBase != null && jointFlag.equals("是")) {
 							property = resBase.getBaseGradeName();
@@ -1218,10 +1214,10 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//是否全科定向生
 					String isGeneralOrderOrientationTrainee = "";
-					if (GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "是";
 					}
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "否";
 					}
 					//规培年限
@@ -1380,7 +1376,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 						area = "其他";
 					}
 					String isYearGraduate = "";
-					if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
 						isYearGraduate = "应届";
 					} else {
 						isYearGraduate = "往届";
@@ -1403,7 +1399,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//研究生
 					String masterFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
 						userResumeExt.setMasterDegreeName("");
 						userResumeExt.setMasterDegreeTypeName("");
 						userResumeExt.setMasterGraSchoolName("");
@@ -1415,7 +1411,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//博士
 					String doctorFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
 						userResumeExt.setDoctorDegreeName("");
 						userResumeExt.setDoctorDegreeTypeName("");
 						userResumeExt.setDoctorGraSchoolName("");
@@ -1431,7 +1427,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					String yydc = "";
 					String hospitalCateName = "";
 					String hospitalAttrName = "";
-					if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
 						ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
 						if (resBase != null && jointFlag.equals("是")) {
 							property = resBase.getBaseGradeName();
@@ -1505,10 +1501,10 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//是否全科定向生
 					String isGeneralOrderOrientationTrainee = "";
-					if (GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "是";
 					}
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "否";
 					}
 					//规培年限
@@ -1669,7 +1665,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 						area = "其他";
 					}
 					String isYearGraduate = "";
-					if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
 						isYearGraduate = "应届";
 					} else {
 						isYearGraduate = "往届";
@@ -1692,7 +1688,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//研究生
 					String masterFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
 						userResumeExt.setMasterDegreeName("");
 						userResumeExt.setMasterDegreeTypeName("");
 						userResumeExt.setMasterGraSchoolName("");
@@ -1704,7 +1700,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//博士
 					String doctorFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
 						userResumeExt.setDoctorDegreeName("");
 						userResumeExt.setDoctorDegreeTypeName("");
 						userResumeExt.setDoctorGraSchoolName("");
@@ -1720,7 +1716,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					String yydc = "";
 					String hospitalCateName = "";
 					String hospitalAttrName = "";
-					if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
 						ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
 						if (resBase != null && jointFlag.equals("是")) {
 							property = resBase.getBaseGradeName();
@@ -1794,10 +1790,10 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//是否全科定向生
 					String isGeneralOrderOrientationTrainee = "";
-					if (GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "是";
 					}
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "否";
 					}
 					//规培年限
@@ -1955,7 +1951,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 
 					String isYearGraduate = "";
-					if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
 						isYearGraduate = "应届";
 					} else {
 						isYearGraduate = "往届";
@@ -1977,7 +1973,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//研究生
 					String masterFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
 						userResumeExt.setMasterDegreeName("");
 						userResumeExt.setMasterDegreeTypeName("");
 						userResumeExt.setMasterGraSchoolName("");
@@ -1989,7 +1985,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//博士
 					String doctorFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
 						userResumeExt.setDoctorDegreeName("");
 						userResumeExt.setDoctorDegreeTypeName("");
 						userResumeExt.setDoctorGraSchoolName("");
@@ -2005,7 +2001,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					String yydc="";
 					String hospitalCateName="";
 					String hospitalAttrName="";
-					if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId())||ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
 						ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
 						if (resBase != null && jointFlag.equals("是")) {
 							property = resBase.getBaseGradeName();
@@ -2090,10 +2086,10 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//是否全科定向生
 					String isGeneralOrderOrientationTrainee = "";
-					if (GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "是";
 					}
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee="否";
 					}
 					//规培年限
@@ -2244,7 +2240,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 						area = "其他";
 					}
 					String isYearGraduate = "";
-					if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
 						isYearGraduate = "应届";
 					} else {
 						isYearGraduate = "往届";
@@ -2267,7 +2263,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//研究生
 					String masterFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsMaster()) || StringUtil.isBlank(userResumeExt.getIsMaster())) {
 						userResumeExt.setMasterDegreeName("");
 						userResumeExt.setMasterDegreeTypeName("");
 						userResumeExt.setMasterGraSchoolName("");
@@ -2279,7 +2275,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//博士
 					String doctorFlag = "";
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsDoctor()) || StringUtil.isBlank(userResumeExt.getIsDoctor())) {
 						userResumeExt.setDoctorDegreeName("");
 						userResumeExt.setDoctorDegreeTypeName("");
 						userResumeExt.setDoctorGraSchoolName("");
@@ -2295,7 +2291,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					String yydc = "";
 					String hospitalCateName = "";
 					String hospitalAttrName = "";
-					if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                    if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
 						ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
 						if (resBase != null && jointFlag.equals("是")) {
 							property = resBase.getBaseGradeName();
@@ -2369,10 +2365,10 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 					}
 					//是否全科定向生
 					String isGeneralOrderOrientationTrainee = "";
-					if (GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "是";
 					}
-					if (GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee())) {
 						isGeneralOrderOrientationTrainee = "否";
 					}
 					//规培年限

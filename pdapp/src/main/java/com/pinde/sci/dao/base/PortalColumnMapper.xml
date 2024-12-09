@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PortalColumnMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PortalColumn" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.PortalColumn" >
     <id column="COLUMN_FLOW" property="columnFlow" jdbcType="VARCHAR" />
     <result column="COLUMN_ID" property="columnId" jdbcType="VARCHAR" />
     <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
     COLUMN_FLOW, COLUMN_ID, COLUMN_NAME, PARENT_COLUMN_ID, ORDINAL, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PortalColumnExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PortalColumnExample" >
     select
     <if test="distinct" >
       distinct
@@ -99,13 +99,13 @@
     delete from PDSCI.PORTAL_COLUMN
     where COLUMN_FLOW = #{columnFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PortalColumnExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.PortalColumnExample" >
     delete from PDSCI.PORTAL_COLUMN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PortalColumn" >
+  <insert id="insert" parameterType="com.pinde.core.model.PortalColumn" >
     insert into PDSCI.PORTAL_COLUMN (COLUMN_FLOW, COLUMN_ID, COLUMN_NAME, 
       PARENT_COLUMN_ID, ORDINAL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +115,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PortalColumn" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.PortalColumn" >
     insert into PDSCI.PORTAL_COLUMN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="columnFlow != null" >
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PortalColumnExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.PortalColumnExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.PORTAL_COLUMN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -242,7 +242,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PortalColumn" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PortalColumn" >
     update PDSCI.PORTAL_COLUMN
     <set >
       <if test="columnId != null" >
@@ -275,7 +275,7 @@
     </set>
     where COLUMN_FLOW = #{columnFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PortalColumn" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PortalColumn" >
     update PDSCI.PORTAL_COLUMN
     set COLUMN_ID = #{columnId,jdbcType=VARCHAR},
       COLUMN_NAME = #{columnName,jdbcType=VARCHAR},

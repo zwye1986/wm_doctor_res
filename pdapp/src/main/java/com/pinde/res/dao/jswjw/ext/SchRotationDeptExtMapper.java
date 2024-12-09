@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationDeptExample;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

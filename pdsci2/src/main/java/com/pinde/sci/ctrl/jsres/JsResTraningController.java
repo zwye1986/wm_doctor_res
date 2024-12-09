@@ -9,9 +9,7 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResLiveTrainingBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -92,7 +90,7 @@ public class JsResTraningController extends GeneralController {
 		String currTime = DateUtil.getCurrDateTime();
 		trainingOpinion.setEvaTime(currTime);
 		resLiveTrainingBiz.edit(trainingOpinion);
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 
 	@RequestMapping(value="/replyOpinions")
@@ -113,9 +111,9 @@ public class JsResTraningController extends GeneralController {
 	@ResponseBody
 	public String delOpinions(String trainingOpinionFlow){
 		ResTrainingOpinion trainingOpinion = resLiveTrainingBiz.read(trainingOpinionFlow);
-		trainingOpinion.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        trainingOpinion.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		resLiveTrainingBiz.edit(trainingOpinion);
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/saveOpinionReply")
@@ -131,7 +129,7 @@ public class JsResTraningController extends GeneralController {
 		String currTime = DateUtil.getCurrDateTime();
 		trainingOpinion.setReplyTime(currTime);
 		resLiveTrainingBiz.edit(trainingOpinion);
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 
 	@RequestMapping(value = "/getGuides/{roleFlag}")
@@ -158,7 +156,7 @@ public class JsResTraningController extends GeneralController {
 				orgFlow = doctor.getOrgFlow();
 			}
 		}
-		if("doctor".equals(roleFlag)&&null!=doctor&&doctor.getDoctorTypeId().equals(JsResDocTypeEnum.Graduate.getId())
+        if ("doctor".equals(roleFlag) && null != doctor && doctor.getDoctorTypeId().equals(com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId())
 				&&(StringUtil.isNotBlank(doctor.getWorkOrgId())||StringUtil.isNotBlank(doctor.getWorkOrgName()))){
 			tarinNotices =resLiveTrainingBiz.searchByTitleOrgFlowAndSchool(resNoticeTitle, orgFlow,doctor);
 		}else {
@@ -200,16 +198,16 @@ public class JsResTraningController extends GeneralController {
 			tarinNotice.setOrgFlow(orgFlow);
 		}
 		resLiveTrainingBiz.edit(tarinNotice);
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 
 	@RequestMapping(value = "/delDirector")
 	@ResponseBody
 	public String delDirector(String recordFlow){
 		ResTarinNotice tarinNotice = resLiveTrainingBiz.readNotice(recordFlow);
-		tarinNotice.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        tarinNotice.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		resLiveTrainingBiz.edit(tarinNotice);
-		return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 
 	@RequestMapping(value={"/uploadNoticePic"})
@@ -218,14 +216,14 @@ public class JsResTraningController extends GeneralController {
 		if(file!=null && !file.isEmpty()){
 			String checkResult = jsResDoctorBiz.checkImg(file);
 			String resultPath = "";
-			if(!GlobalConstant.FLAG_Y.equals(checkResult)){
+            if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(checkResult)) {
 				return checkResult;
 			}else{
 				resultPath = jsResDoctorBiz.saveFileToDirs("", file, "jsresImages_notice");
 				return resultPath;
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	/****************************高******校******管******理******员******角******色************************************************/

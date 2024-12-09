@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,21 +14,15 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jszy.JszyResDoctorExtMapper;
 import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
-import com.pinde.sci.enums.jszy.JszyResDegreeCategoryEnum;
-import com.pinde.sci.enums.jszy.JszyResDocTypeEnum;
-import com.pinde.sci.enums.pub.UserNationEnum;
-import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.res.ResDocTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
@@ -43,7 +37,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +46,7 @@ import java.net.URLEncoder;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 
 	@Autowired
@@ -103,13 +96,13 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		}
 		//学历
 		if(StringUtil.isNotBlank(user.getEducationId())){
-			user.setEducationName(DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
+            user.setEducationName(com.pinde.core.common.enums.DictTypeEnum.UserEducation.getDictNameById(user.getEducationId()));
 		}else{
 			//user.setEducationName("");
 		}
 		//学位
 		if(StringUtil.isNotBlank(user.getDegreeId())){
-			user.setDegreeName(DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
+            user.setDegreeName(com.pinde.core.common.enums.DictTypeEnum.UserDegree.getDictNameById(user.getDegreeId()));
 		}else{
 			user.setDegreeName("");
 		}
@@ -125,7 +118,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		}
 		userBiz.saveUser(user);
 		//设置当前用户
-		GlobalContext.setSessionAttribute(GlobalConstant.CURRENT_USER, user);
+        GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
 		String userFlow = user.getUserFlow();
 		PubUserResume pubUserResume = userResumeBiz.readPubUserResume(userFlow);
 		if(pubUserResume == null){
@@ -133,7 +126,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		}
 		//JavaBean转换成xml
 		if(StringUtil.isNotBlank(userResumeExt.getGraduatedName())){//本科毕业院校
-	    	List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictName().equals(userResumeExt.getGraduatedName())) {
 	    			userResumeExt.setGraduatedId(s.getDictId());
@@ -141,7 +134,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getDegreeId())){//本科学位
-	    	List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("UserDegree");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("UserDegree");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictId().equals(userResumeExt.getDegreeId())) {
 	    			userResumeExt.setDegreeName(s.getDictName());
@@ -149,7 +142,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getMasterDegreeId())){//硕士学位
-	    	List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("UserDegree");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("UserDegree");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictId().equals(userResumeExt.getMasterDegreeId())) {
 	    			userResumeExt.setMasterDegreeName(s.getDictName());
@@ -157,7 +150,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getMasterGraSchoolName())){//硕士毕业院校
-	    	List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictName().equals(userResumeExt.getMasterGraSchoolName())) {
 	    			userResumeExt.setMasterGraSchoolId(s.getDictId());
@@ -165,7 +158,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getDoctorDegreeId())){//博士学位
-	    	List<SysDict> dictList= DictTypeEnum.sysListDictMap.get("UserDegree");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("UserDegree");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictId().equals(userResumeExt.getDoctorDegreeId())) {
 	    			userResumeExt.setDoctorDegreeName(s.getDictName());
@@ -173,7 +166,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getDoctorGraSchoolName())){//博士毕业院校
-	    	List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("GraduateSchool");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("GraduateSchool");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictName().equals(userResumeExt.getDoctorGraSchoolName())) {
 	    			userResumeExt.setDoctorGraSchoolId(s.getDictId());
@@ -181,7 +174,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getMedicalHeaithOrgId())){//医疗机构
-	    	List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("MedicalHeaithOrg");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("MedicalHeaithOrg");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictId().equals(userResumeExt.getMedicalHeaithOrgId())) {
 	    			userResumeExt.setMedicalHeaithOrgName(s.getDictName());
@@ -189,7 +182,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getHospitalAttrId())){
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("HospitalAttr");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("HospitalAttr");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictId().equals(userResumeExt.getHospitalAttrId())) {
 	    			userResumeExt.setHospitalAttrName(s.getDictName());
@@ -197,7 +190,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getHospitalCategoryId())){
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("HospitalCategory");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("HospitalCategory");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictId().equals(userResumeExt.getHospitalCategoryId())) {
 	    			userResumeExt.setHospitalCategoryName(s.getDictName());
@@ -205,7 +198,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	    	}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getBasicHealthOrgId())){
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("BasicHealthOrg");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("BasicHealthOrg");
 			for(SysDict s:dictList){
 				if (s.getDictId().equals(userResumeExt.getBasicHealthOrgId())) {
 					userResumeExt.setBasicHealthOrgName(s.getDictName());
@@ -213,7 +206,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 			}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getBaseAttributeId())){
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("BaseAttribute");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("BaseAttribute");
 			for(SysDict s:dictList){
 				if (s.getDictId().equals(userResumeExt.getBaseAttributeId())) {
 					userResumeExt.setBaseAttributeName(s.getDictName());
@@ -221,7 +214,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 			}
 		}
 		if(StringUtil.isNotBlank(userResumeExt.getBasicHealthOrgLevelId())){
-			List<SysDict> dictList=DictTypeEnum.sysListDictMap.get("BasicHealthOrgLevel");
+            List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get("BasicHealthOrgLevel");
 			for(SysDict s:dictList){
 				if (s.getDictId().equals(userResumeExt.getBasicHealthOrgLevelId())) {
 					userResumeExt.setBasicHealthOrgLevelName(s.getDictName());
@@ -230,7 +223,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		}
 		//毕业院校
 		if(StringUtil.isNotBlank(doctor.getGraduatedName())){
-			Map<String,List<SysDict>>  sysListDictMap = DictTypeEnum.sysListDictMap;
+            Map<String, List<SysDict>> sysListDictMap = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap;
 	    	List<SysDict> dictList=sysListDictMap.get("GraduateSchool");
 	    	for(SysDict s:dictList){
 	    		if (s.getDictName().equals(doctor.getGraduatedName())) {
@@ -243,8 +236,8 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 //		}
 		//人员类型
 		if(StringUtil.isNotBlank(doctor.getDoctorTypeId())){
-			doctor.setDoctorTypeName(JszyResDocTypeEnum.getNameById(doctor.getDoctorTypeId()));
-			if(JszyResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || JszyResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())){
+            doctor.setDoctorTypeName(com.pinde.core.common.enums.ResDocTypeEnum.getNameById(doctor.getDoctorTypeId()));
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
 				if("1".equals(userResumeExt.getMedicalHeaithOrgId())){
 					//基层医疗卫生机构
 					userResumeExt.setBasicHealthOrgId("");//基层医疗卫生机构
@@ -271,11 +264,11 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 					userResumeExt.setBaseAttributeId("");//单位等级
 					userResumeExt.setBaseAttributeName("");
 				}
-				if(JszyResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId())){
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId())) {
 					doctor.setSendCityId("");
 					doctor.setSendCityName("");
 				}
-			}else if(JszyResDocTypeEnum.Social.getId().equals(doctor.getDoctorTypeId())){
+            } else if (com.pinde.core.common.enums.ResDocTypeEnum.Social.getId().equals(doctor.getDoctorTypeId())) {
 				//派送单位（派送学校）相关
 				doctor.setWorkOrgId("");
 				doctor.setWorkOrgName("");
@@ -300,7 +293,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 				userResumeExt.setBasicHealthOrgLevelName("");
 				//基层医疗卫生机构相关
 				/************以上医疗卫生机构相关************/
-			}else if(JszyResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())){
+            } else if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())) {
 				doctor.setSendCityId("");
 				doctor.setSendCityName("");
 				//单位人类型
@@ -327,7 +320,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 			doctor.setDoctorTypeName("");
 		}
 		//是否是对口支援
-		if("N".equals(doctor.getIsPartner())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(doctor.getIsPartner())) {
 			doctor.setSourceProvincesId("");//生源省份
 			doctor.setSourceProvincesName("");
 		}
@@ -356,20 +349,20 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		//单位等级
 		if(StringUtil.isNotBlank(doctor.getWorkOrgLevelId())){
 			doctor.setWorkOrgLevelId(doctor.getWorkOrgLevelId());
-			doctor.setWorkOrgLevelName(DictTypeEnum.getDictName(DictTypeEnum.BaseLevel, doctor.getWorkOrgLevelId()));
+            doctor.setWorkOrgLevelName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseLevel, doctor.getWorkOrgLevelId()));
 		}else{
 			doctor.setWorkOrgLevelId("");
 		}
 		//学位类型
 		if(StringUtil.isNotBlank(doctor.getDegreeCategoryId())){
-			doctor.setDegreeCategoryName(JszyResDegreeCategoryEnum.getNameById(doctor.getDegreeCategoryId()));
+            doctor.setDegreeCategoryName(com.pinde.core.common.enums.JsResDegreeCategoryEnum.getNameById(doctor.getDegreeCategoryId()));
 		}else{
 			doctor.setDegreeCategoryName("");
 		}
 		//派送单位或者学校
 		if(StringUtil.isNotBlank(doctor.getWorkOrgName())){
-			if(JszyResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())){
-				List<SysDict> sysDictList=dictBiz.searchDictListByDictTypeId(DictTypeEnum.SendSchool.getId());
+            if (com.pinde.core.common.enums.ResDocTypeEnum.Graduate.getId().equals(doctor.getDoctorTypeId())) {
+                List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 				if(sysDictList!=null && !sysDictList.isEmpty()){
 					for(SysDict dict:sysDictList){
 						if(dict.getDictName().equals(doctor.getWorkOrgName())){
@@ -405,14 +398,14 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		}
 		long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 		if(file.getSize() > limitSize*1024*1024){
-			return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M！" ;
+            return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M！";
 		}
-		return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
 	}
 	
 	@Override
 	public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName){
-		String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if(file.getSize() > 0){
 			//创建目录
 			String dateString = DateUtil.getCurrDate2();
@@ -470,7 +463,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		operUserFlow = StringUtil.defaultIfEmpty(operUserFlow,GlobalContext.getCurrentUser().getUserFlow());
 		SysUser sysUser=iUserBiz.readSysUser(operUserFlow);
 		ResDoctorSchProcess resDoctorSchProcess=iResDoctorProcessBiz.read(processFlow);
-		String recTypeId=ResRecTypeEnum.getNameById(formFileName);
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName);
 		String currDate=DateUtil.getCurrDateTime();
 		ResRec rec=new ResRec();
 		rec.setRecFlow(recFlow);
@@ -607,11 +600,11 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 				rownum++;
 			}
 		}
-		if(GlobalConstant.FLAG_Y.equals(flag)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
 			HSSFRow rowDepts= sheet.createRow(rownum);
 			HSSFCell cell = rowDepts.createCell(0);
 			String value="";
-			value="合计退培："+list.size()+" "+"退培比例："+backInfoMap.get(GlobalConstant.FLAG_N);
+            value = "合计退培：" + list.size() + " " + "退培比例：" + backInfoMap.get(com.pinde.core.common.GlobalConstant.FLAG_N);
 			cell.setCellValue(value);
 			cell.setCellStyle(styleCenter);
 			sheet.addMergedRegion(new CellRangeAddress(rownum,rownum,0,7));
@@ -663,7 +656,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		    	cellTitle.setCellStyle(styleCenter);
 			 }
 		    int rownum = 1;
-		    List<ResRec> resRecs =(List<ResRec>) backInfoMap.get(GlobalConstant.FLAG_Y);
+            List<ResRec> resRecs = (List<ResRec>) backInfoMap.get(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		    if(resRecs!=null&&!resRecs.isEmpty()){
 		    	for(ResRec sd : resRecs){
 		    		JszyBackTrainForm form =(JszyBackTrainForm) backInfoMap.get(sd.getRecFlow());
@@ -707,11 +700,11 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 		    		rownum++;
 			    	}
 		    	}
-		    	if(GlobalConstant.FLAG_Y.equals(flag)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
 		    		HSSFRow rowDepts= sheet.createRow(rownum);
 		    		HSSFCell cell = rowDepts.createCell(0);
 		    		String value="";
-		    		value="合计退培："+resRecs.size()+" "+"退培比例："+backInfoMap.get(GlobalConstant.FLAG_N);
+                value = "合计退培：" + resRecs.size() + " " + "退培比例：" + backInfoMap.get(com.pinde.core.common.GlobalConstant.FLAG_N);
 		    		cell.setCellValue(value);
 		    		cell.setCellStyle(styleCenter);
 		    		sheet.addMergedRegion(new CellRangeAddress(rownum,rownum,0,7));
@@ -913,7 +906,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
                     CretType = "身份证";
                 }
                 String isYearGraduate = "";
-                if (GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsYearGraduate())) {
                     isYearGraduate = "应届";
                 } else {
                     isYearGraduate = "往届";
@@ -982,7 +975,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 					doctorDegreeName="有";
 				}
                 String masterFlag = "";
-                if (!GlobalConstant.FLAG_Y.equals(userResumeExt.getIsMaster())) {
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsMaster())) {
                     userResumeExt.setMasterDegreeName("");
                     userResumeExt.setMasterDegreeTypeName("");
                     userResumeExt.setMasterGraSchoolName("");
@@ -997,7 +990,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
                 }
                 //博士
                 String doctorFlag = "";
-                if (!GlobalConstant.FLAG_Y.equals(userResumeExt.getIsDoctor()) ) {
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsDoctor())) {
                     userResumeExt.setDoctorDegreeName("");
                     userResumeExt.setDoctorDegreeTypeName("");
                     userResumeExt.setDoctorGraSchoolName("");
@@ -1012,27 +1005,27 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
                 }
 				//订单定向培养
 				String dingxiang="";
-				if(GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(userResumeExt.getIsGeneralOrderOrientationTrainee()))
 				{
 					dingxiang="是";
 				}
-				if(GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(userResumeExt.getIsGeneralOrderOrientationTrainee()))
 				{
 					dingxiang="否";
 				}
 				//是否是对口支援
 				String duiKou="";
-				if(GlobalConstant.FLAG_Y.equals(doctor.getIsPartner()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getIsPartner()))
 				{
 					duiKou="是";
 				}
-				if(GlobalConstant.FLAG_N.equals(doctor.getIsPartner()))
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(doctor.getIsPartner()))
 				{
 					duiKou="否";
 				}
 				//学员类型
 				String doctorTypeName=doctor.getDoctorTypeName();
-//				if(JszyResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()))
+//				if(com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()))
 //				{
 //					doctorTypeName="";
 //					if("1".equals(doctor.getCompanyType()))
@@ -1053,7 +1046,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 				String getBasicHealthOrgLevelName="";
                 //工作单位
                 String property = "";
-                if (ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId())|| ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
+                if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctor.getDoctorTypeId()) || com.pinde.core.common.enums.ResDocTypeEnum.CompanyEntrust.getId().equals(doctor.getDoctorTypeId())) {
                     ResBase resBase = resBaseMapper.selectByPrimaryKey(doctor.getOrgFlow());
                     if (resBase != null && jointFlag.equals("是")) {
                         property = resBase.getBaseGradeName();
@@ -1218,7 +1211,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 			userBalck.setReasonYj("您的信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
 			userBalck.setOperTypeId("1");
 			userBalck.setOperTypeName("自动");
-			userBalck.setRecordStatus(GlobalConstant.FLAG_Y);
+            userBalck.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 
 			if(StringUtil.isNotBlank(userBalck.getRecordFlow()))
 			{
@@ -1231,7 +1224,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 			}
 
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	/**
@@ -1249,7 +1242,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	public JsresUserBalcklist findByIdNo4Black(String idNo) {
 		JsresUserBalcklistExample jsresUserBalcklistExample=new JsresUserBalcklistExample();
 		JsresUserBalcklistExample.Criteria criteria=jsresUserBalcklistExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(idNo);
 		List<JsresUserBalcklist> list = balcklistMapper.selectByExample(jsresUserBalcklistExample);
 		if (list.size()>0)
@@ -1263,7 +1256,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	public JsresUserBalcklist findByUserEmail4Black(String userEmail) {
 		JsresUserBalcklistExample jsresUserBalcklistExample=new JsresUserBalcklistExample();
 		JsresUserBalcklistExample.Criteria criteria=jsresUserBalcklistExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserEmailEqualTo(userEmail);
 		List<JsresUserBalcklist> list = balcklistMapper.selectByExample(jsresUserBalcklistExample);
 		if (list.size()>0)
@@ -1277,7 +1270,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 	public JsresUserBalcklist findByUserPhone4Black(String userPhone) {
 		JsresUserBalcklistExample jsresUserBalcklistExample=new JsresUserBalcklistExample();
 		JsresUserBalcklistExample.Criteria criteria=jsresUserBalcklistExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		List<JsresUserBalcklist> list = balcklistMapper.selectByExample(jsresUserBalcklistExample);
 		if (list.size()>0)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorRecruitMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorRecruit" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorRecruit" >
     <id column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -99,7 +99,7 @@
     <result column="PROVINCE_CERTIFICATE_DATE" property="provinceCertificateDate" jdbcType="VARCHAR" />
     <result column="SIGNUP_WAY" property="signupWay" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResDoctorRecruitWithBLOBs" extends="BaseResultMap" >
     <result column="RETEST_NOTICE" property="retestNotice" jdbcType="CLOB" />
     <result column="ADMIT_NOTICE" property="admitNotice" jdbcType="CLOB" />
     <result column="PROV_REMARK" property="provRemark" jdbcType="CLOB" />
@@ -185,7 +185,7 @@
   <sql id="Blob_Column_List" >
     RETEST_NOTICE, ADMIT_NOTICE, PROV_REMARK
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResDoctorRecruitExample" >
     select
     <if test="distinct" >
       distinct
@@ -201,7 +201,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResDoctorRecruitExample" >
     select
     <if test="distinct" >
       distinct
@@ -234,13 +234,13 @@
     delete from PDSCI.RES_DOCTOR_RECRUIT
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorRecruitExample" >
     delete from PDSCI.RES_DOCTOR_RECRUIT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs" >
        insert into PDSCI.RES_DOCTOR_RECRUIT (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW,
       ORG_NAME, SPE_ID, SPE_NAME,
       SWAP_FLAG, RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME,
@@ -314,7 +314,7 @@
       #{signupWay,jdbcType=VARCHAR}, #{retestNotice,jdbcType=CLOB}, #{admitNotice,jdbcType=CLOB},
       #{provRemark,jdbcType=CLOB}, #{globalNotice,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs" >
     insert into PDSCI.RES_DOCTOR_RECRUIT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recruitFlow != null" >
@@ -909,7 +909,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorRecruitExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_DOCTOR_RECRUIT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -1422,7 +1422,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs" >
     update PDSCI.RES_DOCTOR_RECRUIT
     <set >
       <if test="doctorFlow != null" >
@@ -1719,7 +1719,7 @@
     </set>
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs" >
     update PDSCI.RES_DOCTOR_RECRUIT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -1820,7 +1820,7 @@
       PROV_REMARK = #{provRemark,jdbcType=CLOB}
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorRecruit" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorRecruit" >
     update PDSCI.RES_DOCTOR_RECRUIT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.pinde.core.commom.enums.GeneralEnum;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -14,34 +13,25 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.pub.UserSexEnum;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.CertificateTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -54,7 +44,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class UserBizImpl implements IUserBiz {
 
 	private static Logger logger = LoggerFactory.getLogger(UserBizImpl.class);
@@ -101,7 +91,7 @@ public class UserBizImpl implements IUserBiz {
 	public List<SysUser> selectByNamesOrIdNo(List<String> userNameList, List<String> idNoList) {
 		SysUserExample sysUserExample = new SysUserExample();
 		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo("Y")
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
 		if (CollectionUtil.isNotEmpty(userNameList)) {
 			criteria.andUserNameIn(userNameList);
@@ -123,19 +113,19 @@ public class UserBizImpl implements IUserBiz {
 	public int deleteUser(String userFlow) {
 		SysUser user = new SysUser();
 		user.setUserFlow(userFlow);
-		user.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		int r1 =  sysUserMapper.updateByPrimaryKeySelective(user);
 
 		SysUserRoleExample example = new SysUserRoleExample();
 		com.pinde.sci.model.mo.SysUserRoleExample.Criteria criteria = example.createCriteria();
 		criteria.andUserFlowEqualTo(userFlow);
 		SysUserRole userRole = new SysUserRole();
-		userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		int r2 = userRoleMapper.updateByExampleSelective(userRole,example);
-		if(r1>GlobalConstant.ZERO_LINE && r2>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.ONE_LINE;
+        if (r1 > com.pinde.core.common.GlobalConstant.ZERO_LINE && r2 > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -147,7 +137,7 @@ public class UserBizImpl implements IUserBiz {
 	{
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(sysUser.getIdNo());
 		criteria.andCretTypeIdEqualTo(sysUser.getCretTypeId());
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -160,7 +150,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> searcherUserByDeptFlow(String deptFlow){
 		SysUserExample sysUserExample = new SysUserExample();
-		SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(deptFlow)){
 			criteria.andDeptFlowEqualTo(deptFlow);
 		}else{
@@ -195,7 +185,7 @@ public class UserBizImpl implements IUserBiz {
 
 		//添加带教角色
 		SysRoleExample sysRoleExample = new SysRoleExample();
-		sysRoleExample.createCriteria().andRoleNameEqualTo("带教老师").andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysRoleExample.createCriteria().andRoleNameEqualTo("带教老师").andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoles = roleMapper.selectByExample(sysRoleExample);
 		if(CollectionUtils.isNotEmpty(sysRoles)){
 			SysUserRole insert = new SysUserRole();
@@ -203,7 +193,7 @@ public class UserBizImpl implements IUserBiz {
 			insert.setOrgFlow(user.getOrgFlow());
 			insert.setWsId("res");
 			insert.setRoleFlow(sysRoles.get(0).getRoleFlow());
-			insert.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            insert.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			insert.setRecordFlow(PkUtil.getUUID());
 			GeneralMethod.setRecordInfo(insert, true);
 			userRoleMapper.insert(insert);
@@ -238,20 +228,20 @@ public class UserBizImpl implements IUserBiz {
 				SysUserRole userRole = new SysUserRole();
 				userRole.setUserFlow(user.getUserFlow());
 				userRole.setOrgFlow(user.getOrgFlow());
-				userRole.setWsId(GlobalConstant.RES_WS_ID);
+                userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 				userRole.setRoleFlow(roleFlow);
 				userRole.setAuthTime(DateUtil.getCurrDateTime());
 				userRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 				userRoleBiz.saveSysUserRole(userRole);
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public int saveUser(SysUser user) {
-		String currWsId = (String)GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String currWsId = (String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		String userFlow = user.getUserFlow();
 		if(StringUtil.isNotBlank(userFlow)){
 			GeneralMethod.setRecordInfo(user, false);
@@ -259,7 +249,7 @@ public class UserBizImpl implements IUserBiz {
 				user.setStatusDesc(UserStatusEnum.getNameById(user.getStatusId()));
 			}
 			int ret = sysUserMapper.updateByPrimaryKeySelective(user);
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))) {
 				//全部同步后saveUser改称update
 				user = sysUserMapper.selectByPrimaryKey(userFlow);
 				boolean result = false;
@@ -277,7 +267,7 @@ public class UserBizImpl implements IUserBiz {
 				}
 				logger.debug("wei xin qi ye saveuser is "+result);
 			}
-//			if(GlobalConstant.EDU_WS_ID.equals(currWsId)){//edu工作站
+//			if(com.pinde.core.common.GlobalConstant.EDU_WS_ID.equals(currWsId)){//edu工作站
 //				EduUser findEduUser = this.eduUserBiz.readEduUser(userFlow);
 //				if(findEduUser==null){
 //					EduUser eduUser = new EduUser();
@@ -286,7 +276,7 @@ public class UserBizImpl implements IUserBiz {
 //					this.eduUserBiz.addEduUser(eduUser);
 //				}
 //			}
-//			if(GlobalConstant.NJMUEDU_WS_ID.equals(currWsId)){//njmuedu工作站
+//			if(com.pinde.core.common.GlobalConstant.NJMUEDU_WS_ID.equals(currWsId)){//njmuedu工作站
 //				EduUser findEduUser = this.eduUserBiz.readEduUser(userFlow);
 //				if(findEduUser==null){
 //					EduUser eduUser = new EduUser();
@@ -325,7 +315,7 @@ public class UserBizImpl implements IUserBiz {
 			}
 			GeneralMethod.setRecordInfo(user, true);
 
-			if(GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))){
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("sys_weixin_qiye_flag"))) {
 				boolean result = false;
 				if(StringUtil.isNotBlank(InitConfig.getSysCfg("sys_weixin_qiye_dept_id"))){
 					result = WeixinQiYeUtil.createUser(InitConfig.getSysCfg("sys_weixin_qiye_corp_id"), InitConfig.getSysCfg("sys_weixin_qiye_secret"), InitConfig.getSysCfg("sys_weixin_qiye_dept_id"), user);
@@ -342,13 +332,13 @@ public class UserBizImpl implements IUserBiz {
 				logger.debug("wei xin qi ye createUser is "+result);
 			}
 			int ret = sysUserMapper.insert(user);
-//			if(GlobalConstant.EDU_WS_ID.equals(currWsId)){//edu工作站
+//			if(com.pinde.core.common.GlobalConstant.EDU_WS_ID.equals(currWsId)){//edu工作站
 //				EduUser eduUser = new EduUser();
 //				eduUser.setUserFlow(userFlow);
 //				GeneralMethod.setRecordInfo(eduUser, true);
 //				this.eduUserBiz.addEduUser(eduUser);
 //			}
-//			if(GlobalConstant.NJMUEDU_WS_ID.equals(currWsId)){//njmuedu工作站
+//			if(com.pinde.core.common.GlobalConstant.NJMUEDU_WS_ID.equals(currWsId)){//njmuedu工作站
 //				EduUser eduUser = new EduUser();
 //				eduUser.setUserFlow(userFlow);
 //				GeneralMethod.setRecordInfo(eduUser, true);
@@ -362,7 +352,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> searchUser(SysUser sysUser) {
 		SysUserExample sysUserExample=new SysUserExample();
-		SysUserExample.Criteria criteria=sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		setUserCriteria(criteria , sysUser);
 		sysUserExample.setOrderByClause(" NLSSORT(USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')");
 		if (StringUtil.isNotBlank(sysUser.getUserName())) {
@@ -414,7 +404,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> searchUserByOrgFlow(SysUser sysUser , List<String> orgFlows) {
 		SysUserExample sysUserExample=new SysUserExample();
-		SysUserExample.Criteria criteria=sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysUser.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(sysUser.getOrgFlow());
 		}else if(orgFlows!=null &&!orgFlows.isEmpty()){
@@ -462,7 +452,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserCode(String userCode) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserCodeEqualTo(userCode);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -475,7 +465,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserCodeAndOrgFlow(String userCode,String orgFlow) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserCodeEqualTo(userCode).andOrgFlowEqualTo(orgFlow);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -488,7 +478,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByIdNo(String idNo) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(idNo);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -517,7 +507,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserPhone(String userPhone) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -530,7 +520,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserEmail(String userEmail) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserEmailEqualTo(userEmail);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -542,7 +532,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public SysUser findByUserName(String userName) {
 		SysUserExample sysUserExample = new SysUserExample();
-		SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserNameEqualTo(userName);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size() > 0){
@@ -555,7 +545,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserCodeNotSelf(String userFlow,String userCode) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserCodeEqualTo(userCode);
 		criteria.andUserFlowNotEqualTo(userFlow);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -569,7 +559,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByIdNoNotSelf(String userFlow,String idNo) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(idNo);
 		criteria.andUserFlowNotEqualTo(userFlow);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -583,7 +573,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserPhoneNotSelf(String userFlow,String userPhone) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		criteria.andUserFlowNotEqualTo(userFlow);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -597,7 +587,7 @@ public class UserBizImpl implements IUserBiz {
 	public SysUser findByUserEmailNotSelf(String userFlow,String userEmail) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserEmailEqualTo(userEmail);
 		criteria.andUserFlowNotEqualTo(userFlow);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -613,14 +603,14 @@ public class UserBizImpl implements IUserBiz {
 			GeneralMethod.setRecordInfo(sysUser, false);
 			return sysUserMapper.updateByPrimaryKeySelective(sysUser);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public void modifyUserByExample(SysUser user) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(user.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(user.getOrgFlow());
 		}
@@ -632,7 +622,7 @@ public class UserBizImpl implements IUserBiz {
 	public List<SysUser> searchSysUserByuserFlows(List<String> userFlows){
 		if(userFlows != null && !userFlows.isEmpty()){
 			SysUserExample sysUserExample = new SysUserExample();
-			sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
+            sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
 			return sysUserMapper.selectByExample(sysUserExample);
 		}
 		return null;
@@ -642,7 +632,7 @@ public class UserBizImpl implements IUserBiz {
 	public List<SysUser> searchSysUserByuserFlows(List<String> userFlows,String deptFlow){
 		if(userFlows != null && !userFlows.isEmpty()){
 			SysUserExample sysUserExample = new SysUserExample();
-			sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows).andDeptFlowEqualTo(deptFlow);
+            sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows).andDeptFlowEqualTo(deptFlow);
 			return sysUserMapper.selectByExample(sysUserExample);
 		}
 		return null;
@@ -651,7 +641,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> searchSysUserByOrgFlows(List<String> orgFlows){
 		SysUserExample sysUserExample = new SysUserExample();
-		sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowIn(orgFlows);
+        sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowIn(orgFlows);
 		return sysUserMapper.selectByExample(sysUserExample);
 	}
 
@@ -661,17 +651,6 @@ public class UserBizImpl implements IUserBiz {
 		user.setStatusDesc(UserStatusEnum.Activated.getName());
 		user.setUnLockTime(DateUtil.getCurrDateTime());
 		saveUser(user);
-//		if (GlobalConstant.EDU_WS_ID.equals(GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_WS_ID))) {
-//			/*edu 插入必修课*/
-//			EduCourse course = new EduCourse();
-//			course.setCourseTypeId(ResEduCourseTypeEnum.Required.getId());
-//			List<EduCourse> courseList = this.eduCourseBiz.searchCourseList(course);
-//			if(courseList!=null&&!courseList.isEmpty()){
-//				String userFlow = user.getUserFlow();
-//				for (EduCourse ec : courseList) {
-//					this.eduCourseBiz.chooseCourse(userFlow, ec.getCourseFlow());
-//				}
-//			}
 //		}
 	}
 
@@ -694,42 +673,6 @@ public class UserBizImpl implements IUserBiz {
 	}
 
 	@Override
-	public List<SysUser> headUserByOrgFlowAndRoleFlow(String orgFlow, String roleFlow, SysUser sysUser) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		if(StringUtil.isNotBlank(orgFlow)){
-			paramMap.put("orgFlow", orgFlow);
-		}
-		if(StringUtil.isNotBlank(roleFlow)){
-			paramMap.put("roleFlow", roleFlow);
-		}
-		if (StringUtil.isNotBlank(sysUser.getDeptFlow())||StringUtil.isNotBlank(sysUser.getUserName())) {
-			paramMap.put("sysUser", sysUser);
-		}
-		List<SysDict> deptList = DictTypeEnum.DwjxSpe.getSysDictList();
-		if(null!=deptList && deptList.size()>0){
-			paramMap.put("deptList",deptList);
-		}
-
-		return this.userExtMapper.selectHeadUserByOrgFlowAndRoleFlow(paramMap);
-	}
-
-	@Override
-	public List<SysUser> teacherUserByOrgFlowAndRoleFlow(String orgFlow,
-			String roleFlow,SysUser sysUser) {
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		if(StringUtil.isNotBlank(orgFlow)){
-			paramMap.put("orgFlow", orgFlow);
-		}
-		if(StringUtil.isNotBlank(roleFlow)){
-			paramMap.put("roleFlow", roleFlow);
-		}
-		if (StringUtil.isNotBlank(sysUser.getDeptFlow())||StringUtil.isNotBlank(sysUser.getUserName())) {
-			paramMap.put("sysUser", sysUser);
-		}
-		return this.userExtMapper.selectTeacherUserByOrgFlowAndRoleFlow(paramMap);
-	}
-
-	@Override
  	public List<SysUser> getUserByRecForUni(Map<String,Object> paramMap) {
 		return this.userExtMapper.getUserByRecForUni(paramMap);
 	}
@@ -749,7 +692,7 @@ public class UserBizImpl implements IUserBiz {
 //	@Override
 //	public List<SysUser> searchUserByStatus(SysUser user) {
 //		SysUserExample sysUserExample=new SysUserExample();
-//		sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andStatusIdEqualTo(user.getStatusId());
+//		sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andStatusIdEqualTo(user.getStatusId());
 //		sysUserExample.setOrderByClause(" NLSSORT(USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')");
 //		return sysUserMapper.selectByExample(sysUserExample);
 //	}
@@ -811,7 +754,7 @@ public class UserBizImpl implements IUserBiz {
 		for(String temp : deptFlows){
 			if (userDeptMap.containsKey(temp)) {
 				SysUserDept userDept = userDeptMap.get(temp);
-				userDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                userDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				GeneralMethod.setRecordInfo(userDept, false);
 				userDeptMapper.updateByPrimaryKey(userDept);
 			}else {
@@ -839,7 +782,7 @@ public class UserBizImpl implements IUserBiz {
 	public List<SysUserDept> getUserDept(SysUser user) {
 		SysUserDeptExample example = new SysUserDeptExample();
 		com.pinde.sci.model.mo.SysUserDeptExample.Criteria criteria =  example.createCriteria().andUserFlowEqualTo(user.getUserFlow())
-		.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(user.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(user.getOrgFlow());
 		}
@@ -851,10 +794,10 @@ public class UserBizImpl implements IUserBiz {
 	public void disUserDept(SysUser user) {
 		if(StringUtil.isNotBlank(user.getOrgFlow())){
 			SysUserDeptExample example = new SysUserDeptExample();
-			example.createCriteria().andUserFlowEqualTo(user.getUserFlow()).andOrgFlowEqualTo(user.getOrgFlow()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andUserFlowEqualTo(user.getUserFlow()).andOrgFlowEqualTo(user.getOrgFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 			SysUserDept delete = new SysUserDept();
-			delete.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            delete.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			userDeptMapper.updateByExampleSelective(delete,example);
 		}
 	}
@@ -1092,11 +1035,11 @@ public class UserBizImpl implements IUserBiz {
 	public int saveRegisterUser(String userPhone,String code,String codeTime) {
 		SysUser user = new SysUser();
 		user.setUserPhone(userPhone);
-		user.setIsVerify("N");
+        user.setIsVerify(com.pinde.core.common.GlobalConstant.FLAG_N);
 		user.setVerifyCode(code);
 		user.setVerifyCodeTime(codeTime);
 		SysUserExample sysUserExample = new SysUserExample();
-		sysUserExample.createCriteria().andUserPhoneEqualTo(user.getUserPhone()).andIsVerifyEqualTo(user.getIsVerify()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysUserExample.createCriteria().andUserPhoneEqualTo(user.getUserPhone()).andIsVerifyEqualTo(user.getIsVerify()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUsers != null && sysUsers.size() > 0){
 			SysUser record = sysUsers.get(0);
@@ -1116,7 +1059,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public SysUser selectByUserPhone(String userPhone) {
 		SysUserExample sysUserExample = new SysUserExample();
-		sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUsers != null && sysUsers.size() > 0){
 			List<String> collect = sysUsers.stream().map(sysUser -> sysUser.getVerifyCodeTime()).collect(Collectors.toList());
@@ -1138,7 +1081,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public int saveForgetPasswdUser(String userPhone, String code, String codeTime) {
 		SysUserExample sysUserExample = new SysUserExample();
-		sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo("Y").andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andIsVerifyEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUsers != null && sysUsers.size() > 0){
 			SysUser record = sysUsers.get(0);
@@ -1151,7 +1094,7 @@ public class UserBizImpl implements IUserBiz {
 
 	@Override
 	public int saveAuthenSuccessUser(SysUser currentUser) {
-		currentUser.setIsVerify("Y");
+        currentUser.setIsVerify(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return sysUserMapper.updateByPrimaryKey(currentUser);
 	}
 
@@ -1201,7 +1144,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<JsresUserBalcklist> selectBlacklistByIdNo(String idNo) {
 		JsresUserBalcklistExample example = new JsresUserBalcklistExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andIdNoEqualTo(idNo).andAuditStatusIdEqualTo("Passed");
 		return balcklistMapper.selectByExample(example);
 	}
@@ -1210,7 +1153,7 @@ public class UserBizImpl implements IUserBiz {
 	public boolean userISRole(String userFlow, String roleFlow) {
 		SysUserRoleExample example=new SysUserRoleExample();
 		SysUserRoleExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("Y").andWsIdEqualTo("res");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andWsIdEqualTo("res");
 		if (StringUtil.isNotBlank(userFlow)){
 			criteria.andUserFlowEqualTo(userFlow);
 		}
@@ -1340,15 +1283,15 @@ public class UserBizImpl implements IUserBiz {
 						}else if("学历".equals(currTitle)){
 							sysUser.setEducationName(value);
 							if(StringUtil.isBlank(sysUser.getEducationId())){
-								sysUser.setEducationId(getDictId(value,DictTypeEnum.UserEducation.getId()));
+                                sysUser.setEducationId(getDictId(value, com.pinde.core.common.enums.DictTypeEnum.UserEducation.getId()));
 							}
 						}else if("学位".equals(currTitle)){
 							sysUser.setDegreeName(value);
 							if(StringUtil.isBlank(sysUser.getDegreeId())){
-								sysUser.setDegreeId(getDictId(value, DictTypeEnum.UserDegree.getId()));
+                                sysUser.setDegreeId(getDictId(value, com.pinde.core.common.enums.DictTypeEnum.UserDegree.getId()));
 							}
 						}else if("职称".equals(currTitle)){
-							String titleId = getDictId(value, DictTypeEnum.UserTitle.getId());
+                            String titleId = getDictId(value, com.pinde.core.common.enums.DictTypeEnum.UserTitle.getId());
 							if(StringUtil.isNotBlank(titleId)){
 								sysUser.setTitleName(value);
 								sysUser.setTitleId(titleId);
@@ -1357,7 +1300,7 @@ public class UserBizImpl implements IUserBiz {
 							if(StringUtil.isNotBlank(value)){
 								sysUser.setPostName(value);
 								if(StringUtil.isBlank(sysUser.getPostId())){
-									sysUser.setPostId(getDictId(value, DictTypeEnum.UserPost.getId()));
+                                    sysUser.setPostId(getDictId(value, com.pinde.core.common.enums.DictTypeEnum.UserPost.getId()));
 								}
 							}
 						}
@@ -1426,7 +1369,7 @@ public class UserBizImpl implements IUserBiz {
 
 				List<String> oldRoles = new ArrayList<>();
 				SysUserRoleExample example0 = new SysUserRoleExample();
-				example0.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(sysUser.getUserFlow());
+                example0.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(sysUser.getUserFlow());
 				List<SysUserRole> sysUserRoles = userRoleMapper.selectByExample(example0);
 				if(sysUserRoles!=null&&sysUserRoles.size()>0){
 					for(SysUserRole sysUserRole:sysUserRoles){
@@ -1440,7 +1383,7 @@ public class UserBizImpl implements IUserBiz {
 							SysUserRole sysUserRole = new SysUserRole();
 							sysUserRole.setOrgFlow(cuurUser.getOrgFlow());
 							sysUserRole.setUserFlow(sysUser.getUserFlow());
-							sysUserRole.setWsId(GlobalConstant.RES_WS_ID);
+                            sysUserRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 							sysUserRole.setRoleFlow(role);
 							sysUserRole.setAuthTime(DateUtil.getCurrDateTime());
 							sysUserRole.setAuthUserFlow(cuurUser.getUserFlow());
@@ -1450,11 +1393,11 @@ public class UserBizImpl implements IUserBiz {
 				}
 
 				SysUserDeptExample example1 = new SysUserDeptExample();
-				example1.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(sysUser.getUserFlow());
+                example1.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(sysUser.getUserFlow());
 				List<SysUserDept> sysUserDepts = userDeptMapper.selectByExample(example1);
 				if(sysUserDepts!=null&&sysUserDepts.size()>0){
 					for(SysUserDept sysUserDept:sysUserDepts){
-						sysUserDept.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                        sysUserDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 						userDeptMapper.updateByPrimaryKeySelective(sysUserDept);
 					}
 				}
@@ -1486,7 +1429,7 @@ public class UserBizImpl implements IUserBiz {
 		if ("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
 			SysOrg org = orgBiz.readSysOrg(cuurUser.getOrgFlow());
 			if (org != null) {
-				if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
+                if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
 					List<SysOrg> jointOrgs = orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 					if (jointOrgs != null) {
 						for (SysOrg so : jointOrgs) {
@@ -1664,7 +1607,7 @@ public class UserBizImpl implements IUserBiz {
 	private SysUser findByUserCodeAndOrgFlows(String userCode, List<String> orgFlows) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserCodeEqualTo(userCode).andOrgFlowIn(orgFlows);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -1785,7 +1728,7 @@ public class UserBizImpl implements IUserBiz {
 				}
 				if(StringUtil.isNotBlank(sysUser.getPostName()))
 				{
-					sysUser.setPostId(getDictId(sysUser.getPostName(), DictTypeEnum.UserPost.getId()));
+                    sysUser.setPostId(getDictId(sysUser.getPostName(), com.pinde.core.common.enums.DictTypeEnum.UserPost.getId()));
 					if(StringUtil.isBlank(sysUser.getPostId()))
 					{
 						throw new RuntimeException("导入失败！第"+ (count+2) +"行，职务名称与系统字典不匹配！");
@@ -1812,7 +1755,7 @@ public class UserBizImpl implements IUserBiz {
 				//验证惟一用户登录名
 				if(StringUtil.isNotBlank(sysUser.getUserCode())){
 					SysUserExample example=new SysUserExample();
-					example.createCriteria().andOrgFlowEqualTo(sysUser.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andOrgFlowEqualTo(sysUser.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 					if(sysUserList != null && !sysUserList.isEmpty()){
 						throw new RuntimeException("导入失败！第"+(count+2) +"行，当前系统已存在登录名为"+sysUser.getUserCode()+"的用户");
@@ -1892,7 +1835,7 @@ public class UserBizImpl implements IUserBiz {
 				//验证惟一用户登录名
 				if(StringUtil.isNotBlank(sysUser.getUserCode())){
 					SysUserExample example=new SysUserExample();
-					example.createCriteria().andOrgFlowEqualTo(user.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andOrgFlowEqualTo(user.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 					if(sysUserList != null && !sysUserList.isEmpty()){
 						throw new RuntimeException("导入失败！第"+(count+2) +"行，当前系统已存在登录名为"+sysUser.getUserCode()+"的用户");
@@ -1933,7 +1876,7 @@ public class UserBizImpl implements IUserBiz {
 					int imageHeight = image.getHeight(); //获取图片高度，单位px
 
 					if(imageWidth < 413 || imageHeight < 626){
-						return GlobalConstant.FILE_PIXEL_ERROR;// 分辨率不小于413*626
+                        return com.pinde.core.common.GlobalConstant.FILE_PIXEL_ERROR;// 分辨率不小于413*626
 					}
 				}
 			} catch (IOException e){
@@ -1953,14 +1896,14 @@ public class UserBizImpl implements IUserBiz {
 			String fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-				return GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
 			}
 //			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if(file.getSize()<=150*1024){
 				return "图片大小不得小于150K" ;
 			}
 			if(file.getSize()>300*1024){
-				return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +"300K" ;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + "300K";
 			}
 			try {
 				/*创建目录*/
@@ -1991,10 +1934,10 @@ public class UserBizImpl implements IUserBiz {
 				return url;
 			} catch (Exception e) {
 				e.printStackTrace();
-				return GlobalConstant.UPLOAD_FAIL;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 //	@Override
 //	public String uploadImgWithWatermark(String userFlow,MultipartFile file) {
@@ -2012,11 +1955,11 @@ public class UserBizImpl implements IUserBiz {
 //			String fileName = file.getOriginalFilename();//文件名
 //			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 //			if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
-//				return GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
+//				return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
 //			}
 //			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 //			if(file.getSize()>limitSize*1024*1024){
-//				return GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M" ;
+//				return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR +limitSize +"M" ;
 //			}
 //			try {
 //				/*创建目录*/
@@ -2053,10 +1996,10 @@ public class UserBizImpl implements IUserBiz {
 //				return "success:"+url;
 //			} catch (Exception e) {
 //				e.printStackTrace();
-//				return GlobalConstant.UPLOAD_FAIL;
+//				return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 //			}
 //		}
-//		return GlobalConstant.UPLOAD_FAIL;
+//		return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 //	}
 //	public void fileChannelCopy(File s, File t) {
 //        FileInputStream fi = null;
@@ -2097,14 +2040,14 @@ public class UserBizImpl implements IUserBiz {
 	//	@Override
 //	public List<SysUserDept> searchUserDeptByDept(String deptFlow){
 //		SysUserDeptExample example = new SysUserDeptExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDeptFlowEqualTo(deptFlow);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowEqualTo(deptFlow);
 //		return userDeptMapper.selectByExample(example);
 //	}
 //
 	@Override
 	public List<SysUserDept> searchUserDeptByUser(String userFlow){
 		SysUserDeptExample example = new SysUserDeptExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(userFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(userFlow);
 		return userDeptMapper.selectByExample(example);
 	}
 
@@ -2118,7 +2061,7 @@ public class UserBizImpl implements IUserBiz {
 			String cretTypeId) {
 		SysUserExample sysUserExample=new SysUserExample();
 		SysUserExample.Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(idNo);
 		criteria.andCretTypeIdEqualTo(cretTypeId);
 		criteria.andUserFlowNotEqualTo(userFlow);
@@ -2132,7 +2075,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> searchUserNotInUserFlows(String orgFlow,List<String> userFlows){
 		SysUserExample sysUserExample=new SysUserExample();
-		SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 		if(userFlows!=null&&userFlows.size()>0){
 			criteria.andUserFlowNotIn(userFlows);
 		}
@@ -2164,7 +2107,7 @@ public class UserBizImpl implements IUserBiz {
 //	@Override
 //	public List<SysUser> searchUserByUserCode(String userCode) {
 //		SysUserExample sysUserExample=new SysUserExample();
-//		Criteria criteria=sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		Criteria criteria=sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		if(StringUtil.isNotBlank(userCode)){
 //			criteria.andUserCodeEqualTo(userCode);
 //		}
@@ -2197,7 +2140,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> getUserByOrg(String orgFlow){
 		SysUserExample example = new SysUserExample();
-		SysUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andStatusIdEqualTo("Activated");
+        SysUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andStatusIdEqualTo("Activated");
 		if(StringUtil.isNotBlank(orgFlow)){
 			criteria.andOrgFlowEqualTo(orgFlow);
 		}
@@ -2208,7 +2151,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUser> searchSysUserByLikeCode(SysUser sysUser) {
 		SysUserExample sysUserExample=new SysUserExample();
-		SysUserExample.Criteria criteria=sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		sysUserExample.setOrderByClause(" NLSSORT(USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')");
 		if (StringUtil.isNotBlank(sysUser.getIdNo())) {
 			criteria.andIdNoLike("%"+sysUser.getIdNo()+"%");
@@ -2227,7 +2170,7 @@ public class UserBizImpl implements IUserBiz {
 		if(deptFlows!=null&&!deptFlows.isEmpty())
 		{
 			SysUserExample sysUserExample=new SysUserExample();
-			SysUserExample.Criteria criteria=sysUserExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            SysUserExample.Criteria criteria = sysUserExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andStatusIdEqualTo(UserStatusEnum.Activated.getId()).andDeptFlowIn(deptFlows);
 			sysUserExample.setOrderByClause(" DEPT_FLOW ,NLSSORT(USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')");
 			return sysUserMapper.selectByExample(sysUserExample);
@@ -2252,7 +2195,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("roleFlow",roleFlow);
 		map.put("userCode",user.getUserCode());
 		map.put("certificateLevelId",user.getCertificateLevelId());
-		map.put("isAll","Y");
+        map.put("isAll", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
 		}
@@ -2277,7 +2220,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("roleFlow",roleFlow);
 		map.put("userCode",user.getUserCode());
 		map.put("certificateLevelId",user.getCertificateLevelId());
-		map.put("isAll","Y");
+        map.put("isAll", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
 		}
@@ -2299,7 +2242,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("orgFlow", user.getOrgFlow());
 		map.put("userFlow",user.getUserFlow());
 		map.put("userCode",user.getUserCode());
-		map.put("isAll","Y");
+        map.put("isAll", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);
 		}

@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.Page;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -14,17 +16,11 @@ import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
-import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.BeanUtils;
@@ -162,8 +158,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<String> countryOrgFlowList = new ArrayList<>();//国家基地ORGFLOWLIST
 		Map<String,String> countryOrgNameMap = new HashMap<>();
@@ -264,8 +260,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
 		if(!countryOrgList.isEmpty()){
@@ -324,8 +320,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
 		if(!countryOrgList.isEmpty()){
@@ -362,8 +358,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
 		if(!countryOrgList.isEmpty()){
@@ -395,8 +391,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
@@ -485,8 +481,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
@@ -613,8 +609,8 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 		List<String> allOrgFlow = new ArrayList<>();
 		SysOrg searchOrg = new SysOrg();
-		searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
+        searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
 		List<SysOrg> countryOrgList = orgBiz.searchOrg(searchOrg);//所有国家基地
 
 		List<ResJointOrg> jointOrgList = jointOrgBiz.searchJointOrgAll();//所有协同基地
@@ -735,7 +731,7 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 	public String PageToDoctorOutOfficeInfo(Model model,String monthDate,String isContain,String orgFlow){
 		try {
 			String role=getRoleFlag();//角色
-			if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 				model.addAttribute("university","university");
 			}
 			return "res/platform/monthlyReport/doctorOutOfficeInfo";
@@ -762,42 +758,42 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = com.pinde.core.common.GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 				String currentOrgName = currOrg.getOrgName();
 
 				if(Arrays.asList(datas).contains("Graduate") && Arrays.asList(datas).contains("NotGraduate")){
-					paramMap.put("notGraduate","Y");
-					paramMap.put("graduate","Y");
+                    paramMap.put("notGraduate", com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    paramMap.put("graduate", com.pinde.core.common.GlobalConstant.FLAG_Y);
 				}else{
 					if(Arrays.asList(datas).contains("Graduate")){
-						if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
-							paramMap.put("graduate","Y");
+                        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
+                            paramMap.put("graduate", com.pinde.core.common.GlobalConstant.FLAG_Y);
 						}else{
-							paramMap.put("notGraduate","N");
-							paramMap.put("graduate","Y");
+                            paramMap.put("notGraduate", com.pinde.core.common.GlobalConstant.FLAG_N);
+                            paramMap.put("graduate", com.pinde.core.common.GlobalConstant.FLAG_Y);
 						}
 					}else{
-						paramMap.put("notGraduate","Y");
-						paramMap.put("graduate","N");
+                        paramMap.put("notGraduate", com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        paramMap.put("graduate", com.pinde.core.common.GlobalConstant.FLAG_N);
 					}
 				}
-				if(role.equals(GlobalConstant.USER_LIST_GLOBAL)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 					paramMap.put("province",currOrg.getOrgProvId());
-					paramMap.put("roleFlag",GlobalConstant.USER_LIST_GLOBAL);
+                    paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
 				}
-				if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 					paramMap.put("city",currOrg.getOrgCityId());
-					paramMap.put("roleFlag",GlobalConstant.USER_LIST_CHARGE);
+                    paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE);
 				}
-				if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 					String currentOrgId="";
 					Boolean gaoxiaoFlg = false;
-					List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+                    List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 					if (sendSchools != null && sendSchools.size() > 0) {
 						for (SysDict dict : sendSchools) {
 							if (currentOrgName.equals(dict.getDictName())) {
@@ -808,7 +804,7 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 					}
 					if(gaoxiaoFlg){
 						paramMap.put("university",currentOrgId);
-						paramMap.put("roleFlag",GlobalConstant.USER_LIST_UNIVERSITY);
+                        paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY);
 					}else{
 						throw new RuntimeException("请联系管理员“派送学校”是否有“"+currentOrgName+"”高校");
 					}
@@ -850,7 +846,7 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 
 
 			//高校角色
-			if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 				List li = resMonthlyReportGlobalControllerClass.doctorOutOfficeInfo_University(sortFlag,monthDate,isContain, orgs ,doctorOutOfficeParamPOList,docTypeList,role);
 				return li;
 			}
@@ -858,13 +854,13 @@ public class ResMonthlyReportGlobalController extends GeneralController {
 			SysOrg searchOrg=new SysOrg();
 			SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 			searchOrg.setOrgProvId(currOrg.getOrgProvId());
-			if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 				searchOrg.setOrgCityId(currOrg.getOrgCityId());
 			}
 
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-			searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
              //---start--
 			List<SysOrg> countryOrgs=orgBiz.searchOrg(searchOrg);//获取所有省级或者市级国家基地
 			for(int i =0;i<countryOrgs.size();i++){
@@ -897,7 +893,7 @@ if("isContain".equals(isContain)){
 		outOfficeDoctorMap.put("orgFlow",orgFlow);
 		outOfficeDoctorMap.put("docTypeList",docTypeList);
 		List<Map<String,Object>> outOfficeDoctorInfoList= monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
-		String cksh="N";
+        String cksh = com.pinde.core.common.GlobalConstant.FLAG_N;
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_cksh");
 		if(cfg!=null)
 		{
@@ -1012,7 +1008,7 @@ if("isContain".equals(isContain)){
 					outOfficeDoctorMap.put("orgFlow",orgFlow);
 					outOfficeDoctorMap.put("docTypeList",docTypeList);
 					List<Map<String,Object>> outOfficeDoctorInfoList= monthlyReportExtMapper2.findOutOfficeDoctorInfo(outOfficeDoctorMap);
-					String cksh="N";
+                    String cksh = com.pinde.core.common.GlobalConstant.FLAG_N;
 					JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_cksh");
 					if(cfg!=null)
 					{
@@ -1223,7 +1219,7 @@ if("isContain".equals(isContain)){
 										//出科考核表
 										if(AfterRecTypeEnum.AfterEvaluation.getId().equals(r.getRecTypeId())){
 											//如果科主任审核
-											if(cksh.equals("Y")){
+                                            if (cksh.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 												//科主任通过
 												if(RecStatusEnum.HeadAuditY.getId().equals(r.getHeadAuditStatusId())){
 													count++;
@@ -1307,10 +1303,10 @@ if("isContain".equals(isContain)){
 		param.put("monthDate",monthDate);
 		param.put("sortFlag",sortFlag);
 		String doctorTypeId = "All";
-		if("Y".equals(notGraduate) && !"Y".equals(graduate)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(notGraduate) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(graduate)) {
 			doctorTypeId = "Doctor";
 		}
-		if("Y".equals(graduate) && !"Y".equals(notGraduate)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(graduate) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(notGraduate)) {
 			doctorTypeId = "Graduate";
 		}
 		param.put("doctorTypeId",doctorTypeId);
@@ -1346,25 +1342,25 @@ if("isContain".equals(isContain)){
 				Map<String,Object> paramMap = new HashMap<>();
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = com.pinde.core.common.GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 				String currentOrgName = currOrg.getOrgName();
-				if(role.equals(GlobalConstant.USER_LIST_GLOBAL)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 					paramMap.put("province",currOrg.getOrgProvId());
-					paramMap.put("roleFlag",GlobalConstant.USER_LIST_GLOBAL);
+                    paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
 				}
-				if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 					paramMap.put("city",currOrg.getOrgCityId());
-					paramMap.put("roleFlag",GlobalConstant.USER_LIST_CHARGE);
+                    paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE);
 				}
-				if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 					String currentOrgId="";
 					Boolean gaoxiaoFlg = false;
-					List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+                    List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 					if (sendSchools != null && sendSchools.size() > 0) {
 						for (SysDict dict : sendSchools) {
 							if (currentOrgName.equals(dict.getDictName())) {
@@ -1375,7 +1371,7 @@ if("isContain".equals(isContain)){
 					}
 					if(gaoxiaoFlg){
 						paramMap.put("university",currentOrgId);
-						paramMap.put("roleFlag",GlobalConstant.USER_LIST_UNIVERSITY);
+                        paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY);
 					}else{
 						throw new RuntimeException("请联系管理员“派送学校”是否有“"+currentOrgName+"”高校");
 					}
@@ -1413,7 +1409,7 @@ if("isContain".equals(isContain)){
 
 
 			//高校角色
-			if(GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
 				List li = resMonthlyReportGlobalControllerClass.TeachActiveInfo_University(monthDate,isContain ,orgInfoList,roleFlag);
 				return li;
 			}
@@ -1422,12 +1418,12 @@ if("isContain".equals(isContain)){
 			SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 			searchOrg.setOrgProvId(currOrg.getOrgProvId());
 			//如果是市角色
-			if(roleFlag.equals(GlobalConstant.USER_LIST_CHARGE)){
+                if (roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 				searchOrg.setOrgCityId(currOrg.getOrgCityId());
 			}
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-			searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			//包含协同
 			if("isContain".equals(isContain)){
 				List<SysOrg> countryOrgs=orgBiz.searchOrg(searchOrg);//获取所有省级或者市级国家基地
@@ -1803,7 +1799,7 @@ if("isContain".equals(isContain)){
 	public String PageToAppUseInfo(Model model,String monthDate,String isContain,String orgFlow){
 		try {
 			String role=getRoleFlag();//角色
-			if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 				model.addAttribute("university","university");
 			}
 			return "res/platform/monthlyReport/appUseInfo";
@@ -1841,26 +1837,26 @@ if("isContain".equals(isContain)){
 				Map<String,Object> paramMap = new HashMap<>();
 				paramMap.put("monthDate",monthDate);
 				if(null==isContain){
-					isContain="N";
+                    isContain = com.pinde.core.common.GlobalConstant.FLAG_N;
 				}else{
-					isContain="Y";
+                    isContain = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 				paramMap.put("isContain",isContain);
 				SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 				String currentOrgName = currOrg.getOrgName();
 				//String currentOrgId = currOrg.getOrgFlow();
-				if(role.equals(GlobalConstant.USER_LIST_GLOBAL)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
 					paramMap.put("province",currOrg.getOrgProvId());
-					paramMap.put("roleFlag",GlobalConstant.USER_LIST_GLOBAL);
+                    paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL);
 				}
-				if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 					paramMap.put("city",currOrg.getOrgCityId());
-					paramMap.put("roleFlag",GlobalConstant.USER_LIST_CHARGE);
+                    paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE);
 				}
-				if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 					String currentOrgId="";
 					Boolean gaoxiaoFlg = false;
-					List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+                    List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 					if (sendSchools != null && sendSchools.size() > 0) {
 						for (SysDict dict : sendSchools) {
 							if (currentOrgName.equals(dict.getDictName())) {
@@ -1871,7 +1867,7 @@ if("isContain".equals(isContain)){
 					}
 					if(gaoxiaoFlg){
 						paramMap.put("university",currentOrgId);
-						paramMap.put("roleFlag",GlobalConstant.USER_LIST_UNIVERSITY);
+                        paramMap.put("roleFlag", com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY);
 					}else{
 						throw new RuntimeException("请联系管理员“派送学校”是否有“"+currentOrgName+"”高校");
 					}
@@ -1912,7 +1908,7 @@ if("isContain".equals(isContain)){
 
 
 			//高校角色
-			if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 				List li = resMonthlyReportGlobalControllerClass.appUserInfo_University(monthDate,isContain ,orgFlow,orgs,role);
 				return li;
 			}
@@ -1920,12 +1916,12 @@ if("isContain".equals(isContain)){
 			SysOrg searchOrg=new SysOrg();
 			SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 			searchOrg.setOrgProvId(currOrg.getOrgProvId());
-			if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 				searchOrg.setOrgCityId(currOrg.getOrgCityId());
 			}
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-			searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			//包含协同
 			if("isContain".equals(isContain)){
 				Map<String,Object> map=new HashMap<>();
@@ -2251,12 +2247,12 @@ if("isContain".equals(isContain)){
 			String role =getRoleFlag();
 			if(!"".equals(role)){
 				//高校角色
-				if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 					SysOrg currOrg = orgBiz.readSysOrg(user.getOrgFlow());
 					String currOrgName = currOrg.getOrgName();
 
 					Boolean gaoxiaoFlg = false;
-					List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+                    List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
 					if (sendSchools != null && sendSchools.size() > 0) {
 						for (SysDict dict : sendSchools) {
 							if (currOrgName.equals(dict.getDictName())) {
@@ -2299,12 +2295,12 @@ if("isContain".equals(isContain)){
 					SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
 					searchOrg.setOrgProvId(currOrg.getOrgProvId());
 					///省级
-					if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                    if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 						searchOrg.setOrgCityId(currOrg.getOrgCityId());
 					}
-					searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-					searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-					searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                    searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                    searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					List<SysOrg> exitOrgs=orgBiz.searchOrg(searchOrg);//获取所有省级或者市级国家基地
 					orgs.addAll(exitOrgs);
 					for(int i=0;i<exitOrgs.size();i++) {
@@ -2361,7 +2357,7 @@ if("isContain".equals(isContain)){
 		List<SysOrg> orgUniversity = new ArrayList<>();
 		List<SysOrg> distinctOrgUniversity = new ArrayList<>();
 		List<JsResDoctorRecruitExt> resDoctorRecruitExtsList=new ArrayList<>();
-		if (GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
 			map1.put("universityName", currOrgName);
 			resDoctorRecruitExtsList = monthlyReportExtMapper2.getUserInfoAndOrgNameByUniversity(map1);
 			if (StringUtil.isBlank(orgFlow)) {
@@ -2386,14 +2382,14 @@ if("isContain".equals(isContain)){
 				}
 			}
 			param.put("orgFlows", orgFlows); //所在高校机构
-		} else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
 			if (StringUtil.isBlank(orgFlow)) {
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
 				searchOrg.setOrgCityId(currOrg.getOrgCityId());
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-				searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-				searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
 					List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2409,13 +2405,13 @@ if("isContain".equals(isContain)){
 
 			}
 			param.put("orgFlows", orgFlows);
-		} else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
 			if (StringUtil.isBlank(orgFlow)) {
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-				searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-				searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
 					List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2434,7 +2430,7 @@ if("isContain".equals(isContain)){
 		//PageHelper.startPage(currentPage, getPageSize(request));
 		List<Map<String, String>> list1 = jsResDoctorRecruitBiz.searchOrgNotUseAppDoc(param);
 		List<Map<String, String>> newList =new ArrayList<>();
-		if(GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {
 			if(resDoctorRecruitExtsList.size()>0){
 				for(Map<String, String> map:list1){
 					Boolean flag=false;
@@ -2499,7 +2495,7 @@ if("isContain".equals(isContain)){
 		List<SysOrg> orgUniversity = new ArrayList<>();
 		List<SysOrg> distinctOrgUniversity = new ArrayList<>();
 		List<JsResDoctorRecruitExt> resDoctorRecruitExtsList=new ArrayList<>();
-		if (GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
 			map1.put("universityName", currOrgName);
 			resDoctorRecruitExtsList = monthlyReportExtMapper2.getUserInfoAndOrgNameByUniversity(map1);
 			if (StringUtil.isBlank(orgFlow)) {
@@ -2524,14 +2520,14 @@ if("isContain".equals(isContain)){
 				}
 			}
 			param.put("orgFlows", orgFlows); //所在高校机构
-		} else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
 			if (StringUtil.isBlank(orgFlow)) {
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
 				searchOrg.setOrgCityId(currOrg.getOrgCityId());
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-				searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-				searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
 					List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2547,13 +2543,13 @@ if("isContain".equals(isContain)){
 
 			}
 			param.put("orgFlows", orgFlows);
-		} else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
 			if (StringUtil.isBlank(orgFlow)) {
 				SysOrg searchOrg=new SysOrg();
 				searchOrg.setOrgProvId("320000");
-				searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-				searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-				searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
 				for(SysOrg g:exitOrgs){
 					List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2571,7 +2567,7 @@ if("isContain".equals(isContain)){
 		}
 		List<Map<String, String>> list1 = jsResDoctorRecruitBiz.searchOrgNotUseAppDoc(param);
 		List<Map<String, String>> newList =new ArrayList<>();
-		if(GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {
 			if(resDoctorRecruitExtsList.size()>0){
 				for(Map<String, String> map:list1){
 					Boolean flag=false;
@@ -2616,12 +2612,12 @@ if("isContain".equals(isContain)){
             String role =getRoleFlag();
             if(!"".equals(role)){
                 //高校角色
-                if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+                if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
                     SysOrg currOrg = orgBiz.readSysOrg(user.getOrgFlow());
                     String currOrgName = currOrg.getOrgName();
 
                     Boolean gaoxiaoFlg = false;
-                    List<SysDict> sendSchools = DictTypeEnum.sysListDictMap.get(DictTypeEnum.SendSchool.getId());
+                    List<SysDict> sendSchools = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.SendSchool.getId());
                     if (sendSchools != null && sendSchools.size() > 0) {
                         for (SysDict dict : sendSchools) {
                             if (currOrgName.equals(dict.getDictName())) {
@@ -2664,12 +2660,12 @@ if("isContain".equals(isContain)){
                     SysOrg currOrg=orgBiz.readSysOrg(user.getOrgFlow());
                     searchOrg.setOrgProvId(currOrg.getOrgProvId());
                     ///省级
-                    if(role.equals(GlobalConstant.USER_LIST_CHARGE)){
+                    if (role.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
                         searchOrg.setOrgCityId(currOrg.getOrgCityId());
                     }
-                    searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-                    searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-                    searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                    searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                    searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     List<SysOrg> exitOrgs=orgBiz.searchOrg(searchOrg);//获取所有省级或者市级国家基地
                     orgs.addAll(exitOrgs);
                     for(int i=0;i<exitOrgs.size();i++) {
@@ -2727,7 +2723,7 @@ if("isContain".equals(isContain)){
         List<SysOrg> orgUniversity = new ArrayList<>();
         List<SysOrg> distinctOrgUniversity = new ArrayList<>();
         List<JsResDoctorRecruitExt> resDoctorRecruitExtsList=new ArrayList<>();
-        if (GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
             map1.put("universityName", currOrgName);
             resDoctorRecruitExtsList = monthlyReportExtMapper2.getUserInfoAndOrgNameByUniversity(map1);
             if (StringUtil.isBlank(orgFlow)) {
@@ -2752,14 +2748,14 @@ if("isContain".equals(isContain)){
                 }
             }
             param.put("orgFlows", orgFlows); //所在高校机构
-        } else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
             if (StringUtil.isBlank(orgFlow)) {
                 SysOrg searchOrg=new SysOrg();
                 searchOrg.setOrgProvId("320000");
                 searchOrg.setOrgCityId(currOrg.getOrgCityId());//市
-                searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-                searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-                searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
                 for(SysOrg g:exitOrgs){
                     List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2774,13 +2770,13 @@ if("isContain".equals(isContain)){
                 }
             }
             param.put("orgFlows", orgFlows);
-        } else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
             if (StringUtil.isBlank(orgFlow)) {
                 SysOrg searchOrg=new SysOrg();
                 searchOrg.setOrgProvId("320000");
-                searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-                searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-                searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
                 for(SysOrg g:exitOrgs){
                     List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2800,7 +2796,7 @@ if("isContain".equals(isContain)){
         List<Map<String, String>> list1 = monthlyReportExtMapper2.findDoctorOutOffice(param); //根据条件获取所有（正常和异常）出科学员信息
          list1= getExceptionDoctorOutOfficeInfo(list1,monthDate); //根据条件获取（正常和异常）出科学员信息-筛选年月、异常，学员数据
         List<Map<String, String>> newList =new ArrayList<>();
-        if(GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {
             if(resDoctorRecruitExtsList.size()>0){
                 for(Map<String, String> map:list1){
                     Boolean flag=false;
@@ -2857,7 +2853,7 @@ if("isContain".equals(isContain)){
         List<SysOrg> orgUniversity = new ArrayList<>();
         List<SysOrg> distinctOrgUniversity = new ArrayList<>();
         List<JsResDoctorRecruitExt> resDoctorRecruitExtsList=new ArrayList<>();
-        if (GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {//高校
             map1.put("universityName", currOrgName);
             resDoctorRecruitExtsList = monthlyReportExtMapper2.getUserInfoAndOrgNameByUniversity(map1);
             if (StringUtil.isBlank(orgFlow)) {
@@ -2882,14 +2878,14 @@ if("isContain".equals(isContain)){
                 }
             }
             param.put("orgFlows", orgFlows); //所在高校机构
-        } else if (GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(userListScope)) {//市局
             if (StringUtil.isBlank(orgFlow)) {
                 SysOrg searchOrg=new SysOrg();
                 searchOrg.setOrgProvId("320000");
                 searchOrg.setOrgCityId(currOrg.getOrgCityId());//市
-                searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-                searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-                searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
                 for(SysOrg g:exitOrgs){
                     List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2904,13 +2900,13 @@ if("isContain".equals(isContain)){
                 }
             }
             param.put("orgFlows", orgFlows);
-        } else if (GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(userListScope)) {//省厅
             if (StringUtil.isBlank(orgFlow)) {
                 SysOrg searchOrg=new SysOrg();
                 searchOrg.setOrgProvId("320000");
-                searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-                searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-                searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+                searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+                searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 List<SysOrg>exitOrgs =orgBiz.searchAllSysOrg(searchOrg);
                 for(SysOrg g:exitOrgs){
                     List<SysOrg> orgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
@@ -2930,7 +2926,7 @@ if("isContain".equals(isContain)){
         List<Map<String, String>> list1 = monthlyReportExtMapper2.findDoctorOutOffice(param); //根据条件获取（正常和异常）出科学员信息
         list1= getExceptionDoctorOutOfficeInfo(list1,monthDate); //根据条件获取（正常和异常）出科学员信息-筛选获取异常学员数据
         List<Map<String, String>> newList =new ArrayList<>();
-        if(GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(userListScope)) {
             if(resDoctorRecruitExtsList.size()>0){
                 for(Map<String, String> map:list1){
                     Boolean flag=false;
@@ -2971,7 +2967,7 @@ if("isContain".equals(isContain)){
             Map<String,String> doctorMap=new HashMap<>();
             String orgFlow= mapInfo.get("orgFlow");
             doctorMap.put("doctorFlow",(String) mapInfo.get("doctorFlow"));
-            String cksh="N";
+            String cksh = com.pinde.core.common.GlobalConstant.FLAG_N;
             JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_cksh");
             if(cfg!=null)
             {
@@ -3018,7 +3014,7 @@ if("isContain".equals(isContain)){
 								//出科考核表
 								if(AfterRecTypeEnum.AfterEvaluation.getId().equals(r.getRecTypeId())){
 									//如果科主任审核
-									if(cksh.equals("Y")){
+                                    if (cksh.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 										//科主任通过
 										if(RecStatusEnum.HeadAuditY.getId().equals(r.getHeadAuditStatusId())){
 											count++;
@@ -3334,7 +3330,7 @@ if("isContain".equals(isContain)){
 	public List<Map<String,String>> getRoles(){
 		List<Map<String,String>> roles=new ArrayList<>();
 		String userFlow = GlobalContext.getCurrentUser().getUserFlow();
-		List<String> currRoleList = (List<String>) GlobalContext.getSessionAttribute(GlobalConstant.CURRENT_ROLE_LIST);
+        List<String> currRoleList = (List<String>) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST);
 			for(String roleFlow : currRoleList) {
 				Map<String, String> role = getRoleUrl(roleFlow);
 				if (role != null) {
@@ -3449,19 +3445,19 @@ if("isContain".equals(isContain)){
 		List<PersonChangeEntity> staticData = new ArrayList<>();
 		List<SysOrg> orgsList = new ArrayList<>();
 		try {
-			if (GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag2)) {
+            if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag2)) {
 				List li = resMonthlyReportGlobalControllerClass.gaoxiaopersonChange(lastMonthdate, isContain2);
 				return li;
 			}
 			SysOrg searchOrg = new SysOrg();
 			SysOrg currOrg = orgBiz.readSysOrg(user.getOrgFlow());
 			searchOrg.setOrgProvId(currOrg.getOrgProvId());
-			if (roleFlag2.equals(GlobalConstant.USER_LIST_CHARGE)) {
+            if (roleFlag2.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
 				searchOrg.setOrgCityId(currOrg.getOrgCityId());
 			}
-			searchOrg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-			searchOrg.setOrgLevelId(OrgLevelEnum.CountryOrg.getId());
-			searchOrg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+            searchOrg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+            searchOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysOrg> countryOrgs = orgBiz.searchOrg(searchOrg);//获取所有省级或者市级国家基地
 			for (int i = 0; i < countryOrgs.size(); i++) {
 				countryOrgs.get(i).setParentOrgFlow("");

@@ -5,21 +5,18 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StatisticsUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper;
 import com.pinde.sci.dao.base.SchArrangeMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
-import com.pinde.sci.enums.sch.SchArrangeStatusEnum;
-import com.pinde.sci.enums.sch.SchStageEnum;
-import com.pinde.sci.enums.sch.SchUnitEnum;
+import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
+import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -41,7 +38,7 @@ public class SchArrangeBizTask {
 		_processDoctor(arrange, doctorList, currUser, exact);
 	}
 	
-	@Transactional(rollbackFor=Exception.class)
+	//@Transactional(rollbackFor=Exception.class)
 	private void _processDoctor(SchArrange arrange,List<ResDoctor> doctorList,SysUser currUser,boolean exact){
 		for(int d=0;d<doctorList.size();d++){
 			ResDoctor doctor = doctorList.get(d);
@@ -51,12 +48,12 @@ public class SchArrangeBizTask {
 			example2.createCriteria().andDoctorFlowEqualTo(doctor.getDoctorFlow());//.andArrangeFlowNotEqualTo(arrangeFlow);
 			
 			SchArrangeResult resultUpdate = new SchArrangeResult();
-			resultUpdate.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            resultUpdate.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			schArrangeResultMapper.updateByExampleSelective(resultUpdate, example2);
 			
 			SchArrangeDoctorDeptExample exampleSdd = new SchArrangeDoctorDeptExample();
 			exampleSdd.createCriteria().andArrangeFlowEqualTo(arrange.getArrangeFlow()).andDoctorFlowEqualTo(doctor.getDoctorFlow())
-			.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			
 			List<SchArrangeDoctorDept> arrangeDoctorDeptList = arrangeDoctorDeptMapper.selectByExample(exampleSdd);
 			List<String> allSchDeptList = new LinkedList<String>();
@@ -119,7 +116,7 @@ public class SchArrangeBizTask {
 			}
 			ResDoctor update = new ResDoctor();
 			update.setDoctorFlow(doctor.getDoctorFlow());
-			update.setSchFlag(GlobalConstant.RECORD_STATUS_Y);
+            update.setSchFlag(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			doctorMapper.updateByPrimaryKeySelective(update);
 
 			//被强制终止了
@@ -143,17 +140,17 @@ public class SchArrangeBizTask {
 	}
 	
 
-	@Transactional(rollbackFor=Exception.class)
+	//@Transactional(rollbackFor=Exception.class)
 	private double [][] _arrageDept(SchArrange arrange,ResDoctor doctor,
 			List<SchArrangeDoctorDept> arrangeDoctorDeptList,List<String> allSchDeptList,
 			List<String> allSchDateList,
 			SysUser currUser,boolean exact){
-		String resRotationUnit = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("res_rotation_unit"),SchUnitEnum.Month.getId());
+        String resRotationUnit = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("res_rotation_unit"), com.pinde.core.common.enums.SchUnitEnum.Month.getId());
 		String firthStartYear = DateUtil.transDateTime(arrange.getBeginDate(), DateUtil.defDtPtn04, "yyyy");
 		
 		SchArrangeResultExample example = new SchArrangeResultExample();
 		com.pinde.sci.model.mo.SchArrangeResultExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(currUser.getOrgFlow());
 		criteria.andSchYearGreaterThanOrEqualTo(firthStartYear);
 		List<SchArrangeResult> schArrangeResultList = schArrangeResultMapper.selectByExample(example);
@@ -191,11 +188,11 @@ public class SchArrangeBizTask {
 		
 		String startDate = arrange.getBeginDate();
 		String endDate = arrange.getBeginDate();
-		
-		if(SchUnitEnum.Month.getId().equals(resRotationUnit)){
+
+        if (com.pinde.core.common.enums.SchUnitEnum.Month.getId().equals(resRotationUnit)) {
 			endDate = DateUtil.addMonthForArrange(arrange.getBeginDate(), doctorTotalSchMonth+"",exact);
 		}
-		if(SchUnitEnum.Week.getId().equals(resRotationUnit)){
+        if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(resRotationUnit)) {
 			endDate = DateUtil.addDate(arrange.getBeginDate(), (int)doctorTotalSchMonth*7-1);
 		}
 		int totalDays = (int) DateUtil.signDaysBetweenTowDate(endDate,startDate)+1;
@@ -256,11 +253,11 @@ public class SchArrangeBizTask {
 		return result;
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	//@Transactional(rollbackFor=Exception.class)
 	private String _processDoctorDept(SchArrange arrange,ResDoctor doctor,String schStartDate,int startInterval,
 			List<SchArrangeDoctorDept> arrDocDeptList,List<String> allSchDeptList,List<String> allSchDateList,
 			SysUser currUser,double [][] old,boolean exact){
-		String resRotationUnit = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("res_rotation_unit"),SchUnitEnum.Month.getId());
+        String resRotationUnit = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("res_rotation_unit"), com.pinde.core.common.enums.SchUnitEnum.Month.getId());
 		//医生最大的排班数量
 		List<String> arrDocDeptFlowList = new LinkedList<String>();
 		Map<String,SchArrangeDoctorDept> arrangeDoctorDeptMap = new HashMap<String, SchArrangeDoctorDept>();
@@ -286,10 +283,10 @@ public class SchArrangeBizTask {
 				String schDeptFlow = arrangeDoctorDeptMap.get(arrDocDeptFlow).getSchDeptFlow();
 				float schMonth = Float.parseFloat(StringUtil.defaultIfEmpty(arrangeDoctorDeptMap.get(arrDocDeptFlow).getSchMonth(), "0.0"));
 				int oriDeptIndex = allSchDeptList.indexOf(schDeptFlow);
-				if(SchUnitEnum.Month.getId().equals(resRotationUnit)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Month.getId().equals(resRotationUnit)) {
 					endDate = DateUtil.addMonthForArrange(startDate, schMonth+"",exact);
 				}
-				if(SchUnitEnum.Week.getId().equals(resRotationUnit)){
+                if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(resRotationUnit)) {
 					endDate = DateUtil.addDate(startDate, (int)schMonth*7-1);
 				}
 				String processDate = startDate;
@@ -329,11 +326,11 @@ public class SchArrangeBizTask {
 			String schDeptFlow = arrangeDoctorDept.getSchDeptFlow();
 			float schMonth = Float.parseFloat(arrangeDoctorDept.getSchMonth());
 			int oriDeptIndex = allSchDeptList.indexOf(schDeptFlow);
-			
-			if(SchUnitEnum.Month.getId().equals(resRotationUnit)){
+
+            if (com.pinde.core.common.enums.SchUnitEnum.Month.getId().equals(resRotationUnit)) {
 				endDate = DateUtil.addMonthForArrange(startDate, schMonth+"",exact);
 			}
-			if(SchUnitEnum.Week.getId().equals(resRotationUnit)){
+            if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(resRotationUnit)) {
 				endDate = DateUtil.addDate(startDate, (int)schMonth*7-1);
 			}
 			String processDate = startDate;

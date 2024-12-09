@@ -4,19 +4,18 @@ package com.pinde.res.biz.osca.impl;
 import com.pinde.res.biz.osca.IOscaAdminAppBiz;
 import com.pinde.res.dao.osca.ext.OscaAppMapper;
 import com.pinde.res.model.osca.mo.*;
-import com.pinde.sci.model.mo.OscaSkillDocTeaScore;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.SysDict;
+import com.pinde.core.model.OscaSkillDocTeaScore;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.SysDict;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class OscaAdminAppBizmpl implements IOscaAdminAppBiz {
 
 	@Autowired

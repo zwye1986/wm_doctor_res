@@ -1,6 +1,6 @@
 package com.pinde.res.biz.common;
 
-import com.pinde.sci.model.mo.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfg;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubImpactorFactor extends MybatisObject {
+public class PubImpactorFactor extends TeachingActivitySpeakerExample.MybatisObject {
     private String factorFlow;
 
     private String year;

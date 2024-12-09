@@ -5,7 +5,6 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEntryReportBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SysUserDeptMapper;
 import com.pinde.sci.model.mo.SysUserDept;
@@ -35,7 +34,7 @@ public class ResEntryReportController extends GeneralController {
     public String main(Model model) {
         String userFlow = GlobalContext.getCurrentUser().getUserFlow();
         SysUserDeptExample example = new SysUserDeptExample();
-        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysUserDept> deptList = sysUserDeptMapper.selectByExample(example);
         List<String> deptFlows = new ArrayList<String>();
         String deptFlowsStr = "";
@@ -55,7 +54,7 @@ public class ResEntryReportController extends GeneralController {
                              String reportDate, String trainingSpeId,Integer currentPage,HttpServletRequest request) {
         String userFlow = GlobalContext.getCurrentUser().getUserFlow();
         SysUserDeptExample example = new SysUserDeptExample();
-        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andUserFlowEqualTo(userFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysUserDept> deptList = sysUserDeptMapper.selectByExample(example);
         List<String> deptFlows = new ArrayList<String>();
         for(SysUserDept dept: deptList){
@@ -80,7 +79,7 @@ public class ResEntryReportController extends GeneralController {
         Object val="";
         if(val==null)
         {
-            return "N";
+            return com.pinde.core.common.GlobalConstant.FLAG_N;
         }
         return val;
     }

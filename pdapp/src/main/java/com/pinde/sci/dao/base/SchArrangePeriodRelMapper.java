@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchArrangePeriodRel;
-import com.pinde.sci.model.mo.SchArrangePeriodRelExample;
+import com.pinde.core.model.SchArrangePeriodRel;
+import com.pinde.core.model.SchArrangePeriodRelExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

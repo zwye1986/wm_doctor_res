@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class FeeNoticeTemplate extends MybatisObject {
+public class FeeNoticeTemplate extends TeachingActivitySpeakerExample.MybatisObject {
     private String recordFlow;
 
     private String receiverFlag;

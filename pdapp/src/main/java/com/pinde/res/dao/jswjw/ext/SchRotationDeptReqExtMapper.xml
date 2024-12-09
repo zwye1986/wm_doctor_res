@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SchRotationDeptReqExtMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationDeptReq" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationDeptReq" >
     <id column="REQ_FLOW" property="reqFlow" jdbcType="VARCHAR" />
     <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
     <result column="STANDARD_DEPT_ID" property="standardDeptId" jdbcType="VARCHAR" />
@@ -21,7 +21,7 @@
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
     <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SchRotationDeptReq" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SchRotationDeptReq" extends="BaseResultMap" >
     <result column="REQ_STANDARD" property="reqStandard" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -90,7 +90,7 @@
   <sql id="Blob_Column_List" >
     REQ_STANDARD
   </sql>
-  <select id="selectByExampleTwo" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" >
+  <select id="selectByExampleTwo" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchRotationDeptReqExample" >
     select
     <if test="distinct" >
       distinct

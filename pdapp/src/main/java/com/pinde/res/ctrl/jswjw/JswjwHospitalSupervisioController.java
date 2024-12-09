@@ -1,6 +1,7 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwHospitalSupervisioBiz;
@@ -9,7 +10,6 @@ import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.TeachingActivityInfoMapper;
-import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +75,9 @@ public class JswjwHospitalSupervisioController {
                     for (ResHospSupervSubject hospSupervSubject : reviewedList) {
                         Date subData = sdf.parse(hospSupervSubject.getActivityEndTime());
                         if (nowData.compareTo(subData)>0){
-                            hospSupervSubject.setModifyTime("N");
+                            hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_N);
                         }else {
-                            hospSupervSubject.setModifyTime("Y");
+                            hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -89,9 +89,9 @@ public class JswjwHospitalSupervisioController {
                     for (ResHospSupervSubject hospSupervSubject : toBeReviewedList) {
                         Date subData = sdf.parse(hospSupervSubject.getActivityEndTime());
                         if (nowData.compareTo(subData)>0){
-                            hospSupervSubject.setModifyTime("N");
+                            hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_N);
                         }else {
-                            hospSupervSubject.setModifyTime("Y");
+                            hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                         if (StringUtil.isEmpty(hospSupervSubject.getLeaderOneFlow())|| StringUtil.isEmpty(hospSupervSubject.getLeaderTwoFlow())){
                             hospSupervSubject.setLeaderSubNum("1");
@@ -103,9 +103,9 @@ public class JswjwHospitalSupervisioController {
                             hospSupervSubject.setLeaderSubNum("0");
                         }
                         if ("appoint".equals(hospSupervSubject.getOrderAction())){
-                            hospSupervSubject.setModifyUserFlow("N");
+                            hospSupervSubject.setModifyUserFlow(com.pinde.core.common.GlobalConstant.FLAG_N);
                         }else {
-                            hospSupervSubject.setModifyUserFlow("Y");
+                            hospSupervSubject.setModifyUserFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }
                     }
                 }
@@ -152,19 +152,19 @@ public class JswjwHospitalSupervisioController {
         for (ResHospSupervSubject hospSupervSubject : list) {
             devTime = sdf1.parse(hospSupervSubject.getActivityEndTime());
             if (nowTime.compareTo(devTime)<0){
-                hospSupervSubject.setModifyTime("Y");
+                hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_Y);
             }else {
-                hospSupervSubject.setModifyTime("N");
+                hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             if (hospSupervSubject.getLeaderOneFlow().equals(userFlow)||hospSupervSubject.getLeaderTwoFlow().equals(userFlow)){
-                hospSupervSubject.setModifyTime("N");
+                hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             if (hospSupervSubject.getLeaderOneFlow().equals("0000") || hospSupervSubject.getLeaderTwoFlow().equals("0000")){
                 hospSupervSubject.setLeaderSubNum("1");
             }
             if (!hospSupervSubject.getLeaderOneFlow().equals("0000") && !hospSupervSubject.getLeaderTwoFlow().equals("0000")){
                 hospSupervSubject.setLeaderSubNum("2");
-                hospSupervSubject.setModifyTime("N");
+                hospSupervSubject.setModifyTime(com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             if (hospSupervSubject.getLeaderOneFlow().equals("0000") &&hospSupervSubject.getLeaderTwoFlow().equals("0000")){
                 hospSupervSubject.setLeaderSubNum("0");
@@ -507,7 +507,7 @@ public class JswjwHospitalSupervisioController {
         resScheduleScore.setOrgName(orgName);
         resScheduleScore.setSpeId(speId);
         resScheduleScore.setSubjectFlow(subjectFlow);
-        resScheduleScore.setRecordStatus("Y");
+        resScheduleScore.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (hospitalSupervisioBiz.saveSchedule(resScheduleScore,userFlow) <= 0) {
             model.addAttribute("resultId","500");
             model.addAttribute("resultType","服务器出错");
@@ -620,7 +620,7 @@ public class JswjwHospitalSupervisioController {
         SysUser user = userMapper.selectByPrimaryKey(userFlow);
         ResHospSupervSubject subject = hospitalSupervisioBiz.selectHospSupervisioBySubjectFlow(subjectFlow);
         subject.setEndTime(DateUtil.transDateTime(DateUtil.getCurrDateTime().substring(0,12)));
-        subject.setReviewConfig("N");
+        subject.setReviewConfig(com.pinde.core.common.GlobalConstant.FLAG_N);
         //判断提交人是哪一位专家，保存分数
         if (subject.getLeaderOneFlow().equals(user.getUserFlow())){
             subject.setLeaderOneScore(expertTotal);

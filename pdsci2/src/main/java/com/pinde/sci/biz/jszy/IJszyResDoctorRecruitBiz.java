@@ -19,10 +19,6 @@ public interface IJszyResDoctorRecruitBiz {
      * 根据doctorFlow查询
      */
     ResDoctorRecruit readResDoctorRecruit(String recruitFlow);
-    /**
-     * 根据doctorFlow查询
-     */
-    public JsresRecruitDocInfoWithBLOBs readResDoctorRecruitInfo(String recruitFlow);
 
     /**
      * 查询当前机构下的医师
@@ -47,7 +43,6 @@ public interface IJszyResDoctorRecruitBiz {
      */
     List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause);
 
-    List<JsresRecruitDocInfo> searchResDoctorRecruitInfoList(ResDoctorRecruit recruit, String orderByClause);
 
     /**
      * 查询审核通过人数
@@ -71,32 +66,17 @@ public interface IJszyResDoctorRecruitBiz {
      */
     int updateDoctorTrend(ResDoctorRecruitWithBLOBs recruitWithBLOBs);
 
-    int searchCountByCondition(ResDoctorRecruitWithBLOBs recruitWithBLOBs, String flag);
-
-    /**
-     * 查询培训记录信息
-     */
-    List<JszyResDoctorRecruitExt> searchTrainInfoList(List<String> jointOrgFlowList, ResDoctorRecruit resDoctorRecruit, SysUser user, String flag);
 
     ResDoctorRecruitWithBLOBs readRecruit(String recruitFlow);
 
     List<JszyResDoctorRecruitExt> searchDoctorInfoExts(Map<String, Object> doctorRecruitMap);
 
-    /**
-     * 理论成绩查询
-     */
-    List<JszyResDoctorRecruitExt>  searchDoctorScoreInfoExts(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String flag, String scoreYear, String isHege, List<String> docTypeList);
     List<JszyResDoctorRecruitExt>  searchDoctorSkillAndTheoryScoreExts(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String flag, String scoreYear, String isHege, String skillIsHege, List<String> docTypeList);
 
     /**
      * 技能成绩查询
      */
     List<JszyResDoctorRecruitExt>  searchDoctorSkillScore(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String flag, String scoreYear, String isHege, List<String> docTypeList);
-
-    /**
-     * 公共科目成绩查询
-     */
-    List<JszyResDoctorRecruitExt>  searchDoctorPublicScore(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String flag, String scoreYear, String notAllQualified, String allQualified, List<String> docTypeList);
 
     List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit);
 
@@ -114,7 +94,6 @@ public interface IJszyResDoctorRecruitBiz {
 
     List<Map<String,Object>> doctorScoreQuery(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String derateFlag, List<String> docTypeList, List<String> cerStatusList);
 
-    int saveSecondSpe(ResDoctorRecruitWithBLOBs dBloBs);
 
     List<Map<String,Object>> zlxytj(Map<String,Object> param);
 
@@ -122,24 +101,10 @@ public interface IJszyResDoctorRecruitBiz {
 
     List<Map<String,Object>> zlxytjJoint(Map<String, Object> param);
 
-    List<Map<String,Object>> zlxytj3(Map<String, Object> param);
 
-    void exportForDetailLog(List<JszyDoctorInfoLogExt> doctorInfoExts, HttpServletResponse response) throws Exception;
 
     List<JszyResDoctorRecruitExt> searchDoctorCertificateList(Map<String, Object> param);
 
-    /**
-     * 导入发证学员
-     * @param file
-     * @return
-     */
-    ExcelUtile importDoctorCertificateNoFromExcel2(MultipartFile file);
-
-    List<Map<String,Object>> zlxytj4(Map<String, Object> param);
-
-    List<Map<String,Object>> zlxytj5(Map<String, Object> param);
-
-    ExcelUtile importGraduationPeople(MultipartFile file);
 
     /**
      * 在培学员统计
@@ -147,16 +112,4 @@ public interface IJszyResDoctorRecruitBiz {
      * @return
      */
     List<Map<String,Object>> zpxytj(Map<String, Object> param);
-    /**
-     * 在培学员异动统计
-     * @param param
-     * @return
-     */
-    List<Map<String,Object>> zpxytjChanges(Map<String, Object> param);
-    /**
-     * 在培学员异动详情
-     * @param param
-     * @return
-     */
-    List<Map<String,Object>> zpxytjChangesDetail(Map<String, Object> param);
 }

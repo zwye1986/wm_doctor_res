@@ -1,6 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,9 +10,9 @@ public interface ResRecExtMapper {
 	List<Map<String,Object>> searchAuditCount(@Param(value = "userFlow") String userFlow, @Param(value = "roleFlag") String roleFlag);
 
 	List<ResRec> searchRecByUserAndSchdept(@Param(value = "userFlows") List<String> userFlows,
-										   @Param(value = "schDeptFlows") List<String> schDeptFlows,
-										   @Param(value = "recTypeId") String recTypeId,
-										   @Param(value = "itemName") String itemName);
+                                           @Param(value = "schDeptFlows") List<String> schDeptFlows,
+                                           @Param(value = "recTypeId") String recTypeId,
+                                           @Param(value = "itemName") String itemName);
 
 	
 	List<Map<String,Object>> countRecWithDoc(@Param(value = "userFlows") List<String> userFlows, @Param(value = "schDeptFlows") List<String> schDeptFlows, @Param(value = "isAudit") String isAudit);

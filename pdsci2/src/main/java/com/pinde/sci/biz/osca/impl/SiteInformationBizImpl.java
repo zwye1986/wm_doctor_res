@@ -5,7 +5,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.ISiteInformationBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.OscaOrgSpeMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.osca.OscaSysOrgExtMapper;
@@ -16,14 +15,13 @@ import com.pinde.sci.model.mo.SysOrgExample;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class SiteInformationBizImpl implements ISiteInformationBiz{
 
     @Autowired
@@ -50,7 +48,7 @@ public class SiteInformationBizImpl implements ISiteInformationBiz{
     public int updateSiteInformation(OscaOrgSpe oscaOrgSpe) {
         OscaOrgSpeExample example=new OscaOrgSpeExample();
         OscaOrgSpeExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaOrgSpe.getRecordFlow())){
             criteria.andRecordFlowEqualTo(oscaOrgSpe.getRecordFlow());
         }
@@ -71,7 +69,7 @@ public class SiteInformationBizImpl implements ISiteInformationBiz{
         OscaOrgSpeExample example=new OscaOrgSpeExample();
         example.setDistinct(true);
         OscaOrgSpeExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaOrgSpe.getOrgFlow())){
             criteria.andOrgFlowEqualTo(oscaOrgSpe.getOrgFlow());
         }
@@ -82,7 +80,7 @@ public class SiteInformationBizImpl implements ISiteInformationBiz{
     public List<SysOrg> searchOrgList(SysOrg sysOrg) {
         SysOrgExample example=new SysOrgExample();
         SysOrgExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(sysOrg.getOrgProvId())){
             criteria.andOrgProvIdEqualTo(sysOrg.getOrgProvId());
         }

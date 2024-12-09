@@ -2,7 +2,7 @@ package com.pinde.sci.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.PkUtil;
@@ -14,11 +14,9 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.osca.AssessmentProEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.osca.AssessmentProEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
@@ -65,8 +63,8 @@ public class OscaProvincialController extends GeneralController{
 	@RequestMapping("/skillsAssessmentList")
 	public String list(OscaSkillsAssessment skillsAssessment, Model model, HttpServletRequest request,Integer currentPage,String trainingTypeId){
 		SysDict searchDict = new SysDict();
-		searchDict.setRecordStatus("Y");
-		searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
+        searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);
 		List<SysDict> dictList = dictBiz.searchDictList(searchDict);
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<OscaSkillsAssessment> skillsAssessments =provincialBiz.searchSkillsAssessment(skillsAssessment,dictList);
@@ -93,7 +91,7 @@ public class OscaProvincialController extends GeneralController{
 		model.addAttribute("timeMapSize",timeMap.size());
 		//考点：
 		SysOrg org = new SysOrg();
-		org.setIsExamOrg("Y");
+        org.setIsExamOrg(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysOrg> examOrgList = orgBiz.queryAllSysOrg(org);
 		model.addAttribute("examOrgList", examOrgList);
 		model.addAttribute("doctorNumMap",doctorNumMap);
@@ -123,8 +121,8 @@ public class OscaProvincialController extends GeneralController{
 		paramMap.put("gradeDoctorName",gradeDoctorName);
 		paramMap.put("orgCityId",orgCityId);
 		SysDict searchDict = new SysDict();
-		searchDict.setRecordStatus("Y");
-		searchDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+trainingTypeId);
+        searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);
 		List<SysDict> dictList = dictBiz.searchDictList(searchDict);
 		paramMap.put("dictList",dictList);
 		PageHelper.startPage(currentPage,getPageSize(request));
@@ -164,7 +162,7 @@ public class OscaProvincialController extends GeneralController{
 		model.addAttribute("orgList", orgList);
 		//考点：
 		SysOrg org = new SysOrg();
-		org.setIsExamOrg("Y");
+        org.setIsExamOrg(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysOrg> examOrgList = orgBiz.queryAllSysOrg(org);
 		model.addAttribute("examOrgList", examOrgList);
 		return "osca/provincial/doctorScoreList";
@@ -220,7 +218,7 @@ public class OscaProvincialController extends GeneralController{
 		model.addAttribute("roleFlag",roleFlag);
 		PageHelper.startPage(currentPage,getPageSize(request));
 		if("hospital".equals(roleFlag)){
-			subjectMain.setIsReleased("Y");
+            subjectMain.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			subjectMain.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 		}
 		if("province".equals(roleFlag)){
@@ -319,12 +317,12 @@ public class OscaProvincialController extends GeneralController{
 		OscaFrom from = new OscaFrom();
 		List<OscaFrom> froms = new ArrayList<>();
 		if("hospital".equals(roleFlag)){
-			from.setIsReleased("Y");
+            from.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			froms = formCfgBiz.searchHospitalFrom(from);
 		}
 		if("province".equals(roleFlag)){
 			from.setOrgFlow("jsst");
-			from.setIsReleased("Y");
+            from.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			froms = formCfgBiz.searchForm(from);
 		}
 		model.addAttribute("froms",froms);
@@ -406,13 +404,13 @@ public class OscaProvincialController extends GeneralController{
 	@ResponseBody
 	public int saveSubject(OscaSubjectMain subjectMain,String editFlag){
 		if( "release".equals(editFlag)){
-			subjectMain.setIsReleased("Y");
+            subjectMain.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		if( "delete".equals(editFlag)){
-			subjectMain.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            subjectMain.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		}
 		if("unrelease".equals(editFlag)){
-			subjectMain.setIsReleased("N");
+            subjectMain.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
 		return provincialBiz.edit(subjectMain);
 	}
@@ -447,14 +445,14 @@ public class OscaProvincialController extends GeneralController{
 				actionTypeName = AssessmentProEnum.HospitalPlan.getName();
 				subjectMain.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 				subjectMain.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-				subjectMain.setIsReleased("Y");
+                subjectMain.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 			if("province".equals(roleFlag)){
 				actionTypeId = AssessmentProEnum.ProvincialPlan.getId();
 				actionTypeName = AssessmentProEnum.ProvincialPlan.getName();
 				subjectMain.setOrgFlow("jsst");
 				subjectMain.setOrgName("江苏省厅");
-				subjectMain.setIsReleased("N");
+                subjectMain.setIsReleased(com.pinde.core.common.GlobalConstant.FLAG_N);
 			}
 			int stationNum = stationMapList.size();
 
@@ -495,7 +493,7 @@ public class OscaProvincialController extends GeneralController{
 					List<String> fileFlows = (List<String>)stationMap.get("fileFlows");
 					OscaSubjectStation subjectStation = new OscaSubjectStation();
 					subjectStation.setPartFlow(partFlow);
-					subjectStation.setPartName(DictTypeEnum.ExamPart.getDictNameById(partFlow));
+                    subjectStation.setPartName(com.pinde.core.common.enums.DictTypeEnum.ExamPart.getDictNameById(partFlow));
 					subjectStation.setStationFlow(stationFlow);
 					subjectStation.setExaminedContent(examinedContent);
 					subjectStation.setStationName(stationName);
@@ -545,7 +543,7 @@ public class OscaProvincialController extends GeneralController{
 		if(StringUtil.isNotBlank(stationFlow)){
 			OscaSubjectStation subjectStation = new OscaSubjectStation();
 			subjectStation.setStationFlow(stationFlow);
-			subjectStation.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            subjectStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			return provincialBiz.editStationOnly(subjectStation);
 		}
 		return 0;
@@ -720,7 +718,7 @@ public class OscaProvincialController extends GeneralController{
 		model.addAttribute("partStationsMap",partStationsMap);
 		model.addAttribute("allScore",allScore);
 		model.addAttribute("baseScoreMap",baseScoreMap);
-		if("Y".equals(isEdit))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isEdit))
 		{
 			return "osca/provincial/editPassedInfo";
 		}else{
@@ -750,9 +748,9 @@ public class OscaProvincialController extends GeneralController{
 	public String readFromList(String subjectFlow){
 		List<OscaSubjectStationFrom> list = formCfgBiz.selectSubjectStationFromByFlow(subjectFlow);
 		if (null != list && !list.isEmpty()){
-			return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	@RequestMapping("/showFrom")

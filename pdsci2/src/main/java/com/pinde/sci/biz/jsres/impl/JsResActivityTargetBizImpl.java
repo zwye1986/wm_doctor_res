@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.TeachingActivityFormValueMapper;
 import com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper;
 import com.pinde.sci.dao.base.TeachingActivityTargetMapper;
@@ -13,13 +13,12 @@ import com.pinde.sci.dao.jsres.TeachingActivityTargetExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 
 	@Autowired
@@ -36,7 +35,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public List<TeachingActivityTarget> list(Map<String, String> param) {
 		TeachingActivityTargetExample example=new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(param.get("orgFlow")))
 		{
 			criteria.andOrgFlowEqualTo(param.get("orgFlow"));
@@ -56,7 +55,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public List<TeachingActivityTarget> listNew(Map<String, String> param) {
 		TeachingActivityTargetExample example = new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(param.get("targetType"))) {
 			criteria.andTargetTypeEqualTo(param.get("targetType"));
 		}
@@ -76,7 +75,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public List<TeachingActivityTarget> readByOrgNew(String activityTypeId,String orgFlow) {
 		TeachingActivityTargetExample example=new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(orgFlow);
 		// 查询评价指标活动形式和教学活动的活动形式一致的评价指标
 		if(StringUtil.isNotBlank(activityTypeId)){
@@ -107,14 +106,14 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	public int delTarget(String targetFlow) {
 		TeachingActivityTarget target=new TeachingActivityTarget();
 		target.setTargetFlow(targetFlow);
-		target.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        target.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		return activityTargetMapper.updateByPrimaryKeySelective(target);
 	}
 
 	@Override
 	public TeachingActivityTarget readByName(String orgFlow, String targetName) {
 		TeachingActivityTargetExample example=new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			criteria.andOrgFlowEqualTo(orgFlow);
 			criteria.andTargetNameEqualTo(targetName);
 		List<TeachingActivityTarget> list= activityTargetMapper.selectByExample(example);
@@ -128,7 +127,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public List<TeachingActivityTarget> readByOrg(String orgFlow) {
 		TeachingActivityTargetExample example=new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(orgFlow);
 		example.setOrderByClause("create_time ");
 		List<TeachingActivityTarget> list= activityTargetMapper.selectByExample(example);
@@ -168,7 +167,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public List<TeachingActivityInfoTarget> readActivityTargets(String activityFlow) {
 		TeachingActivityInfoTargetExample example=new TeachingActivityInfoTargetExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andActivityFlowEqualTo(activityFlow);
 		example.setOrderByClause("ORDINAL ASC");
 		return activityInfoTargetMapper.selectByExample(example);
@@ -211,7 +210,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public List<TeachingActivityFormValue> searchFormValue(TeachingActivityFormValue formValue) {
 		TeachingActivityFormValueExample example = new TeachingActivityFormValueExample();
-		TeachingActivityFormValueExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityFormValueExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(formValue!=null){
 			if(StringUtil.isNotBlank(formValue.getActivityFlow())){
 				criteria.andActivityFlowEqualTo(formValue.getActivityFlow());
@@ -227,7 +226,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public TeachingActivityTarget readByNameNew(String orgFlow, String targetName, String targetType) {
 		TeachingActivityTargetExample example = new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(orgFlow);
 		criteria.andTargetNameEqualTo(targetName);
 		criteria.andTargetTypeEqualTo(targetType);
@@ -241,7 +240,7 @@ public class JsResActivityTargetBizImpl implements IJsResActivityTargetBiz {
 	@Override
 	public TeachingActivityTarget readByNameNew2(String orgFlow, String targetName, String activityTypeId) {
 		TeachingActivityTargetExample example = new TeachingActivityTargetExample();
-		TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        TeachingActivityTargetExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(orgFlow);
 		criteria.andTargetNameEqualTo(targetName);
 		criteria.andActivityTypeIdEqualTo(activityTypeId);

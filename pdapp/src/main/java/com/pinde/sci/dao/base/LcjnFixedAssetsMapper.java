@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LcjnFixedAssets;
-import com.pinde.sci.model.mo.LcjnFixedAssetsExample;
+import com.pinde.core.model.LcjnFixedAssets;
+import com.pinde.core.model.LcjnFixedAssetsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

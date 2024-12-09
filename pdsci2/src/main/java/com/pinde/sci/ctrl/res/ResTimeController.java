@@ -4,7 +4,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgTimeBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.form.res.ResOrgTimeForm;
 import com.pinde.sci.model.mo.ResOrgTime;
@@ -76,10 +75,10 @@ public class ResTimeController extends GeneralController{
 		if(time!=null)
 			orgTime.setRecordFlow(time.getRecordFlow());
 		int result = timebiz.saveOrgTime(orgTime);
-		if(result>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	@RequestMapping("/saveSigninSetList")
 	@ResponseBody
@@ -95,10 +94,10 @@ public class ResTimeController extends GeneralController{
 			return "当前登录人已变更，刷新页面！";
 		}
 		int result = timebiz.saveOrgTimes(bean);
-		if(result>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (result > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 }

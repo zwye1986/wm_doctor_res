@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SubjectBizImpl implements ISubjectBiz {
 	@Autowired
 	private SysSubjCodeMapper sysSubjCodeMapper;
@@ -54,7 +54,7 @@ public class SubjectBizImpl implements ISubjectBiz {
 	@Override
 	public SysSubjCode getById(String id) {
 		SysSubjCodeExample example = new SysSubjCodeExample();
-		example.createCriteria().andSubjIdEqualTo(id).andRecordStatusEqualTo("Y");
+        example.createCriteria().andSubjIdEqualTo(id).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysSubjCode> list = this.sysSubjCodeMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
 			return list.get(0);

@@ -1,7 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
-
 import java.io.Serializable;
 
 public class SysRole implements Serializable {

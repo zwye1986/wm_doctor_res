@@ -1,11 +1,11 @@
 package com.pinde.sci.common.util.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.util.Date;
 import java.util.List;
 
-public class MessageInfo extends MybatisObject {
+public class MessageInfo extends TeachingActivitySpeakerExample.MybatisObject {
 
     //发件人地址
     private String  from;

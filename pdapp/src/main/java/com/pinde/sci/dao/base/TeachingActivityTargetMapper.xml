@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.TeachingActivityTargetMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TeachingActivityTarget" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.TeachingActivityTarget" >
     <id column="TARGET_FLOW" property="targetFlow" jdbcType="VARCHAR" />
     <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -79,7 +79,7 @@
     MODIFY_TIME, MODIFY_USER_FLOW, TARGET_TYPE, ACTIVITY_TYPE_ID, ACTIVITY_TYPE_NAME, 
     IS_TEXT
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.TeachingActivityTargetExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.TeachingActivityTargetExample" >
     select
     <if test="distinct" >
       distinct
@@ -103,13 +103,13 @@
     delete from PDSCI.TEACHING_ACTIVITY_TARGET
     where TARGET_FLOW = #{targetFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TeachingActivityTargetExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.TeachingActivityTargetExample" >
     delete from PDSCI.TEACHING_ACTIVITY_TARGET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.TeachingActivityTarget" >
+  <insert id="insert" parameterType="com.pinde.core.model.TeachingActivityTarget" >
     insert into PDSCI.TEACHING_ACTIVITY_TARGET (TARGET_FLOW, TARGET_NAME, ORG_FLOW, 
       ORDINAL, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -121,7 +121,7 @@
       #{targetType,jdbcType=VARCHAR}, #{activityTypeId,jdbcType=VARCHAR}, #{activityTypeName,jdbcType=VARCHAR}, 
       #{isText,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TeachingActivityTarget" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.TeachingActivityTarget" >
     insert into PDSCI.TEACHING_ACTIVITY_TARGET
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="targetFlow != null" >
@@ -206,7 +206,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TeachingActivityTargetExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivityTargetExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.TEACHING_ACTIVITY_TARGET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -221,7 +221,16 @@
           Left Join Res_Joint_Org Jo On U.Org_Flow = Jo.Org_Flow And D.Session_Number = Jo.Session_Number
       WHERE u.USER_FLOW = #{userFlow}
     </select>
-    <update id="updateByExampleSelective" parameterType="map" >
+  <select id="selectMainOrgFlow" resultType="java.lang.String">
+      SELECT
+        jo.ORG_FLOW
+      FROM
+        sys_user u
+          LEFT JOIN RES_DOCTOR d ON u.USER_FLOW = d.DOCTOR_FLOW
+          Left Join Res_Joint_Org Jo On U.Org_Flow = Jo.JOINT_ORG_FLOW And D.Session_Number = Jo.Session_Number
+      WHERE u.USER_FLOW = #{userFlow}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
     update PDSCI.TEACHING_ACTIVITY_TARGET
     <set >
       <if test="record.targetFlow != null" >
@@ -287,7 +296,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.TeachingActivityTarget" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeachingActivityTarget" >
     update PDSCI.TEACHING_ACTIVITY_TARGET
     <set >
       <if test="targetName != null" >
@@ -329,7 +338,7 @@
     </set>
     where TARGET_FLOW = #{targetFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.TeachingActivityTarget" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeachingActivityTarget" >
     update PDSCI.TEACHING_ACTIVITY_TARGET
     set TARGET_NAME = #{targetName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

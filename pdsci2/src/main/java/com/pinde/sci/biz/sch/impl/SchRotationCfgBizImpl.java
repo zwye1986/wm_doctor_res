@@ -7,21 +7,19 @@ import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sch.ISchRotationCfgBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchRotationOrgCfgMapper;
 import com.pinde.sci.dao.base.SchRotationOrgDeptMapper;
 import com.pinde.sci.dao.base.SchRotationOrgGroupMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
-import com.pinde.sci.enums.sch.SchCycleTypeEnum;
-import com.pinde.sci.enums.sch.SchSelYearEnum;
+import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
+import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchRotationOrgDeptForm;
 import com.pinde.sci.form.sch.SchRotationOrgGroupForm;
 import com.pinde.sci.form.sch.SchRotationOrgSchDeptForm;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchRotationCfgBizImpl implements ISchRotationCfgBiz {
 
     @Autowired
@@ -51,7 +49,7 @@ public class SchRotationCfgBizImpl implements ISchRotationCfgBiz {
     public List<SchRotationOrgGroup> searchSchRotationOrgGroup(Map<String, String> paramMap) {
 
         SchRotationOrgGroupExample example = new SchRotationOrgGroupExample();
-        SchRotationOrgGroupExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SchRotationOrgGroupExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(paramMap.get("rotationFlow"))){
             criteria.andRotationFlowEqualTo(paramMap.get("rotationFlow"));
         }
@@ -133,7 +131,7 @@ public class SchRotationCfgBizImpl implements ISchRotationCfgBiz {
         {
             SchRotationOrgCfgExample example=new SchRotationOrgCfgExample();
             example.createCriteria().andOrgFlowEqualTo(orgFlow).andSessionNumberEqualTo(sessionNumber).andRotationFlowEqualTo(rotationFlow)
-                    .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                    .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<SchRotationOrgCfg> list=cycleCfgMapper.selectByExample(example);
             if(list!=null&&list.size()>0)
             {
@@ -164,7 +162,7 @@ public class SchRotationCfgBizImpl implements ISchRotationCfgBiz {
             cfg.setRotationFlow(rotationFlow);
             cfg.setOrgFlow(orgFlow);
         }
-        cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         cfg.setCycleTypeId(cycleTypeId);
         cfg.setCycleTypeName(SchCycleTypeEnum.getNameById(cycleTypeId));
         int c=saveCfg(cfg);
@@ -351,7 +349,7 @@ public class SchRotationCfgBizImpl implements ISchRotationCfgBiz {
                 return save(rotationGroup);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     public int save(SchRotationOrgGroup rotationGroup){

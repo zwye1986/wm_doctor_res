@@ -1,13 +1,12 @@
 package com.pinde.sci.biz.osca.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaExaminerManageBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
@@ -16,25 +15,18 @@ import com.pinde.sci.dao.base.OscaTeaInfoMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.osca.OscaExaminerMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -46,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
     @Autowired
     private SysUserMapper sysUserMapper;
@@ -79,7 +71,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
         if(StringUtil.isNotBlank(userFlow)){
             OscaTeaInfoExample example= new OscaTeaInfoExample();
             OscaTeaInfoExample.Criteria criteria = example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             criteria.andUserFlowEqualTo(userFlow);
             return teaInfoMapper.selectByExample(example);
         }
@@ -99,7 +91,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             sysUser.setStatusId(UserStatusEnum.Activated.getId());
             sysUser.setStatusDesc(UserStatusEnum.Activated.getName());
             //考官标志
-            sysUser.setIsExamTea(GlobalConstant.FLAG_Y);
+            sysUser.setIsExamTea(com.pinde.core.common.GlobalConstant.FLAG_Y);
             GeneralMethod.setRecordInfo(sysUser,true);
             sysUserMapper.insertSelective(sysUser);
         }
@@ -118,7 +110,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                     OscaTeaInfoExample.Criteria criteria = example.createCriteria();
                     criteria.andUserFlowEqualTo(sysUser.getUserFlow());
 
-                    oscaTeaInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    oscaTeaInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                     teaInfoMapper.updateByExampleSelective(oscaTeaInfo,example);
 
                 }
@@ -132,10 +124,10 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                 oscaTeaInfo.setUserFlow(sysUser.getUserFlow());
 
                 oscaTeaInfo.setTrainingTypeId(typeSpe.getTrainingTypeId());
-                oscaTeaInfo.setTrainingTypeName(DictTypeEnum.OscaTrainingType.getDictNameById(typeSpe.getTrainingTypeId()));
+                oscaTeaInfo.setTrainingTypeName(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getDictNameById(typeSpe.getTrainingTypeId()));
 
                 oscaTeaInfo.setTrainingSpeId(typeSpe.getTrainingSpeId());
-                List<SysDict> dictList= dictBiz.searchDictListByDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+typeSpe.getTrainingTypeId());
+                List<SysDict> dictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + typeSpe.getTrainingTypeId());
                 if(dictList!=null&&dictList.size()>0){
                     for (SysDict sd:dictList){
                         if(sd.getDictId().equals(typeSpe.getTrainingSpeId())){
@@ -148,7 +140,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             }
     }
 
-        return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
     }
 
     @Override
@@ -262,7 +254,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                             //校验 人员类型和专业是否对应的存在
                             //1、先校验考核人员类型是否存在，根据名称反查
                             SysDict sysDict = new SysDict();
-                            sysDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId());
+                            sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId());
                             sysDict.setDictName(type);
                             dicts = dictBiz.searchDictListByDictName(sysDict);
 
@@ -278,7 +270,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                             }
                             spe = value;
                             //2、如果存在，则查出该人员类型对应的考核专业list
-                            List<SysDict> dictList= dictBiz.searchDictListByDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+dicts.get(0).getDictId());
+                            List<SysDict> dictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + dicts.get(0).getDictId());
                             //3、校验导入的专业是否存在于list当中
                             if(null!=dictList && dictList.size()>0){
                                 boolean isExist=false;
@@ -307,7 +299,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                             if(StringUtil.isNotBlank(value)){
                                 SysOrg sysOrg = new SysOrg();
                                 sysOrg.setOrgName(value);
-                                sysOrg.setIsExamOrg(GlobalConstant.FLAG_Y);
+                                sysOrg.setIsExamOrg(com.pinde.core.common.GlobalConstant.FLAG_Y);
                                 List<SysOrg> sysOrgs = orgBiz.searchSysOrgByName(sysOrg);
                                 if (sysOrgs != null && sysOrgs.size() > 0) {
                                     sysUser.setOrgName(value);
@@ -337,7 +329,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                         OscaTypeSpeExt typeSpeExt = new OscaTypeSpeExt();
 
                         typeSpeExt.setTrainingTypeId(dicts.get(0).getDictId());
-                        List<SysDict> dictList= dictBiz.searchDictListByDictTypeIdAndDictName(DictTypeEnum.OscaTrainingType.getId()+"."+dicts.get(0).getDictId(),spe);
+                        List<SysDict> dictList = dictBiz.searchDictListByDictTypeIdAndDictName(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + dicts.get(0).getDictId(), spe);
 
                         typeSpeExt.setTrainingSpeId(dictList.get(0).getDictId());
                         typeSpeList.add(typeSpeExt);
@@ -445,7 +437,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                             //校验 人员类型和专业是否对应的存在
                             //1、先校验考核人员类型是否存在，根据名称反查
                             SysDict sysDict = new SysDict();
-                            sysDict.setDictTypeId(DictTypeEnum.OscaTrainingType.getId());
+                            sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId());
                             sysDict.setDictName(type);
                              dicts = dictBiz.searchDictListByDictName(sysDict);
 
@@ -462,7 +454,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                             }
                             spe = value;
                             //2、如果存在，则查出该人员类型对应的考核专业list
-                            List<SysDict> dictList= dictBiz.searchDictListByDictTypeId(DictTypeEnum.OscaTrainingType.getId()+"."+dicts.get(0).getDictId());
+                            List<SysDict> dictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + dicts.get(0).getDictId());
                             //3、校验导入的专业是否存在于list当中
                             if(null!=dictList && dictList.size()>0){
                                 boolean isExist=false;
@@ -494,7 +486,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
 //                    sysUser.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 //                    SysOrg sysOrg1 = new SysOrg();
 //                    sysOrg1.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-//                    sysOrg1.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//                    sysOrg1.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //                    List<SysOrg> sysOrgs1 = orgBiz.searchSysOrg(sysOrg1);
 //                    if (sysOrgs1 != null && sysOrgs1.size() > 0) {
 //                        sysUser.setOrgName(sysOrgs1.get(0).getOrgName());
@@ -517,7 +509,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
                         OscaTypeSpeExt typeSpeExt = new OscaTypeSpeExt();
                         if(null!=dicts && dicts.size()>0){
                             typeSpeExt.setTrainingTypeId(dicts.get(0).getDictId());
-                            List<SysDict> dictList= dictBiz.searchDictListByDictTypeIdAndDictName(DictTypeEnum.OscaTrainingType.getId()+"."+dicts.get(0).getDictId(),spe);
+                            List<SysDict> dictList = dictBiz.searchDictListByDictTypeIdAndDictName(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + dicts.get(0).getDictId(), spe);
 
                             typeSpeExt.setTrainingSpeId(dictList.get(0).getDictId());
                             typeSpeList.add(typeSpeExt);
@@ -583,7 +575,7 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
     public List<SysUser> sysUserList(SysUser sysUser) {
         SysUserExample example=new SysUserExample();
         SysUserExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(sysUser.getUserCode())){
             criteria.andUserCodeEqualTo(sysUser.getUserCode());
         }

@@ -1,6 +1,6 @@
 package com.pinde.res.biz.stdp;
 
-import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
+import com.pinde.core.model.SchAndStandardDeptCfg;
 
 import java.util.List;
 

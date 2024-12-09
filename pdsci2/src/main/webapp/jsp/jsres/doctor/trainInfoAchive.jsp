@@ -140,7 +140,7 @@
 			<!-- 	     <input type="hidden" id="completeFileUrlFlag"/> -->
 			<input type="hidden" id="upFileId"/>
 			<h4>培训信息</h4>
-			<c:set var="auditNotPassed" value="${jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
+			<c:set var="auditNotPassed" value="${resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}"/>
 			<form id="infoForm" style="position: relative;" method="post">
 				<table border="0" cellpadding="0" cellspacing="0" class="base_info">
 					<colgroup>
@@ -155,12 +155,12 @@
 						<td>${doctorRecruit.currDegreeCategoryName }</td>
 						<th style="${auditNotPassed?'color: red':'' }">审核状态：</th>
 						<c:set var="modifyTime" value="${pdfn:transDateTime(doctorRecruit.modifyTime)}"></c:set>
-						<c:if test="${jsResDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
+						<c:if test="${resDoctorAuditStatusEnumNotSubmit.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumAuditing.id eq doctorRecruit.auditStatusId}">
 							<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}</td>
 						</c:if>
-						<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
-											or jsResDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
+						<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId
+											or resDoctorAuditStatusEnumNotPassed.id eq doctorRecruit.auditStatusId}">
 							<td class="${auditNotPassed?'red':'' }">${doctorRecruit.auditStatusName}<label>&#12288;${modifyTime}</label></td>
 						</c:if>
 					</tr>
@@ -175,7 +175,7 @@
 						<td>${doctorRecruit.placeName}</td>
 						<th>
 							<!--培训记录 ： 最新 && 审核通过 -->
-							<c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
+							<c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
 								<!-- 变更申请记录 -->
 								<c:if test="${!empty docOrgHistoryList}">
 									<div class="pxxx" id="changInfo" style="display:none; ">
@@ -217,7 +217,7 @@
 						<td>
 							${doctorRecruit.orgName}
 							<!--培训记录 ： 最新 && 审核通过 -->
-							<c:if test="${isLatest && jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow}">
+							<c:if test="${isLatest && resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow}">
 								<!-- 最新变更记录：  (非待转出审核 && 非待转入审核) && 当前用户-->
 								<c:set var="showChangBtn" value="${(jsResChangeApplyStatusEnumOutApplyWaiting.id != latestDocOrgHistory.changeStatusId && jsResChangeApplyStatusEnumInApplyWaiting.id != latestDocOrgHistory.changeStatusId ) && doctorRecruit.doctorFlow == sessionScope.currUser.userFlow}"/>
 								<c:if test="${showChangBtn}">
@@ -230,7 +230,7 @@
 						<th>培训类别：</th>
 						<td id="catSpeNameTd">${doctorRecruit.catSpeName}</td>
 						<th class="trainSpe">
-							<c:if test="${ jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
+							<c:if test="${ resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId}">
 								<c:if test="${!empty changeSpeList}">
 									<div class="pyyy" id="changSpe" style="display:none; ">
 										<div class="changeinfoContent">
@@ -273,7 +273,7 @@
 							培训专业：</th>
 						<td id="speNameTd">
 							${doctorRecruit.speName}
-							<c:if test="${isLatest && jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow}">
+							<c:if test="${isLatest && resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow}">
 								<c:set var="showChangBtn" value="${(jsResChangeApplySpeEnumBaseWaitingAudit.id != lastChangeSpe.changeStatusId
     		          		&& jsResChangeApplySpeEnumGlobalWaitingAudit.id != lastChangeSpe.changeStatusId)
     		          		&& doctorRecruit.doctorFlow == sessionScope.currUser.userFlow}"/>
@@ -337,7 +337,7 @@
 						<td colspan="3">${doctorRecruit.graduationYear}&#12288;<font color="red">(结业考核年份=当前届别+培训年限)</font></td>
 					</tr>
 					<!-- 审核通过 && 非二阶段 -->
-					<c:if test="${doctorRecruit.auditStatusId eq jsResDoctorAuditStatusEnumPassed.id && not empty doctorRecruit.completeFileUrl && not empty doctorRecruit.completeCertNo}">
+					<c:if test="${doctorRecruit.auditStatusId eq resDoctorAuditStatusEnumPassed.id && not empty doctorRecruit.completeFileUrl && not empty doctorRecruit.completeCertNo}">
 						<tr>
 							<th>结业证书附件：</th>
 							<td>
@@ -353,7 +353,7 @@
 					</c:if>
 
 					<!-- 审核意见 -->
-					<%-- 	           <c:if test="${jsResDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}"> --%>
+					<%-- 	           <c:if test="${resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId or auditNotPassed}"> --%>
 					<c:if test="${not empty doctorRecruit.admitNotice}">
 						<tr>
 							<th style="color: red;"><c:if test="${GlobalConstant.USER_LIST_PERSONAL != sessionScope.userListScope}">历史</c:if>审核意见：</th>

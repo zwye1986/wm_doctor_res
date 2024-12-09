@@ -1,12 +1,12 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResPowerCfgBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;
@@ -77,7 +77,7 @@ public class ResDoctorCfgController extends GeneralController {
         Map<String,Object> params=new HashMap<>();
 
 //        //住院医师状态
-//        List<SysDict> doctorStatusDicts = DictTypeEnum.DoctorStatus.getSysDictList();
+//        List<SysDict> doctorStatusDicts = com.pinde.core.common.enums.DictTypeEnum.DoctorStatus.getSysDictList();
 //        List<String> doctorStatusList = new ArrayList<String>();
 //        for (SysDict dict:doctorStatusDicts) {
 //            doctorStatusList.add(dict.getDictId());
@@ -102,7 +102,7 @@ public class ResDoctorCfgController extends GeneralController {
         if(StringUtil.isNotBlank(ifOpen)){
             params.put("ifOpen",ifOpen);
             for(int i=0;i<powerTypeId.length;i++){
-                params.put(powerTypeId[i],GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
             }
             list=schManualBiz.userListByPower(params);
         }else {
@@ -149,11 +149,11 @@ public class ResDoctorCfgController extends GeneralController {
             }else if("res_doctor_manual_".equals(cfg)){
                 resPowerCfg.setCfgDesc("是否开放学员手册");
             }
-            resPowerCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            resPowerCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             cfgList.add(resPowerCfg);
         }
         resPowerCfgBiz.saveList(cfgList);
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**
@@ -185,10 +185,10 @@ public class ResDoctorCfgController extends GeneralController {
     public String saveDate(ResPowerCfg powerCfg){
 
         int result = resPowerCfgBiz.updateDate(powerCfg);
-        if(result== GlobalConstant.ONE_LINE){
-            return GlobalConstant.SAVE_SUCCESSED;
+        if (result == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -209,15 +209,15 @@ public class ResDoctorCfgController extends GeneralController {
                 cfg.setCfgCode(cfgCode);
                 cfg.setCfgValue(cfgValue);
                 cfg.setCfgDesc(cfgDesc);
-                cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 cfgList.add(cfg);
             }
             int result = resPowerCfgBiz.saveList(cfgList);
-            if(GlobalConstant.ZERO_LINE != result){
-                return GlobalConstant.SAVE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
     /**
      * 人员权限期限导入
@@ -243,23 +243,23 @@ public class ResDoctorCfgController extends GeneralController {
                     int count = (Integer) result.get("count");
                     String msg = (String) result.get("msg");
                     if ("1".equals(code)) {
-                        return GlobalConstant.UPLOAD_FAIL + msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
                     } else {
-                        if (GlobalConstant.ZERO_LINE != count) {
-                            return GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                         } else {
-                            return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         }
                     }
                 } else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             } catch (RuntimeException re) {
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
 
     @RequestMapping(value = {"/exportPowers"})
@@ -283,7 +283,7 @@ public class ResDoctorCfgController extends GeneralController {
         if(StringUtil.isNotBlank(ifOpen)){
             params.put("ifOpen",ifOpen);
             for(int i=0;i<powerTypeId.length;i++){
-                params.put(powerTypeId[i],GlobalConstant.FLAG_Y);
+                params.put(powerTypeId[i], com.pinde.core.common.GlobalConstant.FLAG_Y);
             }
             list=schManualBiz.userListByPower(params);
         }else {
@@ -360,7 +360,7 @@ public class ResDoctorCfgController extends GeneralController {
                 String webPower = "";
                 String webCfgCode = "res_doctor_web_" + userFlow;
                 ResPowerCfg webPowerCfg = resPowerCfgMapper.selectByPrimaryKey(webCfgCode);
-                if (webPowerCfg == null || !GlobalConstant.FLAG_Y.equals(webPowerCfg.getCfgValue())) {
+                if (webPowerCfg == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(webPowerCfg.getCfgValue())) {
                     webPower = "否";
                 } else {
                     webPower = "是";
@@ -369,14 +369,14 @@ public class ResDoctorCfgController extends GeneralController {
                 String appPower = "";
                 String appCfgCode = "res_doctor_app_login_" + userFlow;
                 ResPowerCfg appPowerCfg = resPowerCfgMapper.selectByPrimaryKey(appCfgCode);
-                if (appPowerCfg == null || !GlobalConstant.FLAG_Y.equals(appPowerCfg.getCfgValue())) {
+                if (appPowerCfg == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(appPowerCfg.getCfgValue())) {
                     appPower = "否";
                 } else {
                     appPower = "是";
                 }
                 //权限期限(WEB/APP)
                 String timePower = "";
-                if (webPowerCfg == null || !GlobalConstant.FLAG_Y.equals(webPowerCfg.getCfgValue())) {
+                if (webPowerCfg == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(webPowerCfg.getCfgValue())) {
                     timePower = "";
                 } else {
                     if(StringUtil.isNotBlank(webPowerCfg.getPowerStartTime()) && StringUtil.isNotBlank(webPowerCfg.getPowerStartTime())){
@@ -387,7 +387,7 @@ public class ResDoctorCfgController extends GeneralController {
                 String ckksPower = "";
                 String ckksCfgCode = "res_doctor_ckks_" + userFlow;
                 ResPowerCfg ckksPowerCfg = resPowerCfgMapper.selectByPrimaryKey(ckksCfgCode);
-                if (ckksPowerCfg == null || !GlobalConstant.FLAG_Y.equals(ckksPowerCfg.getCfgValue())) {
+                if (ckksPowerCfg == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(ckksPowerCfg.getCfgValue())) {
                     ckksPower = "否";
                 } else {
                     ckksPower = "是";
@@ -396,7 +396,7 @@ public class ResDoctorCfgController extends GeneralController {
                 String pxscPower = "";
                 String pxscCfgCode = "res_doctor_pxsc_" + userFlow;
                 ResPowerCfg pxscPowerCfg = resPowerCfgMapper.selectByPrimaryKey(pxscCfgCode);
-                if (pxscPowerCfg == null || !GlobalConstant.FLAG_Y.equals(pxscPowerCfg.getCfgValue())) {
+                if (pxscPowerCfg == null || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(pxscPowerCfg.getCfgValue())) {
                     pxscPower = "否";
                 } else {
                     pxscPower = "是";

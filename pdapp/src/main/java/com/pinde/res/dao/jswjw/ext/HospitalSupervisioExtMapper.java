@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.ResHospSupervSubject;
-import com.pinde.sci.model.mo.SysDept;
+import com.pinde.core.model.ResHospSupervSubject;
+import com.pinde.core.model.SysDept;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

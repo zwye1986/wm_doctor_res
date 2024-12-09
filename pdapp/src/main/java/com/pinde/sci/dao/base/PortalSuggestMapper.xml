@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PortalSuggestMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PortalSuggest" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.PortalSuggest" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="SUGGEST_TITLE" property="suggestTitle" jdbcType="VARCHAR" />
     <result column="SUGGEST_CONTENT" property="suggestContent" jdbcType="VARCHAR" />
@@ -81,7 +81,7 @@
     REPLY_USER_NAME, REPLY_CONTENT, REPLY_TIME, SHOW_FLAG, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PortalSuggestExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PortalSuggestExample" >
     select
     <if test="distinct" >
       distinct
@@ -105,13 +105,13 @@
     delete from PDSCI.PORTAL_SUGGEST
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PortalSuggestExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.PortalSuggestExample" >
     delete from PDSCI.PORTAL_SUGGEST
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PortalSuggest" >
+  <insert id="insert" parameterType="com.pinde.core.model.PortalSuggest" >
     insert into PDSCI.PORTAL_SUGGEST (RECORD_FLOW, SUGGEST_TITLE, SUGGEST_CONTENT, 
       USER_NAME, USER_PHONE, SUBMIT_TIME, 
       REPLY_USER_NAME, REPLY_CONTENT, REPLY_TIME, 
@@ -125,7 +125,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PortalSuggest" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.PortalSuggest" >
     insert into PDSCI.PORTAL_SUGGEST
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -222,7 +222,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PortalSuggestExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.PortalSuggestExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.PORTAL_SUGGEST
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -302,7 +302,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PortalSuggest" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PortalSuggest" >
     update PDSCI.PORTAL_SUGGEST
     <set >
       <if test="suggestTitle != null" >
@@ -350,7 +350,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PortalSuggest" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PortalSuggest" >
     update PDSCI.PORTAL_SUGGEST
     set SUGGEST_TITLE = #{suggestTitle,jdbcType=VARCHAR},
       SUGGEST_CONTENT = #{suggestContent,jdbcType=VARCHAR},

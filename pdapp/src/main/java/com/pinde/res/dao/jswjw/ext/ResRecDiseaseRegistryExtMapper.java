@@ -1,6 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

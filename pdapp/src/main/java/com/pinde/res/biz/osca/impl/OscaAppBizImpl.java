@@ -1,8 +1,11 @@
 package com.pinde.res.biz.osca.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.model.*;
+import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,16 +17,13 @@ import com.pinde.res.dao.jswjw.ext.OscaSkillRoomDocExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
 import com.pinde.res.dao.osca.ext.OscaAppMapper;
-import com.pinde.res.enums.osca.AuditStatusEnum;
-import com.pinde.res.enums.osca.DoctorScoreEnum;
-import com.pinde.res.enums.osca.ScanDocStatusEnum;
-import com.pinde.res.enums.osca.ScoreStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SysUserExample.Criteria;
-import com.pinde.sci.util.PasswordHelper;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -41,7 +40,7 @@ import java.net.URLDecoder;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class OscaAppBizImpl implements IOscaAppBiz {
 
 	@Autowired
@@ -215,7 +214,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				if (stations != null) {
 					//如果学员所有站点都没有考核完，直接是不通过
 					if (roomDocs.size() < stations.size()) {
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
@@ -244,7 +243,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 						//如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
 						if(allScore!=null&&allScore>examAllScore)
 						{
-							doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 							doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 							doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 							f=true;
@@ -281,18 +280,18 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 										}
 									}
 									if(stationPassCount==stations.size()) {
-										doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_Y);
 										doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
 										doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
 										f = true;
 									}else{
-										doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 										doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 										doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 										f=true;
 									}
 								}else{
-									doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 									doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 									doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 									f=true;
@@ -347,7 +346,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				if (stations != null) {
 					//如果学员所有站点都没有考核完，直接是不通过
 					if (roomDocs.size() < stations.size()) {
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 						f=true;
 					}else {
 						//每部分的站点数量
@@ -374,7 +373,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 						//如果合格总分配置了 并且 考核 总分小于合格总分 直接不通过
 						if(allScore!=null&&allScore>examAllScore)
 						{
-							doctorAssessment.setIsSavePass("N");
+                            doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 							f=true;
 						}else {
 							//有几部分
@@ -411,14 +410,14 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 										}
 									}
 									if(stationPassCount==stations.size()) {
-										doctorAssessment.setIsSavePass("Y");
+                                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_Y);
 										f = true;
 									}else{
-										doctorAssessment.setIsSavePass("N");
+                                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 										f=true;
 									}
 								}else{
-									doctorAssessment.setIsSavePass("N");
+                                    doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 									f=true;
 								}
 							}
@@ -438,7 +437,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		{
 			OscaSubjectStationScoreExample example=new OscaSubjectStationScoreExample();
 			OscaSubjectStationScoreExample.Criteria criteria =example.createCriteria();
-			criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
 			List<OscaSubjectStationScore> list=stationScoreMapper.selectByExample(example);
 			return list;
 		}
@@ -451,7 +450,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		{
 			OscaSubjectPartScoreExample example=new OscaSubjectPartScoreExample();
 			OscaSubjectPartScoreExample.Criteria criteria =example.createCriteria();
-			criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
 			List<OscaSubjectPartScore> list=partScoreMapper.selectByExample(example);
 			return list;
 		}
@@ -478,7 +477,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 
 				if (stations != null) {
 					if (roomDocs.size() < stations.size()) {
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
@@ -536,19 +535,19 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 					//通过的部分为0
 					if(partPassCount==0)
 					{
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
 					}else if(partCount==partPassCount)
 					{
-						doctorAssessment.setIsSavePass("Y");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_Y);
 						doctorAssessment.setIsPass(DoctorScoreEnum.Passed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.Passed.getName());
 						f=true;
 					}else if(partCount>partPassCount)
 					{
-						doctorAssessment.setIsSavePass("N");
+                        doctorAssessment.setIsSavePass(com.pinde.core.common.GlobalConstant.FLAG_N);
 						doctorAssessment.setIsPass(DoctorScoreEnum.UnPassed.getId());
 						doctorAssessment.setIsPassName(DoctorScoreEnum.UnPassed.getName());
 						f=true;
@@ -582,7 +581,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				param.put("stationFlow", stationFlow);
 				////设置当前站点学员已经考核
 				OscaSkillRoomDoc docRoom=getOscaSkillRoomDocByDoc(param);
-				if(docRoom!=null&&docRoom.getIsAdminAudit().equals(GlobalConstant.FLAG_N)) {
+                if (docRoom != null && docRoom.getIsAdminAudit().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 					//获取所有站点老师提交的总成绩，以及有多少老师提交了成绩
 					Map<String,Object> map=getDocStationAllScore(param);
 					String avgScore=(String) map.get("STATION_AVG_SCORE");
@@ -620,7 +619,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public List<OscaSkillRoom> findClinicalStationRooms(String stationFlow, String clinicalFlow, String orgFlow) {
 		OscaSkillRoomExample example=new OscaSkillRoomExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andStationFlowEqualTo(stationFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andStationFlowEqualTo(stationFlow)
 				.andClinicalFlowEqualTo(clinicalFlow);
 		example.setOrderByClause("room_flow");
 		return roomMapper.selectByExample(example);
@@ -634,7 +633,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public OscaRoomFile getRoomFile(String roomFlow, String orgFlow) {
 		OscaRoomFileExample example=new OscaRoomFileExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRoomFlowEqualTo(roomFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRoomFlowEqualTo(roomFlow)
 				.andOrgFlowEqualTo(orgFlow);
 		List<OscaRoomFile> files=roomFileMapper.selectByExample(example);
 		if(files!=null&&files.size()>0)
@@ -648,7 +647,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
     public OscaSkillDocStation getDocSkillStation(String stationFlow, String userFlow, String clinicalFlow) {
 		OscaSkillDocStationExample example=new OscaSkillDocStationExample();
 
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andStationFlowEqualTo(stationFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andStationFlowEqualTo(stationFlow)
 				.andDoctorFlowEqualTo(userFlow).andClinicalFlowEqualTo(clinicalFlow);
 		List<OscaSkillDocStation> files=docStationMapper.selectByExample(example);
 		if(files!=null&&files.size()>0)
@@ -661,7 +660,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
     public List<OscaSkillDocStation> getDocSkillStations(String userFlow, String clinicalFlow) {
 		OscaSkillDocStationExample example=new OscaSkillDocStationExample();
 
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(userFlow).andClinicalFlowEqualTo(clinicalFlow);
 		return docStationMapper.selectByExample(example);
     }
@@ -685,7 +684,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 			docStationMapper.updateByPrimaryKeySelective(docStation);
 		}else{
 			docStation.setRecordFlow(PkUtil.getUUID());
-			docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			docStation.setCreateUserFlow(saveuser.getUserFlow());
 			docStation.setCreateTime(DateUtil.getCurrDateTime());
 			docStation.setModifyUserFlow(saveuser.getUserFlow());
@@ -698,13 +697,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
     public int saveRoomFile(OscaRoomFile roomFile, SysUser user) {
 		if(roomFile!=null){
 			if(StringUtil.isNotBlank(roomFile.getRecordFlow())){//修改
-				roomFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                roomFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				roomFile.setModifyUserFlow(user.getUserFlow());
 				roomFile.setModifyTime(DateUtil.getCurrDateTime());
 				return this.roomFileMapper.updateByPrimaryKeySelective(roomFile);
 			}else{//新增
 				roomFile.setRecordFlow(PkUtil.getUUID());
-				roomFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                roomFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				roomFile.setCreateUserFlow(user.getUserFlow());
 				roomFile.setCreateTime(DateUtil.getCurrDateTime());
 				roomFile.setModifyUserFlow(user.getUserFlow());
@@ -744,7 +743,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 					param.put("stationFlow", stationFlow);
 					////设置当前站点学员已经考核
 					OscaSkillRoomDoc docRoom=getOscaSkillRoomDocByDoc(param);
-					if(docRoom!=null&&docRoom.getIsAdminAudit().equals(GlobalConstant.FLAG_N)) {
+                    if (docRoom != null && docRoom.getIsAdminAudit().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 						//获取所有站点老师保存的总成绩，以及有多少老师保存了成绩
 						Map<String,Object> map=getDocStationAllSaveScore(param);
 						String avgScore=(String) map.get("STATION_AVG_SCORE");
@@ -819,7 +818,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 					param.put("stationFlow", stationFlow);
 					////设置当前站点学员已经考核
 					OscaSkillRoomDoc docRoom=getOscaSkillRoomDocByDoc(param);
-					if(docRoom!=null&&docRoom.getIsAdminAudit().equals(GlobalConstant.FLAG_N)) {
+                    if (docRoom != null && docRoom.getIsAdminAudit().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 						//获取所有站点老师提交的总成绩，以及有多少老师提交了成绩,无表单的成绩不折算
 						Map<String,Object> map=getDocStationAllScore(param);
 						String avgScore=(String) map.get("STATION_AVG_SCORE");
@@ -984,7 +983,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public List<SysUserRole> getSysUserRole(String userFlow, String wsId) {
 
 		SysUserRoleExample example = new SysUserRoleExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andUserFlowEqualTo(userFlow).andWsIdEqualTo(wsId);
 		return userRoleMapper.selectByExample(example);
 	}
@@ -993,7 +992,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public SysUser findByIdNo(String idNo) {
 		SysUserExample sysUserExample=new SysUserExample();
 		Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(idNo);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -1006,7 +1005,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public SysUser findByUserPhone(String userPhone) {
 		SysUserExample sysUserExample=new SysUserExample();
 		Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -1019,7 +1018,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public SysUser findByUserEmail(String userEmail) {
 		SysUserExample sysUserExample=new SysUserExample();
 		Criteria criteria=sysUserExample.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserEmailEqualTo(userEmail);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -1035,7 +1034,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(), user.getUserPasswd()));
 		user.setStatusId("OSCE_NEW");
 		user.setStatusDesc("OSCE未完善信息学员");
-		user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		user.setCreateUserFlow(user.getUserFlow());
 		user.setCreateTime(DateUtil.getCurrDateTime());
 		user.setModifyUserFlow(user.getUserFlow());
@@ -1051,7 +1050,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 			userRole.setWsId("osca");
 			userRole.setRoleFlow(doctorRole);
 			userRole.setAuthTime(DateUtil.getCurrDate());
-			userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			userRole.setCreateUserFlow(user.getUserFlow());
 			userRole.setCreateTime(DateUtil.getCurrDateTime());
 			saveSysUserRole(userRole,user);
@@ -1069,7 +1068,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				return sysUserMapper.updateByPrimaryKeySelective(user);
 			}else{
 				user.setUserFlow(PkUtil.getUUID());
-				user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				user.setCreateUserFlow(saveuser.getUserFlow());
 				user.setCreateTime(DateUtil.getCurrDateTime());
 				user.setModifyUserFlow(saveuser.getUserFlow());
@@ -1090,7 +1089,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				doctorMapper.updateByPrimaryKeySelective(doctor);
 			}else{
 				doctor.setDoctorFlow(PkUtil.getUUID());
-				doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				doctor.setCreateUserFlow(saveuser.getUserFlow());
 				doctor.setCreateTime(DateUtil.getCurrDateTime());
 				doctor.setModifyUserFlow(saveuser.getUserFlow());
@@ -1103,7 +1102,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public List<SysOrg> queryAllSysOrg(SysOrg sysorg) {
 		SysOrgExample example = new SysOrgExample();
-		SysOrgExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysorg!=null){
 			if(StringUtil.isNotBlank(sysorg.getOrgName())){
 				criteria.andOrgNameLike("%"+sysorg.getOrgName()+"%");
@@ -1127,7 +1126,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		if(StringUtil.isNotBlank(doctorTrainingSpe))
 		{
 			SysDictExample example = new SysDictExample();
-			example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andDictTypeIdEqualTo(doctorTrainingSpe).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<SysDict> sysDictList = sysDictMapper.selectByExample(example);
 
 			return sysDictList;
@@ -1143,16 +1142,16 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		user.setModifyTime(DateUtil.getCurrDateTime());
 		sysUserMapper.updateByPrimaryKeySelective(user);
 		doctor.setDoctorFlow(user.getUserFlow());
-		doctor.setOscaStudentSubmit("Y");
+        doctor.setOscaStudentSubmit(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		ResDoctorExample example = new ResDoctorExample();
-		ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(user.getUserFlow());
+        ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow());
 		int count = doctorMapper.countByExample(example);
 		if(count>0){
 			doctor.setModifyUserFlow(user.getUserFlow());
 			doctor.setModifyTime(DateUtil.getCurrDateTime());
 			doctorMapper.updateByPrimaryKeySelective(doctor);
 		}else{
-			doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			doctor.setCreateUserFlow(user.getUserFlow());
 			doctor.setCreateTime(DateUtil.getCurrDateTime());
 			doctor.setModifyUserFlow(user.getUserFlow());
@@ -1175,7 +1174,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 			doctorRegist.setDoctorFlow(user.getUserFlow());
 			doctorRegist.setStatusId(AuditStatusEnum.Passing.getId());
 			doctorRegist.setStatusName(AuditStatusEnum.Passing.getName());
-			doctorRegist.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            doctorRegist.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			doctorRegist.setCreateUserFlow(user.getUserFlow());
 			doctorRegist.setCreateTime(DateUtil.getCurrDateTime());
 			doctorRegist.setModifyUserFlow(user.getUserFlow());
@@ -1200,7 +1199,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 
 		InxInfoExample example = new InxInfoExample();
 		example.setOrderByClause(" IS_TOP DESC, MODIFY_TIME DESC, INFO_TIME DESC");
-		InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        InxInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(info.getColumnId())) {
 			criteria.andColumnIdEqualTo(info.getColumnId());
 		}
@@ -1223,7 +1222,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				return userRoleMapper.updateByPrimaryKeySelective(userRole);
 			}else{
 				userRole.setRecordFlow(PkUtil.getUUID());
-				user.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				user.setCreateUserFlow(user.getUserFlow());
 				user.setCreateTime(DateUtil.getCurrDateTime());
 				user.setModifyUserFlow(user.getUserFlow());
@@ -1231,7 +1230,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 				return userRoleMapper.insertSelective(userRole);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -1259,13 +1258,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public int editTeaScanDoc(OscaTeaScanDoc b, SysUser user) {
 		if(b!=null){
 			if(StringUtil.isNotBlank(b.getRecordFlow())){//修改
-				b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				b.setModifyUserFlow(user.getUserFlow());
 				b.setModifyTime(DateUtil.getCurrDateTime());
 				return this.scanDocMapper.updateByPrimaryKeySelective(b);
 			}else{//新增
 				b.setRecordFlow(PkUtil.getUUID());
-				b.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                b.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				b.setCreateUserFlow(user.getUserFlow());
 				b.setCreateTime(DateUtil.getCurrDateTime());
 				b.setModifyUserFlow(user.getUserFlow());
@@ -1284,13 +1283,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public int editOscaSkillRoomDoc(OscaSkillRoomDoc docStation, SysUser user) {
 		if(docStation!=null){
 			if(StringUtil.isNotBlank(docStation.getDocRoomFlow())){//修改
-				docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				docStation.setModifyUserFlow(user.getUserFlow());
 				docStation.setModifyTime(DateUtil.getCurrDateTime());
 				return this.roomDocMapper.updateByPrimaryKeySelective(docStation);
 			}else{//新增
 				docStation.setDocRoomFlow(PkUtil.getUUID());
-				docStation.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                docStation.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				docStation.setCreateUserFlow(user.getUserFlow());
 				docStation.setCreateTime(DateUtil.getCurrDateTime());
 				docStation.setModifyUserFlow(user.getUserFlow());
@@ -1305,13 +1304,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public int editOscaSkillRoomTeaScore(OscaSkillDocTeaScore teaScore, SysUser user) {
 		if(teaScore!=null){
 			if(StringUtil.isNotBlank(teaScore.getRecordFlow())){//修改
-				teaScore.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                teaScore.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				teaScore.setModifyUserFlow(user.getUserFlow());
 				teaScore.setModifyTime(DateUtil.getCurrDateTime());
 				return this.teaDocScoreMapper.updateByPrimaryKeySelective(teaScore);
 			}else{//新增
 				teaScore.setRecordFlow(PkUtil.getUUID());
-				teaScore.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                teaScore.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				teaScore.setCreateUserFlow(user.getUserFlow());
 				teaScore.setCreateTime(DateUtil.getCurrDateTime());
 				teaScore.setModifyUserFlow(user.getUserFlow());
@@ -1327,7 +1326,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 
 		if(StringUtil.isNotBlank(orgFlow)) {
 			OscaExamDifferScoreExample example = new OscaExamDifferScoreExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOrgFlowEqualTo(orgFlow);
 			List<OscaExamDifferScore> list=differScoreMapper.selectByExample(example);
 			if(list!=null&&list.size()>0)
@@ -1342,7 +1341,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public List<OscaSubjectStationFrom> getFromsByStationFlow(String stationFlow) {
 		OscaSubjectStationFromExample fromExample=new OscaSubjectStationFromExample();
 		OscaSubjectStationFromExample.Criteria criteria=fromExample.createCriteria();
-		criteria.andStationFlowEqualTo(stationFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andStationFlowEqualTo(stationFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andOrgFlowEqualTo("sign");
 		List<OscaSubjectStationFrom> list = stationFromMapper.selectByExample(fromExample);
 
@@ -1352,7 +1351,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public List<OscaSubjectStationFrom> getFromsByOrgFlow(String stationFlow, String orgFlow) {
 		OscaSubjectStationFromExample fromExample=new OscaSubjectStationFromExample();
 		OscaSubjectStationFromExample.Criteria criteria=fromExample.createCriteria();
-		criteria.andStationFlowEqualTo(stationFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andStationFlowEqualTo(stationFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andOrgFlowEqualTo(orgFlow);
 		List<OscaSubjectStationFrom> list = stationFromMapper.selectByExample(fromExample);
 		return list;
@@ -1488,7 +1487,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 		if(StringUtil.isNotBlank(tickNumber))
 		{
 			OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andTicketNumberEqualTo(tickNumber);
 			List<OscaDoctorAssessment> list=doctorAssessmentMapper.selectByExample(example);
 			if(list!=null&&list.size()>0)
@@ -1531,7 +1530,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public List<OscaSkillScoreDeatil> getScoreDeatilsByScoreFlow(String scoreFlow) {
 		OscaSkillScoreDeatilExample fromExample=new OscaSkillScoreDeatilExample();
 		OscaSkillScoreDeatilExample.Criteria criteria=fromExample.createCriteria();
-		criteria.andScoreFlowEqualTo(scoreFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andScoreFlowEqualTo(scoreFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<OscaSkillScoreDeatil> list = scoreDeatilMapper.selectByExample(fromExample);
 		return list;
 	}
@@ -1561,7 +1560,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public OscaDoctorAssessment getOscaDoctorAssessment(String clinicalFlow, String doctorFlow) {
 		OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
 		OscaDoctorAssessmentExample.Criteria criteria=example.createCriteria();
-		criteria.andDoctorFlowEqualTo(doctorFlow).andClinicalFlowEqualTo(clinicalFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andDoctorFlowEqualTo(doctorFlow).andClinicalFlowEqualTo(clinicalFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<OscaDoctorAssessment> list=doctorAssessmentMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){
 			return  list.get(0);
@@ -1573,7 +1572,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public List<OscaSkillRoomDoc> getOscaSkillRoomDocs(String clinicalFlow, String doctorFlow) {
 		OscaSkillRoomDocExample example=new OscaSkillRoomDocExample();
 		OscaSkillRoomDocExample.Criteria criteria=example.createCriteria();
-		criteria.andClinicalFlowEqualTo(clinicalFlow).andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andClinicalFlowEqualTo(clinicalFlow).andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return roomDocMapper.selectByExample(example);
 	}
 
@@ -1581,13 +1580,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public int editOscaDoctorAssessment(OscaDoctorAssessment doctorAssessment, SysUser user) {
 		if(doctorAssessment!=null){
 			if(StringUtil.isNotBlank(doctorAssessment.getRecordFlow())){//修改
-				doctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				doctorAssessment.setModifyUserFlow(user.getUserFlow());
 				doctorAssessment.setModifyTime(DateUtil.getCurrDateTime());
 				return this.doctorAssessmentMapper.updateByPrimaryKeySelective(doctorAssessment);
 			}else{//新增
 				doctorAssessment.setRecordFlow(PkUtil.getUUID());
-				doctorAssessment.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctorAssessment.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				doctorAssessment.setCreateUserFlow(user.getUserFlow());
 				doctorAssessment.setCreateTime(DateUtil.getCurrDateTime());
 				doctorAssessment.setModifyUserFlow(user.getUserFlow());
@@ -1607,7 +1606,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public List<OscaSubjectStation> getOscaSubjectStations(String subjectFlow) {
 		OscaSubjectStationExample station=new OscaSubjectStationExample();
 		OscaSubjectStationExample.Criteria criteria=station.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSubjectFlowEqualTo(subjectFlow);
 		station.setOrderByClause(" ORDINAL ASC ");
 		return stationMapper.selectByExample(station);
 	}
@@ -1716,7 +1715,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public OscaSkillScoreDeatil getScoreDetail(String key, String scoreFlow) {
 		OscaSkillScoreDeatilExample fromExample=new OscaSkillScoreDeatilExample();
 		OscaSkillScoreDeatilExample.Criteria criteria=fromExample.createCriteria();
-		criteria.andScoreFlowEqualTo(scoreFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        criteria.andScoreFlowEqualTo(scoreFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andScoreKeyEqualTo(key);
 		List<OscaSkillScoreDeatil> list = scoreDeatilMapper.selectByExample(fromExample);
 		if(list!=null&&list.size()>0){
@@ -1728,13 +1727,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public int editOneOscaSkillScoreDeatil(OscaSkillScoreDeatil deatil, SysUser user) {
 		if(deatil!=null){
 			if(StringUtil.isNotBlank(deatil.getRecordFlow())){//修改
-				deatil.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                deatil.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				deatil.setModifyUserFlow(user.getUserFlow());
 				deatil.setModifyTime(DateUtil.getCurrDateTime());
 				return this.scoreDeatilMapper.updateByPrimaryKeySelective(deatil);
 			}else{//新增
 				deatil.setRecordFlow(PkUtil.getUUID());
-				deatil.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                deatil.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				deatil.setCreateUserFlow(user.getUserFlow());
 				deatil.setCreateTime(DateUtil.getCurrDateTime());
 				deatil.setModifyUserFlow(user.getUserFlow());
@@ -1749,13 +1748,13 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	public int editOscaSkillDocScore(OscaSkillDocScore score, SysUser user) {
 		if(score!=null){
 			if(StringUtil.isNotBlank(score.getScoreFlow())){//修改
-				score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				score.setModifyUserFlow(user.getUserFlow());
 				score.setModifyTime(DateUtil.getCurrDateTime());
 				return this.scoreMapper.updateByPrimaryKeySelective(score);
 			}else{//新增
 				score.setScoreFlow(PkUtil.getUUID());
-				score.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                score.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				score.setCreateUserFlow(user.getUserFlow());
 				score.setCreateTime(DateUtil.getCurrDateTime());
 				score.setModifyUserFlow(user.getUserFlow());
@@ -1771,7 +1770,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	//每天1点开始执行
 	@Scheduled(cron="0 0 1 * * ?")
 	public void doJob() throws Exception {
-		if(!GlobalConstant.FLAG_Y.equals(haveNotRegSwitch)){
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(haveNotRegSwitch)) {
 			return;
 		}
 

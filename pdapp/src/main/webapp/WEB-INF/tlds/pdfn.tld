@@ -102,24 +102,12 @@
 	<function>
 		<description></description>
 		<name>getResRecTypeEnumNameById</name>
-		<function-class>com.pinde.app.common.GlobalUtil</function-class>
+        <function-class>com.pinde.app.common.GlobalUtil</function-class>
 		<function-signature>java.lang.String getResRecTypeEnumNameById(java.lang.String)</function-signature>
 	</function>
 
-	<function>
-		<description></description>
-		<name>isWriteAfterSummary</name>
-		<function-class>com.pinde.app.common.GlobalUtil</function-class>
-		<function-signature>java.lang.Boolean isWriteAfterSummary(java.lang.Boolean,java.lang.String)</function-signature>
-	</function>
 
-	<function>
-		<description></description>
-		<name>getObjByFlow</name>
-		<function-class>com.pinde.app.common.GlobalUtil</function-class>
-		<function-signature>java.lang.Object getObjByFlow(java.lang.String,java.lang.String)</function-signature>
-	</function>
-	<function>
+    <function>
 		<description></description>
 		<name>getCurrDateTime</name>
 		<function-class>com.pinde.core.util.DateUtil</function-class>

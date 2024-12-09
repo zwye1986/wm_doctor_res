@@ -211,15 +211,6 @@
             <systemPath>${lib.dir}/cos-26Dec2008.jar</systemPath>
         </dependency>
 
-
-        <dependency>
-            <groupId>druid-1.0.9</groupId>
-            <artifactId>druid-1.0.9</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.dir}/druid-1.0.9.jar</systemPath>
-        </dependency>
-
         <dependency>
             <groupId>easy-captcha-1.6.2</groupId>
             <artifactId>easy-captcha-1.6.2</artifactId>
@@ -983,6 +974,12 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- 下面是为了能在application.properties文件中使用${}引用其它properties的属性 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
 
             <!-- 必须有这个插件，不然外部jar打不到war包里 -->

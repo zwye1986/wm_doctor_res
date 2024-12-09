@@ -9,25 +9,22 @@ import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationExtMapper;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.res.ResTrainCategoryEnum;
-import com.pinde.sci.enums.sch.SchSelTypeEnum;
-import com.pinde.sci.enums.sch.SchStageEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.sch.SchSelTypeEnum;
+import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SchRotationExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchRotationBizImpl implements ISchRotationBiz {
 	@Autowired
 	private SchRotationMapper rotationMapper;
@@ -68,7 +65,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public List<SchRotation> searchSchRotation() {
 		SchRotationExample example = new SchRotationExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL");
 		return rotationMapper.selectByExampleWithBLOBs(example);
 	}
@@ -76,7 +73,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public List<SchRotation> searchSchRotationByIsPublish() {
 		SchRotationExample example = new SchRotationExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andPublishFlagEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("ORDINAL");
 		return rotationMapper.selectByExample(example);
 	}
@@ -86,7 +83,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 //	@Override
 //	public List<SchRotation> searchRotation(String orgFlow) {
 //		SchRotationExample example = new SchRotationExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andRotationTypeIdEqualTo(SchRotationTypeEnum.Local.getId());
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andRotationTypeIdEqualTo(SchRotationTypeEnum.Local.getId());
 //		example.setOrderByClause("ORDINAL");
 //		return rotationMapper.selectByExample(example);
 //	}
@@ -96,7 +93,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 //		SchRotation rotation = null;
 //		SchRotationExample example = new SchRotationExample();
 //		example.createCriteria()
-//		.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //		.andOrgFlowEqualTo(orgFlow)
 //		.andRotationTypeIdEqualTo(SchRotationTypeEnum.Local.getId())
 //		.andRotationFlowEqualTo(rotationFlow);
@@ -110,7 +107,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 //	@Override
 //	public List<SchRotation> searchSchRotationIsPublish(String publishFlag) {
 //		SchRotationExample example = new SchRotationExample();
-//		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationTypeIdEqualTo(SchRotationTypeEnum.Standard.getId());
+//		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationTypeIdEqualTo(SchRotationTypeEnum.Standard.getId());
 //		if(StringUtil.isNotBlank(publishFlag)){
 //			criteria.andPublishFlagEqualTo(publishFlag);
 //		}
@@ -121,7 +118,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public List<SchRotation> searchSchRotationForPlatform(String doctorCateGoryId) {
 		SchRotationExample example = new SchRotationExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andPublishFlagEqualTo(GlobalConstant.FLAG_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(doctorCateGoryId)){
 			criteria.andDoctorCategoryIdEqualTo(doctorCateGoryId);
 		}
@@ -137,7 +134,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public List<SchRotation> searchOrgStandardRotation(SchRotation rotation){
 		SchRotationExample example = new SchRotationExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(rotation.getDoctorCategoryId())){
 			criteria.andDoctorCategoryIdEqualTo(rotation.getDoctorCategoryId());
@@ -161,8 +158,8 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public List<SchRotation> searchSchRotation(String speId) {
 		SchRotationExample example = new SchRotationExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSpeIdEqualTo(speId)
-				.andPublishFlagEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSpeIdEqualTo(speId)
+                .andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("CREATE_TIME DESC");
 		return rotationMapper.selectByExample(example);
 	}
@@ -198,13 +195,13 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				return rotationMapper.insertSelective(rotation);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<SchRotation> searchRotationByrotationFlows(List<String> rotationFlows){
 		SchRotationExample example = new SchRotationExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRotationFlowIn(rotationFlows);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowIn(rotationFlows);
 		example.setOrderByClause("ORDINAL");
 		return rotationMapper.selectByExample(example);
 	}
@@ -320,7 +317,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 									rotationDept.setOrgName(orgName);
 
 									int upCount = parseStandardDept(deptRelListMap,rotationDept,rotation);
-									if(GlobalConstant.FLAG_N.equals(group.getIsRequired())){
+                                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(group.getIsRequired())) {
 										if(SchSelTypeEnum.Free.getId().equals(group.getSelTypeId())){
 											if(maxDeptNum!=null){
 												maxDeptNum+=upCount;
@@ -370,7 +367,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				//产生本地顺序
 				if(confirmDeptMap!=null && confirmDeptMap.size()>0){
 					int ord = 0;
-					if(GlobalConstant.FLAG_Y.equals(rotation.getIsStage())){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotation.getIsStage())) {
 						if(confirmGroupList!=null && confirmGroupList.size()>0){
 							Map<String,List<SchRotationGroup>> confirmGroupMap = new HashMap<String,List<SchRotationGroup>>();
 
@@ -418,9 +415,9 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 					}
 				}
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	private int parseStandardDept(Map<String,List<SchDeptRel>> deptRelListMap,SchRotationDept rotationDept,SchRotation rotation){
@@ -461,9 +458,9 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 //			for(SchRotation rotation : rotationList){
 //				saveSchRotation(rotation);
 //			}
-//			return GlobalConstant.ONE_LINE;
+//			return com.pinde.core.common.GlobalConstant.ONE_LINE;
 //		}
-//		return GlobalConstant.ZERO_LINE;
+//		return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 //	}
 
 	@Override
@@ -479,10 +476,10 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			if(rotation!=null){
 				//保存新方案
 				rotation.setRotationFlow(null);
-				rotation.setPublishFlag(GlobalConstant.FLAG_N);
+                rotation.setPublishFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 				//rotation.setRotationYear(rotationYear);
 				rotation.setRotationName("复制-" + rotation.getRotationName());
-				rotation.setPublishFlag(GlobalConstant.FLAG_N);
+                rotation.setPublishFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 				saveSchRotation(rotation);
 
 				//保存方案的表单配置
@@ -533,9 +530,9 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 					}
 				}
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	private void saveReqByRel(String oldRelFlow,String newRelFlow,SchRotation rotation){
@@ -556,7 +553,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public List<SchRotation> searchRotationByName(String rotationName){
 		SchRotationExample example = new SchRotationExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andRotationNameEqualTo(rotationName);
 		return rotationMapper.selectByExample(example);
 	}
@@ -572,7 +569,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			SchRotation rotation = null;
 
 			String trainingType = doctor.getTrainingTypeId();
-			if(ResTrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)){
+            if (com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)) {
 				trainingType = RecDocCategoryEnum.Doctor.getId();
 			}
 
@@ -581,8 +578,8 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 
 			if(StringUtil.isNotBlank(trainingType) && StringUtil.isNotBlank(speId)){
 				SchRotationExample example = new SchRotationExample();
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-						.andSpeIdEqualTo(speId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                        .andSpeIdEqualTo(speId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andDoctorCategoryIdEqualTo(trainingType);
 				example.setOrderByClause("create_time desc");
 
@@ -621,8 +618,8 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			SchRotation rotation2 = null;
 			if(StringUtil.isNotBlank(trainingType) && StringUtil.isNotBlank(secondspeId)){
 				SchRotationExample example = new SchRotationExample();
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-						.andSpeIdEqualTo(secondspeId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                        .andSpeIdEqualTo(secondspeId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				example.setOrderByClause("create_time desc");
 
 				List<SchRotation> list = rotationMapper.selectByExample(example);
@@ -652,7 +649,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 		List<SchRotation> rotations=new ArrayList<SchRotation>();
 		for (SchRotation schRotation : rotationList) {
 			//如果是对指定机构展示，则只显示本机构的；否则直接显示
-			if (GlobalConstant.RECORD_STATUS_Y.equals(schRotation.getIsOrgView())) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(schRotation.getIsOrgView())) {
 				//根据轮转方案流水和机构流水查询方案机构关联表
 				List<ResRotationOrg> resRotationOrgs=iResRotationOrgBiz.searchByRotationFlowOrg(schRotation.getRotationFlow(),orgFlow);
 				if (resRotationOrgs!=null&&resRotationOrgs.size()>0) {
@@ -671,7 +668,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			SchRotation rotation = null;
 
 			String trainingType = recruit.getCatSpeId();
-			if(ResTrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)){
+            if (com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)) {
 				trainingType = RecDocCategoryEnum.Doctor.getId();
 			}
 
@@ -679,8 +676,8 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 
 			if(StringUtil.isNotBlank(trainingType) && StringUtil.isNotBlank(speId)){
 				SchRotationExample example = new SchRotationExample();
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-						.andSpeIdEqualTo(speId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                        .andSpeIdEqualTo(speId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andDoctorCategoryIdEqualTo(trainingType);
 				example.setOrderByClause("create_time desc");
 
@@ -723,7 +720,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 			SchRotation rotation = null;
 
 			String trainingType = recruit.getCatSpeId();
-			if(ResTrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)){
+            if (com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId().equals(trainingType)) {
 				trainingType = RecDocCategoryEnum.Doctor.getId();
 			}
 
@@ -731,8 +728,8 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 
 			if(StringUtil.isNotBlank(trainingType) && StringUtil.isNotBlank(speId)){
 				SchRotationExample example = new SchRotationExample();
-				example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-						.andSpeIdEqualTo(speId).andPublishFlagEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                        .andSpeIdEqualTo(speId).andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andDoctorCategoryIdEqualTo(trainingType).andCreateTimeLessThan("2019");
 				example.setOrderByClause("create_time desc");
 
@@ -753,9 +750,9 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	public SchRotation searchDoctorBySpeId(String speId) {
 		SchRotationExample example = new SchRotationExample();
 		Criteria criteria = example.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorCategoryIdEqualTo("Doctor")
-				.andPublishFlagEqualTo("Y");
+                .andPublishFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(speId)){
 			criteria.andSpeIdEqualTo(speId);
 		}
@@ -770,7 +767,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Override
 	public ResOrgRotationCfg getRotationCfg(String orgFlow, String speId, String sessionNumber) {
 		ResOrgRotationCfgExample example = new ResOrgRotationCfgExample();
-		example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andSpeIdEqualTo(speId).andSessionYearEqualTo(sessionNumber);
+        example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSpeIdEqualTo(speId).andSessionYearEqualTo(sessionNumber);
 		List<ResOrgRotationCfg> rotationCfgList = rotationCfgMapper.selectByExample(example);
 		if (CollectionUtils.isNotEmpty(rotationCfgList)) {
 			return rotationCfgList.get(0);

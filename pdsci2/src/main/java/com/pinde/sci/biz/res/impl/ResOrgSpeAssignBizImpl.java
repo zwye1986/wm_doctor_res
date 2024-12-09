@@ -1,12 +1,13 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.sci.enums.jsres.BaseStatusEnum;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
@@ -15,7 +16,6 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -25,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     @Autowired
     private ResOrgSpeAssignMapper speAssignMapper;
@@ -49,7 +49,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     @Override
     public List<ResOrgSpeAssign> searchSpeAssign(String assignYear) {
         ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-        ResOrgSpeAssignExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResOrgSpeAssignExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(assignYear)) {
             criteria.andAssignYearEqualTo(assignYear);
         }
@@ -68,7 +68,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
 //				return speAssignMapper.insertSelective(speAssign);
 //			}
 //		}
-//		return GlobalConstant.ZERO_LINE;
+//		return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 //	}
 
     @Override
@@ -79,7 +79,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             String orgFlow = speAssign.getOrgFlow();
             String speId = speAssign.getSpeId();
             ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOrgFlowEqualTo(orgFlow)
                     .andSpeIdEqualTo(speId)
                     .andAssignYearEqualTo(assignYear);
@@ -93,14 +93,14 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                 return speAssignMapper.updateByExampleSelective(speAssign, example);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
     public String queryOrgSpePlanFlow(ResOrgSpeAssign speAssign) {
         if (speAssign != null) {
             ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andOrgFlowEqualTo(speAssign.getOrgFlow())
                     .andSpeIdEqualTo(speAssign.getSpeId())
                     .andAssignYearEqualTo(speAssign.getAssignYear());
@@ -124,13 +124,13 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public List<ResOrgSpeAssign> searchSpeAssign(String orgFlow,
                                                  String assignYear) {
         ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andAssignYearEqualTo(assignYear);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andAssignYearEqualTo(assignYear);
         return this.speAssignMapper.selectByExample(example);
     }
 
     public ResOrgSpeAssign searchSpeAssign(String orgFlow, String assignYear, String speId) {
         ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow)
                 .andAssignYearEqualTo(assignYear)
                 .andSpeIdEqualTo(speId);
@@ -149,7 +149,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     @Override
     public List<ResOrgSpeAssign> searchSpeAssignBySpeIdAndYear(String speId, String year) {
         ResOrgSpeAssignExample example = new ResOrgSpeAssignExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andSpeIdEqualTo(speId)
                 .andAssignYearEqualTo(year);
         return this.speAssignMapper.selectByExample(example);
@@ -213,7 +213,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                 String value = "";
                 String orgCode = "";
                 String orgName = "";
-                String flag = GlobalConstant.UPLOAD_SUCCESSED;
+                String flag = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
                 ResOrgSpeAssign speAssign = new ResOrgSpeAssign();
                 for (int j = 0; j < 2; j++) {//处理基地信息
                     Cell cell = r.getCell(j);
@@ -232,17 +232,17 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                     }
                 }
                 if (StringUtil.isBlank(orgCode) || StringUtil.isBlank(orgName)) {
-                    flag = GlobalConstant.UPLOAD_FAIL;
+                    flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                     problemsMap.put(i + 1, p1);
                 } else {
                     SysOrgExample example = new SysOrgExample();
-                    example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                             .andOrgCodeEqualTo(orgCode).andOrgNameEqualTo(orgName);
                     List<SysOrg> orgList = orgMapper.selectByExample(example);
                     if (null != orgList && orgList.size() > 0) {
                         speAssign.setOrgFlow(orgList.get(0).getOrgFlow());//存在该基地，复制基地流水号
                     } else {
-                        flag = GlobalConstant.UPLOAD_FAIL;
+                        flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, p2);
                     }
                 }
@@ -274,7 +274,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                         succCount++;
                     }
                 }
-                if (GlobalConstant.UPLOAD_FAIL.equals(flag)) {
+                if (com.pinde.core.common.GlobalConstant.UPLOAD_FAIL.equals(flag)) {
                     failCount++;//失败的数
                     lineList.add(i + 1);
                     continue;
@@ -393,9 +393,9 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             String p4 = "面试和操作成绩不能为空！";
             String p6 = "该学员招录状态为已录取，不可修改成绩！";
 
-            String examResultFlag = GlobalConstant.FLAG_N;
-            String interviewExam = GlobalConstant.FLAG_N;
-            String skillExam = GlobalConstant.FLAG_N;
+            String examResultFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
+            String interviewExam = com.pinde.core.common.GlobalConstant.FLAG_N;
+            String skillExam = com.pinde.core.common.GlobalConstant.FLAG_N;
             int succCount = 0, failCount = 0;//导入成功，失败记录数
             List<Integer> lineList = new ArrayList<Integer>();//失败记录行号
             Map<Integer, String> problemsMap = new HashMap<>();//key：行号，val：失败原因
@@ -409,11 +409,11 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                 String value = "";
                 String userName = "";
                 String idNo = "";
-                String flag = GlobalConstant.UPLOAD_SUCCESSED;
+                String flag = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
                 ResDoctorRecruitWithBLOBs record = new ResDoctorRecruitWithBLOBs();
                 ResDoctorRecruitExample recruitExample = new ResDoctorRecruitExample();
                 recruitExample.setOrderByClause("CREATE_TIME DESC");
-                ResDoctorRecruitExample.Criteria criteria = recruitExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                ResDoctorRecruitExample.Criteria criteria = recruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                         .andSessionNumberEqualTo(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"))
                         .andDoctorStatusIdNotEqualTo("NotPassed");
                 for (int j = 0; j < 3; j++) {//处理学员信息
@@ -433,22 +433,22 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                     }
                 }
                 if (StringUtil.isBlank(userName) || StringUtil.isBlank(idNo)) {
-                    flag = GlobalConstant.UPLOAD_FAIL;
+                    flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                     problemsMap.put(i + 1, p1);
                 } else {
                     SysUserExample example = new SysUserExample();
-                    example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                             .andUserNameEqualTo(userName).andIdNoEqualTo(idNo);
                     List<SysUser> userList = userMapper.selectByExample(example);
                     if (null != userList && userList.size() > 0) {
                         criteria.andDoctorFlowEqualTo(userList.get(0).getUserFlow());//存在该学员，复制学员流水号
                     } else {
-                        flag = GlobalConstant.UPLOAD_FAIL;
+                        flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, p2);
                     }
                 }
                 String speName = "";
-                if (flag.equals(GlobalConstant.UPLOAD_SUCCESSED)) {
+                if (flag.equals(com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED)) {
                     criteria.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
                     for (int j = 2; j < colnames.size(); j++) {
                         Cell cell = r.getCell(j);
@@ -464,21 +464,21 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                             speName = value;
                             criteria.andSpeNameEqualTo(value);
                         } else if ("笔试成绩".equals(colnames.get(j))) {
-                            examResultFlag = GlobalConstant.FLAG_Y;
+                            examResultFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
                             if (isNumericzidai(value)) {
                                 record.setExamResult(new BigDecimal(value));
                             }
                             record.setExamStatusId(BaseStatusEnum.Auditing.getId());
                             record.setExamStatusName(BaseStatusEnum.Auditing.getName());
                         } else if ("面试成绩".equals(colnames.get(j))) {
-                            interviewExam = GlobalConstant.FLAG_Y;
+                            interviewExam = com.pinde.core.common.GlobalConstant.FLAG_Y;
                             if (isNumericzidai(value)) {
                                 record.setAuditionResult(new BigDecimal(value));
                             }
                             record.setAuditionStatusId(BaseStatusEnum.Auditing.getId());
                             record.setAuditionStatusName(BaseStatusEnum.Auditing.getName());
                         } else if ("操作成绩".equals(colnames.get(j))) {
-                            skillExam = GlobalConstant.FLAG_Y;
+                            skillExam = com.pinde.core.common.GlobalConstant.FLAG_Y;
                             if (isNumericzidai(value)) {
                                 record.setOperResult(new BigDecimal(value));
                             }
@@ -487,16 +487,16 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                         }
                     }
                     if (StringUtil.isBlank(speName)) {
-                        flag = GlobalConstant.UPLOAD_FAIL;
+                        flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, p3);
-                    } else if (record.getExamResult() == null && GlobalConstant.FLAG_Y.equals(examResultFlag)) {
-                        flag = GlobalConstant.UPLOAD_FAIL;
+                    } else if (record.getExamResult() == null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(examResultFlag)) {
+                        flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, "笔试成绩数值错误");
-                    } else if (record.getAuditionResult() == null && GlobalConstant.FLAG_Y.equals(interviewExam)) {
-                        flag = GlobalConstant.UPLOAD_FAIL;
+                    } else if (record.getAuditionResult() == null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(interviewExam)) {
+                        flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, "面试成绩数值错误");
-                    } else if (record.getOperResult() == null && GlobalConstant.FLAG_Y.equals(skillExam)) {
-                        flag = GlobalConstant.UPLOAD_FAIL;
+                    } else if (record.getOperResult() == null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillExam)) {
+                        flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, "操作成绩数值错误");
                     } else {
                         List<ResDoctorRecruit> recruitList = recruitMapper.selectByExample(recruitExample);
@@ -509,24 +509,24 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                             BigDecimal totalResult = new BigDecimal(0);
 
                             //计算总分=笔试分 + 面试分 + 操作技能分
-                            if (GlobalConstant.FLAG_Y.equals(examResultFlag)) {
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(examResultFlag)) {
                                 totalResult = totalResult.add(record.getExamResult());
-                            } else if (GlobalConstant.FLAG_Y.equals(interviewExam)) {
+                            } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(interviewExam)) {
                                 totalResult = totalResult.add(record.getAuditionResult());
-                            } else if (GlobalConstant.FLAG_Y.equals(skillExam)) {
+                            } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillExam)) {
                                 totalResult = totalResult.add(record.getOperResult());
                             }
-                            if (null != examResult && !GlobalConstant.FLAG_Y.equals(examResultFlag)) {
+                            if (null != examResult && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(examResultFlag)) {
                                 totalResult = totalResult.add(examResult);
                             }
-                            if (null != auditionResult && !GlobalConstant.FLAG_Y.equals(interviewExam)) {
+                            if (null != auditionResult && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(interviewExam)) {
                                 totalResult = totalResult.add(auditionResult);
                             }
-                            if (null != operResult && !GlobalConstant.FLAG_Y.equals(skillExam)) {
+                            if (null != operResult && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(skillExam)) {
                                 totalResult = totalResult.add(operResult);
                             }
-                            if ("Y".equals(recruitTemp.getRecruitFlag())) {//该学员已录取，不可修改成绩
-                                flag = GlobalConstant.UPLOAD_FAIL;
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(recruitTemp.getRecruitFlag())) {//该学员已录取，不可修改成绩
+                                flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                                 problemsMap.put(i + 1, p6);
                             } else {
                                 record.setTotleResult(totalResult);
@@ -534,12 +534,12 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                                 succCount += recruitMapper.updateByPrimaryKeySelective(record);
                             }
                         } else {
-                            flag = GlobalConstant.UPLOAD_FAIL;
+                            flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                             problemsMap.put(i + 1, p5);
                         }
                     }
                 }
-                if (GlobalConstant.UPLOAD_FAIL.equals(flag)) {
+                if (com.pinde.core.common.GlobalConstant.UPLOAD_FAIL.equals(flag)) {
                     failCount++;//失败的数
                     lineList.add(i + 1);
                     continue;
@@ -618,7 +618,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public ResOrgSpe findOrgSpe(String orgFlow, String assignYear, String speId) {
         String[] status = {"open", "stop"};
         ResOrgSpeExample orgSpeExample = new ResOrgSpeExample();
-        orgSpeExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSessionYearEqualTo(assignYear).andStatusIn(Arrays.asList(status)).andOrgFlowEqualTo(orgFlow).andSpeIdEqualTo(speId);
+        orgSpeExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSessionYearEqualTo(assignYear).andStatusIn(Arrays.asList(status)).andOrgFlowEqualTo(orgFlow).andSpeIdEqualTo(speId);
         List<ResOrgSpe> orgSpeList = speMapper.selectByExample(orgSpeExample);
         if (CollectionUtils.isNotEmpty(orgSpeList)) {
             return orgSpeList.get(0);
@@ -650,11 +650,11 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         // 清空当前基地下招生年份为空的招生计划信息再插入
         param.put("modifyUserFlow", currUser.getUserFlow());
         param.put("modifyTime", DateUtil.getCurrDateTime());
-        param.put("recordStatus", GlobalConstant.RECORD_STATUS_N);
+        param.put("recordStatus", com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         recruitExtMapper.delOrgSpeAssign(param);
         param.put("createUserFlow", currUser.getUserFlow());
         param.put("createTime", DateUtil.getCurrDateTime());
-        param.put("recordStatus", GlobalConstant.RECORD_STATUS_Y);
+        param.put("recordStatus", com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return recruitExtMapper.insertOrgSpeAssign(param);
     }
 
@@ -672,9 +672,9 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         param.put("modifyTime", DateUtil.getCurrDateTime());
         int count = recruitExtMapper.updateAssignSpeDesc(param);
         if (count == 0) {
-            return GlobalConstant.OPERATE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPERATE_FAIL;
         }
-        return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
     }
 
     /**
@@ -712,21 +712,21 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         for (Map<String, String> map : (List<Map>) param.get("assignList")) {
             map.put("modifyUserFlow", currUser.getUserFlow());
             map.put("modifyTime", DateUtil.getCurrDateTime());
-            if (GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passed");
                 map.put("auditStatusName", "审核通过");
-            } else if (GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
+            } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passing");
                 map.put("auditStatusName", "待审核");
             }
-            map.put("isShown", GlobalConstant.FLAG_Y);
+            map.put("isShown", com.pinde.core.common.GlobalConstant.FLAG_Y);
             recruitExtMapper.updateAssignInfo(map);
             count++;
         }
         if (count == 0) {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     /**
@@ -811,9 +811,9 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public String updateAssignAudit(Map<String, Object> param) {
         int result = recruitExtMapper.updateAssignAudit(param);
         if (result > 0) {
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
-        return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
     }
 
     @Override
@@ -829,7 +829,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     @Override
     public List<JsresDoctorSpe> searchDoctorSpe() {
         JsresDoctorSpeExample example = new JsresDoctorSpeExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         return doctorSpeMapper.selectByExample(example);
     }
 
@@ -837,7 +837,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public List<JsresSign> searchSignListByParam(Map<String, Object> param) {
         JsresSignExample example = new JsresSignExample();
         JsresSignExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andAuditStatusIdNotEqualTo("NotUse");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andAuditStatusIdNotEqualTo("NotUse");
         if (StringUtil.isNotBlank((String) param.get("orgFlow"))) {
             criteria.andOrgFlowEqualTo((String) param.get("orgFlow"));
         }
@@ -851,7 +851,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public List<JsresSign> searchSignListByOrgFlow(String orgFlow, String useStatusId) {
         JsresSignExample example = new JsresSignExample();
         JsresSignExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(orgFlow)) {
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -865,7 +865,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public List<JsresSign> searchSignListByOrgFlowNew(String orgFlow, String useStatusId, String sessionNumber) {
         JsresSignExample example = new JsresSignExample();
         JsresSignExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(orgFlow)) {
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -886,23 +886,23 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
             GeneralMethod.setRecordInfo(sign, true);
             int count = signMapper.insert(sign);
             if (count > 0) {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         } else {
             GeneralMethod.setRecordInfo(sign, false);
             int count = signMapper.updateByPrimaryKeySelective(sign);
             if (count > 0) {
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     @Override
     public List<JsresSign> searchSignList(JsresSign sign) {
         JsresSignExample example = new JsresSignExample();
         JsresSignExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(sign.getOrgFlow())) {
             criteria.andOrgFlowEqualTo(sign.getOrgFlow());
         }
@@ -921,7 +921,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     public List<JsresSign> searchSignListUnPassed(String orgFlow) {
         JsresSignExample example = new JsresSignExample();
         JsresSignExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andAuditStatusIdNotEqualTo("UnPassed");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andAuditStatusIdNotEqualTo("UnPassed");
         if (StringUtil.isNotBlank(orgFlow)) {
             criteria.andOrgFlowEqualTo(orgFlow);
         }
@@ -938,7 +938,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         }
         // 查询招录信息
         ResDoctorRecruitExample doctorRecruitExample = new ResDoctorRecruitExample();
-        doctorRecruitExample.createCriteria().andRecordStatusEqualTo("Y").andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
+        doctorRecruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
         doctorRecruitExample.setOrderByClause("create_time desc");
         List<ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
@@ -1007,7 +1007,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                     continue;
                 }
                 String value = "";
-                String flag = GlobalConstant.UPLOAD_SUCCESSED;
+                String flag = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED;
                 Map<String, Object> map = new HashMap<>();
                 for (int j = 0; j < colnames.size(); j++) {
                     Cell cell = r.getCell(j);
@@ -1088,21 +1088,21 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         for (Map<String, String> map : (List<Map>) param.get("assignList")) {
             map.put("modifyUserFlow", currUser.getUserFlow());
             map.put("modifyTime", DateUtil.getCurrDateTime());
-            if (GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passed");
                 map.put("auditStatusName", "审核通过");
-            } else if (GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
+            } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passing");
                 map.put("auditStatusName", "待审核");
             }
-            map.put("isShown", GlobalConstant.FLAG_Y);
+            map.put("isShown", com.pinde.core.common.GlobalConstant.FLAG_Y);
             recruitExtMapper.updateAssignInfo(map);
             count++;
         }
         if (count == 0) {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
 }

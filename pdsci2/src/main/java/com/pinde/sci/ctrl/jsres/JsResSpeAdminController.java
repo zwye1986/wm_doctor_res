@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.enums.OrgLevelEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -18,16 +20,12 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
-import com.pinde.sci.enums.jsres.JsResDocTypeEnum;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgLevelEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.DeptBasicInfoForm;
@@ -230,7 +228,7 @@ public class JsResSpeAdminController extends GeneralController{
 			for (SysUserRole role:userRoleList) {
 				if(obj.containsKey("auditRole")) {
 					if (obj.get("auditRole").toString().contains(role.getRoleFlow())) {
-						obj.put("audit", "Y");
+                        obj.put("audit", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 			}
@@ -239,7 +237,7 @@ public class JsResSpeAdminController extends GeneralController{
 		if(list!=null) {
 			for (Map<String,Object> info:list )
 			{
-				info.put("HaveImg","N");
+                info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_N);
 				String imageUrl= (String) info.get("imageUrl");
 				if(StringUtil.isNotBlank(imageUrl))
 				{
@@ -248,7 +246,7 @@ public class JsResSpeAdminController extends GeneralController{
 					List<Element> ec = elem.elements("image");
 					if(ec!=null&&ec.size()>0)
 					{
-						info.put("HaveImg","Y");
+                        info.put("HaveImg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
 				}
 				List<Map<String,Object>>  results=activityBiz.readActivityResults((String) info.get("activityFlow"));
@@ -358,8 +356,8 @@ public class JsResSpeAdminController extends GeneralController{
 		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		JsresPowerCfg orgApprove = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_ctrl_approve_activity");//教学活动评价配置
 		JsresPowerCfg approve = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_approve_activity");//教学活动评价配置评审类型
-		if (null!=orgApprove && null!=approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(),orgApprove.getCfgValue(),"Y")){
-			model.addAttribute("approve","Y");
+        if (null != orgApprove && null != approve && StringUtil.isNotNullAndEquala(approve.getCfgValue(), orgApprove.getCfgValue(), com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+            model.addAttribute("approve", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return "jsres/speAdmin/showEval";
 	}
@@ -386,9 +384,9 @@ public class JsResSpeAdminController extends GeneralController{
 				docTypeList.add(s);
 			}
 		}else{
-			datas=new String[JsResDocTypeEnum.values().length];
+            datas = new String[com.pinde.core.common.enums.ResDocTypeEnum.values().length];
 			int i=0;
-			for(JsResDocTypeEnum e: JsResDocTypeEnum.values())
+            for (com.pinde.core.common.enums.ResDocTypeEnum e : com.pinde.core.common.enums.ResDocTypeEnum.values())
 			{
 				docTypeList.add(e.getId());
 				datas[i++]=e.getId();
@@ -419,7 +417,7 @@ public class JsResSpeAdminController extends GeneralController{
 		Map<String, Map<String,Object>> resRecMap=new HashMap<String, Map<String,Object>>();
 		List<ResRec> resRecList = null;
 		List<ResSchProcessExpress> expressList = null;
-		if(recTypeId.equals(ResRecTypeEnum.AfterEvaluation.getId())){
+        if (recTypeId.equals(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId())) {
 			expressList = expressBiz.searchResRecExpressWithBLOBs(recTypeId,processFlow);
 			if (expressList!=null&&expressList.size()>0) {
 				for (ResSchProcessExpress express : expressList){
@@ -435,7 +433,7 @@ public class JsResSpeAdminController extends GeneralController{
 				model.addAttribute("statusId", powerCfg.getCheckStatusId());
 			}
 		}else{
-			if(ResRecTypeEnum.CampaignRegistry.getId().equals(recTypeId))
+            if (com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId().equals(recTypeId))
 			{
 
 				List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
@@ -457,7 +455,7 @@ public class JsResSpeAdminController extends GeneralController{
 									rec.get("activityRemark")==null?"":String.valueOf(rec.get("activityRemark"));
 							formDataMap.put("activity_content", activity_content);
 							formDataMap.put("activity_address", rec.get("activityAddress")==null?"":String.valueOf(rec.get("activityAddress")));
-							formDataMap.put("isJoin","Y");
+                            formDataMap.put("isJoin", com.pinde.core.common.GlobalConstant.FLAG_Y);
 						}
 						formDataMap.put("recFlow", String.valueOf(rec.get("recFlow")));
 						dataList.add(formDataMap);
@@ -479,7 +477,7 @@ public class JsResSpeAdminController extends GeneralController{
 		}
 
 
-		if(recTypeId.equals(ResRecTypeEnum.AfterEvaluation.getId())){
+        if (recTypeId.equals(com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId())) {
 			String operUserFlow=doctorFlow;
 			Map<String, Object> dataMap = new HashMap<String, Object>();
 			Map<String,Object> processPerMap=resRecBiz.getRecProgressIn(operUserFlow,processFlow,null,null);
@@ -488,10 +486,10 @@ public class JsResSpeAdminController extends GeneralController{
 			}
 			//获取不同类型并定义接受
 			if(processPerMap!=null) {
-				String caseRegistryId = ResRecTypeEnum.CaseRegistry.getId();
-				String diseaseRegistryId = ResRecTypeEnum.DiseaseRegistry.getId();
-				String skillRegistryId = ResRecTypeEnum.SkillRegistry.getId();
-				String operationRegistryId = ResRecTypeEnum.OperationRegistry.getId();
+                String caseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.CaseRegistry.getId();
+                String diseaseRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.DiseaseRegistry.getId();
+                String skillRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.SkillRegistry.getId();
+                String operationRegistryId = com.pinde.core.common.enums.ResRecTypeEnum.OperationRegistry.getId();
 
 				String caseRegistry = (String) processPerMap.get(processFlow + caseRegistryId);
 				String caseRegistryReqNum = (String) processPerMap.get(processFlow + caseRegistryId + "ReqNum");
@@ -509,7 +507,7 @@ public class JsResSpeAdminController extends GeneralController{
 				String skillAndOperationRegistryReqNum = (String) processPerMap.get(processFlow + operationRegistryId + "ReqNum");
 				String skillAndOperationRegistryFinished = (String) processPerMap.get(processFlow + operationRegistryId + "Finished");
 
-				String recTypeIdt = ResRecTypeEnum.CampaignRegistry.getId();
+                String recTypeIdt = com.pinde.core.common.enums.ResRecTypeEnum.CampaignRegistry.getId();
 //				int teachingRounds = 0;
 //				int difficult = 0;
 //				int lecture = 0;
@@ -679,8 +677,7 @@ public class JsResSpeAdminController extends GeneralController{
 		}
 
 
-
-		if(ResRecTypeEnum.AfterEvaluation.getId().equals(recTypeId)){
+        if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(recTypeId)) {
 			if (expressList!=null && expressList.size()>0) {
 				ResSchProcessExpress rec=expressList.get(0);
 				if (rec!=null) {
@@ -699,11 +696,11 @@ public class JsResSpeAdminController extends GeneralController{
 			}
 		}
 
-		if(ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)||ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)){
+        if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId) || com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)) {
 			String cfgCodeId = null;
-			if(ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)){
+            if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId().equals(recTypeId)) {
 				cfgCodeId = ResAssessTypeEnum.TeacherAssess.getId();
-			}else if(ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)){
+            } else if (com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId().equals(recTypeId)) {
 				cfgCodeId = ResAssessTypeEnum.DeptAssess.getId();
 			}
 			if (resRecList!=null && resRecList.size()>0) {
@@ -764,7 +761,7 @@ public class JsResSpeAdminController extends GeneralController{
 		//查询出当前用户所在所有科室
 		List<SysUserDept> deptList = resGradeBiz.searDeptNames(sysUser.getUserFlow());
 		model.addAttribute("deptList",deptList);
-		if (GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 			List<SysUser> sysUserList=iUserBiz.teacherRoleCheckUser2(deptFlow,cfgTeacher,doctorName,sysUser.getUserFlow());
 			Map<String, Integer> studentNumMap=new HashMap<String, Integer>();
 			Map<String, String> averageMap=new HashMap<String, String>();
@@ -815,7 +812,7 @@ public class JsResSpeAdminController extends GeneralController{
 			model.addAttribute("studentNumMap", studentNumMap);
 			model.addAttribute("sysUserList", sysUserList);
 		}
-		if (GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 			model.addAttribute("sysUser",sysUser);
 			if(StringUtil.isEmpty(deptFlow)){
 				deptFlow = sysUser.getDeptFlow();
@@ -1038,7 +1035,7 @@ public class JsResSpeAdminController extends GeneralController{
 
 		model.addAttribute("org",org);
 		List<SysOrg> orgs = new ArrayList<>();
-		if (OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
+        if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
 			List<SysOrg> joinOrgs = orgBiz.searchJointOrgsByOrg(org.getOrgFlow());
 			orgs.addAll(joinOrgs);
 			orgs.add(org);
@@ -1085,8 +1082,8 @@ public class JsResSpeAdminController extends GeneralController{
 		model.addAttribute("speFlow", speFlow);
 		//查看基地是否付费 如果基地是非付费，科室不可以填写数据
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + GlobalContext.getCurrentUser().getOrgFlow());
-		if (null==cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals("Y")){
-			model.addAttribute("viewFlag", GlobalConstant.FLAG_Y);
+        if (null == cfg || StringUtil.isBlank(cfg.getCfgValue()) || !cfg.getCfgValue().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+            model.addAttribute("viewFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		return "jsres/speAdmin/speInfo/main";
 	}
@@ -1102,8 +1099,8 @@ public class JsResSpeAdminController extends GeneralController{
 	@RequestMapping("/findAllBaseInfo")
 	public ModelAndView findAllBaseInfo(String speFlow, String baseInfoName, String editFlag, String viewFlag,String ishos,
 										String orgFlow,String isJoin,String sessionNumber,String onlyRead){
-		if (StringUtil.isNotBlank(ishos) && ishos.equals("Y")){
-			onlyRead="Y";	//省厅只能查看
+        if (StringUtil.isNotBlank(ishos) && ishos.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+            onlyRead = com.pinde.core.common.GlobalConstant.FLAG_Y;    //省厅只能查看
 		}
 		if (StringUtil.isEmpty(sessionNumber)){
 			sessionNumber=DateUtil.getYear();
@@ -1121,11 +1118,11 @@ public class JsResSpeAdminController extends GeneralController{
 		mav.addObject("isJoin", isJoin);
 		mav.addObject("orgFlow", orgFlow);
 		mav.addObject("speFlow", speFlow);
-		mav.addObject("speName", DictTypeEnum.DoctorTrainingSpe.getDictNameById(speFlow));
+        mav.addObject("speName", com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(speFlow));
 		mav.addObject("sessionNumber", sessionNumber);
 		mav.addObject("ishos", ishos);
 
-		if (GlobalConstant.GUIDING_PHYSICIAN.equals(baseInfoName)) {	//指导医师情况
+        if (com.pinde.core.common.GlobalConstant.GUIDING_PHYSICIAN.equals(baseInfoName)) {    //指导医师情况
 			mav.setViewName("jsres/speAdmin/speInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			return mav;
 		}
@@ -1139,8 +1136,8 @@ public class JsResSpeAdminController extends GeneralController{
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) &&(
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_global_role_flow")) ||
 								userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_maintenance_role_flow")))){
-					mav.addObject("isglobal", "Y");
-					viewFlag="Y";
+                    mav.addObject("isglobal", com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    viewFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) &&(
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_admin_role_flow")))){
@@ -1150,7 +1147,7 @@ public class JsResSpeAdminController extends GeneralController{
 		}
 		mav.addObject("viewFlag", viewFlag);
 
-		if (GlobalConstant.ROTATING_DEPARTMENTS.equals(baseInfoName)) {	//轮转科室
+        if (com.pinde.core.common.GlobalConstant.ROTATING_DEPARTMENTS.equals(baseInfoName)) {    //轮转科室
 			SchRotation schRotation = schRotationtBiz.searchDoctorBySpeId(speFlow);
 			if (null!=schRotation){ // 有轮转方案的，下面的重写
 				if(StringUtils.isNotEmpty(speFlow)) {
@@ -1177,8 +1174,8 @@ public class JsResSpeAdminController extends GeneralController{
 					List<ResSpeBaseStdDeptVO> notRequiredList = resSpeBaseStdDeptVOList.stream().filter(vo -> "2".equals(vo.getRotationRequireStatus())).sorted(Comparator.comparing(ResSpeBaseStdDeptVO::getStandardDeptCode)).collect(Collectors.toList());
 
 
-				/*List<Map<String,String>> requiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,"Y");	//轮转科室
-				List<Map<String,String>> notRequiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,"N");
+				/*List<Map<String,String>> requiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,com.pinde.core.common.GlobalConstant.FLAG_Y);	//轮转科室
+				List<Map<String,String>> notRequiredList = deptCfgBiz.searchByLastRotationBySpe(orgFlow,speFlow,com.pinde.core.common.GlobalConstant.FLAG_N);
 
 				// 根据轮转科室查询标准科室并实现去重
 				List<SchAndStandardDeptCfg> standardDeptCfgRequiredList = new ArrayList<>();
@@ -1187,13 +1184,13 @@ public class JsResSpeAdminController extends GeneralController{
 				List<SchAndStandardDeptCfg> standardDeptCfgNotRequiredList1 = new ArrayList<>();
 				for (Map<String, String> map : requiredList) {
 					SchAndStandardDeptCfgExample example = new SchAndStandardDeptCfgExample();
-					example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andSchDeptFlowEqualTo(map.get("schDeptFlow"));
+					example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andSchDeptFlowEqualTo(map.get("schDeptFlow"));
 					List<SchAndStandardDeptCfg> standardDeptCfgList = schAndStandardDeptCfgMapper.selectByExample(example);
 					standardDeptCfgRequiredList1.add(standardDeptCfgList.get(0));
 				}
 				for (Map<String, String> map : notRequiredList) {
 					SchAndStandardDeptCfgExample example = new SchAndStandardDeptCfgExample();
-					example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andSchDeptFlowEqualTo(map.get("schDeptFlow"));
+					example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andSchDeptFlowEqualTo(map.get("schDeptFlow"));
 					List<SchAndStandardDeptCfg> standardDeptCfgList = schAndStandardDeptCfgMapper.selectByExample(example);
 					standardDeptCfgNotRequiredList1.add(standardDeptCfgList.get(0));
 				}
@@ -1222,9 +1219,9 @@ public class JsResSpeAdminController extends GeneralController{
 		}
 
 
-		if (GlobalConstant.DIAG_DISEASE.equals(baseInfoName)
-				|| GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)
-				|| GlobalConstant.TRAINING.equals(baseInfoName)) {	//诊疗疾病范围、医疗设备仪器、培训情况
+        if (com.pinde.core.common.GlobalConstant.DIAG_DISEASE.equals(baseInfoName)
+                || com.pinde.core.common.GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)
+                || com.pinde.core.common.GlobalConstant.TRAINING.equals(baseInfoName)) {    //诊疗疾病范围、医疗设备仪器、培训情况
 			List<Map<String, Object>> resultList=new ArrayList<>();
 			//查询专业的最新轮转方案
 			SchRotation schRotation = schRotationtBiz.searchDoctorBySpeId(speFlow);
@@ -1250,7 +1247,7 @@ public class JsResSpeAdminController extends GeneralController{
 				}
 
 				/*//查询方案的必须轮转的科室
-				List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), "Y");
+				List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 				for (Map<String, String> map : requiredList) {
 					//查询基地与标准科室关联的 轮转科室
 					List<SchAndStandardDeptCfg> cfgList = deptCfgBiz.selectByStandardDeptId(orgFlow, map.get("standardDeptId"));
@@ -1278,28 +1275,28 @@ public class JsResSpeAdminController extends GeneralController{
 		if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
 			JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
 			//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
-			if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals("Y")) {
+            if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 				isPay = true;    //是付费用户
-				if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")) {        //基地查看
-					viewFlag = GlobalConstant.FLAG_N;
+                if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {        //基地查看
+                    viewFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
 				}
 			} else {
-//			viewFlag=GlobalConstant.FLAG_Y;
+//			viewFlag=com.pinde.core.common.GlobalConstant.FLAG_Y;
 //			if (isOrg){ // 管理员编辑
-//				viewFlag=GlobalConstant.FLAG_N;
+//				viewFlag=com.pinde.core.common.GlobalConstant.FLAG_N;
 //			}
 			}
 		}else {
 			isPay = true;
 		}
 
-		if (GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName) &&!GlobalConstant.FLAG_Y.equals(viewFlag) && isPay) {    //基本信息
+        if (com.pinde.core.common.GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag) && isPay) {    //基本信息
 //			prompt(orgFlow,speFlow,sessionNumber,mav);	//各科室基本条件的数据汇总
-			if (null==baseSpeDept && !GlobalConstant.FLAG_Y.equals(viewFlag)){	//如果是编辑并且是付费用户，当前年的数据未填写，将前一年的数据显示出来
+            if (null == baseSpeDept && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {    //如果是编辑并且是付费用户，当前年的数据未填写，将前一年的数据显示出来
 				baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
 //				dataIsNull=true;
-				if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals("Y")){		//基地查看
-					editFlag=GlobalConstant.FLAG_Y;
+                if (StringUtil.isEmpty(onlyRead) || !onlyRead.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {        //基地查看
+                    editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -1308,40 +1305,40 @@ public class JsResSpeAdminController extends GeneralController{
 			String Xml=baseSpeDept.getBaseInfo();
 			if (StringUtil.isNotBlank(Xml)) {
 				BaseSpeDeptExtForm speDeptExtForm= JaxbUtil.converyToJavaBean(Xml, BaseSpeDeptExtForm.class);
-				if (GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName)) {	//基本信息
+                if (com.pinde.core.common.GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName)) {    //基本信息
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
 					if (null==speDeptExtForm.getDeptBasicInfoForm() && isPay){		//如果查询年份的数据为空，就显示前一年的数据
 						baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
 						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
 							mav.addObject("deptBasicInfoForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDeptBasicInfoForm());
 						}
-						editFlag=GlobalConstant.FLAG_Y;
+                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 					}else {
 						mav.addObject("deptBasicInfoForm", speDeptExtForm.getDeptBasicInfoForm());
 					}
-				}else if (GlobalConstant.DEPARTMENT_HEAD.equals(baseInfoName)) {	//负责人信息
+                } else if (com.pinde.core.common.GlobalConstant.DEPARTMENT_HEAD.equals(baseInfoName)) {    //负责人信息
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
 					if (null==speDeptExtForm.getDepartmentHeadForm() && isPay){		//如果查询年份的数据为空，就显示前一年的数据
 						baseSpeDept = deptBasicInfoBiz.readByOrgAndSpe(orgFlow, speFlow,year.toString());
 						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
 							mav.addObject("deptBasicInfoForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDepartmentHeadForm());
 						}
-						editFlag=GlobalConstant.FLAG_Y;
+                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 					}else {
 						mav.addObject("departmentHeadForm", speDeptExtForm.getDepartmentHeadForm());
 					}
 				}
 			}
-			if((GlobalConstant.FLAG_Y.equals(editFlag))&&!GlobalConstant.FLAG_Y.equals(viewFlag)) {
+            if ((com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editFlag)) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jsres/speAdmin/speInfo/edit"+baseInfoName);
 			}else{
 				mav.addObject("baseInfoName", baseInfoName);
 				mav.setViewName("jsres/speAdmin/speInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}
 		}else{//无记录
-			if(GlobalConstant.FLAG_Y.equals(editFlag)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editFlag)) {
 				mav.setViewName("jsres/speAdmin/speInfo/edit"+baseInfoName);
-			}else if(GlobalConstant.FLAG_Y.equals(viewFlag)){
+            } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jsres/speAdmin/speInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}else{
 				mav.setViewName("jsres/speAdmin/speInfo/edit"+baseInfoName);
@@ -1354,7 +1351,7 @@ public class JsResSpeAdminController extends GeneralController{
 		SchRotation schRotation = schRotationtBiz.searchDoctorBySpeId(speFlow);
 		if (null!=schRotation){
 			//查询方案的必须轮转的科室
-			List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), "Y");
+            List<Map<String, String>> requiredList = deptCfgBiz.searchByRequired(schRotation.getRotationFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
 			Integer bzzcws=null;
 			Integer syzcws=null;
 			Integer nszzybrs=null;
@@ -1475,10 +1472,10 @@ public class JsResSpeAdminController extends GeneralController{
 	public String saveBase(String flag, BaseSpeDeptForm baseSpeDeptForm, String index, String type,String sessionNumber,
 						   String fileFlows[],String orgFlow, HttpServletRequest request) throws Exception{
 		int  result =  deptBasicInfoBiz.saveBaseInfo(flag, baseSpeDeptForm, index,type,fileFlows,request,"spe");
-		if(GlobalConstant.ZERO_LINE !=  result){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping("/guidingPhysicianList")

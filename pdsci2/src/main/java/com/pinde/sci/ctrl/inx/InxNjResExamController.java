@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.inx;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
 import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.TjDocinfo;
@@ -69,7 +69,7 @@ public class InxNjResExamController extends GeneralController{
             sysUser.setUserName(docinfo.getUserName());
             sysUser.setOrgName(docinfo.getOrgName());
             sysUser.setIdNo(docinfo.getIdNo());
-            setSessionAttribute(GlobalConstant.CURRENT_USER, sysUser);
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, sysUser);
             setSessionAttribute("docinfo", docinfo);
             return "redirect:/res/njExam/index";
         }catch(RuntimeException re){

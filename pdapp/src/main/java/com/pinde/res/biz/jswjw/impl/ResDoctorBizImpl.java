@@ -1,21 +1,20 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResDoctorBiz;
 import com.pinde.sci.dao.base.ResDoctorMapper;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorExample;
-import com.pinde.sci.model.mo.ResDoctorExample.Criteria;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorExample;
+import com.pinde.core.model.ResDoctorExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResDoctorBizImpl implements IResDoctorBiz {
 	@Autowired
 	private ResDoctorMapper doctorMapper;
@@ -30,7 +29,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz {
 	@Override
 	public	List<ResDoctor> searchDoctor(){
 		ResDoctorExample example = new ResDoctorExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return doctorMapper.selectByExample(example);
 	}
 
@@ -55,7 +54,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz {
 				return doctorMapper.updateByPrimaryKeySelective(doctor);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	private Criteria setCriteria(ResDoctor doctor, Criteria criteria){

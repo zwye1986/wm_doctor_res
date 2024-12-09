@@ -199,32 +199,9 @@
                             </td>
                             <th>职称：</th>
                             <td>
-                                <c:if test="${sessionScope.currWsId eq 'gzykdx'}">
-                                    <input name="titleName" value="${sysUser.titleName}" type="text" class="xltext" />
-                                </c:if>
-                                <c:if test="${sessionScope.currWsId ne 'gzykdx'}">
-                                    <select name="titleId" class="xlselect">
-                                        <option></option>
-                                        <c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-                                            <option value="${title.dictId}"
-                                                    <c:if test='${sysUser.titleId==title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </c:if>
+
                             </td>
                         </tr>
-                        <c:if test="${sessionScope.currWsId==GlobalConstant.SRM_WS_ID}">
-                            <tr>
-                                <th>个人科研账号</th>
-                                <td>
-                                    <input type="text" class="xltext validate[custom[onlyLetterNumber],maxSize[30]]" name="accountNo" value="${sysUser.accountNo}"/>
-                                </td>
-                                <th>工号</th>
-                                <td>
-                                    <input type="text" class="xltext validate[custom[onlyLetterNumber],maxSize[20]]" name="workCode" value="${sysUser.workCode}"/>
-                                </td>
-                            </tr>
-                        </c:if>
                         <tr>
 
                             <th>职务：</th>

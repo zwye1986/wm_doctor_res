@@ -1,8 +1,8 @@
 package com.pinde.res.dao.ezhupei.ext;
 
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchDeptRel;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchDeptRel;
+import com.pinde.core.model.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

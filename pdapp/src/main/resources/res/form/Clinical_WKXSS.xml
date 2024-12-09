@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jspForm>
+    <!--
+    {0}:表单所属机构(开关控制)
+    {1}:版本号
+ -->
+    <jsp path="res/form/{3}/{0}/Clinical_WKXSS_{1}{2}"></jsp>
+    <!--上海奉贤表单-->
+    <shfx ver="1.0">
+        <page ver="1.0">
+            <item name="studentName" remark="姓名" multiple="N"></item>
+            <item name="orgName" remark="所属培训基地" multiple="N"></item>
+            <item name="pxxk" remark="培训学科" multiple="N"></item>
+            <item name="studentSid" remark="工号" multiple="N"></item>
+            <item name="deptName" remark="考核科室" multiple="N"></item>
+            <item name="ssmc" remark="手术、操作名称" multiple="N"></item>
+            <item name="hzxx" remark="患者姓名" multiple="N"></item>
+            <item name="date" remark="日期" multiple="N"></item>
+            <item name="skillScore" remark="得分" multiple="N"></item>
+            <item name="part00" remark="评价0" multiple="N"></item>
+            <item name="part01" remark="评价1" multiple="N"></item>
+            <item name="part02" remark="评价2" multiple="N"></item>
+            <item name="part03" remark="评价3" multiple="N"></item>
+            <item name="part04" remark="评价4" multiple="N"></item>
+            <item name="part05" remark="评价5" multiple="N"></item>
+            <item name="part06" remark="评价6" multiple="N"></item>
+            <item name="part07" remark="评价7" multiple="N"></item>
+            <item name="part08" remark="评价8" multiple="N"></item>
+            <item name="part09" remark="评价9" multiple="N"></item>
+            <item name="part10" remark="评价" multiple="N"></item>
+            <item name="part11" remark="评价" multiple="N"></item>
+            <item name="part12" remark="评价" multiple="N"></item>
+            <item name="part13" remark="评价" multiple="N"></item>
+            <item name="part14" remark="评价" multiple="N"></item>
+            <item name="part15" remark="评价" multiple="N"></item>
+            <item name="part16" remark="评价" multiple="N"></item>
+            <item name="part17" remark="评价" multiple="N"></item>
+            <item name="score1" remark="评价" multiple="N"></item>
+            <item name="score2" remark="评价" multiple="N"></item>
+            <item name="score3" remark="评价" multiple="N"></item>
+            <item name="score4" remark="评价" multiple="N"></item>
+            <item name="score5" remark="评价" multiple="N"></item>
+            <item name="score6" remark="评价" multiple="N"></item>
+            <item name="score7" remark="评价" multiple="N"></item>
+            <item name="score8" remark="评价" multiple="N"></item>
+            <item name="score9" remark="评价" multiple="N"></item>
+            <item name="score10" remark="评价" multiple="N"></item>
+            <item name="score11" remark="评价" multiple="N"></item>
+            <item name="score12" remark="评价" multiple="N"></item>
+            <item name="score13" remark="评价" multiple="N"></item>
+            <item name="score14" remark="评价" multiple="N"></item>
+            <item name="score15" remark="评价" multiple="N"></item>
+            <item name="score16" remark="评价" multiple="N"></item>
+            <item name="score17" remark="评价" multiple="N"></item>
+            <item name="reason00" remark="扣分理由" multiple="N"></item>
+            <item name="reason01" remark="扣分理由" multiple="N"></item>
+            <item name="reason02" remark="扣分理由" multiple="N"></item>
+            <item name="reason03" remark="扣分理由" multiple="N"></item>
+            <item name="reason04" remark="扣分理由" multiple="N"></item>
+            <item name="reason05" remark="扣分理由" multiple="N"></item>
+            <item name="reason06" remark="扣分理由" multiple="N"></item>
+            <item name="reason07" remark="扣分理由" multiple="N"></item>
+            <item name="reason08" remark="扣分理由" multiple="N"></item>
+            <item name="reason09" remark="扣分理由" multiple="N"></item>
+            <item name="reason10" remark="扣分理由" multiple="N"></item>
+            <item name="reason11" remark="扣分理由" multiple="N"></item>
+            <item name="reason12" remark="扣分理由" multiple="N"></item>
+            <item name="reason13" remark="扣分理由" multiple="N"></item>
+            <item name="reason14" remark="扣分理由" multiple="N"></item>
+            <item name="reason15" remark="扣分理由" multiple="N"></item>
+            <item name="reason16" remark="扣分理由" multiple="N"></item>
+            <item name="reason17" remark="扣分理由" multiple="N"></item>
+            <item name="reason21" remark="扣分理由" multiple="N"></item>
+            <item name="reason22" remark="扣分理由" multiple="N"></item>
+            <item name="reason23" remark="扣分理由" multiple="N"></item>
+            <item name="reason24" remark="扣分理由" multiple="N"></item>
+            <item name="reason25" remark="扣分理由" multiple="N"></item>
+            <item name="reason26" remark="扣分理由" multiple="N"></item>
+            <item name="reason27" remark="扣分理由" multiple="N"></item>
+            <item name="reason28" remark="扣分理由" multiple="N"></item>
+            <item name="reason29" remark="扣分理由" multiple="N"></item>
+            <item name="reason30" remark="扣分理由" multiple="N"></item>
+            <item name="reason31" remark="扣分理由" multiple="N"></item>
+            <item name="reason32" remark="扣分理由" multiple="N"></item>
+            <item name="reason33" remark="扣分理由" multiple="N"></item>
+            <item name="reason34" remark="扣分理由" multiple="N"></item>
+            <item name="reason35" remark="扣分理由" multiple="N"></item>
+            <item name="reason36" remark="扣分理由" multiple="N"></item>
+            <item name="reason37" remark="扣分理由" multiple="N"></item>
+            <item name="remarks" remark="备注" multiple="N"></item>
+            <item name="teacherName" remark="考官姓名" multiple="N"></item>
+            <item name="date" remark="日期" multiple="N"></item>
+        </page>
+    </shfx>
+</jspForm>
+

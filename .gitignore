@@ -14,3 +14,4 @@ gen
 /target/*
 /excelModel/target
 *.lst
+.gitlab-ci.yml

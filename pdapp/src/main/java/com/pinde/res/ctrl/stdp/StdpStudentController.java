@@ -1,8 +1,8 @@
 package com.pinde.res.ctrl.stdp;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.commom.enums.DeptStatusEnum;
-import com.pinde.core.commom.enums.ResultEnum;
+import com.pinde.core.common.enums.DeptStatusEnum;
+import com.pinde.core.common.enums.ResultEnum;
 import com.pinde.core.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

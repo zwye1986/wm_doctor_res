@@ -1,23 +1,22 @@
 package com.pinde.res.biz.hbres.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.sci.dao.base.PubFileMapper;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.PubFileExample;
-import com.pinde.sci.model.mo.PubFileExample.Criteria;
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.PubFileExample;
+import com.pinde.core.model.PubFileExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class FileBizImpl implements IFileBiz {
 
 	@Autowired
@@ -29,7 +28,7 @@ public class FileBizImpl implements IFileBiz {
 		if(StringUtil.isBlank(productFlow))
 			return  null;
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(productFlow)){
 			criteria.andProductFlowEqualTo(productFlow);
 		}
@@ -63,7 +62,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public PubFile readDocGraduationFile(PubFile search) {
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(search.getProductType())){
 			criteria.andProductTypeEqualTo(search.getProductType());
 		}
@@ -83,7 +82,7 @@ public class FileBizImpl implements IFileBiz {
 		if(StringUtil.isBlank(productFlow)||StringUtil.isBlank(productType))
 			return  null;
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(productFlow)){
 			criteria.andProductFlowEqualTo(productFlow);
 		}
@@ -104,7 +103,7 @@ public class FileBizImpl implements IFileBiz {
 		if(StringUtil.isBlank(productFlow))
 			return  null;
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(productFlow)){
 			criteria.andProductFlowEqualTo(productFlow);
 		}
@@ -117,7 +116,7 @@ public class FileBizImpl implements IFileBiz {
 	@Override
 	public PubFile readProductFile(String resultFlow, String fileType) {
 		PubFileExample example = new PubFileExample();
-		Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andProductTypeEqualTo(fileType);
 		criteria.andProductFlowEqualTo(resultFlow);
 		List<PubFile> list=pubFileMapper.selectByExampleWithBLOBs(example);

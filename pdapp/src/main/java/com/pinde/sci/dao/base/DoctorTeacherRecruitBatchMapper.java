@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.DoctorTeacherRecruitBatch;
-import com.pinde.sci.model.mo.DoctorTeacherRecruitBatchExample;
+import com.pinde.core.model.DoctorTeacherRecruitBatch;
+import com.pinde.core.model.DoctorTeacherRecruitBatchExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

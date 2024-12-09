@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysCfgLog;
-import com.pinde.sci.model.mo.SysCfgLogExample;
-import com.pinde.sci.model.mo.SysCfgLogWithBLOBs;
+import com.pinde.core.model.SysCfgLog;
+import com.pinde.core.model.SysCfgLogExample;
+import com.pinde.core.model.SysCfgLogWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

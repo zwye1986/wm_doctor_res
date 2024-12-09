@@ -14,7 +14,7 @@
         <result column="DISCIPLE_TEACHER_FLOW" property="discipleTeacherFlow" jdbcType="VARCHAR"/>
         <result column="DISCIPLE_TEACHER_NAME" property="discipleTeacherName" jdbcType="VARCHAR"/>
     </resultMap>
-    <select id="initAnnualAssessmentExt" parameterType="com.pinde.sci.model.mo.ResAnnualAssessment"
+    <select id="initAnnualAssessmentExt" parameterType="com.pinde.core.model.ResAnnualAssessment"
             resultMap="BaseResultMap">
         select
         rd.DOCTOR_FLOW,

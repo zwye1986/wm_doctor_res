@@ -1,8 +1,8 @@
 package com.pinde.res.biz.osca;
 
-import com.pinde.sci.model.mo.OscaDoctorAssessment;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.OscaSubjectStation;
+import com.pinde.core.model.OscaDoctorAssessment;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.OscaSubjectStation;
 
 import java.util.List;
 import java.util.Map;

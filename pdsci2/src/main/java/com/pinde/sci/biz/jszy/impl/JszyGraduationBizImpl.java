@@ -6,7 +6,6 @@ import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.GraduationExamResultsMapper;
 import com.pinde.sci.dao.base.ResDoctorGraduationInfoMapper;
 import com.pinde.sci.dao.res.ResDoctorGraduationInfoExtMapper;
@@ -17,7 +16,6 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,7 +29,7 @@ import java.util.Map;
  * Created by pdkj on 2017/12/27.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JszyGraduationBizImpl implements IJszyGraduationBiz {
 
     @Autowired
@@ -114,7 +112,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
         if (paramMap.get("certificateNumber") != null) {
             criteria.andCertificateNumberIsNotNull();
         }
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (paramMap.get("order") != null) {
             example.setOrderByClause(paramMap.get("order").toString());
         }
@@ -125,7 +123,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
     public ResDoctorGraduationInfo findGraduationInfoByIdNo(String idNo) {
         ResDoctorGraduationInfoExample example = new ResDoctorGraduationInfoExample();
         ResDoctorGraduationInfoExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(idNo);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIdNoEqualTo(idNo);
         List<ResDoctorGraduationInfo> list = graduationInfoMapper.selectByExample(example);
         if (list != null && list.size() > 0) {
             return list.get(0);
@@ -137,7 +135,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
     public int modifyBatch(List<String> recordFlows, ResDoctorGraduationInfo graduationInfo) {
         ResDoctorGraduationInfoExample example = new ResDoctorGraduationInfoExample();
         ResDoctorGraduationInfoExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (recordFlows != null && recordFlows.size() > 0) {
             criteria.andRecordFlowIn(recordFlows);
         }

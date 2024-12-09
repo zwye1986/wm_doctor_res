@@ -1223,7 +1223,7 @@
 							<%--<input type="radio" id="doctorType_${doctor.doctorTypeId }" name="doctor.doctorTypeId" checked style="display: none" value="${doctor.doctorTypeId }">--%>
 						<%--</c:if>--%>
 						<%--<c:if test="${!isPassed}">--%>
-							<%--<c:forEach items="${jsResDocTypeEnumList}" var="doctorType">--%>
+							<%--<c:forEach items="${resDocTypeEnumList}" var="doctorType">--%>
 								<%--<input type="radio" id="doctorType_${doctorType.id }" name="doctor.doctorTypeId" class="validate[required]" onchange="changeWorkAdress(this.value);"  value="${doctorType.id}"style="width: 20px"<c:if test="${doctor.doctorTypeId eq  doctorType.id }">checked="checked"</c:if>--%>
 								<%--/>--%>
 								<%--<label style="cursor: pointer;" class="doctorType" for="doctorType_${doctorType.id }" onmouseover="changeTitle(this);">${doctorType.name }</label>--%>

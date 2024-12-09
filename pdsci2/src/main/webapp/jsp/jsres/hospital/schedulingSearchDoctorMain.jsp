@@ -43,7 +43,7 @@
                 <div class="form_content">
                     <select name="doctorTypeId" class="select" style="width: 150px;">
                         <option value="">请选择</option>
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <option value="${type.id}" ${type.id eq doctorTypeId?'selected':'' }>${type.name}</option>
                         </c:forEach>
                     </select>
@@ -55,6 +55,7 @@
                 <div class="form_label">专&#12288;&#12288;业：</div>
                 <div class="form_content">
                     <select name="trainingSpeId" class="select" id="trainingSpeId" style="width: 150px;">
+                        <option value="" selected>全部</option> <!-- 添加“全部”选项并设为默认选中 -->
                         <c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
                             <option value="${dict.dictId}" <c:if test="${trainingSpeId eq dict.dictId}">selected</c:if>
                                     <c:if test="${'50' eq dict.dictId}">style="display: none" </c:if>
@@ -95,7 +96,7 @@
 <%--                <td class="td_right">--%>
 <%--                    <select name="doctorTypeId" class="select" style="width: 150px;">--%>
 <%--                        <option value="">请选择</option>--%>
-<%--                        <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--                        <c:forEach items="${resDocTypeEnumList}" var="type">--%>
 <%--                            <option value="${type.id}" ${type.id eq doctorTypeId?'selected':'' }>${type.name}</option>--%>
 <%--                        </c:forEach>--%>
 <%--                    </select>--%>

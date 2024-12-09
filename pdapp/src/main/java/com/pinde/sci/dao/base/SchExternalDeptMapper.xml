@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.SchExternalDeptMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchExternalDept">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchExternalDept">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
@@ -83,7 +83,7 @@
     START_DATE, END_DATE, STANDARD_DEPT_ID, STANDARD_DEPT_NAME, PEOPLE_NUM, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SchExternalDeptExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.SchExternalDeptExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -107,13 +107,13 @@
     delete from PDSCI.SCH_EXTERNAL_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchExternalDeptExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SchExternalDeptExample">
     delete from PDSCI.SCH_EXTERNAL_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchExternalDept">
+  <insert id="insert" parameterType="com.pinde.core.model.SchExternalDept">
     insert into PDSCI.SCH_EXTERNAL_DEPT (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
       DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, START_DATE, END_DATE, 
@@ -127,7 +127,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchExternalDept">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SchExternalDept">
     insert into PDSCI.SCH_EXTERNAL_DEPT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -236,7 +236,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchExternalDeptExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.SchExternalDeptExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.SCH_EXTERNAL_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -324,7 +324,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchExternalDept">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchExternalDept">
     update PDSCI.SCH_EXTERNAL_DEPT
     <set>
       <if test="orgFlow != null">
@@ -378,7 +378,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchExternalDept">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchExternalDept">
     update PDSCI.SCH_EXTERNAL_DEPT
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

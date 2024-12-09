@@ -121,7 +121,7 @@
             minViewMode: 2,
             format: 'yyyy'
         });
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         <c:forEach items="${datas}" var="data">
         if ("${data}" == "${type.id}") {
             $("#" + "${data}").attr("checked", "checked");
@@ -143,14 +143,21 @@
         $("#orgFlow").val(flow);
     }
     function search(page) {
-        var data = "";
+        /*var data = "";
         $("input[class='docType']:checked").each(function () {
             data += "&datas=" + $(this).val();
         });
         if (data == "") {
             jboxTip("请选择人员类型！");
             return false;
+        }*/
+        var schStartDate = $("input[name='schStartDate']").val();
+        var schEndDate = $("input[name='schEndDate']").val();
+        if(schStartDate && schEndDate && schStartDate > schEndDate) {
+            jboxTip("轮转开始时间不能大于结束时间！");
+            return false;
         }
+
         jboxStartLoading();
         if (!page) {
             page = 1;
@@ -200,14 +207,14 @@
             jboxTip("当前无记录!");
             return;
         }
-        var data = "";
+        /*var data = "";
         $("input[class='docType']:checked").each(function () {
             data += "&datas=" + $(this).val();
         });
         if (data == "") {
             jboxTip("请选择人员类型！");
             return false;
-        }
+        }*/
         var url ="<s:url value='/jsp/jsres/hospital/sycleMonth.jsp'/>";
         jboxOpen(url, "请选择导出月份", 400, 260);
     }
@@ -216,14 +223,14 @@
             jboxTip("当前无记录!");
             return;
         }
-        var data = "";
+        /*var data = "";
         $("input[class='docType']:checked").each(function () {
             data += "&datas=" + $(this).val();
         });
         if (data == "") {
             jboxTip("请选择人员类型！");
             return false;
-        }
+        }*/
         var url ="<s:url value='/jsp/jsres/hospital/sycleMonth2.jsp'/>";
         jboxOpen(url, "请选择导出时间段", 400, 310);
     }
@@ -273,7 +280,7 @@
                                     onchange="changeTrainSpes('1')">
                                 <option value="">请选择</option>
                                 <option value="DoctorTrainingSpe" <c:if test="${param.trainingTypeId=='DoctorTrainingSpe'}">selected="selected"</c:if> >住院医师</option>
-                                <option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if> >助理全科</option>
+                                    <%--<option value="AssiGeneral" <c:if test="${param.trainingTypeId=='AssiGeneral'}">selected="selected"</c:if> >助理全科</option>--%>
                             <%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
                                     <option value="${trainCategory.id}" <c:if test="${param.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
                                 </c:forEach>--%>
@@ -292,20 +299,20 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type" varStatus="status">
-                                <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType" <c:if test="${status.index==0}">style="margin-left: 5px;" </c:if>
-                                              name="datas"/>${type.name}&nbsp;</label>
-                                <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
-                            </c:forEach>
+                            <%--<td class="td_left">人员类型：</td>
+                            <td colspan="3">
+                                <c:forEach items="${resDocTypeEnumList}" var="type" varStatus="status">
+                                    <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType" <c:if test="${status.index==0}">style="margin-left: 5px;" </c:if>
+                                                  name="datas"/>${type.name}&nbsp;</label>
+                                    <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
+                                </c:forEach>
 
 
-                            <%--&#12288;<input type="button" class="btn_green" onclick="showExportMonth();"--%>
-                                           <%--value="导出试卷"/>--%>
-                            <%--&#12288;<input type="button" class="btn_green" onclick="showExportMonth2();"--%>
-                                           <%--value="导出成绩"/>--%>
-                        </td>
+                                &lt;%&ndash;&#12288;<input type="button" class="btn_green" onclick="showExportMonth();"&ndash;%&gt;
+                                               &lt;%&ndash;value="导出试卷"/>&ndash;%&gt;
+                                &lt;%&ndash;&#12288;<input type="button" class="btn_green" onclick="showExportMonth2();"&ndash;%&gt;
+                                               &lt;%&ndash;value="导出成绩"/>&ndash;%&gt;
+                            </td>--%>
                         <td class="td_left">证&ensp;件&ensp;号：</td>
                         <td>
                             <input type="text" name="idNo" value="${param.idNo}"  class="input" />
@@ -389,14 +396,14 @@
                             <input type="text" name="idNo" value="${param.idNo}"  class="input" />
                         </td>
 
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
-                                              name="datas"/>${type.name}&nbsp;</label>
-                                <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
-                            </c:forEach>
-                        </td>
+                            <%--<td class="td_left">人员类型：</td>
+                            <td colspan="3">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
+                                    <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
+                                                  name="datas"/>${type.name}&nbsp;</label>
+                                    <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
+                                </c:forEach>
+                            </td>--%>
 
                         <td class="td_left">轮转时间：</td>
                         <td colspan="">
@@ -452,14 +459,14 @@
                             <input type="text" id="graduationYear" name="graduationYear" value="${param.graduationYear}"
                                    class="input" readonly="readonly" />
                         </td>
-                        <td class="td_left">人员类型：</td>
-                        <td colspan="3">
-                            <c:forEach items="${jsResDocTypeEnumList}" var="type">
-                                <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
-                                              name="datas"/>${type.name}&nbsp;</label>
-                                <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
-                            </c:forEach>
-                        </td>
+                            <%--<td class="td_left">人员类型：</td>
+                            <td colspan="3">
+                                <c:forEach items="${resDocTypeEnumList}" var="type">
+                                    <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
+                                                  name="datas"/>${type.name}&nbsp;</label>
+                                    <c:if test="${type.id eq 'Company'}"><c:set var="flag" value="Y"></c:set></c:if>
+                                </c:forEach>
+                            </td>--%>
                         <td class="td_left">证&ensp;件&ensp;号：</td>
                         <td>
                             <input type="text" name="idNo" value="${param.idNo}"  class="input" />

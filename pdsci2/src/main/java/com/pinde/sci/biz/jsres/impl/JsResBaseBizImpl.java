@@ -12,13 +12,10 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
-import com.pinde.sci.enums.jsres.JsResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
 import com.pinde.sci.model.mo.*;
@@ -27,7 +24,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -42,7 +38,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResBaseBizImpl implements IJsResBaseBiz{
 
 	@Autowired
@@ -100,7 +96,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 			baseExtInfo=new BaseExtInfoForm();
 		}
 
-		if(GlobalConstant.BASIC_INFO.equals(flag) || GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+        if (com.pinde.core.common.GlobalConstant.BASIC_INFO.equals(flag) || com.pinde.core.common.GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
 			handleJointOrg(request, jointOrgFlows, speIds, fileUploadNum, jointContractFileFlows, fileRemainNum, sysOrg.getOrgFlow(), baseInfoForm.getResBase().getSessionNumber());
 		}
 
@@ -108,21 +104,21 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 			baseExtInfoAllJson = new BaseExtInfoJson();
 		}
 
-		if(GlobalConstant.TEACH_CONDITION.equals(flag) || GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+        if (com.pinde.core.common.GlobalConstant.TEACH_CONDITION.equals(flag) || com.pinde.core.common.GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
 			baseExtInfoAllJson.setBaseExtInfoEducationInfo(baseExtInfoJson.getBaseExtInfoEducationInfo());
 		}
 
 		if(baseInfoForm!=null){
-			if(GlobalConstant.TEACH_CONDITION.equals(flag)){
+            if (com.pinde.core.common.GlobalConstant.TEACH_CONDITION.equals(flag)) {
 				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
-			}else  if (GlobalConstant.ORG_MANAGE.equals(flag)){
+            } else if (com.pinde.core.common.GlobalConstant.ORG_MANAGE.equals(flag)) {
 				baseExtInfo.setOrganizationManage(baseInfoForm.getOrganizationManage());
-			}else if(GlobalConstant.SUPPORT_CONDITION.equals(flag)){
+            } else if (com.pinde.core.common.GlobalConstant.SUPPORT_CONDITION.equals(flag)) {
 				baseExtInfo.setSupportCondition(baseInfoForm.getSupportCondition());
-			}else if(GlobalConstant.BASIC_INFO.equals(flag)){
+            } else if (com.pinde.core.common.GlobalConstant.BASIC_INFO.equals(flag)) {
 				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
 				baseExtInfo.setSysOrg(baseInfoForm.getSysOrg());
-			}else if(GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+            } else if (com.pinde.core.common.GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
 				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
 				baseExtInfo.setSysOrg(baseInfoForm.getSysOrg());
 				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
@@ -138,91 +134,91 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 				String gpsApprovalNumberId = updateResBase.getGpsApprovalNumberId();
 				if(StringUtil.isNotBlank(gpsApprovalNumberId)){
 					resBase.setGpsApprovalNumberId(gpsApprovalNumberId);
-					String dictGpsApproval = DictTypeEnum.GeneralBaseApproNum.getDictNameById(gpsApprovalNumberId);
+                    String dictGpsApproval = com.pinde.core.common.enums.DictTypeEnum.GeneralBaseApproNum.getDictNameById(gpsApprovalNumberId);
 					resBase.setGpsApprovalNumberName(dictGpsApproval);
 				}
 				// 住院医师基地获批文号 resApprovalNumberName
 				String resApprovalNumberId = updateResBase.getResApprovalNumberId();
 				if(StringUtil.isNotBlank(resApprovalNumberId)){
 					resBase.setResApprovalNumberId(resApprovalNumberId);
-					String dictResApproval = DictTypeEnum.ResidentBaseApproveNum.getDictNameById(resApprovalNumberId);
+                    String dictResApproval = com.pinde.core.common.enums.DictTypeEnum.ResidentBaseApproveNum.getDictNameById(resApprovalNumberId);
 					resBase.setResApprovalNumberName(dictResApproval);
 				}
 				String baseGradeId = updateResBase.getBaseGradeId();
 				if(StringUtil.isNotBlank(baseGradeId)){
 					resBase.setBaseGradeId(baseGradeId);
-					resBase.setBaseGradeName(DictTypeEnum.getDictName(DictTypeEnum.BaseLevel, baseGradeId));
+                    resBase.setBaseGradeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseLevel, baseGradeId));
 				}
 				String baseTypeId = updateResBase.getBaseTypeId();
 				if(StringUtil.isNotBlank(baseTypeId)){
 					resBase.setBaseTypeId(baseTypeId);
-					resBase.setBaseTypeName(DictTypeEnum.getDictName(DictTypeEnum.BaseType, baseTypeId));
+                    resBase.setBaseTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseType, baseTypeId));
 				}
 				String basePropertyId = updateResBase.getBasePropertyId();
 				if(StringUtil.isNotBlank(basePropertyId)){
 					resBase.setBasePropertyId(basePropertyId);
-					resBase.setBasePropertyName(DictTypeEnum.getDictName(DictTypeEnum.BasProperty, basePropertyId));
+                    resBase.setBasePropertyName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BasProperty, basePropertyId));
 				}
 			}
 		}
 		BasicInfoForm basicInfo = baseExtInfo.getBasicInfo();
 		if(basicInfo != null) {
 			if (StringUtil.isNotBlank(basicInfo.getJdfzrTitleId())) {
-				basicInfo.setJdfzrTitleName(DictTypeEnum.UserTitle.getDictNameById(basicInfo.getJdfzrTitleId()));
+                basicInfo.setJdfzrTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(basicInfo.getJdfzrTitleId()));
 			}
 			if (StringUtil.isNotBlank(basicInfo.getJdfzrPostId())) {
-				basicInfo.setJdfzrPostName(DictTypeEnum.UserPost.getDictNameById(basicInfo.getJdfzrPostId()));
+                basicInfo.setJdfzrPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(basicInfo.getJdfzrPostId()));
 			}
 			String levelRank = basicInfo.getLevelRank();
 			if(StringUtil.isNotBlank(levelRank)){
-				String levelRankName = DictTypeEnum.OrgLevelRank.getDictNameById(levelRank);
+                String levelRankName = com.pinde.core.common.enums.DictTypeEnum.OrgLevelRank.getDictNameById(levelRank);
 				basicInfo.setLevelRankName(levelRankName);
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getYwfgfzrList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getYwfgfzrList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getZpywkslxrList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getZpywkslxrList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getZpglbmfzrList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getZpglbmfzrList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getContactManList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getContactManList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-						contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-						contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 		}
 		xml=JaxbUtil.convertToXml(baseExtInfo);
 		resBase.setBaseInfo(xml);
-		resBase.setBaseStatusId(JsResDoctorAuditStatusEnum.NotSubmit.getId());
-		resBase.setBaseStatusName(JsResDoctorAuditStatusEnum.NotSubmit.getName());
+        resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+        resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 		if(resBase.getSessionNumber() == null) {
 			resBase.setSessionNumber(baseInfoForm.getResBase().getSessionNumber());
 		}
@@ -341,7 +337,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 				for (ResJointOrg jointOrg : allJointOrgList) {
 					if(updateOrgFlow.equals(jointOrg.getJointOrgFlow())) {
 						jointOrg.setSpeId(orgToSpeMap.get(updateOrgFlow));
-						jointOrg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(updateOrgFlow)));
+                        jointOrg.setSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(updateOrgFlow)));
 						List<MultipartFile> fileList =  jointFlowToFileListMap.get(updateOrgFlow);
 						for (MultipartFile file : fileList) {
 							//保存附件
@@ -366,7 +362,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setProductType("jointContract");
@@ -403,7 +399,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 				ResJointOrg resJointOrg = new ResJointOrg();
 				resJointOrg.setJointFlow(PkUtil.getUUID());
 				resJointOrg.setSpeId(orgToSpeMap.get(insertJointFlow));
-				resJointOrg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(insertJointFlow)));
+                resJointOrg.setSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(insertJointFlow)));
 				resJointOrg.setJointOrgFlow(insertJointFlow);
 				resJointOrg.setJointOrgName(orgFlowToNameMap.get(insertJointFlow));
 				resJointOrg.setOrgFlow(orgFlow);
@@ -437,7 +433,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 						throw new RuntimeException("保存文件失败！");
 					}
 					String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
-					pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					pubFile.setFilePath(filePath);
 					pubFile.setFileName(oldFileName);
 					pubFile.setProductType("jointContract");
@@ -468,7 +464,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 //                    String filePath = basePath + pubFile.getFilePath();
 //                    FileUtil.deletefile(filePath);
 //                }
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				pubFileBiz.editFile(pubFile);
 			}
 		}
@@ -517,11 +513,11 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "resBaseInfo" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
-							pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
-							if (GlobalConstant.SUPPORT_CONDITION.equals(noteTypeId) || GlobalConstant.ORG_MANAGE.equals(noteTypeId)) {
+                            if (com.pinde.core.common.GlobalConstant.SUPPORT_CONDITION.equals(noteTypeId) || com.pinde.core.common.GlobalConstant.ORG_MANAGE.equals(noteTypeId)) {
 								pubFile.setProductType(noteTypeId);
 								pubFile.setFileUpType(key);
 							}else{
@@ -562,7 +558,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		List<ResOrgSpe> oldStatusNList = new ArrayList<ResOrgSpe>();
 		if(exitSpeList != null && !exitSpeList.isEmpty()){
 				for(ResOrgSpe  s: exitSpeList){
-					if(GlobalConstant.RECORD_STATUS_Y.equals(s.getRecordStatus())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(s.getRecordStatus())) {
 						deleteMap.put(s.getOrgSpeFlow(), s );
 						oldStatusYList.add(s);
 					}else{
@@ -596,7 +592,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 						for(ResOrgSpe N :oldStatusNList){
 							if(s.getSpeTypeId().equals(N.getSpeTypeId()) &&  s.getSpeId().equals(N.getSpeId()) && orgFlow.equals(N.getOrgFlow()) ){
 								addFlag = false;
-								N.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                                N.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 								resOrgSpeBiz.saveResOrgSpe(N);
 								break;
 							}
@@ -614,17 +610,17 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		if(deleteMap.size()>0){
 			for(Entry<String, ResOrgSpe> entry : deleteMap.entrySet()){
 				ResOrgSpe delOrgSpe = entry.getValue();
-				delOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                delOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				resOrgSpeBiz.saveResOrgSpe(delOrgSpe);
 			}
 		}
 		ResBase resBase=readBase(orgFlow);
 		if (resBase!=null) {
-			resBase.setBaseStatusId(JsResDoctorAuditStatusEnum.NotSubmit.getId());
-			resBase.setBaseStatusName(JsResDoctorAuditStatusEnum.NotSubmit.getName());
+            resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+            resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 			saveResBase(resBase);
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 	@Override
 	public List<ResBaseExt> searchResBaseExtList(Map<String, Object> paramMap) {
@@ -687,7 +683,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 //	@Override
 //	public List<ResBase> searchResBaseList(ResBase resBase) {
 //		ResBaseExample example=new ResBaseExample();
-//		Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+//		Criteria criteria=example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 //		if (StringUtil.isNotBlank(resBase.getOrgFlow())) {
 //			criteria.andOrgFlowEqualTo(resBase.getOrgFlow());
 //		}
@@ -705,17 +701,17 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 	public void bindDoctorRole(String userFlow) {
 
 			SysRoleExample example = new SysRoleExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andWsIdEqualTo("osca").andRoleNameEqualTo("学员");
 			List<SysRole> roleList = sysRoleMapper.selectByExample(example);//查询临床学员角色
 			if(null != roleList && roleList.size() > 0 && StringUtil.isNotBlank(roleList.get(0).getRoleFlow())){
 				SysUserRoleExample userRoleExample = new SysUserRoleExample();
-				userRoleExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                userRoleExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andUserFlowEqualTo(userFlow).andWsIdEqualTo("osca").andRoleFlowEqualTo(roleList.get(0).getRoleFlow());
 				int count = userRoleMapper.countByExample(userRoleExample);//查询此学员在临床是否是学员角色
 				if(count > 0){
 					SysUserRoleExample userRoleExampleRes = new SysUserRoleExample();
-					userRoleExampleRes.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                    userRoleExampleRes.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 							.andUserFlowEqualTo(userFlow).andWsIdEqualTo("res");
 					int countRes = userRoleMapper.countByExample(userRoleExampleRes);//查询此学员在住培是否已有角色
 					if(countRes == 0) {
@@ -723,7 +719,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 							SysUserRole record = new SysUserRole();
 							record.setRecordFlow(PkUtil.getUUID());
 							record.setUserFlow(userFlow);
-							record.setWsId(GlobalConstant.RES_WS_ID);
+                            record.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
 							record.setRoleFlow(InitConfig.getSysCfg("res_doctor_role_flow"));
 							GeneralMethod.setRecordInfo(record, true);
 							count = userRoleMapper.insertSelective(record);
@@ -762,7 +758,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 	public Map<String, ResBase> searchAll() {
 		ResBaseExample example=new ResBaseExample();
 		ResBaseExample.Criteria criteria=example.createCriteria()
-				.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<ResBase> list = resBaseMapper.selectByExampleWithBLOBs(example);
 		HashMap<String, ResBase> baseMap = new HashMap<>();
 		for (ResBase resBase : list) {

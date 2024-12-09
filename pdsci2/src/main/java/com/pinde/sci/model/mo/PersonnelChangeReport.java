@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PersonnelChangeReport extends MybatisObject {
+public class PersonnelChangeReport extends TeachingActivitySpeakerExample.MybatisObject {
     /**
      * 专业基地名称
      */

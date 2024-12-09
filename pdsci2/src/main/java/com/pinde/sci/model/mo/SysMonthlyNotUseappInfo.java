@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysMonthlyNotUseappInfo extends MybatisObject {
+public class SysMonthlyNotUseappInfo extends TeachingActivitySpeakerExample.MybatisObject {
     private String smrdiFlow;
 
     private String dateMonth;

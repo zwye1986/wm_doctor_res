@@ -9,8 +9,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.enums.res.ResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.sys.OperTypeEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysUser;
@@ -60,8 +59,8 @@ public class PubeduController extends GeneralController {
         try{
             SysUser user = inxBiz.login(userCode, userPasswd);
             //设置当前用户
-            setSessionAttribute(GlobalConstant.CURRENT_USER, user);
-            if(GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())){
+            setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER, user);
+            if (com.pinde.core.common.GlobalConstant.ROOT_USER_CODE.equals(user.getUserCode())) {
                 return "redirect:/main?time="+new Date();
             }
             //在线用户功能使用
@@ -75,7 +74,7 @@ public class PubeduController extends GeneralController {
 
             SysUserRole userRole = new SysUserRole();
             userRole.setUserFlow(user.getUserFlow());
-            userRole.setWsId(GlobalConstant.RES_WS_ID);
+            userRole.setWsId(com.pinde.core.common.GlobalConstant.RES_WS_ID);
             List<SysUserRole> userRoleList = userRoleBiz.searchUserRole(userRole);
             if(null != userRoleList) {
                 for (SysUserRole sysUserRole : userRoleList) {
@@ -85,7 +84,7 @@ public class PubeduController extends GeneralController {
                         log.setOperId(OperTypeEnum.LogIn.getId());
                         log.setOperName(OperTypeEnum.LogIn.getName());
                         log.setLogDesc("登录IP[" + request.getRemoteAddr() + "]");
-                        log.setWsId(GlobalConstant.SYS_WS_ID);
+                        log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
                         GeneralMethod.addSysLog(log);
                         logMapper.insert(log);
                         return "redirect:/pubedu/hospital/home";
@@ -93,7 +92,7 @@ public class PubeduController extends GeneralController {
                 }
                 ResDoctorRecruit resDoctorRecruit = new ResDoctorRecruit();
                 resDoctorRecruit.setDoctorFlow(user.getUserFlow());
-                resDoctorRecruit.setAuditStatusId(ResDoctorAuditStatusEnum.Passed.getId());
+                resDoctorRecruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
                 //查询res_doctor_recruit表中按创建时间为最新的且审核通过的数据
                 List<ResDoctorRecruit> resDoctorRecruitList = resDoctorRecruitBiz.searchDoctorRecruits(resDoctorRecruit);
                 if (!resDoctorRecruitList.isEmpty()) {
@@ -107,7 +106,7 @@ public class PubeduController extends GeneralController {
                                 log.setOperId(OperTypeEnum.LogIn.getId());
                                 log.setOperName(OperTypeEnum.LogIn.getName());
                                 log.setLogDesc("登录IP[" + request.getRemoteAddr() + "]");
-                                log.setWsId(GlobalConstant.SYS_WS_ID);
+                                log.setWsId(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
                                 GeneralMethod.addSysLog(log);
                                 logMapper.insert(log);
                                 return "redirect:/pubedu/doctor/home";

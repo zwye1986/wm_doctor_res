@@ -12,13 +12,11 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.ResAssessTypeEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
@@ -90,11 +88,11 @@ public class ResHeadController extends GeneralController {
 								  String operStartDate, String operEndDate, String sessionNumber, Integer currentPage, HttpServletRequest request, Model model){
 		String workOrgId = "";
 		List<SysOrg> orgList=new ArrayList<>();
-		if(GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(role)) {
 			SysOrg org = new SysOrg();
-			org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
 			orgList = orgBiz.searchOrg(org);
-		}else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 			String currentOrgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			if(StringUtil.isNotBlank(currentOrgFlow)){
 				SysOrg org = orgBiz.readSysOrg(currentOrgFlow);
@@ -122,7 +120,7 @@ public class ResHeadController extends GeneralController {
 
 		//当前用户所在机构
 		if(StringUtil.isBlank(orgFlow)){
-			if((GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(role)||GlobalConstant.USER_LIST_UNIVERSITY.equals(role))&&orgList.size()>0){
+            if ((com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(role) || com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) && orgList.size() > 0) {
 				orgFlow = orgList.get(0).getOrgFlow();
 			}else{
 				orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
@@ -173,7 +171,7 @@ public class ResHeadController extends GeneralController {
 			String teacherRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
 			paramMap.put("roleFlow",teacherRoleFlow);
 
-			recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 			paramMap.put("recTypeId",recType);
 
 			cfgCode = ResAssessTypeEnum.TeacherAssess.getId();
@@ -201,7 +199,7 @@ public class ResHeadController extends GeneralController {
 			}
 			paramMap.put("teacherFlows",keys);
 		}else if("head".equals(gradeRole)){
-			recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
 			paramMap.put("recTypeId",recType);
 
 			cfgCode = ResAssessTypeEnum.DeptAssess.getId();
@@ -322,7 +320,7 @@ public class ResHeadController extends GeneralController {
 		}
 
 		model.addAttribute("scoreMap", scoreMap);
-		if(GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_GLOBAL.equals(role)) {
 			return "res/teacher/gradeSearch4Global";
 		}
 		return "res/teacher/gradeSearch";
@@ -395,7 +393,7 @@ public class ResHeadController extends GeneralController {
 			String teacherRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
 			paramMap.put("roleFlow", teacherRoleFlow);
 
-			recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 			paramMap.put("recTypeId", recType);
 
 			cfgCode = ResAssessTypeEnum.TeacherAssess.getId();
@@ -420,7 +418,7 @@ public class ResHeadController extends GeneralController {
 			}
 			paramMap.put("teacherFlows", keys);
 		} else if ("head".equals(gradeRole)) {
-			recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
 			paramMap.put("recTypeId", recType);
 
 			cfgCode = ResAssessTypeEnum.DeptAssess.getId();
@@ -821,7 +819,7 @@ public class ResHeadController extends GeneralController {
 			String teacherRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
 			paramMap.put("roleFlow",teacherRoleFlow);
 
-			recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 			paramMap.put("recTypeId",recType);
 
 			cfgCode = ResAssessTypeEnum.TeacherAssess.getId();
@@ -852,7 +850,7 @@ public class ResHeadController extends GeneralController {
 			}
 			paramMap.put("teacherFlows",keys);
 		}else if("head".equals(gradeRole)){
-			recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
 			paramMap.put("recTypeId",recType);
 
 			cfgCode = ResAssessTypeEnum.DeptAssess.getId();
@@ -879,7 +877,7 @@ public class ResHeadController extends GeneralController {
 			}
 			paramMap.put("deptFlows",keys);
 		}else if("admin".equals(gradeRole)){
-            recType = ResRecTypeEnum.ManagerGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.ManagerGrade.getId();
             paramMap.put("recTypeId",recType);
 
             cfgCode = ResAssessTypeEnum.ManagerAssess.getId();
@@ -908,7 +906,7 @@ public class ResHeadController extends GeneralController {
         //查询后台配置是否为进修过程管理页面
         String showflag = InitConfig.getSysCfg("is_show_jxres");
         model.addAttribute("showflag",showflag);
-        if(!GlobalConstant.FLAG_Y.equals(showflag)){
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(showflag)) {
             if (StringUtil.isNotBlank(sessionNumber)) {
                 paramMap.put("sessionNumber", sessionNumber);
                 List<Map<String, String>> recDateList = resGradeBiz.getRecContentByProcess(paramMap);
@@ -1095,7 +1093,7 @@ public class ResHeadController extends GeneralController {
             String teacherRoleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
             paramMap.put("roleFlow", teacherRoleFlow);
 
-            recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
             paramMap.put("recTypeId", recType);
 
             cfgCode = ResAssessTypeEnum.TeacherAssess.getId();
@@ -1120,7 +1118,7 @@ public class ResHeadController extends GeneralController {
             }
             paramMap.put("teacherFlows", keys);
         } else if ("head".equals(gradeRole)) {
-            recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
             paramMap.put("recTypeId", recType);
 
             cfgCode = ResAssessTypeEnum.DeptAssess.getId();
@@ -1144,7 +1142,7 @@ public class ResHeadController extends GeneralController {
             }
             paramMap.put("deptFlows", keys);
         }else if("admin".equals(gradeRole)){
-            recType = ResRecTypeEnum.ManagerGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.ManagerGrade.getId();
             paramMap.put("recTypeId",recType);
 
             cfgCode = ResAssessTypeEnum.ManagerAssess.getId();
@@ -1560,7 +1558,7 @@ public class ResHeadController extends GeneralController {
 		paramMap.put("operStartDate",operStartDate);
 		paramMap.put("operEndDate",operEndDate);
 
-		if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 			String currentOrgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			if(StringUtil.isNotBlank(currentOrgFlow)){
 				SysOrg org = orgBiz.readSysOrg(currentOrgFlow);
@@ -1569,21 +1567,21 @@ public class ResHeadController extends GeneralController {
 			}
 		}
 		if("teacher".equals(gradeRole)){
-			recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 			paramMap.put("recTypeId",recType);
 
 			cfgCode = ResAssessTypeEnum.TeacherAssess.getId();
 
 			paramMap.put("teacherFlow",keyCode);
 		}else if("head".equals(gradeRole)){
-			recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
 			paramMap.put("recTypeId",recType);
 
 			cfgCode = ResAssessTypeEnum.DeptAssess.getId();
 
 			paramMap.put("deptFlow",keyCode);
 		}else if("admin".equals(gradeRole)){
-            recType = ResRecTypeEnum.ManagerGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.ManagerGrade.getId();
             paramMap.put("recTypeId",recType);
             cfgCode = ResAssessTypeEnum.ManagerAssess.getId();
 
@@ -1699,22 +1697,22 @@ public class ResHeadController extends GeneralController {
 		paramMap.put("operEndDate",operEndDate);
 		paramMap.put("recFlow",recFlow);
 		if("teacher".equals(gradeRole)){
-			recType = ResRecTypeEnum.TeacherGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.TeacherGrade.getId();
 			paramMap.put("recTypeId",recType);
 			cfgCode = ResAssessTypeEnum.TeacherAssess.getId();
 			paramMap.put("teacherFlow",keyCode);
 		}else if("head".equals(gradeRole)){
-			recType = ResRecTypeEnum.DeptGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
 			paramMap.put("recTypeId",recType);
 			cfgCode = ResAssessTypeEnum.DeptAssess.getId();
 			paramMap.put("deptFlow",keyCode);
 		}else if("admin".equals(gradeRole)){
-			recType = ResRecTypeEnum.ManagerGrade.getId();
+            recType = com.pinde.core.common.enums.ResRecTypeEnum.ManagerGrade.getId();
 			paramMap.put("recTypeId",recType);
 			cfgCode = ResAssessTypeEnum.ManagerAssess.getId();
 
 		}
-		if(GlobalConstant.USER_LIST_UNIVERSITY.equals(role)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(role)) {
 			String currentOrgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 			if(StringUtil.isNotBlank(currentOrgFlow)){
 				SysOrg org = orgBiz.readSysOrg(currentOrgFlow);
@@ -1834,7 +1832,7 @@ public class ResHeadController extends GeneralController {
 	public String evaluateSearch(Model model,String roleType,String doctorName,String startDate,String endDate) throws Exception{
 		SysUser sysUser=GlobalContext.getCurrentUser();
 		String cfgTeacher=InitConfig.getSysCfg("res_teacher_role_flow");
-		if (GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 			List<SysUser> sysUserList=userBiz.teacherRoleCheckUser(sysUser.getDeptFlow(),cfgTeacher,doctorName,sysUser.getUserFlow());
 			Map<String, Integer> studentNumMap=new HashMap<String, Integer>();
 			Map<String, String> averageMap=new HashMap<String, String>();
@@ -1887,7 +1885,7 @@ public class ResHeadController extends GeneralController {
 			model.addAttribute("studentNumMap", studentNumMap);
 			model.addAttribute("sysUserList", sysUserList);
 		}
-		if (GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 			model.addAttribute("sysUser",sysUser);
 //			List<ResRec> recList=resRecBiz.resSearchDeptFlowRec(sysUser.getDeptFlow(),startDate,endDate);
 			List<DeptTeacherGradeInfo> recList=resGradeBiz.resSearchDeptFlowRec(sysUser.getDeptFlow(),startDate,endDate);
@@ -1983,11 +1981,11 @@ public class ResHeadController extends GeneralController {
 			endDate = DateUtil.getDate(endDate)+"235959";
 			map.put("endDate",endDate);
 		}
-		if (GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 			map.put("teacherFlow",userFlow);
 			processRecList=resGradeBiz.processRecRecTeacherMap(map);
 		}
-		if (GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 			map.put("deptFlow", sysUser.getDeptFlow());
 			processRecList=resGradeBiz.processRecShMap(map);
 		}
@@ -2021,9 +2019,9 @@ public class ResHeadController extends GeneralController {
 		model.addAttribute("processRecList", processRecList);
 		List<ResAssessCfgTitleForm> titleFormList = new ArrayList<ResAssessCfgTitleForm>();
 		String cfgCodeId =null;
-		if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 			cfgCodeId = ResAssessTypeEnum.TeacherAssess.getId();
-		}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 			cfgCodeId = ResAssessTypeEnum.DeptAssess.getId();
 		}
 		ResAssessCfg search = new ResAssessCfg();
@@ -2103,19 +2101,19 @@ public class ResHeadController extends GeneralController {
 		if (StringUtil.isNotBlank(recFlow)) {
 			param.put("recFlow",recFlow);
 		}
-		if (GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 			param.put("teacherFlow",userFlow);
 			processRecList=resGradeBiz.processRecRecTeacherMap(param);
 		}
-		if (GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 			param.put("deptFlow", sysUser.getDeptFlow());
 			processRecList=resGradeBiz.processRecShMap(param);
 		}
 		model.addAttribute("processRecList", processRecList);
 		String cfgCodeId =null;
-		if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 			cfgCodeId = ResAssessTypeEnum.TeacherAssess.getId();
-		}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 			cfgCodeId = ResAssessTypeEnum.DeptAssess.getId();
 		}
 		//导出结果集合
@@ -2143,13 +2141,13 @@ public class ResHeadController extends GeneralController {
 
 				String operUserFlow = map.get("operUserFlow")+map.get("recFlow");
 
-				if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)){
+                if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(roleType)) {
 					Map<String,String> itemMap = new HashMap<>();
 					itemMap.put("itemName","带教姓名");
 					itemMap.put("itemScore",map.get("teacherUserName"));
 					itemMap.put("avgScore","");
 					oneInfoList.add(itemMap);
-				}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)){
+                } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(roleType)) {
 
 					Map<String,String> itemMap = new HashMap<>();
 					itemMap.put("itemName","科室名称");
@@ -2418,10 +2416,10 @@ public class ResHeadController extends GeneralController {
 
 		int count = schArrangeResultBiz.saveInDept(arrangeResult,process);
 
-		if(count>GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (count > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	/**
@@ -2434,9 +2432,9 @@ public class ResHeadController extends GeneralController {
 
 		int count = schArrangeResultBiz.delInDept(resultFlows);
 		if(count>0){
-			return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**

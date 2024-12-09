@@ -3,14 +3,11 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResMonthlyReportBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Autowired
 	private SysMonthlyMapper sysMonthlyMapper;
@@ -45,14 +42,14 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthly> getMonths(SysMonthly monthly) {
 		SysMonthlyExample example = new SysMonthlyExample();
-		SysMonthlyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return sysMonthlyMapper.selectByExample(example);
 	}
 
 	@Override
 	public List<SysMonthlyDoctorInfo> getMonthlyDoctorInfo(SysMonthlyDoctorInfo sysMonthlyDoctorInfo,List<String> allOrgFlow) {
 		SysMonthlyDoctorInfoExample example = new SysMonthlyDoctorInfoExample();
-		SysMonthlyDoctorInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyDoctorInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysMonthlyDoctorInfo!=null){
 			if(StringUtil.isNotBlank(sysMonthlyDoctorInfo.getDateMonth())){
 				criteria.andDateMonthEqualTo(sysMonthlyDoctorInfo.getDateMonth());
@@ -91,7 +88,7 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthlyDoctorDetailInfo> getMonthlyDoctorDetailInfo(SysMonthlyDoctorDetailInfo sysMonthlyDoctorDetailInfo) {
 		SysMonthlyDoctorDetailInfoExample example = new SysMonthlyDoctorDetailInfoExample();
-		SysMonthlyDoctorDetailInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyDoctorDetailInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysMonthlyDoctorDetailInfo!=null){
 			if(StringUtil.isNotBlank(sysMonthlyDoctorDetailInfo.getDateMonth())){
 				criteria.andDateMonthEqualTo(sysMonthlyDoctorDetailInfo.getDateMonth());
@@ -103,7 +100,7 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthlyChangeInfo> getSysMonthlyChangeInfo(SysMonthlyChangeInfo sysMonthlyChangeInfo) {
 		SysMonthlyChangeInfoExample example = new SysMonthlyChangeInfoExample();
-		SysMonthlyChangeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyChangeInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysMonthlyChangeInfo!=null){
 			if(StringUtil.isNotBlank(sysMonthlyChangeInfo.getDateMonth())){
 				criteria.andDateMonthEqualTo(sysMonthlyChangeInfo.getDateMonth());
@@ -122,7 +119,7 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthlyReturnDelayInfo> getSysMonthlyReturnDelayInfo(SysMonthlyReturnDelayInfo sysMonthlyReturnDelayInfo) {
 		SysMonthlyReturnDelayInfoExample example = new SysMonthlyReturnDelayInfoExample();
-		SysMonthlyReturnDelayInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyReturnDelayInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysMonthlyReturnDelayInfo!=null){
 			if(StringUtil.isNotBlank(sysMonthlyReturnDelayInfo.getDateMonth())){
 				criteria.andDateMonthEqualTo(sysMonthlyReturnDelayInfo.getDateMonth());
@@ -141,7 +138,7 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthlyDeptCycleInfo> getSysMonthlyDeptCycleInfo(SysMonthlyDeptCycleInfo sysMonthlyDeptCycleInfo) {
 		SysMonthlyDeptCycleInfoExample example = new SysMonthlyDeptCycleInfoExample();
-		SysMonthlyDeptCycleInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyDeptCycleInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysMonthlyDeptCycleInfo!=null){
 			if(StringUtil.isNotBlank(sysMonthlyDeptCycleInfo.getDateMonth())){
 				criteria.andDateMonthEqualTo(sysMonthlyDeptCycleInfo.getDateMonth());
@@ -171,7 +168,7 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthlyDocCycleInfo> getSysMonthlyDocCycleInfo(SysMonthlyDocCycleInfo sysMonthlyDocCycleInfo) {
 		SysMonthlyDocCycleInfoExample example = new SysMonthlyDocCycleInfoExample();
-		SysMonthlyDocCycleInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyDocCycleInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(sysMonthlyDocCycleInfo!=null){
 			if(StringUtil.isNotBlank(sysMonthlyDocCycleInfo.getDateMonth())){
 				criteria.andDateMonthEqualTo(sysMonthlyDocCycleInfo.getDateMonth());
@@ -277,7 +274,7 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
 	@Override
 	public List<SysMonthlyActivityInfo> getSysMonthlyActivityInfo(String dateMonth, List<String> orgFlows) {
 		SysMonthlyActivityInfoExample example = new SysMonthlyActivityInfoExample();
-		SysMonthlyActivityInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysMonthlyActivityInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(dateMonth)){
 			criteria.andDateMonthEqualTo(dateMonth);
 		}
@@ -304,8 +301,8 @@ public class JsResMonthlyReportBizImpl implements IJsResMonthlyReportBiz{
             criteria.andOrgFlowEqualTo(blacklistInfo.getOrgFlow());
         }
 		List<String> typeList = new ArrayList<>();
-		typeList.add(TrainCategoryEnum.DoctorTrainingSpe.getId());
-		typeList.add(TrainCategoryEnum.WMFirst.getId());
+        typeList.add(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
+        typeList.add(com.pinde.core.common.enums.TrainCategoryEnum.WMFirst.getId());
 		criteria.andTrainingTypeIdIn(typeList);
 		return sysMonthlyBlacklistInfoMapper.selectByExample(example);
 	}

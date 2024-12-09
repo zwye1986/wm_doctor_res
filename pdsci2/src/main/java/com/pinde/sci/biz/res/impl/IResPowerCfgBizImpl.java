@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.util.DateUtil;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
@@ -15,16 +15,11 @@ import com.pinde.sci.model.mo.ResPowerCfgExample;
 import com.pinde.sci.model.mo.SysUser;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,7 +34,7 @@ import java.util.Map;
 
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
 
     @Autowired
@@ -51,8 +46,8 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
     public List<ResPowerCfg> searchByCfgCode(String cfgCode){
 
         ResPowerCfgExample example = new ResPowerCfgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
-        example.createCriteria().andCfgValueEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andCfgValueEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.createCriteria().andCfgCodeEqualTo(cfgCode);
         return resPowerCfgMapper.selectByExample(example);
     }
@@ -128,16 +123,16 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
                         Map<String, Object> data = datas.get(i);
                         ResPowerCfg webCfg = new ResPowerCfg();
                         webCfg.setCfgCode("res_doctor_web_" + data.get("userFlow"));
-                        webCfg.setCfgValue(GlobalConstant.RECORD_STATUS_Y);
+                        webCfg.setCfgValue(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         webCfg.setCfgDesc("是否开放学员web登录权限");
-                        webCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        webCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         webCfg.setPowerStartTime((String) data.get("powerStartTime"));
                         webCfg.setPowerEndTime((String) data.get("powerEndTime"));
                         ResPowerCfg appCfg = new ResPowerCfg();
                         appCfg.setCfgCode("res_doctor_app_login_" + data.get("userFlow"));
-//                        appCfg.setCfgValue(GlobalConstant.RECORD_STATUS_Y);
+//                        appCfg.setCfgValue(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         appCfg.setCfgDesc("是否开放学员app登录权限");
-                        appCfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        appCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                         appCfg.setPowerStartTime((String) data.get("powerStartTime"));
                         appCfg.setPowerEndTime((String) data.get("powerEndTime"));
                         count += edit(webCfg);

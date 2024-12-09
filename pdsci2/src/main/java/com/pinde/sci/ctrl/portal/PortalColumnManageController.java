@@ -5,7 +5,6 @@ import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.PortalColumn;
 import com.pinde.sci.model.mo.SysUser;
@@ -86,13 +85,13 @@ public class PortalColumnManageController extends GeneralController {
 	@RequestMapping(value="/deleteJson")
 	public @ResponseBody String deleteJson(@RequestBody List<String> ids){
 		if(ids!=null&&!ids.isEmpty()){
-			int delResult = this.columnBiz.updateRecordStatus(ids, GlobalConstant.RECORD_STATUS_N);
+            int delResult = this.columnBiz.updateRecordStatus(ids, com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			if(delResult>0){
-				return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 	/**
@@ -120,7 +119,7 @@ public class PortalColumnManageController extends GeneralController {
 		{
 			columnIds= Arrays.asList(ids);
 		}
-		List<PortalColumn> colList = columnBiz.getAll(GlobalConstant.RECORD_STATUS_Y,columnIds);//获取所有已启用栏目
+        List<PortalColumn> colList = columnBiz.getAll(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y, columnIds);//获取所有已启用栏目
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		sb.append("{\"id\":\"0\", \"pId\":\"-1\", \"name\":\"顶级栏目\",\"open\":true,\"t\":\"顶级栏目\"},");
@@ -161,7 +160,7 @@ public class PortalColumnManageController extends GeneralController {
 		sb.append("[");
 		sb.append("{\"id\":\"0\", \"pId\":\"-1\", \"name\":\"顶级栏目\",\"open\":true,\"t\":\"顶级栏目\"},");
 		if(columnIds!=null&&columnIds.size()>0) {
-			List<PortalColumn> colList = columnBiz.getAll(GlobalConstant.RECORD_STATUS_Y, columnIds);//获取所有已启用栏目
+            List<PortalColumn> colList = columnBiz.getAll(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y, columnIds);//获取所有已启用栏目
 			if(colList!=null) {
 				for (PortalColumn col : colList) {
 					sb.append("{");

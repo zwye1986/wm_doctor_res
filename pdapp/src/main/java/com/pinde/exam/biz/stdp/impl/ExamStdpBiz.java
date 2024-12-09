@@ -1,12 +1,11 @@
 package com.pinde.exam.biz.stdp.impl;
 
-import com.pinde.app.common.PasswordUtil;
+import com.pinde.core.util.PasswordUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.exam.biz.stdp.IExamStdpBiz;
 import com.pinde.exam.dao.stdp.ext.ExamStdpMapper;
 import com.pinde.exam.enums.stdp.QuestionTypeEnum;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ExamStdpBiz implements IExamStdpBiz{
 	
 	@Resource

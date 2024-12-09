@@ -151,7 +151,7 @@
 		}
 		function cycle(data){
 			var docTypes="";
-			<c:forEach items="${jsResDocTypeEnumList}" var="type">
+			<c:forEach items="${resDocTypeEnumList}" var="type">
 			if(docTypes=="")
 			{
 				docTypes+="docTypes="+"${type.id}";

@@ -37,7 +37,7 @@
 	});
 	function toPage(page) {
 		var data="";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 		}
@@ -52,7 +52,7 @@
 	}
 	function daochu() {
 		var data="";
-		<c:forEach items="${jsResDocTypeEnumList}" var="type">
+		<c:forEach items="${resDocTypeEnumList}" var="type">
 		if($("#"+"${type.id}").attr("checked")){
 			data+="&datas="+$("#"+"${type.id}").val();
 		}
@@ -282,7 +282,7 @@
 
 					<td class="td_left">人员类型：</td>
 					<td colspan="3">
-						<c:forEach items="${jsResDocTypeEnumList}" var="type">
+						<c:forEach items="${resDocTypeEnumList}" var="type">
 							<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" checked/>${type.name}&nbsp;</label>
 						</c:forEach>
 						&nbsp;

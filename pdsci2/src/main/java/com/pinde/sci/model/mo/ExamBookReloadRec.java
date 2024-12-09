@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ExamBookReloadRec extends MybatisObject {
+public class ExamBookReloadRec extends TeachingActivitySpeakerExample.MybatisObject {
     private String reloadRecFlow;
 
     private String bookNum;

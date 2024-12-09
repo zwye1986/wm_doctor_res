@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class OscaSubjectStationScore extends MybatisObject {
+public class OscaSubjectStationScore extends TeachingActivitySpeakerExample.MybatisObject {
     private String recordFlow;
 
     private String subjectFlow;

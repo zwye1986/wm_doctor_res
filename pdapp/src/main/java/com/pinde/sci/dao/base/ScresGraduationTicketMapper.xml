@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ScresGraduationTicketMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ScresGraduationTicket" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ScresGraduationTicket" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="APPLY_FLOW" property="applyFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
@@ -93,7 +93,7 @@
     SKILL_EXAM_TIME2, SKILL_EXAM_TIME2_BARCH, ORG_NAME, ORG_ADDRESS, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, USER_IMG
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ScresGraduationTicketExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ScresGraduationTicketExample" >
     select
     <if test="distinct" >
       distinct
@@ -117,13 +117,13 @@
     delete from PDSCI.SCRES_GRADUATION_TICKET
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ScresGraduationTicketExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ScresGraduationTicketExample" >
     delete from PDSCI.SCRES_GRADUATION_TICKET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+  <insert id="insert" parameterType="com.pinde.core.model.ScresGraduationTicket" >
     insert into PDSCI.SCRES_GRADUATION_TICKET (RECORD_FLOW, APPLY_FLOW, DOCTOR_NAME, 
       DOCTOR_FLOW, GRADUATION_YEAR, TICKET_NUMBER, 
       ID_NO, THEORY_EXAM_DATE, THEORY_EXAM_TIME1, 
@@ -143,7 +143,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ScresGraduationTicket" >
     insert into PDSCI.SCRES_GRADUATION_TICKET
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -300,7 +300,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ScresGraduationTicketExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ScresGraduationTicketExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SCRES_GRADUATION_TICKET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -420,7 +420,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ScresGraduationTicket" >
     update PDSCI.SCRES_GRADUATION_TICKET
     <set >
       <if test="applyFlow != null" >
@@ -498,7 +498,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ScresGraduationTicket" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ScresGraduationTicket" >
     update PDSCI.SCRES_GRADUATION_TICKET
     set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

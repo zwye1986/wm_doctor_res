@@ -14,7 +14,7 @@
         });
         $('#startDate').datepicker();
         $('#endDate').datepicker();
-        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+        <c:forEach items="${resDocTypeEnumList}" var="type">
         <c:if test="${not empty docTypeList}">
         <c:forEach items="${docTypeList}" var="docType">
         if ("${docType}" == "${type.id}") {
@@ -124,7 +124,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">人员类型：
-                        <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                        <c:forEach items="${resDocTypeEnumList}" var="type">
                             <label><input type="checkbox" name="docTypes" id="${type.id}" value="${type.id}"
                                           class="docType"/>${type.name}&nbsp;</label>
                         </c:forEach>

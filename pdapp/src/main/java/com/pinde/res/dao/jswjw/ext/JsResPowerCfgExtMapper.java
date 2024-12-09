@@ -1,6 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.JsresPowerCfg;
+import com.pinde.core.model.JsresPowerCfg;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

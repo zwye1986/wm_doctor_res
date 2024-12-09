@@ -7,10 +7,9 @@ import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.recruit.RecruitOperEnum;
-import com.pinde.sci.enums.recruit.RecruitStatusEnum;
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.model.mo.RecruitCfgInfo;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoLog;
@@ -124,9 +123,9 @@ public class RecruitStatusManageController extends GeneralController {
         recruitInfoLog.setAuditTime(DateUtil.getCurrDateTime2());
         recruitInfoLog.setOperTime(DateUtil.getCurrDateTime2());
         if (recruitInfoLogBiz.updateRecruitInfoLog(recruitInfoLog,auditContent) == 1 && recruitInfoBiz.approve(recruitFlow,auditContent) == 1){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 
@@ -142,9 +141,9 @@ public class RecruitStatusManageController extends GeneralController {
         recruitInfoLog.setAuditTime(DateUtil.getCurrDate());
         recruitInfoLog.setOperTime(DateUtil.getCurrDateTime2());
         if (recruitInfoBiz.disapprove(recruitFlow,auditContent) == 1 && recruitInfoLogBiz.updateRecruitInfoLog(recruitInfoLog,auditContent) == 1){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }else {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
     }
 }

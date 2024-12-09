@@ -7,28 +7,22 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnStudentBiz;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
-import com.pinde.sci.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserExample;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class LcjnStudentBizImpl implements ILcjnStudentBiz {
     @Autowired
     private SysUserMapper userMapper;
@@ -62,7 +56,7 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
         String userFlow = user.getUserFlow();
         if(StringUtil.isNotBlank(userCode)){
             SysUserExample example = new SysUserExample();
-            SysUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserCodeEqualTo(user.getUserCode());
+            SysUserExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserCodeEqualTo(user.getUserCode());
             if(StringUtil.isNotBlank(userFlow)){
                 criteria.andUserFlowNotEqualTo(userFlow);
             }
@@ -71,7 +65,7 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
                 return -1;
             }
         }
-        if("Y".equals(user.getIsOwnerStu())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(user.getIsOwnerStu())) {
             user.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         }
         if(StringUtil.isNotBlank(userFlow)){
@@ -87,7 +81,7 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
             userRole.setRecordFlow(PkUtil.getUUID());
             userRole.setWsId("lcjn");
             userRole.setUserFlow(user.getUserFlow());
-            userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             userRole.setAuthTime(DateUtil.getCurrDateTime());
             userRole.setAuthUserFlow(user.getUserFlow());
             userRole.setCreateTime(DateUtil.getCurrDateTime());
@@ -210,9 +204,9 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
                     }
                     if("*是否本院".equals(currTitle)){
                         if("是".equals(value)){
-                            user.setIsOwnerStu("Y");
+                            user.setIsOwnerStu(com.pinde.core.common.GlobalConstant.FLAG_Y);
                         }else if("否".equals(value)){
-                            user.setIsOwnerStu("N");
+                            user.setIsOwnerStu(com.pinde.core.common.GlobalConstant.FLAG_N);
                         }
                     }
                     if("所在单位".equals(currTitle)){
@@ -230,7 +224,7 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
                         user.setLcjnSpeName(value);
                     }
                 }
-                if("Y".equals(user.getIsOwnerStu())){
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(user.getIsOwnerStu())) {
                     user.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
                 }
                 String regEx = "^1[3|4|5|6|7|8|9][0-9]\\d{8}$";
@@ -285,7 +279,7 @@ public class LcjnStudentBizImpl implements ILcjnStudentBiz {
                     userRole.setRecordFlow(PkUtil.getUUID());
                     userRole.setWsId("lcjn");
                     userRole.setUserFlow(user.getUserFlow());
-                    userRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                     userRole.setAuthTime(DateUtil.getCurrDateTime());
                     userRole.setAuthUserFlow(user.getUserFlow());
                     userRole.setCreateTime(DateUtil.getCurrDateTime());

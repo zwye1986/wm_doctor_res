@@ -1,7 +1,7 @@
 package com.pinde.res.biz.lcjn.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,17 +9,16 @@ import com.pinde.res.biz.lcjn.IInfoBiz;
 import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
 import com.pinde.res.dao.lcjn.ext.InxInfoExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.LcjnDoctorReadInfo;
+import com.pinde.core.model.InxInfo;
+import com.pinde.core.model.LcjnDoctorReadInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class InfoBizImpl implements IInfoBiz {
 	@Resource
 	private SysUserMapper sysUserMapper;
@@ -85,7 +84,7 @@ public class InfoBizImpl implements IInfoBiz {
 			r.setCreateUserFlow(userFlow);
 			r.setModifyTime(DateUtil.getCurrDateTime());
 			r.setModifyUserFlow(userFlow);
-			r.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            r.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			return lcjnReadInfoMapper.insertSelective(r);
 		}
 

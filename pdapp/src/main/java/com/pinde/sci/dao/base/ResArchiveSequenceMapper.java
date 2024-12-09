@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResArchiveSequence;
-import com.pinde.sci.model.mo.ResArchiveSequenceExample;
+import com.pinde.core.model.ResArchiveSequence;
+import com.pinde.core.model.ResArchiveSequenceExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jszy.ext;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResTarinNotice;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResTarinNotice;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

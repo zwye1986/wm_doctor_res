@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.ResPaperBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResPaperMapper;
 import com.pinde.sci.dao.base.TestPaperMapper;
 import com.pinde.sci.model.mo.ResPaper;
@@ -11,12 +11,11 @@ import com.pinde.sci.model.mo.ResPaperExample;
 import com.pinde.sci.model.mo.TestPaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResPaperBizImpl implements ResPaperBiz{
 	@Autowired
 	private ResPaperMapper paperMapper;
@@ -33,8 +32,8 @@ public class ResPaperBizImpl implements ResPaperBiz{
 		}
 		
 		ResPaperExample example = new ResPaperExample();
-		
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andSpeIdEqualTo(speId)
 		.andDeptFlowEqualTo(standardDeptId);
 		
@@ -60,7 +59,7 @@ public class ResPaperBizImpl implements ResPaperBiz{
 
 		ResPaperExample example = new ResPaperExample();
 
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andSpeIdEqualTo("0")
 		.andOrgNameEqualTo(orgName)
 		.andDeptFlowEqualTo(standardDeptId);
@@ -84,7 +83,7 @@ public class ResPaperBizImpl implements ResPaperBiz{
 
 		ResPaperExample example = new ResPaperExample();
 
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andSpeIdEqualTo(speId)
 		.andDeptFlowEqualTo("0");
 
@@ -106,8 +105,8 @@ public class ResPaperBizImpl implements ResPaperBiz{
 		}
 		
 		ResPaperExample example = new ResPaperExample();
-		
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andDeptFlowEqualTo(standardDeptId).andOrgNameIsNull()
 		.andSpeIdEqualTo("0");
 		

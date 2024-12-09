@@ -76,7 +76,7 @@
                 }
             );
             changeTrainSpes();
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             <c:forEach items="${datas}" var="data">
             if ("${data}" == "${type.id}") {
                 $("#" + "${data}").attr("checked", "checked");
@@ -261,7 +261,7 @@
             <input type="hidden" name="schStartDate" value="${schStartDate}"/>
             <input type="hidden" name="schEndDate" value="${schEndDate}"/>
 
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
                 <input type="checkbox" style="display: none;" id="export${type.id}" value="${type.id}" class="docType"
                        name="datas"/>
             </c:forEach>
@@ -338,7 +338,7 @@
                             <div class="form_item" style="width: 400px">
                                 <div class="form_label">人员类型：</div>
                                 <div class="form_content">
-                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <c:forEach items="${resDocTypeEnumList}" var="type">
                                         <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
                                                       name="datas"/>${type.name}&nbsp;</label>
                                     </c:forEach>
@@ -349,7 +349,7 @@
                             <div class="form_item" style="width: 400px">
                                 <div class="form_label">人员类型：</div>
                                 <div class="form_content">
-                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <c:forEach items="${resDocTypeEnumList}" var="type">
                                         <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
                                                       name="datas"/>${type.name}&nbsp;</label>
                                     </c:forEach>
@@ -425,7 +425,7 @@
                 <%--                            <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">--%>
                 <%--                                <td class="td_left">人员类型：</td>--%>
                 <%--                                <td colspan="3">--%>
-                <%--                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+                <%--                                    <c:forEach items="${resDocTypeEnumList}" var="type">--%>
                 <%--                                        <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
                 <%--                                    </c:forEach>--%>
                 <%--                                </td>--%>
@@ -433,7 +433,7 @@
                 <%--                            <c:otherwise>--%>
                 <%--                                <td class="td_left">人员类型：</td>--%>
                 <%--                                <td colspan="3">--%>
-                <%--                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+                <%--                                    <c:forEach items="${resDocTypeEnumList}" var="type">--%>
                 <%--                                        <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
                 <%--                                    </c:forEach>--%>
                 <%--                                </td>--%>
@@ -543,7 +543,7 @@
                             <div class="form_item" style="width: 400px">
                                 <div class="form_label">人员类型：</div>
                                 <div class="form_content">
-                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <c:forEach items="${resDocTypeEnumList}" var="type">
                                         <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
                                                       name="datas"/>${type.name}&nbsp;</label>
                                     </c:forEach>
@@ -554,7 +554,7 @@
                             <div class="form_item" style="width: 400px">
                                 <div class="form_label">人员类型：</div>
                                 <div class="form_content">
-                                    <c:forEach items="${jsResDocTypeEnumList}" var="type">
+                                    <c:forEach items="${resDocTypeEnumList}" var="type">
                                         <label><input type="checkbox" id="${type.id}" value="${type.id}" class="docType"
                                                       name="datas"/>${type.name}&nbsp;</label>
                                     </c:forEach>
@@ -658,7 +658,7 @@
                 <%--                        <c:when test="${sessionScope.userListScope == GlobalConstant.USER_LIST_BASE}">--%>
                 <%--                            <td class="td_left">人员类型：</td>--%>
                 <%--                            <td colspan="3">--%>
-                <%--                                <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+                <%--                                <c:forEach items="${resDocTypeEnumList}" var="type">--%>
                 <%--                                    <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
                 <%--                                </c:forEach>--%>
                 <%--                            </td>--%>
@@ -666,7 +666,7 @@
                 <%--                        <c:otherwise>--%>
                 <%--                            <td class="td_left">人员类型：</td>--%>
                 <%--                            <td colspan="3">--%>
-                <%--                                <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+                <%--                                <c:forEach items="${resDocTypeEnumList}" var="type">--%>
                 <%--                                    <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
                 <%--                                </c:forEach>--%>
                 <%--                            </td>--%>
@@ -700,7 +700,7 @@
                 <%--                 </c:choose>--%>
                 <%--                    &lt;%&ndash;<td class="td_left">人员类型：</td>--%>
                 <%--                    <td colspan="3">--%>
-                <%--                        <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+                <%--                        <c:forEach items="${resDocTypeEnumList}" var="type">--%>
                 <%--                            <label><input type="checkbox" id="${type.id}" value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
                 <%--                        </c:forEach>--%>
                 <%--                    </td>--%>

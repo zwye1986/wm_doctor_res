@@ -1,6 +1,6 @@
 package com.pinde.res.model.jswjw.mo;
 
-import com.pinde.sci.model.mo.OscaSkillRoom;
+import com.pinde.core.model.OscaSkillRoom;
 
 /**
  * Created by Administrator on 2016/11/15.

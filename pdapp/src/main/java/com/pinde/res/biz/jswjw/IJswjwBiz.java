@@ -1,12 +1,12 @@
 package com.pinde.res.biz.jswjw;
 
 import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.model.*;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.JsResDataExt;
 import com.pinde.res.model.jswjw.mo.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -184,7 +184,7 @@ public interface IJswjwBiz {
 	String getJsResCfgCheckByCode(String code);
 
 	public List<ResDoctorSchProcess> searchSchProcess(String userFlow,
-													  String deptFlow);
+                                                      String deptFlow);
 
 	List<SysDept> searchSysDeptList(String orgFlow, String searchStr);
 

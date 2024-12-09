@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResPowerCfg extends MybatisObject {
+public class ResPowerCfg extends TeachingActivitySpeakerExample.MybatisObject {
     private String cfgCode;
 
     private String cfgValue;

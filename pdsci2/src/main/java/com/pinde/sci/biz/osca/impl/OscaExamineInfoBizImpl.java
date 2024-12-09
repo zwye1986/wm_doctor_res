@@ -16,7 +16,7 @@ import java.util.Map;
  * @since 2017/5/12
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class OscaExamineInfoBizImpl implements IOscaExamineInfoBiz {
     @Autowired
     private OscaExamineInfoMapper examineInfoMapper;

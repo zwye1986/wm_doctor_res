@@ -1,6 +1,6 @@
 package com.pinde.res.biz.lcjn;
 
-import com.pinde.sci.model.mo.InxInfo;
+import com.pinde.core.model.InxInfo;
 
 import java.util.List;
 

@@ -1,16 +1,14 @@
 package com.pinde.sci.biz.sys.impl;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.DictFormMapper;
 import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.sys.SysCfgExtMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.sys.SubDictEditForm;
 import com.pinde.sci.model.mo.DictForm;
 import com.pinde.sci.model.mo.DictFormExample;
@@ -19,15 +17,10 @@ import com.pinde.sci.model.mo.SysDictExample.Criteria;
 import com.pinde.sci.model.mo.SysUser;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -38,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class DictBizImpl implements IDictBiz{
 	
 	@Autowired
@@ -68,7 +61,7 @@ public class DictBizImpl implements IDictBiz{
 		if(StringUtil.isNotBlank(dictTypeId)){
 			String[] dictDatas = dictTypeId.split("\\.");
 			String typeId = dictDatas[0];
-			int level = DictTypeEnum.valueOf(typeId).getLevel();
+            int level = com.pinde.core.common.enums.DictTypeEnum.valueOf(typeId).getLevel();
 			if(level>1){
 				//查要修改节点的子节点
 				SysDictExample example = new SysDictExample();
@@ -100,13 +93,13 @@ public class DictBizImpl implements IDictBiz{
 	
 	@Override
 	public void delDictAndSubDict(String dictFlow,String recordStatus) {
-		if(GlobalConstant.FLAG_N.equals(recordStatus)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(recordStatus)) {
 			SysDict oldDict = this.readDict(dictFlow);
 			String dictTypeId = oldDict.getDictTypeId();
 			if(StringUtil.isNotBlank(dictTypeId)){
 				String[] dictDatas = dictTypeId.split("\\.");
 				String typeId = dictDatas[0];
-				int level = DictTypeEnum.valueOf(typeId).getLevel();
+                int level = com.pinde.core.common.enums.DictTypeEnum.valueOf(typeId).getLevel();
 				if(level>1){
 					SysDict record = new SysDict();
 					record.setRecordStatus(recordStatus);
@@ -190,7 +183,7 @@ public class DictBizImpl implements IDictBiz{
 	public List<SysDict> searchDictList(SysDict sysDict) {
 		SysDictExample example = new SysDictExample();
 		Criteria criteria = example.createCriteria();
-//		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysDict.getDictTypeId())){
 			criteria.andDictTypeIdEqualTo(sysDict.getDictTypeId());
 		}
@@ -224,7 +217,7 @@ public class DictBizImpl implements IDictBiz{
 		Criteria criteria  = example.createCriteria();
 		criteria.andDictTypeIdEqualTo(dictTypeId);
 		if(!isShowAll){
-			criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}
 		example.setOrderByClause(" ORDINAL");
 		return this.sysDictMapper.selectByExample(example);
@@ -234,7 +227,7 @@ public class DictBizImpl implements IDictBiz{
 	@Override
 	public List<SysDict> searchDictListByDictTypeId(String dictTypeId) {
 		SysDictExample example = new SysDictExample();
-		example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL");
 		return this.sysDictMapper.selectByExample(example);
 		
@@ -244,7 +237,7 @@ public class DictBizImpl implements IDictBiz{
     public List<SysDict> searchDictListByDictTypeIdAndDictName(String dictTypeId, String dictName) {
         SysDictExample example = new SysDictExample();
         example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andDictNameEqualTo(dictName)
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         example.setOrderByClause("ORDINAL");
         return this.sysDictMapper.selectByExample(example);
 
@@ -253,7 +246,7 @@ public class DictBizImpl implements IDictBiz{
     @Override
 	public List<SysDict> searchDictListByDictTypeIdAndDictId(String dictTypeId,String dictId) {
 		SysDictExample example = new SysDictExample();
-		SysDictExample.Criteria criteria= example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysDictExample.Criteria criteria = example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(dictId))
 		{
 			criteria.andDictIdEqualTo(dictId);
@@ -266,7 +259,7 @@ public class DictBizImpl implements IDictBiz{
 //	@Override
 //	public List<SysDict> searchDictListByDictTypeIdLike(String dictTypeId) {
 //		SysDictExample example = new SysDictExample();
-//		example.createCriteria().andDictTypeIdLike(dictTypeId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		example.createCriteria().andDictTypeIdLike(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		example.setOrderByClause("ORDINAL");
 //		return this.sysDictMapper.selectByExample(example);
 //	}
@@ -325,7 +318,7 @@ public class DictBizImpl implements IDictBiz{
 		String topDictFlow = subDictForm.getTopDictFlow();
 		SysDict topDict = this.readDict(topDictFlow);
 		//二级及三级字典代码不能重复
-		if(DictTypeEnum.OscaTrainingType.getId().equals(topDict.getDictTypeId()))
+        if (com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId().equals(topDict.getDictTypeId()))
 		{
 			saveNewFunc(subDictForm,topDict);
 		}else{
@@ -556,7 +549,7 @@ public class DictBizImpl implements IDictBiz{
 				Row r =  sheet.getRow(i);
 				SysDict dict = new SysDict();
 				dict.setDictTypeId(dictTypeId);
-				dict.setDictTypeName(DictTypeEnum.getNameById(dictTypeId));
+                dict.setDictTypeName(com.pinde.core.common.enums.DictTypeEnum.getNameById(dictTypeId));
 				SysUser su = GlobalContext.getCurrentUser();
 				dict.setOrgFlow(su.getOrgFlow());
 				dict.setOrgName(su.getOrgName());
@@ -607,7 +600,7 @@ public class DictBizImpl implements IDictBiz{
 	@Override
 	public List<DictForm> searchDictForm(DictForm dictForm) {
 		DictFormExample example = new DictFormExample();
-		DictFormExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        DictFormExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(dictForm!=null){
 			if(StringUtil.isNotBlank(dictForm.getDictFlow())){
 				criteria.andDictFlowEqualTo(dictForm.getDictFlow());
@@ -653,7 +646,7 @@ public class DictBizImpl implements IDictBiz{
 	@Override
 	public SysDict searchDict(SysDict dictSearch) {
 		SysDictExample example = new SysDictExample();
-		SysDictExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        SysDictExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(dictSearch.getDictId())){
 			criteria.andDictIdEqualTo(dictSearch.getDictId());
 		}

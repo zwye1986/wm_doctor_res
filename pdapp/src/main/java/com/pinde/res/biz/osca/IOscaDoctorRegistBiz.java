@@ -1,7 +1,7 @@
 package com.pinde.res.biz.osca;
 
-import com.pinde.sci.model.mo.OscaDoctorRegist;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.OscaDoctorRegist;
+import com.pinde.core.model.SysUser;
 
 import java.util.List;
 import java.util.Map;

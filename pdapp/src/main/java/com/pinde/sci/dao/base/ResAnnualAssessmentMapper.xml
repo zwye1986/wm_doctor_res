@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResAnnualAssessmentMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResAnnualAssessment" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResAnnualAssessment" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="RECORD_YEAR" property="recordYear" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -35,7 +35,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" extends="BaseResultMap" >
     <result column="COMPLELE_CONTENT" property="compleleContent" jdbcType="CLOB" />
     <result column="EXPERIENCE_CONTENT" property="experienceContent" jdbcType="CLOB" />
     <result column="AUDIT_CONTENT" property="auditContent" jdbcType="CLOB" />
@@ -110,7 +110,7 @@
   <sql id="Blob_Column_List" >
     COMPLELE_CONTENT, EXPERIENCE_CONTENT, AUDIT_CONTENT, ADMIN_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResAnnualAssessmentExample" >
     select
     <if test="distinct" >
       distinct
@@ -126,7 +126,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResAnnualAssessmentExample" >
     select
     <if test="distinct" >
       distinct
@@ -152,13 +152,13 @@
     delete from PDSCI.RES_ANNUAL_ASSESSMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResAnnualAssessmentExample" >
     delete from PDSCI.RES_ANNUAL_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
     insert into PDSCI.RES_ANNUAL_ASSESSMENT (RECORD_FLOW, RECORD_YEAR, DOCTOR_FLOW, 
       DOCTOR_NAME, TEACHER_FLOW, TEACHER_NAME, 
       STUDY_START_DATE, STUDY_END_DATE, DAY_COUNT, 
@@ -186,7 +186,7 @@
       #{experienceContent,jdbcType=CLOB}, #{auditContent,jdbcType=CLOB}, #{adminContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
     insert into PDSCI.RES_ANNUAL_ASSESSMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -409,7 +409,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResAnnualAssessmentExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_ANNUAL_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -611,7 +611,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
     update PDSCI.RES_ANNUAL_ASSESSMENT
     <set >
       <if test="recordYear != null" >
@@ -722,7 +722,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
     update PDSCI.RES_ANNUAL_ASSESSMENT
     set RECORD_YEAR = #{recordYear,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -761,7 +761,7 @@
       ADMIN_CONTENT = #{adminContent,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResAnnualAssessment" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResAnnualAssessment" >
     update PDSCI.RES_ANNUAL_ASSESSMENT
     set RECORD_YEAR = #{recordYear,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

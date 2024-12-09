@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.osca;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -7,7 +8,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.OscaOrgMenu;
 import com.pinde.sci.model.mo.SysOrg;
@@ -86,20 +86,20 @@ public class OscaOrgMenuController extends GeneralController {
         oscaOrgMenu.setOrgName(orgName);
         oscaOrgMenu.setMenuId(menuId);
         oscaOrgMenu.setMenuName(menuName);
-        if ("N".equals(isChecked)){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(isChecked)) {
             List<OscaOrgMenu> oscaOrgMenuTemp=oscaOrgMenuBiz.searchAllOrgMenu(oscaOrgMenu);
             if (oscaOrgMenuTemp!=null&&oscaOrgMenuTemp.size()>0){
                 oscaOrgMenu.setRecordFlow(oscaOrgMenuTemp.get(0).getRecordFlow());
             }
-            oscaOrgMenu.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            oscaOrgMenu.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
             oscaOrgMenuBiz.updateOscaOrgMenu(oscaOrgMenu);
         }else{
             oscaOrgMenu.setRecordFlow(PkUtil.getUUID());
-            oscaOrgMenu.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            oscaOrgMenu.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             oscaOrgMenu.setCreateTime(DateUtil.getCurrentTime());
             oscaOrgMenu.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
             oscaOrgMenuBiz.saveOscaOrgMenu(oscaOrgMenu);
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 }

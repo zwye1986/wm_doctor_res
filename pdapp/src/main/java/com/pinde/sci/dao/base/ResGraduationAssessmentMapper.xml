@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResGraduationAssessmentMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResGraduationAssessment" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResGraduationAssessment" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
@@ -36,7 +36,7 @@
     <result column="ANNUAL_HEGE" property="annualHege" jdbcType="DECIMAL" />
     <result column="ANNUAL_NOT_HEGE" property="annualNotHege" jdbcType="DECIMAL" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" extends="BaseResultMap" >
     <result column="EXPERIENCE_CONTENT" property="experienceContent" jdbcType="CLOB" />
     <result column="AUDIT_CONTENT" property="auditContent" jdbcType="CLOB" />
     <result column="ADMIN_CONTENT" property="adminContent" jdbcType="CLOB" />
@@ -110,7 +110,7 @@
   <sql id="Blob_Column_List" >
     EXPERIENCE_CONTENT, AUDIT_CONTENT, ADMIN_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResGraduationAssessmentExample" >
     select
     <if test="distinct" >
       distinct
@@ -126,7 +126,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResGraduationAssessmentExample" >
     select
     <if test="distinct" >
       distinct
@@ -152,13 +152,13 @@
     delete from PDSCI.RES_GRADUATION_ASSESSMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResGraduationAssessmentExample" >
     delete from PDSCI.RES_GRADUATION_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
     insert into PDSCI.RES_GRADUATION_ASSESSMENT (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
       TEACHER_FLOW, TEACHER_NAME, STUDY_START_DATE, 
       STUDY_END_DATE, DAY_COUNT, NOTE_COUNT, 
@@ -186,7 +186,7 @@
       #{annualNotHege,jdbcType=DECIMAL}, #{experienceContent,jdbcType=CLOB}, #{auditContent,jdbcType=CLOB}, 
       #{adminContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
     insert into PDSCI.RES_GRADUATION_ASSESSMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -409,7 +409,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.ResGraduationAssessmentExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.RES_GRADUATION_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -612,7 +612,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
     update PDSCI.RES_GRADUATION_ASSESSMENT
     <set >
       <if test="doctorFlow != null" >
@@ -723,7 +723,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
     update PDSCI.RES_GRADUATION_ASSESSMENT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -762,7 +762,7 @@
       ADMIN_CONTENT = #{adminContent,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResGraduationAssessment" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResGraduationAssessment" >
     update PDSCI.RES_GRADUATION_ASSESSMENT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

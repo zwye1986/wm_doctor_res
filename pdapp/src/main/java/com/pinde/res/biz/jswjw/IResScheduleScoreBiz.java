@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.sci.model.mo.ResScheduleScore;
+import com.pinde.core.model.ResScheduleScore;
 
 import java.util.List;
 

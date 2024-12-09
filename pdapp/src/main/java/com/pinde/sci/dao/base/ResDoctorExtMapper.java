@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 
 import java.util.List;
 import java.util.Map;

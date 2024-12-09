@@ -3,7 +3,6 @@ package com.pinde.sci.biz.pub.impl;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.PubUserResumeMapper;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.PubUserResumeExample;
@@ -14,7 +13,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.List;
  *
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class PubResumeBizImpl implements IPubUserResumeBiz{
 	@Autowired
 	private PubUserResumeMapper userResumpMapper;
@@ -45,7 +43,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 	@Override
 	public List<PubUserResume> findPubUserResume() {
 		PubUserResumeExample example = new PubUserResumeExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		return userResumpMapper.selectByExampleWithBLOBs(example);
 	}
 
@@ -62,7 +60,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 				GeneralMethod.setRecordInfo(resume, true);
 				return userResumpMapper.insert(resume);
 			}else{
-				return GlobalConstant.ZERO_LINE;
+                return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 			}
 		}
 	}
@@ -133,7 +131,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 	public List<PubUserResume> findPubUserResumeByUserFlows(List<String> userFlows) {
 		if(userFlows != null && userFlows.size() > 0){
 			PubUserResumeExample example = new PubUserResumeExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 			.andUserFlowIn(userFlows);
 			return userResumpMapper.selectByExampleWithBLOBs(example);
 		}else {

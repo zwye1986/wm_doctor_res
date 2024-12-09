@@ -5,9 +5,7 @@ import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResScoreBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
-import com.pinde.sci.enums.sch.SchStatusEnum;
+import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.res.GradeDetail4ShiYan;
 import org.slf4j.Logger;
@@ -38,7 +36,7 @@ public class ResScoreController extends GeneralController {
 		for (ResScore resScore : resScoreList) {
 			resScoreBiz.save(resScore);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/auditing")
 	@ResponseBody
@@ -49,12 +47,12 @@ public class ResScoreController extends GeneralController {
 			resScore.setAuditStatusName(SchStatusEnum.AuditY.getName());
 			int i=resScoreBiz.save(resScore);
 			if (i>=1) {
-				return GlobalConstant.OPRE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}else{
-				return GlobalConstant.OPRE_FAIL;
+                return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 			}
 		}else{
-			return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 		}
 	}
 	
@@ -82,27 +80,27 @@ public class ResScoreController extends GeneralController {
 	@ResponseBody
 	public String saveScore(ResScore score){
 		if(score==null){
-			return GlobalConstant.OPRE_FAIL_FLAG;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 		}
 		
 //		String doctorFlow = score.getDoctorFlow();
 //		if(!StringUtil.isNotBlank(doctorFlow)){
-//			return GlobalConstant.OPRE_FAIL_FLAG;
+//			return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 //		}
 		
 		String scoreFlow = score.getScoreFlow();
 		if(!StringUtil.isNotBlank(scoreFlow)){
-			score.setScoreTypeId(ResScoreTypeEnum.DeptScore.getId());
-			score.setScoreTypeName(ResScoreTypeEnum.DeptScore.getName());
+            score.setScoreTypeId(com.pinde.core.common.enums.ResScoreTypeEnum.DeptScore.getId());
+            score.setScoreTypeName(com.pinde.core.common.enums.ResScoreTypeEnum.DeptScore.getName());
 		}
 		
 		int result = resScoreBiz.save(score);
-		
-		if(GlobalConstant.ZERO_LINE==result){
-			return GlobalConstant.OPRE_FAIL_FLAG;
+
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE == result) {
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 		}
-		
-		return GlobalConstant.OPRE_SUCCESSED_FLAG;
+
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
 	}
 
 	@RequestMapping(value="/osceScoreList")//十堰市太和医院用
@@ -143,17 +141,17 @@ public class ResScoreController extends GeneralController {
 		if(file.getSize() > 0){
 			try{
 				int result = resScoreBiz.importOsceGrades(file);
-				if(GlobalConstant.ZERO_LINE != result){
-					return GlobalConstant.UPLOAD_SUCCESSED + "导入"+result+"条记录！";
+                if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}else{
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	@RequestMapping(value="/changeOsceScore")//十堰市太和医院用

@@ -7,7 +7,6 @@ import com.pinde.sci.biz.recruit.IRecruitCfgInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.form.recruit.ExamInfoFlowForm;
 import com.pinde.sci.model.mo.RecruitCfgInfo;
@@ -54,7 +53,7 @@ public class RecruitExamMainController extends GeneralController {
                 List<RecruitInfo> recruitInfos=recruitExamMainBiz.readMainRecruitInfos(main.getMainFlow());
                 if(recruitInfos!=null&&recruitInfos.size()>0)
                 {
-                    fenPeiMap.put(main.getMainFlow(),"Y");
+                    fenPeiMap.put(main.getMainFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                 }
             }
         }
@@ -98,34 +97,34 @@ public class RecruitExamMainController extends GeneralController {
     @ResponseBody
     public String delExam(Model model,String mainFlow, HttpServletRequest request){
         RecruitExamMain recruitExamMain=recruitExamMainBiz.readByFlow(mainFlow);
-        if(recruitExamMain==null||GlobalConstant.RECORD_STATUS_N.equals(recruitExamMain.getRecordStatus()))
+        if (recruitExamMain == null || com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamMain.getRecordStatus()))
         {
             return "考试信息不存在，请刷新列表";
         }
-        if(GlobalConstant.RECORD_STATUS_Y.equals(recruitExamMain.getIsPublish()))
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(recruitExamMain.getIsPublish()))
         {
             return "考试信息已发布，无法删除，请刷新列表";
         }
-        recruitExamMain.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        recruitExamMain.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         int c=recruitExamMainBiz.saveExamMain(recruitExamMain);
         if(c==0)
         {
-            return GlobalConstant.DELETE_FAIL;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
         }else{
             //删除子表配置信息
             recruitExamMainBiz.delExamDetail(recruitExamMain.getMainFlow());
         }
-        return GlobalConstant.DELETE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
     }
     @RequestMapping("/publishExam")
     @ResponseBody
     public String publishExam(Model model,String mainFlow, HttpServletRequest request){
         RecruitExamMain recruitExamMain=recruitExamMainBiz.readByFlow(mainFlow);
-        if(recruitExamMain==null||GlobalConstant.RECORD_STATUS_N.equals(recruitExamMain.getRecordStatus()))
+        if (recruitExamMain == null || com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruitExamMain.getRecordStatus()))
         {
             return "考试信息不存在，请刷新列表";
         }
-        if(GlobalConstant.RECORD_STATUS_Y.equals(recruitExamMain.getIsPublish()))
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(recruitExamMain.getIsPublish()))
         {
             return "考试信息已发布，无法重新发布，请刷新列表";
         }
@@ -134,7 +133,7 @@ public class RecruitExamMainController extends GeneralController {
         {
             return "招录配置信息不存在，请重新编辑";
         }
-        if(!GlobalConstant.FLAG_Y.equals(cfgInfo.getIsRecruit()))
+        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(cfgInfo.getIsRecruit()))
         {
             return "此考试信息非当前招录年份考试，无法发布！";
         }
@@ -165,13 +164,13 @@ public class RecruitExamMainController extends GeneralController {
 
             return "考核人数容量小于审核通过人数，无法发布，请重新编辑！";
         }
-        recruitExamMain.setIsPublish(GlobalConstant.FLAG_Y);
+        recruitExamMain.setIsPublish(com.pinde.core.common.GlobalConstant.FLAG_Y);
         int c=recruitExamMainBiz.saveExamMain(recruitExamMain);
         if(c==0)
         {
-            return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
         }
-        return GlobalConstant.OPRE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
     }
     @RequestMapping("/editMainNote")
     public String editMainNote(Model model,String mainFlow, HttpServletRequest request){
@@ -185,9 +184,9 @@ public class RecruitExamMainController extends GeneralController {
         int c=recruitExamMainBiz.saveExamMain(recruitExamMain);
         if(c==0)
         {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
-        return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
     }
 
     @RequestMapping("/saveExamMain")
@@ -210,9 +209,9 @@ public class RecruitExamMainController extends GeneralController {
         recruitExamMain.setOrgFlow(orgFlow);
         int i = recruitExamMainBiz.saveExamMain(recruitExamMain);
         if (i == 1){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }else {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
     @RequestMapping("/fenPei")
@@ -255,6 +254,6 @@ public class RecruitExamMainController extends GeneralController {
         }
         recruitExamMainBiz.fenpei(recruitInfos,flowForms);
 
-        return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
     }
 }

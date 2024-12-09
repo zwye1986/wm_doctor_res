@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresDoctorWork;
-import com.pinde.sci.model.mo.JsresDoctorWorkExample;
+import com.pinde.core.model.JsresDoctorWork;
+import com.pinde.core.model.JsresDoctorWorkExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -4,7 +4,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorKqBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorKqExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
@@ -12,14 +11,13 @@ import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
     @Autowired
     private ResKgCfgMapper kgCfgMapper;
@@ -57,7 +55,7 @@ public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
     @Override
     public List<ResDoctorKq> searchResDoctorKq(ResDoctorKq kq, List<String> notStatus) {
         ResDoctorKqExample example = new ResDoctorKqExample();
-        ResDoctorKqExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorKqExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(kq.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(kq.getDoctorFlow());
         }
@@ -124,7 +122,7 @@ public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
     @Override
     public List<ResKgCfg> readKqCfgList(String orgFlow, String doctorCategoryId) {
         ResKgCfgExample example=new ResKgCfgExample();
-        ResKgCfgExample.Criteria criteria= example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        ResKgCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow);
         if(StringUtil.isNotBlank(doctorCategoryId))
         {
@@ -144,7 +142,7 @@ public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
               if(old!=null)
                   cfg.setCfgFlow(old.getCfgFlow());
               cfg.setOrgFlow(timeSetFrom.getOrgFlow());
-              cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+              cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
               c+=saveKqCfg(cfg);
           }
         }
@@ -201,7 +199,7 @@ public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
     @Override
     public List<ResDoctorSignin> queryDoctorSignins(ResDoctorSignin signin) {
         ResDoctorSigninExample example=new ResDoctorSigninExample();
-        ResDoctorSigninExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDoctorSigninExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(signin.getSigninDate())){
             criteria.andSigninDateEqualTo(signin.getSigninDate());
         }
@@ -245,7 +243,7 @@ public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
     @Override
     public List<ResDoctorSchProcess> searchProcessByDoctorFlow(String userFlow) {
         ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResDoctorSchProcessExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(userFlow)){
             criteria.andUserFlowEqualTo(userFlow);
         }
@@ -269,7 +267,7 @@ public class ResDoctorKqBizImpl implements IResDoctorKqBiz {
     @Override
     public List<ResDoctorKqLog> searchKqLogList(String kqRecordFlow, String typeId) {
         ResDoctorKqLogExample example = new ResDoctorKqLogExample();
-        ResDoctorKqLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        ResDoctorKqLogExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(StringUtil.isNotBlank(kqRecordFlow)){
             criteria.andKqRecordFlowEqualTo(kqRecordFlow);
         }

@@ -1,10 +1,10 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.commom.enums.GeneralEnum;
+import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.XmlParse;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,14 +57,14 @@ public class InitResConfig implements ServletContextListener {
             Map<String, IrbSingleForm> singleFormMap = null;
 
             //循环表单类型
-            for (GeneralEnum<String> temp : EnumUtil.toList(ResRecTypeEnum.class)) {
+            for (GeneralEnum<String> temp : EnumUtil.toList(com.pinde.core.common.enums.ResRecTypeEnum.class)) {
                 resRecTypeEnum = (ResRecTypeEnum) temp;
-                if (GlobalConstant.FLAG_N.equals(resRecTypeEnum.getIsForm())) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resRecTypeEnum.getIsForm())) {
                     continue;
                 }
                 formFileName = resRecTypeEnum.getId(); //登记类型 ID  (如：CaseRegistry...)
                 //根据登记类型ID  获了XML文件
-                irbFormXp = new XmlParse(SpringUtil.getResource("classpath:" + GlobalConstant.RES_FORM_CONFIG_PATH + "/" + formFileName + ".xml").getFile());
+                irbFormXp = new XmlParse(SpringUtil.getResource("classpath:" + com.pinde.core.common.GlobalConstant.RES_FORM_CONFIG_PATH + "/" + formFileName + ".xml").getFile());
 
                 productTypeElements = irbFormXp.getRootElement().elements();//XML文件根节点下的子节点列表
                 jspPath = "";
@@ -115,7 +115,7 @@ public class InitResConfig implements ServletContextListener {
 
     private static void loadResFormDict(ServletContext context) {
         try {
-            XmlParse formXp = new XmlParse(SpringUtil.getResource("classpath:" + GlobalConstant.RES_FORM_CONFIG_PATH + "/formDict.xml").getFile());
+            XmlParse formXp = new XmlParse(SpringUtil.getResource("classpath:" + com.pinde.core.common.GlobalConstant.RES_FORM_CONFIG_PATH + "/formDict.xml").getFile());
             List<Element> formDictElements = formXp.getRootElement().elements();
             List<Map<String, Object>> resFormDictList = new ArrayList<Map<String, Object>>();
 

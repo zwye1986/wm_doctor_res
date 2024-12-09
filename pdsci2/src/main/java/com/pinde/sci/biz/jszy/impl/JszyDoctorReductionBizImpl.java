@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.JsresRecruitDocInfoMapper;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
@@ -13,7 +13,6 @@ import com.pinde.sci.dao.jszy.JszyResReductionExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ import java.util.Map;
  * Created by pdkj on 2017/11/28.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
 
     @Autowired
@@ -40,7 +39,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     public ResDoctorReduction findReductionByRecruitFlow(String recruitFlow) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecruitFlowEqualTo(recruitFlow);
         List<ResDoctorReduction> reductionList = reductionMapper.selectByExample(example);
         if (reductionList != null && reductionList.size() > 0) {
             return reductionList.get(0);
@@ -53,7 +52,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     public List<ResDoctorReduction> findReductionByMap(Map<String, Object> paramMap) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ResDoctorReduction> reductionList = reductionMapper.selectByExample(example);
         return reductionList;
     }
@@ -121,7 +120,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     public ResDoctorReduction findReductionByRecruitFlowandStatusId(String recruitFlow, String auditStatusId) {
         ResDoctorReductionExample example = new ResDoctorReductionExample();
         ResDoctorReductionExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruitFlow)){
             criteria.andRecruitFlowEqualTo(recruitFlow);
         }

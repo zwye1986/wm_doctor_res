@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResUserResumeLog;
-import com.pinde.sci.model.mo.ResUserResumeLogExample;
+import com.pinde.core.model.ResUserResumeLog;
+import com.pinde.core.model.ResUserResumeLogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

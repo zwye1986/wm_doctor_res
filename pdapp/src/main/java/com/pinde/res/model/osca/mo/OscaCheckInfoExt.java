@@ -1,8 +1,8 @@
 package com.pinde.res.model.osca.mo;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
-public class OscaCheckInfoExt extends OscaDoctorAssessment{
+public class OscaCheckInfoExt extends OscaDoctorAssessment {
 
 	//用户
 	private SysUser sysUser;

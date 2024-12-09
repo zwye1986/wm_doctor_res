@@ -1,8 +1,9 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.ResRecTypeEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -11,11 +12,9 @@ import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 
 	@Resource
@@ -118,9 +117,9 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 		return resDoctorSchProcesseList;
 	}
 	@Override
-	public List<ResRec> searchRecByProcess(String processFlow,String doctorFlow) {
+	public List<ResRec> searchRecByProcess(String processFlow, String doctorFlow) {
 //		ResRecCampaignRegistryExample campaignRegistryExample = new ResRecCampaignRegistryExample();
-//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		campaignRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecCampaignRegistry> campaignRegistryList = campaignRegistryMapper.selectByExample(campaignRegistryExample);
 //		List<ResRec> resRecList = campaignRegistryList.stream().map(e -> {
@@ -129,7 +128,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //			return resRec;
 //		}).collect(Collectors.toList());
 //		ResRecCaseRegistryExample caseRegistryExample = new ResRecCaseRegistryExample();
-//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		caseRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecCaseRegistry> caseRegistryList = caseRegistryMapper.selectByExample(caseRegistryExample);
 //		resRecList.addAll(caseRegistryList.stream().map(e -> {
@@ -138,7 +137,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecDiseaseRegistryExample diseaseRegistryExample = new ResRecDiseaseRegistryExample();
-//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		diseaseRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecDiseaseRegistry> diseaseRegistryList = diseaseRegistryMapper.selectByExample(diseaseRegistryExample);
 //		resRecList.addAll(diseaseRegistryList.stream().map(e -> {
@@ -147,7 +146,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
-//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		languageRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecLanguageRegistry> languageRegistryList = languageRegistryMapper.selectByExample(languageRegistryExample);
 //		resRecList.addAll(languageRegistryList.stream().map(e -> {
@@ -156,7 +155,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
-//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		operationRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecOperationRegistry> operationRegistryList = operationRegistryMapper.selectByExample(operationRegistryExample);
 //		resRecList.addAll(operationRegistryList.stream().map(e -> {
@@ -165,7 +164,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //			return resRec;
 //		}).collect(Collectors.toList()));
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 //		skillRegistryExample.setOrderByClause("OPER_TIME");
 //		List<ResRecSkillRegistry> skillRegistryList = skillRegistryMapper.selectByExample(skillRegistryExample);
 //		resRecList.addAll(skillRegistryList.stream().map(e -> {
@@ -175,7 +174,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //		}).collect(Collectors.toList()));
 //		return resRecList;
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
 		example.setOrderByClause("OPER_TIME");
 		return recMapper.selectByExampleWithBLOBs(example);
 	}
@@ -189,21 +188,21 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
 //		ResRecCampaignRegistryExample.Criteria campaignRegistryCriteria = campaignRegistryExample.createCriteria()
-//				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+//				.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 //		ResRecCaseRegistryExample.Criteria caseRegistryCriteria = caseRegistryExample.createCriteria()
-//				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+//				.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 //		ResRecDiseaseRegistryExample.Criteria diseaseRegistryCriteria = diseaseRegistryExample.createCriteria()
-//				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+//				.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 //		ResRecLanguageRegistryExample.Criteria languageRegistryCriteria = languageRegistryExample.createCriteria()
-//				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+//				.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 //		ResRecOperationRegistryExample.Criteria operationRegistryCriteria = operationRegistryExample.createCriteria()
-//				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+//				.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 //		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria()
-//				.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+//				.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 
 		ResRecExample example = new ResRecExample();
 	 ResRecExample.Criteria criteria=	example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andRecTypeIdEqualTo(recType);
 		if(StringUtil.isNotBlank(biaoJi)) {
 //			campaignRegistryCriteria.andAuditStatusIdIsNull();
 //			caseRegistryCriteria.andAuditStatusIdIsNull();
@@ -282,7 +281,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 			String groupFlow, String standardDeptId) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
 		SchRotationDeptExample.Criteria criter=example.createCriteria();
-		criter.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criter.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(groupFlow)) {
 			criter.andGroupFlowEqualTo(groupFlow);
 		}
@@ -304,12 +303,12 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 			try {
 				Document document = DocumentHelper.parseText(content);
 				Element rootElement = document.getRootElement();
-				Element afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_MANAGER+ResRecTypeEnum.AfterEvaluation.getId());
+                Element afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				if(afterEvaluation==null){
-					afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_HEAD+ResRecTypeEnum.AfterEvaluation.getId());
+                    afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				}
 				if(afterEvaluation==null){
-					afterEvaluation = rootElement.element(GlobalConstant.RES_ROLE_SCOPE_TEACHER+ResRecTypeEnum.AfterEvaluation.getId());
+                    afterEvaluation = rootElement.element(com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
 				}
 				List<Element> elements = null;
 				if(afterEvaluation!=null){
@@ -370,17 +369,17 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //		ResRecLanguageRegistryExample languageRegistryExample = new ResRecLanguageRegistryExample();
 //		ResRecOperationRegistryExample operationRegistryExample = new ResRecOperationRegistryExample();
 //		ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
-//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		campaignRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
-//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		caseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
-//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		diseaseRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
-//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		languageRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
-//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		operationRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
-//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+//		skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 //				.andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 //		campaignRegistryExample.setOrderByClause("OPER_TIME");
 //		caseRegistryExample.setOrderByClause("OPER_TIME");
@@ -427,7 +426,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //		return resRecList;
 
 		ResRecExample example = new ResRecExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(operUserFlow);
 		example.setOrderByClause("OPER_TIME");
 		return recMapper.selectByExampleWithBLOBs(example);
 	}
@@ -443,7 +442,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 		operUserFlow = StringUtil.defaultIfEmpty(operUserFlow,userFlow);
 		SysUser sysUser=jswjwBiz.readSysUser(operUserFlow);
 		ResDoctorSchProcess resDoctorSchProcess=iResDoctorProcessBiz.read(processFlow);
-		String recTypeId=ResRecTypeEnum.getNameById(formFileName);
+        String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName);
 		String currDate=DateUtil.getCurrDateTime();
 		ResRec rec=new ResRec();
 		rec.setRecFlow(recFlow);
@@ -526,7 +525,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 	public ResScore readScoreByProcessFlow(String processFlow) {
 		if(StringUtil.isNotBlank(processFlow)){
 			ResScoreExample example=new ResScoreExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andProcessFlowEqualTo(processFlow);
 			List<ResScore> list=scoreMapper.selectByExample(example);
 			if(list!=null&&list.size()>0){

@@ -7,9 +7,7 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchDeptRel;
 import com.pinde.sci.model.mo.SchExternalDept;
@@ -97,7 +95,7 @@ public class SchExternalController extends GeneralController{
 			int count=schExternalDeptBiz.save(schExternalDept);
 			if(count==0)
 			{
-				return GlobalConstant.SAVE_FAIL;
+                return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 			}
 		}else if(old.getPeopleNum().compareTo(schExternalDept.getPeopleNum())>0)
 		{
@@ -112,14 +110,14 @@ public class SchExternalController extends GeneralController{
 				int count=schExternalDeptBiz.save(schExternalDept);
 				if(count==0)
 				{
-					return GlobalConstant.SAVE_FAIL;
+                    return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 				}
 			}else{
 				return "已有"+result+"人安排本科室，无法修改";
 			}
 
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@RequestMapping(value = {"/saveExtDept" })
@@ -140,7 +138,7 @@ public class SchExternalController extends GeneralController{
 		schExternalDept.setSchDeptName(schDept.getSchDeptName());
 		if(StringUtil.isNotBlank(schExternalDept.getStandardDeptId()))
 		{
-			schExternalDept.setStandardDeptName(DictTypeEnum.StandardDept.getDictNameById(schExternalDept.getStandardDeptId()));
+            schExternalDept.setStandardDeptName(com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(schExternalDept.getStandardDeptId()));
 		}
 		//时间段按自然月拆分
 		Map<String,String>time=new HashMap<>();
@@ -159,9 +157,9 @@ public class SchExternalController extends GeneralController{
 		int count=schExternalDeptBiz.saveTimes(moreTimes,schExternalDept);
 		if(moreTimes!=null&&moreTimes.size()>0&&count==moreTimes.size())
 		{
-			return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	@RequestMapping(value = {"/delExternalDept" })
@@ -187,9 +185,9 @@ public class SchExternalController extends GeneralController{
 		int count=schExternalDeptBiz.delExternalDept(recordFlow);
 		if(count==recordFlow.length)
 		{
-			return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 
 }

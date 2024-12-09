@@ -1,23 +1,22 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.res.biz.jswjw.IJswjwChargeBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.base.SysOrgMapper;
-import com.pinde.sci.model.mo.SysDict;
-import com.pinde.sci.model.mo.SysDictExample;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysDictExample;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysOrgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JswjwChargeBizImpl implements IJswjwChargeBiz {
 	
 	@Autowired
@@ -35,7 +34,7 @@ public class JswjwChargeBizImpl implements IJswjwChargeBiz {
     @Override
     public List<SysOrg> searchOrgList(String orgCityId) {
         SysOrgExample example = new SysOrgExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgCityIdEqualTo(orgCityId).andOrgTypeIdEqualTo("Hospital");
         return orgMapper.selectByExample(example);
     }
@@ -153,7 +152,7 @@ public class JswjwChargeBizImpl implements IJswjwChargeBiz {
     @Override
     public List<SysDict> searchSpeList(String dictTypeId) {
         SysDictExample example = new SysDictExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andDictTypeIdEqualTo(dictTypeId);
         return dictMapper.selectByExample(example);
     }

@@ -4,16 +4,14 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pubedu.IStudyCourseBiz;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.StudyCourseDetailInfoMapper;
 import com.pinde.sci.dao.base.StudyCourseDetailMapper;
 import com.pinde.sci.dao.base.StudyCourseMapper;
-import com.pinde.sci.enums.pubedu.CourseDetailTypeEnum;
+import com.pinde.core.common.enums.pubedu.CourseDetailTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
  *
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class StudyCourseBizImpl implements IStudyCourseBiz {
 	@Autowired
 	private StudyCourseMapper courseMapper;
@@ -34,7 +32,7 @@ public class StudyCourseBizImpl implements IStudyCourseBiz {
 	@Override
 	public List<StudyCourse> findStudyCourseList(StudyCourse studyCourse) {
 		StudyCourseExample example = new StudyCourseExample();
-		StudyCourseExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        StudyCourseExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(null != studyCourse){
 			if(StringUtil.isNotBlank(studyCourse.getCourseFlow())){
 				criteria.andCourseFlowEqualTo(studyCourse.getCourseFlow());
@@ -59,7 +57,7 @@ public class StudyCourseBizImpl implements IStudyCourseBiz {
 	public List<StudyCourseDetail> findStudyCourseDetailByFlow(String courseFlow) {
 		if(StringUtil.isNotBlank(courseFlow)){
 			StudyCourseDetailExample example= new StudyCourseDetailExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andCourseFlowEqualTo(courseFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andCourseFlowEqualTo(courseFlow);
 			return detailMapper.selectByExample(example);
 		}
 		return null;
@@ -69,7 +67,7 @@ public class StudyCourseBizImpl implements IStudyCourseBiz {
 	public List<StudyCourseDetailInfo> findDetailInfoByFlow(String courseFlow) {
 		if(StringUtil.isNotBlank(courseFlow)){
 			StudyCourseDetailInfoExample example = new StudyCourseDetailInfoExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andCourseFlowEqualTo(courseFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andCourseFlowEqualTo(courseFlow);
 			return detailInfoMapper.selectByExample(example);
 		}
 		return null;
@@ -104,7 +102,7 @@ public class StudyCourseBizImpl implements IStudyCourseBiz {
 	@Override
 	public List<StudyCourse> findStudyCourseListOrderByASC(){
 		StudyCourseExample example = new StudyCourseExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("ORDINAL asc");
 		return courseMapper.selectByExample(example);
 	}
@@ -171,7 +169,7 @@ public class StudyCourseBizImpl implements IStudyCourseBiz {
 			detailInfo.setCourseFlow(detailInfo.getCourseFlow());
 			detailInfo.setDetailFlow(detailInfo.getDetailFlow());
 			detailInfo.setDetailTypeName(CourseDetailTypeEnum.getNameById(detailInfo.getDetailTypeId()));
-			detailInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            detailInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			detailInfo.setCreateTime(DateUtil.getCurrDateTime());
 			detailInfo.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 			detailInfo.setModifyTime(DateUtil.getCurrDateTime());
@@ -230,7 +228,7 @@ public class StudyCourseBizImpl implements IStudyCourseBiz {
 		int count=0;
 		if(null!=detail){
 			detail.setDetailFlow(PkUtil.getUUID());
-			detail.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            detail.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			detail.setCreateTime(DateUtil.getCurrDateTime());
 			detail.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 			detail.setModifyTime(DateUtil.getCurrDateTime());

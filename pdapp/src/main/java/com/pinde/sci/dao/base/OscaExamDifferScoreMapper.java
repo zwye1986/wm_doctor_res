@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaExamDifferScore;
-import com.pinde.sci.model.mo.OscaExamDifferScoreExample;
+import com.pinde.core.model.OscaExamDifferScore;
+import com.pinde.core.model.OscaExamDifferScoreExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

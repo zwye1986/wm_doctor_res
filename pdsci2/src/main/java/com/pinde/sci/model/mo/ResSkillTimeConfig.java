@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResSkillTimeConfig extends MybatisObject {
+public class ResSkillTimeConfig extends TeachingActivitySpeakerExample.MybatisObject {
     private String skillTimeFlow;
 
     private String testId;

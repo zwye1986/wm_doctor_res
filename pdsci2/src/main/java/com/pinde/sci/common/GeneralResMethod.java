@@ -1,6 +1,6 @@
 package com.pinde.sci.common;
 
-import com.pinde.sci.enums.res.RegistryTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 
 /**
  * Created by Administrator on 2016/3/10 0010.

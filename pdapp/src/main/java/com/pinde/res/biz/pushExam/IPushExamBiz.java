@@ -1,6 +1,6 @@
 package com.pinde.res.biz.pushExam;
 
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public interface IPushExamBiz {
 

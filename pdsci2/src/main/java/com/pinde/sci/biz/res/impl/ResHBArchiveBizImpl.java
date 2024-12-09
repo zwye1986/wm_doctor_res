@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResHBArchiveBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResHBArchiveExtMapper;
 import com.pinde.sci.model.mo.*;
@@ -13,7 +13,6 @@ import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,7 @@ import java.util.Map;
  * Created by www.0001.Ga on 2017-05-22.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
     @Autowired
     private ResArchiveSequenceMapper archiveSequenceMapper;
@@ -45,7 +44,7 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
         if (StringUtil.isNotBlank(archiveTime)) {
             ResArchiveSequenceExample example = new ResArchiveSequenceExample();
             ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-            criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime).andSessionNumberEqualTo(sessionNumber);
+            criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andArchiveTimeEqualTo(archiveTime).andSessionNumberEqualTo(sessionNumber);
             count = archiveSequenceMapper.countByExample(example);
 
         }
@@ -87,7 +86,7 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
     public List<ResArchiveSequence> allResArchiveSequence() {
         ResArchiveSequenceExample example = new ResArchiveSequenceExample();
         ResArchiveSequenceExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
         example.setOrderByClause("CREATE_TIME DESC");
         return archiveSequenceMapper.selectByExample(example);
     }

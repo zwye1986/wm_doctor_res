@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -12,8 +13,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.jsres.TrainCategoryEnum;
-import com.pinde.sci.enums.sch.ActivityTypeEnum;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
@@ -202,7 +201,7 @@ public class JsResActivityDoctorActivityStatisticsController extends GeneralCont
 		}
 		parMp.put("orgFlowList", orgFlowList);
 		parMp.put("docTypeList",docTypeList);
-		parMp.put("typeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        parMp.put("typeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		parMp.put("speId", trainingSpeId);
 		parMp.put("sessionNumbers", sessionNumbers);
 		parMp.put("userName", userName);
@@ -289,7 +288,7 @@ public class JsResActivityDoctorActivityStatisticsController extends GeneralCont
 		}
 		parMp.put("orgFlowList", orgFlowList);
 		parMp.put("docTypeList",docTypeList);
-		parMp.put("typeId", TrainCategoryEnum.DoctorTrainingSpe.getId());
+        parMp.put("typeId", com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());
 		parMp.put("speId", trainingSpeId);
 		parMp.put("sessionNumbers", sessionNumbers);
 		parMp.put("userName", userName);

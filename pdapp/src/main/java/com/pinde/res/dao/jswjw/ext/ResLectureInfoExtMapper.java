@@ -1,6 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.ResLectureInfo;
+import com.pinde.core.model.ResLectureInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

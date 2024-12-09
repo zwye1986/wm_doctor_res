@@ -1,7 +1,7 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.SchRotationDeptReq;
-import com.pinde.sci.model.mo.SchRotationDeptReqExample;
+import com.pinde.core.model.SchRotationDeptReq;
+import com.pinde.core.model.SchRotationDeptReqExample;
 
 import java.util.List;
 

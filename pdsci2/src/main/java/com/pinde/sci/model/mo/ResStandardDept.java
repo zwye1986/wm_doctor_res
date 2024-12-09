@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResStandardDept extends MybatisObject {
+public class ResStandardDept extends TeachingActivitySpeakerExample.MybatisObject {
     private String standardDeptFlow;
 
     private String standardDeptCode;

@@ -8,18 +8,16 @@ import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitExamMainMapper;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitExamMainExtMapper;
-import com.pinde.sci.enums.recruit.RecruitStatusEnum;
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.form.recruit.ExamInfoFlowForm;
 import com.pinde.sci.form.recruit.ExamInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
 
     @Autowired
@@ -49,7 +47,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
     public List<RecruitExamMain> searchAll(RecruitExamMain recruitExamMain) {
         RecruitExamMainExample example = new RecruitExamMainExample();
         RecruitExamMainExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(recruitExamMain.getOrgFlow()))
         {
             criteria.andOrgFlowEqualTo(recruitExamMain.getOrgFlow());
@@ -72,7 +70,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
         RecruitExamMainExample.Criteria criteria = example.createCriteria();
         criteria.andRecruitYearEqualTo(recruitYear);
         criteria.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<RecruitExamMain> recruitExamMains = recruitExamMainMapper.selectByExample(example);
         if (recruitExamMains != null && recruitExamMains.size() > 0){
             return recruitExamMains.get(0);
@@ -90,7 +88,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
         recruitExamMain.setRecruitYear(searchResult.getRecruitYear());
         recruitExamMain.setCfgFlow(searchResult.getCfgFlow());
         recruitExamMain.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-        recruitExamMain.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        recruitExamMain.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         recruitExamMain.setCreateTime(DateUtil.getCurrDateTime());
         recruitExamMain.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
         return recruitExamMainMapper.insertSelective(recruitExamMain);
@@ -123,7 +121,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
     @Override
     public int checkAuditingNum(String recruitYear, String orgFlow) {
         RecruitInfoExample example=new RecruitInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andSessionNumberEqualTo(recruitYear).andOrgFlowEqualTo(orgFlow)
                 .andAuditStatusIdEqualTo(RecruitStatusEnum.Passing.getId());
         return recruitInfoMapper.countByExample(example);
@@ -171,7 +169,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
         int c=recruitExamInfoBiz.saveExamInfo(examInfo);
         if(c==0)
         {
-            return GlobalConstant.SAVE_FAIL;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
         List<String> recordFlows=new ArrayList<>();
         if(roomInfos!=null)
@@ -184,7 +182,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
                     recordFlows.add(old.getRecordFlow());
                     roomInfo.setRecordFlow(old.getRecordFlow());
                 }
-                roomInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                roomInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                 roomInfo.setExamFlow(examInfo.getExamFlow());
                 recruitExamRoomInfoBiz.saveRoomInfo(roomInfo);
             }
@@ -194,7 +192,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
             for(RecruitExamRoomInfo roomInfo:olds)
             {
                 if(!recordFlows.contains(roomInfo.getRecordFlow())) {
-                    roomInfo.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    roomInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                     recruitExamRoomInfoBiz.saveRoomInfo(roomInfo);
                 }
             }
@@ -205,7 +203,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
     @Override
     public int checkPassedNum(String recruitYear, String orgFlow) {
         RecruitInfoExample example=new RecruitInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andSessionNumberEqualTo(recruitYear).andOrgFlowEqualTo(orgFlow)
                 .andAuditStatusIdEqualTo(RecruitStatusEnum.Passed.getId());
         return recruitInfoMapper.countByExample(example);
@@ -214,7 +212,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
     @Override
     public RecruitExamMain readByCfgFlow(String cfgFlow, String orgFlow) {
         RecruitExamMainExample example=new RecruitExamMainExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCfgFlowEqualTo(cfgFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCfgFlowEqualTo(cfgFlow)
         .andOrgFlowEqualTo(orgFlow);
         List<RecruitExamMain> mains=recruitExamMainMapper.selectByExample(example);
         if(mains!=null&&mains.size()>0)
@@ -248,7 +246,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
         {
             RecruitInfo recruitInfo=recruitInfos.get(j);
             ExamInfoFlowForm flowForm=flows.get(j);
-            recruitInfo.setWriteExamFlag(GlobalConstant.FLAG_Y);
+            recruitInfo.setWriteExamFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
             recruitInfo.setMainFlow(flowForm.getMainFlow());
             recruitInfo.setExamFlow(flowForm.getExamFlow());
             recruitInfo.setExamRoomFlow(flowForm.getRecordFlow());
@@ -259,7 +257,7 @@ public class RecruitExamMainBizImpl implements IRecruitExamMainBiz {
     @Override
     public List<RecruitInfo> readMainRecruitInfos(String mainFlow) {
         RecruitInfoExample example=new RecruitInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andMainFlowEqualTo(mainFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andMainFlowEqualTo(mainFlow);
         return recruitInfoMapper.selectByExample(example);
     }
 }

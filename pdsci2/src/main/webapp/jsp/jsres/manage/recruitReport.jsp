@@ -46,7 +46,8 @@
 
     <!-- 统计 -->
     <div class="main-container" data-index="statistics">
-        <iframe src="https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/2bb4a74b-e2b8-48ed-9862-e0edc26f21cb?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))"  height="2100" width="1460"></iframe>
+<%--        <iframe src="https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/2bb4a74b-e2b8-48ed-9862-e0edc26f21cb?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))"  height="2100" width="1460"></iframe>--%>
+        <iframe src="https://js.ezhupei.com:5601/app/dashboards?auth_provider_hint=anonymous1#/view/1235a7a3-ea19-436d-89e6-505cf1944b06?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))" height="2100" width="1460"></iframe>
 <%--        <iframe src="https://restest.njpdxx.com:5650/app/dashboards?auth_provider_hint=anonymous1#/view/2bb4a74b-e2b8-48ed-9862-e0edc26f21cb?embed=true&_g=(filters:!(),refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&hide-filter-bar=true"  height="2100" width="1460"></iframe>--%>
     </div>
 </div>

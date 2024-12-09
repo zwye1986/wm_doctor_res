@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysSubjCode;
-import com.pinde.sci.model.mo.SysSubjCodeExample;
+import com.pinde.core.model.SysSubjCode;
+import com.pinde.core.model.SysSubjCodeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

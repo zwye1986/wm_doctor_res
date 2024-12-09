@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -11,10 +12,9 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.res.DeptActivityItemTypeEnum;
+import com.pinde.core.common.enums.DeptActivityItemTypeEnum;
 import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
 import com.pinde.sci.form.res.QingpuLectureCfgTitleExt;
 import com.pinde.sci.model.mo.*;
@@ -123,7 +123,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 			{
 				String itemFlow= (String) r.get("itemFlow");
 				PubFile file = fileBiz.readFile(itemFlow);
-				if(file!=null&&GlobalConstant.RECORD_STATUS_Y.equals(file.getRecordStatus()))
+                if (file != null && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(file.getRecordStatus()))
 					fileMap.put(itemFlow, file);
 			}
 		}
@@ -145,10 +145,10 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 		Map<String,String> map=new HashMap<>();
 		String result = fileBiz.addDeptFile(file, itemFlow);
 		if(result != "fail"){
-			map.put("result",GlobalConstant.UPLOAD_SUCCESSED);
+            map.put("result", com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED);
 			map.put("fileFlow",result);
 		}else{
-			map.put("result",GlobalConstant.UPLOAD_FAIL);
+            map.put("result", com.pinde.core.common.GlobalConstant.UPLOAD_FAIL);
 			map.put("fileFlow",result);
 		}
 		return map;
@@ -159,14 +159,14 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 		PubFile file=fileBiz.readFile(fileFlow);
 		if(file!=null)
 		{
-			file.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int l=fileBiz.editFile(file);
 			if(l==1)
 			{
-				return GlobalConstant.DELETE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 	//下载附件
 	@RequestMapping(value = {"/downFile" }, method = RequestMethod.GET)
@@ -419,10 +419,10 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 				eval.setOrgName(doctor.getOrgName());
 			}
 		}
-		if(deptActivityBiz.savePlanItemEval(eval) != GlobalConstant.ZERO_LINE){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (deptActivityBiz.savePlanItemEval(eval) != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 
 	private String createGradeXml(Map<String,String[]> gradeInfo){
@@ -646,7 +646,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 					gradeAllMap.put(evalFlow1,gradeMap);
 				}
 			}
-			createExcle(item,titleFormList,gradeAllMap,evals,response,"Y",request);
+            createExcle(item, titleFormList, gradeAllMap, evals, response, com.pinde.core.common.GlobalConstant.FLAG_Y, request);
 			String fileName = new String(("评价表.zip").getBytes("gbk"),"ISO8859-1" );
 			ExcleUtile.setCookie(response);
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
@@ -663,14 +663,14 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 			evals.add(eval);
 			String fileName = new String((eval.getOperUserName()+"-评价表.xls").getBytes("gbk"),"ISO8859-1" );
 			ExcleUtile.setCookie(response);
-			createExcle(item,titleFormList,gradeAllMap,evals,response,"N",request);
+            createExcle(item, titleFormList, gradeAllMap, evals, response, com.pinde.core.common.GlobalConstant.FLAG_N, request);
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 			response.setContentType("application/octet-stream;charset=UTF-8");
 		}
 	}
 
 	private void createExcle(SysDeptMonthPlanItem item, List<QingpuLectureCfgTitleExt> titleFormList, Map<String, Object> gradeAllMap, List<SysDeptMonthPlanItemEval> evals, HttpServletResponse response, String isList, HttpServletRequest request) throws IOException {
-		if("Y".equals(isList))
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isList))
 		{
 			OutputStream out=response.getOutputStream();
 			File zip = new File(request.getRealPath("/files") + "/评价表.zip");// 压缩文件

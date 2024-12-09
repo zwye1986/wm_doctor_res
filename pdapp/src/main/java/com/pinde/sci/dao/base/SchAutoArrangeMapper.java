@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchAutoArrange;
-import com.pinde.sci.model.mo.SchAutoArrangeExample;
+import com.pinde.core.model.SchAutoArrange;
+import com.pinde.core.model.SchAutoArrangeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

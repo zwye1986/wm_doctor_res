@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResErrorSchNotice;
-import com.pinde.sci.model.mo.ResErrorSchNoticeExample;
+import com.pinde.core.model.ResErrorSchNotice;
+import com.pinde.core.model.ResErrorSchNoticeExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

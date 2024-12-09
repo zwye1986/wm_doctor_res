@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.DoctorUntiedRecording;
-import com.pinde.sci.model.mo.DoctorUntiedRecordingExample;
+import com.pinde.core.model.DoctorUntiedRecording;
+import com.pinde.core.model.DoctorUntiedRecordingExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

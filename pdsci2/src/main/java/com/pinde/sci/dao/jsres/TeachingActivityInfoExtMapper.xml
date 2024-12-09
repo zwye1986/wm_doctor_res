@@ -3,6 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper">
     <resultMap id="activityMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
         <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
         <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
         <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
@@ -23,6 +24,7 @@
         <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
         <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
         <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="REALITY_SPEAKER_USER_CODE" property="realitySpeakerUserCode" jdbcType="VARCHAR" />
 
     </resultMap>
     <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
@@ -584,13 +586,88 @@
                 )
             </if>
         </if>
-        <if test='startTime!=null and startTime!=""'>
+        <if test='userName!=null and userName!=""'>
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='activityName!=null and activityName!=""'>
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID in
+            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID in
+            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            AND D.DEPT_NAME in
+            <foreach collection='deptName.split(",")' item="dName" open="(" close=")" separator=",">
+                #{dName}
+            </foreach>
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
             and START_TIME  >= #{startTime}
         </if>
-        <if test='endTime!=null and endTime!=""'>
-            and START_TIME <![CDATA[<]]>= #{endTime}
+        <if test='activityStatus!=null and activityStatus!="" '>
+            and activity_status = #{activityStatus}
         </if>
-        order by START_TIME,END_TIME desc, RESULT.EVAL_SCORE desc
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        <!--判断活动是否有效 -->
+        <if test='isEffective != null and isEffective !="" and isEffective =="1"'>
+            and RESULT.SCAN_NUM > 0
+            and info.is_effective='Y'
+        </if>
+        <if test='isEffective != null and isEffective !="" and isEffective =="0"'>
+            and ((RESULT.SCAN_NUM  is null or RESULT.SCAN_NUM = '')
+            OR (  RESULT.SCAN_NUM > 0  and info.is_effective='N'
+            ))
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="Y" '>
+            and IMAGE_URL LIKE '%imageUrl%'
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="N" '>
+            and (IMAGE_URL is null OR IMAGE_URL NOT LIKE '%imageUrl%')
+        </if>
+        order by
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderByClo)">
+            <choose>
+                <when test="orderByClo == 'activityType'">
+                    activity_type_id
+                </when>
+                <when test="orderByClo == 'activityName'">
+                    NLSSORT(activity_name,'NLS_SORT = SCHINESE_PINYIN_M')
+                </when>
+                <when test="orderByClo == 'userName'">
+                    NLSSORT(user_name,'NLS_SORT = SCHINESE_PINYIN_M')
+                </when>
+                <when test="orderByClo == 'deptName'">
+                    NLSSORT(dept_name,'NLS_SORT = SCHINESE_PINYIN_M')
+                </when>
+                <otherwise>
+
+                </otherwise>
+            </choose>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(orderByFall) and 'DESC' == orderByFall">
+                desc
+            </if>
+            ,
+        </if>
+
+        START_TIME DESC,END_TIME desc, RESULT.EVAL_SCORE desc
     </select>
     <select id="getActivitys" resultMap="activityMap">
         SELECT INFO.*, SU.USER_NAME, D.DEPT_NAME
@@ -610,6 +687,228 @@
         </if>
         order by INFO.START_TIME desc,INFO.END_TIME desc
     </select>
+
+
+
+    <select id="findActivityList3" resultMap="activityMap">
+        SELECT distinct INFO.ACTIVITY_FLOW,
+        INFO.ACTIVITY_NAME,
+        INFO.DEPT_FLOW,
+        INFO.ORG_FLOW,
+        INFO.SPEAKER_FLOW,
+        INFO.SPEAKER_PHONE,
+        INFO.ACTIVITY_TYPE_ID,
+        INFO.ACTIVITY_TYPE_NAME,
+        INFO.START_TIME,
+        INFO.END_TIME,
+        INFO.ACTIVITY_ADDRESS,
+        INFO.ACTIVITY_REMARK,
+        INFO.FILE_FLOW,
+        INFO.RECORD_STATUS,
+        INFO.CREATE_TIME,
+        INFO.CREATE_USER_FLOW,
+        INFO.MODIFY_TIME,
+        INFO.MODIFY_USER_FLOW,
+        INFO.IS_EFFECTIVE,
+        INFO.REALITY_SPEAKER,
+        INFO.ACTIVITY_STATUS,
+        INFO.SUBMIT_ROLE,
+        INFO.AUDIT_ROLE,
+        INFO.OPINION,
+        INFO.MANUAL_END_STATUS,
+        INFO.MANUAL_END_TIEM,
+        INFO.JOIN_NUM,
+        INFO.ADD_ROLE_FLOW,
+        INFO.AUDIT_ROLE_FLOW,
+        INFO.ROLE_ID,
+        INFO.LIMIT_NUM,
+        INFO.ACTIVITY_TYPE_ID_OLD,
+        INFO.ACTIVITY_TYPE_NAME_OLD,
+        INFO.REASON_FOR_DISAGREEMENT,
+        INFO.IS_LOOK,
+        SU.USER_CODE AS USER_CODE,
+        CASE
+        WHEN SU.USER_NAME = INFO.REALITY_SPEAKER THEN
+        SU.USER_CODE ELSE SU2.USER_CODE
+        END AS REALITY_SPEAKER_USER_CODE,
+           SU.USER_NAME,
+           D.DEPT_NAME,
+           RESULT.EVAL_SCORE,
+           F.FILE_NAME,RESULT.SCAN_NUM,
+           RESULT2.REGIEST_NUM
+
+        <if test="roleFlag=='doctor'.toString()">
+            ,R.RESULT_FLOW,R.IS_REGIEST,R.IS_SCAN,R.IS_SCAN2,R.EVAL_SCORE EVAL_SCORE2,R.IS_EFFECTIVE IS_EFFECTIVE2
+        </if>
+        FROM TEACHING_ACTIVITY_INFO INFO
+        LEFT JOIN SYS_USER SU
+        ON INFO.SPEAKER_FLOW = SU.USER_FLOW
+        LEFT JOIN (
+        SELECT USER_NAME, USER_CODE, RECORD_STATUS,ROW_NUMBER() OVER (PARTITION BY USER_NAME ORDER BY USER_CODE) AS RN
+        FROM SYS_USER
+        ) SU2 ON INFO.REALITY_SPEAKER = SU2.USER_NAME AND SU2.RN = 1
+        LEFT JOIN SYS_DEPT D
+        ON D.DEPT_FLOW = INFO.DEPT_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) EVAL_SCORE,count(1) SCAN_NUM
+        FROM TEACHING_ACTIVITY_RESULT T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.IS_SCAN='Y'
+        AND T.IS_SCAN2='Y'
+        GROUP BY ACTIVITY_FLOW) RESULT
+        ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        LEFT JOIN (SELECT ACTIVITY_FLOW, count(1) REGIEST_NUM
+        FROM TEACHING_ACTIVITY_RESULT T
+        WHERE T.RECORD_STATUS = 'Y'
+        AND T.IS_REGIEST='Y'
+        GROUP BY ACTIVITY_FLOW) RESULT2
+        ON RESULT2.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        <if test="roleFlag=='doctor'.toString()">
+            LEFT JOIN TEACHING_ACTIVITY_RESULT R
+            ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+            AND R.RECORD_STATUS='Y'
+            AND R.USER_FLOW=#{userFlow}
+        </if>
+        LEFT JOIN PUB_FILE F ON INFO.FILE_FLOW=F.FILE_FLOW AND F.RECORD_STATUS='Y'
+        <!--        <if test='school != null and school !=""'>-->
+        <!--            LEFT JOIN RES_DOCTOR ED ON INFO.SPEAKER_FLOW = ED.DOCTOR_FLOW-->
+        <!--        </if>-->
+        WHERE INFO.RECORD_STATUS = 'Y'
+        <!--        <if test='school != null and school !=""'>-->
+        <!--            and ED.SCHOOL = #{school}-->
+        <!--        </if>-->
+        AND SU.RECORD_STATUS = 'Y'
+        AND COALESCE( SU2.RECORD_STATUS, 'Y' ) = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        <if test='roleFlag!=null and roleFlag!=""'>
+            <if test="roleFlag=='teach'.toString()">
+                AND INFO.SPEAKER_FLOW = #{userFlow}
+            </if>
+            <if test="roleFlag=='head'.toString() or roleFlag == 'secretary'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                select SUD.DEPT_fLOW
+                from SYS_USER_DEPT sud
+                where sud.RECORD_STATUS='Y'
+                and sud.USER_FLOW=#{userFlow}
+                UNION
+                SELECT DEPT_FLOW
+                FROM SYS_USER WHERE USER_FLOW=#{userFlow}
+                )
+            </if>
+            <if test="roleFlag=='spe'.toString()">
+                AND INFO.DEPT_FLOW IN (
+                select dept_flow from Res_Training_Spe_Dept
+                where record_status='Y'
+                AND ORG_FLOW = #{orgFlow}
+                and training_spe_id in(
+                SELECT res_training_spe_id FROM sys_user
+                where user_flow =#{userFlow}
+                )
+                )
+            </if>
+            <if test="roleFlag=='local'.toString()">
+                AND INFO.ORG_FLOW = #{orgFlow}
+                AND INFO.DEPT_FLOW IN (SELECT DEPT_FLOW
+                FROM SYS_DEPT
+                WHERE ORG_FLOW = #{orgFlow}
+                AND RECORD_STATUS = 'Y')
+            </if>
+            <if test="roleFlag=='doctor'.toString()">
+                <if test="isNew!=null and isNew!=''">
+                    AND START_TIME  <![CDATA[>=]]> to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                    AND end_TIME >= to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                </if>
+                <if test="isEval!=null and isEval!=''">
+                    AND (IS_REGIEST ='Y' OR IS_SCAN='Y')
+                    AND EXISTS (
+                    SELECT 1 FROM Teaching_activity_result
+                    WHERE RECORD_STATUS='Y' AND  USER_FLOW=#{userFlow}
+                    AND Teaching_activity_result.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+                    )
+                </if>
+
+                and info.dept_flow in ( select sd.dept_flow
+                from pdsci.sys_dept sd
+                where sd.record_status = 'Y'
+                and ( exists (
+                select null
+                from pdsci.res_doctor_sch_process rdsp
+                where rdsp.record_status = 'Y'
+                and rdsp.dept_flow = sd.dept_flow
+                and rdsp.user_flow=#{userFlow}
+                <if test='isCurrent!=null and isCurrent!=""'>
+                    and rdsp.sch_start_date <![CDATA[<=]]>to_char(sysdate,'yyyy-mm-dd')
+                    and rdsp.sch_end_date>=to_char(sysdate,'yyyy-mm-dd')
+                </if>
+                )
+                <if test='isCurrent==null or isCurrent==""'>
+                    <if test='orgFlow!=null and orgFlow!=""'>
+                        or
+                        sd.org_flow=#{orgFlow}
+                    </if>
+                </if>
+                )
+                )
+            </if>
+        </if>
+        <if test='userName!=null and userName!=""'>
+            AND SU.USER_NAME LIKE CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='activityName!=null and activityName!=""'>
+            AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID in
+            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test='activityTypeId!=null and activityTypeId!=""'>
+            AND INFO.ACTIVITY_TYPE_ID in
+            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test='deptName!=null and deptName!=""'>
+            AND D.DEPT_NAME in
+            <foreach collection='deptName.split(",")' item="dName" open="(" close=")" separator=",">
+                #{dName}
+            </foreach>
+        </if>
+        <if test='startTime!=null and startTime!="" and (endTime==null or endTime=="")'>
+            and START_TIME  >= #{startTime}
+        </if>
+        <if test='activityStatus!=null and activityStatus!="" '>
+            and activity_status = #{activityStatus}
+        </if>
+        <if test='endTime!=null and endTime!="" and (startTime==null or startTime=="")'>
+            and END_TIME <![CDATA[<]]>= #{endTime}
+        </if>
+        <if test='endTime!=null and endTime!="" and startTime!=null and startTime!=""'>
+            and(
+            (START_TIME>=#{startTime} and #{endTime}>=START_TIME)
+            or
+            (END_TIME>=#{startTime} and #{endTime}>=END_TIME)
+            )
+        </if>
+        <!--判断活动是否有效 -->
+        <if test='isEffective != null and isEffective !="" and isEffective =="1"'>
+            and RESULT.SCAN_NUM > 0
+            and info.is_effective='Y'
+        </if>
+        <if test='isEffective != null and isEffective !="" and isEffective =="0"'>
+            and ((RESULT.SCAN_NUM  is null or RESULT.SCAN_NUM = '')
+            OR (  RESULT.SCAN_NUM > 0  and info.is_effective='N'
+            ))
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="Y" '>
+            and IMAGE_URL LIKE '%imageUrl%'
+        </if>
+        <if test='isUploadImg!=null and isUploadImg=="N" '>
+            and (IMAGE_URL is null OR IMAGE_URL NOT LIKE '%imageUrl%')
+        </if>
+        order by START_TIME,END_TIME desc, RESULT.EVAL_SCORE desc
+    </select>
+
     <resultMap id="DeptActivityMap" type="hashmap" >
         <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
         <result column="QTY" property="qty" jdbcType="VARCHAR" />

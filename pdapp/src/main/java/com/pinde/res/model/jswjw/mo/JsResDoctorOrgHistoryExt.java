@@ -1,8 +1,8 @@
 package com.pinde.res.model.jswjw.mo;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorOrgHistory;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorOrgHistory;
+import com.pinde.core.model.SysUser;
 
 public class JsResDoctorOrgHistoryExt extends ResDoctorOrgHistory{
 

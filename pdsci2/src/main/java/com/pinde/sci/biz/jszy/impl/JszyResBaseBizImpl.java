@@ -6,13 +6,10 @@ import com.pinde.sci.biz.jszy.IJszyResBaseBiz;
 import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jszy.JszyResBaseExtMapper;
-import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
@@ -23,7 +20,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.bind.JAXBException;
@@ -38,7 +34,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 
 	@Autowired
@@ -81,39 +77,39 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 			baseExtInfo=new JszyBaseExtInfoForm();
 		}
 		if(baseInfoForm!=null){
-			if(GlobalConstant.TEACH_CONDITION.equals(flag)){
+            if (com.pinde.core.common.GlobalConstant.TEACH_CONDITION.equals(flag)) {
 				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
-			}else  if (GlobalConstant.ORG_MANAGE.equals(flag)){
+            } else if (com.pinde.core.common.GlobalConstant.ORG_MANAGE.equals(flag)) {
 				baseExtInfo.setOrganizationManage(baseInfoForm.getOrganizationManage());
-			}else if(GlobalConstant.SUPPORT_CONDITION.equals(flag)){
+            } else if (com.pinde.core.common.GlobalConstant.SUPPORT_CONDITION.equals(flag)) {
 				baseExtInfo.setSupportCondition(baseInfoForm.getSupportCondition());
-			}else if(GlobalConstant.BASIC_INFO.equals(flag)){
+            } else if (com.pinde.core.common.GlobalConstant.BASIC_INFO.equals(flag)) {
 				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
 			}
 		}
 		xml=JaxbUtil.convertToXml(baseExtInfo);
 		resBase.setBaseInfo(xml);
-		resBase.setBaseStatusId(JszyResDoctorAuditStatusEnum.NotSubmit.getId());
-		resBase.setBaseStatusName(JszyResDoctorAuditStatusEnum.NotSubmit.getName());
+        resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+        resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 		if(StringUtil.isNotBlank(resBase.getResApprovalNumberId())){
 			resBase.setResApprovalNumberId(resBase.getResApprovalNumberId());
-			resBase.setResApprovalNumberName(DictTypeEnum.getDictName(DictTypeEnum.ResidentBaseApproveNum, resBase.getResApprovalNumberId()));
+            resBase.setResApprovalNumberName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.ResidentBaseApproveNum, resBase.getResApprovalNumberId()));
 		}
 		if(StringUtil.isNotBlank(resBase.getGpsApprovalNumberId())){
 			resBase.setGpsApprovalNumberId(resBase.getGpsApprovalNumberId());
-			resBase.setGpsApprovalNumberName(DictTypeEnum.getDictName(DictTypeEnum.GeneralBaseApproNum, resBase.getGpsApprovalNumberId()));
+            resBase.setGpsApprovalNumberName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.GeneralBaseApproNum, resBase.getGpsApprovalNumberId()));
 		}
 		if(StringUtil.isNotBlank(resBase.getBaseGradeId())){
 			resBase.setBaseGradeId(resBase.getBaseGradeId());
-			resBase.setBaseGradeName(DictTypeEnum.getDictName(DictTypeEnum.BaseLevel, resBase.getBaseGradeId()));
+            resBase.setBaseGradeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseLevel, resBase.getBaseGradeId()));
 		}
 		if(StringUtil.isNotBlank(resBase.getBaseTypeId())){
 			resBase.setBaseTypeId(resBase.getBaseTypeId());
-			resBase.setBaseTypeName(DictTypeEnum.getDictName(DictTypeEnum.BaseType, resBase.getBaseTypeId()));
+            resBase.setBaseTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseType, resBase.getBaseTypeId()));
 		}
 		if(StringUtil.isNotBlank(resBase.getBasePropertyId())){
 			resBase.setBasePropertyId(resBase.getBasePropertyId());
-			resBase.setBasePropertyName(DictTypeEnum.getDictName(DictTypeEnum.BasProperty, resBase.getBasePropertyId()));
+            resBase.setBasePropertyName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BasProperty, resBase.getBasePropertyId()));
 		}
 		return saveResBase(resBase);
   	}
@@ -137,7 +133,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 		List<ResOrgSpe> oldStatusNList = new ArrayList<ResOrgSpe>();
 		if(exitSpeList != null && !exitSpeList.isEmpty()){
 				for(ResOrgSpe  s: exitSpeList){
-					if(GlobalConstant.RECORD_STATUS_Y.equals(s.getRecordStatus())){
+                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(s.getRecordStatus())) {
 						deleteMap.put(s.getOrgSpeFlow(), s );
 						oldStatusYList.add(s);
 					}else{
@@ -171,7 +167,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 						for(ResOrgSpe N :oldStatusNList){
 							if(s.getSpeTypeId().equals(N.getSpeTypeId()) &&  s.getSpeId().equals(N.getSpeId()) && orgFlow.equals(N.getOrgFlow()) ){
 								addFlag = false;
-								N.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                                N.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 								resOrgSpeBiz.saveResOrgSpe(N);
 								break;
 							}
@@ -189,17 +185,17 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 		if(deleteMap.size()>0){
 			for(Entry<String, ResOrgSpe> entry : deleteMap.entrySet()){
 				ResOrgSpe delOrgSpe = entry.getValue();
-				delOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                delOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				resOrgSpeBiz.saveResOrgSpe(delOrgSpe);
 			}
 		}
 		ResBase resBase=readBase(orgFlow);
 		if (resBase!=null) {
-			resBase.setBaseStatusId(JszyResDoctorAuditStatusEnum.NotSubmit.getId());
-			resBase.setBaseStatusName(JszyResDoctorAuditStatusEnum.NotSubmit.getName());
+            resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+            resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 			saveResBase(resBase);
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 	@Override
 	public List<JszyResBaseExt> searchResBaseExtList(Map<String, Object> paramMap) {
@@ -367,7 +363,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 	@Override
 	public List<AttachedUnitInfo> queryUnitInfoList(String orgFlow) {
 		AttachedUnitInfoExample example = new AttachedUnitInfoExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgInfoFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgInfoFlowEqualTo(orgFlow);
 		return auiMapper.selectByExampleWithBLOBs(example);
 	}
 
@@ -441,9 +437,9 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 				return "success:"+url;
 			} catch (Exception e) {
 				e.printStackTrace();
-				return GlobalConstant.UPLOAD_FAIL;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 }

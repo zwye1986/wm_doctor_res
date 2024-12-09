@@ -6,18 +6,16 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.portal.IPortalInfoManageBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.portal.PortalInfoExtMapper;
-import com.pinde.sci.enums.inx.InfoStatusEnum;
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.sci.form.portal.PortalInfoForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.PortalInfoExample.Criteria;
 import com.pinde.sci.model.portal.PortalInfoExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -29,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	@Autowired
 	private PortalInfoMapper inxInfoMapper;
@@ -81,11 +79,11 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 			fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if (!(mimeList.contains(fileType) && suffixList.contains(suffix))) {
-				return GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR;
 			}
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if (file.getSize() > limitSize * 1024 * 1024) {
-				return GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M";
+                return com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M";
 			}
 			try {
 				/*创建目录*/
@@ -103,10 +101,10 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 				return "success:" + dateString + "/" + fileName;
 			} catch (Exception e) {
 				e.printStackTrace();
-				return GlobalConstant.UPLOAD_FAIL;
+                return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 
 	@Override
@@ -140,7 +138,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 			GeneralMethod.setRecordInfo(info, false);
 			return this.inxInfoMapper.updateByPrimaryKeySelective(info);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -178,7 +176,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						return GlobalConstant.ZERO_LINE;
+                        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 					}
 
 				}
@@ -191,23 +189,23 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 					if (file.exists()) {
 						boolean delRestlt = file.delete();
 						if (delRestlt) {
-							return GlobalConstant.ONE_LINE;
+                            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					return GlobalConstant.ZERO_LINE;
+                    return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public List<PortalInfo> getList(PortalInfoForm form,List<String> statusList) {
 		PortalInfoExample example = new PortalInfoExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andInfoStatusIdNotEqualTo(InfoStatusEnum.Failure.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andInfoStatusIdNotEqualTo(InfoStatusEnum.Failure.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(form.getRecordStatus())) {
 			criteria.andRecordStatusEqualTo(form.getRecordStatus());
 		}
@@ -254,7 +252,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 			GeneralMethod.setRecordInfo(info, false);
 			return this.inxInfoMapper.updateByPrimaryKeySelective(info);
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -279,7 +277,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	public List<PortalFile> getFileList(PortalFile file) {
 		PortalFileExample example = new PortalFileExample();
 		PortalFileExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(file!=null){
 			if (StringUtil.isNotBlank(file.getFileName())) {
 				criteria.andFileNameLike("%" + file.getFileName() + "%");
@@ -354,7 +352,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	@Override
 	public List<PortalSuggest> getSuggestList(PortalSuggest suggest) {
 		PortalSuggestExample example = new PortalSuggestExample();
-		PortalSuggestExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        PortalSuggestExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(suggest!=null){
 			if(StringUtil.isNotBlank(suggest.getSuggestTitle())){
 				criteria.andSuggestTitleLike("%"+suggest.getSuggestTitle()+"%");
@@ -388,7 +386,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	@Override
 	public List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain,String order) {
 		JsszportalCommunicationMainExample example = new JsszportalCommunicationMainExample();
-		JsszportalCommunicationMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsszportalCommunicationMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(communicationMain!=null){
 			if(StringUtil.isNotBlank(communicationMain.getDiseaseId())){
 				criteria.andDiseaseIdEqualTo(communicationMain.getDiseaseId());
@@ -429,7 +427,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	@Override
 	public List<JsszportalCommunicationRe> searchCommunicationRe(JsszportalCommunicationRe communicationRe) {
 		JsszportalCommunicationReExample example = new JsszportalCommunicationReExample();
-		JsszportalCommunicationReExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        JsszportalCommunicationReExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(communicationRe!=null){
 			if(StringUtil.isNotBlank(communicationRe.getMainFlow())){
 				criteria.andMainFlowEqualTo(communicationRe.getMainFlow());

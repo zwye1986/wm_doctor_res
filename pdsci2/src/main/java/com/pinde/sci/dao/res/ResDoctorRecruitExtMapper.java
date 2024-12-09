@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorRecruit;

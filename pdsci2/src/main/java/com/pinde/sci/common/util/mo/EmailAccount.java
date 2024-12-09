@@ -1,8 +1,8 @@
 package com.pinde.sci.common.util.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class EmailAccount extends MybatisObject {
+public class EmailAccount extends TeachingActivitySpeakerExample.MybatisObject {
 
     // 邮箱用户
     private String username;

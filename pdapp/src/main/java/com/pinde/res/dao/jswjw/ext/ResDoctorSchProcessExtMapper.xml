@@ -3821,13 +3821,13 @@
 
     <resultMap id="docOrgHistoryExtMap" type="com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt"
                extends="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.BaseResultMap">
-        <association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor">
+        <association property="resDoctor" javaType="com.pinde.core.model.ResDoctor">
             <id column="doctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
             <result column="doctorName" jdbcType="VARCHAR" property="doctorName"/>
             <result column="dsessionNumber" jdbcType="VARCHAR" property="sessionNumber"/>
             <result column="dtrainingSpeName" jdbcType="VARCHAR" property="trainingSpeName"/>
         </association>
-        <association property="sysUser" javaType="com.pinde.sci.model.mo.SysUser">
+        <association property="sysUser" javaType="com.pinde.core.model.SysUser">
             <id column="user_Flow" jdbcType="VARCHAR" property="userFlow"/>
             <result column="USER_HEAD_IMG" jdbcType="VARCHAR" property="userHeadImg"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>

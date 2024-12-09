@@ -1,9 +1,9 @@
 package com.pinde.res.biz.stdp;
 
-import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
-import com.pinde.sci.model.mo.ResAssessCfg;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.DeptTeacherGradeInfo;
+import com.pinde.core.model.ResAssessCfg;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

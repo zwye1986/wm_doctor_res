@@ -1,16 +1,15 @@
 package com.pinde.sci.ctrl.sys;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.PortalColumn;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysRole;
@@ -59,8 +58,8 @@ public class RoleController extends GeneralController{
 	@RequestMapping(value = "/list",method={RequestMethod.POST,RequestMethod.GET})
 	public String list(String currWsId,String roleName,Model model,HttpServletRequest request) {
 		SysRole sysRole = new SysRole();
-		if(StringUtil.isBlank(currWsId)){ 
-			currWsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+		if(StringUtil.isBlank(currWsId)){
+            currWsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		}
 		sysRole.setWsId(currWsId);
 		
@@ -86,8 +85,8 @@ public class RoleController extends GeneralController{
 			model.addAttribute("sysRole", sysRole);
 		}
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		model.addAttribute("sysRoleList", sysRoleList);
 		return "sys/role/edit";
@@ -114,13 +113,13 @@ public class RoleController extends GeneralController{
 			sysRole.setParentRoleName(parentRoleName);
 		}
 		sysRole.setRoleLevelName(RoleLevelEnum.getNameById(sysRole.getRoleLevelId()));
-		if(GlobalConstant.FLAG_N.equals(sysRole.getAllowRegFlag())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(sysRole.getAllowRegFlag())) {
 			sysRole.setRegPageId("");
 			sysRole.setRegPageName("");
 		}
 		roleBiz.save(sysRole);
 		InitConfig._loadRole(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		
 	}
 
@@ -138,7 +137,7 @@ public class RoleController extends GeneralController{
 	public String saveOrder(String [] roleFlow,Model model,HttpServletRequest request) throws Exception{
 		roleBiz.saveOrder(roleFlow);
 		InitConfig._loadRole(request.getServletContext());
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		
 	}
 	
@@ -151,7 +150,7 @@ public class RoleController extends GeneralController{
 	@ResponseBody
 	public String delete(@RequestParam(value="roleFlow",required=true) String roleFlow,@RequestParam(value="recordStatus",required=true) String recordStatus) {
 		roleBiz.delete(roleFlow,recordStatus);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	/**
@@ -163,7 +162,7 @@ public class RoleController extends GeneralController{
 	@ResponseBody
 	public String realDelete(@RequestParam(value="roleFlow",required=true) String roleFlow) {
 		boolean flag = roleBiz.realDelete(roleFlow);
-		return flag ? GlobalConstant.DELETE_SUCCESSED : "删除失败！已使用的角色不能删除！";
+        return flag ? com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED : "删除失败！已使用的角色不能删除！";
 	}
 	
 	/**
@@ -229,7 +228,7 @@ public class RoleController extends GeneralController{
 	@ResponseBody
 	public String saveRoleAuth(SysRole sysRole,String orgFlow,@RequestParam(value="dictName",required=false) String [] dictNames,Model model) {
 		roleBiz.saveRoleAuth(sysRole, orgFlow,dictNames);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	/**
@@ -247,7 +246,7 @@ public class RoleController extends GeneralController{
 		model.addAttribute("workStation", InitConfig.getWorkStation(wsId));
 		List<String> columnIds = roleBiz.getColumn(roleFlow);
 		model.addAttribute("columnIds", columnIds);
-		List<PortalColumn> colList = columnBiz.getAll(GlobalConstant.RECORD_STATUS_Y,null);//获取所有已启用栏目
+        List<PortalColumn> colList = columnBiz.getAll(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y, null);//获取所有已启用栏目
 		model.addAttribute("colList", colList);
 		return "sys/role/column";
 	}
@@ -263,13 +262,13 @@ public class RoleController extends GeneralController{
 	@ResponseBody
 	public String savepop(SysRole sysRole,@RequestParam(value="menuId",required=false) String [] menuIds,Model model) {
 		roleBiz.savePop(sysRole, menuIds);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/savecol",method=RequestMethod.POST)
 	@ResponseBody
 	public String savecol(SysRole sysRole,@RequestParam(value="columnId",required=false) String [] columnIds,Model model) {
 		roleBiz.saveCol(sysRole, columnIds);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 }

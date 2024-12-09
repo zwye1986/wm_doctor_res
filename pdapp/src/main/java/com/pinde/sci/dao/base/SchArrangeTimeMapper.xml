@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchArrangeTimeMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchArrangeTime" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchArrangeTime" >
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
@@ -74,7 +74,7 @@
     RECORD_FLOW, ORG_FLOW, SESSION_NUMBER, START_DATE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchArrangeTimeExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchArrangeTimeExample" >
     select
     <if test="distinct" >
       distinct
@@ -98,13 +98,13 @@
     delete from PDSCI.SCH_ARRANGE_TIME
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchArrangeTimeExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SchArrangeTimeExample" >
     delete from PDSCI.SCH_ARRANGE_TIME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchArrangeTime" >
+  <insert id="insert" parameterType="com.pinde.core.model.SchArrangeTime" >
     insert into PDSCI.SCH_ARRANGE_TIME (RECORD_FLOW, ORG_FLOW, SESSION_NUMBER, 
       START_DATE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -114,7 +114,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchArrangeTime" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SchArrangeTime" >
     insert into PDSCI.SCH_ARRANGE_TIME
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -175,7 +175,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchArrangeTimeExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.SchArrangeTimeExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SCH_ARRANGE_TIME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -231,7 +231,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchArrangeTime" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchArrangeTime" >
     update PDSCI.SCH_ARRANGE_TIME
     <set >
       <if test="orgFlow != null" >
@@ -261,7 +261,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchArrangeTime" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchArrangeTime" >
     update PDSCI.SCH_ARRANGE_TIME
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},

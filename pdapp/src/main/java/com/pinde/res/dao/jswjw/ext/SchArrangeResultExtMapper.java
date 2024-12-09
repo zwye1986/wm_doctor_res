@@ -1,9 +1,9 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.sci.model.mo.DoctorUntiedRecording;
-import com.pinde.sci.model.mo.JsresDoctorDeptDetail;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchArrangeResultExt;
+import com.pinde.core.model.DoctorUntiedRecording;
+import com.pinde.core.model.JsresDoctorDeptDetail;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResultExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

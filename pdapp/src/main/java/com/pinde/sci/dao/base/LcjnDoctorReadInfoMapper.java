@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LcjnDoctorReadInfo;
-import com.pinde.sci.model.mo.LcjnDoctorReadInfoExample;
+import com.pinde.core.model.LcjnDoctorReadInfo;
+import com.pinde.core.model.LcjnDoctorReadInfoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

@@ -5,7 +5,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.RecruitExamInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitExamInfoExtMapper;
@@ -13,12 +12,11 @@ import com.pinde.sci.model.mo.RecruitExamInfo;
 import com.pinde.sci.model.mo.RecruitExamInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class RecruitExamInfoBizImpl implements IRecruitExamInfoBiz {
 
     @Autowired
@@ -32,7 +30,7 @@ public class RecruitExamInfoBizImpl implements IRecruitExamInfoBiz {
         RecruitExamInfoExample example = new RecruitExamInfoExample();
         RecruitExamInfoExample.Criteria criteria = example.createCriteria();
         criteria.andMainFlowEqualTo(mainFlow);
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
         List<RecruitExamInfo> recruitExamInfos = recruitExamInfoMapper.selectByExample(example);
         if (recruitExamInfos != null && recruitExamInfos.size() > 0){

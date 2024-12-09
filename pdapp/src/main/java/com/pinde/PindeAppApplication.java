@@ -1,6 +1,7 @@
 package com.pinde;
 
 import liquibase.integration.spring.SpringLiquibase;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ import javax.sql.DataSource;
 
 @SpringBootApplication(exclude = { FreeMarkerAutoConfiguration.class, MustacheAutoConfiguration.class, TransactionAutoConfiguration.class, QuartzAutoConfiguration.class })
 //@ComponentScan(basePackages = {"com.pinde"})
-@PropertySource(value = {"classpath:jdbc.properties", "classpath:log4j.properties", "classpath:pdapp.properties", "classpath:sso.properties"}, ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath:jdbc.properties", "classpath:pdapp.properties"}, ignoreResourceNotFound = true)
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
-//@MapperScan({"com.pinde.sci.dao.**"})
+@MapperScan({"com.pinde.**.dao.**"})
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "pdsci-jsres-app")
 public class PindeAppApplication extends SpringBootServletInitializer {
     private static Logger logger = LoggerFactory.getLogger(PindeAppApplication.class);

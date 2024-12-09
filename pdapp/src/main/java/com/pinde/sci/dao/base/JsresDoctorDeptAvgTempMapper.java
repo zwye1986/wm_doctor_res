@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresDoctorDeptAvgTemp;
-import com.pinde.sci.model.mo.JsresDoctorDeptAvgTempExample;
+import com.pinde.core.model.JsresDoctorDeptAvgTemp;
+import com.pinde.core.model.JsresDoctorDeptAvgTempExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

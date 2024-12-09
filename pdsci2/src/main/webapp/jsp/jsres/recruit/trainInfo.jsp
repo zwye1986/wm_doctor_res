@@ -135,7 +135,7 @@
 						<td>${jsresRecruitDocInfo.graduationYear}</td>
 					</tr>
 					<!-- 审核通过 && 非二阶段 -->
-					<c:if test="${jsresRecruitDocInfo.auditStatusId eq jsResDoctorAuditStatusEnumPassed.id && not empty jsresRecruitDocInfo.completeFileUrl && not empty jsresRecruitDocInfo.completeCertNo}">
+					<c:if test="${jsresRecruitDocInfo.auditStatusId eq resDoctorAuditStatusEnumPassed.id && not empty jsresRecruitDocInfo.completeFileUrl && not empty jsresRecruitDocInfo.completeCertNo}">
 						<tr>
 							<th>结业证书附件：</th>
 							<td>

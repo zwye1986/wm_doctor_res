@@ -22,7 +22,7 @@ $(document).ready(function(){
 	<c:if test="${sessionScope.userListScope != GlobalConstant.USER_LIST_LOCAL}">
 		//getCityArea();
    	</c:if>
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	<c:forEach items="${datas}" var="data">
 	if("${data}"=="${type.id}"){
 		$("#"+"${data}").attr("checked","checked");
@@ -244,7 +244,7 @@ function exportForDetail(){
 				<div class="form_content" >
 					<select name="reviewFlag" class="select" style="width: 161px;">
 						<option value="">请选择</option>
-						<%--<c:forEach items="${jsResDoctorAuditStatusEnumList}" var="auditStatusEnum">--%>
+						<%--<c:forEach items="${resDoctorAuditStatusEnumList}" var="auditStatusEnum">--%>
 							<%--<c:if test="${auditStatusEnum.id ne 'NotSubmit'}">--%>
 								<%--<option name="${auditStatusEnum.id}" value="${auditStatusEnum.id}"--%>
 										<%--<c:if test="${param.doctorStatusId==auditStatusEnum.id || auditStatusEnum.id == 'Auditing'}">selected="selected"</c:if>>${auditStatusEnum.name}</option>--%>
@@ -281,7 +281,7 @@ function exportForDetail(){
 			<div class="form_item form_item_hide" style="width: 400px">
 				<div class="form_label">人员类型：</div>
 				<div class="form_content" style="margin: auto 0;" >
-					<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>
 					</c:forEach>
 				</div>
@@ -347,7 +347,7 @@ function exportForDetail(){
 <%--				<td>--%>
 <%--					<select name="reviewFlag" class="select">--%>
 <%--						<option value="">请选择</option>--%>
-<%--						&lt;%&ndash;<c:forEach items="${jsResDoctorAuditStatusEnumList}" var="auditStatusEnum">&ndash;%&gt;--%>
+<%--						&lt;%&ndash;<c:forEach items="${resDoctorAuditStatusEnumList}" var="auditStatusEnum">&ndash;%&gt;--%>
 <%--							&lt;%&ndash;<c:if test="${auditStatusEnum.id ne 'NotSubmit'}">&ndash;%&gt;--%>
 <%--								&lt;%&ndash;<option name="${auditStatusEnum.id}" value="${auditStatusEnum.id}"&ndash;%&gt;--%>
 <%--										&lt;%&ndash;<c:if test="${param.doctorStatusId==auditStatusEnum.id || auditStatusEnum.id == 'Auditing'}">selected="selected"</c:if>>${auditStatusEnum.name}</option>&ndash;%&gt;--%>
@@ -368,7 +368,7 @@ function exportForDetail(){
 <%--				</td>--%>
 <%--				<td class="td_left">人员类型：</td>--%>
 <%--				<td colspan="3">--%>
-<%--					<c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
+<%--					<c:forEach items="${resDocTypeEnumList}" var="type">--%>
 <%--						<label><input type="checkbox" id="${type.id}"value="${type.id}"class="docType" name="datas" />${type.name}&nbsp;</label>--%>
 <%--					</c:forEach>--%>
 <%--				</td>--%>

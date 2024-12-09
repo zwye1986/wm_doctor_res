@@ -8,10 +8,8 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.ResTestConfig;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysOrg;
@@ -54,7 +52,7 @@ public class CfgController extends GeneralController  {
 	
 	@RequestMapping(value="/agreement",method={RequestMethod.GET})
 	public ModelAndView agreement(HttpServletRequest request){
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		ModelAndView mav=new ModelAndView("sys/cfg/agreement");
 		SysCfg cfg=new SysCfg();
 		cfg.setWsId(wsId);
@@ -71,7 +69,7 @@ public class CfgController extends GeneralController  {
 	
 	@RequestMapping(value="/edit",method={RequestMethod.GET})
 	public ModelAndView edit(HttpServletRequest request){
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		ModelAndView mav=new ModelAndView("sys/cfg/"+wsId+"Cfg");
 		SysCfg cfg=new SysCfg();
 		cfg.setWsId(wsId);
@@ -91,8 +89,8 @@ public class CfgController extends GeneralController  {
 		mav.addObject("resTest", resTestConfigList);
 		mav.addObject("sysCfgDescMap",sysCfgDescMap);
 		SysOrg sysorg = new SysOrg();
-		sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-		sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
 		mav.addObject("orgs",orgs);
 		return mav.addObject("sysCfgMap",sysCfgMap);	
@@ -100,8 +98,8 @@ public class CfgController extends GeneralController  {
 	
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	@ResponseBody
-	public String save(HttpServletRequest request){		
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+	public String save(HttpServletRequest request){
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		String [] cfgCodes =request.getParameterValues("cfgCode");
 		if(cfgCodes!=null){
 			List<SysCfg> sysCfgList = new ArrayList<SysCfg>();
@@ -132,17 +130,17 @@ public class CfgController extends GeneralController  {
 
 				String sysCfgBigValue=request.getParameter(cfgCode+"_big_value");
 				cfg.setCfgBigValue(sysCfgBigValue);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				sysCfgList.add(cfg);
 			}
 			cfgBiz.save(sysCfgList);
 			}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/saveOne",method=RequestMethod.POST)
 	@ResponseBody
-	public String saveOne(HttpServletRequest request){		
-		String wsId = (String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+	public String saveOne(HttpServletRequest request){
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		String [] cfgCodes =request.getParameterValues("cfgCode");
 		if(cfgCodes!=null){
 			List<SysCfg> sysCfgList = new ArrayList<SysCfg>();
@@ -165,18 +163,18 @@ public class CfgController extends GeneralController  {
 				
 				String sysCfgBigValue=request.getParameter(cfgCode+"_big_value");
 				cfg.setCfgBigValue(sysCfgBigValue);
-				cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				sysCfgList.add(cfg);
 			}
 			int result = cfgBiz.saveSysCfgInfo(sysCfgList);
-			if(GlobalConstant.ZERO_LINE != result){
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
 				SysCfg sysCfg = sysCfgList.get(0);
 				ServletContext application = request.getServletContext();
 				Map<String,String> sysCfgMap = (Map<String, String>) application.getAttribute("sysCfgMap");
 				sysCfgMap.put(sysCfg.getCfgCode(), sysCfg.getCfgValue());
 			}
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value="/testEmail",method={RequestMethod.GET})
@@ -188,7 +186,7 @@ public class CfgController extends GeneralController  {
 	@ResponseBody
 	public String sendEmail(String receiver,String title,String content){
 		msgBiz.addEmailMsg(receiver, title, content);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	@RequestMapping(value="/getErrorMsg",method={RequestMethod.GET})
 	@ResponseBody
@@ -215,7 +213,7 @@ public class CfgController extends GeneralController  {
 		List<SysCfg> saveCfgs=new ArrayList<SysCfg>();
 		saveCfgs.add(sysCfg);
 		cfgBiz.save(saveCfgs);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value={"/saveMailPassword"})
@@ -238,14 +236,14 @@ public class CfgController extends GeneralController  {
 			cfg.setRecordStatus(weixinRemind);
 			sysCfgMapper.updateByPrimaryKeySelective(cfg);
 		}
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	
 	@RequestMapping(value={"/savePageSize"},method=RequestMethod.POST)
 	@ResponseBody
 	public String savePageSize(HttpServletRequest request){
 		cfgBiz.savePageSize(request);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	/**
 	 * 跳转页面

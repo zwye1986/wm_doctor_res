@@ -11,14 +11,11 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper;
 import com.pinde.sci.dao.res.ResDocotrDelayTeturnExtMapper;
-import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
-import com.pinde.sci.enums.jszy.JszyResDoctorAuditStatusEnum;
-import com.pinde.sci.enums.res.ResBaseStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.ResBaseStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -26,7 +23,6 @@ import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +35,7 @@ import java.util.*;
  * Created by pdkj on 2016/12/23.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
 
     @Autowired
@@ -65,7 +61,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     public List<ResDocotrDelayTeturn> searchInfo(ResDocotrDelayTeturn resDocotrDelayTeturn, List<String> orgFlowList,List<String> flags
             , List<String> docTypeList) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resDocotrDelayTeturn!=null){
             if(StringUtil.isNotBlank(resDocotrDelayTeturn.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(resDocotrDelayTeturn.getOrgFlow());
@@ -124,7 +120,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     public List<ResDocotrDelayTeturn> searchInfo2(ResDocotrDelayTeturn resDocotrDelayTeturn, List<String> orgFlowList,List<String> flags
             , List<String> docTypeList, List<String> sessionNumbers) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resDocotrDelayTeturn!=null){
             if(StringUtil.isNotBlank(resDocotrDelayTeturn.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(resDocotrDelayTeturn.getOrgFlow());
@@ -186,7 +182,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     public List<ResDocotrDelayTeturn> searchInfoNew(ResDocotrDelayTeturn resDocotrDelayTeturn, List<String> orgFlowList,List<String> flags
             , List<String> docTypeList) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resDocotrDelayTeturn!=null){
             if(StringUtil.isNotBlank(resDocotrDelayTeturn.getOrgFlow())){
                 criteria.andOrgFlowEqualTo(resDocotrDelayTeturn.getOrgFlow());
@@ -249,7 +245,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     public List<ResDocotrDelayTeturn> searchByDoctorFlow(String doctorFlow) {
         if(StringUtil.isNotBlank(doctorFlow)){
             ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-            ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+            ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
             example.setOrderByClause("CREATE_TIME DESC");
             return resDocotrDelayTeturnMapper.selectByExample(example);
         }else{
@@ -283,14 +279,14 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
         //更新数据
         int recResult = resDocotrDelayTeturnMapper.updateByPrimaryKeySelective(docotrDelayTeturn);
         //更新recruit数据 0与1 是西医中的审核状态  GlobalNotPassed与GlobalPassed是中医的审核状态
-        if(ResBaseStatusEnum.GlobalNotPassed.getId().equals(docotrDelayTeturn.getAuditStatusId())
+        if (com.pinde.core.common.enums.ResBaseStatusEnum.GlobalNotPassed.getId().equals(docotrDelayTeturn.getAuditStatusId())
                 ||"0".equals(docotrDelayTeturn.getAuditStatusId())){
-            recruit.setAuditStatusId(JsResAuditStatusEnum.Passed.getId());
-            recruit.setAuditStatusName(JsResAuditStatusEnum.Passed.getName());
+            recruit.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.Passed.getId());
+            recruit.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.Passed.getName());
             recruitBiz.updateDocrecruit(recruit);
-            return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
         }
-        if(ResBaseStatusEnum.GlobalPassed.getId().equals(docotrDelayTeturn.getAuditStatusId())
+        if (com.pinde.core.common.enums.ResBaseStatusEnum.GlobalPassed.getId().equals(docotrDelayTeturn.getAuditStatusId())
                 ||"1".equals(docotrDelayTeturn.getAuditStatusId())){
             //更新doctor数据
             String doctorFlow = recruit.getDoctorFlow();
@@ -315,8 +311,8 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
             recruit.setDoctorStatusId("23");
             recruit.setDoctorStatusName("退培");
 
-//            recruit.setAuditStatusId(ResDoctorAuditStatusEnum.NotSubmit.getId());
-//            recruit.setAuditStatusName(ResDoctorAuditStatusEnum.NotSubmit.getName());
+//            recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+//            recruit.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 
             recruitBiz.updateDocrecruit(recruit);
             //如果是违约退培就需要将当前退培学员加入黑名单
@@ -328,12 +324,12 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
                     if (StringUtil.isNotBlank(userFlow)) {
                         SysUser sysUser = userBiz.readSysUser(userFlow);
                         if (sysUser != null) {
-                            sysUser.setRecordStatus(GlobalConstant.FLAG_N);
+                            sysUser.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                             userBiz.edit(sysUser);
                         }
                         ResDoctor resDoctor = doctorBiz.searchByUserFlow(userFlow);
                         if (resDoctor != null) {
-                            resDoctor.setRecordStatus(GlobalConstant.FLAG_N);
+                            resDoctor.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                             doctorBiz.editDoctor(resDoctor);
                         }
                     }
@@ -355,12 +351,12 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
                     rotationBiz.updateResSchProcessExpressStatus(doctorFlow);
                 }
 
-                return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
             } else {
-                return GlobalConstant.ZERO_LINE;
+                return com.pinde.core.common.GlobalConstant.ZERO_LINE;
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -379,8 +375,8 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
             String recruitFlow = resDocotrDelayTeturn.getRecruitFlow();
 //            ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitFlow);
 //            if(recruit != null){
-//                recruit.setAuditStatusId(ResDoctorAuditStatusEnum.NotSubmit.getId());
-//                recruit.setAuditStatusName(ResDoctorAuditStatusEnum.NotSubmit.getName());
+//                recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+//                recruit.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
 //                recruitBiz.updateDocrecruit(recruit);
 //            }
             if(StringUtil.isNotBlank(resDocotrDelayTeturn.getRecordFlow())){//修改
@@ -408,7 +404,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
                 return this.resDocotrDelayTeturnMapper.insertSelective(resDocotrDelayTeturn);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -435,8 +431,8 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
         ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
         ResDoctor doctor = doctorBiz.readDoctor(recruit.getDoctorFlow());
         //更新recruit数据
-        recruit.setAuditStatusId(JszyResDoctorAuditStatusEnum.NotSubmit.getId());
-        recruit.setAuditStatusName(JszyResDoctorAuditStatusEnum.NotSubmit.getName());
+        recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
+        recruit.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
         int recruitResult = recruitBiz.updateDocrecruit(recruit);
         resDocotrDelayTeturn.setSecondSpeId(recruit.getSecondSpeId());
         resDocotrDelayTeturn.setSecondSpeName(recruit.getSecondSpeName());
@@ -470,9 +466,9 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
             String msgTitle = "培训信息退培结果";
             String msgContent = "您的培训信息已被基地退回";
             msgBiz.addSysMsg(recruit.getDoctorFlow(), msgTitle, msgContent);
-            return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
         } else {
-            return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
         }
     }
 
@@ -534,7 +530,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
 
         HSSFRow rowTwo = sheet.createRow(1);//第二行
         String[] titles=null;
-        if(flag!=null&&GlobalConstant.FLAG_Y.equals(flag)){
+        if (flag != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
             titles = new String[]{
                     "编号",
                     "培训基地",
@@ -568,7 +564,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
             cellTitle.setCellStyle(styleCenter);
             sheet.setColumnWidth(i, titles.length * 2 * 256);
         }
-        if(flag!=null&&GlobalConstant.FLAG_Y.equals(flag)){
+        if (flag != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 10));//合并单元格
         }else {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 8));//合并单元格
@@ -593,7 +589,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
                 }else{
                     policy=resRecList.get(i).getPolicyName();
                 }
-                if(flag!=null&&GlobalConstant.FLAG_Y.equals(flag)){
+                if (flag != null && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(flag)) {
                     resultList = new String[]{
                             i+1+"",
                             resRecList.get(i).getOrgName(),
@@ -658,9 +654,9 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
 //			String msgTitle = "培训信息退培结果";
 //			String msgContent = "您的培训信息已被基地退回";
 //			msgBiz.addSysMsg(recruit.getDoctorFlow(), msgTitle , msgContent);
-            return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
         } else {
-            return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
         }
     }
     @Override
@@ -674,9 +670,9 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
             String msgTitle = "培训信息延期结果";
             String msgContent = "您的培训信息已被基地延期，延期至" + docotrDelayTeturn.getGraduationYear() + "年。";
             msgBiz.addSysMsg(recruit.getDoctorFlow(), msgTitle, msgContent);
-            return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
         } else {
-            return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
         }
     }
 
@@ -702,8 +698,8 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     public ResDocotrDelayTeturn findTeturnInfo(String recruitFlow) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
         ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andTypeIdEqualTo(ResRecTypeEnum.ReturnTraining.getId())
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.ReturnTraining.getId())
                 .andRecruitFlowEqualTo(recruitFlow).andAuditStatusIdEqualTo("2");
         example.setOrderByClause("CREATE_TIME DESC");
         List<ResDocotrDelayTeturn> list= resDocotrDelayTeturnMapper.selectByExample(example);
@@ -717,8 +713,8 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     public ResDocotrDelayTeturn findDelayInfo(String recruitFlow) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
         ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria()
-                .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
-                .andTypeIdEqualTo(ResRecTypeEnum.Delay.getId())
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.Delay.getId())
                 .andRecruitFlowEqualTo(recruitFlow);
         example.setOrderByClause("GRADUATION_YEAR DESC");
         List<ResDocotrDelayTeturn> list= resDocotrDelayTeturnMapper.selectByExample(example);
@@ -732,7 +728,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     @Override
     public List<ResDocotrDelayTeturn> searchDelayInfo(ResDocotrDelayTeturn delay4Search) {
         ResDocotrDelayTeturnExample example = new ResDocotrDelayTeturnExample();
-        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResDocotrDelayTeturnExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(delay4Search != null){
             if(StringUtil.isNotBlank(delay4Search.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(delay4Search.getDoctorFlow());
@@ -773,11 +769,11 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
         if(!(mimeList.contains(fileType) &&  suffixList.contains(suffix.toLowerCase()))){
             return "请上传 "+InitConfig.getSysCfg("res_file_support_suffix")+"格式的文件";
         }
-        return GlobalConstant.FLAG_Y;//可执行保存
+        return com.pinde.core.common.GlobalConstant.FLAG_Y;//可执行保存
     }
     @Override
     public String saveCheckFileToDirs(MultipartFile file, String changeRecruitFile, String changeTypeId) {
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(file.getSize() > 0){
             //创建目录
             String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir"))+ File.separator + changeRecruitFile + File.separator+ changeTypeId;

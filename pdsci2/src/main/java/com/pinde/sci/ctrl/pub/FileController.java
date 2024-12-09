@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.pub;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.PubFile;
 import org.slf4j.Logger;
@@ -108,8 +107,8 @@ public class FileController extends GeneralController {
             i = pubFileBiz.deleteFile(fileFlows);
         }
         if(i > 0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 }

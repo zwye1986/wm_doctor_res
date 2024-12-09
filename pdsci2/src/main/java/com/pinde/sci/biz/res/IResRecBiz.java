@@ -24,21 +24,13 @@ public interface IResRecBiz {
 	 * @return
 	 */
 	ResRec readResRec(String recFlow);
-	ResRec readResRecByType(String recFlow, String recTypeId);
 	/**
 	 * 新增或修改
 	 * @param rec
 	 * @return
 	 */
 	int edit(ResRec rec);
-	int editByType(ResRec rec, String recTypeId);
-	/**
-	 * 新增或修改
-	 * @param rec
-	 * @param pubFiles 退赔上传的文件
-	 * @return
-	 */
-	int editWithFiles(ResRec rec,List<PubFile> pubFiles);
+
 	List<ResRec> searchByRec(String recTypeId, String schDeptFlow,
 			String operUserFlow);
 	Map<String, Object> parseGradeXml(String recContent);
@@ -76,16 +68,13 @@ public interface IResRecBiz {
 	List<ResRecExt> searchTeacherAudit(String schDeptFlow,
 			String isCurrentFlag, String userFlow);
 	Map<String, Object> parseRecContent(String content);
-
-	//	List<ResRecExt> searchAuditList(String userFlow, String roleFlag,
-//			String recTypeId, String doctorFlow, String isCurrentFlag);
 	List<ResRec> searchByRecWithBLOBs(String recTypeId, String schDeptFlow,
 			String operUserFlow);
 	Map<String,List<Map<String, String>>> parseRecContentAppraise(String content);
 	List<ResRec> searchFinishRec(List<String> recTypeIds, String operUserFlow);
 	Map<String, String> getFinishPer(List<SchArrangeResult> arrResultList);
-	Map<String, String> getStandardDeptFinishPer(List<SchRotationDept> arrResultList);
-	String getRecContent(String recContent, String formName, List<Element> list,
+
+    String getRecContent(String recContent, String formName, List<Element> list,
 						 HttpServletRequest req);
 	int editAndOut(ResRec rec, ResDoctorSchProcess process);
 	List<ResRec> searchByRecWithBLOBs(List<String> recTypeIds,
@@ -102,8 +91,6 @@ public interface IResRecBiz {
 	Map<String, String> getFinishPer(List<SchArrangeResult> arrResultList,
 			String doctorFlow);
 
-	Map<String,String> getFinishPer2(List<SchArrangeResult> arrResultList, ResDoctor resDoctor, SysUser sysUser,
-									 Map<String, SchArrangeResult> arrangeResultMap, Map<String, SchRotationGroup> rotationGroupFlowToEntityMap);
 
 	Map<String, Map<String,String>> getFinishPer2List(Map<String, List<SchArrangeResult>> arrResultListMap, List<ResDoctor> resDoctorList, Map<String, SysUser> userFlowToEntityMap,
 									 Map<String, SchArrangeResult> arrangeResultMap, Map<String, SchRotationGroup> rotationGroupFlowToEntityMap, Map<String, SchRotationDept> keyToRotationDepeMap);
@@ -125,26 +112,9 @@ public interface IResRecBiz {
 	List<Map<String, Object>> appealCountWithUser(List<String> userFlows,
 			List<String> processFlows, String roleFlag);
 	List<ResAppeal> searchAppealForAudit(String processFlow, String recTypeId);
-	
-	/**
-	 * 保存教学活动
-	 * @param resRecForm
-	 * @return
-	 * @throws Exception 
-	 */
-	int saveResRecContent(ResRecForm resRecForm) throws Exception;
-	
-	/**
-	 * 查询
-	 * @param resRec
-	 * @return
-	 * @throws Exception 
-	 */
-	List<ResRecForm> searchResRecFormList(ResRec resRec) throws Exception;
-	
-	ResRecForm getRecContentByRecFlow(String recFlow) throws Exception;
-	
-	List<Map<String, Object>> searchAppealCount(String schDeptFlow,
+
+
+    List<Map<String, Object>> searchAppealCount(String schDeptFlow,
 			String operUserFlow);
 	int oneKeyAudit(String recTypeId, String schDeptFlow, String operUserFlow);
 
@@ -208,15 +178,9 @@ public interface IResRecBiz {
 	 * @return
 	 */
 	int editPreTrainForm(String recFlow, String resultFlow, String roleFlag,HttpServletRequest req);
-	
-	/**
-	 * 获取岗前培训表内容
-	 * @param recContent
-	 * @return
-	 */
-	Map<String, Map<String, String>> getPreTrainFormDataMap(String recContent);
-	
-	/**
+
+
+    /**
 	 * 保存年度培训记录
 	 * @param recFlow
 	 * @param roleFlag
@@ -225,15 +189,9 @@ public interface IResRecBiz {
 	 */
 	int editAnnualTrainForm(String recFlow, String roleFlag,
 			HttpServletRequest req);
-	
-	/**
-	 * 获取年度培训表map
-	 * @param recContent
-	 * @return
-	 */
-	Map<String, Object> getAnnualTrainFormDataMap(String recContent);
-	
-	/**
+
+
+    /**
 	 * 获取用户们的单一类型记录
 	 * @param userFlows
 	 * @param recTypeId
@@ -280,11 +238,8 @@ public interface IResRecBiz {
 	 * @return
 	 */
 	int auditRecs(String[] recFlows, ResRec rec);
-	List<ResRec> searchByUserFlows(String recTypeId, List<String> operUserFlows);
-	List<ResRec> searchByUserFlowsWithBLOBs(String recTypeId,
-			List<String> operUserFlows);
-	
-	/**
+
+    /**
 	 * 保存表单
 	 * @param formFileName
 	 * @param recFlow
@@ -334,6 +289,9 @@ public interface IResRecBiz {
 	 */
 	List<ResRec> searchRecByProcessWithBLOBs(List<String> recTypeIds,
 			String processFlow, String operUserFlow);
+
+	List<ResRec> searchRecAuditByProcessWithBLOBs(List<String> recTypeIds,
+											 String processFlow, String operUserFlow);
 	
 	/**
 	 * 计算该用户的登记进度
@@ -409,7 +367,9 @@ public interface IResRecBiz {
 	 */
 	Map<String, Object> getRecProgressIn(String doctorFlow, String processFlow,
 			String recTypeId, String itemId);
-	
+
+	Map<String, Object> getRecAuditProgressIn(String doctorFlow, String processFlow,
+										 String recTypeId, String itemId);
 	/**
 	 * 获取某类型的登记数据
 	 * @param recTypeId
@@ -425,15 +385,8 @@ public interface IResRecBiz {
 	 */
 	List<ResRec> searchRecAndActivityByProcess(Map<String, Object> paramMap);
 
-	/**
-	 * 查出机构内指定类型的登记数据
-	 * @param orgFlow
-	 * @param recTypeId
-	 * @return
-	 */
-//	List<ResRec> searchRecByOrgWithBLOBs(String orgFlow, String recTypeId);
-	
-	/**
+
+    /**
 	 * 获取评分内容
 	 * @param paramMap
 	 * @return
@@ -492,10 +445,6 @@ public interface IResRecBiz {
 	 */
 	String getFormPath(String rotationFlow, String recTypeId, String currVer,
 					   String recForm, String type,String medicineTypeId,String recordFlow);
-	/**
-	 * 根据过程流水和记录类型查询
-	 */
-	List<ResRec> searchByProcessFlowAndRecTypeId(String processFlow,String recTypeId);
 	List<ResRec> searchByProcessFlowAndRecTypeIdClob(String processFlow,String recTypeId);
 
 	List<ResRec> searchByRecAndProcess(String recTypeId, String operUserFlow, String processFlow);
@@ -511,8 +460,6 @@ public interface IResRecBiz {
 
 	List<Map<String,String>> findTrainCharts(List<String> orgFlowList, String year, String speName);
 
-	//湖北需求根据rotationFlow，doctorFlow，recTypeId查询ResRec
-	List<ResRec> searchByRecWithBLOBsByMap4Hb(Map paramMap);
 
 	/****************************高******校******管******理******员******角******色************************************************/
 
@@ -526,7 +473,6 @@ public interface IResRecBiz {
 
 	int orgBatchAuditDoctorInfo(Map<String, Object> param);
 
-	List<ResRec> getAllAfterSummary(String id);
 
 	List<SchDoctorDept> searchReductionDept(String userFlow, String rotationFlow, String secondRotationFlow);
 
@@ -550,13 +496,8 @@ public interface IResRecBiz {
 
 	ExcelUtile importJsresData(MultipartFile file, String recordFlow, String processFlow, String doctorFlow, String recTypeId);
 
-	/**
-	 * 活动查询
-	 * @return
-	 */
-	List<Map<String, Object>> searchRecActivity(Map<String, Object> paramMap);
 
-	/**
+    /**
 	 * @Department：研发部
 	 * @Description 查询审核信息
 	 * @Author fengxf

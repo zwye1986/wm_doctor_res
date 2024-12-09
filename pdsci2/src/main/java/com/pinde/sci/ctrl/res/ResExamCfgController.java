@@ -2,7 +2,9 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,12 +17,10 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.enums.res.ResScoreTypeEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.Document;
@@ -86,8 +86,8 @@ public class ResExamCfgController extends GeneralController {
             model.addAttribute("standardList",standardList);
         }
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.StandardDept.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.StandardDept.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         Map<String,String> paramMap = new HashMap();
         paramMap.put("orgFlow",currentUser.getOrgFlow());
         List<SchDept> schDepts = schDeptBiz.searchSchDeptHadRelated(paramMap);
@@ -98,7 +98,7 @@ public class ResExamCfgController extends GeneralController {
     public String list(Model model,Integer currentPage ,HttpServletRequest request,
                        SchExamArrangement schExamArrangement  ){
         SysUser sysuser=GlobalContext.getCurrentUser();
-        schExamArrangement.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        schExamArrangement.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         schExamArrangement.setOrgFlow(sysuser.getOrgFlow());
         PageHelper.startPage(currentPage,getPageSize(request));
         List<SchExamArrangement> list=examCfgBiz.searchList(schExamArrangement);
@@ -119,7 +119,7 @@ public class ResExamCfgController extends GeneralController {
                 return "cannotInsert";
             }
         }
-        int result = examCfgBiz.updateArrangement(schExamArrangement,standardDeptId,"Y");
+        int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_Y);
         if(result == 0)
         {
             return "操作失败！";
@@ -130,7 +130,7 @@ public class ResExamCfgController extends GeneralController {
     @ResponseBody
     public String updateCfg(Model model,  SchExamArrangement schExamArrangement  ){
         //删除时，校验是否已有学生考过试，并有成绩的，无法删除
-        if(GlobalConstant.RECORD_STATUS_N.equals(schExamArrangement.getRecordStatus()))
+        if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(schExamArrangement.getRecordStatus()))
         {
             int checkCount=examCfgBiz.checkHaveExam(schExamArrangement.getArrangeFlow());
             if(checkCount>0)
@@ -196,16 +196,16 @@ public class ResExamCfgController extends GeneralController {
                             Map<String,String> paramTempMap = new HashMap<>();
                             paramTempMap.put("countNum",tempMap.get("COUNTNUM"));
                             paramTempMap.put("maxScore",tempMap.get("MAXSCORE"));
-                            if(GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen()) &&
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen()) &&
                                     Integer.parseInt(tempExam.getExamNumber()) > Integer.parseInt(tempMap.get("COUNTNUM"))){
-                                paramTempMap.put("canExam",GlobalConstant.FLAG_Y);
+                                paramTempMap.put("canExam", com.pinde.core.common.GlobalConstant.FLAG_Y);
                             }
                             examLogMaps.put(tempMap.get("ARRANGEFLOW"),paramTempMap);
                         }
                     }else {
-                        if(GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen())){
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(tempExam.getIsOpen())) {
                             Map<String,String> paramTempMap = new HashMap<>();
-                            paramTempMap.put("canExam",GlobalConstant.FLAG_Y);
+                            paramTempMap.put("canExam", com.pinde.core.common.GlobalConstant.FLAG_Y);
                             examLogMaps.put(tempExam.getArrangeFlow(),paramTempMap);
                         }
                     }
@@ -402,14 +402,14 @@ public class ResExamCfgController extends GeneralController {
         SysUser d=new SysUser();
         d.setUserName(userName);
         doctor.setSysUser(d);
-        doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         //人员类型复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         List<String> doctorTypeIdList1 = Arrays.asList(doctorTypeIdList);
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIdList1!=null&&doctorTypeIdList1.size()>0){
             for (SysDict dict:dictList){
@@ -479,14 +479,14 @@ public class ResExamCfgController extends GeneralController {
         SysUser d=new SysUser();
         d.setUserName(userName);
         doctor.setSysUser(d);
-        doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         //人员类型复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         List<String> doctorTypeIdList1 = Arrays.asList(doctorTypeIdList);
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIdList1!=null&&doctorTypeIdList1.size()>0){
             for (SysDict dict:dictList){
@@ -556,14 +556,14 @@ public class ResExamCfgController extends GeneralController {
         SysUser d=new SysUser();
         d.setUserName(userName);
         doctor.setSysUser(d);
-        doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         //人员类型复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         List<String> doctorTypeIdList1 = Arrays.asList(doctorTypeIdList);
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIdList1!=null&&doctorTypeIdList1.size()>0){
             for (SysDict dict:dictList){
@@ -597,7 +597,7 @@ public class ResExamCfgController extends GeneralController {
             }
         }
         if ("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
-            model.addAttribute("jszyFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("jszyFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
             return "res/hospital/examQueryScore/skillList4jszy";
         }
         return "res/hospital/examQueryScore/skillList";
@@ -615,13 +615,13 @@ public class ResExamCfgController extends GeneralController {
         {
             for(ResScore resScore:scorelist)
             {
-                if(ResScoreTypeEnum.SkillScore.getId().equals(resScore.getScoreTypeId())&&StringUtil.isNotBlank(scoreYear)&&scoreYear.equals(resScore.getScorePhaseId()))
+                if (com.pinde.core.common.enums.ResScoreTypeEnum.SkillScore.getId().equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(scoreYear) && scoreYear.equals(resScore.getScorePhaseId()))
                 {
                     skillListByYear.add(resScore);
-                }else if(ResScoreTypeEnum.SkillScore.getId().equals(resScore.getScoreTypeId()))
+                } else if (com.pinde.core.common.enums.ResScoreTypeEnum.SkillScore.getId().equals(resScore.getScoreTypeId()))
                 {
                     skillList.add(resScore);
-                }else if(ResScoreTypeEnum.TheoryScore.getId().equals(resScore.getScoreTypeId()))
+                } else if (com.pinde.core.common.enums.ResScoreTypeEnum.TheoryScore.getId().equals(resScore.getScoreTypeId()))
                 {
                     theoryList.add(resScore);
                 }
@@ -663,7 +663,7 @@ public class ResExamCfgController extends GeneralController {
         model.addAttribute("extScoreMap",extScoreMap);
         model.addAttribute("scoreType",scoreType);
         if ("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
-            model.addAttribute("jszyFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("jszyFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
         return "res/hospital/examQueryScore/skillScoreDetail";
     }
@@ -693,23 +693,23 @@ public class ResExamCfgController extends GeneralController {
                     String msg= (String) result.get("msg");
                     if("1".equals(code))
                     {
-                        return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
                     }else{
-                        if(GlobalConstant.ZERO_LINE != count){
-                            return GlobalConstant.UPLOAD_SUCCESSED + "导入"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + count + "条记录！";
                         }else{
-                            return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         }
                     }
                 }else {
-                    return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
             }catch(RuntimeException re){
                 re.printStackTrace();
                 return re.getMessage();
             }
         }
-        return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
     }
     @RequestMapping(value="/searchDoctorSkillScore")
     public String searchDoctorSkillScore(Model model){
@@ -744,14 +744,14 @@ public class ResExamCfgController extends GeneralController {
         SysUser d=new SysUser();
         d.setUserName(userName);
         doctor.setSysUser(d);
-        doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         //人员类型复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         List<String> doctorTypeIdList1 = Arrays.asList(doctorTypeIdList);
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIdList1!=null&&doctorTypeIdList1.size()>0){
             for (SysDict dict:dictList){

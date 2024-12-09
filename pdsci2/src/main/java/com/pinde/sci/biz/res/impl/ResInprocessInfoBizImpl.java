@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResInprocessInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResDiscipleNoteInfoMapper;
 import com.pinde.sci.dao.base.ResInprocessInfoMapper;
 import com.pinde.sci.dao.base.ResInprocessInfoMemberMapper;
@@ -17,7 +17,6 @@ import com.pinde.sci.model.mo.ResInprocessInfoMember;
 import com.pinde.sci.model.mo.ResInprocessInfoMemberExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ import java.util.Map;
  * Created by www.0001.Ga on 2016-10-12.
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
     @Autowired
     private ResStudentDiscipleTeacherMapper teacherMapper;
@@ -43,7 +42,7 @@ public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
     @Override
     public ResInprocessInfo readByDeptFlowAndOrgFlow(String deptFlow, String orgFlow) {
         ResInprocessInfoExample example=new ResInprocessInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andOrgFlowEqualTo(orgFlow).andDeptFlowEqualTo(deptFlow);
         List<ResInprocessInfo> list=inprocessInfoMapper.selectByExampleWithBLOBs(example);
         if(list!=null&&list.size()>0)
@@ -56,7 +55,7 @@ public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
     @Override
     public List<ResInprocessInfoMember> readMembersByRecordFlow(String recordFlow) {
         ResInprocessInfoMemberExample example=new ResInprocessInfoMemberExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andInfoRecordFlowEqualTo(recordFlow);
 
         return memberMapper.selectByExample(example);

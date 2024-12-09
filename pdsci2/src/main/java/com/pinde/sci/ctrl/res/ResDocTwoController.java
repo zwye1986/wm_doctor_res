@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,7 +9,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +46,7 @@ public class ResDocTwoController extends GeneralController {
 	public String absenceList(Integer currentPage, SchDoctorAbsence doctorAbsence, HttpServletRequest request, Model model){
 //		SchDoctorAbsence doctorAbsence = new SchDoctorAbsence();
 		doctorAbsence.setDoctorFlow(GlobalContext.getCurrentUser().getUserFlow());
-		doctorAbsence.setIsRegister(GlobalConstant.FLAG_N);
+        doctorAbsence.setIsRegister(com.pinde.core.common.GlobalConstant.FLAG_N);
 		PageHelper.startPage(currentPage,getPageSize(request));
 		List<SchDoctorAbsence> doctorAbsenceList = schDoctorAbsenceBiz.searchSchDoctorAbsenceList(doctorAbsence);
 		model.addAttribute("doctorAbsenceList", doctorAbsenceList);
@@ -63,7 +63,7 @@ public class ResDocTwoController extends GeneralController {
 		SysUser user = GlobalContext.getCurrentUser();
 		ResDoctorSchProcess doctorProcess = new ResDoctorSchProcess();
 
-		if(StringUtil.isNotBlank(absenceFlow) || !GlobalConstant.FLAG_Y.equals(isRegister)){
+        if (StringUtil.isNotBlank(absenceFlow) || !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRegister)) {
 			doctorProcess.setUserFlow(StringUtil.isNotBlank(doctorFlow)?doctorFlow:user.getUserFlow());
 			if(StringUtil.isNotBlank(absenceFlow)){
 				SchDoctorAbsence doctorAbsence = schDoctorAbsenceBiz.readSchDoctorAbsence(absenceFlow);
@@ -75,26 +75,26 @@ public class ResDocTwoController extends GeneralController {
 			}
 		}
 		//缺勤登记
-		if (GlobalConstant.FLAG_Y.equals(isRegister)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRegister)) {
 			List<ResDoctor> doctorList = null;
 			ResDoctor doctor = new ResDoctor();
-			if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope) || GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)){
+            if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope) || com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)) {
 				Map<String,Object> paramMap = new HashMap<String,Object>();
-				if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)){//带教老师
+                if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)) {//带教老师
 					paramMap.put("teacherUserFlow", user.getUserFlow());
 				}
-				if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)){//科主任
+                if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)) {//科主任
 					paramMap.put("headUserFlow", user.getUserFlow());
 				}
 				paramMap.put("doctor", doctor);
 				doctorList = resDoctorBiz.searchDocByteacher2(paramMap);
 			} else {
 				//PageHelper.startPage(currentPage,getPageSize(request));
-				doctor.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                doctor.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				doctorList = resDoctorBiz.searchByDoc(doctor);
 			}
 
-//			if(!GlobalConstant.RES_ROLE_SCOPE_CHARGE.equals(resRoleScope)){
+//			if(!com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_CHARGE.equals(resRoleScope)){
 //				doctor.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 //			}
 //			List<ResDoctor> doctorList = resDoctorBiz.searchByDoc(doctor);
@@ -102,16 +102,16 @@ public class ResDocTwoController extends GeneralController {
 		}
 		model.addAttribute("isRegister",isRegister);
 
-		if(GlobalConstant.RES_ROLE_SCOPE_DOCTOR.equals(resRoleScope)){
+        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_DOCTOR.equals(resRoleScope)) {
 			ResDoctor doctor = resDoctorBiz.readDoctor(user.getUserFlow());
 			if(doctor!=null && StringUtil.isNotBlank(doctor.getOrgFlow())){
 				doctorProcess.setOrgFlow(doctor.getOrgFlow());
 			}
-		}else if(GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)){//带教老师
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(resRoleScope)) {//带教老师
 			doctorProcess.setTeacherUserFlow(user.getUserFlow());
-		}else if(GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)){//科主任
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(resRoleScope)) {//科主任
 			doctorProcess.setHeadUserFlow(user.getUserFlow());
-		}else if(GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(resRoleScope)){
+        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_MANAGER.equals(resRoleScope)) {
 			doctorProcess.setOrgFlow(user.getOrgFlow());
 		}
 		List<ResDoctorSchProcess> processList = resDoctorProcessBiz.searchDoctorProcess(null,null,doctorProcess);
@@ -129,10 +129,10 @@ public class ResDocTwoController extends GeneralController {
 	@ResponseBody
 	public String saveDoctorAbsence(SchDoctorAbsence doctorAbsence, MultipartFile file){
 		int result = schDoctorAbsenceBiz.editSchDoctorAbsence2(doctorAbsence,file);
-		if(GlobalConstant.ZERO_LINE != result){
-			return GlobalConstant.SAVE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-		return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 	}
 	
 	/**
@@ -158,13 +158,13 @@ public class ResDocTwoController extends GeneralController {
 		if(StringUtil.isNotBlank(absenceFlow)){
 			SchDoctorAbsence doctorAbsence = new SchDoctorAbsence();
 			doctorAbsence.setAbsenceFlow(absenceFlow);
-			doctorAbsence.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+            doctorAbsence.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int result = schDoctorAbsenceBiz.saveSchDoctorAbsence(doctorAbsence);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.DELETE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 	
 	@RequestMapping(value="/repealAbsence")
@@ -173,14 +173,14 @@ public class ResDocTwoController extends GeneralController {
 		if(StringUtil.isNotBlank(absenceFlow)){
 			SchDoctorAbsence doctorAbsence = new SchDoctorAbsence();
 			doctorAbsence.setAbsenceFlow(absenceFlow);
-			doctorAbsence.setRepealAbsence(GlobalConstant.RECORD_STATUS_Y);
+            doctorAbsence.setRepealAbsence(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			doctorAbsence.setRepealAbsenceDate(DateUtil.getCurrDate());
 			int result = schDoctorAbsenceBiz.saveSchDoctorAbsence(doctorAbsence);
-			if(GlobalConstant.ZERO_LINE != result){
-				return GlobalConstant.OPRE_SUCCESSED;
+            if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 }

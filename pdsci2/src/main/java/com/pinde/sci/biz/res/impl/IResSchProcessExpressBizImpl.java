@@ -16,10 +16,10 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.base.ResSchProcessExpressMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.enums.res.GlobalRecTypeEnum;
-import com.pinde.sci.enums.res.JszyTCMPracticEnum;
-import com.pinde.sci.enums.res.RecStatusEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
+import com.pinde.core.common.enums.GlobalRecTypeEnum;
+import com.pinde.core.common.enums.JszyTCMPracticEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -37,7 +37,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
 
     @Autowired
@@ -63,7 +63,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> searchRecByProcessWithBLOBs(List<String> recTypeIds,String processFlow){
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
                 .andProcessFlowEqualTo(processFlow);
         example.setOrderByClause("OPER_TIME");
         return expressMapper.selectByExampleWithBLOBs(example);
@@ -72,7 +72,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public List<ResSchProcessExpress> searchByUserFlowAndTypeId(String operUserFlow,
                                                   String recTypeId) {
         ResSchProcessExpressExample example=new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(operUserFlow);
         return expressMapper.selectByExampleWithBLOBs(example);
     }
@@ -80,7 +80,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> searchRecByProcess(String processFlow,String doctorFlow) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow);
         example.setOrderByClause("OPER_TIME");
         return expressMapper.selectByExample(example);
     }
@@ -90,7 +90,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public List<ResSchProcessExpress> searchResRecWithBLOBsByRotationDeptFlow(String recTypeId,
                                                                 String recordFlow, String operUserFlow) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecTypeIdEqualTo(recTypeId)
                 .andSchRotationDeptFlowEqualTo(recordFlow)
                 .andOperUserFlowEqualTo(operUserFlow);
@@ -113,7 +113,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public List<ResSchProcessExpress> searchByProcessFlowAndRecTypeIdClob(String processFlow,String recTypeId){
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         if(StringUtil.isNotBlank(processFlow)&&StringUtil.isNotBlank(recTypeId)){
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andRecTypeIdEqualTo(recTypeId);
         }
         return expressMapper.selectByExampleWithBLOBs(example);
     }
@@ -121,7 +121,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> searchRecByProcess(String recTypeId,String rotationDeptFlow,String operUserFlow){
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andSchRotationDeptFlowEqualTo(rotationDeptFlow).andOperUserFlowEqualTo(operUserFlow);
         example.setOrderByClause("OPER_TIME");
         return expressMapper.selectByExampleWithBLOBs(example);
@@ -139,7 +139,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> searchFinishRec(List<String> recTypeIds,String operUserFlow){
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdIn(recTypeIds)
                 .andOperUserFlowEqualTo(operUserFlow);//.andAuditStatusIdEqualTo(RecStatusEnum.TeacherAuditY.getId());
         example.setOrderByClause("OPER_TIME");
         return expressMapper.selectByExample(example);
@@ -148,7 +148,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> searchByRecAndProcess(String recTypeId, String schDeptFlow, String operUserFlow, String processFlow) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow).andProcessFlowEqualTo(processFlow);
         example.setOrderByClause("OPER_TIME");
         return expressMapper.selectByExample(example);
@@ -157,7 +157,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     @Override
     public List<ResSchProcessExpress> searchByRecAndProcess(String recTypeId, String processFlow) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andProcessFlowEqualTo(processFlow);
         example.setOrderByClause("OPER_TIME");
         return expressMapper.selectByExampleWithBLOBs(example);
@@ -185,7 +185,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
             Element rootEle = doc.getRootElement();
             Element nade = rootEle.element(nodeName);
             if(nade!=null){
-                if(!GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                if (!com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
                     nade.addAttribute("id",itemId);
                 }
                 nade.setText(value);
@@ -239,7 +239,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                                 file.transferTo(newFile);
                                 String uploadFile = File.separator+fromName+File.separator+dateString+File.separator+saveFileName;
                                 pubFile.setFilePath(uploadFile);
-                                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
                                 GeneralMethod.setRecordInfo(pubFile, false);
                                 IFileBiz fileBiz = SpringUtil.getBean(IFileBiz.class);
                                 fileBiz.addFile(pubFile);
@@ -297,7 +297,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 //xml中的节点是否是文件
                 String isFile = itemEle.attributeValue("isFile");
                 boolean isMultipart = JspFormUtil.isMultipart(req);
-                if(GlobalConstant.FLAG_Y.equals(isFile)&&isMultipart)
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isFile) && isMultipart)
                 {
                     String name = itemEle.attributeValue("name");
                     Map<String , String[]> dataMap=getParameterMap(req,rootEle.getName(),name);
@@ -320,7 +320,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     element.addAttribute("flow",flow);
                     rootEle.add(element);
                 }else {
-                    if (!GlobalConstant.FLAG_Y.equals(multiple)) {
+                    if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
                         String name = itemEle.attributeValue("name");
 
                         String isSelect = itemEle.attributeValue("select");
@@ -329,7 +329,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
 
                         Element element = DocumentHelper.createElement(name);
 
-                        if (GlobalConstant.FLAG_Y.equals(isSelect)) {
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
                             String[] values = req.getParameterValues(name);
 
                             if (values != null && values.length > 0) {
@@ -445,7 +445,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     }
                 } else {//item
                     String multiple = itemEle.attributeValue("multiple");
-                    if(GlobalConstant.FLAG_N.equals(multiple) || StringUtil.isBlank(multiple)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(multiple) || StringUtil.isBlank(multiple)) {
                         String name = itemEle.attributeValue("name");
                         String value = "";
                         if (dataMap.get(name) != null && dataMap.get(name).length > 0) {
@@ -495,7 +495,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 if("itemGroup".equals(tagName)){
                     if(recordFlow!=null){
                         String delFlag = req.getParameter("delFlag");
-                        if(GlobalConstant.FLAG_Y.equals(delFlag)){
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(delFlag)) {
                             Node delNode = rootEle.selectSingleNode("itemGroup[@recordFlow='"+recordFlow+"']");
                             delNode.detach();
                         }else{
@@ -523,7 +523,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                             itemEle.detach();
                         }
                         String multiple = e.attributeValue("multiple");
-                        if(!GlobalConstant.FLAG_Y.equals(multiple)) {
+                        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
                             String value = req.getParameter(nodeName);
                             Element element = DocumentHelper.createElement(nodeName);
                             if (StringUtil.isNotBlank(value)) {
@@ -562,7 +562,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public List<ResSchProcessExpress> searchResRecExpressWithBLOBs(String recTypeId,
                                                                    String processFlow) {
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                 .andRecTypeIdEqualTo(recTypeId)
                 .andProcessFlowEqualTo(processFlow);
         example.setOrderByClause("AUDIT_STATUS_ID");
@@ -577,14 +577,14 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 return this.expressMapper.updateByPrimaryKeySelective(express);
             }else{//新增
                 express.setRecFlow(PkUtil.getUUID());
-                if(!ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())){//培训年度
+                if (!com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())) {//培训年度
                     express.setOperTime(DateUtil.getCurrDateTime());
                 }
                 GeneralMethod.setRecordInfo(express, true);
                 return this.expressMapper.insertSelective(express);
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
     /**
      *  保存表单
@@ -606,14 +606,14 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
 
         if(StringUtil.isNotBlank(formFileName)){
             String productType = StringUtil.defaultIfEmpty(InitConfig.getSysCfg("res_form_category_"+rotationFlow),InitConfig.getSysCfg("res_form_category"));//与对应开关保持一致
-            productType = StringUtil.defaultIfEmpty(productType,GlobalConstant.RES_FORM_PRODUCT);
+            productType = StringUtil.defaultIfEmpty(productType, com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT);
 
             String currVer = InitConfig.resFormRequestUtil.getVersionMap().get(productType+"_"+formFileName);
             if(StringUtil.isBlank(currVer)){
-                currVer = InitConfig.resFormRequestUtil.getVersionMap().get(GlobalConstant.RES_FORM_PRODUCT+"_"+formFileName);
+                currVer = InitConfig.resFormRequestUtil.getVersionMap().get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + formFileName);
             }
             if(StringUtil.isBlank(currVer)){
-                currVer = GlobalConstant.RES_FORM_PRODUCT_VER;
+                currVer = com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT_VER;
             }
             String type="";
             //获取过程flow
@@ -633,10 +633,10 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
             Map<String,IrbSingleForm> singleFormMap = InitConfig.resFormRequestUtil.getFormMap().get(formFileName);
             IrbSingleForm singleForm = singleFormMap.get(productType+"_"+currVer+type);
             if(singleForm == null){
-                singleForm = singleFormMap.get(GlobalConstant.RES_FORM_PRODUCT+"_"+currVer+type);
+                singleForm = singleFormMap.get(com.pinde.core.common.GlobalConstant.RES_FORM_PRODUCT + "_" + currVer + type);
             }
             if(singleForm == null){
-                throw new RuntimeException("未发现表单 模版类型:"+productType+",表单类型:"+ ResRecTypeEnum.getNameById(formFileName)+",版本号:"+currVer);
+                throw new RuntimeException("未发现表单 模版类型:" + productType + ",表单类型:" + com.pinde.core.common.enums.ResRecTypeEnum.getNameById(formFileName) + ",版本号:" + currVer);
             }
 
             if(singleForm != null){
@@ -648,9 +648,9 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 if(process!=null){
                     boolean toUpdate = false;
                     //是否出科，是则更新出科标记为Y，更新当前轮转标记为N，更新实际轮转结束日期为当前日期
-                    if(GlobalConstant.FLAG_Y.equals(req.getParameter("isAgree"))){
-                        process.setSchFlag(GlobalConstant.FLAG_Y);
-                        process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(req.getParameter("isAgree"))) {
+                        process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 //						process.setEndDate(DateUtil.getCurrDate());
                         toUpdate = true;
                     }
@@ -691,7 +691,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     express.setMedicineType(medicineTypeId);
                     //表单类型
                     express.setRecTypeId(formFileName);
-                    express.setRecTypeName(ResRecTypeEnum.valueOf(formFileName).getTypeName());
+                    express.setRecTypeName(com.pinde.core.common.enums.ResRecTypeEnum.valueOf(formFileName).getTypeName());
                     //表单版本
                     express.setRecVersion(currVer);
                     express.setRecForm(productType);
@@ -738,9 +738,9 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                         GlobalRecTypeEnum.Appraisal.getId().equals(express.getRecTypeId())|| //实习总鉴定
                         GlobalRecTypeEnum.CourseScore.getId().equals(express.getRecTypeId())) { //实习成绩单
                     recContent = getRecContent(formFileName, singleForm, req);
-                } else if(ResRecTypeEnum.TeachRegistry.getId().equals(express.getRecTypeId())){ //教学登记
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.TeachRegistry.getId().equals(express.getRecTypeId())) { //教学登记
                     recContent = getRecContent(formFileName, singleForm.getItemList(), req,express.getRecContent());
-                } else if(ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())){ //出科考核表
+                } else if (com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId().equals(express.getRecTypeId())) { //出科考核表
                     String roleFlag = req.getParameter("roleFlag");
                     recContent = getEvaluationContent(
                             formFileName,
@@ -789,7 +789,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 }
 
                 //培训年度
-                if(ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())){
+                if (com.pinde.core.common.enums.ResRecTypeEnum.AnnualTrainForm.getId().equals(express.getRecTypeId())) {
                     express.setOperTime(req.getParameter("trainDate"));
                 }
 
@@ -816,7 +816,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                             express.setItemName(itemName);
 
                             if(StringUtil.isNotBlank(xmlItemName)){
-                                if(GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                                if (com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
                                     itemName = regItem;
                                 }
                                 recContent = replaceNodeValue(useContent,xmlItemName,itemName,itemId);
@@ -834,7 +834,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     String itemName = req.getParameter("itemName");
                     express.setItemName(itemName);
                     if(StringUtil.isNotBlank(xmlItemName)){
-                        if(GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)){
+                        if (com.pinde.core.common.GlobalConstant.RES_REQ_OTHER_ITEM_ID.equals(itemId)) {
                             itemName = regItem;
                         }
                         recContent = replaceNodeValue(useContent,xmlItemName,itemName,itemId);
@@ -844,10 +844,10 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     edit(express);
                 }
 
-                return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
             }
         }
-        return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
     @Override
@@ -865,7 +865,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         com.pinde.sci.model.mo.ResSchProcessExpressExample.Criteria create=example.createCriteria();
-        create.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andSchRotationDeptFlowEqualTo(processFlow);
         }
@@ -886,7 +886,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         com.pinde.sci.model.mo.ResSchProcessExpressExample.Criteria create=example.createCriteria();
-        create.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andProcessFlowEqualTo(processFlow);
         }
@@ -910,7 +910,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         if(list !=null && list.size()>0 && rootEle!=null){
             for(Element itemEle : list){
                 String multiple = itemEle.attributeValue("multiple");
-                if(!GlobalConstant.FLAG_Y.equals(multiple)){
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(multiple)) {
                     String name = itemEle.attributeValue("name");
                     String isSelect = itemEle.attributeValue("select");
 
@@ -918,7 +918,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
 
                     Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
 
-                    if(GlobalConstant.FLAG_Y.equals(isSelect)){
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSelect)) {
                         String valueName = req.getParameter(name+"_name");
                         if(StringUtil.isBlank(value)){
                             valueName = (String) req.getAttribute(name+"_name");
@@ -969,7 +969,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
             if(StringUtil.isNotBlank(oldContent)){
                 doc = DocumentHelper.parseText(oldContent);
                 root = doc.getRootElement();
-                roleNode = root.element(roleFlag+ResRecTypeEnum.AfterEvaluation.getId());
+                roleNode = root.element(roleFlag + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
                 if(roleNode != null){
                     roleNode.detach();
                 }
@@ -977,7 +977,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 doc = DocumentHelper.createDocument();
                 root = doc.addElement(formName);
             }
-            roleNode = DocumentHelper.createElement(roleFlag+ResRecTypeEnum.AfterEvaluation.getId());
+            roleNode = DocumentHelper.createElement(roleFlag + com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId());
             getContent(list,req,roleNode);
             root.add(roleNode);
             content = root.asXML();
@@ -992,7 +992,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         if(StringUtil.isNotBlank(id))
         {
             ResSchProcessExpressExample example=new ResSchProcessExpressExample();
-            example.createCriteria().andRecTypeIdEqualTo(id).andRecordStatusEqualTo("Y");
+            example.createCriteria().andRecTypeIdEqualTo(id).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
             example.setOrderByClause("create_time asc");
             return expressMapper.selectByExampleWithBLOBs(example);
         }
@@ -1004,7 +1004,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
 
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
         if(StringUtil.isNotBlank(processFlow)){
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow);
             return expressMapper.selectByExampleWithBLOBs(example);
         }
         return  null;

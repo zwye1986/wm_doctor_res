@@ -1,23 +1,22 @@
 package com.pinde.sci.biz.portal.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.PortalColumnMapper;
 import com.pinde.sci.dao.portal.PortalColumnExtMapper;
 import com.pinde.sci.model.mo.PortalColumn;
 import com.pinde.sci.model.mo.PortalColumnExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class PortalColumnManageBizImpl implements IPortalColumnManageBiz {
 	@Autowired
 	private PortalColumnMapper columnMapper;
@@ -61,7 +60,7 @@ public class PortalColumnManageBizImpl implements IPortalColumnManageBiz {
 		}else{
 			criteria.andParentColumnIdIsNull();
 		}
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("column_id desc ");
 		List<PortalColumn> list = this.columnMapper.selectByExample(example);
 		if(list!=null&&list.size()>0){//已有子栏目
@@ -90,7 +89,7 @@ public class PortalColumnManageBizImpl implements IPortalColumnManageBiz {
 	public PortalColumn getById(String columnId) {
 		if(StringUtil.isNotBlank(columnId)){
 			PortalColumnExample example = new PortalColumnExample();
-			example.createCriteria().andColumnIdEqualTo(columnId).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andColumnIdEqualTo(columnId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<PortalColumn> list = this.columnMapper.selectByExample(example);
 			if(list!=null && list.size()>0){
 				return list.get(0);

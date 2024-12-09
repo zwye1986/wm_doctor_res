@@ -10,7 +10,7 @@ $(document).ready(function(){
 		$("#baseFlag").hide();
 	}
 	changeTrainSpes();
-	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+	<c:forEach items="${resDocTypeEnumList}" var="type">
 	<c:forEach items="${datas}" var="data">
 	if("${data}"=="${type.id}"){
 		$("#"+"${data}").attr("checked","checked");

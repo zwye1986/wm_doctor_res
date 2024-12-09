@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IConsultInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ConsultInfoMapper;
 import com.pinde.sci.dao.jsres.ConsultInfoExtMapper;
 import com.pinde.sci.model.mo.ConsultInfo;
@@ -12,13 +12,12 @@ import com.pinde.sci.model.mo.ConsultInfoExample;
 import com.pinde.sci.util.jsres.SensitiveFilterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class IConsultInfoBizImpl implements IConsultInfoBiz {
 
     @Autowired
@@ -55,7 +54,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
         if (StringUtil.isNotBlank(consultInfo.getOrgCityName())){
             criteria.andOrgCityNameEqualTo(consultInfo.getOrgCityName());
         }
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if ("time".equals(orderBy)){
             example.setOrderByClause("CONSULT_QUESTION_CREATE_TIME DESC");
         }else if ("number".equals(orderBy)){
@@ -74,7 +73,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public List<ConsultInfo> searchMyQuestion(String userFlow) {
         ConsultInfoExample example = new ConsultInfoExample();
-        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andCreateUserFlowEqualTo(userFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andCreateUserFlowEqualTo(userFlow);
         List<ConsultInfo> consultInfos = consultInfoMapper.selectByExample(example);
         return consultInfos;
     }
@@ -129,7 +128,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public Integer delete(String consultInfoFlow){
         ConsultInfo consultInfo = new ConsultInfo();
-        consultInfo.setRecordStatus("N");
+        consultInfo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
         consultInfo.setConsultInfoFlow(consultInfoFlow);
         return consultInfoMapper.updateByPrimaryKeySelective(consultInfo);
     }
@@ -137,7 +136,7 @@ public class IConsultInfoBizImpl implements IConsultInfoBiz {
     @Override
     public ConsultInfo read(String consultInfoFlow) {
         ConsultInfoExample example = new ConsultInfoExample();
-        example.createCriteria().andConsultInfoFlowEqualTo(consultInfoFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andConsultInfoFlowEqualTo(consultInfoFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<ConsultInfo> consultInfos = consultInfoMapper.selectByExampleWithBLOBs(example);
         if (consultInfos != null && consultInfos.size() >0){
             return consultInfos.get(0);

@@ -1,21 +1,20 @@
 package com.pinde.res.biz.stdp.impl;
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.GlobalUtil;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysCfgExample;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class cfgBiz implements ICfgBiz {
 	@Resource
 	private SysCfgMapper cfgMapper;
@@ -44,10 +43,10 @@ public class cfgBiz implements ICfgBiz {
 	@Override
 	public List<SysCfg> search(SysCfg cfg) {
 		List<String> wsIdList = new ArrayList<String>();
-		wsIdList.add(GlobalConstant.SYS_WS_ID);
+        wsIdList.add(com.pinde.core.common.GlobalConstant.SYS_WS_ID);
 		SysCfgExample example = new SysCfgExample();
 		SysCfgExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(cfg.getWsId())) {
 			wsIdList.add(cfg.getWsId());
 			criteria.andWsIdIn(wsIdList);

@@ -8,9 +8,8 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pubedu.IStudyCourseBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.pubedu.CourseDetailTypeEnum;
+import com.pinde.core.common.enums.pubedu.CourseDetailTypeEnum;
 import com.pinde.sci.model.mo.StudyCourse;
 import com.pinde.sci.model.mo.StudyCourseDetail;
 import com.pinde.sci.model.mo.StudyCourseDetailInfo;
@@ -77,18 +76,18 @@ public class PubeduHospitalController extends GeneralController{
         String[] fileCheckInfo = testFileMap(fileMap);
         model.addAttribute("operType" , operType);
         if(fileCheckInfo!=null){
-//            model.addAttribute("result" , GlobalConstant.FLAG_N);
+//            model.addAttribute("result" , com.pinde.core.common.GlobalConstant.FLAG_N);
 //            model.addAttribute("fileErrorMsg" , fileCheckInfo);
             return "fileErrorMsg";
         } else {
-            model.addAttribute("result" , GlobalConstant.FLAG_Y);
+            model.addAttribute("result", com.pinde.core.common.GlobalConstant.FLAG_Y);
             String resultPath = "";
             if(uploadFile!=null){
                 if(!uploadFile.isEmpty()){
                     resultPath = resDoctorBiz.saveImg("",uploadFile, "pubeduImages");
                 }
             }
-            if(GlobalConstant.FLAG_N.equals(resultPath)){
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(resultPath)) {
                 resultPath = "";
             }
 //            model.addAttribute("filePath" , resultPath);
@@ -106,7 +105,7 @@ public class PubeduHospitalController extends GeneralController{
             if(file!=null && !file.isEmpty()){
                 if(file!=null && !file.isEmpty()){
                     String fileResult = resDoctorBiz.checkFile(file);
-                    if(!GlobalConstant.FLAG_Y.equals(fileResult)){
+                    if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fileResult)) {
                         return new String[]{name,fileResult};
                     }
                 }
@@ -138,23 +137,23 @@ public class PubeduHospitalController extends GeneralController{
         int count = 0;
         if(StringUtil.isBlank(course.getCourseFlow())){
             course.setCourseFlow(PkUtil.getUUID());
-            course.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            course.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             course.setCreateTime(DateUtil.getCurrDateTime());
             course.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
             course.setModifyTime(DateUtil.getCurrDateTime());
             course.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
             count = studyCourseBiz.insert(course);
         }else{
-            course.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            course.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             course.setModifyTime(DateUtil.getCurrDateTime());
             course.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
             count = studyCourseBiz.updateStudyCourse(course);
         }
 
         if(count > 0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -167,9 +166,9 @@ public class PubeduHospitalController extends GeneralController{
     public String delCourse(String courseFlow){
         int count = studyCourseBiz.deleteByCourseFlow(courseFlow);
         if(count>0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     /**
@@ -183,9 +182,9 @@ public class PubeduHospitalController extends GeneralController{
 
         int count = studyCourseBiz.updateStudyCourseBySelect(type,courseFlow,java.net.URLDecoder.decode(courseName,"UTF-8"));
         if(count > 0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     /**
@@ -258,9 +257,9 @@ public class PubeduHospitalController extends GeneralController{
     public String saveCourseDetailInfo(StudyCourseDetailInfo detailInfo){
         int count = studyCourseBiz.insertDetailInfo(detailInfo);
         if(count>0){
-            return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
         }
-        return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
     }
 
     /**
@@ -274,9 +273,9 @@ public class PubeduHospitalController extends GeneralController{
 
         int count = studyCourseBiz.deleteByRecordFlow(recordFlow);
         if(count > 0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     /**
@@ -291,9 +290,9 @@ public class PubeduHospitalController extends GeneralController{
         studyCourseDetail.setDetailTypeName(java.net.URLDecoder.decode(studyCourseDetail.getDetailTypeName(),"UTF-8"));
         int count = studyCourseBiz.deleteByDetailFlow(studyCourseDetail);
         if(count > 0){
-            return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
         }
-        return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
     }
 
     /**
@@ -314,12 +313,12 @@ public class PubeduHospitalController extends GeneralController{
                 }
                 int count = studyCourseBiz.insertStudyDetail(courseDetail);
                 if(count>0){
-                    return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                 }
             }else {
                 int count = studyCourseBiz.updateStudyCourseDetail(courseDetail);
                 if(count>0){
-                    return GlobalConstant.SAVE_SUCCESSED;
+                    return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
                 }
             }
 
@@ -327,10 +326,10 @@ public class PubeduHospitalController extends GeneralController{
         if("detailInfo".equals(flag)){
             int count = studyCourseBiz.updateStudyCourseDetailInfo(detailInfo);
             if(count>0){
-                return GlobalConstant.SAVE_SUCCESSED;
+                return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
             }
         }
-            return GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
         }
     }
 

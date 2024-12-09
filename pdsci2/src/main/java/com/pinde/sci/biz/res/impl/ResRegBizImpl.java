@@ -1,23 +1,22 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRegBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResRegMapper;
 import com.pinde.sci.model.mo.ResReg;
 import com.pinde.sci.model.mo.ResRegExample;
 import com.pinde.sci.model.mo.ResRegExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResRegBizImpl implements IResRegBiz{
 	@Autowired
 	private ResRegMapper regMapper;
@@ -25,7 +24,7 @@ public class ResRegBizImpl implements IResRegBiz{
 //	@Override
 //	public	List<ResReg> searchResReg(){
 //		ResRegExample example = new ResRegExample();
-//		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //		return regMapper.selectByExample(example);
 //	}
 
@@ -54,14 +53,14 @@ public class ResRegBizImpl implements IResRegBiz{
 				return regMapper.insertSelective(reg);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public ResReg searchRecentYearResReg(String userFlow) {
 		ResRegExample example = new ResRegExample();
 		example.setOrderByClause("REG_YEAR DESC");
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
 		List<ResReg> regs = this.regMapper.selectByExample(example);
 		if(!regs.isEmpty()){
 			return regs.get(0);
@@ -73,7 +72,7 @@ public class ResRegBizImpl implements IResRegBiz{
 	public List<ResReg> searchAllResReg(String userFlow) {
 		ResRegExample example = new ResRegExample();
 		example.setOrderByClause("REG_YEAR DESC");
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
 		return this.regMapper.selectByExample(example);
 	}
 }

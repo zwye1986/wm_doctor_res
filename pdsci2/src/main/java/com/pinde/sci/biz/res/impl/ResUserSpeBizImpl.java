@@ -1,25 +1,24 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResUserSpeBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResUserSpeMapper;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.ResUserSpe;
 import com.pinde.sci.model.mo.ResUserSpeExample;
 import com.pinde.sci.model.mo.ResUserSpeExample.Criteria;
 import com.pinde.sci.model.mo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResUserSpeBizImpl implements IResUserSpeBiz {
 	@Autowired
 	private ResUserSpeMapper userSpeMapper;
@@ -36,7 +35,7 @@ public class ResUserSpeBizImpl implements IResUserSpeBiz {
 		List<ResUserSpe> userSpes = null;
 		if(StringUtil.isNotBlank(userFlow)){
 			ResUserSpeExample example = new ResUserSpeExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 			.andUserFlowEqualTo(userFlow);
 			userSpes = userSpeMapper.selectByExample(example);
 		}
@@ -54,7 +53,7 @@ public class ResUserSpeBizImpl implements IResUserSpeBiz {
 				return userSpeMapper.insertSelective(userSpe);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 //	@Override
@@ -78,7 +77,7 @@ public class ResUserSpeBizImpl implements IResUserSpeBiz {
 				
 				ResUserSpe userSpe = new ResUserSpe();
 				//将不再speids内的禁用
-				userSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                userSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 				Criteria criteria = example.createCriteria().andUserFlowEqualTo(userFlow);
 				if(speIds!=null && speIds.size()>0){
 					criteria.andTrainingSpeIdNotIn(speIds);
@@ -87,7 +86,7 @@ public class ResUserSpeBizImpl implements IResUserSpeBiz {
 				
 				//将speids内的启用
 				if(speIds!=null && speIds.size()>0){
-					userSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                    userSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 					example.clear();
 					example.createCriteria().andUserFlowEqualTo(userFlow).andTrainingSpeIdIn(speIds);
 					userSpeMapper.updateByExampleSelective(userSpe,example);
@@ -111,14 +110,14 @@ public class ResUserSpeBizImpl implements IResUserSpeBiz {
 						
 						userSpe.setRecordFlow(null);
 						userSpe.setTrainingSpeId(speId);
-						userSpe.setTrainingSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId));
+                        userSpe.setTrainingSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(speId));
 						editUserSpe(userSpe);
 					}
 				}
-				return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
@@ -126,7 +125,7 @@ public class ResUserSpeBizImpl implements IResUserSpeBiz {
 		List<ResUserSpe> userSpes = null;
 		if(userFlows!=null && userFlows.size()>0){
 			ResUserSpeExample example = new ResUserSpeExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowIn(userFlows);
 			userSpes = userSpeMapper.selectByExample(example);
 		}
 		return userSpes;

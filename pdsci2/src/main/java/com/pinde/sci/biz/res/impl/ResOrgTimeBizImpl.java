@@ -1,23 +1,22 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgTimeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResOrgTimeMapper;
 import com.pinde.sci.form.res.ResOrgTimeForm;
 import com.pinde.sci.model.mo.ResOrgTime;
 import com.pinde.sci.model.mo.ResOrgTimeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResOrgTimeBizImpl implements IResOrgTimeBiz {
 
     @Autowired
@@ -26,7 +25,7 @@ public class ResOrgTimeBizImpl implements IResOrgTimeBiz {
     public List<ResOrgTime> readOrgTime(String orgFlow) {
         if(StringUtil.isNotBlank(orgFlow)){
             ResOrgTimeExample example = new ResOrgTimeExample();
-            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             example.setOrderByClause("start_time");
             List<ResOrgTime> list = orgTimeMapper.selectByExample(example);
             if(list.size()>0){
@@ -61,7 +60,7 @@ public class ResOrgTimeBizImpl implements IResOrgTimeBiz {
     public ResOrgTime readOrgOneTime(String orgFlow) {
         if(StringUtil.isNotBlank(orgFlow)){
             ResOrgTimeExample example = new ResOrgTimeExample();
-            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            example.createCriteria().andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
             List<ResOrgTime> list = orgTimeMapper.selectByExample(example);
             if(list.size()>0){
                 return list.get(0);
@@ -87,9 +86,9 @@ public class ResOrgTimeBizImpl implements IResOrgTimeBiz {
             {
                 ResOrgTimeExample example = new ResOrgTimeExample();
                 example.createCriteria().andOrgFlowEqualTo(bean.getOrgFlow())
-                        .andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andRecordFlowNotIn(recordFlows);
+                        .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecordFlowNotIn(recordFlows);
                 ResOrgTime time=new ResOrgTime();
-                time.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                time.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
                 orgTimeMapper.updateByExampleSelective(time,example);
 
             }

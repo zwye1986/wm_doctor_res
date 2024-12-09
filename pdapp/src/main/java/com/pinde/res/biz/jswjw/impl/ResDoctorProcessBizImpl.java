@@ -1,25 +1,24 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResDoctorSchProcessExample;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcessExample;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 
 	@Autowired
@@ -31,13 +30,13 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	public int edit(ResDoctorSchProcess process,SysUser user) {
 		if(process!=null){
 			if(StringUtil.isNotBlank(process.getProcessFlow())){//修改
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				process.setModifyUserFlow(user.getUserFlow());
 				process.setModifyTime(DateUtil.getCurrDateTime());
 				return this.resDoctorProcessMapper.updateByPrimaryKeySelective(process);
 			}else{//新增
 				process.setProcessFlow(PkUtil.getUUID());
-				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				process.setCreateUserFlow(user.getUserFlow());
 				process.setCreateTime(DateUtil.getCurrDateTime());
 				process.setModifyUserFlow(user.getUserFlow());
@@ -45,7 +44,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 				return this.resDoctorProcessMapper.insertSelective(process);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public ResDoctorSchProcess read(String processFlow) {
@@ -59,7 +58,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	@Override
 	public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
 		return resDoctorProcessMapper.selectByExample(example);
 	}
 	

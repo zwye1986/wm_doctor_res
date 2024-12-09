@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,10 +15,8 @@ import com.pinde.sci.biz.sch.ISchDoctorDeptBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
@@ -83,7 +81,7 @@ public class ResDoctorArchiveController extends GeneralController {
             success = archiveBiz.saveArchiveInfo4Hb(archiveTime,sessionNumber);
         }
         if(success){
-            return GlobalConstant.OPRE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
         }
         return "存档失败";
     }
@@ -99,8 +97,8 @@ public class ResDoctorArchiveController extends GeneralController {
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         List<String> doctorTypeIdList = doctor.getDoctorTypeIdList();
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIdList!=null&&doctorTypeIdList.size()>0){
             for (SysDict dict:dictList){
@@ -178,7 +176,7 @@ public class ResDoctorArchiveController extends GeneralController {
 
 
         SysDept dept = new SysDept();
-        dept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         dept.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
         List<SysDept> deptList = deptBiz.searchDept(dept);
         model.addAttribute("deptList", deptList);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.CountryOrgInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.CountryOrgInfo" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.CountryOrgInfo" >
     <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
     <result column="ORG_ADDRESS" property="orgAddress" jdbcType="VARCHAR" />
@@ -15,7 +15,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.CountryOrgInfo" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.CountryOrgInfo" extends="BaseResultMap" >
     <result column="CONTENT" property="content" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -83,7 +83,7 @@
   <sql id="Blob_Column_List" >
     CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.CountryOrgInfoExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.CountryOrgInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -99,7 +99,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.CountryOrgInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.CountryOrgInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -125,13 +125,13 @@
     delete from PDSCI.COUNTRY_ORG_INFO
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.CountryOrgInfoExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.CountryOrgInfoExample" >
     delete from PDSCI.COUNTRY_ORG_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.CountryOrgInfo" >
+  <insert id="insert" parameterType="com.pinde.core.model.CountryOrgInfo" >
     insert into PDSCI.COUNTRY_ORG_INFO (ORG_FLOW, ORG_NAME, ORG_ADDRESS, 
       ORG_LEADER, LINK_PHONE, BZ_BED_NUM, 
       KF_BED_NUM, RECORD_STATUS, CREATE_TIME, 
@@ -143,7 +143,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{content,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.CountryOrgInfo" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.CountryOrgInfo" >
     insert into PDSCI.COUNTRY_ORG_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orgFlow != null" >
@@ -228,7 +228,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.CountryOrgInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.CountryOrgInfoExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.COUNTRY_ORG_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -318,7 +318,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.CountryOrgInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.CountryOrgInfo" >
     update PDSCI.COUNTRY_ORG_INFO
     <set >
       <if test="orgName != null" >
@@ -360,7 +360,7 @@
     </set>
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.CountryOrgInfo" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.CountryOrgInfo" >
     update PDSCI.COUNTRY_ORG_INFO
     set ORG_NAME = #{orgName,jdbcType=VARCHAR},
       ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},
@@ -376,7 +376,7 @@
       CONTENT = #{content,jdbcType=CLOB}
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.CountryOrgInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.CountryOrgInfo" >
     update PDSCI.COUNTRY_ORG_INFO
     set ORG_NAME = #{orgName,jdbcType=VARCHAR},
       ORG_ADDRESS = #{orgAddress,jdbcType=VARCHAR},

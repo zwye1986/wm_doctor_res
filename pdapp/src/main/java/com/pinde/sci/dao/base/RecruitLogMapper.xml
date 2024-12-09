@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.RecruitLogMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.RecruitLog">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitLog">
     <id column="LOG_FLOW" jdbcType="VARCHAR" property="logFlow" />
     <result column="APPLY_FLOW" jdbcType="VARCHAR" property="applyFlow" />
     <result column="CHANGE_ITEM" jdbcType="VARCHAR" property="changeItem" />
@@ -82,7 +82,7 @@
     CHANGE_USER_CODE, LOG_DESC, WS_ID, WS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.RecruitLogExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.RecruitLogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -106,13 +106,13 @@
     delete from PDSCI.RECRUIT_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitLogExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitLogExample">
     delete from PDSCI.RECRUIT_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitLog">
+  <insert id="insert" parameterType="com.pinde.core.model.RecruitLog">
     insert into PDSCI.RECRUIT_LOG (LOG_FLOW, APPLY_FLOW, CHANGE_ITEM, 
       OLD_DATA, NEW_DATA, CHANGE_TIME, 
       CHANGE_USER_FLOW, CHANGE_USER_CODE, LOG_DESC, 
@@ -126,7 +126,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitLog">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitLog">
     insert into PDSCI.RECRUIT_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="logFlow != null">
@@ -229,7 +229,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitLogExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.RecruitLogExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.RECRUIT_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -313,7 +313,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitLog">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitLog">
     update PDSCI.RECRUIT_LOG
     <set>
       <if test="applyFlow != null">
@@ -364,7 +364,7 @@
     </set>
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitLog">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitLog">
     update PDSCI.RECRUIT_LOG
     set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
       CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR},

@@ -11,7 +11,11 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
+import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
+import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.model.SysDict;
+import com.google.common.collect.Lists;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.excelUtils.enums.NumberEngEnum;
@@ -27,10 +31,7 @@ import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.res.ResRecTypeEnum;
-import com.pinde.sci.enums.sch.*;
-import com.pinde.sci.enums.sys.DictTypeEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.excelListens.SchedulingAuditCheck;
 import com.pinde.sci.excelListens.SchedulingAuditRead;
 import com.pinde.sci.excelListens.model.*;
@@ -49,9 +50,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Example;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,7 +72,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	@Autowired
@@ -144,19 +145,22 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Autowired
 	private IResRecBiz resRecBiz;
 
+	@Autowired
+	private ResScoreMapper scoreMapper;
+
 	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
 	@Override
 	public List<SchArrangeResult> searchSchArrangeResult() {
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		return arrangeResultMapper.selectByExample(example);
 	}
 
 	@Override
 	public List<SchArrangeResult> searchSchArrangeResultByDoctor(String doctorFlow){
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
 		example.setOrderByClause("SCH_START_DATE");
 		return arrangeResultMapper.selectByExample(example);
 	}
@@ -221,9 +225,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			for(SchArrangeResult result : resultList){
 				saveSchArrangeResult(result);
 			}
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -237,18 +241,18 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				return save(result);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 
 	@Override
 	public int saveProcessAndResult(ResDoctorSchProcess process,SchArrangeResult result) {
 		if(result==null){
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		if(process==null){
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		String schDeptFlow = result.getSchDeptFlow();
@@ -273,7 +277,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		String unit = InitConfig.getSysCfg("res_rotation_unit");
 		//默认按月计算
 		int step = 30;
-		if(SchUnitEnum.Week.getId().equals(unit)){
+        if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unit)) {
 			//如果是周按7天算/没配置或者选择月按30天
 			step = 7;
 			BigDecimal realMonth = BigDecimal.valueOf(0);
@@ -306,7 +310,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			SysUser user = userBiz.findByFlow(teacherUserFlow);
 			if(user!=null){
 				process.setTeacherUserName(user.getUserName());
-				process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
+                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}else{
 			process.setTeacherUserName("");
@@ -324,7 +328,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 		String standardDeptId = result.getStandardDeptId();
 		if(StringUtil.isNotBlank(standardDeptId)){
-			String standardDeptName = DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
+            String standardDeptName = com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
 			result.setStandardDeptName(standardDeptName);
 		}
 
@@ -343,8 +347,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					process.setOrgFlow(doctor.getOrgFlow());
 					process.setOrgName(doctor.getOrgName());
 				}
-				process.setSchFlag(GlobalConstant.FLAG_N);
-				process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
+                process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				process.setSchResultFlow(resultFlow);
 				process.setUserFlow(doctorFlow);
 			}
@@ -386,31 +390,31 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				process.setOrgName(sysOrg.getOrgName());
 
 				String schFlag = doctor.getSchFlag();
-				if(!GlobalConstant.FLAG_Y.equals(schFlag)){
-					doctor.setSchFlag(GlobalConstant.FLAG_Y);
-					doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schFlag)) {
+                    doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 					doctorBiz.editDoctor(doctor);
 				}
 			}
-			process.setSchFlag(GlobalConstant.FLAG_N);
-			process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+            process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+            process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			process.setSchResultFlow(resultFlow);
 			process.setUserFlow(doctorFlow);
 			save(result);
 		}
 		processBiz.edit(process);
 
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
 	public int saveInDept(SchArrangeResult result, ResDoctorSchProcess process) throws ParseException {
 		if(result==null){
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		if(process==null){
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		String schDeptFlow = result.getSchDeptFlow();
@@ -434,7 +438,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		String unit = InitConfig.getSysCfg("res_rotation_unit");
 		//默认按月计算
 		int step = 30;
-		if(SchUnitEnum.Week.getId().equals(unit)){
+        if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unit)) {
 			//如果是周按7天算/没配置或者选择月按30天
 			step = 7;
 			BigDecimal realMonth = BigDecimal.valueOf(0);
@@ -462,7 +466,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			SysUser user = userBiz.findByFlow(teacherUserFlow);
 			if(user!=null){
 				process.setTeacherUserName(user.getUserName());
-				process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
+                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			}
 		}
 
@@ -476,7 +480,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 		String standardDeptId = result.getStandardDeptId();
 		if(StringUtil.isNotBlank(standardDeptId)){
-			String standardDeptName = DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
+            String standardDeptName = com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
 			result.setStandardDeptName(standardDeptName);
 		}
 
@@ -495,7 +499,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					process.setOrgFlow(doctor.getOrgFlow());
 					process.setOrgName(doctor.getOrgName());
 				}
-				process.setSchFlag(GlobalConstant.FLAG_N);
+                process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 				process.setSchResultFlow(resultFlow);
 				process.setUserFlow(doctorFlow);
 			}
@@ -533,21 +537,21 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				process.setOrgName(doctor.getOrgName());
 
 				String schFlag = doctor.getSchFlag();
-				if(!GlobalConstant.FLAG_Y.equals(schFlag)){
-					doctor.setSchFlag(GlobalConstant.FLAG_Y);
-					doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schFlag)) {
+                    doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 					doctorBiz.editDoctor(doctor);
 				}
 			}
-			process.setSchFlag(GlobalConstant.FLAG_N);
-			process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+            process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+            process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			process.setSchResultFlow(resultFlow);
 			process.setUserFlow(doctorFlow);
 			save(result);
 		}
 		processBiz.edit(process);
 
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
@@ -612,17 +616,17 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				}
 			}
 
-			return GlobalConstant.ONE_LINE;
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
 	public int delArrangeResult(String doctorFlow){
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        example.createCriteria().andDoctorFlowEqualTo(doctorFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SchArrangeResult resultTemp = new SchArrangeResult();
-		resultTemp.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        resultTemp.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		return arrangeResultMapper.updateByExampleSelective(resultTemp, example);
 	}
 
@@ -631,7 +635,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if(reStatus){
 			ResDoctor doctor = new ResDoctor();
 			doctor.setDoctorFlow(doctorFlow);
-			doctor.setSchFlag(GlobalConstant.FLAG_N);
+            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			doctorBiz.editDoctor(doctor);
 		}
 		return delArrangeResult(doctorFlow);
@@ -641,7 +645,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	public List<SchArrangeResult> searchArrangeResultByDateAndOrg(String schStartDate,String schEndDate,String orgFlow){
 		SchArrangeResultExample example = new SchArrangeResultExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 		if(StringUtil.isNotBlank(schStartDate)){
 			criteria.andSchEndDateGreaterThanOrEqualTo(schStartDate);
 		}
@@ -659,7 +663,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	public List<SchArrangeResult> searchArrangeResultByDate(String schStartDate,String doctorFlow){
 		SchArrangeResultExample example = new SchArrangeResultExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(schStartDate)){
 			criteria.andSchEndDateLessThanOrEqualTo(schStartDate);
 		}
@@ -672,7 +676,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public List<SchArrangeResult> searchArrangeResultByDate(String schStartDate,String schEndDate,String doctorName){
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andSchEndDateBetween(schStartDate,schEndDate).andDoctorNameEqualTo(doctorName);
 		example.setOrderByClause("SCH_END_DATE");
 		return arrangeResultMapper.selectByExample(example);
@@ -711,7 +715,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		List<SchArrangeResult> resultList = null;
 		if(doctorFlows!=null&&!doctorFlows.isEmpty()){
 			SchArrangeResultExample example = new SchArrangeResultExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowIn(doctorFlows);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowIn(doctorFlows);
 			example.setOrderByClause("SCH_END_DATE");
 			resultList = arrangeResultMapper.selectByExample(example);
 		}
@@ -723,7 +727,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		List<SchArrangeResult> resultList = null;
 		if(resultFlows!=null&&!resultFlows.isEmpty()){
 			SchArrangeResultExample example = new SchArrangeResultExample();
-			example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andResultFlowIn(resultFlows);
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andResultFlowIn(resultFlows);
 			example.setOrderByClause("SCH_END_DATE");
 			resultList = arrangeResultMapper.selectByExample(example);
 		}
@@ -749,8 +753,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			Integer sessionNumber = Integer.parseInt(doctor.getSessionNumber());
 
 			//设置选科标识
-			doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
-//			doctor.setSchFlag(GlobalConstant.FLAG_Y);
+            doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+//			doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			doctorBiz.editDoctor(doctor);
 
 			List<SchRotationGroup> groupList = groupBiz.searchOrgGroupOrAll(rotationFlow,doctor.getOrgFlow(),null);
@@ -870,7 +874,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					result.setDeptName(doctorDept.getDeptName());
 					result.setSchDeptFlow(doctorDept.getSchDeptFlow());
 					result.setSchDeptName(doctorDept.getSchDeptName());
-					result.setIsRequired(GlobalConstant.FLAG_N);
+                    result.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_N);
 					result.setGroupFlow(doctorDept.getGroupFlow());
 					result.setStandardDeptId(doctorDept.getStandardDeptId());
 					result.setStandardDeptName(doctorDept.getStandardDeptName());
@@ -928,7 +932,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			//sortResult(doctorFlow);
 			sortResultByStage(doctorFlow,doctor.getOrgFlow(),rotationFlow);
 		}
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	private void sortResultByStage(String userFlow,String orgFlow,String rotationFlow){
@@ -1079,7 +1083,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				result.setSchYear("1");
 				result.setOrgFlow(doctor.getOrgFlow());
 				result.setOrgName(doctor.getOrgName());
-				result.setIsRequired(GlobalConstant.FLAG_Y);
+                result.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				for(SchDept schDept : schDeptList){
 					result.setResultFlow(null);
 					result.setDeptFlow(schDept.getDeptFlow());
@@ -1089,13 +1093,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					saveSchArrangeResult(result);
 				}
 
-				doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+                doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				doctorBiz.editDoctor(doctor);
 
-				return GlobalConstant.ONE_LINE;
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -1110,7 +1114,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			SysUser operUser = GlobalContext.getCurrentUser();
 
 			//重置状态
-			doctor.setSchFlag(GlobalConstant.FLAG_N);
+            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			doctor.setSchStatusId("");
 			doctor.setSchStatusName("");
 			doctorBiz.editDoctor(doctor);
@@ -1156,7 +1160,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 				if(delResultFlows!=null && delResultFlows.length>0){
 					SchArrangeResult result = new SchArrangeResult();
-					result.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+                    result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 					for(String flow : delResultFlows){
 						result.setResultFlow(flow);
 						saveSchArrangeResult(result);
@@ -1165,7 +1169,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			}
 		}
 
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
@@ -1175,7 +1179,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			SchRotationGroup group = groupBiz.readSchRotationGroup(groupFlow);
 
 			//重置状态
-			doctor.setSchFlag(GlobalConstant.FLAG_N);
+            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			doctor.setSchStatusId("");
 			doctor.setSchStatusName("");
 			doctorBiz.editDoctor(doctor);
@@ -1213,7 +1217,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							result.setGroupFlow(groupFlow);
 							result.setDeptName(schDept.getDeptName());
 							//不是方案配置下的轮转记录
-							result.setIsRotation(GlobalConstant.FLAG_N);
+                            result.setIsRotation(com.pinde.core.common.GlobalConstant.FLAG_N);
 							saveSchArrangeResult(result);
 						}
 					}
@@ -1221,7 +1225,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			}
 		}
 
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
@@ -1262,7 +1266,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						rotationDeptMap.put(rotationDept.getRecordFlow(),rotationDept);
 
 						//记录选科科室
-						if(!GlobalConstant.FLAG_Y.equals(rotationDept.getIsRequired())){
+                        if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(rotationDept.getIsRequired())) {
 							SchDoctorDept doctorDept = new SchDoctorDept();
 							doctorDept.setGroupFlow(rotationDept.getGroupFlow());
 							doctorDept.setSchMonth(rotationDept.getSchMonth());
@@ -1346,17 +1350,17 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							saveSchArrangeResult(result);
 
 							//更新医师选科排班状态
-							doctor.setSchFlag(GlobalConstant.FLAG_Y);
-							doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+                            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                            doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 							doctorBiz.editDoctor(doctor);
 						}
 					}
 
-					return GlobalConstant.ONE_LINE;
+                    return com.pinde.core.common.GlobalConstant.ONE_LINE;
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -1364,7 +1368,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			String standardDeptId,String doctorFlow) {
 		SchArrangeResultExample example = new SchArrangeResultExample();
 		Criteria exam=example.createCriteria();
-		exam.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        exam.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(groupFlow)) {
 			exam.andStandardGroupFlowEqualTo(groupFlow);
 		}
@@ -1385,7 +1389,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		{
 			SchArrangeResultExample example = new SchArrangeResultExample();
 			Criteria exam=example.createCriteria();
-			exam.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+            exam.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			for(SchRotationDept srd :depts)
 			{
 
@@ -1452,7 +1456,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public List<HbresDoctorDeptDetail> hbresDoctorDeptDetails(String doctorFlow, String applyYear) {
 		HbresDoctorDeptDetailExample example=new HbresDoctorDeptDetailExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andApplyYearEqualTo(applyYear);
 		List<HbresDoctorDeptDetail> list=hbresDoctorDeptDetailMapper.selectByExample(example);
 		return list;
@@ -1461,7 +1465,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public Map<String, String> imgUpload(String resultFlow, MultipartFile file, String fileType) {
 		Map<String, String> map=new HashMap<String, String>();
-		map.put("status", GlobalConstant.OPRE_FAIL_FLAG);
+        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 		if(file!=null){
 			List<String> mimeList = new ArrayList<String>();
 			if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
@@ -1474,13 +1478,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			String fileName = file.getOriginalFilename();//文件名
 			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
 			if(!(mimeList.contains(file.getContentType())&&suffixList.contains(suffix))){
-				map.put("error", GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
 				return  map;
 
 			}
 			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
 			if (file.getSize() > limitSize * 1024 * 1024) {
-				map.put("error", GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize +"M") ;
+                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
 				return  map;
 			}
 			try {
@@ -1501,7 +1505,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				PubFile pubFile=fileBiz.readProductFile(resultFlow,fileType);
 				if(pubFile==null)
 					pubFile=new PubFile();
-				pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				pubFile.setFilePath(filePath);
 				pubFile.setFileName(fileName);
 				pubFile.setFileSuffix(suffix);
@@ -1510,10 +1514,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				int c=fileBiz.editFile(pubFile);
 				if(c==1) {
 					map.put("url",url);
-					map.put("status",GlobalConstant.OPRE_SUCCESSED_FLAG);
+                    map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 				}else{
 					map.put("error","上传失败！");
-					map.put("status",GlobalConstant.OPRE_FAIL_FLAG);
+                    map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1579,8 +1583,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		{
 			String doctorFlow = GlobalContext.getCurrentUser().getUserFlow();	//医师流水号
 			ResDoctor doctor=doctorBiz.readDoctor(doctorFlow);
-			doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
-			doctor.setSchFlag(GlobalConstant.FLAG_Y);
+            doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			doctorBiz.editDoctor(doctor);
 			Map<String,String> resultDateAreaMap = getResultCycleDate(doctorFlow);
 			String startDate="";
@@ -1636,7 +1640,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				result.setIsRequired(schRotationDept.getIsRequired());
 				String standardDeptId = schRotationDept.getStandardDeptId();
 				if(StringUtil.isNotBlank(standardDeptId)){
-					String standardDeptName = DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
+                    String standardDeptName = com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
 					result.setStandardDeptName(standardDeptName);
 				}
 				result.setStandardDeptId(schRotationDept.getStandardDeptId());
@@ -1663,8 +1667,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				result.setOrgName(doctor.getOrgName());
 				process.setOrgFlow(doctor.getOrgFlow());
 				process.setOrgName(doctor.getOrgName());
-				process.setSchFlag(GlobalConstant.FLAG_N);
-				process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+                process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 				process.setSchResultFlow(resultFlow);
 				process.setUserFlow(doctorFlow);
 				startDate= DateUtil.addDate(endDate,1);
@@ -1689,11 +1693,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public int editCustomResult(SchArrangeResult result,ResDoctorSchProcess process) throws ParseException {
 		if(result==null){
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		if(process==null){
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 
 		String schDeptFlow = result.getSchDeptFlow();
@@ -1717,7 +1721,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		String unit = InitConfig.getSysCfg("res_rotation_unit");
 		//默认按月计算
 		int step = 30;
-		if(SchUnitEnum.Week.getId().equals(unit)){
+        if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unit)) {
 			//如果是周按7天算/没配置或者选择月按30天
 			step = 7;
 			BigDecimal realMonth = BigDecimal.valueOf(0);
@@ -1758,7 +1762,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 		String standardDeptId = result.getStandardDeptId();
 		if(StringUtil.isNotBlank(standardDeptId)){
-			String standardDeptName = DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
+            String standardDeptName = com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
 			result.setStandardDeptName(standardDeptName);
 		}
 
@@ -1777,8 +1781,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					process.setOrgFlow(doctor.getOrgFlow());
 					process.setOrgName(doctor.getOrgName());
 				}
-				process.setSchFlag(GlobalConstant.FLAG_N);
-				process.setIsCurrentFlag(GlobalConstant.FLAG_Y);
+                process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 				process.setSchResultFlow(resultFlow);
 				process.setUserFlow(doctorFlow);
 			}
@@ -1819,50 +1823,50 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				process.setOrgName(doctor.getOrgName());
 
 				String schFlag = doctor.getSchFlag();
-				if(!GlobalConstant.FLAG_Y.equals(schFlag)){
-					doctor.setSchFlag(GlobalConstant.FLAG_Y);
-					doctor.setSelDeptFlag(GlobalConstant.FLAG_Y);
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schFlag)) {
+                    doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                    doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 					doctorBiz.editDoctor(doctor);
 				}
 			}
-			process.setSchFlag(GlobalConstant.FLAG_N);
-			process.setIsCurrentFlag(GlobalConstant.FLAG_N);
+            process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
+            process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			process.setSchResultFlow(resultFlow);
 			process.setUserFlow(doctorFlow);
 			save(result);
 		}
 		processBiz.edit(process);
 
-		return GlobalConstant.ONE_LINE;
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
 	public int delResultByResultFlow(String resultFlow) {
-		int result = GlobalConstant.ZERO_LINE;
-		int processResult =  GlobalConstant.ZERO_LINE;
+        int result = com.pinde.core.common.GlobalConstant.ZERO_LINE;
+        int processResult = com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		SchArrangeResult arrangeResult = readSchArrangeResult(resultFlow);
-		arrangeResult.setRecordStatus(GlobalConstant.FLAG_N);
+        arrangeResult.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 		result = update(arrangeResult);
 
 		ResDoctorSchProcess process = processBiz.searchByResultFlow(resultFlow);
 		if(process!=null) {
-			process.setRecordStatus(GlobalConstant.FLAG_N);
+            process.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 			processResult = processBiz.edit(process);
 
 			ResRecExample recExample = new ResRecExample();
 			com.pinde.sci.model.mo.ResRecExample.Criteria criteria =  recExample.createCriteria();
 			criteria.andProcessFlowEqualTo(process.getProcessFlow());
 			ResRec rec = new ResRec();
-			rec.setRecordStatus(GlobalConstant.FLAG_N);
+            rec.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 			recMapper.updateByExampleSelective(rec, recExample);
 		}else{
 			processResult=1;
 		}
 
-		if(result!=GlobalConstant.ZERO_LINE && processResult!=GlobalConstant.ZERO_LINE){
-			return GlobalConstant.ONE_LINE;
+        if (result != com.pinde.core.common.GlobalConstant.ZERO_LINE && processResult != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+            return com.pinde.core.common.GlobalConstant.ONE_LINE;
 		}else{
-			return GlobalConstant.ZERO_LINE;
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 		}
 	}
 
@@ -1904,12 +1908,41 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			return result;
 		}
 		List<ResSchProcessExpress> resSchProcessExpresses = schProcessExpressMapper.listByDoctorList(doctorFlowList, schStartDate, schEndDate);
+		List<SchArrangeResult> arrangeResultList = resultExtMapper.selectDoctorSchDate(doctorFlowList, schStartDate, schEndDate);
+		Map<String, List<SchArrangeResult>> doctorToArrangeMap = arrangeResultList.stream().collect(Collectors.groupingBy(vo -> vo.getDoctorFlow()));
+		List<String> resultFlowList = arrangeResultList.stream().map(vo -> vo.getResultFlow()).collect(Collectors.toList());
+		List<ResDoctorSchProcess> processList = new ArrayList<>();
+		if(CollectionUtils.isNotEmpty(resultFlowList)) {
+			Lists.partition(resultFlowList, 1000).forEach(subList -> {
+				ResDoctorSchProcessExample processExample = new ResDoctorSchProcessExample();
+				processExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andSchResultFlowIn(subList);
+				processList.addAll(processBiz.readResDoctorSchProcessByExample(processExample));
+			});
+
+		}
+
+		Map<String, ResDoctorSchProcess> processFlowToEntityMap = processList.stream().collect(Collectors.toMap(vo -> vo.getProcessFlow(), vo -> vo, (vo1, vo2) -> vo1));
+		Map<String, List<ResDoctorSchProcess>> doctorFlowToEntityMap = processList.stream().collect(Collectors.groupingBy(vo -> vo.getUserFlow()));
 		if (CollectionUtil.isEmpty(resSchProcessExpresses)) {
 			Map<String, BigDecimal> itemMap = new HashMap<>();
 			for (String doctorFlow : doctorFlowList) {
 				itemMap = new HashMap<>();
 				itemMap.put(ll,new BigDecimal("0"));
 				itemMap.put(jn,new BigDecimal("0"));
+				List<ResDoctorSchProcess> doctorProcessList = doctorFlowToEntityMap.get(doctorFlow);
+				if(CollectionUtils.isNotEmpty(doctorProcessList)) {
+					BigDecimal totalScore = BigDecimal.ZERO;
+					int count = 0;
+					for (ResDoctorSchProcess process : doctorProcessList) {
+						if(process.getSchScore() != null) {
+							totalScore = totalScore.add(process.getSchScore());
+							count++;
+						}
+					}
+					if(count > 0) {
+						itemMap.put(ll, totalScore.divide(new BigDecimal(count), 2, BigDecimal.ROUND_HALF_DOWN));
+					}
+				}
 				result.put(doctorFlow,itemMap);
 			}
 			return result;
@@ -1921,13 +1954,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				continue;
 			}
 			itemMap = new HashMap<>();
-			itemMap.put(ll,new BigDecimal("0"));
-			itemMap.put(jn,new BigDecimal("0"));
+			List<String> useProcessList = new ArrayList<>();
 			List<ResSchProcessExpress> itemList = expMap.get(doctorFlow);
-			if (CollectionUtil.isEmpty(itemList)) {
-				result.put(doctorFlow,itemMap);
-				continue;
-			}
 			itemMap = new HashMap<>();
 			BigDecimal lilunScore = new BigDecimal("0");
 			int llCount = 0;
@@ -1935,38 +1963,58 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			BigDecimal jinengScore = new BigDecimal("0");
 			int jnCount = 0;
 			itemMap.put(jn,new BigDecimal("0"));
-			for (ResSchProcessExpress item : itemList) {
-				String recContent = item.getRecContent();
-				if (StringUtils.isEmpty(recContent)) {
-					continue;
-				}
-				Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
-				if (CollectionUtil.isEmpty(stringObjectMap)) {
-					continue;
-				}
-				//理论成绩
-				Object theoreResult = stringObjectMap.get("theoreResult");
-				if (ObjectUtil.isNotEmpty(theoreResult)) {
-					try{
-						BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
-						lilunScore = lilunScore.add(bigDecimal);
-						llCount++;
-					}catch (Exception e) {
-
+			if (CollectionUtil.isNotEmpty(itemList)) {
+				for (ResSchProcessExpress item : itemList) {
+					useProcessList.add(item.getProcessFlow());
+					String recContent = item.getRecContent();
+					if (StringUtils.isEmpty(recContent)) {
+						continue;
 					}
-				}
-				//技能成绩
-				Object score = stringObjectMap.get("score");
-				if (ObjectUtil.isNotEmpty(score)) {
-					try{
-						BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
-						jinengScore = jinengScore.add(bigDecimal);
-						jnCount++;
-					}catch (Exception e) {
+					Map<String, Object> stringObjectMap = resRecBiz.parseRecContent(recContent);
+					if (CollectionUtil.isEmpty(stringObjectMap)) {
+						continue;
+					}
+					//理论成绩
+					Object theoreResult = stringObjectMap.get("theoreResult");
+					if (ObjectUtil.isNotEmpty(theoreResult)) {
+						try{
+							BigDecimal bigDecimal = new BigDecimal(String.valueOf(theoreResult));
+							lilunScore = lilunScore.add(bigDecimal);
+							llCount++;
+						}catch (Exception e) {
 
+						}
+					}else {
+						ResDoctorSchProcess processItem = processFlowToEntityMap.getOrDefault(item.getProcessFlow(), new ResDoctorSchProcess());
+						BigDecimal theoryScore = processItem.getSchScore();
+						if (theoryScore != null) {
+							lilunScore = lilunScore.add(theoryScore);
+							llCount++;
+						}
+					}
+					//技能成绩
+					Object score = stringObjectMap.get("score");
+					if (ObjectUtil.isNotEmpty(score)) {
+						try{
+							BigDecimal bigDecimal = new BigDecimal(String.valueOf(score));
+							jinengScore = jinengScore.add(bigDecimal);
+							jnCount++;
+						}catch (Exception e) {
+
+						}
 					}
 				}
 			}
+			List<ResDoctorSchProcess> doctorProcessList = doctorFlowToEntityMap.get(doctorFlow);
+			if(CollectionUtils.isNotEmpty(doctorProcessList)) {
+				for (ResDoctorSchProcess process : doctorProcessList) {
+					if(!useProcessList.contains(process.getProcessFlow()) && process.getSchScore() != null) {
+						lilunScore = lilunScore.add(process.getSchScore());
+						llCount++;
+					}
+				}
+			}
+
 			if (llCount>0){
 				BigDecimal divide = lilunScore.divide(new BigDecimal(llCount), 2, BigDecimal.ROUND_HALF_DOWN);
 				itemMap.put(ll,divide);
@@ -2024,15 +2072,15 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		ResOutOfficeLock resOutOfficeLock = outsOutOfficeLockMapper.selectByPrimaryKey(recordFlow);
 		String userFlow = resOutOfficeLock.getUserFlow();
 		//是否付费用户
-		String isChargeOrg = "Y";
+        String isChargeOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_doctor_app_menu_"+userFlow);
-		if (null == cfg || GlobalConstant.FLAG_N.equals(cfg.getCfgValue())){
-			isChargeOrg = "N";
+        if (null == cfg || com.pinde.core.common.GlobalConstant.FLAG_N.equals(cfg.getCfgValue())) {
+            isChargeOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
 		}
 		List<ResDoctorSchProcess> resDoctorSchProcesses = processBiz.searchProcessByDoctor(userFlow);
 		List<ResDoctorSchProcess> outTimeProcesses = new ArrayList<>();
 		if(CollectionUtils.isNotEmpty(resDoctorSchProcesses)){
-			if(isChargeOrg.equals("Y")){
+            if (isChargeOrg.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
 				for (ResDoctorSchProcess resDoctorSchProcess : resDoctorSchProcesses) {
 					if(StringUtil.isNotEmpty(resDoctorSchProcess.getOutDate())){
 						//找超时的科室信息 计算超时时间 当前时间 - 出科时间
@@ -2125,7 +2173,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	public List<SchArrangeResult> searchSchArrangeResultByDoctorAndRotationFlow(String doctorFlow, String rotationFlow) {
 
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
 				.andRotationFlowEqualTo(rotationFlow);
 		example.setOrderByClause("SCH_DEPT_ORDER,SCH_START_DATE");
 		return arrangeResultMapper.selectByExample(example);
@@ -2134,8 +2182,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	public List<SchArrangeResult> searchSchArrangeResultIsBByDoctorAndRotationFlow(String doctorFlow, String rotationFlow) {
 
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
-				.andRotationFlowEqualTo(rotationFlow).andIsStepBEqualTo(GlobalConstant.FLAG_Y);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
+                .andRotationFlowEqualTo(rotationFlow).andIsStepBEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		example.setOrderByClause("SCH_DEPT_ORDER,SCH_START_DATE");
 		return arrangeResultMapper.selectByExample(example);
 	}
@@ -2143,7 +2191,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public List<SchArrangeResult> searchSchArrangeResultByDoctorAndRotationFlowAndStandardId(String doctorFlow, String rotationFlow,String standardDeptId){
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
 				.andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
 		example.setOrderByClause("SCH_DEPT_ORDER,SCH_START_DATE");
 		return arrangeResultMapper.selectByExample(example);
@@ -2154,7 +2202,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public JsresDoctorDeptDetail deptDoctorWorkDetail(String recordFlow, String rotationFlow, String doctorFlow) {
 		JsresDoctorDeptDetailExample example=new JsresDoctorDeptDetailExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchStandardDeptFlowEqualTo(recordFlow)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchStandardDeptFlowEqualTo(recordFlow)
 				.andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow);
 		List<JsresDoctorDeptDetail> list=doctorDeptDetailMapper.selectByExample(example);
 		if(list!=null&&list.size()>0)
@@ -2164,7 +2212,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Override
 	public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetail(String rotationFlow, String doctorFlow, String applyYear) {
 		JsresDoctorDeptDetailExample example=new JsresDoctorDeptDetailExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow).andApplyYearEqualTo(applyYear);
 		List<JsresDoctorDeptDetail> list=doctorDeptDetailMapper.selectByExample(example);
 		return list;
@@ -2225,12 +2273,12 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					}else if(rotationFlow.equals(doctor.getSecondRotationFlow())){
 						result.setRotationName(doctor.getSecondRotationName());
 					}
-					result.setIsRotation(GlobalConstant.FLAG_Y);
+                    result.setIsRotation(com.pinde.core.common.GlobalConstant.FLAG_Y);
 					result.setDoctorFlow(doctor.getDoctorFlow());
 					result.setDoctorName(doctor.getDoctorName());
 				}
-				if(!GlobalConstant.RECORD_STATUS_D.equals(result.getRecordStatus())){
-					result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_D.equals(result.getRecordStatus())) {
+                    result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				}
 				result.setSchDeptOrder(new BigDecimal(index++));
 				if(isNew)
@@ -2258,7 +2306,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			}
 			return result;
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -2765,7 +2813,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		Map<String, List<ResDoctorRecruit>> recruitMap = new HashMap<>();
 		if (CollectionUtil.isNotEmpty(userFlowList)) {
 			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-			example.createCriteria().andRecordStatusEqualTo("Y")
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 					.andAuditStatusIdEqualTo("Passed")
 					.andDoctorFlowIn(userFlowList);
 			example.setOrderByClause("CREATE_TIME DESC");
@@ -2841,7 +2889,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + orgFlow);
 			if (ObjectUtil.isNotEmpty(openCfg)) {
 				String openVal = openCfg.getCfgValue();
-				if (StringUtils.isNotEmpty(openVal) && "Y".equalsIgnoreCase(openVal)) {
+                if (StringUtils.isNotEmpty(openVal) && com.pinde.core.common.GlobalConstant.FLAG_Y.equalsIgnoreCase(openVal)) {
 					//限制开启
 					JsresPowerCfg minYearNumCfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_process_scheduling_time");
 					if (ObjectUtil.isNotEmpty(minYearNumCfg)) {
@@ -3405,7 +3453,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 //				result.setModifyTime(DateUtil.getCurrDateTime());
 //				result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-//				result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//				result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //				Map<String,String> mapTime= new HashMap<>();
 //				mapTime.put("startDate",result.getSchStartDate());
 //				mapTime.put("endDate",result.getSchEndDate());
@@ -3545,7 +3593,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								}
 								ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
 							/*	if (StringUtil.isEmpty(doctor.getTrainingTypeId()) || !doctor.getTrainingTypeId().equals(trainingTypeId)){
-									if (trainingTypeId.equals(TrainCategoryEnum.DoctorTrainingSpe.getId())){
+									if (trainingTypeId.equals(com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId())){
 										msg = msg+"第" + i + "行导入失败！该学员不是住院医师！<br>";
 									}else {
 										msg = msg+"第" + i + "行导入失败！该学员不是助理全科！<br>";
@@ -3596,7 +3644,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				logger.info("查询学员医师信息！！！！！！！");
 				ResDoctor doctor = doctorBiz.readDoctor(user.getUserFlow());
 				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
+                example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
 				example.setOrderByClause("CREATE_TIME DESC");
 				logger.info("查询学员志愿信息！！！！！！！");
 				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
@@ -3664,7 +3712,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						}
 						SysCfg jsres_is_process = cfgBiz.read("jsres_is_process");
 
-						if (null != jsres_is_process && !GlobalConstant.RECORD_STATUS_Y.equals(jsres_is_process.getCfgValue())) {
+                        if (null != jsres_is_process && !com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(jsres_is_process.getCfgValue())) {
 							// 获取当前入科时间填写系统限制
 							CheckRotationTime(doctor.getDoctorFlow(), dept.getRecordFlow(), startDate, endDate, "1", "", dept.getSchMonth(), i);
 						}
@@ -3708,7 +3756,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 						result.setModifyTime(DateUtil.getCurrDateTime());
 						result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-						result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						Map<String, String> mapTime = new HashMap<>();
 						mapTime.put("startDate", result.getSchStartDate());
 						mapTime.put("endDate", result.getSchEndDate());
@@ -3735,14 +3783,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						process.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 						process.setModifyTime(DateUtil.getCurrDateTime());
 						process.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-						process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                        process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 						doctorSchProcessMapper.insertSelective(process);
 
 						logger.info("查询proExample信息！！！！！！！");
 						ResSchProcessExpressExample proExample = new ResSchProcessExpressExample();
 						proExample.createCriteria().andOperUserFlowEqualTo(user.getUserFlow()).andSchRotationDeptFlowEqualTo(dept.getRecordFlow())
-								.andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                                .andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 						List<ResSchProcessExpress> recList = schProcessExpressMapper.selectByExampleWithBLOBs(proExample);
 						String recContent = "";
 						if (recList != null && recList.size() > 0) {
@@ -3839,7 +3887,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 				result.setModifyTime(DateUtil.getCurrDateTime());
 				result.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-				result.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+                result.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 				String schStartDate = result.getSchStartDate();
 				DateTime startDateTime = cn.hutool.core.date.DateUtil.parseDate(schStartDate);
 				String schEndDate = result.getSchEndDate();
@@ -3886,12 +3934,12 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				process.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 //				process.setModifyTime(DateUtil.getCurrDateTime());
 //				process.setModifyUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-//				process.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//				process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //				doctorSchProcessMapper.insertSelective(process);
 //				logger.info("查询proExample信息！！！！！！！");
 //				ResSchProcessExpressExample proExample = new ResSchProcessExpressExample();
 //				proExample.createCriteria().andOperUserFlowEqualTo(item.getUserFlow()).andSchRotationDeptFlowEqualTo(dept.getRecordFlow())
-//						.andRecTypeIdEqualTo(ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+//						.andRecTypeIdEqualTo(com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //				List<ResSchProcessExpress> recList = schProcessExpressMapper.selectByExampleWithBLOBs(proExample);
 //				String recContent = "";
 //				if (recList != null && recList.size() > 0) {
@@ -3908,7 +3956,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	public void updateResultHaveAfter2(String schRotationDeptFlow, String operUserFlow, String recContent) throws DocumentException {
-		String haveAfterPic="N";
+        String haveAfterPic = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if(StringUtil.isNotBlank(recContent))
 		{
 			Document document= DocumentHelper.parseText(recContent);
@@ -3917,7 +3965,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				List<Object> elem=element.elements("image");
 				if(elem!=null&&elem.size()>0)
 				{
-					haveAfterPic="Y";
+                    haveAfterPic = com.pinde.core.common.GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -3957,7 +4005,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		SchRotationDept rotationDept=rotationDeptBiz.readSchRotationDept(deptFlow);
 		SchArrangeResultExample example = new SchArrangeResultExample();
 		example.createCriteria().andDoctorFlowEqualTo(userFlow).andStandardGroupFlowEqualTo(rotationDept.getGroupFlow()).andRotationFlowEqualTo(rotationDept.getRotationFlow())
-				.andStandardDeptIdEqualTo(rotationDept.getStandardDeptId()).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+                .andStandardDeptIdEqualTo(rotationDept.getStandardDeptId()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		example.setOrderByClause("SCH_START_DATE");
 		return schArrangeResultMapper.selectByExample(example);
 	}
@@ -3971,7 +4019,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 		if(resultDepts!=null && !resultDepts.isEmpty()){
 			SysOrgExample orgExample = new SysOrgExample();
-			orgExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
+            orgExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowNotEqualTo(orgFlow);
 
 			List<SysOrg> orgs = orgMapper.selectByExample(orgExample);
 			Map<String,SysOrg> orgMap = new HashMap<String,SysOrg>();
@@ -4240,7 +4288,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_" + orgFlow);
 		if (ObjectUtil.isNotEmpty(openCfg)) {
 			String openVal = openCfg.getCfgValue();
-			if (StringUtils.isNotEmpty(openVal) && "Y".equalsIgnoreCase(openVal)) {
+            if (StringUtils.isNotEmpty(openVal) && com.pinde.core.common.GlobalConstant.FLAG_Y.equalsIgnoreCase(openVal)) {
 				//限制开启
 				JsresPowerCfg minYearNumCfg = jsResPowerCfgBiz.read("jsres_"+orgFlow+"_org_process_scheduling_time");
 				if (ObjectUtil.isNotEmpty(minYearNumCfg)) {
@@ -4380,9 +4428,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		Map<String, String> standDeptName = bzDeptList.stream().collect(Collectors.toMap(SchRotationDept::getStandardDeptId, SchRotationDept::getStandardDeptName, (k1, k2) -> k2));
 		Map<String, List<SchRotationDept>> collect = bzDeptList.stream().collect(Collectors.groupingBy(SchRotationDept::getIsRequired));
 		//必轮的标准科室
-		List<SchRotationDept> blDeptList = collect.get("Y");
+        List<SchRotationDept> blDeptList = collect.get(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		//非必轮科室
-		List<SchRotationDept> fblDeptList = collect.get("N");
+        List<SchRotationDept> fblDeptList = collect.get(com.pinde.core.common.GlobalConstant.FLAG_N);
 		for (String bzCode : pbBzTimeMap.keySet()) {
 			if (StringUtils.isEmpty(bzCode)) {
 				continue;
@@ -4628,7 +4676,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		//查询所有的专业并处理专业下的所有的科室
 //		Map<String, Object> speMap = new HashMap<>();
 		Map<String, String> speDeptMap = new HashMap<>();
-		List<SysDict> speList = DictTypeEnum.sysListDictMap.get(DictTypeEnum.DoctorTrainingSpe.getId());
+        List<SysDict> speList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		List<String> bzDept = new ArrayList<>();
 		if (CollectionUtil.isNotEmpty(speList)) {
 			//根据专业和年级 年级写死是2023的查询标准科室
@@ -4751,10 +4799,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (null == file) {
 			throw new RuntimeException("导入的文件不能为空");
 		}
-		String openFlag = "Y";
+        String openFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isNotEmpty(openCfg)) {
-			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+            openFlag = StringUtils.isEmpty(openCfg.getCfgValue()) ? com.pinde.core.common.GlobalConstant.FLAG_Y : openCfg.getCfgValue();
 		}
 		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
@@ -4810,10 +4858,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	public Map<String, Object> checkRowData(List<SchedulingDataModel> data) {
 		Map<String, Object> result = new HashMap<>();
-		String openFlag = "Y";
+        String openFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isNotEmpty(openCfg)) {
-			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+            openFlag = StringUtils.isEmpty(openCfg.getCfgValue()) ? com.pinde.core.common.GlobalConstant.FLAG_Y : openCfg.getCfgValue();
 		}
 		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
@@ -4869,7 +4917,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Description: 保存导入数据
 	 */
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	//@Transactional(rollbackFor = Exception.class)
 	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);
@@ -4879,10 +4927,10 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			result.put("msg","暂无导入数据");
 			return result;
 		}
-		String openFlag = "Y";
+        String openFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
 		JsresPowerCfg openCfg = jsResPowerCfgBiz.read("process_scheduling_check_min_mon_" + GlobalContext.getCurrentUser().getOrgFlow());
 		if (ObjectUtil.isNotEmpty(openCfg)) {
-			openFlag = StringUtils.isEmpty(openCfg.getCfgValue())? "Y":openCfg.getCfgValue();
+            openFlag = StringUtils.isEmpty(openCfg.getCfgValue()) ? com.pinde.core.common.GlobalConstant.FLAG_Y : openCfg.getCfgValue();
 		}
 		String minMonthNum = "1";
 		JsresPowerCfg minMonthCfg = jsResPowerCfgBiz.read("jsres_"+GlobalContext.getCurrentUser().getOrgFlow()+"_org_process_scheduling_time");
@@ -4942,7 +4990,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			if (StringUtils.isEmpty(doctorFlow)) {
 				continue;
 			}
-			if (pbInfoItem.getRecordStatus().equals("N")) {
+            if (pbInfoItem.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 				continue;
 			}
 			//该学员的历史排班数据,从数据库查询历史排班数据
@@ -4970,7 +5018,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			DateTime importEnd = cn.hutool.core.date.DateUtil.parseDate(pbInfoItem.getSchEndDate());
 			for (PbInfoItem history : dbList) {
 				if (StringUtils.isNotEmpty(history.getRecordStatus())
-						&&"N".equals(history.getRecordStatus())) {
+                        && com.pinde.core.common.GlobalConstant.FLAG_N.equals(history.getRecordStatus())) {
 					continue;
 				}
 				String dbSchDeptFlow = history.getSchDeptFlow();
@@ -4980,7 +5028,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					//删除历史排班
 					deletePbResult(history.getResultFlow(),true);
 					//移除dbList中的本次历史数据，因为它已经被融合了
-					history.setRecordStatus("N");
+                    history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 					continue;
 				}
 				//判断是否有提交记录
@@ -4991,7 +5039,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					if (importStart.compareTo(hisStart) == 0 && importEnd.compareTo(hisEnd) == 0) {
 						//覆盖
 						if (resRecLog>0){
-							pbInfoItem.setRecordStatus("N");
+                            pbInfoItem.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							continue;
 						}else {
 							pbInfoItem.setResultFlow(history.getResultFlow());
@@ -5007,7 +5055,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								//导入的开始时间和历史数据的结束时间衔接上
 								//导入的开始时间内改为历史的开始时间
@@ -5016,7 +5064,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 								continue;
 							}
 						}
@@ -5029,7 +5077,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//有提交记录的就不合并了,调整本次排班数据
 								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								//导入的尾衔接
 								pbInfoItem.setResultFlow(history.getResultFlow());
@@ -5038,7 +5086,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 								continue;
 							}
 						}
@@ -5051,7 +5099,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								pbInfoItem.setResultFlow(history.getResultFlow());
 								//首部有交集
@@ -5059,7 +5107,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 								continue;
 							}
 						}else {
@@ -5068,7 +5116,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								pbInfoItem.setSchStartDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								//首部有交集
 //								//更新历史排班
@@ -5086,7 +5134,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							if (resRecLog>0){
 								pbInfoItem.setSchEndDate(cn.hutool.core.date.DateUtil.offsetDay(
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchStartDate()),-1).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								pbInfoItem.setResultFlow(history.getResultFlow());
 								//尾部有交集
@@ -5094,7 +5142,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 								continue;
 							}
 						}else {
@@ -5124,13 +5172,13 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1
 								).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								pbInfoItem.setResultFlow(history.getResultFlow());
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 								continue;
 							}
 						}else {
@@ -5144,12 +5192,12 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 										cn.hutool.core.date.DateUtil.parseDate(history.getSchEndDate()),
 										1
 								).toDateStr());
-//								history.setRecordStatus("N");
+//								history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							}else {
 								//删除历史排班
 								deletePbResult(history.getResultFlow(),true);
 								//移除dbList中的本次历史数据，因为它已经被融合了
-								history.setRecordStatus("N");
+                                history.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 								continue;
 							}
 						}
@@ -5158,11 +5206,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					//被包含
 					if (importStart.compareTo(hisStart)>=0 && importEnd.compareTo(hisEnd)<=0){
 						if (resRecLog>0){
-							pbInfoItem.setRecordStatus("N");
+                            pbInfoItem.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							continue;
 						}
 						if (dbSchDeptFlow.equals(importDeptFlow)) {
-							pbInfoItem.setRecordStatus("N");
+                            pbInfoItem.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 							continue;
 						}
 						//不存在提交数据的情况下
@@ -5180,7 +5228,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 					}
 				}
-				if (pbInfoItem.getRecordStatus().equalsIgnoreCase("Y") &&
+                if (pbInfoItem.getRecordStatus().equalsIgnoreCase(com.pinde.core.common.GlobalConstant.FLAG_Y) &&
 				!pbInfoItem.getSchStartDate().equals(pbInfoItem.getSchEndDate())) {
 					savePbWithoutHis(pbInfoItem);
 				}
@@ -5199,11 +5247,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		}
 		//是否开启轮转时长校验
 		JsresPowerCfg openCfgChek = jsResPowerCfgBiz.read("process_scheduling_check_" + GlobalContext.getCurrentUser().getOrgFlow());
-		String checkFlag = "N";
+        String checkFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
 		if (ObjectUtil.isNotEmpty(openCfgChek)) {
-			checkFlag = StringUtils.isEmpty(openCfgChek.getCfgValue())? "N":openCfgChek.getCfgValue();
+            checkFlag = StringUtils.isEmpty(openCfgChek.getCfgValue()) ? com.pinde.core.common.GlobalConstant.FLAG_N : openCfgChek.getCfgValue();
 		}
-		if ("Y".equals(checkFlag)) {
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(checkFlag)) {
 			//开启排班校验
 			boolean successFlag = true;
 			for (String doctorFlow : checkSchMonMap.keySet()) {
@@ -5258,14 +5306,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
 					if (ObjectUtil.isNotEmpty(info)) {
 						arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
-						item.setRecordStatus("N");
+                        item.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 					}
 				}
 			}catch (Exception e) {
 				SchArrangeResult info = arrangeResultMapper.selectByPrimaryKey(item.getResultFlow());
 				if (ObjectUtil.isNotEmpty(info)) {
 					arrangeResultMapper.deleteByPrimaryKey(info.getResultFlow());
-					item.setRecordStatus("N");
+                    item.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 				}
 			}
 		}
@@ -5274,7 +5322,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				continue;
 			}
 			SchArrangeResult item = allByDoctorFlow.get(i);
-			if ("N".equals(item.getRecordStatus())) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_N.equals(item.getRecordStatus())) {
 				continue;
 			}
 			String schStartDate = item.getSchStartDate();
@@ -5375,7 +5423,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		try{
 			for (int i = 0; i < list.size(); i++) {
 				SchArrangeResult thisItem = list.get(i);
-				if (thisItem.getRecordStatus().equals("N")) {
+                if (thisItem.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
 					continue;
 				}
 				int next = i + 1;
@@ -5402,7 +5450,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					thisItem.setSchMonth(divide.toString());
 					arrangeResultMapper.updateByPrimaryKeySelective(thisItem);
 					arrangeResultMapper.deleteByPrimaryKey(nextItem.getResultFlow());
-					nextItem.setRecordStatus("N");
+                    nextItem.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 					next++;
 				}
 			}
@@ -5440,7 +5488,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			SchArrangeResult schArrangeResult = resultMap.get(item.getSchResultFlow());
 			if (ObjectUtil.isEmpty(schArrangeResult)) {
 				//当前轮转数据没有对应的排班
-				item.setRecordStatus("N");
+                item.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 				doctorSchProcessMapper.updateByPrimaryKeySelective(item);
 				continue;
 			}
@@ -5474,14 +5522,14 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		}
 		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
 		ResDoctorSchProcessExample.Criteria criteria = example.createCriteria();
-		criteria.andRecordStatusEqualTo("N")
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N)
 				.andUserFlowEqualTo(doctorFlow);
 		doctorSchProcessMapper.deleteByExample(example);
 
 	}
 
 	private void savePbWithoutHis(PbInfoItem vo){
-		if (StringUtils.isNotEmpty(vo.getRecordStatus()) && "N".equals(vo.getRecordStatus())) {
+        if (StringUtils.isNotEmpty(vo.getRecordStatus()) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(vo.getRecordStatus())) {
 			return;
 		}
 		List<PbInfoItem> list = new ArrayList<>();
@@ -5505,7 +5553,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			//TODO::填充机构信息
 			result.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
 			result.setOrgName(GlobalContext.getCurrentUser().getOrgName());
-			result.setRecordStatus("Y");
+            result.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			result.setCreateTime(DateUtil.getCurrDateTime());
 			result.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 			result.setModifyTime(DateUtil.getCurrDateTime());
@@ -5582,7 +5630,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		if (delete) {
 			arrangeResultMapper.deleteByPrimaryKey(resultFlow);
 		}else {
-			schArrangeResult.setRecordStatus("N");
+            schArrangeResult.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 			arrangeResultMapper.updateByPrimaryKeySelective(schArrangeResult);
 		}
 	}
@@ -5632,7 +5680,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				return result;
 			}
 		}
-		List<SysDict> speList = DictTypeEnum.sysListDictMap.get(DictTypeEnum.DoctorTrainingSpe.getId());
+        List<SysDict> speList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getId());
 		if (CollectionUtil.isEmpty(speList)) {
 			return result;
 		}

@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PortalColumn extends MybatisObject {
+public class PortalColumn extends TeachingActivitySpeakerExample.MybatisObject {
     private String columnFlow;
 
     private String columnId;

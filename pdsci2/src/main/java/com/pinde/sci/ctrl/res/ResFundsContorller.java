@@ -9,10 +9,7 @@ import com.pinde.sci.biz.res.IFundsBiz;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,8 +77,8 @@ public class ResFundsContorller extends GeneralController {
 
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId(currentOrg.getOrgProvId());
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysOrg>  joinOrgs = orgBiz.searchOrg(sysorg);
 
         orgs.addAll(joinOrgs);
@@ -90,10 +87,10 @@ public class ResFundsContorller extends GeneralController {
         model.addAttribute("role", role);
         // 查询是否需要省厅审核
         SysCfg fundingRudit = jswjwBiz.read("funding_Report_audit");
-        if("Y".equals(fundingRudit.getCfgValue())){
-            model.addAttribute("fundingRudit","Y");
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fundingRudit.getCfgValue())) {
+            model.addAttribute("fundingRudit", com.pinde.core.common.GlobalConstant.FLAG_Y);
         } else {
-            model.addAttribute("fundingRudit","N");
+            model.addAttribute("fundingRudit", com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         return "/res/Funding/baseAllocationDetailsList";
     }
@@ -127,8 +124,8 @@ public class ResFundsContorller extends GeneralController {
         List<SysOrg>  orgs = new ArrayList<>();
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId(currentOrg.getOrgProvId());
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysOrg>  joinOrgs = orgBiz.searchOrg(sysorg);
         orgs.addAll(joinOrgs);
         orgs.add(currentOrg);
@@ -136,10 +133,10 @@ public class ResFundsContorller extends GeneralController {
         model.addAttribute("role",role);
         // 查询是否需要省厅审核
         SysCfg fundingRudit = jswjwBiz.read("funding_Report_audit");
-        if("Y".equals(fundingRudit.getCfgValue())){
-            model.addAttribute("fundingRudit","Y");
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(fundingRudit.getCfgValue())) {
+            model.addAttribute("fundingRudit", com.pinde.core.common.GlobalConstant.FLAG_Y);
         } else {
-            model.addAttribute("fundingRudit","N");
+            model.addAttribute("fundingRudit", com.pinde.core.common.GlobalConstant.FLAG_N);
         }
         // 审核
         if(StringUtil.isNotBlank(auditBase)){
@@ -213,7 +210,7 @@ public class ResFundsContorller extends GeneralController {
                         if(StringUtil.isNotBlank(id) && StringUtil.isNotBlank(value) ){
                             // 基地收支详情
                             resBaseFundDetail.setProjectOfBasefundsId(id);
-                            resBaseFundDetail.setProjectOfBasefundsName(DictTypeEnum.BaseFundingUse.getDictNameById(id));
+                            resBaseFundDetail.setProjectOfBasefundsName(com.pinde.core.common.enums.DictTypeEnum.BaseFundingUse.getDictNameById(id));
                             resBaseFundDetail.setMainFlow(newRecordFlow);
                             resBaseFundDetail.setAmountOfMoney(value);
                             iFundsBiz.editResBaseFundDetail(resBaseFundDetail);
@@ -252,7 +249,7 @@ public class ResFundsContorller extends GeneralController {
                             }
                             detail.setMainFlow(recordFlow);
                             detail.setProjectOfBasefundsId(id);
-                            detail.setProjectOfBasefundsName(DictTypeEnum.BaseFundingUse.getDictNameById(id));
+                            detail.setProjectOfBasefundsName(com.pinde.core.common.enums.DictTypeEnum.BaseFundingUse.getDictNameById(id));
                             detail.setAmountOfMoney(value);
                             iFundsBiz.editResBaseFundDetail(detail);
 
@@ -287,8 +284,8 @@ public class ResFundsContorller extends GeneralController {
         List<SysOrg>  orgs = new ArrayList<>();
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId(currentOrg.getOrgProvId());
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysOrg>  joinOrgs = orgBiz.searchOrg(sysorg);
         orgs.addAll(joinOrgs);
         orgs.add(currentOrg);
@@ -334,8 +331,8 @@ public class ResFundsContorller extends GeneralController {
         List<SysOrg>  orgs = new ArrayList<>();
         SysOrg sysorg = new SysOrg();
         sysorg.setOrgProvId(currentOrg.getOrgProvId());
-        sysorg.setOrgTypeId(OrgTypeEnum.Hospital.getId());
-        sysorg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
+        sysorg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysOrg>  joinOrgs = orgBiz.searchOrg(sysorg);
         orgs.addAll(joinOrgs);
         orgs.add(currentOrg);
@@ -383,7 +380,7 @@ public class ResFundsContorller extends GeneralController {
                         if(StringUtil.isNotBlank(id) && StringUtil.isNotBlank(value) ){
                             // 基地收支详情
                             resSyntheticalFundDetail.setProjectOfSyntheticalId(id);
-                            resSyntheticalFundDetail.setProjectOfSyntheticalName(DictTypeEnum.SynCostManagement.getDictNameById(id));
+                            resSyntheticalFundDetail.setProjectOfSyntheticalName(com.pinde.core.common.enums.DictTypeEnum.SynCostManagement.getDictNameById(id));
                             resSyntheticalFundDetail.setMainFlow(newRecordFlow);
                             resSyntheticalFundDetail.setAmountOfMoney(value);
                             iFundsBiz.editResSyntheticalFundDetail(resSyntheticalFundDetail);
@@ -421,7 +418,7 @@ public class ResFundsContorller extends GeneralController {
                             }
                             detail.setMainFlow(recordFlow);
                             detail.setProjectOfSyntheticalId(id);
-                            detail.setProjectOfSyntheticalName(DictTypeEnum.SynCostManagement.getDictNameById(id));
+                            detail.setProjectOfSyntheticalName(com.pinde.core.common.enums.DictTypeEnum.SynCostManagement.getDictNameById(id));
                             detail.setAmountOfMoney(value);
                             iFundsBiz.editResSyntheticalFundDetail(detail);
 
@@ -446,7 +443,7 @@ public class ResFundsContorller extends GeneralController {
         HashMap<String, Object> map = new HashMap<>();
         if(provinceFundDetailList != null ){
             for (ResProvinceFundDetail fundDetail: provinceFundDetailList) {
-                map.put(fundDetail.getMainFlow(),"Y");
+                map.put(fundDetail.getMainFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
             }
         }
         model.addAttribute("provinceFundList",provinceFundList);
@@ -498,7 +495,7 @@ public class ResFundsContorller extends GeneralController {
     @RequestMapping("/delProvinceFund")
     @ResponseBody
     public int delProvinceFund(ResProvinceFund provinceFund){
-        provinceFund.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        provinceFund.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         iFundsBiz.editResProvinceFund(provinceFund);
         return 1;
     }

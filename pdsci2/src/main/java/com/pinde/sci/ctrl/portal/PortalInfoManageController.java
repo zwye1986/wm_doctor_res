@@ -10,11 +10,10 @@ import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.PortalSuggestMapper;
-import com.pinde.sci.enums.inx.InfoStatusEnum;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.enums.InfoStatusEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.form.portal.PortalInfoForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.portal.PortalInfoExt;
@@ -74,9 +73,9 @@ public class PortalInfoManageController extends GeneralController {
 			info = this.infoManageBiz.getExtByFlow(infoFlow);
 		}
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		sysRole.setRoleLevelId(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		Map<String,Object> roleFlows=gateUserManageBiz.getUserRoles(GlobalContext.getCurrentUser().getUserFlow());
 		ModelAndView mav = new ModelAndView("portal/manage/editInfo");
@@ -102,9 +101,9 @@ public class PortalInfoManageController extends GeneralController {
 			info = this.infoManageBiz.getExtByFlow(infoFlow);
 		}
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		sysRole.setRoleLevelId(RoleLevelEnum.GateLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		Map<String,Object> roleFlows=gateUserManageBiz.getUserRoles(GlobalContext.getCurrentUser().getUserFlow());
 		ModelAndView mav = new ModelAndView("portal/manage/editInfo");
@@ -160,13 +159,13 @@ public class PortalInfoManageController extends GeneralController {
 	 */
 	public  String addInfo(PortalInfo info){
 		if(checkInput(info)){
-			info.setIsTop(GlobalConstant.RECORD_STATUS_N);
+            info.setIsTop(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 			int saveResult = this.infoManageBiz.save(info);
-			if(saveResult==GlobalConstant.ONE_LINE){
-				return GlobalConstant.OPRE_SUCCESSED;
+            if (saveResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	/**
 	 * 修改资讯
@@ -176,11 +175,11 @@ public class PortalInfoManageController extends GeneralController {
 	public  String updateInfo(PortalInfo info){
 		if(checkUpdateInput(info)){
 			int updateResult = this.infoManageBiz.update(info);
-			if(updateResult==GlobalConstant.ONE_LINE){
-				return GlobalConstant.OPRE_SUCCESSED;
+            if (updateResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 			}
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	
 	/**
@@ -253,7 +252,7 @@ public class PortalInfoManageController extends GeneralController {
 //            for(String menuId:popedom){
 //                if("portals-mhgl-zxgl-zxsh".equals(menuId)){
 //                    zxsxFlag =  true;
-//		            model.addAttribute("zxsh", GlobalConstant.FLAG_Y);
+//		            model.addAttribute("zxsh", com.pinde.core.common.GlobalConstant.FLAG_Y);
 //                    break;
 //                }
 //            }
@@ -318,11 +317,11 @@ public class PortalInfoManageController extends GeneralController {
 		if(flows!=null&&flows.length>0){
 			List<String> infoFlows = Arrays.asList(flows);
 			int delResult = this.infoManageBiz.updateInfoStatus(infoFlows,infoStatusId);
-		  if(delResult>GlobalConstant.ZERO_LINE){
-			  return GlobalConstant.OPRE_SUCCESSED;
+            if (delResult > com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		  }
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	/**
 	 * 删除标题图片
@@ -333,11 +332,11 @@ public class PortalInfoManageController extends GeneralController {
 	public @ResponseBody String deleteTitleImg(String infoFlow){
 		if(StringUtil.isNotBlank(infoFlow)){
 		  int delResult = this.infoManageBiz.deleteTitleImg(infoFlow);
-		  if(delResult==GlobalConstant.ONE_LINE){
-			  return GlobalConstant.DELETE_SUCCESSED;
+            if (delResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+                return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 		  }
 		}
-		return GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
 	}
 	/**
 	 * 资讯失效
@@ -347,10 +346,10 @@ public class PortalInfoManageController extends GeneralController {
 	@RequestMapping(value="/updateRecordStatus")
 	public @ResponseBody String updateRecordStatus(PortalInfo info){
 		int updateResult =  this.infoManageBiz.update(info);
-		if(updateResult==GlobalConstant.ONE_LINE){
-			  return GlobalConstant.OPRE_SUCCESSED;
+        if (updateResult == com.pinde.core.common.GlobalConstant.ONE_LINE) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		  }
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 	
 	/**
@@ -361,10 +360,10 @@ public class PortalInfoManageController extends GeneralController {
 	@RequestMapping(value="/modifyPortalInfo")
 	public @ResponseBody String modifyInxInfo(PortalInfo info){
 		int result =  infoManageBiz.modifyPortalInfo(info);
-		if(GlobalConstant.ZERO_LINE != result){
-			return GlobalConstant.OPRE_SUCCESSED;
+        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
+            return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
 		}
-		return GlobalConstant.OPRE_FAIL;
+        return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
 
 	//腾讯问卷
@@ -411,7 +410,7 @@ public class PortalInfoManageController extends GeneralController {
 	@RequestMapping("/delFile")
 	@ResponseBody
 	int delFile(PortalFile file){
-		file.setRecordStatus("N");
+        file.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
 		return infoManageBiz.edit(file);
 	}
 
@@ -442,7 +441,7 @@ public class PortalInfoManageController extends GeneralController {
 		String currentDate = DateUtil.getCurrDate();
 		suggest.setSubmitTime(currentDate);
 		PortalSuggestExample example = new PortalSuggestExample();
-		example.createCriteria().andRecordStatusEqualTo("Y").andUserPhoneEqualTo(suggest.getUserPhone()).andSubmitTimeEqualTo(currentDate);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserPhoneEqualTo(suggest.getUserPhone()).andSubmitTimeEqualTo(currentDate);
 		int count = portalSuggestMapper.countByExample(example);
 		if(count>0){
 			return -1;
@@ -453,9 +452,9 @@ public class PortalInfoManageController extends GeneralController {
 	@RequestMapping("/changeShowFlag")
 	@ResponseBody
 	public int changeShowFlag(PortalSuggest suggest){
-		if("Y".equals(suggest.getShowFlag())){
+        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(suggest.getShowFlag())) {
 			PortalSuggestExample example = new PortalSuggestExample();
-			example.createCriteria().andRecordStatusEqualTo("Y").andShowFlagEqualTo("Y");
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andShowFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 			int count = portalSuggestMapper.countByExample(example);
 			if(count>=3){
 				return -1;

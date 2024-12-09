@@ -18,12 +18,10 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.sci.enums.jsres.JsResAuditStatusEnum;
-import com.pinde.sci.enums.res.AfterRecTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
@@ -164,7 +162,7 @@ public class JsResTempController extends GeneralController{
 			//
 			afterBiz.updateNAllInfo(applyYear);
 		}
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateResult"})
 	@ResponseBody
@@ -175,14 +173,14 @@ public class JsResTempController extends GeneralController{
 			for(ResSchProcessExpress rec:recs)
 			{
 				if(StringUtil.isNotBlank(rec.getSchRotationDeptFlow())) {
-					String have_after_pic = "N";
+                    String have_after_pic = com.pinde.core.common.GlobalConstant.FLAG_N;
 					String content = null == rec ? "" : rec.getRecContent();
 					if (StringUtil.isNotBlank(content)) {
 						Document doc = DocumentHelper.parseText(content);
 						Element root = doc.getRootElement();
 						List<Element> imageEles = root.elements();
 						if (imageEles != null && imageEles.size() > 0) {
-							have_after_pic = "Y";
+                            have_after_pic = com.pinde.core.common.GlobalConstant.FLAG_Y;
 						}
 					}
 					afterBiz.updateResultAfterPic(have_after_pic, rec.getSchRotationDeptFlow(),rec.getOperUserFlow());
@@ -190,7 +188,7 @@ public class JsResTempController extends GeneralController{
 			}
 		}
 		afterBiz.updateResultAfterPicNotHaveRec();
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/batchOscaSubmit"})
 	@ResponseBody
@@ -206,7 +204,7 @@ public class JsResTempController extends GeneralController{
 			}
 		}
 		 afterBiz.batchOscaSubmit(orgFlow);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateMonthStatistics"})
 	@ResponseBody
@@ -216,7 +214,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择需要填写数据统计的月份";
 		}
 		 afterBiz.updateMonthStatistics(month);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateMonthAppStatistics"})
 	@ResponseBody
@@ -226,7 +224,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择需要更新App使用率的月份";
 		}
 		 afterBiz.updateMonthAppStatistics(month);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	@RequestMapping(value="/queryProcess", method={RequestMethod.POST})
@@ -271,7 +269,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择需要退回的表单";
 		}
 		int count=afterBiz.delProcessType(processFlow,recTypeId);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value="/backProcessType", method={RequestMethod.POST})
 	@ResponseBody
@@ -290,7 +288,7 @@ public class JsResTempController extends GeneralController{
 			return "此类型出科表已被重新审核，无法退回！";
 		}
 		int count=afterBiz.backProcessType(processFlow,recTypeId);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value="/backAttend", method={RequestMethod.POST})
 	@ResponseBody
@@ -299,9 +297,9 @@ public class JsResTempController extends GeneralController{
 		int count=afterBiz.backAttend(userCode,startDate,endDate);
 		if(count<=0)
 		{
-			return GlobalConstant.OPRE_FAIL;
+            return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 		}
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value="/delProcess", method={RequestMethod.POST})
 	@ResponseBody
@@ -311,7 +309,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择轮转记录";
 		}
 		int count=afterBiz.delProcess(processFlow);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value="/backProcess", method={RequestMethod.POST})
 	@ResponseBody
@@ -321,7 +319,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择轮转记录";
 		}
 		int count=afterBiz.backProcess(processFlow);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 
 	@RequestMapping(value={"/selectAfter2"})
@@ -400,7 +398,7 @@ public class JsResTempController extends GeneralController{
 						afterBiz.edit(after);
 				}
 			}
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/reAsseApply"})
 	@ResponseBody
@@ -446,12 +444,12 @@ public class JsResTempController extends GeneralController{
 					String isPassQualifyingExamination=userResumeExt.getIsPassQualifyingExamination();//是否通过医师资格考试
 					String isHaveQualificationCertificate=userResumeExt.getIsHaveQualificationCertificate();//是否获得医师资格证书
 					String isHavePracticingCategory=userResumeExt.getIsHavePracticingCategory();//是否获得医师执业证书
-					if("Y".equals(isPassQualifyingExamination))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPassQualifyingExamination))
 					{
-						if("Y".equals(isHaveQualificationCertificate))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isHaveQualificationCertificate))
 						{
 
-							if("Y".equals(isHavePracticingCategory))
+                            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isHavePracticingCategory))
 							{
 
 								practicingMap.put("graduationMaterialId","176");//报考资格材料
@@ -549,7 +547,7 @@ public class JsResTempController extends GeneralController{
 				ResTestConfig resTestConfig = resTestConfigList.get(0);
 				jsresGraduationApply.setTestId(resTestConfig.getTestId());
 				//判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-				if(StringUtil.isNotBlank(recruit.getJointOrgFlow()) && "Y".equals(resTestConfig.getJointLocalAudit())){
+                if (StringUtil.isNotBlank(recruit.getJointOrgFlow()) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resTestConfig.getJointLocalAudit())) {
 					if("DoctorTrainingSpe".equals(recruit.getCatSpeId())) {
 						jsresGraduationApply.setAuditStatusId("JointAuditing");
 						jsresGraduationApply.setAuditStatusName("待协同基地审核");
@@ -557,29 +555,29 @@ public class JsResTempController extends GeneralController{
 						jsresGraduationApply.setJointLocalAuditStatusName("");
 						jsresGraduationApply.setJointLocalReason("");
 					}else{
-						jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
-						jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
+                        jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getId());
+                        jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getName());
 					}
-				}else if ("Y".equals(resTestConfig.getLocalAudit())) {
-					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
-					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-				} else if ("Y".equals(resTestConfig.getChargeAudit())) {
-					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
-					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
+                } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
+                    jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getId());
+                    jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getName());
+                } else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
+                    jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitChargePass.getId());
+                    jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitChargePass.getName());
 				} else {
-					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitGlobalPass.getId());
-					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitGlobalPass.getName());
+                    jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getId());
+                    jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
 				}
 				//更新之后从头开始审核，判断需不需要基地审核，需要则是待基地审核，不要要再判断需不需要市局审核，需要则是待市局审核，都不需要则是待省厅审核
-//				if ("Y".equals(resTestConfig.getLocalAudit())) {
-//					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.Auditing.getId());
-//					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.Auditing.getName());
-//				} else if ("Y".equals(resTestConfig.getChargeAudit())) {
-//					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitChargePass.getId());
-//					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitChargePass.getName());
+//				if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resTestConfig.getLocalAudit())) {
+//					jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getId());
+//					jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.Auditing.getName());
+//				} else if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(resTestConfig.getChargeAudit())) {
+//					jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitChargePass.getId());
+//					jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitChargePass.getName());
 //				} else {
-//					jsresGraduationApply.setAuditStatusId(JsResAuditStatusEnum.WaitGlobalPass.getId());
-//					jsresGraduationApply.setAuditStatusName(JsResAuditStatusEnum.WaitGlobalPass.getName());
+//					jsresGraduationApply.setAuditStatusId(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getId());
+//					jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
 //				}
 				jsresGraduationApply.setLocalAuditStatusId("");
 				jsresGraduationApply.setLocalAuditStatusName("");
@@ -631,7 +629,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择申请年份";
 		}
 		afterBiz.updateRecruitAsseInfo(applyYear);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/addUser"})
 	@ResponseBody
@@ -645,11 +643,11 @@ public class JsResTempController extends GeneralController{
 			user.setUserName("0926"+i);
 			user.setUserPasswd(PasswordHelper.encryptPassword(user.getUserFlow(),"123456"));
 			doctor.setDoctorFlow(user.getUserFlow());
-			doctor.setSchFlag("N");
+            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
 			userBiz.insertUser(user);
 			doctorBiz.insertDoctor(doctor);
 		}
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateAfterEvalutaion"})
 	@ResponseBody
@@ -689,14 +687,14 @@ public class JsResTempController extends GeneralController{
 				}
 			}
 		}
-		return GlobalConstant.OPERATE_SUCCESSED+",一共"+all+"条数据，处理了"+count+"条数据。";
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED + ",一共" + all + "条数据，处理了" + count + "条数据。";
 	}
 	@RequestMapping(value={"/updateUriAuditInfo"})
 	@ResponseBody
 	public String updateUriAuditInfo(String applyYear) throws DocumentException {
 
 		afterBiz.updateUriAuditInfo();
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateDeptDetail"})
 	@ResponseBody
@@ -706,7 +704,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择申请年份";
 		}
 		afterBiz.updateDeptDetail(applyYear);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateDeptTemp"})
 	@ResponseBody
@@ -716,7 +714,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择申请年份";
 		}
 		afterBiz.updateDeptTemp(applyYear);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateDeptAvgTemp"})
 	@ResponseBody
@@ -726,7 +724,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择申请年份";
 		}
 		afterBiz.updateDeptAvgTemp(applyYear);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateRecruitAvgTemp"})
 	@ResponseBody
@@ -736,7 +734,7 @@ public class JsResTempController extends GeneralController{
 			return "请选择申请年份";
 		}
 		afterBiz.updateRecruitAvgTemp(applyYear);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/saveRegisteManua"})
 	@ResponseBody
@@ -747,7 +745,7 @@ public class JsResTempController extends GeneralController{
 		}
 		String applyYear= DateUtil.getYear();
 		afterBiz.saveRegisteManua(registeManua,recruitFlow,applyYear);
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/chouquPhoto"})
 	@ResponseBody
@@ -766,23 +764,23 @@ public class JsResTempController extends GeneralController{
 					String msg= (String) result.get("msg");
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！";
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/addTempIdNo"})
 	@ResponseBody
@@ -797,23 +795,23 @@ public class JsResTempController extends GeneralController{
 					String msg= (String) result.get("msg");
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！";
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/addUserInfo"})
 	@ResponseBody
@@ -828,23 +826,23 @@ public class JsResTempController extends GeneralController{
 					String msg= (String) result.get("msg");
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！";
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！";
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/upDateRecruitInfo"})
 	@ResponseBody
@@ -862,23 +860,23 @@ public class JsResTempController extends GeneralController{
 					System.out.println(msg);
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！=="+ JSON.toJSONString(idNos);
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！==" + JSON.toJSONString(idNos);
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/updateRecruitOrgInfo"})
 	@ResponseBody
@@ -896,23 +894,23 @@ public class JsResTempController extends GeneralController{
 					System.out.println(msg);
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！=="+ JSON.toJSONString(idNos);
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！==" + JSON.toJSONString(idNos);
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/updateRecruitSpeInfo"})
 	@ResponseBody
@@ -930,23 +928,23 @@ public class JsResTempController extends GeneralController{
 					System.out.println(msg);
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！=="+ JSON.toJSONString(idNos);
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！==" + JSON.toJSONString(idNos);
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/updateReturenInfo"})
 	@ResponseBody
@@ -964,35 +962,35 @@ public class JsResTempController extends GeneralController{
 					System.out.println(msg);
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！=="+ JSON.toJSONString(idNos);
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！==" + JSON.toJSONString(idNos);
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/addExamTeaRole"})
 	@ResponseBody
 	public String examTeaRole(){
 		afterBiz.examTeaRole();
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	@RequestMapping(value={"/updateNotStudy"})
 	@ResponseBody
 	public String updateNotStudy(){
 		afterBiz.updateNotStudy();
-		return GlobalConstant.OPERATE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.OPERATE_SUCCESSED;
 	}
 	//中文转Unicode
 	public static String gbEncoding(final String gbString) {   //gbString = "测试"
@@ -1055,23 +1053,23 @@ public class JsResTempController extends GeneralController{
 					System.out.println(msg);
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！=="+ JSON.toJSONString(idNos);
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！==" + JSON.toJSONString(idNos);
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 	@RequestMapping(value={"/insertGjptUserInfo"})
 	@ResponseBody
@@ -1089,22 +1087,22 @@ public class JsResTempController extends GeneralController{
 					System.out.println(msg);
 					if("1".equals(code))
 					{
-						return GlobalConstant.UPLOAD_FAIL+msg;
+                        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + msg;
 					}else{
-						if(GlobalConstant.ZERO_LINE != count){
-							return GlobalConstant.UPLOAD_SUCCESSED + "处理"+count+"条记录！=="+ JSON.toJSONString(idNos);
+                        if (com.pinde.core.common.GlobalConstant.ZERO_LINE != count) {
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "处理" + count + "条记录！==" + JSON.toJSONString(idNos);
 						}else{
-							return GlobalConstant.UPLOAD_FAIL;
+                            return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 						}
 					}
 				}else {
-					return GlobalConstant.UPLOAD_FAIL;
+                    return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
 			}catch(RuntimeException re){
 				re.printStackTrace();
 				return re.getMessage();
 			}
 		}
-		return GlobalConstant.UPLOAD_FAIL;
+        return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 	}
 }

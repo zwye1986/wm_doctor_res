@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResSupervisioSubject;
-import com.pinde.sci.model.mo.ResSupervisioSubjectExample;
+import com.pinde.core.model.ResSupervisioSubject;
+import com.pinde.core.model.ResSupervisioSubjectExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

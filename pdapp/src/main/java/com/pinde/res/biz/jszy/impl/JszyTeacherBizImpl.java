@@ -1,7 +1,8 @@
 package com.pinde.res.biz.jszy.impl;
 
-import com.pinde.app.common.GlobalConstant;
-import com.pinde.core.commom.enums.RecStatusEnum;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jszy.IJszyTeacherBiz;
@@ -10,17 +11,15 @@ import com.pinde.sci.dao.base.ResRecMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JszyTeacherBizImpl implements IJszyTeacherBiz {
 	
 	@Autowired
@@ -64,7 +63,7 @@ public class JszyTeacherBizImpl implements IJszyTeacherBiz {
         if(StringUtil.isNotBlank(userFlow) && StringUtil.isNotBlank(dataFlow)){
             ResRec rec = new ResRec();
             rec.setRecFlow(dataFlow);
-            if(statusId.equals("Y")) {
+            if (statusId.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                 rec.setAuditStatusId(RecStatusEnum.TeacherAuditY.getId());
                 rec.setAuditStatusName(RecStatusEnum.TeacherAuditY.getName());
             }else{
@@ -102,7 +101,7 @@ public class JszyTeacherBizImpl implements IJszyTeacherBiz {
     public List<ResRec> getDocRecs(String processFlow, String userFlow, List<String> typeId) {
         ResRecExample example=new  ResRecExample();
         ResRecExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(userFlow);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(userFlow);
         if(typeId!=null&&typeId.size()>0)
                 criteria.andRecTypeIdIn(typeId);
         return recMapper.selectByExample(example);
@@ -111,7 +110,7 @@ public class JszyTeacherBizImpl implements IJszyTeacherBiz {
     public List<ResRec> searchRecByProcessAndRecType(String processFlow,String doctorFlow,String recType,String biaoJi) {
         ResRecExample example = new ResRecExample();
         ResRecExample.Criteria criteria=    example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow)
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow)
                 .andRecTypeIdEqualTo(recType);
         if(StringUtil.isNotBlank(biaoJi))
             criteria.andAuditStatusIdIsNull();
@@ -137,7 +136,7 @@ public class JszyTeacherBizImpl implements IJszyTeacherBiz {
     public ResScore readScoreByProcessFlow(String processFlow) {
         if(StringUtil.isNotBlank(processFlow)){
             ResScoreExample example=new ResScoreExample();
-            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andProcessFlowEqualTo(processFlow);
             List<ResScore> list=scoreMapper.selectByExample(example);
             if(list!=null&&list.size()>0){

@@ -1,10 +1,10 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class SchRotationDeptReq extends MybatisObject {
+public class SchRotationDeptReq extends TeachingActivitySpeakerExample.MybatisObject {
     private String reqFlow;
 
     private String rotationFlow;

@@ -1,7 +1,8 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.app.common.GlobalConstant;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -11,12 +12,10 @@ import com.pinde.res.dao.jswjw.ext.HospitalSupervisioExtMapper;
 import com.pinde.sci.dao.base.ResHospSupervSubjectMapper;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioBiz {
     @Autowired
     private ResHospSupervSubjectMapper hospSupervSubjectMapper;
@@ -189,7 +188,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
 
     @Override
     public String saveFileToDirs(String oldFolderName, MultipartFile file, String folderName){
-        String path = GlobalConstant.FLAG_N;
+        String path = com.pinde.core.common.GlobalConstant.FLAG_N;
         if(file.getSize() > 0){
             //创建目录
             String dateString = DateUtil.getCurrDate2();
@@ -240,7 +239,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
 
     @Override
     public int editSupervisioUser(SysUser user) {
-        user.setRecordStatus("Y");
+        user.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         user.setModifyTime(DateUtil.getCurrDateTime());
         user.setModifyUserFlow(user.getUserFlow());
         return sysUserMapper.updateByPrimaryKeySelective(user);

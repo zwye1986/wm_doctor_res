@@ -1,20 +1,19 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResTypicalCasesBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.ResTypicalCasesMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResTypicalCases;
 import com.pinde.sci.model.mo.ResTypicalCasesExample;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ import java.util.Map;
  * Created by pdkj on 2016/10/14.
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class ResTypicalCasesBizImpl implements IResTypicalCasesBiz {
     @Autowired
     private ResTypicalCasesMapper resTypicalCasesMapper;
@@ -35,7 +34,7 @@ public class ResTypicalCasesBizImpl implements IResTypicalCasesBiz {
     @Override
     public List<ResTypicalCases> searchTypicalCases(ResTypicalCases resTypicalCases) {
         ResTypicalCasesExample example = new ResTypicalCasesExample();
-        ResTypicalCasesExample.Criteria criteria=example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        ResTypicalCasesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(resTypicalCases!=null){
             if(StringUtil.isNotBlank(resTypicalCases.getDoctorFlow())){
                 criteria.andDoctorFlowEqualTo(resTypicalCases.getDoctorFlow());

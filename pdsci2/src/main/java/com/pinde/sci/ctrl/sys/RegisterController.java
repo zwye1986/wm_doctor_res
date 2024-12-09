@@ -6,9 +6,8 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;
@@ -39,10 +38,10 @@ public class RegisterController extends GeneralController {
 	@ModelAttribute("sysRoleList")
 	public List<SysRole> initInterests() {
 		SysRole sysRole = new SysRole();
-		sysRole.setWsId((String)getSessionAttribute(GlobalConstant.CURRENT_WS_ID));
+        sysRole.setWsId((String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
 		sysRole.setRoleLevelId(RoleLevelEnum.SysLevel.getId());
-		sysRole.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
-		sysRole.setAllowRegFlag(GlobalConstant.FLAG_Y);
+        sysRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        sysRole.setAllowRegFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		List<SysRole> sysRoleList = roleBiz.search(sysRole, null);
 		return sysRoleList;
 	}
@@ -67,28 +66,28 @@ public class RegisterController extends GeneralController {
 		if("userCode".equals(forgetType)){
 			old = userBiz.findByUserCode(forgetName);
 			if(old==null){
-				model.addAttribute("forgetErrorMessage",GlobalConstant.USER_CODE_NOT_EXIST);
+                model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_CODE_NOT_EXIST);
 				return "sys/reg/forget/first";
 			}
 		}
 		if("userPhone".equals(forgetType)){
 			old = userBiz.findByUserPhone(forgetName);
 			if(old==null){
-				model.addAttribute("forgetErrorMessage",GlobalConstant.USER_PHONE_NOT_EXIST);
+                model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_PHONE_NOT_EXIST);
 				return "sys/reg/forget/first";
 			}		
 		}
 		if("userEmail".equals(forgetType)){
 			old = userBiz.findByUserEmail(forgetName);
 			if(old==null){
-				model.addAttribute("forgetErrorMessage",GlobalConstant.USER_EMAIL_NOT_EXIST);
+                model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_EMAIL_NOT_EXIST);
 				return "sys/reg/forget/first";
 			}		
 		}
 		if("idNo".equals(forgetType)){
 			old = userBiz.findByIdNo(forgetName);
 			if(old==null){
-				model.addAttribute("forgetErrorMessage",GlobalConstant.ID_NO_NOT_EXIST);
+                model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.ID_NO_NOT_EXIST);
 				return "sys/reg/forget/first";
 			}		
 		}
@@ -110,15 +109,15 @@ public class RegisterController extends GeneralController {
 
 		SysUser old = userBiz.readSysUser(sysUser.getUserFlow());
 		if(!StringUtil.isEquals(sysUser.getUserName(), old.getUserName())){
-			model.addAttribute("forgetErrorMessage",GlobalConstant.USER_NAME_NOT_EQUAL);
+            model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_NAME_NOT_EQUAL);
 			return "sys/reg/forget/second";
 		}
 		if(!"idNo".equals(forgetType) && !StringUtil.isEquals(sysUser.getIdNo(), old.getIdNo())){
-			model.addAttribute("forgetErrorMessage",GlobalConstant.USER_ID_NO_NOT_EQUAL);
+            model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_ID_NO_NOT_EQUAL);
 			return "sys/reg/forget/second";
 		}
 		if(!StringUtil.isEquals(sysUser.getOrgFlow(), old.getOrgFlow())){
-			model.addAttribute("forgetErrorMessage",GlobalConstant.USER_ORG_NOT_EQUAL);
+            model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_ORG_NOT_EQUAL);
 			return "sys/reg/forget/second";
 		}
 		return "redirect:/reg/forget/thrid?userFlow="+old.getUserFlow();
@@ -134,7 +133,7 @@ public class RegisterController extends GeneralController {
 	public String checkThrid(String userFlow,String userPasswdNew,String userPasswdNew2, Model model){
 
 		if(!StringUtil.isEquals(userPasswdNew, userPasswdNew2)){
-			model.addAttribute("forgetErrorMessage",GlobalConstant.USER_PASSWD_NOT_EQUAL);
+            model.addAttribute("forgetErrorMessage", com.pinde.core.common.GlobalConstant.USER_PASSWD_NOT_EQUAL);
 			return "sys/reg/forget/thrid";
 		}
 		SysUser sysUser = new SysUser();

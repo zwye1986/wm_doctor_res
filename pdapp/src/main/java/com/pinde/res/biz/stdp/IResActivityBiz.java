@@ -1,7 +1,7 @@
 package com.pinde.res.biz.stdp;
 
+import com.pinde.core.model.*;
 import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 
 import java.util.List;

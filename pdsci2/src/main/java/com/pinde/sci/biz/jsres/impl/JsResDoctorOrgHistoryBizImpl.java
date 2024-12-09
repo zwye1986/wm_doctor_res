@@ -12,17 +12,14 @@ import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorOrgHistoryExtMapper;
-import com.pinde.sci.enums.jsres.JsResChangeApplyStatusEnum;
 import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +29,7 @@ import java.util.Map;
  *
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 
 	@Autowired
@@ -67,7 +64,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 	@Override
 	public List<ResDoctorOrgHistory> searchDoctorOrgHistoryList(ResDoctorOrgHistory doctorOrgHistory) {
 		ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-		Criteria criteria =  example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(doctorOrgHistory.getDoctorFlow())){
 			criteria.andDoctorFlowEqualTo(doctorOrgHistory.getDoctorFlow());
 		}
@@ -152,13 +149,13 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 			ResDoctorOrgHistory docOrgHistory = readDocOrgHistory(recordFlow);
 			if(docOrgHistory != null){
 				docOrgHistory.setChangeStatusId(changeStatusId);
-				docOrgHistory.setChangeStatusName(JsResChangeApplyStatusEnum.getNameById(changeStatusId));
+                docOrgHistory.setChangeStatusName(com.pinde.core.common.enums.JsResChangeApplyStatusEnum.getNameById(changeStatusId));
 				docOrgHistory.setInDate(DateUtil.getCurrDateTime());
 				String msgTitle = "基地变更申请审核结果";
 				String msgContent = null;
-				if(JsResChangeApplyStatusEnum.GlobalApplyWaiting.getId().equals(changeStatusId)){//基地转入通过
+                if (com.pinde.core.common.enums.JsResChangeApplyStatusEnum.GlobalApplyWaiting.getId().equals(changeStatusId)) {//基地转入通过
 					docOrgHistory.setIsAgreeOldTrain(chooseFlag);
-					if(StringUtil.isNotBlank(time)&&GlobalConstant.FLAG_N.equals(chooseFlag)){
+                    if (StringUtil.isNotBlank(time) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(chooseFlag)) {
 						docOrgHistory.setChangeInGraduationYear(time);
 					}
 					//变更记录
@@ -172,7 +169,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public int auditTurnInOrgGlobal(ResDoctorOrgHistory docOrgHistory) {
@@ -180,17 +177,17 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 			ResDoctorOrgHistory docOrgHistory1 = readDocOrgHistory(docOrgHistory.getRecordFlow());
 			if(docOrgHistory1 != null){
 				docOrgHistory1.setChangeStatusId(docOrgHistory.getChangeStatusId());
-				docOrgHistory1.setChangeStatusName(JsResChangeApplyStatusEnum.getNameById(docOrgHistory.getChangeStatusId()));
+                docOrgHistory1.setChangeStatusName(com.pinde.core.common.enums.JsResChangeApplyStatusEnum.getNameById(docOrgHistory.getChangeStatusId()));
 //				docOrgHistory.setInDate(DateUtil.getCurrDateTime());
 				String msgTitle = "基地变更申请审核结果";
 				String msgContent = null;
-				if(JsResChangeApplyStatusEnum.GlobalApplyPass.getId().equals(docOrgHistory.getChangeStatusId())){//转入通过==》修改最新培训记录
+                if (com.pinde.core.common.enums.JsResChangeApplyStatusEnum.GlobalApplyPass.getId().equals(docOrgHistory.getChangeStatusId())) {//转入通过==》修改最新培训记录
 
 					//获取最新培训记录
 					if(StringUtil.isNotBlank(docOrgHistory1.getDoctorFlow())){
 						ResDoctorRecruit docRecruit =  jsResDoctorRecruitBiz.readRecruit(docOrgHistory1.getRecruitFlow());
 //						docRecruit.setDoctorFlow(doctorFlow);
-//						docRecruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+//						docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 //						List<ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
 						if(docRecruit != null){
 
@@ -207,7 +204,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 									docRecruitWithBLOBs.setPlaceName(sysOrg.getOrgCityName());
 									String isAgreeOldTrain = docOrgHistory1.getIsAgreeOldTrain();
 									String changeInGraduationYear = docOrgHistory1.getChangeInGraduationYear();
-									if(StringUtil.isNotBlank(changeInGraduationYear)&&GlobalConstant.FLAG_N.equals(isAgreeOldTrain)){
+                                    if (StringUtil.isNotBlank(changeInGraduationYear) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isAgreeOldTrain)) {
 										docRecruitWithBLOBs.setGraduationYear(changeInGraduationYear);
 									}
 //									if(StringUtil.isNotBlank(time)){
@@ -221,7 +218,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 									ResDoctor doctor = doctorBiz.readDoctor(docOrgHistory1.getDoctorFlow());
 									doctor.setOrgFlow(orgFlow);
 									doctor.setOrgName(sysOrg.getOrgName());
-//									if(StringUtil.isNotBlank(time)&&GlobalConstant.FLAG_N.equals(chooseFlag)){
+//									if(StringUtil.isNotBlank(time)&&com.pinde.core.common.GlobalConstant.FLAG_N.equals(chooseFlag)){
 //										doctor.setSessionNumber(time);
 //									}
 									doctorBiz.editDoctor(doctor, null);
@@ -248,7 +245,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 				}
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	@Override
 	public ResDoctorOrgHistory readDocOrgHistory(String recordFlow) {
@@ -258,7 +255,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 	@Override
 	public List<ResDoctorOrgHistory> searchWaitingChangeOrgHistoryList(ResDoctorOrgHistory docOrgHistory, List<String> changeStatusIdList) {
 		ResDoctorOrgHistoryExample example = new ResDoctorOrgHistoryExample();
-		Criteria criteria =  example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		//Criteria criteria2 =  example.createCriteria();
 		if(StringUtil.isNotBlank(docOrgHistory.getDoctorFlow())){
 			criteria.andDoctorFlowEqualTo(docOrgHistory.getDoctorFlow());
@@ -293,15 +290,15 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 			ResDoctorOrgHistory docOrgHistory = readDocOrgHistory(history.getRecordFlow());
 			if(docOrgHistory!=null){
 				docOrgHistory.setChangeStatusId(history.getChangeStatusId());
-				docOrgHistory.setChangeStatusName(JsResChangeApplyStatusEnum.getNameById(history.getChangeStatusId()));
+                docOrgHistory.setChangeStatusName(com.pinde.core.common.enums.JsResChangeApplyStatusEnum.getNameById(history.getChangeStatusId()));
 				if(StringUtil.isBlank(time)){
-					if(StringUtil.isNotBlank(docOrgHistory.getChangeStatusId())&&JsResChangeApplyStatusEnum.InApplyUnPass.getId().equals(docOrgHistory.getChangeStatusId())){
+                    if (StringUtil.isNotBlank(docOrgHistory.getChangeStatusId()) && com.pinde.core.common.enums.JsResChangeApplyStatusEnum.InApplyUnPass.getId().equals(docOrgHistory.getChangeStatusId())) {
 						docOrgHistory.setInDate(DateUtil.getCurrDateTime());
 					}else{
 						docOrgHistory.setOutDate(DateUtil.getCurrDateTime());
 					}
 				}else{
-					if(StringUtil.isNotBlank(docOrgHistory.getChangeStatusId())&&JsResChangeApplyStatusEnum.InApplyUnPass.getId().equals(docOrgHistory.getChangeStatusId())){
+                    if (StringUtil.isNotBlank(docOrgHistory.getChangeStatusId()) && com.pinde.core.common.enums.JsResChangeApplyStatusEnum.InApplyUnPass.getId().equals(docOrgHistory.getChangeStatusId())) {
 						docOrgHistory.setInDate(time);
 					}else{
 						docOrgHistory.setOutDate(time);
@@ -314,7 +311,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 				}
 				String msgTitle = "基地变更申请审核结果";
 				String msgContent = null;
-				if(JsResChangeApplyStatusEnum.InApplyWaiting.getId().equals(history.getChangeStatusId())){//通过==》带转入
+                if (com.pinde.core.common.enums.JsResChangeApplyStatusEnum.InApplyWaiting.getId().equals(history.getChangeStatusId())) {//通过==》带转入
 					msgContent = "基地变更申请（" +docOrgHistory.getHistoryOrgName() +" → "+docOrgHistory.getOrgName()+"）审核结果：转出审核通过。";
 				}else{
 					msgContent = "基地变更申请（" +docOrgHistory.getHistoryOrgName() +" → "+docOrgHistory.getOrgName()+"）审核结果：" + docOrgHistory.getChangeStatusName() + "。";
@@ -323,7 +320,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 				return saveDocOrgHistory(docOrgHistory);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
 	@Override
@@ -341,7 +338,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 			}
 			ResDoctorRecruitWithBLOBs lastRecruit = new ResDoctorRecruitWithBLOBs();
 			lastRecruit.setDoctorFlow(history.getDoctorFlow());
-			lastRecruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            lastRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			List<ResDoctorRecruitWithBLOBs> recruitList = jsResDoctorRecruitBiz.searchRecruitWithBLOBs(lastRecruit);
 			if(recruitList != null && !recruitList.isEmpty()){
 				lastRecruit = recruitList.get(0);
@@ -357,13 +354,13 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 				}
 				recruitResult=jsResDoctorRecruitBiz.updateRecruit(lastRecruit);
 			}
-			if(doctorResult!=GlobalConstant.ZERO_LINE&&recruitResult!=GlobalConstant.ZERO_LINE){
-				return GlobalConstant.ONE_LINE;
+            if (doctorResult != com.pinde.core.common.GlobalConstant.ZERO_LINE && recruitResult != com.pinde.core.common.GlobalConstant.ZERO_LINE) {
+                return com.pinde.core.common.GlobalConstant.ONE_LINE;
 			}else{
-				return GlobalConstant.ZERO_LINE;
+                return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 			}
 	}else{
-		return GlobalConstant.ZERO_LINE;	
+            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 }
 

@@ -14,7 +14,7 @@
 	   <thead>
 	   <tr>
 		   <th style="min-width: 150px; max-width: 150px; "   class="toFiexdDept">专业</th>
-		   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+		   <c:forEach items="${resDocTypeEnumList}" var="type">
 			   <th style="min-width: 120px; max-width: 120px; " class="toFiexdDept">${type.name}</th>
 		   </c:forEach>
 		   <th style="min-width: 60px; max-width: 60px; "   class="toFiexdDept">合计</th>
@@ -32,7 +32,7 @@
 					   <td style="min-width: 150px; max-width: 150px; " class="by">
 							   ${spe.dictName}
 					   </td>
-					   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+					   <c:forEach items="${resDocTypeEnumList}" var="type">
 						   <c:set var="key" value="${type.id}${spe.dictId}"></c:set>
 						   <c:set var="sum" value="${sum+typeSpeNumMap[key]}"></c:set>
 						   <td style="min-width: 120px; max-width: 120px; " class="by">${empty typeSpeNumMap[key]?0:typeSpeNumMap[key]}</td>
@@ -47,7 +47,7 @@
 	   </c:forEach>
 	   <tr>
 		   <td style="min-width: 150px; max-width: 150px; " class="by">合计</td>
-		   <c:forEach items="${jsResDocTypeEnumList}" var="type">
+		   <c:forEach items="${resDocTypeEnumList}" var="type">
 			   <td style="min-width: 120px; max-width: 120px; " class="by">${empty typeNumMap[type.id]?0:typeNumMap[type.id]}</td>
 		   </c:forEach>
 		   <td style="min-width: 60px; max-width: 60px; " class="by">${hjsum}</td>

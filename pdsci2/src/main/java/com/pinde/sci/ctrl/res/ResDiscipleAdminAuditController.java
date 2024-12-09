@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDiscipleInfoBiz;
@@ -10,15 +12,9 @@ import com.pinde.sci.biz.res.IResGraduationAssessmentBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.enums.res.DiscipleStatusEnum;
-import com.pinde.sci.enums.res.NoteTypeEnum;
-import com.pinde.sci.enums.res.RecDocCategoryEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.OrgTypeEnum;
 import com.pinde.sci.model.mo.ResDiscipleReq;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
@@ -70,13 +66,13 @@ public class ResDiscipleAdminAuditController extends GeneralController {
                        String speId, String doctorName) throws Exception {
         SysUser currUser = GlobalContext.getCurrentUser();
         String workOrgId="";
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
             //查询所有医院
             SysOrg org = new SysOrg();
-            org.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            org.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             List<SysOrg> orgs = orgBiz.searchOrg(org);
             model.addAttribute("orgs",orgs);
-        }else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             String currentOrgFlow = currUser.getOrgFlow();
             if(StringUtil.isNotBlank(currentOrgFlow)){
                 SysOrg org = orgBiz.readSysOrg(currentOrgFlow);
@@ -96,7 +92,7 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         param.put("teacherName", teacherName);
         param.put("workOrgId", workOrgId);
         param.put("auditId", DiscipleStatusEnum.DiscipleAudit.getId());
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)||GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) || com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             param.put("auditId", DiscipleStatusEnum.AdminAudit.getId());
         }
         List<String> doctorTypeIds = null;
@@ -109,8 +105,8 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         //复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
-        sysDict.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
+        sysDict.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0&&doctorTypeIds!=null&&doctorTypeIds.size()>0){
             for (SysDict dict:dictList){
@@ -125,7 +121,7 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         List<ResDoctorExt> students = doctorBiz.searchDocByDiscipleAdmin(param);
         model.addAttribute("list", students);
         model.addAttribute("roleFlag", roleFlag);
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)||GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) || com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             return "res/disciple/admin/graduationList4Global";
         }
         return "res/disciple/admin/graduationList";
@@ -144,12 +140,12 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         model.addAttribute("roleFlag",roleFlag);
         String workOrgId = "";
         List<SysOrg> orgList=new ArrayList<>();
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)) {
             //查询所有医院
             SysOrg orgTemp = new SysOrg();
-            orgTemp.setOrgTypeId(OrgTypeEnum.Hospital.getId());
+            orgTemp.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
             orgList = orgBiz.searchOrg(orgTemp);
-        }else if(GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        } else if (com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             SysUser currUser = GlobalContext.getCurrentUser();
             String currentOrgFlow = currUser.getOrgFlow();
             if(StringUtil.isNotBlank(currentOrgFlow)){
@@ -171,7 +167,7 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         model.addAttribute("orgList",orgList);
         SysUser currUser = GlobalContext.getCurrentUser();
         Map<String, Object> param = new HashMap<>();
-        if(StringUtil.isBlank(orgFlow)&&!GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)&&!GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
+        if (StringUtil.isBlank(orgFlow) && !com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) && !com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             orgFlow = currUser.getOrgFlow();
             param.put("orgFlow", currUser.getOrgFlow());
             SysOrg org =orgBiz.readSysOrg(orgFlow);
@@ -195,7 +191,7 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         //复选框勾选标识
         Map<String,String> doctorTypeSelectMap = new HashMap<>();
         SysDict sysDict = new SysDict();
-        sysDict.setDictTypeId(DictTypeEnum.DoctorType.getId());
+        sysDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.DoctorType.getId());
         List<SysDict> dictList = dictBiz.searchDictList(sysDict);
         if(dictList!=null&&dictList.size()>0){
             if(doctorTypeIds!=null&&doctorTypeIds.size()>0){
@@ -216,16 +212,16 @@ public class ResDiscipleAdminAuditController extends GeneralController {
         model.addAttribute("doctorTypeSelectMap", doctorTypeSelectMap);
         PageHelper.startPage(currentPage, getPageSize(request));
         List<Map<String, Object>> resultList = new ArrayList<>();
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)||GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) || com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             resultList = doctorBiz.globalQueryDocDisciple(param);
         }else{
             resultList = doctorBiz.adminQueryDocDisciple(param);
         }
         model.addAttribute("list", resultList);
         if ("/inx/jszy".equals(InitConfig.getSysCfg("sys_index_url"))) {
-            model.addAttribute("jszyFlag",GlobalConstant.FLAG_Y);
+            model.addAttribute("jszyFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
         }
-        if(GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag)||GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)){
+        if (com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL.equals(roleFlag) || com.pinde.core.common.GlobalConstant.USER_LIST_UNIVERSITY.equals(roleFlag)) {
             return "res/disciple/admin/studentList4Global";
         }
         return "res/disciple/admin/studentList";

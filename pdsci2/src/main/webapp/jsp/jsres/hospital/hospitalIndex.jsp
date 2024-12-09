@@ -135,7 +135,7 @@
         }
 
         function init() {
-            <%--<c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <%--<c:forEach items="${resDocTypeEnumList}" var="type">
             $("#" + "${type.id}").attr("checked", true);
             </c:forEach>--%>
             getSpeInitData(getDocInitData);
@@ -160,7 +160,7 @@
                 return;
             }
             var data = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if ($("#" + "${type.id}").attr("checked")) {
                 data += "&datas=" + $("#" + "${type.id}").val();
             }
@@ -231,7 +231,7 @@
                 return;
             }
             var data = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if ($("#" + "${type.id}").attr("checked")) {
                 data += "&datas=" + $("#" + "${type.id}").val();
             }
@@ -471,7 +471,7 @@
 
         function cycle(data) {
             var docTypes = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if (docTypes == "") {
                 docTypes += "docTypes=" + "${type.id}";
             } else {
@@ -1559,7 +1559,7 @@
                                             <a href="javascript:void(0);">
                   	<span class="tap_inner tab_second">
 						<c:set var="yearpl" value="${sysCfgMap['jsres_doctorCount_sessionNumber']}pl"></c:set>
-					  	<c:forEach items="${jsResDocTypeEnumList}" var="type">
+					  	<c:forEach items="${resDocTypeEnumList}" var="type">
                             <c:set value="0" var="keyll"></c:set>
                             <c:if test="${not empty sysCfgMap['jsres_doctorCount_sessionNumber'] }">
                                 <c:set value="${doctorCountExtMap[yearpl][type.id]}" var="keyll"></c:set>
@@ -1573,300 +1573,300 @@
                                 </div>
                             </div>
 
-                            <div class="index_show">
-                                ${iframe}
+<%--                            <div class="index_show">--%>
+<%--                                ${iframe}--%>
+<%--                            </div>--%>
+
+                            <div class="main_bd">
+                                <ul>
+                                    <li class="score_frame">
+                                        <h1 style="background:#e7f5fc;">人员信息概况</h1>
+                                        <c:set var="currYear" value="${pdfn:getCurrYear()}"></c:set>
+                                        <div class="grid">
+                                            <c:forEach step="1" begin="${currYear-2}" end="${currYear}" varStatus="num"
+                                                       var="doctor">
+                                                <table style="
+                                                <c:if test='${num.count<3}'>float: left;margin-left:1%;</c:if> <c:if
+                                                        test='${num.count==3}'>margin-left:67%;</c:if>margin-top: 10px;margin-bottom: 10px;border: 1px solid #ccc;"
+                                                       cellpadding="0" cellspacing="0" width="32%">
+                                                    <tbody>
+                                                    <c:set var="year" value="${currYear-num.count+1}"></c:set>
+                                                    <c:set var="key" value="${year}pl"></c:set>
+                                                    <tr>
+                                                        <th align="center" style="background-color: #e7e7eb;">${year}届&#12288;${doctorCountExtMap[key]["DOCTORCOUNT"]}人</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left">
+                                                            <p style="width:100%">
+                                                                <span style="float: left;font-weight: 900;width:30%">培训类别：</span>
+                                                                <span style="float: left;width:35%;text-align:center;">住院医师<br/>${doctorCountExtMap[key]["DoctorTrainingSpe"]}人</span>
+                                                                <span style="float: left;width:35%;text-align:center;">助理全科<br/>${doctorCountExtMap[key]["AssiGeneral"]}人</span>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left">
+                                                            <p style="width:100%">
+                                                                <span style="float: left;font-weight: 900;width:30%">人员类型：</span>
+                                                                <span style="float: left;width:35%;text-align:center;">本单位人<br/>${doctorCountExtMap[key]["Company"]}人</span>
+                                                                <span style="float: left;width:35%;text-align:center;">委培单位人<br/>${doctorCountExtMap[key]["CompanyEntrust"]}人</span>
+                                                            </p>
+                                                            <p style="width:100%">
+                                                                <span style="float: left;font-weight: 900;width:30%">&#12288;</span>
+                                                                <span style="float: left;width:35%;text-align:center;">社会人<br/>${doctorCountExtMap[key]["Social"]}人</span>
+                                                                <span style="float: left;width:35%;text-align:center;">在校专硕<br/>${doctorCountExtMap[key]["Graduate"]}人</span>
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </c:forEach>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
+                            <div class="main_bd">
+                                <ul>
+                                    <li class="score_frame">
+                                        <h1 style="background:#e7f5fc;">当前住培情况</h1>
+                                        <table class="in_table"
+                                               style="float: left;width: 48%; margin-top: 10px;margin: 10px;margin-bottom: 10px;border: 1px solid #ccc;"
+                                               cellpadding="0" cellspacing="0" width="100%">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div id="docChartForIndex" style="height: 200px;"></div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="grid" style="overflow: auto;height: 200px;width: auto;margin: 10px">
+                                            <table class="in_table" style="border: 1px solid #ccc;" cellpadding="0"
+                                                   cellspacing="0" width="100%">
+                                                <colgroup>
+                                                    <col width="25%"/>
+                                                    <col width="25%"/>
+                                                    <col width="25%"/>
+                                                    <col width="25%"/>
+                                                </colgroup>
+                                                <tr style="height: 60px;">
+                                                    <td colspan="4">
+                                                        <div style="float: left;margin-left:80px;height: 10px;width: 10px;background: rgba(255,120,50,1);"></div>
+                                                        <div style="float: left;line-height: 10px;"> ：在培人数</div>
+                                                        <div style="float: left;margin-left:20px;height: 10px;width: 10px;background: rgba(100,200,255,1);"></div>
+                                                        <div style="float: left;line-height: 10px;"> ：已考核待结业人数</div>
+                                                        <div style="float: left;margin-left:20px;height: 10px;width: 10px;background: rgba(255,120,255,1);"></div>
+                                                        <div style="float: left;line-height: 10px;"> ：结业人数</div>
+                                                    </td>
+                                                </tr>
+                                                <c:forEach items="${currDocDetailMaps}" var="currDocDetail">
+                                                    <tr>
+                                                        <td style="text-align: center">${currDocDetail['SESSIONNUMBER']}届</td>
+                                                        <td style="text-align: center">${currDocDetail['20'] ==null? 0:currDocDetail['20']}人</td>
+                                                        <td style="text-align: center">${currDocDetail['22'] ==null? 0:currDocDetail['22']}人</td>
+                                                        <td style="text-align: center">${currDocDetail['21'] ==null? 0:currDocDetail['21']}人</td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+                                        </div>
+                                        <%--<div style="background-color: #e7f5fc;height: 50px;margin:10px ; text-align: center;font-size: large">--%>
+                                        <%--<table class="in_table" style="background-color:#e7f5fc;" cellpadding="0" cellspacing="0"  width="100%">--%>
+                                        <%--<tr style="height: 12px"></tr>--%>
+                                        <%--<tr>--%>
+                                        <%--<td style="text-align: center">填写数据总量：${sumCountAudit['SUMCOUNT']}条</td>--%>
+                                        <%--<td style="text-align: center">带教审核总量：${sumCountAudit['SUMCOUNTRES']}条</td>--%>
+                                        <%--<td style="text-align: center">系统总访问量：${count}次</td>--%>
+                                        <%--</tr>--%>
+                                        <%--</table>--%>
+                                        <%--</div>--%>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="main_bd" style="height:auto;">
+                                <ul>
+                                    <li class="score_frame">
+                                        <h1 style="background:#e7f5fc;">医师信息概况</h1>
+                                        <div class="" style="margin-top: 15px;">
+                                            <form id="doctorNumSearch">
+                                                <table cellspacing="8px">
+                                                    <tr>
+                                                        <td
+                                                                <c:if test="${countryOrg != 'countryOrg'}">hidden="hidden"</c:if>>
+                                                            &#12288;培训基地：
+                                                        </td>
+                                                        <td
+                                                                <c:if test="${countryOrg != 'countryOrg'}">hidden="hidden"</c:if>>
+                                                            <div style="width:150px;">
+                                                                <input id="trainOrg" class="input" type="text"
+                                                                       style="margin-left: 0px;width: 150px"
+                                                                       autocomplete="off"/>
+                                                                <input id="orgFlow2" name="orgFlow" class="input"
+                                                                       type="text" hidden
+                                                                       style="margin-left: 0px;width: 150px"/>
+                                                            </div>
+                                                        </td>
+                                                        <td>&#12288;培训类别：</td>
+                                                        <td>
+                                                            <select onchange="searchInfo();" name="trainTypeId"
+                                                                    id="trainTypeId" class="select"
+                                                                    style="width:150px;">
+                                                                <option value="DoctorTrainingSpe">住院医师</option>
 
-<%--                            <div class="main_bd">--%>
-<%--                                <ul>--%>
-<%--                                    <li class="score_frame">--%>
-<%--                                        <h1 style="background:#e7f5fc;">人员信息概况</h1>--%>
-<%--                                        <c:set var="currYear" value="${pdfn:getCurrYear()}"></c:set>--%>
-<%--                                        <div class="grid">--%>
-<%--                                            <c:forEach step="1" begin="${currYear-2}" end="${currYear}" varStatus="num"--%>
-<%--                                                       var="doctor">--%>
-<%--                                                <table style="--%>
-<%--                                                <c:if test='${num.count<3}'>float: left;margin-left:1%;</c:if> <c:if--%>
-<%--                                                        test='${num.count==3}'>margin-left:67%;</c:if>margin-top: 10px;margin-bottom: 10px;border: 1px solid #ccc;"--%>
-<%--                                                       cellpadding="0" cellspacing="0" width="32%">--%>
-<%--                                                    <tbody>--%>
-<%--                                                    <c:set var="year" value="${currYear-num.count+1}"></c:set>--%>
-<%--                                                    <c:set var="key" value="${year}pl"></c:set>--%>
-<%--                                                    <tr>--%>
-<%--                                                        <th align="center" style="background-color: #e7e7eb;">${year}届&#12288;${doctorCountExtMap[key]["DOCTORCOUNT"]}人</th>--%>
-<%--                                                    </tr>--%>
-<%--                                                    <tr>--%>
-<%--                                                        <td align="left">--%>
-<%--                                                            <p style="width:100%">--%>
-<%--                                                                <span style="float: left;font-weight: 900;width:30%">培训类别：</span>--%>
-<%--                                                                <span style="float: left;width:35%;text-align:center;">住院医师<br/>${doctorCountExtMap[key]["DoctorTrainingSpe"]}人</span>--%>
-<%--                                                                <span style="float: left;width:35%;text-align:center;">助理全科<br/>${doctorCountExtMap[key]["AssiGeneral"]}人</span>--%>
-<%--                                                            </p>--%>
-<%--                                                        </td>--%>
-<%--                                                    </tr>--%>
-<%--                                                    <tr>--%>
-<%--                                                        <td align="left">--%>
-<%--                                                            <p style="width:100%">--%>
-<%--                                                                <span style="float: left;font-weight: 900;width:30%">人员类型：</span>--%>
-<%--                                                                <span style="float: left;width:35%;text-align:center;">本单位人<br/>${doctorCountExtMap[key]["Company"]}人</span>--%>
-<%--                                                                <span style="float: left;width:35%;text-align:center;">委培单位人<br/>${doctorCountExtMap[key]["CompanyEntrust"]}人</span>--%>
-<%--                                                            </p>--%>
-<%--                                                            <p style="width:100%">--%>
-<%--                                                                <span style="float: left;font-weight: 900;width:30%">&#12288;</span>--%>
-<%--                                                                <span style="float: left;width:35%;text-align:center;">社会人<br/>${doctorCountExtMap[key]["Social"]}人</span>--%>
-<%--                                                                <span style="float: left;width:35%;text-align:center;">在校专硕<br/>${doctorCountExtMap[key]["Graduate"]}人</span>--%>
-<%--                                                            </p>--%>
-<%--                                                        </td>--%>
-<%--                                                    </tr>--%>
-<%--                                                    </tbody>--%>
-<%--                                                </table>--%>
-<%--                                            </c:forEach>--%>
-<%--                                        </div>--%>
-<%--                                    </li>--%>
-<%--                                </ul>--%>
-<%--                            </div>--%>
-<%--                            <div class="main_bd">--%>
-<%--                                <ul>--%>
-<%--                                    <li class="score_frame">--%>
-<%--                                        <h1 style="background:#e7f5fc;">当前住培情况</h1>--%>
-<%--                                        <table class="in_table"--%>
-<%--                                               style="float: left;width: 48%; margin-top: 10px;margin: 10px;margin-bottom: 10px;border: 1px solid #ccc;"--%>
-<%--                                               cellpadding="0" cellspacing="0" width="100%">--%>
-<%--                                            <tbody>--%>
-<%--                                            <tr>--%>
-<%--                                                <td>--%>
-<%--                                                    <div id="docChartForIndex" style="height: 200px;"></div>--%>
-<%--                                                </td>--%>
-<%--                                            </tr>--%>
-<%--                                            </tbody>--%>
-<%--                                        </table>--%>
-<%--                                        <div class="grid" style="overflow: auto;height: 200px;width: auto;margin: 10px">--%>
-<%--                                            <table class="in_table" style="border: 1px solid #ccc;" cellpadding="0"--%>
-<%--                                                   cellspacing="0" width="100%">--%>
-<%--                                                <colgroup>--%>
-<%--                                                    <col width="25%"/>--%>
-<%--                                                    <col width="25%"/>--%>
-<%--                                                    <col width="25%"/>--%>
-<%--                                                    <col width="25%"/>--%>
-<%--                                                </colgroup>--%>
-<%--                                                <tr style="height: 60px;">--%>
-<%--                                                    <td colspan="4">--%>
-<%--                                                        <div style="float: left;margin-left:80px;height: 10px;width: 10px;background: rgba(255,120,50,1);"></div>--%>
-<%--                                                        <div style="float: left;line-height: 10px;"> ：在培人数</div>--%>
-<%--                                                        <div style="float: left;margin-left:20px;height: 10px;width: 10px;background: rgba(100,200,255,1);"></div>--%>
-<%--                                                        <div style="float: left;line-height: 10px;"> ：已考核待结业人数</div>--%>
-<%--                                                        <div style="float: left;margin-left:20px;height: 10px;width: 10px;background: rgba(255,120,255,1);"></div>--%>
-<%--                                                        <div style="float: left;line-height: 10px;"> ：结业人数</div>--%>
-<%--                                                    </td>--%>
-<%--                                                </tr>--%>
-<%--                                                <c:forEach items="${currDocDetailMaps}" var="currDocDetail">--%>
-<%--                                                    <tr>--%>
-<%--                                                        <td style="text-align: center">${currDocDetail['SESSIONNUMBER']}届</td>--%>
-<%--                                                        <td style="text-align: center">${currDocDetail['20'] ==null? 0:currDocDetail['20']}人</td>--%>
-<%--                                                        <td style="text-align: center">${currDocDetail['22'] ==null? 0:currDocDetail['22']}人</td>--%>
-<%--                                                        <td style="text-align: center">${currDocDetail['21'] ==null? 0:currDocDetail['21']}人</td>--%>
-<%--                                                    </tr>--%>
-<%--                                                </c:forEach>--%>
-<%--                                            </table>--%>
-<%--                                        </div>--%>
-<%--                                        &lt;%&ndash;<div style="background-color: #e7f5fc;height: 50px;margin:10px ; text-align: center;font-size: large">&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;<table class="in_table" style="background-color:#e7f5fc;" cellpadding="0" cellspacing="0"  width="100%">&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;<tr style="height: 12px"></tr>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;<tr>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;<td style="text-align: center">填写数据总量：${sumCountAudit['SUMCOUNT']}条</td>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;<td style="text-align: center">带教审核总量：${sumCountAudit['SUMCOUNTRES']}条</td>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;<td style="text-align: center">系统总访问量：${count}次</td>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;</tr>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;</table>&ndash;%&gt;--%>
-<%--                                        &lt;%&ndash;</div>&ndash;%&gt;--%>
-<%--                                    </li>--%>
-<%--                                </ul>--%>
-<%--                            </div>--%>
-<%--                            <div class="main_bd" style="height:auto;">--%>
-<%--                                <ul>--%>
-<%--                                    <li class="score_frame">--%>
-<%--                                        <h1 style="background:#e7f5fc;">医师信息概况</h1>--%>
-<%--                                        <div class="" style="margin-top: 15px;">--%>
-<%--                                            <form id="doctorNumSearch">--%>
-<%--                                                <table cellspacing="8px">--%>
-<%--                                                    <tr>--%>
-<%--                                                        <td--%>
-<%--                                                                <c:if test="${countryOrg != 'countryOrg'}">hidden="hidden"</c:if>>--%>
-<%--                                                            &#12288;培训基地：--%>
-<%--                                                        </td>--%>
-<%--                                                        <td--%>
-<%--                                                                <c:if test="${countryOrg != 'countryOrg'}">hidden="hidden"</c:if>>--%>
-<%--                                                            <div style="width:150px;">--%>
-<%--                                                                <input id="trainOrg" class="input" type="text"--%>
-<%--                                                                       style="margin-left: 0px;width: 150px"--%>
-<%--                                                                       autocomplete="off"/>--%>
-<%--                                                                <input id="orgFlow2" name="orgFlow" class="input"--%>
-<%--                                                                       type="text" hidden--%>
-<%--                                                                       style="margin-left: 0px;width: 150px"/>--%>
-<%--                                                            </div>--%>
-<%--                                                        </td>--%>
-<%--                                                        <td>&#12288;培训类别：</td>--%>
-<%--                                                        <td>--%>
-<%--                                                            <select onchange="searchInfo();" name="trainTypeId"--%>
-<%--                                                                    id="trainTypeId" class="select"--%>
-<%--                                                                    style="width:150px;">--%>
-<%--                                                                <option value="DoctorTrainingSpe">住院医师</option>--%>
+                                                            <%--  <c:forEach items="${trainCategoryEnumList}"
+                                                                           var="trainCategory">
+                                                                    <option value="${trainCategory.id}"
+                                                                            <c:if test="${trainCategoryEnumDoctorTrainingSpe.id eq trainCategory.id}">selected</c:if>
+                                                                            <c:if test="${param.trainTypeId==trainCategory.id}">selected="selected"</c:if>
+                                                                    >${trainCategory.name}</option>
+                                                                </c:forEach>--%>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&#12288;年&#12288;&#12288;级：</td>
+                                                        <td>
+                                                            <input type="text" id="sessionNumber" name="sessionNumber"
+                                                                   onclick="WdatePicker({dateFmt:'yyyy',onpicked:function(dp){searchInfo();}})"
+                                                                   <c:if test="${empty param.sessionNumber }">value="${pdfn:getCurrYear()}"
+                                                                   </c:if>value="${param.sessionNumber}" class="input"
+                                                                   readonly="readonly"
+                                                                   style="width: 150px;margin-left: 0px"/>
+                                                        </td>
+                                                        <td>&#12288;人员类型：</td>
+                                                        <td colspan="2">
+                                                            <c:forEach items="${resDocTypeEnumList}" var="type">
+                                                                <label><input onchange="searchInfo();" name="docType"
+                                                                              type="checkbox" id="${type.id}"
+                                                                              name="${type.id}"
+                                                                              value="${type.id}" checked="checked"/>${type.name}&nbsp;</label>
+                                                            </c:forEach>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <%--<td><input class="btn_green" type="button" value="查询" onclick="searchInfo();"/></td>--%>
+                                                    </tr>
+                                                </table>
+                                            </form>
+                                        </div>
+                                        <div class="index_table" id="doctorNum1"
+                                             style="height: 550px;width:100%;margin-top: 50px;">
 
-<%--                                                            &lt;%&ndash;  <c:forEach items="${trainCategoryEnumList}"--%>
-<%--                                                                           var="trainCategory">--%>
-<%--                                                                    <option value="${trainCategory.id}"--%>
-<%--                                                                            <c:if test="${trainCategoryEnumDoctorTrainingSpe.id eq trainCategory.id}">selected</c:if>--%>
-<%--                                                                            <c:if test="${param.trainTypeId==trainCategory.id}">selected="selected"</c:if>--%>
-<%--                                                                    >${trainCategory.name}</option>--%>
-<%--                                                                </c:forEach>&ndash;%&gt;--%>
-<%--                                                            </select>--%>
-<%--                                                        </td>--%>
-<%--                                                    </tr>--%>
-<%--                                                    <tr>--%>
-<%--                                                        <td>&nbsp;</td>--%>
-<%--                                                    </tr>--%>
-<%--                                                    <tr>--%>
-<%--                                                        <td>&#12288;年&#12288;&#12288;级：</td>--%>
-<%--                                                        <td>--%>
-<%--                                                            <input type="text" id="sessionNumber" name="sessionNumber"--%>
-<%--                                                                   onclick="WdatePicker({dateFmt:'yyyy',onpicked:function(dp){searchInfo();}})"--%>
-<%--                                                                   <c:if test="${empty param.sessionNumber }">value="${pdfn:getCurrYear()}"--%>
-<%--                                                                   </c:if>value="${param.sessionNumber}" class="input"--%>
-<%--                                                                   readonly="readonly"--%>
-<%--                                                                   style="width: 150px;margin-left: 0px"/>--%>
-<%--                                                        </td>--%>
-<%--                                                        <td>&#12288;人员类型：</td>--%>
-<%--                                                        <td colspan="2">--%>
-<%--                                                            <c:forEach items="${jsResDocTypeEnumList}" var="type">--%>
-<%--                                                                <label><input onchange="searchInfo();" name="docType"--%>
-<%--                                                                              type="checkbox" id="${type.id}"--%>
-<%--                                                                              name="${type.id}"--%>
-<%--                                                                              value="${type.id}" checked="checked"/>${type.name}&nbsp;</label>--%>
-<%--                                                            </c:forEach>--%>
-<%--                                                        </td>--%>
-<%--                                                        <td></td>--%>
-<%--                                                        <td></td>--%>
-<%--                                                        <td></td>--%>
-<%--                                                        &lt;%&ndash;<td><input class="btn_green" type="button" value="查询" onclick="searchInfo();"/></td>&ndash;%&gt;--%>
-<%--                                                    </tr>--%>
-<%--                                                </table>--%>
-<%--                                            </form>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="index_table" id="doctorNum1"--%>
-<%--                                             style="height: 550px;width:100%;margin-top: 50px;">--%>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <c:set value="jswjw_${currUser.orgFlow}_P0015" var="orgFlow"/>
+                            <c:if test="${sysCfgMap[orgFlow] eq GlobalConstant.RECORD_STATUS_Y}">
+                                <div class="index_form" style="margin-bottom: 10px;">
+                                    <script>
+                                        var okList;
+                                        var currFlag = false;
+                                        var viewLength = 5;
+                                        var likeSearchColumn = 3;
 
-<%--                                        </div>--%>
-<%--                                    </li>--%>
-<%--                                </ul>--%>
-<%--                            </div>--%>
-<%--                            <c:set value="jswjw_${currUser.orgFlow}_P0015" var="orgFlow"/>--%>
-<%--                            <c:if test="${sysCfgMap[orgFlow] eq GlobalConstant.RECORD_STATUS_Y}">--%>
-<%--                                <div class="index_form" style="margin-bottom: 10px;">--%>
-<%--                                    <script>--%>
-<%--                                        var okList;--%>
-<%--                                        var currFlag = false;--%>
-<%--                                        var viewLength = 5;--%>
-<%--                                        var likeSearchColumn = 3;--%>
+                                        $(function () {
+                                            okList = $('#willOutTable .willOutData');
+                                            toOperData();
+                                        });
 
-<%--                                        $(function () {--%>
-<%--                                            okList = $('#willOutTable .willOutData');--%>
-<%--                                            toOperData();--%>
-<%--                                        });--%>
+                                        function toOperData() {
+                                            var docCount = okList.length || 0;
+                                            if (docCount > viewLength) {
+                                                okList.filter(':gt(' + (viewLength - 1) + ')').toggle(currFlag);
+                                                $('#s').toggle(!currFlag);
+                                                $('#h').toggle(currFlag);
+                                                $('#docCount').text(docCount - viewLength);
+                                            } else {
+                                                $('#s,#h').hide();
+                                            }
+                                            $('#noData').toggle(docCount == 0);
+                                        }
 
-<%--                                        function toOperData() {--%>
-<%--                                            var docCount = okList.length || 0;--%>
-<%--                                            if (docCount > viewLength) {--%>
-<%--                                                okList.filter(':gt(' + (viewLength - 1) + ')').toggle(currFlag);--%>
-<%--                                                $('#s').toggle(!currFlag);--%>
-<%--                                                $('#h').toggle(currFlag);--%>
-<%--                                                $('#docCount').text(docCount - viewLength);--%>
-<%--                                            } else {--%>
-<%--                                                $('#s,#h').hide();--%>
-<%--                                            }--%>
-<%--                                            $('#noData').toggle(docCount == 0);--%>
-<%--                                        }--%>
+                                        function more(flag) {
+                                            currFlag = flag;
+                                            okList.filter(':gt(' + (viewLength - 1) + ')').toggle(currFlag);
+                                            $('#s,#h').toggle();
+                                        }
 
-<%--                                        function more(flag) {--%>
-<%--                                            currFlag = flag;--%>
-<%--                                            okList.filter(':gt(' + (viewLength - 1) + ')').toggle(currFlag);--%>
-<%--                                            $('#s,#h').toggle();--%>
-<%--                                        }--%>
+                                        function searchMethod(theAttr) {
+                                            okList = $('#willOutTable .willOutData');
+                                            theAttr = $.trim(theAttr);
+                                            if (theAttr != '') {
+                                                okList.hide();
+                                                okList = okList.filter(':has(td:lt(' + likeSearchColumn + '):contains("' + theAttr + '"))').show();
+                                                toOperData();
+                                            } else {
+                                                okList.show();
+                                                toOperData();
+                                            }
+                                        }
+                                    </script>
+                                    <table id="willOutTable" border="0" cellpadding="0" cellspacing="0" class="grid">
+                                        <colgroup>
+                                            <col width="20%"/>
+                                            <col width="10%"/>
+                                            <col width="10%"/>
+                                            <col width="15%"/>
+                                            <col width="20%"/>
+                                            <col width="15%"/>
+                                            <col width="10%"/>
+                                        </colgroup>
+                                        <tr>
+                                            <th colspan="7" style="text-align: left;padding-left: 10px;">
+                                                当月即将出科学员查询
+                                                <div style="float: right;">
+                                                    搜索：
+                                                    <input type="text" class="input" onkeyup="searchMethod(this.value);"
+                                                           placeholder="轮转科室/姓名/届别"/>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>轮转科室</th>
+                                            <th>姓名</th>
+                                            <th>届别</th>
+                                            <th>培训专业</th>
+                                            <th>轮转时间</th>
+                                            <th>带教老师</th>
+                                            <th>出科状态</th>
+                                        </tr>
+                                        <c:forEach items="${trainingList}" var="training">
+                                            <tr class="willOutData">
+                                                <c:set var="status"
+                                                       value="${training.doctorFlow}${training.schDeptFlow}"></c:set>
+                                                <td>${training.schDeptName}</td>
+                                                <td>${training.doctorName}</td>
+                                                <td>${training.sessionNumber}</td>
+                                                <td>${training.trainingSpeName}</td>
+                                                <td>${training.schStartDate} 至 ${training.schEndDate}</td>
+                                                <td>${training.teacherUserName}</td>
+                                                <td>${stateMap[status]}</td>
+                                            </tr>
+                                        </c:forEach>
 
-<%--                                        function searchMethod(theAttr) {--%>
-<%--                                            okList = $('#willOutTable .willOutData');--%>
-<%--                                            theAttr = $.trim(theAttr);--%>
-<%--                                            if (theAttr != '') {--%>
-<%--                                                okList.hide();--%>
-<%--                                                okList = okList.filter(':has(td:lt(' + likeSearchColumn + '):contains("' + theAttr + '"))').show();--%>
-<%--                                                toOperData();--%>
-<%--                                            } else {--%>
-<%--                                                okList.show();--%>
-<%--                                                toOperData();--%>
-<%--                                            }--%>
-<%--                                        }--%>
-<%--                                    </script>--%>
-<%--                                    <table id="willOutTable" border="0" cellpadding="0" cellspacing="0" class="grid">--%>
-<%--                                        <colgroup>--%>
-<%--                                            <col width="20%"/>--%>
-<%--                                            <col width="10%"/>--%>
-<%--                                            <col width="10%"/>--%>
-<%--                                            <col width="15%"/>--%>
-<%--                                            <col width="20%"/>--%>
-<%--                                            <col width="15%"/>--%>
-<%--                                            <col width="10%"/>--%>
-<%--                                        </colgroup>--%>
-<%--                                        <tr>--%>
-<%--                                            <th colspan="7" style="text-align: left;padding-left: 10px;">--%>
-<%--                                                当月即将出科学员查询--%>
-<%--                                                <div style="float: right;">--%>
-<%--                                                    搜索：--%>
-<%--                                                    <input type="text" class="input" onkeyup="searchMethod(this.value);"--%>
-<%--                                                           placeholder="轮转科室/姓名/届别"/>--%>
-<%--                                                </div>--%>
-<%--                                            </th>--%>
-<%--                                        </tr>--%>
-<%--                                        <tr>--%>
-<%--                                            <th>轮转科室</th>--%>
-<%--                                            <th>姓名</th>--%>
-<%--                                            <th>届别</th>--%>
-<%--                                            <th>培训专业</th>--%>
-<%--                                            <th>轮转时间</th>--%>
-<%--                                            <th>带教老师</th>--%>
-<%--                                            <th>出科状态</th>--%>
-<%--                                        </tr>--%>
-<%--                                        <c:forEach items="${trainingList}" var="training">--%>
-<%--                                            <tr class="willOutData">--%>
-<%--                                                <c:set var="status"--%>
-<%--                                                       value="${training.doctorFlow}${training.schDeptFlow}"></c:set>--%>
-<%--                                                <td>${training.schDeptName}</td>--%>
-<%--                                                <td>${training.doctorName}</td>--%>
-<%--                                                <td>${training.sessionNumber}</td>--%>
-<%--                                                <td>${training.trainingSpeName}</td>--%>
-<%--                                                <td>${training.schStartDate} 至 ${training.schEndDate}</td>--%>
-<%--                                                <td>${training.teacherUserName}</td>--%>
-<%--                                                <td>${stateMap[status]}</td>--%>
-<%--                                            </tr>--%>
-<%--                                        </c:forEach>--%>
+                                        <tr>
+                                            <td id="noData" colspan="7" style="text-align: center;<c:if
+                                                    test="${!empty trainingList}">display: none;</c:if>">无记录!
+                                            </td>
+                                        </tr>
 
-<%--                                        <tr>--%>
-<%--                                            <td id="noData" colspan="7" style="text-align: center;<c:if--%>
-<%--                                                    test="${!empty trainingList}">display: none;</c:if>">无记录!--%>
-<%--                                            </td>--%>
-<%--                                        </tr>--%>
-
-<%--                                        <c:if test="${not empty trainingList}">--%>
-<%--                                            <tr id="s" style="display: none;">--%>
-<%--                                                <td colspan="7">--%>
-<%--                                                    <a onclick="more(true);">还有<font id="docCount"></font>个学员，点击查看</a>--%>
-<%--                                                </td>--%>
-<%--                                            </tr>--%>
-<%--                                            <tr id="h" style="display: none;">--%>
-<%--                                                <td colspan="7"><a onclick="more(false);">收起</a></td>--%>
-<%--                                            </tr>--%>
-<%--                                        </c:if>--%>
-<%--                                    </table>--%>
-<%--                                </div>--%>
-<%--                            </c:if>--%>
+                                        <c:if test="${not empty trainingList}">
+                                            <tr id="s" style="display: none;">
+                                                <td colspan="7">
+                                                    <a onclick="more(true);">还有<font id="docCount"></font>个学员，点击查看</a>
+                                                </td>
+                                            </tr>
+                                            <tr id="h" style="display: none;">
+                                                <td colspan="7"><a onclick="more(false);">收起</a></td>
+                                            </tr>
+                                        </c:if>
+                                    </table>
+                                </div>
+                            </c:if>
 
                             <div class="index_form" style="margin-bottom: 10px;">
                                 <h3>通知公告</h3>

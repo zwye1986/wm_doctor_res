@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.sci.excelListens.model.*;
 import com.pinde.sci.model.mo.*;
@@ -357,7 +358,7 @@ public class SchedulingAuditCheck {
 
                 }
             }
-            if ("Y".equals(minMonthCheck)) {
+            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(minMonthCheck)) {
                 if (StringUtils.isEmpty(minMonth)) {
                     minMonthCheck = "1";
                 }
@@ -779,14 +780,14 @@ public class SchedulingAuditCheck {
         for (PbInfoItem item : importList) {
             String type = item.getType();
             String doctorFlow = item.getDoctorFlow();
-            if ("db".equals(type) || item.getRecordStatus().equals("N")) {
+            if ("db".equals(type) || item.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.FLAG_N)) {
                 continue;
             }
             DateTime itemEnd = DateUtil.parseDate(item.getSchEndDate());
             DateTime itemStart = DateUtil.parseDate(item.getSchStartDate());
             String itemDeptFlow = item.getSchDeptFlow();
             for (PbInfoItem vo : importList) {
-                if ("db".equals(vo.getType()) || vo.getRecordStatus().equals("N") || !doctorFlow.equals(vo.getDoctorFlow())) {
+                if ("db".equals(vo.getType()) || vo.getRecordStatus().equals(com.pinde.core.common.GlobalConstant.FLAG_N) || !doctorFlow.equals(vo.getDoctorFlow())) {
                     continue;
                 }
                 DateTime voEnd = DateUtil.parseDate(vo.getSchEndDate());
@@ -795,14 +796,14 @@ public class SchedulingAuditCheck {
                 if (itemDeptFlow.equals(voDeptFlow)) {
                     if (itemStart.compareTo(voEnd)==0 || itemStart.compareTo(DateUtil.offsetDay(voEnd,1)) == 0) {
                         item.setSchStartDate(vo.getSchStartDate());
-                        vo.setRecordStatus("N");
+                        vo.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_N);
                     }
                 }
             }
         }
 
         if (CollectionUtil.isNotEmpty(importList)) {
-            List<PbInfoItem> collect = importList.stream().filter(e -> "Y".equals(e.getRecordStatus())).collect(Collectors.toList());
+            List<PbInfoItem> collect = importList.stream().filter(e -> com.pinde.core.common.GlobalConstant.FLAG_Y.equals(e.getRecordStatus())).collect(Collectors.toList());
             result.addAll(collect);
         }
         if (CollectionUtil.isNotEmpty(dbList)) {

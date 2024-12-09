@@ -549,7 +549,7 @@
         }
 
         function init() {
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             $("#" + "${type.id}").attr("checked", true);
             </c:forEach>
             getCityArea();
@@ -571,7 +571,7 @@
                 return;
             }
             var data = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if ($("#" + "${type.id}").attr("checked")) {
                 data += "&datas=" + $("#" + "${type.id}").val();
             }
@@ -702,7 +702,7 @@
                 return;
             }
             var data = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if ($("#" + "${type.id}").attr("checked")) {
                 data += "&datas=" + $("#" + "${type.id}").val();
             }
@@ -784,7 +784,7 @@
                 return
             }
             var docTypes = "";
-            <c:forEach items="${jsResDocTypeEnumList}" var="type">
+            <c:forEach items="${resDocTypeEnumList}" var="type">
             if (docTypes == "") {
                 docTypes += "docTypes=" + "${type.id}";
             } else {

@@ -1,27 +1,26 @@
 package com.pinde.res.biz.osca.impl;
 
-import com.pinde.app.common.GlobalConstant;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaDoctorOrderdeBiz;
 import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
 import com.pinde.res.dao.osca.ext.OscaSkillsAssessmentExtMapper;
-import com.pinde.res.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
 import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional(rollbackFor = Exception.class)
+//@Transactional(rollbackFor = Exception.class)
 public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
     @Autowired
     private OscaSkillsAssessmentExtMapper oscaSkillsAssessmentExtMapper;
@@ -50,7 +49,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
     public int updateDoctorAssessment(OscaDoctorAssessment oscaDoctorAssessment) {
         OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
         OscaDoctorAssessmentExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaDoctorAssessment.getRecordFlow())){
             criteria.andRecordFlowEqualTo(oscaDoctorAssessment.getRecordFlow());
         }
@@ -67,7 +66,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
     public List<OscaDoctorAssessment> selectDoctorAssessment(OscaDoctorAssessment oscaDoctorAssessment) {
         OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
         OscaDoctorAssessmentExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(oscaDoctorAssessment.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(oscaDoctorAssessment.getDoctorFlow());
         }
@@ -95,7 +94,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
         args.add(AuditStatusEnum.Passed.getId());
         OscaDoctorAssessmentExample example=new OscaDoctorAssessmentExample();
         OscaDoctorAssessmentExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andAuditStatusIdIn(args);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andAuditStatusIdIn(args);
         if(StringUtil.isNotBlank(oscaDoctorAssessment.getClinicalFlow())){
             criteria.andClinicalFlowEqualTo(oscaDoctorAssessment.getClinicalFlow());
         }
@@ -146,7 +145,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
     public List<ResScore> selectResScore(String doctorFlow, String year) {
         ResScoreExample example=new ResScoreExample();
         ResScoreExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andScoreTypeIdEqualTo("TheoryScore");
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andScoreTypeIdEqualTo("TheoryScore");
         if(StringUtil.isNotBlank(doctorFlow)){
             criteria.andDoctorFlowEqualTo(doctorFlow);
         }
@@ -165,7 +164,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
     public List<OscaSkillsAssessmentTime> searchCheckTime(String clinicalFlow) {
         OscaSkillsAssessmentTimeExample example=new OscaSkillsAssessmentTimeExample();
         OscaSkillsAssessmentTimeExample.Criteria criteria=example.createCriteria();
-        criteria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(clinicalFlow)){
             criteria.andClinicalFlowEqualTo(clinicalFlow);
         }

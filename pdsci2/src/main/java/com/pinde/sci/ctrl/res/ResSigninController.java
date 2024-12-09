@@ -1,6 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.entyties.SysDict;
+import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,9 +9,7 @@ import com.pinde.sci.biz.res.IResOrgDateBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.enums.sys.DictTypeEnum;
 import com.pinde.sci.model.mo.JsresAttendanceDetail;
 import com.pinde.sci.model.mo.ResOrgSigninDate;
 import com.pinde.sci.model.mo.SchDept;
@@ -74,30 +72,30 @@ public class ResSigninController extends GeneralController{
 	public String delSigninDate(Model model,String recordFlow){
 		ResOrgSigninDate date=new ResOrgSigninDate();
 		date.setRecordFlow(recordFlow);
-		date.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        date.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		int c=timebiz.saveOrgTime(date);
 		if(c==0)
-			return GlobalConstant.DELETE_FAIL;
-		return GlobalConstant.DELETE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.DELETE_FAIL;
+        return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;
 	}
 	@RequestMapping("/saveSigninDate")
 	@ResponseBody
 	public String saveSigninDate(Model model,String signinDate){
 		String orgFlow =GlobalContext.getCurrentUser().getOrgFlow();
 		ResOrgSigninDate date=timebiz.readOrgTimeByDate(orgFlow,signinDate);
-		if(date!=null&&GlobalConstant.RECORD_STATUS_Y.equals(date.getRecordStatus()))
+        if (date != null && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(date.getRecordStatus()))
 		{
 			return "考勤日期【"+signinDate+"】在系统中已保存！";
 		}
 		if(date==null)
 			date=new ResOrgSigninDate();
-		date.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        date.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		date.setSigninDate(signinDate);
 		date.setOrgFlow(orgFlow);
 		int c=timebiz.saveOrgTime(date);
 		if(c==0)
-			return GlobalConstant.SAVE_FAIL;
-		return GlobalConstant.SAVE_SUCCESSED;
+            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 	/**
 	 * 查看考勤信息
@@ -130,7 +128,7 @@ public class ResSigninController extends GeneralController{
 				dataStr += d+",";
 			}
 		}else{
-			List<SysDict> dicts=DictTypeEnum.DoctorType.getSysDictList();
+            List<SysDict> dicts = com.pinde.core.common.enums.DictTypeEnum.DoctorType.getSysDictList();
 			if(dicts!=null)
 			{
 				int i=0;
@@ -217,7 +215,7 @@ public class ResSigninController extends GeneralController{
 				dataStr += d+",";
 			}
 		}else{
-			List<SysDict> dicts=DictTypeEnum.DoctorType.getSysDictList();
+            List<SysDict> dicts = com.pinde.core.common.enums.DictTypeEnum.DoctorType.getSysDictList();
 			if(dicts!=null)
 			{
 				int i=0;
@@ -353,11 +351,11 @@ public class ResSigninController extends GeneralController{
 				if(StringUtil.isNotBlank(processFlow)&&StringUtil.isNotBlank(teacherUserName))
 				{
 					teaName=teacherUserName;
-					if("Y".equals(schFlag))
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schFlag))
 					{
 						schStatusName="已出科";
 					}else{
-						if("Y".equals(isCurrentFlag))
+                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isCurrentFlag))
 						{
 							schStatusName="轮转中";
 						}else{

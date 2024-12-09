@@ -4,18 +4,16 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptRelBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.dao.base.SchDeptRelMapper;
 import com.pinde.sci.model.mo.SchDeptRel;
 import com.pinde.sci.model.mo.SchDeptRelExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional(rollbackFor=Exception.class)
+//@Transactional(rollbackFor=Exception.class)
 public class SchDeptRelBizImpl implements ISchDeptRelBiz {
 	@Autowired
 	private SchDeptRelMapper deptRelMapper;
@@ -32,15 +30,15 @@ public class SchDeptRelBizImpl implements ISchDeptRelBiz {
 				return deptRelMapper.insertSelective(deptRel);
 			}
 		}
-		return GlobalConstant.ZERO_LINE;
+        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	@Override
 	public int depSchDeptRel(String schDeptFlow){
 		SchDeptRelExample example = new SchDeptRelExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowEqualTo(schDeptFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowEqualTo(schDeptFlow);
 		SchDeptRel deptRel = new SchDeptRel();
-		deptRel.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+        deptRel.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		return deptRelMapper.updateByExampleSelective(deptRel, example);
 	}
 
@@ -52,28 +50,28 @@ public class SchDeptRelBizImpl implements ISchDeptRelBiz {
 	@Override
 	public List<SchDeptRel> searchRelByStandard(String orgFlow,String standardDeptId){
 		SchDeptRelExample example = new SchDeptRelExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andStandardDeptIdEqualTo(standardDeptId);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow).andStandardDeptIdEqualTo(standardDeptId);
 		return deptRelMapper.selectByExample(example);
 	}
 	
 	@Override
 	public List<SchDeptRel> searchRelBySchDept(String schDeptFlow){
 		SchDeptRelExample example = new SchDeptRelExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowEqualTo(schDeptFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowEqualTo(schDeptFlow);
 		return deptRelMapper.selectByExample(example);
 	}
 	
 	@Override
 	public List<SchDeptRel> searchRelBySchDepts(List<String> schDeptFlows){
 		SchDeptRelExample example = new SchDeptRelExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
 		return deptRelMapper.selectByExample(example);
 	}
 	
 	@Override
 	public List<SchDeptRel> searchRelByOrg(String orgFlow){
 		SchDeptRelExample example = new SchDeptRelExample();
-		example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(orgFlow);
 		return deptRelMapper.selectByExample(example);
 	}
 }

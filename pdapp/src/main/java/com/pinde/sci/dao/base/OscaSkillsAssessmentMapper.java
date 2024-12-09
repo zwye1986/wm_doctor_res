@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.OscaSkillsAssessmentExample;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.OscaSkillsAssessmentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

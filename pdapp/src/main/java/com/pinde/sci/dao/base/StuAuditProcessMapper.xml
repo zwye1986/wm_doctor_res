@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.StuAuditProcessMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StuAuditProcess" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.StuAuditProcess" >
     <id column="PROCESS_FLOW" property="processFlow" jdbcType="VARCHAR" />
     <result column="RESUME_FLOW" property="resumeFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
@@ -81,7 +81,7 @@
     AUDIT_CONTENT, OPER_USER_FLOW, OPER_USER_NAME, OPER_TIME, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.StuAuditProcessExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.StuAuditProcessExample" >
     select
     <if test="distinct" >
       distinct
@@ -105,13 +105,13 @@
     delete from PDSCI.STU_AUDIT_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StuAuditProcessExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.StuAuditProcessExample" >
     delete from PDSCI.STU_AUDIT_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.StuAuditProcess" >
+  <insert id="insert" parameterType="com.pinde.core.model.StuAuditProcess" >
     insert into PDSCI.STU_AUDIT_PROCESS (PROCESS_FLOW, RESUME_FLOW, USER_FLOW, 
       STU_STATUS_ID, STU_STATUS_NAME, PROCESS_REMARK, 
       AUDIT_CONTENT, OPER_USER_FLOW, OPER_USER_NAME, 
@@ -125,7 +125,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StuAuditProcess" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.StuAuditProcess" >
     insert into PDSCI.STU_AUDIT_PROCESS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="processFlow != null" >
@@ -222,7 +222,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StuAuditProcessExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.StuAuditProcessExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.STU_AUDIT_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -302,7 +302,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StuAuditProcess" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StuAuditProcess" >
     update PDSCI.STU_AUDIT_PROCESS
     <set >
       <if test="resumeFlow != null" >
@@ -350,7 +350,7 @@
     </set>
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StuAuditProcess" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StuAuditProcess" >
     update PDSCI.STU_AUDIT_PROCESS
     set RESUME_FLOW = #{resumeFlow,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},

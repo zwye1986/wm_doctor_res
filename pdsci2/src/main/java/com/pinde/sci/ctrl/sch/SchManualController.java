@@ -7,7 +7,6 @@ import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.SysCfg;
 import org.slf4j.Logger;
@@ -89,7 +88,7 @@ public class SchManualController extends GeneralController{
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	public String save(HttpServletRequest request, String[] userFlows, String recordStatus) {
-		String wsId = (String) getSessionAttribute(GlobalConstant.CURRENT_WS_ID);
+        String wsId = (String) getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID);
 		List<SysCfg> sysCfgList = new ArrayList<SysCfg>();
 		for (String userFlow : userFlows) {
 			String cfgCode = "stu_manual_" + userFlow;
@@ -102,11 +101,11 @@ public class SchManualController extends GeneralController{
 			if (StringUtil.isBlank(cfg.getWsName())) {
 				cfg.setWsName("全局公用配置");
 			}
-			cfg.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+            cfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 			sysCfgList.add(cfg);
 		}
 		cfgBiz.save(sysCfgList);
-		return GlobalConstant.SAVE_SUCCESSED;
+        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 }
 

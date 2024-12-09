@@ -1,8 +1,8 @@
 package com.pinde.res.biz.stdp;
 
 
-import com.pinde.sci.model.mo.ResErrorSchNotice;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.ResErrorSchNotice;
+import com.pinde.core.model.SysUser;
 
 /**
  * @author tiger

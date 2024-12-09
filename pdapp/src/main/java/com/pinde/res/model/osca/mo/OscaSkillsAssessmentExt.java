@@ -1,9 +1,9 @@
 package com.pinde.res.model.osca.mo;
 
-import com.pinde.sci.model.mo.OscaDoctorAssessment;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.OscaDoctorAssessment;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.SysUser;
 
 
 public class OscaSkillsAssessmentExt extends OscaSkillsAssessment{

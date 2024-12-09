@@ -1,8 +1,8 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.MybatisObject;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SchAutoArrangeCfg extends MybatisObject {
+public class SchAutoArrangeCfg extends TeachingActivitySpeakerExample.MybatisObject {
     private String recordFlow;
 
     private String orgFlow;

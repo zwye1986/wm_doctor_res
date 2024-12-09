@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.FeeNoticeTemplate;
-import com.pinde.sci.model.mo.FeeNoticeTemplateExample;
+import com.pinde.core.model.FeeNoticeTemplate;
+import com.pinde.core.model.FeeNoticeTemplateExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
