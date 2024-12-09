@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.openApi;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GlobalConstant;
@@ -88,7 +89,9 @@ public class ReportApi {
                         }
                         //查询当前用户关联的科室id
                         List<String> strings = deptExtMapper.deptFlowsByUserId(sysUser.getUserFlow());
-                        result.put("dept",strings);
+                        if(CollectionUtil.isNotEmpty(strings)) {
+                            result.put("dept",strings);
+                        }
                         return result;
                     }
                 }

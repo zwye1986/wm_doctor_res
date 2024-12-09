@@ -28,4 +28,6 @@ public interface SysUserDeptMapper {
     int updateByPrimaryKeySelective(SysUserDept record);
 
     int updateByPrimaryKey(SysUserDept record);
+
+
 }

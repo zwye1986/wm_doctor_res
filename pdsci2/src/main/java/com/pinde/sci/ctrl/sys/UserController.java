@@ -1,14 +1,11 @@
 package com.pinde.sci.ctrl.sys;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.base.Strings;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
-import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.pub.IMsgBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
+import com.pinde.sci.biz.pub.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
@@ -20,10 +17,7 @@ import com.pinde.sci.dao.base.SysUserSchoolMapper;
 import com.pinde.sci.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.sci.enums.pub.UserSexEnum;
 import com.pinde.sci.enums.pub.UserStatusEnum;
-import com.pinde.sci.enums.sys.DictTypeEnum;
-import com.pinde.sci.enums.sys.RoleLevelEnum;
-import com.pinde.sci.enums.sys.UserEmailStatusEnum;
-import com.pinde.sci.enums.sys.UserPhoneStatusEnum;
+import com.pinde.sci.enums.sys.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import nl.captcha.Captcha;
@@ -32,7 +26,6 @@ import nl.captcha.gimpy.DropShadowGimpyRenderer;
 import nl.captcha.text.producer.DefaultTextProducer;
 import nl.captcha.text.renderer.DefaultWordRenderer;
 import nl.captcha.text.renderer.WordRenderer;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.dom4j.DocumentException;
@@ -2033,5 +2026,8 @@ public class UserController extends GeneralController{
 		userBiz.saveUser(user);
 		return GlobalConstant.DELETE_SUCCESSED;
 	}
+
+
+
 
 }
