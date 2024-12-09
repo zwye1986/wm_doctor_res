@@ -3,7 +3,6 @@ package com.pinde.sci.ctrl.openApi;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.common.GlobalConstant;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.model.mo.SysUser;
@@ -42,7 +41,7 @@ public class ReportApi {
         if (null == session) {
             return result;
         }
-        SysUser sysUser = (SysUser) request.getSession().getAttribute(GlobalConstant.CURRENT_USER);
+        SysUser sysUser = (SysUser) request.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_USER);
         if (ObjectUtil.isEmpty(sysUser)) {
             return result;
         }
@@ -50,7 +49,7 @@ public class ReportApi {
         if (StringUtils.isNotEmpty(sysUser.getOrgFlow())) {
             orgFlow = sysUser.getOrgFlow();
         }
-        List<String> currRoleList = (List<String>) request.getSession().getAttribute(GlobalConstant.CURRENT_ROLE_LIST);
+        List<String> currRoleList = (List<String>) request.getSession().getAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_LIST);
         if (currRoleList != null && currRoleList.size() > 0) {
             for (String roleFlow : currRoleList) {
                 if (StringUtil.isNotBlank(roleFlow)) {
