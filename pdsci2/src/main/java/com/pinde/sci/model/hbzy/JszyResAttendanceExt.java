@@ -1,9 +1,9 @@
 package com.pinde.sci.model.hbzy;
 
 
-import com.pinde.sci.model.mo.JsresAttendance;
-import com.pinde.sci.model.mo.SysDept;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
+import com.pinde.sci.model.mo.JsresAttendance;
 
 public class JszyResAttendanceExt extends SysUser{
 

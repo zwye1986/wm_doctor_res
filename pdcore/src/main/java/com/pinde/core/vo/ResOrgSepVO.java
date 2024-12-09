@@ -1,6 +1,7 @@
-package com.pinde.sci.model.vo;
+package com.pinde.core.vo;
 
-import com.pinde.sci.model.mo.ResOrgSpe;
+
+import com.pinde.core.model.ResOrgSpe;
 
 import java.util.List;
 

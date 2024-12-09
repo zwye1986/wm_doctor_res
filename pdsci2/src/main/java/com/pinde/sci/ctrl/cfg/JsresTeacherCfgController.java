@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -9,8 +11,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

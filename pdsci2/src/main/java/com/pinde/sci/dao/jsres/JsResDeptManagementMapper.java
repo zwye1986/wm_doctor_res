@@ -1,9 +1,9 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
-import com.pinde.sci.model.vo.ResSpeBaseStdDeptVO;
-import com.pinde.sci.model.vo.ResStandardDeptVO;
-import com.pinde.sci.model.vo.SysDeptVO;
+import com.pinde.core.vo.ResDeptRelStdDeptVO;
+import com.pinde.core.vo.ResSpeBaseStdDeptVO;
+import com.pinde.core.vo.ResStandardDeptVO;
+import com.pinde.core.vo.SysDeptVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;
 import com.pinde.core.model.SysUserExample;

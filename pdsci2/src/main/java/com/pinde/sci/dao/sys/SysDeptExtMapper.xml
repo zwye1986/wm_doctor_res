@@ -274,7 +274,7 @@
 		WHERE record_status = 'Y'
 		AND sch_dept_Flow  in (SELECT dept_flow FROM sys_dept WHERE ORG_FLOW = #{orgFlow} AND DEPT_NAME = #{deptName})
 	</select>
-    <select id="getSchDeptByBzDeptCode" resultType="com.pinde.sci.model.mo.SysDept">
+	<select id="getSchDeptByBzDeptCode" resultType="com.pinde.core.model.SysDept">
 		select distinct c.sch_dept_flow dept_flow,c.sch_dept_name dept_name,c.org_flow
 		from SCH_AND_STANDARD_DEPT_CFG c
 		left join sch_rotation_dept d  on d.standard_dept_id = c.standard_dept_id and c.org_flow = d.org_flow

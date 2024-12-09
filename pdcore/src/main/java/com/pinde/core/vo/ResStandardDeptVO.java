@@ -1,6 +1,7 @@
-package com.pinde.sci.model.vo;
+package com.pinde.core.vo;
 
-import com.pinde.sci.model.mo.ResStandardDept;
+
+import com.pinde.core.model.ResStandardDept;
 
 import java.util.ArrayList;
 import java.util.List;

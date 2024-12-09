@@ -2,6 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.GlobalRecTypeEnum;
 import com.pinde.core.common.enums.JszyTCMPracticEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;
 import com.pinde.core.util.DateUtil;

@@ -2,8 +2,10 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.lowagie.text.DocumentException;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
@@ -17,7 +19,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.model.mo.*;

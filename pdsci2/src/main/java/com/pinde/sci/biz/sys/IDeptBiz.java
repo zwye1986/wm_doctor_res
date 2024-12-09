@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysDeptExample;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUserDept;
+import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
+import com.pinde.sci.model.mo.SysDeptExample;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

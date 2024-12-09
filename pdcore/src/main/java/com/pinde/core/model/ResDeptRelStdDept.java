@@ -1,17 +1,22 @@
-package com.pinde.sci.model.mo;
+package com.pinde.core.model;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
-public class SysDept implements java.io.Serializable {
+/**
+ * 基地科室entity
+ */
+public class ResDeptRelStdDept implements java.io.Serializable {
+    private String deptCode;
     private String deptFlow;
 
-    private String orgFlow;
-
-    private String deptCode;
 
     private String deptName;
 
-    private Integer ordinal;
+    private String standardDeptFlow;
+
+    private String orgFlow;
+
+    private String orgName;
+
+    private String deptStatus;
 
     private String recordStatus;
 
@@ -23,26 +28,12 @@ public class SysDept implements java.io.Serializable {
 
     private String modifyUserFlow;
 
-    private String deptPinyin;
-
-    private String deptId;
-
-    private String deptPid;
-
     public String getDeptFlow() {
         return deptFlow;
     }
 
     public void setDeptFlow(String deptFlow) {
         this.deptFlow = deptFlow;
-    }
-
-    public String getOrgFlow() {
-        return orgFlow;
-    }
-
-    public void setOrgFlow(String orgFlow) {
-        this.orgFlow = orgFlow;
     }
 
     public String getDeptCode() {
@@ -61,12 +52,28 @@ public class SysDept implements java.io.Serializable {
         this.deptName = deptName;
     }
 
-    public Integer getOrdinal() {
-        return ordinal;
+    public String getStandardDeptFlow() {
+        return standardDeptFlow;
     }
 
-    public void setOrdinal(Integer ordinal) {
-        this.ordinal = ordinal;
+    public void setStandardDeptFlow(String standardDeptFlow) {
+        this.standardDeptFlow = standardDeptFlow;
+    }
+
+    public String getOrgFlow() {
+        return orgFlow;
+    }
+
+    public void setOrgFlow(String orgFlow) {
+        this.orgFlow = orgFlow;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
     }
 
     public String getRecordStatus() {
@@ -109,27 +116,11 @@ public class SysDept implements java.io.Serializable {
         this.modifyUserFlow = modifyUserFlow;
     }
 
-    public String getDeptPinyin() {
-        return deptPinyin;
+    public String getDeptStatus() {
+        return deptStatus;
     }
 
-    public void setDeptPinyin(String deptPinyin) {
-        this.deptPinyin = deptPinyin;
-    }
-
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getDeptPid() {
-        return deptPid;
-    }
-
-    public void setDeptPid(String deptPid) {
-        this.deptPid = deptPid;
+    public void setDeptStatus(String deptStatus) {
+        this.deptStatus = deptStatus;
     }
 }

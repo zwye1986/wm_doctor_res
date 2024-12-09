@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserExample;
 import com.pinde.core.util.DateUtil;

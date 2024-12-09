@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.*;
 import org.apache.ibatis.annotations.Param;
@@ -62,7 +63,7 @@ public interface JsresSupervisioSubjectExtMapper {
 
     List<ResHospSupervSubject> hospitalLeaderScoreList(Map<String, Object> map);
 
-    List<SysDept> selectDeptByOrgFlow( @Param("orgFlow") String orgFlow);
+    List<SysDept> selectDeptByOrgFlow(@Param("orgFlow") String orgFlow);
 
     List<ResHospScoreTable> chooseTable(@Param("speId")String speId,@Param("inspectionType")String inspectionType);
 }

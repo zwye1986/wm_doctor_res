@@ -1,13 +1,12 @@
 package com.pinde.sci.ctrl.sys;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysOrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

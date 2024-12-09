@@ -1,6 +1,7 @@
 package com.pinde.sci.dao.sch;
 
 
+import com.pinde.core.model.SysDept;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.GeneralIdNameModel;

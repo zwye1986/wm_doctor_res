@@ -1,6 +1,7 @@
-package com.pinde.sci.model.vo;
+package com.pinde.core.vo;
 
-import com.pinde.sci.model.mo.ResSpeBaseStdDept;
+
+import com.pinde.core.model.ResSpeBaseStdDept;
 
 import java.util.ArrayList;
 import java.util.List;

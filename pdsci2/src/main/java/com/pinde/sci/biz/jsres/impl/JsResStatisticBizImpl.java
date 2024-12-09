@@ -5,6 +5,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserExample;

@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 
 import com.pinde.core.model.AttachedUnitInfo;
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jszy.IJszyResBaseBiz;

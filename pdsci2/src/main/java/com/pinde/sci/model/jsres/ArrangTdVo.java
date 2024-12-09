@@ -1,11 +1,11 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.core.util.StringUtil;
-import com.pinde.sci.model.mo.SysDept;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.util.StringUtil;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ~~~~~~~~~溺水的鱼~~~~~~~~

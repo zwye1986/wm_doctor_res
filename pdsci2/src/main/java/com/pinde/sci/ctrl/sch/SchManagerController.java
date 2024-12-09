@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.sch;
 
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
@@ -14,8 +17,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;

@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.sch;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;

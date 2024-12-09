@@ -2,6 +2,8 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
@@ -213,7 +215,7 @@ public class InstituteController extends GeneralController {
 	 */
 	@RequestMapping(value="/searchResOrgSpeList", method={RequestMethod.GET})
 	@ResponseBody
-	public List<ResOrgSpe> searchResOrgSpeList(String sessionNumber,ResOrgSpe resOrgSpe, Model model){
+	public List<ResOrgSpe> searchResOrgSpeList(String sessionNumber, ResOrgSpe resOrgSpe, Model model) {
 		List<ResOrgSpe> speList=null;
         resOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(sessionNumber)){

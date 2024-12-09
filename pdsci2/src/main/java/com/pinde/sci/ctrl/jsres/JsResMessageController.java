@@ -2,6 +2,8 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.BaseStatusEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
@@ -22,7 +24,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitResConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;

@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.Docx4jUtil;
@@ -21,7 +22,9 @@ import com.pinde.sci.dao.jsres.PhyAssExtMapper;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;

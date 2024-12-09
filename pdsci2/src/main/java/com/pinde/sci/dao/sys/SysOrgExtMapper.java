@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.sys;
 
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.sci.model.mo.PersonStaticExample;
-import com.pinde.sci.model.mo.ResOrgSpe;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.apache.ibatis.annotations.Param;

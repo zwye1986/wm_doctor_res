@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.enums.EvaluationTypeEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
@@ -12,7 +14,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.EvaluationTypeEnum;
 import com.pinde.sci.form.res.ResEvaluationCfgForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
