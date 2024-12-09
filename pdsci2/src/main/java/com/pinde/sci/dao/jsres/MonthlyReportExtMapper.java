@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.model.mo.*;
 import org.apache.ibatis.annotations.Param;

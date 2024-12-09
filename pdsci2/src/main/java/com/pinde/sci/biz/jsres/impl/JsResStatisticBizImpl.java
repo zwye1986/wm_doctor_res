@@ -6,6 +6,8 @@ import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubWorkpaper extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubWorkpaper implements java.io.Serializable {
     private String recordFlow;
 
     private String workpaperName;

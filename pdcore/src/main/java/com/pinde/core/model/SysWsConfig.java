@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysWsConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysWsConfig implements java.io.Serializable {
     private String wsId;
 
     private String wsName;

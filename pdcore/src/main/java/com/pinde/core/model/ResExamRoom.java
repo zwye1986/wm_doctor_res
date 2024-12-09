@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResExamRoom extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResExamRoom implements java.io.Serializable {
     private String roomFlow;
 
     private String siteFlow;

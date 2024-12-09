@@ -8,7 +8,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

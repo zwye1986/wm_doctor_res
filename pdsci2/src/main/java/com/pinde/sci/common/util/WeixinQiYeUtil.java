@@ -8,7 +8,7 @@ import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.pub.WeixinStatusEnum;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;

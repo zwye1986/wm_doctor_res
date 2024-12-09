@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubPatientRecipe extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubPatientRecipe implements java.io.Serializable {
     private String recipeFlow;
 
     private String patientFlow;

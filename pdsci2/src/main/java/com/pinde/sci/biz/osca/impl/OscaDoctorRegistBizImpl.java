@@ -15,7 +15,7 @@ import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
 import com.pinde.sci.model.mo.OscaDoctorRegist;
 import com.pinde.sci.model.mo.OscaDoctorRegistExample;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

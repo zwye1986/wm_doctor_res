@@ -28,7 +28,7 @@ public interface IJswjwHospitalSupervisioBiz {
 
     int saveScheduleDetailed(ResScheduleScore scheduleScore,String userFlow);
 
-    SysUser selectUser(String userCode,String leader);
+    SysUser selectUser(String userCode, String leader);
 
     String saveFileToDirs(String oldFolderName, MultipartFile uploadFile, String supersivioSign);
 

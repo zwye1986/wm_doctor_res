@@ -3,7 +3,7 @@ package com.pinde.sci.model.osca;
 import java.io.Serializable;
 import java.util.List;
 
-public class OscaFromCfgExt implements Serializable{
+public class OscaFromCfgExt implements java.io.Serializable {
 
 	private static final long serialVersionUID = -4455638586544400099L;
 	

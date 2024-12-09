@@ -1,10 +1,10 @@
 package com.pinde.res.biz.jswjw;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
 import com.pinde.core.model.ResDocotrDelayTeturn;
 import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ public interface IJswjwAdminBiz {
 
     List<SysDept> getErrorSchDepts(String orgFlow);
 
-    void sendErrorSchNotice(List<String> doctorFlows, String content,SysUser user);
+    void sendErrorSchNotice(List<String> doctorFlows, String content, SysUser user);
 
 
     List<JsResDoctorOrgHistoryExt> getSpeChangeList(Map<String,Object> param);

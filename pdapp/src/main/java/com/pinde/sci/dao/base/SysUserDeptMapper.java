@@ -1,8 +1,9 @@
 package com.pinde.sci.dao.base;
 
+import java.util.List;
+
 import com.pinde.core.model.SysUserDept;
 import com.pinde.core.model.SysUserDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysUserDeptMapper {

@@ -2,11 +2,11 @@ package com.pinde.sci.form.hbres;
 
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 
-public class ReplenishInfoForm implements Serializable{
+public class ReplenishInfoForm implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 

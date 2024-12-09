@@ -2,6 +2,8 @@ package com.pinde.sci.biz.lcjn.impl;
 
 import com.pinde.core.common.enums.LcjnAuditStatusEnum;
 import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnDoctorOrderInfoBiz;
 import com.pinde.sci.common.GeneralMethod;

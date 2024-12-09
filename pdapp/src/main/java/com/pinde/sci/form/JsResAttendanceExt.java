@@ -5,7 +5,7 @@ import com.pinde.core.model.JsresAttendance;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 
-public class JsResAttendanceExt extends SysUser{
+public class JsResAttendanceExt extends SysUser {
 
     private JsresAttendance jsresAttendance;
 

@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.common.enums.UserSexEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.common.enums.WeixinStatusEnum;
 import com.pinde.core.common.enums.UserStatusEnum;
 import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -206,7 +206,7 @@ public class WeixinQiYeUtil {
 		return sysUserList;
 	}
 
-	public static boolean saveUser(String corpid,String corpsecret,String weiXinDeptId,SysUser user){
+	public static boolean saveUser(String corpid, String corpsecret, String weiXinDeptId, SysUser user) {
 		SysUser sysUser = getUser(corpid,corpsecret,user.getUserFlow());
 		if(sysUser==null){
 			return createUser(corpid, corpsecret, weiXinDeptId, user);

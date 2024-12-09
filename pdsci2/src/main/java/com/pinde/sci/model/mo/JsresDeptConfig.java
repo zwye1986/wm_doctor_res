@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class JsresDeptConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresDeptConfig implements java.io.Serializable {
     private String cfgFlow;
 
     private String orgFlow;

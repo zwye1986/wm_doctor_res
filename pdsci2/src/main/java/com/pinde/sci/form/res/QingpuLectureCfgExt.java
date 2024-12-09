@@ -3,7 +3,7 @@ package com.pinde.sci.form.res;
 import java.io.Serializable;
 import java.util.List;
 
-public class QingpuLectureCfgExt implements Serializable{
+public class QingpuLectureCfgExt implements java.io.Serializable {
 
 	private static final long serialVersionUID = -4455638586549990099L;
 	

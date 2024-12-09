@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserDeptExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;

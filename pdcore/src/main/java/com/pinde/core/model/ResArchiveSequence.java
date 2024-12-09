@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResArchiveSequence extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResArchiveSequence implements java.io.Serializable {
     private String archiveFlow;
 
     private String archiveTime;

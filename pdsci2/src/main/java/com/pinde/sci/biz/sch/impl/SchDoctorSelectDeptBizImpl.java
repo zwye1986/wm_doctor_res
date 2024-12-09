@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
@@ -310,7 +311,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
             Map<String,SchRotationGroup> groupMap=new HashMap<>();
             Map<String,SchRotationDept> deptMap=new HashMap<>();
             Map<String,SchDept> schDeptMap=new HashMap<>();
-            Map<String,SysUser> userMap=new HashMap<>();
+            Map<String, SysUser> userMap = new HashMap<>();
             Map<String,SysUser> teaMap=new HashMap<>();
             Map<String,List<SchDept>> teaDeptMap=new HashMap<>();
             Map<String,List<SysUserRole>> userRoleMap=new HashMap<>();

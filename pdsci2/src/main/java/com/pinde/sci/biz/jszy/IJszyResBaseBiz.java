@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
+import com.pinde.core.model.AttachedUnitInfo;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
 import com.pinde.sci.model.jszy.JszyResBaseExt;

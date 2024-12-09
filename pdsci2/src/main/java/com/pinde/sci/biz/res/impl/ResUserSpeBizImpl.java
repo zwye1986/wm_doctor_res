@@ -9,7 +9,7 @@ import com.pinde.sci.dao.base.ResUserSpeMapper;
 import com.pinde.sci.model.mo.ResUserSpe;
 import com.pinde.sci.model.mo.ResUserSpeExample;
 import com.pinde.sci.model.mo.ResUserSpeExample.Criteria;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

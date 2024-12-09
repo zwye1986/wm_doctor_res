@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResLectureRandomSign extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResLectureRandomSign implements java.io.Serializable {
     private String randomFlow;
 
     private String lectureFlow;

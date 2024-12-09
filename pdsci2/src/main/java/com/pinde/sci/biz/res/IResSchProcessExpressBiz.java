@@ -5,7 +5,7 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResSchProcessExpress;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.dom4j.Element;
 
 import javax.servlet.http.HttpServletRequest;

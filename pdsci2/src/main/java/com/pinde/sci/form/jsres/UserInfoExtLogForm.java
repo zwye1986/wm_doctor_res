@@ -7,7 +7,7 @@ import com.pinde.sci.model.mo.SysUserLog;
 
 import java.io.Serializable;
 
-public class UserInfoExtLogForm implements Serializable{
+public class UserInfoExtLogForm implements java.io.Serializable {
 
 	/**
 	 * 

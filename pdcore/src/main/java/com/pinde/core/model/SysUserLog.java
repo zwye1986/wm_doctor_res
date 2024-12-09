@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysUserLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysUserLog implements java.io.Serializable {
     private String recordFlow;
 
     private String userFlow;

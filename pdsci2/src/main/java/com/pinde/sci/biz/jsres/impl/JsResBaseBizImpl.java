@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;

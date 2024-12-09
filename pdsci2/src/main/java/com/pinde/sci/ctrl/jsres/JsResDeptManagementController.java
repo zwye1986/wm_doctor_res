@@ -1,8 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

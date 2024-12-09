@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResGradeBorderline extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResGradeBorderline implements java.io.Serializable {
     private String borderlineFlow;
 
     private String examFlow;

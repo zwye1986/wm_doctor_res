@@ -3,7 +3,7 @@ package com.pinde.res.model.jswjw.mo;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResAssessCfgTitleForm implements Serializable{
+public class ResAssessCfgTitleForm implements java.io.Serializable {
 	/**
 	 *
 	 */

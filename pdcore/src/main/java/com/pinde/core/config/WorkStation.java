@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkStation implements Serializable{
+public class WorkStation implements java.io.Serializable {
 
 	/**
 	 * 

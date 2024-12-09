@@ -7,6 +7,7 @@ import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -123,7 +124,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	 * 查询当前机构下医师
 	 */
 	@Override
-	public List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit,SysUser user,List<String>orgFlowList,List<String> docTypeList) {
+	public List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> orgFlowList, List<String> docTypeList) {
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
 		doctorRecruitMap.put("resDoctorRecruit", resDoctorRecruit);
 		doctorRecruitMap.put("user", user);

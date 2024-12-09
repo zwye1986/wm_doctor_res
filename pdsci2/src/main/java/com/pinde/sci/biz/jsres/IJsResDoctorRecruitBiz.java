@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
@@ -24,7 +25,7 @@ public interface IJsResDoctorRecruitBiz {
     /**
      * 查询当前机构下的医师
      */
-    List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList);
+    List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org, List<String> docTypeList);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList1(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtNew(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> jointOrgList,
                                                        List<String> docTypeList,List<String> sessionNumbers,String joinOrgFlow,String isJointOrg,String isArmy);

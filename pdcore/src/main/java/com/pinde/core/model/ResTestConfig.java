@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResTestConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResTestConfig implements java.io.Serializable {
     private String testFlow;
 
     private String testId;

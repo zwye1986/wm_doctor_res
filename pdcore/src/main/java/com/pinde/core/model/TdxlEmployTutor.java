@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class TdxlEmployTutor extends TeachingActivitySpeakerExample.MybatisObject {
+public class TdxlEmployTutor implements java.io.Serializable {
     private String recordFlow;
 
     private String userFlow;

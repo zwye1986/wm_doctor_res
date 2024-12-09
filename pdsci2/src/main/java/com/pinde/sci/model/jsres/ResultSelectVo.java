@@ -8,7 +8,7 @@ import java.util.List;
  * @创建时间 2021/6/3
  * 描述
  */
-public class ResultSelectVo implements Serializable {
+public class ResultSelectVo implements java.io.Serializable {
     private List<DictVo> certificateColumns;    //证件类型
     private List<DictVo> nationColumns;         //民族
     private List<DictVo> nationalityColumns;    //国籍

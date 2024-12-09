@@ -3,7 +3,7 @@ package com.pinde.sci.biz.sys;
 import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysDeptExample;
-import com.pinde.sci.model.mo.SysUserDept;
+import com.pinde.core.model.SysUserDept;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

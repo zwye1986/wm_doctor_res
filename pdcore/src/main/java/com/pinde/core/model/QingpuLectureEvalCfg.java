@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class QingpuLectureEvalCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class QingpuLectureEvalCfg implements java.io.Serializable {
     private String recordFlow;
 
     private String orgFlow;

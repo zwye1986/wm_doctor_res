@@ -3,7 +3,7 @@ package com.pinde.sci.form.jsres;
 import java.io.Serializable;
 import java.util.List;
 
-public class OrganizationManage implements Serializable{
+public class OrganizationManage implements java.io.Serializable {
 
 	/**
 	 * 

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResRingLetterUser extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResRingLetterUser implements java.io.Serializable {
     private String userFlow;
 
     private String ringId;

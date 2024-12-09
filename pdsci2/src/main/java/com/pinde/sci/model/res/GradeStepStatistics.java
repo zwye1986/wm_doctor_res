@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.ResGradeBorderline;
 import java.io.Serializable;
 import java.util.List;
 
-public class GradeStepStatistics implements Serializable{
+public class GradeStepStatistics implements java.io.Serializable {
 
 	
 	/**

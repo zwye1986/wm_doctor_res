@@ -3,7 +3,7 @@ package com.pinde.sci.form.jsres;
 import java.io.Serializable;
 import java.util.List;
 
-public class EducationInfo implements Serializable {
+public class EducationInfo implements java.io.Serializable {
     /**
      * 教学条件entity
      */

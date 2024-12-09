@@ -2,12 +2,13 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.TimeUtil;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;

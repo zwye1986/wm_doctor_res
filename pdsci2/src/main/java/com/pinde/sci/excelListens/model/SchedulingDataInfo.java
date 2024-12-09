@@ -13,7 +13,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-public class SchedulingDataInfo implements Serializable {
+public class SchedulingDataInfo implements java.io.Serializable {
 
     public SchedulingDataInfo(){
         this.disable = false;

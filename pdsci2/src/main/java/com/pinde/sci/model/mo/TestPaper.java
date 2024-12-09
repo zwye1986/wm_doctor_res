@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class TestPaper extends TeachingActivitySpeakerExample.MybatisObject {
+public class TestPaper implements java.io.Serializable {
     private String paperFlow;
 
     private String paperName;

@@ -3,7 +3,7 @@ package com.pinde.sci.form.res;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class AppealForm implements Serializable{
+public class AppealForm implements java.io.Serializable {
 
 	private static final long serialVersionUID = 9077398975259057503L;
 	

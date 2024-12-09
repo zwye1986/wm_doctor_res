@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubAttribute extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubAttribute implements java.io.Serializable {
     private String attrFlow;
 
     private String attrName;

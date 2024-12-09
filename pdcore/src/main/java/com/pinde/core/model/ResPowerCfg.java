@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResPowerCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResPowerCfg implements java.io.Serializable {
     private String cfgCode;
 
     private String cfgValue;

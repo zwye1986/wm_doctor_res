@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysDeptMonthPlanItemEval extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysDeptMonthPlanItemEval implements java.io.Serializable {
     private String evalFlow;
 
     private String itemFlow;

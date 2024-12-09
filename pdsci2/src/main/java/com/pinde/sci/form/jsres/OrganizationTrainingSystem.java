@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class OrganizationTrainingSystem implements Serializable {
+public class OrganizationTrainingSystem implements java.io.Serializable {
         /**
          *  基地信息--组织管理--培训制度表单
          */

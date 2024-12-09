@@ -10,7 +10,7 @@ import java.util.List;
  * @创建时间 2021/6/3
  * 描述
  */
-public class DoctorPlanInfoVo implements Serializable {
+public class DoctorPlanInfoVo implements java.io.Serializable {
     private String signupMsg;
 
     private SysOrg sysOrg;

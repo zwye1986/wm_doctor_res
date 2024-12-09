@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.StuUserExtMapper" >
 	<resultMap id="StuUserExtMap" type="com.pinde.sci.model.res.StuUserExt" extends="com.pinde.sci.dao.base.StuUserResumeMapper.ResultMapWithBLOBs">
-		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
 		<association property="auditProcess" column="PROCESS_FLOW" javaType="com.pinde.sci.model.mo.StuAuditProcess" resultMap="com.pinde.sci.dao.base.StuAuditProcessMapper.BaseResultMap"/>
 		<association property="stuBatch" column="BATCH_FLOW" javaType="com.pinde.sci.model.mo.StuBatch" resultMap="com.pinde.sci.dao.base.StuBatchMapper.BaseResultMap"/>
 	</resultMap>

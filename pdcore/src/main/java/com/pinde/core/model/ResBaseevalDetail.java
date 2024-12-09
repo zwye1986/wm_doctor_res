@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResBaseevalDetail extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResBaseevalDetail implements java.io.Serializable {
     private String recordFlow;
 
     private String baseevalFlow;

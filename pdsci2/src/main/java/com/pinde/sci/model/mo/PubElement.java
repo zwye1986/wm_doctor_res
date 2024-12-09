@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubElement extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubElement implements java.io.Serializable {
     private String elementFlow;
 
     private String elementName;

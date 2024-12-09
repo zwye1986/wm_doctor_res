@@ -45,7 +45,7 @@ public interface IResSchProcessExpressBiz {
      * @param re
      * @return
      */
-    int editResRec(ResSchProcessExpress rec,SysUser user);
+    int editResRec(ResSchProcessExpress rec, SysUser user);
 
     SysUser readSysUser(String userFlow);
 

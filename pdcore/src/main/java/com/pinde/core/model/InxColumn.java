@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class InxColumn extends TeachingActivitySpeakerExample.MybatisObject {
+public class InxColumn implements java.io.Serializable {
     private String columnFlow;
 
     private String columnId;

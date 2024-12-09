@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResSupervisioSubject extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResSupervisioSubject implements java.io.Serializable {
     private String subjectFlow;
 
     private String subjectName;

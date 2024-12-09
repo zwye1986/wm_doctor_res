@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class TjDocinfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class TjDocinfo implements java.io.Serializable {
     private String userFlow;
 
     private String orgFlow;

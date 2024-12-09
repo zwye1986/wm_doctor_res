@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubImportRecord extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubImportRecord implements java.io.Serializable {
     private String impFlow;
 
     private String impTypeId;

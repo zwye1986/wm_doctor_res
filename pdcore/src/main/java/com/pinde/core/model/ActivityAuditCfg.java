@@ -1,9 +1,15 @@
 package com.pinde.core.model;
 
-public class ExpertOrg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ActivityAuditCfg implements java.io.Serializable {
     private String recordFlow;
 
-    private String evalYear;
+    private String addRoleFlow;
+
+    private String addRoleName;
+
+    private String auditRoleFlow;
+
+    private String auditRoleName;
 
     private String orgFlow;
 
@@ -27,12 +33,36 @@ public class ExpertOrg extends TeachingActivitySpeakerExample.MybatisObject {
         this.recordFlow = recordFlow;
     }
 
-    public String getEvalYear() {
-        return evalYear;
+    public String getAddRoleFlow() {
+        return addRoleFlow;
     }
 
-    public void setEvalYear(String evalYear) {
-        this.evalYear = evalYear;
+    public void setAddRoleFlow(String addRoleFlow) {
+        this.addRoleFlow = addRoleFlow;
+    }
+
+    public String getAddRoleName() {
+        return addRoleName;
+    }
+
+    public void setAddRoleName(String addRoleName) {
+        this.addRoleName = addRoleName;
+    }
+
+    public String getAuditRoleFlow() {
+        return auditRoleFlow;
+    }
+
+    public void setAuditRoleFlow(String auditRoleFlow) {
+        this.auditRoleFlow = auditRoleFlow;
+    }
+
+    public String getAuditRoleName() {
+        return auditRoleName;
+    }
+
+    public void setAuditRoleName(String auditRoleName) {
+        this.auditRoleName = auditRoleName;
     }
 
     public String getOrgFlow() {

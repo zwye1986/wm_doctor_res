@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResDoctorProcessEvalConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResDoctorProcessEvalConfig implements java.io.Serializable {
     private String configFlow;
 
     private String orgFlow;

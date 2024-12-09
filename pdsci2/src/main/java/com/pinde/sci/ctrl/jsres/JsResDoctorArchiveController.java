@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -84,7 +85,7 @@ public class JsResDoctorArchiveController extends GeneralController {
 	}
 
 	@RequestMapping(value="/doctorTrendListSun")
-	public String doctorRecruitSun(Model model, Integer currentPage,String archiveFlow, String roleFlag, HttpServletRequest request, ResDoctor doctor, SysUser user, String baseId, String jointOrgFlag, String derateFlag, String orgLevel, String[] datas, String graduationYear){
+    public String doctorRecruitSun(Model model, Integer currentPage, String archiveFlow, String roleFlag, HttpServletRequest request, ResDoctor doctor, SysUser user, String baseId, String jointOrgFlag, String derateFlag, String orgLevel, String[] datas, String graduationYear) {
 		ResDoctorRecruit resDoctorRecruit= new ResDoctorRecruit();
 		if(StringUtil.isNotBlank(graduationYear)){
 			resDoctorRecruit.setGraduationYear(graduationYear);

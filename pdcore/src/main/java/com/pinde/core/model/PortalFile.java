@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PortalFile extends TeachingActivitySpeakerExample.MybatisObject {
+public class PortalFile implements java.io.Serializable {
     private String recordFlow;
 
     private String fileName;

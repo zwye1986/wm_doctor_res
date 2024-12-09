@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubRegulation extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubRegulation implements java.io.Serializable {
     private String regulationFlow;
 
     private String regulationName;

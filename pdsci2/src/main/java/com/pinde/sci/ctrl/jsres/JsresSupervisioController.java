@@ -5,6 +5,7 @@ import com.lowagie.text.DocumentException;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.*;

@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JszyResOrgSpeForm implements Serializable{
+public class JszyResOrgSpeForm implements java.io.Serializable {
 	
 	
 	/**

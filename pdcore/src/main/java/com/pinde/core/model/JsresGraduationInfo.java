@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JsresGraduationInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresGraduationInfo implements java.io.Serializable {
     private String infoFlow;
 
     private String recruitFlow;

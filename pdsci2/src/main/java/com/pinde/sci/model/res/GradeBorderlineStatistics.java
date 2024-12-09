@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author Administrator
  *
  */
-public class GradeBorderlineStatistics implements Serializable{
+public class GradeBorderlineStatistics implements java.io.Serializable {
 	
 	/**
 	 * 

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResTrainingOpinion extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResTrainingOpinion implements java.io.Serializable {
     private String trainingOpinionFlow;
 
     private String opinionUserFlow;

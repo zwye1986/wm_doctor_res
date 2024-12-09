@@ -9,7 +9,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.GeneralIdNameModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class LcjnSupplies extends TeachingActivitySpeakerExample.MybatisObject {
+public class LcjnSupplies implements java.io.Serializable {
     private String suppliesFlow;
 
     private String dictId;

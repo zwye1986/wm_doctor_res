@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResRecruitCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResRecruitCfg implements java.io.Serializable {
     private String cfgFlow;
 
     private String year;

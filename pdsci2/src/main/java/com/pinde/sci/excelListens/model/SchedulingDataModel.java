@@ -14,7 +14,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-public class SchedulingDataModel implements Serializable {
+public class SchedulingDataModel implements java.io.Serializable {
 
     private String id;
 

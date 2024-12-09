@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class OscaSkillScoreDeatil extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaSkillScoreDeatil implements java.io.Serializable {
     private String recordFlow;
 
     private String scoreFlow;

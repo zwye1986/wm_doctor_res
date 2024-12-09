@@ -2,7 +2,7 @@ package com.pinde.sci.common.util.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class EmailAccount extends TeachingActivitySpeakerExample.MybatisObject {
+public class EmailAccount implements java.io.Serializable {
 
     // 邮箱用户
     private String username;

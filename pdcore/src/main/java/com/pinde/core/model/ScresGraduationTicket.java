@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ScresGraduationTicket extends TeachingActivitySpeakerExample.MybatisObject {
+public class ScresGraduationTicket implements java.io.Serializable {
     private String recordFlow;
 
     private String applyFlow;

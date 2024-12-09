@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysDict extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysDict implements java.io.Serializable {
     private String dictFlow;
 
     private String dictTypeId;

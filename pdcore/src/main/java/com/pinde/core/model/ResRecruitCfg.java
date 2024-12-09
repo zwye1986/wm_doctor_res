@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResRecruitCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResRecruitCfg implements java.io.Serializable {
     private String cfgFlow;
 
     private String year;

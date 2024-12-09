@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResLectureRandomScan extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResLectureRandomScan implements java.io.Serializable {
     private String recordFlow;
 
     private String randomFlow;

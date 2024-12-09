@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JxNationalHolidaysRegister extends TeachingActivitySpeakerExample.MybatisObject {
+public class JxNationalHolidaysRegister implements java.io.Serializable {
     private String recordFlow;
 
     private String nationalHolidayName;

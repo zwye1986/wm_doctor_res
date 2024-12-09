@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.evaAudit;
 
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -553,13 +556,6 @@ public class ResNurseController extends GeneralController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public @ResponseBody
     String delete(SysUser user, String wsid) {
-//        if (StringUtil.isNotBlank(wsid)) {
-//            if (wsid.equals(com.pinde.core.common.GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")) {
-//                EduUser eduUser = eduUserBiz.findByFlow(user.getUserFlow());
-//                if (eduUser != null)
-//                    return "当前学生存在学籍信息，不允许删除！！";
-//            }
-//        }
         user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         userBiz.saveUser(user);
         return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;

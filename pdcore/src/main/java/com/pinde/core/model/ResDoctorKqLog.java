@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResDoctorKqLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResDoctorKqLog implements java.io.Serializable {
     private String recordFlow;
 
     private String kqRecordFlow;

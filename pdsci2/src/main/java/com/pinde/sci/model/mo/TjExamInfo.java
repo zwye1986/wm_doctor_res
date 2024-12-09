@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class TjExamInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class TjExamInfo implements java.io.Serializable {
     private String userFlow;
 
     private String cityCode;

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IMsgBiz;

@@ -2,6 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StatisticsUtil;
@@ -34,7 +35,7 @@ public class SchArrangeBizTask {
 	private SchArrangeResultMapper schArrangeResultMapper;
 	
 	@Async
-	public void processDoctor(SchArrange arrange,List<ResDoctor> doctorList,SysUser currUser,boolean exact){
+    public void processDoctor(SchArrange arrange, List<ResDoctor> doctorList, SysUser currUser, boolean exact) {
 		_processDoctor(arrange, doctorList, currUser, exact);
 	}
 	

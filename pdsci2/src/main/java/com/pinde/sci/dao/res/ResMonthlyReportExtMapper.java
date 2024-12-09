@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.*;
 
 import java.util.List;

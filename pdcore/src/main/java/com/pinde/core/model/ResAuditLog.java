@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResAuditLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResAuditLog implements java.io.Serializable {
     private String recordFlow;
 
     private String parentRecordFlow;

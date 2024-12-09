@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResBaseevalForm extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResBaseevalForm implements java.io.Serializable {
     private String formFlow;
 
     private String formName;

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 通用Bean
  * id,name,qty
  */
-public class GeneralIdNameModel implements Serializable{
+public class GeneralIdNameModel implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String id;

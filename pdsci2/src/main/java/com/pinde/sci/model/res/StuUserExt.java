@@ -3,7 +3,7 @@ package com.pinde.sci.model.res;
 import com.pinde.sci.model.mo.StuAuditProcess;
 import com.pinde.sci.model.mo.StuBatch;
 import com.pinde.sci.model.mo.StuUserResume;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public class StuUserExt extends StuUserResume {
 	

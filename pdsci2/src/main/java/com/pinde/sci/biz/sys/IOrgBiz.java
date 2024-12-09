@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sys;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 

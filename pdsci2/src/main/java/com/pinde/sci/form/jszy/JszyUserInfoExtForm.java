@@ -2,11 +2,11 @@ package com.pinde.sci.form.jszy;
 
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 
-public class JszyUserInfoExtForm implements Serializable{
+public class JszyUserInfoExtForm implements java.io.Serializable {
 
 	/**
 	 * 

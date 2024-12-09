@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResKgCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResKgCfg implements java.io.Serializable {
     private String cfgFlow;
 
     private String orgFlow;

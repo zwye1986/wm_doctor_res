@@ -1,6 +1,6 @@
 package com.pinde.sci.common;
 
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSessionBindingListener;
 import java.io.Serializable;
 import java.util.*;
 
-public class SessionData implements Serializable,HttpSessionBindingListener{
+public class SessionData implements java.io.Serializable, HttpSessionBindingListener {
 	
 	private static final long serialVersionUID = 4342045600030902787L;
 	

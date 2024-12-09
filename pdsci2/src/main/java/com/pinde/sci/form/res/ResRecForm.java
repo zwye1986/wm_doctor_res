@@ -4,7 +4,7 @@ import com.pinde.sci.model.mo.ResRec;
 
 import java.io.Serializable;
 
-public class ResRecForm extends ResRec implements Serializable{
+public class ResRecForm extends ResRec implements java.io.Serializable {
 
 	/**
 	 * 

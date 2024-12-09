@@ -4,7 +4,7 @@ package com.pinde.core.model;
 /**
  * 教学活动配置
  */
-public class ActivityCfgExt extends TeachingActivitySpeakerExample.MybatisObject {
+public class ActivityCfgExt implements java.io.Serializable {
 
     /**
      * 教学活动配置主键

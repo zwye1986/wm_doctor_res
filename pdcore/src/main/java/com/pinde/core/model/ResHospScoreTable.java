@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResHospScoreTable extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResHospScoreTable implements java.io.Serializable {
     private String tableFlow;
 
     private String tableName;

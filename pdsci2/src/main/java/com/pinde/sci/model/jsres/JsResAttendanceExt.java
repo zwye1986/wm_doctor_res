@@ -3,7 +3,7 @@ package com.pinde.sci.model.jsres;
 
 import com.pinde.sci.model.mo.JsresAttendance;
 import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public class JsResAttendanceExt extends SysUser{
 

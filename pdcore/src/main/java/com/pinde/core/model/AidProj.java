@@ -1,8 +1,6 @@
-package com.pinde.sci.model.mo;
+package com.pinde.core.model;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
-public class AidProj extends TeachingActivitySpeakerExample.MybatisObject {
+public class AidProj implements java.io.Serializable {
     private String projFlow;
 
     private String projYear;

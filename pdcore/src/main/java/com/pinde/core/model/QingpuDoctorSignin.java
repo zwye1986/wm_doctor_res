@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class QingpuDoctorSignin extends TeachingActivitySpeakerExample.MybatisObject {
+public class QingpuDoctorSignin implements java.io.Serializable {
     private String reportFlow;
 
     private String codeInfo;

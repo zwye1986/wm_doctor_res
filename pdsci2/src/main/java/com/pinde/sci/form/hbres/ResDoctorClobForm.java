@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * //注册医师信息bean
  */
-public class ResDoctorClobForm implements Serializable{
+public class ResDoctorClobForm implements java.io.Serializable {
 
 	private String doctorFlow;
 	private String doctorName;

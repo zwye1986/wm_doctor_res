@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JsresOrgTeacherAuditTemp extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresOrgTeacherAuditTemp implements java.io.Serializable {
     private String recordFlow;
 
     private String orgFlow;

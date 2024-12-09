@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubDiary extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubDiary implements java.io.Serializable {
     private String diaryFlow;
 
     private String diaryDate;

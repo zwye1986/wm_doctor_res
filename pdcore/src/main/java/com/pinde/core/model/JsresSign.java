@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JsresSign extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresSign implements java.io.Serializable {
     private String signFlow;
 
     private String orgFlow;

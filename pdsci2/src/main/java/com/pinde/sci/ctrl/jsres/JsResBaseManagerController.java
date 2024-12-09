@@ -5,6 +5,8 @@ import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;

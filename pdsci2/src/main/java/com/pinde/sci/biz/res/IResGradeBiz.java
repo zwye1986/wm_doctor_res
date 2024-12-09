@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
 import com.pinde.sci.model.hbres.teacherRec;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;

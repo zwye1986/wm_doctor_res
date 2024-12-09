@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class SchRotationDeptReq extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchRotationDeptReq implements java.io.Serializable {
     private String reqFlow;
 
     private String rotationFlow;

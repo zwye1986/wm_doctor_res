@@ -6,6 +6,10 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserDeptExample;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -266,24 +270,6 @@ public class UserBizImpl implements IUserBiz {
 				}
 				logger.debug("wei xin qi ye saveuser is "+result);
 			}
-//			if(com.pinde.core.common.GlobalConstant.EDU_WS_ID.equals(currWsId)){//edu工作站
-//				EduUser findEduUser = this.eduUserBiz.readEduUser(userFlow);
-//				if(findEduUser==null){
-//					EduUser eduUser = new EduUser();
-//					eduUser.setUserFlow(userFlow);
-//					GeneralMethod.setRecordInfo(eduUser, true);
-//					this.eduUserBiz.addEduUser(eduUser);
-//				}
-//			}
-//			if(com.pinde.core.common.GlobalConstant.NJMUEDU_WS_ID.equals(currWsId)){//njmuedu工作站
-//				EduUser findEduUser = this.eduUserBiz.readEduUser(userFlow);
-//				if(findEduUser==null){
-//					EduUser eduUser = new EduUser();
-//					eduUser.setUserFlow(userFlow);
-//					GeneralMethod.setRecordInfo(eduUser, true);
-//					this.njmueduUserBiz.addEduUser(eduUser);
-//				}
-//			}
 			return ret;
 		}else{
 			user.setUserFlow(PkUtil.getUUID());
@@ -331,18 +317,6 @@ public class UserBizImpl implements IUserBiz {
 				logger.debug("wei xin qi ye createUser is "+result);
 			}
 			int ret = sysUserMapper.insert(user);
-//			if(com.pinde.core.common.GlobalConstant.EDU_WS_ID.equals(currWsId)){//edu工作站
-//				EduUser eduUser = new EduUser();
-//				eduUser.setUserFlow(userFlow);
-//				GeneralMethod.setRecordInfo(eduUser, true);
-//				this.eduUserBiz.addEduUser(eduUser);
-//			}
-//			if(com.pinde.core.common.GlobalConstant.NJMUEDU_WS_ID.equals(currWsId)){//njmuedu工作站
-//				EduUser eduUser = new EduUser();
-//				eduUser.setUserFlow(userFlow);
-//				GeneralMethod.setRecordInfo(eduUser, true);
-//				this.njmueduUserBiz.addEduUser(eduUser);
-//			}
 			return ret;
 		}
 
@@ -741,7 +715,7 @@ public class UserBizImpl implements IUserBiz {
 
 	@Override
 	public void addUserDept(SysUser user,List<String> deptFlows) {
-		Map<String,SysUserDept> userDeptMap  = new HashMap<String, SysUserDept>();
+        Map<String, SysUserDept> userDeptMap = new HashMap<String, SysUserDept>();
 		List<SysUserDept> userDeptList = getUserDept(user);
 
 		for(SysUserDept userDept : userDeptList){
@@ -780,7 +754,7 @@ public class UserBizImpl implements IUserBiz {
 	@Override
 	public List<SysUserDept> getUserDept(SysUser user) {
 		SysUserDeptExample example = new SysUserDeptExample();
-		com.pinde.sci.model.mo.SysUserDeptExample.Criteria criteria =  example.createCriteria().andUserFlowEqualTo(user.getUserFlow())
+        SysUserDeptExample.Criteria criteria = example.createCriteria().andUserFlowEqualTo(user.getUserFlow())
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(user.getOrgFlow())){
 			criteria.andOrgFlowEqualTo(user.getOrgFlow());

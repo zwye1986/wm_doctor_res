@@ -5,7 +5,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 /**
  * 基地科室entity
  */
-public class ResDeptRelStdDept extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResDeptRelStdDept implements java.io.Serializable {
     private String deptCode;
     private String deptFlow;
 

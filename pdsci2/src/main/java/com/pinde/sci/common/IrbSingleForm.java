@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class IrbSingleForm implements Serializable{
+public class IrbSingleForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -9135551514432083976L;
 

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class LcjnDoctorCourse extends TeachingActivitySpeakerExample.MybatisObject {
+public class LcjnDoctorCourse implements java.io.Serializable {
     private String recordFlow;
 
     private String courseFlow;

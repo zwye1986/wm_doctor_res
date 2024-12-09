@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class DictForm extends TeachingActivitySpeakerExample.MybatisObject {
+public class DictForm implements java.io.Serializable {
     private String recordFlow;
 
     private String dictFlow;

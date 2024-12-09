@@ -2,7 +2,7 @@ package com.pinde.sci.model.osca;
 
 import java.io.Serializable;
 
-public class OscaFromCfgItemExt implements Serializable{
+public class OscaFromCfgItemExt implements java.io.Serializable {
 	
 	/**
 	 *

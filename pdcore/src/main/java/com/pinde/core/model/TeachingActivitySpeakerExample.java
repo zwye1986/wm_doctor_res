@@ -828,13 +828,4 @@ public class TeachingActivitySpeakerExample {
             this(condition, value, secondValue, null);
         }
     }
-
-    public static class MybatisObject implements Serializable {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5328530320839952263L;
-
-    }
 }

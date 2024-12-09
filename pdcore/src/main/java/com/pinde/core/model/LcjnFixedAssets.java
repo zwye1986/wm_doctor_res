@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class LcjnFixedAssets extends TeachingActivitySpeakerExample.MybatisObject {
+public class LcjnFixedAssets implements java.io.Serializable {
     private String fixedFlow;
 
     private String dictId;

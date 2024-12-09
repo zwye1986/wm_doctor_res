@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class ResLectureScanRegist extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResLectureScanRegist implements java.io.Serializable {
     private String recordFlow;
 
     private String lectureFlow;

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResDeptPlanForm extends SysDeptMonthPlan implements Serializable{
+public class ResDeptPlanForm extends SysDeptMonthPlan implements java.io.Serializable {
 	/**
 	 * 
 	 */

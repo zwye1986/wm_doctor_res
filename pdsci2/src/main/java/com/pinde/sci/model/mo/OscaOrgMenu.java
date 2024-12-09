@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class OscaOrgMenu extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaOrgMenu implements java.io.Serializable {
     private String recordFlow;
 
     private String orgFlow;

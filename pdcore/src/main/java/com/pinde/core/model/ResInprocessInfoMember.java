@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResInprocessInfoMember extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResInprocessInfoMember implements java.io.Serializable {
     private String recordFlow;
 
     private String infoRecordFlow;

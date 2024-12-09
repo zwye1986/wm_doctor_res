@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
@@ -57,7 +58,7 @@ public interface ResRecExtMapper {
 	 * @param recTypeIds
 	 * @return
 	 */
-	List<ResRec> searchAfterAuditRec(@Param(value="process")ResDoctorSchProcess process,@Param(value="user")SysUser user,@Param(value="recTypeIds")List<String> recTypeIds,@Param(value="roleFlagMap")Map<String,String> roleFlagMap);
+    List<ResRec> searchAfterAuditRec(@Param(value = "process") ResDoctorSchProcess process, @Param(value = "user") SysUser user, @Param(value = "recTypeIds") List<String> recTypeIds, @Param(value = "roleFlagMap") Map<String, String> roleFlagMap);
 
 	List<ResSchProcessExpress> searchAfterAuditRecNew(@Param(value="process")ResDoctorSchProcess process, @Param(value="user")SysUser user, @Param(value="recTypeIds")List<String> recTypeIds, @Param(value="roleFlagMap")Map<String,String> roleFlagMap);
 

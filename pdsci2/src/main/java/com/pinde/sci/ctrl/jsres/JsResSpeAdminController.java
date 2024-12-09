@@ -1,7 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.common.enums.OrgLevelEnum;
-import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -25,7 +25,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.DeptBasicInfoForm;

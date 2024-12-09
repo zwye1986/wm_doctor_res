@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubProjProcess extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubProjProcess implements java.io.Serializable {
     private String processFlow;
 
     private String projFlow;

@@ -2,6 +2,8 @@ package com.pinde.sci.ctrl.jszy;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.*;
+import com.pinde.core.model.AttachedUnitInfo;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResActivityBiz;

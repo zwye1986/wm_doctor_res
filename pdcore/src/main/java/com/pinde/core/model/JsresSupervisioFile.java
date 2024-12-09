@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JsresSupervisioFile extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresSupervisioFile implements java.io.Serializable {
     private String recordFlow;
 
     private String orgFlow;

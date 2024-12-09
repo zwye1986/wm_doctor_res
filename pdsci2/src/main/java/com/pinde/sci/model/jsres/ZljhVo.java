@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @创建时间 2021/5/31
  * 描述
  */
-public class ZljhVo implements Serializable {
+public class ZljhVo implements java.io.Serializable {
     private String assignYear;
     private String orgType;
     private String orgName;

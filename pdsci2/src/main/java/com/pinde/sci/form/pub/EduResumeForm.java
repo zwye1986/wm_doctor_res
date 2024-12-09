@@ -2,7 +2,7 @@ package com.pinde.sci.form.pub;
 
 import java.io.Serializable;
 
-public class EduResumeForm implements Serializable{
+public class EduResumeForm implements java.io.Serializable {
 	
 	/**
 	 * 

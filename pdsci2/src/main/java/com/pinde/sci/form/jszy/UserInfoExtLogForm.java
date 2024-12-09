@@ -3,12 +3,12 @@ package com.pinde.sci.form.jszy;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 import java.util.Map;
 
-public class UserInfoExtLogForm implements Serializable{
+public class UserInfoExtLogForm implements java.io.Serializable {
 
 	/**
 	 * 

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import java.io.Serializable;
 
-public class SysRole implements Serializable {
+public class SysRole implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private String roleFlow;
 

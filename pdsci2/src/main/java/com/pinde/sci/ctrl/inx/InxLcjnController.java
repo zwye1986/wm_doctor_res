@@ -14,7 +14,7 @@ import com.pinde.sci.common.*;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

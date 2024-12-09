@@ -5,6 +5,8 @@ import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.*;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -82,8 +84,8 @@ public class UserController extends GeneralController{
 	private IJsResStatisticBiz resStatisticBiz;
 
 	@RequestMapping(value="/list/{userListScope}",method={RequestMethod.POST,RequestMethod.GET})
-	public String list(@PathVariable String userListScope,Integer currentPage ,SysUser search,String roleFlow,String deptFlow,
-					   Model model,HttpServletRequest request){
+    public String list(@PathVariable String userListScope, Integer currentPage, SysUser search, String roleFlow, String deptFlow,
+                       Model model, HttpServletRequest request) {
 
 		long startTime = System.currentTimeMillis(); //获取开始时间
         setSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE, userListScope);

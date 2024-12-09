@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResMonthlyReportBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;

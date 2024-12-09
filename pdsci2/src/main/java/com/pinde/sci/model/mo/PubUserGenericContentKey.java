@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubUserGenericContentKey extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubUserGenericContentKey implements java.io.Serializable {
     private String userFlow;
 
     private String contentType;

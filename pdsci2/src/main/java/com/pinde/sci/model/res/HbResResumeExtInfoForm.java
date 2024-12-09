@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class HbResResumeExtInfoForm extends PubUserResume implements Serializable{
+public class HbResResumeExtInfoForm extends PubUserResume implements java.io.Serializable {
 
 	/**
 	 * 

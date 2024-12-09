@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuSet implements Serializable{
+public class MenuSet implements java.io.Serializable {
 	
 	/**
 	 * 

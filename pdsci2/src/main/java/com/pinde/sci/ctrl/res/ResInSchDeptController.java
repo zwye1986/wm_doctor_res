@@ -1,9 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

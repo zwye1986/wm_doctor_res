@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JsresSpeContrastPractice extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresSpeContrastPractice implements java.io.Serializable {
     private String recordFlow;
 
     private String speId;
