@@ -100,10 +100,8 @@ public interface IJsResDoctorRecruitBiz {
 
     List<JsDoctorInfoExt> searchDoctorInfoResume(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList);
     List<JsDoctorInfoExt> searchDoctorInfoResume1(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
-    List<JsDoctorInfoExt> searchDoctorInfoResume2(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
     List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId,String workOrgName);
 
-//	List<JsDoctorInfoExt> searchDoctorInfo(ResDoctorRecruit resDoctorRecruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList);
 
     int searchDoctorNum(ResDoctorRecruit recruit);
 

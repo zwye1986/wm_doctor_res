@@ -35,6 +35,7 @@ import com.pinde.sci.model.jsres.JsGraduateExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -588,36 +589,6 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 	}
 
 	@Override
-	public List<JsDoctorInfoExt> searchDoctorInfoResume2(ResDoctorRecruit recruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,List<String>sessionNumbers,String baseFlag) {
-		Map<String,Object> paramMap=new HashMap<String,Object>();
-		paramMap.put("resDoctorRecruit", recruit);
-		paramMap.put("doctor", doctor);
-		paramMap.put("user", user);
-		paramMap.put("derateFlag", flag);
-		paramMap.put("jointOrgFlowList", jointOrgFlowList);
-		paramMap.put("sysOrg", sysOrg);
-		paramMap.put("docTypeList", docTypeList);
-		paramMap.put("trainYearList", trainYearList);
-		paramMap.put("sessionNumbers", sessionNumbers);
-		//判断是否为协同基地
-		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
-            paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_Y);
-		}else{
-            paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_N);
-		}
-		List<JsDoctorInfoExt> JsDoctorInfoExtList = new ArrayList<JsDoctorInfoExt>(16);
-		if(StringUtil.isNotBlank(baseFlag))
-		{
-			JsDoctorInfoExtList = jsResDoctorRecruitExtMapper.searchDoctorInfoBaseExts(paramMap);
-		} else {
-			JsDoctorInfoExtList = jsResDoctorRecruitExtMapper.searchDoctorInfoExts2(paramMap);
-		}
-		return JsDoctorInfoExtList;
-
-	}
-
-	@Override
 	public List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit recruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList,List<String>trainYearList,List<String>sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId,String workOrgName) {
 		Map<String,Object> paramMap=new HashMap<String,Object>();
 		paramMap.put("resDoctorRecruit", recruit);
@@ -636,12 +607,12 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 
 		//判断是否为协同基地
 		List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){//是协同基地
+		if (CollectionUtils.isNotEmpty(tempJoinOrgs)) {//是协同基地
             paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_Y);
 		}else{
             paramMap.put("isJointOrg", com.pinde.core.common.GlobalConstant.FLAG_N);
 		}
-		List<JsDoctorInfoExt> JsDoctorInfoExtList = new ArrayList<JsDoctorInfoExt>(16);
+		List<JsDoctorInfoExt> JsDoctorInfoExtList = null;
 		if(StringUtil.isNotBlank(baseFlag))
 		{
 			JsDoctorInfoExtList = jsResDoctorRecruitExtMapper.searchDoctorInfoBaseExts(paramMap);
@@ -667,9 +638,6 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 		if (StringUtil.isNotBlank(recruit.getRecruitYear())) {
 			criteria.andRecruitYearEqualTo(recruit.getRecruitYear());
 		}
-//		if (recruit.getOrdinal() != null) {
-//			criteria.andOrdinalEqualTo(recruit.getOrdinal());
-//		}
 		if(StringUtil.isNotBlank(recruit.getRecruitTypeId())){
 			criteria.andRecruitTypeIdEqualTo(recruit.getRecruitTypeId());
 		}
