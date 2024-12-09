@@ -1,5 +1,8 @@
 package com.pinde.sci.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -14,7 +17,7 @@ public class FileUtil {
         try {
             readfile("E:\\red5-server-1.0.5\\webapps\\pdred5\\streams\\reseduCourseVideo");
         } catch (IOException e) {
-            e.printStackTrace();
+             logger.error("",e);
         }
     }*/
 
@@ -140,11 +143,13 @@ public class FileUtil {
                 file.delete();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             delSuccess = false;
         }
         return delSuccess;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
 
 }

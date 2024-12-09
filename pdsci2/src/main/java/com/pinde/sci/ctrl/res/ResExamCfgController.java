@@ -2,8 +2,6 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -20,13 +18,14 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.core.common.enums.ResScoreTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,6 +46,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/res/examCfg")
 public class ResExamCfgController extends GeneralController {
+    private static Logger logger = LoggerFactory.getLogger(ResExamCfgController.class);
 
     @Autowired
     private  ISchExamCfgBiz examCfgBiz;
@@ -287,7 +287,7 @@ public class ResExamCfgController extends GeneralController {
                     }
                     httpUrl.disconnect();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             }
         }
@@ -323,7 +323,7 @@ public class ResExamCfgController extends GeneralController {
                 }
                 httpUrl.disconnect();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         map.put("result","1");
@@ -377,7 +377,7 @@ public class ResExamCfgController extends GeneralController {
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }
@@ -704,9 +704,9 @@ public class ResExamCfgController extends GeneralController {
                 }else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

@@ -1,9 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.util.DateUtil;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.model.mo.ResTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

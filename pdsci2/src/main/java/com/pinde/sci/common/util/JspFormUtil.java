@@ -4,7 +4,6 @@ import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.ParamPart;
 import com.oreilly.servlet.multipart.Part;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.jspform.Item;
 import com.pinde.core.jspform.ItemGroup;
 import com.pinde.core.jspform.ItemGroupData;
@@ -18,16 +17,18 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.PubFile;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
 public class JspFormUtil {
-	
+	private static Logger logger = LoggerFactory.getLogger(JspFormUtil.class);
+
 	/**
 	 * 判断该请求是否是文件上传的请求
 	 * @param request
@@ -132,7 +133,7 @@ public class JspFormUtil {
 								  filePart.writeTo(out);
 								  pubFile.setFileContent(out.toByteArray());
 							} catch (IOException e) {
-								e.printStackTrace();
+								 logger.error("",e);
 							}finally{
 								if(out!=null)
 									out.close();
@@ -169,7 +170,7 @@ public class JspFormUtil {
 			        }
 			      }
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException(e);
 			}
 			return dataMap;		 
@@ -280,7 +281,7 @@ public class JspFormUtil {
 			}
 				
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException("xml解析异常");
 		}
 		return map;
@@ -519,7 +520,7 @@ public class JspFormUtil {
 		try {
 			document = DocumentHelper.parseText(recContent);
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			return recContent;
 		}
 		Element rootElement = document.getRootElement();

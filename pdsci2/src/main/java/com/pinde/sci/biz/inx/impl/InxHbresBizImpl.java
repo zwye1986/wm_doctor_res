@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.inx.impl;
 
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,10 +12,10 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,9 @@ public class InxHbresBizImpl implements IInxHbresBiz{
 	private IUserRoleBiz userRoleBiz;
 	@Autowired
 	private IMsgBiz msgBiz;
+
+	private static Logger logger = LoggerFactory.getLogger(InxHbresBizImpl.class);
+
 
 	@Override
 	public int registerUser(SysUser user) {
@@ -63,7 +68,7 @@ public class InxHbresBizImpl implements IInxHbresBiz{
 //				title = VelocityUtil.evaluate(title, dataMap);
 //				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException();
 			}
 			SysUser sysUser = new SysUser();
@@ -84,7 +89,7 @@ public class InxHbresBizImpl implements IInxHbresBiz{
 			try {
 				content = VelocityUtil.evaluate(content, dataMap);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException();
 			}
 			this.msgBiz.addEmailMsg(userEmail, InitConfig.getSysCfg("res_resetpasswd_email_title"), content);

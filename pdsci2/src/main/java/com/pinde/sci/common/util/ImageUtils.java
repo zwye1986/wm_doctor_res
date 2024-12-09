@@ -28,7 +28,7 @@ public class ImageUtils {
 //            encoder.encode(image);
 //            out.close();
 //        } catch (Exception e) {
-//            e.printStackTrace();
+//             logger.error("",e);
 //        }
 //    }
 //	public static void pressText(String pressText, File imgFile,

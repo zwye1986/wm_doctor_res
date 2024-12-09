@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.cfg;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
@@ -254,9 +253,9 @@ public class ResDoctorCfgController extends GeneralController {
                 } else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            } catch (RuntimeException re) {
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

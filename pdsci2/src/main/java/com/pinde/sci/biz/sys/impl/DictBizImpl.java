@@ -16,9 +16,10 @@ import com.pinde.sci.model.mo.SysDictExample;
 import com.pinde.sci.model.mo.SysDictExample.Criteria;
 import com.pinde.sci.model.mo.SysUser;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,9 @@ public class DictBizImpl implements IDictBiz{
 	private DictFormMapper dictFormMapper;
 	@Autowired
 	private SysCfgExtMapper sysCfgExtMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(DictBizImpl.class);
+
 
 	@Override
 	public void addDict(SysDict dict) {
@@ -483,7 +487,7 @@ public class DictBizImpl implements IDictBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
 			return parseExcel(wb,dictTypeId);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		} finally {
 			try {

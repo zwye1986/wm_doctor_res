@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.recruit;
 
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.recruit.IRecruitAdmitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.common.GeneralController;
@@ -10,6 +11,8 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
 import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -225,9 +228,9 @@ public class RecruitAdmitInfoManageController extends GeneralController {
                 }else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
 
         }
@@ -248,11 +251,14 @@ public class RecruitAdmitInfoManageController extends GeneralController {
                 if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
                     message = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
                 }
-            } catch (RuntimeException re) {
-                re.printStackTrace();
-                message = re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                message = e.getMessage();
             }
         }
         return message;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(RecruitAdmitInfoManageController.class);
+
 }

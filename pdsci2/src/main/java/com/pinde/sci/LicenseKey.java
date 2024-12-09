@@ -3,7 +3,6 @@ package com.pinde.sci;
 import com.javax0.license3j.licensor.License;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ServerUtil;
-import com.pinde.lic.hardware.MechineInfo;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.bouncycastle.crypto.digests.SHA512Digest;
 

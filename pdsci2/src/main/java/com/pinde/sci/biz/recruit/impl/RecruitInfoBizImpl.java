@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.recruit.impl;
 
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,8 +13,6 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.core.common.enums.recruit.RecruitOperEnum;
-import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoExample;
 import com.pinde.sci.model.mo.RecruitInfoLog;
@@ -20,6 +20,8 @@ import com.pinde.sci.model.mo.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +46,9 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
     private IUserBiz userBiz;
     @Autowired
     private IRecruitInfoLogBiz recruitInfoLogBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(RecruitInfoBizImpl.class);
+
 
     /**
      * 审批IsPass
@@ -356,7 +361,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -516,7 +521,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -657,7 +662,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();

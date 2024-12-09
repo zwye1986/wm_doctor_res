@@ -33,6 +33,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -118,6 +120,7 @@ public class JsResHeadDeptController extends GeneralController{
 
 	@Autowired
 	private IJsResDeptManagementBiz deptManagementBiz;
+    private static Logger logger = LoggerFactory.getLogger(JsResHeadDeptController.class);
 
 	/**
 	 * 科主任主界面
@@ -212,7 +215,7 @@ public class JsResHeadDeptController extends GeneralController{
 							f2 = Float.valueOf(s2);
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 					}
 					Float result=f2-f1;
 					return result>0?1:result==0?0:-1;
@@ -252,7 +255,7 @@ public class JsResHeadDeptController extends GeneralController{
 								 deValue= Float.parseFloat(scoreMap.get("score"));
 							 }
 						 } catch (NumberFormatException e) {
-							 e.printStackTrace();
+                             logger.error("", e);
 						 }
 						 value=value+deValue;
 						 heJiMap.put(key, value);
@@ -359,7 +362,7 @@ public class JsResHeadDeptController extends GeneralController{
 						f1=Float.valueOf(s1.toString());
 						f2=Float.valueOf(s2.toString());
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 					}
 					Float result=f2-f1;
 					return result>0?1:result==0?0:-1;
@@ -1173,7 +1176,7 @@ public class JsResHeadDeptController extends GeneralController{
 					formDataMap.put(element.getName(), element.getText());
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -1250,7 +1253,7 @@ public class JsResHeadDeptController extends GeneralController{
 							try {
 								file.transferTo(newFile);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "inProcessFile" + File.separator + dateString + File.separator + recordFlow + File.separator + originalFilename;
@@ -1399,7 +1402,7 @@ public class JsResHeadDeptController extends GeneralController{
 		}
 
 		if (StringUtil.isEmpty(sessionNumber)){
-			sessionNumber= com.pinde.sci.common.util.DateUtil.getYear();
+            sessionNumber = com.pinde.core.util.DateUtil.getYear();
 		}
 		Integer year=Integer.parseInt(sessionNumber)-1;
 		mav.addObject("sessionNumber", sessionNumber);

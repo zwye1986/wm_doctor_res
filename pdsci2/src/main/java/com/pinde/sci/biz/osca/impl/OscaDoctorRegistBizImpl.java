@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorRegistBiz;
@@ -10,8 +12,6 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.sci.model.mo.OscaDoctorRegist;
 import com.pinde.sci.model.mo.OscaDoctorRegistExample;
 import com.pinde.sci.model.mo.ResDoctor;

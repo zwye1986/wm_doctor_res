@@ -1,22 +1,22 @@
 package com.pinde.sci.biz.recruit.impl;
 
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.base.RecruitInterviewInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.core.common.enums.recruit.RecruitOperEnum;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoLog;
 import com.pinde.sci.model.mo.RecruitInterviewInfo;
 import com.pinde.sci.model.mo.RecruitInterviewInfoExample;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,8 +30,8 @@ import java.util.*;
 //@Transactional(rollbackFor = Exception.class)
 public class RecruitInterviewInfoBizImpl implements IRecruitInterviewInfoBiz {
 
-    @Autowired
-    private RecruitInfoMapper recruitInfoMapper;
+    private static Logger logger = LoggerFactory.getLogger(RecruitInterviewInfoBizImpl.class);
+
 
     @Autowired
     private RecruitInterviewInfoMapper recruitInterviewInfoMapper;
@@ -119,14 +119,14 @@ public class RecruitInterviewInfoBizImpl implements IRecruitInterviewInfoBiz {
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
             return parseDiscAndResponExcel(wb,type);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException(e.getMessage());
         }finally{
             if(is!=null){
                 try {
                     is.close();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             }
         }

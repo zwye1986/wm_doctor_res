@@ -14,6 +14,8 @@ import com.pinde.sci.dao.base.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
+
+    private static Logger logger = LoggerFactory.getLogger(ResSchProcessExpressBizImpl.class);
 
     @Autowired
     private ResSchProcessExpressMapper processExpressMapper;
@@ -233,7 +237,7 @@ public class ResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                             idCsVv = URLDecoder.decode(idCsVv, "UTF-8") ;
                         if(vss!=null) vss = URLDecoder.decode(vss,"UTF-8") ;
                     } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                     //开始创建xml子节点
                     Element currEle = root.addElement(key);

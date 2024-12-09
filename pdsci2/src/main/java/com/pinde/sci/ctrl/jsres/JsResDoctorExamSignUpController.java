@@ -26,6 +26,8 @@ import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.dom4j.DocumentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,6 +76,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
     private IResScoreBiz resScoreBiz;
     @Autowired
     private IJsResGraduationApplyBiz jsresGraduationApplyBiz;
+    private static Logger logger = LoggerFactory.getLogger(JsResDoctorExamSignUpController.class);
 
 
     @RequestMapping("/main")
@@ -1289,7 +1292,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 try {
                     userResumeExt = userResumeBiz.converyToJavaBean((String) sd.get("userResume"), UserResumeExtInfoForm.class);
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 String westernSupportResidents = "";
                 String qualificationCertificateTime = "";

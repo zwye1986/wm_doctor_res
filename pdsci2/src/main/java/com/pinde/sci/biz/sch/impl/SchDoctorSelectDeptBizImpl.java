@@ -12,18 +12,17 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.ctrl.sch.plan.domain.Plan;
-import com.pinde.sci.ctrl.sch.plan.domain.SchDeptPlanAssignment;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchOrgArrangeResultExtMapper;
 import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
-import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchArrangeForm;
 import com.pinde.sci.form.sch.SchDoctorForm;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,6 +74,9 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
     private ISchRotationDeptBiz schRotationDeptBiz;
     @Autowired
     private ISchRotationGroupBiz schRotationtGroupBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(SchDoctorSelectDeptBizImpl.class);
+
 
     @Override
     public List<SchDoctorSelectDept> findSelectDepts(String doctorFlow) {
@@ -198,86 +200,6 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                 doctor.setSchAllFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
             }
             doctorMapper.updateByPrimaryKeySelective(doctor);
-        }
-    }
-
-    @Override
-    public int findDeptMonthUseNum(String deptFlow, String startDate, String endDate) {
-        return  schResultExtMapper.findDeptMonthUseNum(deptFlow, startDate, endDate);
-    }
-
-    @Override
-    public Double getRotationCycleMonthNum(String rotationFlow, String selectYear, String cycleYear, String orgFlow, String sessionNumber) {
-
-        return  schResultExtMapper.getRotationCycleMonthNum(rotationFlow, selectYear, cycleYear, orgFlow, sessionNumber);
-    }
-
-    @Override
-    public void saveArrangeResult(Plan solvedCloudBalance, SchArrangeForm form) throws Exception {
-        if(solvedCloudBalance!=null)
-        {
-            List<String> doctorflows=new ArrayList<>();
-            List<String> flows=new ArrayList<>();
-            Map<String,SchRotationOrgGroup> groupMap=new HashMap<>();
-            Map<String,String> startDateMap=new HashMap<>();
-            Map<String,String> endDateMap=new HashMap<>();
-            for(SchDeptPlanAssignment assignment:solvedCloudBalance.getAssignmentList())
-            {
-                if(!doctorflows.contains(assignment.getDoctorFlow()))
-                    doctorflows.add(assignment.getDoctorFlow());
-                if(!flows.contains(assignment.getRecordFlow()))
-                    flows.add(assignment.getRecordFlow());
-                String startDate=startDateMap.get(assignment.getRecordFlow());
-                String endDate=endDateMap.get(assignment.getRecordFlow());
-                if(StringUtil.isBlank(startDate)||startDate.compareTo(assignment.getMonth().getStartDate())>=0)
-                {
-                    startDateMap.put(assignment.getRecordFlow(),assignment.getMonth().getStartDate());
-                }
-                if(StringUtil.isBlank(endDate)||endDate.compareTo(assignment.getMonth().getEndDate())<=0)
-                {
-                    endDateMap.put(assignment.getRecordFlow(),assignment.getMonth().getEndDate());
-                }
-            }
-            for(String flow:flows)
-            {
-                SchDoctorSelectDept dept=readByFlow(flow);
-                SchRotationOrgGroup group=groupMap.get(dept.getGroupFlow());
-                if(group==null)
-                 group=orgGroupMapper.selectByPrimaryKey(dept.getGroupFlow());
-                groupMap.put(dept.getGroupFlow(),group);
-                SchOrgArrangeResult result=new SchOrgArrangeResult();
-                BeanUtil.mergeNotSameClassObject(dept,result);
-                result.setSchStartDate(startDateMap.get(flow));
-                result.setSchEndDate(endDateMap.get(flow));
-                result.setStandardGroupFlow(group.getStandardGroupFlow());
-                saveResult(result);
-            }
-            for(String doctorFlow:doctorflows) {
-                ResDoctor doctor = doctorBiz.readDoctor(doctorFlow);
-                if (SchSelYearEnum.One.getId().equals(form.getCycleYear())) {
-                    doctor.setSchOneFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                }
-                if (SchSelYearEnum.Two.getId().equals(form.getCycleYear())) {
-                    doctor.setSchTwoFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                }
-                if (SchSelYearEnum.Three.getId().equals(form.getCycleYear())) {
-                    doctor.setSchThreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                }
-                if("All".equals(form.getCycleYear()))
-                {
-                    doctor.setSchAllFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                    doctor.setSchOneFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                    doctor.setSchTwoFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                    doctor.setSchThreeFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                }
-                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSchOneFlag()) ||
-                        com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSchTwoFlag()) ||
-                        com.pinde.core.common.GlobalConstant.FLAG_Y.equals(doctor.getSchThreeFlag()))
-                {
-                    doctor.setSchAllFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                }
-                doctorMapper.updateByPrimaryKeySelective(doctor);
-            }
         }
     }
 
@@ -991,7 +913,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();
@@ -1374,7 +1296,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 is.close();

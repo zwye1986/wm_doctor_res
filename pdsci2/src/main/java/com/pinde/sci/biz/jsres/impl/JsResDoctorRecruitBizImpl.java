@@ -2,7 +2,10 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.BaseStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -25,9 +28,6 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
@@ -37,7 +37,10 @@ import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.dom4j.Document;
@@ -393,7 +396,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			}
 			msgBiz.addSysMsg(recruitWithBLOBs.getDoctorFlow(), msgTitle , msgContent);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		int result = saveDoctorRecruit(recruitWithBLOBs);
 		return result;
@@ -535,7 +538,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				resDoctorBiz.insertRecruitInfoNotPass(recWithBLOBs.getRecruitFlow());
 				doctorRecruitMapper.updateByPrimaryKeySelective(recWithBLOBs);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
 		String modifyTime = DateUtil.transDateTime(recWithBLOBs.getModifyTime());
@@ -836,7 +839,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
                     try {
                         oldGraduationYear = Integer.parseInt(recruit.getGraduationYear());
                     } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                 }
 				ResDocotrDelayTeturn ret=resDoctorDelayTeturnBiz.findDelayInfo(recruitWithBLOBs.getRecruitFlow());
@@ -2025,7 +2028,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2241,7 +2244,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				is.close();

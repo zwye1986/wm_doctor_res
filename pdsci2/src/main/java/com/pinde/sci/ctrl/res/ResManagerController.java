@@ -836,9 +836,9 @@ public class ResManagerController extends GeneralController {
                 if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
                     message = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}
-			} catch (RuntimeException re) {
-				re.printStackTrace();
-				message = re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                message = e.getMessage();
 			}
 		}
 		return message;
@@ -862,9 +862,9 @@ public class ResManagerController extends GeneralController {
                 if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
                     message = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}
-			} catch (RuntimeException re) {
-				re.printStackTrace();
-				message = re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                message = e.getMessage();
 			}
 		}
 		return message;
@@ -5425,7 +5425,7 @@ public class ResManagerController extends GeneralController {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return titleFormList;
@@ -6309,7 +6309,7 @@ public class ResManagerController extends GeneralController {
 			paramMap.put("lectureEvaDetailList", lectureEvaDetailList);
 			return resLectureInfoBiz.saveLectureEval(scanRegist, paramMap);
 		}catch (Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 			return "系统异常，请稍后重试！";
 		}
 	}

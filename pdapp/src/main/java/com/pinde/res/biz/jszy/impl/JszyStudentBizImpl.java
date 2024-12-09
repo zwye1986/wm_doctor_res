@@ -14,6 +14,9 @@ import com.pinde.res.dao.jszy.ext.JszySchArrangeResultExtMapper;
 import com.pinde.res.dao.jszy.ext.ResDiscipleInfoExtMapper;
 import com.pinde.res.model.jszy.mo.UploadFileForm;
 import com.pinde.sci.dao.base.*;
+import com.pinde.sci.util.DateTimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
@@ -32,7 +35,10 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class JszyStudentBizImpl implements IJszyStudentBiz {
-	
+	private static Logger logger = LoggerFactory.getLogger(JszyStudentBizImpl.class);
+
+
+
 	@Resource
 	private JszySchArrangeResultExtMapper resultExtMapper;
 	@Resource
@@ -111,7 +117,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 			try {
 				val = getMethod(s,obj);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 			key+=val;
 		}
@@ -964,7 +970,7 @@ public class JszyStudentBizImpl implements IJszyStudentBiz {
 					try {
 						generateImage(fileForm.getContent(),fileDir+  File.separator +originalFilename);
 					} catch (Exception e) {
-						e.printStackTrace();
+						logger.error("", e);
 						throw new RuntimeException("保存文件失败！");
 					}
 					String filePath = File.separator + "discipleFiles" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;

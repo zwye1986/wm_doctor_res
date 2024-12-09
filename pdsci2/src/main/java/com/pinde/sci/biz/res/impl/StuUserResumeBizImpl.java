@@ -8,9 +8,10 @@ import com.pinde.sci.dao.base.StuUserResumeMapper;
 import com.pinde.sci.dao.res.StuUserExtMapper;
 import com.pinde.sci.model.mo.StuUserResume;
 import com.pinde.sci.model.res.StuUserExt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -48,7 +49,7 @@ public class StuUserResumeBizImpl implements IStuUserResumeBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -61,7 +62,7 @@ public class StuUserResumeBizImpl implements IStuUserResumeBiz {
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }
@@ -74,5 +75,8 @@ public class StuUserResumeBizImpl implements IStuUserResumeBiz {
     public List<StuUserExt> searchUser(Map<String, Object> mp) {
         return stuUserExtMapper.searchUser(mp);
     }
+
+    private static Logger logger = LoggerFactory.getLogger(StuUserResumeBizImpl.class);
+
 }
  

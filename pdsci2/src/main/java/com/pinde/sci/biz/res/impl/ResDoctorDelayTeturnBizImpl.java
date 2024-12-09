@@ -14,13 +14,13 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper;
 import com.pinde.sci.dao.res.ResDocotrDelayTeturnExtMapper;
-import com.pinde.core.common.enums.ResBaseStatusEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -789,7 +789,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -800,5 +800,6 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
         return path;
     }
 
+    private static Logger logger = LoggerFactory.getLogger(ResDoctorDelayTeturnBizImpl.class);
 
 }

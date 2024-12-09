@@ -1,13 +1,12 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IDeptBasicInfoBiz;
-import com.pinde.sci.biz.jsres.IJsResDeptManagementBiz;
 import com.pinde.sci.biz.jsres.IResBaseSpeDeptBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
@@ -15,7 +14,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.sci.dao.base.ResBaseSpeDeptDataMapper;
 import com.pinde.sci.dao.base.ResBaseSpeDeptInfoMapper;
 import com.pinde.sci.dao.base.ResBaseSpeDeptMapper;
@@ -24,6 +22,8 @@ import com.pinde.sci.dao.sch.ResBaseSpeDeptDataExtMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,8 +59,8 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     @Autowired
     private ResBaseSpeDeptDataExtMapper resBaseSpeDeptDataExtMapper;
 
-    @Autowired
-    private IJsResDeptManagementBiz deptManagementBiz;
+    private static Logger logger = LoggerFactory.getLogger(DeptBasicInfoBizImpl.class);
+
 
     @Override
     public int saveBaseInfo(String flag, BaseSpeDeptForm baseSpeDeptForm, String index, String type, String[] fileFlows,
@@ -187,7 +187,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
                             try {
                                 file.transferTo(newFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + "resBaseInfo" + File.separator + noteTypeId + File.separator + dateString + File.separator + recordFlow + File.separator + originalFilename;

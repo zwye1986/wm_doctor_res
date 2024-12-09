@@ -1,5 +1,9 @@
 package com.pinde.sci.ctrl.inx;
 
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.INoticeBiz;
@@ -9,13 +13,12 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.SessionData;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -171,8 +174,8 @@ public class InxRecruitController extends GeneralController{
 				return "redirect:"+sysUrl;
 			}
 			loginErrorMessage = "未赋权";
-		}catch(RuntimeException re){
-			loginErrorMessage = re.getMessage();
+        } catch (RuntimeException e) {
+            loginErrorMessage = e.getMessage();
 		}
 		model.addAttribute("loginErrorMessage" , loginErrorMessage);
 		return "recruit/inx/login";

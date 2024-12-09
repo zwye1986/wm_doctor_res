@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
@@ -8,7 +8,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResDiscipleRecordInfoMapper;
 import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
-import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfo;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfoExample;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;

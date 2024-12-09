@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.ZipUtil;
@@ -17,6 +18,8 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -121,7 +124,7 @@ public class ResExamPaperDownController extends GeneralController {
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                logger.error("", e);
                 map.put("result","0");
                 map.put("msg","该试卷信息不存在，无法下载！");
                 return JSON.toJSONString(map);
@@ -135,7 +138,7 @@ public class ResExamPaperDownController extends GeneralController {
                     }
                     httpUrl.disconnect();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             }
         }
@@ -171,7 +174,7 @@ public class ResExamPaperDownController extends GeneralController {
                 }
                 httpUrl.disconnect();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         map.put("result","1");
@@ -286,7 +289,7 @@ public class ResExamPaperDownController extends GeneralController {
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }
@@ -398,7 +401,7 @@ public class ResExamPaperDownController extends GeneralController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 if (bis != null) {
@@ -408,7 +411,7 @@ public class ResExamPaperDownController extends GeneralController {
                     httpUrl.disconnect();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return urlMap;
@@ -448,7 +451,7 @@ public class ResExamPaperDownController extends GeneralController {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 if (bis != null) {
@@ -459,7 +462,7 @@ public class ResExamPaperDownController extends GeneralController {
                     httpUrl.disconnect();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }
@@ -480,15 +483,18 @@ public class ResExamPaperDownController extends GeneralController {
             wb.write(fos);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         } finally {
             try {
                 if (fos != null) {
                     fos.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }
+
+    private static Logger logger = LoggerFactory.getLogger(ResExamPaperDownController.class);
+
 }

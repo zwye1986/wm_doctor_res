@@ -1,9 +1,9 @@
 package com.pinde.sci.common;
 
+import com.pinde.core.common.enums.sys.ReqTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.core.common.enums.sys.ReqTypeEnum;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class GeneralMethod {
                 setModifyUserFlow.invoke(obj, currUser.getUserFlow());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 

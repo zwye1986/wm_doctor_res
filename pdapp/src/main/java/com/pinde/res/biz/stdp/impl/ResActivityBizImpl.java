@@ -15,7 +15,10 @@ import com.pinde.res.biz.stdp.IResActivityTargetBiz;
 import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.base.*;
+import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
@@ -33,6 +36,9 @@ import java.util.*;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class ResActivityBizImpl implements IResActivityBiz {
+
+	private static Logger logger = LoggerFactory.getLogger(ResActivityBizImpl.class);
+
 
 	@Autowired
 	private TeachingActivityInfoExtMapper activityInfoExtMapper;
@@ -351,13 +357,13 @@ public class ResActivityBizImpl implements IResActivityBiz {
 					try {
 						startDate1 = sdf.parse(currDate);
 					} catch (ParseException e) {
-						e.printStackTrace();
+						logger.error("", e);
 					}
 					Date endDate = null;
 					try {
 						endDate = sdf.parse(startDate);
 					} catch (ParseException e) {
-						e.printStackTrace();
+						logger.error("", e);
 					}
 					Calendar startCal = Calendar.getInstance();
 					startCal.setTime(startDate1);
@@ -659,13 +665,13 @@ public class ResActivityBizImpl implements IResActivityBiz {
 					try {
 						startDate1 = sdf.parse(currDate);
 					} catch (ParseException e) {
-						e.printStackTrace();
+						logger.error("", e);
 					}
 					Date endDate = null;
 					try {
 						endDate = sdf.parse(startDate);
 					} catch (ParseException e) {
-						e.printStackTrace();
+						logger.error("", e);
 					}
 					Calendar startCal = Calendar.getInstance();
 					startCal.setTime(startDate1);
@@ -957,12 +963,12 @@ public class ResActivityBizImpl implements IResActivityBiz {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 

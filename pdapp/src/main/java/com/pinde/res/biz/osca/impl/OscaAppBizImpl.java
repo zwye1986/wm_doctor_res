@@ -24,10 +24,13 @@ import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.*;
+import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -1670,7 +1673,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 					try {
 						if(vss!=null) vss = URLDecoder.decode(vss,"UTF-8") ;
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+						logger.error("", e);
 					}
 					//开始创建xml子节点
 					Element currEle = root.addElement(key);
@@ -1785,5 +1788,8 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 			}
 		}
 	}
+
+	private static Logger logger = LoggerFactory.getLogger(OscaAppBizImpl.class);
+
 }  
   

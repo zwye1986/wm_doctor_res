@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.osca.impl;
 
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.osca.*;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -15,21 +19,18 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.osca.OscaCheckInfoExtMapper;
 import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.time.DateFormatUtils;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +44,9 @@ import java.util.*;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class OscaBaseBizImpl implements IOscaBaseBiz{
+
+    private static Logger logger = LoggerFactory.getLogger(OscaBaseBizImpl.class);
+
 
     @Autowired
     private OscaSkillsAssessmentMapper osaMapper;
@@ -612,7 +616,7 @@ public class OscaBaseBizImpl implements IOscaBaseBiz{
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
             return parseExcel(wb, clinicalFlow);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new RuntimeException(e.getMessage());
         } finally {
             try {

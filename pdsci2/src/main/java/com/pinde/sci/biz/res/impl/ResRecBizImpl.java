@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.google.common.collect.Lists;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -22,7 +23,6 @@ import com.pinde.sci.dao.res.ResAppealExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
-import com.pinde.core.common.enums.*;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResAppealExample.Criteria;
@@ -481,7 +481,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			}
 			resultContent = doc.asXML();
 		} catch (DocumentException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return resultContent;
 	}
@@ -492,7 +492,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			try {
 				rootEle = DocumentHelper.parseText(recContent).getRootElement();
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}else{
 			rootEle = DocumentHelper.createElement(formName);
@@ -570,7 +570,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				try {
 					oldRootEle = DocumentHelper.parseText(recContent).getRootElement();
 				} catch (DocumentException e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 			for(Element itemEle : list){
@@ -969,7 +969,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException(e);
 			}
 			return dataMap;
@@ -1053,7 +1053,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException(e);
 			}
 			return dataMap;
@@ -1100,7 +1100,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			root.add(roleNode);
 			content = root.asXML();
 		} catch (DocumentException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return content;
 	}
@@ -1199,7 +1199,7 @@ public class ResRecBizImpl implements IResRecBiz {
 										a = Integer.parseInt(map0.get("isView"));
 										b = Integer.parseInt(map1.get("isView"));
 									} catch (Exception e) {
-										e.printStackTrace();
+                                        logger.error("", e);
 									}
 									return a-b;
 								}
@@ -1256,7 +1256,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								}
 							}
 						} catch (DocumentException e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 					}
 
@@ -1271,7 +1271,7 @@ public class ResRecBizImpl implements IResRecBiz {
 										a = Integer.parseInt(map0.get("isView"));
 										b = Integer.parseInt(map1.get("isView"));
 									} catch (Exception e) {
-										e.printStackTrace();
+                                        logger.error("", e);
 									}
 									return a-b;
 								}
@@ -1731,7 +1731,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return gradeMap;
@@ -1785,7 +1785,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return gradeMap;
@@ -1834,7 +1834,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return gradeMap;
@@ -2079,7 +2079,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2255,7 +2255,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2495,7 +2495,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					appraiseMap.put("deptHeadAutograth",deptAppraiseList);
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return appraiseMap;
@@ -4908,7 +4908,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					}
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -4943,7 +4943,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			}
 		} catch (DocumentException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return dataMap;
 	}
@@ -4992,7 +4992,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				content = root.asXML();
 			}catch(Exception e){
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return content;
@@ -5025,7 +5025,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				content = root.asXML();
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return content;
@@ -5058,7 +5058,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //				}
 //
 //			}catch(Exception e){
-//				e.printStackTrace();
+//				 logger.error("",e);
 //			}
 //		}
 //		return dataMap;
@@ -5739,7 +5739,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				ftpHelperUtil.uploadFile(localFilePath,ftpDir,ftpFileName);
                 map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return map;
@@ -5810,7 +5810,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
                 map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return map;
@@ -5969,7 +5969,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				map.put("fileUrl",url);
                 map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return map;
@@ -6156,7 +6156,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			try {
 				val = getMethod(s,obj);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			key+=val;
 		}
@@ -6664,7 +6664,7 @@ public class ResRecBizImpl implements IResRecBiz {
 										reqNum = (float)Math.round(reqNum);
 									}
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 							}
 						}
@@ -7312,7 +7312,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 
 		return recContent;

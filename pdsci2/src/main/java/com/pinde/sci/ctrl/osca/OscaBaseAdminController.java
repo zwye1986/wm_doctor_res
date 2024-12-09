@@ -36,6 +36,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,8 +72,8 @@ public class OscaBaseAdminController extends GeneralController {
 	private IUserBiz userBiz;
 	@Autowired
 	private IOscaDoctorOrderdeBiz oscaDoctorOrderdeBiz;
-	@Autowired
-	private IFileBiz pubFileBiz;
+    private static Logger logger = LoggerFactory.getLogger(OscaBaseAdminController.class);
+
 	/**
 	 * 引导页
 	 */
@@ -1098,9 +1100,9 @@ public class OscaBaseAdminController extends GeneralController {
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -1141,9 +1143,9 @@ public class OscaBaseAdminController extends GeneralController {
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -1568,7 +1570,7 @@ public class OscaBaseAdminController extends GeneralController {
 		try {
 			QRCodeUtil.generateQRCode(text, width, height, format, path);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return basePath + "." + format;
 	}

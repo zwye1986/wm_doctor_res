@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
+import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StatisticsUtil;
@@ -10,8 +12,6 @@ import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper;
 import com.pinde.sci.dao.base.SchArrangeMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
-import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
-import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.springframework.beans.factory.annotation.Autowired;

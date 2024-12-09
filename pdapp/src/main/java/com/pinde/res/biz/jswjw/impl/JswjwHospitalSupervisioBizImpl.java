@@ -204,7 +204,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -217,7 +217,7 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }

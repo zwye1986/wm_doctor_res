@@ -22,6 +22,8 @@ import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -358,7 +360,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 							try {
 								file.transferTo(newFile);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
@@ -429,7 +431,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 					try {
 						file.transferTo(newFile);
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 						throw new RuntimeException("保存文件失败！");
 					}
 					String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
@@ -509,7 +511,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 							try {
 								file.transferTo(newFile);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "resBaseInfo" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
@@ -775,4 +777,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		}
 		return  resBase ;
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
+
 }

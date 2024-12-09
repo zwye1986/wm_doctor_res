@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.common.enums.TrainCategoryTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

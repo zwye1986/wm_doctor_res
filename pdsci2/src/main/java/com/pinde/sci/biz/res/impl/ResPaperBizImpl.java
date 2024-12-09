@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.ResPaperBiz;
 import com.pinde.sci.dao.base.ResPaperMapper;

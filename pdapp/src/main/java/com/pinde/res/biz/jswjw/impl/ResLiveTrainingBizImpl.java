@@ -9,6 +9,9 @@ import com.pinde.res.biz.jswjw.IResLiveTrainingBiz;
 import com.pinde.res.dao.jswjw.ext.RestarinNoticeExtMapper;
 import com.pinde.sci.dao.base.ResTarinNoticeMapper;
 import com.pinde.sci.dao.base.ResTrainingOpinionMapper;
+import com.pinde.sci.util.DateTimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -142,8 +145,10 @@ public class ResLiveTrainingBizImpl implements IResLiveTrainingBiz {
                 setModifyUserFlow.invoke(obj, userFlow);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
+
+    private static Logger logger = LoggerFactory.getLogger(ResLiveTrainingBizImpl.class);
 
 }

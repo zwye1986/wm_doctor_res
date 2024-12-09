@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -16,13 +15,17 @@ import com.pinde.sci.model.mo.ResAnnualAssessmentRecordExample;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SysUser;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +39,8 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
+    private static Logger logger = LoggerFactory.getLogger(ResAnnualCheckBizImpl.class);
+
 
     @Autowired
     private ResAnnualAssessmentRecordMapper recordMapper;
@@ -112,7 +117,7 @@ public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
                     count = recordMapper.updateByPrimaryKeySelective(assessmentRecord);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("删除文件失败！");
             }
         }
@@ -138,7 +143,7 @@ public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -151,7 +156,7 @@ public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }
@@ -365,7 +370,7 @@ public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
             Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int) file.getSize()));
             return parseCheckExcel(wb);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             throw new Exception(e.getMessage());
         } finally {
             is.close();

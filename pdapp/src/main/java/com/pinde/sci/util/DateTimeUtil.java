@@ -43,51 +43,6 @@ public class DateTimeUtil {
         }
         return months;
     }
-    /**
-     * 获取两个日期之间的所有周
-     * @param startDate
-     * @param endDate
-     * @return
-     */
-    public static List<String> newGetWeeksByTwoDate(String startDate, String endDate){
-        List<String> weeks = null;
-        try {
-            if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate) && startDate.compareTo(endDate) <= 0) {
-                weeks = new ArrayList<String>();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date dateStart = sdf.parse(startDate);
-                Date dateEnd = sdf.parse(endDate);
-                while ((dateEnd.getTime() - dateStart.getTime())>=0) {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = null;
-                    try {
-                        date = format.parse(startDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setFirstDayOfWeek(Calendar.MONDAY);
-                    calendar.setTime(date);
-                    if(calendar.get(Calendar.WEEK_OF_YEAR)==1&&(calendar.get(Calendar.MONTH) + 1)==12)
-                    {
-                        weeks.add((calendar.get(Calendar.YEAR)+1) + "-" + calendar.get(Calendar.WEEK_OF_YEAR));
-                    }else{
-                        weeks.add(calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.WEEK_OF_YEAR));
-                    }
-
-                    calendar.add(Calendar.DATE, 7);
-                    int year = calendar.get(Calendar.YEAR);    //获取年
-                    int month = calendar.get(Calendar.MONTH) + 1;   //获取月份，0表示1月份
-                    int day = calendar.get(Calendar.DATE);    //获取当前天数
-                    startDate = year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
-                    dateStart = format.parse(startDate);
-                }
-            }
-        }catch (Exception e){
-
-        }
-        return weeks;
-    }
 
     private static long weekFormat(long days){
         long result = 1;
@@ -96,62 +51,8 @@ public class DateTimeUtil {
         }
         return result;
     }
-    public static void main(String[] args) {
-        Calendar ca = Calendar.getInstance();//创建一个日期实例
-        ca.setTime(new Date());//实例化一个日期
-        //System.out.println(ca.get(Calendar.DAY_OF_YEAR));//获取是第多少天
-        //System.out.println(ca.get(Calendar.WEEK_OF_YEAR));//获取是第几周
-
-        //System.out.println("===============================");
-        String today = "2016-08-09";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = format.parse(today);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTime(date);
-        //System.out.println(calendar.get(Calendar.YEAR));
-        //System.out.println(calendar.get(Calendar.WEEK_OF_YEAR));
-        calendar.add(Calendar.DATE,7);
-        //System.out.println(calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DATE));
-        int year = calendar.get(Calendar.YEAR);    //获取年
-        int month = calendar.get(Calendar.MONTH) + 1;   //获取月份，0表示1月份
-        int day = calendar.get(Calendar.DATE);    //获取当前天数
-
-        //System.out.println(year+"-"+(month<10?"0"+month:month)+"-"+(day<10?"0"+day:day));
 
 
-//        {"orgFlow":"","schDeptFlow":"","startDate":"2016-07-11","endDate":"2016-08-08"}
-//        {"orgFlow":"","schDeptFlow":"","startDate":"2016-08-15","endDate":"2016-09-12"}
-//        {"orgFlow":"","schDeptFlow":"","startDate":"2016-09-12","endDate":"2016-10-10"}
-
-        List<String> weeks = newGetWeeksByTwoDate("2016-07-25","2016-07-25");
-        for (String week:weeks  ) {
-            //System.out.println(week);
-        }
-        //System.out.println("===============================");
-        weeks = newGetWeeksByTwoDate("2016-08-09","2016-09-05");
-        for (String week:weeks  ) {
-            //System.out.println(week);
-        }
-    }
-
-    public static int getDays(String startdate, String enddate) {
-        int temp = 0;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date dateStart = sdf.parse(startdate);
-            Date dateEnd = sdf.parse(enddate);
-            temp = (int) ((dateEnd.getTime() - dateStart.getTime()) / 86400000 / 7);
-        } catch (Exception ee) {
-            ee.printStackTrace();
-        }
-        return temp;
-    }
     /**
      * 获取两个日期之间的所有周
      * @param startDate

@@ -58,7 +58,7 @@ public class  ReadConfig{
 				}
 			}
 			catch(IOException e){
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			
 		}

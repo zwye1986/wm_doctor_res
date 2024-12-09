@@ -306,7 +306,7 @@ public class JswjwWxTeacherController extends GeneralController {
 				//为json字符串转码
 				searchData = new String(searchData.getBytes("ISO8859-1") , "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			//转换json字符串为map对象
 			searchMap = (Map<String,String>)JSON.parse(searchData);
@@ -2066,7 +2066,7 @@ public class JswjwWxTeacherController extends GeneralController {
 					}
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -6239,7 +6239,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		try {
 			generateImage(form.getImageContent(), fileDir + File.separator + originalFilename);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException("保存文件失败！");
 		}
 		String filePath = File.separator + "activityFile" + File.separator + dateString + File.separator + form.getRecordFlow() + File.separator + originalFilename;
@@ -6299,7 +6299,7 @@ public class JswjwWxTeacherController extends GeneralController {
 		try {
 			generateImage(form.getImageContent(), fileDir + File.separator + originalFilename);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			throw new RuntimeException("保存文件失败！");
 		}
 		String filePath = File.separator + "activityFile" + File.separator + dateString + File.separator + form.getRecordFlow() + File.separator + originalFilename;

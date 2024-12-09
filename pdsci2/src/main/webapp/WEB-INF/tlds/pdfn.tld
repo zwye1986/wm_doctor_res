@@ -204,14 +204,15 @@
 	<function>
 		<description></description>
 		<name>encryptPassword</name>
-		<function-class>com.pinde.sci.common.util.PasswordHelper</function-class>
+		<function-class>com.pinde.core.common.PasswordHelper</function-class>
 		<function-signature>java.lang.String  encryptPassword(java.lang.String  , java.lang.String ) </function-signature>
 	</function>
 	<function>
 		<description></description>
 		<name>getDictName</name>
-		<function-class>com.pinde.sci.enums.sys.DictTypeEnum</function-class>
-		<function-signature>java.lang.String getDictName(com.pinde.sci.enums.sys.DictTypeEnum  , java.lang.String ) </function-signature>
+		<function-class>com.pinde.core.common.enums.DictTypeEnum</function-class>
+		<function-signature>java.lang.String getDictName(com.pinde.core.common.enums.DictTypeEnum,java.lang.String)
+		</function-signature>
 	</function>
 	<function>
 		<description></description>
@@ -255,12 +256,12 @@
 		<function-class>com.pinde.sci.common.InitConfig</function-class>
 		<function-signature>java.lang.String getSysCfg(java.lang.String)</function-signature>
 	</function>
-	<function>
-		<description></description>
-		<name>getSingnPhoto</name>
-		<function-class>com.pinde.sci.ctrl.jszy.JszySingupController</function-class>
-		<function-signature>java.lang.String getUserSingPhoto(java.lang.String)</function-signature>
-	</function>
+	<!--	<function>
+            <description></description>
+            <name>getSingnPhoto</name>
+            <function-class>com.pinde.sci.ctrl.jszy.JszySingupController</function-class>
+            <function-signature>java.lang.String getUserSingPhoto(java.lang.String)</function-signature>
+        </function>-->
 	<function>
 		<description></description>
 		<name>getInitPass</name>
@@ -383,7 +384,8 @@
         <description></description>
         <name>getRegistryTypeEnumById</name>
         <function-class>com.pinde.sci.common.GeneralResMethod</function-class>
-        <function-signature>com.pinde.sci.enums.res.RegistryTypeEnum getRegistryTypeEnumById(java.lang.String) </function-signature>
+		<function-signature>com.pinde.core.common.enums.RegistryTypeEnum getRegistryTypeEnumById(java.lang.String)
+		</function-signature>
     </function>
 
 
@@ -401,16 +403,18 @@
 		<function-class>com.pinde.sci.common.util.ExamUtil</function-class>
 		<function-signature>java.lang.String[] getSelection(int) </function-signature>
 	</function>
-	<function>
+
+	<!--<function>
     <description></description>
     <name>getQuestTypeName</name>
     <function-class>com.pinde.sci.enums.exam.QuestionTypeEnum</function-class>
     <function-signature>java.lang.String getNameById(java.lang.String ) </function-signature>
-    </function>
-    <function>
+    </function>-->
+
+	<function>
     <description></description>
     <name>getArmyTypeEnumName</name>
-    <function-class>com.pinde.sci.enums.res.ArmyTypeEnum</function-class>
+		<function-class>com.pinde.core.common.enums.ArmyTypeEnum</function-class>
     <function-signature>java.lang.String getNameById(java.lang.String ) </function-signature>
     </function>
 	<function>

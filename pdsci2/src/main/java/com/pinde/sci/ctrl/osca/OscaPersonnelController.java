@@ -4,6 +4,7 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.osca.IOscaBaseBiz;
 import com.pinde.sci.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -17,6 +18,8 @@ import com.pinde.sci.model.mo.OscaDoctorRegist;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -236,9 +239,9 @@ public class OscaPersonnelController extends GeneralController {
                 }else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -281,4 +284,7 @@ public class OscaPersonnelController extends GeneralController {
         response.setContentType("application/octet-stream;charset=UTF-8");
         ExcleUtile.exportSimpleExcleByObjs(titles, resultMapList, response.getOutputStream());
     }
+
+    private static Logger logger = LoggerFactory.getLogger(OscaPersonnelController.class);
+
 }

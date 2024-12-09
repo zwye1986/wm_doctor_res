@@ -1,5 +1,9 @@
 package com.pinde.sci.YuYinUtil;
 
+import com.pinde.core.util.DateUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +15,8 @@ import java.net.URLEncoder;
  * 与连接相关的Util类
  */
 public class ConnUtil {
+    private static Logger logger = LoggerFactory.getLogger(ConnUtil.class);
+
 
     /**
      * UrlEncode， UTF-8 编码
@@ -23,7 +29,7 @@ public class ConnUtil {
         try {
             result = URLEncoder.encode(str, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return result;
     }

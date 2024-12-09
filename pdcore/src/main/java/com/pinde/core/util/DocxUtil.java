@@ -8,12 +8,15 @@ import org.docx4j.XmlUtils;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.wml.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
 
 public final class DocxUtil {
-	
+    private static Logger logger = LoggerFactory.getLogger(DocxUtil.class);
+
 	private static String getTemplate(File templateFile)throws Exception{
 		BufferedReader bufReader=new BufferedReader(new InputStreamReader(new FileInputStream(templateFile),"UTF-8"));
 		String line = null;
@@ -83,7 +86,7 @@ public final class DocxUtil {
 		try {
 			DocxUtil.convert(sourceFile, "D:\\"+DateUtil.getCurrDateTime()+".docx",projInfoMap);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 }

@@ -5,6 +5,7 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
@@ -21,6 +22,8 @@ import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -579,7 +582,7 @@ public class JsResUniversityManageController extends GeneralController {
 			}
 			wb.write(os);
 		} catch(Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 		}
 
 	}
@@ -599,5 +602,8 @@ public class JsResUniversityManageController extends GeneralController {
 			columnWidth.put(key, length);
 		}
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(JsResUniversityManageController.class);
+
 
 }

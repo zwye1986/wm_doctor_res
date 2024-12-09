@@ -321,7 +321,7 @@ public class JswjwAppController {
                                     }
                                 }
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                         } else {
                             flag = true;
@@ -361,7 +361,7 @@ public class JswjwAppController {
                                 return false;
                             }
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
 
                     }
@@ -897,7 +897,7 @@ public class JswjwAppController {
                             return "res/gzzyyy/joinExam";
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                 } else if (StringUtil.isNotBlank(deptConfig.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(deptConfig.getIsTestOut())) {
                     String currDate = DateUtil.getCurrDate();
@@ -913,7 +913,7 @@ public class JswjwAppController {
                                 return "res/gzzyyy/joinExam";
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                     }
                 }
@@ -946,7 +946,7 @@ public class JswjwAppController {
                                 return "res/gzzyyy/joinExam";
                             }
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                     } else if (StringUtil.isNotBlank(config.getIsTestOut()) && com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(config.getIsTestOut())) {
                         String currDate = DateUtil.getCurrDate();
@@ -962,7 +962,7 @@ public class JswjwAppController {
                                     return "res/gzzyyy/joinExam";
                                 }
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                         }
                     }
@@ -1358,7 +1358,7 @@ public class JswjwAppController {
                     formDataMap.put(element.getName(), element.getText());
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return formDataMap;
@@ -2425,7 +2425,7 @@ public class JswjwAppController {
                             return true;
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.error("", e);
                     }
                 }
 
@@ -3736,7 +3736,7 @@ public class JswjwAppController {
                 String content = URLDecoder.decode(trainingOpinion.getOpinionUserContent(), "UTF-8");
                 trainingOpinion.setOpinionUserContent(content);
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         SysUser currentUser = jswjwBiz.readSysUser(userFlow);
@@ -3851,7 +3851,7 @@ public class JswjwAppController {
             //System.out.println(encode);
 
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         String href = null;
 
@@ -6599,7 +6599,7 @@ public class JswjwAppController {
                     }
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return "res/jswjw/500";
             }
         }
@@ -6692,7 +6692,7 @@ public class JswjwAppController {
                     return "res/jswjw/checkVerifyCode";
                 }
             } catch (ParseException e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return "res/jswjw/500";
             }
         }
@@ -9030,7 +9030,7 @@ public class JswjwAppController {
                 try {
                     extScore = jswjwBiz.convertMapToXml(extScoreMap, resScore);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 if (StringUtil.isNotBlank(extScore)) {
                     resScore.setExtScore(extScore);
@@ -9689,7 +9689,7 @@ public class JswjwAppController {
             resDoctor.setDoctorStatusName("报名审核中");
             jswjwBiz.editDoctor(resDoctor);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         docRecWithBLOBs.setIsRetrain(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         //查询是否重培（有退培记录且审核通过为重培） 默认否
@@ -9729,7 +9729,7 @@ public class JswjwAppController {
                             try{
                                 cd.setTime(sdf.parse(recruitDate));
                             }catch(ParseException e){
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             cd.add(Calendar.YEAR,trainYear+3);//增加n年
                             String format = sdf.format(cd.getTime());
@@ -10139,7 +10139,7 @@ public class JswjwAppController {
                         try {
                             cd.setTime(sdf.parse(recruitDate));
                         } catch (ParseException e) {
-                            e.printStackTrace();
+                            logger.error("", e);
                         }
                         cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                         String format = sdf.format(cd.getTime());
@@ -10424,7 +10424,7 @@ public class JswjwAppController {
                             try {
                                 cd.setTime(sdf.parse(recruitDate));
                             } catch (ParseException e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             cd.add(Calendar.YEAR, trainYear + 3);//增加n年
                             String format = sdf.format(cd.getTime());

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.pub.impl;
 
 
+import com.pinde.core.common.enums.sys.MsgTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,9 +10,10 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.SMSUtil;
 import com.pinde.sci.dao.base.PubMsgMapper;
-import com.pinde.core.common.enums.sys.MsgTypeEnum;
 import com.pinde.sci.model.mo.PubMsg;
 import com.pinde.sci.model.mo.PubMsgExample;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -104,7 +106,7 @@ public class MsgBizImpl implements IMsgBiz {
 			pubMsg.setSender(StringUtil.defaultString(InitConfig.getSysCfg("sys_mail_from")));
 			pubMsg.setSendTime(DateUtil.getCurrDateTime());
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			Integer errorTimes = pubMsg.getSendErrorTimes();
 			if(errorTimes==null){
 				errorTimes = new Integer(0);
@@ -219,4 +221,7 @@ public class MsgBizImpl implements IMsgBiz {
 		SMSUtil util = new SMSUtil(mobiles);
 		return util.sendSMS(smsTempFlow,params,relId,relType);
 	}
+
+    private static Logger logger = LoggerFactory.getLogger(MsgBizImpl.class);
+
 }

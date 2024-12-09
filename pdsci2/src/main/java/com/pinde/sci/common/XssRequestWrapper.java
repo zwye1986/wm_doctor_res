@@ -1,7 +1,7 @@
 package com.pinde.sci.common;
 
 import com.pinde.core.util.HtmlUtil;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
+import com.pinde.core.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;

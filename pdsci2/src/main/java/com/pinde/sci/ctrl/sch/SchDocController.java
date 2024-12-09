@@ -3403,7 +3403,7 @@ public class SchDocController extends GeneralController{
             String endWeek = year2+"-"+week2 +"~" +sdf2.format(startTime) + "—" + sdf2.format(endTime);
             weekTime.add(endWeek);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return weekTime;
@@ -3447,9 +3447,9 @@ public class SchDocController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -3495,9 +3495,9 @@ public class SchDocController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -3532,9 +3532,9 @@ public class SchDocController extends GeneralController{
 				} else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL + hintList.toString();
 				}
-			} catch (RuntimeException re) {
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

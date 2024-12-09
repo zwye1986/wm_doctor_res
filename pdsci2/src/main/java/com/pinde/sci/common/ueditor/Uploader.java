@@ -7,6 +7,8 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ import java.util.*;
  * 
  */
 public class Uploader {
+    private static Logger logger = LoggerFactory.getLogger(Uploader.class);
+
 
 	// 文件大小常量, 单位kb
 	private static final int MAX_SIZE = 500 * 1024;
@@ -131,7 +135,7 @@ public class Uploader {
 
 			this.state = this.errorInfo.get("SUCCESS");
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			this.state = this.errorInfo.get("IO");
 		}
 

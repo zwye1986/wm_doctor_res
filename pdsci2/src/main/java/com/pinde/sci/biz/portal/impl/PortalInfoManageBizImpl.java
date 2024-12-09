@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.portal.impl;
 
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,11 +10,12 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.portal.PortalInfoExtMapper;
-import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.sci.form.portal.PortalInfoForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.PortalInfoExample.Criteria;
 import com.pinde.sci.model.portal.PortalInfoExt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +45,9 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	private JsszportalCommunicationMainMapper communicationMainMapper;
 	@Autowired
 	private JsszportalCommunicationReMapper communicationReMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(PortalInfoManageBizImpl.class);
+
 
 	@Override
 	public int save(PortalInfo info) {
@@ -100,7 +105,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 				file.transferTo(newFile);
 				return "success:" + dateString + "/" + fileName;
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
                 return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 			}
 		}
@@ -175,7 +180,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 							}
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
                         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 					}
 
@@ -193,7 +198,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
                     return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 				}
 			}

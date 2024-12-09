@@ -45,7 +45,7 @@ public class CommonUtilController extends GeneralController {
 				}
 			} catch (Exception e) {
 				logger.error("通用sql资源加载出错...", e);
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return sql;

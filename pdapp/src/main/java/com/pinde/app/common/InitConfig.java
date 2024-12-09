@@ -99,7 +99,7 @@ public class InitConfig implements ServletContextListener {
             weekPasswordMap = weekPasswords;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         logger.debug("读取弱密码结束...");
     }

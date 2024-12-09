@@ -3,6 +3,8 @@ package com.pinde.sci.common.util;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import java.io.UnsupportedEncodingException;
@@ -39,6 +41,9 @@ public class RSAUtils {
 
     //密文种子, 当想更换RSA钥匙的时候,只需要修改密文种子,即可更换 随便写上数字或者英文即可
     private static final String radamKey = "nari";
+
+    private static Logger logger = LoggerFactory.getLogger(RSAUtils.class);
+
 
     //类加载后进行初始化数据
     static {
@@ -151,7 +156,7 @@ public class RSAUtils {
             decode = URLDecoder.decode(reverse, "UTF-8");
             System.out.println("解密后文字：" + decode);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return decode;
     }
@@ -169,7 +174,7 @@ public class RSAUtils {
             decode = URLDecoder.decode(reverse, "UTF-8");
             System.out.println("解密后文字：" + decode);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return decode;
     }

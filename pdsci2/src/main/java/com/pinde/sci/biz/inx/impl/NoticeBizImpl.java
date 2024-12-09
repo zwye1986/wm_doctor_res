@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.inx.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,7 +11,6 @@ import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.base.ResInfoRoleMapper;
 import com.pinde.sci.dao.base.ResReadInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
-import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.InxInfoExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;

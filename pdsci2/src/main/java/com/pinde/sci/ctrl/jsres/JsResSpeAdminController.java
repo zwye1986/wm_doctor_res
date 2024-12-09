@@ -40,6 +40,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,6 +132,7 @@ public class JsResSpeAdminController extends GeneralController{
 
 	@Autowired
 	private IJsResDeptManagementBiz deptManagementBiz;
+    private static Logger logger = LoggerFactory.getLogger(JsResSpeAdminController.class);
 
 	/**
 	 * 入科教育管理标签页
@@ -182,7 +185,7 @@ public class JsResSpeAdminController extends GeneralController{
 					formDataMap.put(element.getName(), element.getText());
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -802,7 +805,7 @@ public class JsResSpeAdminController extends GeneralController{
 							f2 = Float.valueOf(s2);
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 					}
 					Float result=f2-f1;
 					return result>0?1:result==0?0:-1;
@@ -839,7 +842,7 @@ public class JsResSpeAdminController extends GeneralController{
 								deValue= Float.parseFloat(scoreMap.get("score"));
 							}
 						} catch (NumberFormatException e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 						value=value+deValue;
 						heJiMap.put(key, value);

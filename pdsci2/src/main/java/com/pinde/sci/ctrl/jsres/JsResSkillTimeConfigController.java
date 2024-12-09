@@ -6,9 +6,8 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
 import com.pinde.core.pdf.utils.ResourceLoader;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.QRCodeUtil;
-import com.pinde.core.util.ZipUtil;
+import com.pinde.core.util.*;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.osca.IOscaBaseBiz;
 import com.pinde.sci.biz.osca.IOscaDoctorOrderdeBiz;
@@ -17,8 +16,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.DateUtil;
-import com.pinde.sci.ctrl.sch.plan.util.StringUtil;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.osca.DoctorScoreEnum;
 import com.pinde.core.common.enums.osca.SignStatusEnum;
@@ -28,6 +25,8 @@ import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,6 +68,9 @@ public class JsResSkillTimeConfigController extends GeneralController {
     private IJsResDoctorRecruitBiz jsResDoctorRecruitBiz;
     @Autowired
     private IJsResGraduationApplyBiz jsresGraduationApplyBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(JsResSkillTimeConfigController.class);
+
 
     @RequestMapping("/main")
     public String main(Model model) {
@@ -293,9 +295,9 @@ public class JsResSkillTimeConfigController extends GeneralController {
                 } else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            } catch (RuntimeException re) {
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -526,9 +528,9 @@ public class JsResSkillTimeConfigController extends GeneralController {
                 }else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            }catch(RuntimeException re){
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -708,7 +710,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
         try {
             QRCodeUtil.generateQRCode(text, width, height, format, path);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return basePath + "." + format;
     }

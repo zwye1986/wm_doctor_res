@@ -10,6 +10,9 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.ISysSupervisioUserBiz;
 import com.pinde.res.dao.jswjw.ext.JsresSupervisioSubjectExtMapper;
 import com.pinde.sci.dao.base.*;
+import com.pinde.sci.util.DateTimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,6 +42,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	private JsresSupervisioFileMapper supervisioFileMapper;
 	@Autowired
 	private SysUserMapper sysUserMapper;
+	private static Logger logger = LoggerFactory.getLogger(SysSupervisioUserBizImpl.class);
 
 
 	@Override
@@ -196,7 +200,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 
@@ -209,7 +213,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("", e);
 					throw new RuntimeException("删除文件失败！");
 				}
 			}
@@ -374,7 +378,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 
@@ -387,7 +391,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("", e);
 					throw new RuntimeException("删除文件失败！");
 				}
 			}

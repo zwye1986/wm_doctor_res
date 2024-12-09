@@ -3,31 +3,40 @@ package com.pinde.sci.biz.res.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.pinde.core.common.GeneralEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.RegStatusEnum;
+import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.sch.SchStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
-import com.pinde.sci.biz.jsres.*;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
+import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
-import com.pinde.sci.biz.sys.*;
-import com.pinde.sci.common.*;
+import com.pinde.sci.biz.sys.IOrgBiz;
+import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.sys.IUserRoleBiz;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.dao.sch.SchDoctorDeptExtMapper;
-import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
-import com.pinde.core.common.enums.pub.UserNationEnum;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.*;
-import com.pinde.core.common.enums.sch.SchStatusEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.excelListens.model.ResRecItem;
-import com.pinde.sci.form.hbres.*;
+import com.pinde.sci.form.hbres.ExtInfoForm;
+import com.pinde.sci.form.hbres.ReplenishInfoForm;
+import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
@@ -42,7 +51,12 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
-import org.dom4j.*;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -54,7 +68,9 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -134,6 +150,9 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 
 	private static final String EXT_INFO_ROOT = "extInfo";
 	private static final String EXT_INFO_ELE = "extInfoForm";
+
+	private static Logger logger = LoggerFactory.getLogger(ResDoctorBizImpl.class);
+
 
 	public static String _doubleTrans(double d) {
 		if ((double) Math.round(d) - d == 0.0D)
@@ -682,7 +701,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 				throw new RuntimeException("保存图片失败！");
 			}
 			//删除原图片
@@ -694,7 +713,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error("", e);
 					throw new RuntimeException("删除图片失败！");
 				}
 			}
@@ -1114,7 +1133,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerExcel(wb, orgFlow);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			try {
@@ -1137,7 +1156,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerStudentExcel(wb, orgFlow);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			try {
@@ -2002,7 +2021,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return filedMap;
@@ -2031,7 +2050,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					}
 				}
 			}catch(Exception e){
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return extInfo;
@@ -2048,7 +2067,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Method setMethod = objClass.getMethod(methedName,new Class[] {String.class});
 			setMethod.invoke(obj,new Object[] {attrValue});
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 	@Override
@@ -2239,7 +2258,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			}
 			return excelUtile;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2408,7 +2427,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						try {
 							extScore = convertMapToXml(extScoreMap,resScore);
 						} catch (Exception e) {
-							e.printStackTrace();
+							 logger.error("",e);
 						}
 						resScore.setExtScore(extScore);*/
 						resScoreList.add(resScore);
@@ -2518,7 +2537,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			}
 			return excelUtile;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -2624,7 +2643,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						try {
 							extScore = convertMapToXml(extScoreMap,resScore);
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.error("", e);
 						}
 						resScore.setExtScore(extScore);
 						count+=savePublic(resScore);
@@ -2762,7 +2781,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				is.close();
@@ -5276,7 +5295,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Workbook wb = createCommonWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 			return parseManagerExcel4jszy(wb, orgFlow,role);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new RuntimeException(e.getMessage());
 		}finally{
 			try {
@@ -5949,7 +5968,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				if (bis != null) {
@@ -5959,7 +5978,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					httpUrl.disconnect();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return count;
@@ -6013,7 +6032,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				wb.write(fos);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			try {
 				if (bis != null) {
@@ -6024,7 +6043,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					httpUrl.disconnect();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}

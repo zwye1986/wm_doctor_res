@@ -14,7 +14,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.DateUtil;
 import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.ResTeachPlanDoctorMapper;
 import com.pinde.sci.dao.base.ResTeachQualifiedPlanMapper;
@@ -26,6 +25,8 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,6 +69,7 @@ public class JsresPhyAssController extends GeneralController {
     @Autowired
     private IDictBiz dictBiz;
 
+    private static Logger logger = LoggerFactory.getLogger(JsresPhyAssController.class);
 
     //培训计划发布
     @RequestMapping(value = "/plannedReleaseMain")
@@ -88,11 +90,11 @@ public class JsresPhyAssController extends GeneralController {
         paramMap.put("planStatusId",planStatusId);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
-        paramMap.put("nowData",DateUtil.getCurrDateTime2());
+        paramMap.put("nowData", com.pinde.core.util.DateUtil.getCurrDateTime2());
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String, Object>> list = phyAssExtMapper.searchPlanInfoList(paramMap);
         model.addAttribute("list",list);
-        model.addAttribute("nowDate", DateUtil.getCurrDateTime2());
+        model.addAttribute("nowDate", com.pinde.core.util.DateUtil.getCurrDateTime2());
         return "jsres/phyAss/planedReleaseList";
     }
 
@@ -214,20 +216,20 @@ public class JsresPhyAssController extends GeneralController {
         paramMap.put("planStatusId",planStatusId);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
-        paramMap.put("nowData",DateUtil.getCurrDateTime2());
+        paramMap.put("nowData", com.pinde.core.util.DateUtil.getCurrDateTime2());
         paramMap.put("local", com.pinde.core.common.GlobalConstant.FLAG_Y);
         if (StringUtil.isNotBlank(type) && type.equals("import")){
             paramMap.put("importPlan", com.pinde.core.common.GlobalConstant.FLAG_Y);
             PageHelper.startPage(currentPage,getPageSize(request));
             List<Map<String, Object>> list = phyAssExtMapper.searchOrgPlanInfoList(paramMap);
             model.addAttribute("list",list);
-            model.addAttribute("nowDate", DateUtil.getCurrDateTime2());
+            model.addAttribute("nowDate", com.pinde.core.util.DateUtil.getCurrDateTime2());
             return "jsres/phyAss/importMain";
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String, Object>> list = phyAssExtMapper.searchOrgPlanInfoList(paramMap);
         model.addAttribute("list",list);
-        model.addAttribute("nowDate", DateUtil.getCurrDateTime2());
+        model.addAttribute("nowDate", com.pinde.core.util.DateUtil.getCurrDateTime2());
         return "jsres/phyAss/baseListEntryList";
     }
 
@@ -356,7 +358,7 @@ public class JsresPhyAssController extends GeneralController {
             try {
                 count = phyAssBiz.importBaseUserExcel(file, planFlow);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 return e.getMessage();
             }
             if (count != 0) {
@@ -550,7 +552,7 @@ public class JsresPhyAssController extends GeneralController {
      */
     @RequestMapping(value = "/editPlanUserInfo")
     public String editPlanUserInfo(Model model,String recordFlow,String planFlow) {
-        List<Map<String, Object>> contentList = phyAssExtMapper.searchAllByTime(DateUtil.getCurrDateTime2());
+        List<Map<String, Object>> contentList = phyAssExtMapper.searchAllByTime(com.pinde.core.util.DateUtil.getCurrDateTime2());
         List<SysDept> depts = deptBiz.searchDeptByOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> paramMap=new HashMap<>();
         paramMap.put("recordFlow",recordFlow);
@@ -648,11 +650,11 @@ public class JsresPhyAssController extends GeneralController {
         paramMap.put("speName",speName);
         paramMap.put("enrollStartTime",enrollStartTime);
         paramMap.put("enrollEndTime",enrollEndTime);
-        paramMap.put("nowData",DateUtil.getCurrDateTime2());
+        paramMap.put("nowData", com.pinde.core.util.DateUtil.getCurrDateTime2());
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String, Object>> list = phyAssExtMapper.searchPlanScoreList(paramMap);
         model.addAttribute("list",list);
-        model.addAttribute("nowDate", DateUtil.getCurrDateTime2());
+        model.addAttribute("nowDate", com.pinde.core.util.DateUtil.getCurrDateTime2());
         return "jsres/phyAss/planScoreList";
     }
 
@@ -813,12 +815,12 @@ public class JsresPhyAssController extends GeneralController {
         plan.setPlanStartTime(StringUtil.convertYearNum(plan.getPlanStartTime()));
         model.addAttribute("plan",plan);
         model.addAttribute("conLen",plan.getPlanContent().length());
-        model.addAttribute("nowDate",DateUtil.getCurrDate());
+        model.addAttribute("nowDate", com.pinde.core.util.DateUtil.getCurrDate());
         String num = phyAssExtMapper.gainPlanCertificateNo(doctor.getPlanFlow());
-        String phyNo=DateUtil.getYear()+"32"+doctor.getSpeId()+num;
+        String phyNo = com.pinde.core.util.DateUtil.getYear() + "32" + doctor.getSpeId() + num;
         model.addAttribute("phyNo",phyNo);
         model.addAttribute("type",type);
-        model.addAttribute("nowDate",StringUtil.convertYearNum(DateUtil.getCurrDate()));
+        model.addAttribute("nowDate", StringUtil.convertYearNum(com.pinde.core.util.DateUtil.getCurrDate()));
         String url = InitConfig.getSysCfg("upload_base_url") + "/";
         PubFile file = fileBiz.readProductFile("phyAss","phyAssSeal");
         if(null != file){
@@ -899,13 +901,13 @@ public class JsresPhyAssController extends GeneralController {
                 for (String s : list) {
                     ResTeachPlanDoctor doctor = planDoctorMapper.selectByPrimaryKey(s);
                     String num = phyAssExtMapper.gainPlanCertificateNo(doctor.getPlanFlow());
-                    String phyNo=DateUtil.getYear()+"32"+doctor.getSpeId()+num;
+                    String phyNo = com.pinde.core.util.DateUtil.getYear() + "32" + doctor.getSpeId() + num;
                     doctor.setCertificateNo(phyNo);
                     doctor.setGainCertificateId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     doctor.setGainCertificateName("已生成");
                     doctor.setGradeId(gradeId);
                     doctor.setGradeName(gradeName);
-                    doctor.setCertificateStartTime(DateUtil.getCurrDate());
+                    doctor.setCertificateStartTime(com.pinde.core.util.DateUtil.getCurrDate());
                     planDoctorMapper.updateByPrimaryKey(doctor);
                     count++;
                 }
@@ -974,7 +976,7 @@ public class JsresPhyAssController extends GeneralController {
             for (Map<String, Object> map : list) {
                 if (StringUtil.isNotBlank((String)map.get("sendcertificateTime"))){
                     String sendcertificateTime = (String)map.get("sendcertificateTime");
-                    Long date = DateUtil.appointDaysBetweenTowDate(sendcertificateTime,dayNum);
+                    Long date = com.pinde.core.util.DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum);
                     map.put("endcertificateTime",date.toString());
                 }
             }
@@ -1010,7 +1012,7 @@ public class JsresPhyAssController extends GeneralController {
                     ResTeachPlanDoctor doctor = planDoctorMapper.selectByPrimaryKey(s);
                     doctor.setSendCertificateId(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     doctor.setSendCertificateName("已发放");
-                    doctor.setSendCertificateTime(DateUtil.getCurrDate());
+                    doctor.setSendCertificateTime(com.pinde.core.util.DateUtil.getCurrDate());
                     planDoctorMapper.updateByPrimaryKey(doctor);
                     count++;
                 }
@@ -1147,7 +1149,7 @@ public class JsresPhyAssController extends GeneralController {
             for (Map<String, Object> map : list) {
                 String sendcertificateTime = map.get("sendcertificateTime").toString();
                 String endcertificateTime = map.get("endcertificateTime").toString();
-                String day = DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum).toString();
+                String day = com.pinde.core.util.DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum).toString();
                 sendcertificateTime=sendcertificateTime+"~"+endcertificateTime;
                 map.put("sendcertificateTime",sendcertificateTime);
                 map.put("endcertificateTime",day);
@@ -1198,7 +1200,7 @@ public class JsresPhyAssController extends GeneralController {
             for (Map<String, Object> map : list) {
                 String sendcertificateTime = map.get("sendcertificateTime").toString();
                 String endcertificateTime = map.get("endcertificateTime").toString();
-                String day = DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum).toString();
+                String day = com.pinde.core.util.DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum).toString();
                 sendcertificateTime=sendcertificateTime+"~"+endcertificateTime;
                 map.put("sendcertificateTime",sendcertificateTime);
                 map.put("endcertificateTime",day);
@@ -1281,7 +1283,7 @@ public class JsresPhyAssController extends GeneralController {
                 String sendcertificateTime = map.get("sendCertificateTime").toString();
                 String endcertificateTime = map.get("endCertificateTime").toString();
 
-                String day = DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum).toString();
+                String day = com.pinde.core.util.DateUtil.appointDaysBetweenTowDate(sendcertificateTime, dayNum).toString();
                 planStartTime=planStartTime+"~"+planEndTime;
                 sendcertificateTime=sendcertificateTime+"~"+endcertificateTime;
                 map.put("planStartTime",planStartTime);

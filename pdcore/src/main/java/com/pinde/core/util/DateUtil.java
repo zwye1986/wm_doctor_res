@@ -1,25 +1,94 @@
 package com.pinde.core.util;
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.pdf.freemaker.FreemarkerConfiguration;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.*;
 
-public class DateUtil { 
+public class DateUtil {
+	/**
+	 * 一天中的天数
+	 */
+	public static long millionSecondsOfDay = 86400000;
 	//缺省日期格式
     public static String defDtPtn01 = "yyyyMMddHHmmss";
 	public static String defDtPtn02 = "yyyy-MM-dd HH:mm:ss";
 	public static String defDtPtn04 = "yyyy-MM-dd";
-//	private static FastDateFormat ISO_DATE_FORMAT = DateFormatUtils.ISO_DATE_FORMAT;
+	private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
+
+	/**
+	 * 今天
+	 *
+	 * @return 今天date
+	 */
+	public static Date getToday() {
+		return new Date();
+
+	}
+
+	/**
+	 * 得到两个日期之间的天数,两头不算,取出数据后，可以根据需要再加
+	 *
+	 * @param date1
+	 * @param date2
+	 * @return
+	 * @author lihengjun
+	 */
+	public static int getDay(Date date1, Date date2) {
+		Long d2 = date2.getTime();
+		Long d1 = date1.getTime();
+		return (int) ((d2 - d1) / millionSecondsOfDay);
+	}
+
+	/**
+	 * 根据指定日期格式格式化日期
+	 *
+	 * @param date
+	 * @param formater
+	 * @return
+	 * @author lihengjun
+	 */
+	public static String format(Date date, String formater) {
+		if (date == null)
+			return null;
+
+		SimpleDateFormat sdf = new SimpleDateFormat(formater);
+		return sdf.format(date);
+	}
+
+	/**
+	 * 格式化日期
+	 *
+	 * @param date
+	 * @param formater
+	 * @return
+	 * @author lihengjun
+	 */
+	public static Date parse(String date, String formater) {
+		if (date == null || "".equals(date))
+			return null;
+		SimpleDateFormat sdf = new SimpleDateFormat(formater);
+		Date result = null;
+		try {
+			result = sdf.parse(date);
+		} catch (ParseException e) {
+			logger.error("", e);
+		}
+		return result;
+	}
 	
 	/**
 	 * 格式化日期对象
@@ -39,7 +108,7 @@ public class DateUtil {
 //		try {
 //			date = sdf.parse(str);
 //		} catch (ParseException e) {
-//			e.printStackTrace();
+//			 logger.error("",e);
 //		} 
 //		return date;
 //	}
@@ -52,7 +121,7 @@ public class DateUtil {
 //			date = sdf.parse(str);
 //			
 //		} catch (ParseException e) {
-//			e.printStackTrace();
+//			 logger.error("",e);
 //		} 
 //		return date;
 //	}
@@ -150,13 +219,36 @@ public class DateUtil {
 	 * 获得当月第一天
 	 */
 
-	public static String getFirstDayOfMonth(){
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar   cal_1 = Calendar.getInstance();//获取当前日期
-		cal_1.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天
-		String  firstDay = format.format(cal_1.getTime());
-		return firstDay;
+	public static String getFirstDayOfMonth() {
+		return getFirstDayOfCurrentMonth();
 	}
+
+	public static String getFirstDayOfCurrentMonth() {
+		// 获取当前日期
+		LocalDate currentDate = LocalDate.now();
+		// 获取当前月份的第一天
+		LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
+		// 设置日期格式
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// 格式化并返回字符串
+		return firstDayOfMonth.format(formatter);
+	}
+
+	public static String getLastDayOfMonth() {
+		return getLastDayOfCurrentMonth();
+	}
+
+	public static String getLastDayOfCurrentMonth() {
+		// 获取当前日期
+		LocalDate currentDate = LocalDate.now();
+		// 获取当前月份的最后一天
+		LocalDate lastDayOfMonth = currentDate.withDayOfMonth(currentDate.lengthOfMonth());
+		// 设置日期格式
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// 格式化并返回字符串
+		return lastDayOfMonth.format(formatter);
+	}
+
 	public static String getLastDateOfCurrMonth(){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar   cal_1 = Calendar.getInstance();//获取当前日期
@@ -172,7 +264,7 @@ public class DateUtil {
 		try {
 			cal_1.setTime(format.parse(time));
 		} catch (ParseException e) {
-			e.printStackTrace();
+			 logger.error("",e);
 		}
 		cal_1.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天
 		String  firstDay = format2.format(cal_1.getTime());
@@ -185,7 +277,7 @@ public class DateUtil {
 		try {
 			cal_1.setTime(format.parse(time));
 		} catch (ParseException e) {
-			e.printStackTrace();
+			 logger.error("",e);
 		}
 		cal_1.set(Calendar.DAY_OF_MONTH, cal_1.getActualMaximum(Calendar.DATE));//设置最后一天
 		String  firstDay = format2.format(cal_1.getTime());
@@ -434,10 +526,10 @@ public class DateUtil {
 			Calendar c = Calendar.getInstance();//获得一个日历的实例
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		    Date date = null;
-		    try{
-		         date = sdf.parse(endDate);
+			try {
+				date = sdf.parse(endDate);
 		       }catch(Exception e){
-		    	   e.printStackTrace();
+		    	    logger.error("",e);
 		       }
 		    c.setTime(date);//设置日历时间
 		    c.add(Calendar.MONTH,mInt);	//增加的月数
@@ -592,11 +684,7 @@ public class DateUtil {
 		}
 	}
 	
-	/**
-	 * @param endDate  String 格式yyyy-mm
-	 * @param step 天数 只能为整数
-	 * @return String yyyy-MM
-	 * */
+
 	public static String addMonth(String startMonth,int step){
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.defDtPtn04);
 		SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM");
@@ -1056,7 +1144,7 @@ public class DateUtil {
 //		try {
 //			date = sdf.parse(str);
 //		} catch (ParseException e) {
-//			e.printStackTrace();
+//			 logger.error("",e);
 //		}
 //		return date;
 //	}
@@ -1441,9 +1529,9 @@ public class DateUtil {
             s1 = sdf.parse(starDate1);
             e1 = sdf.parse(endDate1);
             s2 = sdf.parse(startDate2);
-            e2 = sdf.parse(endDate2);
+			e2 = sdf.parse(endDate2);
         } catch (ParseException e) {
-            e.printStackTrace();
+             logger.error("",e);
         }
         if ((s1.compareTo(s2)<=0 && e1.compareTo(s2)>=0 )
                 || (s2.compareTo(s1)<=0 && e2.compareTo(s1)>=0) )
@@ -1469,7 +1557,7 @@ public class DateUtil {
 			d1 = sdf.parse(date1);
 			d2 = sdf.parse(date2);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("",e);
 		}
 		c1.setTime(d1);
 		c2.setTime(d2);

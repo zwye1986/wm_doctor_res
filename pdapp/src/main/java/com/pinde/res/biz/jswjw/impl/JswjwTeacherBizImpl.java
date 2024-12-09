@@ -12,7 +12,10 @@ import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.sci.dao.base.*;
+import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,24 +30,16 @@ import java.util.Map;
 //@Transactional(rollbackFor=Exception.class)
 public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 
+	private static Logger logger = LoggerFactory.getLogger(JswjwTeacherBizImpl.class);
+
+
 	@Resource
 	private SysUserMapper sysUserMapper;
 	@Resource
 	private SysUserExtMapper sysUserExtMapper;
 	@Resource
 	private ResRecMapper recMapper;
-//	@Autowired
-//	private ResRecCampaignRegistryMapper campaignRegistryMapper;
-//	@Autowired
-//	private ResRecCaseRegistryMapper caseRegistryMapper;
-//	@Autowired
-//	private ResRecDiseaseRegistryMapper diseaseRegistryMapper;
-//	@Autowired
-//	private ResRecLanguageRegistryMapper languageRegistryMapper;
-//	@Autowired
-//	private ResRecOperationRegistryMapper operationRegistryMapper;
-//	@Autowired
-//	private ResRecSkillRegistryMapper skillRegistryMapper;
+
 	@Resource
 	private ResDoctorMapper doctorMapper;
 	@Resource
@@ -355,7 +350,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 					}
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return formDataMap;
@@ -560,7 +555,7 @@ public class JswjwTeacherBizImpl implements IJswjwTeacherBiz{
 //							idCsVv = URLDecoder.decode(idCsVv, "UTF-8") ;
 //						if(vss!=null) vss = URLDecoder.decode(vss,"UTF-8") ;
 //					} catch (UnsupportedEncodingException e) {
-//						e.printStackTrace();
+//						 logger.error("",e);
 //					}
 					//开始创建xml子节点
 					Element currEle = root.addElement(key);

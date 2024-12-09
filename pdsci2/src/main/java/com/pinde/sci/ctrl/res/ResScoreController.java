@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResScoreBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.res.GradeDetail4ShiYan;
 import org.slf4j.Logger;
@@ -146,9 +146,9 @@ public class ResScoreController extends GeneralController {
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

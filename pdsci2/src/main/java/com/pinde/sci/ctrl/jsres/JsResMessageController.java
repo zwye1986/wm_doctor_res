@@ -1247,7 +1247,7 @@ public class JsResMessageController extends GeneralController {
             resDoctor.setDoctorStatusName("报名审核中");
             resDoctorBiz.editDoctor(resDoctor);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         ResDoctor doctor = resDoctorBiz.readDoctor(docRecWithBLOBs.getDoctorFlow());
         docRecWithBLOBs.setIsRetrain(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
@@ -1288,7 +1288,7 @@ public class JsResMessageController extends GeneralController {
                             try{
                                 cd.setTime(sdf.parse(recruitDate));
                             }catch(ParseException e){
-                                e.printStackTrace();
+                                logger.error("", e);
                             }
                             cd.add(Calendar.YEAR,trainYear+3);//增加n年
                             String format = sdf.format(cd.getTime());
@@ -1379,7 +1379,7 @@ public class JsResMessageController extends GeneralController {
             resDoctor.setDoctorStatusName("报名审核中");
             resDoctorBiz.editDoctor(resDoctor);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         int result = jsResDoctorRecruitBiz.saveDoctorRecruit(docRecWithBLOBs);
         if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {

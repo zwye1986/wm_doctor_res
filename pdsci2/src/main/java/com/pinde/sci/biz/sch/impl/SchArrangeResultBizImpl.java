@@ -11,33 +11,45 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.excel.enums.NumberEngEnum;
 import com.pinde.core.model.SysDict;
-import com.google.common.collect.Lists;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
-import com.pinde.excelUtils.enums.NumberEngEnum;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.res.*;
+import com.pinde.sci.biz.res.IResDoctorBiz;
+import com.pinde.sci.biz.res.IResDoctorProcessBiz;
+import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.*;
+import com.pinde.sci.biz.sys.ICfgBiz;
+import com.pinde.sci.biz.sys.IDeptBiz;
+import com.pinde.sci.biz.sys.IOrgBiz;
+import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.CfgBizImpl;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.excelListens.SchedulingAuditCheck;
 import com.pinde.sci.excelListens.SchedulingAuditRead;
-import com.pinde.sci.excelListens.model.*;
+import com.pinde.sci.excelListens.model.PbInfoItem;
+import com.pinde.sci.excelListens.model.ResRecItem;
+import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SelectDept;
-import com.pinde.sci.model.jsres.*;
+import com.pinde.sci.model.jsres.ArrangTdVo;
+import com.pinde.sci.model.jsres.LzDeptItem;
+import com.pinde.sci.model.jsres.PbImportDataItem;
+import com.pinde.sci.model.jsres.PbImportDataVo;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.SchArrangeResultExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
@@ -45,12 +57,14 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.dom4j.*;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Example;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -59,7 +73,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -298,7 +315,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			try {
 				month = TimeUtil.getMonthsBetween(map);
 			} catch (ParseException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			String schMonth = String.valueOf(Double.parseDouble(month + ""));
 			result.setSchMonth(schMonth);
@@ -1520,7 +1537,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
                     map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return map;
@@ -2721,7 +2738,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					}
 
 				}catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 					continue;
 				}
 			}
@@ -3283,7 +3300,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				Map<String, Object> map = new HashMap<>();
 //				for (int j = 0; j < colnames.size(); j++) {
 //					Cell cell = r.getCell(j);
-//					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
+//					if (null == cell ||  StringUtil.isBlank(cell.toString().trim())) {
 //						continue;
 //					}
 //					if (r.getCell((short) j).getCellType().getCode() == 1) {
@@ -3309,32 +3326,32 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //						map.put("teacherName",value);
 //					}
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，学员姓名为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，身份证号为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("deptName")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("deptName")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，标准科室为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schDeptName")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("schDeptName")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，轮转科室为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schStartDate")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("schStartDate")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，开始时间为空！");
 //				}
-//				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("schEndDate")))) {
+//				if ( StringUtil.isBlank(String.valueOf(map.get("schEndDate")))) {
 //					throw new RuntimeException("导入失败！第" + i + "行，结束时间为空！");
 //				}
 //				if (map.get("schStartDate").toString().compareTo(map.get("schEndDate").toString())>0){
 //					throw new RuntimeException("导入失败！第" + i + "行，轮转开始时间必须早于结束时间！");
 //				}
 //				//禅道3299 科主任带教老师非必填
-////				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("headName")))) {
+////				if ( StringUtil.isBlank(String.valueOf(map.get("headName")))) {
 ////					throw new RuntimeException("导入失败！第" + i + "行，科主任为空！");
 ////				}
-////				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("teacherName")))) {
+////				if ( StringUtil.isBlank(String.valueOf(map.get("teacherName")))) {
 ////					throw new RuntimeException("导入失败！第" + i + "行，带教老师为空！");
 ////				}
 //				SysUser user = userBiz.findByIdNo(map.get("idNo").toString());
@@ -3503,7 +3520,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				try {
 //					updateResultHaveAfter2(dept.getRecordFlow(),user.getUserFlow(),recContent);
 //				} catch (DocumentException e) {
-//					e.printStackTrace();
+//					 logger.error("",e);
 //				}
 //				succCount++;
 //			}
@@ -3555,7 +3572,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				List<Map<String, Object>> deptList = new ArrayList<>();
 				for (int j = 0; j < colnames.size(); j++) {
 					Cell cell = r.getCell(j);
-					if (null == cell || com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(cell.toString().trim())) {
+                    if (null == cell || StringUtil.isBlank(cell.toString().trim())) {
 						continue;
 					}
 					if (r.getCell((short) j).getCellType().getCode() == 1) {
@@ -3625,11 +3642,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						}
 					}
 				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("doctorName")))) {
 					msg = msg+"第" + i + "行导入失败！学员姓名为空！<br>";
 					continue;
 				}
-				if (com.pinde.sci.ctrl.sch.plan.util.StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
+                if (StringUtil.isBlank(String.valueOf(map.get("idNo")))) {
 					msg = msg+"第" + i + "行导入失败！身份证号为空！<br>";
 					continue;
 				}
@@ -3799,7 +3816,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						try {
 							updateResultHaveAfter2(dept.getRecordFlow(), user.getUserFlow(), recContent);
 						} catch (DocumentException e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 						checkSuccess = true;
 					}
@@ -3948,7 +3965,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				try {
 //					updateResultHaveAfter2(dept.getRecordFlow(), item.getUserFlow(), recContent);
 //				} catch (DocumentException e) {
-//					e.printStackTrace();
+//					 logger.error("",e);
 //				}
 			}
 		}

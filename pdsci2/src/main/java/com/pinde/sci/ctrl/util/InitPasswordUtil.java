@@ -2,7 +2,7 @@ package com.pinde.sci.ctrl.util;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

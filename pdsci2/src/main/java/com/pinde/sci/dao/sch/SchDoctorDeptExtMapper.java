@@ -3,7 +3,9 @@ package com.pinde.sci.dao.sch;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * proj锟斤拷展mapper

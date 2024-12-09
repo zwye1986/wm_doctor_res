@@ -1926,7 +1926,7 @@ public class ResTeacherController extends GeneralController {
 							}
 							recContent = doc.asXML();
 						} catch (Exception e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 					}
 
@@ -1968,7 +1968,7 @@ public class ResTeacherController extends GeneralController {
 								recContent = resRecBiz.getTeaAuditRecContent(recTypeId, singleForm.getItemList(), req,root);
 							}
 						} catch (Exception e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 					}
                     if (StringUtil.isNotBlank(recContent) && (com.pinde.core.common.enums.ResRecTypeEnum.EmergencyCase.getId().equals(rec.getRecTypeId())))
@@ -1982,7 +1982,7 @@ public class ResTeacherController extends GeneralController {
 							}
 							recContent = doc.asXML();
 						} catch (Exception e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 					}
 
@@ -2756,7 +2756,7 @@ public class ResTeacherController extends GeneralController {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return titleFormList;
@@ -3071,8 +3071,8 @@ public class ResTeacherController extends GeneralController {
 //				}else{
 //					return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 //				}
-//			}catch(RuntimeException re) {
-//				re.printStackTrace();
+//			}catch(RuntimeException e) {
+//				logger.error("",e);
 //				return re.getMessage();
 //			}
 //		}
@@ -3144,9 +3144,9 @@ public class ResTeacherController extends GeneralController {
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -5179,9 +5179,9 @@ public class ResTeacherController extends GeneralController {
 				}else{
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

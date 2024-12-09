@@ -26,6 +26,8 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -587,7 +589,7 @@ public class ResDiscipleNoteController extends GeneralController {
                             try {
                                 file.transferTo(newFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + "discipleFiles" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
@@ -668,4 +670,7 @@ public class ResDiscipleNoteController extends GeneralController {
         }
         return result;
     }
+
+    private static Logger logger = LoggerFactory.getLogger(ResDiscipleNoteController.class);
+
 }

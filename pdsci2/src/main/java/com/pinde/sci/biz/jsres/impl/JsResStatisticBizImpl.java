@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
@@ -18,21 +22,18 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.common.util.PasswordHelper;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.ChartExtMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,6 +78,9 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	private ResTeacherTrainingMapper teacherTrainingMapper;
 	@Autowired
 	private SysUserMapper sysUserMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(JsResStatisticBizImpl.class);
+
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
 		SysOrgExample example=new SysOrgExample();
@@ -241,7 +245,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			try {
 				file.transferTo(newFile);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw new RuntimeException("保存文件失败！");
 			}
 
@@ -254,7 +258,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 						imgFile.delete();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 					throw new RuntimeException("删除文件失败！");
 				}
 			}
@@ -292,7 +296,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 							}
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 						throw new RuntimeException("删除图片失败！");
 					}
 				}
@@ -319,7 +323,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 							}
 						}
 					} catch (Exception e) {
-						e.printStackTrace();
+                        logger.error("", e);
 						throw new RuntimeException("删除图片失败！");
 					}
 				}
@@ -924,7 +928,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 				}
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}finally{
 			try {
 				is.close();

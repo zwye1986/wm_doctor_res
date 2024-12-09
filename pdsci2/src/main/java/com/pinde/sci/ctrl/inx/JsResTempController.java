@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -20,14 +22,14 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.common.util.PasswordHelper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +50,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/jsres/temp")
 public class JsResTempController extends GeneralController{
+    private static Logger logger = LoggerFactory.getLogger(JsResTempController.class);
+
 	@Autowired
 	private IUserBiz userBiz;
 	@Autowired
@@ -775,9 +779,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -806,9 +810,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -837,9 +841,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -871,9 +875,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -905,9 +909,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -939,9 +943,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -973,9 +977,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -1064,9 +1068,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -1098,9 +1102,9 @@ public class JsResTempController extends GeneralController{
 				}else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
 				}
-			}catch(RuntimeException re){
-				re.printStackTrace();
-				return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

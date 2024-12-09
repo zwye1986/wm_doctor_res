@@ -1,9 +1,8 @@
 package com.pinde.sci.common.util;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.model.SysSmsLog;
-import com.pinde.core.model.TestPaperExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.SpringUtil;
@@ -15,6 +14,8 @@ import com.pinde.sci.dao.base.SysSmsTemplateMapper;
 import com.pinde.sci.model.mo.SysSmsTemplate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,12 +26,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * 短信发送服务
  *
  */
 public class SMSUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(SMSUtil.class);
+
     /** 用户名常量 */
     public static final String UID = "njpdxx-test";
     /** 用户密码常量 */
@@ -192,13 +195,13 @@ public class SMSUtil {
             System.out.println(result);
             System.out.println("result================");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("编码转换异常");
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("协议使用异常");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("返回结果异常");
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);
@@ -268,13 +271,13 @@ public class SMSUtil {
             System.out.println(result);
             System.out.println("result================");
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("编码转换异常");
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("协议使用异常");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("返回结果异常");
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);
@@ -427,13 +430,13 @@ public class SMSUtil {
             // 返回发送结果
             result = in.readLine().toString();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("编码转换异常");
         } catch (ProtocolException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("协议使用异常");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             logger.info("返回结果异常");
         } finally {
             if (result.startsWith("{\"stat\":\"100")) {
@@ -545,7 +548,7 @@ public class SMSUtil {
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));//构建缓存阅读器
             result = in.readLine();//返回信息
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return -2;//返回结果异常
         } finally {
             if (result.startsWith("{\"stat\":\"100")) {
@@ -591,7 +594,7 @@ public class SMSUtil {
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             result = in.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return "返回结果异常";
         } finally {
             Map<String, String> map = (Map<String, String>)JSON.parse(result);//默认json格式

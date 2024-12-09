@@ -5,17 +5,13 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.UserStatusEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PasswordUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.*;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
 import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromTitle;
-import com.pinde.sci.util.FtpHelperUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -2010,7 +2006,7 @@ public class OscaAppController {
 					root.add(baseRoot);
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 			Element fromScore=root.addElement("fromScore");
 			if(dateMap!=null)
@@ -2121,7 +2117,7 @@ public class OscaAppController {
 		try {
 			Map<String, Map<String, Object>> dateMap = (Map<String, Map<String, Object>>) JSON.parse(jsonData);
 		}catch (Exception e){
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		List<String> datas=new ArrayList<>();
 		datas.add("1");

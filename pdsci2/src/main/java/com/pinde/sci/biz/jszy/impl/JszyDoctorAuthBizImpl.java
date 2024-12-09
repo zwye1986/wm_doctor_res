@@ -10,6 +10,8 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.DoctorAuthMapper;
 import com.pinde.sci.model.mo.DoctorAuth;
 import com.pinde.sci.model.mo.DoctorAuthExample;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -119,7 +121,7 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
                 String ftpFileName=fileName;
                 ftpHelperUtil.uploadFile(localFilePath,ftpDir,ftpFileName);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return map;
@@ -129,4 +131,7 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
     public DoctorAuth readByFlow(String recordFlow) {
         return doctorAuthMapper.selectByPrimaryKey(recordFlow);
     }
+
+    private static Logger logger = LoggerFactory.getLogger(JszyDoctorAuthBizImpl.class);
+
 }

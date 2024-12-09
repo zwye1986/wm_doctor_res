@@ -2,19 +2,22 @@ package com.pinde.sci.biz.sch.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.model.jsres.LzDeptItem;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SchRotationDeptExample;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 

@@ -13,7 +13,7 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.core.common.enums.pub.NurseStatusEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
@@ -30,6 +30,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,6 +83,7 @@ public class ResNurseController extends GeneralController {
     private IResDoctorRecruitBiz recruitBiz;
     @Autowired
     private SysUserMapper sysUserMapper;
+    private static Logger logger = LoggerFactory.getLogger(ResNurseController.class);
 
     @RequestMapping("/index")
     public String index(){
@@ -653,9 +656,9 @@ public class ResNurseController extends GeneralController {
                 } else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            } catch (RuntimeException re) {
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -831,9 +834,9 @@ public class ResNurseController extends GeneralController {
                 } else {
                     return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                 }
-            } catch (RuntimeException re) {
-                re.printStackTrace();
-                return re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                return e.getMessage();
             }
         }
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;

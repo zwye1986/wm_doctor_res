@@ -85,9 +85,9 @@ public class EmailUtil {
 //        try {
 //            sslSend(messageInfo, emailAccount);
 //        } catch (MessagingException e) {
-//            e.printStackTrace();
+//             logger.error("",e);
 //        } catch (IOException e) {
-//            e.printStackTrace();
+//             logger.error("",e);
 //        }
 //    }
 }

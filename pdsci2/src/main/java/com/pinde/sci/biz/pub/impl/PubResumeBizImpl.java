@@ -11,6 +11,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ import java.util.List;
 public class PubResumeBizImpl implements IPubUserResumeBiz{
 	@Autowired
 	private PubUserResumeMapper userResumpMapper;
+    private static Logger logger = LoggerFactory.getLogger(PubResumeBizImpl.class);
 
 	/**
 	 * 获取个人履历
@@ -71,7 +74,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 		try {
 			t = clazz.newInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		if (StringUtil.isNotBlank(xml)) {
 			if(t!=null){
@@ -80,7 +83,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 				try {
 					dom = DocumentHelper.parseText(xml);
 				} catch (DocumentException e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 				Element root = dom.getRootElement();
 				List<Element> elements=root.elements();
@@ -106,7 +109,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 		try {
 			t = clazz.newInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		if(t!=null){
 			//解析xml返回对象
@@ -147,7 +150,7 @@ public class PubResumeBizImpl implements IPubUserResumeBiz{
 			Method setMethod = objClass.getMethod(methedName, String.class);
 			setMethod.invoke(obj, attrValue);
 		}catch(Exception e){
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 }

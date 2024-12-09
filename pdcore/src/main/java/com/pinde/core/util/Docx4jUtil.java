@@ -23,6 +23,8 @@ import org.docx4j.openpackaging.parts.WordprocessingML.HeaderPart;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.relationships.Relationship;
 import org.docx4j.wml.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.tidy.Tidy;
 
 import javax.xml.bind.JAXBElement;
@@ -36,6 +38,7 @@ public final class Docx4jUtil {
 
 	private static final String CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 	static ObjectFactory factory = Context.getWmlObjectFactory();
+    private static Logger logger = LoggerFactory.getLogger(Docx4jUtil.class);
 
 	private static WordprocessingMLPackage getTemplate(File name) throws Docx4JException, FileNotFoundException {
 		WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(name));
@@ -125,7 +128,7 @@ public final class Docx4jUtil {
 						}
 				    }
 				} catch (Exception e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 		}
@@ -439,7 +442,7 @@ public final class Docx4jUtil {
 //			return resultPkg;	
 //			
 //		} catch (Exception e) {
-//			e.printStackTrace();
+//			 logger.error("",e);
 //		} 
 //		return null;
 //	}
@@ -455,7 +458,7 @@ public final class Docx4jUtil {
 			chunk.setId(altChunkRel.getId());
 			main.addObject(chunk);
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 
@@ -535,7 +538,7 @@ public final class Docx4jUtil {
 				//Don't care what type of exporter you use
 			Docx4J.toFO(foSettings, os, Docx4J.FLAG_NONE);
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 				throw e;
 			}
 		}

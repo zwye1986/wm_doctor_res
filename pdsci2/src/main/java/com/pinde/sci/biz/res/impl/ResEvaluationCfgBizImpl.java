@@ -14,6 +14,8 @@ import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationDeptExt;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,9 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     private ResEvaluationDeptMapper evaluationDeptMapper;
     @Autowired
     private ResEvaluationDeptExtMapper evaluationDeptExtMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(ResEvaluationCfgBizImpl.class);
+
 
     @Override
     public int editEvaluationCfgTitle(ResEvaluationCfg evaluationcfg, ResEvaluationCfgTitleForm titleForm) throws Exception {
@@ -230,7 +235,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return null;

@@ -5,6 +5,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorKqBiz;
@@ -19,6 +20,8 @@ import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +49,8 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/jsres/attendanceNew")
 public class AttendanceController extends GeneralController {
+    private static Logger logger = LoggerFactory.getLogger(AttendanceController.class);
+
 
     @Autowired
     private IResOrgAddressBiz orgAddressBiz;
@@ -950,7 +955,7 @@ public class AttendanceController extends GeneralController {
                             try {
                                 file.transferTo(newFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.error("", e);
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath =  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;

@@ -296,7 +296,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 								putMapVal(scoreMap,evalFlow+gk,score);
 							}
@@ -306,7 +306,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 									String scoreS = (String) gradeMap.get("totalScore");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 								putMapVal(scoreMap, evalFlow, score);
 							}else{
@@ -507,7 +507,7 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return gradeMap;
@@ -1020,18 +1020,18 @@ public class ResDeptActivityStatisticsController extends GeneralController {
 					in.close();
 					srcfile[i].delete();//删除服务器上文件
 				} catch (IOException e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 			}
 			out.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}finally {
 			if(out!=null)
 				try {
 					out.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+                    logger.error("", e);
 				}
 		}
 	}

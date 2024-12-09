@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -20,8 +22,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.ResAssessTypeEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.UserInfoExtForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -31,6 +31,8 @@ import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,6 +90,9 @@ public class InstituteController extends GeneralController {
 	private ISchRotationDeptBiz rotationDeptBiz;
 	@Autowired
 	private ISchArrangeResultBiz resultBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(InstituteController.class);
+
 
 	//医师信息管理模块
 	/**
@@ -788,7 +793,7 @@ public class InstituteController extends GeneralController {
 		}
 
 		//当前用户所在机构
-		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
+		String orgFlow;
 		//省厅下基地及协同基地
 
 		String orgFlowRec = GlobalContext.getCurrentUser().getOrgFlow();
@@ -1071,7 +1076,7 @@ public class InstituteController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+                                    logger.error("", e);
 								}
 
 								putMapVal(scoreMap,operUserFlow+gk,score);
@@ -1081,7 +1086,7 @@ public class InstituteController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 
 							putMapVal(scoreMap,operUserFlow,score);
@@ -1895,7 +1900,7 @@ public class InstituteController extends GeneralController {
 								String scoreS = dataMap.get("score");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+                                logger.error("", e);
 							}
 
 							putMapVal(avgMap,key+"_"+gk,score);
@@ -1906,7 +1911,7 @@ public class InstituteController extends GeneralController {
 							String scoreS = (String)o;
 							score = Float.valueOf(scoreS);
 						} catch (Exception e) {
-							e.printStackTrace();
+                            logger.error("", e);
 						}
 
 						putMapVal(avgMap,key+"_"+total,score);

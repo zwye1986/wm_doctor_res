@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
@@ -17,8 +16,6 @@ import com.pinde.sci.dao.base.JsresGraduationApplyLogMapper;
 import com.pinde.sci.dao.base.JsresGraduationApplyMapper;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.ArmyTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -30,6 +27,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +68,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     private IPubUserResumeBiz userResumeBiz;
     @Autowired
     private IResJointOrgBiz jointOrgBiz;
+
+    private static Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
+
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
         JsresGraduationApplyExample example = new JsresGraduationApplyExample();
@@ -586,7 +588,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                         userResumeExt = userResumeBiz.converyToJavaBean(userResume.getUserResume(), UserResumeExtInfoForm.class);
                     }
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 String degreeCategoryName = (String)sd.get("degreeCategoryName");
                 if(StringUtil.isNotBlank(userResumeExt.getDoctorDegreeTypeName())){
@@ -1528,7 +1530,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                         userResumeExt = userResumeBiz.converyToJavaBean(userResume.getUserResume(), UserResumeExtInfoForm.class);
                     }
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 String degreeCategoryName = (String)sd.get("degreeCategoryName");
                 if(StringUtil.isNotBlank(userResumeExt.getDoctorDegreeTypeName())){
@@ -1840,7 +1842,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                         userResumeExt = userResumeBiz.converyToJavaBean(userResume.getUserResume(), UserResumeExtInfoForm.class);
                     }
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 if(null != userResumeExt){
                     String armyType = userResumeExt.getArmyType();

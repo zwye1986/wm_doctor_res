@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.pubedu.impl;
 
+import com.pinde.core.common.enums.pubedu.CourseDetailTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,7 +9,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.StudyCourseDetailInfoMapper;
 import com.pinde.sci.dao.base.StudyCourseDetailMapper;
 import com.pinde.sci.dao.base.StudyCourseMapper;
-import com.pinde.core.common.enums.pubedu.CourseDetailTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -7,6 +7,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.TimeUtil;
+import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
@@ -15,7 +16,7 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.res.ISysMonthlyStatisticsBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
@@ -24,6 +25,8 @@ import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +51,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/statistic")
 public class JsResStatisticController extends GeneralController {
+    private static Logger logger = LoggerFactory.getLogger(JsResStatisticController.class);
+
 	/**
 	 * @author PPBear
 	 */
@@ -2429,9 +2434,9 @@ public class JsResStatisticController extends GeneralController {
                 if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
                     message = com.pinde.core.common.GlobalConstant.UPLOAD_SUCCESSED + "导入" + result + "条记录！";
 				}
-			} catch (RuntimeException re) {
-				re.printStackTrace();
-				message = re.getMessage();
+            } catch (RuntimeException e) {
+                logger.error("", e);
+                message = e.getMessage();
 			}
 		}
 		return message;

@@ -11,6 +11,8 @@ import com.pinde.sci.dao.base.JsresBaseEvaluationMapper;
 import com.pinde.sci.dao.base.JsresBaseEvaluationScoreMapper;
 import com.pinde.sci.dao.jsres.JsresBaseEvaluationExtMapper;
 import com.pinde.sci.model.mo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,9 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     private JsresBaseEvaluationScoreMapper jsresBaseEvaluationScoreMapper;
     @Autowired
     private JsresBaseEvaluationExtMapper jsresBaseEvaluationExtMapper;
+
+    private static Logger logger = LoggerFactory.getLogger(JsResBaseEvaluationBizImpl.class);
+
 
     @Override
     public List<JsresBaseEvaluation> searchBaseEvaluationList(JsresBaseEvaluation jsresBaseEvaluation) {
@@ -171,7 +176,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -184,7 +189,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }

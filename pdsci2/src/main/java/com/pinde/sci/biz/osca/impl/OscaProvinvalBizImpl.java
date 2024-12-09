@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -13,7 +14,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.osca.OscaDoctorAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaSubjectMainExtMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

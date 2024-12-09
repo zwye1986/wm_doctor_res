@@ -207,7 +207,7 @@ public class JswjwTeacherAppController{
 				//为json字符串转码
 				searchData = new String(searchData.getBytes("ISO8859-1") , "UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 			//转换json字符串为map对象
 			searchMap = (Map<String,String>)JSON.parse(searchData);
@@ -1989,7 +1989,7 @@ public class JswjwTeacherAppController{
 					}
 				}
 			} catch (DocumentException e) {
-				e.printStackTrace();
+                logger.error("", e);
 			}
 		}
 		return formDataMap;

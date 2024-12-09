@@ -2,8 +2,13 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.jsres.JsresSendMessageEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ClientIPUtils;
+import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
@@ -16,12 +21,11 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sch.ISchDeptExternalRelBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.*;
-import com.pinde.sci.common.util.*;
+import com.pinde.sci.common.util.DESUtil;
+import com.pinde.sci.common.util.RSAUtils;
+import com.pinde.sci.common.util.SMSUtil;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.core.common.enums.jsres.JsresSendMessageEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.jsres.LoginVo;
 import com.pinde.sci.model.jsres.ResultVo;
 import com.pinde.sci.model.mo.*;
@@ -1023,7 +1027,7 @@ public class InxJsResController extends GeneralController {
                 if (roleFlow.equals(InitConfig.getSysCfg("res_doctor_role_flow"))) {
                     String changePasswordTime = user.getChangePasswordTime();
                     if (StringUtil.isBlank(changePasswordTime)) {
-                        user.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
+                        user.setChangePasswordTime(com.pinde.core.util.DateUtil.getCurrDate());
                         userBiz.updateUser(user);
                     } else {
                         int passwordFailureTime = Integer.valueOf(StringUtil.isBlank(InitConfig.getSysCfg("Password_Failure_Time")) ? "6" : InitConfig.getSysCfg("Password_Failure_Time"));
@@ -1263,7 +1267,7 @@ public class InxJsResController extends GeneralController {
                     }*/
                     String changePasswordTime = user.getChangePasswordTime();
                     if (StringUtil.isBlank(changePasswordTime)) {
-                        user.setChangePasswordTime(com.pinde.sci.common.util.DateUtil.getCurrDate());
+                        user.setChangePasswordTime(com.pinde.core.util.DateUtil.getCurrDate());
                         userBiz.updateUser(user);
                     } else {
                         int passwordFailureTime = Integer.valueOf(StringUtil.isBlank(InitConfig.getSysCfg("Password_Failure_Time")) ? "6" : InitConfig.getSysCfg("Password_Failure_Time"));

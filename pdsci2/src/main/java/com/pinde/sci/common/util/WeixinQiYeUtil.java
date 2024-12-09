@@ -3,10 +3,10 @@ package com.pinde.sci.common.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.pinde.core.util.StringUtil;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.pub.WeixinStatusEnum;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysUser;
 import org.apache.commons.httpclient.HttpClient;
@@ -344,7 +344,7 @@ public class WeixinQiYeUtil {
 			}  
 			request.releaseConnection();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			if (in != null) {  
 				try {  
 					in.close();  
@@ -377,7 +377,7 @@ public class WeixinQiYeUtil {
 			}  
 			request.releaseConnection();
 		} catch (Exception e) {
-			e.printStackTrace();
+            logger.error("", e);
 			if (in != null) {  
 				try {  
 					in.close();  

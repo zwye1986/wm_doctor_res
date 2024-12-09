@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
@@ -23,13 +22,14 @@ import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.util.FtpHelperUtil;
 import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -55,6 +55,8 @@ import java.util.stream.Collectors;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class JswjwBizImpl implements IJswjwBiz {
+
+    private static Logger logger = LoggerFactory.getLogger(JswjwBizImpl.class);
     /**
      * 要求标识
      */
@@ -745,7 +747,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                         uploadExitFormData.put("label", "未上传");
                     }
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             } else {
                 uploadExitFormData.put("label", "未上传");
@@ -1264,7 +1266,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return formDataMap;
@@ -2391,7 +2393,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
             record.setRecContent(doc.asXML());
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         record.setModifyTime(DateUtil.getCurrDateTime());
         record.setModifyUserFlow(userFlow);
@@ -3077,7 +3079,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
             record.setRecContent(doc.asXML());
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         record.setModifyTime(DateUtil.getCurrDateTime());
         record.setModifyUserFlow(dataExt.getUserFlow());
@@ -3159,7 +3161,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 }
 
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
 
         }
@@ -3296,11 +3298,11 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -3434,11 +3436,11 @@ public class JswjwBizImpl implements IJswjwBiz {
             }
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -3521,11 +3523,11 @@ public class JswjwBizImpl implements IJswjwBiz {
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -3609,12 +3611,12 @@ public class JswjwBizImpl implements IJswjwBiz {
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
     @Override
@@ -3667,7 +3669,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 expressMapper.updateByPrimaryKeyWithBLOBs(record);
                 updateResultHaveAfter(record.getSchRotationDeptFlow(), record.getOperUserFlow(), record.getRecContent());
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
 
@@ -4837,7 +4839,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         try {
             updateResultHaveAfter(deptFlow, userFlow, recContent);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -5220,7 +5222,7 @@ public class JswjwBizImpl implements IJswjwBiz {
 //					try {
 //						if(vss!=null) vss = URLDecoder.decode(vss,"UTF-8") ;
 //					} catch (UnsupportedEncodingException e) {
-//						e.printStackTrace();
+//						 logger.error("",e);
 //					}
                     //开始创建xml子节点
                     Element currEle = root.addElement(key);
@@ -5296,7 +5298,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 String totalScore = StringUtil.defaultIfEmpty(doc.getRootElement().elementText("totalScore"), "未评价");
                 gradeMap.put(rec.getDeptFlow() + "_" + rec.getRecTypeId(), totalScore);
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return gradeMap;
@@ -5316,7 +5318,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 gradeMap.put(rec.getProcessFlow(), rec.getRecFlow());
                 gradeMap.put(rec.getProcessFlow() + "TypeId", rec.getRecTypeId());
             } catch (DocumentException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return gradeMap;
@@ -5376,7 +5378,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return null;
@@ -5479,7 +5481,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return gradeMap;
@@ -5515,7 +5517,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return null;
@@ -5555,7 +5557,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return gradeMap;
@@ -5697,10 +5699,10 @@ public class JswjwBizImpl implements IJswjwBiz {
             return imgUrlMap;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return null;
         }
     }
@@ -5779,10 +5781,10 @@ public class JswjwBizImpl implements IJswjwBiz {
             return imgUrlMap;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return null;
         }
     }
@@ -6911,7 +6913,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             try {
                 val = getMethod(s, obj);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
             key += val;
         }
@@ -7396,7 +7398,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                                         reqNum = (float) Math.round(reqNum);
                                     }
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.error("", e);
                                 }
                             }
                         }
@@ -7813,7 +7815,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         try {
             t = clazz.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         if (StringUtil.isNotBlank(xml)) {
             if (t != null) {
@@ -7822,7 +7824,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 try {
                     dom = DocumentHelper.parseText(xml);
                 } catch (DocumentException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
                 Element root = dom.getRootElement();
                 List<Element> elements = root.elements();
@@ -7850,7 +7852,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             Method setMethod = objClass.getMethod(methedName, String.class);
             setMethod.invoke(obj, attrValue);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 
@@ -8411,7 +8413,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -8424,7 +8426,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }
@@ -8466,7 +8468,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             try {
                 file.transferTo(newFile);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
                 throw new RuntimeException("保存文件失败！");
             }
 
@@ -8479,7 +8481,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                         imgFile.delete();
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                     throw new RuntimeException("删除文件失败！");
                 }
             }
@@ -9059,7 +9061,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 try {
                     user.setCretTypeName(CertificateTypeEnum.getNameById(user.getCretTypeId()));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 } finally {
                     user.setCretTypeId(CertificateTypeEnum.Shenfenzheng.getId());
                     user.setCretTypeName(CertificateTypeEnum.Shenfenzheng.getName());
@@ -9778,9 +9780,9 @@ public class JswjwBizImpl implements IJswjwBiz {
             return "userImages/" + dateString + "/" + fileName;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return null;
     }
@@ -9834,9 +9836,9 @@ public class JswjwBizImpl implements IJswjwBiz {
             return "jsresImages" + File.separator + "asseApplication/" + dateString + "/" + fileName;
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return null;
     }
@@ -9946,7 +9948,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
         return gradeMap;
@@ -10092,11 +10094,11 @@ public class JswjwBizImpl implements IJswjwBiz {
                 return imageXML;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         } catch (DocumentException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return "";
     }
@@ -10399,7 +10401,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 setModifyUserFlow.invoke(obj, userFlow);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
     }
 

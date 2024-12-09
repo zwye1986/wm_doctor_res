@@ -4,6 +4,8 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -32,6 +34,7 @@ public class FtpHelper implements Closeable {
    // @Value("#{configProperties['ftp.password']}")
     public String ftpPassWord;
 
+    private static Logger logger = LoggerFactory.getLogger(FtpHelper.class);
 
     public static FtpHelper getInstance() {
         return new FtpHelper();
@@ -59,10 +62,10 @@ public class FtpHelper implements Closeable {
             input.close();
         } catch (ClassNotFoundException e)
         {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         }
         return true;
@@ -162,7 +165,7 @@ public class FtpHelper implements Closeable {
             fis.close();
             return flag;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         } finally {
         }
@@ -208,7 +211,7 @@ public class FtpHelper implements Closeable {
 
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         } finally {
         }
@@ -277,7 +280,7 @@ public class FtpHelper implements Closeable {
             System.out.println("下载ftp文件失败：" + ftpFileName + ";目录：" + ftpDirName);
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         }
     }
@@ -298,7 +301,7 @@ public class FtpHelper implements Closeable {
             System.out.println("删除文件："+flag);
             return flag;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         }
     }
@@ -318,7 +321,7 @@ public class FtpHelper implements Closeable {
             String d = new String(dir.toString().getBytes("GBK"), "iso-8859-1");
             return ftp.removeDirectory(d);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         }
     }
@@ -369,7 +372,7 @@ public class FtpHelper implements Closeable {
             //将目录切换至指定路径
             return ftp.changeWorkingDirectory(d);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("", e);
             return false;
         }
     }
@@ -386,7 +389,7 @@ public class FtpHelper implements Closeable {
                     ftp.logout();
                     ftp.disconnect();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error("", e);
                 }
             }
         }

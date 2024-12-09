@@ -1,7 +1,10 @@
 package com.pinde.core.pdf.freemaker;
 
 import com.pinde.core.pdf.utils.ResourceLoader;
+import com.pinde.core.util.ExcleUtile;
 import freemarker.template.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +19,7 @@ import java.io.IOException;
 public class FreemarkerConfiguration {
 
 	private static Configuration config = null;
+    private static Logger logger = LoggerFactory.getLogger(FreemarkerConfiguration.class);
 
 	/**
 	 * 获取 FreemarkerConfiguration
@@ -46,7 +50,7 @@ public class FreemarkerConfiguration {
 		try {
 			config.setDirectoryForTemplateLoading(new File(path));
 		} catch (IOException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 	}
 

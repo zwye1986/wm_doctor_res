@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -20,7 +19,6 @@ import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResScoreExample.Criteria;
 import com.pinde.sci.model.res.GradeDetail4ShiYan;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;

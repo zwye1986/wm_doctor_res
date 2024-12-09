@@ -262,7 +262,7 @@ public class OrgController extends GeneralController {
 				}
 			}
 		} catch (DocumentException e) {
-			e.printStackTrace();
+            logger.error("", e);
 		}
 		return map;
 	}

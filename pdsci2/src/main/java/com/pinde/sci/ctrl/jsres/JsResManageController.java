@@ -32,7 +32,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.common.util.PasswordHelper;
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.ctrl.res.ResMonthlyReportGlobalControllerClass;
@@ -59,6 +59,8 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -104,6 +106,8 @@ public class JsResManageController extends GeneralController {
 	private final static Pattern mobile_pattern = Pattern.compile(mobile);
 
 	private List<String> acceptedRoleNameList = Arrays.asList("带教老师", "科主任", "科秘", "教学主任", "教学秘书", "督导-评分专家");
+	private static Logger logger = LoggerFactory.getLogger(JsResManageController.class);
+
 
 	@Autowired
 	private ResTeacherTrainingMapper teacherTrainingMapper;
@@ -6296,7 +6300,7 @@ public class JsResManageController extends GeneralController {
 								try {
 									file.transferTo(newFile);
 								} catch (Exception e) {
-									e.printStackTrace();
+									logger.error("", e);
 									throw new RuntimeException("保存文件失败！");
 								}
 								String filePath = File.separator + "returnImg" + File.separator + dateString + File.separator + originalFilename;
@@ -6772,9 +6776,9 @@ public class JsResManageController extends GeneralController {
 					sb.append("其余"+count+"用户信息正常导入系统");
 					return sb.toString();
 				}
-			} catch (RuntimeException re) {
-				re.printStackTrace();
-				return re.getMessage();
+			} catch (RuntimeException e) {
+				logger.error("", e);
+				return e.getMessage();
 			}
 		}
         return com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
@@ -7979,7 +7983,7 @@ public class JsResManageController extends GeneralController {
 								String scoreS = dataMap.get("score");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+								logger.error("", e);
 							}
 
 							putMapVal(avgMap, key + "_" + gk, score);
@@ -7991,7 +7995,7 @@ public class JsResManageController extends GeneralController {
 							String scoreS = (String) o;
 							score = Float.valueOf(scoreS);
 						} catch (Exception e) {
-							e.printStackTrace();
+							logger.error("", e);
 						}
 
 						putMapVal(avgMap, key + "_" + total, score);
@@ -8135,7 +8139,7 @@ public class JsResManageController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+									logger.error("", e);
 								}
 
 								putMapVal(scoreMap, operUserFlow + gk, score);
@@ -8145,7 +8149,7 @@ public class JsResManageController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+								logger.error("", e);
 							}
 
 							putMapVal(scoreMap, operUserFlow, score);
@@ -8259,7 +8263,7 @@ public class JsResManageController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+									logger.error("", e);
 								}
 
 								putMapVal(scoreMap, operUserFlow + gk, score);
@@ -8269,7 +8273,7 @@ public class JsResManageController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+								logger.error("", e);
 							}
 
 							putMapVal(scoreMap, operUserFlow, score);
@@ -11103,7 +11107,7 @@ public class JsResManageController extends GeneralController {
 									String scoreS = dataMap.get("score");
 									score = Float.valueOf(scoreS);
 								} catch (Exception e) {
-									e.printStackTrace();
+									logger.error("", e);
 								}
 
 								putMapVal(scoreMap, operUserFlow + gk, score);
@@ -11113,7 +11117,7 @@ public class JsResManageController extends GeneralController {
 								String scoreS = (String) gradeMap.get("totalScore");
 								score = Float.valueOf(scoreS);
 							} catch (Exception e) {
-								e.printStackTrace();
+								logger.error("", e);
 							}
 
 							putMapVal(scoreMap, operUserFlow, score);
@@ -15970,7 +15974,7 @@ public class JsResManageController extends GeneralController {
 				model.addAttribute("userListScope",role);
 			}
 		}catch (RuntimeException e){
-			e.printStackTrace();
+			logger.error("", e);
 			if(null==e.getMessage()){
 				model.addAttribute("error","null");
 			}else{

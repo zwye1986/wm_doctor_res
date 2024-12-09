@@ -1,6 +1,5 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.model.mo.SysUser;
 import org.slf4j.Logger;

@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch;
 
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.ctrl.sch.plan.domain.Plan;
 import com.pinde.sci.form.sch.SchArrangeForm;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
 import com.pinde.sci.model.mo.SchArrangeResult;
@@ -28,11 +27,6 @@ public interface ISchDoctorSelectDeptBiz {
 
     void delArrangeResult(SchArrangeForm form);
 
-    int findDeptMonthUseNum(String deptFlow, String startDate, String endDate);
-
-    Double getRotationCycleMonthNum(String rotationFlow, String selectYear, String cycleYear, String orgFlow, String sessionNumber);
-
-    void saveArrangeResult(Plan solvedCloudBalance, SchArrangeForm form) throws Exception;
 
     List<SchOrgArrangeResult> readOrgArrangeResult(Map<String, String> param);
 
