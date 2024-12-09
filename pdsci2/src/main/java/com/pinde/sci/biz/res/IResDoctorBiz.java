@@ -1,7 +1,9 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.sci.excelListens.model.ResRecItem;
-import com.pinde.sci.form.hbres.*;
+import com.pinde.sci.form.hbres.ExtInfoForm;
+import com.pinde.sci.form.hbres.ReplenishInfoForm;
+import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
@@ -13,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author tiger

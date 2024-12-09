@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

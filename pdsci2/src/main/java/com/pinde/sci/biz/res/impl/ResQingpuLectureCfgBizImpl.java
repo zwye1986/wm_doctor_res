@@ -1,19 +1,13 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResQingpuLectureCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.QingpuLectureEvalCfgMapper;
-import com.pinde.core.common.enums.DeptActivityItemTypeEnum;
-import com.pinde.sci.form.res.QingpuLectureCfgExt;
 import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
-import com.pinde.sci.form.res.QingpuLectureCfgTitleExt;
 import com.pinde.sci.model.mo.QingpuLectureEvalCfg;
 import com.pinde.sci.model.mo.QingpuLectureEvalCfgExample;
-import com.pinde.sci.model.mo.SysUser;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

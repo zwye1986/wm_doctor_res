@@ -7,7 +7,6 @@ import com.pinde.sci.model.jsres.DoctorSignup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 //@Transactional(rollbackFor = Exception.class)

@@ -1,16 +1,18 @@
 package com.pinde.sci.ctrl.inx;
 
+import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
-import com.pinde.sci.biz.jsres.impl.JsResSupervisioBizImpl;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.SessionData;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysUser;

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.google.common.collect.Lists;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -22,7 +23,6 @@ import com.pinde.sci.dao.res.ResAppealExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
-import com.pinde.core.common.enums.*;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResAppealExample.Criteria;

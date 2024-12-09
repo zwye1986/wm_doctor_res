@@ -1,9 +1,10 @@
 package com.pinde.sci.biz.recruit.impl;
 
+import com.pinde.core.common.enums.recruit.RecruitOperEnum;
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
@@ -12,8 +13,6 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.core.common.enums.recruit.RecruitOperEnum;
-import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoExample;
 import com.pinde.sci.model.mo.RecruitInfoLog;

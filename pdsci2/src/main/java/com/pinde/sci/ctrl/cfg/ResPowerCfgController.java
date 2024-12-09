@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.cfg;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResPowerCfgBiz;

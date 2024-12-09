@@ -1,6 +1,5 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.sci.model.mo.SysUser;
 
 import javax.servlet.http.HttpServletRequest;

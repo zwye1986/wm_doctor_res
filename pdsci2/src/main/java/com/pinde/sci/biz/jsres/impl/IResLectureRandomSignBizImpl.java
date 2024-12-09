@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.PkUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResLectureRandomSignBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.ResLectureRandomScanMapper;
 import com.pinde.sci.dao.base.ResLectureRandomSignMapper;
 import com.pinde.sci.dao.res.ResLectureInfoExtMapper;

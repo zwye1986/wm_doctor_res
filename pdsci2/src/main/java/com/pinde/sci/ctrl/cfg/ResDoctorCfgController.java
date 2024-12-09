@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.cfg;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;

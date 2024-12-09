@@ -1,6 +1,5 @@
 package com.pinde.sci.common.util;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.StringUtil;
 
 /**

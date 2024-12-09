@@ -6,7 +6,6 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResBaseBiz;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
 import com.pinde.sci.biz.pub.IFileBiz;

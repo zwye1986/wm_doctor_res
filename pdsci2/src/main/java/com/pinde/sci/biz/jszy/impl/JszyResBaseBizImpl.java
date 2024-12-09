@@ -2,7 +2,6 @@ package com.pinde.sci.biz.jszy.impl;
 
 
 import com.pinde.core.util.*;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jszy.IJszyResBaseBiz;
 import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;

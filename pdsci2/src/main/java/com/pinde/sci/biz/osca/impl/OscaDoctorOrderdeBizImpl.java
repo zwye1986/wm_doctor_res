@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.osca.impl;
 
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorOrderdeBiz;
 import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
@@ -8,7 +9,6 @@ import com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaSubjectMainExtMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;

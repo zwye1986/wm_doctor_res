@@ -1,17 +1,16 @@
 package com.pinde.sci.biz.jszy.impl;
 
 
-import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.JsResTrainYearEnum;
+import com.pinde.core.common.enums.JszyBaseStatusEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
 import com.pinde.sci.biz.jszy.IJszyResDoctorRecruitBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;

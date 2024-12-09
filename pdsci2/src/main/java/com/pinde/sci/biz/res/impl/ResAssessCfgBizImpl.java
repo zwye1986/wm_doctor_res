@@ -1,16 +1,14 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.util.DateUtil;
+import com.pinde.core.common.enums.ResAssessEvalTypeEnum;
+import com.pinde.core.common.enums.ResAssessScoreTypeEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResAssessCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResAssessCfgMapper;
-import com.pinde.core.common.enums.ResAssessEvalTypeEnum;
-import com.pinde.core.common.enums.ResAssessScoreTypeEnum;
-import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;

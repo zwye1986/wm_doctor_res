@@ -1,4 +1,3 @@
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@include file="/jsp/common/doctype.jsp" %>

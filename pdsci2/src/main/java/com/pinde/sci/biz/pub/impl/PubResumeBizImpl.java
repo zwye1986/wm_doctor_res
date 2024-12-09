@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.pub.impl;
 
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.common.GeneralMethod;

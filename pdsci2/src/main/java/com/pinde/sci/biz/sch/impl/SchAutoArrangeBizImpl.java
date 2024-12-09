@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

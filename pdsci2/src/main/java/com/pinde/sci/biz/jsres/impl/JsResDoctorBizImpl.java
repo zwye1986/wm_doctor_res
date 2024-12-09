@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
@@ -18,9 +21,6 @@ import com.pinde.sci.dao.base.ResDoctorProcessEvalConfigMapper;
 import com.pinde.sci.dao.base.ResJointOrgMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorExtMapper;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
-import com.pinde.core.common.enums.pub.UserNationEnum;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.BackTrainForm;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

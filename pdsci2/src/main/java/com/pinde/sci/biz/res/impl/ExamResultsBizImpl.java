@@ -8,7 +8,6 @@ import com.pinde.sci.model.mo.ExamResults;
 import com.pinde.sci.model.mo.ExamResultsExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;

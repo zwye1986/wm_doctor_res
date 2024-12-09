@@ -1,6 +1,5 @@
 package com.pinde.sci.biz.sys.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ICfgBiz;

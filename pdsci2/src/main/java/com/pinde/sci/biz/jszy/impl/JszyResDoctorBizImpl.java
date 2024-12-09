@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
@@ -10,7 +13,6 @@ import com.pinde.sci.biz.jszy.IJszyResDoctorRecruitBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
-import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
@@ -20,15 +22,11 @@ import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jszy.JszyResDoctorExtMapper;
 import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
-import com.pinde.core.common.enums.pub.UserNationEnum;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
-
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;

@@ -1,8 +1,5 @@
 package com.pinde.sci.biz.sys.impl;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.OrgLevelEnum;
-import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,7 +11,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.core.common.enums.ResOrgLevelEnum;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.springframework.beans.factory.annotation.Autowired;

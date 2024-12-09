@@ -2,7 +2,6 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -15,8 +14,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper;
 import com.pinde.sci.dao.res.ResDocotrDelayTeturnExtMapper;
-import com.pinde.core.common.enums.ResBaseStatusEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;

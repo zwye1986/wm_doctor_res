@@ -1,10 +1,11 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
@@ -21,8 +22,6 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.core.common.PasswordHelper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;

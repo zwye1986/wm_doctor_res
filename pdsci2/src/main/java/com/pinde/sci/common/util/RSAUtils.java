@@ -1,6 +1,5 @@
 package com.pinde.sci.common.util;
 
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;

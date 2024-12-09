@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.AbsenceTypeEnum;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.Docx4jUtil;
@@ -16,7 +15,6 @@ import com.pinde.sci.biz.sch.ISchRotationDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.core.common.enums.*;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;

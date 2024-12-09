@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.util.*;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.biz.sch.*;

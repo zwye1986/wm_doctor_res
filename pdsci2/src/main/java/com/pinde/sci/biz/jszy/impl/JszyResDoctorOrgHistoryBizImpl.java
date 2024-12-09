@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 
 import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -18,7 +19,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.jszy.JszyResDoctorOrgHistoryExtMapper;
-import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample.Criteria;

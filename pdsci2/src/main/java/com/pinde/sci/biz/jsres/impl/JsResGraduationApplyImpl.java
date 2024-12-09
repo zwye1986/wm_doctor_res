@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.DictTypeEnum;
-import com.pinde.core.util.DateUtil;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
@@ -18,8 +16,6 @@ import com.pinde.sci.dao.base.JsresGraduationApplyLogMapper;
 import com.pinde.sci.dao.base.JsresGraduationApplyMapper;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.ArmyTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;

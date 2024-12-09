@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.pub.impl;
 
 
+import com.pinde.core.common.enums.sys.MsgTypeEnum;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,7 +10,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.SMSUtil;
 import com.pinde.sci.dao.base.PubMsgMapper;
-import com.pinde.core.common.enums.sys.MsgTypeEnum;
 import com.pinde.sci.model.mo.PubMsg;
 import com.pinde.sci.model.mo.PubMsgExample;
 import org.slf4j.Logger;

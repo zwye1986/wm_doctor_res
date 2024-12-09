@@ -1,6 +1,4 @@
 <%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>

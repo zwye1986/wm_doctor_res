@@ -70,7 +70,7 @@
 		<url-pattern>/jsres/doctor/uploadIdCardFile</url-pattern>
 		<url-pattern>/jsres/doctor/uploadFile</url-pattern>
 		<url-pattern>/jsres/doctor/uploadUserHeadPortrait</url-pattern>
-	</filter-mapping>
+	</filter-mapping><!--
 
 
 	<filter>
@@ -90,7 +90,7 @@
 	<filter-mapping>
 	       <filter-name>CompressingFilter</filter-name>
 	       <url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping>-->
 	<filter>
    		<filter-name>multipartFilter</filter-name>  
    		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>  

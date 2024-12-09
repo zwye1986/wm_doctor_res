@@ -5,7 +5,6 @@ import com.pinde.sci.dao.base.PersonnelChangeReportMapper;
 import com.pinde.sci.model.mo.PersonnelChangeReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -7,7 +9,6 @@ import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.*;
-import com.pinde.sci.biz.jsres.impl.JsResSupervisioBizImpl;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResAssessCfgBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -21,8 +22,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.ResAssessTypeEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.UserInfoExtForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -794,7 +793,7 @@ public class InstituteController extends GeneralController {
 		}
 
 		//当前用户所在机构
-		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
+		String orgFlow;
 		//省厅下基地及协同基地
 
 		String orgFlowRec = GlobalContext.getCurrentUser().getOrgFlow();

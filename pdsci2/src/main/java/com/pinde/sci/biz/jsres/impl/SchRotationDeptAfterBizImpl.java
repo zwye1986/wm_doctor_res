@@ -2,6 +2,14 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.GeneralEnum;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.ScoreStatusEnum;
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -16,21 +24,9 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.core.common.PasswordHelper;
-import com.pinde.sci.ctrl.jsres.JsResHeadDeptController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.core.common.enums.osca.DoctorScoreEnum;
-import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
-import com.pinde.core.common.enums.osca.ScoreStatusEnum;
-import com.pinde.core.common.enums.pub.UserNationEnum;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.model.mo.*;
-import com.sun.image.codec.jpeg.ImageFormatException;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
@@ -264,96 +260,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
         return null;
     }
 
-    public static void main(String[] args) throws ImageFormatException, IOException {
 
-        try {
-            String oldDirString="C:\\Users\\pdkj\\Desktop\\test2";
-            String copyDirString=oldDirString+"\\copy";
-            String tempDirString=oldDirString+"\\temp";
-            File oldDir=new File(oldDirString);
-            File newDir=new File(copyDirString);
-            if(!newDir.exists())
-            {
-                newDir.mkdirs();
-            }
-            File tempDir=new File(tempDirString);
-            if(!tempDir.exists())
-            {
-                tempDir.mkdirs();
-            }
-            if(oldDir!=null&&oldDir.exists())
-            {
-                for(File oldFile:oldDir.listFiles())
-                {
-                    if(!oldFile.isDirectory())
-                    {
-                        File newFile=new File(copyDirString+"\\"+oldFile.getName());
-                        File tempFile=new File(tempDirString+"\\"+oldFile.getName());
-                        copyImage(oldFile,newFile,tempFile);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            logger.error("", e);
-        }
-    }
-    private static void copyImage(File oldFile, File newFile, File tempFile) throws Exception {
-
-        long bytesum = -1;
-
-        int min = 16 * 1024;
-        int max = 45 * 1024;
-
-        byte[] data = null;  //真正要用到的是FileInputStream类的read()方法
-        if (!oldFile.equals(tempFile)) {
-            InputStream inStream = new FileInputStream(oldFile); //读入原文件
-            FileOutputStream tfs = new FileOutputStream(tempFile);//输出临时文件
-
-            data = new byte[inStream.available()];    //in.available()是得到文件的字节数
-            inStream.read(data);    //把文件的字节一个一个地填到bytes数组中
-            tfs.write(data, 0, data.length);
-            inStream.close();
-            tfs.close();
-            bytesum = data.length;
-        } else {
-            InputStream inStream = new FileInputStream(tempFile); //读入原文件
-            data = new byte[inStream.available()];    //in.available()是得到文件的字节数
-            inStream.read(data);    //把文件的字节一个一个地填到bytes数组中
-            inStream.close();
-            bytesum = data.length;
-        }
-        if (bytesum > 0 && (bytesum < min || bytesum > max)) {
-            if (bytesum > max) {
-                FileOutputStream fos = new FileOutputStream(tempFile);
-                //调用PicZoom类的静态方法zoom对原始图像进行缩放。
-                BufferedImage buffImg = shrinkZoom(data);
-                //创建JPEG图像编码器，用于编码内存中的图像数据到JPEG数据输出流。
-                JPEGImageEncoder jpgEncoder = JPEGCodec.createJPEGEncoder(fos);
-                //编码BufferedImage对象到JPEG数据输出流。
-                jpgEncoder.encode(buffImg);
-                fos.flush();
-                fos.close();
-                bytesum = -1;
-                copyImage(tempFile, newFile, tempFile);
-            } else if (bytesum < min) {
-                FileOutputStream fos = new FileOutputStream(tempFile);
-                //调用PicZoom类的静态方法zoom对原始图像进行缩放。
-                BufferedImage buffImg = magnifyZoom(data);
-                //创建JPEG图像编码器，用于编码内存中的图像数据到JPEG数据输出流。
-                JPEGImageEncoder jpgEncoder = JPEGCodec.createJPEGEncoder(fos);
-                //编码BufferedImage对象到JPEG数据输出流。
-                jpgEncoder.encode(buffImg);
-                fos.flush();
-                fos.close();
-                bytesum = -1;
-                copyImage(tempFile, newFile, tempFile);
-            }
-        } else {
-            FileOutputStream fs = new FileOutputStream(newFile);//输出文件
-            fs.write(data, 0, data.length);
-            fs.close();
-        }
-    }
 
     //放大图片
     private static BufferedImage magnifyZoom(byte[] imageData) {

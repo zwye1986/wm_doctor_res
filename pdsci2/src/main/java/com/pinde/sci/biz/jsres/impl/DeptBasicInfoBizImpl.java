@@ -1,13 +1,12 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IDeptBasicInfoBiz;
-import com.pinde.sci.biz.jsres.IJsResDeptManagementBiz;
 import com.pinde.sci.biz.jsres.IResBaseSpeDeptBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
@@ -15,7 +14,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.util.StringUtil;
 import com.pinde.sci.dao.base.ResBaseSpeDeptDataMapper;
 import com.pinde.sci.dao.base.ResBaseSpeDeptInfoMapper;
 import com.pinde.sci.dao.base.ResBaseSpeDeptMapper;

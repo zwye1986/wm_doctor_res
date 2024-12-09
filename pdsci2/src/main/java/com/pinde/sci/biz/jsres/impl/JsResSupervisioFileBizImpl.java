@@ -1,12 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResSupervisioFileBiz;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.ctrl.jsres.JsResHeadDeptController;
 import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
 import com.pinde.sci.model.mo.JsresSupervisioFile;
 import com.pinde.sci.model.mo.JsresSupervisioFileExample;

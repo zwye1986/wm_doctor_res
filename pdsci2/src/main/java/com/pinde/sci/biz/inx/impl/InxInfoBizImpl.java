@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.inx.impl;
 
+import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.InxColumnMapper;
 import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
-import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.sci.form.inx.InxInfoForm;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.InxInfoExample;
