@@ -230,14 +230,14 @@ function changeOrgFlow(obj){
 	 var social=true;
 	 var graduate=false;
 	 $(".docType:checked").each(function(){
-		 if($(this).val()=="${jsResDocTypeEnumCompany.id}"){
+		 if($(this).val()=="${resDocTypeEnumCompany.id}"){
 			 result=1;
 			 company=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumSocial.id}"){
+		 if($(this).val()=="${resDocTypeEnumSocial.id}"){
 			 social=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumGraduate.id}"){
+		 if($(this).val()=="${resDocTypeEnumGraduate.id}"){
 			 graduate=true;
 		 }
 	 });

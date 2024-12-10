@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 import com.pinde.core.common.enums.*;
 import com.pinde.core.jspform.ItemGroupData;
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.Docx4jUtil;
@@ -1754,7 +1755,7 @@ public class ResRecController extends GeneralController {
 
 	@RequestMapping(value="/saveDeptEval",method={RequestMethod.POST})
 	@ResponseBody
-	public String saveDeptEval(ResSchProcessExpress deptEval,String cfgFlow,String operUserFlow,String roleFlag,HttpServletRequest request) throws DocumentException {
+    public String saveDeptEval(ResSchProcessExpress deptEval, String cfgFlow, String operUserFlow, String roleFlag, HttpServletRequest request) throws DocumentException {
 		String recContent = createGradeXml(request.getParameterMap(),roleFlag);
 		String currTime = DateUtil.getCurrDateTime();
 		SysUser user = GlobalContext.getCurrentUser();

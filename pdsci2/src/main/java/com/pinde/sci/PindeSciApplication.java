@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration;
 import org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration;
 import org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.*;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
@@ -25,7 +23,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = {"com.pinde.sci", "com.pinde.core"})
 @PropertySource(value = {"classpath:jdbc.properties", "classpath:pdsci.properties"/*, "classpath:log4j.properties", "classpath:sso.properties"*/}, ignoreResourceNotFound = true)
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
-@MapperScan({"com.pinde.sci.dao.**"})
+@MapperScan({"com.pinde.sci.dao.**", "com.pinde.core.common.sci.dao.**"})
 @Configuration
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "jsres-pdsci")
 public class PindeSciApplication extends SpringBootServletInitializer {

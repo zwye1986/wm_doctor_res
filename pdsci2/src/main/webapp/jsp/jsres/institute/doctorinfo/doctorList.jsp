@@ -261,7 +261,7 @@ function changeOrgFlow(obj){
  function changeCheckBox(obj){
 	 var result=0;
 	 $(".docType:checked").each(function(){
-		 if($(this).val()=="${jsResDocTypeEnumCompany.id}"){
+		 if($(this).val()=="${resDocTypeEnumCompany.id}"){
 			 result=1;
 		 }
 	 });

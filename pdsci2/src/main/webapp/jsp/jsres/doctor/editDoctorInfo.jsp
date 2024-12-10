@@ -293,7 +293,7 @@
 		var nameResult = 0;
 		var workOrgName = $("#workOrgName").val();
 		var personType = $('input:radio[name="doctor.doctorTypeId"]:checked').val();
-		if("${jsResDocTypeEnumGraduate.id}"==personType){
+		if("${resDocTypeEnumGraduate.id}"==personType){
 			<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
 			if ("${dict.dictName}" == workOrgName) {
 				nameResult = 1;
@@ -307,7 +307,7 @@
 			}
 		}
 		nameResult = 0;
-		if ("${jsResDocTypeEnumCompanyEntrust.id}" == personType || "${jsResDocTypeEnumCompany.id}" == personType) {
+		if ("${resDocTypeEnumCompanyEntrust.id}" == personType || "${resDocTypeEnumCompany.id}" == personType) {
 			<c:forEach items="${dictTypeEnumWorkOrgList}" var="dict">
 			if ("${dict.dictName}" == workOrgName) {
 				nameResult = 1;
@@ -664,13 +664,13 @@
 
 	function changeWorkAdress(doctorTypeId) {
 
-		if (doctorTypeId == "${jsResDocTypeEnumCompanyEntrust.id}") {
+		if (doctorTypeId == "${resDocTypeEnumCompanyEntrust.id}") {
 			$(".workUniteCreditCode").show();
 		} else {
 			$("#workUniteCreditCode").val("");
 			$(".workUniteCreditCode").hide();
 		}
-		if (doctorTypeId == "${jsResDocTypeEnumCompany.id}" || doctorTypeId == "${jsResDocTypeEnumCompanyEntrust.id}") {
+		if (doctorTypeId == "${resDocTypeEnumCompany.id}" || doctorTypeId == "${resDocTypeEnumCompanyEntrust.id}") {
 			if ($("#Td").is(":hidden")) {
 				$("#medicalHeaithOrgIdTd").attr("colspan", 4);
 			} else {
@@ -682,7 +682,7 @@
 			$("#doctorTypeNameTd").removeAttr("colspan");
 // 		changeOrgLevel("${userResumeExt.medicalHeaithOrgId}");
 		}
-		if (doctorTypeId == "${jsResDocTypeEnumSocial.id}") {
+		if (doctorTypeId == "${resDocTypeEnumSocial.id}") {
 			$(".school").hide();
 			$(".hospital").hide();
 			$(".medical").hide();
@@ -696,7 +696,7 @@
 			$("#orgLevel").val("");
 			$("#doctorTypeNameTd").attr("colspan", 4);
 		}
-		if (doctorTypeId == "${jsResDocTypeEnumGraduate.id}") {
+		if (doctorTypeId == "${resDocTypeEnumGraduate.id}") {
 			$(".address").hide();
 			$(".hospital").hide();
 			$(".address").val("");
@@ -862,16 +862,16 @@
 
 	function changeTitle() {
 		$(".doctorType").each(function () {
-			if ($(this).text() == "${jsResDocTypeEnumCompany.name}") {
+			if ($(this).text() == "${resDocTypeEnumCompany.name}") {
 				$(this).attr("title", "已落实工作岗位参加住院医师规范化培训的人员");
 			}
-			if ($(this).text() == "${jsResDocTypeEnumCompanyEntrust.name}") {
+			if ($(this).text() == "${resDocTypeEnumCompanyEntrust.name}") {
 				$(this).attr("title", "已落实工作岗位参加住院医师规范化培训的人员");
 			}
-			if ($(this).text() == "${jsResDocTypeEnumSocial.name}") {
+			if ($(this).text() == "${resDocTypeEnumSocial.name}") {
 				$(this).attr("title", "未落实工作岗位参加住院医师规范化培训的人员");
 			}
-			if ($(this).text() == "${jsResDocTypeEnumGraduate.name}") {
+			if ($(this).text() == "${resDocTypeEnumGraduate.name}") {
 				$(this).attr("title", "考入高等医学院校临床专业学位硕士研究生的在校学生");
 			}
 		});
@@ -929,16 +929,16 @@
 		var school = $("#psxx").val();
 		var org = $("#psdw").val();
 		var personType = $('input:radio[name="doctor.doctorTypeId"]:checked').val();
-		if (personType == "${jsResDocTypeEnumCompany.id}") {
+		if (personType == "${resDocTypeEnumCompany.id}") {
 			$("#workOrgName").val(org);
 		}
-		if (personType == "${jsResDocTypeEnumCompanyEntrust.id}") {
+		if (personType == "${resDocTypeEnumCompanyEntrust.id}") {
 			$("#workOrgName").val(org);
 		}
-		if (personType == "${jsResDocTypeEnumGraduate.id}") {
+		if (personType == "${resDocTypeEnumGraduate.id}") {
 			$("#workOrgName").val(school);
 		}
-		if (personType == "${jsResDocTypeEnumSocial.id}") {
+		if (personType == "${resDocTypeEnumSocial.id}") {
 			$("#workOrgName").val("");
 		}
 	}
@@ -947,16 +947,16 @@
 		var school = obj.value;
 		var org = $("#psdw").val();
 		var personType = $('input:radio[name="doctor.doctorTypeId"]:checked').val();
-		if (personType == "${jsResDocTypeEnumCompany.id}") {
+		if (personType == "${resDocTypeEnumCompany.id}") {
 			$("#workOrgName").val(org);
 		}
-		if (personType == "${jsResDocTypeEnumCompanyEntrust.id}") {
+		if (personType == "${resDocTypeEnumCompanyEntrust.id}") {
 			$("#workOrgName").val(org);
 		}
-		if (personType == "${jsResDocTypeEnumGraduate.id}") {
+		if (personType == "${resDocTypeEnumGraduate.id}") {
 			$("#workOrgName").val(school);
 		}
-		if (personType == "${jsResDocTypeEnumSocial.id}") {
+		if (personType == "${resDocTypeEnumSocial.id}") {
 			$("#workOrgName").val("");
 		}
 	}
@@ -1662,48 +1662,51 @@
 							</c:forEach>&nbsp;&#12288;
 						</c:if>
 					</td>
-					<th class="school"><span class="red">*</span>派送学校：</th>
-					<td class="school" colspan="2">
 
-						<select class="select  validate[required]"  style="width: 160px" onchange="checkWorkOrgName(this);">
-							<option value="">请选择</option>
-							<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
-								<option value="${dict.dictName}"
-										<c:if test="${doctor.workOrgName eq dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
-							</c:forEach>
-						</select>
-						<%--<input id="psxx" value="${doctor.workOrgName}" class="toggleView input validate[required]"
-							   type="text" onchange="changeOrg();"/>
-						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
-							<div class="boxHome psxx" id="psxxSel"
-								 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumGraduate.id}">
+						<th class="school"><span class="red">*</span>派送学校：</th>
+						<td class="school" colspan="2">
+
+							<select class="select  validate[required]"  style="width: 160px" onchange="checkWorkOrgName(this);">
+								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
-									<p class="item psxx" flow="${dict.dictId}" value="${dict.dictName}"
-									   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
+									<option value="${dict.dictName}"
+											<c:if test="${doctor.workOrgName eq dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
 								</c:forEach>
-							</div>
-						</div>&nbsp;&nbsp;
-						--%>
-						<input type="hidden" id="school" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<th class="address" id="address"><span class="red">*</span>派送单位：</th>
-					<td colspan="4" class="address">
-						<input id="psdw" value="${doctor.workOrgName}" class="toggleView input validate[required]"
-							   type="text" onchange="changeOrg();"/>
-						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
-							<div class="boxHome psdw" id="psdwSel"
-								 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-								<c:forEach items="${dictTypeEnumWorkOrgList}" var="dict">
-									<p class="item psdw" flow="${dict.dictId}" value="${dict.dictName}"
-									   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
-								</c:forEach>
-							</div>
-						</div>&nbsp;&nbsp;
-						<input type="hidden" id="work" value=""/>
-						<input type="hidden" id="workOrgName" name="doctor.workOrgName" value="${doctor.workOrgName}"/>
-					</td>
+							</select>
+							<%--<input id="psxx" value="${doctor.workOrgName}" class="toggleView input validate[required]"
+								   type="text" onchange="changeOrg();"/>
+							<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
+								<div class="boxHome psxx" id="psxxSel"
+									 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+									<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
+										<p class="item psxx" flow="${dict.dictId}" value="${dict.dictName}"
+										   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
+									</c:forEach>
+								</div>
+							</div>&nbsp;&nbsp;
+							--%>
+							<input type="hidden" id="school" value=""/>
+						</td>
+					</c:if>
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumCompanyEntrust.id}">
+						<th class="address" id="address"><span class="red">*</span>派送单位：</th>
+						<td colspan="4" class="address">
+							<input id="psdw" value="${doctor.workOrgName}" class="toggleView input validate[required]"
+								   type="text" onchange="changeOrg();"/>
+							<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
+								<div class="boxHome psdw" id="psdwSel"
+									 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+									<c:forEach items="${dictTypeEnumWorkOrgList}" var="dict">
+										<p class="item psdw" flow="${dict.dictId}" value="${dict.dictName}"
+										   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
+									</c:forEach>
+								</div>
+							</div>&nbsp;&nbsp;
+							<input type="hidden" id="work" value=""/>
+							<input type="hidden" id="workOrgName" name="doctor.workOrgName" value="${doctor.workOrgName}"/>
+						</td>
+					</c:if>
 				</tr>
 				<tr class="workUniteCreditCode" style="display: none;">
 					<th class="address"><span class="red">*</span>工作单位：</th>

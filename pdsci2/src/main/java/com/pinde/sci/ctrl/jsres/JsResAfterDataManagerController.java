@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -16,7 +17,6 @@ import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -135,7 +135,7 @@ public class JsResAfterDataManagerController extends GeneralController {
 //                    if((doctor.getOrgFlow().equals(orgFlow1)) || (orgFlow1.equals(secondOrgFlow) && "1".equals(baseFlag))) {
                     if((doctor.getOrgFlow().equals(orgFlow1)) || (orgFlow1.equals(secondOrgFlow))) {
                         List<ResDoctorSchProcess> processes = afterBiz.queryProcess(userCode);
-                        Map<String,ResSchProcessExpress> expressMap=new HashMap<>();
+                        Map<String, ResSchProcessExpress> expressMap = new HashMap<>();
                         List<String> recTypeIds=new ArrayList<>();
                         recTypeIds.add(AfterRecTypeEnum.AfterEvaluation.getId());
                         recTypeIds.add(AfterRecTypeEnum.DOPS.getId());

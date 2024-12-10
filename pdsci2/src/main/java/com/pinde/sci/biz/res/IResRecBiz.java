@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.*;
@@ -263,7 +264,7 @@ public interface IResRecBiz {
 	List<ResRec> searchRecByProcessWithBLOBs(String processFlow,
 			String recTypeId);
 	List<ResSchProcessExpress> searchRecByProcessWithBLOBs(String processFlow,
-			List<String> recTypeIds);
+                                                           List<String> recTypeIds);
 	ResSchProcessExpress readResSchProcessExpress(String recFlow);
 	
 	List<ResRec> searchRecByProcess(String processFlow,String doctorFlow);

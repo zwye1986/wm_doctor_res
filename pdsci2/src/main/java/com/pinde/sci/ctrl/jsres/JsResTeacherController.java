@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;
@@ -2419,6 +2420,7 @@ public class JsResTeacherController extends GeneralController{
 		teacherComment=teacherComment.replaceAll("\n","\\\\n");
 		teacherComment=teacherComment.replaceAll("\r","\\\\r");
 		express.setTeacherComment(teacherComment);
+		express.setManagerAuditUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 		int i=expressBiz.edit(express);
 		if (i==0) {
             return com.pinde.core.common.GlobalConstant.SAVE_FAIL;

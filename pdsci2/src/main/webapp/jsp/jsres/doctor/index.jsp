@@ -32,7 +32,7 @@
 			setBodyHeight();
 			<%--if("${recordCount !=0}"=="true"){--%>
 			var result=0;
-			if("${jsResDocTypeEnumCompany.id}"=="${doctor.doctorTypeId}"&&"单位人"=="${doctor.doctorTypeName}"){
+			if("${resDocTypeEnumCompany.id}"=="${doctor.doctorTypeId}"&&"单位人"=="${doctor.doctorTypeName}"){
 				<%--if("${doctor.workOrgId}"==""){--%>
 				result=1;
 // 			}
@@ -40,7 +40,7 @@
 				result=1;
 //			}
 			}
-			<%--if("${jsResDocTypeEnumGraduate.id}"=="${doctor.doctorTypeId}"){--%>
+			<%--if("${resDocTypeEnumGraduate.id}"=="${doctor.doctorTypeId}"){--%>
 			<%--if("${GlobalConstant.FLAG_N}"=="${school}"){--%>
 			<%--result=1;--%>
 			<%--}--%>

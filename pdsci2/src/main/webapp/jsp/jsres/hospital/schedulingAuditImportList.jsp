@@ -89,12 +89,12 @@
                         initData(respData);
                         hideSubmitBt();
                     }
-                    jboxInfo("导入失败，请核对异常数据");
                     jboxEndLoading();
+                    jboxInfo("导入失败，请核对异常数据");
                 } else {
                     hideSubmitBt();
-                    jboxInfo("导入失败，请核对异常数据");
                     jboxEndLoading();
+                    jboxInfo("导入失败，请核对异常数据");
                 }
             },null,false);
         }else {

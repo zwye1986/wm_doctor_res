@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.ResSchProcessExpressMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSchProcessExpress" >
+<mapper namespace="com.pinde.core.common.sci.dao.ResSchProcessExpressMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSchProcessExpress">
     <id column="REC_FLOW" property="recFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -50,7 +50,7 @@
     <result column="MEDICINE_TYPE" property="medicineType" jdbcType="VARCHAR" />
     <result column="TEACHER_COMMENT" property="teacherComment" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResSchProcessExpress" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResSchProcessExpress" extends="BaseResultMap">
     <result column="REC_CONTENT" property="recContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -125,7 +125,8 @@
   <sql id="Blob_Column_List" >
     REC_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResSchProcessExpressExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+          parameterType="com.pinde.core.model.ResSchProcessExpressExample">
     select
     <if test="distinct" >
       distinct
@@ -141,7 +142,8 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResSchProcessExpressExample" >
+  <select id="selectByExample" resultMap="BaseResultMap"
+          parameterType="com.pinde.core.model.ResSchProcessExpressExample">
     select
     <if test="distinct" >
       distinct
@@ -163,17 +165,31 @@
     from PDSCI.RES_SCH_PROCESS_EXPRESS
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </select>
+
+  <select id="queryResRecList" resultType="com.pinde.core.model.ResSchProcessExpress">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PDSCI.RES_SCH_PROCESS_EXPRESS
+    where record_status = 'Y'
+    <foreach collection="processFlowList" item="" open="and (" close=")" separator=" or " index="i">
+        (SCH_ROTATION_DEPT_FLOW = #{processFlowList[${i}], jdbcType=VARCHAR} and OPER_USER_FLOW  = #{operUserFlowList[${i}], jdbcType=VARCHAR})
+    </foreach>
+    and REC_TYPE_ID = #{recTypeId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from PDSCI.RES_SCH_PROCESS_EXPRESS
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSchProcessExpressExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSchProcessExpressExample">
     delete from PDSCI.RES_SCH_PROCESS_EXPRESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.core.model.ResSchProcessExpress" >
+  <insert id="insert" parameterType="com.pinde.core.model.ResSchProcessExpress">
     insert into PDSCI.RES_SCH_PROCESS_EXPRESS (REC_FLOW, ORG_FLOW, ORG_NAME, 
       DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, REC_TYPE_ID, REC_TYPE_NAME, 
@@ -211,7 +227,7 @@
       #{schRotationDeptFlow,jdbcType=VARCHAR}, #{medicineType,jdbcType=VARCHAR}, #{teacherComment,jdbcType=VARCHAR}, 
       #{recContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.core.model.ResSchProcessExpress" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResSchProcessExpress">
     insert into PDSCI.RES_SCH_PROCESS_EXPRESS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recFlow != null" >
@@ -506,13 +522,58 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.ResSchProcessExpressExample" resultType="java.lang.Integer" >
+  <select id="listByDoctorList" resultType="com.pinde.core.model.ResSchProcessExpress">
+    select spe.* from res_sch_process_express spe
+    where record_status = 'Y'
+      AND rec_type_id = 'AfterEvaluation'
+    <choose>
+      <when test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+        and exists(
+        select 1 from SCH_ARRANGE_RESULT sar,
+        Res_Doctor_Sch_Process dsp
+                 where sar.doctor_flow = spe.oper_user_flow and sar.record_status = 'Y' and dsp.sch_result_flow = sar.result_flow and dsp.process_flow = spe.process_flow and dsp.record_status = 'Y'
+        and sar.sch_start_date &lt;= #{schEndDate} and #{schStartDate} &lt;= sar.sch_end_date
+        )
+      </when>
+      <when test="schStartDate != null and schStartDate != ''">
+        and exists(
+        select 1 from SCH_ARRANGE_RESULT sar,
+        Res_Doctor_Sch_Process dsp
+                 where sar.doctor_flow = spe.oper_user_flow and sar.record_status = 'Y' and dsp.sch_result_flow = sar.result_flow and dsp.process_flow = spe.process_flow and dsp.record_status = 'Y'
+        and sar.sch_start_date >= #{schStartDate}
+        )
+      </when>
+      <when test="schEndDate != null and schEndDate != ''">
+        and exists(
+        select 1 from SCH_ARRANGE_RESULT sar,
+        Res_Doctor_Sch_Process dsp
+                 where sar.doctor_flow = spe.oper_user_flow and sar.record_status = 'Y' and dsp.sch_result_flow = sar.result_flow and dsp.process_flow = spe.process_flow and dsp.record_status = 'Y'
+        and sar.sch_end_date &lt;= #{schEndDate}
+        )
+      </when>
+      <otherwise></otherwise>
+    </choose>
+    <choose>
+      <when test="null != doctorFlowList and doctorFlowList.size() &gt; 0">
+        AND spe.oper_user_flow in
+        <foreach collection="doctorFlowList" item="doctorFlow" open="(" separator="," close=")">
+          #{doctorFlow}
+        </foreach>
+      </when>
+      <otherwise>
+        AND 1 &lt;&gt; 1
+      </otherwise>
+    </choose>
+
+  </select>
+  <select id="countByExample" parameterType="com.pinde.core.model.ResSchProcessExpressExample"
+          resultType="java.lang.Integer">
     select count(*) from PDSCI.RES_SCH_PROCESS_EXPRESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update PDSCI.RES_SCH_PROCESS_EXPRESS
     <set >
       <if test="record.recFlow != null" >
@@ -771,7 +832,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSchProcessExpress" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSchProcessExpress">
     update PDSCI.RES_SCH_PROCESS_EXPRESS
     <set >
       <if test="orgFlow != null" >
@@ -918,7 +979,7 @@
     </set>
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResSchProcessExpress" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResSchProcessExpress">
     update PDSCI.RES_SCH_PROCESS_EXPRESS
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -969,7 +1030,7 @@
       REC_CONTENT = #{recContent,jdbcType=CLOB}
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSchProcessExpress" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSchProcessExpress">
     update PDSCI.RES_SCH_PROCESS_EXPRESS
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

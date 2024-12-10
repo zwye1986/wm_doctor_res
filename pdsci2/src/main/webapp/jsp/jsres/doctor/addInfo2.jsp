@@ -130,15 +130,15 @@ function saveDoctorInfo(){
 		<tr>
 			<th><span class="red">*</span>人员类型：</th>
 			<td id="doctorTypeNameTd">
-				<input type="radio" id="doctorType_${jsResDocTypeEnumCompany.id }" name="doctor.doctorTypeId" class="validate[required]"
-					   value="${jsResDocTypeEnumCompany.id}"style="width: 20px"<c:if test="${doctor.doctorTypeId eq  jsResDocTypeEnumCompany.id }">checked="checked"</c:if>
+				<input type="radio" id="doctorType_${resDocTypeEnumCompany.id }" name="doctor.doctorTypeId" class="validate[required]"
+					   value="${resDocTypeEnumCompany.id}"style="width: 20px"<c:if test="${doctor.doctorTypeId eq  resDocTypeEnumCompany.id }">checked="checked"</c:if>
 				/>
-				<label style="cursor: pointer;" class="doctorType" for="doctorType_${jsResDocTypeEnumCompany.id }">${jsResDocTypeEnumCompany.name }</label>
+				<label style="cursor: pointer;" class="doctorType" for="doctorType_${resDocTypeEnumCompany.id }">${resDocTypeEnumCompany.name }</label>
 				&nbsp;&#12288;
-				<input type="radio" id="doctorType_${jsResDocTypeEnumCompanyEntrust.id }" name="doctor.doctorTypeId" class="validate[required]"
-					   value="${jsResDocTypeEnumCompanyEntrust.id}"style="width: 20px"<c:if test="${doctor.doctorTypeId eq  jsResDocTypeEnumCompanyEntrust.id }">checked="checked"</c:if>
+				<input type="radio" id="doctorType_${resDocTypeEnumCompanyEntrust.id }" name="doctor.doctorTypeId" class="validate[required]"
+					   value="${resDocTypeEnumCompanyEntrust.id}"style="width: 20px"<c:if test="${doctor.doctorTypeId eq  resDocTypeEnumCompanyEntrust.id }">checked="checked"</c:if>
 				/>
-				<label style="cursor: pointer;" class="doctorType" for="doctorType_${jsResDocTypeEnumCompanyEntrust.id }">${jsResDocTypeEnumCompanyEntrust.name }</label>
+				<label style="cursor: pointer;" class="doctorType" for="doctorType_${resDocTypeEnumCompanyEntrust.id }">${resDocTypeEnumCompanyEntrust.name }</label>
 
 			</td>
 		</tr>

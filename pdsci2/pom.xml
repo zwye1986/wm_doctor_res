@@ -146,15 +146,15 @@
             </plugin>
 
             <!-- 必须有这个插件，不然外部jar打不到war包里 -->
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
                 <configuration>
                     <webResources>
                         <resource>
-                            &lt;!&ndash; directory的路径是需要打包的第三方jar包位置&ndash;&gt;
-                            <directory>src/main/lib</directory>
+                            <!-- directory的路径是需要打包的第三方jar包位置-->
+                            <directory>../shared/lib</directory>
                             <targetPath>WEB-INF/lib/</targetPath>
                             <filtering>false</filtering>
                             <includes>
@@ -163,8 +163,7 @@
                         </resource>
                     </webResources>
                 </configuration>
-            </plugin>-->
-
+            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
