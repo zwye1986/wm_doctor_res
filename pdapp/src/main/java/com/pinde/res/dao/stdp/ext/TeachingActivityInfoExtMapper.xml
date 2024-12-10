@@ -866,7 +866,7 @@
         where tai.ACTIVITY_FLOW=#{activityFlow}
         and (
         (
-        INFO.START_TIME <![CDATA[<]]>. tai.START_TIME
+        INFO.START_TIME <![CDATA[<]]> tai.START_TIME
         and INFO.END_TIME > tai.START_TIME
         )
         or
