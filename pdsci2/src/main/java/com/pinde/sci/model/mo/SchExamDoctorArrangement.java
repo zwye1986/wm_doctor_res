@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class SchExamDoctorArrangement extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchExamDoctorArrangement implements java.io.Serializable {
     private String recordFlow;
 
     private String arrangeFlow;

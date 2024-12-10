@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class GcpQcRecordRec extends TeachingActivitySpeakerExample.MybatisObject {
+public class GcpQcRecordRec implements java.io.Serializable {
     private String recFlow;
 
     private String qcFlow;

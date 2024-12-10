@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysCfgLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysCfgLog implements java.io.Serializable {
     private String cfgFlow;
 
     private String cfgCode;

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @创建时间 2021/6/3
  * 描述
  */
-public class DictVo implements Serializable {
+public class DictVo implements java.io.Serializable {
     private String dictValue;
     private String dictLabel;
 

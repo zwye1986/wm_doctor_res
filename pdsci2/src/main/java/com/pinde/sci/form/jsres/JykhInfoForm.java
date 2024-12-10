@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class JykhInfoForm implements Serializable{
+public class JykhInfoForm implements java.io.Serializable {
 
 	private String province;//省份-江苏
 	private String userName;//姓名

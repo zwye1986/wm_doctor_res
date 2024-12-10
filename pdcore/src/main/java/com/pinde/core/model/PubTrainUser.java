@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubTrainUser extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubTrainUser implements java.io.Serializable {
     private String recordFlow;
 
     private String trainFlow;

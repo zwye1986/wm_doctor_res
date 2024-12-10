@@ -4,11 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.common.enums.UserSexEnum;
-import com.pinde.core.util.StringUtil;
-import com.pinde.core.common.enums.WeixinStatusEnum;
 import com.pinde.core.common.enums.UserStatusEnum;
+import com.pinde.core.common.enums.WeixinStatusEnum;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.util.StringUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -206,7 +206,7 @@ public class WeixinQiYeUtil {
 		return sysUserList;
 	}
 
-	public static boolean saveUser(String corpid,String corpsecret,String weiXinDeptId,SysUser user){
+	public static boolean saveUser(String corpid, String corpsecret, String weiXinDeptId, SysUser user) {
 		SysUser sysUser = getUser(corpid,corpsecret,user.getUserFlow());
 		if(sysUser==null){
 			return createUser(corpid, corpsecret, weiXinDeptId, user);
@@ -237,7 +237,7 @@ public class WeixinQiYeUtil {
 		return false;
 	}
 
-	public static boolean updateDept(String corpid,String corpsecret,SysDept dept){
+	public static boolean updateDept(String corpid, String corpsecret, SysDept dept) {
 		String accessToken = gettoken(corpid,corpsecret);
 		String createUrl = "https://qyapi.weixin.qq.com/cgi-bin/department/update?access_token="+StringUtil.defaultString(accessToken);
 		String jsonData = "{"
@@ -281,9 +281,6 @@ public class WeixinQiYeUtil {
 	}
 
 
-	public static boolean saveDept(String corpid, String corpsecret,SysDept dept) {
-		return false;
-	}
 
 	public static String sendMsg(String corpid,String corpsecret,String agentid,String getUserFlow,String content){
 		String accessToken = gettoken(corpid,corpsecret);

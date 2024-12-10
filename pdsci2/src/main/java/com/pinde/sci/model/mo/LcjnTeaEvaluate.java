@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class LcjnTeaEvaluate extends TeachingActivitySpeakerExample.MybatisObject {
+public class LcjnTeaEvaluate implements java.io.Serializable {
     private String teaEvaluateFlow;
 
     private String courseFlow;

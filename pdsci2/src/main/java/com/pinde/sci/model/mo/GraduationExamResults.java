@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class GraduationExamResults extends TeachingActivitySpeakerExample.MybatisObject {
+public class GraduationExamResults implements java.io.Serializable {
     private String resultsId;
 
     private String userId;

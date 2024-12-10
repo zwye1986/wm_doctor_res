@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResPowerCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResPowerCfg implements java.io.Serializable {
     private String cfgCode;
 
     private String cfgValue;

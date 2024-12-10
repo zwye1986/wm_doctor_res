@@ -4,6 +4,7 @@ import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -80,7 +81,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 	private ResJointOrgMapper jointOrgMapper;
 
 	@Override
-	public int saveDoctorInfo(SysUser user, ResDoctor doctor, UserResumeExtInfoForm userResumeExt,String qtCountry) {
+    public int saveDoctorInfo(SysUser user, ResDoctor doctor, UserResumeExtInfoForm userResumeExt, String qtCountry) {
 
 		SysUser sysUser = userBiz.readSysUser(user.getUserFlow());
 		if (null!=sysUser && StringUtil.isNotBlank(sysUser.getTrainingTypeId())){

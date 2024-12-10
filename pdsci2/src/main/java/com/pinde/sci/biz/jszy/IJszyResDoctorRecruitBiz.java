@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;

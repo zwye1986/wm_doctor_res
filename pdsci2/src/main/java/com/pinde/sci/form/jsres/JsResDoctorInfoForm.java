@@ -1,11 +1,11 @@
 package com.pinde.sci.form.jsres;
 
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 
-public class JsResDoctorInfoForm implements Serializable{
+public class JsResDoctorInfoForm implements java.io.Serializable {
 
 	/**
 	 * 

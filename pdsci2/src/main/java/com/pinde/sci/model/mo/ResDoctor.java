@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.util.List;
 
-public class ResDoctor extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResDoctor implements java.io.Serializable {
     private String doctorFlow;
 
     private String doctorCode;

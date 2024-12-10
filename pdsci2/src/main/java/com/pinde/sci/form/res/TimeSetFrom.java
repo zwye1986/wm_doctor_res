@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.ResKgCfg;
 import java.io.Serializable;
 import java.util.List;
 
-public class TimeSetFrom implements Serializable{
+public class TimeSetFrom implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 3862460508039897162L;
 	

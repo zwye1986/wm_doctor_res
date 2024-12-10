@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResRotationOrg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResRotationOrg implements java.io.Serializable {
     private String recordFlow;
 
     private String rotationFlow;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubPatientWindow extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubPatientWindow implements java.io.Serializable {
     private String recordFlow;
 
     private String projFlow;

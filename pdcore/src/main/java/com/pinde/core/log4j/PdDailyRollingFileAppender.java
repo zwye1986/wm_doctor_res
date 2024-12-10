@@ -456,7 +456,7 @@ public class PdDailyRollingFileAppender extends FileAppender {
  * The Class ModifiedTimeSortableFile extends java.io.File class and
  * implements Comparable to sort files list based upon their modified date
  */
-class ModifiedTimeSortableFile extends File implements Serializable, Comparable<File>
+class ModifiedTimeSortableFile extends File implements java.io.Serializable, Comparable<File>
 {
 	private static final long serialVersionUID = 1373373728209668895L;
 	

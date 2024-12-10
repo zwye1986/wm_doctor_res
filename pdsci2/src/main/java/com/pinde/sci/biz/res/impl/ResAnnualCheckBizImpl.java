@@ -13,7 +13,7 @@ import com.pinde.sci.dao.base.ResAnnualAssessmentRecordMapper;
 import com.pinde.sci.model.mo.ResAnnualAssessmentRecord;
 import com.pinde.sci.model.mo.ResAnnualAssessmentRecordExample;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;

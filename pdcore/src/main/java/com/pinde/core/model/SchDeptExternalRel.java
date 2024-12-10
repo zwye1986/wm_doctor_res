@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchDeptExternalRel extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchDeptExternalRel implements java.io.Serializable {
     private String recordFlow;
 
     private String schDeptFlow;

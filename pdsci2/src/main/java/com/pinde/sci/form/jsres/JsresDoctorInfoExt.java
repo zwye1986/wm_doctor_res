@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class JsresDoctorInfoExt implements Serializable {
+public class JsresDoctorInfoExt implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3081738391574662552L;
 

@@ -2,7 +2,7 @@ package com.pinde.res.model.jswjw.mo;
 
 import java.io.Serializable;
 
-public class ResAssessCfgItemForm implements Serializable{
+public class ResAssessCfgItemForm implements java.io.Serializable {
 
 	/**
 	 *

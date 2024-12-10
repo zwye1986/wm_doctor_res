@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysUser;
+import com.pinde.sci.model.mo.PersonStaticExample;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysOrgExample;
 import com.pinde.sci.model.sys.SysOrgExt;
 
 import java.util.List;

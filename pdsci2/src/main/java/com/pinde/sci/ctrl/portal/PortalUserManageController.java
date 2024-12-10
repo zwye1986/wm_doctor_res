@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.portal;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;
@@ -10,7 +9,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

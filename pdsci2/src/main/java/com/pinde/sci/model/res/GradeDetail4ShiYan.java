@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class GradeDetail4ShiYan implements Serializable{
+public class GradeDetail4ShiYan implements java.io.Serializable {
 	
 	/**
 	 * 试验室太和医院OSCE考试成绩详情

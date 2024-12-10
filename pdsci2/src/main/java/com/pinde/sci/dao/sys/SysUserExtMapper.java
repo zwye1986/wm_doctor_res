@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.sys;
 
 import com.pinde.sci.form.sys.SysUserForm;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -5,6 +5,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;

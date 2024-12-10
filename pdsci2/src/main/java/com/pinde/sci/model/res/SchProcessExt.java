@@ -3,7 +3,7 @@ package com.pinde.sci.model.res;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 
 public class SchProcessExt extends ResDoctorSchProcess {

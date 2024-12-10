@@ -4,6 +4,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.INoticeBiz;

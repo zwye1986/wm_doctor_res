@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class OscaSubjectStation extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaSubjectStation implements java.io.Serializable {
     private String stationFlow;
 
     private String stationName;

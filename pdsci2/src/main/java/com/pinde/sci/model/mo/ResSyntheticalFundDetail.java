@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResSyntheticalFundDetail extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResSyntheticalFundDetail implements java.io.Serializable {
     private String recordFlow;
 
     private String mainFlow;

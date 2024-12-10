@@ -2,14 +2,13 @@ package com.pinde.sci.ctrl.recruit;
 
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.recruit.IRecruitAdmitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

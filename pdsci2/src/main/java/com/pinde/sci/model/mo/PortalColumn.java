@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PortalColumn extends TeachingActivitySpeakerExample.MybatisObject {
+public class PortalColumn implements java.io.Serializable {
     private String columnFlow;
 
     private String columnId;

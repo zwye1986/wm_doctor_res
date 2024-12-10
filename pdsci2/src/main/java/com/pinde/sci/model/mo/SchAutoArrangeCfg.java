@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SchAutoArrangeCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchAutoArrangeCfg implements java.io.Serializable {
     private String recordFlow;
 
     private String orgFlow;

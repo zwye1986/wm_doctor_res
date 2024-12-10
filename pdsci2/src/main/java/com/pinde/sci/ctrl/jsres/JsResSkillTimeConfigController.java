@@ -2,12 +2,12 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
 import com.pinde.core.pdf.utils.ResourceLoader;
 import com.pinde.core.util.*;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.osca.IOscaBaseBiz;
 import com.pinde.sci.biz.osca.IOscaDoctorOrderdeBiz;

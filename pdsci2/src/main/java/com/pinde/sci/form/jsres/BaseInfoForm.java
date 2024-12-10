@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.SysOrg;
 
 import java.io.Serializable;
 
-public class BaseInfoForm implements Serializable {
+public class BaseInfoForm implements java.io.Serializable {
 	/**
 	 * @author Administrator
 	 */

@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.ResOrgAddress;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResOrgAddressForm implements Serializable{
+public class ResOrgAddressForm implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2420819931570058734L;
 	private String orgFlow;

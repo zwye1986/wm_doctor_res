@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class RecruitLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class RecruitLog implements java.io.Serializable {
     private String logFlow;
 
     private String applyFlow;

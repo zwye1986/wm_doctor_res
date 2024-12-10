@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw.impl;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +10,6 @@ import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.ResDoctorSchProcessExample;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 	private ResDoctorSchProcessExtMapper resDoctorProcessExtMapper;
 
 	@Override
-	public int edit(ResDoctorSchProcess process,SysUser user) {
+	public int edit(ResDoctorSchProcess process, SysUser user) {
 		if(process!=null){
 			if(StringUtil.isNotBlank(process.getProcessFlow())){//修改
                 process.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);

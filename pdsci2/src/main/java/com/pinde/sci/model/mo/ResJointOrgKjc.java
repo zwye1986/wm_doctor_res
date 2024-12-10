@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResJointOrgKjc extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResJointOrgKjc implements java.io.Serializable {
     private String jointFlow;
 
     private String orgFlow;

@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class ResRecItem implements Serializable {
+public class ResRecItem implements java.io.Serializable {
 
     private Integer countNum;
 

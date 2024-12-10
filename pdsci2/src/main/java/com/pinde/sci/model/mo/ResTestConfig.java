@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResTestConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResTestConfig implements java.io.Serializable {
     private String testFlow;
 
     private String testId;

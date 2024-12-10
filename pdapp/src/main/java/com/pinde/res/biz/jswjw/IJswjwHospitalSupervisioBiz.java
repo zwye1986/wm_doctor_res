@@ -2,7 +2,6 @@ package com.pinde.res.biz.jswjw;
 
 import com.pinde.core.model.ResHospSupervSubject;
 import com.pinde.core.model.ResScheduleScore;
-import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,13 +27,12 @@ public interface IJswjwHospitalSupervisioBiz {
 
     int saveScheduleDetailed(ResScheduleScore scheduleScore,String userFlow);
 
-    SysUser selectUser(String userCode,String leader);
+    SysUser selectUser(String userCode, String leader);
 
     String saveFileToDirs(String oldFolderName, MultipartFile uploadFile, String supersivioSign);
 
     int editSupervisioUser(SysUser user);
 
-    List<SysDept> selectDeptByOrgFlow(String orgFlow);
 
     List<ResScheduleScore> queryScheduleListNotItemName(ResScheduleScore scheduleScore);
 

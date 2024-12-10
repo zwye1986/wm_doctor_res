@@ -1,9 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.OrgLevelEnum;
-import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;

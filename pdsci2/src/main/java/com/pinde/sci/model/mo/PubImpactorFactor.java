@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubImpactorFactor extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubImpactorFactor implements java.io.Serializable {
     private String factorFlow;
 
     private String year;

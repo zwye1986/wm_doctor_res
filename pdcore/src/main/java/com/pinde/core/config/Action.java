@@ -3,7 +3,7 @@ package com.pinde.core.config;
 import java.io.Serializable;
 
 
-public class Action implements Serializable{
+public class Action implements java.io.Serializable {
 
 	/**
 	 * 

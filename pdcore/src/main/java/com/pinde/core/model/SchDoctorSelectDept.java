@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchDoctorSelectDept extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchDoctorSelectDept implements java.io.Serializable {
     private String selectFlow;
 
     private String doctorFlow;

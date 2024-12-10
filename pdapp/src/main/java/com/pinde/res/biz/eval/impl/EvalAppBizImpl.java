@@ -2,7 +2,6 @@ package com.pinde.res.biz.eval.impl;
 
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserRole;

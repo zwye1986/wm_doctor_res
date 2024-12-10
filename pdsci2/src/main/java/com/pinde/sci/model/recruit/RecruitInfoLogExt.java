@@ -3,7 +3,7 @@ package com.pinde.sci.model.recruit;
 
 import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.mo.RecruitInfoLog;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public class RecruitInfoLogExt extends RecruitInfoLog {
     private SysUser sysUser;

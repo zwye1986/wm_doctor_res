@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class StuUserResume extends TeachingActivitySpeakerExample.MybatisObject {
+public class StuUserResume implements java.io.Serializable {
     private String resumeFlow;
 
     private String userFlow;

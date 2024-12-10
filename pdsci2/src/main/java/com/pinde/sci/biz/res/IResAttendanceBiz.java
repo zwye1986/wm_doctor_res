@@ -4,7 +4,7 @@ import com.pinde.sci.model.jsres.JsResAttendanceExt;
 import com.pinde.sci.model.jszy.JszyResAttendanceExt;
 import com.pinde.sci.model.mo.JsresAttendance;
 import com.pinde.sci.model.mo.JsresAttendanceDetail;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.ResAttendanceExt;
 
 import java.util.List;

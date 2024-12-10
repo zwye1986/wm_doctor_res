@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class InxInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class InxInfo implements java.io.Serializable {
     private String infoFlow;
 
     private String infoTitle;

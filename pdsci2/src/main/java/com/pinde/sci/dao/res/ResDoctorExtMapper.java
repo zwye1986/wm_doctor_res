@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;

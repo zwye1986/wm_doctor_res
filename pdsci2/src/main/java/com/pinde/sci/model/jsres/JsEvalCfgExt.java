@@ -3,7 +3,7 @@ package com.pinde.sci.model.jsres;
 import java.io.Serializable;
 import java.util.List;
 
-public class JsEvalCfgExt implements Serializable{
+public class JsEvalCfgExt implements java.io.Serializable {
 	
 	private String configFlow;
 	private List<JsEvalCfgItemExt> itemFormList;

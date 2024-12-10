@@ -1,7 +1,7 @@
 package com.pinde.sci.model.res;
 
 import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 
 public class ResAllowanceUserExt extends SysUser {

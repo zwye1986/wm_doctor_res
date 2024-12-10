@@ -16,7 +16,7 @@ public interface IOscaDoctorRegistBiz {
     //根据条件查询学员列表
     List<Map<String,Object>> searchStudents(Map<String, Object> paramMap);
     //编辑单条记录
-    int edit(OscaDoctorRegist oscaDoctorRegist,SysUser saveuser);
+    int edit(OscaDoctorRegist oscaDoctorRegist, SysUser saveuser);
     //审核学员注册记录
     void editAudit(OscaDoctorRegist oscaDoctorRegist,SysUser saveuser);
 }

@@ -21,7 +21,7 @@ import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysSupervisioUser;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

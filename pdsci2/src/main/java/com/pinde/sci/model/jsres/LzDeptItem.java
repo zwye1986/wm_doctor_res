@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @Description: 轮转科室对应的标准科室及其轮转信息
  */
 @Data
-public class LzDeptItem implements Serializable {
+public class LzDeptItem implements java.io.Serializable {
 
     /**
      * 轮转科室id

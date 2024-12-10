@@ -1,7 +1,6 @@
 package com.pinde.res.biz.jswjw.impl;
 
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
@@ -243,12 +242,6 @@ public class JswjwHospitalSupervisioBizImpl implements IJswjwHospitalSupervisioB
         user.setModifyTime(DateUtil.getCurrDateTime());
         user.setModifyUserFlow(user.getUserFlow());
         return sysUserMapper.updateByPrimaryKeySelective(user);
-    }
-
-
-    @Override
-    public List<SysDept> selectDeptByOrgFlow(String orgFlow) {
-        return hospitalSupervisioExtMapper.selectDeptByOrgFlow(orgFlow);
     }
 
 

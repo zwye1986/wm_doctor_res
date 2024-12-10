@@ -99,7 +99,7 @@
 			  AND Res_Docotr_Delay_Teturn.doctor_flow = rd.doctor_flow
 			  AND type_id = 'ReturnTraining')
 	</select>
-    <select id="listByNameOrIdNo" resultType="com.pinde.sci.model.mo.SysUser">
+    <select id="listByNameOrIdNo" resultType="com.pinde.core.model.SysUser">
 		SELECT u.USER_NAME,u.ID_NO,u.USER_FLOW FROM SYS_USER u
 		INNER JOIN RES_DOCTOR d on u.USER_FLOW = d.DOCTOR_FLOW
 		WHERE u.RECORD_STATUS = 'Y'

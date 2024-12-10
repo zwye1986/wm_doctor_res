@@ -3,7 +3,7 @@ package com.pinde.sci.form.sczyres;
 import java.io.Serializable;
 import java.util.List;
 
-public class ExtInfoForm implements Serializable{
+public class ExtInfoForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1592918930641343959L;
 

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchArrangePeriodRel extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchArrangePeriodRel implements java.io.Serializable {
     private String recordFlow;
 
     private String schDeptFlow;

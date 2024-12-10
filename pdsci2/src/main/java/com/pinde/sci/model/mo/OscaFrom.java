@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class OscaFrom extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaFrom implements java.io.Serializable {
     private String fromFlow;
 
     private String fromName;

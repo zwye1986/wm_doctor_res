@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,7 +13,10 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PersonStaticExample;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysOrgExample;
+import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.util.List;
 
-public class SysOrg extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysOrg implements java.io.Serializable {
     private String orgFlow;
 
     private String orgCode;

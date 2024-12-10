@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResPassScoreCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResPassScoreCfg implements java.io.Serializable {
     private String cfgYear;
 
     private String cfgPassScore;

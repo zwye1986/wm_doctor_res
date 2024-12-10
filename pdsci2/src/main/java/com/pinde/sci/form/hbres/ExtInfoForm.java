@@ -2,7 +2,7 @@ package com.pinde.sci.form.hbres;
 
 import java.io.Serializable;
 
-public class ExtInfoForm implements Serializable{
+public class ExtInfoForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1592918930641343959L;
 

@@ -5,7 +5,7 @@ import com.pinde.core.model.SysDict;
 import java.io.Serializable;
 import java.util.List;
 
-public class SubDictEditForm implements Serializable{
+public class SubDictEditForm implements java.io.Serializable {
 
 	/**
 	 * 

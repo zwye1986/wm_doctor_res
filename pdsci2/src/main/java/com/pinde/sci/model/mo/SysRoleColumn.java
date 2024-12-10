@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysRoleColumn extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysRoleColumn implements java.io.Serializable {
     private String recordFlow;
 
     private String roleFlow;

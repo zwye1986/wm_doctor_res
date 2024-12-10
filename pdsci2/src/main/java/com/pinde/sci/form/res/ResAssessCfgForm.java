@@ -3,7 +3,7 @@ package com.pinde.sci.form.res;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResAssessCfgForm implements Serializable{
+public class ResAssessCfgForm implements java.io.Serializable {
 	
 	/**
 	 * 

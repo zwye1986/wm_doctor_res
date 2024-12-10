@@ -2,10 +2,8 @@ package com.pinde.res.biz.osca.impl;
 
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.model.*;
-import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -24,7 +22,6 @@ import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -119,7 +116,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public SysUser findByUserCode(String userCode) {
 		SysUserExample sysUserExample=new SysUserExample();
-		Criteria criteria=sysUserExample.createCriteria();
+		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
 		criteria.andUserCodeEqualTo(userCode);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
 		if(sysUserList.size()>0){
@@ -994,7 +991,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public SysUser findByIdNo(String idNo) {
 		SysUserExample sysUserExample=new SysUserExample();
-		Criteria criteria=sysUserExample.createCriteria();
+		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andIdNoEqualTo(idNo);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -1007,7 +1004,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public SysUser findByUserPhone(String userPhone) {
 		SysUserExample sysUserExample=new SysUserExample();
-		Criteria criteria=sysUserExample.createCriteria();
+		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserPhoneEqualTo(userPhone);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);
@@ -1020,7 +1017,7 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	@Override
 	public SysUser findByUserEmail(String userEmail) {
 		SysUserExample sysUserExample=new SysUserExample();
-		Criteria criteria=sysUserExample.createCriteria();
+		SysUserExample.Criteria criteria = sysUserExample.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andUserEmailEqualTo(userEmail);
 		List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);

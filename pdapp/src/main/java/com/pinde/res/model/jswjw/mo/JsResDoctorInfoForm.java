@@ -6,7 +6,7 @@ import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 
-public class JsResDoctorInfoForm implements Serializable{
+public class JsResDoctorInfoForm implements java.io.Serializable {
 
 	/**
 	 * 

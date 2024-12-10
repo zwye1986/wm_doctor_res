@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class OscaRoomFile extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaRoomFile implements java.io.Serializable {
     private String recordFlow;
 
     private String roomFlow;

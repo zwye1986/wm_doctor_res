@@ -2,7 +2,7 @@ package com.pinde.sci.biz.osca;
 
 
 import com.pinde.sci.model.mo.OscaTeaInfo;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;

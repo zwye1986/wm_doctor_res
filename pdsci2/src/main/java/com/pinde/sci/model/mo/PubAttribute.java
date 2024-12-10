@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubAttribute extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubAttribute implements java.io.Serializable {
     private String attrFlow;
 
     private String attrName;

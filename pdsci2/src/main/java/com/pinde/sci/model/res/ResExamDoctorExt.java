@@ -2,7 +2,7 @@ package com.pinde.sci.model.res;
 
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResExamDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public class ResExamDoctorExt extends ResExamDoctor{
 

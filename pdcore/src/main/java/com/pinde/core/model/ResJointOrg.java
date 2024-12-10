@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResJointOrg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResJointOrg implements java.io.Serializable {
     private String jointFlow;
 
     private String orgFlow;

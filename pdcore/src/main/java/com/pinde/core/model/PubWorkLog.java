@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubWorkLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubWorkLog implements java.io.Serializable {
     private String logFlow;
 
     private String fillDate;

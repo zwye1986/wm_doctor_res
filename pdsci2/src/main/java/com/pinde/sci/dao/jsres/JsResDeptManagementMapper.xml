@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.JsResDeptManagementMapper">
-    <resultMap id="BaseStandardDeptResultMap" type="com.pinde.sci.model.vo.ResStandardDeptVO">
+    <resultMap id="BaseStandardDeptResultMap" type="com.pinde.core.vo.ResStandardDeptVO">
         <id column="standard_dept_flow" property="standardDeptFlow" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result column="standard_dept_code" property="standardDeptCode" javaType="java.lang.String" jdbcType="VARCHAR" />
         <result column="standard_dept_name" property="standardDeptName" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -173,7 +173,8 @@
         </where>
     </sql>
 
-    <select id="searchStandardDept" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO" resultType="com.pinde.sci.model.vo.ResStandardDeptVO">
+    <select id="searchStandardDept" parameterType="com.pinde.core.vo.ResStandardDeptVO"
+            resultType="com.pinde.core.vo.ResStandardDeptVO">
         select
             <include refid="Base_Column_List_Standard_dept"/>
         from pdsci.RES_STANDARD_DEPT
@@ -181,7 +182,8 @@
         <include refid="Base_Standard_Dept_Search_Condition"/>
     </select>
 
-    <select id="searchStandardDeptLevelAllByNameFuzzy" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO" resultType="com.pinde.sci.model.vo.ResStandardDeptVO">
+    <select id="searchStandardDeptLevelAllByNameFuzzy" parameterType="com.pinde.core.vo.ResStandardDeptVO"
+            resultType="com.pinde.core.vo.ResStandardDeptVO">
         select
         <include refid="Base_Column_List_Standard_dept"/>
         from pdsci.RES_STANDARD_DEPT
@@ -189,7 +191,7 @@
         <include refid="Dept_Name_Fuzzy_Level_All_Search_Condition"/>
     </select>
 
-    <insert id="saveStandardDept" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO">
+    <insert id="saveStandardDept" parameterType="com.pinde.core.vo.ResStandardDeptVO">
         insert into pdsci.res_standard_dept(<include refid="Base_Column_List_Standard_dept"/>)
         values(
            #{standardDeptFlow,jdbcType=VARCHAR},
@@ -208,7 +210,7 @@
         )
     </insert>
 
-    <update id="updateStandardDept" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO">
+    <update id="updateStandardDept" parameterType="com.pinde.core.vo.ResStandardDeptVO">
         update pdsci.res_standard_dept
         <set>
             <if test="standardDeptCode != null and standardDeptCode != ''">
@@ -232,7 +234,7 @@
     </update>
 
     <!-- 批量更新的写法，另有批量插入的写法，代码里搜insert all -->
-    <update id="batchUpdateStandardDeptSelective" parameterType="com.pinde.sci.model.vo.ResStandardDeptVO">
+    <update id="batchUpdateStandardDeptSelective" parameterType="com.pinde.core.vo.ResStandardDeptVO">
         <foreach collection="standardDeptVOList" separator=";" open="begin" close=";end;" item="standardDeptVO">
             update pdsci.res_standard_dept
             <set>
@@ -254,8 +256,9 @@
         where record_status = 'Y'
         and standard_dept_flow = #{standardDeptFlow}
     </delete>
-    
-    <select id="searchSpeBaseStdDept" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO" resultType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+
+    <select id="searchSpeBaseStdDept" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO"
+            resultType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
         select
         <include refid="Base_Column_List_Spe_Base_Std_Dept"/>
         from pdsci.RES_SPE_BASE_STD_DEPT
@@ -263,7 +266,7 @@
         <include refid="Base_Spe_Base_Std_Dept_Search_Condition"/>
     </select>
 
-    <update id="updateSpeBaseStdDept" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+    <update id="updateSpeBaseStdDept" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
         update pdsci.RES_SPE_BASE_STD_DEPT
         set spe_base_id = #{speBaseId,jdbcType=VARCHAR},
             standard_dept_flow = #{standardDeptFlow,jdbcType=VARCHAR},
@@ -276,7 +279,7 @@
           and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateSpeBaseStdDeptSelective" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+    <update id="updateSpeBaseStdDeptSelective" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
         update pdsci.RES_SPE_BASE_STD_DEPT
         <set>
             <if test="speBaseId != null and speBaseId != ''">
@@ -305,7 +308,7 @@
         and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
     </update>
 
-    <insert id="saveSpeBaseStdDept" parameterType="com.pinde.sci.model.vo.ResSpeBaseStdDeptVO">
+    <insert id="saveSpeBaseStdDept" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
         insert into pdsci.RES_SPE_BASE_STD_DEPT(<include refid="Base_Column_List_Spe_Base_Std_Dept"/>)
         values(
         #{speBaseStdDeptFlow,jdbcType=VARCHAR},
@@ -327,7 +330,8 @@
           and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
     </delete>
 
-    <select id="selectResDeptRelStdDept" parameterType="com.pinde.sci.model.vo.ResDeptRelStdDeptVO" resultType="com.pinde.sci.model.vo.ResDeptRelStdDeptVO">
+    <select id="selectResDeptRelStdDept" parameterType="com.pinde.core.vo.ResDeptRelStdDeptVO"
+            resultType="com.pinde.core.vo.ResDeptRelStdDeptVO">
         select
         <include refid="Base_Column_List_Dept_Rel_Std_Dept"/>
         from pdsci.RES_DEPT_REL_STD_DEPT
@@ -336,7 +340,8 @@
         order by modify_time desc
     </select>
 
-    <select id="selectSysDeptRelStdDept" parameterType="com.pinde.sci.model.vo.SysDeptVO" resultType="com.pinde.sci.model.vo.SysDeptVO">
+    <select id="selectSysDeptRelStdDept" parameterType="com.pinde.core.vo.SysDeptVO"
+            resultType="com.pinde.core.vo.SysDeptVO">
         select
             sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS, sd.CREATE_TIME, sd.CREATE_USER_FLOW,
             sd.MODIFY_TIME, sd.MODIFY_USER_FLOW, sd.DEPT_PINYIN, sd.DEPT_ID, sd.DEPT_PID,

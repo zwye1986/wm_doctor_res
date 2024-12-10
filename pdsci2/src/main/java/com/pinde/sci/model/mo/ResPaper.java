@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResPaper extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResPaper implements java.io.Serializable {
     private String paperFlow;
 
     private String paperName;

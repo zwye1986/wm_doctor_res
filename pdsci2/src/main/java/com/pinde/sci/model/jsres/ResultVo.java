@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @Author zsq
  * @Date Created in 2021/5/28 10:24
  */
-public class ResultVo implements Serializable {
+public class ResultVo implements java.io.Serializable {
     private int code;
     private String msg;
 

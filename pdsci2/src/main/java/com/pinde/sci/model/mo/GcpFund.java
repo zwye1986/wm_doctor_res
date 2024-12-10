@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class GcpFund extends TeachingActivitySpeakerExample.MybatisObject {
+public class GcpFund implements java.io.Serializable {
     private String fundFlow;
 
     private String projFlow;

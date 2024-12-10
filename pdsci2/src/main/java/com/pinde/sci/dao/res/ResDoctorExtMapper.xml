@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorExtMapper" >
     <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
-	    <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
         <association property="userResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.StuUserResume" resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorRecruit" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
 		<association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.PubUserResume" resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs"/>
@@ -44,7 +45,7 @@
 		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
 		<result column="AVG_SCORE" property="avgScore" jdbcType="DECIMAL" />
 		<result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
-		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" >
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser">
 			<id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
 			<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
 			<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
@@ -94,7 +95,8 @@
 		<result property="flow" column="ROTATION_FLOW" javaType="string"/>
 	</resultMap>
     <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
-	    <association property="sysUser" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
 	    <association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorRecruit" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
     </resultMap>
 	<insert id="insertRecruitInfo">
@@ -1265,7 +1267,8 @@
 	
 	<resultMap id="ResExamDoctorExtMap" type="com.pinde.sci.model.res.ResExamDoctorExt" extends="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
 	    <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
-	    <association property="user" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="user" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
     </resultMap>
 	<select id="searchExamDoctorExt" parameterType="com.pinde.sci.model.res.ResExamDoctorExt" resultMap="ResExamDoctorExtMap">
 	      SELECT * FROM 

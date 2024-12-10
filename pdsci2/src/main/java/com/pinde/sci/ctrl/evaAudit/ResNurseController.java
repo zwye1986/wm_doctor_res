@@ -1,5 +1,14 @@
 package com.pinde.sci.ctrl.evaAudit;
 
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.pub.NurseStatusEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -9,16 +18,14 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
-import com.pinde.sci.biz.sys.*;
+import com.pinde.sci.biz.sys.IDeptBiz;
+import com.pinde.sci.biz.sys.IRoleBiz;
+import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.dao.base.SysUserMapper;
-import com.pinde.core.common.enums.pub.NurseStatusEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.RecStatusEnum;
-import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.mo.*;
@@ -553,13 +560,6 @@ public class ResNurseController extends GeneralController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public @ResponseBody
     String delete(SysUser user, String wsid) {
-//        if (StringUtil.isNotBlank(wsid)) {
-//            if (wsid.equals(com.pinde.core.common.GlobalConstant.CMIS_WS_ID) || wsid.equals("gycmis")) {
-//                EduUser eduUser = eduUserBiz.findByFlow(user.getUserFlow());
-//                if (eduUser != null)
-//                    return "当前学生存在学籍信息，不允许删除！！";
-//            }
-//        }
         user.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
         userBiz.saveUser(user);
         return com.pinde.core.common.GlobalConstant.DELETE_SUCCESSED;

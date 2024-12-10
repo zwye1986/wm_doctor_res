@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class ContactorInfoForm implements Serializable{
+public class ContactorInfoForm implements java.io.Serializable {
 	/**
 	 * 
 	 */

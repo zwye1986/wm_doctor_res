@@ -3,7 +3,7 @@ package com.pinde.sci.model.osca;
 import com.pinde.sci.model.mo.OscaDoctorAssessment;
 import com.pinde.sci.model.mo.OscaSkillsAssessment;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 
 public class OscaSkillsAssessmentExt extends OscaSkillsAssessment{

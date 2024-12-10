@@ -2,7 +2,7 @@ package com.pinde.sci.form.pub;
 
 import java.io.Serializable;
 
-public class ProjFileForm implements Serializable{
+public class ProjFileForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1683056837776219802L;
 	

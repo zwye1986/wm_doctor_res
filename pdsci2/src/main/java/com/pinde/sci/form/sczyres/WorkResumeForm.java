@@ -2,7 +2,7 @@ package com.pinde.sci.form.sczyres;
 
 import java.io.Serializable;
 
-public class WorkResumeForm implements Serializable{
+public class WorkResumeForm implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2181384506782700990L;
 	

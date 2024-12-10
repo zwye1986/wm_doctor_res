@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.model.mo.ResOrgSpe;
+import com.pinde.core.model.ResOrgSpe;
 
 import java.util.List;
 

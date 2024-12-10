@@ -12,7 +12,7 @@ import com.pinde.sci.dao.res.AnnualAssessmentExtMapper;
 import com.pinde.sci.model.mo.ResAnnualAssessment;
 import com.pinde.sci.model.mo.ResAnnualAssessmentExample;
 import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

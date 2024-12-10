@@ -2,6 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelYearEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.util.BeanUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

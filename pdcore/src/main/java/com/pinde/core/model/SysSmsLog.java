@@ -3,7 +3,7 @@ package com.pinde.core.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class SysSmsLog implements Serializable {
+public class SysSmsLog implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private String smsLogFlow;
 

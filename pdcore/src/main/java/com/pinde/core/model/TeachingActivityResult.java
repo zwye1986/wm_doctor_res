@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class TeachingActivityResult extends TeachingActivitySpeakerExample.MybatisObject {
+public class TeachingActivityResult implements java.io.Serializable {
     private String resultFlow;
 
     private String activityFlow;

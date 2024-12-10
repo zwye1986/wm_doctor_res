@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysDateInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysDateInfo implements java.io.Serializable {
     private String dateFlow;
 
     private String dateDay;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class AttachedUnitInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class AttachedUnitInfo implements java.io.Serializable {
     private String recordFlow;
 
     private String orgInfoFlow;

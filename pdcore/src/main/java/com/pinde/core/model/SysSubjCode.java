@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysSubjCode extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysSubjCode implements java.io.Serializable {
     private String subjFlow;
 
     private String subjId;

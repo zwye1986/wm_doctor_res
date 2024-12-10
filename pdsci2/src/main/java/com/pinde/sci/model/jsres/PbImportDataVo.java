@@ -14,7 +14,7 @@ import java.util.List;
  * @Description: 排班导入到db的接受类
  */
 @Data
-public class PbImportDataVo implements Serializable {
+public class PbImportDataVo implements java.io.Serializable {
 
     private String doctorFlow;
 

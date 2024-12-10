@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResSkillTimeConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResSkillTimeConfig implements java.io.Serializable {
     private String skillTimeFlow;
 
     private String testId;

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResArchiveSequence extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResArchiveSequence implements java.io.Serializable {
     private String archiveFlow;
 
     private String archiveTime;

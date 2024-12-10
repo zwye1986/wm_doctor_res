@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Administrator
  *
  */
-public class DateCfgMsg implements Serializable{
+public class DateCfgMsg implements java.io.Serializable {
 
 	/**
 	 * 

@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.SysDept;
 import com.pinde.sci.form.res.ResEvaluationCfgForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationDeptExt;
 import com.pinde.sci.model.mo.ResEvaluationCfg;
-import com.pinde.sci.model.mo.SysDept;
 
 import java.util.List;
 

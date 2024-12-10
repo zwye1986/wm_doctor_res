@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.SchArrangeResult;
 
 import java.io.Serializable;
 
-public class SchGradeFrom extends SchArrangeResult implements Serializable {
+public class SchGradeFrom extends SchArrangeResult implements java.io.Serializable {
 
     private String isHead;
     private String isTeacher;

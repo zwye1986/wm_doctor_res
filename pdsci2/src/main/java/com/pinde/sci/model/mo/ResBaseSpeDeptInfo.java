@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class ResBaseSpeDeptInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResBaseSpeDeptInfo implements java.io.Serializable {
     private String recordFlow;
 
     private String speFlow;

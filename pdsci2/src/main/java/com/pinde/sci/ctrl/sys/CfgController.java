@@ -13,7 +13,7 @@ import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.model.mo.ResTestConfig;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

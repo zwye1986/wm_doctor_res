@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class InxInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class InxInfo implements java.io.Serializable {
     private String infoFlow;
 
     private String infoTitle;

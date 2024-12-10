@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IrbFormRequestUtil implements Serializable{
+public class IrbFormRequestUtil implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -5028190301142088428L;
 	

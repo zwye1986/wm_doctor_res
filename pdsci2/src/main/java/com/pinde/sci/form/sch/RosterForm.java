@@ -4,7 +4,7 @@ package com.pinde.sci.form.sch;
 import java.io.Serializable;
 import java.util.List;
 
-public class RosterForm implements Serializable{
+public class RosterForm implements java.io.Serializable {
 	private static final long serialVersionUID = 8256273931760685022L;
 	private String startDate;
 	private List<RosterTime> months;

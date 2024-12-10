@@ -10,7 +10,7 @@ import com.pinde.core.common.enums.DiscipleStatusEnum;
 import com.pinde.sci.model.mo.ResDiscipleRecordInfo;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

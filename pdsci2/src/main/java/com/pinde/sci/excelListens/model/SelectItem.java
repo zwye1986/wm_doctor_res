@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class SelectItem implements Serializable {
+public class SelectItem implements java.io.Serializable {
 
     private String label;
 

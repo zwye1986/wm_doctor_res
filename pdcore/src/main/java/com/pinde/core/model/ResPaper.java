@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResPaper extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResPaper implements java.io.Serializable {
     private String paperFlow;
 
     private String paperName;

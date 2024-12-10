@@ -1,15 +1,13 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
-import com.pinde.sci.biz.inx.impl.InxBizImpl;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;

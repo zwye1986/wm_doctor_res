@@ -3,7 +3,7 @@ package com.pinde.sci.form.sch;
 import java.io.Serializable;
 import java.util.List;
 
-public class DoctorSearchForm implements Serializable{
+public class DoctorSearchForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = -7689352547548165240L;
 	

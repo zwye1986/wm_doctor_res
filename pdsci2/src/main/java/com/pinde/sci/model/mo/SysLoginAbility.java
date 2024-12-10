@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysLoginAbility extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysLoginAbility implements java.io.Serializable {
     private String userCode;
 
     private String loginNum;

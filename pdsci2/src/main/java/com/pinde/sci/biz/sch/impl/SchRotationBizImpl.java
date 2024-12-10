@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchSelTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;

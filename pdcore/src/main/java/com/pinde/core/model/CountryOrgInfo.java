@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class CountryOrgInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class CountryOrgInfo implements java.io.Serializable {
     private String orgFlow;
 
     private String orgName;

@@ -1,12 +1,21 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.common.enums.*;
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.BaseStatusEnum;
+import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.pub.UserNationEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.common.enums.sys.MsgTypeEnum;
-import com.pinde.core.model.SysDict;
 import com.pinde.core.jspform.ItemGroupData;
+import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
-import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.jszy.IJszyDoctorAuthBiz;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
@@ -22,15 +31,10 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.core.common.PasswordHelper;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.core.common.enums.pub.UserNationEnum;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.JsResDoctorInfoForm;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserInfoExtForm;
@@ -42,7 +46,9 @@ import com.pinde.sci.util.jsres.ResultUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -2786,6 +2792,8 @@ public class JsResDoctorController extends GeneralController {
                 sessionNumbers = Arrays.asList(numbers);
                 doctor.setSessionNumber("");
             }
+        } else if (StringUtil.isNotBlank(sessionNumber)) {
+            sessionNumbers.add(sessionNumber);
         }
         String[] headLines = new String[]{
                 "住院医师规范化培训" + titleYear + "级招收对象花名册",
@@ -2830,6 +2838,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(graduationYear)) {
             recruit.setGraduationYear(graduationYear);
         }
+        jointOrgFlowList.add(currenOrg.getOrgFlow());
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
             if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(currenOrg.getOrgLevelId()) && StringUtil.isBlank(doctor.getOrgFlow())) {
                 jointOrgFlowList.add(exSysUser.getOrgFlow());

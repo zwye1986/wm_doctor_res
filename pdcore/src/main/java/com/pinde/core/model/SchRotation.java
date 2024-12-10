@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchRotation extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchRotation implements java.io.Serializable {
     private String rotationFlow;
 
     private String rotationName;

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysSupervisioUser extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysSupervisioUser implements java.io.Serializable {
     private String userFlow;
 
     private String userPasswd;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class TeachingActivityEval extends TeachingActivitySpeakerExample.MybatisObject {
+public class TeachingActivityEval implements java.io.Serializable {
     private String evalFlow;
 
     private String resultFlow;

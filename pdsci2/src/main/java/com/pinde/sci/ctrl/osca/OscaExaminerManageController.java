@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
 
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -71,7 +72,7 @@ public class OscaExaminerManageController extends GeneralController{
      * @return
      */
     @RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-    public String oscaExaminerList(SysUser sysUser, Integer currentPage, HttpServletRequest request, String exmpel,Model model){
+    public String oscaExaminerList(SysUser sysUser, Integer currentPage, HttpServletRequest request, String exmpel, Model model) {
         List<String> orgFlowList=new ArrayList<>();
         SysOrg sysOrg=orgBiz.readSysOrg(GlobalContext.getCurrentUser().getOrgFlow());
         Map<String, Object> map=new HashMap<>();

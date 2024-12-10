@@ -1657,20 +1657,11 @@
 									   <c:if test="${doctor.doctorTypeId eq  doctorType.id }">checked="checked"</c:if>
 								/>
 								<label style="cursor: pointer;" id="doctorTypeName_${doctorType.id }" class="doctorType" for="doctorType_${doctorType.id }"
-									   onmouseover="changeTitle(this);">${doctorType.name }</label>
-
-
-
-
+									   onmouseover="changeTitle(this);">${doctorType.name }
+								</label>
 							</c:forEach>&nbsp;&#12288;
 						</c:if>
 					</td>
-
-
-
-
-
-
 					<th class="school"><span class="red">*</span>派送学校：</th>
 					<td class="school" colspan="2">
 

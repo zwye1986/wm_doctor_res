@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class OscaSkillsAssessmentTime extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaSkillsAssessmentTime implements java.io.Serializable {
     private String recrodFlow;
 
     private String clinicalFlow;

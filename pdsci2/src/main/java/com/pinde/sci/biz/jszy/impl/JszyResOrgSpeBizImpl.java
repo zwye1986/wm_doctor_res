@@ -2,12 +2,12 @@ package com.pinde.sci.biz.jszy.impl;
 
 
 import com.pinde.core.common.enums.TrainCategoryTypeEnum;
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
-import com.pinde.sci.model.mo.ResOrgSpe;
 import com.pinde.sci.model.mo.ResOrgSpeExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;

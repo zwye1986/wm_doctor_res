@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
@@ -24,7 +25,7 @@ public interface IJsResDoctorRecruitBiz {
     /**
      * 查询当前机构下的医师
      */
-    List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList);
+    List<JsResDoctorRecruitExt> resDoctorRecruitExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org, List<String> docTypeList);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtList1(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers);
     List<JsResDoctorRecruitExt> resDoctorRecruitExtNew(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> jointOrgList,
                                                        List<String> docTypeList,List<String> sessionNumbers,String joinOrgFlow,String isJointOrg,String isArmy);
@@ -100,10 +101,8 @@ public interface IJsResDoctorRecruitBiz {
 
     List<JsDoctorInfoExt> searchDoctorInfoResume(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList);
     List<JsDoctorInfoExt> searchDoctorInfoResume1(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
-    List<JsDoctorInfoExt> searchDoctorInfoResume2(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag);
     List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId,String workOrgName);
 
-//	List<JsDoctorInfoExt> searchDoctorInfo(ResDoctorRecruit resDoctorRecruit,ResDoctor doctor,SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList,String flag,List<String>docTypeList);
 
     int searchDoctorNum(ResDoctorRecruit recruit);
 

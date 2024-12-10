@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysRolePopedom extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysRolePopedom implements java.io.Serializable {
     private String recordFlow;
 
     private String roleFlow;

@@ -1,5 +1,6 @@
 package com.pinde.sci.model.jsres;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.*;
 
 public class JsRecruitDocInfoExt extends JsresRecruitDocInfo {

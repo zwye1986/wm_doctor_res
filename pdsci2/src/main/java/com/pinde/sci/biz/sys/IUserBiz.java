@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.sys;
 
 import com.pinde.sci.model.mo.JsresUserBalcklist;
-import com.pinde.sci.model.mo.SysUser;
-import com.pinde.sci.model.mo.SysUserDept;
-import com.pinde.sci.model.mo.SysUserExample;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserExample;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

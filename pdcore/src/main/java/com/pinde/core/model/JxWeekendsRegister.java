@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JxWeekendsRegister extends TeachingActivitySpeakerExample.MybatisObject {
+public class JxWeekendsRegister implements java.io.Serializable {
     private String recordFlow;
 
     private String weekendDate;

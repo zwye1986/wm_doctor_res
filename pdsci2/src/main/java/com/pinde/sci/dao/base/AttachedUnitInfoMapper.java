@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.AttachedUnitInfo;
+import com.pinde.core.model.AttachedUnitInfo;
 import com.pinde.sci.model.mo.AttachedUnitInfoExample;
 import org.apache.ibatis.annotations.Param;
 

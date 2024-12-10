@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class TeachingEquipment implements Serializable {
+public class TeachingEquipment implements java.io.Serializable {
     /**
      * 基地信息-教学条件-教学设备表单
      */

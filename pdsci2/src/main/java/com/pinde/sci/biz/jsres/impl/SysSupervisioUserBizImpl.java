@@ -2,6 +2,9 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;

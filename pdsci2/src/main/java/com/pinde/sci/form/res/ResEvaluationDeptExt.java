@@ -4,7 +4,7 @@ import com.pinde.sci.model.mo.ResEvaluationDept;
 
 import java.io.Serializable;
 
-public class ResEvaluationDeptExt extends ResEvaluationDept implements Serializable{
+public class ResEvaluationDeptExt extends ResEvaluationDept implements java.io.Serializable {
 
 	private static final long serialVersionUID = -5631934699990814967L;
 

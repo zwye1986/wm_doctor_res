@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResPassScoreCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResPassScoreCfg implements java.io.Serializable {
     private String cfgYear;
 
     private String cfgPassScore;

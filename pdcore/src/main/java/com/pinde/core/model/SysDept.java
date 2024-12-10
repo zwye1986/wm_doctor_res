@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysDept extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysDept implements java.io.Serializable {
     private String deptFlow;
 
     private String orgFlow;

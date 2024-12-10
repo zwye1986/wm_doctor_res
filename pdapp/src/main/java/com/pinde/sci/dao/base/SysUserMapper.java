@@ -1,10 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
 import java.util.List;
 import java.util.Map;
 
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface SysUserMapper {

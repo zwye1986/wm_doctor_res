@@ -1,12 +1,11 @@
 package com.pinde.sci.model.jsres;
 
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
-import org.apache.commons.lang3.StringUtils;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ~~~~~~~~~溺水的鱼~~~~~~~~
@@ -15,7 +14,7 @@ import java.util.*;
  * @Date: 2024/09/19/16:24
  * @Description:
  */
-public class ArrangTdVo implements Serializable {
+public class ArrangTdVo implements java.io.Serializable {
 
     /**
      * context:内容，统一字符类型

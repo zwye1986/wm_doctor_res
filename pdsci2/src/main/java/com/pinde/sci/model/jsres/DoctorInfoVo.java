@@ -2,7 +2,7 @@ package com.pinde.sci.model.jsres;
 
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @创建时间 2021/5/28
  * 描述
  */
-public class DoctorInfoVo implements Serializable {
+public class DoctorInfoVo implements java.io.Serializable {
 
     private SysUser user;
 
