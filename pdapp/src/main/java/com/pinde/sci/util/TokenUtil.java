@@ -25,7 +25,7 @@ public class TokenUtil
     protected static MemCached memCached = null;
 
     @Value("#{configProperties['memcache.server']}")
-    protected static String server="192.168.2.17:11211";
+    protected static String server = "127.0.0.1:11211";
     // 设置与缓存服务器的连接池
     static {
         memCached=MemCached.getInstance();
@@ -94,13 +94,5 @@ public class TokenUtil
             return false;
         }
         return true;
-    }
-    public static void main(String[] args)
-    {
-        MemCached cache = MemCached.getInstance();
-        cache.add("hello2", 234);
-        cache.add("aa", "bb", new Date(1000 * 60));
-        System.out.println("aa get value : " + cache.get("aa"));
-        System.out.println("hello2 get value : " + cache.get("hello2"));
     }
 }

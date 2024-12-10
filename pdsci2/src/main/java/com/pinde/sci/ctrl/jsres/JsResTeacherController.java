@@ -2420,6 +2420,7 @@ public class JsResTeacherController extends GeneralController{
 		teacherComment=teacherComment.replaceAll("\n","\\\\n");
 		teacherComment=teacherComment.replaceAll("\r","\\\\r");
 		express.setTeacherComment(teacherComment);
+		express.setManagerAuditUserFlow(GlobalContext.getCurrentUser().getUserFlow());
 		int i=expressBiz.edit(express);
 		if (i==0) {
             return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
