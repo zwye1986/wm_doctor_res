@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysCfgLog extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysCfgLog implements java.io.Serializable {
     private String cfgFlow;
 
     private String cfgCode;

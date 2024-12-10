@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysMonthlyNotUseappInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysMonthlyNotUseappInfo implements java.io.Serializable {
     private String smrdiFlow;
 
     private String dateMonth;

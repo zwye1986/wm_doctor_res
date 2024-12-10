@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysSubjCode extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysSubjCode implements java.io.Serializable {
     private String subjFlow;
 
     private String subjId;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ScresRecuritMoreSpe extends TeachingActivitySpeakerExample.MybatisObject {
+public class ScresRecuritMoreSpe implements java.io.Serializable {
     private String recordFlow;
 
     private String recruitFlow;

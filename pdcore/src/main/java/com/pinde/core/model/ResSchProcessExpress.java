@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResSchProcessExpress extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResSchProcessExpress implements java.io.Serializable {
     private String recFlow;
 
     private String orgFlow;

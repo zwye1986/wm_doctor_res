@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres.BaseSpeDept;
 
 import java.io.Serializable;
 
-public class TrainingActivityForm implements Serializable {
+public class TrainingActivityForm implements java.io.Serializable {
     /**
      * 培训活动记录名称
      */

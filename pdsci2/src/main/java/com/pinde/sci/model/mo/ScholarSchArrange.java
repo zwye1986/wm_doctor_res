@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ScholarSchArrange extends TeachingActivitySpeakerExample.MybatisObject {
+public class ScholarSchArrange implements java.io.Serializable {
     private String arrangeFlow;
 
     private String doctorFlow;

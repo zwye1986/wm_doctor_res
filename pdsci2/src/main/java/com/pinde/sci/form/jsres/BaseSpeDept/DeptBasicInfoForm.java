@@ -3,7 +3,7 @@ package com.pinde.sci.form.jsres.BaseSpeDept;
 import java.io.Serializable;
 import java.util.List;
 
-public class DeptBasicInfoForm implements Serializable {
+public class DeptBasicInfoForm implements java.io.Serializable {
 
     private static final long serialVersionUID = -3081738391574662552L;
 

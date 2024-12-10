@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResEnterOpenCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResEnterOpenCfg implements java.io.Serializable {
     private String cfgFlow;
 
     private String orgFlow;

@@ -6,7 +6,7 @@ import com.pinde.sci.model.mo.SchRotationGroup;
 import java.io.Serializable;
 import java.util.List;
 
-public class SchRotationDeptForm implements Serializable{
+public class SchRotationDeptForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 3862460508039897169L;
 	

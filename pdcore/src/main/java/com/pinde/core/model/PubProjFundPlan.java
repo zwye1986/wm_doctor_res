@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class PubProjFundPlan extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubProjFundPlan implements java.io.Serializable {
     private String fundPlanFlow;
 
     private String projFlow;

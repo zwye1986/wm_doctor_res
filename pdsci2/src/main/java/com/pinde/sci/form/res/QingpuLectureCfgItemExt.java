@@ -2,7 +2,7 @@ package com.pinde.sci.form.res;
 
 import java.io.Serializable;
 
-public class QingpuLectureCfgItemExt implements Serializable{
+public class QingpuLectureCfgItemExt implements java.io.Serializable {
 	
 	/**
 	 *

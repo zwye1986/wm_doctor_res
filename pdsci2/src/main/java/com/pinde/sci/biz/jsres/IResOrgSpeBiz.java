@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.ResOrgSpe;
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.sci.model.mo.SysOrg;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchArrangeDoctor extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchArrangeDoctor implements java.io.Serializable {
     private String arrDocFlow;
 
     private String arrangeFlow;

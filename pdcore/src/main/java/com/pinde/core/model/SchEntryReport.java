@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchEntryReport extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchEntryReport implements java.io.Serializable {
     private String reportFlow;
 
     private String codeInfo;

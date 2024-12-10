@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class SupportCondition implements Serializable {
+public class SupportCondition implements java.io.Serializable {
 		private String buildAndMang;
 		private String giveLive;
 		private String wageAndTip;

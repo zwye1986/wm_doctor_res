@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class OrganizationWorkCondition implements Serializable {
+public class OrganizationWorkCondition implements java.io.Serializable {
         /**
          *  基地信息--组织管理--工作情况表单
          */

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchExamStandardDept extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchExamStandardDept implements java.io.Serializable {
     private String recordFlow;
 
     private String arrangeFlow;

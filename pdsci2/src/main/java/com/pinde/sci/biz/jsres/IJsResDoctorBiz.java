@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
@@ -25,7 +26,7 @@ public interface IJsResDoctorBiz {
      * @param userResumeExt
      * @return
      */
-    int saveDoctorInfo(SysUser user, ResDoctor doctor, UserResumeExtInfoForm userResumeExt,String qtCountry);
+    int saveDoctorInfo(SysUser user, ResDoctor doctor, UserResumeExtInfoForm userResumeExt, String qtCountry);
     int saveDoctorInfo2(SysUser user, ResDoctor doctor, UserResumeExtInfoForm userResumeExt);
     /**
      * 检查上传图片的类型及大小

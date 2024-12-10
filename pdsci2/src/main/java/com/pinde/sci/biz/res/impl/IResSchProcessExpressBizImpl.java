@@ -3,6 +3,7 @@ package com.pinde.sci.biz.res.impl;
 import com.pinde.core.common.enums.GlobalRecTypeEnum;
 import com.pinde.core.common.enums.JszyTCMPracticEnum;
 import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.SpringUtil;
@@ -109,7 +110,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     }
 
     @Override
-    public List<ResSchProcessExpress> searchAfterAuditRec(ResDoctorSchProcess process,SysUser user,List<String> recTypeIds,Map<String,String> roleFlagMap){
+    public List<ResSchProcessExpress> searchAfterAuditRec(ResDoctorSchProcess process, SysUser user, List<String> recTypeIds, Map<String, String> roleFlagMap) {
         return resRecExtMapper.searchAfterAuditRecNew(process,user,recTypeIds,roleFlagMap);
     }
     @Override

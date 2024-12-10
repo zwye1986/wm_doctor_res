@@ -21,7 +21,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-public class PbInfoItem implements Serializable {
+public class PbInfoItem implements java.io.Serializable {
 
     private String resultFlow;
 

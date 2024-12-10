@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class OrganizationPerson  implements Serializable{
+public class OrganizationPerson implements java.io.Serializable {
 			/**
 	 * 
 	 */

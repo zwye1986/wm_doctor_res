@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by www.0001.Ga on 2016-11-16.
  */
-public class ResSxsScoreExportForm implements Serializable {
+public class ResSxsScoreExportForm implements java.io.Serializable {
     private static final long serialVersionUID = 2697698680458967809L;
 
     private String userName;

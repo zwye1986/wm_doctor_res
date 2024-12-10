@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres.BaseSpeDept;
 
 import java.io.Serializable;
 
-public class DocSchlAndSpeForm implements Serializable {
+public class DocSchlAndSpeForm implements java.io.Serializable {
     /**
      *
      */

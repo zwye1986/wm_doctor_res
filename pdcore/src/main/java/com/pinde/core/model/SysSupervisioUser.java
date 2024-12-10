@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysSupervisioUser extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysSupervisioUser implements java.io.Serializable {
     private String userFlow;
 
     private String userPasswd;

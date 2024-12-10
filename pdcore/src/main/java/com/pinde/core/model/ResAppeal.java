@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class ResAppeal extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResAppeal implements java.io.Serializable {
     private String appealFlow;
 
     private String orgFlow;

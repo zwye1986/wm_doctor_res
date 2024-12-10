@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public interface IEdcUserRegBiz {
 

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubMeetingUser extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubMeetingUser implements java.io.Serializable {
     private String recordFlow;
 
     private String meetingFlow;

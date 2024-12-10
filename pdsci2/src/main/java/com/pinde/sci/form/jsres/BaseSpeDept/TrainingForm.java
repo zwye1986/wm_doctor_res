@@ -3,7 +3,7 @@ package com.pinde.sci.form.jsres.BaseSpeDept;
 import java.io.Serializable;
 import java.util.List;
 
-public class TrainingForm implements Serializable {
+public class TrainingForm implements java.io.Serializable {
 
     private static final long serialVersionUID = -3081738391574662552L;
     private String lzcws;           //轮转管床数

@@ -3,7 +3,7 @@ package com.pinde.sci.form.sch;
 import java.io.Serializable;
 import java.util.List;
 
-public class SelectDeptForm implements Serializable{
+public class SelectDeptForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 3862460508039897169L;
 	

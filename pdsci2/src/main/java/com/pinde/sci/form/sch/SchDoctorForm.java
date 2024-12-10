@@ -2,7 +2,7 @@ package com.pinde.sci.form.sch;
 
 import java.io.Serializable;
 
-public class SchDoctorForm implements Serializable{
+public class SchDoctorForm implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 3862460508039897169L;
 

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class OscaSkillDocScore extends TeachingActivitySpeakerExample.MybatisObject {
+public class OscaSkillDocScore implements java.io.Serializable {
     private String scoreFlow;
 
     private String doctorFlow;

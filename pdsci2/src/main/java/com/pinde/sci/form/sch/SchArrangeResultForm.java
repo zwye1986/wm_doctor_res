@@ -7,7 +7,7 @@ import com.pinde.sci.model.mo.SchArrangeResult;
 import java.io.Serializable;
 import java.util.List;
 
-public class SchArrangeResultForm implements Serializable{
+public class SchArrangeResultForm implements java.io.Serializable {
 	private static final long serialVersionUID = 8256273931760685022L;
 	
 	private SchArrangeDoctor arrDoc;

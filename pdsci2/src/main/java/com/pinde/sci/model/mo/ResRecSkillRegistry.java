@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResRecSkillRegistry extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResRecSkillRegistry implements java.io.Serializable {
     private String recFlow;
 
     private String orgFlow;

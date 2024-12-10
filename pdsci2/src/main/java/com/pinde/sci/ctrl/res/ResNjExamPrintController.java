@@ -1,9 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.common.enums.OrgTypeEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.impl.JsResSupervisioBizImpl;
 import com.pinde.sci.biz.res.INjResExamBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;

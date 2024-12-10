@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JxTuitionManagement extends TeachingActivitySpeakerExample.MybatisObject {
+public class JxTuitionManagement implements java.io.Serializable {
     private String recordFlow;
 
     private String costCategory;

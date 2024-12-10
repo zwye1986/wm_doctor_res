@@ -8,7 +8,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResScheduleScoreMapper;
 import com.pinde.sci.model.mo.ResScheduleScore;
 import com.pinde.sci.model.mo.ResScheduleScoreExample;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

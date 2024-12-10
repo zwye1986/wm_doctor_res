@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResRec extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResRec implements java.io.Serializable {
     private String recFlow;
 
     private String orgFlow;

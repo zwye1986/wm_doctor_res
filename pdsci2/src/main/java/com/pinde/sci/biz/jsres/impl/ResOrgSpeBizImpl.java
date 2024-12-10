@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.pinde.core.common.enums.TrainCategoryTypeEnum;
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
@@ -9,8 +10,11 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResOrgSpeExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
+import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.sci.model.mo.SysCfgExample;
+import com.pinde.sci.model.mo.SysOrg;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +42,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 
 
 	@Override
-	public List<ResOrgSpe> searchResOrgSpeList(ResOrgSpe resOrgSpe,String trainCategoryTypeId) {
+	public List<ResOrgSpe> searchResOrgSpeList(ResOrgSpe resOrgSpe, String trainCategoryTypeId) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
 		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria();
 		List<String>speTypeIdList=new ArrayList<String>();

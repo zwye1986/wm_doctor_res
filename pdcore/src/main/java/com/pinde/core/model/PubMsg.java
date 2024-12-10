@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubMsg extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubMsg implements java.io.Serializable {
     private String msgFlow;
 
     private String msgCode;

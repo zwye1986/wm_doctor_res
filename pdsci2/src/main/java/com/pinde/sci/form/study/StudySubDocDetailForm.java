@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.StudySubject;
 
 import java.io.Serializable;
 
-public class StudySubDocDetailForm implements Serializable {
+public class StudySubDocDetailForm implements java.io.Serializable {
 	/**
 	 * @author Administrator
 	 */

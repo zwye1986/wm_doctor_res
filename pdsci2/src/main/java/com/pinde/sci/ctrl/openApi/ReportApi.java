@@ -5,7 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Date: 2024/09/23/8:33
  * @Description: 排班导入到db的接受类
  */
-public class PbImportDataItem implements Serializable {
+public class PbImportDataItem implements java.io.Serializable {
 
     private String schDeptFlow;
 

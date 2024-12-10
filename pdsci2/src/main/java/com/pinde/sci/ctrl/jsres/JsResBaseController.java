@@ -1,8 +1,5 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.OrgLevelEnum;
-import com.pinde.core.common.enums.OrgTypeEnum;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResDoctorArchiveBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
@@ -12,7 +9,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.ResArchiveSequence;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

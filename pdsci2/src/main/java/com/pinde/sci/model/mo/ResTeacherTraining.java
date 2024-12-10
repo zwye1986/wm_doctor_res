@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public class ResTeacherTraining extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResTeacherTraining implements java.io.Serializable {
     private String recordFlow;
 
     private String doctorName;

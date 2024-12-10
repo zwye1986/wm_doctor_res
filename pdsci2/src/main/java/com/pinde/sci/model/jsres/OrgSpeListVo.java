@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @创建时间 2021/6/3
  * 描述
  */
-public class OrgSpeListVo implements Serializable {
+public class OrgSpeListVo implements java.io.Serializable {
     private String recordFlow;
 
     private String orgFlow;

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResGradeBorderline extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResGradeBorderline implements java.io.Serializable {
     private String borderlineFlow;
 
     private String examFlow;

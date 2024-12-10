@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResUserBindMacid extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResUserBindMacid implements java.io.Serializable {
     private String userFlow;
 
     private String macId;

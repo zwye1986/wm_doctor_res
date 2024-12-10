@@ -3,7 +3,7 @@ package com.pinde.sci.model.jsres;
 import java.io.Serializable;
 import java.util.List;
 
-public class JsEvalCfgTitleExt implements Serializable{
+public class JsEvalCfgTitleExt implements java.io.Serializable {
 
 	private String id;
 	private String name;

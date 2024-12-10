@@ -1,7 +1,11 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.ResOrgSpe;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.JsresDoctorSpe;
+import com.pinde.sci.model.mo.JsresSign;
+import com.pinde.sci.model.mo.ResOrgSpeAssign;
+import com.pinde.sci.model.mo.ResOrgSpeExample;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

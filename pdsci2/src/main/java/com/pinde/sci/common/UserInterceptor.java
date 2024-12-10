@@ -1,7 +1,7 @@
 package com.pinde.sci.common;
 
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;

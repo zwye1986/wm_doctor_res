@@ -10,7 +10,7 @@ import java.util.List;
  * @创建时间 2021/6/3
  * 描述
  */
-public class DoctorRecruitVo implements Serializable {
+public class DoctorRecruitVo implements java.io.Serializable {
     private ResDoctorRecruit doctorRecruit;
     private String addRecord;
     private String speId;

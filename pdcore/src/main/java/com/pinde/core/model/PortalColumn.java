@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PortalColumn extends TeachingActivitySpeakerExample.MybatisObject {
+public class PortalColumn implements java.io.Serializable {
     private String columnFlow;
 
     private String columnId;

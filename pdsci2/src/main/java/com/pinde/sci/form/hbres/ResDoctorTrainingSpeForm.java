@@ -2,7 +2,7 @@ package com.pinde.sci.form.hbres;
 
 import java.io.Serializable;
 
-public class ResDoctorTrainingSpeForm implements Serializable{
+public class ResDoctorTrainingSpeForm implements java.io.Serializable {
 
 	/**
 	 * 

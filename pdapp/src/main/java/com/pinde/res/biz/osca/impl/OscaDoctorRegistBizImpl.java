@@ -1,7 +1,7 @@
 package com.pinde.res.biz.osca.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.UserStatusEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +13,6 @@ import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.core.model.OscaDoctorRegist;
 import com.pinde.core.model.OscaDoctorRegistExample;
 import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +72,7 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
     }
 
     @Override
-    public void editAudit(OscaDoctorRegist oscaDoctorRegist,SysUser saveuser) {
+    public void editAudit(OscaDoctorRegist oscaDoctorRegist, SysUser saveuser) {
         edit(oscaDoctorRegist,saveuser);
         if(AuditStatusEnum.Passed.getId().equals(oscaDoctorRegist.getStatusId())){
             //修改user状态

@@ -4,7 +4,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 
 import java.math.BigDecimal;
 
-public class StuBatch extends TeachingActivitySpeakerExample.MybatisObject {
+public class StuBatch implements java.io.Serializable {
     private String batchFlow;
 
     private String batchNo;

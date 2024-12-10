@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @CreateTime: 2019-05-07 14:28
  * @Description: ${Description}
  */
-public class ExamInfoFlowForm  implements Serializable {
+public class ExamInfoFlowForm implements java.io.Serializable {
 
     private static final long serialVersionUID = -7930841955002365083L;
 

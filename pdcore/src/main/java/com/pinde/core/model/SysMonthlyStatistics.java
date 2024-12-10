@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysMonthlyStatistics extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysMonthlyStatistics implements java.io.Serializable {
     private String statisticFlow;
 
     private String orgFlow;

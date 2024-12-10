@@ -2,7 +2,7 @@ package com.pinde.sci.model.jsres;
 
 import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.ResMessage;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @创建时间 2021/5/28
  * 描述
  */
-public class LoginVo implements Serializable {
+public class LoginVo implements java.io.Serializable {
     private List<InxInfo> infos;
     private List<ResMessage> messages;
     private String loginErrorMessage;

@@ -13,7 +13,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.JsresAttendanceDetail;
 import com.pinde.sci.model.mo.ResOrgSigninDate;
 import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

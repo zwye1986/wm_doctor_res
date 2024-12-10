@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResHospScoreTable extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResHospScoreTable implements java.io.Serializable {
     private String tableFlow;
 
     private String tableName;

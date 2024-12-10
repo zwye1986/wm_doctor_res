@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubMsg extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubMsg implements java.io.Serializable {
     private String msgFlow;
 
     private String msgCode;

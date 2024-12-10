@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubImportRecord extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubImportRecord implements java.io.Serializable {
     private String impFlow;
 
     private String impTypeId;

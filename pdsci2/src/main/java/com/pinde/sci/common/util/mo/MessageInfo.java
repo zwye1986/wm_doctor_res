@@ -5,7 +5,7 @@ import com.pinde.core.model.TeachingActivitySpeakerExample;
 import java.util.Date;
 import java.util.List;
 
-public class MessageInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class MessageInfo implements java.io.Serializable {
 
     //发件人地址
     private String  from;

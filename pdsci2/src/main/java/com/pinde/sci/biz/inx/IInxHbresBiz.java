@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.inx;
 
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 
 public interface IInxHbresBiz {
     /**

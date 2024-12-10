@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysAppUserInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysAppUserInfo implements java.io.Serializable {
     private String infoFlow;
 
     private String docotrFlow;

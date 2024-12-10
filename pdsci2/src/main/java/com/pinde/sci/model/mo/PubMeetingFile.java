@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class PubMeetingFile extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubMeetingFile implements java.io.Serializable {
     private String fileFlow;
 
     private String fileName;

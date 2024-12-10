@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResScheduleScore extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResScheduleScore implements java.io.Serializable {
     private String scheduleFlow;
 
     private String orgFlow;

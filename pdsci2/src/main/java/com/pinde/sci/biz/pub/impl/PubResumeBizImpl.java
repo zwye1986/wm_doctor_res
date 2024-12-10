@@ -6,7 +6,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.PubUserResumeMapper;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.PubUserResumeExample;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

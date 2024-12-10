@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ExpertEvalCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class ExpertEvalCfg implements java.io.Serializable {
     private String cfgFlow;
 
     private String evalYear;

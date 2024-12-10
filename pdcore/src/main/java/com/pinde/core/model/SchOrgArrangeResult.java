@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class SchOrgArrangeResult extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchOrgArrangeResult implements java.io.Serializable {
     private String arrangeFlow;
 
     private String doctorFlow;

@@ -1,7 +1,10 @@
 package com.pinde.sci.ctrl.evaAudit;
 
 import com.google.common.collect.Lists;
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserDept;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -15,15 +18,10 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.ResAssessTypeEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.hbres.teacherRec;
 import com.pinde.sci.model.mo.ResAssessCfg;
-import com.pinde.sci.model.mo.SysDept;
-import com.pinde.sci.model.mo.SysUser;
-import com.pinde.sci.model.mo.SysUserDept;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;

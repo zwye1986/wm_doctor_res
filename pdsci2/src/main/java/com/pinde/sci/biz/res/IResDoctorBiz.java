@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ExtInfoForm;
 import com.pinde.sci.form.hbres.ReplenishInfoForm;

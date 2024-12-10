@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class JsresExamSignup extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresExamSignup implements java.io.Serializable {
     private String signupFlow;
 
     private String signupYear;

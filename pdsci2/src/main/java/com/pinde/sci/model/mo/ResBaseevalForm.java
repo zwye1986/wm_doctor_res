@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResBaseevalForm extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResBaseevalForm implements java.io.Serializable {
     private String formFlow;
 
     private String formName;

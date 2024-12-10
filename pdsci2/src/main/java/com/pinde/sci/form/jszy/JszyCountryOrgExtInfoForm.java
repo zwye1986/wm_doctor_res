@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class JszyCountryOrgExtInfoForm extends PubUserResume implements Serializable{
+public class JszyCountryOrgExtInfoForm extends PubUserResume implements java.io.Serializable {
 
 	//带教科室名称
 	private String deptName;

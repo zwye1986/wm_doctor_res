@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.sch.SchSelYearEnum;
+import com.pinde.core.model.SysDept;
 import com.pinde.core.util.BeanUtil;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +12,6 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchRotationOrgGroupForm;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@ package com.pinde.sci.form.res;
 
 import java.io.Serializable;
 
-public class AnnualTrainForm implements Serializable{
+public class AnnualTrainForm implements java.io.Serializable {
 
 	/**
 	 * 

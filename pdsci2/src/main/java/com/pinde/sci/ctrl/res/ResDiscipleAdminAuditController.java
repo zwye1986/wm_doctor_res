@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
@@ -17,7 +16,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.model.mo.ResDiscipleReq;
 import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

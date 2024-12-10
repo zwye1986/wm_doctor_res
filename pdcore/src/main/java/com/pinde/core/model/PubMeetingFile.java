@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubMeetingFile extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubMeetingFile implements java.io.Serializable {
     private String fileFlow;
 
     private String fileName;

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 基地---教学活动和教学结果
  */
-public class JiaoxueActiveAndResultParam extends TeachingActivitySpeakerExample.MybatisObject {
+public class JiaoxueActiveAndResultParam implements java.io.Serializable {
     private String activityFlow;
 
     private String activityName;

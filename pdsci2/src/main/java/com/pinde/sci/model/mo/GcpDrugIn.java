@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class GcpDrugIn extends TeachingActivitySpeakerExample.MybatisObject {
+public class GcpDrugIn implements java.io.Serializable {
     private String recordFlow;
 
     private String projFlow;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResSignin extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResSignin implements java.io.Serializable {
     private String recordFlow;
 
     private String userFlow;

@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.util.StringUtil;
+import com.pinde.core.vo.ResDeptRelStdDeptVO;
+import com.pinde.core.vo.ResSpeBaseStdDeptVO;
+import com.pinde.core.vo.ResStandardDeptVO;
+import com.pinde.core.vo.SysDeptVO;
 import com.pinde.sci.biz.jsres.IJsResDeptManagementBiz;
 import com.pinde.sci.dao.jsres.JsResDeptManagementMapper;
-import com.pinde.sci.model.vo.ResDeptRelStdDeptVO;
-import com.pinde.sci.model.vo.ResSpeBaseStdDeptVO;
-import com.pinde.sci.model.vo.ResStandardDeptVO;
-import com.pinde.sci.model.vo.SysDeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SysMonthlyDoctorInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysMonthlyDoctorInfo implements java.io.Serializable {
     private String smdiFlow;
 
     private String dateMonth;

@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class LcjnSkillCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class LcjnSkillCfg implements java.io.Serializable {
     private String skillFlow;
 
     private String skillName;

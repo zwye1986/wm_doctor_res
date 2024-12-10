@@ -1,7 +1,7 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +10,6 @@ import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.core.model.PubFile;
 import com.pinde.core.model.ResDoctorKq;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SysAppUserInfo extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysAppUserInfo implements java.io.Serializable {
     private String infoFlow;
 
     private String docotrFlow;

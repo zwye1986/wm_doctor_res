@@ -7,13 +7,16 @@ import com.pinde.core.model.SysUser;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author zhangwenyun
+ */
 public interface IResDoctorProcessBiz {
 	/**
 	 * 保存或修改
 	 * @param process
 	 * @return
 	 */
-	int edit(ResDoctorSchProcess process,SysUser user);
+    int edit(ResDoctorSchProcess process, SysUser user);
 	/**
 	 * 根据主键查找
 	 * @param processFlow

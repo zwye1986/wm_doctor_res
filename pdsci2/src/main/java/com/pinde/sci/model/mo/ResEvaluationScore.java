@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ResEvaluationScore extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResEvaluationScore implements java.io.Serializable {
     private String scoreFlow;
 
     private String subjectFlow;

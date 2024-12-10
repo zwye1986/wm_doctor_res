@@ -21,7 +21,6 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
 
     @Override
     public int saveSchedule(ResScheduleScore scheduleScore,String userFlow) {
-        SysUser user = null;
         List<ResScheduleScore> scoreList = queryScheduleList(scheduleScore);
         if (scoreList.size() > 0) {
             ResScheduleScore resScheduleScore = scoreList.get(0);
@@ -40,7 +39,6 @@ public class ResScheduleScoreBizImpl implements IResScheduleScoreBiz {
 
     @Override
     public int saveScheduleDetailed(ResScheduleScore scheduleScore,String userFlow) {
-        SysUser user = null;
         List<ResScheduleScore> scoreList = queryScheduleList(scheduleScore);
         if (scoreList.size() > 0) {
             ResScheduleScore resScheduleScore = scoreList.get(0);

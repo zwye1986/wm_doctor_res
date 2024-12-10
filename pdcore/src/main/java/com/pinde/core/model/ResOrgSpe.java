@@ -1,6 +1,7 @@
 package com.pinde.core.model;
 
-public class ResOrgSpe extends TeachingActivitySpeakerExample.MybatisObject {
+
+public class ResOrgSpe implements java.io.Serializable {
     private String orgSpeFlow;
 
     private String orgFlow;
@@ -24,6 +25,14 @@ public class ResOrgSpe extends TeachingActivitySpeakerExample.MybatisObject {
     private String modifyTime;
 
     private String modifyUserFlow;
+
+    private String sessionYear;
+
+    private String status;
+
+    private String minRecruitCapacity;
+
+    private String baseCapacity;
 
     public String getOrgSpeFlow() {
         return orgSpeFlow;
@@ -119,5 +128,37 @@ public class ResOrgSpe extends TeachingActivitySpeakerExample.MybatisObject {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getSessionYear() {
+        return sessionYear;
+    }
+
+    public void setSessionYear(String sessionYear) {
+        this.sessionYear = sessionYear;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMinRecruitCapacity() {
+        return minRecruitCapacity;
+    }
+
+    public void setMinRecruitCapacity(String minRecruitCapacity) {
+        this.minRecruitCapacity = minRecruitCapacity;
+    }
+
+    public String getBaseCapacity() {
+        return baseCapacity;
+    }
+
+    public void setBaseCapacity(String baseCapacity) {
+        this.baseCapacity = baseCapacity;
     }
 }

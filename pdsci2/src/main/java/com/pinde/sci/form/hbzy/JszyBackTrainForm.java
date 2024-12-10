@@ -2,7 +2,7 @@ package com.pinde.sci.form.hbzy;
 
 import java.io.Serializable;
 
-public class JszyBackTrainForm implements Serializable {
+public class JszyBackTrainForm implements java.io.Serializable {
 		/**
 	 * 
 	 */

@@ -2,7 +2,7 @@ package com.pinde.sci.form.sch;
 
 import java.io.Serializable;
 
-public class RosterTime implements Serializable{
+public class RosterTime implements java.io.Serializable {
 
 	private String index;
 	private String schMonth;

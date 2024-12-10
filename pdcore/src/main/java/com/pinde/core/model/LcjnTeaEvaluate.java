@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class LcjnTeaEvaluate extends TeachingActivitySpeakerExample.MybatisObject {
+public class LcjnTeaEvaluate implements java.io.Serializable {
     private String teaEvaluateFlow;
 
     private String courseFlow;

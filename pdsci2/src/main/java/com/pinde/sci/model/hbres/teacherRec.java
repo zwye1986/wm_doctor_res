@@ -2,7 +2,7 @@ package com.pinde.sci.model.hbres;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class teacherRec extends TeachingActivitySpeakerExample.MybatisObject {
+public class teacherRec implements java.io.Serializable {
     private String avg;
     private String sessionNumber;
     private String userName;

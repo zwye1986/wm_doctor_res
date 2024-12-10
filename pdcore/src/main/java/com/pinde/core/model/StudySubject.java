@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class StudySubject extends TeachingActivitySpeakerExample.MybatisObject {
+public class StudySubject implements java.io.Serializable {
     private String subjectFlow;
 
     private String subjectName;

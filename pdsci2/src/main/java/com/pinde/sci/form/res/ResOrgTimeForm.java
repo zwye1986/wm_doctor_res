@@ -5,7 +5,7 @@ import com.pinde.sci.model.mo.ResOrgTime;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResOrgTimeForm implements Serializable{
+public class ResOrgTimeForm implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2420819931570058734L;
 	private String orgFlow;

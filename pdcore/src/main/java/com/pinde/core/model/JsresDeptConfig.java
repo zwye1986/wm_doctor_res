@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class JsresDeptConfig extends TeachingActivitySpeakerExample.MybatisObject {
+public class JsresDeptConfig implements java.io.Serializable {
     private String cfgFlow;
 
     private String orgFlow;

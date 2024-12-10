@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubElement extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubElement implements java.io.Serializable {
     private String elementFlow;
 
     private String elementName;

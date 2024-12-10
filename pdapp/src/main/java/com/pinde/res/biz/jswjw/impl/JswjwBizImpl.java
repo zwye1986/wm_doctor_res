@@ -8,7 +8,6 @@ import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
-import com.pinde.core.model.SysUserExample.Criteria;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
@@ -283,7 +282,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     @Override
     public SysUser findByUserCode(String userCode) {
         SysUserExample sysUserExample = new SysUserExample();
-        Criteria criteria = sysUserExample.createCriteria();
+        SysUserExample.Criteria criteria = sysUserExample.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andUserCodeEqualTo(userCode);
         List<SysUser> sysUserList = sysUserMapper.selectByExample(sysUserExample);

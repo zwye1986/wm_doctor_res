@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class PubImpactorFactor extends TeachingActivitySpeakerExample.MybatisObject {
+public class PubImpactorFactor implements java.io.Serializable {
     private String factorFlow;
 
     private String year;

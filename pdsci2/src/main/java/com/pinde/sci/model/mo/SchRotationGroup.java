@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class SchRotationGroup extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchRotationGroup implements java.io.Serializable {
     private String groupFlow;
 
     private String rotationFlow;

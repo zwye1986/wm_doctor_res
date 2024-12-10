@@ -3,7 +3,7 @@ package com.pinde.core.model;
 /**
  * @author xieshihai
  */
-public class StudyDoctor extends TeachingActivitySpeakerExample.MybatisObject {
+public class StudyDoctor implements java.io.Serializable {
     private String doctorFlow;
     private String doctorCode;
     private String doctorName;

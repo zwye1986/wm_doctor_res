@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class RecruitTargetMain extends TeachingActivitySpeakerExample.MybatisObject {
+public class RecruitTargetMain implements java.io.Serializable {
     private String rargetFlow;
 
     private String recruitYear;

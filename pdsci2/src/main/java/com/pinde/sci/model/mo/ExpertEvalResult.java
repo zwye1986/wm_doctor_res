@@ -2,7 +2,7 @@ package com.pinde.sci.model.mo;
 
 import com.pinde.core.model.TeachingActivitySpeakerExample;
 
-public class ExpertEvalResult extends TeachingActivitySpeakerExample.MybatisObject {
+public class ExpertEvalResult implements java.io.Serializable {
     private String resultFlow;
 
     private String cfgFlow;

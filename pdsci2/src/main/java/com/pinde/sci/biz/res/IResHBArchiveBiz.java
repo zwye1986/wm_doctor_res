@@ -3,7 +3,7 @@ package com.pinde.sci.biz.res;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.ResArchiveSequence;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;
 

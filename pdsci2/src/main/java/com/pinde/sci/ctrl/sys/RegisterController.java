@@ -9,7 +9,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

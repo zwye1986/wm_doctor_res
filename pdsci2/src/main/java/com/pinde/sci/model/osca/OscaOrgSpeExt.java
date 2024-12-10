@@ -1,7 +1,7 @@
 package com.pinde.sci.model.osca;
 
+import com.pinde.core.model.SysDept;
 import com.pinde.sci.model.mo.OscaOrgSpe;
-import com.pinde.sci.model.mo.SysDept;
 import com.pinde.sci.model.mo.SysOrg;
 
 public class OscaOrgSpeExt extends OscaOrgSpe{

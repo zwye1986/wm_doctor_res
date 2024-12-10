@@ -1,12 +1,11 @@
 package com.pinde.sci.form.jsres;
 
-import com.pinde.sci.model.mo.ResOrgSpe;
+import com.pinde.core.model.ResOrgSpe;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResOrgSpeForm implements Serializable{
+public class ResOrgSpeForm implements java.io.Serializable {
 	
 	
 	/**

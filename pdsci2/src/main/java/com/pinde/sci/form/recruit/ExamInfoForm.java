@@ -13,7 +13,7 @@ import java.util.List;
  * @CreateTime: 2019-05-07 14:28
  * @Description: ${Description}
  */
-public class ExamInfoForm extends RecruitExamInfo implements Serializable {
+public class ExamInfoForm extends RecruitExamInfo implements java.io.Serializable {
 
     private static final long serialVersionUID = 4961548952138944295L;
 

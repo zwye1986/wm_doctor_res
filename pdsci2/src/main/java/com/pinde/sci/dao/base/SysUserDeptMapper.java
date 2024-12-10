@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysUserDept;
-import com.pinde.sci.model.mo.SysUserDeptExample;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserDeptExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

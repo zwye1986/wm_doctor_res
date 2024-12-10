@@ -2,7 +2,7 @@ package com.pinde.core.model;
 
 import java.math.BigDecimal;
 
-public class SysSmsTemplate extends TeachingActivitySpeakerExample.MybatisObject {
+public class SysSmsTemplate implements java.io.Serializable {
     private String smsTempFlow;
 
     private String wsId;

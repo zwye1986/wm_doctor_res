@@ -1,11 +1,11 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
+import com.pinde.core.model.SysUser;
 import com.pinde.res.biz.jswjw.IJswjwKzrBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,7 +87,7 @@ public class JswjwKzrBizImpl implements IJswjwKzrBiz {
 	}
 
 	@Override
-	public List<SysUser> teacherRoleCheckUser(String deptFlow, String role,String userName, String userFlow) {
+	public List<SysUser> teacherRoleCheckUser(String deptFlow, String role, String userName, String userFlow) {
 		Map<String,Object> map=new HashMap<String, Object>();
 		map.put("sysDeptFlow", deptFlow);
 		map.put("roleFlow", role);

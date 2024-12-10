@@ -2,7 +2,7 @@ package com.pinde.sci.form.jsres;
 
 import java.io.Serializable;
 
-public class BackTrainForm implements Serializable {
+public class BackTrainForm implements java.io.Serializable {
 		/**
 	 * 
 	 */

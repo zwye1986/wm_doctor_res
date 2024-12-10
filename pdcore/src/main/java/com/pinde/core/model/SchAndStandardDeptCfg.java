@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class SchAndStandardDeptCfg extends TeachingActivitySpeakerExample.MybatisObject {
+public class SchAndStandardDeptCfg implements java.io.Serializable {
     private String recordFlow;
 
     private String schDeptFlow;

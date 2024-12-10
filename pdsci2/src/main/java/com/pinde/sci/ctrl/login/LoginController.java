@@ -16,7 +16,7 @@ import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysLoginAbility;
 import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.utils.CaptchaUtil;
 import nl.captcha.Captcha;

@@ -2,7 +2,7 @@ package com.pinde.sci.form.res;
 
 import java.io.Serializable;
 
-public class ResEvaluationCfgItemExt implements Serializable{
+public class ResEvaluationCfgItemExt implements java.io.Serializable {
 	
 	/**
 	 *

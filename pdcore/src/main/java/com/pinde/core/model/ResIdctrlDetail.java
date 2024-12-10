@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResIdctrlDetail extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResIdctrlDetail implements java.io.Serializable {
     private String recordFlow;
 
     private String idctrlMainFlow;

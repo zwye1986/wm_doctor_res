@@ -12,7 +12,7 @@ import com.pinde.sci.form.recruit.ExamInfoFlowForm;
 import com.pinde.sci.model.mo.RecruitCfgInfo;
 import com.pinde.sci.model.mo.RecruitExamMain;
 import com.pinde.sci.model.mo.RecruitInfo;
-import com.pinde.sci.model.mo.SysUser;
+import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -2,7 +2,7 @@ package com.pinde.sci.model.res;
 
 import java.io.Serializable;
 
-public class GradeStep implements Serializable{
+public class GradeStep implements java.io.Serializable {
 	
 	/**
 	 * 

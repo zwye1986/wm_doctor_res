@@ -2,7 +2,7 @@ package com.pinde.sci.form.sczyres;
 
 import java.io.Serializable;
 
-public class ExportDoctorInfo implements Serializable{
+public class ExportDoctorInfo implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

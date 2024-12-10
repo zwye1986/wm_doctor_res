@@ -1,6 +1,6 @@
 package com.pinde.core.model;
 
-public class ResDoctorOrgHistory extends TeachingActivitySpeakerExample.MybatisObject {
+public class ResDoctorOrgHistory implements java.io.Serializable {
     private String recordFlow;
 
     private String doctorFlow;

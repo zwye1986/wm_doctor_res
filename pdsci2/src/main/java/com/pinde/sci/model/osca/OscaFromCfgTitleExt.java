@@ -3,7 +3,7 @@ package com.pinde.sci.model.osca;
 import java.io.Serializable;
 import java.util.List;
 
-public class OscaFromCfgTitleExt implements Serializable{
+public class OscaFromCfgTitleExt implements java.io.Serializable {
 	
 	/**
 	 *
