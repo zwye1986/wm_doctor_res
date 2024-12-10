@@ -17,24 +17,18 @@ import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
+import com.pinde.core.common.enums.sch.*;
 import com.pinde.core.excel.enums.NumberEngEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.res.IResDoctorBiz;
-import com.pinde.sci.biz.res.IResDoctorProcessBiz;
-import com.pinde.sci.biz.res.IResRecBiz;
+import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.ICfgBiz;
-import com.pinde.sci.biz.sys.IDeptBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.biz.sys.impl.CfgBizImpl;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
+import com.pinde.sci.common.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
@@ -42,15 +36,30 @@ import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
 import com.pinde.sci.excelListens.SchedulingAuditCheck;
 import com.pinde.sci.excelListens.SchedulingAuditRead;
-import com.pinde.sci.excelListens.model.PbInfoItem;
-import com.pinde.sci.excelListens.model.ResRecItem;
-import com.pinde.sci.excelListens.model.SchedulingDataModel;
+import com.pinde.sci.excelListens.model.*;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SelectDept;
-import com.pinde.sci.model.jsres.ArrangTdVo;
-import com.pinde.sci.model.jsres.LzDeptItem;
-import com.pinde.sci.model.jsres.PbImportDataItem;
-import com.pinde.sci.model.jsres.PbImportDataVo;
+import com.pinde.sci.model.jsres.*;
+import com.pinde.sci.model.mo.JsresDoctorDeptDetail;
+import com.pinde.sci.model.mo.JsresDoctorDeptDetailExample;
+import com.pinde.sci.model.mo.JsresPowerCfg;
+import com.pinde.sci.model.mo.PubFile;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.sci.model.mo.ResDoctorRecruitExample;
+import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.ResDoctorSchProcessExample;
+import com.pinde.sci.model.mo.ResOutOfficeLock;
+import com.pinde.sci.model.mo.ResRec;
+import com.pinde.sci.model.mo.ResRecExample;
+import com.pinde.sci.model.mo.ResSchProcessExpress;
+import com.pinde.sci.model.mo.ResSchProcessExpressExample;
+import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
+import com.pinde.sci.model.mo.SchArrange;
+import com.pinde.sci.model.mo.SchArrangeDoctor;
+import com.pinde.sci.model.mo.SchArrangeDoctorDept;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchArrangeResultExample;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.mo.JsresDoctorDeptDetail;
 import com.pinde.sci.model.mo.JsresDoctorDeptDetailExample;
@@ -70,6 +79,15 @@ import com.pinde.sci.model.mo.SchArrangeDoctor;
 import com.pinde.sci.model.mo.SchArrangeDoctorDept;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchArrangeResultExample;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchDeptExternalRel;
+import com.pinde.sci.model.mo.SchDoctorDept;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SchRotationGroup;
+import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysOrgExample;
 import com.pinde.sci.model.mo.SchArrangeResultExample.Criteria;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchDeptExternalRel;
@@ -85,26 +103,22 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.ParseException;
@@ -4962,7 +4976,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 * @Description: 保存导入数据
 	 */
 	@Override
-	//@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class,propagation= Propagation.NESTED)
 	public Map<String,Object> submitPbImport(List<SchedulingDataModel> data) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		result.put("code",200);
@@ -5321,10 +5335,15 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			if (successFlag) {
 				return result;
 			}
-			//存在标准科室轮转时长超出限制的情况，手动回滚事物
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-			result.put("code",500);
-			result.put("data",entity.getData());
+			try{
+				//存在标准科室轮转时长超出限制的情况，手动回滚事物
+				result.put("code",500);
+				result.put("data",entity.getData());
+				TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			}catch (Exception e) {
+				result.put("code",500);
+				result.put("data",entity.getData());
+			}
 		}else {
 			//不开启轮转时长的校验，导入成功
 			return result;
