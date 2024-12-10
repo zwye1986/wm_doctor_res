@@ -247,8 +247,8 @@
             年级：<input type="text" id="sessionNumber" name="sessionNumber"
                       value="${sessionNumber}"
                       class="select" readonly="readonly" style="width: 100px;margin-left: 0px"/>&#12288;
-            <input type="checkbox" value="${jsResDocTypeEnumGraduate.id}" name="graduate" id="graduate"
-                   <c:if test="${jsResDocTypeEnumGraduate.id eq param.graduate}">checked</c:if>/>在校专硕
+            <input type="checkbox" value="${resDocTypeEnumGraduate.id}" name="graduate" id="graduate"
+                   <c:if test="${resDocTypeEnumGraduate.id eq param.graduate}">checked</c:if>/>在校专硕
             &#12288;<input class="btn_green" type="button" value="查&#12288;询" onclick="search();"/>
         </form>
     </div>

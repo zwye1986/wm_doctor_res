@@ -79,19 +79,19 @@ function changeOrg(){
 	var school=$("#psxx").val();
 	var org=$("#work").val();
 	var personType=$('#doctorTypeId').val();
-	if(personType == "${jsResDocTypeEnumCompany.id}"){
+	if(personType == "${resDocTypeEnumCompany.id}"){
 		$("#workOrgName").val(org);
 	}
-	if(personType== "${jsResDocTypeEnumGraduate.id}"){
+	if(personType== "${resDocTypeEnumGraduate.id}"){
 		$("#workOrgName").val(school);
 	}
-	if(personType== "${jsResDocTypeEnumSocial.id}"){
+	if(personType== "${resDocTypeEnumSocial.id}"){
 		$("#workOrgName").val("");
 	}
 }
 $(function(){
 	var result=0;
-	if("${doctor.doctorTypeId}"=="${jsResDocTypeEnumGraduate.id}"){
+	if("${doctor.doctorTypeId}"=="${resDocTypeEnumGraduate.id}"){
 		if("${GlobalConstant.FLAG_N}"!="${school}"){
 			$(".school").hide();
 			$(".address").hide();
@@ -99,7 +99,7 @@ $(function(){
 			result=1;
 		}
 	}
-	if("${doctor.doctorTypeId}"=="${jsResDocTypeEnumCompany.id}"){
+	if("${doctor.doctorTypeId}"=="${resDocTypeEnumCompany.id}"){
 // 		if("${doctor.workOrgLevelId}"!="" && "${doctor.workOrgName}"!=""){
 		if("${doctor.workOrgName}"!=""){
 			$(".school").hide();
@@ -108,7 +108,7 @@ $(function(){
 			result=1;
 		}
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumSocial.id}"){
+	if(doctorTypeId == "${resDocTypeEnumSocial.id}"){
 		$(".person").hide();
 		$(".school").hide();
 		$(".address").hide();
@@ -140,13 +140,13 @@ $(function(){
 	});
 });
 function changeWorkAdress(doctorTypeId){
-	if(doctorTypeId == "${jsResDocTypeEnumCompany.id}"){
+	if(doctorTypeId == "${resDocTypeEnumCompany.id}"){
 		$(".school").hide();
 		$(".address").show();
 		$("#psxx").val("");
 		$("#doctorTypeNameTd").removeAttr("colspan");
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumSocial.id}"){
+	if(doctorTypeId == "${resDocTypeEnumSocial.id}"){
 		$(".school").hide();
 		$(".address").hide();
 		$("#work").val("");
@@ -155,7 +155,7 @@ function changeWorkAdress(doctorTypeId){
 		$("#orgLevel").val("");
 		$("#doctorTypeNameTd").attr("colspan",4);
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumGraduate.id}"){
+	if(doctorTypeId == "${resDocTypeEnumGraduate.id}"){
 		$(".address").hide();
 		$("#work").val("");
 		$(".school").show();
@@ -176,7 +176,7 @@ function saveDoctorInfo(){
 	var nameResult=0;
 	var workOrgName=$("#workOrgName").val();
 	var personType=$('#doctorTypeId').val();
-	if("${jsResDocTypeEnumGraduate.id}"==personType){
+	if("${resDocTypeEnumGraduate.id}"==personType){
 		<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
 			if("${dict.dictName}"==workOrgName){
 				nameResult=1;

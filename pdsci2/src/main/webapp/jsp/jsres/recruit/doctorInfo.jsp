@@ -62,14 +62,14 @@ function checkBx(value,type){
 }
 
 function changeWorkAdress(doctorTypeId){
-	if(doctorTypeId == "${jsResDocTypeEnumCompanyEntrust.id}")
+	if(doctorTypeId == "${resDocTypeEnumCompanyEntrust.id}")
 	{
 		$(".workUniteCreditCode").show();
 	}else{
 		$("#workUniteCreditCode").val("");
 		$(".workUniteCreditCode").hide();
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumCompany.id}"||doctorTypeId == "${jsResDocTypeEnumCompanyEntrust.id}"){
+	if(doctorTypeId == "${resDocTypeEnumCompany.id}"||doctorTypeId == "${resDocTypeEnumCompanyEntrust.id}"){
 		if($("#Td").is(":hidden"))
 		{
 			$("#medicalHeaithOrgIdTd").attr("colspan",4);
@@ -81,7 +81,7 @@ function changeWorkAdress(doctorTypeId){
 		$("#psxx").val("");
 		$("#doctorTypeNameTd").removeAttr("colspan");
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumSocial.id}"){
+	if(doctorTypeId == "${resDocTypeEnumSocial.id}"){
 		$(".school").hide();
 		$(".hospital").hide();
 		$(".medical").hide();
@@ -95,7 +95,7 @@ function changeWorkAdress(doctorTypeId){
 		$("#orgLevel").val("");
 		$("#doctorTypeNameTd").attr("colspan",4);
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumGraduate.id}"){
+	if(doctorTypeId == "${resDocTypeEnumGraduate.id}"){
 		$(".address").hide();
 		$(".hospital").hide();
 		$(".address").val("");
@@ -326,12 +326,16 @@ function showTime2(flag){
 			    <tr>
 			    	<th>人员类型：</th>
 			        <td id="doctorTypeNameTd">${doctor.doctorTypeName}</td>
-			         <th class="school">派送学校：</th>
-			        <td class="school" colspan="2">
-			        	<label>${doctor.workOrgName}</label>
-			        </td>
-			        <th class="address">派送单位：</th>
-			        <td colspan="2" class="address">${doctor.workOrgName}</td>
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumGraduate.id}">
+                         <th class="school">派送学校：</th>
+                        <td class="school" colspan="2">
+                            <label>${doctor.workOrgName}</label>
+                        </td>
+					</c:if>
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumCompanyEntrust.id}">
+                        <th class="address">派送单位：</th>
+                        <td colspan="2" class="address">${doctor.workOrgName}</td>
+					</c:if>
 			    </tr>
 				<tr class="workUniteCreditCode" style="display: none;" >
 					<th>工作单位统一信用代码(15或18位)：</th>
