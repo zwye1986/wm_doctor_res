@@ -42,7 +42,7 @@ function toPage(page) {
 	if($("#orgFlow").val()==""){
 		$("#trainOrg").val("");
 	}
-	var data="${jsResDocTypeEnumGraduate.id}";
+	var data="${resDocTypeEnumGraduate.id}";
 	$("#currentPage").val(page);
 	jboxStartLoading();
 	jboxPostLoad("doctorListZi","<s:url value='/jsres/doctorRecruit/doctorTrendListSunForUni'/>?"+data+"&roleFlag=${roleFlag}",$("#searchForm").serialize(),false);
@@ -95,7 +95,7 @@ function exportExcel(){
 		jboxTip("请选择年级");
 		return false;
 	}
-	var data="${jsResDocTypeEnumGraduate.id}";
+	var data="${resDocTypeEnumGraduate.id}";
 	var url = "<s:url value='/jsres/doctor/exportDoctorForUni'/>?"+data;
 	jboxTip("导出中…………");
 	jboxSubmit($("#searchForm"), url, null, null, false);
@@ -234,14 +234,14 @@ function changeOrgFlow(obj){
 	 var social=true;
 	 var graduate=false;
 	 $(".docType:checked").each(function(){
-		 if($(this).val()=="${jsResDocTypeEnumCompany.id}"){
+		 if($(this).val()=="${resDocTypeEnumCompany.id}"){
 			 result=1;
 			 company=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumSocial.id}"){
+		 if($(this).val()=="${resDocTypeEnumSocial.id}"){
 			 social=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumGraduate.id}"){
+		 if($(this).val()=="${resDocTypeEnumGraduate.id}"){
 			 graduate=true;
 		 }
 	 });

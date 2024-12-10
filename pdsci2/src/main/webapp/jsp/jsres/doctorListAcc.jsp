@@ -444,17 +444,17 @@ function changeOrgFlow(obj){
 	 var social=true;
 	 var graduate=false;
 	 $(".docType:checked").each(function(){
-		 if($(this).val()=="${jsResDocTypeEnumCompany.id}"){
+		 if($(this).val()=="${resDocTypeEnumCompany.id}"){
 			 result=1;
 			 company=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumCompanyEntrust.id}"){
+		 if($(this).val()=="${resDocTypeEnumCompanyEntrust.id}"){
 			 companyE=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumSocial.id}"){
+		 if($(this).val()=="${resDocTypeEnumSocial.id}"){
 			 social=false;
 		 }
-		 if($(this).val()=="${jsResDocTypeEnumGraduate.id}"){
+		 if($(this).val()=="${resDocTypeEnumGraduate.id}"){
 			 graduate=true;
 		 }
 	 });
@@ -472,17 +472,17 @@ function changeOrgFlow(obj){
 	 if("${sessionScope.userListScope==GlobalConstant.USER_LIST_LOCAL}"=="true"){
 		 var showWorkOrg = false;
 		 $(".docType:checked").each(function(){
-			 if($(this).val()=="${jsResDocTypeEnumCompany.id}"){
+			 if($(this).val()=="${resDocTypeEnumCompany.id}"){
 				 showWorkOrg=false;
 				 return false;
 			 }
-			 if($(this).val()=="${jsResDocTypeEnumCompanyEntrust.id}"){
+			 if($(this).val()=="${resDocTypeEnumCompanyEntrust.id}"){
 				 showWorkOrg=true;
 			 }
-			 if($(this).val()=="${jsResDocTypeEnumSocial.id}"){
+			 if($(this).val()=="${resDocTypeEnumSocial.id}"){
 				 showWorkOrg=false;
 			 }
-			 if($(this).val()=="${jsResDocTypeEnumGraduate.id}"){
+			 if($(this).val()=="${resDocTypeEnumGraduate.id}"){
 				 showWorkOrg=false;
 			 }
 		 });

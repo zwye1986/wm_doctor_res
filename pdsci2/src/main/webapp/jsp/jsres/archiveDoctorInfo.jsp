@@ -17,20 +17,20 @@ function checkBx(value,type){
 	}
 }
 function changeWorkAdress(doctorTypeId){
-	if(doctorTypeId == "${jsResDocTypeEnumCompany.id}"){
+	if(doctorTypeId == "${resDocTypeEnumCompany.id}"){
 		$(".school").hide();
 		$(".address").show();
 		$("#doctorTypeNameTd").removeAttr("colspan");
 		changeOrgLevel("${userResumeExt.medicalHeaithOrgId}");
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumSocial.id}"){
+	if(doctorTypeId == "${resDocTypeEnumSocial.id}"){
 		$(".school").hide();
 		$(".address").hide();
 		$("#doctorTypeNameTd").attr("colspan",4);
 		$(".address").hide();
 		$(".hospital").hide();
 	}
-	if(doctorTypeId == "${jsResDocTypeEnumGraduate.id}"){
+	if(doctorTypeId == "${resDocTypeEnumGraduate.id}"){
 		$(".address").hide();
 		$(".school").show();
 		$("#doctorTypeNameTd").removeAttr("colspan");
@@ -131,12 +131,16 @@ function changeOrgLevel(value){
 			    <tr>
 			    	<th>人员类型：</th>
 			        <td id="doctorTypeNameTd">${doctor.doctorTypeName}</td>
-			         <th class="school">派送学校：</th>
-			        <td class="school" colspan="2">
-			        	<label>${doctor.workOrgName}</label>
-			        </td>
-			        <th class="address">派送单位：</th>
-			        <td colspan="2" class="address">${doctor.workOrgName}</td>
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumGraduate.id}">
+						<th class="school">派送学校：</th>
+						<td class="school" colspan="2">
+							<label>${doctor.workOrgName}</label>
+						</td>
+					</c:if>
+					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumCompanyEntrust.id}">
+						<th class="address">派送单位：</th>
+						<td colspan="2" class="address">${doctor.workOrgName}</td>
+					</c:if>
 			    </tr>
 <!-- 			     <tr class="address"> -->
 <!-- 			    	<th>单位等级：</th> -->
