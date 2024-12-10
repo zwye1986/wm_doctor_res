@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;

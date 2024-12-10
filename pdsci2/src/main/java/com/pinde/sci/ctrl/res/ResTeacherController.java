@@ -30,7 +30,6 @@ import com.pinde.sci.model.mo.ResDiscipleInfo;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResSchProcessExpress;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.mo.ResUserSpe;
 import com.pinde.sci.model.mo.SchArrangeResult;

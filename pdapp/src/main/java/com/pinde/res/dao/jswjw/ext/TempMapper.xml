@@ -916,7 +916,7 @@
     </update>
 
     <select id="searchRecByProcessWithBLOBsByDel"
-            resultMap="com.pinde.sci.dao.base.ResSchProcessExpressMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.ResSchProcessExpressMapper.BaseResultMap">
         SELECT *
         FROM RES_SCH_PROCESS_EXPRESS p
         where modify_user_flow='TEMP-delProcessType'
@@ -1352,7 +1352,7 @@ COMPLETE_BI_PER=(CASE
         order by create_time desc
     </select>
     <select id="updateAfterEvalutaion"
-            resultMap="com.pinde.sci.dao.base.ResSchProcessExpressMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.ResSchProcessExpressMapper.BaseResultMap">
         SELECT rec_flow,Process_flow
         FROM RES_SCH_PROCESS_EXPRESS
         where SCH_ROTATION_DEPT_FLOW is null and rec_Type_id ='AfterEvaluation'

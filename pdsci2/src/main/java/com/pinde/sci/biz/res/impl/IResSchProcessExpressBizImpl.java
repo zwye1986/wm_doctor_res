@@ -3,6 +3,8 @@ package com.pinde.sci.biz.res.impl;
 import com.pinde.core.common.enums.GlobalRecTypeEnum;
 import com.pinde.core.common.enums.JszyTCMPracticEnum;
 import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.model.ResSchProcessExpress;
+import com.pinde.core.model.ResSchProcessExpressExample;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -21,7 +23,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.IrbSingleForm;
 import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
-import com.pinde.sci.dao.base.ResSchProcessExpressMapper;
+import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
@@ -74,7 +76,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     }
     @Override
     public List<ResSchProcessExpress> searchByUserFlowAndTypeId(String operUserFlow,
-                                                  String recTypeId) {
+                                                                String recTypeId) {
         ResSchProcessExpressExample example=new ResSchProcessExpressExample();
         example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
                 .andOperUserFlowEqualTo(operUserFlow);
@@ -868,7 +870,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                               String recTypeId) {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        com.pinde.sci.model.mo.ResSchProcessExpressExample.Criteria create=example.createCriteria();
+        com.pinde.core.model.ResSchProcessExpressExample.Criteria create = example.createCriteria();
         create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andSchRotationDeptFlowEqualTo(processFlow);
@@ -889,7 +891,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
     public ResSchProcessExpress queryResRecByProcessAndType(String processFlow,String recTypeId) {
         ResSchProcessExpress rec=null;
         ResSchProcessExpressExample example = new ResSchProcessExpressExample();
-        com.pinde.sci.model.mo.ResSchProcessExpressExample.Criteria create=example.createCriteria();
+        com.pinde.core.model.ResSchProcessExpressExample.Criteria create = example.createCriteria();
         create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(processFlow)) {
             create.andProcessFlowEqualTo(processFlow);

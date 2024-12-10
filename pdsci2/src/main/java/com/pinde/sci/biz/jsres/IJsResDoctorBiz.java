@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;

@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.sch;
 
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResSchProcessExpress;
 import com.pinde.sci.model.mo.SchRotationDeptReq;
 import org.apache.ibatis.annotations.Param;
 

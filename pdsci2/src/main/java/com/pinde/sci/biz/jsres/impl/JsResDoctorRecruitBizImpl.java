@@ -6,6 +6,7 @@ import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
@@ -2281,7 +2282,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
                 if(doctorSchProcess!=null){
                     String processFlow = doctorSchProcess.getProcessFlow();
                     List<ResSchProcessExpress> resRecs = expressBiz.searchByProcessFlowClob(processFlow);
-                    if(resRecs!=null&&resRecs.size()>0)
+					if (CollectionUtils.isNotEmpty(resRecs))
                     {
                         for(ResSchProcessExpress r:resRecs)
                         {

@@ -3,6 +3,7 @@ package com.pinde.sci.biz.jsres.impl;
 import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.*;

@@ -466,7 +466,8 @@
 		GROUP BY RDSP.USER_FLOW
 	</select>
 
-	<select id="searchAfterAuditRecNew" resultMap="com.pinde.sci.dao.base.ResSchProcessExpressMapper.ResultMapWithBLOBs">
+    <select id="searchAfterAuditRecNew"
+            resultMap="com.pinde.core.common.sci.dao.ResSchProcessExpressMapper.ResultMapWithBLOBs">
 		SELECT RR.*
 		FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_SCH_PROCESS_EXPRESS RR
 		WHERE SU.RECORD_STATUS = 'Y'

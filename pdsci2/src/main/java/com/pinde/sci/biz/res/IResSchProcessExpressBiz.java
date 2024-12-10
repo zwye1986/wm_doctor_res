@@ -1,10 +1,8 @@
 package com.pinde.sci.biz.res;
 
 
-
-
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import org.dom4j.Element;
 
@@ -16,7 +14,7 @@ public interface IResSchProcessExpressBiz {
 
 
     List<ResSchProcessExpress> searchResRecWithBLOBsByRotationDeptFlow(String recTypeId,
-                                                         String recordFlow, String operUserFlow);
+                                                                       String recordFlow, String operUserFlow);
 
 
     int editAndOut(ResSchProcessExpress rec, ResDoctorSchProcess process);
