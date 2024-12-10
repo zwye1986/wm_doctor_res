@@ -584,6 +584,14 @@
             jboxLoad("content", "<s:url value='/jsres/doctor/accountManage'/>?source=hospital", true);
         }
 
+        function reportDept() {
+            jboxLoad("content", "<s:url value='/jsres/report/toDept'/>", true);
+        }
+
+        function reportDoc() {
+            jboxLoad("content", "<s:url value='/jsres/report/toDoc'/>", true);
+        }
+
         function cfgManage() {
             jboxLoad("content", "<s:url value='/jsres/cfgManager/main'/>", true);
         }
@@ -1512,6 +1520,13 @@
                             <dd class="menu_item"><a href="javascript:doctorOutDept();">学员出科情况统计</a></dd>
                             <dd class="menu_item"><a onclick="localDoctorException()">学员轮转异常统计</a></dd>
 <%--                            <dd class="menu_item"><a onclick="localMonthlyReport()">月度报表</a></dd>--%>
+                        </dl>
+                        <dl class="menu">
+                            <dt class="menu_title">
+                                <i class="icon_menu menu_setup"></i>月度报表
+                            </dt>
+                            <dd class="menu_item"><a href="javascript:reportDept();">科室报表</a></dd>
+                            <dd class="menu_item"><a href="javascript:reportDoc();">人员报表</a></dd>
                         </dl>
                         <dl class="menu">
                             <dt class="menu_title">
