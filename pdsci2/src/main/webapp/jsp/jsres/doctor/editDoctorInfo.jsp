@@ -1663,50 +1663,46 @@
 						</c:if>
 					</td>
 
-					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumGraduate.id}">
-						<th class="school"><span class="red">*</span>派送学校：</th>
-						<td class="school" colspan="2">
+					<th class="school"><span class="red">*</span>派送学校：</th>
+					<td class="school" colspan="2">
 
-							<select class="select  validate[required]"  style="width: 160px" onchange="checkWorkOrgName(this);">
-								<option value="">请选择</option>
+						<select class="select  validate[required]"  style="width: 160px" onchange="checkWorkOrgName(this);">
+							<option value="">请选择</option>
+							<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
+								<option value="${dict.dictName}"
+										<c:if test="${doctor.workOrgName eq dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
+							</c:forEach>
+						</select>
+						<%--<input id="psxx" value="${doctor.workOrgName}" class="toggleView input validate[required]"
+							   type="text" onchange="changeOrg();"/>
+						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
+							<div class="boxHome psxx" id="psxxSel"
+								 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
 								<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
-									<option value="${dict.dictName}"
-											<c:if test="${doctor.workOrgName eq dict.dictName}">selected="selected"</c:if>>${dict.dictName}</option>
+									<p class="item psxx" flow="${dict.dictId}" value="${dict.dictName}"
+									   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
 								</c:forEach>
-							</select>
-							<%--<input id="psxx" value="${doctor.workOrgName}" class="toggleView input validate[required]"
-								   type="text" onchange="changeOrg();"/>
-							<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
-								<div class="boxHome psxx" id="psxxSel"
-									 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-									<c:forEach items="${dictTypeEnumSendSchoolList}" var="dict">
-										<p class="item psxx" flow="${dict.dictId}" value="${dict.dictName}"
-										   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
-									</c:forEach>
-								</div>
-							</div>&nbsp;&nbsp;
-							--%>
-							<input type="hidden" id="school" value=""/>
-						</td>
-					</c:if>
-					<c:if test="${doctor.doctorTypeId eq resDocTypeEnumCompanyEntrust.id}">
-						<th class="address" id="address"><span class="red">*</span>派送单位：</th>
-						<td colspan="4" class="address">
-							<input id="psdw" value="${doctor.workOrgName}" class="toggleView input validate[required]"
-								   type="text" onchange="changeOrg();"/>
-							<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
-								<div class="boxHome psdw" id="psdwSel"
-									 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
-									<c:forEach items="${dictTypeEnumWorkOrgList}" var="dict">
-										<p class="item psdw" flow="${dict.dictId}" value="${dict.dictName}"
-										   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
-									</c:forEach>
-								</div>
-							</div>&nbsp;&nbsp;
-							<input type="hidden" id="work" value=""/>
-							<input type="hidden" id="workOrgName" name="doctor.workOrgName" value="${doctor.workOrgName}"/>
-						</td>
-					</c:if>
+							</div>
+						</div>&nbsp;&nbsp;
+						--%>
+						<input type="hidden" id="school" value=""/>
+					</td>
+					<th class="address" id="address"><span class="red">*</span>派送单位：</th>
+					<td colspan="4" class="address">
+						<input id="psdw" value="${doctor.workOrgName}" class="toggleView input validate[required]"
+							   type="text" onchange="changeOrg();"/>
+						<div style="width: 0px;height: 0px;overflow: visible;float: left; position:relative; top:30px;margin-left: 2px">
+							<div class="boxHome psdw" id="psdwSel"
+								 style="max-height: 250px;overflow: auto; border: 1px #ccc solid;background-color: white;min-width: 166px;border-top: none;position: relative;display:none;">
+								<c:forEach items="${dictTypeEnumWorkOrgList}" var="dict">
+									<p class="item psdw" flow="${dict.dictId}" value="${dict.dictName}"
+									   style="line-height: 20px; padding:10px 0;cursor: default; ">${dict.dictName}</p>
+								</c:forEach>
+							</div>
+						</div>&nbsp;&nbsp;
+						<input type="hidden" id="work" value=""/>
+						<input type="hidden" id="workOrgName" name="doctor.workOrgName" value="${doctor.workOrgName}"/>
+					</td>
 				</tr>
 				<tr class="workUniteCreditCode" style="display: none;">
 					<th class="address"><span class="red">*</span>工作单位：</th>
