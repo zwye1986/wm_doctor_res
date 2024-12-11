@@ -6,9 +6,12 @@ import com.alibaba.fastjson.TypeReference;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.utils.ObjectUtils;
@@ -21,10 +24,6 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.osca.DoctorScoreEnum;
-import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
-import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
@@ -226,16 +225,16 @@ public class JswjwWxController extends GeneralController {
         }
 //        List<SysUser> sysUsers = jswjwBiz.selectByUserPhoneAndIsVerify(userPhone);
 //        if (sysUsers != null && sysUsers.size() > 0) {
-            SMSUtil smsUtil = new SMSUtil(userPhone);
-            int code = (int) ((Math.random() * 9 + 1) * 1000);
+        SMSUtil smsUtil = new SMSUtil(userPhone);
+        int code = (int) ((Math.random() * 9 + 1) * 1000);
         SysSmsLog sSmsRecord = smsUtil.send("10001", "516946", "R101", code);
-            if (!"100".equals(sSmsRecord.getStatusCode())) {
-                return ResultDataThrow(sSmsRecord.getStatusName());
-            }
-            resultMap.put("resultId", "200");
-            resultMap.put("resultType", "发送成功");
-            resultMap.put("phoneCode", code);
-            return resultMap;
+        if (!"100".equals(sSmsRecord.getStatusCode())) {
+            return ResultDataThrow(sSmsRecord.getStatusName());
+        }
+        resultMap.put("resultId", "200");
+        resultMap.put("resultType", "发送成功");
+        resultMap.put("phoneCode", code);
+        return resultMap;
 //        }
 //        return ResultDataThrow("用户不存在");
     }
@@ -4258,7 +4257,7 @@ public class JswjwWxController extends GeneralController {
             // 获取当前时间
             String currentDateTime = DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm");
 
-           // 检查当前时间是否在 startDate 和 info.getStartTime() 之间
+            // 检查当前时间是否在 startDate 和 info.getStartTime() 之间
             boolean isAfterOrEqualStartDate = currentDateTime.compareTo(startDate) > 0;
             boolean isBeforeOrEqualStartTime = currentDateTime.compareTo(startDateAfter) < 0;
 
@@ -4372,7 +4371,7 @@ public class JswjwWxController extends GeneralController {
             if (!isAfterOrEqualEndDate || !isBeforeOrEqualEndTime) {
                 return ResultDataThrow("未在时间范围内签退！");
             }
-            
+
             if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(result.getIsScan2())) {
                 return ResultDataThrow("你已扫码签退成功！");
             }
@@ -11250,7 +11249,7 @@ public class JswjwWxController extends GeneralController {
             return resultMap;
         }
         if (StringUtil.isEmpty(Month)) {
-           Month=DateUtil.getMonth();
+            Month = DateUtil.getMonth();
         }
         Map<String, Object> param =new HashMap<>();
         param.put("userFlow",userFlow);
