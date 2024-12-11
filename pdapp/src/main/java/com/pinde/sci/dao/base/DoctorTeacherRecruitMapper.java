@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.DoctorTeacherRecruit;
 import com.pinde.core.model.DoctorTeacherRecruitExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DoctorTeacherRecruitMapper {
     int countByExample(DoctorTeacherRecruitExample example);
