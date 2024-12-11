@@ -4258,7 +4258,7 @@ public class JswjwWxController extends GeneralController {
                 Date startTimeDateTime = simpleDateFormat.parse(info.getStartTime());
 
                 // 检查 scanTime 是否在 startDate 和 info.getStartTime() 之间
-                if (!scanDateTime.after(startDateDateTime) && !scanDateTime.before(startTimeDateTime)) {
+                if (scanDateTime.after(startDateDateTime) && scanDateTime.before(startTimeDateTime)) {
                     return ResultDataThrow("未在时间范围内签到！");
                 }
 
@@ -4367,7 +4367,7 @@ public class JswjwWxController extends GeneralController {
             Date endTimeDateTime = simpleDateFormat.parse(info.getEndTime());
 
             // 检查 scanTime 是否在 startDate 和 info.getStartTime() 之间
-            if (!scanDateTime.after(endTimeDateTime) && !scanDateTime.before(startDateDateTime)) {
+            if (scanDateTime.after(endTimeDateTime) && scanDateTime.before(startDateDateTime)) {
                 return ResultDataThrow("未在时间范围内签退！");
             }
             
