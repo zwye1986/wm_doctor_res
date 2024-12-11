@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.model.DoctorAuth;
+import com.pinde.core.model.DoctorAuthExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -8,8 +10,6 @@ import com.pinde.sci.biz.jszy.IJszyDoctorAuthBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.DoctorAuthMapper;
-import com.pinde.sci.model.mo.DoctorAuth;
-import com.pinde.sci.model.mo.DoctorAuthExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
