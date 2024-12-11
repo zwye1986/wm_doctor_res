@@ -1,10 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserDept;
-import com.pinde.sci.model.hbres.teacherRec;
-import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
 import org.apache.ibatis.annotations.Param;
@@ -111,17 +107,17 @@ public interface DeptTeacherGradeInfoExtMapper {
 
 	List<DeptTeacherGradeInfo> getDeptDoctorEvalStaticDetail(Map<String, Object> paramMap);
 
-	List<teacherRec> getUserByRecAndAvgScore(Map<String, Object> paramMap);
+	List<TeacherRec> getUserByRecAndAvgScore(Map<String, Object> paramMap);
 
 	List<Map<String, String>> getRecContentByProcess2(Map<String, Object> paramMap);
 
-	List<teacherRec> getDeptByRecAndAvgScore(Map<String, Object> paramMap);
+	List<TeacherRec> getDeptByRecAndAvgScore(Map<String, Object> paramMap);
 
-	List<teacherRec> getDoctorByRecAndAvgScore(Map<String, Object> paramMap);
+	List<TeacherRec> getDoctorByRecAndAvgScore(Map<String, Object> paramMap);
 
 	List<Map<String, String>> getRecContentByProcess3(Map<String, Object> paramMap);
 
-    List<teacherRec> getUserByRecAndAvgScore2(Map<String, Object> paramMap);
+	List<TeacherRec> getUserByRecAndAvgScore2(Map<String, Object> paramMap);
 
 	List<Map<String, String>> getTeachResult(Map<String, Object> paramMap);
 

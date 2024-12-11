@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.model.mo.DoctorAuth;
+import com.pinde.core.model.DoctorAuth;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

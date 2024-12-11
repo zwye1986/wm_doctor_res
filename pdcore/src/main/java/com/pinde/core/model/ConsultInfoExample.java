@@ -1,4 +1,4 @@
-package com.pinde.sci.model.mo;
+package com.pinde.core.model;
 
 import java.util.ArrayList;
 import java.util.List;

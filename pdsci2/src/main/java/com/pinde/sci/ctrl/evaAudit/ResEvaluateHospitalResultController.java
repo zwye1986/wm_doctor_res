@@ -5,6 +5,7 @@ import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.TeacherRec;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -20,7 +21,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
-import com.pinde.sci.model.hbres.teacherRec;
 import com.pinde.sci.model.mo.ResAssessCfg;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
@@ -170,21 +170,21 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("studentType", studentType);
             //查出当前机构的所有带教老师
             PageHelper.startPage(currentPage, getPageSize(request));
-            List<teacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
+            List<TeacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
 
-//            for (teacherRec teacherRec : userList) {
+//            for (TeacherRec TeacherRec : userList) {
 //                Map<String, Object> param = new HashMap<String, Object>();
 //                param.put("orgFlow", orgFlow);
-//                param.put("doctorFlow", teacherRec.getUserFlow());
+//                param.put("doctorFlow", TeacherRec.getUserFlow());
 //                List<String> recTypeIdList1 = new ArrayList<>();
 //                recTypeIdList1.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGrade.getId());
 //                recTypeIdList1.add(com.pinde.core.common.enums.ResRecTypeEnum.TeacherDoctorGradeTwo.getId());
 //                param.put("recTypeIdList", recTypeIdList1);
 //                param.put("deptFlow", deptFlow);
-//                param.put("processFlow", teacherRec.getProcessFlow());
+//                param.put("processFlow", TeacherRec.getProcessFlow());
 //                param.put("recFlow", null);
 //                List<Map<String, String>> recList = resGradeBiz.getRecContentByProcess3(param);
-//                teacherRec.setOperUserName(recList.get(0).get("operUserName"));
+//                TeacherRec.setOperUserName(recList.get(0).get("operUserName"));
 //                int scoreSum = 0;
 //                List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.readForm(recList.get(0).get("cfgFlow"));
 //                if (null != assessCfgList && assessCfgList.size() > 0) {
@@ -197,7 +197,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 //                        }
 //                    }
 //                }
-//                teacherRec.setSumScore(String.valueOf(scoreSum));
+//                TeacherRec.setSumScore(String.valueOf(scoreSum));
 //            }
 
             model.addAttribute("datas", userList);
@@ -217,7 +217,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
                 paramMap.put("recTypeIds", recTypeIds);
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
-                List<teacherRec> userList = resGradeBiz.getUserByRecAndAvgScore2(paramMap);
+                List<TeacherRec> userList = resGradeBiz.getUserByRecAndAvgScore2(paramMap);
                 model.addAttribute("datas", userList);
             } else {
                 //带教flow
@@ -232,7 +232,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
-                List<teacherRec> userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
+                List<TeacherRec> userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
                 model.addAttribute("datas", userList);
             }
         } else if ("head".equals(gradeRole)) {
@@ -245,7 +245,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.getParsedGrade(cfgCode);
             model.addAttribute("assessCfgList", assessCfgList);
             PageHelper.startPage(currentPage, getPageSize(request));
-            List<teacherRec> depts = resGradeBiz.getDeptByRecAndAvgScore(paramMap);
+            List<TeacherRec> depts = resGradeBiz.getDeptByRecAndAvgScore(paramMap);
             model.addAttribute("datas", depts);
             paramMap.put("deptFlows", keys);
         }
@@ -265,7 +265,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             paramMap.put("studentType", studentType);
             //查出当前机构的所有带教老师
             PageHelper.startPage(currentPage, getPageSize(request));
-            List<teacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
+            List<TeacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
             getGradeAvgs(userList);
             model.addAttribute("datas", userList);
             model.addAttribute("studentTypes", studentType);
@@ -284,7 +284,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
-                List<teacherRec> userList = resGradeBiz.getUserByRecAndAvgScore2(paramMap);
+                List<TeacherRec> userList = resGradeBiz.getUserByRecAndAvgScore2(paramMap);
                 getGradeAvgs(userList);
                 model.addAttribute("datas", userList);
             } else {
@@ -298,7 +298,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
                 //查出当前机构的所有带教老师
                 PageHelper.startPage(currentPage, getPageSize(request));
-                List<teacherRec> userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
+                List<TeacherRec> userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
                 getGradeAvgs(userList);
                 model.addAttribute("datas", userList);
             }
@@ -688,7 +688,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         paramMap.put("sessionNumber", sessionNumber);
         paramMap.put("startScore", startScore);
         paramMap.put("endScore", endScore);
-        List<teacherRec> userList = new ArrayList<>();
+        List<TeacherRec> userList = new ArrayList<>();
         List<Map<String, String>> dataList=new ArrayList<>();
 
         if ("doctor".equals(gradeRole)) {
@@ -736,7 +736,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
             dataList = resRecBiz.searchNurseAssEvaluate(paramMap);
         }
         if (!"nurse".equals(gradeRole)) {
-            for (teacherRec teacherRec : userList) {
+            for (TeacherRec teacherRec : userList) {
                 teacherRec.setScore("100");
             }
         }
@@ -745,7 +745,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         String[] titles = null;
         if ("head".equals(gradeRole)) {
             List<Map<String,String>> resultList = new ArrayList<>();
-            for(teacherRec user : userList) {
+            for (TeacherRec user : userList) {
                 Map<String, Object> queryMap = new HashMap<String, Object>();
                 queryMap.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
                 recType = com.pinde.core.common.enums.ResRecTypeEnum.DeptGrade.getId();
@@ -1025,7 +1025,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         }
         if ("teacher".equals(gradeRole)) {
             List<Map<String,String>> resultList = new ArrayList<>();
-            for(teacherRec user : userList){
+            for (TeacherRec user : userList) {
                 Map<String, Object> queryMap = new HashMap<String, Object>();
                 queryMap.put("orgFlow", GlobalContext.getCurrentUser().getOrgFlow());
                 queryMap.put("teacherFlow", user.getUserFlow());
@@ -1360,7 +1360,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
         }
         if ("doctor".equals(gradeRole)) {
             List<Map<String,String>> resultList = new ArrayList<>();
-            for(teacherRec user : userList) {
+            for (TeacherRec user : userList) {
                 Map<String, Object> queryMap = new HashMap<String, Object>();
                 queryMap.put("doctorFlow", user.getUserFlow());
                 List<String> recTypeIdList = new ArrayList<>();
@@ -2156,7 +2156,7 @@ public class ResEvaluateHospitalResultController extends GeneralController {
 
     }
 
-    public List<teacherRec> getGradeAvgs(List<teacherRec> userList) {
+    public List<TeacherRec> getGradeAvgs(List<TeacherRec> userList) {
         userList.stream().forEach(teacherRec -> {
             if (StringUtil.isNotEmpty(teacherRec.getCfgFlow())) {
                 List<ResAssessCfgTitleForm> assessCfgList = assessCfgBiz.readForm(teacherRec.getCfgFlow());

@@ -23,8 +23,6 @@ import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
 import com.pinde.sci.model.mo.DoctorUntiedRecording;
 import com.pinde.sci.model.mo.LectureInfoTarget;
 import com.pinde.sci.model.mo.PubUserResume;

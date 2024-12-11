@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.ConsultInfo;
+import com.pinde.core.model.ConsultInfoExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IConsultInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ConsultInfoMapper;
 import com.pinde.sci.dao.jsres.ConsultInfoExtMapper;
-import com.pinde.sci.model.mo.ConsultInfo;
-import com.pinde.sci.model.mo.ConsultInfoExample;
 import com.pinde.sci.util.jsres.SensitiveFilterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

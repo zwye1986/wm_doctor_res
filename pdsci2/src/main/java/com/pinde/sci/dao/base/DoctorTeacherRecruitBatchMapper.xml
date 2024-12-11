@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.DoctorTeacherRecruitBatchMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.DoctorTeacherRecruitBatch">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.DoctorTeacherRecruitBatch">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="REF_RECORD_FLOW" jdbcType="VARCHAR" property="refRecordFlow" />
     <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
@@ -99,7 +99,8 @@
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, USER_ID_NO, SCHOOL_AUDIT_STATUS_ID, 
     SCHOOL_AUDIT_STATUS_NAME
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatchExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatchExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -123,13 +124,13 @@
     delete from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatchExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatchExample">
     delete from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatch">
+    <insert id="insert" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
     insert into PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH (RECORD_FLOW, REF_RECORD_FLOW, USER_FLOW, 
       USER_NAME, DOCTOR_FLOW, DOCTOR_NAME, 
       ORG_FLOW, ORG_NAME, SPE_ID, 
@@ -153,7 +154,7 @@
       #{userIdNo,jdbcType=VARCHAR}, #{schoolAuditStatusId,jdbcType=VARCHAR}, #{schoolAuditStatusName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatch">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
     insert into PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -340,7 +341,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatchExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatchExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -480,7 +482,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatch">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
     update PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
     <set>
       <if test="refRecordFlow != null">
@@ -573,7 +575,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.DoctorTeacherRecruitBatch">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
     update PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
     set REF_RECORD_FLOW = #{refRecordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},

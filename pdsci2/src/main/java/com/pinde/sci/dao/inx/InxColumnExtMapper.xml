@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.inx.InxColumnExtMapper" >
-	<resultMap id="extResultMap" type="com.pinde.sci.model.inx.InxColumnExt" extends="com.pinde.sci.dao.base.InxColumnMapper.BaseResultMap" >
+    <resultMap id="extResultMap" type="com.pinde.core.model.InxColumnExt"
+               extends="com.pinde.sci.dao.base.InxColumnMapper.BaseResultMap">
 		<association property="parentColumn" column="parent_column_id" javaType="com.pinde.sci.model.mo.InxColumn" >
 			<id column="PAR_COLUMN_FLOW" property="columnFlow" jdbcType="VARCHAR" />
 		    <result column="PAR_COLUMN_ID" property="columnId" jdbcType="VARCHAR" />

@@ -1,16 +1,16 @@
 package com.pinde.sci.biz.inx.impl;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
+import com.pinde.core.common.sci.dao.InxInfoMapper;
+import com.pinde.core.model.InxInfo;
+import com.pinde.core.model.InxInfoExample;
+import com.pinde.core.model.InxInfoExample.Criteria;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.InxColumnMapper;
-import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
 import com.pinde.sci.form.inx.InxInfoForm;
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.InxInfoExample;
-import com.pinde.sci.model.mo.InxInfoExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

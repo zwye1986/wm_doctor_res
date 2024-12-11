@@ -2,6 +2,8 @@ package com.pinde.sci.ctrl.inx;
 
 
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.model.InxInfo;
+import com.pinde.core.model.InxInfoExt;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IGateUserManageBiz;
@@ -11,8 +13,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.inx.InxInfoForm;
-import com.pinde.sci.model.inx.InxInfoExt;
-import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.SysRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

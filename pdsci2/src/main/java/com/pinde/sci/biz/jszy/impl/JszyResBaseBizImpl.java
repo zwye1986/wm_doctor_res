@@ -1,9 +1,7 @@
 package com.pinde.sci.biz.jszy.impl;
 
 
-import com.pinde.core.model.AttachedUnitInfo;
-import com.pinde.core.model.ResOrgSpe;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jszy.IJszyResBaseBiz;
 import com.pinde.sci.biz.jszy.IJszyResOrgSpeBiz;
@@ -17,7 +15,10 @@ import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
 import com.pinde.sci.model.jszy.JszyResBaseExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResBase;
+import com.pinde.sci.model.mo.ResPassScoreCfg;
+import com.pinde.sci.model.mo.ResPassScoreCfgExample;
+import com.pinde.sci.model.mo.SysOrg;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

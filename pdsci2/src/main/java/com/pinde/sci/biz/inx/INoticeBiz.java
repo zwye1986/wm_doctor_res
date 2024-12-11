@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.inx;
 
-import com.pinde.sci.model.mo.InxInfo;
+import com.pinde.core.model.InxInfo;
 import com.pinde.sci.model.mo.ResInfoRole;
 
 import java.util.List;

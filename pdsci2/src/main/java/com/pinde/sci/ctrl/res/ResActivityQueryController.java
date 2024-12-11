@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.DictForm;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;

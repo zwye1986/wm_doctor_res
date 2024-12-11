@@ -44,7 +44,6 @@ import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.sci.model.mo.InxInfo;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.JsresRecruitDocInfo;
 import com.pinde.sci.model.mo.PubFile;

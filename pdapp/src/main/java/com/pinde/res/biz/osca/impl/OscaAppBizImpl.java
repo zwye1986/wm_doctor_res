@@ -3,6 +3,11 @@ package com.pinde.res.biz.osca.impl;
 
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.ScoreStatusEnum;
+import com.pinde.core.common.sci.dao.InxInfoMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -12,13 +17,7 @@ import com.pinde.res.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.res.ctrl.osca.OscaCompartor;
 import com.pinde.res.dao.jswjw.ext.OscaDoctorAssessmentExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSkillRoomDocExtMapper;
-import com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper;
-import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
 import com.pinde.res.dao.osca.ext.OscaAppMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.osca.DoctorScoreEnum;
-import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
-import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.sci.dao.base.*;
@@ -85,15 +84,10 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	private OscaDoctorRegistMapper oscaDoctorRegistMapper;
 	@Autowired
 	private IOscaDoctorRegistBiz oscaDoctorRegistBiz;
-
-	@Autowired
-	private OscaDoctorAssessmentMapper oscaDoctorAssessmentMapper;
 	@Autowired
 	private OscaDoctorAssessmentExtMapper oscaDoctorAssessmentExtMapper;
 	@Autowired
 	private OscaSkillsAssessmentMapper skillsAssessmentMapper;
-	@Autowired
-	private OscaSubjectMainExtMapper oscaSubjectMainExtMapper;
 	@Autowired
 	private OscaSubjectMainMapper oscaSubjectMainMapper;
 	@Autowired
@@ -104,8 +98,6 @@ public class OscaAppBizImpl implements IOscaAppBiz {
 	private OscaRoomFileMapper roomFileMapper;
 	@Autowired
 	private OscaSkillDocStationMapper docStationMapper;
-	@Autowired
-	private OscaSkillRoomExtMapper roomExtMapper;
 
 	@Autowired
 	private OscaSkillRoomDocExtMapper roomDocExtMapper;

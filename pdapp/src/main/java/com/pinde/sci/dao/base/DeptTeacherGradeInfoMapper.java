@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.core.model.DeptTeacherGradeInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DeptTeacherGradeInfoMapper {
     int countByExample(DeptTeacherGradeInfoExample example);

@@ -1,6 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.DeptTeacherGradeInfo;
+import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 
 public class DeptTeacherGradeInfoExt extends DeptTeacherGradeInfo {

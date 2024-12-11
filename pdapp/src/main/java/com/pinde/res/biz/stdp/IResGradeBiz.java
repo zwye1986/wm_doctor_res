@@ -15,9 +15,6 @@ import java.util.Map;
 public interface IResGradeBiz {
 
     DeptTeacherGradeInfo getRecByRecType(String processFlow, String funcFlow);
-    List<DeptTeacherGradeInfo> getRecListByRecType(String processFlow, String funcFlow);
-
-    String editGradeInfo(String dataFlow, String operUserFlow, String resultFlow, String funcFlow, HttpServletRequest request, String formId);
 
     //获取医师轮转计划
     <T> T searcheDocResult(String doctorFlow, String resultFlow);
@@ -54,7 +51,6 @@ public interface IResGradeBiz {
 
     Map<String,Object> parseGradeInfoXml(String recContent);
 
-    String editKmGradeInfo(String recFlow, String userFlow, String resultFlow,String processFlow,String typeId, HttpServletRequest request, String resZseyDefaultForm);
     /**
      * 根据条件查找
      * @param itemsMap

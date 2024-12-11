@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.CountryOrgInfo;
-import com.pinde.sci.model.mo.CountryOrgInfoExample;
+import com.pinde.core.model.CountryOrgInfo;
+import com.pinde.core.model.CountryOrgInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

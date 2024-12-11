@@ -1,7 +1,4 @@
-package com.pinde.sci.model.inx;
-
-import com.pinde.sci.model.mo.InxColumn;
-import com.pinde.sci.model.mo.InxInfo;
+package com.pinde.core.model;
 
 public class InxInfoExt extends InxInfo {
 	/**

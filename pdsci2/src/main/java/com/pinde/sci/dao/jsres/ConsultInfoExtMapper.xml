@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.ConsultInfoExtMapper" >
-    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ConsultInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ConsultInfo">
         <id column="CONSULT_INFO_FLOW" property="consultInfoFlow" jdbcType="VARCHAR" />
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
         <result column="CONSULT_QUESTION" property="consultQuestion" jdbcType="VARCHAR" />
@@ -30,7 +30,7 @@
         <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
         <result column="CHARGE_NAME" property="chargeName" jdbcType="VARCHAR" />
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ConsultInfo" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ConsultInfo" extends="BaseResultMap">
         <result column="CONSULT_ANSWER" property="consultAnswer" jdbcType="CLOB" />
     </resultMap>
     <select id="searchOrgCityNameList" resultType="String">

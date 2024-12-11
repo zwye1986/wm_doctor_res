@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.DoctorAuth;
 import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;

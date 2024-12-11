@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.evaAudit;
 
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.TeacherRec;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.res.IResGradeBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.hbres.teacherRec;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +41,7 @@ public class ResEvaTeacherResultController extends GeneralController {
         paramMap.put("recTypeId",recType);
 
         PageHelper.startPage(currentPage,getPageSize(request));
-        List<teacherRec> userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
+        List<TeacherRec> userList = resGradeBiz.getUserByRecAndAvgScore(paramMap);
         model.addAttribute("datas",userList);
         model.addAttribute("allScore", "100");
 //        model.addAttribute("year",year);

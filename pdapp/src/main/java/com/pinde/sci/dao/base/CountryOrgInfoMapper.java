@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.CountryOrgInfo;
 import com.pinde.core.model.CountryOrgInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CountryOrgInfoMapper {
     int countByExample(CountryOrgInfoExample example);

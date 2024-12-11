@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSONArray;
+import com.pinde.core.common.enums.jsres.ConsultRoleEnum;
+import com.pinde.core.model.ConsultInfo;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
@@ -15,8 +17,10 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.jsres.ConsultRoleEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.sci.model.mo.SysRole;
+import com.pinde.sci.model.mo.SysUserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

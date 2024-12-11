@@ -1,8 +1,6 @@
-package com.pinde.sci.model.hbres;
+package com.pinde.core.model;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
-public class teacherRec implements java.io.Serializable {
+public class TeacherRec implements java.io.Serializable {
     private String avg;
     private String sessionNumber;
     private String userName;
