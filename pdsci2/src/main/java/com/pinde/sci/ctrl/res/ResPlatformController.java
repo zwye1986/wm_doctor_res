@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.ResDoctorStatusEnum;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
+import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;

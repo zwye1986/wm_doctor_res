@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.lcjn.ext.InxInfoExtMapper">
 
-	<select id="getDocNoReadInfos" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+    <select id="getDocNoReadInfos" resultMap="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
 		SELECT INFO_FLOW, INFO_TITLE, TITLE_IMG, COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, INFO_STATUS_NAME,
 		to_char(to_date(INFO_TIME,'yyyymmddhh24miss'),'yyyy-MM-dd HH24:MI:ss') INFO_TIME, PASS_TIME, PASS_USER_FLOW, CANCEL_TIME, CANCEL_USER_FLOW, DELETE_TIME,
 		DELETE_USER_FLOW, INFO_KEYWORD, IS_TOP, VIEW_NUM, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
@@ -17,7 +17,7 @@
 			AND DOCTOR_FLOW =#{userFlow}
 		)
 	</select>
-	<select id="getInfos" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+    <select id="getInfos" resultMap="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
 		SELECT  info.INFO_FLOW, INFO_TITLE, TITLE_IMG, COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, INFO_STATUS_NAME,
 		to_char(to_date(INFO_TIME,'yyyymmddhh24miss'),'yyyy-MM-dd HH24:MI:ss') INFO_TIME, PASS_TIME, PASS_USER_FLOW, CANCEL_TIME, CANCEL_USER_FLOW, DELETE_TIME,
 		DELETE_USER_FLOW, INFO_KEYWORD, IS_TOP, VIEW_NUM, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
@@ -49,7 +49,7 @@
 		</if>
 	</update>
 
-	<resultMap id="infoMap" type="hashmap" extends="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+    <resultMap id="infoMap" type="hashmap" extends="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
 		<result column="record_flow" jdbcType="VARCHAR" property="recordFlow" />
 	</resultMap>
 	<select id="searchInfoByOrgBeforeDate" resultMap="infoMap">
@@ -125,7 +125,8 @@
 		)
 		ORDER BY R.CREATE_TIME DESC,INFO_TIME DESC
 	</select>
-	<select id="findNoticeWithBLOBsNotHaveRole" resultMap="com.pinde.sci.dao.base.InxInfoMapper.ResultMapWithBLOBs">
+    <select id="findNoticeWithBLOBsNotHaveRole"
+            resultMap="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
 		SELECT *
 		FROM PDSCI.INX_INFO
 		WHERE RECORD_STATUS = 'Y'

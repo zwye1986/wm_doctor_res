@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.DictFormMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.DictForm" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.DictForm">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="DICT_FLOW" property="dictFlow" jdbcType="VARCHAR" />
     <result column="DETAIL_ORDER" property="detailOrder" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
     RECORD_FLOW, DICT_FLOW, DETAIL_ORDER, DETAIL_KEY, INPUT_TYPE, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.DictFormExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.DictFormExample">
     select
     <if test="distinct" >
       distinct
@@ -99,13 +99,13 @@
     delete from PDSCI.DICT_FORM
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.DictFormExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.DictFormExample">
     delete from PDSCI.DICT_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.DictForm" >
+  <insert id="insert" parameterType="com.pinde.core.model.DictForm">
     insert into PDSCI.DICT_FORM (RECORD_FLOW, DICT_FLOW, DETAIL_ORDER, 
       DETAIL_KEY, INPUT_TYPE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +115,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.DictForm" >
+  <insert id="insertSelective" parameterType="com.pinde.core.model.DictForm">
     insert into PDSCI.DICT_FORM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.DictFormExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.DictFormExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.DICT_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -242,7 +242,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.DictForm" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DictForm">
     update PDSCI.DICT_FORM
     <set >
       <if test="dictFlow != null" >
@@ -275,7 +275,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.DictForm" >
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DictForm">
     update PDSCI.DICT_FORM
     set DICT_FLOW = #{dictFlow,jdbcType=VARCHAR},
       DETAIL_ORDER = #{detailOrder,jdbcType=VARCHAR},

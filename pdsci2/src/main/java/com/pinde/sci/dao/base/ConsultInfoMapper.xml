@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ConsultInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ConsultInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ConsultInfo">
     <id column="CONSULT_INFO_FLOW" property="consultInfoFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="CONSULT_QUESTION" property="consultQuestion" jdbcType="VARCHAR" />
@@ -30,7 +30,7 @@
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
     <result column="CHARGE_NAME" property="chargeName" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ConsultInfo" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ConsultInfo" extends="BaseResultMap">
     <result column="CONSULT_ANSWER" property="consultAnswer" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -102,7 +102,8 @@
   <sql id="Blob_Column_List" >
     CONSULT_ANSWER
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ConsultInfoExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ConsultInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -118,7 +119,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ConsultInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ConsultInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -144,13 +145,13 @@
     delete from PDSCI.CONSULT_INFO
     where CONSULT_INFO_FLOW = #{consultInfoFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ConsultInfoExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ConsultInfoExample">
     delete from PDSCI.CONSULT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ConsultInfo" >
+    <insert id="insert" parameterType="com.pinde.core.model.ConsultInfo">
     insert into PDSCI.CONSULT_INFO (CONSULT_INFO_FLOW, ORG_FLOW, CONSULT_QUESTION, 
       CONSULT_QUESTIONER_FLOW, CONSULT_QUESTIONER_NAME, 
       CONSULT_QUESTIONER_GRADE, CONSULT_QUESTIONER_BASE_NAME, 
@@ -176,7 +177,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{chargeName,jdbcType=VARCHAR}, #{consultAnswer,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ConsultInfo" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ConsultInfo">
     insert into PDSCI.CONSULT_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="consultInfoFlow != null" >
@@ -351,7 +352,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ConsultInfoExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ConsultInfoExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.CONSULT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -516,7 +517,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ConsultInfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ConsultInfo">
     update PDSCI.CONSULT_INFO
     <set >
       <if test="orgFlow != null" >
@@ -603,7 +604,7 @@
     </set>
     where CONSULT_INFO_FLOW = #{consultInfoFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ConsultInfo" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ConsultInfo">
     update PDSCI.CONSULT_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       CONSULT_QUESTION = #{consultQuestion,jdbcType=VARCHAR},
@@ -634,7 +635,7 @@
       CONSULT_ANSWER = #{consultAnswer,jdbcType=CLOB}
     where CONSULT_INFO_FLOW = #{consultInfoFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ConsultInfo" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ConsultInfo">
     update PDSCI.CONSULT_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       CONSULT_QUESTION = #{consultQuestion,jdbcType=VARCHAR},

@@ -1,10 +1,9 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.ResMessage;
+import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.SysUser;
+import com.pinde.sci.model.mo.ResMessage;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

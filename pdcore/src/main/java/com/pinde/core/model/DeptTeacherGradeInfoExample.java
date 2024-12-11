@@ -2273,6 +2273,76 @@ public class DeptTeacherGradeInfoExample {
             addCriterion("TEACHER_FLOW_THREE not between", value1, value2, "teacherFlowThree");
             return (Criteria) this;
         }
+
+        public Criteria andOperUserRoleNameIsNull() {
+            addCriterion("OPER_USER_ROLE_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameIsNotNull() {
+            addCriterion("OPER_USER_ROLE_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameEqualTo(String value) {
+            addCriterion("OPER_USER_ROLE_NAME =", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameNotEqualTo(String value) {
+            addCriterion("OPER_USER_ROLE_NAME <>", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameGreaterThan(String value) {
+            addCriterion("OPER_USER_ROLE_NAME >", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameGreaterThanOrEqualTo(String value) {
+            addCriterion("OPER_USER_ROLE_NAME >=", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameLessThan(String value) {
+            addCriterion("OPER_USER_ROLE_NAME <", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameLessThanOrEqualTo(String value) {
+            addCriterion("OPER_USER_ROLE_NAME <=", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameLike(String value) {
+            addCriterion("OPER_USER_ROLE_NAME like", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameNotLike(String value) {
+            addCriterion("OPER_USER_ROLE_NAME not like", value, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameIn(List<String> values) {
+            addCriterion("OPER_USER_ROLE_NAME in", values, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameNotIn(List<String> values) {
+            addCriterion("OPER_USER_ROLE_NAME not in", values, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameBetween(String value1, String value2) {
+            addCriterion("OPER_USER_ROLE_NAME between", value1, value2, "operUserRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperUserRoleNameNotBetween(String value1, String value2) {
+            addCriterion("OPER_USER_ROLE_NAME not between", value1, value2, "operUserRoleName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

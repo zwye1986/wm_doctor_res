@@ -1,6 +1,4 @@
-package com.pinde.sci.model.mo;
-
-import com.pinde.core.model.TeachingActivitySpeakerExample;
+package com.pinde.core.model;
 
 public class ConsultInfo implements java.io.Serializable {
     private String consultInfoFlow;

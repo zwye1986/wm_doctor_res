@@ -63,6 +63,8 @@ public class DeptTeacherGradeInfo implements java.io.Serializable {
 
     private String teacherFlowThree;
 
+    private String operUserRoleName;
+
     private String recContent;
 
     public String getRecFlow() {
@@ -311,6 +313,14 @@ public class DeptTeacherGradeInfo implements java.io.Serializable {
 
     public void setTeacherFlowThree(String teacherFlowThree) {
         this.teacherFlowThree = teacherFlowThree;
+    }
+
+    public String getOperUserRoleName() {
+        return operUserRoleName;
+    }
+
+    public void setOperUserRoleName(String operUserRoleName) {
+        this.operUserRoleName = operUserRoleName;
     }
 
     public String getRecContent() {

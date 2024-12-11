@@ -1,9 +1,7 @@
 package com.pinde.sci.ctrl.evaAudit;
 
 import com.pinde.core.common.enums.RecStatusEnum;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,8 +13,10 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
-import com.pinde.sci.model.hbres.teacherRec;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResAssessCfg;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.SchDept;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -99,7 +99,7 @@ public class ResEvaDoctorResultController extends GeneralController {
         model.addAttribute("deptFlow",deptFlow);
         //查出当前机构的所有带教老师
         PageHelper.startPage(currentPage,getPageSize(request));
-        List<teacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
+        List<TeacherRec> userList = resGradeBiz.getDoctorByRecAndAvgScore(paramMap);
         model.addAttribute("datas",userList);
         return "hbres/evaAudit/resultSearch/doctorResult";
     }

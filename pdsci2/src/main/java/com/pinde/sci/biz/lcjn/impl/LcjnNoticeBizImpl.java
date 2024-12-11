@@ -1,15 +1,15 @@
 package com.pinde.sci.biz.lcjn.impl;
 
 
+import com.pinde.core.common.sci.dao.InxInfoMapper;
+import com.pinde.core.model.InxInfo;
+import com.pinde.core.model.InxInfoExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnNoticeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.InxInfoMapper;
 import com.pinde.sci.dao.lcjn.LcjnNoticeExtMapper;
-import com.pinde.sci.model.mo.InxInfo;
-import com.pinde.sci.model.mo.InxInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

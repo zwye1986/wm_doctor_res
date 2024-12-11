@@ -2,9 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.GlobalRecTypeEnum;
 import com.pinde.core.common.enums.JszyTCMPracticEnum;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.SpringUtil;
@@ -24,8 +22,12 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.res.DeptTeacherGradeInfoExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.model.hbres.teacherRec;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PubFile;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
@@ -987,11 +989,11 @@ public class ResGradeBizImpl implements IResGradeBiz {
 
 
 	@Override
-	public List<teacherRec> getUserByRecAndAvgScore(Map<String, Object> paramMap) {
+	public List<TeacherRec> getUserByRecAndAvgScore(Map<String, Object> paramMap) {
 		return gradeInfoExtMapper.getUserByRecAndAvgScore(paramMap);
 	}
 	@Override
-	public List<teacherRec> getUserByRecAndAvgScore2(Map<String, Object> paramMap) {
+	public List<TeacherRec> getUserByRecAndAvgScore2(Map<String, Object> paramMap) {
 		return gradeInfoExtMapper.getUserByRecAndAvgScore2(paramMap);
 	}
 
@@ -1032,12 +1034,12 @@ public class ResGradeBizImpl implements IResGradeBiz {
 	}
 
 	@Override
-	public List<teacherRec> getDeptByRecAndAvgScore(Map<String, Object> paramMap) {
+	public List<TeacherRec> getDeptByRecAndAvgScore(Map<String, Object> paramMap) {
 		return gradeInfoExtMapper.getDeptByRecAndAvgScore(paramMap);
 	}
 
 	@Override
-	public List<teacherRec> getDoctorByRecAndAvgScore(Map<String, Object> paramMap) {
+	public List<TeacherRec> getDoctorByRecAndAvgScore(Map<String, Object> paramMap) {
 		return this.gradeInfoExtMapper.getDoctorByRecAndAvgScore(paramMap);
 	}
 }

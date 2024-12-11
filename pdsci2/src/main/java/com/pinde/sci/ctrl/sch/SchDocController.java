@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.sch;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.sch.SchRotationMedicineType;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
+import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;

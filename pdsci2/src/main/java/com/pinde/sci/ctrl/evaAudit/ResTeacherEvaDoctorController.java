@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.evaAudit;
 
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;

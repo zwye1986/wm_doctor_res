@@ -1135,7 +1135,7 @@
         </if>
         group by process_flow,rec_type_id
     </select>
-    <resultMap id="teacherRecMap" type="com.pinde.sci.model.hbres.teacherRec" >
+    <resultMap id="teacherRecMap" type="com.pinde.core.model.TeacherRec">
         <result column="avg" property="avg" jdbcType="VARCHAR" />
         <result column="CREATE_YEAR" property="sessionNumber" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />

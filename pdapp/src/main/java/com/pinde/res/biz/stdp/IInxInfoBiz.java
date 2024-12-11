@@ -1,10 +1,7 @@
 package com.pinde.res.biz.stdp;
 
-import com.pinde.res.model.stdp.mo.InxInfoForm;
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.ResReadInfo;
-
-import java.util.List;
 
 public interface IInxInfoBiz {
 
@@ -15,22 +12,6 @@ public interface IInxInfoBiz {
      * @return
      */
     InxInfo getByInfoFlow(String infoFlow);
-
-    /**
-     * 获取资讯列表
-     *
-     * @param form
-     * @return
-     */
-    List<InxInfo> getList(InxInfoForm form);
-
-    /**
-     * 查询分类的资讯列表
-     *
-     * @param form
-     * @return
-     */
-    List<InxInfo> queryClassifyList(InxInfoForm form);
 
     ResReadInfo getReadInfoByFlow(String infoFlow,  String userFlow);
 

@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.inx;
 
+import com.pinde.core.model.InxInfo;
 import com.pinde.sci.form.inx.InxInfoForm;
-import com.pinde.sci.model.mo.InxInfo;
 
 import java.util.List;
 
