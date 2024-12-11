@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.inx;
 
-import com.pinde.sci.model.mo.InxColumn;
+import com.pinde.core.model.InxColumn;
 
 import java.util.List;
 import java.util.Map;

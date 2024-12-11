@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.inx.InxColumnExtMapper" >
     <resultMap id="extResultMap" type="com.pinde.core.model.InxColumnExt"
                extends="com.pinde.sci.dao.base.InxColumnMapper.BaseResultMap">
-		<association property="parentColumn" column="parent_column_id" javaType="com.pinde.sci.model.mo.InxColumn" >
+        <association property="parentColumn" column="parent_column_id" javaType="com.pinde.core.model.InxColumn">
 			<id column="PAR_COLUMN_FLOW" property="columnFlow" jdbcType="VARCHAR" />
 		    <result column="PAR_COLUMN_ID" property="columnId" jdbcType="VARCHAR" />
 		    <result column="PAR_COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />

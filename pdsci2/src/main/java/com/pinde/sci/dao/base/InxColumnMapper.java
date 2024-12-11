@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.InxColumn;
-import com.pinde.sci.model.mo.InxColumnExample;
+import com.pinde.core.model.InxColumn;
+import com.pinde.core.model.InxColumnExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

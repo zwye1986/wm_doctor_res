@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.inx.InxInfoExtMapper" >
     <resultMap id="extResultMap" type="com.pinde.core.model.InxInfoExt"
                extends="com.pinde.core.common.sci.dao.InxInfoMapper.BaseResultMap">
-		<association property="column" column="column_id" javaType="com.pinde.sci.model.mo.InxColumn" >
+        <association property="column" column="column_id" javaType="com.pinde.core.model.InxColumn">
 			<id column="COLUMN_FLOW" jdbcType="VARCHAR" property="columnFlow" />
 		    <result column="COLUMN_ID" jdbcType="VARCHAR" property="columnId" />
 		    <result column="COLUMN_NAME" jdbcType="VARCHAR" property="columnName" />
@@ -18,7 +18,7 @@
 	</resultMap>
     <resultMap id="extResultMapWithBLOBs" type="com.pinde.core.model.InxInfoExt"
                extends="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
-		<association property="column" column="column_id" javaType="com.pinde.sci.model.mo.InxColumn" >
+        <association property="column" column="column_id" javaType="com.pinde.core.model.InxColumn">
 			<id column="COLUMN_FLOW" jdbcType="VARCHAR" property="columnFlow" />
 		    <result column="COLUMN_ID" jdbcType="VARCHAR" property="columnId" />
 		    <result column="COLUMN_NAME" jdbcType="VARCHAR" property="columnName" />

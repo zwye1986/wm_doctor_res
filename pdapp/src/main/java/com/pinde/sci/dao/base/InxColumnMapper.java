@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.InxColumn;
 import com.pinde.core.model.InxColumnExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface InxColumnMapper {
     int countByExample(InxColumnExample example);

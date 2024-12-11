@@ -2,6 +2,7 @@ package com.pinde.sci.biz.inx.impl;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.core.common.sci.dao.InxInfoMapper;
+import com.pinde.core.model.InxColumn;
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.InxInfoExample;
 import com.pinde.core.model.InxInfoExample.Criteria;
@@ -15,7 +16,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
 import com.pinde.sci.form.inx.InxInfoForm;
-import com.pinde.sci.model.mo.InxColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
