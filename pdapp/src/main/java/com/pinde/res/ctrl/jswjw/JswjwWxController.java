@@ -6,9 +6,12 @@ import com.alibaba.fastjson.TypeReference;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.utils.ObjectUtils;
@@ -21,10 +24,6 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.osca.DoctorScoreEnum;
-import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
-import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
@@ -4258,7 +4257,7 @@ public class JswjwWxController extends GeneralController {
                 Date startTimeDateTime = simpleDateFormat.parse(info.getStartTime());
 
                 // 检查 scanTime 是否在 startDate 和 info.getStartTime() 之间
-                if (scanDateTime.after(startDateDateTime) && scanDateTime.before(startTimeDateTime)) {
+                if (!scanDateTime.after(startDateDateTime) && !scanDateTime.before(startTimeDateTime)) {
                     return ResultDataThrow("未在时间范围内签到！");
                 }
 
