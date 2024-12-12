@@ -156,7 +156,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
         int count= editGraduationInfo(numInfo);
         if(count==1)
         {
-            ResDoctorRecruit recruit=recruitBiz.readResDoctorRecruit(numInfo.getRecruitFlow());
+            com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(numInfo.getRecruitFlow());
             if(recruit!=null)
             {
                 recruit.setDoctorStatusId("21");

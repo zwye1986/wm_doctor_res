@@ -42,7 +42,7 @@ public interface OscaSkillsAssessmentExtMapper {
 
     int countOrderedTime(Map<String, String> map);
 
-    List<ResDoctorRecruit> searchDoctorGraduationYear(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> searchDoctorGraduationYear(String doctorFlow);
 
     //查询某市的考核信息
     List<OscaSkillsAssessment> searchCitySkillsAssessment(Map<String, Object> paramMap);

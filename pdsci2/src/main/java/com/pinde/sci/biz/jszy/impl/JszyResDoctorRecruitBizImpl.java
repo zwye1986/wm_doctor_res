@@ -3,8 +3,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.enums.JsResTrainYearEnum;
 import com.pinde.core.common.enums.JszyBaseStatusEnum;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -21,7 +20,9 @@ import com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.jszy.JszyResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.JsresRecruitDocInfoWithBLOBs;
+import com.pinde.sci.model.mo.JsresRecruitInfo;
+import com.pinde.sci.model.mo.ResDoctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,7 +103,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	}
 
 	@Override
-	public List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause) {
+	public List<com.pinde.core.model.ResDoctorRecruit> searchResDoctorRecruitList(com.pinde.core.model.ResDoctorRecruit recruit, String orderByClause) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
 		if(StringUtil.isNotBlank(recruit.getDoctorFlow())){
@@ -127,7 +128,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	}
 
     @Override
-	public int searchBasePassCount(ResDoctorRecruit recruit,List<String> orgFlowList) {
+	public int searchBasePassCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList) {
 		Map<String,Object> paramMap=new HashMap<String,Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -147,7 +148,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 			
 			String recruitFlow = recWithBLOBs.getRecruitFlow();
 			String doctorFlow = recWithBLOBs.getDoctorFlow();
-			ResDoctorRecruit recruit = null;
+			com.pinde.core.model.ResDoctorRecruit recruit = null;
 			if(StringUtil.isNotBlank(recruitFlow) && StringUtil.isNotBlank(doctorFlow)){
 				recruit = readResDoctorRecruit(recruitFlow);
 				ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);
@@ -213,8 +214,8 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	public List<JszyDoctorInfoExt> searchDoctorInfoResume(Map<String,Object> paramMap) {
 		return jszyResDoctorRecruitExtMapper.searchDoctorInfoExts(paramMap);
 	}
-	
-	public int searchDoctorNum(ResDoctorRecruit recruit){
+
+	public int searchDoctorNum(com.pinde.core.model.ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
@@ -289,7 +290,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 		exitRec.setDoctorFlow(doctorFlow);
         exitRec.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
         exitRec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		List<ResDoctorRecruit> passedRecruitList = searchResDoctorRecruitList(exitRec, "CREATE_TIME");
+		List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList = searchResDoctorRecruitList(exitRec, "CREATE_TIME");
 		boolean firstIsWMSecond = false;//首条是否为二阶段(有自动生成一阶段)
 		if(passedRecruitList != null && !passedRecruitList.isEmpty()){
 			for(ResDoctorRecruit  rec : passedRecruitList){
@@ -310,7 +311,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 //				exitN.setDoctorFlow(doctorFlow);
 //				exitN.setCatSpeId(com.pinde.core.common.enums.JsResTrainYearEnum.WMFirst.getId());
 //				exitN.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
-//				List<ResDoctorRecruit> exitNList = searchResDoctorRecruitList(exitN, null);
+//				List<com.pinde.core.model.ResDoctorRecruit>  exitNList = searchResDoctorRecruitList(exitN, null);
 //				if(exitNList != null && !exitNList.isEmpty()){
 //					exitN = exitNList.get(0);
 //					addWMFirst.setRecruitFlow(exitN.getRecruitFlow());
@@ -348,14 +349,6 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 		}
 		return saveDoctorRecruit(recWithBLOBs);
 	}
-
-	private void updateAllRecruit(ResDoctorRecruit r) {
-		if(StringUtil.isNotBlank(r.getRecruitFlow()))
-		{
-			doctorRecruitMapper.updateByPrimaryKey(r);
-		}
-	}
-
 	@Override
 	public int updateDoctorTrend(ResDoctorRecruitWithBLOBs recruitWithBLOBs) {
 		String doctorFlow = recruitWithBLOBs.getDoctorFlow();
@@ -462,7 +455,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 
 
 	@Override
-	public List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit) {
+	public List<com.pinde.core.model.ResDoctorRecruit> readDoctorRecruits(com.pinde.core.model.ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
@@ -499,7 +492,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	}
 
 	@Override
-	public List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(ResDoctorRecruit recruit) {
+	public List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(com.pinde.core.model.ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(recruit.getDoctorFlow())){
@@ -531,13 +524,13 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
         recruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 		.andDoctorFlowEqualTo(doctorFlow);
 		recruitExample.setOrderByClause("CREATE_TIME DESC");
-		
-		List<ResDoctorRecruit> recruits = doctorRecruitMapper.selectByExample(recruitExample);
+
+		List<com.pinde.core.model.ResDoctorRecruit> recruits = doctorRecruitMapper.selectByExample(recruitExample);
 		if(recruits==null || recruits.isEmpty()){
 			return false;
 		}
-		
-		ResDoctorRecruit recruit = recruits.get(0);
+
+		com.pinde.core.model.ResDoctorRecruit recruit = recruits.get(0);
 		
 		if(recruit==null){
 			return false;
@@ -590,7 +583,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 
 
 	@Override
-	public List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(ResDoctorRecruit recruit) {
+	public List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(com.pinde.core.model.ResDoctorRecruit recruit) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(recruit.getOrgFlow())) {

@@ -1,6 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.SysRole;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.SysUserRole;
 

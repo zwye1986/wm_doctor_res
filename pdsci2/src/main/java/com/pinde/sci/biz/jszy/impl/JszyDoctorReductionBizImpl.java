@@ -86,7 +86,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     @Override
     public int updateRecruitAndDoctorInfo(ResDoctorReduction reduction) {
         if (reduction != null) {
-            ResDoctorRecruit recruit = recruitMapper.selectByPrimaryKey(reduction.getRecruitFlow());
+            com.pinde.core.model.ResDoctorRecruit recruit = recruitMapper.selectByPrimaryKey(reduction.getRecruitFlow());
             String afterReduceTrainYear = reduction.getAfterReduceTrainYear();
             if (recruit != null) {
                 String sessionNumber = recruit.getSessionNumber();

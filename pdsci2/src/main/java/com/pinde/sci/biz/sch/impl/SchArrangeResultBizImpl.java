@@ -57,8 +57,6 @@ import com.pinde.sci.model.mo.JsresDoctorDeptDetailExample;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitExample;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResDoctorSchProcessExample;
 import com.pinde.sci.model.mo.ResOutOfficeLock;
@@ -2851,8 +2849,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			userFlowList = idNOs.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
 		}
 		//校验学员志愿
-		List<ResDoctorRecruit> recruitList = new ArrayList<>();
-		Map<String, List<ResDoctorRecruit>> recruitMap = new HashMap<>();
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = new ArrayList<>();
+        Map<String, List<com.pinde.core.model.ResDoctorRecruit>> recruitMap = new HashMap<>();
 		if (CollectionUtil.isNotEmpty(userFlowList)) {
 			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
@@ -3188,7 +3186,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	 */
 	private List<SysDept> checkDataRecurit(Map<String, ArrangTdVo> listItem,
 								  SysUser user,
-								  Map<String, List<ResDoctorRecruit>> recruitMap){
+                                           Map<String, List<com.pinde.core.model.ResDoctorRecruit>> recruitMap) {
 		List<SysDept> result = new ArrayList<>();
 		ArrangTdVo item = listItem.get("recurit");
 		item.setDisable(true);
@@ -3211,7 +3209,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			listItem.put("recurit",item);
 			return result;
 		}
-		List<ResDoctorRecruit> resDoctorRecruits = recruitMap.get(userFlow);
+        List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = recruitMap.get(userFlow);
 		if (CollectionUtil.isEmpty(resDoctorRecruits)) {
 			item.setTip(StringUtils.isEmpty(item.getTip())? "系统未分配该学员的培训方案！<br/>":
 					item.getTip()+"系统未分配该学员的培训方案！<br/>");
@@ -3387,7 +3385,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 //				ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 //				example.createCriteria().andRecordStatusEqualTo("Y").andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
 //				example.setOrderByClause("CREATE_TIME DESC");
-//				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
+//				List<com.pinde.core.model.ResDoctorRecruit>  recruitList = resDoctorRecruitMapper.selectByExample(example);
 //				if (null== recruitList ||  recruitList.size()==0){
 //					throw new RuntimeException("导入失败！第" + i + "行，系统为分配该学员的培训方案！");
 //				}
@@ -3689,7 +3687,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
                 example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andAuditStatusIdEqualTo("Passed").andDoctorFlowEqualTo(doctor.getDoctorFlow());
 				example.setOrderByClause("CREATE_TIME DESC");
 				logger.info("查询学员志愿信息！！！！！！！");
-				List<ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
+                List<com.pinde.core.model.ResDoctorRecruit> recruitList = resDoctorRecruitMapper.selectByExample(example);
 				if (null== recruitList ||  recruitList.size()==0){
 					msg = msg+"第" + i + "行导入失败！系统未分配该学员的培训方案！<br>";
 					continue;

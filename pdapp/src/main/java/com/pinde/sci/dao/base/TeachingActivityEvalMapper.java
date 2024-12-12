@@ -3,10 +3,10 @@ package com.pinde.sci.dao.base;
 import com.pinde.core.model.ActivityCfgExt;
 import com.pinde.core.model.TeachingActivityEval;
 import com.pinde.core.model.TeachingActivityEvalExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface TeachingActivityEvalMapper {
     int countByExample(TeachingActivityEvalExample example);

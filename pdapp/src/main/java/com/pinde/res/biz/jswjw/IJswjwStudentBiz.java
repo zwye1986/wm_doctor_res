@@ -76,7 +76,7 @@ public interface IJswjwStudentBiz {
 
     int editErrorNotice(ResErrorSchNotice notice, SysUser user);
 
-    List<ResDoctorRecruit> findCertificates(String userFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> findCertificates(String userFlow);
 
     ResDoctorRecruit readRecruit(String recordFlow);
 

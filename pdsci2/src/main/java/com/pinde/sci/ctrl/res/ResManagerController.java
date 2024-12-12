@@ -52,7 +52,6 @@ import com.pinde.sci.model.mo.SchRotation;
 import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.sci.model.mo.SchRotationDeptReq;
 import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;

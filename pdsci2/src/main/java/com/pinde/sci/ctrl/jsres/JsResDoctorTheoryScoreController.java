@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
@@ -10,10 +11,12 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.*;
+import com.pinde.sci.biz.jsres.IJsResBaseBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
+import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
@@ -50,9 +53,6 @@ import java.util.*;
 public class JsResDoctorTheoryScoreController extends GeneralController {
 
     private static Logger logger = LoggerFactory.getLogger(JsResDoctorTheoryScoreController.class);
-
-    @Autowired
-    private IJsResDoctorBiz jsResDoctorBiz;
     @Autowired
     private IJsResBaseBiz baseBiz;
     @Autowired
@@ -67,8 +67,6 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     private OrgBizImpl orgBiz;
     @Autowired
     private IResJointOrgBiz jointOrgBiz;
-    @Autowired
-    private IDictBiz dictBiz;
     @Autowired
     private IResRecBiz resRecBiz;
     @Autowired
@@ -90,8 +88,6 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             sysorg.setOrgCityId(org.getOrgCityId());
         }
-//        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//        List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
         sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs=orgBiz.searchOrgNotCountryOrg(sysorg);
         sysorg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
@@ -1549,7 +1545,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         {
             if(StringUtil.isNotBlank(recruitFlow))
             {
-                ResDoctorRecruit recruit=resDoctorRecruitBiz.getNewRecruit(doctorFlow);
+                com.pinde.core.model.ResDoctorRecruit recruit = resDoctorRecruitBiz.getNewRecruit(doctorFlow);
                 if(recruit!=null)
                     score.setRecruitFlow(recruit.getRecruitFlow());
             }else {
@@ -1635,7 +1631,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         {
             if(StringUtil.isNotBlank(recruitFlow))
             {
-                ResDoctorRecruit recruit=resDoctorRecruitBiz.getNewRecruit(doctorFlow);
+                com.pinde.core.model.ResDoctorRecruit recruit = resDoctorRecruitBiz.getNewRecruit(doctorFlow);
                 if(recruit!=null)
                     score.setRecruitFlow(recruit.getRecruitFlow());
             }else {

@@ -2,6 +2,8 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
@@ -17,8 +19,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.JsresSign;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -653,7 +653,7 @@ public class JsResHospitaltController extends GeneralController{
 		List<String> records = Arrays.asList(recruitFlowList);
 		for(int i=0;i<records.size();i++){
 			String recruitFlow = records.get(i);
-			ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+			com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
             if (StringUtil.isBlank(recruit.getRecruitFlag()) || com.pinde.core.common.GlobalConstant.FLAG_N.equals(recruit.getRecruitFlag())) {
 				// 已录取的学员 成绩审核不进行操作
 				ResDoctorRecruitWithBLOBs docRecWithBLOBs = new ResDoctorRecruitWithBLOBs();
@@ -741,7 +741,7 @@ public class JsResHospitaltController extends GeneralController{
 		for(int i=0;i<records.size();i++){
 			String recruitFlow = records.get(i);
 			// 学员已报到则不进行操作
-			ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+			com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 			//学员进行报到操作 更新rotation_flow
 			if(StringUtil.isBlank(recruit.getRotationFlow())){
 				//已报到 则不能一键录取/不录取
@@ -764,8 +764,8 @@ public class JsResHospitaltController extends GeneralController{
 	 * @return
 	 */
 	@RequestMapping(value = "/expertAchievementList")
-	public void expertAchievementList(ResDoctorRecruit resDoctorRecruit, SysUser sysUser,String scoreType, HttpServletResponse response,
-									String sortType,String datas[]) {
+	public void expertAchievementList(ResDoctorRecruit resDoctorRecruit, SysUser sysUser, String scoreType, HttpServletResponse response,
+									  String sortType, String datas[]) {
 
 		try {
 			List<String> sessionNumbers = new ArrayList<String>();//年级多选

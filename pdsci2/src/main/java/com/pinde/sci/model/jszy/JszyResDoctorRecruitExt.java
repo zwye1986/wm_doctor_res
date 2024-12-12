@@ -1,11 +1,11 @@
 package com.pinde.sci.model.jszy;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResScore;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResScore;
 
-public class JszyResDoctorRecruitExt extends ResDoctorRecruit{
+public class JszyResDoctorRecruitExt extends ResDoctorRecruit {
 
 	/**
 	 * 

@@ -5,6 +5,7 @@ import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
@@ -22,7 +23,6 @@ import com.pinde.sci.common.SessionData;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.model.mo.SysLog;
-import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -145,7 +145,7 @@ public class InxRecruitController extends GeneralController{
 			if(!userRoleList.isEmpty()){
 				userRole = userRoleList.get(0);
 			}
-			SysRole role = roleBiz.read(userRole.getRoleFlow()); 
+			SysRole role = roleBiz.read(userRole.getRoleFlow());
 			if(role!=null) {
 
                 setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID, com.pinde.core.common.GlobalConstant.RECRUIT_WS_ID);

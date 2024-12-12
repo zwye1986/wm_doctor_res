@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
@@ -18,7 +20,9 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorOrgHistoryExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorOrgHistory;
+import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample;
 import com.pinde.sci.model.mo.ResDoctorOrgHistoryExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -190,7 +194,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 						ResDoctorRecruit docRecruit =  jsResDoctorRecruitBiz.readRecruit(docOrgHistory1.getRecruitFlow());
 //						docRecruit.setDoctorFlow(doctorFlow);
 //						docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-//						List<ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
+//						List<com.pinde.core.model.ResDoctorRecruit>  docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
 						if(docRecruit != null){
 
 							String orgFlow = docOrgHistory1.getOrgFlow();
@@ -326,7 +330,7 @@ public class JsResDoctorOrgHistoryBizImpl implements IJsResDoctorOrgHistoryBiz{
 	}
 
 	@Override
-	public int changeStatus(ResDoctorOrgHistory history,ResDoctorRecruit doctorRecruit) {
+    public int changeStatus(ResDoctorOrgHistory history, ResDoctorRecruit doctorRecruit) {
 		int doctorResult=0;int recruitResult=0;
 		if(history!=null){
 			ResDoctor doctor=doctorBiz.readDoctor(history.getDoctorFlow());

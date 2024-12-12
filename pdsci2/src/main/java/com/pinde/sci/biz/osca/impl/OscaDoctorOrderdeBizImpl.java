@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorOrderdeBiz;
 import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
@@ -135,7 +136,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz{
     }
 
     @Override
-    public List<ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow) {
         return oscaSkillsAssessmentExtMapper.searchDoctorGraduationYear(doctorFlow);
     }
 

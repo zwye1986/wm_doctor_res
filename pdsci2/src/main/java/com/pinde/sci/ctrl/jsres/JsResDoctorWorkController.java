@@ -22,7 +22,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.ResJointOrg;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -215,7 +214,7 @@ public class JsResDoctorWorkController extends GeneralController {
 		parMp.put("userFlow", userFlow);
 		parMp.put("recruitFlow", recruitFlow);
 		ResDoctor resDoctor=resDoctorBiz.findByFlow(userFlow);
-		ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+		com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 		parMp.put("orgFlow", recruit.getOrgFlow());
 		//住院医师缩减调整
 		boolean isReduction = false;

@@ -8,6 +8,7 @@ import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ClientIPUtils;

@@ -30,7 +30,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysDeptMapper;
-import com.pinde.sci.dao.base.SysOrgBatchMapper;
+import com.pinde.core.common.sci.dao.SysOrgBatchMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.form.jsres.*;

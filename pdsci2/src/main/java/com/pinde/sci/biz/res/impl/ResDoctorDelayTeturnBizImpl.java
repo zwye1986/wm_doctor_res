@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -275,7 +276,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     }
 
     @Override
-    public int checkBackTrain(ResDocotrDelayTeturn docotrDelayTeturn, ResDoctorRecruit recruit)
+    public int checkBackTrain(ResDocotrDelayTeturn docotrDelayTeturn, com.pinde.core.model.ResDoctorRecruit recruit)
     {
         //更新数据
         int recResult = resDocotrDelayTeturnMapper.updateByPrimaryKeySelective(docotrDelayTeturn);
@@ -374,7 +375,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
         if(resDocotrDelayTeturn != null){
             //将recruit改成NotSubmit
             String recruitFlow = resDocotrDelayTeturn.getRecruitFlow();
-//            ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitFlow);
+//            com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitFlow);
 //            if(recruit != null){
 //                recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
 //                recruit.setAuditStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
@@ -429,7 +430,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     @Override
     public int editJszy(ResDocotrDelayTeturn resDocotrDelayTeturn, ResDoctorRecruitWithBLOBs recruitWithBLOBs) {
 
-        ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
+        com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
         ResDoctor doctor = doctorBiz.readDoctor(recruit.getDoctorFlow());
         //更新recruit数据
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
@@ -633,7 +634,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     }
     @Override
     public int saveDelayInfo(ResDocotrDelayTeturn docotrDelayTeturn) {
-        ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(docotrDelayTeturn.getRecruitFlow());
+        com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(docotrDelayTeturn.getRecruitFlow());
         ResDoctor resDoctor = doctorBiz.readDoctor(recruit.getDoctorFlow());
         recruit.setGraduationYear(docotrDelayTeturn.getGraduationYear());
         docotrDelayTeturn.setOrgFlow(recruit.getOrgFlow());
@@ -662,7 +663,7 @@ public class ResDoctorDelayTeturnBizImpl implements IResDoctorDelayTeturnBiz {
     }
     @Override
     public int checkDelayInfo(ResDocotrDelayTeturn docotrDelayTeturn) {
-        ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(docotrDelayTeturn.getRecruitFlow());
+        com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(docotrDelayTeturn.getRecruitFlow());
         recruit.setGraduationYear(docotrDelayTeturn.getGraduationYear());
         GeneralMethod.setRecordInfo(docotrDelayTeturn, false);
         int recResult = resDocotrDelayTeturnMapper.updateByPrimaryKeySelective(docotrDelayTeturn);

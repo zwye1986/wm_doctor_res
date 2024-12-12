@@ -962,7 +962,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                 JsresGraduationApply apply = graduationApplyBiz.readByFlow(applyFlow);
                 if (apply != null) {
 //                    if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(apply.getCityAuditStatusId())) {
-//                        ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
+//                        com.pinde.core.model.ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
 //                        SysUser doc=userBiz.findByFlow(recruit.getDoctorFlow());
 //                        return "市局已退回学员【"+doc.getUserName()+"】考核资格申请信息，无法审核！";
 //                    }

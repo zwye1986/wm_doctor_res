@@ -1,4 +1,4 @@
-package com.pinde.sci.dao.base;
+package com.pinde.core.common.sci.dao;
 
 import com.pinde.core.model.AttachedUnitInfo;
 import com.pinde.core.model.AttachedUnitInfoExample;

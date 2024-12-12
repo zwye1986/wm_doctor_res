@@ -667,7 +667,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	}
 
 	@Override
-	public SchRotation getRotationByRecruit(ResDoctorRecruit recruit) {
+    public SchRotation getRotationByRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
 		if(recruit!=null){
 			SchRotation rotation = null;
 
@@ -719,7 +719,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
     }
 
 	@Override
-	public SchRotation getRotationByRecruitNew(ResDoctorRecruit recruit) {
+    public SchRotation getRotationByRecruitNew(com.pinde.core.model.ResDoctorRecruit recruit) {
 		if(recruit!=null){
 			SchRotation rotation = null;
 

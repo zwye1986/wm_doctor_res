@@ -817,7 +817,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 	@Override
 	public int updateAffirm(List<String> scoreFlowList) {
 		List<String> doctorFlows = doctorExtMapper.selectDoctorFlow(scoreFlowList);
-		List<ResDoctorRecruit> doctorRecruits = recruitMapper.selectByDoctorFlow(doctorFlows);
+		List<com.pinde.core.model.ResDoctorRecruit> doctorRecruits = recruitMapper.selectByDoctorFlow(doctorFlows);
 		recruitBiz.createCertificateNo(doctorRecruits);
 		return doctorExtMapper.updateAffirm(scoreFlowList);
 	}
@@ -825,7 +825,7 @@ public class ResScoreBizImpl implements IResScoreBiz{
 	@Override
 	public int updateNotAffirm(List<String> scoreFlowList) {
 		List<String> doctorFlows = doctorExtMapper.selectDoctorFlow(scoreFlowList);
-		List<ResDoctorRecruit> doctorRecruits = recruitMapper.selectByDoctorFlow(doctorFlows);
+		List<com.pinde.core.model.ResDoctorRecruit> doctorRecruits = recruitMapper.selectByDoctorFlow(doctorFlows);
 		recruitBiz.createNotCertificateNo(doctorRecruits);
 		return doctorExtMapper.updateNotAffirm(scoreFlowList);
 	}

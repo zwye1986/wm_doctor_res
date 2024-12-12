@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
@@ -34,5 +35,5 @@ public interface IResDoctorArchiveBiz {
 
 	List<ResUserResumeLog> searchResUserResumeLog(ResUserResumeLog userResumeLog);
 
-	List<JsDoctorInfoLogExt> searchDoctorInfoResume(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList,String archiveFlow);
+    List<JsDoctorInfoLogExt> searchDoctorInfoResume(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, String archiveFlow);
 }

@@ -1,8 +1,7 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruit;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -23,11 +22,11 @@ public class DoctorRecruitVo implements java.io.Serializable {
     private String placeId;
     private String placeName;
     private String assignYear;
-    private List<ResDoctorRecruit> passedRecruitList;
+    private List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList;
     private Boolean firstRecIsWMSecond;
     private Boolean isWMSecondRecPassed;
     private List<String> catSpeIdList;
-    private List<ResDoctorRecruit> prevPassedList;
+    private List<com.pinde.core.model.ResDoctorRecruit> prevPassedList;
     private ResDoctorRecruit latestPrevPassed;
 
     public ResDoctorRecruit getDoctorRecruit() {
@@ -126,11 +125,11 @@ public class DoctorRecruitVo implements java.io.Serializable {
         this.assignYear = assignYear;
     }
 
-    public List<ResDoctorRecruit> getPassedRecruitList() {
+    public List<com.pinde.core.model.ResDoctorRecruit> getPassedRecruitList() {
         return passedRecruitList;
     }
 
-    public void setPassedRecruitList(List<ResDoctorRecruit> passedRecruitList) {
+    public void setPassedRecruitList(List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList) {
         this.passedRecruitList = passedRecruitList;
     }
 
@@ -158,11 +157,11 @@ public class DoctorRecruitVo implements java.io.Serializable {
         this.catSpeIdList = catSpeIdList;
     }
 
-    public List<ResDoctorRecruit> getPrevPassedList() {
+    public List<com.pinde.core.model.ResDoctorRecruit> getPrevPassedList() {
         return prevPassedList;
     }
 
-    public void setPrevPassedList(List<ResDoctorRecruit> prevPassedList) {
+    public void setPrevPassedList(List<com.pinde.core.model.ResDoctorRecruit> prevPassedList) {
         this.prevPassedList = prevPassedList;
     }
 

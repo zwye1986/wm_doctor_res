@@ -1347,7 +1347,7 @@ public class OscaStudentController {
 			}
 			orgFlow=resDoctor.getOrgFlow();
 		}
-		List<ResDoctorRecruit> resDoctorRecruits=oscaDoctorOrderdeBiz.selectDoctorGraduationYear(userFlow);
+        List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = oscaDoctorOrderdeBiz.selectDoctorGraduationYear(userFlow);
 		if(resDoctorRecruits!=null&&resDoctorRecruits.size()>0&&resDoctorRecruits.get(0)!=null){
 			graduationYear=resDoctorRecruits.get(0).getGraduationYear();
 		}
@@ -1607,7 +1607,7 @@ public class OscaStudentController {
 				}
 			}else{//江苏西医学员只能每一年考核一次
 				String graduationYear="";
-				List<ResDoctorRecruit> resDoctorRecruits=oscaDoctorOrderdeBiz.selectDoctorGraduationYear(userFlow);
+                List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = oscaDoctorOrderdeBiz.selectDoctorGraduationYear(userFlow);
 				if(resDoctorRecruits!=null&&resDoctorRecruits.size()>0&&resDoctorRecruits.get(0)!=null){
 					graduationYear=resDoctorRecruits.get(0).getGraduationYear();
 				}

@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
@@ -833,7 +834,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		List<SysMonthlyDoctorDetailInfo> sysMonthlyDoctorDetailInfoList = monthlyReportBiz.getMonthlyDoctorDetailInfo(search2);
 		List<SysUser> userList = monthlyReportExtMapper.getUserList(paramMap);
 		List<ResDoctor> doctorList = monthlyReportExtMapper.getDoctorList(paramMap);
-		List<ResDoctorRecruit> recruitList = monthlyReportExtMapper.getRecruitList(paramMap);
+		List<com.pinde.core.model.ResDoctorRecruit> recruitList = monthlyReportExtMapper.getRecruitList(paramMap);
 
 		List<SysMonthlyChangeInfo> speChangeList = new ArrayList<>();
 		List<SysMonthlyChangeInfo> baseChangeInList = new ArrayList<>();
@@ -843,7 +844,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 		Map<String,SysMonthlyDoctorDetailInfo> detailInfoMap = new HashMap<>();
 		Map<String,SysUser> userMap = new HashMap<>();
 		Map<String,ResDoctor> doctorMap = new HashMap<>();
-		Map<String,ResDoctorRecruit> recruitMap = new HashMap<>();
+		Map<String, ResDoctorRecruit> recruitMap = new HashMap<>();
 
 		if(SysMonthlyChangeInfoFinal!=null&&SysMonthlyChangeInfoFinal.size()>0){
 			for(SysMonthlyChangeInfo sysMonthlyChangeInfo:SysMonthlyChangeInfoFinal){
@@ -1062,7 +1063,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				if (sysUser != null && doctor != null && recruit != null) {
@@ -1349,7 +1350,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				if (sysUser != null && doctor != null && recruit != null) {
@@ -1637,7 +1638,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				if (sysUser != null && doctor != null && recruit != null) {
@@ -1923,7 +1924,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				if(sysUser!=null&&doctor!=null&&recruit!=null){
@@ -2213,7 +2214,7 @@ public class JsResMonthlyReportGlobalController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				if (sysUser != null && doctor != null && recruit != null) {

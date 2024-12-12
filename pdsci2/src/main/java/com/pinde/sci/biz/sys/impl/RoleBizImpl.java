@@ -1,14 +1,16 @@
 package com.pinde.sci.biz.sys.impl;
 
-import com.pinde.core.model.ActivityAuditCfg;
+import com.pinde.core.common.sci.dao.SysRoleMapper;
+import com.pinde.core.model.SysRole;
+import com.pinde.core.model.SysRoleExample;
+import com.pinde.core.model.SysRoleExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.jsres.ActivityCfgExt;
+import com.pinde.core.model.ActivityCfgExt;
 import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SysRoleExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -286,13 +288,6 @@ public class RoleBizImpl implements IRoleBiz {
     public List<ActivityCfgExt> searchActvity(Map<String, String> param) {
         return sysRoleMapper.searchActvity(param);
     }
-
-
-	@Override
-	public List<ActivityAuditCfg> searchActvityNew(Map<String, String> param) {
-		return sysRoleMapper.searchActvityNew(param);
-	}
-
 	@Override
 	public List<SysCfg> searchRoleList() {
 		SysCfgExample example = new SysCfgExample();

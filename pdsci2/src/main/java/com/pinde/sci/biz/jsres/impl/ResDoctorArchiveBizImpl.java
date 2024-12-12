@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
@@ -315,7 +316,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     }
 
     @Override
-    public List<JsDoctorInfoLogExt> searchDoctorInfoResume(ResDoctorRecruit recruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, String archiveFlow) {
+    public List<JsDoctorInfoLogExt> searchDoctorInfoResume(com.pinde.core.model.ResDoctorRecruit recruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, String archiveFlow) {
         Map<String,Object> paramMap=new HashMap<String,Object>();
         paramMap.put("resDoctorRecruit", recruit);
         paramMap.put("doctor", doctor);

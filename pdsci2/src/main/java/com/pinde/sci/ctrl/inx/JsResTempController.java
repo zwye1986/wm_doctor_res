@@ -423,7 +423,7 @@ public class JsResTempController extends GeneralController{
 			return "请填写学员流水号";
 		}
 
-		ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 		if(!applyYear.equals(recruit.getGraduationYear()))
 		{
 			return "结业考核年份不是当前年，无法更新数据！";
@@ -615,7 +615,7 @@ public class JsResTempController extends GeneralController{
 			return "请填写学员流水号";
 		}
 
-		ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 		if(!applyYear.equals(recruit.getGraduationYear()))
 		{
 			return "结业考核年份不是当前年，无法更新数据！";

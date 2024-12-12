@@ -2521,10 +2521,10 @@ public class JswjwWxAdminController extends GeneralController {
 		Map<String,String> trainMap = new HashMap<>();
 		if (list.size() > 0) {
 			for (Map<String, Object> stringObjectMap : list) {
-				ResDoctorRecruit recruit = new ResDoctorRecruit();
+                com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 				recruit.setDoctorFlow((String) stringObjectMap.get("doctorFlow"));
                 recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-				List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
+                List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
 				if (recruitList.size() > 0) {
 					recruit = recruitList.get(0);
 					String endTime = "";

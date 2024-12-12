@@ -20,9 +20,9 @@ public interface ResDoctorRecruitMapper {
 
     List<ResDoctorRecruitWithBLOBs> selectByExampleWithBLOBs(ResDoctorRecruitExample example);
 
-    List<ResDoctorRecruit> selectByExample(ResDoctorRecruitExample example);
+    List<com.pinde.core.model.ResDoctorRecruit> selectByExample(ResDoctorRecruitExample example);
 
-    List<ResDoctorRecruit> selectByDoctorFlow(@Param("docotrFlows") List<String> docotrFlows);
+    List<com.pinde.core.model.ResDoctorRecruit> selectByDoctorFlow(@Param("docotrFlows") List<String> docotrFlows);
 
     ResDoctorRecruitWithBLOBs selectByPrimaryKey(String recruitFlow);
 

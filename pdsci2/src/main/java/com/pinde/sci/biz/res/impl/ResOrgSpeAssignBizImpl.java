@@ -17,9 +17,7 @@ import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.pinde.sci.model.mo.JsresSign;
 import com.pinde.sci.model.mo.JsresSignExample;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitExample;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.mo.ResOrgSpeAssign;
 import com.pinde.sci.model.mo.ResOrgSpeAssignExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample;
@@ -520,9 +518,9 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                         flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, "操作成绩数值错误");
                     } else {
-                        List<ResDoctorRecruit> recruitList = recruitMapper.selectByExample(recruitExample);
+                        List<com.pinde.core.model.ResDoctorRecruit> recruitList = recruitMapper.selectByExample(recruitExample);
                         if (null != recruitList && recruitList.size() > 0) {
-                            ResDoctorRecruit recruitTemp = recruitList.get(0);
+                            com.pinde.core.model.ResDoctorRecruit recruitTemp = recruitList.get(0);
 
                             BigDecimal examResult = recruitTemp.getExamResult();
                             BigDecimal auditionResult = recruitTemp.getAuditionResult();
@@ -785,7 +783,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
 //			return "请先完善报考信息";
 //		}
         // 查询招录信息
-        List<ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             // 招录表 待审核 或 招录表医师状态审核通过    审核通过且 医师表 医师状态为在培的
@@ -816,7 +814,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
 //			return "请先完善报考信息";
 //		}
         // 查询招录信息
-        List<ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             // 招录表 待审核 或 招录表医师状态审核通过    审核通过且 医师表 医师状态为在培的
@@ -961,7 +959,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         ResDoctorRecruitExample doctorRecruitExample = new ResDoctorRecruitExample();
         doctorRecruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
         doctorRecruitExample.setOrderByClause("create_time desc");
-        List<ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             //有报送记录只能走报送通道

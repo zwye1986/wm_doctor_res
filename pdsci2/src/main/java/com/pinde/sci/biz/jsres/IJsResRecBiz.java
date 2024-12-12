@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.form.jsres.BackTrainForm;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.mo.ResRec;
 import org.dom4j.DocumentException;
 
@@ -31,7 +31,7 @@ public interface IJsResRecBiz {
      * @return
      * @throws DocumentException
      */
-    int checkBackTrain(ResRec resRec, BackTrainForm backTrainForm,ResDoctorRecruit doctorRecruit) throws DocumentException;
+    int checkBackTrain(ResRec resRec, BackTrainForm backTrainForm, ResDoctorRecruit doctorRecruit) throws DocumentException;
 }
 
 	

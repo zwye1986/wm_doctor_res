@@ -1,10 +1,8 @@
 package com.pinde.sci.form.hbres;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
-
-import java.io.Serializable;
+import com.pinde.sci.model.mo.ResDoctor;
 
 public class ReplenishInfoForm implements java.io.Serializable {
 
@@ -13,8 +11,8 @@ public class ReplenishInfoForm implements java.io.Serializable {
 	private SysUser user;
 	
 	private ResDoctor doctor;
-	
-	private ResDoctorRecruit recruit;
+
+    private com.pinde.core.model.ResDoctorRecruit recruit;
 	
 	private ExtInfoForm extInfo;
 
@@ -38,7 +36,7 @@ public class ReplenishInfoForm implements java.io.Serializable {
 		return recruit;
 	}
 
-	public void setRecruit(ResDoctorRecruit recruit) {
+    public void setRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
 		this.recruit = recruit;
 	}
 

@@ -10,9 +10,7 @@ import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -41,7 +39,41 @@ import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.JsresExamSignup;
+import com.pinde.sci.model.mo.JsresExamSignupExample;
+import com.pinde.sci.model.mo.JsresGraduationApply;
+import com.pinde.sci.model.mo.JsresGraduationApplyExample;
+import com.pinde.sci.model.mo.JsresPowerCfg;
+import com.pinde.sci.model.mo.JsresRecruitDocInfoExample;
+import com.pinde.sci.model.mo.JsresRecruitDocInfoWithBLOBs;
+import com.pinde.sci.model.mo.JsresRecruitInfo;
+import com.pinde.sci.model.mo.JsresRecruitInfoExample;
+import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.sci.model.mo.ResBase;
+import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorExample;
+import com.pinde.sci.model.mo.ResDoctorOrgHistory;
+import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.ResDoctorSchProcessExample;
+import com.pinde.sci.model.mo.ResExamDoctor;
+import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.sci.model.mo.ResReg;
+import com.pinde.sci.model.mo.ResScore;
+import com.pinde.sci.model.mo.ResSignin;
+import com.pinde.sci.model.mo.ResSigninExample;
+import com.pinde.sci.model.mo.ResTestConfig;
+import com.pinde.sci.model.mo.ResUserBindMacid;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchArrangeResultExample;
+import com.pinde.sci.model.mo.SchDoctorDept;
+import com.pinde.sci.model.mo.SchDoctorDeptExample;
+import com.pinde.sci.model.mo.SchDoctorSelectDept;
+import com.pinde.sci.model.mo.SchDoctorSelectDeptExample;
+import com.pinde.sci.model.mo.SchOrgArrangeResult;
+import com.pinde.sci.model.mo.SchOrgArrangeResultExample;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;
@@ -1016,7 +1048,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	public int resetDoctorRecruit(String doctorFlow){
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			String regYear = InitConfig.getSysCfg("res_reg_year");
-			List<ResDoctorRecruit> doctorRecruits = doctorRecruitBiz.findResDoctorRecruits(regYear, doctorFlow);
+			List<com.pinde.core.model.ResDoctorRecruit> doctorRecruits = doctorRecruitBiz.findResDoctorRecruits(regYear, doctorFlow);
 			ResDoctorRecruitWithBLOBs recruit = null;
 			if (doctorRecruits != null && doctorRecruits.size() >0) {
 				int size = doctorRecruits.size();
@@ -2139,7 +2171,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 							resDoctor.setDoctorFlow(sysUser.getUserFlow());
 							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
                             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
-							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+							List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 							if (CollectionUtils.isNotEmpty(resDoctorRecruits)) {
 								resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
 							}
@@ -2312,7 +2344,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		if (StringUtil.isNotBlank(sessionNumber)) {
 			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(sessionNumber);
-			List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+			List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 			if (resDoctorRecruits.size() == 0) {
 				msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员在当前届别下没有培训记录，请确认后提交！！</br>";
 				return null;
@@ -2413,7 +2445,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 
 							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
                             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
-							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+							List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 							if (CollectionUtils.isNotEmpty(resDoctorRecruits)) {
 								resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
 							}
@@ -2637,7 +2669,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
                         resScore.setScoreTypeId(com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getId());
                         resScore.setScoreTypeName(com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getName());
                         resScore.setPaperFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
-						ResDoctorRecruit recruit=doctorRecruitBiz.getNewRecruit(sysUser.getUserFlow());
+						com.pinde.core.model.ResDoctorRecruit recruit = doctorRecruitBiz.getNewRecruit(sysUser.getUserFlow());
 						if(recruit!=null)
 							resScore.setRecruitFlow(recruit.getRecruitFlow());
 						//处理各个站的成绩
@@ -2858,7 +2890,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						ResDoctorRecruit docRecruit =  new ResDoctorRecruit();
 						docRecruit.setDoctorFlow(doctorFlow);
                         docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-						List<ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
+						List<com.pinde.core.model.ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
 						if(docRecruitList != null && !docRecruitList.isEmpty()) {
 							docRecruit = docRecruitList.get(0);
 							//DoctorRecruit回写

@@ -47,8 +47,6 @@ import com.pinde.sci.model.mo.OscaSubjectStationScore;
 import com.pinde.sci.model.mo.OscaSubjectStationScoreExample;
 import com.pinde.sci.model.mo.OscaTeaScanDoc;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitExample;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.SchRotationDeptAfterExample;
 import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
@@ -1184,7 +1182,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
             example.createCriteria().andDoctorFlowEqualTo(doctorFlow)
                     .andSessionNumberEqualTo(sessionNumber);
             example.setOrderByClause("MODIFY_TIME DESC");
-            List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
             if (recruitList != null && !recruitList.isEmpty()) {
                 return recruitList.get(0);
             }

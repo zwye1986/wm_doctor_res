@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SysRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysRole" >
+<mapper namespace="com.pinde.core.common.sci.dao.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysRole">
     <id column="ROLE_FLOW" property="roleFlow" jdbcType="VARCHAR" />
     <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
     <result column="WS_ID" property="wsId" jdbcType="VARCHAR" />
@@ -21,7 +21,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="BaseMap" type="com.pinde.sci.model.jsres.ActivityCfgExt" >
+    <resultMap id="BaseMap" type="com.pinde.core.model.ActivityCfgExt">
     <id column="record_flow" property="recordFlow" jdbcType="VARCHAR" />
     <result column="submit_role" property="submitRole" jdbcType="VARCHAR" />
     <result column="sub_role_name" property="subRoleName" jdbcType="VARCHAR" />
@@ -96,7 +96,7 @@
     PARENT_ROLE_NAME, ALLOW_REG_FLAG, REG_PAGE_ID, REG_PAGE_NAME, ORDINAL, REMARK, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysRoleExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysRoleExample">
     select
     <if test="distinct" >
       distinct
@@ -120,13 +120,13 @@
     delete from PDSCI.SYS_ROLE
     where ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysRoleExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysRoleExample">
     delete from PDSCI.SYS_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysRole" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysRole">
     insert into PDSCI.SYS_ROLE (ROLE_FLOW, ROLE_NAME, WS_ID, 
       WS_NAME, ROLE_LEVEL_ID, ROLE_LEVEL_NAME, 
       PARENT_ROLE_FLOW, PARENT_ROLE_NAME, ALLOW_REG_FLAG, 
@@ -142,7 +142,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysRole" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysRole">
     insert into PDSCI.SYS_ROLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleFlow != null" >
@@ -366,7 +366,7 @@
     </if>
   </select>
 
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysRoleExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysRoleExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.SYS_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -458,7 +458,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysRole" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysRole">
     update PDSCI.SYS_ROLE
     <set >
       <if test="roleName != null" >
@@ -515,7 +515,7 @@
     </set>
     where ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysRole" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysRole">
     update PDSCI.SYS_ROLE
     set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
       WS_ID = #{wsId,jdbcType=VARCHAR},

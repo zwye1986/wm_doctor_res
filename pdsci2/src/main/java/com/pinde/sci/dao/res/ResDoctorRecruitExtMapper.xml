@@ -306,7 +306,8 @@
 		</if>
 		ORDER BY dr.TOTLE_RESULT DESC nulls last
 	</select>
-	<resultMap id="docRecruitClobMap" type="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.ResultMapWithBLOBs">
+    <resultMap id="docRecruitClobMap" type="com.pinde.core.model.ResDoctorRecruitWithBLOBs"
+               extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.ResultMapWithBLOBs">
 	</resultMap>
 	<select id="docRecruitClobSearch" parameterType="java.util.Map" resultMap="docRecruitClobMap">
 		SELECT * FROM RES_DOCTOR_RECRUIT rdr

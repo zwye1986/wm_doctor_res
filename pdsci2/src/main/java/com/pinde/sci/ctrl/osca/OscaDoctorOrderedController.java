@@ -141,7 +141,7 @@ public class OscaDoctorOrderedController extends GeneralController {
         }
         List<SysOrg> orgList = new ArrayList<>();
         String recruitFlow = "";
-        List<ResDoctorRecruit> resDoctorRecruits=oscaDoctorOrderdeBiz.selectDoctorGraduationYear(GlobalContext.getCurrentUser().getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = oscaDoctorOrderdeBiz.selectDoctorGraduationYear(GlobalContext.getCurrentUser().getUserFlow());
         if(resDoctorRecruits!=null&&resDoctorRecruits.size()>0&&resDoctorRecruits.get(0)!=null){
             graduationYear=resDoctorRecruits.get(0).getGraduationYear();
             recruitFlow = resDoctorRecruits.get(0).getRecruitFlow();

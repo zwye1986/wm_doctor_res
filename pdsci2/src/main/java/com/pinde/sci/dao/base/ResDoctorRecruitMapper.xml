@@ -101,7 +101,7 @@
     <result column="RECRUIT_FLAG_REASON" property="recruitFlagReason" jdbcType="VARCHAR" />
     <result column="REVIEW_FLAG" property="reviewFlag" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResDoctorRecruitWithBLOBs" extends="BaseResultMap">
     <result column="RETEST_NOTICE" property="retestNotice" jdbcType="CLOB" />
     <result column="ADMIT_NOTICE" property="admitNotice" jdbcType="CLOB" />
     <result column="PROV_REMARK" property="provRemark" jdbcType="CLOB" />
@@ -237,7 +237,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs">
     insert into PDSCI.RES_DOCTOR_RECRUIT (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW, 
       ORG_NAME, SPE_ID, SPE_NAME, 
       SWAP_FLAG, RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME, 
@@ -313,7 +313,7 @@
       #{retestNotice,jdbcType=CLOB}, #{admitNotice,jdbcType=CLOB}, #{provRemark,jdbcType=CLOB}, 
       #{globalNotice,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs">
     insert into PDSCI.RES_DOCTOR_RECRUIT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recruitFlow != null" >
@@ -1464,7 +1464,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs">
     update PDSCI.RES_DOCTOR_RECRUIT
     <set >
       <if test="doctorFlow != null" >
@@ -1773,7 +1773,7 @@
     </set>
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs">
     update PDSCI.RES_DOCTOR_RECRUIT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

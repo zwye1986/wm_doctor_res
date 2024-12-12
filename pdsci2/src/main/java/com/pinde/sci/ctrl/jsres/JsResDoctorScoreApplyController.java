@@ -1,9 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -19,7 +17,9 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResJointOrg;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -422,7 +422,7 @@ public class JsResDoctorScoreApplyController extends GeneralController {
                     ResDoctorRecruit docRecruit =  new ResDoctorRecruit();
                     docRecruit.setDoctorFlow(doctorFlow);
                     docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-                    List<ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
+                    List<com.pinde.core.model.ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
                     if(docRecruitList != null && !docRecruitList.isEmpty()) {
                         
                         docRecruit = docRecruitList.get(0);

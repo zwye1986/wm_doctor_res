@@ -6,6 +6,7 @@ import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.common.sci.dao.VerificationCodeRecordMapper;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.VerificationCodeRecord;
 import com.pinde.core.model.VerificationCodeRecordExample;

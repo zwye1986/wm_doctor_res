@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
@@ -114,10 +115,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            ResDoctorRecruit recruit = new ResDoctorRecruit();
+            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
             recruit.setDoctorFlow(doctor.getDoctorFlow());
             recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
             //在系统中是否有资格审核记录
             if (recruitList != null && recruitList.size() > 0) {
                 ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
@@ -827,10 +828,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         Map<String,String> trainMap = new HashMap<>();
         if (list.size() > 0) {
             for (Map<String, Object> stringObjectMap : list) {
-                ResDoctorRecruit recruit = new ResDoctorRecruit();
+                com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
                 recruit.setDoctorFlow((String) stringObjectMap.get("doctorFlow"));
                 recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-                List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
+                List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
                 if (recruitList.size() > 0) {
                     recruit = recruitList.get(0);
                     String endTime = "";

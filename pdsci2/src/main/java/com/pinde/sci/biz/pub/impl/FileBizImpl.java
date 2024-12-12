@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.pub.impl;
 
 
+import com.pinde.core.model.ResDoctorRecruitExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,8 +12,10 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PubFile;
+import com.pinde.sci.model.mo.PubFileExample;
 import com.pinde.sci.model.mo.PubFileExample.Criteria;
+import com.pinde.sci.model.mo.ResDoctorReduction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -705,7 +708,7 @@ public class FileBizImpl implements IFileBiz {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andDoctorStatusNameEqualTo("在培");
-		List<ResDoctorRecruit> recruitList = recruitMapper.selectByExample(example);
+		List<com.pinde.core.model.ResDoctorRecruit> recruitList = recruitMapper.selectByExample(example);
 		if(null != recruitList && !recruitList.isEmpty()){
 			ResDoctorReduction reduction = reductionBiz.findReductionByRecruitFlow(recruitList.get(0).getRecruitFlow());
 			if(null != reduction){

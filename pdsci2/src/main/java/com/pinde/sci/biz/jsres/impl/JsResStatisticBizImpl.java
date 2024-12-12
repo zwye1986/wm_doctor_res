@@ -33,13 +33,11 @@ import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.mo.ResTeacherTraining;
 import com.pinde.sci.model.mo.ResTeacherTrainingExample;
 import com.pinde.sci.model.mo.SysDeptExample;
 import com.pinde.sci.model.mo.SysDictExample;
-import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
@@ -113,7 +111,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return sysOrgMapper.countByExample(example);
 	}
 	@Override
-	public int statisticDoctorCount(ResDoctorRecruit recruit, List<String> cityIdList) {
+    public int statisticDoctorCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> cityIdList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("cityIdList", cityIdList);
@@ -152,7 +150,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	}
 
 	@Override
-	public List<Map<String, Object>> statisticJointCountByOrg(ResDoctorRecruit recruit, List<String> orgFlowList, String trainTypeId, List<String> docTypeList) {
+    public List<Map<String, Object>> statisticJointCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String trainTypeId, List<String> docTypeList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -201,20 +199,20 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return chartExtMapper.findOrgGraduateCount(sessionNumber);
 	}
 	@Override
-	public List<Map<String,String>> doctorNumForUni1(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni1(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni1(recruit,orgFlows,org);
 	}
 	@Override
-	public List<Map<String,String>> doctorNumForUni1DaoChu(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni1DaoChu(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni1DaoChu(recruit,orgFlows,org);
 	}
 	@Override
-	public List<Map<String,String>> doctorNumForUni2(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni2(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni2(recruit,orgFlows,org);
 	}
 
 	@Override
-	public List<Map<String,String>> doctorNumForUni2DaoChu(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni2DaoChu(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni2DaoChu(recruit,orgFlows,org);
 	}
 
@@ -675,7 +673,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	return doctorExtMapper.statisticYearCondocCount(paramMap);
 	}
 	@Override
-	public List<Map<String,Object>>  statisticDocCouByType(ResDoctorRecruit recruit, List<String> orgFlowList,ResDoctor doctor,List<String>docTypeList) {
+    public List<Map<String, Object>> statisticDocCouByType(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> docTypeList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("doctor", doctor);
@@ -684,7 +682,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticDocCouByType(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticJointCount(ResDoctorRecruit recruit, List<String> orgFlowList,ResDoctor doctor, List<String> docTypeList) {
+    public List<Map<String, Object>> statisticJointCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> docTypeList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("doctor", doctor);
 		paramMap.put("recruit", recruit);
@@ -816,7 +814,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			    wb.write(response.getOutputStream());
 	}
 	@Override
-	public List<Map<String, Object>> statisticDocCountByOrg(ResDoctorRecruit recruit,List<String> orgFlowList,String graduate) {
+    public List<Map<String, Object>> statisticDocCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String graduate) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -832,7 +830,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticDocCountByOrg(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticAppCountByOrg(ResDoctorRecruit recruit,ResRec resRec,String endTime,String startTime,List<String> delTypeList,String graduate) {
+    public List<Map<String, Object>> statisticAppCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, ResRec resRec, String endTime, String startTime, List<String> delTypeList, String graduate) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("resRec", resRec);
@@ -851,7 +849,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticAppCountByOrg(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticRealAppCount(List<String> delTypeList,ResDoctorRecruit recruit,String endTime,String startTime, List<String> orgFlowList, String jointFlag,String month) {
+    public List<Map<String, Object>> statisticRealAppCount(List<String> delTypeList, com.pinde.core.model.ResDoctorRecruit recruit, String endTime, String startTime, List<String> orgFlowList, String jointFlag, String month) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("endTime", endTime);
 		paramMap.put("delTypeList", delTypeList);
@@ -863,7 +861,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticRealAppCount(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticDocCountByOrgForTime(String jointFlag, List<String> orgFlowList, String startTime,String endTime,ResDoctorRecruit recruit) {
+    public List<Map<String, Object>> statisticDocCountByOrgForTime(String jointFlag, List<String> orgFlowList, String startTime, String endTime, com.pinde.core.model.ResDoctorRecruit recruit) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("jointFlag", jointFlag);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -873,7 +871,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticDocCountByOrgForTime(paramMap);
 	}
 	@Override
-	public List<JsDoctorInfoExt> statisticNoAppUser(ResDoctorRecruit recruit,ResRec resRec, List<String> delTypeList,String startDate,String endDate,String graduate) {
+    public List<JsDoctorInfoExt> statisticNoAppUser(com.pinde.core.model.ResDoctorRecruit recruit, ResRec resRec, List<String> delTypeList, String startDate, String endDate, String graduate) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("resRec", resRec);

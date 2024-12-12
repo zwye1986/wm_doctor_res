@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

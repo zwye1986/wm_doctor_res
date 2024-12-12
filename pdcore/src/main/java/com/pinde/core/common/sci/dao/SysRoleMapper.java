@@ -1,9 +1,8 @@
-package com.pinde.sci.dao.base;
+package com.pinde.core.common.sci.dao;
 
-import com.pinde.sci.model.jsres.ActivityCfgExt;
-import com.pinde.core.model.ActivityAuditCfg;
-import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysRoleExample;
+import com.pinde.core.model.ActivityCfgExt;
+import com.pinde.core.model.SysRole;
+import com.pinde.core.model.SysRoleExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -40,5 +39,4 @@ public interface SysRoleMapper {
 
     List<ActivityCfgExt> searchActvity(Map<String,String> param);
 
-    List<ActivityAuditCfg> searchActvityNew(Map<String, String> param);
 }

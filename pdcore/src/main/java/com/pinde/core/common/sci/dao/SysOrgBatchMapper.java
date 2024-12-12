@@ -1,7 +1,7 @@
-package com.pinde.sci.dao.base;
+package com.pinde.core.common.sci.dao;
 
-import com.pinde.sci.model.mo.SysOrgBatch;
-import com.pinde.sci.model.mo.SysOrgBatchExample;
+import com.pinde.core.model.SysOrgBatch;
+import com.pinde.core.model.SysOrgBatchExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

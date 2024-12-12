@@ -485,7 +485,7 @@ public interface IJswjwBiz {
 
 	SchRotation searchRoattionNew(String trainingType, String trainingSpeId);
 
-	List<ResDoctorRecruit> getRecruitList(String userFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> getRecruitList(String userFlow);
 
 	List<LectureInfoTarget> searchLectureInfoTargetList(String lectureFlow);
 
@@ -539,7 +539,7 @@ public interface IJswjwBiz {
 	//获取该医师的所有补考记录
 	List<JsresExamSignup> readDoctorExanSignUps(String doctorFlow);
 
-	List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause);
+    List<com.pinde.core.model.ResDoctorRecruit> searchResDoctorRecruitList(com.pinde.core.model.ResDoctorRecruit recruit, String orderByClause);
 
 	JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear);
 
@@ -560,7 +560,7 @@ public interface IJswjwBiz {
 
 	SchRotation readSchRotation(String rotationFlow);
 
-	SchRotation getRotationByRecruit(ResDoctorRecruit recruit);
+    SchRotation getRotationByRecruit(com.pinde.core.model.ResDoctorRecruit recruit);
 
 	ResDoctor findByFlow(String doctorFlow);
 
@@ -620,7 +620,7 @@ public interface IJswjwBiz {
 
 	List<SysLog> searchSysLog(SysLog log);
 
-	List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit);
+    List<com.pinde.core.model.ResDoctorRecruit> readDoctorRecruits(com.pinde.core.model.ResDoctorRecruit recruit);
 
 	List<Map<String,Object>> searchAssignInfoListNew(Map<String, Object> paramMap);
 
@@ -647,7 +647,7 @@ public interface IJswjwBiz {
 	List<ResDocotrDelayTeturn> searchInfo(ResDocotrDelayTeturn resDocotrDelayTeturn, List<String> orgFlowList,List<String> flags
 			, List<String> docTypeList);
 
-	List<ResDoctorRecruit> searchRecruitList(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> searchRecruitList(String doctorFlow);
 
 	int saveDoctorRecruit(ResDoctorRecruitWithBLOBs doctorRecruitWithBLOBs);
 

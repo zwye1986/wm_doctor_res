@@ -1,7 +1,7 @@
 package com.pinde.sci.model.jszy;
 
 import com.pinde.sci.model.mo.ResDoctorGraduationInfo;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 
 /**
  * Created by Administrator on 2017/12/28.
