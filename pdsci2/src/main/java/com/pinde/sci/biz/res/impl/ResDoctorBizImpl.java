@@ -11,6 +11,7 @@ import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
@@ -1107,7 +1108,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	}
 
 	@Override
-	public List<ResDoctorExt> searchDoctorAccountList(SysUser sysUser, SysOrg sysOrg,String baseFlag,String orgFlow,String lockStatus,String trainingSpeId,String trainingTypeId) {
+	public List<ResDoctorExt> searchDoctorAccountList(SysUser sysUser, SysOrg sysOrg, String baseFlag, String orgFlow, String lockStatus, String trainingSpeId, String trainingTypeId) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("sysUser", sysUser);
 		paramMap.put("sysOrg", sysOrg);

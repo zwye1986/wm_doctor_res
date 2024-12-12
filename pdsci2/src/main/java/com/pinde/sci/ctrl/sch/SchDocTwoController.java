@@ -6,6 +6,7 @@ import com.pinde.core.common.enums.ResDoctorStatusEnum;
 import com.pinde.core.common.enums.sch.SchRotationMedicineType;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -2949,7 +2950,7 @@ public class SchDocTwoController extends GeneralController{
 		}
 	}
 	@RequestMapping("/template/guanLian")
-	public String guanLian(String flow,SysOrg org,Model model){
+	public String guanLian(String flow, SysOrg org, Model model) {
 			SchRotation schRotation=schRotationtBiz.readSchRotation(flow);
 			model.addAttribute("schRotation",schRotation);
 			List<SysOrg> sysOrgs=orgBiz.queryAllSysOrg(org);

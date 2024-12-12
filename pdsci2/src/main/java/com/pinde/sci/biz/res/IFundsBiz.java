@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res;
 
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.mo.*;
 
 import java.util.HashMap;

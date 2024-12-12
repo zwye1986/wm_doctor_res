@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
+import com.pinde.core.model.PersonStaticExample;
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.mo.PersonStaticExample;
 import com.pinde.sci.model.mo.ResDoctorRecruit;
 import org.apache.ibatis.annotations.Param;
 

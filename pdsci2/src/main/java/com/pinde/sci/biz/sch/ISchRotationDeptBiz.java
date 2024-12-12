@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
 import com.pinde.sci.model.mo.*;
@@ -11,13 +12,9 @@ import java.util.Map;
 
 
 public interface ISchRotationDeptBiz {
-	//	List<SchRotationDept> searchSchRotationDept();
-	List<SchRotationDeptReq> searchSchRotationDeptReqOrgNull();
 	List<SchRotationDept> searchSchRotationDept(String rotationFlow);
 	
 	SchRotationDept readSchRotationDept(String recordFlow);
-
-	List<SchRotationDeptReq> searchDeptReqByExample(SchRotationDeptReqExample example);
 
 	int saveSchRotationDept(SchRotationDept rotationDept);
 
@@ -25,17 +22,12 @@ public interface ISchRotationDeptBiz {
 
 	List<SchRotationDept> searchSchRotationDeptGroup(String rotationFlow);
 
-//	List<SchRotationDept> searchSchRotationDeptMust(String rotationFlow);
 
 	int saveRotationDeptOrd(String[] recordFlows);
 
 	SchRotationDeptReq readDeptReq(String reqFlow);
 
 	int editDeptReq(SchRotationDeptReq deptReq);
-
-//	SchRotationDept readSchRotationDept(String schDeptFlow, String rotationFlow);
-
-//	List<SchRotationDeptReq> searchDeptReq(String rotationFlow,String schDeptFlow,String recTypeId);
 
 	List<SchRotationDeptReq> searchDeptReq(String rotationFlow,
 			String schDeptFlow);
@@ -52,13 +44,9 @@ public interface ISchRotationDeptBiz {
 
 
 	List<SchRotationDept> searchRotationDeptByFlows(List<String> recordFlows);
-	List<SchRotationDept> searchRotationDeptByFlows();
 
 	int saveSelDepts(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor);
 
-//	int delSchRotationDeptForm(SchRotationDeptForm rotationDeptForm);
-
-	int saveSelDeptsAndResult(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor);
 
 	List<SchRotationDept> searchDeptByRotations(List<String> rotationFlows);
 
@@ -70,13 +58,8 @@ public interface ISchRotationDeptBiz {
 
 	List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow);
 
-//	List<SchRotationDeptReq> searchStandardReqByMust(
-//			String rotationFlow, String standardDeptId);
-
 	List<SchRotationDeptReq> searchStandardReqByGroup(String standardGroupFlow,
 			String standardDeptId);
-	List<SchRotationDeptReq> searchStandardReqByGroupAndOrgSessionNumber(String standardGroupFlow,
-			String standardDeptId,String orgFlow,String sessionNumber);
 
 	List<SchRotationDeptReq> searchStandardReqByResult(SchArrangeResult result,ResDoctor doctor);
 
@@ -94,10 +77,6 @@ public interface ISchRotationDeptBiz {
 
 	List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow,
 			String recTypeId, String itemName);
-
-//	List<SchRotationDept> searchRotationDeptByGroupFlow(String groupFlow);
-
-//	List<SchRotationDept> searchSelDeptByRotations(List<String> rotationFlows);
 
 	List<SchRotationDept> searchOrgSchRotationDept(String rotationFlow,
 			String orgFlow);
@@ -130,7 +109,6 @@ public interface ISchRotationDeptBiz {
 	 */
 	SchRotationDept readStandardRotationDept(String resultFlow);
 
-	List<SchRotationDept> readStandardRotationDeptByExample(SchRotationDeptExample example);
 
 	/**
 	 * 根据多条排班数据flow查询标准规则科室
@@ -147,12 +125,6 @@ public interface ISchRotationDeptBiz {
 	List<SchRotationDept> searchRotationDeptByRecordFlows(
 			List<String> recordFlows);
 
-	/**
-	 * 根据方案获取必轮规则,包含大字段
-	 * @param rotationFlow
-	 * @return
-	 */
-//	List<SchRotationDept> searchSchRotationDeptMustWithBLOBs(String rotationFlow);
 
 	/**
 	 * 根据组合内规则,包含大字段
@@ -226,10 +198,8 @@ public interface ISchRotationDeptBiz {
 	 * @return
 	 */
 	List<SchRotationDeptReq> searchSchRotationDeptReq(String relRecordFlow);
-//	int synchronizeReq(String relRecordFlow, String currRelRecordFlow);
-//	List<SchRotationDept> searchSchRotationDeptByCurrFlow(
-//			String currRelRecordFlow);
-	List<SchRotationDeptReq> searchRotationDeptReq(String relRecordFlow,
+
+    List<SchRotationDeptReq> searchRotationDeptReq(String relRecordFlow,
 			String recTypeId);
 	int synchronizeReq(String relRecordFlow, String currRelRecordFlow,
 			String recTypeId);
@@ -239,17 +209,9 @@ public interface ISchRotationDeptBiz {
 	 * @return
 	 */
 	SchRotationDept searchGroupFlowAndStandardDeptIdQuery(String groupFlow, String standardDeptId);
-	SchRotationDept searchGroupFlowAndStandardDeptIdQueryTwo(String groupFlow, String standardDeptId);
 
 	List<SchRotationDept> searchOrgSchRotationDeptBySessionNumber(String rotationFlow, String orgFlow, String sessionNumber);
 
-	/**
-	 * 保存
-	 * @param schRotationDeptReqList
-     */
-	void initSchRotationDeptReq(List<SchRotationDeptReq> schRotationDeptReqList);
-
-	List<SchRotationDept> doctorGetNotSchDept(String rotationFlow, String doctorFlow);
 
 	ExcelUtile importDeptReqExcel(MultipartFile file, Map<String,Object> map);
 

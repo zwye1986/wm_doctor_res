@@ -1,8 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;

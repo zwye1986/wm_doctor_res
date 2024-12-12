@@ -1,11 +1,13 @@
 package com.pinde.sci.model.mo;
 
+import com.pinde.core.model.SysOrg;
+
 import java.util.List;
 
 /**
  * 学员出科情况pojo
  */
-public class DoctorOutOfficeParamPO extends SysOrg  {
+public class DoctorOutOfficeParamPO extends SysOrg {
     private Integer monthOutOfficeSum; //本月应出科人数
 
     private Integer monthActualOutOfficeSum; //本月实际出科人数

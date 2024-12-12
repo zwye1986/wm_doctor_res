@@ -4,6 +4,7 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;

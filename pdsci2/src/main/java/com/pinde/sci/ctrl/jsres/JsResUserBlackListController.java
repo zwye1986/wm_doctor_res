@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
@@ -14,8 +15,11 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.JsresUserBalcklist;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResJointOrg;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -148,7 +152,7 @@ public class JsResUserBlackListController extends GeneralController {
         List<SysOrg> orgs=new ArrayList<SysOrg>();
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL) || getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             SysOrg org=new SysOrg();
-            SysOrg s=orgBiz.readSysOrg(user.getOrgFlow());
+            val s = orgBiz.readSysOrg(user.getOrgFlow());
             org.setOrgProvId(s.getOrgProvId());
             if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
                 jsresUserBalcklist.setOrgFlow(user.getOrgFlow());

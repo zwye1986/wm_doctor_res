@@ -1,7 +1,10 @@
 package com.pinde.sci.model.osca;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.OscaDoctorAssessment;
+import com.pinde.sci.model.mo.OscaSkillsAssessment;
+import com.pinde.sci.model.mo.ResDoctor;
 
 public class OscaCheckInfoExt extends OscaDoctorAssessment{
 

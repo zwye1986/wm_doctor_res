@@ -48,6 +48,10 @@
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SysOrg" extends="BaseResultMap" >
     <result column="ORG_INFO" property="orgInfo" jdbcType="CLOB" />
   </resultMap>
+
+    <resultMap id="ResultMapWithSession" type="com.pinde.core.model.PersonStaticExample" extends="BaseResultMap">
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR"/>
+    </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -926,4 +930,46 @@
       BASE_CODE = #{baseCode,jdbcType=VARCHAR}
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </update>
+
+    <update id="updateByOrgFlow" parameterType="java.lang.String">
+        update RES_JOINT_ORG
+        set JOINT_ORG_NAME=#{orgName}
+        where JOINT_ORG_FLOW = #{orgFlow}
+    </update>
+
+    <select id="selectByExampleSession" resultMap="ResultMapWithSession">
+        select a.*,b.session_number
+        from PDSCI.SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where
+        c.record_status='Y') b
+        where a.org_flow=b.org_flow
+        <if test="OrgProvId!=null and OrgProvId!=''">
+            and a.org_prov_id=#{OrgProvId}
+        </if>
+        <if test="OrgCityId!=null and OrgCityId!=''">
+            and a.org_city_id=#{OrgCityId}
+        </if>
+        <if test="OrgTypeId!=null and OrgTypeId!=''">
+            and a.org_type_id=#{OrgTypeId}
+        </if>
+        <if test="OrgLevelId!=null and OrgLevelId!=''">
+            and a.org_level_id=#{OrgLevelId}
+        </if>
+        <if test="RecordStatus!=null and RecordStatus!=''">
+            and a.record_status=#{RecordStatus}
+        </if>
+        order by b.session_number
+    </select>
+    <select id="selectJointOrgAllList" resultType="com.pinde.core.model.SysOrg">
+        select
+        <include refid="Base_Column_List"/>
+        from PDSCI.SYS_ORG
+        where
+        (ORG_LEVEL_ID not in (
+        <foreach collection="orgLevelIdNotIn" item="orgLevelId" separator=",">
+            #{orgLevelId,jdbcType=VARCHAR}
+        </foreach>
+        ) or ORG_LEVEL_ID is null)
+        and org_type_id = #{orgTypeId, jdbcType=VARCHAR}
+        and record_status = 'Y'
+    </select>
 </mapper>

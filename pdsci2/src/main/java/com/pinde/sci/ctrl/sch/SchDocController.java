@@ -3,10 +3,7 @@ package com.pinde.sci.ctrl.sch;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.sch.SchRotationMedicineType;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
-import com.pinde.core.model.DeptTeacherGradeInfo;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -24,7 +21,22 @@ import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.sch.DoctorSearchForm;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
+import com.pinde.sci.model.mo.ResRotationOrg;
+import com.pinde.sci.model.mo.ResTrainingSpeDept;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchDeptRel;
+import com.pinde.sci.model.mo.SchDoctorAbsence;
+import com.pinde.sci.model.mo.SchDoctorDept;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SchRotationDeptReq;
+import com.pinde.sci.model.mo.SchRotationGroup;
+import com.pinde.sci.model.mo.SysCfg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -3176,7 +3188,7 @@ public class SchDocController extends GeneralController{
 		}
 	}
 	@RequestMapping("/template/guanLian")
-	public String guanLian(String flow,SysOrg org,Model model){
+	public String guanLian(String flow, SysOrg org, Model model) {
 			SchRotation schRotation=schRotationtBiz.readSchRotation(flow);
 			model.addAttribute("schRotation",schRotation);
 			List<SysOrg> sysOrgs=orgBiz.queryAllSysOrg(org);

@@ -1,10 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.sci.dao.SysOrgMapper;
-import com.pinde.core.model.ResOrgSpe;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysOrgExample;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IOrgBiz;
@@ -12,7 +9,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.model.mo.PersonStaticExample;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -716,5 +712,26 @@ public class OrgBizImpl implements IOrgBiz {
 		criteria.andOrgCityIdEqualTo(cityId);
 		example.setOrderByClause("org_code asc");
 		return sysOrgMapper.selectByExampleWithBLOBs(example);
+	}
+
+	@Override
+	public List<SysOrg> searchOrgNotCountryOrg(SysOrg sysorg) {
+		SysOrgExample example = new SysOrgExample();
+		SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		criteria.andOrgLevelIdNotEqualTo(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
+		if (StringUtil.isNotBlank(sysorg.getOrgProvId())) {
+			criteria.andOrgProvIdEqualTo(sysorg.getOrgProvId());
+		}
+		if (StringUtil.isNotBlank(sysorg.getOrgCityId())) {
+			criteria.andOrgCityIdEqualTo(sysorg.getOrgCityId());
+		}
+		if (StringUtil.isNotBlank(sysorg.getOrgAreaId())) {
+			criteria.andOrgAreaIdEqualTo(sysorg.getOrgAreaId());
+		}
+		if (StringUtil.isNotBlank(sysorg.getOrgTypeId())) {
+			criteria.andOrgTypeIdEqualTo(sysorg.getOrgTypeId());
+		}
+		example.setOrderByClause(" ORDINAL,ORG_CODE DESC,ORG_FLOW desc");
+		return sysOrgMapper.selectByExample(example);
 	}
 }

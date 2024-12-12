@@ -1,9 +1,14 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.PersonStaticExample;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.sci.model.mo.ResRec;
+import com.pinde.sci.model.mo.ResTeacherTraining;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

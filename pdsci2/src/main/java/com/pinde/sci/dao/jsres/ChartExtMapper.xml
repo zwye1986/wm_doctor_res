@@ -852,7 +852,8 @@
     </select>
 
 
-    <select id="getPersonStaticData" resultType="com.pinde.sci.model.mo.PersonStaticExample" parameterType="java.util.Map">
+    <select id="getPersonStaticData" resultType="com.pinde.core.model.PersonStaticExample"
+            parameterType="java.util.Map">
        <!-- SELECT
         t.org_flow,
         t.org_name,
@@ -927,7 +928,8 @@
           group by <!--t.session_number,-->t.org_flow,t.org_name
     </select>
 
-    <select id="getPersonStaticDataNEWyuh" resultType="com.pinde.sci.model.mo.PersonStaticExample" parameterType="java.util.Map">
+    <select id="getPersonStaticDataNEWyuh" resultType="com.pinde.core.model.PersonStaticExample"
+            parameterType="java.util.Map">
         WITH aa as(
           SELECT
             T .org_flow,

@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
-import com.pinde.core.model.ResOrgSpe;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,6 +14,15 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
+import com.pinde.sci.model.mo.JsresSign;
+import com.pinde.sci.model.mo.JsresSignExample;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.sci.model.mo.ResDoctorRecruitExample;
+import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.sci.model.mo.ResOrgSpeAssign;
+import com.pinde.sci.model.mo.ResOrgSpeAssignExample;
+import com.pinde.sci.model.mo.ResOrgSpeExample;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;

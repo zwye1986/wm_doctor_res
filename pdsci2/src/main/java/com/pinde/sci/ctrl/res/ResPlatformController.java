@@ -3,10 +3,7 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.ResDoctorStatusEnum;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
-import com.pinde.core.model.InxInfo;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.INoticeBiz;
@@ -19,7 +16,14 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
 import com.pinde.sci.form.sch.DoctorSearchForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorOrgHistory;
+import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.sci.model.mo.ResScore;
+import com.pinde.sci.model.mo.ResSignin;
+import com.pinde.sci.model.mo.SchDoctorAbsence;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -501,7 +505,7 @@ public class ResPlatformController extends GeneralController {
 	 *  学员分配
 	 */
 	@RequestMapping(value={"/doctorAllot"})
-	public String doctorAllot(Model model,Integer currentPage,SysOrg sysOrg,HttpServletRequest request){
+    public String doctorAllot(Model model, Integer currentPage, SysOrg sysOrg, HttpServletRequest request) {
 		SysUser user = GlobalContext.getCurrentUser();//当前用户
 		String orgFlow = user.getOrgFlow();
 		if(currentPage==null){

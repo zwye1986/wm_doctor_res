@@ -7,6 +7,7 @@ import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;

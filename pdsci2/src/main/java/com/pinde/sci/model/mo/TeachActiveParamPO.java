@@ -1,11 +1,13 @@
 package com.pinde.sci.model.mo;
 
+import com.pinde.core.model.SysOrg;
+
 import java.util.List;
 
 /**
  * 教学活动情况pojo
  */
-public class TeachActiveParamPO extends SysOrg  {
+public class TeachActiveParamPO extends SysOrg {
     private Integer trainerSum;
 
     private Integer teachActiveSessionSum;

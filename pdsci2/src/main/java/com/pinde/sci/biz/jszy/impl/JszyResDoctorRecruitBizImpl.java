@@ -3,6 +3,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.enums.JsResTrainYearEnum;
 import com.pinde.core.common.enums.JszyBaseStatusEnum;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -402,7 +403,7 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 		return jszyResDoctorRecruitExtMapper.searchJsDoctorRecruitExtList(doctorRecruitMap);
 	}
 	@Override
-	public List<JszyResDoctorRecruitExt>  searchDoctorSkillAndTheoryScoreExts( ResDoctorRecruit resDoctorRecruit,ResDoctor doctor, SysUser  user,SysOrg  sysOrg,List<String>  jointOrgFlowList,  String flag , String  scoreYear, String  isHege,String  skillIsHege,List<String> docTypeList)
+    public List<JszyResDoctorRecruitExt> searchDoctorSkillAndTheoryScoreExts(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, String scoreYear, String isHege, String skillIsHege, List<String> docTypeList)
 	{
 		Map<String, Object> doctorRecruitMap=new HashMap<String, Object>();
 		doctorRecruitMap.put("doctor", doctor);

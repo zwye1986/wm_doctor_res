@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IFundsBiz;

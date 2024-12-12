@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.model.PersonStaticExample;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -66,7 +68,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
      * 学院出科
      * @return
      */
-    public   List  doctorOutOfficeInfo_University(String sortFlag,String monthDate,String isContain,List<SysOrg> orgs,List<DoctorOutOfficeParamPO> doctorOutOfficeParamPOList,String[] docTypeList,String role){
+    public List doctorOutOfficeInfo_University(String sortFlag, String monthDate, String isContain, List<SysOrg> orgs, List<DoctorOutOfficeParamPO> doctorOutOfficeParamPOList, String[] docTypeList, String role) {
         SysUser user = GlobalContext.getCurrentUser();
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(2);//设置精确到小数点后2位

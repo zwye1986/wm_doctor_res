@@ -3,6 +3,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

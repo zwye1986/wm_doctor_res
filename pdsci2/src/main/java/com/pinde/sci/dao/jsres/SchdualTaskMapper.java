@@ -1,5 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.jsres.AppUseInfoPojoParam;
 import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
 import com.pinde.sci.model.jsres.DoctorLunZhuanDataMonthReport;

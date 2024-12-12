@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.sys;
 
+import com.pinde.core.model.PersonStaticExample;
 import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysOrgExample;
-import com.pinde.sci.model.mo.PersonStaticExample;
 import com.pinde.sci.model.sys.SysOrgExt;
 
 import java.util.List;
@@ -156,4 +156,6 @@ public interface IOrgBiz {
 	List<SysOrg> selectJointOrgAllList(SysOrg sysOrg);
 
     List<SysOrg> searchOrgListByCityId(String cityId);
+
+    List<SysOrg> searchOrgNotCountryOrg(SysOrg sysorg);
 }

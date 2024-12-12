@@ -1,8 +1,10 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -18,7 +20,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;

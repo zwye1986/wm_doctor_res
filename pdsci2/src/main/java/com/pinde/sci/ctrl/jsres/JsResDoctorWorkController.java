@@ -1,7 +1,10 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.model.ResSchProcessExpress;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
@@ -18,9 +21,9 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.RegistryTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.sci.model.mo.ResJointOrg;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -92,7 +95,7 @@ public class JsResDoctorWorkController extends GeneralController {
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
 		model.addAttribute("org",org);
-		SysOrg sysorg =new  SysOrg();
+		SysOrg sysorg = new SysOrg();
 		sysorg.setOrgProvId(org.getOrgProvId());
 		//市局角色
         if (StringUtil.isNotBlank(roleFlag) && com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {

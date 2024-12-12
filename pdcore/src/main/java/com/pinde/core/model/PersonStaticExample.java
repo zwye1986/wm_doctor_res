@@ -1,6 +1,4 @@
-package com.pinde.sci.model.mo;
-
-import com.pinde.core.model.SysOrg;
+package com.pinde.core.model;
 
 public class PersonStaticExample extends SysOrg {
 
