@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.osca;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.mo.OscaOrgSpe;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;
 
 import java.util.List;

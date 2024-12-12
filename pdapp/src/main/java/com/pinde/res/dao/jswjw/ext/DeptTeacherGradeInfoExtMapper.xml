@@ -389,7 +389,7 @@
         order by dtgi.oper_time
     </select>
 
-    <select id="getUserByRec" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRec" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select su.*
         from pdsci.sys_user su
         where su.record_status = 'Y'
@@ -505,7 +505,7 @@
         ))
     </select>
 
-    <select id="getUserByRecForUni" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select su.*
         from pdsci.sys_user su
         where su.record_status = 'Y'

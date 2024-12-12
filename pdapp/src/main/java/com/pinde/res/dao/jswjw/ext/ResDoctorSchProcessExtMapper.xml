@@ -5784,7 +5784,7 @@
             </if>
         order by  NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),dr.org_flow, dr.doctor_flow,dr.CREATE_TIME desc
     </select>
-    <resultMap type="HashMap" id="deptStudentsMap"  extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <resultMap type="HashMap" id="deptStudentsMap" extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         <result column="training_spe_name" javaType="string" property="trainingSpeName"/>
         <result column="session_number" javaType="string" property="sessionNumber"/>
         <result column="RING_PASS" property="ringPass" jdbcType="VARCHAR" />

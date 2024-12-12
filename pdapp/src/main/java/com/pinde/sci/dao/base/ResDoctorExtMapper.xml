@@ -30,7 +30,8 @@
     	</if>
     </select>
 	<resultMap id="ResDoctorExt" type="com.pinde.core.model.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
-		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+					 resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="searchResDoctorUser" parameterType="com.pinde.core.model.ResDoctorExt" resultMap="ResDoctorExt">
 		select * from res_doctor INNER JOIN  sys_user on  res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW  AND sys_user.RECORD_STATUS = 'Y'

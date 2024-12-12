@@ -1,22 +1,18 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysOrgExample;
 import com.pinde.core.model.SysUser;
-import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.model.mo.PersonStaticExample;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
-import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +32,6 @@ public class OrgBizImpl implements IOrgBiz {
 	private SysOrgExtMapper sysOrgExtMapper;
 	@Autowired
 	private IUserBiz userBiz;
-	@Autowired
-	private IUserRoleBiz userRoleBiz;
 	
 	@Override
 	public SysOrg readSysOrg(String sysOrgFlow) {
@@ -71,40 +65,6 @@ public class OrgBizImpl implements IOrgBiz {
 			GeneralMethod.setRecordInfo(org, true);
 			return sysOrgMapper.insertSelective(org);
 		}
-	}
-	
-	@Override
-	public int saveDeclarerOrg(SysOrg org,SysUser user) {
-		if(org != null && user != null){
-			boolean orgRecord = StringUtil.isNotBlank(org.getOrgFlow());
-			boolean userRecord = StringUtil.isNotBlank(user.getUserFlow());
-			if(orgRecord){
-				update(org);
-			}else{
-				org.setOrgFlow(PkUtil.getUUID());
-				save(org);
-			}
-			user.setOrgFlow(org.getOrgFlow());
-			user.setOrgName(org.getOrgName());
-			if(userRecord){
-				userBiz.saveUser(user);
-			}else{
-				user.setUserFlow(PkUtil.getUUID());
-				userBiz.addUser(user);
-			}
-			if(!userRecord){
-				SysUserRole userRole = new SysUserRole();
-				userRole.setUserFlow(user.getUserFlow());
-				userRole.setOrgFlow(org.getOrgFlow());
-                userRole.setWsId((String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_WS_ID));
-                userRole.setRoleFlow(InitConfig.getSysCfg(com.pinde.core.common.GlobalConstant.DECLARER_ROLE_FLOW));
-				userRole.setAuthUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-				userRole.setAuthTime(DateUtil.getCurrDateTime());
-				userRoleBiz.saveSysUserRole(userRole);
-			}
-            return com.pinde.core.common.GlobalConstant.ONE_LINE;
-		}
-        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 	
 	private int save(SysOrg org){
@@ -412,54 +372,6 @@ public class OrgBizImpl implements IOrgBiz {
 		example.setOrderByClause("ORG_CODE");
 	    return sysOrgMapper.selectByExample(example);
 	}
-
-	@Override
-	public List<SysOrg> searchOrgNoRegByRoleFlow(String roleFlow) {
-		return this.sysOrgExtMapper.selectOrgNoRegByRoleFlow(roleFlow);
-	}
-
-	@Override
-	public List<SysOrg> searchChildrenOrgByOrgFlowNotIncludeSelf(String orgFlow) {
-		 return sysOrgExtMapper.selectChildrenOrgListByOrgFlowNotIncludeSelf(orgFlow);
-	}
-
-	@Override
-	public Map<String, List<SysOrg>> searchChargeAndApply(SysOrg org,String projListScope) {
-		List<SysOrg> firstGradeOrgList=null;
-		List<SysOrg> secondGradeOrgList=null;
-        org.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		Map<String,List<SysOrg>> resultMap=new HashMap<String, List<SysOrg>>();
-		SysUser currUser=GlobalContext.getCurrentUser();
-		//如果chargeOrgFlow不为空，查询该机构下所有下属机构
-		if(StringUtil.isNotBlank(org.getChargeOrgFlow())){
-			secondGradeOrgList=searchOrg(org);
-			resultMap.put("secondGradeOrgList", secondGradeOrgList);
-		}
-		//查询当前机构下一级所有机构
-		SysOrg currOrg=new SysOrg();
-		currOrg.setChargeOrgFlow(currUser.getOrgFlow());
-		firstGradeOrgList=searchOrg(currOrg);
-        if (com.pinde.core.common.GlobalConstant.PROJ_STATUS_SCOPE_GLOBAL.equals(projListScope)) {
-			SysOrg globalOrg=readSysOrg(currUser.getOrgFlow());
-			firstGradeOrgList.add(globalOrg);
-		}
-		resultMap.put("firstGradeOrgList", firstGradeOrgList);
-		return resultMap;
-	}
-
-	@Override
-	public List<SysOrg> searchOrgListByChargeOrgFlow(String chargeOrgFlow) {
-		SysOrg sysOrg = new SysOrg();
-		sysOrg.setChargeOrgFlow(chargeOrgFlow);
-        sysOrg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
-		List<SysOrg> orgList = this.searchOrg(sysOrg);
-		return orgList;
-	}
-
-	@Override
-	public List<SysOrg> searchChargeOrg() {
-		return this.sysOrgExtMapper.selectChargeOrgList();
-	}
 	
 	@Override
 	public List<SysOrg> searchSysOrg(SysOrg sysorg) {
@@ -574,10 +486,7 @@ public class OrgBizImpl implements IOrgBiz {
 		return sysOrgMapper.selectByExample(example);
 	}
 
-	@Override
-	public List<SysOrg> searchOrgNotSelfAndNotCountryAndNotProvince(String orgFlow) {
-		return sysOrgExtMapper.searchOrgNotSelfAndNotCountryAndNotProvince(orgFlow);
-	}
+
 	@Override
 	public List<SysOrg> searchOrgFlowIn(List<String> orgFlows){
 		SysOrgExample example = new SysOrgExample();
@@ -639,10 +548,6 @@ public class OrgBizImpl implements IOrgBiz {
 		return sysOrgExtMapper.searchJointOrgsByOrg(orgFlow);
 	}
 
-	@Override
-	public List<PersonStaticExample> searchJointOrgsSession(String orgFlow) {
-		return sysOrgExtMapper.searchJointOrgsSession(orgFlow);
-	}
 
 	@Override
 	public SysOrg readSysOrgByName(String orgName) {
@@ -658,57 +563,6 @@ public class OrgBizImpl implements IOrgBiz {
 		}
 		return null;
 	}
-
-	@Override
-	public SysOrg readSysOrgByCode(String orgCode) {
-		if(StringUtil.isNotBlank(orgCode)) {
-			SysOrgExample example = new SysOrgExample();
-            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgCodeEqualTo(orgCode);
-			example.setOrderByClause("ORDINAL");
-			List<SysOrg> list= sysOrgMapper.selectByExample(example);
-			if(list!=null&&list.size()>0)
-			{
-				return list.get(0);
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public int checkOrgCodeNotSelf(String orgCode,String orgFlow) {
-		if(StringUtil.isNotBlank(orgCode)) {
-			SysOrgExample example = new SysOrgExample();
-			SysOrgExample.Criteria criteria= example.createCriteria()
-					.andOrgCodeEqualTo(orgCode);
-			if(StringUtil.isNotBlank(orgFlow)) {
-				criteria.andOrgFlowNotEqualTo(orgFlow);
-			}
-			List<SysOrg> list= sysOrgMapper.selectByExample(example);
-			if(list!=null&&list.size()>0)
-			{
-				return list.size();
-			}
-		}
-		return 0;
-	}
-	@Override
-	public int checkOrgNameNotSelf(String orgName,String orgFlow) {
-		if(StringUtil.isNotBlank(orgName)) {
-			SysOrgExample example = new SysOrgExample();
-			SysOrgExample.Criteria criteria= example.createCriteria()
-					.andOrgNameEqualTo(orgName);
-			if(StringUtil.isNotBlank(orgFlow)) {
-				criteria.andOrgFlowNotEqualTo(orgFlow);
-			}
-			List<SysOrg> list= sysOrgMapper.selectByExample(example);
-			if(list!=null&&list.size()>0)
-			{
-				return list.size();
-			}
-		}
-		return 0;
-	}
-
 	public List<String> getOrgFlowsBySysOrgs(List<SysOrg> orgs){
 		List<String> orgFlows = null;
 		if(orgs != null && orgs.size() > 0){
@@ -769,27 +623,6 @@ public class OrgBizImpl implements IOrgBiz {
 		return sysOrgExtMapper.updateHospitalNotSubmit(userFlowList);
 	}
 
-	@Override
-	public List<SysOrg> searchOrgNotCountryOrg(SysOrg sysorg) {
-		SysOrgExample example=new SysOrgExample();
-        SysOrgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-        criteria.andOrgLevelIdNotEqualTo(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
-		if(StringUtil.isNotBlank(sysorg.getOrgProvId())){
-			criteria.andOrgProvIdEqualTo(sysorg.getOrgProvId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgCityId())){
-			criteria.andOrgCityIdEqualTo(sysorg.getOrgCityId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgAreaId())){
-			criteria.andOrgAreaIdEqualTo(sysorg.getOrgAreaId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgTypeId())){
-			criteria.andOrgTypeIdEqualTo(sysorg.getOrgTypeId());
-		}
-		example.setOrderByClause(" ORDINAL,ORG_CODE DESC,ORG_FLOW desc");
-		return sysOrgMapper.selectByExample(example);
-	}
-
     @Override
     public List<SysOrg> searchSysOrgOrder(List<String> orgLevels){
         SysOrgExample example=new SysOrgExample();
@@ -805,30 +638,6 @@ public class OrgBizImpl implements IOrgBiz {
     }
 
 	/**
-	 * @param sysOrgExt
-	 * @Department：研发部
-	 * @Description 查询基地列表信息
-	 * @Author fengxf
-	 * @Date 2020/9/2
-	 */
-	@Override
-	public List<SysOrgExt> searchOrgListByParam(SysOrgExt sysOrgExt) {
-		return sysOrgExtMapper.searchOrgListByParam(sysOrgExt);
-	}
-
-	/**
-	 * @param sysOrgExt
-	 * @Department：研发部
-	 * @Description 查询基地下协同基地的数量
-	 * @Author fengxf
-	 * @Date 2020/9/2
-	 */
-	@Override
-	public List<Map<String, String>> getJointOrgCountByParam(SysOrgExt sysOrgExt) {
-		return sysOrgExtMapper.getJointOrgCountByParam(sysOrgExt);
-	}
-
-	/**
 	 * @param workOrgId
 	 * @Department：研发部
 	 * @Description 查询高校下的培训基地信息
@@ -838,58 +647,6 @@ public class OrgBizImpl implements IOrgBiz {
 	@Override
 	public List<SysOrg> searchUniversityOrgList(String workOrgId) {
 		return sysOrgExtMapper.searchUniversityOrgList(workOrgId);
-	}
-
-	/**
-	 * @param sysorg
-	 * @Department：研发部
-	 * @Description 除当前医院的剩下医院
-	 * @Author Zjie
-	 * @Date 0027, 2020年11月27日
-	 */
-	@Override
-	public List<SysOrg> searchOrgNew(SysOrg sysorg) {
-		SysOrgExample example=new SysOrgExample();
-        SysOrgExample.Criteria criteria = example.createCriteria();//.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		if(StringUtil.isNotBlank(sysorg.getOrgFlow())){
-			criteria.andOrgFlowNotEqualTo(sysorg.getOrgFlow());
-//			criteria.andOrgFlowEqualTo(sysorg.getOrgFlow());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgCode())){
-			criteria.andOrgCodeEqualTo(sysorg.getOrgCode());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgName())){
-			criteria.andOrgNameLike("%"+sysorg.getOrgName()+"%");
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgProvId())){
-			criteria.andOrgProvIdEqualTo(sysorg.getOrgProvId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getRecordStatus())){
-			criteria.andRecordStatusEqualTo(sysorg.getRecordStatus());
-		}
-		if(StringUtil.isNotBlank(sysorg.getChargeOrgFlow())){
-			criteria.andChargeOrgFlowEqualTo(sysorg.getChargeOrgFlow());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgCityId())){
-			criteria.andOrgCityIdEqualTo(sysorg.getOrgCityId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgAreaId())){
-			criteria.andOrgAreaIdEqualTo(sysorg.getOrgAreaId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgTypeId())){
-			criteria.andOrgTypeIdEqualTo(sysorg.getOrgTypeId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getOrgLevelId())){
-			criteria.andOrgLevelIdEqualTo(sysorg.getOrgLevelId());
-		}
-		if(StringUtil.isNotBlank(sysorg.getIsSecondFlag())){
-			criteria.andIsSecondFlagEqualTo(sysorg.getIsSecondFlag());
-		}
-		if(StringUtil.isNotBlank(sysorg.getIsExamOrg())){
-			criteria.andIsExamOrgEqualTo(sysorg.getIsExamOrg());
-		}
-		example.setOrderByClause(" ORDINAL,ORG_CODE,RECORD_STATUS DESC,ORG_FLOW desc");
-		return sysOrgMapper.selectByExample(example);
 	}
 
 	/**
@@ -912,25 +669,11 @@ public class OrgBizImpl implements IOrgBiz {
 	}
 
 	@Override
-	public List<SysOrg> searchOrgWork() {
-		SysOrgExample example=new SysOrgExample();
-		example.createCriteria().andOrgTypeIdEqualTo("Hospital");
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		example.setOrderByClause("ORDINAL");
-		return sysOrgMapper.selectByExample(example);
-	}
-
-	@Override
 	public List<SysOrg> searchOrgNotJointOrg(SysOrg sysOrg, List<String> orgLevelList) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("sysOrg", sysOrg);
 		paramMap.put("orgLevelList", orgLevelList);
 		return sysOrgExtMapper.searchOrgNotJointOrg(paramMap);
-	}
-
-	@Override
-	public List<SysOrg> orgGxList() {
-		return sysOrgExtMapper.orgGxList();
 	}
 
 	@Override

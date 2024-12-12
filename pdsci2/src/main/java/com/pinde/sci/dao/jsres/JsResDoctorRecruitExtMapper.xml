@@ -13,7 +13,8 @@
 		<result column="RANK_NUM" jdbcType="VARCHAR" property="rankNum"/>
 		<result column="IS_RETRAIN" jdbcType="VARCHAR" property="isRetrain"/>
 		<result column="ARMY_TYPE" jdbcType="VARCHAR" property="armyType"/>
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 		    <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
@@ -35,7 +36,8 @@
 		<result column="SPE_ID_NEW" jdbcType="VARCHAR" property="speIdNew"/>
 		<result column="SPE_NAME_NEW" jdbcType="VARCHAR" property="speNameNew"/>
 		<result column="FIRST_IS_PASS" jdbcType="VARCHAR" property="firstIsPass"/>
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 			<result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
@@ -52,7 +54,8 @@
 		<result column="SKILL_TEST_ID" jdbcType="VARCHAR" property="skillTestId"/>
 		<result column="COUNTRY_ORG_NAME" jdbcType="VARCHAR" property="countryOrgName"/>
 		<result column="THEROY_SCORE_FLOW" jdbcType="VARCHAR" property="theroyScoreFlow"/>
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resScore" column="user_flow"  resultMap="com.pinde.sci.dao.base.ResScoreMapper.ResultMapWithBLOBs" />
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
@@ -62,13 +65,15 @@
 	</resultMap>
 	<resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
 		<result column="ARMY_TYPE" jdbcType="VARCHAR" property="armyType"/>
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
 	</resultMap>
 	
 	<resultMap id="doctorInfoSun" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 	</resultMap>
 	 <select id="searchDoctorRecruit"  parameterType="java.util.Map" resultMap="doctorInfoSun">
 	 	  select 	dr.*,		
@@ -6334,7 +6339,8 @@
 		group by re.org_flow
     </select> 
     <resultMap id="info" type="com.pinde.sci.model.jsres.JsDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 	</resultMap>
 	<select id="statisticNoAppUser"  parameterType="java.util.Map" resultMap="info">

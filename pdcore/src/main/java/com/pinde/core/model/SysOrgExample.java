@@ -3033,6 +3033,146 @@ public class SysOrgExample {
             addCriterion("BASE_CODE not between", value1, value2, "baseCode");
             return (Criteria) this;
         }
+
+        public Criteria andOrgPersonInChargeIsNull() {
+            addCriterion("ORG_PERSON_IN_CHARGE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeIsNotNull() {
+            addCriterion("ORG_PERSON_IN_CHARGE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeEqualTo(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE =", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeNotEqualTo(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE <>", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeGreaterThan(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE >", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeGreaterThanOrEqualTo(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE >=", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeLessThan(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE <", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeLessThanOrEqualTo(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE <=", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeLike(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE like", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeNotLike(String value) {
+            addCriterion("ORG_PERSON_IN_CHARGE not like", value, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeIn(List<String> values) {
+            addCriterion("ORG_PERSON_IN_CHARGE in", values, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeNotIn(List<String> values) {
+            addCriterion("ORG_PERSON_IN_CHARGE not in", values, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeBetween(String value1, String value2) {
+            addCriterion("ORG_PERSON_IN_CHARGE between", value1, value2, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgPersonInChargeNotBetween(String value1, String value2) {
+            addCriterion("ORG_PERSON_IN_CHARGE not between", value1, value2, "orgPersonInCharge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccIsNull() {
+            addCriterion("IS_ACC is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccIsNotNull() {
+            addCriterion("IS_ACC is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccEqualTo(String value) {
+            addCriterion("IS_ACC =", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccNotEqualTo(String value) {
+            addCriterion("IS_ACC <>", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccGreaterThan(String value) {
+            addCriterion("IS_ACC >", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccGreaterThanOrEqualTo(String value) {
+            addCriterion("IS_ACC >=", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccLessThan(String value) {
+            addCriterion("IS_ACC <", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccLessThanOrEqualTo(String value) {
+            addCriterion("IS_ACC <=", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccLike(String value) {
+            addCriterion("IS_ACC like", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccNotLike(String value) {
+            addCriterion("IS_ACC not like", value, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccIn(List<String> values) {
+            addCriterion("IS_ACC in", values, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccNotIn(List<String> values) {
+            addCriterion("IS_ACC not in", values, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccBetween(String value1, String value2) {
+            addCriterion("IS_ACC between", value1, value2, "isAcc");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAccNotBetween(String value1, String value2) {
+            addCriterion("IS_ACC not between", value1, value2, "isAcc");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

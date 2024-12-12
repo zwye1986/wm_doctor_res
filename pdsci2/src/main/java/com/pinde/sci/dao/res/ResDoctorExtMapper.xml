@@ -3,13 +3,14 @@
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorExtMapper" >
     <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
         <association property="userResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.StuUserResume" resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorRecruit" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
 		<association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.PubUserResume" resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
 	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 			<result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
@@ -96,7 +97,7 @@
 	</resultMap>
     <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 	    <association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorRecruit" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
     </resultMap>
 	<insert id="insertRecruitInfo">
@@ -863,7 +864,8 @@
 		</if>
 		order by session_number,sch_start_date,SCH_END_DATE
 	</select>
-	<resultMap id="SysUserResDoctorExt" type="com.pinde.sci.model.sys.SysUserResDoctorExt" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <resultMap id="SysUserResDoctorExt" type="com.pinde.sci.model.sys.SysUserResDoctorExt"
+               extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 	   <association property="doctor" column="doctor_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
        <collection property="resDoctorSchProcessList" ofType="com.pinde.sci.model.mo.ResDoctorSchProcess" column="USER_FLOW">
 			 	<id column="PROCESS_FLOW" jdbcType="VARCHAR" property="processFlow" />
@@ -1231,8 +1233,9 @@
 		update PDSCI.RES_DOCTOR SET DOCTOR_STATUS_ID = #{statusId},DOCTOR_STATUS_NAME = #{statusName}
 		WHERE  RES_DOCTOR.RECORD_STATUS = 'Y' AND RES_DOCTOR.DOCTOR_STATUS_ID=#{oldStatusId} and RES_DOCTOR.session_number = #{regNumber}
 	</update>
-	
-	<select id="searchNotInExamUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="searchNotInExamUser" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 	    select tmp.user_flow , tmp.user_name from 
             (
                 select rr.USER_FLOW , rr.USER_NAME from res_reg rr where rr.RECORD_STATUS='Y' AND rr.STATUS_ID=#{statusId} and rr.REG_YEAR=#{regYear} 
@@ -1268,7 +1271,7 @@
 	<resultMap id="ResExamDoctorExtMap" type="com.pinde.sci.model.res.ResExamDoctorExt" extends="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
 	    <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
         <association property="user" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>
 	<select id="searchExamDoctorExt" parameterType="com.pinde.sci.model.res.ResExamDoctorExt" resultMap="ResExamDoctorExtMap">
 	      SELECT * FROM 

@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sys.SysOrgExtMapper" >
-	<select id="selectChildrenOrgListByOrgFlow" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
-  		select <include refid="com.pinde.sci.dao.base.SysOrgMapper.Base_Column_List" /> from PDSCI.sys_org start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and record_status='Y'
+	<select id="selectChildrenOrgListByOrgFlow" parameterType="java.lang.String"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
+		select
+		<include refid="com.pinde.core.common.sci.dao.SysOrgMapper.Base_Column_List"/>
+		from PDSCI.sys_org start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and
+		record_status='Y'
 	</select>
-	
-	<select id="selectChildrenOrgListByOrgFlowNotIncludeSelf" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
-  		select <include refid="com.pinde.sci.dao.base.SysOrgMapper.Base_Column_List" /> from PDSCI.sys_org where level='2' start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and record_status='Y'
+
+	<select id="selectChildrenOrgListByOrgFlowNotIncludeSelf" parameterType="java.lang.String"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
+		select
+		<include refid="com.pinde.core.common.sci.dao.SysOrgMapper.Base_Column_List"/>
+		from PDSCI.sys_org where level='2' start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and
+		record_status='Y'
 	</select>
-	
-	<select id="selectOrgNoRegByRoleFlow" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+
+	<select id="selectOrgNoRegByRoleFlow" parameterType="java.lang.String"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select * from 
 		PDSCI.sys_org so 
 		where so.record_status='Y' and  
 		so.org_flow not in (select su.org_flow from PDSCI.sys_user su , PDSCI.sys_user_role sur where su.user_flow=sur.user_flow and sur.role_flow=#{roleFlow} and su.record_status='Y' and sur.record_status='Y' and su.org_flow is not null)
 	</select>
-	
-	<select id="selectChargeOrgList" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+
+	<select id="selectChargeOrgList" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	    select * from PDSCI.sys_org where org_flow in (select distinct charge_org_flow from PDSCI.sys_org where charge_org_flow is not null) and record_status='Y' order by ordinal
 	</select>
-	<select id="searchOrgs" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchOrgs" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	    select *
 	    from PDSCI.SYS_ORG
 	    where RECORD_STATUS='Y'
@@ -53,7 +62,7 @@
 	 	  </if> 
 		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
 	</select>
-	<select id="searchJointOrgsByOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchJointOrgsByOrg" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
 	    from PDSCI.SYS_ORG
 	    where RECORD_STATUS='Y'
@@ -68,7 +77,7 @@
 		)
 		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
 	</select>
-	<select id="searchJointOrgsSession" resultMap="com.pinde.sci.dao.base.SysOrgMapper.ResultMapWithSession">
+	<select id="searchJointOrgsSession" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.ResultMapWithSession">
 		select a.*,b.session_number
 		from PDSCI.SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where c.record_status='Y' and c.DATE_MONTH='2019-10') b
 		where a.ORG_FLOW=b.ORG_FLOW
@@ -83,7 +92,8 @@
 		)
 		ORDER BY b.session_number DESC
 	</select>
-	<select id="searchOrgNotSelfAndNotCountryAndNotProvince" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchOrgNotSelfAndNotCountryAndNotProvince"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
 	    from PDSCI.SYS_ORG
 	    where RECORD_STATUS='Y'
@@ -98,7 +108,7 @@
 		and org_flow != #{orgFlow}
 		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
 	</select>
-	<select id="getUniOrgs" parameterType="map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="getUniOrgs" parameterType="map" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
 	    from PDSCI.SYS_ORG
 	    where RECORD_STATUS='Y'
@@ -125,7 +135,8 @@
         )
 		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
 	</select>
-	<select id="getUniBackTrainOrgs" parameterType="map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="getUniBackTrainOrgs" parameterType="map"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
 	    from PDSCI.SYS_ORG
 	    where RECORD_STATUS='Y'
@@ -151,8 +162,9 @@
         )
 		ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
 	</select>
-	
-	<select id="searchJsResOrgWithJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+
+	<select id="searchJsResOrgWithJointOrg" parameterType="java.util.Map"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	    select ORG_FLOW, ORG_NAME 
 	    from PDSCI.SYS_ORG
 	    where RECORD_STATUS='Y'
@@ -170,8 +182,9 @@
 	    	) 
     	)
 	</select>
-	
-	<select id="searOrgTeacherRoleCheckUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+
+	<select id="searOrgTeacherRoleCheckUser" parameterType="java.util.Map"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	  	 select * from sys_org so
 			where so.record_status = 'Y'
 					<if test="org!=null">
@@ -203,7 +216,8 @@
 			        )
 			      )
 	</select>
-	<select id="confirmRole" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+	<select id="confirmRole" parameterType="java.util.Map"
+			resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select a.* from sys_user a
 		  left join sys_user_role b on a.user_flow = b.user_flow
 		  left join sys_org c on a.org_flow = c.org_flow
@@ -214,7 +228,7 @@
 		   and c.hospital_password = #{hospitalPassword}
 		   and a.user_flow=#{userFlow}
 	</select>
-	<select id="searchOrgs4hbUniversity" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchOrgs4hbUniversity" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select *
 		from PDSCI.SYS_ORG so
 		where so.RECORD_STATUS='Y'
@@ -276,7 +290,8 @@
 	</update>
 
 	<!-- 基地map -->
-	<resultMap id="orgMap" type="com.pinde.sci.model.sys.SysOrgExt" extends="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<resultMap id="orgMap" type="com.pinde.sci.model.sys.SysOrgExt"
+			   extends="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		<result column="ORG_BASE_GRADE_NAME" property="orgBaseGradeName" jdbcType="VARCHAR" />
 		<result column="JOINT_ORG_FLOW" property="jointOrgFlow" jdbcType="VARCHAR" />
 		<result column="JOINT_ORG_NAME" property="jointOrgName" jdbcType="VARCHAR" />
@@ -365,7 +380,7 @@
 	</select>
 
 	<!-- 查询高校下的培训基地信息 -->
-	<select id="searchUniversityOrgList" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchUniversityOrgList" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT
 			ORG_FLOW,
 			ORG_CODE,
@@ -428,7 +443,8 @@
 	</select>
 
 	<!-- 市局查询基地和协同基地信息 -->
-	<select id="searchOrgAndJointOrgList" parameterType="com.pinde.sci.model.mo.SysOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchOrgAndJointOrgList" parameterType="com.pinde.sci.model.mo.SysOrg"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT
 			ORG_FLOW,
 			ORG_CODE,
@@ -523,8 +539,8 @@
 		</if>
 		ORDER BY O.ORDINAL,O.ORG_CODE,O.ORG_FLOW DESC
 	</select>
-	
-	<select id="searchOrgListNew" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+
+	<select id="searchOrgListNew" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT ORG_FLOW, ORG_PROV_ID, ORG_CITY_ID, ORG_AREA_ID, ORG_LEVEL_ID
   			,CASE WHEN OLD_ORG_NAME IS NULL THEN ORG_NAME ELSE wm_concat(ORG_NAME||'('||OLD_ORG_NAME||')') END ORG_NAME
 		FROM PDSCI.SYS_ORG
@@ -547,7 +563,8 @@
 		ORDER BY ORG_FLOW DESC
 	</select>
 
-	<select id="searchOrgNotJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchOrgNotJointOrg" parameterType="java.util.Map"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select o.ORG_FLOW, o.ORG_NAME
 		from PDSCI.SYS_ORG o
 		where o.RECORD_STATUS='Y'
@@ -563,7 +580,7 @@
 			AND J.JOINT_ORG_FLOW = O.ORG_FLOW)
 	</select>
 
-	<select id="orgGxList" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="orgGxList" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	select org_name,org_flow from sys_org
     	where org_name in (select org_name from res_doctor
    		where doctor_type_id='Graduate' and work_org_name='南京医科大学' group by org_name)
@@ -593,7 +610,8 @@
 			ORDER BY ORDINAL, ORG_CODE, ORG_FLOW DESC
 	</select>
 
-	<select id="searchOrgByJoin"  parameterType="com.pinde.sci.model.sys.SysOrgExt"   resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+	<select id="searchOrgByJoin" parameterType="com.pinde.sci.model.sys.SysOrgExt"
+			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT O.*
 		FROM SYS_ORG O
 		WHERE O.RECORD_STATUS = 'Y'

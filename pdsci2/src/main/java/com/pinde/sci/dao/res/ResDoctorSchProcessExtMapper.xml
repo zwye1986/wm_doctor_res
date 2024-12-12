@@ -3253,7 +3253,7 @@
 		</if>
 		and a.TEACHER_USER_FLOW= #{teacherUserFlow}
 	</select>
-	<select id="jsresTeacherSchDocByDate" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="jsresTeacherSchDocByDate" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select * from sys_user where user_Flow in(
 		select distinct(a.USER_FLOW) from (
 		select P.TEACHER_USER_FLOW TEACHER_USER_FLOW,

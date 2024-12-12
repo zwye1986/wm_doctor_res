@@ -1,4 +1,4 @@
-package com.pinde.sci.dao.base;
+package com.pinde.core.common.sci.dao;
 
 import com.pinde.core.model.SysUserDept;
 import com.pinde.core.model.SysUserDeptExample;
@@ -28,6 +28,4 @@ public interface SysUserDeptMapper {
     int updateByPrimaryKeySelective(SysUserDept record);
 
     int updateByPrimaryKey(SysUserDept record);
-
-
 }

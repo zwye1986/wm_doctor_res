@@ -18,7 +18,6 @@ import com.pinde.sci.model.jszy.JszyResBaseExt;
 import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResPassScoreCfgExample;
-import com.pinde.sci.model.mo.SysOrg;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

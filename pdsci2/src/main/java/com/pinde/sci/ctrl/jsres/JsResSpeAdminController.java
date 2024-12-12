@@ -44,7 +44,6 @@ import com.pinde.sci.model.mo.ResTeacherTraining;
 import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchRotation;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.mo.TeachingActivityEval;
 import com.pinde.sci.model.mo.TeachingActivityInfo;

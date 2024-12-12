@@ -55,7 +55,7 @@
         )
     </select>
 
-    <select id="searchOrgs" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+    <select id="searchOrgs" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select *
         from PDSCI.SYS_ORG
         where RECORD_STATUS='Y'

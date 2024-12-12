@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.biz.recruit.IRecruitAdmitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
@@ -8,8 +10,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.mo.RecruitAdmitInfo;
 import com.pinde.sci.model.mo.RecruitInfo;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

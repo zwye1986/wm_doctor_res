@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.pinde.core.common.enums.*;
+import com.pinde.core.common.sci.dao.SysUserDeptMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -13,7 +14,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.IrbSingleForm;
-import com.pinde.sci.dao.base.SysUserDeptMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -39,7 +39,6 @@ import com.pinde.sci.model.mo.SchDoctorDept;
 import com.pinde.sci.model.mo.SchRotation;
 import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.*;

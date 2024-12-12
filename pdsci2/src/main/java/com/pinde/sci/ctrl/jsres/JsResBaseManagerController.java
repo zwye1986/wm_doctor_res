@@ -60,8 +60,6 @@ import com.pinde.sci.model.mo.SchRotationGroupExample;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysCfgExample;
 import com.pinde.sci.model.mo.SysDeptExample;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.mo.TeachingActivityInfo;
 import com.pinde.sci.model.mo.*;

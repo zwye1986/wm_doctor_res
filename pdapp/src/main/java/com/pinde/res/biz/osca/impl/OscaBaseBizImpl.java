@@ -1,16 +1,13 @@
 package com.pinde.res.biz.osca.impl;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.osca.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.osca.IOscaBaseBiz;
-import com.pinde.res.biz.osca.IOscaDoctorOrderdeBiz;
 import com.pinde.res.dao.osca.ext.OscaCheckInfoExtMapper;
 import com.pinde.res.dao.osca.ext.OscaSkillsAssessmentExtMapper;
-import com.pinde.core.common.enums.osca.*;
 import com.pinde.res.model.osca.mo.OscaCheckInfoExt;
 import com.pinde.sci.dao.base.*;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -49,25 +46,13 @@ public class OscaBaseBizImpl implements IOscaBaseBiz {
     @Autowired
     private OscaSkillRoomDocMapper osrdMapper;
     @Autowired
-    private SysUserMapper userMapper;
-    @Autowired
     private OscaSkillDocScoreMapper osdsMapper;
     @Autowired
     private OscaOrgSpeMapper oosMapper;
     @Autowired
-    private SysRoleMapper sysRoleMapper;
-    @Autowired
-    private SysUserRoleMapper userRoleMapper;
-    @Autowired
     private OscaCheckInfoExtMapper checkExtMapper;
     @Autowired
     private OscaExamDifferScoreMapper differScoreMapper;
-    @Autowired
-    private ResDoctorMapper doctorMapper;
-    @Autowired
-    private IOscaAppBiz oscaAppBiz;
-    @Autowired
-    private IOscaDoctorOrderdeBiz doctorOrderdeBiz;
     @Autowired
     private OscaSkillsAssessmentTimeMapper timeMapper;
     @Autowired

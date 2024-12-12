@@ -2,13 +2,13 @@ package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.biz.sys.IEdcUserRegBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
-import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

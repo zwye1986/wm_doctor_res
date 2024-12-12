@@ -1,23 +1,18 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysOrgExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
-import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
-import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResStatisticBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.dao.base.ResBaseMapper;
-import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
-import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
-import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.dao.res.ResChartExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
@@ -48,23 +43,8 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class ResStatisticBizImpl implements IResStatisticBiz {
-
-	@Autowired
-	private IOrgBiz orgBiz;
-	@Autowired
-	private IResDoctorBiz doctorBiz;
-	@Autowired
-	private ResBaseMapper resBaseMapper;
-	@Autowired
-	private ResOrgSpeMapper resOrgSpeMapper;
 	@Autowired
 	private SysOrgMapper sysOrgMapper;
-	@Autowired
-	private ResBaseExtMapper resBaseExtMapper;
-	@Autowired
-	private IResOrgSpeBiz resOrgSpeBiz;
-	@Autowired
-	private IJsResDoctorBiz jsResDoctorBiz;
 	@Autowired
 	private JsResDoctorRecruitExtMapper recruitExtMapper;
 	@Autowired

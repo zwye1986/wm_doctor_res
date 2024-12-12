@@ -9,7 +9,7 @@ import com.pinde.core.model.SysUserRoleExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.eval.IEvalAppBiz;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserExample;
 import com.pinde.core.util.JaxbUtil;
@@ -14,7 +15,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.mo.*;

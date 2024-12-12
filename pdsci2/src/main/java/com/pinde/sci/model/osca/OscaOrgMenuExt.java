@@ -1,6 +1,6 @@
 package com.pinde.sci.model.osca;
 
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.SysOrg;
 
 public class OscaOrgMenuExt extends SysOrg {
     //是否开通考核项目管理

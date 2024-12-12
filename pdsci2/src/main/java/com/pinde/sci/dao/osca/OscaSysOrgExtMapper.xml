@@ -16,7 +16,7 @@
         <result column="RECORD_STATUS" property="sysOrg.recordStatus" jdbcType="VARCHAR" />
     </resultMap>
 
-    <select id="searchOrgCitys" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+    <select id="searchOrgCitys" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select distinct ORG_CITY_ID , ORG_CITY_NAME
         from PDSCI.SYS_ORG
         where RECORD_STATUS='Y'

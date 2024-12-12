@@ -1,8 +1,9 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.NoticeStatusEnum;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;

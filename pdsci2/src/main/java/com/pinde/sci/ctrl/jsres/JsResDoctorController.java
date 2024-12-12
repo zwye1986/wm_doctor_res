@@ -70,7 +70,6 @@ import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.sci.model.mo.SchRotationDeptExample;
 import com.pinde.sci.model.mo.SchRotationDeptReq;
 import com.pinde.sci.model.mo.SchRotationGroup;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.mo.SysRole;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.res.ResDoctorExt;

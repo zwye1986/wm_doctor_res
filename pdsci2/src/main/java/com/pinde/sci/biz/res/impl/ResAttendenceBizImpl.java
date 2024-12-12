@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -7,11 +8,13 @@ import com.pinde.sci.biz.res.IResAttendanceBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.JsresAttendanceDetailMapper;
 import com.pinde.sci.dao.base.JsresAttendanceMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.res.ResAttendanceExtMapper;
 import com.pinde.sci.model.jsres.JsResAttendanceExt;
 import com.pinde.sci.model.jszy.JszyResAttendanceExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.JsresAttendance;
+import com.pinde.sci.model.mo.JsresAttendanceDetail;
+import com.pinde.sci.model.mo.JsresAttendanceDetailExample;
+import com.pinde.sci.model.mo.JsresAttendanceExample;
 import com.pinde.sci.model.res.ResAttendanceExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

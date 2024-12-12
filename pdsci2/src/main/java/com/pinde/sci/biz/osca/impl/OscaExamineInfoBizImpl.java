@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.osca.impl;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.biz.osca.IOscaExamineInfoBiz;
 import com.pinde.sci.dao.osca.OscaExamineInfoMapper;
-import com.pinde.sci.model.mo.SysOrg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

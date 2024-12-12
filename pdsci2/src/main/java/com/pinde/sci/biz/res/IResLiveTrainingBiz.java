@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.res;
 
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResTarinNotice;
 import com.pinde.sci.model.mo.ResTrainingOpinion;
-import com.pinde.sci.model.mo.SysOrg;
 
 import java.util.List;
 import java.util.Map;

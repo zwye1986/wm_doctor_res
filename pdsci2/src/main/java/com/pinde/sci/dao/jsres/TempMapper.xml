@@ -1167,7 +1167,7 @@ COMPLETE_BI_PER=(CASE
                      )
          )order by sch_start_date
     </select>
-    <select id="examTeaRole"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="examTeaRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select * from sys_user where is_exam_tea='Y'
     </select>
     <select id="getOscaNotSubmitInfo"  resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">

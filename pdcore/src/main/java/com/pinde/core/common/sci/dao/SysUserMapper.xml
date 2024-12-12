@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SysUserMapper" >
-    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysUser">
+<mapper namespace="com.pinde.core.common.sci.dao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysUser" >
     <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
     <result column="USER_PASSWD" property="userPasswd" jdbcType="VARCHAR" />
@@ -127,11 +127,6 @@
     <result column="BANK_ACCOUNT_NUMBER" property="bankAccountNumber" jdbcType="VARCHAR" />
     <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
     <result column="UN_LOCK_TIME" property="unLockTime" jdbcType="VARCHAR" />
-    <result column="TEACHER_LEVEL" property="teacherLevel" jdbcType="VARCHAR" />
-    <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
-    <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
-    <result column="LOCK_REASON" property="lockReason" jdbcType="VARCHAR" />
-    <result column="IS_RESPONSIBLE_TUTOR" property="isResponsibleTutor" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -213,10 +208,9 @@
     NATIONALITY, LAST_LOGIN_ERROR_TIME, LOGIN_ERROR_COUNT, CHANGE_PASSWORD_TIME, IS_SUBMIT_ID, 
     IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, APP_LAST_LOGIN_ERROR_TIME, 
     APP_LOGIN_ERROR_COUNT, AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, USER_LEVEL_ID, USER_LEVEL_NAME, 
-    USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME, TEACHER_LEVEL, 
-    TRAINING_TYPE_ID, TRAINING_TYPE_NAME, LOCK_REASON ,IS_RESPONSIBLE_TUTOR
+    USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME
   </sql>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserExample">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserExample" >
     select
     <if test="distinct" >
       distinct
@@ -240,13 +234,13 @@
     delete from PDSCI.SYS_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
-    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysUserExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysUserExample" >
     delete from PDSCI.SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-    <insert id="insert" parameterType="com.pinde.core.model.SysUser">
+  <insert id="insert" parameterType="com.pinde.core.model.SysUser" >
     insert into PDSCI.SYS_USER (USER_FLOW, USER_CODE, USER_PASSWD, 
       USER_NAME, SEX_ID, SEX_NAME, 
       STATUS_ID, STATUS_DESC, USER_PHONE, 
@@ -290,8 +284,7 @@
       AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, 
       USER_LEVEL_ID, USER_LEVEL_NAME, USER_SIGN_URL, 
       BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, 
-      UN_LOCK_TIME, TEACHER_LEVEL, TRAINING_TYPE_ID, 
-      TRAINING_TYPE_NAME, LOCK_REASON,IS_RESPONSIBLE_TUTOR)
+      UN_LOCK_TIME)
     values (#{userFlow,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, #{userPasswd,jdbcType=VARCHAR}, 
       #{userName,jdbcType=VARCHAR}, #{sexId,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, 
       #{statusId,jdbcType=VARCHAR}, #{statusDesc,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
@@ -335,10 +328,9 @@
       #{auditStatus,jdbcType=VARCHAR}, #{orgFlowGx,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
       #{userLevelId,jdbcType=VARCHAR}, #{userLevelName,jdbcType=VARCHAR}, #{userSignUrl,jdbcType=VARCHAR}, 
       #{bankOfDeposit,jdbcType=VARCHAR}, #{bankAccountNumber,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
-      #{unLockTime,jdbcType=VARCHAR}, #{teacherLevel,jdbcType=VARCHAR}, #{trainingTypeId,jdbcType=VARCHAR}, 
-      #{trainingTypeName,jdbcType=VARCHAR}, #{lockReason,jdbcType=VARCHAR}, #{isResponsibleTutor,jdbcType=VARCHAR})
+      #{unLockTime,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.pinde.core.model.SysUser">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysUser" >
     insert into PDSCI.SYS_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
@@ -715,21 +707,6 @@
       </if>
       <if test="unLockTime != null" >
         UN_LOCK_TIME,
-      </if>
-      <if test="teacherLevel != null" >
-        TEACHER_LEVEL,
-      </if>
-      <if test="trainingTypeId != null" >
-        TRAINING_TYPE_ID,
-      </if>
-      <if test="trainingTypeName != null" >
-        TRAINING_TYPE_NAME,
-      </if>
-      <if test="lockReason != null" >
-        LOCK_REASON,
-      </if>
-      <if test="isResponsibleTutor != null" >
-        IS_RESPONSIBLE_TUTOR,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -1108,29 +1085,15 @@
       <if test="unLockTime != null" >
         #{unLockTime,jdbcType=VARCHAR},
       </if>
-      <if test="teacherLevel != null" >
-        #{teacherLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="trainingTypeId != null" >
-        #{trainingTypeId,jdbcType=VARCHAR},
-      </if>
-      <if test="trainingTypeName != null" >
-        #{trainingTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="lockReason != null" >
-        #{lockReason,jdbcType=VARCHAR},
-      </if>
-      <if test="isResponsibleTutor != null" >
-        #{isResponsibleTutor,jdbcType=VARCHAR},
-      </if>
     </trim>
   </insert>
-    <select id="countByExample" parameterType="com.pinde.core.model.SysUserExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.SysUserExample" resultType="java.lang.Integer" >
     select count(*) from PDSCI.SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
   <update id="updateByExampleSelective" parameterType="map" >
     update PDSCI.SYS_USER
     <set >
@@ -1509,21 +1472,6 @@
       <if test="record.unLockTime != null" >
         UN_LOCK_TIME = #{record.unLockTime,jdbcType=VARCHAR},
       </if>
-      <if test="record.teacherLevel != null" >
-        TEACHER_LEVEL = #{record.teacherLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="record.trainingTypeId != null" >
-        TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.trainingTypeName != null" >
-        TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.lockReason != null" >
-        LOCK_REASON = #{record.lockReason,jdbcType=VARCHAR},
-      </if>
-      <if test="record.isResponsibleTutor != null" >
-        IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -1655,17 +1603,12 @@
       BANK_OF_DEPOSIT = #{record.bankOfDeposit,jdbcType=VARCHAR},
       BANK_ACCOUNT_NUMBER = #{record.bankAccountNumber,jdbcType=VARCHAR},
       OPEN_ID = #{record.openId,jdbcType=VARCHAR},
-      UN_LOCK_TIME = #{record.unLockTime,jdbcType=VARCHAR},
-      TEACHER_LEVEL = #{record.teacherLevel,jdbcType=VARCHAR},
-      TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
-      TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
-      LOCK_REASON = #{record.lockReason,jdbcType=VARCHAR},
-      IS_RESPONSIBLE_TUTOR = #{record.isResponsibleTutor,jdbcType=VARCHAR}
+      UN_LOCK_TIME = #{record.unLockTime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysUser">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysUser" >
     update PDSCI.SYS_USER
     <set >
       <if test="userCode != null" >
@@ -2040,25 +1983,10 @@
       <if test="unLockTime != null" >
         UN_LOCK_TIME = #{unLockTime,jdbcType=VARCHAR},
       </if>
-      <if test="teacherLevel != null" >
-        TEACHER_LEVEL = #{teacherLevel,jdbcType=VARCHAR},
-      </if>
-      <if test="trainingTypeId != null" >
-        TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
-      </if>
-      <if test="trainingTypeName != null" >
-        TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
-      </if>
-      <if test="lockReason != null" >
-        LOCK_REASON = #{lockReason,jdbcType=VARCHAR},
-      </if>
-      <if test="isResponsibleTutor != null" >
-        IS_RESPONSIBLE_TUTOR = #{isResponsibleTutor,jdbcType=VARCHAR},
-      </if>
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
-    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysUser">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysUser" >
     update PDSCI.SYS_USER
     set USER_CODE = #{userCode,jdbcType=VARCHAR},
       USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
@@ -2183,12 +2111,34 @@
       BANK_OF_DEPOSIT = #{bankOfDeposit,jdbcType=VARCHAR},
       BANK_ACCOUNT_NUMBER = #{bankAccountNumber,jdbcType=VARCHAR},
       OPEN_ID = #{openId,jdbcType=VARCHAR},
-      UN_LOCK_TIME = #{unLockTime,jdbcType=VARCHAR},
-      TEACHER_LEVEL = #{teacherLevel,jdbcType=VARCHAR},
-      TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
-      TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
-      LOCK_REASON = #{lockReason,jdbcType=VARCHAR},
-      IS_RESPONSIBLE_TUTOR = #{isResponsibleTutor,jdbcType=VARCHAR}
+      UN_LOCK_TIME = #{unLockTime,jdbcType=VARCHAR}
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="getDoctorSchInfo" resultType="java.util.Map">
+    SELECT
+    *
+    FROM
+    (
+      SELECT
+        r.SCH_DEPT_FLOW,
+        r.SCH_DEPT_NAME,
+        p.TEACHER_USER_FLOW,
+        p.TEACHER_USER_NAME
+      FROM
+        RES_DOCTOR_SCH_PROCESS p
+          LEFT JOIN SCH_ARRANGE_RESULT r  ON r.DEPT_FLOW = p.DEPT_FLOW and r.DOCTOR_FLOW = p.USER_FLOW
+      WHERE
+        r.RECORD_STATUS = 'Y'
+        and p.RECORD_STATUS = 'Y'
+        AND p.USER_FLOW = #{userFlow}
+        AND r.SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+        AND r.SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+        AND p.SCH_START_DATE <![CDATA[<]]>= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+        AND p.SCH_END_DATE >= TO_CHAR (SYSDATE, 'yyyy-mm-dd')
+    )
+    WHERE
+    ROWNUM = 1
+  </select>
 </mapper>

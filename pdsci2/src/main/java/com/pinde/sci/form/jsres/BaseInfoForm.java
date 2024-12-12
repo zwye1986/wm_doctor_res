@@ -1,9 +1,7 @@
 package com.pinde.sci.form.jsres;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.mo.ResBase;
-import com.pinde.sci.model.mo.SysOrg;
-
-import java.io.Serializable;
 
 public class BaseInfoForm implements java.io.Serializable {
 	/**

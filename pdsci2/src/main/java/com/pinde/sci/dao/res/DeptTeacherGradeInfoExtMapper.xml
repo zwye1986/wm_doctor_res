@@ -684,7 +684,7 @@
             </if>
     </select>
 
-    <select id="getUserByRec" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRec" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select distinct su.user_name,su.user_Flow,su.user_code,su.dept_flow,su.dept_name
         FROM pdsci.res_doctor_sch_process rdsp
         join pdsci.DEPT_TEACHER_GRADE_INFO dtgi
@@ -839,7 +839,7 @@
         </if>
     </select>
 
-    <select id="getOrgByRec" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+    <select id="getOrgByRec" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select so.*
         from pdsci.sys_org so
         where so.record_status = 'Y'
@@ -868,7 +868,8 @@
     </select>
 
 
-    <select id="searDeptNames" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.SysUserDeptMapper.BaseResultMap">
+    <select id="searDeptNames" parameterType="java.lang.String"
+            resultMap="com.pinde.core.common.sci.dao.SysUserDeptMapper.BaseResultMap">
        select sud.* from sys_user su INNER join sys_user_dept sud
       on su.user_flow = sud.user_flow
       and sud.user_flow = #{userFlow,jdbcType=VARCHAR}
@@ -938,7 +939,7 @@
         ))
     </select>
 
-    <select id="getUserByRecForUni" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select su.*
         from pdsci.sys_user su
         where su.record_status = 'Y'

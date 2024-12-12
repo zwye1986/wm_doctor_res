@@ -5,9 +5,11 @@
 	<resultMap id="resBaseExtMap" type="com.pinde.sci.model.osca.OscaCheckInfoExt" extends="com.pinde.sci.dao.base.OscaDoctorAssessmentMapper.BaseResultMap" >
 		<id property="recordFlow" column="RECORD_FLOW" jdbcType="VARCHAR"/>
 		<result property="auditPassNum" column="AUDITPASSNUM" jdbcType="VARCHAR"/>
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="doctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
-		<association property="sysOrg" column="orgFlow"  resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap" />
+        <association property="sysOrg" column="orgFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap"/>
 		<association property="skillAssess" column="CLINICAL_FLOW"  resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap" />
 	</resultMap>
 

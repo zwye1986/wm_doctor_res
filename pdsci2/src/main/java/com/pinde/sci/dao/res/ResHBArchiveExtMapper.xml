@@ -35,9 +35,10 @@
 
     <insert id="saveSysUserLog" parameterType="java.util.Map">
         insert into user_${archiveTime}_${sessionNumber} (
-        <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List" />
+        <include refid="com.pinde.core.common.sci.dao.SysUserMapper.Base_Column_List"/>
         )
-        select <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List" />
+        select
+        <include refid="com.pinde.core.common.sci.dao.SysUserMapper.Base_Column_List"/>
         from sys_user su
         where su.RECORD_STATUS='Y'
         and su.user_flow in (
@@ -107,7 +108,7 @@
 
     <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>
 
     <select id="searchArchiveList" parameterType="java.util.Map" resultMap="ResDoctorExt">
@@ -215,7 +216,8 @@
         ORDER BY nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),rd.session_number desc, su.user_code,rd.CREATE_TIME
     </select>
 
-    <select id="readUserArchive" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="readUserArchive" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
       select * from user_${archiveTime}_${sessionNumber} where user_flow = #{userFlow}
     </select>
 

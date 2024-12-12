@@ -1,11 +1,10 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
-import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -21,7 +20,6 @@ import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
 import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

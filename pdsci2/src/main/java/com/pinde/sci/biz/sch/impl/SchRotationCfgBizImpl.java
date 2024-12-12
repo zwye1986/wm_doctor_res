@@ -2,7 +2,9 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelYearEnum;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.model.SysDept;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.util.BeanUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +15,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchRotationOrgCfgMapper;
 import com.pinde.sci.dao.base.SchRotationOrgDeptMapper;
 import com.pinde.sci.dao.base.SchRotationOrgGroupMapper;
-import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
 import com.pinde.sci.form.sch.SchRotationOrgDeptForm;
 import com.pinde.sci.form.sch.SchRotationOrgGroupForm;

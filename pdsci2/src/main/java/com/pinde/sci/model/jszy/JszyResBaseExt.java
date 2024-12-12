@@ -1,7 +1,7 @@
 package com.pinde.sci.model.jszy;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.mo.ResBase;
-import com.pinde.sci.model.mo.SysOrg;
 
 public class JszyResBaseExt extends ResBase{
 	

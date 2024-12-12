@@ -2,7 +2,6 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
 
 import javax.servlet.http.HttpServletRequest;

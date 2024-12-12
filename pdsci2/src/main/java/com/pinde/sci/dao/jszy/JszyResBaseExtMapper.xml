@@ -3,7 +3,8 @@
 <mapper namespace="com.pinde.sci.dao.jszy.JszyResBaseExtMapper">
 
 	<resultMap id="resBaseExtMap" type="com.pinde.sci.model.jszy.JszyResBaseExt" extends="com.pinde.sci.dao.base.ResBaseMapper.BaseResultMap" >
-		<association property="sysOrg" column="sysOrgFlow"  resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap" />
+        <association property="sysOrg" column="sysOrgFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap"/>
 	</resultMap>
 	
     <select id="searchResBaseExtList"  parameterType="java.util.Map" resultMap="resBaseExtMap">

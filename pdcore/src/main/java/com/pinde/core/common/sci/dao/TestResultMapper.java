@@ -1,9 +1,10 @@
-package com.pinde.sci.dao.base;
+package com.pinde.core.common.sci.dao;
 
 import com.pinde.core.model.TestResult;
 import com.pinde.core.model.TestResultExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TestResultMapper {
     int countByExample(TestResultExample example);

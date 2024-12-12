@@ -12,7 +12,8 @@
 		<result column="GLOBAL_REASON" jdbcType="VARCHAR" property="globalReason"/>
 		<result column="RANK_NUM" jdbcType="VARCHAR" property="rankNum"/>
 		<result column="IS_RETRAIN" jdbcType="VARCHAR" property="isRetrain"/>
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 		</association>
 	</resultMap>

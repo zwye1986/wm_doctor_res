@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.ResDoctorRecruitExtMapper" >
 	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.res.model.jswjw.mo.ResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
-		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="searchDoctorRecruitAllList" parameterType="java.util.Map" resultType="java.util.Map">

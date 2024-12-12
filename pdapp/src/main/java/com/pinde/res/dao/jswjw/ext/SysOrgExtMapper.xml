@@ -125,7 +125,8 @@
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </select>
 
-  <select id="searchOrgNotJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+  <select id="searchOrgNotJointOrg" parameterType="java.util.Map"
+          resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
     select o.ORG_FLOW, o.ORG_NAME
     from PDSCI.SYS_ORG o
     where o.RECORD_STATUS='Y'
@@ -140,7 +141,7 @@
     WHERE J.RECORD_STATUS = 'Y'
     AND J.JOINT_ORG_FLOW = O.ORG_FLOW)
   </select>
-  <select id="searchJointOrgsByOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+  <select id="searchJointOrgsByOrg" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
     select *
     from PDSCI.SYS_ORG
     where RECORD_STATUS='Y'

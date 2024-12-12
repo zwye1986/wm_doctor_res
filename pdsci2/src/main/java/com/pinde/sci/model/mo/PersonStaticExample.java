@@ -1,5 +1,7 @@
 package com.pinde.sci.model.mo;
 
+import com.pinde.core.model.SysOrg;
+
 public class PersonStaticExample extends SysOrg {
 
     //年级

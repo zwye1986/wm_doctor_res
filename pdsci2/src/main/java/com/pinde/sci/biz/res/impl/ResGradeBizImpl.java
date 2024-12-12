@@ -27,7 +27,6 @@ import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;

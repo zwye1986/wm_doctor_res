@@ -1172,8 +1172,8 @@ ORDER BY
         </if>
         GROUP BY s.ORG_FLOW, s.ORG_NAME
     </select>
-    
-    <select id="getUserList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="map">
+
+    <select id="getUserList" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap" parameterType="map">
         SELECT su.* from
         sys_user su
         where su.record_status = 'Y'

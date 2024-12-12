@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SysUserExtMapper" >
-	<select id="searchUserList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="searchUserList" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select u.* from PDSCI.sys_user u
 		where record_status='Y'
         and status_id='Activated'
@@ -27,7 +28,8 @@
 		</if>
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-	<select id="teacherRoleCheckUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="teacherRoleCheckUser" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select u.*
 		from PDSCI.sys_user u
 		where record_status='Y'
@@ -62,7 +64,7 @@
             </if>
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-    <resultMap id="speUserMap" type="hashmap" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <resultMap id="speUserMap" type="hashmap" extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
     </resultMap>
 	<select id="teacherRoleCheckSpeUser" parameterType="java.util.Map" resultMap="speUserMap">
@@ -123,7 +125,7 @@
         </if>
 		order by EVAL_SCORE ${orderBy},nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-    <resultMap id="deptUserMap" type="hashmap" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <resultMap id="deptUserMap" type="hashmap" extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 
     </resultMap>
 	<select id="deptUsers" parameterType="java.util.Map" resultMap="deptUserMap">
@@ -172,7 +174,7 @@
                     </if>
 	</select>
 
-    <select id="readDeptTeachAndHead" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+    <select id="readDeptTeachAndHead" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select distinct su.* from sys_user su
         left join sys_user_role sur on su.user_flow = sur.user_flow
         where su.RECORD_STATUS = 'Y'
@@ -203,7 +205,8 @@
     </select>
 
     <!-- 查询用户基本信息 -->
-    <select id="getUserBaseInfo" parameterType="String" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserBaseInfo" parameterType="String"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         SELECT
             USER_FLOW,
             USER_CODE,

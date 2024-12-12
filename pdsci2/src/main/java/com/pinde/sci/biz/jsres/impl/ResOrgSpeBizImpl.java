@@ -3,6 +3,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.enums.TrainCategoryTypeEnum;
 import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResOrgSpeBiz;
@@ -14,7 +15,6 @@ import com.pinde.sci.model.mo.ResOrgSpeExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysCfgExample;
-import com.pinde.sci.model.mo.SysOrg;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

@@ -1,6 +1,6 @@
 package com.pinde.sci.model.sys;
 
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.SysOrg;
 
 /**
  * @ClassName SysOrgExt

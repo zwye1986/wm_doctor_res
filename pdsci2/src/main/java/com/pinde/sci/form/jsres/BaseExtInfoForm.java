@@ -1,6 +1,6 @@
 package com.pinde.sci.form.jsres;
 
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.SysOrg;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

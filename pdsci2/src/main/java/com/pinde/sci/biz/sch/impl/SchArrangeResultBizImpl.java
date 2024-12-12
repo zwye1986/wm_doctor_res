@@ -17,6 +17,7 @@ import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
 import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.excel.enums.NumberEngEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
@@ -77,8 +78,6 @@ import com.pinde.sci.model.mo.SchRotation;
 import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.sci.model.mo.SchRotationGroup;
 import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
 import com.pinde.sci.model.mo.SchArrangeResultExample.Criteria;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
@@ -136,8 +135,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private ISchArrangeDoctorBiz arrdocBiz;
 	@Autowired
 	private ISchArrangeDoctorDeptBiz arrDocDeptBiz;
-//	@Autowired
-//	private SchArrangeResultExtMapper resultMapper;
+
 	@Autowired
 	private ISchRotationDeptBiz rotationDeptBiz;
 	@Autowired
@@ -182,8 +180,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private ResDoctorRecruitMapper resDoctorRecruitMapper;
 	@Autowired
 	private ResSchProcessExpressMapper schProcessExpressMapper;
-	@Autowired
-	private SchRotationMapper rotationMapper;
+
 	@Autowired
 	private SysOrgMapper orgMapper;
 	@Autowired
@@ -192,8 +189,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Autowired
 	private IResRecBiz resRecBiz;
 
-	@Autowired
-	private ResScoreMapper scoreMapper;
 
 	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 

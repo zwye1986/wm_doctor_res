@@ -1,7 +1,7 @@
-package com.pinde.sci.dao.base;
+package com.pinde.core.common.sci.dao;
 
-import com.pinde.sci.model.mo.TestPaper;
-import com.pinde.sci.model.mo.TestPaperExample;
+import com.pinde.core.model.TestPaper;
+import com.pinde.core.model.TestPaperExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
