@@ -5,9 +5,8 @@ import com.lowagie.text.pdf.BaseFont;
 import com.pinde.core.pdf.utils.ResourceLoader;
 import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
-import org.docx4j.org.xhtmlrenderer.pdf.ITextFontResolver;
-import org.docx4j.org.xhtmlrenderer.pdf.ITextRenderer;
-
+import org.xhtmlrenderer.pdf.ITextFontResolver;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.File;
 import java.io.IOException;
