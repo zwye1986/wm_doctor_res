@@ -4538,43 +4538,36 @@ public class JswjwAppController {
             }
         }
         String key1 = jswjwBiz.getJsResCfgCode("jsres_" + info.getOrgFlow() + "_org_activity_start_time");
-        String end = jswjwBiz.getJsResCfgCode("jsres_" + info.getOrgFlow() + "_org_activity_end_time");
         int startTime = 10;
-        int endTime = 10;
         if (StringUtil.isNotBlank(key1)) {
             startTime = Integer.valueOf(key1);
-        }
-        if (StringUtil.isNotBlank(end)) {
-            endTime = Integer.valueOf(end);
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date;
         String startDate = info.getStartTime();
-        String endDate = info.getEndTime();
+        String endDate = info.getStartTime();
         try {
             date = simpleDateFormat.parse(info.getStartTime());
             Calendar calender = Calendar.getInstance();
             calender.setTime(date);
+
             calender.add(Calendar.MINUTE, -startTime);
-
             startDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
-
-            date = simpleDateFormat.parse(info.getEndTime());
-            calender.setTime(date);
-            calender.add(Calendar.MINUTE, endTime);
+            calender.add(Calendar.MINUTE, startTime << 1);
             endDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
         } catch (ParseException e) {
             startDate = info.getStartTime();
-            endDate = info.getEndTime();
+            endDate = info.getStartTime();
         }
-        if (DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(startDate) < 0) {
+        String nowStr = DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm");
+        if (nowStr.compareTo(startDate) < 0) {
             model.addAttribute("resultId", "3011107");
-            model.addAttribute("resultType", "活动暂未开始，无法参加");
+            model.addAttribute("resultType", "活动签到暂未开始，无法参加活动");
             return "res/jswjw/qrCode";
         }
-        if (DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(endDate) > 0) {
+        if (nowStr.compareTo(endDate) > 0) {
             model.addAttribute("resultId", "3011107");
-            model.addAttribute("resultType", "活动已结束，无法参加");
+            model.addAttribute("resultType", "活动签到已结束，无法参加活动");
             return "res/jswjw/qrCode";
         }
         int count = activityBiz.checkJoin2(activityFlow, userFlow);
