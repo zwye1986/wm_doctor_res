@@ -1467,7 +1467,8 @@ public class JsResBaseManagerController extends GeneralController {
 			}
 			List<SysOrg> orgList = orgBiz.searchOrg(sysOrg);
 			if(CollectionUtils.isNotEmpty(orgList)) {
-				result = resOrgSpeBiz.saveOrgSpeManageAll(orgSpe, orgList);
+				resOrgSpeBiz.saveOrgSpeManageAll(orgSpe, orgList);
+				return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}else {
 			result = resOrgSpeBiz.saveOrgSpeManage(orgSpe);

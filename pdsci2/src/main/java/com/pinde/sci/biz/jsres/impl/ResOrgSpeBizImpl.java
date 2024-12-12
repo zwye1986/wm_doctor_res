@@ -139,7 +139,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 						updateOrgSpe.setMinRecruitCapacity(orgSpe.getMinRecruitCapacity());
 					}
 
-					GeneralMethod.setRecordInfo(updateList, false);
+					GeneralMethod.setRecordInfo(updateOrgSpe, false);
 					updateList.add(updateOrgSpe);
 				}else { // 新增
 					ResOrgSpe insertOrgSpe = new ResOrgSpe();

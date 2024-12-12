@@ -1,0 +1,23 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-add-base-capacity-procedure" author="zhangwenyun">
+        <sql>
+            update RES_ORG_SPE ros
+            set SPE_TYPE_NAME = '住院医师',
+                SPE_name = (
+                    select sd.DICT_NAME
+                    from sys_dict sd
+                    where sd.DICT_TYPE_ID = 'DoctorTrainingSpe'
+                      and sd.record_status = 'Y'
+                      and ros.SPE_ID = sd.DICT_ID
+                )
+            where record_status = 'Y'
+            and spe_type_name is null
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

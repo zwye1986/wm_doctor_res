@@ -10247,11 +10247,18 @@ public class JsResDoctorController extends GeneralController {
             if (recruit != null) {
                 if (StringUtil.isNotBlank(recruit.getSessionNumber())) {
                     if (Integer.parseInt(recruit.getSessionNumber()) > 2014) {
+                        int currentYear = LocalDate.now().getYear();
                         ResOrgSpe spe = new ResOrgSpe();
                         spe.setOrgFlow(recruit.getOrgFlow());
                         spe.setSpeTypeId(recruit.getCatSpeId());
                         spe.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
+                        spe.setSessionYear(String.valueOf(currentYear));
                         speList = resBaseSpeBiz.searchResOrgSpeList(spe);
+
+                        if(CollectionUtils.isEmpty(speList)) {
+                            spe.setSessionYear(String.valueOf(currentYear - 1));
+                            speList = resBaseSpeBiz.searchResOrgSpeList(spe);
+                        }
                     } else {
                         List<SysDict> dictList = com.pinde.core.common.enums.DictTypeEnum.sysListDictMap.get(recruit.getCatSpeId());
                         if (dictList != null && !dictList.isEmpty()) {
