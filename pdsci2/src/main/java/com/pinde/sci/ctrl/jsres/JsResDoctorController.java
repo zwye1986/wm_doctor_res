@@ -8311,6 +8311,7 @@ public class JsResDoctorController extends GeneralController {
                                 String yearStr, String baseFlag, String rotationFlow) throws UnsupportedEncodingException {
         SysUser currUser = GlobalContext.getCurrentUser();
         String operUserFlow = currUser.getUserFlow();
+        if (StringUtils.isBlank(doctorFlow)) doctorFlow = operUserFlow;
         String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId();
         //TODO
 //        List<ResRec> resRecList = resRecBiz.searchByUserFlowAndTypeId(operUserFlow, recTypeId);
@@ -8403,7 +8404,7 @@ public class JsResDoctorController extends GeneralController {
      */
     @RequestMapping(value = "/process", method = {RequestMethod.GET})
     public String process(Model model, String hideApprove, String doctorFlow, String roleFlag, String search, String rotationFlow) throws DocumentException, UnsupportedEncodingException {
-        search = java.net.URLDecoder.decode(search, "UTF-8");
+        if (StringUtils.isNotBlank(search)) search = java.net.URLDecoder.decode(search, "UTF-8");
         model.addAttribute("hideApprove", hideApprove);
         model.addAttribute("search", search);
         model.addAttribute("roleFlag", roleFlag);

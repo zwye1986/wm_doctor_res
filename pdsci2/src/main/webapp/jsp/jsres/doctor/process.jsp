@@ -483,14 +483,14 @@ function doctorback(){
 </div>
 <div class="main_hd">
     <h2>
-<c:if test="${hideApprove != 'null'}"><B>学员：</B>${sysUser.userName}&#12288;<B>培养年限：</B>
+<c:if test="${not empty hideApprove}"><B>学员：</B>${sysUser.userName}&#12288;<B>培养年限：</B>
 <c:if test="${doctor.trainingYears eq 'OneYear'}">1年</c:if>
 <c:if test="${doctor.trainingYears eq 'TwoYear'}">2年</c:if>
 <c:if test="${doctor.trainingYears eq 'ThreeYear'}">3年</c:if>
 	&#12288;</c:if>
 		<B>培训基地：</B><c:if test="${!empty doctorRecruit.jointOrgFlow}">${doctorRecruit.jointOrgName}</c:if> <c:if test="${empty doctorRecruit.jointOrgFlow}">${doctorRecruit.orgName}</c:if>&#12288;<B>培训专业：</B>${doctorRecruit.speName }&#12288;
    <B> 轮转方案：</B>${rotation.rotationName } &#12288;<c:if test="${empty rotation }"><font color='red'>首次使用请登录APP填写培训数据(首页扫描二维码)!</font></c:if>
-   <c:if test="${hideApprove eq 'null'}">
+   <c:if test="${empty hideApprove}">
 	   	<%--<input type="button" class="btn_green" value="诚信声明" name="sincerity" onclick="sincerity();"/>--%>
 	   <c:if test="${showManual eq 'Y'}">
    			<a href="javascript:void(0);" onclick="daochu('${doctor.doctorFlow}');" id="printBtn" class="btn_green" >培训手册</a>
@@ -507,7 +507,7 @@ function doctorback(){
             </div>
         </span>
     </c:if>
- 	<c:if test="${hideApprove != 'null'}">
+ 	<c:if test="${not empty hideApprove}">
 	 	<c:if test="${sessionScope.userListScope==GlobalConstant.RES_ROLE_SCOPE_SCHOOL}">
 	 		<a href="javascript:doctorback();" class="btn_green">返回</a>
 	 	</c:if>
@@ -596,7 +596,7 @@ function doctorback(){
 										  <th style="width: 100px; ">科室名称</th>
 			                				<th style='padding-left:5px;width: 100px;'>开始日期</th>
 			                				<th style='padding-left:5px;width: 100px;'>结束日期</th>
-										  	<c:if test="${daoRu eq 'Y' and hideApprove eq 'null'}">
+										  	<c:if test="${daoRu eq 'Y' and  empty hideApprove}">
 												<th style='padding-left:5px;width: 150px;'>操作</th>
 											</c:if>
 			                			</tr>
@@ -605,7 +605,7 @@ function doctorback(){
 				                				<td>${result.schDeptName}</td>
 				                				<td style='padding-left:5px;'>${result.schStartDate}</td>
 				                				<td style='padding-left:5px;'>${result.schEndDate}</td>
-												<c:if test="${daoRu eq 'Y' and hideApprove eq 'null'}">
+												<c:if test="${daoRu eq 'Y' and  empty hideApprove}">
 													<td style='padding-left:5px;'><a class="btn" onclick="openImport('${dept.recordFlow}','${resultProcessMap[result.resultFlow].processFlow}')">数据导入</a></td>
 												</c:if>
 				                			</tr>
@@ -692,7 +692,7 @@ function doctorback(){
 		                	<%--<a class="btn" onclick="uploadAfterEvaluation('${processMap[key].processFlow}');">出科考核表</a>--%>
 	                	<%--</c:if>--%>
 	                	<%--<c:if test="${empty resultMap[key] }">--%>
-			                <c:if test="${hideApprove eq 'null'}">
+			                <c:if test="${ empty hideApprove}">
 								<%--出科考核--%>
 							 	<c:if test="${ckk}">
 							 		<span class="showCkk btn" style=" color: #459ae9;">出科考核
@@ -765,7 +765,7 @@ function doctorback(){
 			                			<a class="btn" onclick="upload('${dept.recordFlow}','${sysUser.userFlow}');">上传</a>&#12288;
 			                	</c:if>
 			                	<%--</c:if>--%>
-		                	<c:if test="${hideApprove != 'null'}">
+		                	<c:if test="${not empty hideApprove}">
 								<c:if test="${param.roleFlag eq GlobalConstant.USER_LIST_LOCAL}">
 			                		<%--<c:set value="jswjw_${doctor.orgFlow}_P001" var="orgFlow"/>--%>
 									<c:set value="jsres_${doctor.orgFlow }_guocheng" var="orgFlow"/>
