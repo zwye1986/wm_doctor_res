@@ -53,7 +53,6 @@ import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorOrgHistory;
-import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.mo.ResDoctorReduction;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResJointOrg;
@@ -8319,11 +8318,17 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(search)) {
             search = URLEncoder.encode(search, "iso-8859-1");
         }
-        if (StringUtil.isNotBlank(doctorFlow)) {
-            return "redirect:/jsres/doctor/process?hideApprove=" + hideApprove + "&doctorFlow=" + doctorFlow + "&roleFlag=" + roleFlag + "&search=" + search + "&currentPage=" + currentPage + "&yearStr=" + yearStr + "&baseFlag=" + baseFlag + "&rotationFlow=" + rotationFlow;
-        }
-        if (resRecList != null && !resRecList.isEmpty()) {
-            return "redirect:/jsres/doctor/process?hideApprove=" + hideApprove + "&roleFlag=" + roleFlag + "&search=" + search + "&yearStr=" + yearStr + "&baseFlag=" + baseFlag + "&rotationFlow=" + rotationFlow;
+        StringBuilder url = new StringBuilder("redirect:/jsres/doctor/process?1=1");
+        if (StringUtils.isNotBlank(hideApprove)) url.append("&hideApprove=").append(hideApprove);
+        if (StringUtils.isNotBlank(doctorFlow)) url.append("&doctorFlow=").append(doctorFlow);
+        if (StringUtils.isNotBlank(roleFlag)) url.append("&roleFlag=").append(roleFlag);
+        if (StringUtils.isNotBlank(search)) url.append("&search=").append(search);
+        if (StringUtils.isNotBlank(currentPage)) url.append("&currentPage=").append(currentPage);
+        if (StringUtils.isNotBlank(yearStr)) url.append("&yearStr=").append(yearStr);
+        if (StringUtils.isNotBlank(baseFlag)) url.append("&baseFlag=").append(baseFlag);
+        if (StringUtils.isNotBlank(rotationFlow)) url.append("&rotationFlow=").append(rotationFlow);
+        if (StringUtil.isNotBlank(doctorFlow) || CollectionUtils.isNotEmpty(resRecList)) {
+            return url.toString();
         } else {
             return "jsres/doctor/recordHandbook";
         }
@@ -9309,7 +9314,7 @@ public class JsResDoctorController extends GeneralController {
     @RequestMapping(value = "/daochu")
     public void daochu(String doctorFlow, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        List<WordprocessingMLPackage> addTemplates = new ArrayList<WordprocessingMLPackage>();
+        List<WordprocessingMLPackage> addTemplates = new ArrayList<>();
 
         Map<String, Object> dataMap = new HashMap<String, Object>();
         ResDoctor doctor = resDoctorBiz.readDoctor(doctorFlow);

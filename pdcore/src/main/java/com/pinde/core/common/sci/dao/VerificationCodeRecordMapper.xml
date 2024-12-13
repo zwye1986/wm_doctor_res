@@ -256,7 +256,7 @@
         where RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR}
     </update>
 
-    <select id="countByPhone" parameterType="com.pinde.sci.model.mo.VerificationCodeRecordExample"
+  <select id="countByPhone" parameterType="com.pinde.core.model.VerificationCodeRecordExample"
             resultType="java.lang.Integer">
         select count(*)
         from PDSCI.VERIFICATION_CODE_RECORD

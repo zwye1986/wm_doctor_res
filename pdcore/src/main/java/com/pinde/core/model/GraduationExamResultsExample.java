@@ -1,17 +1,17 @@
-package com.pinde.sci.model.mo;
+package com.pinde.core.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExamResultsExample {
+public class GraduationExamResultsExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ExamResultsExample() {
+    public GraduationExamResultsExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -382,6 +382,216 @@ public class ExamResultsExample {
 
         public Criteria andSoluScoreNotBetween(String value1, String value2) {
             addCriterion("SOLU_SCORE not between", value1, value2, "soluScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreIsNull() {
+            addCriterion("EXAM_SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreIsNotNull() {
+            addCriterion("EXAM_SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreEqualTo(String value) {
+            addCriterion("EXAM_SCORE =", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreNotEqualTo(String value) {
+            addCriterion("EXAM_SCORE <>", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreGreaterThan(String value) {
+            addCriterion("EXAM_SCORE >", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("EXAM_SCORE >=", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreLessThan(String value) {
+            addCriterion("EXAM_SCORE <", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreLessThanOrEqualTo(String value) {
+            addCriterion("EXAM_SCORE <=", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreLike(String value) {
+            addCriterion("EXAM_SCORE like", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreNotLike(String value) {
+            addCriterion("EXAM_SCORE not like", value, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreIn(List<String> values) {
+            addCriterion("EXAM_SCORE in", values, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreNotIn(List<String> values) {
+            addCriterion("EXAM_SCORE not in", values, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreBetween(String value1, String value2) {
+            addCriterion("EXAM_SCORE between", value1, value2, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamScoreNotBetween(String value1, String value2) {
+            addCriterion("EXAM_SCORE not between", value1, value2, "examScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreIsNull() {
+            addCriterion("EXAM_PASS_SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreIsNotNull() {
+            addCriterion("EXAM_PASS_SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreEqualTo(String value) {
+            addCriterion("EXAM_PASS_SCORE =", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreNotEqualTo(String value) {
+            addCriterion("EXAM_PASS_SCORE <>", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreGreaterThan(String value) {
+            addCriterion("EXAM_PASS_SCORE >", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("EXAM_PASS_SCORE >=", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreLessThan(String value) {
+            addCriterion("EXAM_PASS_SCORE <", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreLessThanOrEqualTo(String value) {
+            addCriterion("EXAM_PASS_SCORE <=", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreLike(String value) {
+            addCriterion("EXAM_PASS_SCORE like", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreNotLike(String value) {
+            addCriterion("EXAM_PASS_SCORE not like", value, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreIn(List<String> values) {
+            addCriterion("EXAM_PASS_SCORE in", values, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreNotIn(List<String> values) {
+            addCriterion("EXAM_PASS_SCORE not in", values, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreBetween(String value1, String value2) {
+            addCriterion("EXAM_PASS_SCORE between", value1, value2, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andExamPassScoreNotBetween(String value1, String value2) {
+            addCriterion("EXAM_PASS_SCORE not between", value1, value2, "examPassScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassIsNull() {
+            addCriterion("IS_PASS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassIsNotNull() {
+            addCriterion("IS_PASS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassEqualTo(String value) {
+            addCriterion("IS_PASS =", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassNotEqualTo(String value) {
+            addCriterion("IS_PASS <>", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassGreaterThan(String value) {
+            addCriterion("IS_PASS >", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassGreaterThanOrEqualTo(String value) {
+            addCriterion("IS_PASS >=", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassLessThan(String value) {
+            addCriterion("IS_PASS <", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassLessThanOrEqualTo(String value) {
+            addCriterion("IS_PASS <=", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassLike(String value) {
+            addCriterion("IS_PASS like", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassNotLike(String value) {
+            addCriterion("IS_PASS not like", value, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassIn(List<String> values) {
+            addCriterion("IS_PASS in", values, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassNotIn(List<String> values) {
+            addCriterion("IS_PASS not in", values, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassBetween(String value1, String value2) {
+            addCriterion("IS_PASS between", value1, value2, "isPass");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPassNotBetween(String value1, String value2) {
+            addCriterion("IS_PASS not between", value1, value2, "isPass");
             return (Criteria) this;
         }
 

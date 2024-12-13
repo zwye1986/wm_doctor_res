@@ -738,7 +738,7 @@
     </select>
 
     <!--获取学员轮转统计数据-->
-    <select id="getRotationData" resultType="com.pinde.sci.model.mo.SysOrg" parameterType="java.util.Map">
+    <select id="getRotationData" resultType="com.pinde.core.model.SysOrg" parameterType="java.util.Map">
         <!--select aa.trainDoctorTotal,aa.org_flow,aa.org_name,nvl(rr.fillNum,0) fillNum,nvl(rr.auditNum,0) auditNum from
         (SELECT nvl(COUNT(DISTINCT d.doctor_flow), 0) AS trainDoctorTotal,rdr.org_flow,rdr.org_name
         FROM RES_DOCTOR_RECRUIT rdr , res_doctor d WHERE rdr.doctor_flow = d.doctor_flow

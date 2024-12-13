@@ -443,7 +443,7 @@
 	</select>
 
 	<!-- 市局查询基地和协同基地信息 -->
-	<select id="searchOrgAndJointOrgList" parameterType="com.pinde.sci.model.mo.SysOrg"
+	<select id="searchOrgAndJointOrgList" parameterType="com.pinde.core.model.SysOrg"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT
 			ORG_FLOW,

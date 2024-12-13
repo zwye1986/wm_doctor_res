@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ExamResults;
+import com.pinde.core.model.ExamResults;
 
 import java.math.BigDecimal;
 import java.util.List;

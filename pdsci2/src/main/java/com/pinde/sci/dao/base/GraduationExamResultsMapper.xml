@@ -92,7 +92,8 @@
     EXAM_TEST_TYPE, RECORD_STATUS, IS_MARKED, SUBJECTIVE_SCORE, MARK_USER_ID, MARK_TIME, 
     IS_SYN, RESULT_SOURCE, TEST_COUNT, THEORY_SCORE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.GraduationExamResultsExample" >
+  <select id="selectByExample" resultMap="BaseResultMap"
+          parameterType="com.pinde.core.model.GraduationExamResultsExample">
     select
     <if test="distinct" >
       distinct
@@ -116,7 +117,7 @@
     delete from PDSCI.GRADUATION_EXAM_RESULTS
     where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.GraduationExamResultsExample" >
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.GraduationExamResultsExample">
     delete from PDSCI.GRADUATION_EXAM_RESULTS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -299,7 +300,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.GraduationExamResultsExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.pinde.core.model.GraduationExamResultsExample"
+          resultType="java.lang.Integer">
     select count(*) from PDSCI.GRADUATION_EXAM_RESULTS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

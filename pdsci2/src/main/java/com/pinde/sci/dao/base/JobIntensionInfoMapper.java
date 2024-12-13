@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JobIntensionInfo;
-import com.pinde.sci.model.mo.JobIntensionInfoExample;
+import com.pinde.core.model.JobIntensionInfo;
+import com.pinde.core.model.JobIntensionInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

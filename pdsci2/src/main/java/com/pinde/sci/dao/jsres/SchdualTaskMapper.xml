@@ -212,7 +212,7 @@
 		DELETE FROM PCU_APP_USERINFO WHERE MONTH_DATE=#{monthDate}
 	</delete>
 
-	<select id="selectPCUAppInfo" resultType="com.pinde.sci.model.mo.SysOrg" parameterType="java.util.Map">
+	<select id="selectPCUAppInfo" resultType="com.pinde.core.model.SysOrg" parameterType="java.util.Map">
 	  select
 		RECORD_FLOW as recordFlow,
 		"NO" as no,
@@ -529,7 +529,7 @@
 		DELETE FROM PCU_DOCTOR_LUNZHUAN_FIND WHERE MONTH_DATE=#{monthDate}
 	</delete>
 
-	<select id="selectPCUDoctorLunzhuanFind" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.SysOrg">
+	<select id="selectPCUDoctorLunzhuanFind" parameterType="java.util.Map" resultType="com.pinde.core.model.SysOrg">
 		select
 		RECORD_FLOW as  recordFlow,
 		"NO" as orgCode,

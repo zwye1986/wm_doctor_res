@@ -789,7 +789,7 @@ ORDER BY
         AND res.IS_SCAN='Y' AND res.IS_SCAN2='Y'
     </select>
     <!--获取notuseapp在培人数之和、住院医生人数、在职专硕人数-->
-    <select id="getAppDatayuh" resultType="com.pinde.sci.model.mo.SysOrg" parameterType="java.util.Map">
+    <select id="getAppDatayuh" resultType="com.pinde.core.model.SysOrg" parameterType="java.util.Map">
         SELECT s.ORG_FLOW as orgflow, s.ORG_NAME as orgName,
         (select count(0) from SYS_MONTHLY_NOT_USEAPP_INFO s2
         where s2.doctor_type_id != 'Graduate' and s2.org_flow = s.org_flow and s2.RECORD_STATUS='Y'

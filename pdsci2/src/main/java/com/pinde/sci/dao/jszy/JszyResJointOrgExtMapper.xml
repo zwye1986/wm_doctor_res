@@ -38,7 +38,7 @@
              ORDER BY JO.ORG_FLOW,SO.ORG_CODE
     </select>
 
-    <resultMap id="orgMap" type="com.pinde.sci.model.mo.SysOrg" >
+    <resultMap id="orgMap" type="com.pinde.core.model.SysOrg">
         <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
         <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
         <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />

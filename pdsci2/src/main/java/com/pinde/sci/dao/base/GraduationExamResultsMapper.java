@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
+import com.pinde.core.model.GraduationExamResultsExample;
 import com.pinde.sci.model.mo.GraduationExamResults;
-import com.pinde.sci.model.mo.GraduationExamResultsExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

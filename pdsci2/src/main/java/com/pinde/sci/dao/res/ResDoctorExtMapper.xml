@@ -5,7 +5,8 @@
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
         <association property="userResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.StuUserResume" resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
-		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorRecruit" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
+		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
+					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
 		<association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.PubUserResume" resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
 	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
@@ -98,7 +99,8 @@
     <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-	    <association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorRecruit" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
+		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
+					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
     </resultMap>
 	<insert id="insertRecruitInfo">
 		insert into jsres_recruit_info( record_flow, doctor_flow, doctor_type_id, doctor_type_name, org_flow, org_name, spe_id, spe_name, cat_spe_id, cat_spe_name, train_years, session_number, graduation_year, doctor_status_id, doctor_status_name, record_status, create_time, create_user_flow, modify_time, modify_user_flow )
