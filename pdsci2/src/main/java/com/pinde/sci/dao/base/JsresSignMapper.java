@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresSign;
-import com.pinde.sci.model.mo.JsresSignExample;
+import com.pinde.core.model.JsresSign;
+import com.pinde.core.model.JsresSignExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

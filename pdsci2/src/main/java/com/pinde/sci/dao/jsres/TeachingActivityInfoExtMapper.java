@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.TeachingActivityEval;
-import com.pinde.sci.model.mo.TeachingActivityInfo;
+import com.pinde.core.model.TeachingActivityEval;
+import com.pinde.core.model.TeachingActivityInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

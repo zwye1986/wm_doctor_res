@@ -4,6 +4,8 @@ package com.pinde.sci.ctrl.osca;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.osca.DoctorScoreEnum;
 import com.pinde.core.common.enums.osca.SignStatusEnum;
+import com.pinde.core.model.JsresExamSignup;
+import com.pinde.core.model.JsresGraduationApply;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;

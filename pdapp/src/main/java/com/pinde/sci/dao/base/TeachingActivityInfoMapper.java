@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.TeachingActivityInfo;
 import com.pinde.core.model.TeachingActivityInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface TeachingActivityInfoMapper {
     int countByExample(TeachingActivityInfoExample example);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.LcjnDoctorSiginMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.LcjnDoctorSigin">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnDoctorSigin">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />
     <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName" />
@@ -76,7 +76,7 @@
     RECORD_FLOW, COURSE_FLOW, COURSE_NAME, DOCTOR_FLOW, DOCTOR_NAME, SIGIN_TIME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.LcjnDoctorSiginExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.LcjnDoctorSiginExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,13 +100,13 @@
     delete from PDSCI.LCJN_DOCTOR_SIGIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.LcjnDoctorSiginExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnDoctorSiginExample">
     delete from PDSCI.LCJN_DOCTOR_SIGIN
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.LcjnDoctorSigin">
+    <insert id="insert" parameterType="com.pinde.core.model.LcjnDoctorSigin">
     insert into PDSCI.LCJN_DOCTOR_SIGIN (RECORD_FLOW, COURSE_FLOW, COURSE_NAME, 
       DOCTOR_FLOW, DOCTOR_NAME, SIGIN_TIME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -116,7 +116,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.LcjnDoctorSigin">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnDoctorSigin">
     insert into PDSCI.LCJN_DOCTOR_SIGIN
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -189,7 +189,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.LcjnDoctorSiginExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.LcjnDoctorSiginExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.LCJN_DOCTOR_SIGIN
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -253,7 +254,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.LcjnDoctorSigin">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnDoctorSigin">
     update PDSCI.LCJN_DOCTOR_SIGIN
     <set>
       <if test="courseFlow != null">
@@ -289,7 +290,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.LcjnDoctorSigin">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnDoctorSigin">
     update PDSCI.LCJN_DOCTOR_SIGIN
     set COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{courseName,jdbcType=VARCHAR},

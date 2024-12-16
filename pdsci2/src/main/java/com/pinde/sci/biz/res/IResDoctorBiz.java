@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.JsresRecruitDocInfoWithBLOBs;
+import com.pinde.core.model.JsresRecruitInfo;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.excelListens.model.ResRecItem;

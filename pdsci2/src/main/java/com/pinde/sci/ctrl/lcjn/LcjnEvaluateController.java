@@ -1,11 +1,15 @@
 package com.pinde.sci.ctrl.lcjn;
 
 
+import com.pinde.core.model.LcjnCourseEvaluate;
+import com.pinde.core.model.LcjnCourseEvaluateDetail;
+import com.pinde.core.model.LcjnCourseTea;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnEvaluateBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.LcjnTeaEvaluate;
+import com.pinde.sci.model.mo.LcjnTeaEvaluateDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

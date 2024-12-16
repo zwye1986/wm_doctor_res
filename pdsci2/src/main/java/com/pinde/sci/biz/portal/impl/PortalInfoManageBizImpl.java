@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.portal.impl;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
+import com.pinde.core.model.JsszportalCommunicationMain;
+import com.pinde.core.model.JsszportalCommunicationMainExample;
+import com.pinde.core.model.JsszportalCommunicationRe;
+import com.pinde.core.model.JsszportalCommunicationReExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -389,7 +393,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	}
 
 	@Override
-	public List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain,String order) {
+	public List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain, String order) {
 		JsszportalCommunicationMainExample example = new JsszportalCommunicationMainExample();
         JsszportalCommunicationMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(communicationMain!=null){

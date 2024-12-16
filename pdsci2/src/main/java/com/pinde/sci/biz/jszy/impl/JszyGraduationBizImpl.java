@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.model.GraduationExamResults;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
@@ -9,7 +10,9 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.GraduationExamResultsMapper;
 import com.pinde.sci.dao.base.ResDoctorGraduationInfoMapper;
 import com.pinde.sci.dao.res.ResDoctorGraduationInfoExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorGraduationInfo;
+import com.pinde.sci.model.mo.ResDoctorGraduationInfoExample;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;

@@ -1,5 +1,7 @@
 package com.pinde.sci.model.jsres;
 
+import com.pinde.core.model.JsresRecruitDocInfo;
+import com.pinde.core.model.JsresRecruitInfo;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.mo.*;
 

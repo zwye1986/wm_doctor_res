@@ -1,10 +1,15 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.JsresRecruitDocInfoWithBLOBs;
+import com.pinde.core.model.JsresRecruitInfo;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorOrgHistory;
+import com.pinde.sci.model.mo.ResExamDoctor;
+import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.res.ResExamDoctorExt;

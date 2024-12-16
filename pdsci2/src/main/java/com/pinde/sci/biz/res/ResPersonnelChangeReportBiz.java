@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.PersonnelChangeReport;
+import com.pinde.core.model.PersonnelChangeReport;
 
 import java.util.List;
 

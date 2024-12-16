@@ -207,7 +207,7 @@
             <div class="form_search">
 
                 <div class="form_item">
-
+                    <input type="hidden" name="currentPage" id="currentPage"/>
                     <div class="form_label">姓&#12288;&#12288;名：</div>
                     <div class="form_content">
                         <input type="text" class="input" name="userName" value="${param.userName}"/>

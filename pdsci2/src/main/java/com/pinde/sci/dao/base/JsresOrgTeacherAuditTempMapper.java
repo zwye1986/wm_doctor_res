@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresOrgTeacherAuditTemp;
-import com.pinde.sci.model.mo.JsresOrgTeacherAuditTempExample;
+import com.pinde.core.model.JsresOrgTeacherAuditTemp;
+import com.pinde.core.model.JsresOrgTeacherAuditTempExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

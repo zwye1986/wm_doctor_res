@@ -1982,7 +1982,7 @@ ORDER BY
         <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
         <result column="REGIEST_NUM" property="regiestNum" jdbcType="VARCHAR" />
         <result column="SCAN_NUM" property="scanNum" jdbcType="VARCHAR" />
-        <collection property="resultList" ofType="com.pinde.sci.model.mo.TeachingActivityResult" >
+        <collection property="resultList" ofType="com.pinde.core.model.TeachingActivityResult">
             <id column="RESULT_FLOW" jdbcType="VARCHAR" property="resultFlow" />
             <result column="ACTIVITY_FLOW" jdbcType="VARCHAR" property="activityFlow" />
             <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
@@ -2161,7 +2161,7 @@ ORDER BY
     </select>
 
 
-    <select id="selectFindChangeSpe" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.PersonChangeEntity">
+    <select id="selectFindChangeSpe" parameterType="java.util.Map" resultType="com.pinde.core.model.PersonChangeEntity">
                WITH aaa AS (
             SELECT
                 org_name,

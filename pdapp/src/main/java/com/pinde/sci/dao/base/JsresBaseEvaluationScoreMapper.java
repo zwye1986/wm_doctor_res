@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.JsresBaseEvaluationScore;
 import com.pinde.core.model.JsresBaseEvaluationScoreExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresBaseEvaluationScoreMapper {
     int countByExample(JsresBaseEvaluationScoreExample example);

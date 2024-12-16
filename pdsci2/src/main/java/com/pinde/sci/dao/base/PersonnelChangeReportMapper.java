@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PersonnelChangeReport;
+import com.pinde.core.model.PersonnelChangeReport;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

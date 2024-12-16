@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.JsresSupervisioFile;
+import com.pinde.core.model.JsresSupervisioFileExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResSupervisioFileBiz;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
-import com.pinde.sci.model.mo.JsresSupervisioFile;
-import com.pinde.sci.model.mo.JsresSupervisioFileExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

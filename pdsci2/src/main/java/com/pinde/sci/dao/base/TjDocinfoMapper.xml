@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.TjDocinfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TjDocinfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.TjDocinfo">
     <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
@@ -118,7 +118,7 @@
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ORG_CODE2, BEGINDATE, 
     ENDDATE, SESSION_NUMBER, ADDRESS, EXAMTIME, SITEPHONE, TITLE, CITY_CODE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.TjDocinfoExample">
     select
     <if test="distinct" >
       distinct
@@ -142,13 +142,13 @@
     delete from PDSCI.TJ_DOCINFO
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.TjDocinfoExample">
     delete from PDSCI.TJ_DOCINFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    <insert id="insert" parameterType="com.pinde.core.model.TjDocinfo">
     insert into PDSCI.TJ_DOCINFO (USER_FLOW, ORG_FLOW, ORG_CODE, 
       ORG_NAME, DOCROLE, USER_ID, 
       USER_PASSWORD, USER_NAME, ID_NO, 
@@ -184,7 +184,7 @@
       #{sitephone,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.TjDocinfo">
     insert into PDSCI.TJ_DOCINFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
@@ -479,7 +479,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.TjDocinfoExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.TJ_DOCINFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -691,7 +691,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TjDocinfo">
     update PDSCI.TJ_DOCINFO
     <set >
       <if test="orgFlow != null" >
@@ -838,7 +838,7 @@
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.TjDocinfo" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TjDocinfo">
     update PDSCI.TJ_DOCINFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_CODE = #{orgCode,jdbcType=VARCHAR},

@@ -1,15 +1,13 @@
 package com.pinde.res.biz.jswjw.impl;
 
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.JsresSupervisioFile;
+import com.pinde.core.model.JsresSupervisioFileExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJsResSupervisioFileBiz;
 import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
-import com.pinde.core.model.JsresSupervisioFile;
-import com.pinde.core.model.JsresSupervisioFileExample;
-import com.pinde.sci.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +96,7 @@ public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
     }
 
     @Override
-    public List<JsresSupervisioFile> searchSubjectFile(String subjectYear, String subjectFlow, String speId,String userFlow) {
+    public List<JsresSupervisioFile> searchSubjectFile(String subjectYear, String subjectFlow, String speId, String userFlow) {
         JsresSupervisioFileExample example = new JsresSupervisioFileExample();
         JsresSupervisioFileExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(subjectFlow)) {

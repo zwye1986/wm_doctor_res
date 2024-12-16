@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.sci.model.mo.LcjnDoctorSigin;
+import com.pinde.core.model.LcjnDoctorSigin;
 
 import java.util.List;
 import java.util.Map;

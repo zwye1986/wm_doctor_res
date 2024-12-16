@@ -1,7 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
 public class ResAnnualAssessmentRecord implements java.io.Serializable {
     private String annualAssessmentFlow;
 

@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.inx;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.model.JsresGraduationApply;
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;

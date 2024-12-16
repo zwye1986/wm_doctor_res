@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.LcjnCourseInfo;
+import com.pinde.core.model.LcjnCourseSkill;
+import com.pinde.core.model.LcjnCourseSupplies;
+import com.pinde.sci.model.mo.LcjnSkillCfgDetail;
+import com.pinde.sci.model.mo.LcjnSupplies;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +13,7 @@ public interface ILcjnCostBiz {
     //根据courseFlow查询所有相关技能
     List<LcjnCourseSkill> searchByCourseFlow(String courseFlow);
     //根据skillFlow查询所有所需其他耗材
-    List<LcjnCourseSupplies> searchSuppliesBySkillFlowAndCourse(String skillFlow,String courseFlow);
+    List<LcjnCourseSupplies> searchSuppliesBySkillFlowAndCourse(String skillFlow, String courseFlow);
     //根据courseFlow查询所有所需其他耗材
     List<LcjnCourseSupplies> searchSuppliesByCourseFlow(String courseFlow);
     //根据物资id查询所有所需其他耗材

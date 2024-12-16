@@ -1,6 +1,8 @@
 package com.pinde.sci.dao.sch;
 
 
+import com.pinde.core.model.HbresDoctorDeptDetail;
+import com.pinde.core.model.JsresDoctorDeptDetail;
 import com.pinde.core.model.SysDept;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.mo.*;

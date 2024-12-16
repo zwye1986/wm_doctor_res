@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.TeachingActivityInfo;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
 import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.SchProcessExt;

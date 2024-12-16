@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

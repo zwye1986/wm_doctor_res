@@ -31,7 +31,6 @@ import com.pinde.sci.dao.jsres.ChartExtMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.mo.ResTeacherTraining;

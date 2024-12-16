@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.JsresDeptConfig;
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.JsresDeptConfig;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResOrgCkxz;
 import org.springframework.web.multipart.MultipartFile;
 

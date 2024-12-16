@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
@@ -22,7 +23,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.SysLog;
 import com.pinde.sci.model.mo.SysLogExample;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -13,7 +13,8 @@ import com.pinde.sci.dao.base.JsresDeptConfigMapper;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResOrgCkxz;
+import com.pinde.sci.model.mo.ResOrgCkxzExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

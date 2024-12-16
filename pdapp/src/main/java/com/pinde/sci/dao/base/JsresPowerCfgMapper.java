@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.JsresPowerCfgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresPowerCfgMapper {
     int countByExample(JsresPowerCfgExample example);

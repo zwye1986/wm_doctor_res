@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
@@ -9,7 +10,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResJointOrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

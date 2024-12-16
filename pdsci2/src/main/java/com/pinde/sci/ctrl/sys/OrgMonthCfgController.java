@@ -1,11 +1,11 @@
 package com.pinde.sci.ctrl.sys;
 
+import com.pinde.core.model.JsresSpeContrastPractice;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.ISpePracticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.JsresSpeContrastPractice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

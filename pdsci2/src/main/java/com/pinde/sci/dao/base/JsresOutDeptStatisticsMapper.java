@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresOutDeptStatistics;
-import com.pinde.sci.model.mo.JsresOutDeptStatisticsExample;
+import com.pinde.core.model.JsresOutDeptStatistics;
+import com.pinde.core.model.JsresOutDeptStatisticsExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

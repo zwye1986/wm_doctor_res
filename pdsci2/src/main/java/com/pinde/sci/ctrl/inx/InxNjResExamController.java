@@ -2,12 +2,12 @@ package com.pinde.sci.ctrl.inx;
 
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.TjDocinfo;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
 import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.TjDocinfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.LcjnCourseSkillMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.LcjnCourseSkill">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnCourseSkill">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />
     <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName" />
@@ -75,7 +75,7 @@
     RECORD_FLOW, COURSE_FLOW, COURSE_NAME, SKILL_FLOW, SKILL_NAME, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.LcjnCourseSkillExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.LcjnCourseSkillExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -99,13 +99,13 @@
     delete from PDSCI.LCJN_COURSE_SKILL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.LcjnCourseSkillExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnCourseSkillExample">
     delete from PDSCI.LCJN_COURSE_SKILL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.LcjnCourseSkill">
+    <insert id="insert" parameterType="com.pinde.core.model.LcjnCourseSkill">
     insert into PDSCI.LCJN_COURSE_SKILL (RECORD_FLOW, COURSE_FLOW, COURSE_NAME, 
       SKILL_FLOW, SKILL_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +115,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.LcjnCourseSkill">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnCourseSkill">
     insert into PDSCI.LCJN_COURSE_SKILL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -182,7 +182,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.LcjnCourseSkillExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.LcjnCourseSkillExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.LCJN_COURSE_SKILL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -242,7 +243,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.LcjnCourseSkill">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnCourseSkill">
     update PDSCI.LCJN_COURSE_SKILL
     <set>
       <if test="courseFlow != null">
@@ -275,7 +276,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.LcjnCourseSkill">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnCourseSkill">
     update PDSCI.LCJN_COURSE_SKILL
     set COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{courseName,jdbcType=VARCHAR},

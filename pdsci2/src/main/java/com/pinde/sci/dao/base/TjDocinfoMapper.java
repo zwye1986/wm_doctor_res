@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.TjDocinfo;
-import com.pinde.sci.model.mo.TjDocinfoExample;
+import com.pinde.core.model.TjDocinfo;
+import com.pinde.core.model.TjDocinfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

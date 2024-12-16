@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.model.mo.GraduationExamResults;
+import com.pinde.core.model.GraduationExamResults;
 import com.pinde.sci.model.mo.ResDoctorGraduationInfo;
 
 import javax.servlet.http.HttpServletResponse;

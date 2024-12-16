@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.res.NjDocinfoExtMapper" >
     <resultMap id="NjDocinfoExtMap" type="com.pinde.sci.model.res.NjDocinfoExt" extends="com.pinde.sci.dao.base.TjDocinfoMapper.BaseResultMap">
     </resultMap>
-    <select id="searchNjDocinfo"  parameterType="com.pinde.sci.model.mo.TjDocinfo"  resultMap="NjDocinfoExtMap">
+    <select id="searchNjDocinfo" parameterType="com.pinde.core.model.TjDocinfo" resultMap="NjDocinfoExtMap">
         select
         USER_FLOW, ORG_FLOW, ORG_CODE, ORG_NAME, DOCROLE, USER_ID, USER_NAME, USER_PASSWORD,
         ID_NO, QUALIFIED_NO, SPE_CODE, SPE_NAME, TICKET_NUM, USER_SEX, DEGREE, BEF_ORG_NAME,
@@ -130,7 +130,7 @@
     ENDDATE, SESSION_NUMBER, ADDRESS, EXAMTIME, SITEPHONE, TITLE, CITY_CODE
   </sql>
 
-    <select id="selectByParam" resultMap="NjDocinfoExtMap" parameterType="com.pinde.sci.model.mo.TjDocinfoExample" >
+    <select id="selectByParam" resultMap="NjDocinfoExtMap" parameterType="com.pinde.core.model.TjDocinfoExample">
         select
         <if test="distinct" >
             distinct

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresDoctorGraduationInfo;
-import com.pinde.sci.model.mo.JsresDoctorGraduationInfoExample;
+import com.pinde.core.model.JsresDoctorGraduationInfo;
+import com.pinde.core.model.JsresDoctorGraduationInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
