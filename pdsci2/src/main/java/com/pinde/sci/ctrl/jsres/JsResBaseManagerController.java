@@ -1,9 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.RegistryTypeEnum;
-import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.common.enums.*;
+import com.pinde.core.common.sci.dao.SysOrgBatchMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -11,26 +10,15 @@ import com.pinde.core.pdf.PdfDocumentGenerator;
 import com.pinde.core.pdf.utils.ResourceLoader;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
-import com.pinde.core.vo.ResDeptRelStdDeptVO;
-import com.pinde.core.vo.ResOrgSepVO;
-import com.pinde.core.vo.SysDeptVO;
+import com.pinde.core.vo.*;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
-import com.pinde.sci.biz.sys.IDictBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.IUserRoleBiz;
-import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.dao.base.SysDeptMapper;
-import com.pinde.core.common.sci.dao.SysOrgBatchMapper;
+import com.pinde.sci.biz.sys.*;
+import com.pinde.sci.common.*;
+import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.form.jsres.*;
@@ -74,9 +62,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -4436,6 +4422,11 @@ public class JsResBaseManagerController extends GeneralController {
 	public void docExport(String trainingTypeId, String trainingSpeId, String sessionNumber, String orgFlow,
 						  String userName, String idNo, String graduationYear, String[] datas, String sort,
 						  Integer currentPage, HttpServletRequest request, Model model, String baseFlag, HttpServletResponse response) throws Exception {
+		String fileName = "学生工作量统计.xls";
+		fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		response.setContentType("application/octet-stream;charset=UTF-8");
+
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		String userOrgFlow = "";
 		if (currentUser != null) {
@@ -4500,10 +4491,7 @@ public class JsResBaseManagerController extends GeneralController {
 		titles[6] = "rotationNum,ylz,schNum:轮转科室(要求数/已轮转/已出科)";
 		titles[7] = "rotationNum,afterNum:出科要求表(要求数/上传数)";
 		ExcleUtile.exportSimpleExcleByObjs(titles, rltLst, response.getOutputStream());
-		String fileName = "学生工作量统计.xls";
-		fileName = URLEncoder.encode(fileName, "UTF-8");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-		response.setContentType("application/octet-stream;charset=UTF-8");
+
 	}
 
 	/**
