@@ -1,4 +1,4 @@
-package pdkj.report.bz.confs;
+package com.pinde.sci.common;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
