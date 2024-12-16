@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.RecruitInfoLogMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.RecruitInfoLog" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitInfoLog">
     <id column="LOG_FLOW" property="logFlow" jdbcType="VARCHAR" />
     <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
     <result column="OPER_USER_FLOW" property="operUserFlow" jdbcType="VARCHAR" />
@@ -82,7 +82,7 @@
     AUDIT_STATUS_ID, AUDIT_STATUS_NAME, OPER_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, AUDIT_CONTENT, AUDIT_TIME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.RecruitInfoLogExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.RecruitInfoLogExample">
     select
     <if test="distinct" >
       distinct
@@ -106,13 +106,13 @@
       delete from RECRUIT_INFO_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitInfoLogExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitInfoLogExample">
       delete from RECRUIT_INFO_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
+    <insert id="insert" parameterType="com.pinde.core.model.RecruitInfoLog">
       insert into RECRUIT_INFO_LOG (LOG_FLOW, RECRUIT_FLOW, OPER_USER_FLOW,
       OPER_USER_NAME, OPER_TYPE_ID, OPER_TYPE_NAME, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, OPER_TIME, 
@@ -126,7 +126,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{auditContent,jdbcType=VARCHAR}, 
       #{auditTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitInfoLog">
       insert into RECRUIT_INFO_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="logFlow != null" >
@@ -229,7 +229,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitInfoLogExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.RecruitInfoLogExample"
+            resultType="java.lang.Integer">
       select count(*) from RECRUIT_INFO_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -313,7 +314,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitInfoLog">
       update RECRUIT_INFO_LOG
     <set >
       <if test="recruitFlow != null" >
@@ -364,7 +365,7 @@
     </set>
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitInfoLog">
       update RECRUIT_INFO_LOG
     set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},

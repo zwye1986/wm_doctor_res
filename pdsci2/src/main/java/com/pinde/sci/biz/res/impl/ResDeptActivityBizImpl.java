@@ -5,6 +5,7 @@ import com.pinde.core.common.enums.DeptActivityItemTypeEnum;
 import com.pinde.core.common.enums.DeptActivityStatusEnum;
 import com.pinde.core.common.enums.DeptActivityTypeEnum;
 import com.pinde.core.common.enums.DeptActivityUserTypeEnum;
+import com.pinde.core.model.QingpuLectureEvalCfg;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDeptActivityBiz;

@@ -1,9 +1,8 @@
 package com.pinde.sci.form.recruit;
 
-import com.pinde.sci.model.mo.RecruitExamInfo;
-import com.pinde.sci.model.mo.RecruitExamRoomInfo;
+import com.pinde.core.model.RecruitExamInfo;
+import com.pinde.core.model.RecruitExamRoomInfo;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

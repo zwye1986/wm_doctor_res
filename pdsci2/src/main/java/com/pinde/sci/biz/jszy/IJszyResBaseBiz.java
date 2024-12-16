@@ -2,11 +2,11 @@ package com.pinde.sci.biz.jszy;
 
 import com.pinde.core.model.AttachedUnitInfo;
 import com.pinde.core.model.CountryOrgInfo;
+import com.pinde.core.model.ResBase;
 import com.pinde.core.model.ResOrgSpe;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
 import com.pinde.sci.model.jszy.JszyResBaseExt;
-import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

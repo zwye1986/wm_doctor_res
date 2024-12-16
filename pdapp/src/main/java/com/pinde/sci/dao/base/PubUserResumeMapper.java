@@ -1,7 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import java.util.List;
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.PubUserResumeExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubUserResumeMapper {
     int countByExample(PubUserResumeExample example);

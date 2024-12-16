@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.RecruitExamInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.RecruitExamInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitExamInfo">
     <id column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
     <result column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
     <result column="EXAM_YEAR" property="examYear" jdbcType="VARCHAR" />
@@ -81,7 +81,7 @@
     INTERVIEW_END_TIME, INTERVIEW_ADDRESS, INTERVIEW_DEMO, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.RecruitExamInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.RecruitExamInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -105,13 +105,13 @@
       delete from RECRUIT_EXAM_INFO
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitExamInfoExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitExamInfoExample">
       delete from RECRUIT_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
+    <insert id="insert" parameterType="com.pinde.core.model.RecruitExamInfo">
       insert into RECRUIT_EXAM_INFO (EXAM_FLOW, MAIN_FLOW, EXAM_YEAR,
       ORG_FLOW, EXAM_START_TIME, EXAM_END_TIME, 
       INTERVIEW_START_TIME, INTERVIEW_END_TIME, INTERVIEW_ADDRESS, 
@@ -125,7 +125,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitExamInfo">
       insert into RECRUIT_EXAM_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="examFlow != null" >
@@ -222,7 +222,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitExamInfoExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.RecruitExamInfoExample"
+            resultType="java.lang.Integer">
       select count(*) from RECRUIT_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -302,7 +303,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitExamInfo">
       update RECRUIT_EXAM_INFO
     <set >
       <if test="mainFlow != null" >
@@ -350,7 +351,7 @@
     </set>
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitExamInfo">
       update RECRUIT_EXAM_INFO
     set MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
       EXAM_YEAR = #{examYear,jdbcType=VARCHAR},

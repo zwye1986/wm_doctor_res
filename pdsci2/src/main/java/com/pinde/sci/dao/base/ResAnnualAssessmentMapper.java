@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResAnnualAssessment;
-import com.pinde.sci.model.mo.ResAnnualAssessmentExample;
-import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
+import com.pinde.core.model.ResAnnualAssessment;
+import com.pinde.core.model.ResAnnualAssessmentExample;
+import com.pinde.core.model.ResAnnualAssessmentWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

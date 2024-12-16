@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResBase;
 import com.pinde.core.model.ResBaseExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResBaseMapper {
     int countByExample(ResBaseExample example);

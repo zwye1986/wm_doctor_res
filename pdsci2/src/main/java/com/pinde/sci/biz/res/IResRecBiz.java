@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.ResAppeal;
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.TeachingActivityInfo;

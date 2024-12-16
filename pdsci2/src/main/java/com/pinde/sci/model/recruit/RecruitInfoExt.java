@@ -1,7 +1,6 @@
 package com.pinde.sci.model.recruit;
 
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 public class RecruitInfoExt extends RecruitInfo {
     private SysUser sysUser;

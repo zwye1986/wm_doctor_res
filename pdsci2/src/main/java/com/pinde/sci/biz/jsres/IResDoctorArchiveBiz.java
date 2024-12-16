@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.ResArchiveSequence;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;

@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.ResBase;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;

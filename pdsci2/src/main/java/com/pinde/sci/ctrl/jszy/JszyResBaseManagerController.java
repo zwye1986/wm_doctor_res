@@ -34,7 +34,6 @@ import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
 import com.pinde.sci.form.jszy.JszyResOrgSpeForm;
 import com.pinde.sci.model.jszy.JszyResBaseExt;
 import com.pinde.sci.model.jszy.JszyResJointOrgExt;
-import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResJointOrg;

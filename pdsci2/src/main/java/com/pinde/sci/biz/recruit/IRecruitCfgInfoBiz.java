@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.recruit;
 
-import com.pinde.sci.model.mo.RecruitCfgInfo;
+import com.pinde.core.model.RecruitCfgInfo;
 
 import java.util.List;
 

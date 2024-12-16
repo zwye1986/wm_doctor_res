@@ -20,8 +20,6 @@ import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
-import com.pinde.sci.model.mo.ResAppeal;
-import com.pinde.sci.model.mo.ResAssessCfg;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResEvaluationCfg;

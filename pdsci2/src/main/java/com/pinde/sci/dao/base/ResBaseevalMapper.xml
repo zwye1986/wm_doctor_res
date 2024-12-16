@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResBaseevalMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResBaseeval">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResBaseeval">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
@@ -82,7 +82,7 @@
     STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     SPE_ID, SPE_NAME
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.ResBaseevalExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -106,13 +106,13 @@
       delete from RES_BASEEVAL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample">
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResBaseevalExample">
       delete from RES_BASEEVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+  <insert id="insert" parameterType="com.pinde.core.model.ResBaseeval">
       insert into RES_BASEEVAL (RECORD_FLOW, USER_FLOW, USER_NAME,
       EVAL_YEAR, FORM_FLOW, FORM_NAME, 
       EVAL_DATE, STATUS_ID, STATUS_NAME, 
@@ -126,7 +126,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
       #{speName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResBaseeval">
       insert into RES_BASEEVAL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -229,7 +229,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.pinde.core.model.ResBaseevalExample" resultType="java.lang.Integer">
       select count(*) from RES_BASEEVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -313,7 +313,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResBaseeval">
       update RES_BASEEVAL
     <set>
       <if test="userFlow != null">
@@ -364,7 +364,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBaseeval">
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResBaseeval">
       update RES_BASEEVAL
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},

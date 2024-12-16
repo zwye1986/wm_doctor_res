@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.recruit.impl;
 
 import com.pinde.core.common.enums.recruit.RecruitOperEnum;
+import com.pinde.core.model.RecruitAdmitInfo;
+import com.pinde.core.model.RecruitAdmitInfoExample;
+import com.pinde.core.model.RecruitInfo;
+import com.pinde.core.model.RecruitInfoLog;
 import com.pinde.sci.biz.recruit.IRecruitAdmitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
@@ -8,10 +12,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.RecruitAdmitInfoMapper;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.sci.model.mo.RecruitAdmitInfo;
-import com.pinde.sci.model.mo.RecruitAdmitInfoExample;
-import com.pinde.sci.model.mo.RecruitInfo;
-import com.pinde.sci.model.mo.RecruitInfoLog;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

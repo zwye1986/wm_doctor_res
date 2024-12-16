@@ -1,8 +1,13 @@
 package com.pinde.sci.biz.res;
 
 
+import com.pinde.core.model.ResBaseFund;
+import com.pinde.core.model.ResBaseFundDetail;
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResProvinceFund;
+import com.pinde.sci.model.mo.ResProvinceFundDetail;
+import com.pinde.sci.model.mo.ResSyntheticalFund;
+import com.pinde.sci.model.mo.ResSyntheticalFundDetail;
 
 import java.util.HashMap;
 import java.util.List;

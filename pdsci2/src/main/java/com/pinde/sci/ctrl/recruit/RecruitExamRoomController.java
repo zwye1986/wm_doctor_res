@@ -1,13 +1,13 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.model.RecruitExamRoom;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitExamTeacherBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.RecruitExamRoom;
-import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

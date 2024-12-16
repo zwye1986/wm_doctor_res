@@ -1643,6 +1643,76 @@ public class ResBaseExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andSessionNumberIsNull() {
+            addCriterion("SESSION_NUMBER is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberIsNotNull() {
+            addCriterion("SESSION_NUMBER is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberEqualTo(String value) {
+            addCriterion("SESSION_NUMBER =", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotEqualTo(String value) {
+            addCriterion("SESSION_NUMBER <>", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberGreaterThan(String value) {
+            addCriterion("SESSION_NUMBER >", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberGreaterThanOrEqualTo(String value) {
+            addCriterion("SESSION_NUMBER >=", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberLessThan(String value) {
+            addCriterion("SESSION_NUMBER <", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberLessThanOrEqualTo(String value) {
+            addCriterion("SESSION_NUMBER <=", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberLike(String value) {
+            addCriterion("SESSION_NUMBER like", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotLike(String value) {
+            addCriterion("SESSION_NUMBER not like", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberIn(List<String> values) {
+            addCriterion("SESSION_NUMBER in", values, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotIn(List<String> values) {
+            addCriterion("SESSION_NUMBER not in", values, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberBetween(String value1, String value2) {
+            addCriterion("SESSION_NUMBER between", value1, value2, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSessionNumberNotBetween(String value1, String value2) {
+            addCriterion("SESSION_NUMBER not between", value1, value2, "sessionNumber");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
