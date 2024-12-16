@@ -3783,9 +3783,9 @@ public class JsResManageController extends GeneralController {
 				resDoctorRecruit.setJointOrgAudit("Passed");
 			}
 		}else{
-			if(StringUtil.isNotBlank(resDoctorRecruit.getOrgAudit()) && !"UnPassed".equals(resDoctorRecruit.getOrgAudit())){
+			/*if(StringUtil.isNotBlank(resDoctorRecruit.getOrgAudit()) && !"UnPassed".equals(resDoctorRecruit.getOrgAudit())){
 				resDoctorRecruit.setJointOrgAudit("Passed");
-			}
+			}*/
 			if("UnPassed".equals(resDoctorRecruit.getOrgAudit())){
 				resDoctorRecruit.setOrgAudit("");
 				resDoctorRecruit.setJointOrgAudit("");
