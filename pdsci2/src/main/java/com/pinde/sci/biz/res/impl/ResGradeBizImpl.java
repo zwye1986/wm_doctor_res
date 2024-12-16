@@ -22,7 +22,6 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.res.DeptTeacherGradeInfoExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.SchDept;

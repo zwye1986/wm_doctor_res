@@ -1,10 +1,8 @@
 package com.pinde.sci.biz.portal.impl;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
-import com.pinde.core.model.JsszportalCommunicationMain;
-import com.pinde.core.model.JsszportalCommunicationMainExample;
-import com.pinde.core.model.JsszportalCommunicationRe;
-import com.pinde.core.model.JsszportalCommunicationReExample;
+import com.pinde.core.model.*;
+import com.pinde.core.model.PortalInfoExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,8 +13,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.portal.PortalInfoExtMapper;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.PortalInfoExample.Criteria;
 import com.pinde.sci.model.portal.PortalInfoExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

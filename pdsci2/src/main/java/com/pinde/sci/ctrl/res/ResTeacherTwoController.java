@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
+import com.pinde.core.model.PubFile;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +14,9 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchDoctorAbsence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +90,7 @@ public class ResTeacherTwoController extends GeneralController {
 					fileFlowList.add(da.getMakingFile());
 				}
 			}
-			Map<String,PubFile> fileMap = new HashMap<String, PubFile>();
+			Map<String, PubFile> fileMap = new HashMap<String, PubFile>();
 			if(fileFlowList.size() > 0){
 				List<PubFile> pubFileList =	fileBiz.searchFile(fileFlowList);
 				for(PubFile file :pubFileList){

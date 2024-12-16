@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.pub;
 
-import com.pinde.sci.model.mo.PubMsg;
-import com.pinde.sci.model.mo.PubMsgExample;
+import com.pinde.core.model.PubMsg;
+import com.pinde.core.model.PubMsgExample;
 
 import java.util.List;
 

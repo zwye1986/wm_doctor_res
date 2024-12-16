@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.sys;
 
 
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.model.PortalColumn;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysRole;
@@ -12,7 +13,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.PortalColumn;
 import com.pinde.sci.model.mo.SysRoleAuthGx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

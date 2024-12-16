@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PortalInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PortalInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PortalInfo">
     <id column="INFO_FLOW" property="infoFlow" jdbcType="VARCHAR" />
     <result column="INFO_TITLE" property="infoTitle" jdbcType="VARCHAR" />
     <result column="TITLE_IMG" property="titleImg" jdbcType="VARCHAR" />
@@ -32,7 +32,7 @@
     <result column="INFO_USER_NAME" property="infoUserName" jdbcType="VARCHAR" />
     <result column="AUTHOR" property="author" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PortalInfo" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.PortalInfo" extends="BaseResultMap">
     <result column="INFO_CONTENT" property="infoContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -103,7 +103,8 @@
   <sql id="Blob_Column_List" >
     INFO_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.PortalInfoExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.PortalInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -119,7 +120,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PortalInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PortalInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -145,13 +146,13 @@
     delete from PDSCI.PORTAL_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PortalInfoExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PortalInfoExample">
     delete from PDSCI.PORTAL_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PortalInfo" >
+    <insert id="insert" parameterType="com.pinde.core.model.PortalInfo">
     insert into PDSCI.PORTAL_INFO (INFO_FLOW, INFO_TITLE, TITLE_IMG, 
       COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, 
       INFO_STATUS_NAME, INFO_TIME, PASS_TIME, 
@@ -175,7 +176,7 @@
       #{infoUserName,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{infoContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PortalInfo" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PortalInfo">
     insert into PDSCI.PORTAL_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="infoFlow != null" >
@@ -362,7 +363,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PortalInfoExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.PortalInfoExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.PORTAL_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -537,7 +538,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PortalInfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PortalInfo">
     update PDSCI.PORTAL_INFO
     <set >
       <if test="infoTitle != null" >
@@ -630,7 +631,7 @@
     </set>
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PortalInfo" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PortalInfo">
     update PDSCI.PORTAL_INFO
     set INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{titleImg,jdbcType=VARCHAR},
@@ -663,7 +664,7 @@
       INFO_CONTENT = #{infoContent,jdbcType=CLOB}
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PortalInfo" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PortalInfo">
     update PDSCI.PORTAL_INFO
     set INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{titleImg,jdbcType=VARCHAR},

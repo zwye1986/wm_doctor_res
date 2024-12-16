@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PortalColumn;
-import com.pinde.sci.model.mo.PortalColumnExample;
+import com.pinde.core.model.PortalColumn;
+import com.pinde.core.model.PortalColumnExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

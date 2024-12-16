@@ -22,7 +22,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.sch.DoctorSearchForm;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.ResBaseeval;
 import com.pinde.sci.model.mo.ResBaseevalDetail;

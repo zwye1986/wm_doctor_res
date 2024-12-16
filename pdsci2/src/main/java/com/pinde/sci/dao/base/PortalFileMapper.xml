@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PortalFileMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PortalFile" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PortalFile">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
     <result column="UPLOAD_TIME" property="uploadTime" jdbcType="VARCHAR" />
@@ -79,7 +79,7 @@
     DOWNLOAD_TIMES, FILE_URL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PortalFileExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PortalFileExample">
     select
     <if test="distinct" >
       distinct
@@ -103,13 +103,13 @@
     delete from PDSCI.PORTAL_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PortalFileExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PortalFileExample">
     delete from PDSCI.PORTAL_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PortalFile" >
+    <insert id="insert" parameterType="com.pinde.core.model.PortalFile">
     insert into PDSCI.PORTAL_FILE (RECORD_FLOW, FILE_NAME, UPLOAD_TIME, 
       FILE_SIZE, UPLOAD_USER_FLOW, UPLOAD_USER_NAME, 
       DOWNLOAD_TIMES, FILE_URL, RECORD_STATUS, 
@@ -121,7 +121,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PortalFile" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PortalFile">
     insert into PDSCI.PORTAL_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -206,7 +206,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PortalFileExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.PortalFileExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.PORTAL_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -278,7 +278,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PortalFile" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PortalFile">
     update PDSCI.PORTAL_FILE
     <set >
       <if test="fileName != null" >
@@ -320,7 +320,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PortalFile" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PortalFile">
     update PDSCI.PORTAL_FILE
     set FILE_NAME = #{fileName,jdbcType=VARCHAR},
       UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},

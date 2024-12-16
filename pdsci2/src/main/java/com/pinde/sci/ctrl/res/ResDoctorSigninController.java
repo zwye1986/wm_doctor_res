@@ -19,7 +19,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.res.TimeSetFrom;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorKq;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;

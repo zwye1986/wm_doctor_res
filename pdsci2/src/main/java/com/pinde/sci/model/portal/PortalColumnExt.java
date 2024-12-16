@@ -1,6 +1,6 @@
 package com.pinde.sci.model.portal;
 
-import com.pinde.sci.model.mo.PortalColumn;
+import com.pinde.core.model.PortalColumn;
 
 public class PortalColumnExt extends PortalColumn {
 	

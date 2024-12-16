@@ -23,7 +23,6 @@ import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResBaseExample;
 import com.pinde.sci.model.mo.ResJointOrg;

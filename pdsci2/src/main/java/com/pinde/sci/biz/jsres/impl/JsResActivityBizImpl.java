@@ -21,7 +21,6 @@ import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResHospSupervSubject;
 import com.pinde.sci.model.mo.SysCfg;
 import com.pinde.sci.model.mo.SysCfgExample;

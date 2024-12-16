@@ -37,7 +37,6 @@ import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.TrainingForm;
 import com.pinde.sci.model.jsres.ResBaseExt;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorExample;

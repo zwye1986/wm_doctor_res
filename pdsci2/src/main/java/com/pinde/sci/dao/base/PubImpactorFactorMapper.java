@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubImpactorFactor;
-import com.pinde.sci.model.mo.PubImpactorFactorExample;
+import com.pinde.core.model.PubImpactorFactor;
+import com.pinde.core.model.PubImpactorFactorExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
