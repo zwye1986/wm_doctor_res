@@ -52,7 +52,6 @@ import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.jsres.LzDeptItem;
 import com.pinde.sci.model.jsres.PbImportDataItem;
 import com.pinde.sci.model.jsres.PbImportDataVo;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResDoctorSchProcessExample;

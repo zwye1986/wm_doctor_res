@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.pub;
 
-import com.pinde.sci.model.mo.PubFile;
+import com.pinde.core.model.PubFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

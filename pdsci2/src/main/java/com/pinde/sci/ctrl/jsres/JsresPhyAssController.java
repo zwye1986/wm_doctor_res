@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.PubFile;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
@@ -21,7 +22,6 @@ import com.pinde.sci.dao.base.ResTeachPlanDoctorMapper;
 import com.pinde.sci.dao.base.ResTeachQualifiedPlanMapper;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResQualifiedPlanMsg;
 import com.pinde.sci.model.mo.ResTeachPlanDoctor;
 import com.pinde.sci.model.mo.ResTeachQualifiedPlan;

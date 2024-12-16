@@ -19,7 +19,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.mo.ResTestConfig;

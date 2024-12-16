@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.osca;
 
-import com.pinde.sci.model.mo.PubFile;
+import com.pinde.core.model.PubFile;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

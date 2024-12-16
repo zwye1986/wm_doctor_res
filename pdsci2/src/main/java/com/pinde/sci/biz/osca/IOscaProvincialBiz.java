@@ -2,7 +2,6 @@ package com.pinde.sci.biz.osca;
 
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.model.*;
-import com.pinde.sci.model.mo.PubFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

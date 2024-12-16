@@ -1,11 +1,7 @@
 package com.pinde.sci.biz.portal;
 
-import com.pinde.core.model.JsszportalCommunicationMain;
-import com.pinde.core.model.JsszportalCommunicationRe;
+import com.pinde.core.model.*;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.mo.PortalFile;
-import com.pinde.sci.model.mo.PortalInfo;
-import com.pinde.sci.model.mo.PortalSuggest;
 import com.pinde.sci.model.portal.PortalInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 
