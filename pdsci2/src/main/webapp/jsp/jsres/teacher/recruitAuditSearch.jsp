@@ -159,7 +159,7 @@
 
     <c:set var="preKey" value="res_${preRecTypeEnumPreTrainForm.id}_form_flag"/>
     <div style="overflow-x:auto;max-width:100%;overflow-y:auto;min-height:500px; margin-left: 30px; margin-right: 30px; ">
-        <table border="0" cellpadding="0" cellspacing="0" class="grid">
+        <table border="0" cellpadding="0" cellspacing="0" class="grid" style="width: auto">
             <tr>
                 <th style="width: 100px;">姓名</th>
                 <th style="width: 100px;">人员类型</th>
