@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.JsresUserBalcklist;
+import com.pinde.core.model.JsresUserBalcklist;
 import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 

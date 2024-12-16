@@ -29,6 +29,8 @@ public class JsresDeptConfig implements java.io.Serializable {
 
     private String modifyUserFlow;
 
+    private String scoreToplimit;
+
     public String getCfgFlow() {
         return cfgFlow;
     }
@@ -139,5 +141,13 @@ public class JsresDeptConfig implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getScoreToplimit() {
+        return scoreToplimit;
+    }
+
+    public void setScoreToplimit(String scoreToplimit) {
+        this.scoreToplimit = scoreToplimit;
     }
 }

@@ -43,6 +43,18 @@ public class JsresUserBalcklist implements java.io.Serializable {
 
     private String modifyUserFlow;
 
+    private String auditStatusId;
+
+    private String auditStatusName;
+
+    private String isSystem;
+
+    private String attachmentPath;
+
+    private String fileName;
+
+    private String cretTypeId;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -209,5 +221,53 @@ public class JsresUserBalcklist implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getAuditStatusId() {
+        return auditStatusId;
+    }
+
+    public void setAuditStatusId(String auditStatusId) {
+        this.auditStatusId = auditStatusId;
+    }
+
+    public String getAuditStatusName() {
+        return auditStatusName;
+    }
+
+    public void setAuditStatusName(String auditStatusName) {
+        this.auditStatusName = auditStatusName;
+    }
+
+    public String getIsSystem() {
+        return isSystem;
+    }
+
+    public void setIsSystem(String isSystem) {
+        this.isSystem = isSystem;
+    }
+
+    public String getAttachmentPath() {
+        return attachmentPath;
+    }
+
+    public void setAttachmentPath(String attachmentPath) {
+        this.attachmentPath = attachmentPath;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getCretTypeId() {
+        return cretTypeId;
+    }
+
+    public void setCretTypeId(String cretTypeId) {
+        this.cretTypeId = cretTypeId;
     }
 }

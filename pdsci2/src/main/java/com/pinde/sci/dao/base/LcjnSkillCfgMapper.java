@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LcjnSkillCfg;
-import com.pinde.sci.model.mo.LcjnSkillCfgExample;
+import com.pinde.core.model.LcjnSkillCfg;
+import com.pinde.core.model.LcjnSkillCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

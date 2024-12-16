@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
@@ -9,7 +10,6 @@ import com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper;
 import com.pinde.sci.dao.base.TeachingActivityTargetMapper;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.jsres.TeachingActivityTargetExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

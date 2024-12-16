@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.sci.model.mo.LcjnFixedAssets;
-import com.pinde.sci.model.mo.LcjnSupplies;
-import com.pinde.sci.model.mo.LcjnSuppliesBatch;
+import com.pinde.core.model.LcjnFixedAssets;
+import com.pinde.core.model.LcjnSupplies;
+import com.pinde.core.model.LcjnSuppliesBatch;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

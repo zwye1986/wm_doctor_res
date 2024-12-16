@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.sci.dao.SysRoleMapper;
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysRoleExample;
 import com.pinde.core.model.SysUser;
@@ -14,7 +15,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.SysRoleExtMapper;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.SysUserRole;
 import com.pinde.sci.model.mo.SysUserRoleExample;
 import com.pinde.sci.model.mo.SysUserRoleExample.Criteria;

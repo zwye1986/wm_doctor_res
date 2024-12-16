@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.JsresSpeContrastPractice;
 import com.pinde.core.model.JsresSpeContrastPracticeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresSpeContrastPracticeMapper {
     int countByExample(JsresSpeContrastPracticeExample example);

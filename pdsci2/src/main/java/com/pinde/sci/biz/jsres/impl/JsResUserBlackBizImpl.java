@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.JsresUserBalcklist;
+import com.pinde.core.model.JsresUserBalcklistExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,8 +10,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
-import com.pinde.sci.model.mo.JsresUserBalcklist;
-import com.pinde.sci.model.mo.JsresUserBalcklistExample;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

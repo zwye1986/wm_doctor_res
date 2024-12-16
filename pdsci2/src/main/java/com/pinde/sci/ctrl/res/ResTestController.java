@@ -17,8 +17,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
-import com.pinde.sci.model.mo.JsresDeptConfig;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorGraduationExam;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;

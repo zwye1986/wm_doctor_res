@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.mo.TjDocinfo;
+import com.pinde.core.model.TjDocinfo;
 import com.pinde.sci.model.res.TjDocinfoExt;
 
 import java.util.List;

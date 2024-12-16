@@ -19,8 +19,6 @@ import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.sci.model.mo.JsresAttendance;
-import com.pinde.sci.model.mo.JsresAttendanceDetail;
 import com.pinde.sci.model.mo.PubFile;
 import com.pinde.sci.model.mo.PubUserResume;
 import com.pinde.sci.model.mo.ResAppeal;

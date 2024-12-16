@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.HospSelfAssessmentCfg;
-import com.pinde.sci.model.mo.HospSelfAssessmentCfgExample;
+import com.pinde.core.model.HospSelfAssessmentCfg;
+import com.pinde.core.model.HospSelfAssessmentCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

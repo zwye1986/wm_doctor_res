@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.TeacherTargetApply;
-import com.pinde.sci.model.mo.TeacherTargetApplyExample;
+import com.pinde.core.model.TeacherTargetApply;
+import com.pinde.core.model.TeacherTargetApplyExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -7,6 +7,7 @@ import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.ResSchProcessExpressExample;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.TeachingActivityInfo;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;

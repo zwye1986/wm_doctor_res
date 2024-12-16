@@ -1,7 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
 import java.util.List;
 
 public class ResDoctor implements java.io.Serializable {

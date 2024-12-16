@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaSubjectPartScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSubjectPartScore" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSubjectPartScore">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="PART_FLOW" property="partFlow" jdbcType="VARCHAR" />
@@ -74,7 +74,8 @@
     RECORD_FLOW, SUBJECT_FLOW, PART_FLOW, PART_SCORE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScoreExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.OscaSubjectPartScoreExample">
     select
     <if test="distinct" >
       distinct
@@ -98,13 +99,13 @@
     delete from PDSCI.OSCA_SUBJECT_PART_SCORE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScoreExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSubjectPartScoreExample">
     delete from PDSCI.OSCA_SUBJECT_PART_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScore" >
+    <insert id="insert" parameterType="com.pinde.core.model.OscaSubjectPartScore">
     insert into PDSCI.OSCA_SUBJECT_PART_SCORE (RECORD_FLOW, SUBJECT_FLOW, PART_FLOW, 
       PART_SCORE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -114,7 +115,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScore" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSubjectPartScore">
     insert into PDSCI.OSCA_SUBJECT_PART_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -175,7 +176,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScoreExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSubjectPartScoreExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_SUBJECT_PART_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -231,7 +233,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScore" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSubjectPartScore">
     update PDSCI.OSCA_SUBJECT_PART_SCORE
     <set >
       <if test="subjectFlow != null" >
@@ -261,7 +263,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSubjectPartScore" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSubjectPartScore">
     update PDSCI.OSCA_SUBJECT_PART_SCORE
     set SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
       PART_FLOW = #{partFlow,jdbcType=VARCHAR},

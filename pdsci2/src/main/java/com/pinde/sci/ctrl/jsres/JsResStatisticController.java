@@ -25,7 +25,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResJointOrg;
 import com.pinde.sci.model.mo.ResRec;

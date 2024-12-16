@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.model.SysDept;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.PojoUtils;
@@ -11,6 +11,12 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
+import com.pinde.sci.model.mo.ResEvaluationScore;
+import com.pinde.sci.model.mo.ResEvaluationScoreExample;
+import com.pinde.sci.model.mo.ResHospScoreTable;
+import com.pinde.sci.model.mo.ResOrgSpeAssign;
+import com.pinde.sci.model.mo.ResScheduleScore;
+import com.pinde.sci.model.mo.ResScheduleScoreExample;
 import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

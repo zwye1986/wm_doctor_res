@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PersonnelStatisticsByName;
+import com.pinde.core.model.PersonnelStatisticsByName;
 
 import java.util.List;
 

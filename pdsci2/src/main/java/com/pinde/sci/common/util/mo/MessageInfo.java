@@ -1,7 +1,5 @@
 package com.pinde.sci.common.util.mo;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
 import java.util.Date;
 import java.util.List;
 

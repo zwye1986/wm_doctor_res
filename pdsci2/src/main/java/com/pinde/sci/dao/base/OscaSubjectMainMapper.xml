@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaSubjectMainMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSubjectMain" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSubjectMain">
     <id column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
     <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
@@ -87,7 +87,7 @@
     MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME, PASS_PER, IS_RESAVE, ALL_SCORE, TRAINING_TYPE_ID, 
     TRAINING_TYPE_NAME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaSubjectMainExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.OscaSubjectMainExample">
     select
     <if test="distinct" >
       distinct
@@ -111,13 +111,13 @@
     delete from PDSCI.OSCA_SUBJECT_MAIN
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectMainExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSubjectMainExample">
     delete from PDSCI.OSCA_SUBJECT_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSubjectMain" >
+    <insert id="insert" parameterType="com.pinde.core.model.OscaSubjectMain">
     insert into PDSCI.OSCA_SUBJECT_MAIN (SUBJECT_FLOW, SUBJECT_NAME, TRAINING_SPE_ID, 
       TRAINING_SPE_NAME, ACTION_TYPE_ID, ACTION_TYPE_NAME, 
       STATION_NUM, IS_RELEASED, RECORD_STATUS, 
@@ -133,7 +133,7 @@
       #{passPer,jdbcType=DECIMAL}, #{isResave,jdbcType=VARCHAR}, #{allScore,jdbcType=DECIMAL}, 
       #{trainingTypeId,jdbcType=VARCHAR}, #{trainingTypeName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSubjectMain" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSubjectMain">
     insert into PDSCI.OSCA_SUBJECT_MAIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
@@ -260,7 +260,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectMainExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSubjectMainExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_SUBJECT_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -360,7 +361,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSubjectMain" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSubjectMain">
     update PDSCI.OSCA_SUBJECT_MAIN
     <set >
       <if test="subjectName != null" >
@@ -423,7 +424,7 @@
     </set>
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSubjectMain" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSubjectMain">
     update PDSCI.OSCA_SUBJECT_MAIN
     set SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},

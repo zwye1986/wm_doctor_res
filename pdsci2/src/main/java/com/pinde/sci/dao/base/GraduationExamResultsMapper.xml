@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.GraduationExamResultsMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.GraduationExamResults" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.GraduationExamResults">
     <id column="RESULTS_ID" property="resultsId" jdbcType="VARCHAR" />
     <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
     <result column="SOLU_ID" property="soluId" jdbcType="VARCHAR" />
@@ -123,7 +123,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    <insert id="insert" parameterType="com.pinde.core.model.GraduationExamResults">
     insert into PDSCI.GRADUATION_EXAM_RESULTS (RESULTS_ID, USER_ID, SOLU_ID, 
       SOLU_SCORE, EXAM_SCORE, EXAM_PASS_SCORE, 
       IS_PASS, EXAM_TIME, WORD_URL, 
@@ -143,7 +143,7 @@
       #{isSyn,jdbcType=VARCHAR}, #{resultSource,jdbcType=VARCHAR}, #{testCount,jdbcType=VARCHAR}, 
       #{theoryScore,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.GraduationExamResults">
     insert into PDSCI.GRADUATION_EXAM_RESULTS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="resultsId != null" >
@@ -421,7 +421,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.GraduationExamResults">
     update PDSCI.GRADUATION_EXAM_RESULTS
     <set >
       <if test="userId != null" >
@@ -499,7 +499,7 @@
     </set>
     where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.GraduationExamResults" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.GraduationExamResults">
     update PDSCI.GRADUATION_EXAM_RESULTS
     set USER_ID = #{userId,jdbcType=VARCHAR},
       SOLU_ID = #{soluId,jdbcType=VARCHAR},

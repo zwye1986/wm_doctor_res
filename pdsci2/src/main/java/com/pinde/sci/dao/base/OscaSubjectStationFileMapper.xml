@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.OscaSubjectStationFileMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSubjectStationFile">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSubjectStationFile">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="STATION_FLOW" jdbcType="VARCHAR" property="stationFlow" />
     <result column="STATION_NAME" jdbcType="VARCHAR" property="stationName" />
@@ -76,7 +76,8 @@
     RECORD_FLOW, STATION_FLOW, STATION_NAME, FILE_FLOW, ORG_NAME, ORG_FLOW, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFileExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.OscaSubjectStationFileExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,13 +101,13 @@
     delete from PDSCI.OSCA_SUBJECT_STATION_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFileExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSubjectStationFileExample">
     delete from PDSCI.OSCA_SUBJECT_STATION_FILE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFile">
+    <insert id="insert" parameterType="com.pinde.core.model.OscaSubjectStationFile">
     insert into PDSCI.OSCA_SUBJECT_STATION_FILE (RECORD_FLOW, STATION_FLOW, STATION_NAME, 
       FILE_FLOW, ORG_NAME, ORG_FLOW, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -116,7 +117,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFile">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSubjectStationFile">
     insert into PDSCI.OSCA_SUBJECT_STATION_FILE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -189,7 +190,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFileExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSubjectStationFileExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_SUBJECT_STATION_FILE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -253,7 +255,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFile">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSubjectStationFile">
     update PDSCI.OSCA_SUBJECT_STATION_FILE
     <set>
       <if test="stationFlow != null">
@@ -289,7 +291,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSubjectStationFile">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSubjectStationFile">
     update PDSCI.OSCA_SUBJECT_STATION_FILE
     set STATION_FLOW = #{stationFlow,jdbcType=VARCHAR},
       STATION_NAME = #{stationName,jdbcType=VARCHAR},

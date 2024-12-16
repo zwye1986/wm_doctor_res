@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.JsresSpeContrastPractice;
+import com.pinde.core.model.JsresSpeContrastPractice;
 
 import java.util.List;
 

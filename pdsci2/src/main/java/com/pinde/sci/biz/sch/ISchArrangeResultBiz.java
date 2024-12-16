@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sch;
 
+import com.pinde.core.model.HbresDoctorDeptDetail;
+import com.pinde.core.model.JsresDoctorDeptDetail;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;

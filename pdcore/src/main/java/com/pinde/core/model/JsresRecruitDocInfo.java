@@ -137,6 +137,16 @@ public class JsresRecruitDocInfo implements java.io.Serializable {
 
     private String graduationCertificateType;
 
+    private String signupWay;
+
+    public String getSignupWay() {
+        return signupWay;
+    }
+
+    public void setSignupWay(String signupWay) {
+        this.signupWay = signupWay;
+    }
+
     public String getRecruitFlow() {
         return recruitFlow;
     }

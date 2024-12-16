@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSkillsAssessmentTime">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSkillsAssessmentTime">
     <id column="RECROD_FLOW" jdbcType="VARCHAR" property="recrodFlow" />
     <result column="CLINICAL_FLOW" jdbcType="VARCHAR" property="clinicalFlow" />
     <result column="EXAM_START_TIME" jdbcType="VARCHAR" property="examStartTime" />
@@ -75,7 +75,8 @@
     RECROD_FLOW, CLINICAL_FLOW, EXAM_START_TIME, EXAM_END_TIME, TEST_NUMBER, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTimeExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentTimeExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -99,13 +100,13 @@
     delete from PDSCI.OSCA_SKILLS_ASSESSMENT_TIME
     where RECROD_FLOW = #{recrodFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTimeExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentTimeExample">
     delete from PDSCI.OSCA_SKILLS_ASSESSMENT_TIME
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTime">
+    <insert id="insert" parameterType="com.pinde.core.model.OscaSkillsAssessmentTime">
     insert into PDSCI.OSCA_SKILLS_ASSESSMENT_TIME (RECROD_FLOW, CLINICAL_FLOW, EXAM_START_TIME, 
       EXAM_END_TIME, TEST_NUMBER, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +116,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTime">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillsAssessmentTime">
     insert into PDSCI.OSCA_SKILLS_ASSESSMENT_TIME
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recrodFlow != null">
@@ -182,7 +183,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTimeExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentTimeExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_SKILLS_ASSESSMENT_TIME
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -242,7 +244,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTime">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillsAssessmentTime">
     update PDSCI.OSCA_SKILLS_ASSESSMENT_TIME
     <set>
       <if test="clinicalFlow != null">
@@ -275,7 +277,7 @@
     </set>
     where RECROD_FLOW = #{recrodFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSkillsAssessmentTime">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillsAssessmentTime">
     update PDSCI.OSCA_SKILLS_ASSESSMENT_TIME
     set CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
       EXAM_START_TIME = #{examStartTime,jdbcType=VARCHAR},

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.OscaDoctorAssessment;
 import com.pinde.core.model.OscaDoctorAssessmentExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaDoctorAssessmentMapper {
     int countByExample(OscaDoctorAssessmentExample example);

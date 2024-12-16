@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.HospSelfAssessmentCfgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.HospSelfAssessmentCfg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.HospSelfAssessmentCfg">
     <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
     <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
     <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
@@ -74,7 +74,8 @@
     CFG_FLOW, SESSION_NUMBER, START_TIME, END_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.HospSelfAssessmentCfgExample">
     select
     <if test="distinct" >
       distinct
@@ -98,13 +99,13 @@
     delete from PDSCI.HOSP_SELF_ASSESSMENT_CFG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfgExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.HospSelfAssessmentCfgExample">
     delete from PDSCI.HOSP_SELF_ASSESSMENT_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfg" >
+    <insert id="insert" parameterType="com.pinde.core.model.HospSelfAssessmentCfg">
     insert into PDSCI.HOSP_SELF_ASSESSMENT_CFG (CFG_FLOW, SESSION_NUMBER, START_TIME, 
       END_TIME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -114,7 +115,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfg" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.HospSelfAssessmentCfg">
     insert into PDSCI.HOSP_SELF_ASSESSMENT_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
@@ -175,7 +176,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfgExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.HospSelfAssessmentCfgExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.HOSP_SELF_ASSESSMENT_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -231,7 +233,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfg" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.HospSelfAssessmentCfg">
     update PDSCI.HOSP_SELF_ASSESSMENT_CFG
     <set >
       <if test="sessionNumber != null" >
@@ -261,7 +263,7 @@
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.HospSelfAssessmentCfg" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.HospSelfAssessmentCfg">
     update PDSCI.HOSP_SELF_ASSESSMENT_CFG
     set SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
       START_TIME = #{startTime,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresDataStatistics;
-import com.pinde.sci.model.mo.JsresDataStatisticsExample;
+import com.pinde.core.model.JsresDataStatistics;
+import com.pinde.core.model.JsresDataStatisticsExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

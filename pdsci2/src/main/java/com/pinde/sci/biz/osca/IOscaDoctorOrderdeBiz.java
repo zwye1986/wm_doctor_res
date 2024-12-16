@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.osca;
 
 
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
+import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 
 import java.util.List;

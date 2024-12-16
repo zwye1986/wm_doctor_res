@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.JsresSpeContrastPracticeMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresSpeContrastPractice">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresSpeContrastPractice">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="SPE_ID" jdbcType="VARCHAR" property="speId" />
     <result column="SPE_NAME" jdbcType="VARCHAR" property="speName" />
@@ -77,7 +77,8 @@
     RECORD_FLOW, SPE_ID, SPE_NAME, TYPE_ID, TYPE_NAME, PRACTICE_ID, PRACTICE_NAME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPracticeExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.JsresSpeContrastPracticeExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -101,13 +102,13 @@
     delete from PDSCI.JSRES_SPE_CONTRAST_PRACTICE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPracticeExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresSpeContrastPracticeExample">
     delete from PDSCI.JSRES_SPE_CONTRAST_PRACTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPractice">
+    <insert id="insert" parameterType="com.pinde.core.model.JsresSpeContrastPractice">
     insert into PDSCI.JSRES_SPE_CONTRAST_PRACTICE (RECORD_FLOW, SPE_ID, SPE_NAME, 
       TYPE_ID, TYPE_NAME, PRACTICE_ID, 
       PRACTICE_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -119,7 +120,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPractice">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresSpeContrastPractice">
     insert into PDSCI.JSRES_SPE_CONTRAST_PRACTICE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -198,7 +199,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPracticeExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresSpeContrastPracticeExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.JSRES_SPE_CONTRAST_PRACTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -266,7 +268,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPractice">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresSpeContrastPractice">
     update PDSCI.JSRES_SPE_CONTRAST_PRACTICE
     <set>
       <if test="speId != null">
@@ -305,7 +307,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresSpeContrastPractice">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresSpeContrastPractice">
     update PDSCI.JSRES_SPE_CONTRAST_PRACTICE
     set SPE_ID = #{speId,jdbcType=VARCHAR},
       SPE_NAME = #{speName,jdbcType=VARCHAR},

@@ -6,7 +6,7 @@ import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 
 
-public class OscaSkillsAssessmentExt extends OscaSkillsAssessment{
+public class OscaSkillsAssessmentExt extends OscaSkillsAssessment {
     private OscaDoctorAssessment oscaDoctorAssessment;
     private String overplus;
     private SysUser sysUser;

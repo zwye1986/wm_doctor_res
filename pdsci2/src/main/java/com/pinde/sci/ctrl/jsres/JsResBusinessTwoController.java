@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.page.PageHelper;
@@ -10,7 +11,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.JsresPowerCfg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

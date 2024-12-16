@@ -3,6 +3,8 @@ package com.pinde.sci.biz.jszy.impl;
 import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.JsresUserBalcklist;
+import com.pinde.core.model.JsresUserBalcklistExample;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;

@@ -1,8 +1,12 @@
 package com.pinde.sci.ctrl.lcjn;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.LcjnAuditStatusEnum;
+import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
+import com.pinde.core.model.LcjnCourseInfo;
+import com.pinde.core.model.LcjnCourseTime;
+import com.pinde.core.model.LcjnDoctorCourse;
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.ClassUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,11 +15,6 @@ import com.pinde.sci.biz.lcjn.ILcjnDoctorSignBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.LcjnAuditStatusEnum;
-import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
-import com.pinde.sci.model.mo.LcjnCourseInfo;
-import com.pinde.sci.model.mo.LcjnCourseTime;
-import com.pinde.sci.model.mo.LcjnDoctorCourse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

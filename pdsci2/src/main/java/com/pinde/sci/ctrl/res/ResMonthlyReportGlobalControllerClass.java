@@ -1,9 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.model.PersonStaticExample;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
@@ -19,7 +16,8 @@ import com.pinde.sci.ctrl.jsres.JsResManageController;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.sci.model.mo.SchArrangeResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

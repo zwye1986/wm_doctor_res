@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.TjDocinfo;
+import com.pinde.core.model.TjExamInfo;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.TjDocinfo;
-import com.pinde.sci.model.mo.TjExamInfo;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import org.springframework.web.multipart.MultipartFile;
 

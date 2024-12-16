@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaSkillRoomDoc;
-import com.pinde.sci.model.mo.OscaSkillRoomDocExample;
+import com.pinde.core.model.OscaSkillRoomDoc;
+import com.pinde.core.model.OscaSkillRoomDocExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

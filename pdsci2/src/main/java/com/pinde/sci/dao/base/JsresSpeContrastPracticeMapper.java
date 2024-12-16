@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresSpeContrastPractice;
-import com.pinde.sci.model.mo.JsresSpeContrastPracticeExample;
+import com.pinde.core.model.JsresSpeContrastPractice;
+import com.pinde.core.model.JsresSpeContrastPracticeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

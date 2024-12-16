@@ -1,7 +1,5 @@
 package com.pinde.sci.model.mo;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
 import java.math.BigDecimal;
 
 public class PubProjAuthor implements java.io.Serializable {

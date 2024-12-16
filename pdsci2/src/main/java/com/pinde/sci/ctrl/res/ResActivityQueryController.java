@@ -2,10 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.DictForm;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -24,7 +21,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivityResultMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.PubFile;
+import com.pinde.sci.model.mo.ResDoctor;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.JsresExamSignup;
+import com.pinde.core.model.JsresExamSignup;
 import com.pinde.sci.model.mo.ResSkillTimeConfig;
 import org.springframework.web.multipart.MultipartFile;
 

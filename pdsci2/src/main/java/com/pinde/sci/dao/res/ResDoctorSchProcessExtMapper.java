@@ -1,8 +1,11 @@
 package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.TeachingActivityInfo;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.res.SchProcessExt;
 import org.apache.ibatis.annotations.Param;
 

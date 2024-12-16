@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.DoctorData;
-import com.pinde.sci.model.mo.DoctorDataExample;
+import com.pinde.core.model.DoctorData;
+import com.pinde.core.model.DoctorDataExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.OscaSubjectStation;
 import com.pinde.core.model.OscaSubjectStationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaSubjectStationMapper {
     int countByExample(OscaSubjectStationExample example);

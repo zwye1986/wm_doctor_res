@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.TeacherTargetApplyMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TeacherTargetApply">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.TeacherTargetApply">
     <id column="APPLY_FLOW" jdbcType="VARCHAR" property="applyFlow" />
     <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
@@ -100,7 +100,8 @@
     SPECIALIZED_RECRUIT_NUM, ORG_USER_FLOW, ORG_USER_NAME, ORG_AUDIT_TIME, SCHOOL_AUDIT_TIME, 
     TEACHER_APPLY_TIME
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.TeacherTargetApplyExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.TeacherTargetApplyExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -124,13 +125,13 @@
     delete from PDSCI.TEACHER_TARGET_APPLY
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TeacherTargetApplyExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.TeacherTargetApplyExample">
     delete from PDSCI.TEACHER_TARGET_APPLY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.TeacherTargetApply">
+    <insert id="insert" parameterType="com.pinde.core.model.TeacherTargetApply">
     insert into PDSCI.TEACHER_TARGET_APPLY (APPLY_FLOW, USER_FLOW, USER_NAME, 
       ORG_FLOW, ORG_NAME, SPE_ID, 
       SPE_NAME, RECRUIT_YEAR, IS_ACADEMIC, 
@@ -154,7 +155,7 @@
       #{orgUserFlow,jdbcType=VARCHAR}, #{orgUserName,jdbcType=VARCHAR}, #{orgAuditTime,jdbcType=VARCHAR}, 
       #{schoolAuditTime,jdbcType=VARCHAR}, #{teacherApplyTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TeacherTargetApply">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.TeacherTargetApply">
     insert into PDSCI.TEACHER_TARGET_APPLY
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="applyFlow != null">
@@ -347,7 +348,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TeacherTargetApplyExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.TeacherTargetApplyExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.TEACHER_TARGET_APPLY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -491,7 +493,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.TeacherTargetApply">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeacherTargetApply">
     update PDSCI.TEACHER_TARGET_APPLY
     <set>
       <if test="userFlow != null">
@@ -587,7 +589,7 @@
     </set>
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.TeacherTargetApply">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeacherTargetApply">
     update PDSCI.TEACHER_TARGET_APPLY
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},

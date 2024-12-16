@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.LcjnCourseEvaluateDetailMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.LcjnCourseEvaluateDetail">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnCourseEvaluateDetail">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="EVALUATE_FLOW" jdbcType="VARCHAR" property="evaluateFlow" />
     <result column="DICT_ID" jdbcType="VARCHAR" property="dictId" />
@@ -75,7 +75,8 @@
     RECORD_FLOW, EVALUATE_FLOW, DICT_ID, DICT_NAME, EVAL_SCORE, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetailExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetailExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -99,13 +100,13 @@
     delete from PDSCI.LCJN_COURSE_EVALUATE_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetailExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetailExample">
     delete from PDSCI.LCJN_COURSE_EVALUATE_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetail">
+    <insert id="insert" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetail">
     insert into PDSCI.LCJN_COURSE_EVALUATE_DETAIL (RECORD_FLOW, EVALUATE_FLOW, DICT_ID, 
       DICT_NAME, EVAL_SCORE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +116,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetail">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetail">
     insert into PDSCI.LCJN_COURSE_EVALUATE_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -182,7 +183,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetailExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetailExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.LCJN_COURSE_EVALUATE_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -242,7 +244,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetail">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetail">
     update PDSCI.LCJN_COURSE_EVALUATE_DETAIL
     <set>
       <if test="evaluateFlow != null">
@@ -275,7 +277,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.LcjnCourseEvaluateDetail">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnCourseEvaluateDetail">
     update PDSCI.LCJN_COURSE_EVALUATE_DETAIL
     set EVALUATE_FLOW = #{evaluateFlow,jdbcType=VARCHAR},
       DICT_ID = #{dictId,jdbcType=VARCHAR},
