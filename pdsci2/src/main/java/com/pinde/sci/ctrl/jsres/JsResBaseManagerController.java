@@ -4434,6 +4434,11 @@ public class JsResBaseManagerController extends GeneralController {
 	public void docExport(String trainingTypeId, String trainingSpeId, String sessionNumber, String orgFlow,
 						  String userName, String idNo, String graduationYear, String[] datas, String sort,
 						  Integer currentPage, HttpServletRequest request, Model model, String baseFlag, HttpServletResponse response) throws Exception {
+		String fileName = "学生工作量统计.xls";
+		fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		response.setContentType("application/octet-stream;charset=UTF-8");
+
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		String userOrgFlow = "";
 		if (currentUser != null) {
@@ -4498,10 +4503,7 @@ public class JsResBaseManagerController extends GeneralController {
 		titles[6] = "rotationNum,ylz,schNum:轮转科室(要求数/已轮转/已出科)";
 		titles[7] = "rotationNum,afterNum:出科要求表(要求数/上传数)";
 		ExcleUtile.exportSimpleExcleByObjs(titles, rltLst, response.getOutputStream());
-		String fileName = "学生工作量统计.xls";
-		fileName = URLEncoder.encode(fileName, "UTF-8");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-		response.setContentType("application/octet-stream;charset=UTF-8");
+
 	}
 
 	/**
