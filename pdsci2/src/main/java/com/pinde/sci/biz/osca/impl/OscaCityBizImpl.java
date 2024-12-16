@@ -2,7 +2,7 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.sci.biz.osca.IOscaCityBiz;
 import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
+import com.pinde.core.model.OscaSkillsAssessment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

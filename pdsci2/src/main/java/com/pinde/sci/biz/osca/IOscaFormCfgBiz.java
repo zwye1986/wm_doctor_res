@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.osca;
 
-import com.pinde.sci.model.mo.OscaFrom;
-import com.pinde.sci.model.mo.OscaSubjectStationFrom;
+import com.pinde.core.model.OscaFrom;
+import com.pinde.core.model.OscaSubjectStationFrom;
 import com.pinde.sci.model.osca.OscaFromCfgExt;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;

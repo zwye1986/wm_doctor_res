@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.LcjnSuppliesMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.LcjnSupplies">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnSupplies">
     <id column="SUPPLIES_FLOW" jdbcType="VARCHAR" property="suppliesFlow" />
     <result column="DICT_ID" jdbcType="VARCHAR" property="dictId" />
     <result column="DICT_NAME" jdbcType="VARCHAR" property="dictName" />
@@ -76,7 +76,7 @@
     SUPPLIES_FLOW, DICT_ID, DICT_NAME, SUPPLIES_PRICE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.LcjnSuppliesExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.LcjnSuppliesExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,13 +100,13 @@
     delete from PDSCI.LCJN_SUPPLIES
     where SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.LcjnSuppliesExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnSuppliesExample">
     delete from PDSCI.LCJN_SUPPLIES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.LcjnSupplies">
+    <insert id="insert" parameterType="com.pinde.core.model.LcjnSupplies">
     insert into PDSCI.LCJN_SUPPLIES (SUPPLIES_FLOW, DICT_ID, DICT_NAME, 
       SUPPLIES_PRICE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -116,7 +116,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.LcjnSupplies">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnSupplies">
     insert into PDSCI.LCJN_SUPPLIES
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="suppliesFlow != null">
@@ -189,7 +189,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.LcjnSuppliesExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.LcjnSuppliesExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.LCJN_SUPPLIES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -253,7 +253,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.LcjnSupplies">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnSupplies">
     update PDSCI.LCJN_SUPPLIES
     <set>
       <if test="dictId != null">
@@ -289,7 +289,7 @@
     </set>
     where SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.LcjnSupplies">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnSupplies">
     update PDSCI.LCJN_SUPPLIES
     set DICT_ID = #{dictId,jdbcType=VARCHAR},
       DICT_NAME = #{dictName,jdbcType=VARCHAR},

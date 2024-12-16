@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaTeaScanDoc;
-import com.pinde.sci.model.mo.OscaTeaScanDocExample;
+import com.pinde.core.model.OscaTeaScanDoc;
+import com.pinde.core.model.OscaTeaScanDocExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

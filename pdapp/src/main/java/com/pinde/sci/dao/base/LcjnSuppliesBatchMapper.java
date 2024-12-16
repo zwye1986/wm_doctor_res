@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.LcjnSuppliesBatch;
 import com.pinde.core.model.LcjnSuppliesBatchExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface LcjnSuppliesBatchMapper {
     int countByExample(LcjnSuppliesBatchExample example);

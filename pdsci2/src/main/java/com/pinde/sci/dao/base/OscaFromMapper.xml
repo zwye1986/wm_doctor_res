@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaFromMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaFrom" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaFrom">
     <id column="FROM_FLOW" property="fromFlow" jdbcType="VARCHAR" />
     <result column="FROM_NAME" property="fromName" jdbcType="VARCHAR" />
     <result column="FROM_TYPE_ID" property="fromTypeId" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.OscaFrom" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.OscaFrom" extends="BaseResultMap">
     <result column="RROM_CONTENT" property="rromContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -86,7 +86,8 @@
   <sql id="Blob_Column_List" >
     RROM_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.OscaFromExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.OscaFromExample">
     select
     <if test="distinct" >
       distinct
@@ -102,7 +103,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaFromExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.OscaFromExample">
     select
     <if test="distinct" >
       distinct
@@ -128,13 +129,13 @@
     delete from PDSCI.OSCA_FROM
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaFromExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaFromExample">
     delete from PDSCI.OSCA_FROM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaFrom" >
+    <insert id="insert" parameterType="com.pinde.core.model.OscaFrom">
     insert into PDSCI.OSCA_FROM (FROM_FLOW, FROM_NAME, FROM_TYPE_ID, 
       FROM_TYPE_NAME, FROM_URL, IS_RELEASED, 
       FROM_SCORE, RECORD_STATUS, CREATE_TIME, 
@@ -148,7 +149,7 @@
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{rromContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaFrom" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaFrom">
     insert into PDSCI.OSCA_FROM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fromFlow != null" >
@@ -245,7 +246,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaFromExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaFromExample" resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_FROM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -345,7 +346,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaFrom" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaFrom">
     update PDSCI.OSCA_FROM
     <set >
       <if test="fromName != null" >
@@ -393,7 +394,7 @@
     </set>
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.OscaFrom" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.OscaFrom">
     update PDSCI.OSCA_FROM
     set FROM_NAME = #{fromName,jdbcType=VARCHAR},
       FROM_TYPE_ID = #{fromTypeId,jdbcType=VARCHAR},
@@ -411,7 +412,7 @@
       RROM_CONTENT = #{rromContent,jdbcType=CLOB}
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaFrom" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaFrom">
     update PDSCI.OSCA_FROM
     set FROM_NAME = #{fromName,jdbcType=VARCHAR},
       FROM_TYPE_ID = #{fromTypeId,jdbcType=VARCHAR},

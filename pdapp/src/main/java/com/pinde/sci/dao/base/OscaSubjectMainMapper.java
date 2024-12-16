@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.OscaSubjectMain;
 import com.pinde.core.model.OscaSubjectMainExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaSubjectMainMapper {
     int countByExample(OscaSubjectMainExample example);

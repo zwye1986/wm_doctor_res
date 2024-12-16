@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.LectureInfoTarget;
+import com.pinde.core.model.LectureInfoTargetExample;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;

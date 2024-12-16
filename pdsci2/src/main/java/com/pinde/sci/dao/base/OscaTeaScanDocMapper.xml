@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.OscaTeaScanDocMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaTeaScanDoc">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaTeaScanDoc">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="CLINICAL_FLOW" jdbcType="VARCHAR" property="clinicalFlow" />
     <result column="CLINICAL_NAME" jdbcType="VARCHAR" property="clinicalName" />
@@ -85,7 +85,7 @@
     ROOM_FLOW, ROOM_NAME, PARTNER_FLOW, PARTNER_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, CODE_INFO, STATUS_ID, STATUS_NAME
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.OscaTeaScanDocExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.OscaTeaScanDocExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -109,13 +109,13 @@
     delete from PDSCI.OSCA_TEA_SCAN_DOC
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaTeaScanDocExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaTeaScanDocExample">
     delete from PDSCI.OSCA_TEA_SCAN_DOC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaTeaScanDoc">
+    <insert id="insert" parameterType="com.pinde.core.model.OscaTeaScanDoc">
     insert into PDSCI.OSCA_TEA_SCAN_DOC (RECORD_FLOW, CLINICAL_FLOW, CLINICAL_NAME, 
       DOCTOR_FLOW, DOCTOR_NAME, EXAM_TIME, 
       ROOM_RECORD_FLOW, ROOM_FLOW, ROOM_NAME, 
@@ -131,7 +131,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{codeInfo,jdbcType=VARCHAR}, #{statusId,jdbcType=VARCHAR}, 
       #{statusName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaTeaScanDoc">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaTeaScanDoc">
     insert into PDSCI.OSCA_TEA_SCAN_DOC
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -252,7 +252,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaTeaScanDocExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaTeaScanDocExample"
+            resultType="java.lang.Integer">
     select count(*) from PDSCI.OSCA_TEA_SCAN_DOC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -348,7 +349,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaTeaScanDoc">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaTeaScanDoc">
     update PDSCI.OSCA_TEA_SCAN_DOC
     <set>
       <if test="clinicalFlow != null">
@@ -408,7 +409,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaTeaScanDoc">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaTeaScanDoc">
     update PDSCI.OSCA_TEA_SCAN_DOC
     set CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
       CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},

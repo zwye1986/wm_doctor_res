@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.LcjnTeaEvaluate;
 import com.pinde.core.model.LcjnTeaEvaluateExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface LcjnTeaEvaluateMapper {
     int countByExample(LcjnTeaEvaluateExample example);

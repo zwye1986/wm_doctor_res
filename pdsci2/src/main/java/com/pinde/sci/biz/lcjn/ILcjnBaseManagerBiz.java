@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.lcjn;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.mo.LcjnFixedAssets;
-import com.pinde.sci.model.mo.LcjnSkillCfg;
-import com.pinde.sci.model.mo.LcjnSkillCfgDetail;
-import com.pinde.sci.model.mo.LcjnSupplies;
+import com.pinde.core.model.LcjnFixedAssets;
+import com.pinde.core.model.LcjnSkillCfg;
+import com.pinde.core.model.LcjnSkillCfgDetail;
+import com.pinde.core.model.LcjnSupplies;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.OscaSkillDocTeaScore;
 import com.pinde.core.model.OscaSkillDocTeaScoreExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaSkillDocTeaScoreMapper {
     int countByExample(OscaSkillDocTeaScoreExample example);

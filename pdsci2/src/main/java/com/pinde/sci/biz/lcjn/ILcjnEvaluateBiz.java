@@ -4,8 +4,8 @@ import com.pinde.core.model.LcjnCourseEvaluate;
 import com.pinde.core.model.LcjnCourseEvaluateDetail;
 import com.pinde.core.model.LcjnCourseInfo;
 import com.pinde.core.model.LcjnCourseTea;
-import com.pinde.sci.model.mo.LcjnTeaEvaluate;
-import com.pinde.sci.model.mo.LcjnTeaEvaluateDetail;
+import com.pinde.core.model.LcjnTeaEvaluate;
+import com.pinde.core.model.LcjnTeaEvaluateDetail;
 
 import java.util.List;
 

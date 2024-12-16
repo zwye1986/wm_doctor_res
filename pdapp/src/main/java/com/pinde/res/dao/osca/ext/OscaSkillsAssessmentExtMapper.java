@@ -1,9 +1,8 @@
 package com.pinde.res.dao.osca.ext;
 
-import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
 import com.pinde.core.model.OscaSkillsAssessment;
 import com.pinde.core.model.OscaSubjectStation;
-import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.OscaDoctorRegist;
 import com.pinde.core.model.OscaDoctorRegistExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaDoctorRegistMapper {
     int countByExample(OscaDoctorRegistExample example);

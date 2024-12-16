@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaOrgSpe;
-import com.pinde.sci.model.mo.OscaOrgSpeExample;
+import com.pinde.core.model.OscaOrgSpe;
+import com.pinde.core.model.OscaOrgSpeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
