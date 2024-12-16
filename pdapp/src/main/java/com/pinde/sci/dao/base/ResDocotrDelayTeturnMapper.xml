@@ -121,7 +121,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCOTR_DELAY_TETURN
+      from RES_DOCOTR_DELAY_TETURN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -132,21 +132,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCOTR_DELAY_TETURN
+      from RES_DOCOTR_DELAY_TETURN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DOCOTR_DELAY_TETURN
+      delete from RES_DOCOTR_DELAY_TETURN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDocotrDelayTeturnExample" >
-    delete from PDSCI.RES_DOCOTR_DELAY_TETURN
+      delete from RES_DOCOTR_DELAY_TETURN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResDocotrDelayTeturn" >
-    insert into PDSCI.RES_DOCOTR_DELAY_TETURN (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into RES_DOCOTR_DELAY_TETURN (RECORD_FLOW, ORG_FLOW, ORG_NAME,
       SESSION_NUMBER, TRAINING_YEARS, DOCTOR_FLOW, 
       DOCTOR_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
       TRAINING_TYPE_ID, TRAINING_TYPE_NAME, DOCTOR_TYPE_ID, 
@@ -178,7 +178,7 @@
       #{secondSpeName,jdbcType=VARCHAR}, #{globalCheckFile,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDocotrDelayTeturn" >
-    insert into PDSCI.RES_DOCOTR_DELAY_TETURN
+      insert into RES_DOCOTR_DELAY_TETURN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -449,13 +449,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResDocotrDelayTeturnExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DOCOTR_DELAY_TETURN
+      select count(*) from RES_DOCOTR_DELAY_TETURN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DOCOTR_DELAY_TETURN
+      update RES_DOCOTR_DELAY_TETURN
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -595,7 +595,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DOCOTR_DELAY_TETURN
+      update RES_DOCOTR_DELAY_TETURN
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -645,7 +645,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDocotrDelayTeturn" >
-    update PDSCI.RES_DOCOTR_DELAY_TETURN
+      update RES_DOCOTR_DELAY_TETURN
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -780,7 +780,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDocotrDelayTeturn" >
-    update PDSCI.RES_DOCOTR_DELAY_TETURN
+      update RES_DOCOTR_DELAY_TETURN
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},

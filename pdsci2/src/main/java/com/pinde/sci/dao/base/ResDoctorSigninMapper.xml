@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SIGNIN
+      from RES_DOCTOR_SIGNIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SIGNIN
+      from RES_DOCTOR_SIGNIN
     where REPORT_FLOW = #{reportFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DOCTOR_SIGNIN
+      delete from RES_DOCTOR_SIGNIN
     where REPORT_FLOW = #{reportFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSigninExample" >
-    delete from PDSCI.RES_DOCTOR_SIGNIN
+      delete from RES_DOCTOR_SIGNIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorSignin" >
-    insert into PDSCI.RES_DOCTOR_SIGNIN (REPORT_FLOW, CODE_INFO, SIGNIN_TIME, 
+      insert into RES_DOCTOR_SIGNIN (REPORT_FLOW, CODE_INFO, SIGNIN_TIME,
       SIGNIN_DATE, DOCTOR_FLOW, TEACHER_USER_FLOW, 
       RESULT_FLOW, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorSignin" >
-    insert into PDSCI.RES_DOCTOR_SIGNIN
+      insert into RES_DOCTOR_SIGNIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="reportFlow != null" >
         REPORT_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSigninExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DOCTOR_SIGNIN
+      select count(*) from RES_DOCTOR_SIGNIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DOCTOR_SIGNIN
+      update RES_DOCTOR_SIGNIN
     <set >
       <if test="record.reportFlow != null" >
         REPORT_FLOW = #{record.reportFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DOCTOR_SIGNIN
+      update RES_DOCTOR_SIGNIN
     set REPORT_FLOW = #{record.reportFlow,jdbcType=VARCHAR},
       CODE_INFO = #{record.codeInfo,jdbcType=VARCHAR},
       SIGNIN_TIME = #{record.signinTime,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorSignin" >
-    update PDSCI.RES_DOCTOR_SIGNIN
+      update RES_DOCTOR_SIGNIN
     <set >
       <if test="codeInfo != null" >
         CODE_INFO = #{codeInfo,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where REPORT_FLOW = #{reportFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorSignin" >
-    update PDSCI.RES_DOCTOR_SIGNIN
+      update RES_DOCTOR_SIGNIN
     set CODE_INFO = #{codeInfo,jdbcType=VARCHAR},
       SIGNIN_TIME = #{signinTime,jdbcType=VARCHAR},
       SIGNIN_DATE = #{signinDate,jdbcType=VARCHAR},

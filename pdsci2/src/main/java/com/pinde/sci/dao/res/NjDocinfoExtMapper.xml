@@ -136,7 +136,7 @@
             distinct
         </if>
         <include refid="Base_Column_List" />
-        from PDSCI.TJ_DOCINFO
+        from TJ_DOCINFO
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>

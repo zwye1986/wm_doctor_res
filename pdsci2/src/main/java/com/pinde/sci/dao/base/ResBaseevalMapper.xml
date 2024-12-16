@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASEEVAL
+      from RES_BASEEVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASEEVAL
+      from RES_BASEEVAL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_BASEEVAL
+      delete from RES_BASEEVAL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample">
-    delete from PDSCI.RES_BASEEVAL
+      delete from RES_BASEEVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBaseeval">
-    insert into PDSCI.RES_BASEEVAL (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      insert into RES_BASEEVAL (RECORD_FLOW, USER_FLOW, USER_NAME,
       EVAL_YEAR, FORM_FLOW, FORM_NAME, 
       EVAL_DATE, STATUS_ID, STATUS_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -127,7 +127,7 @@
       #{speName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBaseeval">
-    insert into PDSCI.RES_BASEEVAL
+      insert into RES_BASEEVAL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -230,13 +230,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseevalExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_BASEEVAL
+      select count(*) from RES_BASEEVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_BASEEVAL
+      update RES_BASEEVAL
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_BASEEVAL
+      update RES_BASEEVAL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBaseeval">
-    update PDSCI.RES_BASEEVAL
+      update RES_BASEEVAL
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBaseeval">
-    update PDSCI.RES_BASEEVAL
+      update RES_BASEEVAL
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
       EVAL_YEAR = #{evalYear,jdbcType=VARCHAR},

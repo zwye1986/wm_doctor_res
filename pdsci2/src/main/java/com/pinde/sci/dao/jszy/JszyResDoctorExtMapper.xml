@@ -211,12 +211,12 @@
 
 	<select id="searchResDoctorByMap"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
 		select ed.* from res_doctor ed
-		LEFT JOIN pdsci.SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
 		where ed.record_status='Y'
 		AND U.RECORD_STATUS='Y'
 		AND ed.org_flow IN (SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		<if test="cityId!=null and cityId!=''">
 			AND ORG_CITY_ID = #{cityId}
 		</if>
@@ -246,7 +246,7 @@
 	</select>
 	<select id="findWaitPassCountByOrgFlow"  resultType="java.lang.Integer">
 		SELECT COUNT(0)
-		FROM pdsci.res_doctor rd
+        FROM res_doctor rd
 		WHERE rd.record_status = 'Y'
 		<if test="list!=null and list.size>0">
 			and ORG_FLOW in

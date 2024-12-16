@@ -204,7 +204,7 @@
             <bind name="userName" value="'%'+userName+'%'"/>
             and DOCTOR_FLOW in (
             select USER_FLOW
-            from pdsci.SYS_USER
+            from SYS_USER
             where RECORD_STATUS ='Y'
             and USER_NAME like #{userName}
             )

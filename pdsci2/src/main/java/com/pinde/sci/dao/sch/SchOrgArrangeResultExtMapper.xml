@@ -221,7 +221,7 @@
         </if>
         and STANDARD_DEPT_ID in (
             SELECT STANDARD_DEPT_ID
-            FROM PDSCI.SCH_DEPT_REL
+        FROM SCH_DEPT_REL
             WHERE RECORD_STATUS = 'Y'
             AND SCH_DEPT_FLOW =#{schDeptFlow}
         )

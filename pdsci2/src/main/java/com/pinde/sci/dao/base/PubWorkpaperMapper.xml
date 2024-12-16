@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubWorkpaperMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubWorkpaper" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubWorkpaper">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="WORKPAPER_NAME" property="workpaperName" jdbcType="VARCHAR" />
     <result column="WORKPAPER_TYPE_ID" property="workpaperTypeId" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PubWorkpaper" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.PubWorkpaper" extends="BaseResultMap">
     <result column="WORKPAPER_CONTENT" property="workpaperContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -85,7 +85,8 @@
   <sql id="Blob_Column_List" >
     WORKPAPER_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.PubWorkpaperExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.PubWorkpaperExample">
     select
     <if test="distinct" >
       distinct
@@ -93,7 +94,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_WORKPAPER
+        from PUB_WORKPAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -101,13 +102,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubWorkpaperExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubWorkpaperExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_WORKPAPER
+        from PUB_WORKPAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +121,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_WORKPAPER
+      from PUB_WORKPAPER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_WORKPAPER
+      delete from PUB_WORKPAPER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubWorkpaperExample" >
-    delete from PDSCI.PUB_WORKPAPER
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubWorkpaperExample">
+        delete from PUB_WORKPAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubWorkpaper" >
-    insert into PDSCI.PUB_WORKPAPER (RECORD_FLOW, WORKPAPER_NAME, WORKPAPER_TYPE_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubWorkpaper">
+        insert into PUB_WORKPAPER (RECORD_FLOW, WORKPAPER_NAME, WORKPAPER_TYPE_ID,
       WORKPAPER_TYPE_NAME, WORKPAPER_STATUS_ID, WORKPAPER_STATUS_NAME, 
       REPORT_USER_NAME, REPORT_TIME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -145,8 +146,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{workpaperContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubWorkpaper" >
-    insert into PDSCI.PUB_WORKPAPER
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubWorkpaper">
+        insert into PUB_WORKPAPER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -236,14 +237,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubWorkpaperExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_WORKPAPER
+    <select id="countByExample" parameterType="com.pinde.core.model.PubWorkpaperExample" resultType="java.lang.Integer">
+        select count(*) from PUB_WORKPAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_WORKPAPER
+      update PUB_WORKPAPER
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -293,7 +294,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.PUB_WORKPAPER
+      update PUB_WORKPAPER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       WORKPAPER_NAME = #{record.workpaperName,jdbcType=VARCHAR},
       WORKPAPER_TYPE_ID = #{record.workpaperTypeId,jdbcType=VARCHAR},
@@ -313,7 +314,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_WORKPAPER
+      update PUB_WORKPAPER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       WORKPAPER_NAME = #{record.workpaperName,jdbcType=VARCHAR},
       WORKPAPER_TYPE_ID = #{record.workpaperTypeId,jdbcType=VARCHAR},
@@ -331,8 +332,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubWorkpaper" >
-    update PDSCI.PUB_WORKPAPER
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubWorkpaper">
+        update PUB_WORKPAPER
     <set >
       <if test="workpaperName != null" >
         WORKPAPER_NAME = #{workpaperName,jdbcType=VARCHAR},
@@ -376,8 +377,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PubWorkpaper" >
-    update PDSCI.PUB_WORKPAPER
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubWorkpaper">
+        update PUB_WORKPAPER
     set WORKPAPER_NAME = #{workpaperName,jdbcType=VARCHAR},
       WORKPAPER_TYPE_ID = #{workpaperTypeId,jdbcType=VARCHAR},
       WORKPAPER_TYPE_NAME = #{workpaperTypeName,jdbcType=VARCHAR},
@@ -393,8 +394,8 @@
       WORKPAPER_CONTENT = #{workpaperContent,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubWorkpaper" >
-    update PDSCI.PUB_WORKPAPER
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubWorkpaper">
+        update PUB_WORKPAPER
     set WORKPAPER_NAME = #{workpaperName,jdbcType=VARCHAR},
       WORKPAPER_TYPE_ID = #{workpaperTypeId,jdbcType=VARCHAR},
       WORKPAPER_TYPE_NAME = #{workpaperTypeName,jdbcType=VARCHAR},

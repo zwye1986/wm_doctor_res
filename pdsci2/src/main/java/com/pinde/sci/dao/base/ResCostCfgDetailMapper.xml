@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_COST_CFG_DETAIL
+      from RES_COST_CFG_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_COST_CFG_DETAIL
+      from RES_COST_CFG_DETAIL
     where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_COST_CFG_DETAIL
+      delete from RES_COST_CFG_DETAIL
     where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResCostCfgDetailExample" >
-    delete from PDSCI.RES_COST_CFG_DETAIL
+      delete from RES_COST_CFG_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResCostCfgDetail" >
-    insert into PDSCI.RES_COST_CFG_DETAIL (DETAIL_FLOW, MAIN_FLOW, ORG_FLOW, 
+      insert into RES_COST_CFG_DETAIL (DETAIL_FLOW, MAIN_FLOW, ORG_FLOW,
       ORG_NAME, ITEM_ID, ITEM_NAME, 
       START_DATE, END_DATE, TEA_COST, 
       KM_COST, HEAD_COST, SPE_COST, 
@@ -128,7 +128,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResCostCfgDetail" >
-    insert into PDSCI.RES_COST_CFG_DETAIL
+      insert into RES_COST_CFG_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="detailFlow != null" >
         DETAIL_FLOW,
@@ -237,13 +237,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResCostCfgDetailExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_COST_CFG_DETAIL
+      select count(*) from RES_COST_CFG_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_COST_CFG_DETAIL
+      update RES_COST_CFG_DETAIL
     <set >
       <if test="record.detailFlow != null" >
         DETAIL_FLOW = #{record.detailFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_COST_CFG_DETAIL
+      update RES_COST_CFG_DETAIL
     set DETAIL_FLOW = #{record.detailFlow,jdbcType=VARCHAR},
       MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResCostCfgDetail" >
-    update PDSCI.RES_COST_CFG_DETAIL
+      update RES_COST_CFG_DETAIL
     <set >
       <if test="mainFlow != null" >
         MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
@@ -379,7 +379,7 @@
     where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResCostCfgDetail" >
-    update PDSCI.RES_COST_CFG_DETAIL
+      update RES_COST_CFG_DETAIL
     set MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

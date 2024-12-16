@@ -91,7 +91,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+        from JSRES_DOCTOR_GRADUATION_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,21 +102,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+      from JSRES_DOCTOR_GRADUATION_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+      delete from JSRES_DOCTOR_GRADUATION_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorGraduationInfoExample">
-    delete from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+        delete from JSRES_DOCTOR_GRADUATION_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorGraduationInfo">
-    insert into PDSCI.JSRES_DOCTOR_GRADUATION_INFO (INFO_FLOW, APPLY_FLOW, RECRUIT_FLOW, 
+        insert into JSRES_DOCTOR_GRADUATION_INFO (INFO_FLOW, APPLY_FLOW, RECRUIT_FLOW,
       ROTATION_FLOW, DOCTOR_FLOW, IMAGE_COUNT, 
       IMAGE_ALL_COUNT, AVG_IMAGE_COUNT, DATA_COUNT, 
       DATA_ALL_COUNT, AVG_DATA_COUNT, DATA_TIME, 
@@ -132,7 +132,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorGraduationInfo">
-    insert into PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+        insert into JSRES_DOCTOR_GRADUATION_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="infoFlow != null" >
         INFO_FLOW,
@@ -248,13 +248,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorGraduationInfoExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+        select count(*) from JSRES_DOCTOR_GRADUATION_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+      update JSRES_DOCTOR_GRADUATION_INFO
     <set >
       <if test="record.infoFlow != null" >
         INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
@@ -316,7 +316,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+      update JSRES_DOCTOR_GRADUATION_INFO
     set INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
       APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
@@ -340,7 +340,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorGraduationInfo">
-    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+        update JSRES_DOCTOR_GRADUATION_INFO
     <set >
       <if test="applyFlow != null" >
         APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
@@ -397,7 +397,7 @@
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorGraduationInfo">
-    update PDSCI.JSRES_DOCTOR_GRADUATION_INFO
+        update JSRES_DOCTOR_GRADUATION_INFO
     set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
       RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},

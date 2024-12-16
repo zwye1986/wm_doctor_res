@@ -21,7 +21,7 @@ import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.sch.DoctorSearchForm;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.core.model.PubUserResume;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;

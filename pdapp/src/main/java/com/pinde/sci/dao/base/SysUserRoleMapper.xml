@@ -83,7 +83,7 @@
       distinct
     </if>
     *
-    from PDSCI.SYS_USER_ROLE
+      from SYS_USER_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER_ROLE
+      from SYS_USER_ROLE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_USER_ROLE
+      delete from SYS_USER_ROLE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysUserRoleExample" >
-    delete from PDSCI.SYS_USER_ROLE
+      delete from SYS_USER_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysUserRole" >
-    insert into PDSCI.SYS_USER_ROLE (RECORD_FLOW, USER_FLOW, ORG_FLOW, 
+      insert into SYS_USER_ROLE (RECORD_FLOW, USER_FLOW, ORG_FLOW,
       WS_ID, ROLE_FLOW, AUTH_TIME, 
       AUTH_USER_FLOW, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysUserRole" >
-    insert into PDSCI.SYS_USER_ROLE
+      insert into SYS_USER_ROLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysUserRoleExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_USER_ROLE
+      select count(*) from SYS_USER_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_USER_ROLE
+      update SYS_USER_ROLE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_USER_ROLE
+      update SYS_USER_ROLE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysUserRole" >
-    update PDSCI.SYS_USER_ROLE
+      update SYS_USER_ROLE
     <set >
       <if test="userFlow != null" >
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysUserRole" >
-    update PDSCI.SYS_USER_ROLE
+      update SYS_USER_ROLE
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       WS_ID = #{wsId,jdbcType=VARCHAR},

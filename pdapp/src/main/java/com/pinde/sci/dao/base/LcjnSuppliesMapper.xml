@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_SUPPLIES
+      from LCJN_SUPPLIES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_SUPPLIES
+      from LCJN_SUPPLIES
     where SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_SUPPLIES
+      delete from LCJN_SUPPLIES
     where SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnSuppliesExample">
-    delete from PDSCI.LCJN_SUPPLIES
+      delete from LCJN_SUPPLIES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.LcjnSupplies">
-    insert into PDSCI.LCJN_SUPPLIES (SUPPLIES_FLOW, DICT_ID, DICT_NAME, 
+      insert into LCJN_SUPPLIES (SUPPLIES_FLOW, DICT_ID, DICT_NAME,
       SUPPLIES_PRICE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       ORG_FLOW, ORG_NAME)
@@ -117,7 +117,7 @@
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnSupplies">
-    insert into PDSCI.LCJN_SUPPLIES
+      insert into LCJN_SUPPLIES
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="suppliesFlow != null">
         SUPPLIES_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.LcjnSuppliesExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_SUPPLIES
+      select count(*) from LCJN_SUPPLIES
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_SUPPLIES
+      update LCJN_SUPPLIES
     <set>
       <if test="record.suppliesFlow != null">
         SUPPLIES_FLOW = #{record.suppliesFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_SUPPLIES
+      update LCJN_SUPPLIES
     set SUPPLIES_FLOW = #{record.suppliesFlow,jdbcType=VARCHAR},
       DICT_ID = #{record.dictId,jdbcType=VARCHAR},
       DICT_NAME = #{record.dictName,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnSupplies">
-    update PDSCI.LCJN_SUPPLIES
+      update LCJN_SUPPLIES
     <set>
       <if test="dictId != null">
         DICT_ID = #{dictId,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnSupplies">
-    update PDSCI.LCJN_SUPPLIES
+      update LCJN_SUPPLIES
     set DICT_ID = #{dictId,jdbcType=VARCHAR},
       DICT_NAME = #{dictName,jdbcType=VARCHAR},
       SUPPLIES_PRICE = #{suppliesPrice,jdbcType=VARCHAR},

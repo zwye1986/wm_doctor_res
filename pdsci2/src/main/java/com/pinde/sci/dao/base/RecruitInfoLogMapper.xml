@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_INFO_LOG
+      from RECRUIT_INFO_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_INFO_LOG
+      from RECRUIT_INFO_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_INFO_LOG
+      delete from RECRUIT_INFO_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitInfoLogExample" >
-    delete from PDSCI.RECRUIT_INFO_LOG
+      delete from RECRUIT_INFO_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
-    insert into PDSCI.RECRUIT_INFO_LOG (LOG_FLOW, RECRUIT_FLOW, OPER_USER_FLOW, 
+      insert into RECRUIT_INFO_LOG (LOG_FLOW, RECRUIT_FLOW, OPER_USER_FLOW,
       OPER_USER_NAME, OPER_TYPE_ID, OPER_TYPE_NAME, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, OPER_TIME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -127,7 +127,7 @@
       #{auditTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
-    insert into PDSCI.RECRUIT_INFO_LOG
+      insert into RECRUIT_INFO_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="logFlow != null" >
         LOG_FLOW,
@@ -230,13 +230,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitInfoLogExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_INFO_LOG
+      select count(*) from RECRUIT_INFO_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_INFO_LOG
+      update RECRUIT_INFO_LOG
     <set >
       <if test="record.logFlow != null" >
         LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_INFO_LOG
+      update RECRUIT_INFO_LOG
     set LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
-    update PDSCI.RECRUIT_INFO_LOG
+      update RECRUIT_INFO_LOG
     <set >
       <if test="recruitFlow != null" >
         RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitInfoLog" >
-    update PDSCI.RECRUIT_INFO_LOG
+      update RECRUIT_INFO_LOG
     set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{operUserName,jdbcType=VARCHAR},

@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      from SYS_MONTHLY_TEA_WORK_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      from SYS_MONTHLY_TEA_WORK_INFO
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      delete from SYS_MONTHLY_TEA_WORK_INFO
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyTeaWorkInfoExample" >
-    delete from PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      delete from SYS_MONTHLY_TEA_WORK_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysMonthlyTeaWorkInfo" >
-    insert into PDSCI.SYS_MONTHLY_TEA_WORK_INFO (SMRDI_FLOW, DATE_MONTH, ORG_FLOW, 
+      insert into SYS_MONTHLY_TEA_WORK_INFO (SMRDI_FLOW, DATE_MONTH, ORG_FLOW,
       ORG_NAME, DEPT_FLOW, DEPT_NAME, 
       TEACHER_USER_FLOW, TEACHER_USER_NAME, USER_CODE, 
       ACTIVITY_NUM, RECORD_STATUS, CREATE_TIME, 
@@ -126,7 +126,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyTeaWorkInfo" >
-    insert into PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      insert into SYS_MONTHLY_TEA_WORK_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smrdiFlow != null" >
         SMRDI_FLOW,
@@ -223,13 +223,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyTeaWorkInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      select count(*) from SYS_MONTHLY_TEA_WORK_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      update SYS_MONTHLY_TEA_WORK_INFO
     <set >
       <if test="record.smrdiFlow != null" >
         SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      update SYS_MONTHLY_TEA_WORK_INFO
     set SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
       DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthlyTeaWorkInfo" >
-    update PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      update SYS_MONTHLY_TEA_WORK_INFO
     <set >
       <if test="dateMonth != null" >
         DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthlyTeaWorkInfo" >
-    update PDSCI.SYS_MONTHLY_TEA_WORK_INFO
+      update SYS_MONTHLY_TEA_WORK_INFO
     set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

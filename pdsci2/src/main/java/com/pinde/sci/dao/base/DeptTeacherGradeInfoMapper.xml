@@ -116,7 +116,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.DEPT_TEACHER_GRADE_INFO
+        from DEPT_TEACHER_GRADE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -131,7 +131,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.DEPT_TEACHER_GRADE_INFO
+        from DEPT_TEACHER_GRADE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -144,21 +144,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.DEPT_TEACHER_GRADE_INFO
+      from DEPT_TEACHER_GRADE_INFO
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.DEPT_TEACHER_GRADE_INFO
+      delete from DEPT_TEACHER_GRADE_INFO
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.DeptTeacherGradeInfoExample">
-    delete from PDSCI.DEPT_TEACHER_GRADE_INFO
+        delete from DEPT_TEACHER_GRADE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.DeptTeacherGradeInfo">
-    insert into PDSCI.DEPT_TEACHER_GRADE_INFO (REC_FLOW, ORG_FLOW, ORG_NAME, 
+        insert into DEPT_TEACHER_GRADE_INFO (REC_FLOW, ORG_FLOW, ORG_NAME,
       DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, REC_TYPE_ID, REC_TYPE_NAME, 
       REC_VERSION, STATUS_ID, STATUS_NAME, 
@@ -184,7 +184,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.DeptTeacherGradeInfo">
-    insert into PDSCI.DEPT_TEACHER_GRADE_INFO
+        insert into DEPT_TEACHER_GRADE_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recFlow != null" >
         REC_FLOW,
@@ -390,13 +390,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.DeptTeacherGradeInfoExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.DEPT_TEACHER_GRADE_INFO
+        select count(*) from DEPT_TEACHER_GRADE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.DEPT_TEACHER_GRADE_INFO
+      update DEPT_TEACHER_GRADE_INFO
     <set >
       <if test="record.recFlow != null" >
         REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
@@ -503,7 +503,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.DEPT_TEACHER_GRADE_INFO
+      update DEPT_TEACHER_GRADE_INFO
     set REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -542,7 +542,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.DEPT_TEACHER_GRADE_INFO
+      update DEPT_TEACHER_GRADE_INFO
     set REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -580,7 +580,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DeptTeacherGradeInfo">
-    update PDSCI.DEPT_TEACHER_GRADE_INFO
+        update DEPT_TEACHER_GRADE_INFO
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -682,7 +682,7 @@
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.DeptTeacherGradeInfo">
-    update PDSCI.DEPT_TEACHER_GRADE_INFO
+        update DEPT_TEACHER_GRADE_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
@@ -718,7 +718,7 @@
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DeptTeacherGradeInfo">
-    update PDSCI.DEPT_TEACHER_GRADE_INFO
+        update DEPT_TEACHER_GRADE_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},

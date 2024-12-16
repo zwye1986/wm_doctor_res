@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubProjAuthor;
-import com.pinde.sci.model.mo.PubProjAuthorExample;
+import com.pinde.core.model.PubProjAuthor;
+import com.pinde.core.model.PubProjAuthorExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

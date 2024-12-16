@@ -93,7 +93,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SUBJECT_MAIN
+        from OSCA_SUBJECT_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -104,21 +104,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SUBJECT_MAIN
+      from OSCA_SUBJECT_MAIN
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_SUBJECT_MAIN
+      delete from OSCA_SUBJECT_MAIN
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSubjectMainExample">
-    delete from PDSCI.OSCA_SUBJECT_MAIN
+        delete from OSCA_SUBJECT_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.OscaSubjectMain">
-    insert into PDSCI.OSCA_SUBJECT_MAIN (SUBJECT_FLOW, SUBJECT_NAME, TRAINING_SPE_ID, 
+        insert into OSCA_SUBJECT_MAIN (SUBJECT_FLOW, SUBJECT_NAME, TRAINING_SPE_ID,
       TRAINING_SPE_NAME, ACTION_TYPE_ID, ACTION_TYPE_NAME, 
       STATION_NUM, IS_RELEASED, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -134,7 +134,7 @@
       #{trainingTypeId,jdbcType=VARCHAR}, #{trainingTypeName,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSubjectMain">
-    insert into PDSCI.OSCA_SUBJECT_MAIN
+        insert into OSCA_SUBJECT_MAIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
         SUBJECT_FLOW,
@@ -262,13 +262,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.OscaSubjectMainExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_SUBJECT_MAIN
+        select count(*) from OSCA_SUBJECT_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_SUBJECT_MAIN
+      update OSCA_SUBJECT_MAIN
     <set >
       <if test="record.subjectFlow != null" >
         SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
@@ -336,7 +336,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_SUBJECT_MAIN
+      update OSCA_SUBJECT_MAIN
     set SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
       TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
@@ -362,7 +362,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSubjectMain">
-    update PDSCI.OSCA_SUBJECT_MAIN
+        update OSCA_SUBJECT_MAIN
     <set >
       <if test="subjectName != null" >
         SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
@@ -425,7 +425,7 @@
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSubjectMain">
-    update PDSCI.OSCA_SUBJECT_MAIN
+        update OSCA_SUBJECT_MAIN
     set SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
       TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},

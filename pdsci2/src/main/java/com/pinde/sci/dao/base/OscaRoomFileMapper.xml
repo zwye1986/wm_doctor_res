@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_ROOM_FILE
+        from OSCA_ROOM_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_ROOM_FILE
+      from OSCA_ROOM_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_ROOM_FILE
+      delete from OSCA_ROOM_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaRoomFileExample">
-    delete from PDSCI.OSCA_ROOM_FILE
+        delete from OSCA_ROOM_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.OscaRoomFile">
-    insert into PDSCI.OSCA_ROOM_FILE (RECORD_FLOW, ROOM_FLOW, FILE_FLOW, 
+        insert into OSCA_ROOM_FILE (RECORD_FLOW, ROOM_FLOW, FILE_FLOW,
       ORG_NAME, ORG_FLOW, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.OscaRoomFile">
-    insert into PDSCI.OSCA_ROOM_FILE
+        insert into OSCA_ROOM_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.OscaRoomFileExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_ROOM_FILE
+        select count(*) from OSCA_ROOM_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_ROOM_FILE
+      update OSCA_ROOM_FILE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_ROOM_FILE
+      update OSCA_ROOM_FILE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
       FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaRoomFile">
-    update PDSCI.OSCA_ROOM_FILE
+        update OSCA_ROOM_FILE
     <set >
       <if test="roomFlow != null" >
         ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaRoomFile">
-    update PDSCI.OSCA_ROOM_FILE
+        update OSCA_ROOM_FILE
     set ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
       FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubProjProcessMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubProjProcess" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubProjProcess">
     <id column="PROCESS_FLOW" property="processFlow" jdbcType="VARCHAR" />
     <result column="PROJ_FLOW" property="projFlow" jdbcType="VARCHAR" />
     <result column="PROJ_STAGE_ID" property="projStageId" jdbcType="VARCHAR" />
@@ -88,13 +88,13 @@
     OPER_USER_NAME, OPER_ORG_FLOW, OPER_ORG_NAME, OPER_TIME, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubProjProcessExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubProjProcessExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_PROCESS
+        from PUB_PROJ_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -105,21 +105,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_PROCESS
+      from PUB_PROJ_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_PROJ_PROCESS
+      delete from PUB_PROJ_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubProjProcessExample" >
-    delete from PDSCI.PUB_PROJ_PROCESS
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubProjProcessExample">
+        delete from PUB_PROJ_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubProjProcess" >
-    insert into PDSCI.PUB_PROJ_PROCESS (PROCESS_FLOW, PROJ_FLOW, PROJ_STAGE_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubProjProcess">
+        insert into PUB_PROJ_PROCESS (PROCESS_FLOW, PROJ_FLOW, PROJ_STAGE_ID,
       PROJ_STAGE_NAME, PROJ_STATUS_ID, PROJ_STATUS_NAME, 
       REC_FLOW, REC_TYPE_ID, REC_TYPE_NAME, 
       PROCESS_REMARK, AUDIT_CONTENT, OPER_USER_FLOW, 
@@ -136,8 +136,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubProjProcess" >
-    insert into PDSCI.PUB_PROJ_PROCESS
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubProjProcess">
+        insert into PUB_PROJ_PROCESS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="processFlow != null" >
         PROCESS_FLOW,
@@ -269,14 +269,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubProjProcessExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_PROJ_PROCESS
+    <select id="countByExample" parameterType="com.pinde.core.model.PubProjProcessExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_PROJ_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_PROJ_PROCESS
+      update PUB_PROJ_PROCESS
     <set >
       <if test="record.processFlow != null" >
         PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
@@ -347,7 +348,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_PROJ_PROCESS
+      update PUB_PROJ_PROCESS
     set PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
       PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       PROJ_STAGE_ID = #{record.projStageId,jdbcType=VARCHAR},
@@ -373,8 +374,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubProjProcess" >
-    update PDSCI.PUB_PROJ_PROCESS
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubProjProcess">
+        update PUB_PROJ_PROCESS
     <set >
       <if test="projFlow != null" >
         PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
@@ -439,8 +440,8 @@
     </set>
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubProjProcess" >
-    update PDSCI.PUB_PROJ_PROCESS
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubProjProcess">
+        update PUB_PROJ_PROCESS
     set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
       PROJ_STAGE_ID = #{projStageId,jdbcType=VARCHAR},
       PROJ_STAGE_NAME = #{projStageName,jdbcType=VARCHAR},

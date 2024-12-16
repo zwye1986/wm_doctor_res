@@ -2,7 +2,7 @@ package com.pinde.sci.model.res;
 
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.core.model.PubUserResume;
 import com.pinde.sci.model.mo.ResAnnualAssessmentRecord;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.StuUserResume;

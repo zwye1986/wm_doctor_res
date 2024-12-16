@@ -109,7 +109,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SCH_PROCESS
+      from RES_DOCTOR_SCH_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -121,7 +121,7 @@
   <select id="searchByResultFlowPartitionList" resultType="com.pinde.sci.model.mo.ResDoctorSchProcess">
     select
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SCH_PROCESS
+      from RES_DOCTOR_SCH_PROCESS
     where record_status = 'Y'
     <foreach collection="resultFlowListList" item="resultFlowList" open="and (" close=")" separator=" or ">
         sch_result_flow in
@@ -134,21 +134,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SCH_PROCESS
+      from RES_DOCTOR_SCH_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DOCTOR_SCH_PROCESS
+      delete from RES_DOCTOR_SCH_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessExample" >
-    delete from PDSCI.RES_DOCTOR_SCH_PROCESS
+      delete from RES_DOCTOR_SCH_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
-    insert into PDSCI.RES_DOCTOR_SCH_PROCESS (PROCESS_FLOW, USER_FLOW, ORG_FLOW, 
+      insert into RES_DOCTOR_SCH_PROCESS (PROCESS_FLOW, USER_FLOW, ORG_FLOW,
       ORG_NAME, DEPT_FLOW, DEPT_NAME, 
       SCH_DEPT_FLOW, SCH_DEPT_NAME, SCH_RESULT_FLOW, 
       SCH_START_DATE, SCH_END_DATE, START_DATE, 
@@ -174,7 +174,7 @@
       #{temporaryAuditStatusName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
-    insert into PDSCI.RES_DOCTOR_SCH_PROCESS
+      insert into RES_DOCTOR_SCH_PROCESS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="processFlow != null" >
         PROCESS_FLOW,
@@ -385,13 +385,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DOCTOR_SCH_PROCESS
+      select count(*) from RES_DOCTOR_SCH_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DOCTOR_SCH_PROCESS
+      update RES_DOCTOR_SCH_PROCESS
     <set >
       <if test="record.processFlow != null" >
         PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
@@ -501,7 +501,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DOCTOR_SCH_PROCESS
+      update RES_DOCTOR_SCH_PROCESS
     set PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -541,7 +541,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
-    update PDSCI.RES_DOCTOR_SCH_PROCESS
+      update RES_DOCTOR_SCH_PROCESS
     <set >
       <if test="userFlow != null" >
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -646,7 +646,7 @@
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
-    update PDSCI.RES_DOCTOR_SCH_PROCESS
+      update RES_DOCTOR_SCH_PROCESS
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubRegulationMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubRegulation" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubRegulation">
     <id column="REGULATION_FLOW" property="regulationFlow" jdbcType="VARCHAR" />
     <result column="REGULATION_NAME" property="regulationName" jdbcType="VARCHAR" />
     <result column="REGULATION_CODE" property="regulationCode" jdbcType="VARCHAR" />
@@ -85,13 +85,13 @@
     ORDINAL, REGULATION_REMARK, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubRegulationExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubRegulationExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_REGULATION
+        from PUB_REGULATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,21 +102,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_REGULATION
+      from PUB_REGULATION
     where REGULATION_FLOW = #{regulationFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_REGULATION
+      delete from PUB_REGULATION
     where REGULATION_FLOW = #{regulationFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubRegulationExample" >
-    delete from PDSCI.PUB_REGULATION
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubRegulationExample">
+        delete from PUB_REGULATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubRegulation" >
-    insert into PDSCI.PUB_REGULATION (REGULATION_FLOW, REGULATION_NAME, REGULATION_CODE, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubRegulation">
+        insert into PUB_REGULATION (REGULATION_FLOW, REGULATION_NAME, REGULATION_CODE,
       REGULATION_CATEGORY_ID, REGULATION_CATEGORY_NAME, 
       REGULATION_TYPE_ID, REGULATION_TYPE_NAME, FILE_FLOW, 
       DEPT_FLOW, DEPT_NAME, REGULATION_YEAR, 
@@ -131,8 +131,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubRegulation" >
-    insert into PDSCI.PUB_REGULATION
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubRegulation">
+        insert into PUB_REGULATION
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="regulationFlow != null" >
         REGULATION_FLOW,
@@ -246,14 +246,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubRegulationExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_REGULATION
+    <select id="countByExample" parameterType="com.pinde.core.model.PubRegulationExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_REGULATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_REGULATION
+      update PUB_REGULATION
     <set >
       <if test="record.regulationFlow != null" >
         REGULATION_FLOW = #{record.regulationFlow,jdbcType=VARCHAR},
@@ -315,7 +316,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_REGULATION
+      update PUB_REGULATION
     set REGULATION_FLOW = #{record.regulationFlow,jdbcType=VARCHAR},
       REGULATION_NAME = #{record.regulationName,jdbcType=VARCHAR},
       REGULATION_CODE = #{record.regulationCode,jdbcType=VARCHAR},
@@ -338,8 +339,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubRegulation" >
-    update PDSCI.PUB_REGULATION
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubRegulation">
+        update PUB_REGULATION
     <set >
       <if test="regulationName != null" >
         REGULATION_NAME = #{regulationName,jdbcType=VARCHAR},
@@ -395,8 +396,8 @@
     </set>
     where REGULATION_FLOW = #{regulationFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubRegulation" >
-    update PDSCI.PUB_REGULATION
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubRegulation">
+        update PUB_REGULATION
     set REGULATION_NAME = #{regulationName,jdbcType=VARCHAR},
       REGULATION_CODE = #{regulationCode,jdbcType=VARCHAR},
       REGULATION_CATEGORY_ID = #{regulationCategoryId,jdbcType=VARCHAR},

@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.sch.SchRotationExtMapper" >
 <!-- 	<select id="searchRotationByRole" resultMap="com.pinde.sci.dao.base.SchRotationMapper.BaseResultMap"> -->
 <!-- 		SELECT *  -->
-<!-- 		FROM PDSCI.SCH_ROTATION -->
+    <!-- 		FROM  SCH_ROTATION -->
 <!-- 		WHERE RECORD_STATUS = 'Y' -->
 <!-- 		<if test="roleFlag != null and roleFlag == 'global'"> -->
 <!-- 			AND ORG_FLOW IS NULL -->
@@ -32,13 +32,13 @@
 	
 <!-- 	<select id="searchNotExistRotation" resultMap="com.pinde.sci.dao.base.SchRotationMapper.ResultMapWithBLOBs"> -->
 <!-- 		SELECT *  -->
-<!-- 		FROM PDSCI.SCH_ROTATION -->
+    <!-- 		FROM  SCH_ROTATION -->
 <!-- 		WHERE RECORD_STATUS = 'Y' -->
 <!-- 		AND ROTATION_TYPE_ID = 'Standard' -->
 <!-- 		AND	PUBLISH_FLAG = 'Y' -->
 <!-- 		AND ROTATION_FLOW NOT IN ( -->
 <!-- 			SELECT STANDARD_ROTATION_FLOW  -->
-<!-- 			FROM PDSCI.SCH_ROTATION -->
+    <!-- 			FROM  SCH_ROTATION -->
 <!-- 			WHERE RECORD_STATUS = 'Y' -->
 <!-- 			AND STANDARD_ROTATION_FLOW IS NOT NULL -->
 <!-- 			AND ORG_FLOW = #{orgFlow} -->
@@ -46,13 +46,13 @@
 <!-- 	</select> -->
 
 	<select id="searchNotExistRotation" resultMap="com.pinde.sci.dao.base.SchRotationMapper.BaseResultMap">
-		SELECT * 
-		FROM PDSCI.SCH_ROTATION
+		SELECT *
+        FROM SCH_ROTATION
 		WHERE RECORD_STATUS = 'Y'
 		AND	PUBLISH_FLAG = 'Y'
 		AND ROTATION_FLOW NOT IN (
-			SELECT DISTINCT ROTATION_FLOW 
-			FROM PDSCI.SCH_ROTATION_DEPT
+			SELECT DISTINCT ROTATION_FLOW
+        FROM SCH_ROTATION_DEPT
 			WHERE RECORD_STATUS = 'Y'
 			AND ORG_FLOW = #{orgFlow}
 		)

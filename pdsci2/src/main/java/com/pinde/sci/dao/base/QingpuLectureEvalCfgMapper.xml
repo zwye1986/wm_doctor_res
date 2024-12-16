@@ -88,7 +88,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.QINGPU_LECTURE_EVAL_CFG
+      from QINGPU_LECTURE_EVAL_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.QINGPU_LECTURE_EVAL_CFG
+      from QINGPU_LECTURE_EVAL_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -115,21 +115,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.QINGPU_LECTURE_EVAL_CFG
+      from QINGPU_LECTURE_EVAL_CFG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.QINGPU_LECTURE_EVAL_CFG
+      delete from QINGPU_LECTURE_EVAL_CFG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfgExample" >
-    delete from PDSCI.QINGPU_LECTURE_EVAL_CFG
+      delete from QINGPU_LECTURE_EVAL_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfg" >
-    insert into PDSCI.QINGPU_LECTURE_EVAL_CFG (RECORD_FLOW, ORG_FLOW, TYPE_ID, 
+      insert into QINGPU_LECTURE_EVAL_CFG (RECORD_FLOW, ORG_FLOW, TYPE_ID,
       TYPE_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       CFG_BIG_VALUE)
@@ -139,7 +139,7 @@
       #{cfgBigValue,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfg" >
-    insert into PDSCI.QINGPU_LECTURE_EVAL_CFG
+      insert into QINGPU_LECTURE_EVAL_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.QINGPU_LECTURE_EVAL_CFG
+      select count(*) from QINGPU_LECTURE_EVAL_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.QINGPU_LECTURE_EVAL_CFG
+      update QINGPU_LECTURE_EVAL_CFG
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.QINGPU_LECTURE_EVAL_CFG
+      update QINGPU_LECTURE_EVAL_CFG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
@@ -266,7 +266,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.QINGPU_LECTURE_EVAL_CFG
+      update QINGPU_LECTURE_EVAL_CFG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
@@ -281,7 +281,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfg" >
-    update PDSCI.QINGPU_LECTURE_EVAL_CFG
+      update QINGPU_LECTURE_EVAL_CFG
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfg" >
-    update PDSCI.QINGPU_LECTURE_EVAL_CFG
+      update QINGPU_LECTURE_EVAL_CFG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       TYPE_ID = #{typeId,jdbcType=VARCHAR},
       TYPE_NAME = #{typeName,jdbcType=VARCHAR},
@@ -327,7 +327,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.QingpuLectureEvalCfg" >
-    update PDSCI.QINGPU_LECTURE_EVAL_CFG
+      update QINGPU_LECTURE_EVAL_CFG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       TYPE_ID = #{typeId,jdbcType=VARCHAR},
       TYPE_NAME = #{typeName,jdbcType=VARCHAR},

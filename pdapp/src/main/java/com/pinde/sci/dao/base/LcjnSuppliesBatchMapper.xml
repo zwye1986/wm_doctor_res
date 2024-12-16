@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_SUPPLIES_BATCH
+      from LCJN_SUPPLIES_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_SUPPLIES_BATCH
+      from LCJN_SUPPLIES_BATCH
     where STOCK_FLOW = #{stockFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_SUPPLIES_BATCH
+      delete
+      from LCJN_SUPPLIES_BATCH
     where STOCK_FLOW = #{stockFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnSuppliesBatchExample">
-    delete from PDSCI.LCJN_SUPPLIES_BATCH
+      delete from LCJN_SUPPLIES_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.LcjnSuppliesBatch">
-    insert into PDSCI.LCJN_SUPPLIES_BATCH (STOCK_FLOW, SUPPLIES_FLOW, STOCK_NUM, 
+      insert into LCJN_SUPPLIES_BATCH (STOCK_FLOW, SUPPLIES_FLOW, STOCK_NUM,
       ADD_TIME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +116,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnSuppliesBatch">
-    insert into PDSCI.LCJN_SUPPLIES_BATCH
+      insert into LCJN_SUPPLIES_BATCH
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="stockFlow != null">
         STOCK_FLOW,
@@ -176,13 +177,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.LcjnSuppliesBatchExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_SUPPLIES_BATCH
+      select count(*) from LCJN_SUPPLIES_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_SUPPLIES_BATCH
+      update LCJN_SUPPLIES_BATCH
     <set>
       <if test="record.stockFlow != null">
         STOCK_FLOW = #{record.stockFlow,jdbcType=VARCHAR},
@@ -217,7 +218,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_SUPPLIES_BATCH
+      update LCJN_SUPPLIES_BATCH
     set STOCK_FLOW = #{record.stockFlow,jdbcType=VARCHAR},
       SUPPLIES_FLOW = #{record.suppliesFlow,jdbcType=VARCHAR},
       STOCK_NUM = #{record.stockNum,jdbcType=VARCHAR},
@@ -232,7 +233,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnSuppliesBatch">
-    update PDSCI.LCJN_SUPPLIES_BATCH
+      update LCJN_SUPPLIES_BATCH
     <set>
       <if test="suppliesFlow != null">
         SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR},
@@ -262,7 +263,7 @@
     where STOCK_FLOW = #{stockFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnSuppliesBatch">
-    update PDSCI.LCJN_SUPPLIES_BATCH
+      update LCJN_SUPPLIES_BATCH
     set SUPPLIES_FLOW = #{suppliesFlow,jdbcType=VARCHAR},
       STOCK_NUM = #{stockNum,jdbcType=VARCHAR},
       ADD_TIME = #{addTime,jdbcType=VARCHAR},

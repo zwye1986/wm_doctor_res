@@ -47,7 +47,6 @@ import com.pinde.sci.excelListens.model.PbInfoItem;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
-import com.pinde.sci.form.sch.SelectDept;
 import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.jsres.LzDeptItem;
 import com.pinde.sci.model.jsres.PbImportDataItem;
@@ -121,8 +120,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	@Autowired
 	private JsresDoctorDeptDetailMapper doctorDeptDetailMapper;
 	@Autowired
-	private HbresDoctorDeptDetailMapper hbresDoctorDeptDetailMapper;
-	@Autowired
 	private SchArrangeResultMapper arrangeResultMapper;
 	@Autowired
 	private ISchArrangeBiz arrangeBiz;
@@ -187,12 +184,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
     private static final Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
-	@Override
-	public List<SchArrangeResult> searchSchArrangeResult() {
-		SchArrangeResultExample example = new SchArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		return arrangeResultMapper.selectByExample(example);
-	}
 
 	@Override
 	public List<SchArrangeResult> searchSchArrangeResultByDoctor(String doctorFlow){
@@ -207,14 +198,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return resultExtMapper.querySchArrangeResultByDoctor(doctorFlow);
 	}
 
-	@Override
-	public List<SchArrangeResult> searchSchArrangeResultByDoctor4Sort(String doctorFlow){
-		Map<String,Object> paramMap = new HashMap<>();
-		if(StringUtil.isNotBlank(doctorFlow)){
-			paramMap.put("doctorFlow",doctorFlow);
-		}
-		return resultExtMapper.searchSchArrangeResultByDoctor4Sort(paramMap);
-	}
 
 	@Override
 	public List<SchArrangeResult> searchProcessByItems(Map<String, Object> paramMap) {
@@ -696,51 +679,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return resultExtMapper.searchArrangeResultByDateAndOrgByMapNew(map);
 	}
 
-	@Override
-	public List<SchArrangeResult> searchArrangeResultByDate(String schStartDate,String doctorFlow){
-		SchArrangeResultExample example = new SchArrangeResultExample();
-		Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		if(StringUtil.isNotBlank(schStartDate)){
-			criteria.andSchEndDateLessThanOrEqualTo(schStartDate);
-		}
-		if(StringUtil.isNotBlank(doctorFlow)){
-			criteria.andDoctorFlowEqualTo(doctorFlow);
-		}
-		return arrangeResultMapper.selectByExample(example);
-	}
-
-	@Override
-	public List<SchArrangeResult> searchArrangeResultByDate(String schStartDate,String schEndDate,String doctorName){
-		SchArrangeResultExample example = new SchArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-		.andSchEndDateBetween(schStartDate,schEndDate).andDoctorNameEqualTo(doctorName);
-		example.setOrderByClause("SCH_END_DATE");
-		return arrangeResultMapper.selectByExample(example);
-	}
-
-	@Override
-	public List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlow(String startDate,String endDate,String docFlow){
-		return resultExtMapper.searchArrangeResultByDateAndDoctorFlow(startDate,endDate,docFlow);
-	}
-
-	@Override
-	public List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlows(String startDate,String endDate,List<ResDoctor> doctorList,String schDeptFlow){
-		if(doctorList==null||doctorList.size()==0){
-			return null;
-		}
-		Map<String,Object> paramMap = new HashMap<>();
-		paramMap.put("startDate",startDate);
-		paramMap.put("endDate",endDate);
-		paramMap.put("doctorList",doctorList);
-		paramMap.put("schDeptFlow",schDeptFlow);
-		return resultExtMapper.searchArrangeResultByDateAndDoctorFlows(paramMap);
-	}
-
-	@Override
-	public List<Map<String,Object>> searchArrangeResultNotInDates(String startDate,String endDate,String docFlow){
-		return resultExtMapper.searchArrangeResultNotInDates(startDate,endDate,docFlow);
-	}
 
 	@Override
 	public List<SchArrangeResult> searchCycleArrangeResults(Map<String,Object> paramMap){
@@ -1068,80 +1006,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	@Override
-	public int countArrangeResultBySchDeptFlow(String month, String schDeptFlow, String sessionNumber) throws ParseException {
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf.parse(month+"-15");
-		c.setTime(date);
-		String startDate=sdf.format(c.getTime());
-		c.add(Calendar.MONTH, 1);
-		String endDate=DateUtil.addDate(sdf.format(c.getTime()), -1);
-
-		return resultExtMapper.countResultBySchDeptFlow(startDate,endDate,schDeptFlow,sessionNumber);
-	}
-
-	@Override
-	public List<Map<String,Object>> doctorSelectDeptCount(String doctorFlow){
-		return resultExtMapper.doctorSelectDeptCount(doctorFlow);
-	}
-
-	@Override
 	public List<SchArrangeResult> searchResultByDoctor(ResDoctor doctor){
 		return resultExtMapper.searchResultByDoctor(doctor);
-	}
-
-	@Override
-	public int createFreeRosteringResult(ResDoctor doctor){
-		if(doctor!=null){
-			String orgFlow = doctor.getOrgFlow();
-			List<SchDept> schDeptList = schDeptBiz.searchSchDeptList(orgFlow);
-			if(schDeptList!=null && schDeptList.size()>0){
-				SysUser operUser = GlobalContext.getCurrentUser();
-
-				SchArrange arrange = new SchArrange();
-				arrange.setArrangeFlow(PkUtil.getUUID());
-				arrange.setDoctorNum(1);
-				arrange.setOperTime(DateUtil.getCurrDateTime());
-				arrange.setOperUserFlow(operUser.getUserFlow());
-				arrange.setOperUserName(operUser.getUserName());
-				arrange.setArrangeTypeId(SchArrangeTypeEnum.Hand.getId());
-				arrange.setArrangeTypeName(SchArrangeTypeEnum.Hand.getName());
-				arrange.setArrangeStatusId(SchArrangeStatusEnum.Finish.getId());
-				arrange.setArrangeStatusName(SchArrangeStatusEnum.Finish.getName());
-				arrange.setOrgFlow(doctor.getOrgFlow());
-				arrange.setOrgName(doctor.getOrgName());
-				arrangeBiz.saveArrange(arrange);
-
-				SchArrangeResult result = new SchArrangeResult();
-				result.setArrangeFlow(arrange.getArrangeFlow());
-				result.setDoctorFlow(doctor.getDoctorFlow());
-				result.setDoctorName(doctor.getDoctorName());
-				result.setSessionNumber(doctor.getSessionNumber());
-				result.setSchYear("1");
-				result.setOrgFlow(doctor.getOrgFlow());
-				result.setOrgName(doctor.getOrgName());
-                result.setIsRequired(com.pinde.core.common.GlobalConstant.FLAG_Y);
-				for(SchDept schDept : schDeptList){
-					result.setResultFlow(null);
-					result.setDeptFlow(schDept.getDeptFlow());
-					result.setDeptName(schDept.getDeptName());
-					result.setSchDeptFlow(schDept.getSchDeptFlow());
-					result.setSchDeptName(schDept.getSchDeptName());
-					saveSchArrangeResult(result);
-				}
-
-                doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-				doctorBiz.editDoctor(doctor);
-
-                return com.pinde.core.common.GlobalConstant.ONE_LINE;
-			}
-		}
-        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
-	}
-
-	@Override
-	public List<SchArrangeResult> cutAfterResult(List<String> doctorFlows){
-		return resultExtMapper.cutAfterResult(doctorFlows);
 	}
 
 	@Override
@@ -1481,399 +1347,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return resultExtMapper.findDeptsByDoctor(doctorFlow);
 	}
 
-	@Override
-	public List<HbresDoctorDeptDetail> hbresDoctorSchResults(List<String> resultFlows) {
-		if(resultFlows!=null&&resultFlows.size()>0)
-			return resultExtMapper.hbresDoctorSchResults(resultFlows);
-		return null;
-	}
-
-	@Override
-	public List<HbresDoctorDeptDetail> hbresDoctorDeptDetails(String doctorFlow, String applyYear) {
-		HbresDoctorDeptDetailExample example=new HbresDoctorDeptDetailExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-				.andDoctorFlowEqualTo(doctorFlow).andApplyYearEqualTo(applyYear);
-		List<HbresDoctorDeptDetail> list=hbresDoctorDeptDetailMapper.selectByExample(example);
-		return list;
-	}
-
-	@Override
-	public Map<String, String> imgUpload(String resultFlow, MultipartFile file, String fileType) {
-		Map<String, String> map=new HashMap<String, String>();
-        map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
-		if(file!=null){
-			List<String> mimeList = new ArrayList<String>();
-			if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")))){
-				mimeList = Arrays.asList(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_mime")).split(","));
-			}
-			List<String> suffixList = new ArrayList<String>();
-			if(StringUtil.isNotBlank(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_suffix")))){
-				suffixList = Arrays.asList(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_support_suffix")).split(","));
-			}
-			String fileName = file.getOriginalFilename();//文件名
-			String suffix = fileName.substring(fileName.lastIndexOf("."));//后缀名
-			if(!(mimeList.contains(file.getContentType())&&suffixList.contains(suffix))){
-                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_TYPE_ERROR);
-				return  map;
-
-			}
-			long limitSize = Long.parseLong(StringUtil.defaultString(InitConfig.getSysCfg("inx_image_limit_size")));//图片大小限制
-			if (file.getSize() > limitSize * 1024 * 1024) {
-                map.put("error", com.pinde.core.common.GlobalConstant.UPLOAD_IMG_SIZE_ERROR + limitSize + "M");
-				return  map;
-			}
-			try {
-				/*创建目录*/
-				String dateString = DateUtil.getCurrDate2();
-				String newDir = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir"))+ File.separator+fileType+File.separator + dateString ;
-				File fileDir = new File(newDir);
-				if(!fileDir.exists()){
-					fileDir.mkdirs();
-				}
-				/*文件名*/
-				fileName = file.getOriginalFilename();
-				fileName = PkUtil.getUUID() + fileName.substring(fileName.lastIndexOf("."));
-				File newFile = new File(fileDir, fileName);
-				file.transferTo(newFile);
-				String filePath = "/" + fileType + "/" + dateString + "/" + fileName;
-				String url = InitConfig.getSysCfg("upload_base_url")+filePath;
-				PubFile pubFile=fileBiz.readProductFile(resultFlow,fileType);
-				if(pubFile==null)
-					pubFile=new PubFile();
-                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-				pubFile.setFilePath(filePath);
-				pubFile.setFileName(fileName);
-				pubFile.setFileSuffix(suffix);
-				pubFile.setProductType(fileType);
-				pubFile.setProductFlow(resultFlow);
-				int c=fileBiz.editFile(pubFile);
-				if(c==1) {
-					map.put("url",url);
-                    map.put("status", com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG);
-				}else{
-					map.put("error","上传失败！");
-                    map.put("status", com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG);
-				}
-			} catch (Exception e) {
-                logger.error("", e);
-			}
-		}
-		return map;
-	}
-
-	@Override
-	public List<SchArrangeResult> schArrangeResultQuery(Map<String, Object> map) {
-		List<SchArrangeResult> arrangeResultList=resultExtMapper.schArrangeResultQuery(map);
-		return arrangeResultList;
-	}
-
-	/*@Override
-	public int roundRobinStudents(String doctorFlow, String currDate) {
-		int num=resultMapper.roundRobinStudents(doctorFlow,currDate);
-		return num;
-	}*/
-
-	@Override
-	public int checkResultDate(Map<String,Object> paramMap){
-		return resultExtMapper.checkResultDate(paramMap);
-	}
-	@Override
-	public int checkScholarDate(Map<String,Object> paramMap){
-		return resultExtMapper.checkResultDate(paramMap);
-	}
-
-	@Override
-	public int checkSelectResult(String doctorFlow, String startDate, String endDate){
-		return resultExtMapper.checkSelectResult(doctorFlow,startDate,endDate);
-	}
-	@Override
-	public int getAllSchMonth(String doctorFlow){
-		return resultExtMapper.getAllSchMonth(doctorFlow);
-	}
-
-	@Override
-	public int checkSelectStandardDept(String doctorFlow, String standardDeptId, String groupFlow){
-		return resultExtMapper.checkSelectStandardDept(doctorFlow,standardDeptId,groupFlow);
-	}
-	@Override
-	public int countArrangeResultByGroupFlow(String doctorFlow,String groupFlow){
-		return resultExtMapper.countArrangeResultByGroupFlow(doctorFlow,groupFlow);
-	}
-
-	@Override
-	public int countResultByDoctorAndDate(String d, String doctorFlow) throws ParseException {
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = sdf.parse(d+"-15");
-		c.setTime(date);
-		String startDate=sdf.format(c.getTime());
-		c.add(Calendar.MONTH, 1);
-		String endDate=DateUtil.addDate(sdf.format(c.getTime()), -1);
-		return resultExtMapper.countResultByDoctorAndDate(startDate,endDate,doctorFlow);
-	}
-
-	@Override
-	public String saveDoctorSelectDept(List<SelectDept> selectDepts) throws ParseException {
-		if(selectDepts!=null&&selectDepts.size()>0)
-		{
-			String doctorFlow = GlobalContext.getCurrentUser().getUserFlow();	//医师流水号
-			ResDoctor doctor=doctorBiz.readDoctor(doctorFlow);
-            doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-            doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-			doctorBiz.editDoctor(doctor);
-			Map<String,String> resultDateAreaMap = getResultCycleDate(doctorFlow);
-			String startDate="";
-			if(resultDateAreaMap!=null&&StringUtil.isNotBlank(resultDateAreaMap.get("max"))){
-				startDate = DateUtil.addDate(resultDateAreaMap.get("max"),1);
-			}else{
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-				Calendar   cal_1 = Calendar.getInstance();//获取当前日期
-				cal_1.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天
-				cal_1.add(Calendar.MONTH,1);
-				startDate= format.format(cal_1.getTime());
-			}
-			for(SelectDept selectDept:selectDepts)
-			{
-				SchArrangeResult result=new SchArrangeResult();
-				ResDoctorSchProcess process=new ResDoctorSchProcess();
-
-				String resultFlow = PkUtil.getUUID();
-
-				result.setResultFlow(resultFlow);
-				result.setArrangeFlow(resultFlow);
-
-				String schDeptFlow = selectDept.getSchDeptFlow();
-				SchDept dept = schDeptBiz.readSchDept(schDeptFlow);
-				if(dept!=null){
-					result.setDeptFlow(dept.getDeptFlow());
-					result.setDeptName(dept.getDeptName());
-					result.setSchDeptName(dept.getSchDeptName());
-					result.setSchDeptFlow(schDeptFlow);
-
-					process.setDeptFlow(dept.getDeptFlow());
-					process.setDeptName(dept.getDeptName());
-					process.setSchDeptName(dept.getSchDeptName());
-					process.setSchDeptFlow(schDeptFlow);
-				}
-
-//				String[] schDates=selectDept.getSchDate().split(",");
-//				startDate=schDates[0]+"-01";
-				//开始时间加1个自然月
-				Calendar c = Calendar.getInstance();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = sdf.parse(startDate);
-				c.setTime(date);
-				c.add(Calendar.MONTH, Integer.valueOf(selectDept.getSchMonth()));
-				String endDate=DateUtil.addDate(sdf.format(c.getTime()), -1);
-				result.setSchStartDate(startDate);
-				result.setSchEndDate(endDate);
-				process.setSchStartDate(startDate);
-				process.setSchEndDate(endDate);
-				process.setStartDate(startDate);
-				process.setEndDate(endDate);
-				SchRotationDept schRotationDept=rotationDeptBiz.readSchRotationDept(selectDept.getRecordFlow());
-				result.setIsRequired(schRotationDept.getIsRequired());
-				String standardDeptId = schRotationDept.getStandardDeptId();
-				if(StringUtil.isNotBlank(standardDeptId)){
-                    String standardDeptName = com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
-					result.setStandardDeptName(standardDeptName);
-				}
-				result.setStandardDeptId(schRotationDept.getStandardDeptId());
-				result.setSchMonth(selectDept.getSchMonth());
-				result.setDoctorFlow(doctorFlow);
-				result.setDoctorName(doctor.getDoctorName());
-				result.setSessionNumber(doctor.getSessionNumber());
-				result.setStandardGroupFlow(schRotationDept.getGroupFlow());
-					SchRotationGroup  group=groupBiz.readSchRotationGroup(result.getStandardGroupFlow());
-					if(group!=null) {
-						SchRotation rotation = rotationBiz.readSchRotation(group.getRotationFlow());
-						if (rotation != null) {
-							result.setRotationFlow(rotation.getRotationFlow());
-							result.setRotationName(rotation.getRotationName());
-						} else {
-							result.setRotationFlow(doctor.getRotationFlow());
-							result.setRotationName(doctor.getRotationName());
-						}
-					}else{
-						result.setRotationFlow(doctor.getRotationFlow());
-						result.setRotationName(doctor.getRotationName());
-					}
-				result.setOrgFlow(doctor.getOrgFlow());
-				result.setOrgName(doctor.getOrgName());
-				process.setOrgFlow(doctor.getOrgFlow());
-				process.setOrgName(doctor.getOrgName());
-                process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
-                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
-				process.setSchResultFlow(resultFlow);
-				process.setUserFlow(doctorFlow);
-				startDate= DateUtil.addDate(endDate,1);
-				int re=save(result);
-				//+processBiz.edit(process);
-				if(re<1)
-				{
-					throw new RuntimeException("选科保存失败！");
-				}
-				//startDate=sdf.format(c.getTime());
-			}
-			return "选科保存成功！";
-		}
-		return "请选择需要轮转的科室！";
-	}
-
-	private Map<String, String> getResultCycleDate(String doctorFlow) {
-
-		return resultExtMapper.getResultCycleDate(doctorFlow);
-	}
-
-	@Override
-	public int editCustomResult(SchArrangeResult result,ResDoctorSchProcess process) throws ParseException {
-		if(result==null){
-            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
-		}
-
-		if(process==null){
-            return com.pinde.core.common.GlobalConstant.ZERO_LINE;
-		}
-
-		String schDeptFlow = result.getSchDeptFlow();
-		if(StringUtil.isNotBlank(schDeptFlow)){
-			SchDept dept = schDeptBiz.readSchDept(schDeptFlow);
-			if(dept!=null){
-				result.setDeptFlow(dept.getDeptFlow());
-				result.setDeptName(dept.getDeptName());
-				result.setSchDeptName(dept.getSchDeptName());
-
-				process.setDeptFlow(dept.getDeptFlow());
-				process.setDeptName(dept.getDeptName());
-				process.setSchDeptName(dept.getSchDeptName());
-			}
-		}
-
-		String startDate = result.getSchStartDate();
-		String endDate = result.getSchEndDate();
-		process.setSchStartDate(startDate);
-		process.setSchEndDate(endDate);//轮转计划单位
-		String unit = InitConfig.getSysCfg("res_rotation_unit");
-		//默认按月计算
-		int step = 30;
-        if (com.pinde.core.common.enums.SchUnitEnum.Week.getId().equals(unit)) {
-			//如果是周按7天算/没配置或者选择月按30天
-			step = 7;
-			BigDecimal realMonth = BigDecimal.valueOf(0);
-			long realDays = DateUtil.signDaysBetweenTowDate(result.getSchEndDate(),result.getSchStartDate())+1;
-			if(realDays!=0){
-				//计算实际轮转的月/周数
-				double realMonthF = (realDays/(step*1.0));
-				realMonth = BigDecimal.valueOf(realMonthF);
-                realMonth = realMonth.setScale(1, RoundingMode.HALF_UP);
-			}
-			String schMonth= String.valueOf(realMonth.doubleValue());
-			result.setSchMonth(schMonth);
-		}else{
-			Map<String,String> map= new HashMap<>();
-			map.put("startDate",result.getSchStartDate());
-			map.put("endDate",result.getSchEndDate());
-			Double month = TimeUtil.getMonthsBetween(map);
-			String schMonth = String.valueOf(Double.parseDouble(month + ""));
-			result.setSchMonth(schMonth);
-		}
-
-
-		String teacherUserFlow = process.getTeacherUserFlow();
-		if(StringUtil.isNotBlank(teacherUserFlow)){
-			SysUser user = userBiz.findByFlow(teacherUserFlow);
-			if(user!=null){
-				process.setTeacherUserName(user.getUserName());
-			}
-		}
-
-		String headUserFlow = process.getHeadUserFlow();
-		if(StringUtil.isNotBlank(headUserFlow)){
-			SysUser user = userBiz.findByFlow(headUserFlow);
-			if(user!=null){
-				process.setHeadUserName(user.getUserName());
-			}
-		}
-
-		String standardDeptId = result.getStandardDeptId();
-		if(StringUtil.isNotBlank(standardDeptId)){
-            String standardDeptName = com.pinde.core.common.enums.DictTypeEnum.StandardDept.getDictNameById(standardDeptId);
-			result.setStandardDeptName(standardDeptName);
-		}
-
-		String resultFlow = result.getResultFlow();
-
-		if(StringUtil.isNotBlank(resultFlow)){
-			ResDoctorSchProcess schProcess = processBiz.searchByResultFlow(resultFlow);
-			if(schProcess!=null){
-				process.setProcessFlow(schProcess.getProcessFlow());
-			}else{
-				String doctorFlow = result.getDoctorFlow();
-				ResDoctor doctor = doctorBiz.readDoctor(doctorFlow);
-				if(doctor!=null){
-					process.setStartDate(process.getSchStartDate());
-					process.setEndDate(process.getSchEndDate());
-					process.setOrgFlow(doctor.getOrgFlow());
-					process.setOrgName(doctor.getOrgName());
-				}
-                process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
-                process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-				process.setSchResultFlow(resultFlow);
-				process.setUserFlow(doctorFlow);
-			}
-			update(result);
-		}else{
-			resultFlow = PkUtil.getUUID();
-
-			result.setResultFlow(resultFlow);
-			result.setArrangeFlow(resultFlow);
-
-			String doctorFlow = result.getDoctorFlow();
-			ResDoctor doctor = doctorBiz.readDoctor(doctorFlow);
-			result.setDoctorFlow(doctorFlow);
-			if(doctor!=null){
-				result.setDoctorName(doctor.getDoctorName());
-				result.setSessionNumber(doctor.getSessionNumber());
-				SchRotationGroup  group=groupBiz.readSchRotationGroup(result.getStandardGroupFlow());
-				if(group!=null) {
-					SchRotation rotation = rotationBiz.readSchRotation(group.getRotationFlow());
-					if (rotation != null) {
-						result.setRotationFlow(rotation.getRotationFlow());
-						result.setRotationName(rotation.getRotationName());
-					} else {
-						result.setRotationFlow(doctor.getRotationFlow());
-						result.setRotationName(doctor.getRotationName());
-					}
-				}else{
-					result.setRotationFlow(doctor.getRotationFlow());
-					result.setRotationName(doctor.getRotationName());
-				}
-				result.setOrgFlow(doctor.getOrgFlow());
-				result.setOrgName(doctor.getOrgName());
-
-				//process.setStartDate(DateUtil.getCurrDate());实际开始时间取计划开始时间
-				process.setStartDate(process.getSchStartDate());
-				process.setEndDate(process.getSchEndDate());
-				process.setOrgFlow(doctor.getOrgFlow());
-				process.setOrgName(doctor.getOrgName());
-
-				String schFlag = doctor.getSchFlag();
-                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(schFlag)) {
-                    doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-                    doctor.setSelDeptFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-					doctorBiz.editDoctor(doctor);
-				}
-			}
-            process.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
-            process.setIsCurrentFlag(com.pinde.core.common.GlobalConstant.FLAG_N);
-			process.setSchResultFlow(resultFlow);
-			process.setUserFlow(doctorFlow);
-			save(result);
-		}
-		processBiz.edit(process);
-
-        return com.pinde.core.common.GlobalConstant.ONE_LINE;
-	}
 
 	@Override
 	public int delResultByResultFlow(String resultFlow) {
@@ -2200,11 +1673,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	@Override
-	public Map<String, Object> deptWorkingDetail(Map<String, Object> map) {
-		return docSchProcessExtMapper.deptWorkingDetail( map);
-	}
-
-	@Override
 	public List<SchArrangeResult> searchSchArrangeResultByDoctorAndRotationFlow(String doctorFlow, String rotationFlow) {
 
 		SchArrangeResultExample example = new SchArrangeResultExample();
@@ -2213,26 +1681,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		example.setOrderByClause("SCH_DEPT_ORDER,SCH_START_DATE");
 		return arrangeResultMapper.selectByExample(example);
 	}
-	@Override
-	public List<SchArrangeResult> searchSchArrangeResultIsBByDoctorAndRotationFlow(String doctorFlow, String rotationFlow) {
-
-		SchArrangeResultExample example = new SchArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
-                .andRotationFlowEqualTo(rotationFlow).andIsStepBEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
-		example.setOrderByClause("SCH_DEPT_ORDER,SCH_START_DATE");
-		return arrangeResultMapper.selectByExample(example);
-	}
-
-	@Override
-	public List<SchArrangeResult> searchSchArrangeResultByDoctorAndRotationFlowAndStandardId(String doctorFlow, String rotationFlow,String standardDeptId){
-		SchArrangeResultExample example = new SchArrangeResultExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow)
-				.andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
-		example.setOrderByClause("SCH_DEPT_ORDER,SCH_START_DATE");
-		return arrangeResultMapper.selectByExample(example);
-
-	}
-
 
 	@Override
 	public JsresDoctorDeptDetail deptDoctorWorkDetail(String recordFlow, String rotationFlow, String doctorFlow) {
@@ -2355,11 +1803,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	@Override
-	public List<SchArrangeResult> searchSchArrangeResultBySpeAndDoc(Map<String, Object> paramMap) {
-		return resultExtMapper.searchSchArrangeResultBySpeAndDoc(paramMap);
-	}
-
-	@Override
 	public Map<String, Object> doctorDeptAvgWorkDetail(String recruitFlow, String applyYear) {
 		return docSchProcessExtMapper.doctorDeptAvgWorkDetail(recruitFlow,applyYear);
 	}
@@ -2402,13 +1845,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return resultExtMapper.searchCycleArrangeResultsForUniTwo(paramMap);
 	}
 
-	@Override
-	public List<Map<String, Object>> docWorkingSearchForUni(Map<String, Object> paraMp) {
-		if(paraMp.get("workOrgId")==null&&paraMp.get("workOrgName")==null){
-			return null;
-		}
-		return docSchProcessExtMapper.docWorkingSearchForUni(paraMp);
-	}
 	@Override
 	public List<Map<String, Object>> orgTeaAuditInfoForUni(Map<String, Object> paraMp) {
 		if(paraMp.get("workOrgId")==null&&paraMp.get("workOrgName")==null){
@@ -2519,125 +1955,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		is.read(fileData);
 		Workbook wb =  createUserWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
 		return parseExcelToScheduing2(wb,rotationFlow,trainingTypeId);
-	}
-
-//	@Override
-//	public Map<String,Object> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException {
-//		Map<String, Object> result = new HashMap<>();
-//		InputStream is = file.getInputStream();
-//		byte[] fileData = new byte[(int) file.getSize()];
-//		is.read(fileData);
-//		Workbook wb =  createUserWorkbook(new ByteInputStream(fileData, (int)file.getSize() ));
-//		int sheetNum = wb.getNumberOfSheets();
-//		if(sheetNum<=0){
-//			return result;
-//		}
-//		List<String> headList = new ArrayList<>();
-//		Sheet sheetAt = wb.getSheetAt(0);
-//		Row headRow = sheetAt.getRow(0);
-//		short lastCellNum = headRow.getLastCellNum();
-//		if (lastCellNum<1) {
-//			return result;
-//		}
-//		for (int i = 0; i < lastCellNum; i++) {
-//			String stringCellValue = headRow.getCell(i).getStringCellValue();
-//			headList.add(stringCellValue);
-//		}
-//		result.put("headers",headList);
-//		int lastRowNum = sheetAt.getLastRowNum();
-//		if (lastRowNum <1) {
-//			return result;
-//		}
-//		List<Map<String, String>> data = new ArrayList<>();
-//		Map<String, String> dataItem = new HashMap<>();
-//		for (int i = 1; i <= lastRowNum; i++) {
-//			Row row = sheetAt.getRow(i);
-//			if (null == row) {
-//				//忽略空行
-//				continue;
-//			}
-//			dataItem = new HashMap<>();
-//			for (int j = 0; j < headList.size(); j++) {
-//				String column = headList.get(j);
-//				Cell cell = row.getCell(j);
-//				if(null != cell){
-//					cell.setCellType(CellType.STRING);
-//					String stringCellValue = cell.getStringCellValue();
-//					if (StringUtil.isBlank(stringCellValue)) {
-//						dataItem.put(column,null);
-//						continue;
-//					}
-//					dataItem.put(column,stringCellValue);
-//					continue;
-//				}
-//				dataItem.put(column,null);
-//			}
-//			data.add(dataItem);
-//		}
-//		//数据处理
-//		if (CollectionUtil.isEmpty(data)) {
-//			result.put("data",new ArrayList<>());
-//			result.put("flag",false);
-//			return result;
-//		}
-//		List<Map<String, ArrangTdVo>> list = new ArrayList<>();
-//		Map<String, ArrangTdVo> rowItem = new HashMap<>();
-//		ArrangTdVo item = new ArrangTdVo();
-//		for (Map<String, String> datum : data) {
-//			rowItem = new HashMap<>();
-//			if (CollectionUtil.isEmpty(datum)) {
-//				list.add(rowItem);
-//				continue;
-//			}
-//			item = new ArrangTdVo();
-//			item.setDisable(true);
-//			rowItem.put("recurit",item);
-//			for (String key : datum.keySet()) {
-//				item = new ArrangTdVo();
-//				item.setContext(StringUtils.isEmpty(datum.get(key))? "":datum.get(key));
-//				item.setDisable(true);
-//				item.setTip("");
-//				rowItem.put(key,item);
-//			}
-//			list.add(rowItem);
-//		}
-////		Map<String, Object> res = checkData(data);
-//		Map<String, Object> res = checkReturnData(list);
-//		result.put("data",res.get("data"));
-//		result.put("flag",res.get("flag"));
-//		return result;
-//	}
-
-
-
-	@Override
-	public Map<String,Object> updateImportData(List<Map<String, ArrangTdVo>> data) {
-		//将data转为 List<Map<String, String>> 类型
-		Map<String, Object> resp = new HashMap<>();
-		resp.put("code",200);
-		if (CollectionUtil.isEmpty(data)) {
-			resp.put("data",data);
-			return resp;
-		}
-//		List<Map<String, String>> updateData = new ArrayList<>();
-//		Map<String, String> itemMap = new HashMap<>();
-//		for (Map<String, ArrangTdVo> datum : data) {
-//			itemMap = new HashMap<>();
-//			if (CollectionUtil.isEmpty(datum)) {
-//				continue;
-//			}
-//			for (String keyName : datum.keySet()) {
-//				itemMap.put(keyName,datum.get(keyName).getContext());
-//			}
-//			updateData.add(itemMap);
-//		}
-//		Map<String, Object> maps = checkData(updateData);
-		resp = checkReturnData(data);
-//		if (!(Boolean) resp.get("flag")) {
-//			resp.put("code",500);
-//			resp.put("msg","存在校验不通过的数据，请调整后提交");
-//		}
-		return resp;
 	}
 
 	@Override
@@ -4007,18 +3324,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		updateResultHaveAfter(haveAfterPic,schRotationDeptFlow,operUserFlow);
 	}
 
-	@Override
-	public SysUser searchTeacherList(String sysDeptFlow, String roleId, String userName) {
-		Map<String,Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("sysDeptFlow", sysDeptFlow);
-		paramMap.put("roleFlow", roleId);
-		paramMap.put("userName", userName);
-		List<SysUser> userList = sysUserExtMapper.searchUserList(paramMap);
-		if (null!=userList && userList.size()>0){
-			return userList.get(0);
-		}
-		return null;
-	}
 	//检测时间是否重叠
 	@Override
 	public List<SchArrangeResult> checkResultDate(String doctorFlow,String startDate,String endDate,String subDeptFlow,String rotationFlow){

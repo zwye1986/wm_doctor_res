@@ -116,7 +116,7 @@
     <insert id="insertReqList" parameterType="java.util.List">
         insert all
         <foreach collection="addReqList" index="index" item="item" separator="">
-        into PDSCI.SCH_ROTATION_DEPT_REQ (
+            into SCH_ROTATION_DEPT_REQ (
         REQ_FLOW, ROTATION_FLOW, STANDARD_DEPT_ID,
         STANDARD_DEPT_NAME, REL_RECORD_FLOW, REC_TYPE_ID,
         REC_TYPE_NAME, ITEM_NAME, REQ_NUM,

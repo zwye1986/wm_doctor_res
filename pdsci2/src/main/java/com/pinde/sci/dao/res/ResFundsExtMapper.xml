@@ -57,7 +57,7 @@
 
     <select id="searchOrgs" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select *
-        from PDSCI.SYS_ORG
+        from SYS_ORG
         where RECORD_STATUS='Y'
         ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
     </select>
@@ -68,7 +68,7 @@
 
     <select id="searchResProvinceFundDetailMoney"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResProvinceFundDetailMapper.BaseResultMap" >
         select *
-        from PDSCI.RES_PROVINCE_FUND_DETAIL
+        from RES_PROVINCE_FUND_DETAIL
         where RECORD_STATUS = 'Y'
         and MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
         <if test="source != null and source != ''" >

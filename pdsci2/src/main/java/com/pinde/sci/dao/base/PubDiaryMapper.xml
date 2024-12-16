@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_DIARY
+        from PUB_DIARY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +95,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_DIARY
+      from PUB_DIARY
     where DIARY_FLOW = #{diaryFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_DIARY
+      delete from PUB_DIARY
     where DIARY_FLOW = #{diaryFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.PubDiaryExample">
-    delete from PDSCI.PUB_DIARY
+        delete from PUB_DIARY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.PubDiary">
-    insert into PDSCI.PUB_DIARY (DIARY_FLOW, DIARY_DATE, START_TIME, 
+        insert into PUB_DIARY (DIARY_FLOW, DIARY_DATE, START_TIME,
       END_TIME, OPER_USER_FLOW, OPER_USER_NAME, 
       DIARY_TITLE, DIARY_CONTENT, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,7 +121,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.PubDiary">
-    insert into PDSCI.PUB_DIARY
+        insert into PUB_DIARY
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="diaryFlow != null" >
         DIARY_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.PubDiaryExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_DIARY
+        select count(*) from PUB_DIARY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_DIARY
+      update PUB_DIARY
     <set >
       <if test="record.diaryFlow != null" >
         DIARY_FLOW = #{record.diaryFlow,jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_DIARY
+      update PUB_DIARY
     set DIARY_FLOW = #{record.diaryFlow,jdbcType=VARCHAR},
       DIARY_DATE = #{record.diaryDate,jdbcType=VARCHAR},
       START_TIME = #{record.startTime,jdbcType=VARCHAR},
@@ -278,7 +278,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubDiary">
-    update PDSCI.PUB_DIARY
+        update PUB_DIARY
     <set >
       <if test="diaryDate != null" >
         DIARY_DATE = #{diaryDate,jdbcType=VARCHAR},
@@ -320,7 +320,7 @@
     where DIARY_FLOW = #{diaryFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubDiary">
-    update PDSCI.PUB_DIARY
+        update PUB_DIARY
     set DIARY_DATE = #{diaryDate,jdbcType=VARCHAR},
       START_TIME = #{startTime,jdbcType=VARCHAR},
       END_TIME = #{endTime,jdbcType=VARCHAR},

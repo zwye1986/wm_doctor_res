@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sys.SysLogExtMapper" >
 	<select id="searchLog" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysLogMapper.BaseResultMap">
-  		select <include refid="com.pinde.sci.dao.base.SysLogMapper.Base_Column_List" /> from PDSCI.sys_log 
-  		where user_flow in(select distinct user_flow from PDSCI.sys_log where record_status='Y'
+        select
+        <include refid="com.pinde.sci.dao.base.SysLogMapper.Base_Column_List"/>
+        from sys_log
+        where user_flow in(select distinct user_flow from sys_log where record_status='Y'
            <if test='deptFlow!=null and deptFlow!=""'>
               and dept_flow = #{deptFlow}
            </if>

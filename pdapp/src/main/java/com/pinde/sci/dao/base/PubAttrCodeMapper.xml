@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_ATTR_CODE
+      from PUB_ATTR_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_ATTR_CODE
+      from PUB_ATTR_CODE
     where CODE_FLOW = #{codeFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_ATTR_CODE
+      delete from PUB_ATTR_CODE
     where CODE_FLOW = #{codeFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.PubAttrCodeExample" >
-    delete from PDSCI.PUB_ATTR_CODE
+      delete from PUB_ATTR_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.PubAttrCode" >
-    insert into PDSCI.PUB_ATTR_CODE (CODE_FLOW, CODE_VALUE, CODE_NAME, 
+      insert into PUB_ATTR_CODE (CODE_FLOW, CODE_VALUE, CODE_NAME,
       MODULE_CODE, ELEMENT_CODE, ATTR_CODE, 
       ORDINAL, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.PubAttrCode" >
-    insert into PDSCI.PUB_ATTR_CODE
+      insert into PUB_ATTR_CODE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="codeFlow != null" >
         CODE_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.PubAttrCodeExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_ATTR_CODE
+      select count(*) from PUB_ATTR_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_ATTR_CODE
+      update PUB_ATTR_CODE
     <set >
       <if test="record.codeFlow != null" >
         CODE_FLOW = #{record.codeFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_ATTR_CODE
+      update PUB_ATTR_CODE
     set CODE_FLOW = #{record.codeFlow,jdbcType=VARCHAR},
       CODE_VALUE = #{record.codeValue,jdbcType=VARCHAR},
       CODE_NAME = #{record.codeName,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubAttrCode" >
-    update PDSCI.PUB_ATTR_CODE
+      update PUB_ATTR_CODE
     <set >
       <if test="codeValue != null" >
         CODE_VALUE = #{codeValue,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where CODE_FLOW = #{codeFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubAttrCode" >
-    update PDSCI.PUB_ATTR_CODE
+      update PUB_ATTR_CODE
     set CODE_VALUE = #{codeValue,jdbcType=VARCHAR},
       CODE_NAME = #{codeName,jdbcType=VARCHAR},
       MODULE_CODE = #{moduleCode,jdbcType=VARCHAR},

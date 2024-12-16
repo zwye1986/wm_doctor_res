@@ -91,7 +91,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DEPT
+      from SCH_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,21 +102,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DEPT
+      from SCH_DEPT
     where SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SCH_DEPT
+      delete from SCH_DEPT
     where SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchDeptExample">
-    delete from PDSCI.SCH_DEPT
+      delete from SCH_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SchDept">
-    insert into PDSCI.SCH_DEPT (SCH_DEPT_FLOW, SCH_DEPT_NAME, DEPT_FLOW, 
+      insert into SCH_DEPT (SCH_DEPT_FLOW, SCH_DEPT_NAME, DEPT_FLOW,
       DEPT_NAME, ORG_FLOW, ORG_NAME, 
       DEPT_NUM, EXTERNAL, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -132,7 +132,7 @@
       #{deptPid,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchDept">
-    insert into PDSCI.SCH_DEPT
+      insert into SCH_DEPT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="schDeptFlow != null">
         SCH_DEPT_FLOW,
@@ -253,13 +253,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchDeptExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SCH_DEPT
+      select count(*) from SCH_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SCH_DEPT
+      update SCH_DEPT
     <set>
       <if test="record.schDeptFlow != null">
         SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
@@ -324,7 +324,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SCH_DEPT
+      update SCH_DEPT
     set SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
       SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -349,7 +349,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchDept">
-    update PDSCI.SCH_DEPT
+      update SCH_DEPT
     <set>
       <if test="schDeptName != null">
         SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
@@ -409,7 +409,7 @@
     where SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchDept">
-    update PDSCI.SCH_DEPT
+      update SCH_DEPT
     set SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},

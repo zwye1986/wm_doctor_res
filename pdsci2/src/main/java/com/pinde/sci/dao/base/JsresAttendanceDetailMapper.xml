@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_ATTENDANCE_DETAIL
+        from JSRES_ATTENDANCE_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_ATTENDANCE_DETAIL
+      from JSRES_ATTENDANCE_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_ATTENDANCE_DETAIL
+      delete from JSRES_ATTENDANCE_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresAttendanceDetailExample">
-    delete from PDSCI.JSRES_ATTENDANCE_DETAIL
+        delete from JSRES_ATTENDANCE_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.JsresAttendanceDetail">
-    insert into PDSCI.JSRES_ATTENDANCE_DETAIL (RECORD_FLOW, ATTENDANCE_FLOW, DOCTOR_FLOW, 
+        insert into JSRES_ATTENDANCE_DETAIL (RECORD_FLOW, ATTENDANCE_FLOW, DOCTOR_FLOW,
       DOCTOR_NAME, ATTEND_DATE, ATTEND_TIME, 
       ATTEND_LOCAL, SELF_REMARKS, TEACHER_REMARKS, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -124,7 +124,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.JsresAttendanceDetail">
-    insert into PDSCI.JSRES_ATTENDANCE_DETAIL
+        insert into JSRES_ATTENDANCE_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -216,13 +216,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.JsresAttendanceDetailExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_ATTENDANCE_DETAIL
+        select count(*) from JSRES_ATTENDANCE_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_ATTENDANCE_DETAIL
+      update JSRES_ATTENDANCE_DETAIL
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -272,7 +272,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_ATTENDANCE_DETAIL
+      update JSRES_ATTENDANCE_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ATTENDANCE_FLOW = #{record.attendanceFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresAttendanceDetail">
-    update PDSCI.JSRES_ATTENDANCE_DETAIL
+        update JSRES_ATTENDANCE_DETAIL
     <set >
       <if test="attendanceFlow != null" >
         ATTENDANCE_FLOW = #{attendanceFlow,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresAttendanceDetail">
-    update PDSCI.JSRES_ATTENDANCE_DETAIL
+        update JSRES_ATTENDANCE_DETAIL
     set ATTENDANCE_FLOW = #{attendanceFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

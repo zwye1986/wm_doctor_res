@@ -122,7 +122,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_TYPICAL_CASES
+      from RES_TYPICAL_CASES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -136,7 +136,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TYPICAL_CASES
+      from RES_TYPICAL_CASES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -149,21 +149,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_TYPICAL_CASES
+      from RES_TYPICAL_CASES
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_TYPICAL_CASES
+      delete from RES_TYPICAL_CASES
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResTypicalCasesExample" >
-    delete from PDSCI.RES_TYPICAL_CASES
+      delete from RES_TYPICAL_CASES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResTypicalCases" >
-    insert into PDSCI.RES_TYPICAL_CASES (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      insert into RES_TYPICAL_CASES (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       TEACHER_FLOW, TEACHER_NAME, PEOPLE_NAME, 
       SEX_ID, SEX_NAME, VISIT_DATE, 
       BIRTH_DATE, VISIT_ACTION_ID, VISIT_ACTION_NAME, 
@@ -193,7 +193,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{auditContent,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResTypicalCases" >
-    insert into PDSCI.RES_TYPICAL_CASES
+      insert into RES_TYPICAL_CASES
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -434,13 +434,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResTypicalCasesExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_TYPICAL_CASES
+      select count(*) from RES_TYPICAL_CASES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_TYPICAL_CASES
+      update RES_TYPICAL_CASES
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -565,7 +565,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_TYPICAL_CASES
+      update RES_TYPICAL_CASES
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -610,7 +610,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_TYPICAL_CASES
+      update RES_TYPICAL_CASES
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -654,7 +654,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResTypicalCases" >
-    update PDSCI.RES_TYPICAL_CASES
+      update RES_TYPICAL_CASES
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -774,7 +774,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResTypicalCases" >
-    update PDSCI.RES_TYPICAL_CASES
+      update RES_TYPICAL_CASES
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},
@@ -816,7 +816,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResTypicalCases" >
-    update PDSCI.RES_TYPICAL_CASES
+      update RES_TYPICAL_CASES
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},

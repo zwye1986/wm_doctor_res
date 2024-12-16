@@ -86,7 +86,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EXAM
+      from RES_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,21 +97,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EXAM
+      from RES_EXAM
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_EXAM
+      delete from RES_EXAM
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResExamExample" >
-    delete from PDSCI.RES_EXAM
+      delete from RES_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResExam" >
-    insert into PDSCI.RES_EXAM (EXAM_FLOW, EXAM_NAME, EXAM_DATE, 
+      insert into RES_EXAM (EXAM_FLOW, EXAM_NAME, EXAM_DATE,
       EXAM_TIME, EXAM_TYPE_ID, EXAM_TYPE_NAME, 
       EXAM_STATUS_ID, EXAM_STATUS_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -123,7 +123,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{examYear,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResExam" >
-    insert into PDSCI.RES_EXAM
+      insert into RES_EXAM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="examFlow != null" >
         EXAM_FLOW,
@@ -214,13 +214,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResExamExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_EXAM
+      select count(*) from RES_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_EXAM
+      update RES_EXAM
     <set >
       <if test="record.examFlow != null" >
         EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_EXAM
+      update RES_EXAM
     set EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
       EXAM_NAME = #{record.examName,jdbcType=VARCHAR},
       EXAM_DATE = #{record.examDate,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResExam" >
-    update PDSCI.RES_EXAM
+      update RES_EXAM
     <set >
       <if test="examName != null" >
         EXAM_NAME = #{examName,jdbcType=VARCHAR},
@@ -335,7 +335,7 @@
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResExam" >
-    update PDSCI.RES_EXAM
+      update RES_EXAM
     set EXAM_NAME = #{examName,jdbcType=VARCHAR},
       EXAM_DATE = #{examDate,jdbcType=VARCHAR},
       EXAM_TIME = #{examTime,jdbcType=VARCHAR},

@@ -95,7 +95,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.EXAM_RESULTS
+      from EXAM_RESULTS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -106,21 +106,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.EXAM_RESULTS
+      from EXAM_RESULTS
     where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.EXAM_RESULTS
+      delete from EXAM_RESULTS
     where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ExamResultsExample">
-    delete from PDSCI.EXAM_RESULTS
+      delete from EXAM_RESULTS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ExamResults">
-    insert into PDSCI.EXAM_RESULTS (RESULTS_ID, USER_ID, SOLU_ID, 
+      insert into EXAM_RESULTS (RESULTS_ID, USER_ID, SOLU_ID,
       SOLU_SCORE, EXAM_TIME, WORD_URL, 
       SOLU_NAME, ADD_SCORE, EXAM_WN, 
       PROCESS_FLOW, SUBMIT_TIME, UNIFY_EXAMTIME_ID, 
@@ -138,7 +138,7 @@
       #{theoryScore,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ExamResults">
-    insert into PDSCI.EXAM_RESULTS
+      insert into EXAM_RESULTS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="resultsId != null" >
         RESULTS_ID,
@@ -277,13 +277,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ExamResultsExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.EXAM_RESULTS
+      select count(*) from EXAM_RESULTS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.EXAM_RESULTS
+      update EXAM_RESULTS
     <set >
       <if test="record.resultsId != null" >
         RESULTS_ID = #{record.resultsId,jdbcType=VARCHAR},
@@ -357,7 +357,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.EXAM_RESULTS
+      update EXAM_RESULTS
     set RESULTS_ID = #{record.resultsId,jdbcType=VARCHAR},
       USER_ID = #{record.userId,jdbcType=VARCHAR},
       SOLU_ID = #{record.soluId,jdbcType=VARCHAR},
@@ -385,7 +385,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ExamResults">
-    update PDSCI.EXAM_RESULTS
+      update EXAM_RESULTS
     <set >
       <if test="userId != null" >
         USER_ID = #{userId,jdbcType=VARCHAR},
@@ -454,7 +454,7 @@
     where RESULTS_ID = #{resultsId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ExamResults">
-    update PDSCI.EXAM_RESULTS
+      update EXAM_RESULTS
     set USER_ID = #{userId,jdbcType=VARCHAR},
       SOLU_ID = #{soluId,jdbcType=VARCHAR},
       SOLU_SCORE = #{soluScore,jdbcType=VARCHAR},

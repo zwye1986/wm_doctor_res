@@ -1,37 +1,23 @@
 package com.pinde.sci.model.mo;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class SysWsConfigExample {
+    @Setter
     protected String orderByClause;
 
+    @Setter
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
     public SysWsConfigExample() {
         oredCriteria = new ArrayList<Criteria>();
-    }
-
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
-    }
-
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
-    public void setDistinct(boolean distinct) {
-        this.distinct = distinct;
-    }
-
-    public boolean isDistinct() {
-        return distinct;
-    }
-
-    public List<Criteria> getOredCriteria() {
-        return oredCriteria;
     }
 
     public void or(Criteria criteria) {

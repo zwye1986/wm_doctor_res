@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILLS_STATION_FILE
+        from OSCA_SKILLS_STATION_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILLS_STATION_FILE
+      from OSCA_SKILLS_STATION_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_SKILLS_STATION_FILE
+      delete from OSCA_SKILLS_STATION_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillsStationFileExample">
-    delete from PDSCI.OSCA_SKILLS_STATION_FILE
+        delete from OSCA_SKILLS_STATION_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.OscaSkillsStationFile">
-    insert into PDSCI.OSCA_SKILLS_STATION_FILE (RECORD_FLOW, CLINICAL_FLOW, CLINICAL_NAME, 
+        insert into OSCA_SKILLS_STATION_FILE (RECORD_FLOW, CLINICAL_FLOW, CLINICAL_NAME,
       STATION_FLOW, STATION_NAME, FILE_FLOW, 
       ORG_NAME, ORG_FLOW, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -124,7 +124,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillsStationFile">
-    insert into PDSCI.OSCA_SKILLS_STATION_FILE
+        insert into OSCA_SKILLS_STATION_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -216,13 +216,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillsStationFileExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_SKILLS_STATION_FILE
+        select count(*) from OSCA_SKILLS_STATION_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_SKILLS_STATION_FILE
+      update OSCA_SKILLS_STATION_FILE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -272,7 +272,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_SKILLS_STATION_FILE
+      update OSCA_SKILLS_STATION_FILE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       CLINICAL_FLOW = #{record.clinicalFlow,jdbcType=VARCHAR},
       CLINICAL_NAME = #{record.clinicalName,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillsStationFile">
-    update PDSCI.OSCA_SKILLS_STATION_FILE
+        update OSCA_SKILLS_STATION_FILE
     <set >
       <if test="clinicalFlow != null" >
         CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillsStationFile">
-    update PDSCI.OSCA_SKILLS_STATION_FILE
+        update OSCA_SKILLS_STATION_FILE
     set CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR},
       CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
       STATION_FLOW = #{stationFlow,jdbcType=VARCHAR},

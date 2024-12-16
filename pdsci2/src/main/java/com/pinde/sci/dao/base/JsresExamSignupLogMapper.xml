@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_EXAM_SIGNUP_LOG
+        from JSRES_EXAM_SIGNUP_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_EXAM_SIGNUP_LOG
+      from JSRES_EXAM_SIGNUP_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_EXAM_SIGNUP_LOG
+      delete from JSRES_EXAM_SIGNUP_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresExamSignupLogExample">
-    delete from PDSCI.JSRES_EXAM_SIGNUP_LOG
+        delete from JSRES_EXAM_SIGNUP_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.JsresExamSignupLog">
-    insert into PDSCI.JSRES_EXAM_SIGNUP_LOG (RECORD_FLOW, SIGNUP_FLOW, AUDIT_STATUS_ID, 
+        insert into JSRES_EXAM_SIGNUP_LOG (RECORD_FLOW, SIGNUP_FLOW, AUDIT_STATUS_ID,
       AUDIT_STATUS_NAME, AUDIT_ROLE_ID, AUDIT_ROLE_NAME, 
       AUDIT_REASON, AUDIT_TIME, USER_FLOW, 
       USER_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -127,7 +127,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.JsresExamSignupLog">
-    insert into PDSCI.JSRES_EXAM_SIGNUP_LOG
+        insert into JSRES_EXAM_SIGNUP_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -225,13 +225,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.JsresExamSignupLogExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_EXAM_SIGNUP_LOG
+        select count(*) from JSRES_EXAM_SIGNUP_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_EXAM_SIGNUP_LOG
+      update JSRES_EXAM_SIGNUP_LOG
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -284,7 +284,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_EXAM_SIGNUP_LOG
+      update JSRES_EXAM_SIGNUP_LOG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       SIGNUP_FLOW = #{record.signupFlow,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
@@ -305,7 +305,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresExamSignupLog">
-    update PDSCI.JSRES_EXAM_SIGNUP_LOG
+        update JSRES_EXAM_SIGNUP_LOG
     <set >
       <if test="signupFlow != null" >
         SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR},
@@ -353,7 +353,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresExamSignupLog">
-    update PDSCI.JSRES_EXAM_SIGNUP_LOG
+        update JSRES_EXAM_SIGNUP_LOG
     set SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
       AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},

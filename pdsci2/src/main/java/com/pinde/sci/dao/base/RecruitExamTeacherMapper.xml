@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_EXAM_TEACHER
+      from RECRUIT_EXAM_TEACHER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_EXAM_TEACHER
+      from RECRUIT_EXAM_TEACHER
     where TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_EXAM_TEACHER
+      delete from RECRUIT_EXAM_TEACHER
     where TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitExamTeacherExample" >
-    delete from PDSCI.RECRUIT_EXAM_TEACHER
+      delete from RECRUIT_EXAM_TEACHER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitExamTeacher" >
-    insert into PDSCI.RECRUIT_EXAM_TEACHER (TEACHER_FLOW, ORG_FLOW, ROOM_FLOW, 
+      insert into RECRUIT_EXAM_TEACHER (TEACHER_FLOW, ORG_FLOW, ROOM_FLOW,
       TEA_NAME, TEA_ROLE, TEA_DEMO, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitExamTeacher" >
-    insert into PDSCI.RECRUIT_EXAM_TEACHER
+      insert into RECRUIT_EXAM_TEACHER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="teacherFlow != null" >
         TEACHER_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitExamTeacherExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_EXAM_TEACHER
+      select count(*) from RECRUIT_EXAM_TEACHER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_TEACHER
+      update RECRUIT_EXAM_TEACHER
     <set >
       <if test="record.teacherFlow != null" >
         TEACHER_FLOW = #{record.teacherFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_TEACHER
+      update RECRUIT_EXAM_TEACHER
     set TEACHER_FLOW = #{record.teacherFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitExamTeacher" >
-    update PDSCI.RECRUIT_EXAM_TEACHER
+      update RECRUIT_EXAM_TEACHER
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitExamTeacher" >
-    update PDSCI.RECRUIT_EXAM_TEACHER
+      update RECRUIT_EXAM_TEACHER
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR},
       TEA_NAME = #{teaName,jdbcType=VARCHAR},

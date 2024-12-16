@@ -13,35 +13,35 @@
 
     <!--<changeSet id="20240703-02" author="zxr">
         <sql>
-            insert into pdsci.test_liquibase(id, name) values (lower(sys_guid()), 'first record');
+            insert into  test_liquibase(id, name) values (lower(sys_guid()), 'first record');
         </sql>
     </changeSet>-->
 
     <changeSet id="20240921-jointOrgTable_add_spe" author="zxr">
         <sql>
-            alter table pdsci.RES_JOINT_ORG add spe_id varchar2(32);
-            alter table pdsci.RES_JOINT_ORG add spe_name varchar2(32);
-            comment on column pdsci.RES_JOINT_ORG.spe_id is '协同专业基地编码';
-            comment on column pdsci.RES_JOINT_ORG.spe_name is '协同专业基地名称';
+            alter table RES_JOINT_ORG add spe_id varchar2(32);
+            alter table RES_JOINT_ORG add spe_name varchar2(32);
+            comment on column RES_JOINT_ORG.spe_id is '协同专业基地编码';
+            comment on column RES_JOINT_ORG.spe_name is '协同专业基地名称';
         </sql>
     </changeSet>
 
     <changeSet id="20240924-resBase_add_column" author="zxr">
         <!-- 基地信息扩展，原来的BASE_INFO字段最长4000字符，多了不好操作，怕超了，又加一个字段，且从原先的xml格式改为json格式，省点字符 -->
         <sql>
-            alter table pdsci.RES_BASE add BASE_EXT_INFO CLOB;
-            comment on column pdsci.RES_BASE.BASE_EXT_INFO is '基地扩展信息';
+            alter table RES_BASE add BASE_EXT_INFO CLOB;
+            comment on column RES_BASE.BASE_EXT_INFO is '基地扩展信息';
         </sql>
     </changeSet>
 
     <changeSet id="20240924-teacherTraining_add_column" author="zxr">
         <!-- 基地信息扩展，原来的BASE_INFO字段最长4000字符，多了不好操作，怕超了，又加一个字段，且从原先的xml格式改为json格式，省点字符 -->
         <sql>
-            alter table PDSCI.RES_TEACHER_TRAINING add TEACHING_CERT_LEVEL varchar2(16);
-            comment on column PDSCI.RES_TEACHER_TRAINING.TEACHING_CERT_LEVEL is '师资证书等级';
+            alter table RES_TEACHER_TRAINING add TEACHING_CERT_LEVEL varchar2(16);
+            comment on column RES_TEACHER_TRAINING.TEACHING_CERT_LEVEL is '师资证书等级';
 
-            alter table PDSCI.RES_TEACHER_TRAINING add CERT_GRANTED_DATE varchar2(16);
-            comment on column PDSCI.RES_TEACHER_TRAINING.CERT_GRANTED_DATE is '师资证书取得时间';
+            alter table RES_TEACHER_TRAINING add CERT_GRANTED_DATE varchar2(16);
+            comment on column RES_TEACHER_TRAINING.CERT_GRANTED_DATE is '师资证书取得时间';
         </sql>
     </changeSet>
 

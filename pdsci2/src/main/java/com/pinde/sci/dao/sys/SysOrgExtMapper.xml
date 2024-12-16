@@ -5,7 +5,7 @@
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select
 		<include refid="com.pinde.core.common.sci.dao.SysOrgMapper.Base_Column_List"/>
-		from PDSCI.sys_org start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and
+        from sys_org start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and
 		record_status='Y'
 	</select>
 
@@ -13,24 +13,26 @@
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select
 		<include refid="com.pinde.core.common.sci.dao.SysOrgMapper.Base_Column_List"/>
-		from PDSCI.sys_org where level='2' start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and
+        from sys_org where level='2' start WITH org_flow=#{orgFlow} connect by prior org_flow=charge_org_flow and
 		record_status='Y'
 	</select>
 
 	<select id="selectOrgNoRegByRoleFlow" parameterType="java.lang.String"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
-		select * from 
-		PDSCI.sys_org so 
-		where so.record_status='Y' and  
-		so.org_flow not in (select su.org_flow from PDSCI.sys_user su , PDSCI.sys_user_role sur where su.user_flow=sur.user_flow and sur.role_flow=#{roleFlow} and su.record_status='Y' and sur.record_status='Y' and su.org_flow is not null)
+		select * from
+        sys_org so
+		where so.record_status='Y' and
+        so.org_flow not in (select su.org_flow from sys_user su , sys_user_role sur where su.user_flow=sur.user_flow and
+        sur.role_flow=#{roleFlow} and su.record_status='Y' and sur.record_status='Y' and su.org_flow is not null)
 	</select>
 
 	<select id="selectChargeOrgList" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
-	    select * from PDSCI.sys_org where org_flow in (select distinct charge_org_flow from PDSCI.sys_org where charge_org_flow is not null) and record_status='Y' order by ordinal
+        select * from sys_org where org_flow in (select distinct charge_org_flow from sys_org where charge_org_flow is
+        not null) and record_status='Y' order by ordinal
 	</select>
 	<select id="searchOrgs" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	    select *
-	    from PDSCI.SYS_ORG
+        from SYS_ORG
 	    where RECORD_STATUS='Y'
 		<if test="sysOrg!=null">
 		 	  <if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
@@ -64,11 +66,11 @@
 	</select>
 	<select id="searchJointOrgsByOrg" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
-	    from PDSCI.SYS_ORG
+        from SYS_ORG
 	    where RECORD_STATUS='Y'
 	    and ORG_FLOW in (
 		select rjo.JOINT_ORG_FLOW
-		from  PDSCI.RES_JOINT_ORG rjo
+        from RES_JOINT_ORG rjo
 		where rjo.RECORD_STATUS='Y'
 		<if test="_parameter != null and _parameter != ''">
             and rjo.ORG_FLOW = #{orgFlow}
@@ -79,12 +81,13 @@
 	</select>
 	<select id="searchJointOrgsSession" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.ResultMapWithSession">
 		select a.*,b.session_number
-		from PDSCI.SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where c.record_status='Y' and c.DATE_MONTH='2019-10') b
+        from SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where
+        c.record_status='Y' and c.DATE_MONTH='2019-10') b
 		where a.ORG_FLOW=b.ORG_FLOW
 		and a.RECORD_STATUS='Y'
 		and a.ORG_FLOW in (
 		select rjo.JOINT_ORG_FLOW
-		from  PDSCI.RES_JOINT_ORG rjo
+        from RES_JOINT_ORG rjo
 		where rjo.RECORD_STATUS='Y'
 		<if test="_parameter != null and _parameter != ''">
 			and rjo.ORG_FLOW = #{orgFlow}
@@ -95,13 +98,13 @@
 	<select id="searchOrgNotSelfAndNotCountryAndNotProvince"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
-	    from PDSCI.SYS_ORG
+        from SYS_ORG
 	    where RECORD_STATUS='Y'
 	    and org_level_id !='CountryOrg'
 	    and org_level_id !='ProvinceOrg'
 	    and ORG_FLOW not in (
 			select rjo.JOINT_ORG_FLOW
-			from  PDSCI.RES_JOINT_ORG rjo
+        from RES_JOINT_ORG rjo
 			where rjo.RECORD_STATUS='Y'
 			and rjo.ORG_FLOW != #{orgFlow}
 		)
@@ -110,7 +113,7 @@
 	</select>
 	<select id="getUniOrgs" parameterType="map" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
-	    from PDSCI.SYS_ORG
+        from SYS_ORG
 	    where RECORD_STATUS='Y'
 	   AND ORG_FLOW IN (
 	    	SELECT DISTINCT RDR.ORG_FLOW
@@ -138,7 +141,7 @@
 	<select id="getUniBackTrainOrgs" parameterType="map"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 	     select *
-	    from PDSCI.SYS_ORG
+        from SYS_ORG
 	    where RECORD_STATUS='Y'
 	   AND ORG_FLOW IN (
 	    	SELECT DISTINCT RDR.ORG_FLOW
@@ -165,8 +168,8 @@
 
 	<select id="searchJsResOrgWithJointOrg" parameterType="java.util.Map"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
-	    select ORG_FLOW, ORG_NAME 
-	    from PDSCI.SYS_ORG
+	    select ORG_FLOW, ORG_NAME
+        from SYS_ORG
 	    where RECORD_STATUS='Y'
 		and ORG_TYPE_ID = #{sysOrg.orgTypeId}
 		and ORG_CITY_ID = #{sysOrg.orgCityId}
@@ -175,7 +178,7 @@
 			<foreach collection="orgLevelList" open="(" separator="," close=")" item="item">#{item}</foreach>
    			or ORG_FLOW in (
 		    	select rjo.JOINT_ORG_FLOW
-		    	from PDSCI.SYS_ORG so, PDSCI.RES_JOINT_ORG rjo
+        from SYS_ORG so, RES_JOINT_ORG rjo
 		    	where so.ORG_FLOW = rjo.ORG_FLOW
 		    	and so.RECORD_STATUS='Y' and rjo.RECORD_STATUS='Y'
 		       	and so.ORG_LEVEL_ID = 'CountryOrg'
@@ -230,7 +233,7 @@
 	</select>
 	<select id="searchOrgs4hbUniversity" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select *
-		from PDSCI.SYS_ORG so
+        from SYS_ORG so
 		where so.RECORD_STATUS='Y'
 		and exists (
 			select null from res_doctor rd where
@@ -543,7 +546,7 @@
 	<select id="searchOrgListNew" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT ORG_FLOW, ORG_PROV_ID, ORG_CITY_ID, ORG_AREA_ID, ORG_LEVEL_ID
   			,CASE WHEN OLD_ORG_NAME IS NULL THEN ORG_NAME ELSE wm_concat(ORG_NAME||'('||OLD_ORG_NAME||')') END ORG_NAME
-		FROM PDSCI.SYS_ORG
+        FROM SYS_ORG
 		WHERE RECORD_STATUS = 'Y'
 		<if test="sysorg != null">
 			<if test="sysorg.orgProvId!=null and sysorg.orgProvId!=''">
@@ -566,7 +569,7 @@
 	<select id="searchOrgNotJointOrg" parameterType="java.util.Map"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		select o.ORG_FLOW, o.ORG_NAME
-		from PDSCI.SYS_ORG o
+        from SYS_ORG o
 		where o.RECORD_STATUS='Y'
 		and o.ORG_TYPE_ID = #{sysOrg.orgTypeId}
 		and o.ORG_CITY_ID = #{sysOrg.orgCityId}
@@ -602,7 +605,7 @@
 	</select>
 
 	<select id="searchOrgList"   resultMap="orgMap">
-		SELECT * FROM PDSCI.SYS_ORG
+        SELECT * FROM SYS_ORG
 		WHERE ORG_PROV_ID = '320000'
 	    	AND ORG_TYPE_ID = 'Hospital'
 	    	AND RECORD_STATUS = 'Y'
@@ -634,7 +637,7 @@
 
 	<select id="searchByCountOrg"  resultMap="com.pinde.sci.dao.base.ResOrgSpeMapper.BaseResultMap">
 		SELECT R.ORG_FLOW, R.ORG_NAME, R.SPE_ID, R.SPE_NAME
-		FROM PDSCI.RES_ORG_SPE R
+        FROM RES_ORG_SPE R
 		LEFT JOIN SYS_ORG S
 		ON R.ORG_FLOW=S.ORG_FLOW
 		WHERE R.RECORD_STATUS = 'Y'

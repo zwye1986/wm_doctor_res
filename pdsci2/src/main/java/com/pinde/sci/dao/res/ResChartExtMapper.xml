@@ -702,8 +702,8 @@
         and rr.status_id = 'Passed'
         and t.record_status = 'Y' and t.recruit_flag = 'Y' and t.confirm_flag = 'Y'
         AND t.org_flow IN (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         AND u.RECORD_STATUS = 'Y'
         AND rd.doctor_type_id IN ('Company', 'Graduate', 'Social', 'CompanyEntrust')
@@ -725,8 +725,8 @@
         WHERE T.RECORD_STATUS = 'Y'
         AND t.audit_status_id = 'Passed'
         AND t.org_flow IN (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         AND u.RECORD_STATUS = 'Y'
         AND rd.doctor_type_id IN ('Company', 'Graduate', 'Social', 'CompanyEntrust')
@@ -742,8 +742,8 @@
         AND T.AUDIT_STATUS_ID = 'GlobalPassed'
         AND u.record_status = 'N'
         AND t.org_flow IN (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         AND rd.doctor_type_id IN ('Company', 'Graduate', 'Social', 'CompanyEntrust')
         ) t
@@ -798,8 +798,8 @@
         and t.record_status = 'Y' and t.recruit_flag = 'Y' and t.confirm_flag = 'Y'
         AND ORG.org_flow IN
         (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         AND u.RECORD_STATUS = 'Y'
         <if test="docTypeList!=null and docTypeList.size>0">
@@ -852,8 +852,8 @@
         and u.RECORD_STATUS = 'Y'
         AND ORG.org_flow IN
         (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         <if test="docTypeList!=null and docTypeList.size>0">
             and rd.DOCTOR_TYPE_ID in
@@ -899,8 +899,8 @@
         AND u.record_status = 'N'
         AND ORG.org_flow IN
         (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         <if test="docTypeList!=null and docTypeList.size>0">
             and rd.DOCTOR_TYPE_ID in
@@ -947,8 +947,8 @@
         and t.record_status = 'Y' and t.recruit_flag = 'Y' and t.confirm_flag = 'Y'
         AND ORG.JOINT_ORG_FLOW IN
         (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         AND u.RECORD_STATUS = 'Y'
         <if test="docTypeList!=null and docTypeList.size>0">
@@ -989,8 +989,8 @@
         AND u.record_status = 'N'
         AND ORG.JOINT_ORG_FLOW IN
         (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         <if test="docTypeList!=null and docTypeList.size>0">
             and rd.DOCTOR_TYPE_ID in
@@ -1029,8 +1029,8 @@
         and u.RECORD_STATUS = 'Y'
         AND ORG.JOINT_ORG_FLOW IN
         (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM  SYS_ORG
+        WHERE  SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '420000')
         <if test="docTypeList!=null and docTypeList.size>0">
             and rd.DOCTOR_TYPE_ID in

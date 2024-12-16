@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ERROR_SCH_NOTICE
+      from RES_ERROR_SCH_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ERROR_SCH_NOTICE
+      from RES_ERROR_SCH_NOTICE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_ERROR_SCH_NOTICE
+      delete from RES_ERROR_SCH_NOTICE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResErrorSchNoticeExample">
-    delete from PDSCI.RES_ERROR_SCH_NOTICE
+      delete from RES_ERROR_SCH_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
-    insert into PDSCI.RES_ERROR_SCH_NOTICE (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      insert into RES_ERROR_SCH_NOTICE (RECORD_FLOW, USER_FLOW, USER_NAME,
       STATUS_ID, STATUS_NAME, NOTICE_TIME, 
       NOTICE_CONTENT, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
-    insert into PDSCI.RES_ERROR_SCH_NOTICE
+      insert into RES_ERROR_SCH_NOTICE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResErrorSchNoticeExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_ERROR_SCH_NOTICE
+      select count(*) from RES_ERROR_SCH_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_ERROR_SCH_NOTICE
+      update RES_ERROR_SCH_NOTICE
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_ERROR_SCH_NOTICE
+      update RES_ERROR_SCH_NOTICE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
-    update PDSCI.RES_ERROR_SCH_NOTICE
+      update RES_ERROR_SCH_NOTICE
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
-    update PDSCI.RES_ERROR_SCH_NOTICE
+      update RES_ERROR_SCH_NOTICE
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
       STATUS_ID = #{statusId,jdbcType=VARCHAR},

@@ -116,7 +116,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_EXAM_SIGNUP
+        from JSRES_EXAM_SIGNUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -127,21 +127,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_EXAM_SIGNUP
+      from JSRES_EXAM_SIGNUP
     where SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_EXAM_SIGNUP
+      delete from JSRES_EXAM_SIGNUP
     where SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresExamSignupExample">
-    delete from PDSCI.JSRES_EXAM_SIGNUP
+        delete from JSRES_EXAM_SIGNUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.JsresExamSignup">
-    insert into PDSCI.JSRES_EXAM_SIGNUP (SIGNUP_FLOW, SIGNUP_YEAR, SIGNUP_TYPE_ID,
+        insert into JSRES_EXAM_SIGNUP (SIGNUP_FLOW, SIGNUP_YEAR, SIGNUP_TYPE_ID,
       SIGNUP_TYPE_NAME, DOCTOR_FLOW, DOCTOR_TYPE_ID,
       DOCTOR_TYPE_NAME, ORG_FLOW, ORG_NAME,
       SESSION_NUMBER, TRAINING_YEARS, TRAINING_TYPE_ID,
@@ -169,7 +169,7 @@
       #{globalReason,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.JsresExamSignup">
-    insert into PDSCI.JSRES_EXAM_SIGNUP
+        insert into JSRES_EXAM_SIGNUP
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="signupFlow != null" >
         SIGNUP_FLOW,
@@ -405,13 +405,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.JsresExamSignupExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_EXAM_SIGNUP
+        select count(*) from JSRES_EXAM_SIGNUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_EXAM_SIGNUP
+      update JSRES_EXAM_SIGNUP
     <set >
       <if test="record.signupFlow != null" >
         SIGNUP_FLOW = #{record.signupFlow,jdbcType=VARCHAR},
@@ -533,7 +533,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_EXAM_SIGNUP
+      update JSRES_EXAM_SIGNUP
     set SIGNUP_FLOW = #{record.signupFlow,jdbcType=VARCHAR},
     SIGNUP_YEAR = #{record.signupYear,jdbcType=VARCHAR},
     SIGNUP_TYPE_ID = #{record.signupTypeId,jdbcType=VARCHAR},
@@ -577,7 +577,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresExamSignup">
-    update PDSCI.JSRES_EXAM_SIGNUP
+        update JSRES_EXAM_SIGNUP
     <set >
       <if test="signupYear != null" >
         SIGNUP_YEAR = #{signupYear,jdbcType=VARCHAR},
@@ -694,7 +694,7 @@
     where SIGNUP_FLOW = #{signupFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresExamSignup">
-    update PDSCI.JSRES_EXAM_SIGNUP
+        update JSRES_EXAM_SIGNUP
     set SIGNUP_YEAR = #{signupYear,jdbcType=VARCHAR},
       SIGNUP_TYPE_ID = #{signupTypeId,jdbcType=VARCHAR},
       SIGNUP_TYPE_NAME = #{signupTypeName,jdbcType=VARCHAR},

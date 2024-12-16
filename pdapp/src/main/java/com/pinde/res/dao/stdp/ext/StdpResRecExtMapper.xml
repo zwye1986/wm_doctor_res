@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.stdp.ext.StdpResRecExtMapper">
 	<select id="getRecs" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
-		select * 
-		from pdsci.res_rec rr
+		select *
+        from res_rec rr
 		where record_status = 'Y'
 		and rr.oper_user_flow = #{operUserFlow}  and
 		exists (select null from sys_cfg where cfg_value='Y' and record_status='Y' and cfg_code='res_registry_type_'||rr.rec_type_id) 

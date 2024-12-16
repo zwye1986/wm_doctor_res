@@ -78,7 +78,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JX_WEEKENDS_REGISTER
+      from JX_WEEKENDS_REGISTER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,21 +89,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JX_WEEKENDS_REGISTER
+      from JX_WEEKENDS_REGISTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.JX_WEEKENDS_REGISTER
+      delete
+      from JX_WEEKENDS_REGISTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JxWeekendsRegisterExample">
-    delete from PDSCI.JX_WEEKENDS_REGISTER
+      delete from JX_WEEKENDS_REGISTER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JxWeekendsRegister">
-    insert into PDSCI.JX_WEEKENDS_REGISTER (RECORD_FLOW, WEEKEND_DATE, RECORD_STATUS, 
+      insert into JX_WEEKENDS_REGISTER (RECORD_FLOW, WEEKEND_DATE, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
     values (#{recordFlow,jdbcType=VARCHAR}, #{weekendDate,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
@@ -111,7 +112,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JxWeekendsRegister">
-    insert into PDSCI.JX_WEEKENDS_REGISTER
+      insert into JX_WEEKENDS_REGISTER
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -160,13 +161,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JxWeekendsRegisterExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.JX_WEEKENDS_REGISTER
+      select count(*) from JX_WEEKENDS_REGISTER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.JX_WEEKENDS_REGISTER
+      update JX_WEEKENDS_REGISTER
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -195,7 +196,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.JX_WEEKENDS_REGISTER
+      update JX_WEEKENDS_REGISTER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       WEEKEND_DATE = #{record.weekendDate,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -208,7 +209,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JxWeekendsRegister">
-    update PDSCI.JX_WEEKENDS_REGISTER
+      update JX_WEEKENDS_REGISTER
     <set>
       <if test="weekendDate != null">
         WEEKEND_DATE = #{weekendDate,jdbcType=VARCHAR},
@@ -232,7 +233,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JxWeekendsRegister">
-    update PDSCI.JX_WEEKENDS_REGISTER
+      update JX_WEEKENDS_REGISTER
     set WEEKEND_DATE = #{weekendDate,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},

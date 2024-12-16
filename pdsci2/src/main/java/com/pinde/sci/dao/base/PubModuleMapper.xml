@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MODULE
+        from PUB_MODULE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MODULE
+      from PUB_MODULE
     where MODULE_FLOW = #{moduleFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_MODULE
+      delete from PUB_MODULE
     where MODULE_FLOW = #{moduleFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.PubModuleExample">
-    delete from PDSCI.PUB_MODULE
+        delete from PUB_MODULE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.PubModule">
-    insert into PDSCI.PUB_MODULE (MODULE_FLOW, MODULE_NAME, MODULE_CODE, 
+        insert into PUB_MODULE (MODULE_FLOW, MODULE_NAME, MODULE_CODE,
       MODULE_TYPE_ID, MODULE_TYPE_NAME, MODULE_SHORT_NAME, 
       MODULE_SEARCH, ORDINAL, MODULE_STYLE_ID, 
       MODULE_STYLE_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -126,7 +126,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.PubModule">
-    insert into PDSCI.PUB_MODULE
+        insert into PUB_MODULE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="moduleFlow != null" >
         MODULE_FLOW,
@@ -223,13 +223,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.PubModuleExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_MODULE
+        select count(*) from PUB_MODULE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_MODULE
+      update PUB_MODULE
     <set >
       <if test="record.moduleFlow != null" >
         MODULE_FLOW = #{record.moduleFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_MODULE
+      update PUB_MODULE
     set MODULE_FLOW = #{record.moduleFlow,jdbcType=VARCHAR},
       MODULE_NAME = #{record.moduleName,jdbcType=VARCHAR},
       MODULE_CODE = #{record.moduleCode,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubModule">
-    update PDSCI.PUB_MODULE
+        update PUB_MODULE
     <set >
       <if test="moduleName != null" >
         MODULE_NAME = #{moduleName,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
     where MODULE_FLOW = #{moduleFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubModule">
-    update PDSCI.PUB_MODULE
+        update PUB_MODULE
     set MODULE_NAME = #{moduleName,jdbcType=VARCHAR},
       MODULE_CODE = #{moduleCode,jdbcType=VARCHAR},
       MODULE_TYPE_ID = #{moduleTypeId,jdbcType=VARCHAR},

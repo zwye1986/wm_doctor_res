@@ -1,11 +1,12 @@
 package com.pinde.sci.dao.sch;
 
 
-import com.pinde.core.model.HbresDoctorDeptDetail;
 import com.pinde.core.model.JsresDoctorDeptDetail;
 import com.pinde.core.model.SysDept;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.sci.model.mo.ResOutOfficeLock;
+import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.res.GeneralIdNameModel;
 import com.pinde.sci.model.res.SchArrangeResultExt;
 import org.apache.ibatis.annotations.Param;
@@ -72,15 +73,6 @@ public interface SchArrangeResultExtMapper {
 
 	int countRotationUse(@Param(value="rotationFlow")String rotationFlow);
 
-	int countResultBySchDeptFlow(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param(value = "schDeptFlow") String schDeptFlow, @Param("sessionNumber") String sessionNumber);
-	
-	/**
-	 * 根据医师找出正在轮转和未轮转的计划
-	 * @param doctorFlows
-	 * @return
-	 */
-	List<SchArrangeResult> cutAfterResult(@Param(value="doctorFlows")List<String> doctorFlows);
-	
 	/**
 	 * 为该医师的计划按标准科室排序
 	 * @param doctorFlow
@@ -95,42 +87,13 @@ public interface SchArrangeResultExtMapper {
 	 */
 	List<SchArrangeResult> searchResultByDoctor(@Param(value="doctor")ResDoctor doctor);
 	
-	List<SchArrangeResult> schArrangeResultQuery(Map<String, Object> map);
-
-	/*int roundRobinStudents(String doctorFlow,String currDate);*/
-	
 	/**
 	 * 查询过程或计划数据
 	 * @param paramMap
 	 * @return
 	 */
 	List<SchArrangeResultExt> getResults(Map<String,Object> paramMap);
-	
-	/**
-	 * 检查是否存在重叠时间的科室
-	 * @param paramMap
-	 * @return
-	 */
-	int checkResultDate(Map<String,Object> paramMap);
 
-	int checkScholarDate(Map<String,Object> paramMap);
-
-	int getArrangedNum(Map<String,Object> paramMap);
-
-	/**
-	 根据开始和结束时间、doctorFlow查询单个学员轮转科室
-	 */
-	List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlow
-	(@Param(value="startDate")String startDate,@Param(value="endDate")String endDate,@Param(value="docFlow")String docFlow);
-
-	/**
-	 根据开始和结束时间、doctorFlow查询多个学员轮转科室
-	 */
-	List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlows(Map<String,Object> paramMap);
-
-	//根据开始结束时间 ，查询单个学员不在该范围的时间
-	List<Map<String,Object>> searchArrangeResultNotInDates(@Param(value="startDate")String startDate,
-														   @Param(value="endDate")String endDate, @Param(value="docFlow")String docFlow);
 
 	/**
 	 * 根据开始和结束时间、doctorFlow查询多个学员轮转科室
@@ -151,29 +114,12 @@ public interface SchArrangeResultExtMapper {
 
 	List<SchArrangeResult> getResultBySchRotationDept(Map<String, String> param);
 
-	int checkSelectResult(@Param("doctorFlow") String doctorFlow, @Param("startDate") String startDate, @Param("endDate") String endDate);
-
-	int getAllSchMonth(@Param("doctorFlow") String doctorFlow);
-
-	int checkSelectStandardDept(@Param("doctorFlow") String doctorFlow, @Param("standardDeptId") String standardDeptId, @Param("groupFlow") String groupFlow);
-
-	Map<String,String> getResultCycleDate(@Param("doctorFlow") String doctorFlow);
-
-	List<Map<String,Object>> doctorSelectDeptCount(@Param("doctorFlow") String doctorFlow);
-
-	int countArrangeResultByGroupFlow(@Param("doctorFlow") String doctorFlow, @Param("groupFlow") String groupFlow);
-
-	int countResultByDoctorAndDate(@Param("startDate") String startDate, @Param("endDate") String endDate, @Param("doctorFlow") String doctorFlow);
-
 	List<Map<String,Object>> preWarningBeforeList(Map<String, String> param);
 
 	List<Map<String,Object>> preWarningIngList(Map<String, String> param);
 
 	List<Map<String,Object>> preWarningAfterList(Map<String, String> param);
 
-	List<SchArrangeResult> searchSchArrangeResultByDoctor4Sort(Map<String,Object> paramMap);
-
-	List<SchArrangeResult> searchSchArrangeResultBySpeAndDoc(Map<String, Object> paramMap);
 
 	List<Map<String,Object>> querySchArrangeResultByDoctor(@Param("doctorFlow") String doctorFlow);
 
@@ -193,7 +139,6 @@ public interface SchArrangeResultExtMapper {
 
 	List<SchArrangeResult> searchArrangeResultByDateAndOrgByMapNew(Map<String, Object> param);
 
-	List<HbresDoctorDeptDetail> hbresDoctorSchResults(@Param("resultFlows") List<String> resultFlows);
 
 	/**
 	 * @Department：研发部

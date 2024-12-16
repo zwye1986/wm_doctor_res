@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_ADMIT_INFO
+      from RECRUIT_ADMIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_ADMIT_INFO
+      from RECRUIT_ADMIT_INFO
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_ADMIT_INFO
+      delete from RECRUIT_ADMIT_INFO
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitAdmitInfoExample" >
-    delete from PDSCI.RECRUIT_ADMIT_INFO
+      delete from RECRUIT_ADMIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitAdmitInfo" >
-    insert into PDSCI.RECRUIT_ADMIT_INFO (RECRUIT_FLOW, ORG_FLOW, DOCTOR_FLOW, 
+      insert into RECRUIT_ADMIT_INFO (RECRUIT_FLOW, ORG_FLOW, DOCTOR_FLOW,
       ADMIT_TIME, ADMIT_ADDRESS, ADMIT_DEMO, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitAdmitInfo" >
-    insert into PDSCI.RECRUIT_ADMIT_INFO
+      insert into RECRUIT_ADMIT_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recruitFlow != null" >
         RECRUIT_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitAdmitInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_ADMIT_INFO
+      select count(*) from RECRUIT_ADMIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_ADMIT_INFO
+      update RECRUIT_ADMIT_INFO
     <set >
       <if test="record.recruitFlow != null" >
         RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_ADMIT_INFO
+      update RECRUIT_ADMIT_INFO
     set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitAdmitInfo" >
-    update PDSCI.RECRUIT_ADMIT_INFO
+      update RECRUIT_ADMIT_INFO
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitAdmitInfo" >
-    update PDSCI.RECRUIT_ADMIT_INFO
+      update RECRUIT_ADMIT_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ADMIT_TIME = #{admitTime,jdbcType=VARCHAR},

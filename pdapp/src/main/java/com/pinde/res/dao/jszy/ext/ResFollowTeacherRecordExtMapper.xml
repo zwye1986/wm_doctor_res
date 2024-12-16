@@ -4,7 +4,7 @@
 
 	<select id="searchFolowTeacherRecordByType" resultMap="com.pinde.sci.dao.base.ResDiscipleRecordInfoMapper.BaseResultMap">
 		SELECT *
-		FROM PDSCI.RES_DISCIPLE_RECORD_INFO
+        FROM RES_DISCIPLE_RECORD_INFO
 		WHERE RECORD_STATUS = 'Y'
 		AND DOCTOR_FLOW=#{userFlow}
 		<if test="typeId=='NotAudit'">
@@ -21,7 +21,7 @@
 	<select id="folowTeacherRecordFinishMap" resultType="hashmap">
 		select *
   		from (SELECT AUDIT_STATUS_ID, COUNT(1) qty
-          FROM PDSCI.RES_DISCIPLE_RECORD_INFO
+              FROM RES_DISCIPLE_RECORD_INFO
          WHERE RECORD_STATUS = 'Y'
            and doctor_flow = #{userFlow}
          GROUP BY AUDIT_STATUS_ID)
@@ -32,7 +32,7 @@
 	<select id="discipleNoteInfoFinishMap" resultType="hashmap">
 		select *
   		from (SELECT AUDIT_STATUS_ID, COUNT(1) qty
-          FROM PDSCI.RES_DISCIPLE_NOTE_INFO
+              FROM RES_DISCIPLE_NOTE_INFO
          WHERE RECORD_STATUS = 'Y'
            and doctor_flow = #{userFlow}
            and note_type_id=#{noteTypeId}
@@ -45,7 +45,7 @@
 	<select id="typicalCasesFinishMap" resultType="hashmap">
 		select *
   		from (SELECT AUDIT_STATUS_ID, COUNT(1) qty
-          FROM PDSCI.res_typical_cases
+              FROM res_typical_cases
          WHERE RECORD_STATUS = 'Y'
            and doctor_flow = #{userFlow}
          GROUP BY AUDIT_STATUS_ID)

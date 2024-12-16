@@ -27,7 +27,7 @@ import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.base.SysUserSchoolMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
-import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.core.model.PubUserResume;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResTeacherTraining;
 import com.pinde.sci.model.mo.ResTeacherTrainingExample;

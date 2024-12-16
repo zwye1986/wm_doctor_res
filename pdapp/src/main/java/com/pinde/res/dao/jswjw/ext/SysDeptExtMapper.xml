@@ -3,8 +3,8 @@
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SysDeptExtMapper" >
 	<select id="getExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
 		select *
-		from pdsci.sys_dept sd
-		inner join pdsci.sch_dept_external_rel sder
+        from sys_dept sd
+                 inner join sch_dept_external_rel sder
 		on sd.dept_flow = sder.dept_flow
 		where sd.record_status = 'Y'
 		and sder.record_status = 'Y'
@@ -13,8 +13,8 @@
 	</select>
 	
 	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
-		select DISTINCT sd.* from pdsci.sys_dept sd
-		left join pdsci.sch_dept_external_rel sder
+        select DISTINCT sd.* from sys_dept sd
+        left join sch_dept_external_rel sder
 		on sd.dept_flow = sder.dept_flow
 		and sder.record_status = 'Y'
 		where sd.record_status = 'Y'
@@ -48,7 +48,8 @@
 		order by sd.dept_code
 	</select>
 	<select id="getErrorSchDepts" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
-		select DISTINCT sd.* from pdsci.sys_dept sd
+        select DISTINCT sd.*
+        from sys_dept sd
 		where sd.org_flow=#{orgFlow} and
 			exists(
 				select null

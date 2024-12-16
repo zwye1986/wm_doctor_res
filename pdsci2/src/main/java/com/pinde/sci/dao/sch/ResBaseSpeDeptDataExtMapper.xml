@@ -77,7 +77,7 @@
 	</resultMap>
 	<select id="countByOrgListAndSpe" resultMap="countByOrgAndSpeMap">
 		SELECT SPE_ID,COUNT(RECORD_FLOW) NUM
-		FROM PDSCI.RES_TEACHER_TRAINING
+        FROM RES_TEACHER_TRAINING
 		WHERE ORG_FLOW in
 		<foreach collection="orgFlowList" item="orgFlow" open="(" close=")" separator=",">
 			#{orgFlow}
@@ -95,7 +95,7 @@
 		</if>
 		DR.SPE_ID SPE_ID,count(DR.DOCTOR_FLOW) NUM
 		FROM RES_DOCTOR_RECRUIT DR
-		LEFT JOIN PDSCI.SYS_USER U ON DR.DOCTOR_FLOW = U.USER_FLOW
+        LEFT JOIN SYS_USER U ON DR.DOCTOR_FLOW = U.USER_FLOW
 		LEFT JOIN RES_DOCTOR ED ON DR.DOCTOR_FLOW = ED.DOCTOR_FLOW
 		WHERE DR.RECORD_STATUS = 'Y'
 		AND U.RECORD_STATUS = 'Y'

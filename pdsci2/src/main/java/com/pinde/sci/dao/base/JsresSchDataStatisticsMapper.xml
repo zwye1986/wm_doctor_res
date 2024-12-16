@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_SCH_DATA_STATISTICS
+        from JSRES_SCH_DATA_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_SCH_DATA_STATISTICS
+      from JSRES_SCH_DATA_STATISTICS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_SCH_DATA_STATISTICS
+      delete from JSRES_SCH_DATA_STATISTICS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresSchDataStatisticsExample">
-    delete from PDSCI.JSRES_SCH_DATA_STATISTICS
+        delete from JSRES_SCH_DATA_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.JsresSchDataStatistics">
-    insert into PDSCI.JSRES_SCH_DATA_STATISTICS (RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW, 
+        insert into JSRES_SCH_DATA_STATISTICS (RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW,
       ORG_FLOW, ORG_NAME, MONTH_DATE, 
       DOCTOR_TRAIN_TOTAL, DATA_WRITE_TOTAL, DATA_AUDIT_TOTAL, 
       AUDIT_SCALE, AVG_WRITE, AVG_AUDIT, 
@@ -124,7 +124,7 @@
       #{doctorTypeId,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.JsresSchDataStatistics">
-    insert into PDSCI.JSRES_SCH_DATA_STATISTICS
+        insert into JSRES_SCH_DATA_STATISTICS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -216,13 +216,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.JsresSchDataStatisticsExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_SCH_DATA_STATISTICS
+        select count(*) from JSRES_SCH_DATA_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_SCH_DATA_STATISTICS
+      update JSRES_SCH_DATA_STATISTICS
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -272,7 +272,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_SCH_DATA_STATISTICS
+      update JSRES_SCH_DATA_STATISTICS
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
       PARENT_ORG_FLOW = #{record.parentOrgFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresSchDataStatistics">
-    update PDSCI.JSRES_SCH_DATA_STATISTICS
+        update JSRES_SCH_DATA_STATISTICS
     <set >
       <if test="orgCode != null" >
         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresSchDataStatistics">
-    update PDSCI.JSRES_SCH_DATA_STATISTICS
+        update JSRES_SCH_DATA_STATISTICS
     set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       PARENT_ORG_FLOW = #{parentOrgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

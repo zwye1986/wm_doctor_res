@@ -94,7 +94,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DICT
+      from SYS_DICT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -105,21 +105,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DICT
+      from SYS_DICT
     where DICT_FLOW = #{dictFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_DICT
+      delete from SYS_DICT
     where DICT_FLOW = #{dictFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDictExample" >
-    delete from PDSCI.SYS_DICT
+      delete from SYS_DICT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.SysDict">
-    insert into PDSCI.SYS_DICT (DICT_FLOW, DICT_TYPE_ID, DICT_TYPE_NAME, 
+        insert into SYS_DICT (DICT_FLOW, DICT_TYPE_ID, DICT_TYPE_NAME,
       DICT_ID, DICT_NAME, DICT_DESC, 
       ORDINAL, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -133,7 +133,7 @@
       #{dictNameEn,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.SysDict">
-    insert into PDSCI.SYS_DICT
+        insert into SYS_DICT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="dictFlow != null" >
         DICT_FLOW,
@@ -236,13 +236,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDictExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_DICT
+      select count(*) from SYS_DICT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_DICT
+      update SYS_DICT
     <set >
       <if test="record.dictFlow != null" >
         DICT_FLOW = #{record.dictFlow,jdbcType=VARCHAR},
@@ -298,7 +298,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_DICT
+      update SYS_DICT
     set DICT_FLOW = #{record.dictFlow,jdbcType=VARCHAR},
       DICT_TYPE_ID = #{record.dictTypeId,jdbcType=VARCHAR},
       DICT_TYPE_NAME = #{record.dictTypeName,jdbcType=VARCHAR},
@@ -320,7 +320,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDict">
-    update PDSCI.SYS_DICT
+        update SYS_DICT
     <set >
       <if test="dictTypeId != null" >
         DICT_TYPE_ID = #{dictTypeId,jdbcType=VARCHAR},
@@ -371,7 +371,7 @@
     where DICT_FLOW = #{dictFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDict">
-    update PDSCI.SYS_DICT
+        update SYS_DICT
     set DICT_TYPE_ID = #{dictTypeId,jdbcType=VARCHAR},
       DICT_TYPE_NAME = #{dictTypeName,jdbcType=VARCHAR},
       DICT_ID = #{dictId,jdbcType=VARCHAR},

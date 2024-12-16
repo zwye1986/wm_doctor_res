@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ORG_BATCH
+        from SYS_ORG_BATCH
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ORG_BATCH
+      from SYS_ORG_BATCH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_ORG_BATCH
+      delete from SYS_ORG_BATCH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.SysOrgBatchExample">
-    delete from PDSCI.SYS_ORG_BATCH
+        delete from SYS_ORG_BATCH
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.SysOrgBatch">
-    insert into PDSCI.SYS_ORG_BATCH (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
+        insert into SYS_ORG_BATCH (RECORD_FLOW, ORG_FLOW, ORG_NAME,
       ORG_BATCH, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.SysOrgBatch">
-    insert into PDSCI.SYS_ORG_BATCH
+        insert into SYS_ORG_BATCH
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.SysOrgBatchExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SYS_ORG_BATCH
+        select count(*) from SYS_ORG_BATCH
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_ORG_BATCH
+      update SYS_ORG_BATCH
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_ORG_BATCH
+      update SYS_ORG_BATCH
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysOrgBatch">
-    update PDSCI.SYS_ORG_BATCH
+        update SYS_ORG_BATCH
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysOrgBatch">
-    update PDSCI.SYS_ORG_BATCH
+        update SYS_ORG_BATCH
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       ORG_BATCH = #{orgBatch,jdbcType=VARCHAR},

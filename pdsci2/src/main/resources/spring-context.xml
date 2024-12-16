@@ -16,7 +16,7 @@
         <property name="locations">
             <list>
                 <value>classpath:jdbc.properties</value>
-				<value>classpath:pdsci.properties</value>
+                <value>classpath: properties</value>
             </list>
         </property>
     </bean>

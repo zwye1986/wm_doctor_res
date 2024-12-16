@@ -91,7 +91,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RECRUIT_EXAM_MAIN
+      from RECRUIT_EXAM_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -105,7 +105,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_EXAM_MAIN
+      from RECRUIT_EXAM_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -118,21 +118,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RECRUIT_EXAM_MAIN
+      from RECRUIT_EXAM_MAIN
     where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_EXAM_MAIN
+      delete from RECRUIT_EXAM_MAIN
     where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitExamMainExample" >
-    delete from PDSCI.RECRUIT_EXAM_MAIN
+      delete from RECRUIT_EXAM_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitExamMain" >
-    insert into PDSCI.RECRUIT_EXAM_MAIN (MAIN_FLOW, RECRUIT_YEAR, CFG_FLOW, 
+      insert into RECRUIT_EXAM_MAIN (MAIN_FLOW, RECRUIT_YEAR, CFG_FLOW,
       ORG_FLOW, START_TIME, END_TIME, 
       IS_PUBLISH, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -144,7 +144,7 @@
       #{mainNote,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitExamMain" >
-    insert into PDSCI.RECRUIT_EXAM_MAIN
+      insert into RECRUIT_EXAM_MAIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="mainFlow != null" >
         MAIN_FLOW,
@@ -229,13 +229,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitExamMainExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_EXAM_MAIN
+      select count(*) from RECRUIT_EXAM_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_MAIN
+      update RECRUIT_EXAM_MAIN
     <set >
       <if test="record.mainFlow != null" >
         MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_MAIN
+      update RECRUIT_EXAM_MAIN
     set MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
       RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
       CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -301,7 +301,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_MAIN
+      update RECRUIT_EXAM_MAIN
     set MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
       RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
       CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -319,7 +319,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitExamMain" >
-    update PDSCI.RECRUIT_EXAM_MAIN
+      update RECRUIT_EXAM_MAIN
     <set >
       <if test="recruitYear != null" >
         RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
@@ -361,7 +361,7 @@
     where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.RecruitExamMain" >
-    update PDSCI.RECRUIT_EXAM_MAIN
+      update RECRUIT_EXAM_MAIN
     set RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
       CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -377,7 +377,7 @@
     where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitExamMain" >
-    update PDSCI.RECRUIT_EXAM_MAIN
+      update RECRUIT_EXAM_MAIN
     set RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
       CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

@@ -473,10 +473,10 @@ SELECT
 	ed.ORG_Name AS edOrgName,
 	ed.doctor_type_name,
 	ed.doctor_type_id,
-    (select bb.org_code from PDSCI.SYS_ORG bb where dr.org_flow=bb.org_flow) org_code
+        (select bb.org_code from SYS_ORG bb where dr.org_flow=bb.org_flow) org_code
 FROM
-	pdsci.RES_DOCTOR_RECRUIT dr
-LEFT JOIN pdsci.SYS_USER U ON dr.DOCTOR_FLOW = U .USER_FLOW
+        RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER U ON dr.DOCTOR_FLOW = U .USER_FLOW
 LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 WHERE
 	dr.RECORD_STATUS = 'Y'
@@ -485,9 +485,9 @@ AND dr.org_flow IN (
 	SELECT
 		ORG_FLOW
 	FROM
-		PDSCI.SYS_ORG
+        SYS_ORG
 	WHERE
-		PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        SYS_ORG.RECORD_STATUS = 'Y'
 	AND dr.AUDIT_STATUS_ID != 'NotSubmit'
    AND ORG_PROV_ID ='320000'
 	AND ed.DOCTOR_TYPE_ID IN ('Graduate', 'Graduate')
@@ -645,14 +645,14 @@ ORDER BY
 			, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID
 			, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME, ed.ORG_FLOW AS edOrgFlow, ed.ORG_Name AS edOrgName
 			, ed.doctor_type_name, ed.doctor_type_id -->
-		FROM pdsci.RES_DOCTOR_RECRUIT dr
-		LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 		WHERE dr.RECORD_STATUS = 'Y'
 			AND u.RECORD_STATUS = 'Y'
 			AND dr.org_flow IN (SELECT ORG_FLOW
-				FROM PDSCI.SYS_ORG
-				WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					AND dr.AUDIT_STATUS_ID != 'NotSubmit'
         <if test='orgFlow!=null and orgFlow!=""'>
 			   AND dr.ORG_FLOW =#{orgFlow}
@@ -1653,14 +1653,14 @@ ORDER BY
         , u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID
         , u.EDUCATION_NAME, u.POST_ID, u.POST_NAME, ed.ORG_FLOW AS edOrgFlow, ed.ORG_Name AS edOrgName
         , ed.doctor_type_name, ed.doctor_type_id
-		FROM pdsci.RES_DOCTOR_RECRUIT dr
-		LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 		WHERE dr.RECORD_STATUS = 'Y'
 			AND u.RECORD_STATUS = 'Y'
 			AND dr.org_flow IN (SELECT ORG_FLOW
-				FROM PDSCI.SYS_ORG
-				WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					AND dr.AUDIT_STATUS_ID != 'NotSubmit'
 					<if test="orgFlow!=null and  orgFlow!=''">
                         AND dr.ORG_FLOW = #{orgFlow}

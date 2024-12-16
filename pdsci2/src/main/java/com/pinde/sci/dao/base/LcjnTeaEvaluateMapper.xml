@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_TEA_EVALUATE
+        from LCJN_TEA_EVALUATE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_TEA_EVALUATE
+      from LCJN_TEA_EVALUATE
     where TEA_EVALUATE_FLOW = #{teaEvaluateFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_TEA_EVALUATE
+      delete from LCJN_TEA_EVALUATE
     where TEA_EVALUATE_FLOW = #{teaEvaluateFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnTeaEvaluateExample">
-    delete from PDSCI.LCJN_TEA_EVALUATE
+        delete from LCJN_TEA_EVALUATE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
-    insert into PDSCI.LCJN_TEA_EVALUATE (TEA_EVALUATE_FLOW, COURSE_FLOW, COURSE_NAME, 
+        insert into LCJN_TEA_EVALUATE (TEA_EVALUATE_FLOW, COURSE_FLOW, COURSE_NAME,
       DOCTOR_FLOW, DOCTOR_NAME, USER_FLOW, 
       USER_NAME, EVAL_CONTENT, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -122,7 +122,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
-    insert into PDSCI.LCJN_TEA_EVALUATE
+        insert into LCJN_TEA_EVALUATE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="teaEvaluateFlow != null">
         TEA_EVALUATE_FLOW,
@@ -208,13 +208,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.LcjnTeaEvaluateExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_TEA_EVALUATE
+        select count(*) from LCJN_TEA_EVALUATE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_TEA_EVALUATE
+      update LCJN_TEA_EVALUATE
     <set>
       <if test="record.teaEvaluateFlow != null">
         TEA_EVALUATE_FLOW = #{record.teaEvaluateFlow,jdbcType=VARCHAR},
@@ -261,7 +261,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_TEA_EVALUATE
+      update LCJN_TEA_EVALUATE
     set TEA_EVALUATE_FLOW = #{record.teaEvaluateFlow,jdbcType=VARCHAR},
       COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
@@ -280,7 +280,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
-    update PDSCI.LCJN_TEA_EVALUATE
+        update LCJN_TEA_EVALUATE
     <set>
       <if test="courseFlow != null">
         COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
@@ -322,7 +322,7 @@
     where TEA_EVALUATE_FLOW = #{teaEvaluateFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
-    update PDSCI.LCJN_TEA_EVALUATE
+        update LCJN_TEA_EVALUATE
     set COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{courseName,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

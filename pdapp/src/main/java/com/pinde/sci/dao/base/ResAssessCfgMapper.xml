@@ -95,7 +95,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_ASSESS_CFG
+      from RES_ASSESS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,7 +109,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ASSESS_CFG
+      from RES_ASSESS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -122,21 +122,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_ASSESS_CFG
+      from RES_ASSESS_CFG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_ASSESS_CFG
+      delete from RES_ASSESS_CFG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResAssessCfgExample" >
-    delete from PDSCI.RES_ASSESS_CFG
+      delete from RES_ASSESS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResAssessCfg" >
-    insert into PDSCI.RES_ASSESS_CFG (CFG_FLOW, ORG_FLOW, CFG_CODE_ID, 
+      insert into RES_ASSESS_CFG (CFG_FLOW, ORG_FLOW, CFG_CODE_ID,
       CFG_CODE_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       ASSESS_TYPE_ID, ASSESS_TYPE_NAME, FORM_NAME, 
@@ -150,7 +150,7 @@
       #{cfgBigValue,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResAssessCfg" >
-    insert into PDSCI.RES_ASSESS_CFG
+      insert into RES_ASSESS_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
         CFG_FLOW,
@@ -253,13 +253,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResAssessCfgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_ASSESS_CFG
+      select count(*) from RES_ASSESS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_ASSESS_CFG
+      update RES_ASSESS_CFG
     <set >
       <if test="record.cfgFlow != null" >
         CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -315,7 +315,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_ASSESS_CFG
+      update RES_ASSESS_CFG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       CFG_CODE_ID = #{record.cfgCodeId,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_ASSESS_CFG
+      update RES_ASSESS_CFG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       CFG_CODE_ID = #{record.cfgCodeId,jdbcType=VARCHAR},
@@ -358,7 +358,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResAssessCfg" >
-    update PDSCI.RES_ASSESS_CFG
+      update RES_ASSESS_CFG
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -409,7 +409,7 @@
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResAssessCfg" >
-    update PDSCI.RES_ASSESS_CFG
+      update RES_ASSESS_CFG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       CFG_CODE_ID = #{cfgCodeId,jdbcType=VARCHAR},
       CFG_CODE_NAME = #{cfgCodeName,jdbcType=VARCHAR},
@@ -428,7 +428,7 @@
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResAssessCfg" >
-    update PDSCI.RES_ASSESS_CFG
+      update RES_ASSESS_CFG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       CFG_CODE_ID = #{cfgCodeId,jdbcType=VARCHAR},
       CFG_CODE_NAME = #{cfgCodeName,jdbcType=VARCHAR},

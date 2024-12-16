@@ -102,7 +102,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_MSG
+        from PUB_MSG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -116,7 +116,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MSG
+        from PUB_MSG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -129,21 +129,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_MSG
+      from PUB_MSG
     where MSG_FLOW = #{msgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_MSG
+      delete from PUB_MSG
     where MSG_FLOW = #{msgFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.PubMsgExample">
-    delete from PDSCI.PUB_MSG
+        delete from PUB_MSG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.PubMsg">
-    insert into PDSCI.PUB_MSG (MSG_FLOW, MSG_CODE, MSG_TYPE_ID, 
+        insert into PUB_MSG (MSG_FLOW, MSG_CODE, MSG_TYPE_ID,
       MSG_TYPE_NAME, MSG_TIME, MSG_TITLE, 
       SENDER, SEND_TIME, SEND_FLAG, 
       SEND_RESULT, SEND_ERROR_TIMES, RECEIVER, 
@@ -161,7 +161,7 @@
       #{msgContent,jdbcType=CLOB})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.PubMsg">
-    insert into PDSCI.PUB_MSG
+        insert into PUB_MSG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="msgFlow != null" >
         MSG_FLOW,
@@ -300,13 +300,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.PubMsgExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_MSG
+        select count(*) from PUB_MSG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_MSG
+      update PUB_MSG
     <set >
       <if test="record.msgFlow != null" >
         MSG_FLOW = #{record.msgFlow,jdbcType=VARCHAR},
@@ -380,7 +380,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.PUB_MSG
+      update PUB_MSG
     set MSG_FLOW = #{record.msgFlow,jdbcType=VARCHAR},
       MSG_CODE = #{record.msgCode,jdbcType=VARCHAR},
       MSG_TYPE_ID = #{record.msgTypeId,jdbcType=VARCHAR},
@@ -408,7 +408,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_MSG
+      update PUB_MSG
     set MSG_FLOW = #{record.msgFlow,jdbcType=VARCHAR},
       MSG_CODE = #{record.msgCode,jdbcType=VARCHAR},
       MSG_TYPE_ID = #{record.msgTypeId,jdbcType=VARCHAR},
@@ -435,7 +435,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubMsg">
-    update PDSCI.PUB_MSG
+        update PUB_MSG
     <set >
       <if test="msgCode != null" >
         MSG_CODE = #{msgCode,jdbcType=VARCHAR},
@@ -504,7 +504,7 @@
     where MSG_FLOW = #{msgFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubMsg">
-    update PDSCI.PUB_MSG
+        update PUB_MSG
     set MSG_CODE = #{msgCode,jdbcType=VARCHAR},
       MSG_TYPE_ID = #{msgTypeId,jdbcType=VARCHAR},
       MSG_TYPE_NAME = #{msgTypeName,jdbcType=VARCHAR},
@@ -529,7 +529,7 @@
     where MSG_FLOW = #{msgFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubMsg">
-    update PDSCI.PUB_MSG
+        update PUB_MSG
     set MSG_CODE = #{msgCode,jdbcType=VARCHAR},
       MSG_TYPE_ID = #{msgTypeId,jdbcType=VARCHAR},
       MSG_TYPE_NAME = #{msgTypeName,jdbcType=VARCHAR},

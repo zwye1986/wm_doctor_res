@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_ELEMENT
+        from PUB_ELEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_ELEMENT
+      from PUB_ELEMENT
     where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_ELEMENT
+      delete from PUB_ELEMENT
     where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.PubElementExample">
-    delete from PDSCI.PUB_ELEMENT
+        delete from PUB_ELEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.PubElement">
-    insert into PDSCI.PUB_ELEMENT (ELEMENT_FLOW, ELEMENT_NAME, ELEMENT_CODE, 
+        insert into PUB_ELEMENT (ELEMENT_FLOW, ELEMENT_NAME, ELEMENT_CODE,
       ELEMENT_VAR_NAME, MODULE_CODE, ELEMENT_SERIAL, 
       COLUMN_COUNT, ORDINAL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -122,7 +122,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.PubElement">
-    insert into PDSCI.PUB_ELEMENT
+        insert into PUB_ELEMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="elementFlow != null" >
         ELEMENT_FLOW,
@@ -207,13 +207,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.PubElementExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_ELEMENT
+        select count(*) from PUB_ELEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_ELEMENT
+      update PUB_ELEMENT
     <set >
       <if test="record.elementFlow != null" >
         ELEMENT_FLOW = #{record.elementFlow,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_ELEMENT
+      update PUB_ELEMENT
     set ELEMENT_FLOW = #{record.elementFlow,jdbcType=VARCHAR},
       ELEMENT_NAME = #{record.elementName,jdbcType=VARCHAR},
       ELEMENT_CODE = #{record.elementCode,jdbcType=VARCHAR},
@@ -279,7 +279,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubElement">
-    update PDSCI.PUB_ELEMENT
+        update PUB_ELEMENT
     <set >
       <if test="elementName != null" >
         ELEMENT_NAME = #{elementName,jdbcType=VARCHAR},
@@ -321,7 +321,7 @@
     where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubElement">
-    update PDSCI.PUB_ELEMENT
+        update PUB_ELEMENT
     set ELEMENT_NAME = #{elementName,jdbcType=VARCHAR},
       ELEMENT_CODE = #{elementCode,jdbcType=VARCHAR},
       ELEMENT_VAR_NAME = #{elementVarName,jdbcType=VARCHAR},

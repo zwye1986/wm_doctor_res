@@ -33,12 +33,12 @@
         DISCIPLE_TEACHER_FLOW, DISCIPLE_TEACHER_NAME
     </sql>
     <insert id="saveResDoctorLog" parameterType="java.lang.String">
-        insert into PDSCI.RES_DOCTOR_LOG (
+        insert into RES_DOCTOR_LOG (
         RECORD_FLOW,DOCTOR_HEAD_IMG,DISPATCH_FILE,QUALIFIED_FILE, <include refid="ResDoctor_Column_List" />,ARCHIVE_FLOW
         )
         select sys_guid(),'/${archiveFlow}/'||DOCTOR_HEAD_IMG, '/${archiveFlow}/'||DISPATCH_FILE,'/${archiveFlow}/'||QUALIFIED_FILE,
         <include refid="ResDoctor_Column_List" />,#{archiveFlow}
-        from PDSCI.RES_DOCTOR rd where rd.RECORD_STATUS='Y'
+        from RES_DOCTOR rd where rd.RECORD_STATUS='Y'
     </insert>
 
     <sql id="SysUser_Column_List">
@@ -57,11 +57,11 @@
         IS_OSCA
     </sql>
     <insert id="saveSysUserLog" parameterType="java.lang.String">
-        insert into PDSCI.SYS_USER_LOG (
+        insert into SYS_USER_LOG (
         RECORD_FLOW,USER_HEAD_IMG, <include refid="SysUser_Column_List" />,ARCHIVE_FLOW
         )
         select sys_guid(),'/${archiveFlow}/'||USER_HEAD_IMG,<include refid="SysUser_Column_List" />,#{archiveFlow}
-        from PDSCI.SYS_USER su where su.RECORD_STATUS='Y'
+        from SYS_USER su where su.RECORD_STATUS='Y'
 
     </insert>
 
@@ -79,7 +79,7 @@
         TYPE_ID, REGISTE_MANUA, SECOND_SPE_ID, SECOND_SPE_NAME
     </sql>
     <insert id="saveResDoctorRecruitLog" parameterType="java.lang.String">
-        insert into PDSCI.RES_DOCTOR_RECRUIT_LOG (
+        insert into RES_DOCTOR_RECRUIT_LOG (
         RECORD_FLOW,PROVE_FILE_URL,COMPLETE_FILE_URL,SPECIAL_FILE_URL,CERTIFICATE_URI,QUALIFICATION_MATERIAL_URI,DOCTOR_AUTH,
         RECORD_STATUS,CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW,
         <include refid="ResDoctorRecruit_Column_List" />,ARCHIVE_FLOW
@@ -88,7 +88,7 @@
         '/${archiveFlow}/'||CERTIFICATE_URI,'/${archiveFlow}/'||QUALIFICATION_MATERIAL_URI,'/${archiveFlow}/'||da.IMAGE_URL,
         rdr.RECORD_STATUS,rdr.CREATE_TIME, rdr.CREATE_USER_FLOW, rdr.MODIFY_TIME, rdr.MODIFY_USER_FLOW,
         <include refid="ResDoctorRecruit_Column_List" />,#{archiveFlow}
-        from PDSCI.RES_DOCTOR_RECRUIT rdr
+        from RES_DOCTOR_RECRUIT rdr
         left JOIN  ( SELECT ROW_NUMBER() OVER(PARTITION BY OPER_USER_FLOW ORDER BY create_time DESC) rn,
         DOCTOR_AUTH.*
         FROM DOCTOR_AUTH) da ON rdr.DOCTOR_FLOW = da.OPER_USER_FLOW and da.RECORD_STATUS = 'Y' and da.rn=1
@@ -103,7 +103,7 @@
     </select>
     <select id="sysUserPathTitle" resultType="java.util.Map">
       select distinct substr(USER_HEAD_IMG,0,instr(USER_HEAD_IMG,'/',1,1)-1)
-      from PDSCI.SYS_USER
+        from SYS_USER
         where RECORD_STATUS='Y'
     </select>
     <resultMap id="BaseResultMap" type="java.util.Map">
@@ -144,8 +144,8 @@
         dr.RECORD_STATUS, dr.CREATE_TIME, dr.CREATE_USER_FLOW, dr.MODIFY_TIME, dr.MODIFY_USER_FLOW,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
         , u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
         ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName
-        from pdsci.RES_DOCTOR_RECRUIT_LOG dr
-        left join  pdsci.SYS_USER_LOG u
+        from RES_DOCTOR_RECRUIT_LOG dr
+        left join SYS_USER_LOG u
         on dr.DOCTOR_FLOW =  u.USER_FLOW
         <if test="archiveFlow != null and archiveFlow != ''">
             and u.archive_Flow = #{archiveFlow}
@@ -158,8 +158,8 @@
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
         and dr.org_flow in(
         SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
         <if test="sysOrg!=null">
             <if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
                 AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -266,8 +266,8 @@
 
     <select id="searchDoctorInfoExts"  parameterType="java.util.Map" resultMap="doctorInfo">
         select *
-        from pdsci.RES_DOCTOR_RECRUIT_LOG dr
-        left join  pdsci.SYS_USER_LOG u
+        from RES_DOCTOR_RECRUIT_LOG dr
+        left join SYS_USER_LOG u
         on dr.DOCTOR_FLOW =  u.USER_FLOW
         <if test="archiveFlow != null and archiveFlow != ''">
             and u.archive_Flow = #{archiveFlow}
@@ -277,13 +277,13 @@
         <if test="archiveFlow != null and archiveFlow != ''">
             and ed.archive_Flow = #{archiveFlow}
         </if>
-        left join pdsci.RES_USER_RESUME_LOG pur
+        left join RES_USER_RESUME_LOG pur
         on pur.USER_FLOW=dr.DOCTOR_FLOW
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
         and dr.org_flow in(
         SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
         <if test="sysOrg!=null">
             <if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
                 AND ORG_PROV_ID = #{sysOrg.orgProvId}

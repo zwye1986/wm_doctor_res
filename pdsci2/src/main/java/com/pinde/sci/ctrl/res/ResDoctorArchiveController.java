@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 
+import com.pinde.core.model.PubUserResume;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysUser;

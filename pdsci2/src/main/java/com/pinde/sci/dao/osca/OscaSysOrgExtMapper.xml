@@ -18,7 +18,7 @@
 
     <select id="searchOrgCitys" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select distinct ORG_CITY_ID , ORG_CITY_NAME
-        from PDSCI.SYS_ORG
+        from SYS_ORG
         where RECORD_STATUS='Y'
         <if test="orgProvId!=null and orgProvId!=''">
             and  ORG_PROV_ID=#{orgProvId}
@@ -76,7 +76,7 @@
     </select>
 
     <update id="updateOscaOrgSpe" parameterType="map">
-        update PDSCI.OSCA_ORG_SPE
+        update OSCA_ORG_SPE
         set record_status='N' ,
             MODIFY_TIME=#{modifyTime},
             MODIFY_USER_FLOW=#{modifyUserFlow}

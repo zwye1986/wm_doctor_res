@@ -94,7 +94,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_IMPACTOR_FACTOR
+        from PUB_IMPACTOR_FACTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -105,21 +105,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_IMPACTOR_FACTOR
+      from PUB_IMPACTOR_FACTOR
     where FACTOR_FLOW = #{factorFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_IMPACTOR_FACTOR
+      delete from PUB_IMPACTOR_FACTOR
     where FACTOR_FLOW = #{factorFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.PubImpactorFactorExample">
-    delete from PDSCI.PUB_IMPACTOR_FACTOR
+        delete from PUB_IMPACTOR_FACTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.PubImpactorFactor">
-    insert into PDSCI.PUB_IMPACTOR_FACTOR (FACTOR_FLOW, YEAR, FACTOR_TYPE_ID, 
+        insert into PUB_IMPACTOR_FACTOR (FACTOR_FLOW, YEAR, FACTOR_TYPE_ID,
       FACTOR_TYPE_NAME, RANK, JOURNAL_TITLE, 
       ISSN, TOTAL_CITES, IMPACT_FACTOR, 
       FIVE_YEAR_IMPACTOR_FACTOR, IMMEDIACY_INDEX, 
@@ -137,7 +137,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.PubImpactorFactor">
-    insert into PDSCI.PUB_IMPACTOR_FACTOR
+        insert into PUB_IMPACTOR_FACTOR
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="factorFlow != null" >
         FACTOR_FLOW,
@@ -265,13 +265,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.PubImpactorFactorExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_IMPACTOR_FACTOR
+        select count(*) from PUB_IMPACTOR_FACTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_IMPACTOR_FACTOR
+      update PUB_IMPACTOR_FACTOR
     <set >
       <if test="record.factorFlow != null" >
         FACTOR_FLOW = #{record.factorFlow,jdbcType=VARCHAR},
@@ -339,7 +339,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_IMPACTOR_FACTOR
+      update PUB_IMPACTOR_FACTOR
     set FACTOR_FLOW = #{record.factorFlow,jdbcType=VARCHAR},
       YEAR = #{record.year,jdbcType=VARCHAR},
       FACTOR_TYPE_ID = #{record.factorTypeId,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubImpactorFactor">
-    update PDSCI.PUB_IMPACTOR_FACTOR
+        update PUB_IMPACTOR_FACTOR
     <set >
       <if test="year != null" >
         YEAR = #{year,jdbcType=VARCHAR},
@@ -428,7 +428,7 @@
     where FACTOR_FLOW = #{factorFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubImpactorFactor">
-    update PDSCI.PUB_IMPACTOR_FACTOR
+        update PUB_IMPACTOR_FACTOR
     set YEAR = #{year,jdbcType=VARCHAR},
       FACTOR_TYPE_ID = #{factorTypeId,jdbcType=VARCHAR},
       FACTOR_TYPE_NAME = #{factorTypeName,jdbcType=VARCHAR},

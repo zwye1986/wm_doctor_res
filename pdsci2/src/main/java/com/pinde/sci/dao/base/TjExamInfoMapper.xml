@@ -86,7 +86,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TJ_EXAM_INFO
+        from TJ_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,13 +95,13 @@
     </if>
   </select>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.TjExamInfoExample">
-    delete from PDSCI.TJ_EXAM_INFO
+        delete from TJ_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.TjExamInfo">
-    insert into PDSCI.TJ_EXAM_INFO (USER_FLOW, CITY_CODE, EXAM_TIME, 
+        insert into TJ_EXAM_INFO (USER_FLOW, CITY_CODE, EXAM_TIME,
       EXAM_ADDRESS, SITE_PHONE, TITLE, 
       REMARK, RECORD_FLOW, SPE_NAME, 
       ORG_FLOW, RECORD_STATUS, CREATE_TIME, 
@@ -115,7 +115,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.TjExamInfo">
-    insert into PDSCI.TJ_EXAM_INFO
+        insert into TJ_EXAM_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
         USER_FLOW,
@@ -212,13 +212,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.TjExamInfoExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.TJ_EXAM_INFO
+        select count(*) from TJ_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.TJ_EXAM_INFO
+      update TJ_EXAM_INFO
     <set >
       <if test="record.userFlow != null" >
         USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -271,7 +271,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.TJ_EXAM_INFO
+      update TJ_EXAM_INFO
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
       EXAM_TIME = #{record.examTime,jdbcType=VARCHAR},

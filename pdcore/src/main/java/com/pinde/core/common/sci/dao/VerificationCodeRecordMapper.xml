@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.VERIFICATION_CODE_RECORD
+      from VERIFICATION_CODE_RECORD
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,13 +91,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.VerificationCodeRecordExample" >
-    delete from PDSCI.VERIFICATION_CODE_RECORD
+      delete from VERIFICATION_CODE_RECORD
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.VerificationCodeRecord" >
-    insert into PDSCI.VERIFICATION_CODE_RECORD (RECORD_FLOW, DATE_TIME, PHONE, 
+      insert into VERIFICATION_CODE_RECORD (RECORD_FLOW, DATE_TIME, PHONE,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, SEND_NUM, 
       APP_SEND, CODE_ERROR_NUM)
@@ -107,7 +107,7 @@
       #{appSend,jdbcType=VARCHAR}, #{codeErrorNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.VerificationCodeRecord" >
-    insert into PDSCI.VERIFICATION_CODE_RECORD
+      insert into VERIFICATION_CODE_RECORD
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -180,13 +180,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.VerificationCodeRecordExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.VERIFICATION_CODE_RECORD
+      select count(*) from VERIFICATION_CODE_RECORD
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.VERIFICATION_CODE_RECORD
+      update VERIFICATION_CODE_RECORD
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -227,7 +227,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.VERIFICATION_CODE_RECORD
+      update VERIFICATION_CODE_RECORD
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DATE_TIME = #{record.dateTime,jdbcType=VARCHAR},
       PHONE = #{record.phone,jdbcType=VARCHAR},
@@ -245,7 +245,7 @@
   </update>
 
     <update id="update" parameterType="map">
-        update PDSCI.VERIFICATION_CODE_RECORD
+        update VERIFICATION_CODE_RECORD
         set DATE_TIME        = #{record.dateTime,jdbcType=VARCHAR},
             PHONE            = #{record.phone,jdbcType=VARCHAR},
             RECORD_STATUS    = #{record.recordStatus,jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
   <select id="countByPhone" parameterType="com.pinde.core.model.VerificationCodeRecordExample"
             resultType="java.lang.Integer">
         select count(*)
-        from PDSCI.VERIFICATION_CODE_RECORD
+      from VERIFICATION_CODE_RECORD
         where RECORD_STATUS = 'Y'
           and PHONE = #{userPhone}
           and to_date(create_time, 'yyyymmdd hh24:mi:ss') >= sysdate - 5 / (24 * 60)

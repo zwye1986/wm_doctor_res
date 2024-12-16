@@ -92,7 +92,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SKILL
+      from RES_DOCTOR_SKILL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +103,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SKILL
+      from RES_DOCTOR_SKILL
     where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DOCTOR_SKILL
+      delete from RES_DOCTOR_SKILL
     where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSkillExample" >
-    delete from PDSCI.RES_DOCTOR_SKILL
+      delete from RES_DOCTOR_SKILL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
-    insert into PDSCI.RES_DOCTOR_SKILL (DOCTOR_SKILL_FLOW, CITY_ID, TEST_ID, 
+      insert into RES_DOCTOR_SKILL (DOCTOR_SKILL_FLOW, CITY_ID, TEST_ID,
       TEST_NAME, DOCTOR_FLOW, DOCTOR_NAME, 
       ID_NO, SPE_ID, SPE_NAME, 
       TICKET_NUMBER, SKILL_ORG_FLOW, SKILL_ORG_NAME, 
@@ -133,7 +133,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
-    insert into PDSCI.RES_DOCTOR_SKILL
+      insert into RES_DOCTOR_SKILL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="doctorSkillFlow != null" >
         DOCTOR_SKILL_FLOW,
@@ -260,13 +260,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSkillExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DOCTOR_SKILL
+      select count(*) from RES_DOCTOR_SKILL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DOCTOR_SKILL
+      update RES_DOCTOR_SKILL
     <set >
       <if test="record.doctorSkillFlow != null" >
         DOCTOR_SKILL_FLOW = #{record.doctorSkillFlow,jdbcType=VARCHAR},
@@ -334,7 +334,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DOCTOR_SKILL
+      update RES_DOCTOR_SKILL
     set DOCTOR_SKILL_FLOW = #{record.doctorSkillFlow,jdbcType=VARCHAR},
       CITY_ID = #{record.cityId,jdbcType=VARCHAR},
       TEST_ID = #{record.testId,jdbcType=VARCHAR},
@@ -360,7 +360,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
-    update PDSCI.RES_DOCTOR_SKILL
+      update RES_DOCTOR_SKILL
     <set >
       <if test="cityId != null" >
         CITY_ID = #{cityId,jdbcType=VARCHAR},
@@ -423,7 +423,7 @@
     where DOCTOR_SKILL_FLOW = #{doctorSkillFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorSkill" >
-    update PDSCI.RES_DOCTOR_SKILL
+      update RES_DOCTOR_SKILL
     set CITY_ID = #{cityId,jdbcType=VARCHAR},
       TEST_ID = #{testId,jdbcType=VARCHAR},
       TEST_NAME = #{testName,jdbcType=VARCHAR},

@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PORTAL_FILE
+        from PORTAL_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PORTAL_FILE
+      from PORTAL_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PORTAL_FILE
+      delete from PORTAL_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.PortalFileExample">
-    delete from PDSCI.PORTAL_FILE
+        delete from PORTAL_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.PortalFile">
-    insert into PDSCI.PORTAL_FILE (RECORD_FLOW, FILE_NAME, UPLOAD_TIME, 
+        insert into PORTAL_FILE (RECORD_FLOW, FILE_NAME, UPLOAD_TIME,
       FILE_SIZE, UPLOAD_USER_FLOW, UPLOAD_USER_NAME, 
       DOWNLOAD_TIMES, FILE_URL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -122,7 +122,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.PortalFile">
-    insert into PDSCI.PORTAL_FILE
+        insert into PORTAL_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -207,13 +207,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.PortalFileExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PORTAL_FILE
+        select count(*) from PORTAL_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PORTAL_FILE
+      update PORTAL_FILE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PORTAL_FILE
+      update PORTAL_FILE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
       UPLOAD_TIME = #{record.uploadTime,jdbcType=VARCHAR},
@@ -279,7 +279,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PortalFile">
-    update PDSCI.PORTAL_FILE
+        update PORTAL_FILE
     <set >
       <if test="fileName != null" >
         FILE_NAME = #{fileName,jdbcType=VARCHAR},
@@ -321,7 +321,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PortalFile">
-    update PDSCI.PORTAL_FILE
+        update PORTAL_FILE
     set FILE_NAME = #{fileName,jdbcType=VARCHAR},
       UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},
       FILE_SIZE = #{fileSize,jdbcType=VARCHAR},

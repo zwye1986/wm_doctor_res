@@ -86,7 +86,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_PARTICIPATION
+      from JSRES_DOCTOR_PARTICIPATION
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,21 +97,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_PARTICIPATION
+      from JSRES_DOCTOR_PARTICIPATION
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.JSRES_DOCTOR_PARTICIPATION
+      delete
+      from JSRES_DOCTOR_PARTICIPATION
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorParticipationExample">
-    delete from PDSCI.JSRES_DOCTOR_PARTICIPATION
+      delete from JSRES_DOCTOR_PARTICIPATION
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorParticipation">
-    insert into PDSCI.JSRES_DOCTOR_PARTICIPATION (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      insert into JSRES_DOCTOR_PARTICIPATION (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       PARTICIPATION_DATE, PARTICIPATION_ROOM, PARTICIPATION_TITLE, 
       PARTICIPATION_ROLE, PARTICIPATION_COMPLETE, 
       PARTICIPATION_AUTHOR, RECORD_STATUS, CREATE_TIME, 
@@ -125,7 +126,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorParticipation">
-    insert into PDSCI.JSRES_DOCTOR_PARTICIPATION
+      insert into JSRES_DOCTOR_PARTICIPATION
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -216,13 +217,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorParticipationExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_DOCTOR_PARTICIPATION
+      select count(*) from JSRES_DOCTOR_PARTICIPATION
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.JSRES_DOCTOR_PARTICIPATION
+      update JSRES_DOCTOR_PARTICIPATION
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -272,7 +273,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.JSRES_DOCTOR_PARTICIPATION
+      update JSRES_DOCTOR_PARTICIPATION
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -292,7 +293,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorParticipation">
-    update PDSCI.JSRES_DOCTOR_PARTICIPATION
+      update JSRES_DOCTOR_PARTICIPATION
     <set>
       <if test="doctorFlow != null">
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -337,7 +338,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorParticipation">
-    update PDSCI.JSRES_DOCTOR_PARTICIPATION
+      update JSRES_DOCTOR_PARTICIPATION
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       PARTICIPATION_DATE = #{participationDate,jdbcType=VARCHAR},

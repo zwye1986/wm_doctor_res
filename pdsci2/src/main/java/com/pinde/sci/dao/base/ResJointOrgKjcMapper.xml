@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_JOINT_ORG_KJC
+      from RES_JOINT_ORG_KJC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_JOINT_ORG_KJC
+      from RES_JOINT_ORG_KJC
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_JOINT_ORG_KJC
+      delete from RES_JOINT_ORG_KJC
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResJointOrgKjcExample" >
-    delete from PDSCI.RES_JOINT_ORG_KJC
+      delete from RES_JOINT_ORG_KJC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResJointOrgKjc" >
-    insert into PDSCI.RES_JOINT_ORG_KJC (JOINT_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into RES_JOINT_ORG_KJC (JOINT_FLOW, ORG_FLOW, ORG_NAME,
       JOINT_ORG_FLOW, JOINT_ORG_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, SESSION_YEAR)
@@ -117,7 +117,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{sessionYear,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResJointOrgKjc" >
-    insert into PDSCI.RES_JOINT_ORG_KJC
+      insert into RES_JOINT_ORG_KJC
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="jointFlow != null" >
         JOINT_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResJointOrgKjcExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_JOINT_ORG_KJC
+      select count(*) from RES_JOINT_ORG_KJC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_JOINT_ORG_KJC
+      update RES_JOINT_ORG_KJC
     <set >
       <if test="record.jointFlow != null" >
         JOINT_FLOW = #{record.jointFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_JOINT_ORG_KJC
+      update RES_JOINT_ORG_KJC
     set JOINT_FLOW = #{record.jointFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResJointOrgKjc" >
-    update PDSCI.RES_JOINT_ORG_KJC
+      update RES_JOINT_ORG_KJC
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResJointOrgKjc" >
-    update PDSCI.RES_JOINT_ORG_KJC
+      update RES_JOINT_ORG_KJC
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       JOINT_ORG_FLOW = #{jointOrgFlow,jdbcType=VARCHAR},

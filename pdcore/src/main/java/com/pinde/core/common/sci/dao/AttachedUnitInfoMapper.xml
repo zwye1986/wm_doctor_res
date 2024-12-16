@@ -93,7 +93,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.ATTACHED_UNIT_INFO
+        from ATTACHED_UNIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -107,7 +107,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.ATTACHED_UNIT_INFO
+        from ATTACHED_UNIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +120,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.ATTACHED_UNIT_INFO
+      from ATTACHED_UNIT_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.ATTACHED_UNIT_INFO
+      delete from ATTACHED_UNIT_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.AttachedUnitInfoExample">
-    delete from PDSCI.ATTACHED_UNIT_INFO
+        delete from ATTACHED_UNIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.AttachedUnitInfo">
-    insert into PDSCI.ATTACHED_UNIT_INFO (RECORD_FLOW, ORG_INFO_FLOW, UNIT_TYPE_ID, 
+      insert into ATTACHED_UNIT_INFO (RECORD_FLOW, ORG_INFO_FLOW, UNIT_TYPE_ID,
       UNIT_NAME, UNIT_ADDRESS, UNIT_LEADER, 
       LINK_PHONE, PDF_URL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -146,7 +146,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{content,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.AttachedUnitInfo">
-    insert into PDSCI.ATTACHED_UNIT_INFO
+      insert into ATTACHED_UNIT_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -238,13 +238,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.AttachedUnitInfoExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.ATTACHED_UNIT_INFO
+        select count(*) from ATTACHED_UNIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.ATTACHED_UNIT_INFO
+      update ATTACHED_UNIT_INFO
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -294,7 +294,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.ATTACHED_UNIT_INFO
+      update ATTACHED_UNIT_INFO
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_INFO_FLOW = #{record.orgInfoFlow,jdbcType=VARCHAR},
       UNIT_TYPE_ID = #{record.unitTypeId,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.ATTACHED_UNIT_INFO
+      update ATTACHED_UNIT_INFO
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_INFO_FLOW = #{record.orgInfoFlow,jdbcType=VARCHAR},
       UNIT_TYPE_ID = #{record.unitTypeId,jdbcType=VARCHAR},
@@ -333,7 +333,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.AttachedUnitInfo">
-    update PDSCI.ATTACHED_UNIT_INFO
+      update ATTACHED_UNIT_INFO
     <set >
       <if test="orgInfoFlow != null" >
         ORG_INFO_FLOW = #{orgInfoFlow,jdbcType=VARCHAR},
@@ -378,7 +378,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.AttachedUnitInfo">
-    update PDSCI.ATTACHED_UNIT_INFO
+      update ATTACHED_UNIT_INFO
     set ORG_INFO_FLOW = #{orgInfoFlow,jdbcType=VARCHAR},
       UNIT_TYPE_ID = #{unitTypeId,jdbcType=VARCHAR},
       UNIT_NAME = #{unitName,jdbcType=VARCHAR},
@@ -395,7 +395,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.AttachedUnitInfo">
-    update PDSCI.ATTACHED_UNIT_INFO
+      update ATTACHED_UNIT_INFO
     set ORG_INFO_FLOW = #{orgInfoFlow,jdbcType=VARCHAR},
       UNIT_TYPE_ID = #{unitTypeId,jdbcType=VARCHAR},
       UNIT_NAME = #{unitName,jdbcType=VARCHAR},

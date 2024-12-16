@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubProjFundPlan;
-import com.pinde.sci.model.mo.PubProjFundPlanExample;
+import com.pinde.core.model.PubProjFundPlan;
+import com.pinde.core.model.PubProjFundPlanExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

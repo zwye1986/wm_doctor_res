@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_COURSE_INFO
+        from LCJN_COURSE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_COURSE_INFO
+      from LCJN_COURSE_INFO
     where COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_COURSE_INFO
+      delete from LCJN_COURSE_INFO
     where COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnCourseInfoExample">
-    delete from PDSCI.LCJN_COURSE_INFO
+        delete from LCJN_COURSE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.LcjnCourseInfo">
-    insert into PDSCI.LCJN_COURSE_INFO (COURSE_FLOW, COURSE_NAME, COURSE_PEOPLE_NUM, 
+        insert into LCJN_COURSE_INFO (COURSE_FLOW, COURSE_NAME, COURSE_PEOPLE_NUM,
       COURSE_ADDRESS, COURSE_DEMO, APPOINT_START_TIME, 
       APPOINT_END_TIME, IS_RELEASED, IS_SCORE_RELEASED, 
       CODE_INFO, RECORD_STATUS, CREATE_TIME, 
@@ -128,7 +128,7 @@
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnCourseInfo">
-    insert into PDSCI.LCJN_COURSE_INFO
+        insert into LCJN_COURSE_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="courseFlow != null">
         COURSE_FLOW,
@@ -238,13 +238,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.LcjnCourseInfoExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_COURSE_INFO
+        select count(*) from LCJN_COURSE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_COURSE_INFO
+      update LCJN_COURSE_INFO
     <set>
       <if test="record.courseFlow != null">
         COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_COURSE_INFO
+      update LCJN_COURSE_INFO
     set COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
       COURSE_PEOPLE_NUM = #{record.coursePeopleNum,jdbcType=VARCHAR},
@@ -326,7 +326,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnCourseInfo">
-    update PDSCI.LCJN_COURSE_INFO
+        update LCJN_COURSE_INFO
     <set>
       <if test="courseName != null">
         COURSE_NAME = #{courseName,jdbcType=VARCHAR},
@@ -380,7 +380,7 @@
     where COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnCourseInfo">
-    update PDSCI.LCJN_COURSE_INFO
+        update LCJN_COURSE_INFO
     set COURSE_NAME = #{courseName,jdbcType=VARCHAR},
       COURSE_PEOPLE_NUM = #{coursePeopleNum,jdbcType=VARCHAR},
       COURSE_ADDRESS = #{courseAddress,jdbcType=VARCHAR},

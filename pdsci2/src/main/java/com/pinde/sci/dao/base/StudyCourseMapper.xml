@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.STUDY_COURSE
+      from STUDY_COURSE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.STUDY_COURSE
+      from STUDY_COURSE
     where COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.STUDY_COURSE
+      delete from STUDY_COURSE
     where COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StudyCourseExample">
-    delete from PDSCI.STUDY_COURSE
+      delete from STUDY_COURSE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.StudyCourse">
-    insert into PDSCI.STUDY_COURSE (COURSE_FLOW, COURSE_NAME, COURSE_IMG_URL, 
+      insert into STUDY_COURSE (COURSE_FLOW, COURSE_NAME, COURSE_IMG_URL,
       DETAIL_IMG_URL, TEACHER_NAME, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StudyCourse">
-    insert into PDSCI.STUDY_COURSE
+      insert into STUDY_COURSE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="courseFlow != null">
         COURSE_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.StudyCourseExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.STUDY_COURSE
+      select count(*) from STUDY_COURSE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.STUDY_COURSE
+      update STUDY_COURSE
     <set>
       <if test="record.courseFlow != null">
         COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.STUDY_COURSE
+      update STUDY_COURSE
     set COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
       COURSE_IMG_URL = #{record.courseImgUrl,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StudyCourse">
-    update PDSCI.STUDY_COURSE
+      update STUDY_COURSE
     <set>
       <if test="courseName != null">
         COURSE_NAME = #{courseName,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StudyCourse">
-    update PDSCI.STUDY_COURSE
+      update STUDY_COURSE
     set COURSE_NAME = #{courseName,jdbcType=VARCHAR},
       COURSE_IMG_URL = #{courseImgUrl,jdbcType=VARCHAR},
       DETAIL_IMG_URL = #{detailImgUrl,jdbcType=VARCHAR},

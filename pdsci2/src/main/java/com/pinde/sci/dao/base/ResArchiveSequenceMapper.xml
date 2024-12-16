@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ARCHIVE_SEQUENCE
+      from RES_ARCHIVE_SEQUENCE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ARCHIVE_SEQUENCE
+      from RES_ARCHIVE_SEQUENCE
     where ARCHIVE_FLOW = #{archiveFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_ARCHIVE_SEQUENCE
+      delete from RES_ARCHIVE_SEQUENCE
     where ARCHIVE_FLOW = #{archiveFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResArchiveSequenceExample">
-    delete from PDSCI.RES_ARCHIVE_SEQUENCE
+      delete from RES_ARCHIVE_SEQUENCE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResArchiveSequence">
-    insert into PDSCI.RES_ARCHIVE_SEQUENCE (ARCHIVE_FLOW, ARCHIVE_TIME, RECORD_STATUS, 
+      insert into RES_ARCHIVE_SEQUENCE (ARCHIVE_FLOW, ARCHIVE_TIME, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, SESSION_NUMBER)
     values (#{archiveFlow,jdbcType=VARCHAR}, #{archiveTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
@@ -112,7 +112,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResArchiveSequence">
-    insert into PDSCI.RES_ARCHIVE_SEQUENCE
+      insert into RES_ARCHIVE_SEQUENCE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="archiveFlow != null">
         ARCHIVE_FLOW,
@@ -167,13 +167,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResArchiveSequenceExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_ARCHIVE_SEQUENCE
+      select count(*) from RES_ARCHIVE_SEQUENCE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_ARCHIVE_SEQUENCE
+      update RES_ARCHIVE_SEQUENCE
     <set>
       <if test="record.archiveFlow != null">
         ARCHIVE_FLOW = #{record.archiveFlow,jdbcType=VARCHAR},
@@ -205,7 +205,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_ARCHIVE_SEQUENCE
+      update RES_ARCHIVE_SEQUENCE
     set ARCHIVE_FLOW = #{record.archiveFlow,jdbcType=VARCHAR},
       ARCHIVE_TIME = #{record.archiveTime,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResArchiveSequence">
-    update PDSCI.RES_ARCHIVE_SEQUENCE
+      update RES_ARCHIVE_SEQUENCE
     <set>
       <if test="archiveTime != null">
         ARCHIVE_TIME = #{archiveTime,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
     where ARCHIVE_FLOW = #{archiveFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResArchiveSequence">
-    update PDSCI.RES_ARCHIVE_SEQUENCE
+      update RES_ARCHIVE_SEQUENCE
     set ARCHIVE_TIME = #{archiveTime,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},

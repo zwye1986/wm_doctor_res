@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_HOSP_SCORE_TABLE
+      from RES_HOSP_SCORE_TABLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,13 +93,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResHospScoreTableExample" >
-    delete from PDSCI.RES_HOSP_SCORE_TABLE
+      delete from RES_HOSP_SCORE_TABLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResHospScoreTable" >
-    insert into PDSCI.RES_HOSP_SCORE_TABLE (TABLE_FLOW, TABLE_NAME, TABLE_PATH_NAME, 
+      insert into RES_HOSP_SCORE_TABLE (TABLE_FLOW, TABLE_NAME, TABLE_PATH_NAME,
       TABLE_TYPE_ID, TABLE_TYPE_NAME, SPE_ID, 
       SPE_NAME, RECORD_STATUS, ORDER_NUM, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -111,7 +111,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResHospScoreTable" >
-    insert into PDSCI.RES_HOSP_SCORE_TABLE
+      insert into RES_HOSP_SCORE_TABLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="tableFlow != null" >
         TABLE_FLOW,
@@ -196,13 +196,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResHospScoreTableExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_HOSP_SCORE_TABLE
+      select count(*) from RES_HOSP_SCORE_TABLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_HOSP_SCORE_TABLE
+      update RES_HOSP_SCORE_TABLE
     <set >
       <if test="record.tableFlow != null" >
         TABLE_FLOW = #{record.tableFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_HOSP_SCORE_TABLE
+      update RES_HOSP_SCORE_TABLE
     set TABLE_FLOW = #{record.tableFlow,jdbcType=VARCHAR},
       TABLE_NAME = #{record.tableName,jdbcType=VARCHAR},
       TABLE_PATH_NAME = #{record.tablePathName,jdbcType=VARCHAR},

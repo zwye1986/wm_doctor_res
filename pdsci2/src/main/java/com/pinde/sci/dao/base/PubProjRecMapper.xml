@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.PubProjRecMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubProjRec">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubProjRec">
     <id column="REC_FLOW" jdbcType="VARCHAR" property="recFlow" />
     <result column="PROJ_FLOW" jdbcType="VARCHAR" property="projFlow" />
     <result column="PROJ_STAGE_ID" jdbcType="VARCHAR" property="projStageId" />
@@ -20,7 +20,7 @@
     <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
     <result column="PAGE_GROUP_NAME" jdbcType="VARCHAR" property="pageGroupName" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PubProjRec">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.PubProjRec">
     <result column="REC_CONTENT" jdbcType="CLOB" property="recContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -89,7 +89,8 @@
   <sql id="Blob_Column_List">
     REC_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.PubProjRecExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.PubProjRecExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -97,7 +98,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_PROJ_REC
+        from PUB_PROJ_REC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -105,13 +106,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.PubProjRecExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.PubProjRecExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_REC
+        from PUB_PROJ_REC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -124,21 +125,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_PROJ_REC
+      from PUB_PROJ_REC
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.PUB_PROJ_REC
+      delete from PUB_PROJ_REC
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubProjRecExample">
-    delete from PDSCI.PUB_PROJ_REC
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubProjRecExample">
+        delete from PUB_PROJ_REC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubProjRec">
-    insert into PDSCI.PUB_PROJ_REC (REC_FLOW, PROJ_FLOW, PROJ_STAGE_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubProjRec">
+        insert into PUB_PROJ_REC (REC_FLOW, PROJ_FLOW, PROJ_STAGE_ID,
       PROJ_STAGE_NAME, PROJ_STATUS_ID, PROJ_STATUS_NAME, 
       REC_TYPE_ID, REC_TYPE_NAME, OPER_USER_FLOW, 
       OPER_USER_NAME, OPER_TIME, RECORD_STATUS, 
@@ -153,8 +154,8 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{pageGroupName,jdbcType=VARCHAR}, #{recContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubProjRec">
-    insert into PDSCI.PUB_PROJ_REC
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubProjRec">
+        insert into PUB_PROJ_REC
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recFlow != null">
         REC_FLOW,
@@ -268,14 +269,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubProjRecExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_PROJ_REC
+    <select id="countByExample" parameterType="com.pinde.core.model.PubProjRecExample" resultType="java.lang.Integer">
+        select count(*) from PUB_PROJ_REC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.PUB_PROJ_REC
+      update PUB_PROJ_REC
     <set>
       <if test="record.recFlow != null">
         REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
@@ -337,7 +338,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update PDSCI.PUB_PROJ_REC
+      update PUB_PROJ_REC
     set REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
       PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       PROJ_STAGE_ID = #{record.projStageId,jdbcType=VARCHAR},
@@ -361,7 +362,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.PUB_PROJ_REC
+      update PUB_PROJ_REC
     set REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
       PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       PROJ_STAGE_ID = #{record.projStageId,jdbcType=VARCHAR},
@@ -383,8 +384,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubProjRec">
-    update PDSCI.PUB_PROJ_REC
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubProjRec">
+        update PUB_PROJ_REC
     <set>
       <if test="projFlow != null">
         PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
@@ -440,8 +441,8 @@
     </set>
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PubProjRec">
-    update PDSCI.PUB_PROJ_REC
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubProjRec">
+        update PUB_PROJ_REC
     set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
       PROJ_STAGE_ID = #{projStageId,jdbcType=VARCHAR},
       PROJ_STAGE_NAME = #{projStageName,jdbcType=VARCHAR},
@@ -461,8 +462,8 @@
       REC_CONTENT = #{recContent,jdbcType=CLOB}
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubProjRec">
-    update PDSCI.PUB_PROJ_REC
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubProjRec">
+        update PUB_PROJ_REC
     set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
       PROJ_STAGE_ID = #{projStageId,jdbcType=VARCHAR},
       PROJ_STAGE_NAME = #{projStageName,jdbcType=VARCHAR},

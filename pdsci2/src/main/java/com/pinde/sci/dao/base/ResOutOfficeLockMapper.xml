@@ -91,7 +91,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_OUT_OFFICE_LOCK
+      from RES_OUT_OFFICE_LOCK
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,21 +102,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_OUT_OFFICE_LOCK
+      from RES_OUT_OFFICE_LOCK
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_OUT_OFFICE_LOCK
+      delete from RES_OUT_OFFICE_LOCK
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResOutOfficeLockExample" >
-    delete from PDSCI.RES_OUT_OFFICE_LOCK
+      delete from RES_OUT_OFFICE_LOCK
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResOutOfficeLock" >
-    insert into PDSCI.RES_OUT_OFFICE_LOCK (RECORD_FLOW, USER_NAME, USER_FLOW, 
+      insert into RES_OUT_OFFICE_LOCK (RECORD_FLOW, USER_NAME, USER_FLOW,
       ORG_FLOW, ORG_NAME, TRAINING_TYPE_ID, 
       TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
       TIME_OUT_STATUS, RECORD_STATUS, CREATE_TIME, 
@@ -132,7 +132,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResOutOfficeLock" >
-    insert into PDSCI.RES_OUT_OFFICE_LOCK
+      insert into RES_OUT_OFFICE_LOCK
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -247,13 +247,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResOutOfficeLockExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_OUT_OFFICE_LOCK
+      select count(*) from RES_OUT_OFFICE_LOCK
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_OUT_OFFICE_LOCK
+      update RES_OUT_OFFICE_LOCK
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -315,7 +315,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_OUT_OFFICE_LOCK
+      update RES_OUT_OFFICE_LOCK
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -339,7 +339,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResOutOfficeLock" >
-    update PDSCI.RES_OUT_OFFICE_LOCK
+      update RES_OUT_OFFICE_LOCK
     <set >
       <if test="userName != null" >
         USER_NAME = #{userName,jdbcType=VARCHAR},
@@ -396,7 +396,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResOutOfficeLock" >
-    update PDSCI.RES_OUT_OFFICE_LOCK
+      update RES_OUT_OFFICE_LOCK
     set USER_NAME = #{userName,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

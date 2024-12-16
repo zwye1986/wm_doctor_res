@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEACH_ACTIVITY_CFG
+        from TEACH_ACTIVITY_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.TEACH_ACTIVITY_CFG
+      from TEACH_ACTIVITY_CFG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.TEACH_ACTIVITY_CFG
+      delete from TEACH_ACTIVITY_CFG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.TeachActivityCfgExample">
-    delete from PDSCI.TEACH_ACTIVITY_CFG
+        delete from TEACH_ACTIVITY_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.TeachActivityCfg">
-    insert into PDSCI.TEACH_ACTIVITY_CFG (RECORD_FLOW, SUBMIT_ROLE, SUB_ROLE_NAME, 
+        insert into TEACH_ACTIVITY_CFG (RECORD_FLOW, SUBMIT_ROLE, SUB_ROLE_NAME,
       AUDIT_ROLE, AUDIT_ROLE_NAME, RECORD_STATUS, 
       CREATE_TIME, MODIFY_TIME, ORG_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.TeachActivityCfg">
-    insert into PDSCI.TEACH_ACTIVITY_CFG
+        insert into TEACH_ACTIVITY_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -177,13 +177,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.TeachActivityCfgExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.TEACH_ACTIVITY_CFG
+        select count(*) from TEACH_ACTIVITY_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.TEACH_ACTIVITY_CFG
+      update TEACH_ACTIVITY_CFG
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -218,7 +218,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.TEACH_ACTIVITY_CFG
+      update TEACH_ACTIVITY_CFG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       SUBMIT_ROLE = #{record.submitRole,jdbcType=VARCHAR},
       SUB_ROLE_NAME = #{record.subRoleName,jdbcType=VARCHAR},
@@ -233,7 +233,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeachActivityCfg">
-    update PDSCI.TEACH_ACTIVITY_CFG
+        update TEACH_ACTIVITY_CFG
     <set >
       <if test="submitRole != null" >
         SUBMIT_ROLE = #{submitRole,jdbcType=VARCHAR},
@@ -263,7 +263,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeachActivityCfg">
-    update PDSCI.TEACH_ACTIVITY_CFG
+        update TEACH_ACTIVITY_CFG
     set SUBMIT_ROLE = #{submitRole,jdbcType=VARCHAR},
       SUB_ROLE_NAME = #{subRoleName,jdbcType=VARCHAR},
       AUDIT_ROLE = #{auditRole,jdbcType=VARCHAR},

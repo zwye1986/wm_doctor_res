@@ -5,7 +5,7 @@
 	<select id="searchOpinionByUni" resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
 		SELECT
 				*
-		  FROM PDSCI.RES_TRAINING_OPINION
+        FROM RES_TRAINING_OPINION
 		 WHERE RECORD_STATUS = 'Y'
 
 		<if test="content!=null and content!=''">
@@ -79,7 +79,7 @@
 	</select>
 	<select id="searchByOpinionUserContentAndReplayStatusNew"  resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
 		SELECT RTO.*
-		FROM PDSCI.RES_TRAINING_OPINION RTO
+        FROM RES_TRAINING_OPINION RTO
 		LEFT join RES_DOCTOR RD ON RD.DOCTOR_FLOW = RTO.OPINION_USER_FLOW
 		WHERE RTO.RECORD_STATUS = 'Y'
 		and RD.RECORD_STATUS = 'Y'

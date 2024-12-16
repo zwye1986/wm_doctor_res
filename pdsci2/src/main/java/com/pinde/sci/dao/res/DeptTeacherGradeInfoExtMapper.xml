@@ -349,8 +349,8 @@
         dtgi.rec_content CONTENT,
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -418,8 +418,8 @@
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER,
         DTGI.CFG_FLOW
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -506,8 +506,8 @@
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER,
         DTGI.CFG_FLOW
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -562,8 +562,8 @@
         </if>
         rd.SESSION_NUMBER,
         to_char(ROUND(SUM(ALL_SCORE) / COUNT(DISTINCT dtgi.rec_flow), 1)) avg_score
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -630,8 +630,8 @@
             rdsp.dept_flow KEY,
         </if>
         to_char(ROUND(SUM(ALL_SCORE) / COUNT(DISTINCT dtgi.rec_flow), 1)) avg_score
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -686,8 +686,8 @@
 
     <select id="getUserByRec" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select distinct su.user_name,su.user_Flow,su.user_code,su.dept_flow,su.dept_name
-        FROM pdsci.res_doctor_sch_process rdsp
-        join pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        FROM res_doctor_sch_process rdsp
+        join DEPT_TEACHER_GRADE_INFO dtgi
         on rdsp.process_flow = dtgi.process_flow
         join sys_User su on
         rdsp.teacher_user_flow=su.user_Flow
@@ -728,10 +728,10 @@
     </select>
     <select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
         select distinct sd.dept_flow,sd.dept_name,sd.ordinal
-        FROM pdsci.res_doctor_sch_process rdsp
-        join pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        FROM res_doctor_sch_process rdsp
+        join DEPT_TEACHER_GRADE_INFO dtgi
         on rdsp.process_flow = dtgi.process_flow
-        join  pdsci.sys_dept sd
+        join sys_dept sd
         on rdsp.dept_flow = sd.dept_flow
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
@@ -770,10 +770,10 @@
     </resultMap>
     <select id="getDeptDoctorEvalStatic" resultMap="doctorEvalMap">
         select sd.dept_flow,sd.dept_name,count(1) num
-        FROM pdsci.res_doctor_sch_process rdsp
-        join pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        FROM res_doctor_sch_process rdsp
+        join DEPT_TEACHER_GRADE_INFO dtgi
         on rdsp.process_flow = dtgi.process_flow
-        join  pdsci.sys_dept sd
+        join sys_dept sd
         on rdsp.dept_flow = sd.dept_flow
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
@@ -806,10 +806,10 @@
     </select>
     <select id="getDeptDoctorEvalStaticDetail" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select dtgi.*
-        FROM pdsci.res_doctor_sch_process rdsp
-        join pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        FROM res_doctor_sch_process rdsp
+        join DEPT_TEACHER_GRADE_INFO dtgi
         on rdsp.process_flow = dtgi.process_flow
-        join  pdsci.sys_dept sd
+        join sys_dept sd
         on rdsp.dept_flow = sd.dept_flow
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
@@ -841,16 +841,16 @@
 
     <select id="getOrgByRec" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select so.*
-        from pdsci.sys_org so
+        from sys_org so
         where so.record_status = 'Y'
         and so.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -877,7 +877,7 @@
     </select>
     <select id="searchScoreList" resultMap="extBLOBMap">
         select rr.*,rdp.*
-        from pdsci.DEPT_TEACHER_GRADE_INFO rr,pdsci.RES_DOCTOR_SCH_PROCESS rdp,pdsci.res_doctor rd,pdsci.sys_user su
+        from DEPT_TEACHER_GRADE_INFO rr, RES_DOCTOR_SCH_PROCESS rdp, res_doctor rd, sys_user su
         where rr.RECORD_STATUS='Y' and rdp.RECORD_STATUS='Y' and rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'
         and rdp.user_flow = oper_user_flow and rr.PROCESS_FLOW= rdp.PROCESS_FLOW
         and oper_user_flow = rd.doctor_flow and su.user_flow = rd.doctor_flow
@@ -941,11 +941,11 @@
 
     <select id="getUserByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select su.*
-        from pdsci.sys_user su
+        from sys_user su
         where su.record_status = 'Y'
         and exists(
         select null
-        from pdsci.sys_user_role sur
+        from sys_user_role sur
         where record_status = 'Y'
         and sur.user_flow = su.user_flow
         and sur.role_flow = #{roleFlow}
@@ -953,7 +953,7 @@
         and su.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and rdsp.teacher_user_flow = su.user_flow
         and exists(
@@ -978,7 +978,7 @@
         )
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -1006,12 +1006,12 @@
 
     <select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
         select sd.*
-        from pdsci.sys_dept sd
+        from sys_dept sd
         where sd.record_status = 'Y'
         and sd.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and rdsp.dept_flow = sd.dept_flow
         and exists(
@@ -1033,7 +1033,7 @@
         )
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -1066,8 +1066,8 @@
         dtgi.rec_content CONTENT,
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -1164,8 +1164,8 @@
             rdsp.process_flow,ROUND(avg(dtgi.all_score),1) avg,rdsp.sch_flag,rdsp.is_current_flag,rd.session_number CREATE_YEAR,
             rd.DOCTOR_NAME as user_name,rd.DOCTOR_FLOW as user_Flow,rd.DOCTOR_TYPE_ID,rd.DOCTOR_TYPE_NAME,rd.TRAINING_SPE_ID,rd.TRAINING_SPE_NAME,rdsp.dept_flow,
             rdsp.dept_name,rdsp.SCH_START_DATE,rdsp.SCH_end_DATE,dtgi.CFG_FLOW,dtgi.rec_type_id,dtgi.rec_flow,cfg.TOTAL_SCORE,cfg.CFG_CODE_NAME
-        FROM pdsci.res_doctor_sch_process rdsp
-        JOIN pdsci.DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
+        FROM res_doctor_sch_process rdsp
+        JOIN DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
         JOIN res_doctor rd ON rdsp.user_Flow = rd.doctor_flow
         inner join RES_ASSESS_CFG cfg on dtgi.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
         WHERE rdsp.record_status = 'Y'
@@ -1228,8 +1228,8 @@
     </select>
     <select id="getUserByRecAndAvgScore" resultMap="teacherRecMap">
         SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code, su.dept_flow, su.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
-        FROM pdsci.res_doctor_sch_process rdsp
-        JOIN pdsci.DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
+        FROM res_doctor_sch_process rdsp
+        JOIN DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
         JOIN sys_User su ON rdsp.teacher_user_flow = su.user_Flow
         inner join RES_ASSESS_CFG cfg on dtgi.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
         WHERE rdsp.record_status = 'Y'
@@ -1292,8 +1292,8 @@
     </select>
     <select id="getUserByRecAndAvgScore2" resultMap="teacherRecMap">
         SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code,rdsp.dept_flow, rdsp.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
-        FROM pdsci.res_doctor_sch_process rdsp
-        JOIN pdsci.DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
+        FROM res_doctor_sch_process rdsp
+        JOIN DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
         JOIN sys_User su ON rdsp.teacher_user_flow = su.user_Flow
         inner join RES_ASSESS_CFG cfg on dtgi.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
         WHERE rdsp.record_status = 'Y'
@@ -1355,9 +1355,9 @@
 
     <select id="getDeptByRecAndAvgScore" resultMap="teacherRecMap">
         select ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR, sd.dept_flow,sd.dept_name
-        FROM pdsci.res_doctor_sch_process rdsp
-        join pdsci.DEPT_TEACHER_GRADE_INFO dtgi on rdsp.process_flow = dtgi.process_flow
-        join  pdsci.sys_dept sd on rdsp.dept_flow = sd.dept_flow
+        FROM res_doctor_sch_process rdsp
+        join DEPT_TEACHER_GRADE_INFO dtgi on rdsp.process_flow = dtgi.process_flow
+        join sys_dept sd on rdsp.dept_flow = sd.dept_flow
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
         and  sd.record_status = 'Y'
@@ -1414,8 +1414,8 @@
         dtgi.rec_type_id rec_type_id,
         rd.SESSION_NUMBER,
         dtgi.cfg_flow
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -1485,8 +1485,8 @@
         rd.SESSION_NUMBER,
         dtgi.cfg_flow,
         dtgi.OPER_USER_ROLE_NAME
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -1686,8 +1686,8 @@
             RDSP.PROCESS_FLOW, RD.SESSION_NUMBER, SU.USER_NAME, SU.USER_FLOW, RD.DOCTOR_TYPE_ID, RD.DOCTOR_TYPE_NAME, RD.TRAINING_SPE_ID
             , RD.TRAINING_SPE_NAME, RDSP.DEPT_FLOW, RDSP.DEPT_NAME, RDSP.SCH_START_DATE, RDSP.SCH_END_DATE
             , DTGI.CFG_FLOW, DTGI.REC_TYPE_ID,WM_CONCAT(DTGI.REC_FLOW) REC_FLOW,WM_CONCAT(DTGI.ALL_SCORE) SCORE,WM_CONCAT(DTGI.OPER_USER_ROLE_NAME) OPER_USER_ROLE_NAME
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
-        JOIN PDSCI.DEPT_TEACHER_GRADE_INFO DTGI ON RDSP.PROCESS_FLOW = DTGI.PROCESS_FLOW
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
+        JOIN DEPT_TEACHER_GRADE_INFO DTGI ON RDSP.PROCESS_FLOW = DTGI.PROCESS_FLOW
         JOIN SYS_USER SU ON RDSP.USER_FLOW = SU.USER_FLOW
         JOIN RES_DOCTOR RD ON RDSP.USER_FLOW = RD.DOCTOR_FLOW
         WHERE RDSP.RECORD_STATUS = 'Y'

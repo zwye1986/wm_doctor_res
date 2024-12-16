@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_BASE_EVALUATION
+      from JSRES_BASE_EVALUATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +95,22 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_BASE_EVALUATION
+      from JSRES_BASE_EVALUATION
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_BASE_EVALUATION
+      delete
+      from JSRES_BASE_EVALUATION
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresBaseEvaluationExample" >
-    delete from PDSCI.JSRES_BASE_EVALUATION
+      delete from JSRES_BASE_EVALUATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsresBaseEvaluation" >
-    insert into PDSCI.JSRES_BASE_EVALUATION (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into JSRES_BASE_EVALUATION (RECORD_FLOW, ORG_FLOW, ORG_NAME,
       PLAN_YEAR, TITLE, SPE_CONTENT, 
       OWNER_ALL_SCORE, SPE_ALL_SCORE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,7 +122,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresBaseEvaluation" >
-    insert into PDSCI.JSRES_BASE_EVALUATION
+      insert into JSRES_BASE_EVALUATION
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -206,13 +207,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsresBaseEvaluationExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_BASE_EVALUATION
+      select count(*) from JSRES_BASE_EVALUATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_BASE_EVALUATION
+      update JSRES_BASE_EVALUATION
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -259,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_BASE_EVALUATION
+      update JSRES_BASE_EVALUATION
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -278,7 +279,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresBaseEvaluation" >
-    update PDSCI.JSRES_BASE_EVALUATION
+      update JSRES_BASE_EVALUATION
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -320,7 +321,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresBaseEvaluation" >
-    update PDSCI.JSRES_BASE_EVALUATION
+      update JSRES_BASE_EVALUATION
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       PLAN_YEAR = #{planYear,jdbcType=VARCHAR},

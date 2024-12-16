@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ENTRY_REPORT
+      from SCH_ENTRY_REPORT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ENTRY_REPORT
+      from SCH_ENTRY_REPORT
     where REPORT_FLOW = #{reportFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ENTRY_REPORT
+      delete from SCH_ENTRY_REPORT
     where REPORT_FLOW = #{reportFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchEntryReportExample" >
-    delete from PDSCI.SCH_ENTRY_REPORT
+      delete from SCH_ENTRY_REPORT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SchEntryReport" >
-    insert into PDSCI.SCH_ENTRY_REPORT (REPORT_FLOW, CODE_INFO, REPORT_TIME, 
+      insert into SCH_ENTRY_REPORT (REPORT_FLOW, CODE_INFO, REPORT_TIME,
       REPORT_DATE, DOCTOR_FLOW, HEAD_USER_FLOW, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchEntryReport" >
-    insert into PDSCI.SCH_ENTRY_REPORT
+      insert into SCH_ENTRY_REPORT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="reportFlow != null" >
         REPORT_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchEntryReportExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ENTRY_REPORT
+      select count(*) from SCH_ENTRY_REPORT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ENTRY_REPORT
+      update SCH_ENTRY_REPORT
     <set >
       <if test="record.reportFlow != null" >
         REPORT_FLOW = #{record.reportFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ENTRY_REPORT
+      update SCH_ENTRY_REPORT
     set REPORT_FLOW = #{record.reportFlow,jdbcType=VARCHAR},
       CODE_INFO = #{record.codeInfo,jdbcType=VARCHAR},
       REPORT_TIME = #{record.reportTime,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchEntryReport" >
-    update PDSCI.SCH_ENTRY_REPORT
+      update SCH_ENTRY_REPORT
     <set >
       <if test="codeInfo != null" >
         CODE_INFO = #{codeInfo,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where REPORT_FLOW = #{reportFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchEntryReport" >
-    update PDSCI.SCH_ENTRY_REPORT
+      update SCH_ENTRY_REPORT
     set CODE_INFO = #{codeInfo,jdbcType=VARCHAR},
       REPORT_TIME = #{reportTime,jdbcType=VARCHAR},
       REPORT_DATE = #{reportDate,jdbcType=VARCHAR},

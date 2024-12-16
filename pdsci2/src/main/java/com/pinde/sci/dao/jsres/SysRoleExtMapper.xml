@@ -18,7 +18,7 @@
 		sr.CREATE_USER_FLOW,
 		sr.MODIFY_TIME,
 		sr.MODIFY_USER_FLOW
-		from PDSCI.SYS_USER_ROLE sr
+        from SYS_USER_ROLE sr
 		<if test="userFlows != null" >
 			inner join (select * from (
 			<foreach collection="userFlows" item="userFlow" separator="union">

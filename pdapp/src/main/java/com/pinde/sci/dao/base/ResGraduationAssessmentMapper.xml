@@ -118,7 +118,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_GRADUATION_ASSESSMENT
+      from RES_GRADUATION_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -132,7 +132,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_GRADUATION_ASSESSMENT
+      from RES_GRADUATION_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -145,21 +145,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_GRADUATION_ASSESSMENT
+      from RES_GRADUATION_ASSESSMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_GRADUATION_ASSESSMENT
+      delete from RES_GRADUATION_ASSESSMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResGraduationAssessmentExample" >
-    delete from PDSCI.RES_GRADUATION_ASSESSMENT
+      delete from RES_GRADUATION_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
-    insert into PDSCI.RES_GRADUATION_ASSESSMENT (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      insert into RES_GRADUATION_ASSESSMENT (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       TEACHER_FLOW, TEACHER_NAME, STUDY_START_DATE, 
       STUDY_END_DATE, DAY_COUNT, NOTE_COUNT, 
       EXPERIENCE_COUNT, TCM_COUNT, XXTH_COUNT, 
@@ -187,7 +187,7 @@
       #{adminContent,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
-    insert into PDSCI.RES_GRADUATION_ASSESSMENT
+      insert into RES_GRADUATION_ASSESSMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -410,13 +410,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResGraduationAssessmentExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_GRADUATION_ASSESSMENT
+      select count(*) from RES_GRADUATION_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_GRADUATION_ASSESSMENT
+      update RES_GRADUATION_ASSESSMENT
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -532,7 +532,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_GRADUATION_ASSESSMENT
+      update RES_GRADUATION_ASSESSMENT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -574,7 +574,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_GRADUATION_ASSESSMENT
+      update RES_GRADUATION_ASSESSMENT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -613,7 +613,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
-    update PDSCI.RES_GRADUATION_ASSESSMENT
+      update RES_GRADUATION_ASSESSMENT
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -724,7 +724,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResGraduationAssessmentWithBLOBs" >
-    update PDSCI.RES_GRADUATION_ASSESSMENT
+      update RES_GRADUATION_ASSESSMENT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},
@@ -763,7 +763,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResGraduationAssessment" >
-    update PDSCI.RES_GRADUATION_ASSESSMENT
+      update RES_GRADUATION_ASSESSMENT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},

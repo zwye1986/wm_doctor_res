@@ -124,7 +124,7 @@
         FROM JSRES_GRADUATION_APPLY JGA
         left join res_doctor_recruit dr
         ON JGA.RECRUIT_FLOW = DR.RECRUIT_FLOW
-        left join  pdsci.SYS_USER u
+        left join SYS_USER u
         on dr.DOCTOR_FLOW =  u.USER_FLOW
         LEFT JOIN RES_DOCTOR RD
         ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
@@ -155,8 +155,8 @@
         AND SU.RECORD_STATUS = 'Y'
         and DR.org_flow in(
         SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
         <if test="org!=null">
             <if test="org.orgProvId!=null and org.orgProvId!=''">AND ORG_PROV_ID = #{org.orgProvId}
             </if>
@@ -972,8 +972,8 @@
         </if>
         and jg.org_flow in(
             SELECT ORG_FLOW
-            FROM PDSCI.SYS_ORG
-            WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
             <if test="org!=null">
                 <if test="org.orgProvId!=null and org.orgProvId!=''">AND ORG_PROV_ID = #{org.orgProvId}
                 </if>
@@ -1268,8 +1268,8 @@
         </if>
         and jg.org_flow in(
         SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
         <if test="org!=null">
             <if test="org.orgProvId!=null and org.orgProvId!=''">
                 AND ORG_PROV_ID = #{org.orgProvId}
@@ -1516,8 +1516,8 @@
         AND SO.RECORD_STATUS = 'Y'
         <!--and DR.org_flow in(
             SELECT ORG_FLOW
-            FROM PDSCI.SYS_ORG
-            WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+            FROM  SYS_ORG
+            WHERE  SYS_ORG.RECORD_STATUS='Y'
             <if test="org!=null">
                     <if test="org.orgProvId!=null and org.orgProvId!=''">AND ORG_PROV_ID = #{org.orgProvId}
                     </if>
@@ -1808,8 +1808,8 @@
         <if test="roleFlag != 'charge'.toString()">
             and ((DR.org_flow in(
             SELECT ORG_FLOW
-            FROM PDSCI.SYS_ORG
-            WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+            FROM SYS_ORG
+            WHERE SYS_ORG.RECORD_STATUS='Y'
             <if test="org!=null">
                 <if test="org.orgProvId!=null and org.orgProvId!=''">
                     AND ORG_PROV_ID = #{org.orgProvId}
@@ -1844,8 +1844,8 @@
            AND JGA.AUDIT_STATUS_ID != 'WaitChargePass'
            and ((DR.org_flow in(
            SELECT ORG_FLOW
-           FROM PDSCI.SYS_ORG
-           WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+           FROM SYS_ORG
+           WHERE SYS_ORG.RECORD_STATUS='Y'
            <if test="org!=null">
                <if test="org.orgProvId!=null and org.orgProvId!=''">
                    AND ORG_PROV_ID = #{org.orgProvId}
@@ -2413,8 +2413,8 @@
        </if>
        and so.org_flow in(
        SELECT ORG_FLOW
-       FROM PDSCI.SYS_ORG
-       WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+       FROM SYS_ORG
+       WHERE SYS_ORG.RECORD_STATUS='Y'
        <if test="org!=null">
            <if test="org.orgProvId!=null and org.orgProvId!=''">
                AND ORG_PROV_ID = #{org.orgProvId}
@@ -2509,7 +2509,7 @@
        FROM JSRES_GRADUATION_APPLY JGA
        left join res_doctor_recruit dr
        ON JGA.RECRUIT_FLOW = DR.RECRUIT_FLOW
-       left join  pdsci.SYS_USER u
+       left join SYS_USER u
        on dr.DOCTOR_FLOW =  u.USER_FLOW
        LEFT JOIN RES_DOCTOR RD
        ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
@@ -2540,8 +2540,8 @@
        AND SU.RECORD_STATUS = 'Y'
        and DR.org_flow in(
        SELECT ORG_FLOW
-       FROM PDSCI.SYS_ORG
-       WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+       FROM SYS_ORG
+       WHERE SYS_ORG.RECORD_STATUS='Y'
        <if test="org!=null">
            <if test="org.orgProvId!=null and org.orgProvId!=''">AND ORG_PROV_ID = #{org.orgProvId}
            </if>
@@ -3095,7 +3095,7 @@
            , DR.TRAIN_YEAR, JGA.GRADUATION_SCOPE_NAME AS PRACTICING_SCOPE_NAME, RD.CERTIFICATE_NO, SCORE.SCORE_FLOW, JGA.APPLY_FLOW
        FROM JSRES_GRADUATION_APPLY JGA
        LEFT JOIN res_doctor_recruit dr ON JGA.RECRUIT_FLOW = DR.RECRUIT_FLOW
-       LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+       LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
        LEFT JOIN RES_DOCTOR RD ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
        LEFT JOIN SYS_ORG SO ON RD.ORG_FLOW = SO.ORG_FLOW
        LEFT JOIN jsres_exam_signup JES ON JES.DOCTOR_FLOW = RD.DOCTOR_FLOW AND JES.RECORD_STATUS = 'Y'
@@ -3106,8 +3106,8 @@
        AND DR.RECORD_STATUS = 'Y'
        AND SU.RECORD_STATUS = 'Y'
        AND DR.org_flow IN (SELECT ORG_FLOW
-           FROM PDSCI.SYS_ORG
-           WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+       FROM SYS_ORG
+       WHERE SYS_ORG.RECORD_STATUS = 'Y'
            <if test="org!=null">
                <if test="org.orgProvId!=null and org.orgProvId!=''">
                    AND ORG_PROV_ID = #{org.orgProvId}

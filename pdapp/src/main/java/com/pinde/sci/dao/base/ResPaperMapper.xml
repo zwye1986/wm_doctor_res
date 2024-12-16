@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_PAPER
+      from RES_PAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_PAPER
+      from RES_PAPER
     where PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_PAPER
+      delete from RES_PAPER
     where PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResPaperExample" >
-    delete from PDSCI.RES_PAPER
+      delete from RES_PAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResPaper" >
-    insert into PDSCI.RES_PAPER (PAPER_FLOW, PAPER_NAME, SPE_ID, 
+      insert into RES_PAPER (PAPER_FLOW, PAPER_NAME, SPE_ID,
       SPE_NAME, DEPT_FLOW, DEPT_NAME, 
       ROTATION_FLOW, ROTATION_NAME, DOCTOR_CATEGORY_ID, 
       DOCTOR_CATEGORY_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -128,7 +128,7 @@
       #{orgName,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResPaper" >
-    insert into PDSCI.RES_PAPER
+      insert into RES_PAPER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="paperFlow != null" >
         PAPER_FLOW,
@@ -237,13 +237,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResPaperExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_PAPER
+      select count(*) from RES_PAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_PAPER
+      update RES_PAPER
     <set >
       <if test="record.paperFlow != null" >
         PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_PAPER
+      update RES_PAPER
     set PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
       PAPER_NAME = #{record.paperName,jdbcType=VARCHAR},
       SPE_ID = #{record.speId,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResPaper" >
-    update PDSCI.RES_PAPER
+      update RES_PAPER
     <set >
       <if test="paperName != null" >
         PAPER_NAME = #{paperName,jdbcType=VARCHAR},
@@ -379,7 +379,7 @@
     where PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResPaper" >
-    update PDSCI.RES_PAPER
+      update RES_PAPER
     set PAPER_NAME = #{paperName,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},
       SPE_NAME = #{speName,jdbcType=VARCHAR},

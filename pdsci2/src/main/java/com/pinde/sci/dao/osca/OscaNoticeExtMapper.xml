@@ -4,7 +4,7 @@
 
     <select id="searchInfoByOrgBeforeDate" resultMap="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
     SELECT *
-    FROM PDSCI.INX_INFO
+        FROM INX_INFO
     WHERE RECORD_STATUS = 'Y'
     <if test='orgFlow!=null and orgFlow!=""'>
         AND (ORG_FLOW = #{orgFlow} OR ORG_FLOW IS NULL)

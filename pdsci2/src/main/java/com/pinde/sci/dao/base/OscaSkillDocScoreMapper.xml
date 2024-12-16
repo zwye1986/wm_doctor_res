@@ -112,7 +112,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.OSCA_SKILL_DOC_SCORE
+        from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -127,7 +127,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILL_DOC_SCORE
+        from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -140,21 +140,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.OSCA_SKILL_DOC_SCORE
+      from OSCA_SKILL_DOC_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_SKILL_DOC_SCORE
+      delete from OSCA_SKILL_DOC_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillDocScoreExample">
-    delete from PDSCI.OSCA_SKILL_DOC_SCORE
+        delete from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.OscaSkillDocScore">
-    insert into PDSCI.OSCA_SKILL_DOC_SCORE (SCORE_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+        insert into OSCA_SKILL_DOC_SCORE (SCORE_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       RECORD_YEAR, ROOM_RECORD_FLOW, ROOM_FLOW, 
       ROOM_NAME, CLINICAL_FLOW, CLINICAL_NAME, 
       STATION_FLOW, STATION_NAME, IS_HAVE_FROM, 
@@ -178,7 +178,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillDocScore">
-    insert into PDSCI.OSCA_SKILL_DOC_SCORE
+        insert into OSCA_SKILL_DOC_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scoreFlow != null" >
         SCORE_FLOW,
@@ -366,13 +366,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillDocScoreExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_SKILL_DOC_SCORE
+        select count(*) from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+      update OSCA_SKILL_DOC_SCORE
     <set >
       <if test="record.scoreFlow != null" >
         SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
@@ -470,7 +470,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+      update OSCA_SKILL_DOC_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -506,7 +506,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+      update OSCA_SKILL_DOC_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -541,7 +541,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillDocScore">
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+        update OSCA_SKILL_DOC_SCORE
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -634,7 +634,7 @@
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.OscaSkillDocScore">
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+        update OSCA_SKILL_DOC_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       RECORD_YEAR = #{recordYear,jdbcType=CHAR},
@@ -667,7 +667,7 @@
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillDocScore">
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+        update OSCA_SKILL_DOC_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       RECORD_YEAR = #{recordYear,jdbcType=CHAR},

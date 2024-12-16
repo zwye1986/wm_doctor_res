@@ -118,7 +118,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_ANNUAL_ASSESSMENT
+      from RES_ANNUAL_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -132,7 +132,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ANNUAL_ASSESSMENT
+      from RES_ANNUAL_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -145,21 +145,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_ANNUAL_ASSESSMENT
+      from RES_ANNUAL_ASSESSMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_ANNUAL_ASSESSMENT
+      delete from RES_ANNUAL_ASSESSMENT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResAnnualAssessmentExample" >
-    delete from PDSCI.RES_ANNUAL_ASSESSMENT
+      delete from RES_ANNUAL_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
-    insert into PDSCI.RES_ANNUAL_ASSESSMENT (RECORD_FLOW, RECORD_YEAR, DOCTOR_FLOW, 
+      insert into RES_ANNUAL_ASSESSMENT (RECORD_FLOW, RECORD_YEAR, DOCTOR_FLOW,
       DOCTOR_NAME, TEACHER_FLOW, TEACHER_NAME, 
       STUDY_START_DATE, STUDY_END_DATE, DAY_COUNT, 
       NOTE_COUNT, EXPERIENCE_COUNT, TCM_COUNT, 
@@ -187,7 +187,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
-    insert into PDSCI.RES_ANNUAL_ASSESSMENT
+      insert into RES_ANNUAL_ASSESSMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -410,13 +410,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResAnnualAssessmentExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_ANNUAL_ASSESSMENT
+      select count(*) from RES_ANNUAL_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_ANNUAL_ASSESSMENT
+      update RES_ANNUAL_ASSESSMENT
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -532,7 +532,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_ANNUAL_ASSESSMENT
+      update RES_ANNUAL_ASSESSMENT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RECORD_YEAR = #{record.recordYear,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -574,7 +574,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_ANNUAL_ASSESSMENT
+      update RES_ANNUAL_ASSESSMENT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RECORD_YEAR = #{record.recordYear,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -612,7 +612,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
-    update PDSCI.RES_ANNUAL_ASSESSMENT
+      update RES_ANNUAL_ASSESSMENT
     <set >
       <if test="recordYear != null" >
         RECORD_YEAR = #{recordYear,jdbcType=VARCHAR},
@@ -723,7 +723,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResAnnualAssessmentWithBLOBs" >
-    update PDSCI.RES_ANNUAL_ASSESSMENT
+      update RES_ANNUAL_ASSESSMENT
     set RECORD_YEAR = #{recordYear,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -762,7 +762,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResAnnualAssessment" >
-    update PDSCI.RES_ANNUAL_ASSESSMENT
+      update RES_ANNUAL_ASSESSMENT
     set RECORD_YEAR = #{recordYear,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

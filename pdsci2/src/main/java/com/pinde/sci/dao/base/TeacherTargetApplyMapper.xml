@@ -107,7 +107,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHER_TARGET_APPLY
+        from TEACHER_TARGET_APPLY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -118,21 +118,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHER_TARGET_APPLY
+      from TEACHER_TARGET_APPLY
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.TEACHER_TARGET_APPLY
+      delete from TEACHER_TARGET_APPLY
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.TeacherTargetApplyExample">
-    delete from PDSCI.TEACHER_TARGET_APPLY
+        delete from TEACHER_TARGET_APPLY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.TeacherTargetApply">
-    insert into PDSCI.TEACHER_TARGET_APPLY (APPLY_FLOW, USER_FLOW, USER_NAME, 
+        insert into TEACHER_TARGET_APPLY (APPLY_FLOW, USER_FLOW, USER_NAME,
       ORG_FLOW, ORG_NAME, SPE_ID, 
       SPE_NAME, RECRUIT_YEAR, IS_ACADEMIC, 
       IS_SPECIALIZED, ACADEMIC_NUM, SPECIALIZED_NUM, 
@@ -156,7 +156,7 @@
       #{schoolAuditTime,jdbcType=VARCHAR}, #{teacherApplyTime,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.TeacherTargetApply">
-    insert into PDSCI.TEACHER_TARGET_APPLY
+        insert into TEACHER_TARGET_APPLY
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="applyFlow != null">
         APPLY_FLOW,
@@ -350,13 +350,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.TeacherTargetApplyExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.TEACHER_TARGET_APPLY
+        select count(*) from TEACHER_TARGET_APPLY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.TEACHER_TARGET_APPLY
+      update TEACHER_TARGET_APPLY
     <set>
       <if test="record.applyFlow != null">
         APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
@@ -457,7 +457,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.TEACHER_TARGET_APPLY
+      update TEACHER_TARGET_APPLY
     set APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -494,7 +494,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeacherTargetApply">
-    update PDSCI.TEACHER_TARGET_APPLY
+        update TEACHER_TARGET_APPLY
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -590,7 +590,7 @@
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeacherTargetApply">
-    update PDSCI.TEACHER_TARGET_APPLY
+        update TEACHER_TARGET_APPLY
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

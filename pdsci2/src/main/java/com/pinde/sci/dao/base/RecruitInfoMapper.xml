@@ -137,7 +137,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_INFO
+      from RECRUIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -148,21 +148,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_INFO
+      from RECRUIT_INFO
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_INFO
+      delete from RECRUIT_INFO
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitInfoExample" >
-    delete from PDSCI.RECRUIT_INFO
+      delete from RECRUIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitInfo" >
-    insert into PDSCI.RECRUIT_INFO (RECRUIT_FLOW, ORG_FLOW, DOCTOR_FLOW, 
+      insert into RECRUIT_INFO (RECRUIT_FLOW, ORG_FLOW, DOCTOR_FLOW,
       RECRUIT_YEAR, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, 
       LINK_MAN, LINK_MAN_PHONE, WORK_ORG_NAME, 
       WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, TRAINING_TYPE_ID, 
@@ -204,7 +204,7 @@
       #{submitTime,jdbcType=VARCHAR}, #{auditTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitInfo" >
-    insert into PDSCI.RECRUIT_INFO
+      insert into RECRUIT_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recruitFlow != null" >
         RECRUIT_FLOW,
@@ -553,13 +553,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_INFO
+      select count(*) from RECRUIT_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_INFO
+      update RECRUIT_INFO
     <set >
       <if test="record.recruitFlow != null" >
         RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
@@ -738,7 +738,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_INFO
+      update RECRUIT_INFO
     set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -801,7 +801,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitInfo" >
-    update PDSCI.RECRUIT_INFO
+      update RECRUIT_INFO
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -975,7 +975,7 @@
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitInfo" >
-    update PDSCI.RECRUIT_INFO
+      update RECRUIT_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},

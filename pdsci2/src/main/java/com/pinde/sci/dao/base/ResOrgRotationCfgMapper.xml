@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ORG_ROTATION_CFG
+      from RES_ORG_ROTATION_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +95,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ORG_ROTATION_CFG
+      from RES_ORG_ROTATION_CFG
     where ROTATION_CFG_FLOW = #{rotationCfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_ORG_ROTATION_CFG
+      delete from RES_ORG_ROTATION_CFG
     where ROTATION_CFG_FLOW = #{rotationCfgFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResOrgRotationCfgExample" >
-    delete from PDSCI.RES_ORG_ROTATION_CFG
+      delete from RES_ORG_ROTATION_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResOrgRotationCfg" >
-    insert into PDSCI.RES_ORG_ROTATION_CFG (ROTATION_CFG_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into RES_ORG_ROTATION_CFG (ROTATION_CFG_FLOW, ORG_FLOW, ORG_NAME,
       SPE_ID, SPE_NAME, ROTATION_FLOW, 
       ROTATION_NAME, SESSION_YEAR, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,7 +121,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResOrgRotationCfg" >
-    insert into PDSCI.RES_ORG_ROTATION_CFG
+      insert into RES_ORG_ROTATION_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="rotationCfgFlow != null" >
         ROTATION_CFG_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResOrgRotationCfgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_ORG_ROTATION_CFG
+      select count(*) from RES_ORG_ROTATION_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_ORG_ROTATION_CFG
+      update RES_ORG_ROTATION_CFG
     <set >
       <if test="record.rotationCfgFlow != null" >
         ROTATION_CFG_FLOW = #{record.rotationCfgFlow,jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_ORG_ROTATION_CFG
+      update RES_ORG_ROTATION_CFG
     set ROTATION_CFG_FLOW = #{record.rotationCfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -278,7 +278,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResOrgRotationCfg" >
-    update PDSCI.RES_ORG_ROTATION_CFG
+      update RES_ORG_ROTATION_CFG
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -320,7 +320,7 @@
     where ROTATION_CFG_FLOW = #{rotationCfgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResOrgRotationCfg" >
-    update PDSCI.RES_ORG_ROTATION_CFG
+      update RES_ORG_ROTATION_CFG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},

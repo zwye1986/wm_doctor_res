@@ -156,7 +156,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER_LOG
+      from SYS_USER_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -167,21 +167,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER_LOG
+      from SYS_USER_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SYS_USER_LOG
+      delete from SYS_USER_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysUserLogExample">
-    delete from PDSCI.SYS_USER_LOG
+      delete from SYS_USER_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SysUserLog">
-    insert into PDSCI.SYS_USER_LOG (RECORD_FLOW, USER_FLOW, USER_CODE, 
+      insert into SYS_USER_LOG (RECORD_FLOW, USER_FLOW, USER_CODE,
       USER_PASSWD, USER_NAME, SEX_ID, 
       SEX_NAME, STATUS_ID, STATUS_DESC, 
       USER_PHONE, USER_EMAIL, DEPT_FLOW, 
@@ -237,7 +237,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysUserLog">
-    insert into PDSCI.SYS_USER_LOG
+      insert into SYS_USER_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -688,13 +688,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysUserLogExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SYS_USER_LOG
+      select count(*) from SYS_USER_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SYS_USER_LOG
+      update SYS_USER_LOG
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -924,7 +924,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SYS_USER_LOG
+      update SYS_USER_LOG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_CODE = #{record.userCode,jdbcType=VARCHAR},
@@ -1004,7 +1004,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysUserLog">
-    update PDSCI.SYS_USER_LOG
+      update SYS_USER_LOG
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -1229,7 +1229,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysUserLog">
-    update PDSCI.SYS_USER_LOG
+      update SYS_USER_LOG
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_CODE = #{userCode,jdbcType=VARCHAR},
       USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},

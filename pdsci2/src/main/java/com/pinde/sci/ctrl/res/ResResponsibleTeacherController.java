@@ -16,7 +16,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.core.model.PubUserResume;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
 import com.pinde.sci.model.mo.ResRotationOrg;

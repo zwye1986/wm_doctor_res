@@ -13,7 +13,7 @@
 	<select id="searchDoctorOrgHistoryExtList" parameterType="java.util.Map" resultMap="docOrgHistoryExtMap">
 	  	SELECT doh.*,
 	  		   d.DOCTOR_FLOW doctorFlow, d.DOCTOR_NAME doctorName, d.SESSION_NUMBER dsessionNumber
-		from pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+        from RES_DOCTOR_ORG_HISTORY doh, RES_DOCTOR d
 		where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
 		and doh.RECORD_STATUS = 'Y' and d.RECORD_STATUS = 'Y'
 		<if test="docOrgHistory!=null">

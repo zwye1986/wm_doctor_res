@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.STU_DEPT_OF_STAFF
+      from STU_DEPT_OF_STAFF
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.STU_DEPT_OF_STAFF
+      from STU_DEPT_OF_STAFF
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.STU_DEPT_OF_STAFF
+      delete from STU_DEPT_OF_STAFF
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.StuDeptOfStaffExample">
-    delete from PDSCI.STU_DEPT_OF_STAFF
+      delete from STU_DEPT_OF_STAFF
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.StuDeptOfStaff">
-    insert into PDSCI.STU_DEPT_OF_STAFF (RECORD_FLOW, USER_FLOW, USER_ROLE, 
+      insert into STU_DEPT_OF_STAFF (RECORD_FLOW, USER_FLOW, USER_ROLE,
       ORG_FLOW, ORG_NAME, DEPT_FLOW, 
       DEPT_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.StuDeptOfStaff">
-    insert into PDSCI.STU_DEPT_OF_STAFF
+      insert into STU_DEPT_OF_STAFF
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.StuDeptOfStaffExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.STU_DEPT_OF_STAFF
+      select count(*) from STU_DEPT_OF_STAFF
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.STU_DEPT_OF_STAFF
+      update STU_DEPT_OF_STAFF
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.STU_DEPT_OF_STAFF
+      update STU_DEPT_OF_STAFF
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_ROLE = #{record.userRole,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StuDeptOfStaff">
-    update PDSCI.STU_DEPT_OF_STAFF
+      update STU_DEPT_OF_STAFF
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StuDeptOfStaff">
-    update PDSCI.STU_DEPT_OF_STAFF
+      update STU_DEPT_OF_STAFF
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_ROLE = #{userRole,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

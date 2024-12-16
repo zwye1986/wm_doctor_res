@@ -173,7 +173,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TEACHER_TRAINING
+      from RES_TEACHER_TRAINING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -184,14 +184,14 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TEACHER_TRAINING
+      from RES_TEACHER_TRAINING
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
 
   <select id="selectByCondition" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TEACHER_TRAINING
+      from RES_TEACHER_TRAINING
     <where>
       <if test="record.doctorName != null and record.doctorName != ''" >
         <bind name="doctorName" value="'%'+record.doctorName+'%'"/>
@@ -339,7 +339,7 @@
   <select id="selectByConditionAddUserDept" resultMap="BaseResultMap2" >
     select
     <include refid="Column_List" />,dept.dept_name as USER_DEPE_NAMES
-    from PDSCI.RES_TEACHER_TRAINING a
+      from RES_TEACHER_TRAINING a
     LEFT JOIN SYS_USER_DEPT dept on a.record_flow = dept.USER_FLOW and dept.RECORD_STATUS = 'Y'
     <where>
       <if test="record.doctorName != null and record.doctorName != ''" >
@@ -486,17 +486,17 @@
 
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_TEACHER_TRAINING
+      delete from RES_TEACHER_TRAINING
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResTeacherTrainingExample" >
-    delete from PDSCI.RES_TEACHER_TRAINING
+      delete from RES_TEACHER_TRAINING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResTeacherTraining" >
-    insert into PDSCI.RES_TEACHER_TRAINING (RECORD_FLOW, DOCTOR_NAME, SEX_NAME, 
+      insert into RES_TEACHER_TRAINING (RECORD_FLOW, DOCTOR_NAME, SEX_NAME,
       TECHNICAL_TITLE, ORG_FLOW, ORG_NAME, 
       CERTIFICATE_NO, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -528,7 +528,7 @@
       #{certificateLevel,jdbcType=VARCHAR}, #{certificateTime,jdbcType=VARCHAR}, #{isResponsibleTutor,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResTeacherTraining" >
-    insert into PDSCI.RES_TEACHER_TRAINING
+      insert into RES_TEACHER_TRAINING
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -805,13 +805,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResTeacherTrainingExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_TEACHER_TRAINING
+      select count(*) from RES_TEACHER_TRAINING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_TEACHER_TRAINING
+      update RES_TEACHER_TRAINING
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -948,7 +948,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_TEACHER_TRAINING
+      update RES_TEACHER_TRAINING
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
       SEX_NAME = #{record.sexName,jdbcType=VARCHAR},
@@ -997,7 +997,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResTeacherTraining" >
-    update PDSCI.RES_TEACHER_TRAINING
+      update RES_TEACHER_TRAINING
     <set >
       <if test="doctorName != null" >
         DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -1135,7 +1135,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResTeacherTraining" >
-    update PDSCI.RES_TEACHER_TRAINING
+      update RES_TEACHER_TRAINING
     set DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       SEX_NAME = #{sexName,jdbcType=VARCHAR},
       TECHNICAL_TITLE = #{technicalTitle,jdbcType=VARCHAR},
@@ -1195,7 +1195,7 @@
   <select id="selectDetailByKey" resultMap="BaseResultMap">
     select
     <include refid="Column_List" />,b.ID_NO
-    from PDSCI.RES_TEACHER_TRAINING a left join SYS_USER b on a.record_flow = b.user_flow
+      from RES_TEACHER_TRAINING a left join SYS_USER b on a.record_flow = b.user_flow
     where a.record_flow = #{recordFlow,jdbcType=VARCHAR}
   </select>
 </mapper>

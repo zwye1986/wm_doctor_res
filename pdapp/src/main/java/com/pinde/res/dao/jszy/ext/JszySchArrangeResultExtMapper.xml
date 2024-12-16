@@ -7,7 +7,7 @@
 	</resultMap>
 	<select id="getDocResultArea" resultMap="areaMap">
 		select min(sch_start_date) MIN_DATE,max(sch_end_date) MAX_DATE
-		from pdsci.sch_arrange_result 
+        from sch_arrange_result
 		where record_status = 'Y'
 		and doctor_flow = #{doctorFlow}
 	</select>
@@ -78,8 +78,8 @@
 			end )
 			end
 		end rotation_status
-		from pdsci.sch_arrange_result sar
-		left join pdsci.res_doctor_sch_process rdsp
+        from sch_arrange_result sar
+        left join res_doctor_sch_process rdsp
 		on sar.result_flow = rdsp.sch_result_flow
     		and rdsp.record_status = 'Y'
 		where sar.record_status = 'Y'
@@ -116,7 +116,7 @@
 
 	<select id="checkResultDate" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
 		select *
-		from pdsci.sch_arrange_result
+        from sch_arrange_result
 		where record_status = 'Y'
 		and doctor_flow = #{doctorFlow}
 		and (

@@ -44,8 +44,8 @@ select * from (
         where rss.record_status = 'Y'
         and rss.org_flow in(
             SELECT ORG_FLOW
-            FROM PDSCI.SYS_ORG
-            WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
             <if test="org!=null">
                 <if test="org.orgProvId!=null and org.orgProvId!=''">
                     AND ORG_PROV_ID = #{org.orgProvId}
@@ -115,8 +115,8 @@ select * from (
 		WHERE rss.record_status = 'Y'
 		AND rss.org_flow IN (
 		    SELECT ORG_FLOW
-		    FROM PDSCI.SYS_ORG
-		    WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
         <if test="org!=null">
             <if test="org.orgProvId!=null and org.orgProvId!=''">
                 AND ORG_PROV_ID = #{org.orgProvId}
@@ -173,8 +173,8 @@ select * from (
         where rss.record_status = 'Y'
         and rss.org_flow in(
             SELECT ORG_FLOW
-            FROM PDSCI.SYS_ORG
-            WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
             <if test="org!=null">
                 <if test="org.orgProvId!=null and org.orgProvId!=''">
                     AND ORG_PROV_ID = #{org.orgProvId}
@@ -241,8 +241,8 @@ select * from (
         rss.record_status = 'Y'
         AND rss.org_flow IN (
         SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
         <if test="org!=null">
             <if test="org.orgProvId!=null and org.orgProvId!=''">
                 AND ORG_PROV_ID = #{org.orgProvId}

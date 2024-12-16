@@ -30,18 +30,19 @@
 		</association>
 	</resultMap>
   <select id="selectExtByFlow" parameterType="string" resultMap="extResultMapWithBLOBs">
-  	select t1.*,COLUMN_FLOW, t2.COLUMN_ID as t2_column_id, t2.COLUMN_NAME, t2.PARENT_COLUMN_ID, t2.ORDINAL as t2_ORDINAL, t2.RECORD_STATUS as t2_RECORD_STATUS, t2.CREATE_TIME as t2_CREATE_TIME, t2.CREATE_USER_FLOW as t2_CREATE_USER_FLOW, t2.MODIFY_TIME as t2_MODIFY_TIME, t2.MODIFY_USER_FLOW as t2_MODIFY_USER_FLOW 
-	      from PDSCI.PORTAL_INFO  t1 left join PDSCI.PORTAL_COLUMN t2 on t1.column_id = t2.column_id  where info_flow=#{infoFlow}
+  	select t1.*,COLUMN_FLOW, t2.COLUMN_ID as t2_column_id, t2.COLUMN_NAME, t2.PARENT_COLUMN_ID, t2.ORDINAL as t2_ORDINAL, t2.RECORD_STATUS as t2_RECORD_STATUS, t2.CREATE_TIME as t2_CREATE_TIME, t2.CREATE_USER_FLOW as t2_CREATE_USER_FLOW, t2.MODIFY_TIME as t2_MODIFY_TIME, t2.MODIFY_USER_FLOW as t2_MODIFY_USER_FLOW
+      from PORTAL_INFO t1 left join PORTAL_COLUMN t2 on t1.column_id = t2.column_id where info_flow=#{infoFlow}
   </select>
   <update id="updateInfoState" parameterType="com.pinde.sci.form.portal.PortalInfoForm">
-	 update  PDSCI.PORTAL_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID <![CDATA[<>]]> 'Failure' and   info_flow in
+      update PORTAL_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID
+      <![CDATA[<>]]> 'Failure' and info_flow in
 	       <foreach collection="infoFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
 	       <if test='infoStatusId=="Passing"'>
 	       	and (INFO_STATUS_ID = 'Edit' or INFO_STATUS_ID = 'NoPassed')
 	       </if>
   </update>
   <update id="deleteInfoRole" >
-	 update  PDSCI.RES_INFO_ROLE set RECORD_STATUS='N'
+      update RES_INFO_ROLE set RECORD_STATUS='N'
 	  where INFO_FLOW=#{info.infoFlow} and RECORD_STATUS='Y'
 	   <if test="roleFlows !=null and roleFlows.size()>0">
 		   and   INFO_ROLE in
@@ -51,7 +52,7 @@
   
   <select id="searchInfoByOrgBeforeDate" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
-  	FROM PDSCI.PORTAL_INFO
+      FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
 		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
 			AND COLUMN_ID = #{resNoticeTypeId}
@@ -82,7 +83,7 @@
   </select>
   <select id="searchInfoByOrg" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
-  	FROM PDSCI.PORTAL_INFO
+      FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
 		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
 			AND COLUMN_ID = #{resNoticeTypeId}
@@ -97,7 +98,7 @@
   </select>
   <select id="searchInfoByParam" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
-  	FROM PDSCI.PORTAL_INFO
+      FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
 		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
 			AND COLUMN_ID = #{resNoticeTypeId}
@@ -115,7 +116,7 @@
   </select>
   <select id="searchInfoByOrgNoRoleFlow" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
-  	FROM PDSCI.PORTAL_INFO
+      FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
 		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
 			AND COLUMN_ID = #{resNoticeTypeId}
@@ -133,7 +134,7 @@
   </select>
   <select id="searchInfoNotRead" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
-  	FROM PDSCI.PORTAL_INFO
+      FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
 		<if test='resNoticeTypeId!=null and resNoticeTypeId!=""'>
 			AND COLUMN_ID = #{resNoticeTypeId}
@@ -165,7 +166,7 @@
   </select>
   <select id="findNoticeWithBLOBsNotHaveRole" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
-  	FROM PDSCI.PORTAL_INFO
+      FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
   	<if test='info.columnId!=null and info.columnId!=""'>
   		AND COLUMN_ID = #{info.columnId}

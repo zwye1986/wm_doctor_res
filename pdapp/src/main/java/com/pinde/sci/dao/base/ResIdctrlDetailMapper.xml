@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_IDCTRL_DETAIL
+      from RES_IDCTRL_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_IDCTRL_DETAIL
+      from RES_IDCTRL_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_IDCTRL_DETAIL
+      delete from RES_IDCTRL_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResIdctrlDetailExample" >
-    delete from PDSCI.RES_IDCTRL_DETAIL
+      delete from RES_IDCTRL_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResIdctrlDetail" >
-    insert into PDSCI.RES_IDCTRL_DETAIL (RECORD_FLOW, IDCTRL_MAIN_FLOW, ID, 
+      insert into RES_IDCTRL_DETAIL (RECORD_FLOW, IDCTRL_MAIN_FLOW, ID,
       IS_BINDING, START_DATE, END_DATE, 
       DOCTOR_FLOW, DOCTOR_NAME, OPER_USER_FLOW, 
       OPER_USER_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -128,7 +128,7 @@
       #{orgName,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResIdctrlDetail" >
-    insert into PDSCI.RES_IDCTRL_DETAIL
+      insert into RES_IDCTRL_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -237,13 +237,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResIdctrlDetailExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_IDCTRL_DETAIL
+      select count(*) from RES_IDCTRL_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_IDCTRL_DETAIL
+      update RES_IDCTRL_DETAIL
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_IDCTRL_DETAIL
+      update RES_IDCTRL_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       IDCTRL_MAIN_FLOW = #{record.idctrlMainFlow,jdbcType=VARCHAR},
       ID = #{record.id,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResIdctrlDetail" >
-    update PDSCI.RES_IDCTRL_DETAIL
+      update RES_IDCTRL_DETAIL
     <set >
       <if test="idctrlMainFlow != null" >
         IDCTRL_MAIN_FLOW = #{idctrlMainFlow,jdbcType=VARCHAR},
@@ -379,7 +379,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResIdctrlDetail" >
-    update PDSCI.RES_IDCTRL_DETAIL
+      update RES_IDCTRL_DETAIL
     set IDCTRL_MAIN_FLOW = #{idctrlMainFlow,jdbcType=VARCHAR},
       ID = #{id,jdbcType=VARCHAR},
       IS_BINDING = #{isBinding,jdbcType=VARCHAR},

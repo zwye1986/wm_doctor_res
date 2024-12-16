@@ -111,7 +111,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PORTAL_INFO
+      from PORTAL_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -125,7 +125,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PORTAL_INFO
+      from PORTAL_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -138,21 +138,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PORTAL_INFO
+      from PORTAL_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PORTAL_INFO
+      delete from PORTAL_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.PortalInfoExample" >
-    delete from PDSCI.PORTAL_INFO
+      delete from PORTAL_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.PortalInfo" >
-    insert into PDSCI.PORTAL_INFO (INFO_FLOW, INFO_TITLE, TITLE_IMG, 
+      insert into PORTAL_INFO (INFO_FLOW, INFO_TITLE, TITLE_IMG,
       COLUMN_ID, COLUMN_NAME, INFO_STATUS_ID, 
       INFO_STATUS_NAME, INFO_TIME, PASS_TIME, 
       PASS_USER_FLOW, CANCEL_TIME, CANCEL_USER_FLOW, 
@@ -176,7 +176,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.PortalInfo" >
-    insert into PDSCI.PORTAL_INFO
+      insert into PORTAL_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="infoFlow != null" >
         INFO_FLOW,
@@ -363,13 +363,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.PortalInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PORTAL_INFO
+      select count(*) from PORTAL_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PORTAL_INFO
+      update PORTAL_INFO
     <set >
       <if test="record.infoFlow != null" >
         INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
@@ -467,7 +467,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.PORTAL_INFO
+      update PORTAL_INFO
     set INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
       INFO_TITLE = #{record.infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{record.titleImg,jdbcType=VARCHAR},
@@ -503,7 +503,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PORTAL_INFO
+      update PORTAL_INFO
     set INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
       INFO_TITLE = #{record.infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{record.titleImg,jdbcType=VARCHAR},
@@ -538,7 +538,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PortalInfo" >
-    update PDSCI.PORTAL_INFO
+      update PORTAL_INFO
     <set >
       <if test="infoTitle != null" >
         INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
@@ -631,7 +631,7 @@
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PortalInfo" >
-    update PDSCI.PORTAL_INFO
+      update PORTAL_INFO
     set INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{titleImg,jdbcType=VARCHAR},
       COLUMN_ID = #{columnId,jdbcType=VARCHAR},
@@ -664,7 +664,7 @@
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PortalInfo" >
-    update PDSCI.PORTAL_INFO
+      update PORTAL_INFO
     set INFO_TITLE = #{infoTitle,jdbcType=VARCHAR},
       TITLE_IMG = #{titleImg,jdbcType=VARCHAR},
       COLUMN_ID = #{columnId,jdbcType=VARCHAR},

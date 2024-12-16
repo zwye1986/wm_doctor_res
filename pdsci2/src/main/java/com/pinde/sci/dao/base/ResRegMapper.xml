@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_REG
+    from  RES_REG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_REG
+    from  RES_REG
     where REG_FLOW = #{regFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_REG
+    delete from  RES_REG
     where REG_FLOW = #{regFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResRegExample" >
-    delete from PDSCI.RES_REG
+    delete from  RES_REG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
 &lt;!&ndash;  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResReg" >
-    insert into PDSCI.RES_REG (REG_FLOW, USER_FLOW, USER_NAME, 
+    insert into  RES_REG (REG_FLOW, USER_FLOW, USER_NAME,
       REG_YEAR, STATUS_ID, STATUS_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>&ndash;&gt;
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResReg" >
-    insert into PDSCI.RES_REG
+    insert into  RES_REG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="regFlow != null" >
         REG_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResRegExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_REG
+    select count(*) from  RES_REG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_REG
+    update  RES_REG
     <set >
       <if test="record.regFlow != null" >
         REG_FLOW = #{record.regFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_REG
+    update  RES_REG
     set REG_FLOW = #{record.regFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResReg" >
-    update PDSCI.RES_REG
+    update  RES_REG
     <set >
       <if test="userFlow != null" >
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where REG_FLOW = #{regFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResReg" >
-    update PDSCI.RES_REG
+    update  RES_REG
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
       REG_YEAR = #{regYear,jdbcType=VARCHAR},

@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER_SCHOOL
+      from SYS_USER_SCHOOL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER_SCHOOL
+      from SYS_USER_SCHOOL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_USER_SCHOOL
+      delete from SYS_USER_SCHOOL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysUserSchoolExample" >
-    delete from PDSCI.SYS_USER_SCHOOL
+      delete from SYS_USER_SCHOOL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SysUserSchool" >
-    insert into PDSCI.SYS_USER_SCHOOL (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      insert into SYS_USER_SCHOOL (RECORD_FLOW, USER_FLOW, USER_NAME,
       SCHOOL, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysUserSchool" >
-    insert into PDSCI.SYS_USER_SCHOOL
+      insert into SYS_USER_SCHOOL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysUserSchoolExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_USER_SCHOOL
+      select count(*) from SYS_USER_SCHOOL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_USER_SCHOOL
+      update SYS_USER_SCHOOL
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_USER_SCHOOL
+      update SYS_USER_SCHOOL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysUserSchool" >
-    update PDSCI.SYS_USER_SCHOOL
+      update SYS_USER_SCHOOL
     <set >
       <if test="userFlow != null" >
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysUserSchool" >
-    update PDSCI.SYS_USER_SCHOOL
+      update SYS_USER_SCHOOL
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
       SCHOOL = #{school,jdbcType=VARCHAR},

@@ -4,7 +4,7 @@
 	
 	<select id="countRotationUse" resultType="int">
 		SELECT COUNT(DISTINCT DOCTOR_FLOW)
-		FROM PDSCI.SCH_DOCTOR_DEPT
+        FROM SCH_DOCTOR_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND ROTATION_FLOW = #{rotationFlow}
 	</select>
@@ -46,8 +46,8 @@
 	</update>
 	
 	<select id="countReducation" resultType="int">
-		select count(0) 
-		from pdsci.res_doctor rd
+		select count(0)
+        from res_doctor rd
 		where rd.record_status = 'Y'
 		and rd.org_flow = #{orgFlow}
 		and rd.session_number >= '2015'
@@ -56,7 +56,7 @@
      	 AND degree_category_id is not null
 		and not exists(
 			select null
-			from pdsci.sch_doctor_dept sdd
+        from sch_doctor_dept sdd
 			where sdd.record_status = 'Y'
       		and sdd.org_flow=rd.org_flow
 			and rd.doctor_flow = sdd.doctor_flow
@@ -73,7 +73,7 @@
 	</select>
 	<select id="jszyCountReducation" resultType="int">
 		select count(0)
-		from pdsci.res_doctor rd
+        from res_doctor rd
 		where rd.record_status = 'Y'
 		and rd.org_flow = #{orgFlow}
 		and (rd.training_years = '1' or rd.training_years='2')
@@ -86,7 +86,7 @@
       	)
 		and not exists(
 			select null
-			from pdsci.sch_doctor_dept sdd
+        from sch_doctor_dept sdd
 			where sdd.record_status = 'Y'
       		and sdd.org_flow=rd.org_flow
 			and rd.doctor_flow = sdd.doctor_flow

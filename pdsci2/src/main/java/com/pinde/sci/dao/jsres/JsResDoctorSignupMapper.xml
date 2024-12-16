@@ -19,7 +19,7 @@
   </resultMap>
 
   <insert id="insert" parameterType="com.pinde.sci.model.jsres.DoctorSignup" >
-    insert into PDSCI.JSRES_DOCTOR_SIGNUP (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_SFZ,
+      insert into JSRES_DOCTOR_SIGNUP (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_SFZ,
       SIGNUP_STATUS, ORG_FLOW, SPE_ID,
       SPE_NAME, ASSIGN_FLOW, ASSIGN_YEAR)
     values (#{recordFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{doctorSFZ,jdbcType=VARCHAR},

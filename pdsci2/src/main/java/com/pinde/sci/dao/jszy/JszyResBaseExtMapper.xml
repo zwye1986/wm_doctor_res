@@ -12,7 +12,7 @@
 					, res.BASE_PROPERTY_NAME, res.RES_APPROVAL_NUMBER_ID, res.RES_APPROVAL_NUMBER_NAME, res.GPS_APPROVAL_NUMBER_ID, res.GPS_APPROVAL_NUMBER_NAME, res.BASE_INFO
                     , res.BASE_STATUS_ID, res.BASE_STATUS_NAME, res.AUDIT_STATUS_ID, res.AUDIT_STATUS_NAME, res.RECORD_STATUS	,
                		org.ORG_NAME, org.ORG_FLOW sysOrgFlow
-    		from pdsci.RES_BASE res, pdsci.SYS_ORG org 
+        from RES_BASE res, SYS_ORG org
     		where org.ORG_FLOW = res.ORG_FLOW
     		and  res.RECORD_STATUS= 'Y' and org.RECORD_STATUS= 'Y'
     		<if test='base.baseTypeName!=null and base.baseTypeName!=""'>

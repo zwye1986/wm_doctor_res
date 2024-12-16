@@ -3,22 +3,22 @@
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SysUserExtMapper" >
     <select id="searchUserList" parameterType="java.util.Map"
             resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
-		select u.* from PDSCI.sys_user u
+        select u.* from sys_user u
 		where record_status='Y'
         and status_id='Activated'
         and u.user_flow in(
             select u.user_flow
-            from PDSCI.sys_user_role iu, sys_user u
+        from sys_user_role iu, sys_user u
                 where iu.user_flow = u.user_flow and iu.record_status = 'Y'
                 and iu.role_flow = #{roleFlow}
                 and u.dept_flow = #{sysDeptFlow}
             union
             select u.user_flow
-                from PDSCI.sys_user_role iu, sys_user u
+        from sys_user_role iu, sys_user u
                 where iu.user_flow = u.user_flow and iu.record_status = 'Y'
                 and iu.role_flow = #{roleFlow}
                     and exists(select 1
-                    from pdsci.sys_user_dept sud
+        from sys_user_dept sud
                     where sud.record_status = 'Y'
                     and u.user_flow = sud.user_flow
                     and sud.dept_flow = #{sysDeptFlow})
@@ -31,12 +31,12 @@
     <select id="teacherRoleCheckUser" parameterType="java.util.Map"
             resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select u.*
-		from PDSCI.sys_user u
+        from sys_user u
 		where record_status='Y'
             and status_id='Activated'
             and u.user_flow in(
                 select u.user_flow
-                from PDSCI.sys_user_role iu, sys_user u
+        from sys_user_role iu, sys_user u
                     where iu.user_flow = u.user_flow and iu.record_status = 'Y'
                     and iu.role_flow = #{roleFlow}
             )

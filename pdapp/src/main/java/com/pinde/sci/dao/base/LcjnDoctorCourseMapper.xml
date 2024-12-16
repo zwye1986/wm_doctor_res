@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_DOCTOR_COURSE
+      from LCJN_DOCTOR_COURSE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_DOCTOR_COURSE
+      from LCJN_DOCTOR_COURSE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_DOCTOR_COURSE
+      delete
+      from LCJN_DOCTOR_COURSE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnDoctorCourseExample">
-    delete from PDSCI.LCJN_DOCTOR_COURSE
+      delete from LCJN_DOCTOR_COURSE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.LcjnDoctorCourse">
-    insert into PDSCI.LCJN_DOCTOR_COURSE (RECORD_FLOW, COURSE_FLOW, COURSE_NAME, 
+      insert into LCJN_DOCTOR_COURSE (RECORD_FLOW, COURSE_FLOW, COURSE_NAME,
       DOCTOR_FLOW, DOCTOR_NAME, APPOINT_TIME, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, REASON, 
       ENTERING_STATUS_ID, ENTERING_STATUS_NAME, EXAM_SCORE, 
@@ -128,7 +129,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnDoctorCourse">
-    insert into PDSCI.LCJN_DOCTOR_COURSE
+      insert into LCJN_DOCTOR_COURSE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -237,13 +238,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.LcjnDoctorCourseExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_DOCTOR_COURSE
+      select count(*) from LCJN_DOCTOR_COURSE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_DOCTOR_COURSE
+      update LCJN_DOCTOR_COURSE
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -302,7 +303,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_DOCTOR_COURSE
+      update LCJN_DOCTOR_COURSE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
@@ -325,7 +326,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnDoctorCourse">
-    update PDSCI.LCJN_DOCTOR_COURSE
+      update LCJN_DOCTOR_COURSE
     <set>
       <if test="courseFlow != null">
         COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
@@ -379,7 +380,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnDoctorCourse">
-    update PDSCI.LCJN_DOCTOR_COURSE
+      update LCJN_DOCTOR_COURSE
     set COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{courseName,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TEACH_QUALIFIED_PLAN
+      from RES_TEACH_QUALIFIED_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TEACH_QUALIFIED_PLAN
+      from RES_TEACH_QUALIFIED_PLAN
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_TEACH_QUALIFIED_PLAN
+      delete from RES_TEACH_QUALIFIED_PLAN
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResTeachQualifiedPlanExample" >
-    delete from PDSCI.RES_TEACH_QUALIFIED_PLAN
+      delete from RES_TEACH_QUALIFIED_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResTeachQualifiedPlan" >
-    insert into PDSCI.RES_TEACH_QUALIFIED_PLAN (PLAN_FLOW, INTRODUCE, PLAN_CONTENT, 
+      insert into RES_TEACH_QUALIFIED_PLAN (PLAN_FLOW, INTRODUCE, PLAN_CONTENT,
       ENROLL_START_TIME, ENROLL_END_TIME, PLAN_START_TIME, 
       PLAN_END_TIME, ASK_CONTENT, PLAN_STATUS_ID, 
       PLAN_STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -126,7 +126,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResTeachQualifiedPlan" >
-    insert into PDSCI.RES_TEACH_QUALIFIED_PLAN
+      insert into RES_TEACH_QUALIFIED_PLAN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="planFlow != null" >
         PLAN_FLOW,
@@ -223,13 +223,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResTeachQualifiedPlanExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_TEACH_QUALIFIED_PLAN
+      select count(*) from RES_TEACH_QUALIFIED_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_TEACH_QUALIFIED_PLAN
+      update RES_TEACH_QUALIFIED_PLAN
     <set >
       <if test="record.planFlow != null" >
         PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_TEACH_QUALIFIED_PLAN
+      update RES_TEACH_QUALIFIED_PLAN
     set PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
       INTRODUCE = #{record.introduce,jdbcType=VARCHAR},
       PLAN_CONTENT = #{record.planContent,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResTeachQualifiedPlan" >
-    update PDSCI.RES_TEACH_QUALIFIED_PLAN
+      update RES_TEACH_QUALIFIED_PLAN
     <set >
       <if test="introduce != null" >
         INTRODUCE = #{introduce,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResTeachQualifiedPlan" >
-    update PDSCI.RES_TEACH_QUALIFIED_PLAN
+      update RES_TEACH_QUALIFIED_PLAN
     set INTRODUCE = #{introduce,jdbcType=VARCHAR},
       PLAN_CONTENT = #{planContent,jdbcType=VARCHAR},
       ENROLL_START_TIME = #{enrollStartTime,jdbcType=VARCHAR},

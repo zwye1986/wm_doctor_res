@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubWorkLogMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubWorkLog" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubWorkLog">
     <id column="LOG_FLOW" property="logFlow" jdbcType="VARCHAR" />
     <result column="FILL_DATE" property="fillDate" jdbcType="VARCHAR" />
     <result column="END_DATE" property="endDate" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PubWorkLog" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.PubWorkLog" extends="BaseResultMap">
     <result column="LOG_CONTENT" property="logContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -85,7 +85,8 @@
   <sql id="Blob_Column_List" >
     LOG_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.PubWorkLogExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.PubWorkLogExample">
     select
     <if test="distinct" >
       distinct
@@ -93,7 +94,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_WORK_LOG
+        from PUB_WORK_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -101,13 +102,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubWorkLogExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubWorkLogExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_WORK_LOG
+        from PUB_WORK_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +121,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_WORK_LOG
+      from PUB_WORK_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_WORK_LOG
+      delete from PUB_WORK_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubWorkLogExample" >
-    delete from PDSCI.PUB_WORK_LOG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubWorkLogExample">
+        delete from PUB_WORK_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubWorkLog" >
-    insert into PDSCI.PUB_WORK_LOG (LOG_FLOW, FILL_DATE, END_DATE, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubWorkLog">
+        insert into PUB_WORK_LOG (LOG_FLOW, FILL_DATE, END_DATE,
       WEEK_NUM, LOG_MONTH, LOG_TYPE_ID, 
       LOG_TYPE_NAME, USER_FLOW, USER_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -147,8 +148,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{logContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubWorkLog" >
-    insert into PDSCI.PUB_WORK_LOG
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubWorkLog">
+        insert into PUB_WORK_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="logFlow != null" >
         LOG_FLOW,
@@ -244,14 +245,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubWorkLogExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_WORK_LOG
+    <select id="countByExample" parameterType="com.pinde.core.model.PubWorkLogExample" resultType="java.lang.Integer">
+        select count(*) from PUB_WORK_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_WORK_LOG
+      update PUB_WORK_LOG
     <set >
       <if test="record.logFlow != null" >
         LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
@@ -304,7 +305,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.PUB_WORK_LOG
+      update PUB_WORK_LOG
     set LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
       FILL_DATE = #{record.fillDate,jdbcType=VARCHAR},
       END_DATE = #{record.endDate,jdbcType=VARCHAR},
@@ -325,7 +326,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_WORK_LOG
+      update PUB_WORK_LOG
     set LOG_FLOW = #{record.logFlow,jdbcType=VARCHAR},
       FILL_DATE = #{record.fillDate,jdbcType=VARCHAR},
       END_DATE = #{record.endDate,jdbcType=VARCHAR},
@@ -344,8 +345,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubWorkLog" >
-    update PDSCI.PUB_WORK_LOG
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubWorkLog">
+        update PUB_WORK_LOG
     <set >
       <if test="fillDate != null" >
         FILL_DATE = #{fillDate,jdbcType=VARCHAR},
@@ -392,8 +393,8 @@
     </set>
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PubWorkLog" >
-    update PDSCI.PUB_WORK_LOG
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubWorkLog">
+        update PUB_WORK_LOG
     set FILL_DATE = #{fillDate,jdbcType=VARCHAR},
       END_DATE = #{endDate,jdbcType=VARCHAR},
       WEEK_NUM = #{weekNum,jdbcType=DECIMAL},
@@ -410,8 +411,8 @@
       LOG_CONTENT = #{logContent,jdbcType=CLOB}
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubWorkLog" >
-    update PDSCI.PUB_WORK_LOG
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubWorkLog">
+        update PUB_WORK_LOG
     set FILL_DATE = #{fillDate,jdbcType=VARCHAR},
       END_DATE = #{endDate,jdbcType=VARCHAR},
       WEEK_NUM = #{weekNum,jdbcType=DECIMAL},

@@ -130,7 +130,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_ORG
+      from SYS_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -144,7 +144,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ORG
+      from SYS_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -157,21 +157,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_ORG
+      from SYS_ORG
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_ORG
+      delete from SYS_ORG
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysOrgExample" >
-    delete from PDSCI.SYS_ORG
+      delete from SYS_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysOrg" >
-    insert into PDSCI.SYS_ORG (ORG_FLOW, ORG_CODE, ORG_NAME, 
+      insert into SYS_ORG (ORG_FLOW, ORG_CODE, ORG_NAME,
       ORG_PROV_ID, ORG_PROV_NAME, ORG_CITY_ID, 
       ORG_CITY_NAME, ORG_AREA_ID, ORG_AREA_NAME, 
       ORG_TYPE_ID, ORG_TYPE_NAME, ORG_ADDRESS, 
@@ -203,7 +203,7 @@
       #{orgInfo,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysOrg" >
-    insert into PDSCI.SYS_ORG
+      insert into SYS_ORG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orgFlow != null" >
         ORG_FLOW,
@@ -468,13 +468,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysOrgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_ORG
+      select count(*) from SYS_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_ORG
+      update SYS_ORG
     <set >
       <if test="record.orgFlow != null" >
         ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -611,7 +611,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SYS_ORG
+      update SYS_ORG
     set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -660,7 +660,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_ORG
+      update SYS_ORG
     set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -708,7 +708,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysOrg" >
-    update PDSCI.SYS_ORG
+      update SYS_ORG
     <set >
       <if test="orgCode != null" >
         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
@@ -840,7 +840,7 @@
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SysOrg" >
-    update PDSCI.SYS_ORG
+      update SYS_ORG
     set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR},
@@ -886,7 +886,7 @@
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysOrg" >
-    update PDSCI.SYS_ORG
+      update SYS_ORG
     set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       ORG_PROV_ID = #{orgProvId,jdbcType=VARCHAR},
@@ -939,7 +939,7 @@
 
     <select id="selectByExampleSession" resultMap="ResultMapWithSession">
         select a.*,b.session_number
-        from PDSCI.SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where
+        from SYS_ORG a,(select distinct c.org_flow,c.session_number from SYS_MONTHLY_DOCTOR_INFO c where
         c.record_status='Y') b
         where a.org_flow=b.org_flow
         <if test="OrgProvId!=null and OrgProvId!=''">
@@ -962,7 +962,7 @@
     <select id="selectJointOrgAllList" resultType="com.pinde.core.model.SysOrg">
         select
         <include refid="Base_Column_List"/>
-        from PDSCI.SYS_ORG
+        from SYS_ORG
         where
         (ORG_LEVEL_ID not in (
         <foreach collection="orgLevelIdNotIn" item="orgLevelId" separator=",">

@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DEPT_CONFIG
+        from JSRES_DEPT_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DEPT_CONFIG
+      from JSRES_DEPT_CONFIG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_DEPT_CONFIG
+      delete from JSRES_DEPT_CONFIG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDeptConfigExample">
-    delete from PDSCI.JSRES_DEPT_CONFIG
+        delete from JSRES_DEPT_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.JsresDeptConfig">
-    insert into PDSCI.JSRES_DEPT_CONFIG (CFG_FLOW, ORG_FLOW, DEPT_FLOW, 
+        insert into JSRES_DEPT_CONFIG (CFG_FLOW, ORG_FLOW, DEPT_FLOW,
       DEPT_NAME, TEST_NUM, SCORE_PASS, 
       IS_TEST_OUT, TEST_OUT_TIME, TEACHER_WRITE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -126,7 +126,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDeptConfig">
-    insert into PDSCI.JSRES_DEPT_CONFIG
+        insert into JSRES_DEPT_CONFIG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
         CFG_FLOW,
@@ -224,13 +224,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.JsresDeptConfigExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_DEPT_CONFIG
+        select count(*) from JSRES_DEPT_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_DEPT_CONFIG
+      update JSRES_DEPT_CONFIG
     <set >
       <if test="record.cfgFlow != null" >
         CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -283,7 +283,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_DEPT_CONFIG
+      update JSRES_DEPT_CONFIG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -304,7 +304,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDeptConfig">
-    update PDSCI.JSRES_DEPT_CONFIG
+        update JSRES_DEPT_CONFIG
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -352,7 +352,7 @@
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDeptConfig">
-    update PDSCI.JSRES_DEPT_CONFIG
+        update JSRES_DEPT_CONFIG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},

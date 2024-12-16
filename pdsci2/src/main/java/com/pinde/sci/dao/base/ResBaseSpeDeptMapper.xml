@@ -93,7 +93,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_BASE_SPE_DEPT
+      from RES_BASE_SPE_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -107,7 +107,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASE_SPE_DEPT
+      from RES_BASE_SPE_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +120,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_BASE_SPE_DEPT
+      from RES_BASE_SPE_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_BASE_SPE_DEPT
+      delete from RES_BASE_SPE_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptExample" >
-    delete from PDSCI.RES_BASE_SPE_DEPT
+      delete from RES_BASE_SPE_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBaseSpeDept" >
-    insert into PDSCI.RES_BASE_SPE_DEPT (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into RES_BASE_SPE_DEPT (RECORD_FLOW, ORG_FLOW, ORG_NAME,
       TYPE, SPE_FLOW, SPE_NAME, 
       DEPT_FLOW, DEPT_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -148,7 +148,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBaseSpeDept" >
-    insert into PDSCI.RES_BASE_SPE_DEPT
+      insert into RES_BASE_SPE_DEPT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -245,13 +245,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseSpeDeptExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_BASE_SPE_DEPT
+      select count(*) from RES_BASE_SPE_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_BASE_SPE_DEPT
+      update RES_BASE_SPE_DEPT
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -304,7 +304,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_BASE_SPE_DEPT
+      update RES_BASE_SPE_DEPT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_BASE_SPE_DEPT
+      update RES_BASE_SPE_DEPT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -345,7 +345,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBaseSpeDept" >
-    update PDSCI.RES_BASE_SPE_DEPT
+      update RES_BASE_SPE_DEPT
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -393,7 +393,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResBaseSpeDept" >
-    update PDSCI.RES_BASE_SPE_DEPT
+      update RES_BASE_SPE_DEPT
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       TYPE = #{type,jdbcType=VARCHAR},
@@ -411,7 +411,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBaseSpeDept" >
-    update PDSCI.RES_BASE_SPE_DEPT
+      update RES_BASE_SPE_DEPT
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       TYPE = #{type,jdbcType=VARCHAR},

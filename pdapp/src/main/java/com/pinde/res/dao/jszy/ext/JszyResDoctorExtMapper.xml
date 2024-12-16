@@ -32,16 +32,16 @@
 		sar.result_flow,
 		sar.sch_dept_name,
 		rdsp.process_flow
-		from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
 		LEFT JOIN res_power_cfg rpc
 		on 'res_doctor_web_' || rdsp.user_flow = rpc.cfg_code
-			inner join pdsci.sch_arrange_result sar
+        inner join sch_arrange_result sar
 			on sar.record_status = 'Y'
 			and sar.result_flow = rdsp.sch_result_flow
-				inner join pdsci.res_doctor rd
+        inner join res_doctor rd
 				on rd.record_status = 'Y'
 				and rdsp.user_flow = rd.doctor_flow
-					inner join pdsci.sys_user su
+        inner join sys_user su
 					on su.record_status = 'Y'
 					and su.user_flow = rd.doctor_flow
 		where rdsp.record_status = 'Y'
@@ -85,16 +85,16 @@
 		sar.sch_dept_name,
 		rdsp.process_flow,
 		rd.doctor_type_id
-		FROM pdsci.res_doctor_sch_process rdsp
+        FROM res_doctor_sch_process rdsp
 		LEFT JOIN res_power_cfg rpc
 		on 'res_doctor_web_' || rdsp.user_flow = rpc.cfg_code
-		INNER JOIN pdsci.sch_arrange_result sar
+        INNER JOIN sch_arrange_result sar
 		ON sar.record_status = 'Y'
 		AND sar.result_flow = rdsp.sch_result_flow
-		INNER JOIN pdsci.res_doctor rd
+        INNER JOIN res_doctor rd
 		ON rd.record_status = 'Y'
 		AND rdsp.user_flow = rd.doctor_flow
-		INNER JOIN pdsci.sys_user su
+        INNER JOIN sys_user su
 		ON su.record_status = 'Y'
 		AND su.user_flow = rd.doctor_flow
 		WHERE rdsp.record_status = 'Y'
@@ -146,16 +146,16 @@
 		sar.sch_dept_name,
 		rdsp.process_flow,
 		rd.doctor_type_id
-		FROM pdsci.res_doctor_sch_process rdsp
+        FROM res_doctor_sch_process rdsp
 		LEFT JOIN res_power_cfg rpc
 		on 'res_doctor_web_' || rdsp.user_flow = rpc.cfg_code
-		INNER JOIN pdsci.sch_arrange_result sar
+        INNER JOIN sch_arrange_result sar
 		ON sar.record_status = 'Y'
 		AND sar.result_flow = rdsp.sch_result_flow
-		INNER JOIN pdsci.res_doctor rd
+        INNER JOIN res_doctor rd
 		ON rd.record_status = 'Y'
 		AND rdsp.user_flow = rd.doctor_flow
-		INNER JOIN pdsci.sys_user su
+        INNER JOIN sys_user su
 		ON su.record_status = 'Y'
 		AND su.user_flow = rd.doctor_flow
 		WHERE rdsp.record_status = 'Y'

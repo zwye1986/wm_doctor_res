@@ -93,7 +93,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      from SYS_DEPT_MONTH_PLAN_ITEM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -107,7 +107,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      from SYS_DEPT_MONTH_PLAN_ITEM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +120,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      from SYS_DEPT_MONTH_PLAN_ITEM
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      delete from SYS_DEPT_MONTH_PLAN_ITEM
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanItemExample" >
-    delete from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      delete from SYS_DEPT_MONTH_PLAN_ITEM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysDeptMonthPlanItem" >
-    insert into PDSCI.SYS_DEPT_MONTH_PLAN_ITEM (ITEM_FLOW, PLAN_FLOW, PLAN_TIME, 
+      insert into SYS_DEPT_MONTH_PLAN_ITEM (ITEM_FLOW, PLAN_FLOW, PLAN_TIME,
       ADDRESS, CONTENT, TITLE, 
       ITEM_TYPE_ID, ITEM_TYPE_NAME, JOIN_USER_FLOW, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -148,7 +148,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysDeptMonthPlanItem" >
-    insert into PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      insert into SYS_DEPT_MONTH_PLAN_ITEM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="itemFlow != null" >
         ITEM_FLOW,
@@ -245,13 +245,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanItemExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      select count(*) from SYS_DEPT_MONTH_PLAN_ITEM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      update SYS_DEPT_MONTH_PLAN_ITEM
     <set >
       <if test="record.itemFlow != null" >
         ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
@@ -304,7 +304,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      update SYS_DEPT_MONTH_PLAN_ITEM
     set ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
       PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
       PLAN_TIME = #{record.planTime,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      update SYS_DEPT_MONTH_PLAN_ITEM
     set ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
       PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
       PLAN_TIME = #{record.planTime,jdbcType=VARCHAR},
@@ -345,7 +345,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDeptMonthPlanItem" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      update SYS_DEPT_MONTH_PLAN_ITEM
     <set >
       <if test="planFlow != null" >
         PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
@@ -393,7 +393,7 @@
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SysDeptMonthPlanItem" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      update SYS_DEPT_MONTH_PLAN_ITEM
     set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
       PLAN_TIME = #{planTime,jdbcType=VARCHAR},
       ADDRESS = #{address,jdbcType=VARCHAR},
@@ -411,7 +411,7 @@
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDeptMonthPlanItem" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM
+      update SYS_DEPT_MONTH_PLAN_ITEM
     set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
       PLAN_TIME = #{planTime,jdbcType=VARCHAR},
       ADDRESS = #{address,jdbcType=VARCHAR},

@@ -141,7 +141,7 @@
     <select id="selectByIdNO" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from PDSCI.SYS_USER
+        from SYS_USER
         where ID_NO = #{IDNO,jdbcType=VARCHAR}
         and RECORD_STATUS='Y'
     </select>

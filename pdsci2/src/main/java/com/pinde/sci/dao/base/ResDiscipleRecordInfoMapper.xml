@@ -92,7 +92,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DISCIPLE_RECORD_INFO
+      from RES_DISCIPLE_RECORD_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +103,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DISCIPLE_RECORD_INFO
+      from RES_DISCIPLE_RECORD_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DISCIPLE_RECORD_INFO
+      delete from RES_DISCIPLE_RECORD_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfoExample" >
-    delete from PDSCI.RES_DISCIPLE_RECORD_INFO
+      delete from RES_DISCIPLE_RECORD_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    insert into PDSCI.RES_DISCIPLE_RECORD_INFO (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      insert into RES_DISCIPLE_RECORD_INFO (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       TEACHER_FLOW, TEACHER_NAME, START_TIME, 
       END_TIME, DISCIPLE_DATE, AUDIT_STATUS_ID, 
       AUDIT_STATUS_NAME, AUDIT_USER_FLOW, AUDIT_USER_NAME, 
@@ -133,7 +133,7 @@
       #{address,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    insert into PDSCI.RES_DISCIPLE_RECORD_INFO
+      insert into RES_DISCIPLE_RECORD_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -254,13 +254,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DISCIPLE_RECORD_INFO
+      select count(*) from RES_DISCIPLE_RECORD_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+      update RES_DISCIPLE_RECORD_INFO
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+      update RES_DISCIPLE_RECORD_INFO
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -350,7 +350,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+      update RES_DISCIPLE_RECORD_INFO
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -410,7 +410,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+      update RES_DISCIPLE_RECORD_INFO
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},

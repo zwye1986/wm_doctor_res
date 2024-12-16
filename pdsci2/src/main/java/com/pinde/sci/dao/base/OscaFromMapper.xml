@@ -95,7 +95,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.OSCA_FROM
+        from OSCA_FROM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,7 +109,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_FROM
+        from OSCA_FROM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -122,21 +122,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.OSCA_FROM
+      from OSCA_FROM
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_FROM
+      delete from OSCA_FROM
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaFromExample">
-    delete from PDSCI.OSCA_FROM
+        delete from OSCA_FROM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.OscaFrom">
-    insert into PDSCI.OSCA_FROM (FROM_FLOW, FROM_NAME, FROM_TYPE_ID, 
+        insert into OSCA_FROM (FROM_FLOW, FROM_NAME, FROM_TYPE_ID,
       FROM_TYPE_NAME, FROM_URL, IS_RELEASED, 
       FROM_SCORE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -150,7 +150,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.OscaFrom">
-    insert into PDSCI.OSCA_FROM
+        insert into OSCA_FROM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fromFlow != null" >
         FROM_FLOW,
@@ -247,13 +247,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.OscaFromExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_FROM
+        select count(*) from OSCA_FROM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_FROM
+      update OSCA_FROM
     <set >
       <if test="record.fromFlow != null" >
         FROM_FLOW = #{record.fromFlow,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.OSCA_FROM
+      update OSCA_FROM
     set FROM_FLOW = #{record.fromFlow,jdbcType=VARCHAR},
       FROM_NAME = #{record.fromName,jdbcType=VARCHAR},
       FROM_TYPE_ID = #{record.fromTypeId,jdbcType=VARCHAR},
@@ -327,7 +327,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_FROM
+      update OSCA_FROM
     set FROM_FLOW = #{record.fromFlow,jdbcType=VARCHAR},
       FROM_NAME = #{record.fromName,jdbcType=VARCHAR},
       FROM_TYPE_ID = #{record.fromTypeId,jdbcType=VARCHAR},
@@ -347,7 +347,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaFrom">
-    update PDSCI.OSCA_FROM
+        update OSCA_FROM
     <set >
       <if test="fromName != null" >
         FROM_NAME = #{fromName,jdbcType=VARCHAR},
@@ -395,7 +395,7 @@
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.OscaFrom">
-    update PDSCI.OSCA_FROM
+        update OSCA_FROM
     set FROM_NAME = #{fromName,jdbcType=VARCHAR},
       FROM_TYPE_ID = #{fromTypeId,jdbcType=VARCHAR},
       FROM_TYPE_NAME = #{fromTypeName,jdbcType=VARCHAR},
@@ -413,7 +413,7 @@
     where FROM_FLOW = #{fromFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaFrom">
-    update PDSCI.OSCA_FROM
+        update OSCA_FROM
     set FROM_NAME = #{fromName,jdbcType=VARCHAR},
       FROM_TYPE_ID = #{fromTypeId,jdbcType=VARCHAR},
       FROM_TYPE_NAME = #{fromTypeName,jdbcType=VARCHAR},

@@ -142,7 +142,7 @@
     </select>
     <select id="checkAnnualDate" resultType="java.lang.Integer">
         select nvl(count(1),0)
-        from pdsci.res_annual_assessment
+        from res_annual_assessment
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and (

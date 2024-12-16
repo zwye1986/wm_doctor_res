@@ -92,7 +92,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN
+      from SYS_DEPT_MONTH_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +103,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN
+      from SYS_DEPT_MONTH_PLAN
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_DEPT_MONTH_PLAN
+      delete from SYS_DEPT_MONTH_PLAN
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanExample" >
-    delete from PDSCI.SYS_DEPT_MONTH_PLAN
+      delete from SYS_DEPT_MONTH_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
-    insert into PDSCI.SYS_DEPT_MONTH_PLAN (PLAN_FLOW, DEPT_FLOW, PLAN_DATE, 
+      insert into SYS_DEPT_MONTH_PLAN (PLAN_FLOW, DEPT_FLOW, PLAN_DATE,
       PLAN_TYPE_ID, PLAN_TYPE_NAME, PLAN_DEMO, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, 
       IS_REPORT, THEORY_EXAM_TIME, SKILL_EXAM_TIME, 
@@ -133,7 +133,7 @@
       #{skillOrTheory,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
-    insert into PDSCI.SYS_DEPT_MONTH_PLAN
+      insert into SYS_DEPT_MONTH_PLAN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="planFlow != null" >
         PLAN_FLOW,
@@ -254,13 +254,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_DEPT_MONTH_PLAN
+      select count(*) from SYS_DEPT_MONTH_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN
+      update SYS_DEPT_MONTH_PLAN
     <set >
       <if test="record.planFlow != null" >
         PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN
+      update SYS_DEPT_MONTH_PLAN
     set PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
       PLAN_DATE = #{record.planDate,jdbcType=VARCHAR},
@@ -350,7 +350,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN
+      update SYS_DEPT_MONTH_PLAN
     <set >
       <if test="deptFlow != null" >
         DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
@@ -410,7 +410,7 @@
     where PLAN_FLOW = #{planFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDeptMonthPlan" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN
+      update SYS_DEPT_MONTH_PLAN
     set DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       PLAN_DATE = #{planDate,jdbcType=VARCHAR},
       PLAN_TYPE_ID = #{planTypeId,jdbcType=VARCHAR},

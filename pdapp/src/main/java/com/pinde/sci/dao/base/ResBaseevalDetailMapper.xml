@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASEEVAL_DETAIL
+      from RES_BASEEVAL_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +95,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASEEVAL_DETAIL
+      from RES_BASEEVAL_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_BASEEVAL_DETAIL
+      delete from RES_BASEEVAL_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResBaseevalDetailExample" >
-    delete from PDSCI.RES_BASEEVAL_DETAIL
+      delete from RES_BASEEVAL_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResBaseevalDetail" >
-    insert into PDSCI.RES_BASEEVAL_DETAIL (RECORD_FLOW, BASEEVAL_FLOW, ORDER_NUMBER, 
+      insert into RES_BASEEVAL_DETAIL (RECORD_FLOW, BASEEVAL_FLOW, ORDER_NUMBER,
       SCORE, deduct_marks, FILE_NAME, 
       FILE_SUFFIX, FILE_PATH, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,7 +121,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResBaseevalDetail" >
-    insert into PDSCI.RES_BASEEVAL_DETAIL
+      insert into RES_BASEEVAL_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResBaseevalDetailExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_BASEEVAL_DETAIL
+      select count(*) from RES_BASEEVAL_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_BASEEVAL_DETAIL
+      update RES_BASEEVAL_DETAIL
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_BASEEVAL_DETAIL
+      update RES_BASEEVAL_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       BASEEVAL_FLOW = #{record.baseevalFlow,jdbcType=VARCHAR},
       ORDER_NUMBER = #{record.orderNumber,jdbcType=VARCHAR},
@@ -278,7 +278,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResBaseevalDetail" >
-    update PDSCI.RES_BASEEVAL_DETAIL
+      update RES_BASEEVAL_DETAIL
     <set >
       <if test="baseevalFlow != null" >
         BASEEVAL_FLOW = #{baseevalFlow,jdbcType=VARCHAR},
@@ -320,7 +320,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResBaseevalDetail" >
-    update PDSCI.RES_BASEEVAL_DETAIL
+      update RES_BASEEVAL_DETAIL
     set BASEEVAL_FLOW = #{baseevalFlow,jdbcType=VARCHAR},
       ORDER_NUMBER = #{orderNumber,jdbcType=VARCHAR},
       SCORE = #{score,jdbcType=VARCHAR},

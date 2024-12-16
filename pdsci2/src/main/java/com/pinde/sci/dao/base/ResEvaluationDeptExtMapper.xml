@@ -66,7 +66,7 @@
     <select id="selectByRecord" resultMap="BaseResultMap"  parameterType="com.pinde.sci.model.mo.ResEvaluationDept" >
         select
         <include refid="Base_Column_List" />
-        from PDSCI.RES_EVALUATION_DEPT ED
+        from RES_EVALUATION_DEPT ED
         LEFT JOIN SYS_DEPT SD ON ED.DEPT_FLOW = SD.DEPT_FLOW
         where 1=1
         <if test="record.recordFlow != null" >
@@ -86,7 +86,7 @@
     <select id="getDeptExt" resultMap="DeptResultMap" >
         select
         <include refid="Dept_Column_List" />
-        from PDSCI.SYS_DEPT ED
+        from SYS_DEPT ED
         WHERE ED.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
         AND ED.record_status = 'Y'
         AND NOT EXISTS (SELECT 1

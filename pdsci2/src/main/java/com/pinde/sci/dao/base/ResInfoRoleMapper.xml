@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_INFO_ROLE
+      from RES_INFO_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_INFO_ROLE
+      from RES_INFO_ROLE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_INFO_ROLE
+      delete from RES_INFO_ROLE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResInfoRoleExample" >
-    delete from PDSCI.RES_INFO_ROLE
+      delete from RES_INFO_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResInfoRole" >
-    insert into PDSCI.RES_INFO_ROLE (RECORD_FLOW, INFO_FLOW, INFO_ROLE, 
+      insert into RES_INFO_ROLE (RECORD_FLOW, INFO_FLOW, INFO_ROLE,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, SESSION_NUMBER
       )
@@ -115,7 +115,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResInfoRole" >
-    insert into PDSCI.RES_INFO_ROLE
+      insert into RES_INFO_ROLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResInfoRoleExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_INFO_ROLE
+      select count(*) from RES_INFO_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_INFO_ROLE
+      update RES_INFO_ROLE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_INFO_ROLE
+      update RES_INFO_ROLE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
       INFO_ROLE = #{record.infoRole,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResInfoRole" >
-    update PDSCI.RES_INFO_ROLE
+      update RES_INFO_ROLE
     <set >
       <if test="infoFlow != null" >
         INFO_FLOW = #{infoFlow,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResInfoRole" >
-    update PDSCI.RES_INFO_ROLE
+      update RES_INFO_ROLE
     set INFO_FLOW = #{infoFlow,jdbcType=VARCHAR},
       INFO_ROLE = #{infoRole,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

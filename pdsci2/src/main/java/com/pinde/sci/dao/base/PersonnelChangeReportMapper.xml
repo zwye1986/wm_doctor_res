@@ -15,7 +15,7 @@
             policy_time like concat(#{dateMonth},'%')
         </if>
         then 1 else 0 end)changeTimeNum
-        FROM PDSCI.RES_DOCOTR_DELAY_TETURN dt
+        FROM RES_DOCOTR_DELAY_TETURN dt
         WHERE RECORD_STATUS = 'Y'
         <if test="orgFlow!=null and orgFlow!=''">
             AND ORG_FLOW = #{orgFlow}
@@ -23,7 +23,7 @@
         AND TYPE_ID = 'Delay'
         AND DOCTOR_TYPE_ID IN ('Company', 'CompanyEntrust', 'Social', 'Graduate')
         and TRAINING_SPE_ID in (SELECT DICT_ID
-        FROM PDSCI.SYS_DICT
+        FROM SYS_DICT
         WHERE DICT_TYPE_ID = 'DoctorTrainingSpe'
         and record_status = 'Y')
         group BY training_spe_name
@@ -35,7 +35,7 @@
             policy_time like concat(#{dateMonth},'%')
         </if>
         then 1 else 0 end)changeTimeNum
-        FROM PDSCI.RES_DOCOTR_DELAY_TETURN dt
+        FROM RES_DOCOTR_DELAY_TETURN dt
           WHERE RECORD_STATUS = 'Y'
             <if test="orgFlow!=null and orgFlow!=''">
                 AND ORG_FLOW = #{orgFlow}
@@ -54,11 +54,11 @@
                 policy_time like concat(#{dateMonth},'%')
             </if>
             then 1 else 0 end)changeTimeNum
-            FROM PDSCI.RES_DOCOTR_DELAY_TETURN dt
+        FROM RES_DOCOTR_DELAY_TETURN dt
               WHERE RECORD_STATUS = 'Y'
                 AND ORG_FLOW in (
                   select joint_org_flow from res_joint_org where org_flow in (
-                  select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+        select distinct(org_flow) from SYS_MONTHLY_DOCTOR_INFO where
                     <if test="trainingSpeName!=null and trainingSpeName!=''">
                         training_spe_name = #{trainingSpeName}
                     </if>
@@ -87,7 +87,7 @@
             </if>
           then 1 else 0 end)speChangeNum
           from
-          pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+        RES_DOCTOR_ORG_HISTORY doh, RES_DOCTOR d
           where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
               AND doh.RECORD_STATUS = 'Y'
               AND d.RECORD_STATUS = 'Y'
@@ -112,7 +112,7 @@
             </if>
           then 1 else 0 end)speChangeNum
           from
-          pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+        RES_DOCTOR_ORG_HISTORY doh, RES_DOCTOR d
           where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
               AND doh.RECORD_STATUS = 'Y'
               AND d.RECORD_STATUS = 'Y'
@@ -140,7 +140,7 @@
             </if>
             then 1 else 0 end)speChangeNum
               from
-              pdsci.RES_DOCTOR_ORG_HISTORY doh, pdsci.RES_DOCTOR d
+        RES_DOCTOR_ORG_HISTORY doh, RES_DOCTOR d
               where doh.DOCTOR_FLOW = d.DOCTOR_FLOW
                   AND doh.RECORD_STATUS = 'Y'
                   AND d.RECORD_STATUS = 'Y'
@@ -149,7 +149,7 @@
                   AND doh.CHANGE_STATUS_ID IN ('GlobalAuditPass')
                   AND (doh.ORG_FLOW IN (
                       select joint_org_flow from res_joint_org where org_flow in (
-                      select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+        select distinct(org_flow) from SYS_MONTHLY_DOCTOR_INFO where
                           <if test="trainingSpeName!=null and trainingSpeName!=''">
                               training_spe_name = #{trainingSpeName}
                           </if>
@@ -162,7 +162,7 @@
                       ))
                   OR doh.HISTORY_ORG_FLOW IN (
                       select joint_org_flow from res_joint_org where org_flow in (
-                      select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+        select distinct(org_flow) from SYS_MONTHLY_DOCTOR_INFO where
                         <if test="trainingSpeName!=null and trainingSpeName!=''">
                             training_spe_name = #{trainingSpeName}
                         </if>

@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_EXAM_INFO
+      from RECRUIT_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_EXAM_INFO
+      from RECRUIT_EXAM_INFO
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_EXAM_INFO
+      delete from RECRUIT_EXAM_INFO
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitExamInfoExample" >
-    delete from PDSCI.RECRUIT_EXAM_INFO
+      delete from RECRUIT_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
-    insert into PDSCI.RECRUIT_EXAM_INFO (EXAM_FLOW, MAIN_FLOW, EXAM_YEAR, 
+      insert into RECRUIT_EXAM_INFO (EXAM_FLOW, MAIN_FLOW, EXAM_YEAR,
       ORG_FLOW, EXAM_START_TIME, EXAM_END_TIME, 
       INTERVIEW_START_TIME, INTERVIEW_END_TIME, INTERVIEW_ADDRESS, 
       INTERVIEW_DEMO, RECORD_STATUS, CREATE_TIME, 
@@ -126,7 +126,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
-    insert into PDSCI.RECRUIT_EXAM_INFO
+      insert into RECRUIT_EXAM_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="examFlow != null" >
         EXAM_FLOW,
@@ -223,13 +223,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitExamInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_EXAM_INFO
+      select count(*) from RECRUIT_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_INFO
+      update RECRUIT_EXAM_INFO
     <set >
       <if test="record.examFlow != null" >
         EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_EXAM_INFO
+      update RECRUIT_EXAM_INFO
     set EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
       MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
       EXAM_YEAR = #{record.examYear,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
-    update PDSCI.RECRUIT_EXAM_INFO
+      update RECRUIT_EXAM_INFO
     <set >
       <if test="mainFlow != null" >
         MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitExamInfo" >
-    update PDSCI.RECRUIT_EXAM_INFO
+      update RECRUIT_EXAM_INFO
     set MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
       EXAM_YEAR = #{examYear,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_APP_USER_INFO
+      from SYS_APP_USER_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_APP_USER_INFO
+      from SYS_APP_USER_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SYS_APP_USER_INFO
+      delete from SYS_APP_USER_INFO
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysAppUserInfoExample">
-    delete from PDSCI.SYS_APP_USER_INFO
+      delete from SYS_APP_USER_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysAppUserInfo">
-    insert into PDSCI.SYS_APP_USER_INFO (INFO_FLOW, DOCOTR_FLOW, USE_MONTH, 
+      insert into SYS_APP_USER_INFO (INFO_FLOW, DOCOTR_FLOW, USE_MONTH,
       USE_YEAR, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysAppUserInfo">
-    insert into PDSCI.SYS_APP_USER_INFO
+      insert into SYS_APP_USER_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="infoFlow != null">
         INFO_FLOW,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysAppUserInfoExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SYS_APP_USER_INFO
+      select count(*) from SYS_APP_USER_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SYS_APP_USER_INFO
+      update SYS_APP_USER_INFO
     <set>
       <if test="record.infoFlow != null">
         INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SYS_APP_USER_INFO
+      update SYS_APP_USER_INFO
     set INFO_FLOW = #{record.infoFlow,jdbcType=VARCHAR},
       DOCOTR_FLOW = #{record.docotrFlow,jdbcType=VARCHAR},
       USE_MONTH = #{record.useMonth,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysAppUserInfo">
-    update PDSCI.SYS_APP_USER_INFO
+      update SYS_APP_USER_INFO
     <set>
       <if test="docotrFlow != null">
         DOCOTR_FLOW = #{docotrFlow,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where INFO_FLOW = #{infoFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysAppUserInfo">
-    update PDSCI.SYS_APP_USER_INFO
+      update SYS_APP_USER_INFO
     set DOCOTR_FLOW = #{docotrFlow,jdbcType=VARCHAR},
       USE_MONTH = #{useMonth,jdbcType=VARCHAR},
       USE_YEAR = #{useYear,jdbcType=VARCHAR},

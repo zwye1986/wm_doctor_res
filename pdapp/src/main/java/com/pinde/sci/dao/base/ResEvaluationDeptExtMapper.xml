@@ -55,7 +55,7 @@
     <select id="getDeptExt" resultMap="DeptResultMap" >
         select
         <include refid="Dept_Column_List" />
-        from PDSCI.SYS_DEPT ED
+        from SYS_DEPT ED
         WHERE ED.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
         AND ED.record_status = 'Y'
         AND NOT EXISTS (SELECT 1

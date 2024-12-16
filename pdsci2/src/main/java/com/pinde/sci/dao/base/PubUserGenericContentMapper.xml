@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.PubUserGenericContentMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubUserGenericContent">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubUserGenericContent">
     <id column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
     <id column="CONTENT_TYPE" jdbcType="VARCHAR" property="contentType" />
     <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
@@ -10,7 +10,7 @@
     <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
     <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PubUserGenericContent">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.PubUserGenericContent">
     <result column="CONTENT" jdbcType="CLOB" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -78,7 +78,8 @@
   <sql id="Blob_Column_List">
     CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.PubUserGenericContentExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.PubUserGenericContentExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -86,7 +87,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_USER_GENERIC_CONTENT
+        from PUB_USER_GENERIC_CONTENT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,13 +95,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.PubUserGenericContentExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.PubUserGenericContentExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_USER_GENERIC_CONTENT
+        from PUB_USER_GENERIC_CONTENT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -108,35 +110,36 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubUserGenericContentKey" resultMap="ResultMapWithBLOBs">
+    <select id="selectByPrimaryKey" parameterType="com.pinde.core.model.PubUserGenericContentKey"
+            resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_USER_GENERIC_CONTENT
+        from PUB_USER_GENERIC_CONTENT
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubUserGenericContentKey">
-    delete from PDSCI.PUB_USER_GENERIC_CONTENT
+    <delete id="deleteByPrimaryKey" parameterType="com.pinde.core.model.PubUserGenericContentKey">
+        delete from PUB_USER_GENERIC_CONTENT
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
       and CONTENT_TYPE = #{contentType,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubUserGenericContentExample">
-    delete from PDSCI.PUB_USER_GENERIC_CONTENT
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubUserGenericContentExample">
+        delete from PUB_USER_GENERIC_CONTENT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubUserGenericContent">
-    insert into PDSCI.PUB_USER_GENERIC_CONTENT (USER_FLOW, CONTENT_TYPE, RECORD_STATUS, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubUserGenericContent">
+        insert into PUB_USER_GENERIC_CONTENT (USER_FLOW, CONTENT_TYPE, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, CONTENT)
     values (#{userFlow,jdbcType=VARCHAR}, #{contentType,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{content,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubUserGenericContent">
-    insert into PDSCI.PUB_USER_GENERIC_CONTENT
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubUserGenericContent">
+        insert into PUB_USER_GENERIC_CONTENT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userFlow != null">
         USER_FLOW,
@@ -190,14 +193,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubUserGenericContentExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_USER_GENERIC_CONTENT
+    <select id="countByExample" parameterType="com.pinde.core.model.PubUserGenericContentExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_USER_GENERIC_CONTENT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.PUB_USER_GENERIC_CONTENT
+      update PUB_USER_GENERIC_CONTENT
     <set>
       <if test="record.userFlow != null">
         USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -229,7 +233,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update PDSCI.PUB_USER_GENERIC_CONTENT
+      update PUB_USER_GENERIC_CONTENT
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       CONTENT_TYPE = #{record.contentType,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -243,7 +247,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.PUB_USER_GENERIC_CONTENT
+      update PUB_USER_GENERIC_CONTENT
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       CONTENT_TYPE = #{record.contentType,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -255,8 +259,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubUserGenericContent">
-    update PDSCI.PUB_USER_GENERIC_CONTENT
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubUserGenericContent">
+        update PUB_USER_GENERIC_CONTENT
     <set>
       <if test="recordStatus != null">
         RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
@@ -280,8 +284,8 @@
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
       and CONTENT_TYPE = #{contentType,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PubUserGenericContent">
-    update PDSCI.PUB_USER_GENERIC_CONTENT
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubUserGenericContent">
+        update PUB_USER_GENERIC_CONTENT
     set RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
@@ -291,8 +295,8 @@
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
       and CONTENT_TYPE = #{contentType,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubUserGenericContent">
-    update PDSCI.PUB_USER_GENERIC_CONTENT
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubUserGenericContent">
+        update PUB_USER_GENERIC_CONTENT
     set RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},

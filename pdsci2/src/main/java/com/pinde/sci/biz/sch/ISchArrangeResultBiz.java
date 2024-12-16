@@ -1,12 +1,10 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.core.model.HbresDoctorDeptDetail;
 import com.pinde.core.model.JsresDoctorDeptDetail;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
-import com.pinde.sci.form.sch.SelectDept;
 import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.mo.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -23,15 +21,10 @@ import java.util.Map;
 
 public interface ISchArrangeResultBiz {
 
-	Map<String,Object> updateImportData(List<Map<String, ArrangTdVo>> data);
-
 	Map<String,Object> saveDbImportArrang(List<Map<String, ArrangTdVo>> data) throws ParseException;
 
 	Map<String,Object> submitImportData(List<Map<String, ArrangTdVo>> data);
-	List<SchArrangeResult> searchSchArrangeResult();
 
-	int countArrangeResultBySchDeptFlow(String nextNextMonth, String schDeptFlow, String sessionNumber) throws ParseException;
-	
 	SchArrangeResult readSchArrangeResult(String resultFlow);
 
 	List<SchArrangeResult> readSchArrangeResultByExample(SchArrangeResultExample example);
@@ -68,20 +61,6 @@ public interface ISchArrangeResultBiz {
 	 */
 	int delArrangeResult(String doctorFlow,boolean reStatus);
 
-	List<SchArrangeResult> searchArrangeResultByDate(String schStartDate,
-			String doctorFlow);
-
-	List<SchArrangeResult> searchArrangeResultByDate(String schStartDate,
-			String schEndDate, String doctorName);
-
-	List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlow(String startDate,
-			String endDate, String docFlow);
-
-	List<SchArrangeResult> searchArrangeResultByDateAndDoctorFlows(String startDate,
-																  String endDate, List<ResDoctor> doctorList,String schDeptFlow);
-
-	List<Map<String,Object>> searchArrangeResultNotInDates(String startDate,String endDate, String docFlow);
-
 	List<SchArrangeResult> searchArrangeResultByDoctorFlows(
 			List<String> doctorFlows);
 
@@ -112,21 +91,6 @@ public interface ISchArrangeResultBiz {
 	List<SchArrangeResult> willInDoctor(Map<String,Object> map);
 
 	int countRotationUse(String rotationFlow);
-
-	/**
-	 * 为自由排班(无方案医师)的医师生成排班数据
-	 * @param doctorFlow
-	 * @param orgFlow
-	 * @return
-	 */
-	int createFreeRosteringResult(ResDoctor doctor);
-
-	/**
-	 * 根据医师找出正在轮转和未轮转的计划
-	 * @param doctorFlows
-	 * @return
-	 */
-	List<SchArrangeResult> cutAfterResult(List<String> doctorFlows);
 
 	/**
 	 * 编辑该医师的排班计划
@@ -165,27 +129,7 @@ public interface ISchArrangeResultBiz {
 	 * @return
 	 */
 	List<SchArrangeResult> searchResultByGroupFlow(String groupFlow, String standardDeptId,String doctorFlow);
-	
-	
-	/*int roundRobinStudents(String doctorFlow,String currDate);*/
-	List<SchArrangeResult> schArrangeResultQuery(Map<String, Object> map);
 
-	/**
-	 * 检查是否存在重叠时间
-	 * @param paramMap
-	 * @return
-	 */
-	int checkResultDate(Map<String, Object> paramMap);
-
-	int checkScholarDate(Map<String, Object> paramMap);
-
-	/**
-	 * 保存轮转计划和轮转进度
-	 * @param result
-	 * @param process
-	 * @return
-	 */
-	int editCustomResult(SchArrangeResult result, ResDoctorSchProcess process) throws ParseException;
 	/**
 	 * 删除一条result
 	 */
@@ -242,18 +186,11 @@ public interface ISchArrangeResultBiz {
 
 	List<SchArrangeResult> searchCycleArrangeResultsForUniTwo(Map<String, Object> paramMap);
 
-	List<Map<String,Object>> docWorkingSearchForUni(Map<String, Object> parMp);
-
 	List<Map<String,Object>> orgTeaAuditInfoForUni(Map<String, Object> parMp);
 
 	List<Map<String,Object>> exportCkScore(Map<String, Object> paramMap);
 
-	Map<String,Object> deptWorkingDetail(Map<String, Object> map);
-
 	List<SchArrangeResult> searchSchArrangeResultByDoctorAndRotationFlow(String doctorFlow, String rotationFlow);
-	List<SchArrangeResult> searchSchArrangeResultIsBByDoctorAndRotationFlow(String doctorFlow, String rotationFlow);
-
-	List<SchArrangeResult> searchSchArrangeResultByDoctorAndRotationFlowAndStandardId(String doctorFlow, String rotationFlow,String standardDeptId);
 
 	JsresDoctorDeptDetail deptDoctorWorkDetail(String recordFlow, String rotationFlow, String doctorFlow);
 
@@ -266,31 +203,7 @@ public interface ISchArrangeResultBiz {
 
 	int synchronizeProcessByResults(List<SchArrangeResult> resultList);
 
-	int checkSelectResult(String doctorFlow, String startDate, String endDate);
-
-	int getAllSchMonth(String doctorFlow);
-
-	int checkSelectStandardDept(String doctorFlow, String standardDeptId, String groupFlow);
-
-	String saveDoctorSelectDept(List<SelectDept> selectDepts) throws ParseException;
-
-
-	List<Map<String,Object>> doctorSelectDeptCount(String doctorFlow);
-
-	int countArrangeResultByGroupFlow(String doctorFlow, String groupFlow);
-
-	int countResultByDoctorAndDate(String d, String doctorFlow) throws ParseException;
-
-	/**
-	 * 老板要求，学员轮转，轮转科室的排列按照最上方为轮转中，然后是待入科，最下面是已出科
-	 * @param userFlow
-	 * @return
-     */
-	List<SchArrangeResult> searchSchArrangeResultByDoctor4Sort(String userFlow);
-
 	SchArrangeResult getResultBySchRotationDept(Map<String, String> param);
-
-	List<SchArrangeResult> searchSchArrangeResultBySpeAndDoc(Map<String, Object> paramMap);
 
 	int editSchArrangeResult(SchArrangeResult result1);
 
@@ -309,12 +222,6 @@ public interface ISchArrangeResultBiz {
 	List<SchArrangeResult> searchArrangeResultByDateAndOrgByMap(Map<String, String> param);
 
 	List<SysDept> findDeptsByDoctor(String doctorFlow);
-
-	List<HbresDoctorDeptDetail> hbresDoctorSchResults(List<String> doctorFlow);
-
-	List<HbresDoctorDeptDetail> hbresDoctorDeptDetails(String doctorFlow, String applyYear);
-
-	Map<String,String> imgUpload(String resultFlow, MultipartFile checkFile, String fileType);
 
 	/**
 	 * @Department：研发部
@@ -359,8 +266,6 @@ public interface ISchArrangeResultBiz {
 										   String subDeptFlow,String rotationFlow);
 
     List<SchArrangeResult> searchSchArrangeResult(String userFlow, String deptFlow);
-
-	SysUser searchTeacherList(String sysDeptFlow, String roleId,String userName);
 
 	List<SysDept> searchSysDeptList(String orgFlow, String searchStr);
 
