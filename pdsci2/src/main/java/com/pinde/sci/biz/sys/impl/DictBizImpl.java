@@ -42,7 +42,7 @@ public class DictBizImpl implements IDictBiz{
 	@Autowired
 	private SysCfgExtMapper sysCfgExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(DictBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DictBizImpl.class);
 
 
 	@Override

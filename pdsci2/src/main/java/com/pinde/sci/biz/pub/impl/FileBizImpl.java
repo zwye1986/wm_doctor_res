@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +141,7 @@ public class FileBizImpl implements IFileBiz {
             /*设置页面编码为UTF-8*/
 			response.setHeader("Content-Type","text/html;charset=UTF-8");
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
 			outputStream.flush();
 			outputStream.close();
 		}
@@ -197,7 +198,7 @@ public class FileBizImpl implements IFileBiz {
 			/*设置页面编码为UTF-8*/
 			response.setHeader("Content-Type","text/html;charset=UTF-8");
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
 			outputStream.flush();
 			outputStream.close();
 		}
@@ -257,7 +258,7 @@ public class FileBizImpl implements IFileBiz {
 							fileName += "." + fileSuffixs[fileSuffixs.length-1];
 						}
 					}
-					fileName = new String(fileName.getBytes("utf-8"),"ISO8859-1" );
+                    fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), "ISO8859-1");
                     response.reset();
                     response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                     response.addHeader("Content-Length", "" + dataLength);
@@ -279,7 +280,7 @@ public class FileBizImpl implements IFileBiz {
             /*设置页面编码为UTF-8*/
             response.setHeader("Content-Type","text/html;charset=UTF-8");
             OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
             outputStream.flush();
             outputStream.close();
         }
@@ -718,6 +719,6 @@ public class FileBizImpl implements IFileBiz {
 		return null;
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(FileBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileBizImpl.class);
 
 }

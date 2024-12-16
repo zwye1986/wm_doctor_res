@@ -75,10 +75,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         }
         boolean planExtStatus = saveResTeachQualifiedPlanExt(ext,type,planFlow);
         boolean pubFileStatus = savePubFile(fileList, planFlow,"");
-        if (planExtStatus==true && pubFileStatus==true){
-            return true;
-        }
-        return false;
+        return planExtStatus && pubFileStatus;
     }
 
     private boolean saveResTeachQualifiedPlanExt(ResTeachQualifiedPlanExt ext,String type,String planFlow) throws UnsupportedEncodingException {
@@ -119,10 +116,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             msg.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
             msgCount=msgCount+planMsgMapper.insert(msg);
         }
-        if (planCount>0 && msgCount==msgList.size()){
-            return true;
-        }
-        return false;
+        return planCount > 0 && msgCount == msgList.size();
     }
 
 
@@ -184,10 +178,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                 }
             }
         }
-        if (fileCount==fileList.size()){
-            return true;
-        }
-        return false;
+        return fileCount == fileList.size();
     }
 
     @Override
@@ -215,10 +206,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
             msgCount =msgCount+ planMsgMapper.updateByPrimaryKey(msg);
         }
         pubFileBiz.deleteFileByTypeFlow("phyAss",planFlow);
-        if (planCount>0 && msgCount==msgList.size()){
-            return true;
-        }
-        return false;
+        return planCount > 0 && msgCount == msgList.size();
     }
 
 
@@ -416,10 +404,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
                 }
             }
         }
-        if (userNum >0 && deptNum==deptSuccess){
-            return true;
-        }
-        return false;
+        return userNum > 0 && deptNum == deptSuccess;
     }
 
 
@@ -818,7 +803,7 @@ public class IJsResPhyAssBizImpl implements IJsResPhyAssBiz {
         return path;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(IJsResPhyAssBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(IJsResPhyAssBizImpl.class);
 
 }
 

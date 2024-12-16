@@ -77,7 +77,7 @@ import java.util.*;
 //@Transactional(rollbackFor = Exception.class)
 public class OscaBaseBizImpl implements IOscaBaseBiz{
 
-    private static Logger logger = LoggerFactory.getLogger(OscaBaseBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(OscaBaseBizImpl.class);
 
 
     @Autowired

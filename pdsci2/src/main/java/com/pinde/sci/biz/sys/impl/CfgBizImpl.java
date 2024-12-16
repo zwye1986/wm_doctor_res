@@ -83,7 +83,7 @@ public class CfgBizImpl implements ICfgBiz {
 	@Override
 	public String getPageSize(HttpServletRequest request) {
 		String cfgValue = null;
-		String getPath = StringUtil.defaultString(request.getServletPath().toString());
+        String getPath = StringUtil.defaultString(request.getServletPath());
 
 		if(GlobalContext.getCurrentUser()!=null){
 			String cfgCode = getPath + "/" +GlobalContext.getCurrentUser().getUserFlow();

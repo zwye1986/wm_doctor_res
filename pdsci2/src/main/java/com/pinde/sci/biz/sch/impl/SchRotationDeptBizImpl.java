@@ -92,7 +92,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Autowired
 	private SchRotationExtendMapper rotationExtendMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(SchRotationDeptBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchRotationDeptBizImpl.class);
 
     //	}
 	@Override
@@ -1696,7 +1696,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				Integer maxDeptNnum = 0;
 				Row r = sheet.getRow(i);
 				boolean rowEmpty = isRowEmpty(r);
-				if (rowEmpty == false) {
+                if (!rowEmpty) {
 					SchRotationDept schRotationDept = new SchRotationDept();
 					SchRotation schRotation = new SchRotation();
 					SchRotationGroup schRotationGroupNew = new SchRotationGroup();

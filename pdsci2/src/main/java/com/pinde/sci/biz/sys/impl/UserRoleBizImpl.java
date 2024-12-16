@@ -221,9 +221,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
             criteria.andRoleFlowIn(roleFlowList);
             criteria.andUserFlowEqualTo(sysUser.getUserFlow());
             int count = sysUserRoleMapper.countByExample(userRoleExample);
-            if (count > 0) {
-                return true;
-            }
+            return count > 0;
         }
 
         return false;

@@ -76,7 +76,7 @@ public class StuUserResumeBizImpl implements IStuUserResumeBiz {
         return stuUserExtMapper.searchUser(mp);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(StuUserResumeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(StuUserResumeBizImpl.class);
 
 }
  

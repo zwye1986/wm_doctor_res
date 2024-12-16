@@ -11,17 +11,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LicenseKey {
-    private static String MACHINE_ID = "machineId";//电脑物理id
-    private static String ISSUE_DATE = "issueDate";//发证时间
-    private static String VALID_DATE = "validDate";//到期时间
-    private static String WORK_STATION = "workStation";
+    private static final String MACHINE_ID = "machineId";//电脑物理id
+    private static final String ISSUE_DATE = "issueDate";//发证时间
+    private static final String VALID_DATE = "validDate";//到期时间
+    private static final String WORK_STATION = "workStation";
 
     private static String machineId = "a65757cd-76b3-3fef-95a5-81d090f4563a";
     private static String issueDate = "2014-04-01";
     private static String validDate = "2014-04-30";
     private static String workStation = "";
 
-    private static byte[] digest = new byte[]{
+    private static final byte[] digest = new byte[]{
             (byte) 0x06,
             (byte) 0x86, (byte) 0x22, (byte) 0xBC, (byte) 0x44, (byte) 0xCF, (byte) 0x51, (byte) 0xA6, (byte) 0x39,
             (byte) 0x01, (byte) 0x8F, (byte) 0x3D, (byte) 0xA1, (byte) 0x90, (byte) 0x82, (byte) 0x6F, (byte) 0x4A,
@@ -113,7 +113,7 @@ public class LicenseKey {
         }
 
         retval.append("\n};\n");
-        System.out.println(retval.toString());
+        System.out.println(retval);
         System.out.println("------------------------------------------------------------------------------------");
     }
 

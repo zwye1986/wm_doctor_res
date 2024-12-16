@@ -62,7 +62,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     private LcjnFixedAssetsMapper lfaMapper;
     @Autowired
     private SysUserMapper suMapper;
-    private static Logger logger = LoggerFactory.getLogger(LcjnBaseManagerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LcjnBaseManagerController.class);
 
     @Override
     public List<Map<String, Object>> queryCourseList(Map<String, String> map) {
@@ -530,7 +530,6 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     public List<LcjnFixedAssets> queryFixedAssetsList() {
         LcjnFixedAssetsExample example = new LcjnFixedAssetsExample();
         example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
-        ;
         example.setOrderByClause("CREATE_TIME");
         return lfaMapper.selectByExample(example);
     }
@@ -642,7 +641,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
                     .andSkillIdEqualTo(String.valueOf(param.get("skillId"))).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
             if(lscMapper.countByExample(example) > 0){//是否已配置过同技能
                 return -1;
-            };
+            }
             //新增技能表
             LcjnSkillCfg lsc = new LcjnSkillCfg();
             String pk = PkUtil.getUUID();

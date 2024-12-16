@@ -75,9 +75,7 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
             int d2 = archiveExtMapper.saveResumeLog(paramMap);
             int e = archiveExtMapper.createResRecruitRegisterLog(paramMap);
             int e2 = archiveExtMapper.saveResRecruitRegisterLog(paramMap);
-            if (a2 >= 0 && b2 >= 0 && c2 >= 0 && d2 >= 0 && e2 >= 0) {
-                return true;
-            }
+            return a2 >= 0 && b2 >= 0 && c2 >= 0 && d2 >= 0 && e2 >= 0;
         }
         return false;
     }

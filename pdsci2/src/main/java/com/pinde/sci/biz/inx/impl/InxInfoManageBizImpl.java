@@ -238,7 +238,7 @@ public class InxInfoManageBizImpl implements IinxInfoManageBiz {
         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(InxInfoManageBizImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(InxInfoManageBizImpl.class);
 
 
 }

@@ -61,7 +61,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     @Autowired
     private ResBaseSpeDeptDataExtMapper resBaseSpeDeptDataExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(DeptBasicInfoBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeptBasicInfoBizImpl.class);
 
 
     @Override

@@ -39,10 +39,7 @@ public class ResPersonnelStatisticsImpl implements ResPersonnelStatisticsBiz {
     @Override
     public boolean isCollaborativelBase(String orgFlow) {
         ResJointOrg resJointOrg = resJointOrgMapper.selectByJointOrgFlow(orgFlow);
-        if (resJointOrg!=null){
-            return true;
-        }
-        return false;
+        return resJointOrg != null;
     }
 
     @Override

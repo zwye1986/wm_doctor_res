@@ -46,10 +46,7 @@ public class DiscipleBizImpl implements IDiscipleBiz {
         ResStudentDiscipleTeacherExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         criteria.andTeacherFlowEqualTo(discipleFlow).andDoctorFlowEqualTo(doctorFlow);
         List<ResStudentDiscipleTeacher> studentDiscipleTeachers = teacherMapper.selectByExample(example);
-        if(studentDiscipleTeachers != null && studentDiscipleTeachers.size() > 0){
-            return true;
-        }
-        return false;
+        return studentDiscipleTeachers != null && studentDiscipleTeachers.size() > 0;
     }
 
     @Override

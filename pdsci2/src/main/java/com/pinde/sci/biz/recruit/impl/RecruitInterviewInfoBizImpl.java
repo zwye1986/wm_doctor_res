@@ -30,7 +30,7 @@ import java.util.*;
 //@Transactional(rollbackFor = Exception.class)
 public class RecruitInterviewInfoBizImpl implements IRecruitInterviewInfoBiz {
 
-    private static Logger logger = LoggerFactory.getLogger(RecruitInterviewInfoBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecruitInterviewInfoBizImpl.class);
 
 
     @Autowired
@@ -46,10 +46,7 @@ public class RecruitInterviewInfoBizImpl implements IRecruitInterviewInfoBiz {
     @Override
     public Boolean isQualifyInterview(String recruitFlow) {
         RecruitInterviewInfo recruitInterviewInfo = recruitInterviewInfoMapper.selectByPrimaryKey(recruitFlow);
-        if (recruitInterviewInfo == null){
-            return true;
-        }
-        return false;
+        return recruitInterviewInfo == null;
     }
 
     @Override

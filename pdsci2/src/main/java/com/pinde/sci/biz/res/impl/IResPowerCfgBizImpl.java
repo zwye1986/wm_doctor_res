@@ -145,7 +145,7 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
                 @Override
                 public String checkExcelData(HashMap data, ExcelUtile eu) {
                     String sheetName = (String) eu.get("SheetName");
-                    if (sheetName == null || !"Powers".equals(sheetName)) {
+                    if (!"Powers".equals(sheetName)) {
                         eu.put("count", 0);
                         eu.put("code", "1");
                         eu.put("msg", "请使用系统提供的模板！！");
@@ -286,6 +286,6 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
 
     }
 
-    private static Logger logger = LoggerFactory.getLogger(IResPowerCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(IResPowerCfgBizImpl.class);
 
 }

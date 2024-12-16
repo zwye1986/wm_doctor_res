@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -84,7 +85,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Autowired
 	private IUserBiz userBiz;
 
-	private static Logger logger = LoggerFactory.getLogger(JsResActivityBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResActivityBizImpl.class);
 
 	@Override
 	public List<Map<String, Object>> findActivityList(Map<String, String> param) {
@@ -314,7 +315,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				saveResultEval(eval);
 			}
 			int count= evals.size()- remarks;
-			BigDecimal evalScore=new BigDecimal(sum/count).setScale(0,BigDecimal.ROUND_HALF_UP);
+            BigDecimal evalScore = new BigDecimal(sum / count).setScale(0, RoundingMode.HALF_UP);
 			result.setEvalScore(evalScore);
 			return saveResult(result);
 

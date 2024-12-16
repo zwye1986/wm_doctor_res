@@ -103,7 +103,7 @@ public interface ResRecSkillRegistryExtMapper {
 	 * 获取已审核数
 	 * @return
 	 */
-	public List<Map<String,String>> isNotAuditedMaps(Map<String, Object> paramMap);
+    List<Map<String, String>> isNotAuditedMaps(Map<String, Object> paramMap);
 
 
 	/**

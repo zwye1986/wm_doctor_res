@@ -18,7 +18,7 @@ import java.util.List;
 //@Transactional(rollbackFor=Exception.class)
 public class SpePracticeBizImpl implements ISpePracticeBiz {
 
-	private static Logger logger = LoggerFactory.getLogger(SpePracticeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpePracticeBizImpl.class);
 
 	@Autowired
 	private JsresSpeContrastPracticeMapper scpMapper;

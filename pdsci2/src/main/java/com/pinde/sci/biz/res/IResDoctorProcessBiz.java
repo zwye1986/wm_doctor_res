@@ -180,7 +180,7 @@ public interface IResDoctorProcessBiz {
 
 	int getTeaDeptNotAuditNum(Map<String, Object> map);
 
-	void exportInfo(HttpServletResponse response, List<SchArrangeResult> arrResultList, Map<String, ResDoctorSchProcess> processMap, Map<String, String> finishPerMap) throws UnsupportedEncodingException, Exception;
+	void exportInfo(HttpServletResponse response, List<SchArrangeResult> arrResultList, Map<String, ResDoctorSchProcess> processMap, Map<String, String> finishPerMap) throws Exception;
 
 	List<Map<String,Object>> jsresSchDoctorSchProcessEval(Map<String, Object> param);
 

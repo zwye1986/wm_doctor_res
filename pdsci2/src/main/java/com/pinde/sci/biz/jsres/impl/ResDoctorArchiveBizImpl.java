@@ -119,9 +119,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
             for (String oldPath : dirs) {
                 FileUtil.copyFile(StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + oldPath, newPath + oldPath);
             }
-            if (a > 0 && b > 0 && c > 0) {
-                return true;
-            }
+            return a > 0 && b > 0 && c > 0;
         }
         return false;
     }

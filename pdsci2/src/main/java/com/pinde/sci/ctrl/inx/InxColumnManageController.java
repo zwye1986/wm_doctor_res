@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/inx/manage/column")
 public class InxColumnManageController extends GeneralController {
-	private static Logger logger = LoggerFactory.getLogger(InxColumnManageController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InxColumnManageController.class);
 	@Autowired
 	private IinxColumnManageBiz columnBiz;
 	
@@ -62,11 +62,8 @@ public class InxColumnManageController extends GeneralController {
 		if(StringUtil.isEmpty(column.getParentColumnId())||StringUtil.isBlank(column.getParentColumnId())){
 			return false;
 		}
-		if(column.getOrdinal()==null){
-			return false;
-		}
-		return true;
-	}
+        return column.getOrdinal() != null;
+    }
 	/**
 	 * 停用
 	 * @return 

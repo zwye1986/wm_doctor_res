@@ -691,9 +691,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				}
 			}
 
-			if(rotation!=null){
-				return  rotation;
-			}
+            return rotation;
 		}
 		return null;
 	}
@@ -743,9 +741,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				}
 			}
 
-			if(rotation!=null){
-				return  rotation;
-			}
+            return rotation;
 		}
 		return null;
 	}

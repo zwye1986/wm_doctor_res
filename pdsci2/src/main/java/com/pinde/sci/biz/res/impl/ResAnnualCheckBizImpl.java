@@ -39,7 +39,7 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
-    private static Logger logger = LoggerFactory.getLogger(ResAnnualCheckBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResAnnualCheckBizImpl.class);
 
 
     @Autowired

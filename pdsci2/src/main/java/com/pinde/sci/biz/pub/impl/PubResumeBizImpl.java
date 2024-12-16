@@ -29,7 +29,7 @@ import java.util.List;
 public class PubResumeBizImpl implements IPubUserResumeBiz{
 	@Autowired
 	private PubUserResumeMapper userResumpMapper;
-    private static Logger logger = LoggerFactory.getLogger(PubResumeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(PubResumeBizImpl.class);
 
 	/**
 	 * 获取个人履历

@@ -222,6 +222,6 @@ public class MsgBizImpl implements IMsgBiz {
 		return util.sendSMS(smsTempFlow,params,relId,relType);
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(MsgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgBizImpl.class);
 
 }

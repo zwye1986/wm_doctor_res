@@ -54,7 +54,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 	@Autowired
 	private ResTeacherTrainingMapper teacherTrainingMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(ResStatisticBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResStatisticBizImpl.class);
 
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
@@ -233,7 +233,7 @@ public class ResStatisticBizImpl implements IResStatisticBiz {
 			    		orgCell.setCellValue(so.getOrgName());
 			    		orgCell.setCellStyle(styleCenter);
 
-			    		Integer dateNewWidth = so.getOrgName().getBytes().length*1*256;
+                        Integer dateNewWidth = so.getOrgName().getBytes().length * 256;
 			    		width = width<dateNewWidth?dateNewWidth:width;
 			    		sheet.setColumnWidth(colnum,width);
 			    		colWidthAuto.put(colnum,width);

@@ -134,7 +134,7 @@ public class PubeduController extends GeneralController {
         return "redirect:/inx/pubedu";
     }
 
-    private static Logger logger = LoggerFactory.getLogger(PubeduController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PubeduController.class);
 
 
 

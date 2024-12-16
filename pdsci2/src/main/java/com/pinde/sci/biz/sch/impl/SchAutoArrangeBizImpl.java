@@ -608,6 +608,6 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
         return autoArrangeExtMapper.getSchRotations(orgFlow);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(SchAutoArrangeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchAutoArrangeBizImpl.class);
 
 }

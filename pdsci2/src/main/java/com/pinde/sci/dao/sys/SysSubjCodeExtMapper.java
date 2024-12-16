@@ -11,6 +11,7 @@ import com.pinde.sci.form.sys.SubjectForm;
  */
 public interface SysSubjCodeExtMapper {
 
-	public int updateByIds(SubjectForm form);
-	public int updateParentId(SubjectForm form);
+    int updateByIds(SubjectForm form);
+
+    int updateParentId(SubjectForm form);
 }

@@ -100,7 +100,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -183,7 +185,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private IResRecBiz resRecBiz;
 
 
-	private static Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
 
 	@Override
 	public List<SchArrangeResult> searchSchArrangeResult() {
@@ -321,7 +323,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				//计算实际轮转的月/周数
 				double realMonthF = (realDays/(step*1.0));
 				realMonth = BigDecimal.valueOf(realMonthF);
-				realMonth = realMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
+                realMonth = realMonth.setScale(1, RoundingMode.HALF_UP);
 			}
 			String schMonth= String.valueOf(realMonth.doubleValue());
 			result.setSchMonth(schMonth);
@@ -482,7 +484,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				//计算实际轮转的月/周数
 				double realMonthF = (realDays/(step*1.0));
 				realMonth = BigDecimal.valueOf(realMonthF);
-				realMonth = realMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
+                realMonth = realMonth.setScale(1, RoundingMode.HALF_UP);
 			}
 			String schMonth= String.valueOf(realMonth.doubleValue());
 			result.setSchMonth(schMonth);
@@ -1171,9 +1173,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			if(doctor!=null){
 				if(addSchDeptFlows!=null && addSchDeptFlows.length>0){
 					List<String> schDeptFlows = new ArrayList<String>();
-					for(String flow : addSchDeptFlows){
-						schDeptFlows.add(flow);
-					}
+                    Collections.addAll(schDeptFlows, addSchDeptFlows);
 					List<SchDept> schDeptList = schDeptBiz.searchDeptByFlows(schDeptFlows);
 					if(schDeptList!=null && schDeptList.size()>0){
 						SchArrangeResult result = new SchArrangeResult();
@@ -1765,7 +1765,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				//计算实际轮转的月/周数
 				double realMonthF = (realDays/(step*1.0));
 				realMonth = BigDecimal.valueOf(realMonthF);
-				realMonth = realMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
+                realMonth = realMonth.setScale(1, RoundingMode.HALF_UP);
 			}
 			String schMonth= String.valueOf(realMonth.doubleValue());
 			result.setSchMonth(schMonth);
@@ -1975,7 +1975,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						}
 					}
 					if(count > 0) {
-						itemMap.put(ll, totalScore.divide(new BigDecimal(count), 2, BigDecimal.ROUND_HALF_DOWN));
+                        itemMap.put(ll, totalScore.divide(new BigDecimal(count), 2, RoundingMode.HALF_DOWN));
 					}
 				}
 				result.put(doctorFlow,itemMap);
@@ -2051,11 +2051,11 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			}
 
 			if (llCount>0){
-				BigDecimal divide = lilunScore.divide(new BigDecimal(llCount), 2, BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal divide = lilunScore.divide(new BigDecimal(llCount), 2, RoundingMode.HALF_DOWN);
 				itemMap.put(ll,divide);
 			}
 			if (jnCount>0){
-				BigDecimal divide = jinengScore.divide(new BigDecimal(jnCount), 2, BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal divide = jinengScore.divide(new BigDecimal(jnCount), 2, RoundingMode.HALF_DOWN);
 				itemMap.put(jn,divide);
 			}
 			if (itemMap.get(ll).compareTo(new BigDecimal("0"))<=0) {
@@ -3719,8 +3719,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							continue;
 						}
 						//检测时间是否重叠
-						String startDate = DateUtil.transDate(stringObjectMap.get("schStartDate").toString());;
-						String endDate = DateUtil.transDate(stringObjectMap.get("schEndDate").toString());
+                        String startDate = DateUtil.transDate(stringObjectMap.get("schStartDate").toString());
+                        String endDate = DateUtil.transDate(stringObjectMap.get("schEndDate").toString());
 						String schDeptName = stringObjectMap.get("schDeptName").toString();
 						if (schDeptName.contains(sysOrg.getOrgName())){
 							schDeptName=schDeptName.substring(0,schDeptName.indexOf("["));
@@ -3929,7 +3929,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				DateTime endDateTime = cn.hutool.core.date.DateUtil.parseDate(schEndDate);
 				long dayNum = cn.hutool.core.date.DateUtil.betweenDay(startDateTime, endDateTime, true);
 				dayNum = dayNum+1;
-				BigDecimal divide = new BigDecimal(dayNum).divide(new BigDecimal("15"), 0, BigDecimal.ROUND_HALF_DOWN);
+                BigDecimal divide = new BigDecimal(dayNum).divide(new BigDecimal("15"), 0, RoundingMode.HALF_DOWN);
 				BigDecimal multiply = divide.multiply(new BigDecimal("0.5"));
 				double v = multiply.doubleValue();
 				String schMonth = String.valueOf(Double.parseDouble(v + ""));
@@ -4764,7 +4764,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
 				encodedFileName = URLEncoder.encode("排班导入模板.xls", "UTF-8");
 			} else {
-				encodedFileName = new String("排班导入模板.xls".getBytes("UTF-8"), "ISO8859-1");
+                encodedFileName = new String("排班导入模板.xls".getBytes(StandardCharsets.UTF_8), "ISO8859-1");
 			}
 			response.setHeader("Content-Disposition", "attachment; filename=" + encodedFileName);//设置文件头编码方式和文件名
 			ExcelWriter build = EasyExcel.write(response.getOutputStream()).withTemplate(file.getPath()).build();
@@ -5486,7 +5486,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					DateTime startDate = cn.hutool.core.date.DateUtil.parseDate(thisItem.getSchStartDate());
 					DateTime endDate = cn.hutool.core.date.DateUtil.parseDate(thisItem.getSchEndDate());
 					long l = cn.hutool.core.date.DateUtil.betweenDay(startDate, endDate, false) + 1;
-					BigDecimal divide = new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"), 1, BigDecimal.ROUND_HALF_DOWN);
+                    BigDecimal divide = new BigDecimal(String.valueOf(l)).divide(new BigDecimal("30"), 1, RoundingMode.HALF_DOWN);
 					thisItem.setSchMonth(divide.toString());
 					arrangeResultMapper.updateByPrimaryKeySelective(thisItem);
 					arrangeResultMapper.deleteByPrimaryKey(nextItem.getResultFlow());
@@ -5713,7 +5713,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 			Map parse = (Map) JSONUtil.parse(val);
 			if (CollectionUtil.isNotEmpty(parse)) {
 				for (Object key : parse.keySet()) {
-					Object mapVal = parse.get((String) key);
+                    Object mapVal = parse.get(key);
 					List<SchRotationDept> list = JSONUtil.toList(JSONUtil.toJsonStr(mapVal), SchRotationDept.class);
 					result.put((String) key,list);
 				}

@@ -47,10 +47,7 @@ public class RecruitAdmitInfoBizImpl implements IRecruitAdmitInfoBiz {
     @Override
         public Boolean isQualifyAdmit(String recruitFlow) {
         RecruitAdmitInfo recruitAdmitInfo = recruitAdmitInfoMapper.selectByPrimaryKey(recruitFlow);
-        if (recruitAdmitInfo == null){
-            return true;
-        }
-        return false;
+        return recruitAdmitInfo == null;
     }
 
     @Override
@@ -263,7 +260,7 @@ public class RecruitAdmitInfoBizImpl implements IRecruitAdmitInfoBiz {
         return row_num - 1;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(RecruitAdmitInfoBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecruitAdmitInfoBizImpl.class);
 
 
 }

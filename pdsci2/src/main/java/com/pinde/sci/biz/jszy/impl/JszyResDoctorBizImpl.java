@@ -52,7 +52,7 @@ import java.util.*;
 //@Transactional(rollbackFor=Exception.class)
 public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 
-    private static Logger logger = LoggerFactory.getLogger(JszyResDoctorBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JszyResDoctorBizImpl.class);
 
 	@Autowired
 	private IPubUserResumeBiz userResumeBiz;
@@ -863,7 +863,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
             cellTitle = rowThree.createCell(i);
             cellTitle.setCellValue(titles[i]);
             cellTitle.setCellStyle(styleCenter);
-            sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
         }
 
         int rowNum = 3;

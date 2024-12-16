@@ -36,7 +36,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Autowired
     private JsresBaseEvaluationExtMapper jsresBaseEvaluationExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(JsResBaseEvaluationBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResBaseEvaluationBizImpl.class);
 
 
     @Override

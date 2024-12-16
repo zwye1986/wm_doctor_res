@@ -24,7 +24,7 @@ public interface IFileBiz {
 	 * @param file userFlow
 	 * @return  文件流水号
 	 */
-	public String addFile(MultipartFile file , String userFlow);
+    String addFile(MultipartFile file, String userFlow);
 	/**
 	 * 新增或修改
 	 * @param file

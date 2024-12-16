@@ -28,8 +28,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/hospitalCfg")
 public class JsresHospitalCfgController extends GeneralController{
-	
-	private static Logger logger = LoggerFactory.getLogger(JsresHospitalCfgController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(JsresHospitalCfgController.class);
 
 	@Autowired
 	private IOrgBiz orgBiz;
@@ -299,7 +299,7 @@ public class JsresHospitalCfgController extends GeneralController{
 
     @RequestMapping(value = {"/statisticsList" })
     public String statisticsList (String orgFlow, Integer currentPage, HttpServletRequest request, Model model, String sessionNumber,
-                                  String datas[], String trainingTypeId){
+                                  String[] datas, String trainingTypeId) {
         List<String> docTypeList=new ArrayList<>();
         if(datas!=null&&datas.length>0) {
             docTypeList.addAll(Arrays.asList(datas));
@@ -319,7 +319,7 @@ public class JsresHospitalCfgController extends GeneralController{
     @RequestMapping("/exportStatistics")
     @ResponseBody
     public void exportStatistics(String orgFlow, HttpServletRequest request, String sessionNumber,
-                             String datas[], String trainingTypeId, HttpServletResponse response) throws Exception{
+                                 String[] datas, String trainingTypeId, HttpServletResponse response) throws Exception {
         List<String> docTypeList=new ArrayList<>();
         if(datas!=null&&datas.length>0) {
             docTypeList.addAll(Arrays.asList(datas));

@@ -99,7 +99,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     @Autowired
     private IOrgBiz orgBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(SchRotationDeptAfterBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchRotationDeptAfterBizImpl.class);
     @Override
     public List<SchRotationDeptAfterWithBLOBs> getAll() {
         SchRotationDeptAfterExample example=new SchRotationDeptAfterExample();

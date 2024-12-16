@@ -256,10 +256,7 @@ public class ResSkillTimeConfigBizImpl implements IResSkillTimeConfigBiz {
                 skillTimeConfig.getSkillEndTime().compareTo(resTest.getSkillEndTime()) <= 0)).collect(Collectors.toList());
         List<ResSkillTimeConfig> collect = skillTimeConfigs.stream().filter(resTest -> skillTimeConfig.getSkillStartTime().compareTo(resTest.getSkillStartTime()) <= 0
                 && skillTimeConfig.getSkillEndTime().compareTo(resTest.getSkillEndTime()) >= 0).collect(Collectors.toList());
-        if (list.size() == 0 && collect.size() == 0) {
-            return true;
-        }
-        return false;
+        return list.size() == 0 && collect.size() == 0;
     }
     //根据唯一标识获取考试信息
     @Override

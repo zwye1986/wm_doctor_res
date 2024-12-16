@@ -24,7 +24,7 @@ import java.util.List;
 public class JsResSupervisioFileBizImpl implements IJsResSupervisioFileBiz {
     @Autowired
     private JsresSupervisioFileMapper supervisioFileMapper;
-    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioFileBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResSupervisioFileBizImpl.class);
     @Override
     public String checkImg(MultipartFile file) {
         List<String> mimeList = new ArrayList<String>();

@@ -89,6 +89,6 @@ public class InxNjResExamController extends GeneralController{
         return "redirect:/inx/njresexam";
     }
 
-    private static Logger logger = LoggerFactory.getLogger(InxNjResExamController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InxNjResExamController.class);
 
 }

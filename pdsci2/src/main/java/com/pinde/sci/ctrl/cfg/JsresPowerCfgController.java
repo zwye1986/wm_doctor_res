@@ -27,8 +27,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/powerCfg")
 public class JsresPowerCfgController extends GeneralController{
-	
-	private static Logger logger = LoggerFactory.getLogger(JsresPowerCfgController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(JsresPowerCfgController.class);
 
 	@Autowired
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;

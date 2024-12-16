@@ -1050,7 +1050,7 @@ public class JsResTempController extends GeneralController{
 	public String insertSptUserInfo(MultipartFile file){
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) afterBiz.insertSptUserInfo(file);
+                ExcelUtile result = afterBiz.insertSptUserInfo(file);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");
@@ -1084,7 +1084,7 @@ public class JsResTempController extends GeneralController{
 	public String insertGjptUserInfo(MultipartFile file){
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) afterBiz.insertGjptUserInfo(file);
+                ExcelUtile result = afterBiz.insertGjptUserInfo(file);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");

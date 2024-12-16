@@ -21,8 +21,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/sendSchoolCfg")
 public class JsresSendSchoolCfgController extends GeneralController{
-	
-	private static Logger logger = LoggerFactory.getLogger(JsresSendSchoolCfgController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(JsresSendSchoolCfgController.class);
 
 	@Autowired
 	private IDictBiz dictBiz;

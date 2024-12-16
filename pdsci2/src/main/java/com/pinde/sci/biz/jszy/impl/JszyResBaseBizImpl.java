@@ -63,7 +63,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 	@Autowired
 	private AttachedUnitInfoMapper auiMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(JszyResBaseBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JszyResBaseBizImpl.class);
 
 	/**
 	 * 保存基地的基本信息
@@ -306,8 +306,8 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 			Class<?> objClass = obj.getClass();
 			String firstLetter = attrName.substring(0, 1).toUpperCase();
 			String methedName = "set" + firstLetter + attrName.substring(1);
-			Method setMethod = objClass.getMethod(methedName, new Class[]{String.class});
-			setMethod.invoke(obj, new Object[]{attrValue});
+            Method setMethod = objClass.getMethod(methedName, String.class);
+            setMethod.invoke(obj, attrValue);
 		} catch (Exception e) {
             logger.error("", e);
 		}

@@ -37,7 +37,7 @@ public class ResAssessCfgBizImpl implements IResAssessCfgBiz {
 	@Autowired
 	private ResAssessCfgMapper assessCfgMapper;
 
-	private static Logger logger = LoggerFactory.getLogger(ResAssessCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResAssessCfgBizImpl.class);
 
 
 	@Override

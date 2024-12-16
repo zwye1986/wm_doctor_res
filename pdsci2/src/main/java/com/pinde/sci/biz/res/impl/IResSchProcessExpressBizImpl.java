@@ -263,9 +263,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                                 } else {
                                     String[] values = dataMap.get(paramName);
                                     List<String> valueList = new ArrayList<String>();
-                                    for (String temp : values) {
-                                        valueList.add(temp);
-                                    }
+                                    Collections.addAll(valueList, values);
                                     valueList.add(fileFlow);
                                     String[] newValues = new String[valueList.size()];
                                     dataMap.put(paramName, valueList.toArray(newValues));
@@ -277,9 +275,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                                 } else {
                                     String[] values = dataMap.get(paramFileName);
                                     List<String> valueList = new ArrayList<String>();
-                                    for (String temp : values) {
-                                        valueList.add(temp);
-                                    }
+                                    Collections.addAll(valueList, values);
                                     valueList.add(fileName);
                                     String[] newValues = new String[valueList.size()];
                                     dataMap.put(paramFileName, valueList.toArray(newValues));
@@ -364,7 +360,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     } else {
                         String[] values = req.getParameterValues(itemEle.attributeValue("name"));
                         Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-                        if (values != null && values.length > 0) {
+                        if (values != null) {
                             for (String value : values) {
                                 Element valueEle = DocumentHelper.createElement("value");
                                 if (StringUtil.isNotBlank(value)) {
@@ -469,7 +465,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                     } else {
                         String[] values = dataMap.get(itemEle.attributeValue("name"));
                         Element element = rootEle.addElement(itemEle.attributeValue("name"));
-                        if (values != null && values.length > 0) {
+                        if (values != null) {
                             for (String value : values) {
                                 Element valueEle = element.addElement("value");
                                 if (StringUtil.isNotBlank(value)) {
@@ -543,7 +539,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                         }else {
                             String[] values = req.getParameterValues(nodeName);
                             Element element = DocumentHelper.createElement(nodeName);
-                            if(values != null && values.length > 0) {
+                            if (values != null) {
                                 for (String value : values) {
                                     Element valueEle = DocumentHelper.createElement("value");
                                     if (StringUtil.isNotBlank(value)) {
@@ -946,7 +942,7 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
                 }else {
                     String[] values = req.getParameterValues(itemEle.attributeValue("name"));
                     Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-                    if(values != null && values.length > 0) {
+                    if (values != null) {
                         for (String value : values) {
                             Element valueEle = DocumentHelper.createElement("value");
                             if (StringUtil.isNotBlank(value)) {
@@ -1020,6 +1016,6 @@ public class IResSchProcessExpressBizImpl implements IResSchProcessExpressBiz {
         return  null;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(IResSchProcessExpressBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(IResSchProcessExpressBizImpl.class);
 
 }

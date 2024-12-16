@@ -789,6 +789,6 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		return  resBase ;
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
 
 }

@@ -64,7 +64,7 @@ public class InxBizImpl implements IInxBiz{
 	@Autowired
 	private VerificationCodeRecordMapper CodeRecordMap;
 
-    private static Logger logger = LoggerFactory.getLogger(InxBizImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(InxBizImpl.class);
 
 
 	@Override

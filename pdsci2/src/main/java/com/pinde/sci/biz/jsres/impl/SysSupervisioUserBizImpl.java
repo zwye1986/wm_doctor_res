@@ -71,7 +71,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Autowired
 	private ResHospSupervSubjectMapper hospSupervSubjectMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(SysSupervisioUserBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SysSupervisioUserBizImpl.class);
 
 	@Override
 	public List<ResSupervisioSubject> selectBaseSubjectList(Map<String, Object> param) {

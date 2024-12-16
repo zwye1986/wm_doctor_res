@@ -51,6 +51,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +90,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Autowired
 	private SysUserMapper sysUserMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(JsResStatisticBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResStatisticBizImpl.class);
 
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
@@ -410,7 +411,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			/*设置页面编码为UTF-8*/
 			response.setHeader("Content-Type","text/html;charset=UTF-8");
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现证书附件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现证书附件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
 			outputStream.flush();
 			outputStream.close();
 		}
@@ -729,8 +730,8 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			    		HSSFCell orgCell = rowDep.createCell(colnum);
 			    		orgCell.setCellValue(so.getOrgName());
 			    		orgCell.setCellStyle(styleCenter);
-			    		
-			    		Integer dateNewWidth = so.getOrgName().getBytes().length*1*256;
+
+                        Integer dateNewWidth = so.getOrgName().getBytes().length * 256;
 			    		width = width<dateNewWidth?dateNewWidth:width;
 			    		sheet.setColumnWidth(colnum,width);
 			    		colWidthAuto.put(colnum,width);

@@ -31,7 +31,7 @@ public class InxHbresBizImpl implements IInxHbresBiz{
 	@Autowired
 	private IMsgBiz msgBiz;
 
-	private static Logger logger = LoggerFactory.getLogger(InxHbresBizImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(InxHbresBizImpl.class);
 
 
 	@Override

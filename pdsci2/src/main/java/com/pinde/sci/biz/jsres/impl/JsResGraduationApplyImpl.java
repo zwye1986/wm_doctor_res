@@ -38,6 +38,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Autowired
     private IResJointOrgBiz jointOrgBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
 
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
@@ -540,7 +541,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell1.setCellValue((String)sd.get("orgName"));
                 cell1.setCellStyle(styleCenter);
                 HSSFCell cell2 = rowDepts.createCell(3);//是否协同
-                if(sd.get("countryOrgFlow") == null || ((String)sd.get("orgFlow")).equals((String)sd.get("countryOrgFlow"))){
+                if (sd.get("countryOrgFlow") == null || sd.get("orgFlow").equals(sd.get("countryOrgFlow"))) {
                     cell2.setCellValue("否");
                     cell2.setCellStyle(styleCenter);
                 }else {
@@ -576,7 +577,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell8.setCellValue((String)sd.get("changeSpeName"));
                 cell8.setCellStyle(styleCenter);
                 HSSFCell cell9 = rowDepts.createCell(14);
-                cell9.setCellValue((String)sd.get("startDate")+"~"+(String)sd.get("endDate"));
+                cell9.setCellValue(sd.get("startDate") + "~" + sd.get("endDate"));
                 cell9.setCellStyle(styleCenter);
 
                 HSSFCell cell10 = rowDepts.createCell(15);
@@ -713,13 +714,13 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                     cell19.setCellValue((String) sd.get("idNo"));
                     cell19.setCellStyle(styleCenter);
                     HSSFCell cell21 = rowDepts.createCell(30);
-                    cell21.setCellValue((String) sd.get("avgComplete")+"%");
+                cell21.setCellValue(sd.get("avgComplete") + "%");
                     cell21.setCellStyle(styleCenter);
                     HSSFCell cell23 = rowDepts.createCell(31);
-                    cell23.setCellValue((String) sd.get("avgOutComplete")+"%");
+                cell23.setCellValue(sd.get("avgOutComplete") + "%");
                     cell23.setCellStyle(styleCenter);
                     HSSFCell cell24 = rowDepts.createCell(32);
-                    cell24.setCellValue((String) sd.get("avgAudit")+"%");
+                cell24.setCellValue(sd.get("avgAudit") + "%");
                     cell24.setCellStyle(styleCenter);
                     HSSFCell cell25 = rowDepts.createCell(33);
                     cell25.setCellValue((String) sd.get("trainYearName"));
@@ -738,7 +739,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                     String upPer="0%";
                     if(Integer.valueOf(allNum)>0&&Integer.valueOf(upNum)>0)
                     {
-                        double per=new BigDecimal(Double.valueOf(upNum) / Double.valueOf(allNum)*100).setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue();
+                        double per = BigDecimal.valueOf(Double.valueOf(upNum) / Double.valueOf(allNum) * 100).setScale(0, RoundingMode.HALF_UP).doubleValue();
                         if(per>100)
                         {
                             per=100;
@@ -909,7 +910,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell6.setCellValue((String)sd.get("speName"));
                 cell6.setCellStyle(styleCenter);
                 HSSFCell cell7 = rowDepts.createCell(7);//培训起止时间
-                cell7.setCellValue((String)sd.get("startDate")+"~"+(String)sd.get("endDate"));
+                cell7.setCellValue(sd.get("startDate") + "~" + sd.get("endDate"));
                 cell7.setCellStyle(styleCenter);
                 HSSFCell cell8 = rowDepts.createCell(8);
                 cell8.setCellValue((String)sd.get("educationName"));
@@ -1075,7 +1076,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell5.setCellStyle(styleCenter);
 
                 HSSFCell cell6 = rowDepts.createCell(6);
-                cell6.setCellValue((String)sd.get("startDate")+"~"+(String)sd.get("endDate"));
+                cell6.setCellValue(sd.get("startDate") + "~" + sd.get("endDate"));
                 cell6.setCellStyle(styleCenter);
 
                 if("global".equals(roleFlag)) {
@@ -1274,7 +1275,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell6.setCellValue((String)sd.get("speName"));
                 cell6.setCellStyle(styleCenter);
                 HSSFCell cell7 = rowDepts.createCell(7);//培训起止时间
-                cell7.setCellValue((String)sd.get("startDate")+"~"+(String)sd.get("endDate"));
+                cell7.setCellValue(sd.get("startDate") + "~" + sd.get("endDate"));
                 cell7.setCellStyle(styleCenter);
                 HSSFCell cell8 = rowDepts.createCell(8);
                 cell8.setCellValue((String)sd.get("educationName"));
@@ -1482,7 +1483,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell1.setCellValue((String)sd.get("orgName"));
                 cell1.setCellStyle(styleCenter);
                 HSSFCell cell2 = rowDepts.createCell(3);//是否协同
-                if(sd.get("countryOrgFlow") == null || ((String)sd.get("orgFlow")).equals((String)sd.get("countryOrgFlow"))){
+                if (sd.get("countryOrgFlow") == null || sd.get("orgFlow").equals(sd.get("countryOrgFlow"))) {
                     cell2.setCellValue("否");
                     cell2.setCellStyle(styleCenter);
                 }else {
@@ -1518,7 +1519,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell8.setCellValue((String)sd.get("changeSpeName"));
                 cell8.setCellStyle(styleCenter);
                 HSSFCell cell9 = rowDepts.createCell(14);
-                cell9.setCellValue((String)sd.get("startDate")+"~"+(String)sd.get("endDate"));
+                cell9.setCellValue(sd.get("startDate") + "~" + sd.get("endDate"));
                 cell9.setCellStyle(styleCenter);
 
                 HSSFCell cell10 = rowDepts.createCell(15);
@@ -1612,13 +1613,13 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 cell19.setCellValue((String) sd.get("idNo"));
                 cell19.setCellStyle(styleCenter);
                 HSSFCell cell21 = rowDepts.createCell(30);
-                cell21.setCellValue((String) sd.get("avgComplete")+"%");
+                cell21.setCellValue(sd.get("avgComplete") + "%");
                 cell21.setCellStyle(styleCenter);
                 HSSFCell cell23 = rowDepts.createCell(31);
-                cell23.setCellValue((String) sd.get("avgOutComplete")+"%");
+                cell23.setCellValue(sd.get("avgOutComplete") + "%");
                 cell23.setCellStyle(styleCenter);
                 HSSFCell cell24 = rowDepts.createCell(32);
-                cell24.setCellValue((String) sd.get("avgAudit")+"%");
+                cell24.setCellValue(sd.get("avgAudit") + "%");
                 cell24.setCellStyle(styleCenter);
                 HSSFCell cell25 = rowDepts.createCell(33);
                 cell25.setCellValue((String) sd.get("trainYearName"));
@@ -1637,7 +1638,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 String upPer="0%";
                 if(Integer.valueOf(allNum)>0&&Integer.valueOf(upNum)>0)
                 {
-                    double per=new BigDecimal(Double.valueOf(upNum) / Double.valueOf(allNum)*100).setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    double per = BigDecimal.valueOf(Double.valueOf(upNum) / Double.valueOf(allNum) * 100).setScale(0, RoundingMode.HALF_UP).doubleValue();
                     if(per>100)
                     {
                         per=100;

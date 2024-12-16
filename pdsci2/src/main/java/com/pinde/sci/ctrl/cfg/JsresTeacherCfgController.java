@@ -26,8 +26,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/teacherCfg")
 public class JsresTeacherCfgController extends GeneralController{
-	
-	private static Logger logger = LoggerFactory.getLogger(JsresTeacherCfgController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(JsresTeacherCfgController.class);
 	
 	@Autowired
 	private IDeptBiz deptBiz;

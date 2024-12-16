@@ -44,7 +44,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Autowired
     private ResEvaluationDeptExtMapper evaluationDeptExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(ResEvaluationCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResEvaluationCfgBizImpl.class);
 
 
     @Override
@@ -258,7 +258,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
             int length = bigestColumnId.length();
             String leftPart = bigestColumnId.substring(0, length-2);
             String rightPart = bigestColumnId.substring(length-2);
-            int idValue = new Integer(rightPart).intValue();
+            int idValue = Integer.parseInt(rightPart);
             idValue++;
             if(idValue<10){
                 rightPart = "0"+idValue;

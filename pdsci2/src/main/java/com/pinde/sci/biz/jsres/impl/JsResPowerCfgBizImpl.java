@@ -42,7 +42,7 @@ import java.util.*;
 public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
 
 
-    private static Logger logger = LoggerFactory.getLogger(JsResPowerCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResPowerCfgBizImpl.class);
 
 
     @Autowired
@@ -399,7 +399,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
                 @Override
                 public String checkExcelData(HashMap data, ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"ImportTime".equals(sheetName))
+                    if (!"ImportTime".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");

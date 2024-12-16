@@ -229,6 +229,6 @@ public class JsResUserBlackBizImpl implements IJsResUserBlackBiz {
         return path;
     }
 
-    private static Logger logger = LoggerFactory.getLogger(JsresUserBalcklist.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsresUserBalcklist.class);
 
 }

@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 //@Transactional(rollbackFor=Exception.class)
 public class UserBizImpl implements IUserBiz {
 
-	private static Logger logger = LoggerFactory.getLogger(UserBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserBizImpl.class);
 
 	@Autowired
 	private SysUserMapper sysUserMapper;
@@ -1140,9 +1140,7 @@ public class UserBizImpl implements IUserBiz {
 		List<SysUserRole> list = sysUserRoleMapper.selectByExample(example);
 		if (null!=list && list.size()>0){
 			SysUserRole sysUserRole = list.get(0);
-			if (StringUtil.isNotBlank(sysUserRole.getRoleFlow()) && sysUserRole.getRoleFlow().equals(roleFlow)){
-				return true;
-			}
+            return StringUtil.isNotBlank(sysUserRole.getRoleFlow()) && sysUserRole.getRoleFlow().equals(roleFlow);
 		}
 		return false;
 	}
@@ -1357,7 +1355,7 @@ public class UserBizImpl implements IUserBiz {
 						oldRoles.add(roleFlow);
 					}
 				}
-				if(roles!=null && roles.length>0){
+                if (roles != null) {
 					for(String role:roles){
 						if(!oldRoles.contains(role)){
 							SysUserRole sysUserRole = new SysUserRole();

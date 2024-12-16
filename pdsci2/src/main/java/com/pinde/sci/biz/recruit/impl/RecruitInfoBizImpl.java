@@ -47,7 +47,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
     @Autowired
     private IRecruitInfoLogBiz recruitInfoLogBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(RecruitInfoBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecruitInfoBizImpl.class);
 
 
     /**
@@ -285,7 +285,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"examScore".equals(sheetName))
+                    if (!"examScore".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");
@@ -442,7 +442,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"InterviewScore".equals(sheetName))
+                    if (!"InterviewScore".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");
@@ -601,7 +601,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"admitResult".equals(sheetName))
+                    if (!"admitResult".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");

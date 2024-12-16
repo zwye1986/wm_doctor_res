@@ -374,7 +374,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
         return lectureScanRegistMapper.selectByPrimaryKey(recordFlow);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
 
 
 }

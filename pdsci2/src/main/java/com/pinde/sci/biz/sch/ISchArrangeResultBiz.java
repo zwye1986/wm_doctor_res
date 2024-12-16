@@ -349,7 +349,7 @@ public interface ISchArrangeResultBiz {
 
 	List<Map<String,Object>> schedulingSearchAuditList(Map<String, Object> paramMap);
 
-	Map<String,Object>  importSchedulingAuditExcel(MultipartFile file,String rotationFlow,String trainingTypeId) throws IOException, Exception;
+    Map<String, Object> importSchedulingAuditExcel(MultipartFile file, String rotationFlow, String trainingTypeId) throws Exception;
 
 	Map<String,String> importSchedulingAuditExcelCache(MultipartFile file) throws IOException, InvalidFormatException;
 	Map<String, Object> checkRowData(List<SchedulingDataModel> data);
@@ -358,7 +358,7 @@ public interface ISchArrangeResultBiz {
 	List<SchArrangeResult> checkResultDate(String doctorFlow, String startDate, String endDate,
 										   String subDeptFlow,String rotationFlow);
 
-	public List<SchArrangeResult> searchSchArrangeResult(String userFlow, String deptFlow);
+    List<SchArrangeResult> searchSchArrangeResult(String userFlow, String deptFlow);
 
 	SysUser searchTeacherList(String sysDeptFlow, String roleId,String userName);
 

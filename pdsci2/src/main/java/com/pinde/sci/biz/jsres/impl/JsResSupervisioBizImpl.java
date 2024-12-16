@@ -51,7 +51,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	private HospSelfAssessmentMapper assessmentMapper;
 	@Autowired
 	private HospSelfAssessmentCfgMapper assessmentCfgMapper;
-    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResSupervisioBizImpl.class);
 
 
 
@@ -627,7 +627,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
         ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				.andCoreIndicatorsEqualTo("0");
 
-		if (null!=cfgFlow && StringUtil.isNotBlank(cfgFlow)){
+        if (StringUtil.isNotBlank(cfgFlow)) {
 			criteria.andSubjectFlowEqualTo(cfgFlow);
 		}
 		if (StringUtil.isNotBlank(orgFlow)){

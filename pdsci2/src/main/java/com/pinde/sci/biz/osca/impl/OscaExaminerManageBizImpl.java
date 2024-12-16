@@ -175,9 +175,9 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
 
             int row_num = sheet.getLastRowNum();
@@ -353,9 +353,9 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
 
             int row_num = sheet.getLastRowNum();
