@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.OscaSkillRoomTea;
 import com.pinde.core.model.OscaSkillRoomTeaExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OscaSkillRoomTeaMapper {
     int countByExample(OscaSkillRoomTeaExample example);

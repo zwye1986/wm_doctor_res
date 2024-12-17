@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.recruit;
 
-import com.pinde.sci.model.mo.RecruitInfoLog;
+import com.pinde.core.model.RecruitInfoLog;
 
 public interface IRecruitInfoLogBiz {
     Integer updateRecruitInfoLog(RecruitInfoLog recruitInfoLog,String auditContent);

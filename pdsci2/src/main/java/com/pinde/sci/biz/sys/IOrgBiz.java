@@ -14,32 +14,32 @@ import java.util.Map;
  *
  */
 public interface IOrgBiz {
-	
-	public SysOrg readSysOrg(String orgFlow);
-	
-	public int addOrg(SysOrg org);
-	
-	public int saveOrg(SysOrg org);
-	
-	public List<SysOrg> searchOrg(SysOrg sysOrg);
 
-	public List<SysOrg> searchOrgIsAcc(SysOrg sysOrg);
+    SysOrg readSysOrg(String orgFlow);
 
-	public List<SysOrg> searchOrgList(SysOrg sysOrg);
+    int addOrg(SysOrg org);
 
-	public List<PersonStaticExample> searchOrgSession(SysOrg sysOrg);
+    int saveOrg(SysOrg org);
+
+    List<SysOrg> searchOrg(SysOrg sysOrg);
+
+    List<SysOrg> searchOrgIsAcc(SysOrg sysOrg);
+
+    List<SysOrg> searchOrgList(SysOrg sysOrg);
+
+    List<PersonStaticExample> searchOrgSession(SysOrg sysOrg);
 
 	/**
 	 * 查询全部单位
 	 */
-	public List<SysOrg> queryAllSysOrg(SysOrg sysorg);
+    List<SysOrg> queryAllSysOrg(SysOrg sysorg);
 	
 	/**
 	 * 查询某个节点下所有子节点包过自身节点
 	 * @param orgFlow
 	 * @return
 	 */
-	public List<SysOrg> searchChildrenOrgByOrgFlow(String orgFlow);
+    List<SysOrg> searchChildrenOrgByOrgFlow(String orgFlow);
 
 
     List<SysOrg> searchOrgByClause(SysOrg sysorg, String orderClause);
@@ -50,7 +50,7 @@ public interface IOrgBiz {
 
 	List<SysOrg> searchSysOrgByName(SysOrg sysorg);
 
-	public List<SysOrg> searchOrgByExample(SysOrgExample example);
+    List<SysOrg> searchOrgByExample(SysOrgExample example);
 
 	List<SysOrg> searchOrderBy(SysOrg sysorg);
 

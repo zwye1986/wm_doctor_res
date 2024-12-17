@@ -554,7 +554,7 @@
 
     <select id="searchSchArrangeResultByDoctorAndDate" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT *
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW = #{doctorFlow}
         <if test='deptFlow!=null and deptFlow!=""'>
@@ -567,7 +567,7 @@
 
     <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT *
-        FROM PDSCI.SCH_ARRANGE_RESULT sar
+        FROM SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW = #{doctorFlow}
         <choose>
@@ -821,155 +821,6 @@
                       IC.QTY) A
     </select>
 
-    <select id="hbresDoctorSchResults"   resultMap="com.pinde.sci.dao.base.HbresDoctorDeptDetailMapper.BaseResultMap">
-        SELECT sys_guid() RECORD_FLOW,
-        SAR.RESULT_FLOW,
-        SAR.DOCTOR_FLOW,
-        SAR.SCH_START_DATE,
-        SAR.SCH_END_DATE,
-        SAR.SCH_MONTH,
-        SAR.ORG_FLOW,
-        SAR.ORG_NAME,
-        SAR.DEPT_FLOW,
-        SAR.DEPT_NAME,
-        SAR.SCH_DEPT_FLOW,
-        SAR.SCH_DEPT_NAME,
-        SAR.ROTATION_FLOW,
-        SAR.GROUP_FLOW,
-        SAR.STANDARD_GROUP_FLOW,
-        SAR.STANDARD_DEPT_ID,
-        SAR.STANDARD_DEPT_NAME,
-        SAR.REQ_NUM,
-        SAR.COMPLETE_NUM,
-        SAR.IN_COMPLETE_NUM,
-        SAR.OUT_COMPLETE_NUM,
-        SAR.AUDIT_NUM,
-        CASE
-        WHEN REQ_NUM = 0 THEN
-        '-'
-        ELSE
-        TO_CHAR(CASE
-        WHEN ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100 > 100 THEN
-        100
-        ELSE
-        ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100
-        END) END COMPLETE_BI,
-        CASE
-        WHEN REQ_NUM = 0 THEN
-        '-'
-        ELSE
-        TO_CHAR(CASE
-        WHEN ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100 > 100 THEN
-        100
-        ELSE
-        ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100
-        END) END OUT_COMPLETE_BI,
-        CASE
-        WHEN REQ_NUM = 0 THEN
-        '-'
-        ELSE
-
-        TO_CHAR(CASE
-        WHEN ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100 > 100 THEN
-        100
-        ELSE
-        ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100
-        END) END IN_COMPLETE_BI,
-
-        CASE
-        WHEN REQ_NUM = 0 THEN
-        '-'
-        ELSE
-        TO_CHAR(ROUND(CASE
-        WHEN REQ_NUM != 0 AND COMPLETE_NUM = 0 THEN
-        0
-        WHEN COMPLETE_NUM != 0 THEN
-        AUDIT_NUM / COMPLETE_NUM
-        ELSE
-        0
-        END, 2) * 100) END AUDIT_BI,
-        'Y',
-        to_char(sysdate, 'YYYYMMDDHH24MISS'),
-        'System',
-        to_char(sysdate, 'YYYYMMDDHH24MISS'),
-        'System'
-        FROM (SELECT SAR.RESULT_FLOW,
-        SAR.DOCTOR_FLOW,
-        SAR.SCH_START_DATE,
-        SAR.SCH_END_DATE,
-        SAR.SCH_MONTH,
-        SAR.ORG_FLOW,
-        SAR.ORG_NAME,
-        SAR.DEPT_FLOW,
-        SAR.DEPT_NAME,
-        SAR.SCH_DEPT_FLOW,
-        SAR.SCH_DEPT_NAME,
-        SAR.ROTATION_FLOW,
-        SAR.GROUP_FLOW,
-        SAR.STANDARD_GROUP_FLOW,
-        SAR.STANDARD_DEPT_ID,
-        SAR.STANDARD_DEPT_NAME,
-        NVL(SUM(REQ.REQ_NUM), 0) REQ_NUM,
-        TO_CHAR(NVL(SUM(RR.COMPLETE_NUM), 0)) COMPLETE_NUM,
-        TO_CHAR(NVL(SUM(RR.IN_COMPLETE_NUM), 0)) IN_COMPLETE_NUM,
-        SUM(RR.OUT_COMPLETE_NUM) OUT_COMPLETE_NUM,
-        TO_CHAR(NVL(SUM(RR.AUDIT_NUM), 0)) AUDIT_NUM
-        FROM SCH_ARRANGE_RESULT SAR
-        LEFT JOIN SCH_ROTATION_DEPT SRD ON SAR.ROTATION_FLOW =
-        SRD.ROTATION_FLOW
-        AND SRD.ORG_FLOW IS NULL
-        AND SRD.GROUP_FLOW =
-        SAR.STANDARD_GROUP_FLOW
-        AND SRD.STANDARD_DEPT_ID =
-        SAR.STANDARD_DEPT_ID
-        AND SRD.RECORD_STATUS = 'Y'
-        LEFT JOIN (SELECT REQ.REL_RECORD_FLOW,NVL(SUM(REQ.REQ_NUM), 0) REQ_NUM
-        FROM SCH_ROTATION_DEPT_REQ REQ WHERE
-        REQ.RECORD_STATUS = 'Y'
-        AND REQ.REC_TYPE_ID IN
-        ('CampaignNoItemRegistry',
-        'CaseRegistry',
-        'DiseaseRegistry',
-        'OperationRegistry',
-        'SkillRegistry')
-        GROUP BY REQ.REL_RECORD_FLOW
-        ) REQ ON  REQ.REL_RECORD_FLOW =
-        SRD.RECORD_FLOW
-        LEFT JOIN RES_DOCTOR_SCH_PROCESS PROCESS ON PROCESS.SCH_RESULT_FLOW =
-        SAR.RESULT_FLOW
-        AND PROCESS.RECORD_STATUS = 'Y'
-        LEFT JOIN (SELECT PROCESS_FLOW,TO_CHAR(NVL(COUNT(RR.REC_FLOW), 0)) COMPLETE_NUM,
-        TO_CHAR(NVL(COUNT(RR.REC_FLOW), 0)) IN_COMPLETE_NUM,
-        '0' AS OUT_COMPLETE_NUM,
-        TO_CHAR(NVL(COUNT(RR.AUDIT_STATUS_ID), 0)) AUDIT_NUM  FROM RES_REC RR WHERE
-        RR.RECORD_STATUS = 'Y'
-        AND RR.REC_TYPE_ID IN
-        ('CampaignNoItemRegistry', 'CaseRegistry',
-        'DiseaseRegistry', 'OperationRegistry',
-        'SkillRegistry')
-        GROUP BY PROCESS_FLOW
-        )RR  ON RR.PROCESS_FLOW = PROCESS.PROCESS_FLOW
-        WHERE SAR.RECORD_STATUS = 'Y'
-        AND SAR.RESULT_FLOW IN
-        <foreach collection="resultFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
-        GROUP BY SAR.RESULT_FLOW,
-        SAR.DOCTOR_FLOW,
-        SAR.SCH_START_DATE,
-        SAR.SCH_END_DATE,
-        SAR.SCH_MONTH,
-        SAR.ORG_FLOW,
-        SAR.ORG_NAME,
-        SAR.DEPT_FLOW,
-        SAR.DEPT_NAME,
-        SAR.SCH_DEPT_FLOW,
-        SAR.SCH_DEPT_NAME,
-        SAR.ROTATION_FLOW,
-        SAR.GROUP_FLOW,
-        SAR.STANDARD_GROUP_FLOW,
-        SAR.STANDARD_DEPT_ID,
-        SAR.STANDARD_DEPT_NAME) SAR
-    </select>
-
     <resultMap type="HashMap" id="docCycleMap">
         <result property="userName" column="user_name" javaType="string"/>
         <result property="trainingSpeName" column="training_spe_name" javaType="string"/>
@@ -1117,7 +968,7 @@
 
     <select id="countResultByUser" resultMap="resultCountMap">
         SELECT DOCTOR_FLOW,COUNT(*) RESULT_COUNT
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE DOCTOR_FLOW IN
         <foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
             #{userFlow}
@@ -1221,11 +1072,11 @@
 
     <select id="countDateArea" resultMap="resultDateMap">
         SELECT MIN(SCH_START_DATE) MIN_DATE,MAX(SCH_END_DATE) MAX_DATE
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW IN(
         SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         AND SCH_STATUS_ID IS NOT NULL
         <if test='doctor!=null'>
@@ -1249,18 +1100,18 @@
     </select>
     <select id="getResultCycleDate" resultMap="resultDateMap">
         SELECT MIN(SCH_START_DATE) MIN_DATE,MAX(SCH_END_DATE) MAX_DATE
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW =#{doctorFlow}
     </select>
 
     <select id="countMonthNum" resultMap="countMonthNumMap">
         SELECT SCH_DEPT_FLOW,COUNT(SCH_DEPT_FLOW) COUNT_NUM
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW IN (
         SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         <if test='doctor!=null'>
             <if test='doctor.schStatusId!=null and doctor.schStatusId!=""'>
@@ -1293,11 +1144,11 @@
 
     <select id="searchInMonthResult" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT *
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW IN (
         SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         <if test='doctor!=null'>
             <if test='doctor.schStatusId!=null and doctor.schStatusId!=""'>
@@ -1331,25 +1182,25 @@
 
     <select id="willInDoctor" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT *
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND( DOCTOR_FLOW IN (
         SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         AND SCH_FLAG = 'Y'
         AND (
         ORG_FLOW = #{orgFlow}
         OR ORG_FLOW IN (
         SELECT ORG_FLOW
-        FROM PDSCI.SCH_DEPT_EXTERNAL_REL
+        FROM SCH_DEPT_EXTERNAL_REL
         WHERE RECORD_STATUS = 'Y'
         AND REL_ORG_FLOW = #{orgFlow}
         )
         )
         <!-- 			AND DOCTOR_FLOW NOT IN ( -->
         <!-- 				SELECT USER_FLOW  -->
-        <!-- 				FROM PDSCI.RES_DOCTOR_SCH_PROCESS -->
+        <!-- 				FROM  RES_DOCTOR_SCH_PROCESS -->
         <!-- 				WHERE RECORD_STATUS = 'Y' -->
         <!-- 				AND IS_CURRENT_FLAG = 'Y' -->
         <!-- 			) -->
@@ -1358,7 +1209,7 @@
         org_flow=#{orgFlow}
         and DOCTOR_FLOW IN (
         SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         AND SCH_FLAG = 'Y'
         )
@@ -1366,14 +1217,14 @@
         )
         AND (NOT EXISTS (
         SELECT NULL
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW
         <!-- 			AND IS_CURRENT_FLAG = 'N' -->
         <!-- 			AND SCH_FLAG = 'Y' -->
         )OR EXISTS(
         SELECT NULL
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW
         AND (
@@ -1386,7 +1237,7 @@
     </select>
     <select id="willInDoctor2" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT distinct a.*
-        FROM PDSCI.SCH_ARRANGE_RESULT a
+        FROM SCH_ARRANGE_RESULT a
         left join res_doctor rd on a.doctor_flow=rd.doctor_flow
         left join sys_user su on a.doctor_flow=su.user_flow
         LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||su.USER_FLOW = RPC.CFG_CODE
@@ -1433,12 +1284,12 @@
     <!-- 按科室统计入科异常学员 -->
     <select id="preWarningBefore" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
         SELECT DEPT_FLOW AS ID, DEPT_NAME AS NAME, COUNT(1) AS QTY
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND SCH_START_DATE <![CDATA[<=]]> #{schEndDate}
         AND SCH_START_DATE >= #{schStartDate}
         AND (DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         <if test='sessionNumber!=null and sessionNumber!=""'>
             AND SESSION_NUMBER = #{sessionNumber}
@@ -1447,12 +1298,12 @@
         and DOCTOR_STATUS_ID in ('Training','20')
         AND (ORG_FLOW = #{orgFlow}
         OR ORG_FLOW IN (SELECT ORG_FLOW
-        FROM PDSCI.SCH_DEPT_EXTERNAL_REL
+        FROM SCH_DEPT_EXTERNAL_REL
         WHERE RECORD_STATUS = 'Y'
         AND REL_ORG_FLOW = #{orgFlow})))
         OR ORG_FLOW = #{orgFlow}
         AND DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         <if test='sessionNumber!=null and sessionNumber!=""'>
             AND SESSION_NUMBER = #{sessionNumber}
@@ -1460,11 +1311,11 @@
         AND SCH_FLAG = 'Y'
         and DOCTOR_STATUS_ID in ('Training','20')))
         AND (NOT EXISTS (SELECT NULL
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW)
         OR EXISTS (SELECT NULL
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW
         AND (TEACHER_USER_FLOW IS NULL
@@ -1562,10 +1413,10 @@
         R.SCH_END_DATE,
         RD.TRAINING_TYPE_NAME,
         RD.TRAINING_SPE_NAME
-        FROM PDSCI.SCH_ARRANGE_RESULT R
+        FROM SCH_ARRANGE_RESULT R
         LEFT JOIN SYS_USER U
         ON U.USER_FLOW=R.DOCTOR_FLOW
-        LEFT JOIN PDSCI.RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
         WHERE R.RECORD_STATUS = 'Y'
         and rd.DOCTOR_STATUS_ID in ('Training','20')
         AND SCH_START_DATE <![CDATA[<=]]> #{schEndDate}
@@ -1574,7 +1425,7 @@
             AND R.DEPT_FLOW=#{deptFlow}
         </if>
         AND (R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         <if test='sessionNumber!=null and sessionNumber!=""'>
             AND SESSION_NUMBER = #{sessionNumber}
@@ -1582,7 +1433,7 @@
         AND SCH_FLAG = 'Y'
         AND (ORG_FLOW = #{orgFlow}
         OR ORG_FLOW IN (SELECT ORG_FLOW
-        FROM PDSCI.SCH_DEPT_EXTERNAL_REL
+        FROM SCH_DEPT_EXTERNAL_REL
         WHERE RECORD_STATUS = 'Y'
         AND REL_ORG_FLOW = #{orgFlow})))
         OR R.ORG_FLOW = #{orgFlow}
@@ -1590,15 +1441,15 @@
             AND R.SESSION_NUMBER = #{sessionNumber}
         </if>
         AND R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-        FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
         WHERE RECORD_STATUS = 'Y'
         AND SCH_FLAG = 'Y'))
         AND (NOT EXISTS (SELECT NULL
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_RESULT_FLOW = R.RESULT_FLOW)
         OR EXISTS (SELECT NULL
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_RESULT_FLOW = R.RESULT_FLOW
         AND (TEACHER_USER_FLOW IS NULL
@@ -1622,7 +1473,7 @@
         FROM RES_DOCTOR_SCH_PROCESS P
         LEFT JOIN SYS_USER U
         ON U.USER_FLOW=P.USER_FLOW
-        LEFT JOIN PDSCI.RES_DOCTOR RD ON RD.DOCTOR_FLOW = P.USER_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = P.USER_FLOW
         LEFT JOIN  RES_SCH_PROCESS_EXPRESS RR
         ON RR.RECORD_STATUS = 'Y'
         AND RR.PROCESS_FLOW = P.PROCESS_FLOW
@@ -1682,7 +1533,7 @@
         FROM RES_DOCTOR_SCH_PROCESS P
         LEFT JOIN SYS_USER U
         ON U.USER_FLOW=P.USER_FLOW
-        LEFT JOIN PDSCI.RES_DOCTOR RD ON RD.DOCTOR_FLOW = P.USER_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = P.USER_FLOW
         LEFT JOIN  RES_SCH_PROCESS_EXPRESS RR
         ON RR.RECORD_STATUS = 'Y'
         AND RR.PROCESS_FLOW = P.PROCESS_FLOW
@@ -1728,7 +1579,7 @@
     </select>
 
     <select id="countResultBySchDeptFlow" resultType="int">
-        select count(*) cnt FROM PDSCI.SCH_ARRANGE_RESULT
+        select count(*) cnt FROM SCH_ARRANGE_RESULT
 		WHERE RECORD_STATUS = 'Y'
 		AND SCH_DEPT_FLOW = #{schDeptFlow}
         and is_step_b='N'
@@ -1760,7 +1611,7 @@
     </resultMap>
     <select id="doctorSelectDeptCount" resultMap="countMap">
         select STANDARD_GROUP_FLOW GROUP_FLOW, to_char(nvl(count(1),0)) RESULT_COUNT
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
 		WHERE RECORD_STATUS = 'Y'
 		and doctor_flow=#{doctorFlow}
         and is_step_b='N'
@@ -1769,11 +1620,11 @@
 
     <select id="countRotationUse" resultType="int">
 		SELECT COUNT(DISTINCT DOCTOR_FLOW)
-		FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
 		WHERE RECORD_STATUS = 'Y'
 		AND DOCTOR_FLOW NOT IN (
 			SELECT DISTINCT DOCTOR_FLOW
-			FROM PDSCI.SCH_DOCTOR_DEPT
+        FROM SCH_DOCTOR_DEPT
 			WHERE RECORD_STATUS = 'Y'
 			AND ROTATION_FLOW = #{rotationFlow}
 		)
@@ -1782,11 +1633,11 @@
 
     <select id="cutAfterResult" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT *
-        FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
         AND RESULT_FLOW NOT IN (
         SELECT SCH_RESULT_FLOW
-        FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
         WHERE RECORD_STATUS = 'Y'
         AND SCH_FLAG = 'Y'
         AND USER_FLOW IN
@@ -1825,7 +1676,7 @@
 
     <select id="searchResultByDoctor" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT SAR.*
-        FROM PDSCI.SCH_ARRANGE_RESULT SAR,PDSCI.RES_DOCTOR RD
+        FROM SCH_ARRANGE_RESULT SAR, RES_DOCTOR RD
         WHERE SAR.RECORD_STATUS = 'Y'
         AND RD.RECORD_STATUS = 'Y'
         AND SAR.DOCTOR_FLOW = RD.DOCTOR_FLOW
@@ -1852,13 +1703,13 @@
 
     <resultMap id="resultExtMap" type="com.pinde.sci.model.res.SchArrangeResultExt"
                extends="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
-        <association property="process" javaType="com.pinde.sci.model.mo.ResDoctorSchProcess"
+        <association property="process" javaType="com.pinde.core.model.ResDoctorSchProcess"
                      resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
         </association>
     </resultMap>
     <select id="getResults" resultMap="resultExtMap">
         select sar.*,rdsp.*
-        from pdsci.sch_arrange_result sar,pdsci.res_doctor_sch_process rdsp
+        from sch_arrange_result sar, res_doctor_sch_process rdsp
         where sar.record_status = 'Y'
         and rdsp.record_status = 'Y'
         and sar.result_flow = rdsp.sch_result_flow
@@ -1878,7 +1729,7 @@
 
     <select id="getArrangedNum" parameterType="java.util.Map" resultType="int">
         select count(0)
-        from pdsci.Scholar_Sch_Arrange
+        from Scholar_Sch_Arrange
         where record_status = 'Y'
         <if test='doctorFlow!=null and doctorFlow!=""'>
             and doctor_Flow != #{doctorFlow}
@@ -1908,7 +1759,7 @@
 
     <select id="checkScholarDate" parameterType="java.util.Map" resultType="int">
         select count(0)
-        from pdsci.Scholar_Sch_Arrange
+        from Scholar_Sch_Arrange
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         <if test='deptFlow!=null and deptFlow!=""'>
@@ -1934,7 +1785,7 @@
 
     <select id="checkResultDate" parameterType="java.util.Map" resultType="int">
         select count(0)
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and (
@@ -1968,7 +1819,7 @@
     </select>
     <select id="checkSelectResult" parameterType="java.util.Map" resultType="int">
         select count(0)
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and is_step_b='N'
@@ -1977,14 +1828,14 @@
     </select>
     <select id="checkSelectStandardDept"  resultType="int">
        SELECT (select count(0)
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and standard_Dept_Id=#{standardDeptId}
         and standard_group_flow=#{groupFlow}
         )+
         (select count(0)
-        from pdsci.sch_arrange_period_rel
+        from sch_arrange_period_rel
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and standard_Dept_Id=#{standardDeptId})
@@ -1992,7 +1843,7 @@
     </select>
     <select id="countArrangeResultByGroupFlow"  resultType="int">
        SELECT nvl((select count(0)
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and is_step_b='N'
         and doctor_flow = #{doctorFlow}
@@ -2001,7 +1852,7 @@
     </select>
     <select id="getAllSchMonth" parameterType="java.util.Map" resultType="int">
         select nvl(sum(sch_month),0)
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and is_step_b='N'
         and doctor_flow = #{doctorFlow}
@@ -2197,7 +2048,7 @@
     </select>
     <select id="countResultByDoctorAndDate" resultType="java.lang.Integer">
        SELECT nvl((select count(0)
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and  ((
@@ -2573,7 +2424,7 @@
 
     <select id="checkResultDateList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         select *
-        from pdsci.sch_arrange_result
+        from sch_arrange_result
         where record_status = 'Y'
         and doctor_flow = #{doctorFlow}
         and (

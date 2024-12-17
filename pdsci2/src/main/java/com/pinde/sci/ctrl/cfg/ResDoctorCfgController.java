@@ -34,7 +34,7 @@ import java.util.*;
 @RequestMapping("/res/doctorCfg")
 public class ResDoctorCfgController extends GeneralController {
 
-    private static Logger logger = LoggerFactory.getLogger(ResDoctorCfgController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResDoctorCfgController.class);
 
     @Autowired
     private ISchManualBiz schManualBiz;
@@ -65,9 +65,9 @@ public class ResDoctorCfgController extends GeneralController {
      * @throws Exception
      */
     @RequestMapping(value = {"/userList" })
-    public String userList (Model model, Integer currentPage, HttpServletRequest request,String orgFlow,
-                            String sessionNumber, String workOrgId, String userName, String idNo,String userCode,String trainingYears,
-                            String datas[],String doctorCategoryId,String trainingSpeId, String ifOpen, String[] powerTypeId) throws Exception{
+    public String userList(Model model, Integer currentPage, HttpServletRequest request, String orgFlow,
+                           String sessionNumber, String workOrgId, String userName, String idNo, String userCode, String trainingYears,
+                           String[] datas, String doctorCategoryId, String trainingSpeId, String ifOpen, String[] powerTypeId) throws Exception {
         List<String> docTypeList=new ArrayList<>();
         if(datas!=null&&datas.length>0)
         {
@@ -263,8 +263,8 @@ public class ResDoctorCfgController extends GeneralController {
 
     @RequestMapping(value = {"/exportPowers"})
     public void schRotationExport(String orgFlow, String sessionNumber, String workOrgId, String userName,
-                                  String idNo, String datas[], String doctorCategoryId, HttpServletResponse response,
-                                  HttpServletRequest request, String trainingSpeId,String ifOpen,String[] powerTypeId) throws Exception {
+                                  String idNo, String[] datas, String doctorCategoryId, HttpServletResponse response,
+                                  HttpServletRequest request, String trainingSpeId, String ifOpen, String[] powerTypeId) throws Exception {
         List<String> docTypeList = new ArrayList<>();
         if (datas != null && datas.length > 0) {
             docTypeList.addAll(Arrays.asList(datas));

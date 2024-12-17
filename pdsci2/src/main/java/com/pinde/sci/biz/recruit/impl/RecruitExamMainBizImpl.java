@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.recruit.impl;
 
 import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,7 +16,6 @@ import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitExamMainExtMapper;
 import com.pinde.sci.form.recruit.ExamInfoFlowForm;
 import com.pinde.sci.form.recruit.ExamInfoForm;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

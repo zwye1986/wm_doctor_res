@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.PubDiary;
 import com.pinde.core.model.PubDiaryExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubDiaryMapper {
     int countByExample(PubDiaryExample example);

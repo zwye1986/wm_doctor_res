@@ -117,7 +117,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_SCORE
+      from RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -131,7 +131,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SCORE
+      from RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -144,21 +144,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_SCORE
+      from RES_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SCORE
+      delete from RES_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
-    delete from PDSCI.RES_SCORE
+      delete from RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResScore" >
-    insert into PDSCI.RES_SCORE (SCORE_FLOW, DOCTOR_FLOW, SCORE_TYPE_ID, 
+      insert into RES_SCORE (SCORE_FLOW, DOCTOR_FLOW, SCORE_TYPE_ID,
       SCORE_TYPE_NAME, RESULT_FLOW, PROCESS_FLOW, 
       SCH_DEPT_FLOW, SCH_DEPT_NAME, SCORE_PHASE_ID, 
       SCORE_PHASE_NAME, THEORY_SCORE, SKILL_SCORE, 
@@ -184,7 +184,7 @@
       #{realScore,jdbcType=VARCHAR}, #{extScore,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResScore" >
-    insert into PDSCI.RES_SCORE
+      insert into RES_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scoreFlow != null" >
         SCORE_FLOW,
@@ -401,13 +401,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResScoreExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SCORE
+      select count(*) from RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SCORE
+      update RES_SCORE
     <set >
       <if test="record.scoreFlow != null" >
         SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
@@ -520,7 +520,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_SCORE
+      update RES_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       SCORE_TYPE_ID = #{record.scoreTypeId,jdbcType=VARCHAR},
@@ -561,7 +561,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SCORE
+      update RES_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       SCORE_TYPE_ID = #{record.scoreTypeId,jdbcType=VARCHAR},
@@ -601,7 +601,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResScore" >
-    update PDSCI.RES_SCORE
+      update RES_SCORE
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -709,7 +709,7 @@
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResScore" >
-    update PDSCI.RES_SCORE
+      update RES_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},
       SCORE_TYPE_NAME = #{scoreTypeName,jdbcType=VARCHAR},
@@ -747,7 +747,7 @@
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResScore" >
-    update PDSCI.RES_SCORE
+      update RES_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},
       SCORE_TYPE_NAME = #{scoreTypeName,jdbcType=VARCHAR},

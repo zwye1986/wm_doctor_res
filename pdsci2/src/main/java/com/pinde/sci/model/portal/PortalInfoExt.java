@@ -1,7 +1,7 @@
 package com.pinde.sci.model.portal;
 
-import com.pinde.sci.model.mo.PortalColumn;
-import com.pinde.sci.model.mo.PortalInfo;
+import com.pinde.core.model.PortalColumn;
+import com.pinde.core.model.PortalInfo;
 
 public class PortalInfoExt extends PortalInfo {
 	/**

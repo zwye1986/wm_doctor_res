@@ -111,7 +111,7 @@
 		</if>
 		<if test='haveFile != null and haveFile != ""'>
 			AND exists (
-			select 1 from    PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
 			WHERE RECORD_STATUS = 'Y'
 			AND PRODUCT_TYPE = 'StuFlie'
 			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -224,7 +224,7 @@
 		</if>
 		<if test='haveFile != null and haveFile != ""'>
 			AND exists (
-			select 1 from    PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
 			WHERE RECORD_STATUS = 'Y'
 			AND PRODUCT_TYPE = 'StuFlie'
 			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -348,7 +348,7 @@
         </if>
         <if test='haveFile != null and haveFile != ""'>
             AND exists (
-            select 1 from PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
             WHERE RECORD_STATUS = 'Y'
             AND PRODUCT_TYPE = 'StuFlie'
             AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -465,7 +465,7 @@
 		</if>
 		<if test='haveFile != null and haveFile != ""'>
 			AND exists (
-			select 1 from    PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
 			WHERE RECORD_STATUS = 'Y'
 			AND PRODUCT_TYPE = 'StuFlie'
 			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -572,7 +572,7 @@
 		</if>
 		<if test='haveFile != null and haveFile != ""'>
 			AND exists (
-			select 1 from    PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
 			WHERE RECORD_STATUS = 'Y'
 			AND PRODUCT_TYPE = 'StuFlie'
 			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -673,7 +673,7 @@
 		</if>
 		<if test='haveFile != null and haveFile != ""'>
 			AND exists (
-			select 1 from    PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
 			WHERE RECORD_STATUS = 'Y'
 			AND PRODUCT_TYPE = 'StuFlie'
 			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -761,7 +761,7 @@
 			<if test='isForeign=="N"'>
 				<if test='haveFile != null and haveFile != ""'>
 					AND exists (
-					select 1 from    PDSCI.PUB_FILE t
+                    select 1 from PUB_FILE t
 					WHERE RECORD_STATUS = 'Y'
 					AND PRODUCT_TYPE = 'StuFlie'
 					AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -774,7 +774,7 @@
 			AND(SU.IS_Foreign='N'
 			<if test='haveFile != null and haveFile != ""'>
 				AND exists (
-				select 1 from    PDSCI.PUB_FILE t
+                select 1 from PUB_FILE t
 				WHERE RECORD_STATUS = 'Y'
 				AND PRODUCT_TYPE = 'StuFlie'
 				AND T.PRODUCT_FLOW=SUR.RESUME_FLOW
@@ -999,7 +999,7 @@
 		</if>
 		<if test='haveFile != null and haveFile != ""'>
 			AND exists (
-			select 1 from    PDSCI.PUB_FILE t
+            select 1 from PUB_FILE t
 			WHERE RECORD_STATUS = 'Y'
 			AND PRODUCT_TYPE = 'StuFlie'
 			AND T.PRODUCT_FLOW=SUR.RESUME_FLOW

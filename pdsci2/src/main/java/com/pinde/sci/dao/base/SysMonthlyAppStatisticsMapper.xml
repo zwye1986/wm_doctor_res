@@ -77,7 +77,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_APP_STATISTICS
+      from SYS_MONTHLY_APP_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,21 +88,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_APP_STATISTICS
+      from SYS_MONTHLY_APP_STATISTICS
     where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_MONTHLY_APP_STATISTICS
+      delete from SYS_MONTHLY_APP_STATISTICS
     where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" >
-    delete from PDSCI.SYS_MONTHLY_APP_STATISTICS
+      delete from SYS_MONTHLY_APP_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
-    insert into PDSCI.SYS_MONTHLY_APP_STATISTICS (APP_FLOW, ORG_FLOW, ALL_NUM, 
+      insert into SYS_MONTHLY_APP_STATISTICS (APP_FLOW, ORG_FLOW, ALL_NUM,
       USER_NUM, PER_NUM, DATE_MONTH, 
       DOCTOR_TYPE_ID)
     values (#{appFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{allNum,jdbcType=DECIMAL}, 
@@ -110,7 +110,7 @@
       #{doctorTypeId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
-    insert into PDSCI.SYS_MONTHLY_APP_STATISTICS
+      insert into SYS_MONTHLY_APP_STATISTICS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appFlow != null" >
         APP_FLOW,
@@ -159,13 +159,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_MONTHLY_APP_STATISTICS
+      select count(*) from SYS_MONTHLY_APP_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+      update SYS_MONTHLY_APP_STATISTICS
     <set >
       <if test="record.appFlow != null" >
         APP_FLOW = #{record.appFlow,jdbcType=VARCHAR},
@@ -194,7 +194,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+      update SYS_MONTHLY_APP_STATISTICS
     set APP_FLOW = #{record.appFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ALL_NUM = #{record.allNum,jdbcType=DECIMAL},
@@ -207,7 +207,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
-    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+      update SYS_MONTHLY_APP_STATISTICS
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -231,7 +231,7 @@
     where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
-    update PDSCI.SYS_MONTHLY_APP_STATISTICS
+      update SYS_MONTHLY_APP_STATISTICS
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ALL_NUM = #{allNum,jdbcType=DECIMAL},
       USER_NUM = #{userNum,jdbcType=DECIMAL},

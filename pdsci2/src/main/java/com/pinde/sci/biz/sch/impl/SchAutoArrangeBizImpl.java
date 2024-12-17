@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -608,6 +610,6 @@ public class SchAutoArrangeBizImpl implements ISchAutoArrangeBiz {
         return autoArrangeExtMapper.getSchRotations(orgFlow);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(SchAutoArrangeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchAutoArrangeBizImpl.class);
 
 }

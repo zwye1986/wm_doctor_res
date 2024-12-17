@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResBaseMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResBase" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResBase">
     <id column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
     <result column="EMAIL" property="email" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResBase" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResBase" extends="BaseResultMap">
     <result column="BASE_INFO" property="baseInfo" jdbcType="CLOB" />
     <result column="BASE_EXT_INFO" property="baseExtInfo" jdbcType="CLOB" />
   </resultMap>
@@ -97,7 +97,8 @@
   <sql id="Blob_Column_List" >
     BASE_INFO
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResBaseExample" >
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+          parameterType="com.pinde.core.model.ResBaseExample">
     select
     <if test="distinct" >
       distinct
@@ -105,7 +106,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_BASE
+      from RES_BASE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -113,13 +114,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResBaseExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResBaseExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASE
+      from RES_BASE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -134,22 +135,22 @@
          , b.RES_APPROVAL_NUMBER_NAME, b.GPS_APPROVAL_NUMBER_ID, b.GPS_APPROVAL_NUMBER_NAME, b.BASE_STATUS_ID, b.BASE_STATUS_NAME
          , b.AUDIT_STATUS_ID, b.AUDIT_STATUS_NAME, b.RECORD_STATUS, b.CREATE_TIME, b.CREATE_USER_FLOW
          , b.MODIFY_TIME, b.MODIFY_USER_FLOW, b.BASE_INFO
-    FROM PDSCI.RES_BASE b
+      FROM RES_BASE b
            LEFT JOIN SYS_ORG o on o.org_flow = b.org_flow
     where b.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_BASE
+      delete from RES_BASE
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResBaseExample" >
-    delete from PDSCI.RES_BASE
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResBaseExample">
+      delete from RES_BASE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResBase" >
-    insert into PDSCI.RES_BASE (ORG_FLOW, ORG_NAME, EMAIL, 
+  <insert id="insert" parameterType="com.pinde.core.model.ResBase">
+      insert into RES_BASE (ORG_FLOW, ORG_NAME, EMAIL,
       BASE_GRADE_ID, BASE_GRADE_NAME, BASE_TYPE_ID, 
       BASE_TYPE_NAME, BASE_PROPERTY_ID, BASE_PROPERTY_NAME, 
       RES_APPROVAL_NUMBER_ID, RES_APPROVAL_NUMBER_NAME, 
@@ -168,8 +169,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{baseInfo,jdbcType=CLOB}, #{sessionNumber,jdbcType=VARCHAR},#{baseExtInfo,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResBase" >
-    insert into PDSCI.RES_BASE
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResBase">
+      insert into RES_BASE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="orgFlow != null" >
         ORG_FLOW,
@@ -313,8 +314,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResBaseExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_BASE
+  <select id="countByExample" parameterType="com.pinde.core.model.ResBaseExample" resultType="java.lang.Integer">
+      select count(*) from RES_BASE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -327,14 +328,14 @@
          , b.RES_APPROVAL_NUMBER_NAME, b.GPS_APPROVAL_NUMBER_ID, b.GPS_APPROVAL_NUMBER_NAME, b.BASE_STATUS_ID, b.BASE_STATUS_NAME
          , b.AUDIT_STATUS_ID, b.AUDIT_STATUS_NAME, b.RECORD_STATUS, b.CREATE_TIME, b.CREATE_USER_FLOW
          , b.MODIFY_TIME, b.MODIFY_USER_FLOW, b.BASE_INFO, b.SESSION_NUMBER,b.BASE_EXT_INFO
-    FROM PDSCI.RES_BASE b
+        FROM RES_BASE b
            LEFT JOIN SYS_ORG o on o.org_flow = b.org_flow
     where b.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
         and b.SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
     </select>
 
     <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_BASE
+        update RES_BASE
     <set >
       <if test="record.orgFlow != null" >
         ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -411,7 +412,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_BASE
+      update RES_BASE
     set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
       EMAIL = #{record.email,jdbcType=VARCHAR},
@@ -440,7 +441,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_BASE
+      update RES_BASE
     set ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
       EMAIL = #{record.email,jdbcType=VARCHAR},
@@ -467,8 +468,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResBase" >
-    update PDSCI.RES_BASE
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResBase">
+      update RES_BASE
     <set >
       <if test="orgName != null" >
         ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -545,8 +546,8 @@
         and SESSION_NUMBER = #{sessionNumber, jdbcType=VARCHAR}
     </if>
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResBase" >
-    update PDSCI.RES_BASE
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResBase">
+      update RES_BASE
     set ORG_NAME = #{orgName,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
       BASE_GRADE_ID = #{baseGradeId,jdbcType=VARCHAR},
@@ -571,8 +572,8 @@
       BASE_INFO = #{baseInfo,jdbcType=CLOB}
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResBase" >
-    update PDSCI.RES_BASE
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResBase">
+      update RES_BASE
     set ORG_NAME = #{orgName,jdbcType=VARCHAR},
       EMAIL = #{email,jdbcType=VARCHAR},
       BASE_GRADE_ID = #{baseGradeId,jdbcType=VARCHAR},

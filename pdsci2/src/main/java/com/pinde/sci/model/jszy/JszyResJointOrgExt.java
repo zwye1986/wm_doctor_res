@@ -1,6 +1,6 @@
 package com.pinde.sci.model.jszy;
 
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 
 /**
  * Created by pdkj20 on 2018/3/29.

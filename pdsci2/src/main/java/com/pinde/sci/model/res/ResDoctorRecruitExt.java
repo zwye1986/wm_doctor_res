@@ -1,8 +1,8 @@
 package com.pinde.sci.model.res;
 
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.ResDoctor;
 
 public class ResDoctorRecruitExt extends ResDoctorRecruit {
 	

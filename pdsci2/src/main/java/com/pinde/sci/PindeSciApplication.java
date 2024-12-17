@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "jsres-pdsci")
 public class PindeSciApplication extends SpringBootServletInitializer {
-    private static Logger logger = LoggerFactory.getLogger(PindeSciApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(PindeSciApplication.class);
 
     @Autowired
     private Environment env;

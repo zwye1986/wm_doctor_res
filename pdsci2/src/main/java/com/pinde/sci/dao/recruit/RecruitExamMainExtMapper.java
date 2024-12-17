@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.recruit;
 
+import com.pinde.core.model.RecruitInfo;
 import com.pinde.sci.form.recruit.ExamInfoFlowForm;
-import com.pinde.sci.model.mo.RecruitInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

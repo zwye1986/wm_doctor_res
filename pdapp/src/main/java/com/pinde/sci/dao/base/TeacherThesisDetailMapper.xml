@@ -92,7 +92,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHER_THESIS_DETAIL
+      from TEACHER_THESIS_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +103,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHER_THESIS_DETAIL
+      from TEACHER_THESIS_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.TEACHER_THESIS_DETAIL
+      delete from TEACHER_THESIS_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.TeacherThesisDetailExample">
-    delete from PDSCI.TEACHER_THESIS_DETAIL
+      delete from TEACHER_THESIS_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.TeacherThesisDetail">
-    insert into PDSCI.TEACHER_THESIS_DETAIL (RECORD_FLOW, APPLY_FLOW, THESIS_TYPE_ID, 
+      insert into TEACHER_THESIS_DETAIL (RECORD_FLOW, APPLY_FLOW, THESIS_TYPE_ID,
       THESIS_TYPE_NAME, THESIS_NAME, THESIS_TITLE, 
       AUTHOR_RANKING_ID, AUTHOR_RANKING_NAME, REPORT_TIME, 
       SCI_POINT, FILE_FLOW, PRODUCT_WORK_NAME, 
@@ -133,7 +133,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.TeacherThesisDetail">
-    insert into PDSCI.TEACHER_THESIS_DETAIL
+      insert into TEACHER_THESIS_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -254,13 +254,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.TeacherThesisDetailExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.TEACHER_THESIS_DETAIL
+      select count(*) from TEACHER_THESIS_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.TEACHER_THESIS_DETAIL
+      update TEACHER_THESIS_DETAIL
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.TEACHER_THESIS_DETAIL
+      update TEACHER_THESIS_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
       THESIS_TYPE_ID = #{record.thesisTypeId,jdbcType=VARCHAR},
@@ -350,7 +350,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeacherThesisDetail">
-    update PDSCI.TEACHER_THESIS_DETAIL
+      update TEACHER_THESIS_DETAIL
     <set>
       <if test="applyFlow != null">
         APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
@@ -410,7 +410,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeacherThesisDetail">
-    update PDSCI.TEACHER_THESIS_DETAIL
+      update TEACHER_THESIS_DETAIL
     set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
       THESIS_TYPE_ID = #{thesisTypeId,jdbcType=VARCHAR},
       THESIS_TYPE_NAME = #{thesisTypeName,jdbcType=VARCHAR},

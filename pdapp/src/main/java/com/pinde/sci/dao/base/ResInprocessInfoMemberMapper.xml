@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_INPROCESS_INFO_MEMBER
+      from RES_INPROCESS_INFO_MEMBER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_INPROCESS_INFO_MEMBER
+      from RES_INPROCESS_INFO_MEMBER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_INPROCESS_INFO_MEMBER
+      delete from RES_INPROCESS_INFO_MEMBER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResInprocessInfoMemberExample">
-    delete from PDSCI.RES_INPROCESS_INFO_MEMBER
+      delete from RES_INPROCESS_INFO_MEMBER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResInprocessInfoMember">
-    insert into PDSCI.RES_INPROCESS_INFO_MEMBER (RECORD_FLOW, INFO_RECORD_FLOW, MEMBER_TITLE_ID, 
+      insert into RES_INPROCESS_INFO_MEMBER (RECORD_FLOW, INFO_RECORD_FLOW, MEMBER_TITLE_ID,
       MEMBER_TITLE_NAME, MEMBER_NAME, MEMBER_PHONE, 
       MEMBER_POST_ID, MEMBER_POST_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -122,7 +122,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResInprocessInfoMember">
-    insert into PDSCI.RES_INPROCESS_INFO_MEMBER
+      insert into RES_INPROCESS_INFO_MEMBER
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -207,13 +207,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResInprocessInfoMemberExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_INPROCESS_INFO_MEMBER
+      select count(*) from RES_INPROCESS_INFO_MEMBER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_INPROCESS_INFO_MEMBER
+      update RES_INPROCESS_INFO_MEMBER
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_INPROCESS_INFO_MEMBER
+      update RES_INPROCESS_INFO_MEMBER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       INFO_RECORD_FLOW = #{record.infoRecordFlow,jdbcType=VARCHAR},
       MEMBER_TITLE_ID = #{record.memberTitleId,jdbcType=VARCHAR},
@@ -279,7 +279,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResInprocessInfoMember">
-    update PDSCI.RES_INPROCESS_INFO_MEMBER
+      update RES_INPROCESS_INFO_MEMBER
     <set>
       <if test="infoRecordFlow != null">
         INFO_RECORD_FLOW = #{infoRecordFlow,jdbcType=VARCHAR},
@@ -321,7 +321,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResInprocessInfoMember">
-    update PDSCI.RES_INPROCESS_INFO_MEMBER
+      update RES_INPROCESS_INFO_MEMBER
     set INFO_RECORD_FLOW = #{infoRecordFlow,jdbcType=VARCHAR},
       MEMBER_TITLE_ID = #{memberTitleId,jdbcType=VARCHAR},
       MEMBER_TITLE_NAME = #{memberTitleName,jdbcType=VARCHAR},

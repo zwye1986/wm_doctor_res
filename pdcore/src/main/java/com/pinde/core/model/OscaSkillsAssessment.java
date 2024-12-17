@@ -57,6 +57,10 @@ public class OscaSkillsAssessment implements java.io.Serializable {
 
     private String remarks;
 
+    private String testId;
+
+    private String skillOrgPhone;
+
     public String getClinicalFlow() {
         return clinicalFlow;
     }
@@ -279,5 +283,21 @@ public class OscaSkillsAssessment implements java.io.Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
+
+    public String getSkillOrgPhone() {
+        return skillOrgPhone;
+    }
+
+    public void setSkillOrgPhone(String skillOrgPhone) {
+        this.skillOrgPhone = skillOrgPhone;
     }
 }

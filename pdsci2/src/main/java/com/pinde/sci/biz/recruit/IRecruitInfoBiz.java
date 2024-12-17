@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.recruit;
 
+import com.pinde.core.model.RecruitInfo;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.RecruitInfo;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -129,7 +129,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DOCTOR_ABSENCE
+      from SCH_DOCTOR_ABSENCE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -140,21 +140,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DOCTOR_ABSENCE
+      from SCH_DOCTOR_ABSENCE
     where ABSENCE_FLOW = #{absenceFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_DOCTOR_ABSENCE
+      delete from SCH_DOCTOR_ABSENCE
     where ABSENCE_FLOW = #{absenceFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchDoctorAbsenceExample" >
-    delete from PDSCI.SCH_DOCTOR_ABSENCE
+      delete from SCH_DOCTOR_ABSENCE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SchDoctorAbsence" >
-    insert into PDSCI.SCH_DOCTOR_ABSENCE (ABSENCE_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      insert into SCH_DOCTOR_ABSENCE (ABSENCE_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       SESSION_NUMBER, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
       START_DATE, END_DATE, INTERVAL_DAY, 
       ABSENCE_RESON, RECORD_STATUS, CREATE_TIME, 
@@ -192,7 +192,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchDoctorAbsence" >
-    insert into PDSCI.SCH_DOCTOR_ABSENCE
+      insert into SCH_DOCTOR_ABSENCE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="absenceFlow != null" >
         ABSENCE_FLOW,
@@ -505,13 +505,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchDoctorAbsenceExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_DOCTOR_ABSENCE
+      select count(*) from SCH_DOCTOR_ABSENCE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_DOCTOR_ABSENCE
+      update SCH_DOCTOR_ABSENCE
     <set >
       <if test="record.absenceFlow != null" >
         ABSENCE_FLOW = #{record.absenceFlow,jdbcType=VARCHAR},
@@ -672,7 +672,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_DOCTOR_ABSENCE
+      update SCH_DOCTOR_ABSENCE
     set ABSENCE_FLOW = #{record.absenceFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -729,7 +729,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchDoctorAbsence" >
-    update PDSCI.SCH_DOCTOR_ABSENCE
+      update SCH_DOCTOR_ABSENCE
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -885,7 +885,7 @@
     where ABSENCE_FLOW = #{absenceFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchDoctorAbsence" >
-    update PDSCI.SCH_DOCTOR_ABSENCE
+      update SCH_DOCTOR_ABSENCE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},

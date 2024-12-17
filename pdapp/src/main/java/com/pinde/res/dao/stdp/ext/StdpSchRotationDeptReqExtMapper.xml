@@ -5,16 +5,16 @@
 	</resultMap>
 	<select id="getReqAndProcess" resultMap="processReqMap">
 		select rdsp.process_flow,rdsp.sch_result_flow,srdr.req_num
-		from pdsci.sch_rotation_dept_req srdr
-			inner join pdsci.sch_rotation_dept srd
+        from sch_rotation_dept_req srdr
+        inner join sch_rotation_dept srd
 				on srd.record_status = 'Y'
 				and srdr.rel_record_flow = srd.record_flow
-			inner join pdsci.sch_arrange_result sar
+        inner join sch_arrange_result sar
 				on sar.record_status = 'Y'
 				and srd.group_flow = sar.standard_group_flow
 				and srd.standard_dept_id = sar.standard_dept_id
 				and sar.doctor_flow = #{userFlow}
-			inner join pdsci.res_doctor_sch_process rdsp
+        inner join res_doctor_sch_process rdsp
 				on rdsp.record_status = 'Y'
 				and sar.result_flow = rdsp.sch_result_flow
 		where srdr.record_status = 'Y'

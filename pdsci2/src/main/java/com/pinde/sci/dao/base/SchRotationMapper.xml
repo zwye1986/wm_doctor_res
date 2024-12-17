@@ -104,7 +104,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION
+      from SCH_ROTATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -118,7 +118,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION
+      from SCH_ROTATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -131,14 +131,14 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION
+      from SCH_ROTATION
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </select>
 
   <select id="readSchRotationByPartitionList" resultType="com.pinde.sci.model.mo.SchRotation">
     select
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION
+      from SCH_ROTATION
     where record_status = 'Y'
     <foreach collection="rotationFlowListList" item="rotationFlowList" open="and (" close=")" separator=" or ">
       ROTATION_FLOW in
@@ -149,17 +149,17 @@
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ROTATION
+      delete from SCH_ROTATION
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchRotationExample" >
-    delete from PDSCI.SCH_ROTATION
+      delete from SCH_ROTATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SchRotation" >
-    insert into PDSCI.SCH_ROTATION (ROTATION_FLOW, ROTATION_NAME, PUBLISH_FLAG, 
+      insert into SCH_ROTATION (ROTATION_FLOW, ROTATION_NAME, PUBLISH_FLAG,
       SPE_ID, SPE_NAME, ROTATION_YEAR, 
       DOCTOR_CATEGORY_ID, DOCTOR_CATEGORY_NAME, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -179,7 +179,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchRotation" >
-    insert into PDSCI.SCH_ROTATION
+      insert into SCH_ROTATION
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="rotationFlow != null" >
         ROTATION_FLOW,
@@ -330,13 +330,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchRotationExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ROTATION
+      select count(*) from SCH_ROTATION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ROTATION
+      update SCH_ROTATION
     <set >
       <if test="record.rotationFlow != null" >
         ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
@@ -416,7 +416,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SCH_ROTATION
+      update SCH_ROTATION
     set ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
       PUBLISH_FLAG = #{record.publishFlag,jdbcType=VARCHAR},
@@ -446,7 +446,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ROTATION
+      update SCH_ROTATION
     set ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
       PUBLISH_FLAG = #{record.publishFlag,jdbcType=VARCHAR},
@@ -475,7 +475,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchRotation" >
-    update PDSCI.SCH_ROTATION
+      update SCH_ROTATION
     <set >
       <if test="rotationName != null" >
         ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
@@ -550,7 +550,7 @@
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotation" >
-    update PDSCI.SCH_ROTATION
+      update SCH_ROTATION
     set ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
       PUBLISH_FLAG = #{publishFlag,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},
@@ -577,7 +577,7 @@
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchRotation" >
-    update PDSCI.SCH_ROTATION
+      update SCH_ROTATION
     set ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
       PUBLISH_FLAG = #{publishFlag,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},

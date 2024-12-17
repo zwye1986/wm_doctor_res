@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.ResJointOrgExample;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResJointOrgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

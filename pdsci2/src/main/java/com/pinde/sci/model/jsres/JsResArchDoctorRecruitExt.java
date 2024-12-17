@@ -1,8 +1,8 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.ResDoctorLog;
-import com.pinde.sci.model.mo.ResDoctorRecruitLog;
-import com.pinde.sci.model.mo.SysUserLog;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorRecruitLog;
+import com.pinde.core.model.SysUserLog;
 
 /**
  * Created by www.0001.Ga on 2017-05-24.

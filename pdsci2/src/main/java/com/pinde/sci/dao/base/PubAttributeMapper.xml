@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubAttributeMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubAttribute" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubAttribute">
     <id column="ATTR_FLOW" property="attrFlow" jdbcType="VARCHAR" />
     <result column="ATTR_NAME" property="attrName" jdbcType="VARCHAR" />
     <result column="ATTR_CODE" property="attrCode" jdbcType="VARCHAR" />
@@ -87,13 +87,13 @@
     ORDINAL, IS_VIEW_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubAttributeExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubAttributeExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_ATTRIBUTE
+        from PUB_ATTRIBUTE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -104,21 +104,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_ATTRIBUTE
+      from PUB_ATTRIBUTE
     where ATTR_FLOW = #{attrFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_ATTRIBUTE
+      delete from PUB_ATTRIBUTE
     where ATTR_FLOW = #{attrFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubAttributeExample" >
-    delete from PDSCI.PUB_ATTRIBUTE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubAttributeExample">
+        delete from PUB_ATTRIBUTE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubAttribute" >
-    insert into PDSCI.PUB_ATTRIBUTE (ATTR_FLOW, ATTR_NAME, ATTR_CODE, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubAttribute">
+        insert into PUB_ATTRIBUTE (ATTR_FLOW, ATTR_NAME, ATTR_CODE,
       ATTR_VAR_NAME, MODULE_CODE, ELEMENT_CODE, 
       ELEMENT_NAME, DATA_TYPE_ID, DATA_TYPE_NAME, 
       DATA_LENGTH, DATA_DECIMAL_LENGTH, INPUT_TYPE_ID, 
@@ -133,8 +133,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubAttribute" >
-    insert into PDSCI.PUB_ATTRIBUTE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubAttribute">
+        insert into PUB_ATTRIBUTE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="attrFlow != null" >
         ATTR_FLOW,
@@ -260,14 +260,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubAttributeExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_ATTRIBUTE
+    <select id="countByExample" parameterType="com.pinde.core.model.PubAttributeExample" resultType="java.lang.Integer">
+        select count(*) from PUB_ATTRIBUTE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_ATTRIBUTE
+      update PUB_ATTRIBUTE
     <set >
       <if test="record.attrFlow != null" >
         ATTR_FLOW = #{record.attrFlow,jdbcType=VARCHAR},
@@ -335,7 +335,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_ATTRIBUTE
+      update PUB_ATTRIBUTE
     set ATTR_FLOW = #{record.attrFlow,jdbcType=VARCHAR},
       ATTR_NAME = #{record.attrName,jdbcType=VARCHAR},
       ATTR_CODE = #{record.attrCode,jdbcType=VARCHAR},
@@ -360,8 +360,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubAttribute" >
-    update PDSCI.PUB_ATTRIBUTE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubAttribute">
+        update PUB_ATTRIBUTE
     <set >
       <if test="attrName != null" >
         ATTR_NAME = #{attrName,jdbcType=VARCHAR},
@@ -423,8 +423,8 @@
     </set>
     where ATTR_FLOW = #{attrFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubAttribute" >
-    update PDSCI.PUB_ATTRIBUTE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubAttribute">
+        update PUB_ATTRIBUTE
     set ATTR_NAME = #{attrName,jdbcType=VARCHAR},
       ATTR_CODE = #{attrCode,jdbcType=VARCHAR},
       ATTR_VAR_NAME = #{attrVarName,jdbcType=VARCHAR},

@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.recruit.impl;
 
+import com.pinde.core.model.RecruitExamRoomInfo;
+import com.pinde.core.model.RecruitExamRoomInfoExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.RecruitExamRoomInfoMapper;
-import com.pinde.sci.model.mo.RecruitExamRoomInfo;
-import com.pinde.sci.model.mo.RecruitExamRoomInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

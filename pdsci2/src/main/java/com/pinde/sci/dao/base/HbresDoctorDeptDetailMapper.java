@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.HbresDoctorDeptDetail;
-import com.pinde.sci.model.mo.HbresDoctorDeptDetailExample;
+import com.pinde.core.model.HbresDoctorDeptDetail;
+import com.pinde.core.model.HbresDoctorDeptDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

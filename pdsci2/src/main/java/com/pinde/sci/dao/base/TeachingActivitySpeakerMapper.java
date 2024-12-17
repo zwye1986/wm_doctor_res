@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.TeachingActivitySpeaker;
-import com.pinde.sci.model.mo.TeachingActivitySpeakerExample;
+import com.pinde.core.model.TeachingActivitySpeaker;
+import com.pinde.core.model.TeachingActivitySpeakerExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

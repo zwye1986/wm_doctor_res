@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SYNTHETICAL_FUND
+      from RES_SYNTHETICAL_FUND
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +95,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SYNTHETICAL_FUND
+      from RES_SYNTHETICAL_FUND
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SYNTHETICAL_FUND
+      delete from RES_SYNTHETICAL_FUND
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSyntheticalFundExample" >
-    delete from PDSCI.RES_SYNTHETICAL_FUND
+      delete from RES_SYNTHETICAL_FUND
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
-    insert into PDSCI.RES_SYNTHETICAL_FUND (RECORD_FLOW, REPORT_DATE, IN_PLACE_DATE, 
+      insert into RES_SYNTHETICAL_FUND (RECORD_FLOW, REPORT_DATE, IN_PLACE_DATE,
       ORG_FLOW, ORG_NAME, AMOUNT_OF_INCOME, 
       AMOUNT_OF_EXPENSES, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -121,7 +121,7 @@
       #{isSend,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
-    insert into PDSCI.RES_SYNTHETICAL_FUND
+      insert into RES_SYNTHETICAL_FUND
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSyntheticalFundExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SYNTHETICAL_FUND
+      select count(*) from RES_SYNTHETICAL_FUND
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SYNTHETICAL_FUND
+      update RES_SYNTHETICAL_FUND
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SYNTHETICAL_FUND
+      update RES_SYNTHETICAL_FUND
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       REPORT_DATE = #{record.reportDate,jdbcType=VARCHAR},
       IN_PLACE_DATE = #{record.inPlaceDate,jdbcType=VARCHAR},
@@ -278,7 +278,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
-    update PDSCI.RES_SYNTHETICAL_FUND
+      update RES_SYNTHETICAL_FUND
     <set >
       <if test="reportDate != null" >
         REPORT_DATE = #{reportDate,jdbcType=VARCHAR},
@@ -320,7 +320,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
-    update PDSCI.RES_SYNTHETICAL_FUND
+      update RES_SYNTHETICAL_FUND
     set REPORT_DATE = #{reportDate,jdbcType=VARCHAR},
       IN_PLACE_DATE = #{inPlaceDate,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

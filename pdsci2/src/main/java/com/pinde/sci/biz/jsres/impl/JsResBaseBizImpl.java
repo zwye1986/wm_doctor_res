@@ -23,14 +23,11 @@ import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResBase;
-import com.pinde.sci.model.mo.ResBaseExample;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResPassScoreCfgExample;
-import com.pinde.sci.model.mo.SysUserRole;
-import com.pinde.sci.model.mo.SysUserRoleExample;
+import com.pinde.core.model.SysUserRole;
+import com.pinde.core.model.SysUserRoleExample;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -790,6 +787,6 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		return  resBase ;
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubMeetingMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubMeeting" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubMeeting">
     <id column="MEETING_FLOW" property="meetingFlow" jdbcType="VARCHAR" />
     <result column="MEETING_NAME" property="meetingName" jdbcType="VARCHAR" />
     <result column="MEETING_DATE" property="meetingDate" jdbcType="VARCHAR" />
@@ -79,13 +79,13 @@
     MEETING_TYPE_NAME, MEETING_SUMMARY, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubMeetingExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubMeetingExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MEETING
+        from PUB_MEETING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MEETING
+      from PUB_MEETING
     where MEETING_FLOW = #{meetingFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_MEETING
+      delete from PUB_MEETING
     where MEETING_FLOW = #{meetingFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubMeetingExample" >
-    delete from PDSCI.PUB_MEETING
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubMeetingExample">
+        delete from PUB_MEETING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubMeeting" >
-    insert into PDSCI.PUB_MEETING (MEETING_FLOW, MEETING_NAME, MEETING_DATE, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubMeeting">
+        insert into PUB_MEETING (MEETING_FLOW, MEETING_NAME, MEETING_DATE,
       MEETING_ADDRESS, MEETING_HOST, MEETING_TYPE_ID, 
       MEETING_TYPE_NAME, MEETING_SUMMARY, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,8 +121,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubMeeting" >
-    insert into PDSCI.PUB_MEETING
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubMeeting">
+        insert into PUB_MEETING
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="meetingFlow != null" >
         MEETING_FLOW,
@@ -206,14 +206,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubMeetingExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_MEETING
+    <select id="countByExample" parameterType="com.pinde.core.model.PubMeetingExample" resultType="java.lang.Integer">
+        select count(*) from PUB_MEETING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_MEETING
+      update PUB_MEETING
     <set >
       <if test="record.meetingFlow != null" >
         MEETING_FLOW = #{record.meetingFlow,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_MEETING
+      update PUB_MEETING
     set MEETING_FLOW = #{record.meetingFlow,jdbcType=VARCHAR},
       MEETING_NAME = #{record.meetingName,jdbcType=VARCHAR},
       MEETING_DATE = #{record.meetingDate,jdbcType=VARCHAR},
@@ -278,8 +278,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubMeeting" >
-    update PDSCI.PUB_MEETING
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubMeeting">
+        update PUB_MEETING
     <set >
       <if test="meetingName != null" >
         MEETING_NAME = #{meetingName,jdbcType=VARCHAR},
@@ -320,8 +320,8 @@
     </set>
     where MEETING_FLOW = #{meetingFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubMeeting" >
-    update PDSCI.PUB_MEETING
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubMeeting">
+        update PUB_MEETING
     set MEETING_NAME = #{meetingName,jdbcType=VARCHAR},
       MEETING_DATE = #{meetingDate,jdbcType=VARCHAR},
       MEETING_ADDRESS = #{meetingAddress,jdbcType=VARCHAR},

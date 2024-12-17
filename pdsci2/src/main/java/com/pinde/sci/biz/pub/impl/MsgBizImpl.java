@@ -2,6 +2,8 @@ package com.pinde.sci.biz.pub.impl;
 
 
 import com.pinde.core.common.enums.sys.MsgTypeEnum;
+import com.pinde.core.model.PubMsg;
+import com.pinde.core.model.PubMsgExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,8 +12,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.SMSUtil;
 import com.pinde.sci.dao.base.PubMsgMapper;
-import com.pinde.sci.model.mo.PubMsg;
-import com.pinde.sci.model.mo.PubMsgExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -222,6 +222,6 @@ public class MsgBizImpl implements IMsgBiz {
 		return util.sendSMS(smsTempFlow,params,relId,relType);
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(MsgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MsgBizImpl.class);
 
 }

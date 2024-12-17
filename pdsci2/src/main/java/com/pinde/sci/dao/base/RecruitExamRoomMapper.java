@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.RecruitExamRoom;
-import com.pinde.sci.model.mo.RecruitExamRoomExample;
+import com.pinde.core.model.RecruitExamRoom;
+import com.pinde.core.model.RecruitExamRoomExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

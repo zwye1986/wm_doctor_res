@@ -37,13 +37,10 @@ import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.ResArchiveSequence;
-import com.pinde.sci.model.mo.ResAssessCfg;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResDoctorSchProcessExample;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcessExample;
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.model.mo.ResOutOfficeLock;
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
@@ -53,7 +50,6 @@ import com.pinde.sci.model.mo.SchRotation;
 import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.sci.model.mo.SchRotationDeptExample;
 import com.pinde.sci.model.mo.SchRotationGroup;
-import com.pinde.sci.model.mo.TeachingActivityInfo;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -882,7 +878,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 		}
 		Map<String,Object> paramMap = new HashMap<String, Object>();
-//		paramMap.put("trainingTypeId",com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());	//住院医师
+		paramMap.put("trainingTypeId", trainingTypeId);	//住院医师
 		if(docTypes!=null&&docTypes.length>0){
 			paramMap.put("docTypeList",docTypes);
 		}

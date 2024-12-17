@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 
 import com.pinde.core.common.sci.dao.AttachedUnitInfoMapper;
+import com.pinde.core.common.sci.dao.CountryOrgInfoMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jszy.IJszyResBaseBiz;
@@ -10,7 +11,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.sci.dao.CountryOrgInfoMapper;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
@@ -19,7 +19,6 @@ import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
 import com.pinde.sci.model.jszy.JszyResBaseExt;
-import com.pinde.sci.model.mo.ResBase;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResPassScoreCfgExample;
 import org.dom4j.Document;
@@ -63,7 +62,7 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 	@Autowired
 	private AttachedUnitInfoMapper auiMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(JszyResBaseBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JszyResBaseBizImpl.class);
 
 	/**
 	 * 保存基地的基本信息
@@ -306,8 +305,8 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 			Class<?> objClass = obj.getClass();
 			String firstLetter = attrName.substring(0, 1).toUpperCase();
 			String methedName = "set" + firstLetter + attrName.substring(1);
-			Method setMethod = objClass.getMethod(methedName, new Class[]{String.class});
-			setMethod.invoke(obj, new Object[]{attrValue});
+            Method setMethod = objClass.getMethod(methedName, String.class);
+            setMethod.invoke(obj, attrValue);
 		} catch (Exception e) {
             logger.error("", e);
 		}

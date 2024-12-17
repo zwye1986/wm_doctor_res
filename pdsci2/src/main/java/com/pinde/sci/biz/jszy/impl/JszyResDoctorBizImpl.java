@@ -3,8 +3,7 @@ package com.pinde.sci.biz.jszy.impl;
 import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -26,7 +25,9 @@ import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.sci.model.mo.ResRec;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -50,7 +51,7 @@ import java.util.*;
 //@Transactional(rollbackFor=Exception.class)
 public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
 
-    private static Logger logger = LoggerFactory.getLogger(JszyResDoctorBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JszyResDoctorBizImpl.class);
 
 	@Autowired
 	private IPubUserResumeBiz userResumeBiz;
@@ -861,7 +862,7 @@ public class JszyResDoctorBizImpl implements IJszyResDoctorBiz {
             cellTitle = rowThree.createCell(i);
             cellTitle.setCellValue(titles[i]);
             cellTitle.setCellStyle(styleCenter);
-            sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
         }
 
         int rowNum = 3;

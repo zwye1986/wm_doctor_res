@@ -3,8 +3,7 @@ package com.pinde.sci.biz.lcjn.impl;
 import com.pinde.core.common.enums.LcjnAuditStatusEnum;
 import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
 import com.pinde.core.common.sci.dao.SysUserMapper;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnDoctorOrderInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
@@ -12,7 +11,6 @@ import com.pinde.sci.dao.base.LcjnCourseInfoMapper;
 import com.pinde.sci.dao.base.LcjnCourseTimeMapper;
 import com.pinde.sci.dao.base.LcjnDoctorCourseMapper;
 import com.pinde.sci.dao.lcjn.LcjnDoctorTrainExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -214,9 +212,9 @@ public class LcjnDoctorOrderInfoBizImpl implements ILcjnDoctorOrderInfoBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
 
             int row_num = sheet.getLastRowNum();

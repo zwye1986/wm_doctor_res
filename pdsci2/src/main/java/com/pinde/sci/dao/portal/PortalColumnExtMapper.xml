@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.portal.PortalColumnExtMapper" >
   <select id="searchInxColumnList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.PortalColumnMapper.BaseResultMap">
-	    select * from PDSCI.PORTAL_COLUMN
+      select * from PORTAL_COLUMN
 	    where RECORD_STATUS = 'Y'
 		<if test='columnId != null and columnId != ""'>
 			<bind name="columnId" value="columnId+'%'"/>

@@ -28,29 +28,25 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.model.mo.JsresRecruitDocInfoExample;
-import com.pinde.sci.model.mo.JsresRecruitDocInfoWithBLOBs;
-import com.pinde.sci.model.mo.JsresRecruitInfo;
-import com.pinde.sci.model.mo.JsresRecruitInfoExample;
-import com.pinde.sci.model.mo.OscaDoctorAssessment;
-import com.pinde.sci.model.mo.OscaDoctorAssessmentExample;
-import com.pinde.sci.model.mo.OscaSkillDocScore;
-import com.pinde.sci.model.mo.OscaSkillRoomDoc;
-import com.pinde.sci.model.mo.OscaSkillRoomDocExample;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.OscaSubjectMain;
-import com.pinde.sci.model.mo.OscaSubjectPartScore;
-import com.pinde.sci.model.mo.OscaSubjectPartScoreExample;
-import com.pinde.sci.model.mo.OscaSubjectStation;
-import com.pinde.sci.model.mo.OscaSubjectStationExample;
-import com.pinde.sci.model.mo.OscaSubjectStationScore;
-import com.pinde.sci.model.mo.OscaSubjectStationScoreExample;
-import com.pinde.sci.model.mo.OscaTeaScanDoc;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.OscaDoctorAssessment;
+import com.pinde.core.model.OscaDoctorAssessmentExample;
+import com.pinde.core.model.OscaSkillDocScore;
+import com.pinde.core.model.OscaSkillRoomDoc;
+import com.pinde.core.model.OscaSkillRoomDocExample;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.OscaSubjectMain;
+import com.pinde.core.model.OscaSubjectPartScore;
+import com.pinde.core.model.OscaSubjectPartScoreExample;
+import com.pinde.core.model.OscaSubjectStation;
+import com.pinde.core.model.OscaSubjectStationExample;
+import com.pinde.core.model.OscaSubjectStationScore;
+import com.pinde.core.model.OscaSubjectStationScoreExample;
+import com.pinde.core.model.OscaTeaScanDoc;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.SchRotationDeptAfterExample;
 import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
@@ -103,7 +99,7 @@ public class SchRotationDeptAfterBizImpl implements ISchRotationDeptAfterBiz {
     @Autowired
     private IOrgBiz orgBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(SchRotationDeptAfterBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchRotationDeptAfterBizImpl.class);
     @Override
     public List<SchRotationDeptAfterWithBLOBs> getAll() {
         SchRotationDeptAfterExample example=new SchRotationDeptAfterExample();

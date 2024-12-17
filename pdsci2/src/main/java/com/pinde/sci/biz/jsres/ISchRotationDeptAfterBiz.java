@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
 import org.springframework.web.multipart.MultipartFile;
 

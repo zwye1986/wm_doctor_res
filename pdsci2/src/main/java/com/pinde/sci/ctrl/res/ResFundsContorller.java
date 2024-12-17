@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.ResBaseFund;
+import com.pinde.core.model.ResBaseFundDetail;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;

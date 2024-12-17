@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_KQ_LOG
+      from RES_DOCTOR_KQ_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_KQ_LOG
+      from RES_DOCTOR_KQ_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DOCTOR_KQ_LOG
+      delete from RES_DOCTOR_KQ_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorKqLogExample" >
-    delete from PDSCI.RES_DOCTOR_KQ_LOG
+      delete from RES_DOCTOR_KQ_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResDoctorKqLog" >
-    insert into PDSCI.RES_DOCTOR_KQ_LOG (RECORD_FLOW, KQ_RECORD_FLOW, ROLE_ID, 
+      insert into RES_DOCTOR_KQ_LOG (RECORD_FLOW, KQ_RECORD_FLOW, ROLE_ID,
       ROLE_NAME, AUDIT_USER_FLOW, AUDIT_USER_NAME, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_TIME, 
       AUDIT_REMAKE, TYPE_ID, TYPE_NAME, 
@@ -128,7 +128,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorKqLog" >
-    insert into PDSCI.RES_DOCTOR_KQ_LOG
+      insert into RES_DOCTOR_KQ_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -237,13 +237,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorKqLogExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DOCTOR_KQ_LOG
+      select count(*) from RES_DOCTOR_KQ_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DOCTOR_KQ_LOG
+      update RES_DOCTOR_KQ_LOG
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DOCTOR_KQ_LOG
+      update RES_DOCTOR_KQ_LOG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       KQ_RECORD_FLOW = #{record.kqRecordFlow,jdbcType=VARCHAR},
       ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorKqLog" >
-    update PDSCI.RES_DOCTOR_KQ_LOG
+      update RES_DOCTOR_KQ_LOG
     <set >
       <if test="kqRecordFlow != null" >
         KQ_RECORD_FLOW = #{kqRecordFlow,jdbcType=VARCHAR},
@@ -379,7 +379,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorKqLog" >
-    update PDSCI.RES_DOCTOR_KQ_LOG
+      update RES_DOCTOR_KQ_LOG
     set KQ_RECORD_FLOW = #{kqRecordFlow,jdbcType=VARCHAR},
       ROLE_ID = #{roleId,jdbcType=VARCHAR},
       ROLE_NAME = #{roleName,jdbcType=VARCHAR},

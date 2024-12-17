@@ -88,7 +88,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_AFTER
+      from SCH_ROTATION_DEPT_AFTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_AFTER
+      from SCH_ROTATION_DEPT_AFTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -115,21 +115,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_AFTER
+      from SCH_ROTATION_DEPT_AFTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ROTATION_DEPT_AFTER
+      delete from SCH_ROTATION_DEPT_AFTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationDeptAfterExample" >
-    delete from PDSCI.SCH_ROTATION_DEPT_AFTER
+      delete from SCH_ROTATION_DEPT_AFTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
-    insert into PDSCI.SCH_ROTATION_DEPT_AFTER (RECORD_FLOW, SCH_ROTATION_DEPT_FLOW, 
+      insert into SCH_ROTATION_DEPT_AFTER (RECORD_FLOW, SCH_ROTATION_DEPT_FLOW,
       DOCTOR_FLOW, RECORD_STATUS, MODFIY_TIME, 
       IMAGE_URLS_BACK, THUMB_URLS_BACK, APPLY_YEAR, 
       IMAGE_URLS, THUMB_URLS)
@@ -139,7 +139,7 @@
       #{imageUrls,jdbcType=CLOB}, #{thumbUrls,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
-    insert into PDSCI.SCH_ROTATION_DEPT_AFTER
+      insert into SCH_ROTATION_DEPT_AFTER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SchRotationDeptAfterExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ROTATION_DEPT_AFTER
+      select count(*) from SCH_ROTATION_DEPT_AFTER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ROTATION_DEPT_AFTER
+      update SCH_ROTATION_DEPT_AFTER
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SCH_ROTATION_DEPT_AFTER
+      update SCH_ROTATION_DEPT_AFTER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       SCH_ROTATION_DEPT_FLOW = #{record.schRotationDeptFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -266,7 +266,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ROTATION_DEPT_AFTER
+      update SCH_ROTATION_DEPT_AFTER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       SCH_ROTATION_DEPT_FLOW = #{record.schRotationDeptFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -280,7 +280,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
-    update PDSCI.SCH_ROTATION_DEPT_AFTER
+      update SCH_ROTATION_DEPT_AFTER
     <set >
       <if test="schRotationDeptFlow != null" >
         SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow,jdbcType=VARCHAR},
@@ -313,7 +313,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SchRotationDeptAfterWithBLOBs" >
-    update PDSCI.SCH_ROTATION_DEPT_AFTER
+      update SCH_ROTATION_DEPT_AFTER
     set SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
@@ -326,7 +326,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationDeptAfter" >
-    update PDSCI.SCH_ROTATION_DEPT_AFTER
+      update SCH_ROTATION_DEPT_AFTER
     set SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

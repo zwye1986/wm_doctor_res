@@ -3,9 +3,7 @@ package com.pinde.sci.ctrl.inx;
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -26,7 +24,14 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.sci.model.mo.ResTestConfig;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -1049,7 +1054,7 @@ public class JsResTempController extends GeneralController{
 	public String insertSptUserInfo(MultipartFile file){
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) afterBiz.insertSptUserInfo(file);
+                ExcelUtile result = afterBiz.insertSptUserInfo(file);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");
@@ -1083,7 +1088,7 @@ public class JsResTempController extends GeneralController{
 	public String insertGjptUserInfo(MultipartFile file){
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) afterBiz.insertGjptUserInfo(file);
+                ExcelUtile result = afterBiz.insertGjptUserInfo(file);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");

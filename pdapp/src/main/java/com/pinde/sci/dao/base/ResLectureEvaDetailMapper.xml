@@ -97,7 +97,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_LECTURE_EVA_DETAIL
+      from RES_LECTURE_EVA_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -111,7 +111,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_LECTURE_EVA_DETAIL
+      from RES_LECTURE_EVA_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -124,21 +124,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_LECTURE_EVA_DETAIL
+      from RES_LECTURE_EVA_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_LECTURE_EVA_DETAIL
+      delete from RES_LECTURE_EVA_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResLectureEvaDetailExample" >
-    delete from PDSCI.RES_LECTURE_EVA_DETAIL
+      delete from RES_LECTURE_EVA_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
-    insert into PDSCI.RES_LECTURE_EVA_DETAIL (RECORD_FLOW, LECTURE_FLOW, OPER_USER_FLOW, 
+      insert into RES_LECTURE_EVA_DETAIL (RECORD_FLOW, LECTURE_FLOW, OPER_USER_FLOW,
       OPER_USER_NAME, EVA_CONTENT, EVA_SCORE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, EVAL_FORM_SCORE, 
@@ -154,7 +154,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
-    insert into PDSCI.RES_LECTURE_EVA_DETAIL
+      insert into RES_LECTURE_EVA_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -269,13 +269,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResLectureEvaDetailExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_LECTURE_EVA_DETAIL
+      select count(*) from RES_LECTURE_EVA_DETAIL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_LECTURE_EVA_DETAIL
+      update RES_LECTURE_EVA_DETAIL
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -337,7 +337,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_LECTURE_EVA_DETAIL
+      update RES_LECTURE_EVA_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       LECTURE_FLOW = #{record.lectureFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
@@ -361,7 +361,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_LECTURE_EVA_DETAIL
+      update RES_LECTURE_EVA_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       LECTURE_FLOW = #{record.lectureFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
@@ -384,7 +384,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
-    update PDSCI.RES_LECTURE_EVA_DETAIL
+      update RES_LECTURE_EVA_DETAIL
     <set >
       <if test="lectureFlow != null" >
         LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
@@ -441,7 +441,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
-    update PDSCI.RES_LECTURE_EVA_DETAIL
+      update RES_LECTURE_EVA_DETAIL
     set LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{operUserName,jdbcType=VARCHAR},
@@ -462,7 +462,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResLectureEvaDetail" >
-    update PDSCI.RES_LECTURE_EVA_DETAIL
+      update RES_LECTURE_EVA_DETAIL
     set LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{operUserName,jdbcType=VARCHAR},

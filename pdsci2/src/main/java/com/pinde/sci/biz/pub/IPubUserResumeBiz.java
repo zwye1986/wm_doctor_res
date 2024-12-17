@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.pub;
 
-import com.pinde.sci.model.mo.PubUserResume;
+import com.pinde.core.model.PubUserResume;
 import com.pinde.core.model.SysUser;
 import org.dom4j.DocumentException;
 

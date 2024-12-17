@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResGradeBorderlineMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResGradeBorderline" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResGradeBorderline">
     <id column="BORDERLINE_FLOW" property="borderlineFlow" jdbcType="VARCHAR" />
     <result column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
     <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
@@ -77,13 +77,14 @@
     BORDERLINE_FLOW, EXAM_FLOW, SPE_ID, SPE_NAME, GRADE_STEP, GRADE_BORDERLINE, PUBLISH_FLAG, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResGradeBorderlineExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResGradeBorderlineExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_GRADE_BORDERLINE
+      from RES_GRADE_BORDERLINE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +95,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_GRADE_BORDERLINE
+      from RES_GRADE_BORDERLINE
     where BORDERLINE_FLOW = #{borderlineFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_GRADE_BORDERLINE
+      delete from RES_GRADE_BORDERLINE
     where BORDERLINE_FLOW = #{borderlineFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResGradeBorderlineExample" >
-    delete from PDSCI.RES_GRADE_BORDERLINE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResGradeBorderlineExample">
+      delete from RES_GRADE_BORDERLINE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResGradeBorderline" >
-    insert into PDSCI.RES_GRADE_BORDERLINE (BORDERLINE_FLOW, EXAM_FLOW, SPE_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResGradeBorderline">
+      insert into RES_GRADE_BORDERLINE (BORDERLINE_FLOW, EXAM_FLOW, SPE_ID,
       SPE_NAME, GRADE_STEP, GRADE_BORDERLINE, 
       PUBLISH_FLAG, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -119,8 +120,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResGradeBorderline" >
-    insert into PDSCI.RES_GRADE_BORDERLINE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResGradeBorderline">
+      insert into RES_GRADE_BORDERLINE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="borderlineFlow != null" >
         BORDERLINE_FLOW,
@@ -198,14 +199,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResGradeBorderlineExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_GRADE_BORDERLINE
+    <select id="countByExample" parameterType="com.pinde.core.model.ResGradeBorderlineExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_GRADE_BORDERLINE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_GRADE_BORDERLINE
+      update RES_GRADE_BORDERLINE
     <set >
       <if test="record.borderlineFlow != null" >
         BORDERLINE_FLOW = #{record.borderlineFlow,jdbcType=VARCHAR},
@@ -249,7 +251,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_GRADE_BORDERLINE
+      update RES_GRADE_BORDERLINE
     set BORDERLINE_FLOW = #{record.borderlineFlow,jdbcType=VARCHAR},
       EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
       SPE_ID = #{record.speId,jdbcType=VARCHAR},
@@ -266,8 +268,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResGradeBorderline" >
-    update PDSCI.RES_GRADE_BORDERLINE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResGradeBorderline">
+      update RES_GRADE_BORDERLINE
     <set >
       <if test="examFlow != null" >
         EXAM_FLOW = #{examFlow,jdbcType=VARCHAR},
@@ -305,8 +307,8 @@
     </set>
     where BORDERLINE_FLOW = #{borderlineFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResGradeBorderline" >
-    update PDSCI.RES_GRADE_BORDERLINE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResGradeBorderline">
+      update RES_GRADE_BORDERLINE
     set EXAM_FLOW = #{examFlow,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},
       SPE_NAME = #{speName,jdbcType=VARCHAR},

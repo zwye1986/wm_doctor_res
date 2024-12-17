@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResBaseeval;
-import com.pinde.sci.model.mo.ResBaseevalDetail;
-import com.pinde.sci.model.mo.ResBaseevalForm;
-import com.pinde.sci.model.mo.ResBaseevalFormCfg;
+import com.pinde.core.model.ResBaseeval;
+import com.pinde.core.model.ResBaseevalDetail;
+import com.pinde.core.model.ResBaseevalForm;
+import com.pinde.core.model.ResBaseevalFormCfg;
 
 import java.util.List;
 

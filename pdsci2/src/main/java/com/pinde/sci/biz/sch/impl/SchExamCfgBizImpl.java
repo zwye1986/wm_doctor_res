@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.model.ResDoctorGraduationExam;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

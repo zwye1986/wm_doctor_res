@@ -47,6 +47,8 @@ public class ResDoctorReduction implements java.io.Serializable {
 
     private String requireXtAduit;
 
+    private String proveFilePath;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -229,5 +231,13 @@ public class ResDoctorReduction implements java.io.Serializable {
 
     public void setRequireXtAduit(String requireXtAduit) {
         this.requireXtAduit = requireXtAduit;
+    }
+
+    public String getProveFilePath() {
+        return proveFilePath;
+    }
+
+    public void setProveFilePath(String proveFilePath) {
+        this.proveFilePath = proveFilePath;
     }
 }

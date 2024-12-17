@@ -1,5 +1,9 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.ResDoctorKq;
+import com.pinde.core.model.ResDoctorKqLog;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSignin;
 import com.pinde.sci.form.res.TimeSetFrom;
 import com.pinde.sci.model.mo.*;
 

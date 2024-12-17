@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResBookStudyRecord;
+import com.pinde.core.model.ResBookStudyRecord;
 
 import java.util.List;
 

@@ -1,15 +1,15 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
+import com.pinde.core.model.RecruitExamMain;
+import com.pinde.core.model.RecruitInterviewInfo;
+import com.pinde.core.model.SysUser;
 import com.pinde.sci.biz.recruit.IRecruitExamMainBiz;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
-import com.pinde.sci.model.mo.RecruitExamMain;
-import com.pinde.sci.model.mo.RecruitInterviewInfo;
-import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

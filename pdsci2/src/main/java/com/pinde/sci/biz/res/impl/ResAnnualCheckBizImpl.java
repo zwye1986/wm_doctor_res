@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResAnnualAssessmentRecord;
+import com.pinde.core.model.ResAnnualAssessmentRecordExample;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,10 +13,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResAnnualAssessmentRecordMapper;
-import com.pinde.sci.model.mo.ResAnnualAssessmentRecord;
-import com.pinde.sci.model.mo.ResAnnualAssessmentRecordExample;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.ResDoctor;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
@@ -39,7 +39,7 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class ResAnnualCheckBizImpl implements IResAnnualCheckBiz{
-    private static Logger logger = LoggerFactory.getLogger(ResAnnualCheckBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResAnnualCheckBizImpl.class);
 
 
     @Autowired

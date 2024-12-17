@@ -18,7 +18,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.ResBaseSpeDept;
 import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
 import com.pinde.sci.model.mo.SysDeptExample;
 import org.apache.commons.collections4.CollectionUtils;

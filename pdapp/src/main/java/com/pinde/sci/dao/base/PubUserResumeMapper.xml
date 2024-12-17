@@ -86,7 +86,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_USER_RESUME
+      from PUB_USER_RESUME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,7 +100,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_USER_RESUME
+      from PUB_USER_RESUME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -113,21 +113,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_USER_RESUME
+      from PUB_USER_RESUME
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_USER_RESUME
+      delete from PUB_USER_RESUME
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.PubUserResumeExample" >
-    delete from PDSCI.PUB_USER_RESUME
+      delete from PUB_USER_RESUME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.PubUserResume" >
-    insert into PDSCI.PUB_USER_RESUME (USER_FLOW, USER_NAME, RECORD_STATUS, 
+      insert into PUB_USER_RESUME (USER_FLOW, USER_NAME, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, USER_RESUME)
     values (#{userFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
@@ -135,7 +135,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{userResume,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.PubUserResume" >
-    insert into PDSCI.PUB_USER_RESUME
+      insert into PUB_USER_RESUME
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
         USER_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.PubUserResumeExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_USER_RESUME
+      select count(*) from PUB_USER_RESUME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_USER_RESUME
+      update PUB_USER_RESUME
     <set >
       <if test="record.userFlow != null" >
         USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -228,7 +228,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.PUB_USER_RESUME
+      update PUB_USER_RESUME
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
     USER_NAME = #{record.userName,jdbcType=VARCHAR},
     RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -242,7 +242,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_USER_RESUME
+      update PUB_USER_RESUME
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
     USER_NAME = #{record.userName,jdbcType=VARCHAR},
     RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -255,7 +255,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubUserResume" >
-    update PDSCI.PUB_USER_RESUME
+      update PUB_USER_RESUME
     <set >
       <if test="userName != null" >
         USER_NAME = #{userName,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubUserResume" >
-    update PDSCI.PUB_USER_RESUME
+      update PUB_USER_RESUME
     set USER_NAME = #{userName,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
@@ -293,7 +293,7 @@
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubUserResume" >
-    update PDSCI.PUB_USER_RESUME
+      update PUB_USER_RESUME
     set USER_NAME = #{userName,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},

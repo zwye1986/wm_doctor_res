@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResBaseeval;
-import com.pinde.sci.model.mo.ResBaseevalExample;
+import com.pinde.core.model.ResBaseeval;
+import com.pinde.core.model.ResBaseevalExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

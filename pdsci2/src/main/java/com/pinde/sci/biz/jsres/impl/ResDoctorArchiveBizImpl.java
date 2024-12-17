@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResDoctorArchiveBiz;
@@ -15,7 +13,16 @@ import com.pinde.sci.dao.jsres.ResArchiveExtMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
 import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorLogExample;
+import com.pinde.core.model.ResDoctorRecruitLog;
+import com.pinde.core.model.ResDoctorRecruitLogExample;
+import com.pinde.core.model.ResDoctorRecruitLogWithBLOBs;
+import com.pinde.sci.model.mo.ResUserResumeLog;
+import com.pinde.sci.model.mo.ResUserResumeLogExample;
+import com.pinde.core.model.SysUserLog;
+import com.pinde.core.model.SysUserLogExample;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -119,9 +126,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
             for (String oldPath : dirs) {
                 FileUtil.copyFile(StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")) + File.separator + oldPath, newPath + oldPath);
             }
-            if (a > 0 && b > 0 && c > 0) {
-                return true;
-            }
+            return a > 0 && b > 0 && c > 0;
         }
         return false;
     }
@@ -248,7 +253,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     @Override
     public List<ResDoctorRecruitLogWithBLOBs> searchResDoctorRecruitList(ResDoctorRecruitLog recruit, String orderByClause) {
         ResDoctorRecruitLogExample example = new ResDoctorRecruitLogExample();
-        com.pinde.sci.model.mo.ResDoctorRecruitLogExample.Criteria criteria = example.createCriteria();
+        ResDoctorRecruitLogExample.Criteria criteria = example.createCriteria();
         if(StringUtil.isNotBlank(recruit.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
         }

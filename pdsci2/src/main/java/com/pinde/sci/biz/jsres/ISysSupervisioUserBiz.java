@@ -1,7 +1,9 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResSupervisioSubject;
+import com.pinde.sci.model.mo.ResSupervisioSubjectUser;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;

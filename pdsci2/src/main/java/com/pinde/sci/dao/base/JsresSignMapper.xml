@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresSignMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresSign" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresSign">
     <id column="SIGN_FLOW" property="signFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -83,13 +83,13 @@
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, PRESIDENT_NAME, USE_TIME, 
     STOP_TIME, USE_STATUS_ID, USE_STATUS_NAME, SESSION_NUMBER
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresSignExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresSignExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_SIGN
+        from JSRES_SIGN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_SIGN
+      from JSRES_SIGN
     where SIGN_FLOW = #{signFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_SIGN
+      delete from JSRES_SIGN
     where SIGN_FLOW = #{signFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresSignExample" >
-    delete from PDSCI.JSRES_SIGN
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresSignExample">
+        delete from JSRES_SIGN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresSign" >
-    insert into PDSCI.JSRES_SIGN (SIGN_FLOW, ORG_FLOW, ORG_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresSign">
+        insert into JSRES_SIGN (SIGN_FLOW, ORG_FLOW, ORG_NAME,
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, SIGN_URL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, PRESIDENT_NAME, 
@@ -127,8 +127,8 @@
       #{useTime,jdbcType=VARCHAR}, #{stopTime,jdbcType=VARCHAR}, #{useStatusId,jdbcType=VARCHAR}, 
       #{useStatusName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresSign" >
-    insert into PDSCI.JSRES_SIGN
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresSign">
+        insert into JSRES_SIGN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="signFlow != null" >
         SIGN_FLOW,
@@ -236,14 +236,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresSignExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_SIGN
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresSignExample" resultType="java.lang.Integer">
+        select count(*) from JSRES_SIGN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_SIGN
+      update JSRES_SIGN
     <set >
       <if test="record.signFlow != null" >
         SIGN_FLOW = #{record.signFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_SIGN
+      update JSRES_SIGN
     set SIGN_FLOW = #{record.signFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -324,8 +324,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresSign" >
-    update PDSCI.JSRES_SIGN
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresSign">
+        update JSRES_SIGN
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -378,8 +378,8 @@
     </set>
     where SIGN_FLOW = #{signFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresSign" >
-    update PDSCI.JSRES_SIGN
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresSign">
+        update JSRES_SIGN
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},

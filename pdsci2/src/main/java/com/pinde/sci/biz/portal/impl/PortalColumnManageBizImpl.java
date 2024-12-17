@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.portal.impl;
 
+import com.pinde.core.model.PortalColumn;
+import com.pinde.core.model.PortalColumnExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.PortalColumnMapper;
 import com.pinde.sci.dao.portal.PortalColumnExtMapper;
-import com.pinde.sci.model.mo.PortalColumn;
-import com.pinde.sci.model.mo.PortalColumnExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +67,7 @@ public class PortalColumnManageBizImpl implements IPortalColumnManageBiz {
 			int length = bigestColumnId.length();
 			String leftPart = bigestColumnId.substring(0, length-2);
 			String rightPart = bigestColumnId.substring(length-2);
-			int idValue = new Integer(rightPart).intValue();
+            int idValue = Integer.parseInt(rightPart);
 			idValue++;
 			if(idValue<10){
 				rightPart = "0"+idValue;

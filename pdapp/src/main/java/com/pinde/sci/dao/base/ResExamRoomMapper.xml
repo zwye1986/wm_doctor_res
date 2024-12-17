@@ -81,7 +81,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EXAM_ROOM
+      from RES_EXAM_ROOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,21 +92,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EXAM_ROOM
+      from RES_EXAM_ROOM
     where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_EXAM_ROOM
+      delete from RES_EXAM_ROOM
     where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResExamRoomExample" >
-    delete from PDSCI.RES_EXAM_ROOM
+      delete from RES_EXAM_ROOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResExamRoom" >
-    insert into PDSCI.RES_EXAM_ROOM (ROOM_FLOW, SITE_FLOW, SITE_CODE, 
+      insert into RES_EXAM_ROOM (ROOM_FLOW, SITE_FLOW, SITE_CODE,
       ROOM_CODE, SEAT_NUM, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -116,7 +116,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResExamRoom" >
-    insert into PDSCI.RES_EXAM_ROOM
+      insert into RES_EXAM_ROOM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roomFlow != null" >
         ROOM_FLOW,
@@ -183,13 +183,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResExamRoomExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_EXAM_ROOM
+      select count(*) from RES_EXAM_ROOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_EXAM_ROOM
+      update RES_EXAM_ROOM
     <set >
       <if test="record.roomFlow != null" >
         ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
@@ -227,7 +227,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_EXAM_ROOM
+      update RES_EXAM_ROOM
     set ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
       SITE_FLOW = #{record.siteFlow,jdbcType=VARCHAR},
       SITE_CODE = #{record.siteCode,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResExamRoom" >
-    update PDSCI.RES_EXAM_ROOM
+      update RES_EXAM_ROOM
     <set >
       <if test="siteFlow != null" >
         SITE_FLOW = #{siteFlow,jdbcType=VARCHAR},
@@ -276,7 +276,7 @@
     where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResExamRoom" >
-    update PDSCI.RES_EXAM_ROOM
+      update RES_EXAM_ROOM
     set SITE_FLOW = #{siteFlow,jdbcType=VARCHAR},
       SITE_CODE = #{siteCode,jdbcType=VARCHAR},
       ROOM_CODE = #{roomCode,jdbcType=VARCHAR},

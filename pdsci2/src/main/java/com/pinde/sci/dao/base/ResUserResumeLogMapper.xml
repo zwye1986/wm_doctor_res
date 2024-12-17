@@ -149,7 +149,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_USER_RESUME_LOG
+      from RES_USER_RESUME_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -160,21 +160,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_USER_RESUME_LOG
+      from RES_USER_RESUME_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_USER_RESUME_LOG
+      delete from RES_USER_RESUME_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResUserResumeLogExample">
-    delete from PDSCI.RES_USER_RESUME_LOG
+      delete from RES_USER_RESUME_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
-    insert into PDSCI.RES_USER_RESUME_LOG (RECORD_FLOW, USER_FLOW, TELEPHONE, 
+      insert into RES_USER_RESUME_LOG (RECORD_FLOW, USER_FLOW, TELEPHONE,
       EMERGENCY_ADDRESS, WORK_SCHOOL_NAME, ORG_RANK, 
       ORG_LEVEL, GRADUATED_ID, GRADUATED_NAME, 
       SPECIALIZED, GRADUATION_TIME, COLLEGE_CERTIFICATE_NO, 
@@ -228,7 +228,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
-    insert into PDSCI.RES_USER_RESUME_LOG
+      insert into RES_USER_RESUME_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -625,13 +625,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResUserResumeLogExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_USER_RESUME_LOG
+      select count(*) from RES_USER_RESUME_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_USER_RESUME_LOG
+      update RES_USER_RESUME_LOG
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -834,7 +834,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_USER_RESUME_LOG
+      update RES_USER_RESUME_LOG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
@@ -905,7 +905,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
-    update PDSCI.RES_USER_RESUME_LOG
+      update RES_USER_RESUME_LOG
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -1103,7 +1103,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
-    update PDSCI.RES_USER_RESUME_LOG
+      update RES_USER_RESUME_LOG
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       TELEPHONE = #{telephone,jdbcType=VARCHAR},
       EMERGENCY_ADDRESS = #{emergencyAddress,jdbcType=VARCHAR},

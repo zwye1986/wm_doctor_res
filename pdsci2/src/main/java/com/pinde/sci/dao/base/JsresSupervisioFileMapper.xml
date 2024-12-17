@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresSupervisioFileMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresSupervisioFile" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresSupervisioFile">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -81,13 +81,14 @@
     SPE_ID, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     SUBJECT_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresSupervisioFileExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.JsresSupervisioFileExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_SUPERVISIO_FILE
+        from JSRES_SUPERVISIO_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_SUPERVISIO_FILE
+      from JSRES_SUPERVISIO_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_SUPERVISIO_FILE
+      delete from JSRES_SUPERVISIO_FILE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresSupervisioFileExample" >
-    delete from PDSCI.JSRES_SUPERVISIO_FILE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresSupervisioFileExample">
+        delete from JSRES_SUPERVISIO_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresSupervisioFile" >
-    insert into PDSCI.JSRES_SUPERVISIO_FILE (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresSupervisioFile">
+        insert into JSRES_SUPERVISIO_FILE (RECORD_FLOW, ORG_FLOW, ORG_NAME,
       ITEM_ID, ITEM_NAME, PLAN_YEAR, 
       FILE_NAME, FILE_URL, SPE_ID, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -125,8 +126,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{subjectFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresSupervisioFile" >
-    insert into PDSCI.JSRES_SUPERVISIO_FILE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresSupervisioFile">
+        insert into JSRES_SUPERVISIO_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -222,14 +223,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresSupervisioFileExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_SUPERVISIO_FILE
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresSupervisioFileExample"
+            resultType="java.lang.Integer">
+        select count(*) from JSRES_SUPERVISIO_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_SUPERVISIO_FILE
+      update JSRES_SUPERVISIO_FILE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -282,7 +284,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_SUPERVISIO_FILE
+      update JSRES_SUPERVISIO_FILE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -302,8 +304,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresSupervisioFile" >
-    update PDSCI.JSRES_SUPERVISIO_FILE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresSupervisioFile">
+        update JSRES_SUPERVISIO_FILE
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -350,8 +352,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresSupervisioFile" >
-    update PDSCI.JSRES_SUPERVISIO_FILE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresSupervisioFile">
+        update JSRES_SUPERVISIO_FILE
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       ITEM_ID = #{itemId,jdbcType=VARCHAR},

@@ -71,5 +71,5 @@ public interface IResGradeBiz {
      */
     String saveGrade1(ResAssessCfg assessCfg,String cfgFlow, String userFlow, String deptFlow, String subDeptFlow, String assessType, HttpServletRequest request);
 
-    String saveGradeTwo(ResAssessCfg assessCfg,String cfgFlow, String userFlow, String deptFlow, String resultFlow, String assessType, HttpServletRequest request);
+    String saveGradeTwo(ResAssessCfg assessCfg, String cfgFlow, String userFlow, String deptFlow, String resultFlow, String assessType, HttpServletRequest request);
 }

@@ -44,7 +44,7 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class DeptBizImpl implements IDeptBiz {
-	private static Logger logger = LoggerFactory.getLogger(DeptBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeptBizImpl.class);
 	
 	@Autowired
 	private SysDeptMapper sysDeptMapper;

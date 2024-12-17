@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASEEVAL_FORM
+      from RES_BASEEVAL_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_BASEEVAL_FORM
+      from RES_BASEEVAL_FORM
     where FORM_FLOW = #{formFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_BASEEVAL_FORM
+      delete from RES_BASEEVAL_FORM
     where FORM_FLOW = #{formFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResBaseevalFormExample" >
-    delete from PDSCI.RES_BASEEVAL_FORM
+      delete from RES_BASEEVAL_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResBaseevalForm" >
-    insert into PDSCI.RES_BASEEVAL_FORM (FORM_FLOW, FORM_NAME, FORM_URL, 
+      insert into RES_BASEEVAL_FORM (FORM_FLOW, FORM_NAME, FORM_URL,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, 
       ORG_NAME, eval_year)
@@ -117,7 +117,7 @@
       #{orgName,jdbcType=VARCHAR}, #{evalYear,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResBaseevalForm" >
-    insert into PDSCI.RES_BASEEVAL_FORM
+      insert into RES_BASEEVAL_FORM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="formFlow != null" >
         FORM_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResBaseevalFormExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_BASEEVAL_FORM
+      select count(*) from RES_BASEEVAL_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_BASEEVAL_FORM
+      update RES_BASEEVAL_FORM
     <set >
       <if test="record.formFlow != null" >
         FORM_FLOW = #{record.formFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_BASEEVAL_FORM
+      update RES_BASEEVAL_FORM
     set FORM_FLOW = #{record.formFlow,jdbcType=VARCHAR},
       FORM_NAME = #{record.formName,jdbcType=VARCHAR},
       FORM_URL = #{record.formUrl,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResBaseevalForm" >
-    update PDSCI.RES_BASEEVAL_FORM
+      update RES_BASEEVAL_FORM
     <set >
       <if test="formName != null" >
         FORM_NAME = #{formName,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where FORM_FLOW = #{formFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResBaseevalForm" >
-    update PDSCI.RES_BASEEVAL_FORM
+      update RES_BASEEVAL_FORM
     set FORM_NAME = #{formName,jdbcType=VARCHAR},
       FORM_URL = #{formUrl,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

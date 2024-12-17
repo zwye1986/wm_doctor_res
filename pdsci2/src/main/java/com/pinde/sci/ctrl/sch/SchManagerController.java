@@ -18,7 +18,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.SchDoctorSelectDept;
 import com.pinde.sci.model.mo.SchOrgArrangeResult;
 import com.pinde.sci.model.mo.SchRotation;

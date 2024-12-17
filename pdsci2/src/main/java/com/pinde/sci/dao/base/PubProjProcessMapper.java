@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubProjProcess;
-import com.pinde.sci.model.mo.PubProjProcessExample;
+import com.pinde.core.model.PubProjProcess;
+import com.pinde.core.model.PubProjProcessExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

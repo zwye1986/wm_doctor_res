@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaSkillDocScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSkillDocScore" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSkillDocScore">
     <id column="SCORE_FLOW" property="scoreFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
@@ -32,7 +32,7 @@
     <result column="IS_REQUIRED" property="isRequired" jdbcType="VARCHAR" />
     <result column="FROM_SCORE" property="fromScore" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.OscaSkillDocScore" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.OscaSkillDocScore" extends="BaseResultMap">
     <result column="FROM_CONTENT" property="fromContent" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -103,7 +103,8 @@
   <sql id="Blob_Column_List" >
     FROM_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.OscaSkillDocScoreExample">
     select
     <if test="distinct" >
       distinct
@@ -111,7 +112,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.OSCA_SKILL_DOC_SCORE
+        from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -119,13 +120,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.OscaSkillDocScoreExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILL_DOC_SCORE
+        from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -138,21 +140,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.OSCA_SKILL_DOC_SCORE
+      from OSCA_SKILL_DOC_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_SKILL_DOC_SCORE
+      delete from OSCA_SKILL_DOC_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" >
-    delete from PDSCI.OSCA_SKILL_DOC_SCORE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillDocScoreExample">
+        delete from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
-    insert into PDSCI.OSCA_SKILL_DOC_SCORE (SCORE_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.OscaSkillDocScore">
+        insert into OSCA_SKILL_DOC_SCORE (SCORE_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       RECORD_YEAR, ROOM_RECORD_FLOW, ROOM_FLOW, 
       ROOM_NAME, CLINICAL_FLOW, CLINICAL_NAME, 
       STATION_FLOW, STATION_NAME, IS_HAVE_FROM, 
@@ -175,8 +177,8 @@
       #{isRequired,jdbcType=VARCHAR}, #{fromScore,jdbcType=VARCHAR}, #{fromContent,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
-    insert into PDSCI.OSCA_SKILL_DOC_SCORE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillDocScore">
+        insert into OSCA_SKILL_DOC_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scoreFlow != null" >
         SCORE_FLOW,
@@ -362,14 +364,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSkillDocScoreExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.OSCA_SKILL_DOC_SCORE
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillDocScoreExample"
+            resultType="java.lang.Integer">
+        select count(*) from OSCA_SKILL_DOC_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+      update OSCA_SKILL_DOC_SCORE
     <set >
       <if test="record.scoreFlow != null" >
         SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
@@ -467,7 +470,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+      update OSCA_SKILL_DOC_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -503,7 +506,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+      update OSCA_SKILL_DOC_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -537,8 +540,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillDocScore">
+        update OSCA_SKILL_DOC_SCORE
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -630,8 +633,8 @@
     </set>
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.OscaSkillDocScore">
+        update OSCA_SKILL_DOC_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       RECORD_YEAR = #{recordYear,jdbcType=CHAR},
@@ -663,8 +666,8 @@
       FROM_CONTENT = #{fromContent,jdbcType=CLOB}
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSkillDocScore" >
-    update PDSCI.OSCA_SKILL_DOC_SCORE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillDocScore">
+        update OSCA_SKILL_DOC_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       RECORD_YEAR = #{recordYear,jdbcType=CHAR},

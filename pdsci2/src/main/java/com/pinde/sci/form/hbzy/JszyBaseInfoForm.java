@@ -1,11 +1,11 @@
 package com.pinde.sci.form.hbzy;
 
+import com.pinde.core.model.ResBase;
 import com.pinde.core.model.SysOrg;
 import com.pinde.sci.form.jsres.BasicInfoForm;
 import com.pinde.sci.form.jsres.EducationInfo;
 import com.pinde.sci.form.jsres.OrganizationManage;
 import com.pinde.sci.form.jsres.SupportCondition;
-import com.pinde.sci.model.mo.ResBase;
 
 public class JszyBaseInfoForm implements java.io.Serializable {
 	/**

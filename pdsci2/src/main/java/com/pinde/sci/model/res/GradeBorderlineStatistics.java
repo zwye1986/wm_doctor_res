@@ -1,8 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.ResGradeBorderline;
-
-import java.io.Serializable;
+import com.pinde.core.model.ResGradeBorderline;
 
 /**
  * 分数线统计显示的Bean

@@ -312,7 +312,8 @@
 		DELETE FROM PCU_TEACH_ACTIVE WHERE MONTH_DATE=#{monthDate}
 	</delete>
 
-	<select id="selectPCUTeachActive" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.TeachActiveParamPO">
+    <select id="selectPCUTeachActive" parameterType="java.util.Map"
+            resultType="com.pinde.core.model.TeachActiveParamPO">
 		select
 		RECORD_FLOW as recordFlow,
 		"NO" as no,
@@ -417,7 +418,8 @@
 	<delete id="deletePreviousCurrMonthDoctorOutOffice" >
 		DELETE FROM PCU_DOCTOR_OUTOFFICE WHERE MONTH_DATE=#{monthDate}
 	</delete>
-	<select id="selectPCUDoctorOutOffice" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.DoctorOutOfficeParamPO">
+    <select id="selectPCUDoctorOutOffice" parameterType="java.util.Map"
+            resultType="com.pinde.core.model.DoctorOutOfficeParamPO">
 		select
 		RECORD_FLOW as recordFlow,
 		"NO" as no,
@@ -600,7 +602,7 @@
 			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
 				RDR2.ORG_FLOW,RDR2.ORG_NAME,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				  WHERE rdr.RECORD_STATUS = 'Y'
 				  and U.RECORD_STATUS = 'Y'
@@ -640,7 +642,7 @@
 				AND RD.JOINT_ORG_FLOW IS NULL
 				GROUP BY RD.ORG_FLOW),0) AS DOCTOR_USE_TOTAL,
 			nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				  WHERE rdr.RECORD_STATUS = 'Y'
 				  and U.RECORD_STATUS = 'Y'
@@ -681,7 +683,7 @@
 				(SELECT org_prov_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_prov_id,
         		(SELECT org_city_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_city_id
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			WHERE rdr2.RECORD_STATUS = 'Y'
 			and U.RECORD_STATUS = 'Y'
@@ -712,7 +714,7 @@
 			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
 				RDR2.ORG_FLOW,RDR2.ORG_NAME,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				  WHERE rdr.RECORD_STATUS = 'Y'
 				  and U.RECORD_STATUS = 'Y'
@@ -749,7 +751,7 @@
 				AND RD.ORG_FLOW = RDR2.ORG_FLOW
 				GROUP BY RD.ORG_FLOW),0) AS DOCTOR_USE_TOTAL,
 			nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				  WHERE rdr.RECORD_STATUS = 'Y'
 				  and U.RECORD_STATUS = 'Y'
@@ -788,7 +790,7 @@
 				(SELECT org_prov_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_prov_id,
         		(SELECT org_city_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_city_id
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			WHERE rdr2.RECORD_STATUS = 'Y'
 			and U.RECORD_STATUS = 'Y'
@@ -819,7 +821,7 @@
 			(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
 				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				  WHERE rdr.RECORD_STATUS = 'Y'
 				  and U.RECORD_STATUS = 'Y'
@@ -856,7 +858,7 @@
 				AND RD.JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW
 				GROUP BY RD.JOINT_ORG_FLOW),0) AS DOCTOR_USE_TOTAL,
 			nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				  LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				  LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				  WHERE rdr.RECORD_STATUS = 'Y'
 				  and U.RECORD_STATUS = 'Y'
@@ -895,7 +897,7 @@
 				(SELECT org_prov_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_prov_id,
         		(SELECT org_city_id FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.JOINT_ORG_FLOW) as org_city_id
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			WHERE rdr2.RECORD_STATUS = 'Y'
 			and U.RECORD_STATUS = 'Y'
@@ -973,7 +975,7 @@
 			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
 				RDR2.ORG_FLOW,RDR2.ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				WHERE rdr.RECORD_STATUS = 'Y'
 				and U.RECORD_STATUS = 'Y'
@@ -990,7 +992,7 @@
 				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
 				),0) AS DOCTOR_TRAIN_TOTAL
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			LEFT JOIN
 				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
@@ -1059,7 +1061,7 @@
 			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
 				RDR2.ORG_FLOW,RDR2.ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				WHERE rdr.RECORD_STATUS = 'Y'
 				and U.RECORD_STATUS = 'Y'
@@ -1076,7 +1078,7 @@
 				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
 				),0) AS DOCTOR_TRAIN_TOTAL
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			LEFT JOIN
 				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
@@ -1145,7 +1147,7 @@
 			SELECT lower(rawtohex(sys_guid())),(SELECT ORG_CODE FROM SYS_ORG WHERE RECORD_STATUS = 'Y' AND ORG_FLOW = RDR2.ORG_FLOW) as org_code,
 				RDR2.ORG_FLOW,RDR2.ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				WHERE rdr.RECORD_STATUS = 'Y'
 				and U.RECORD_STATUS = 'Y'
@@ -1162,7 +1164,7 @@
 				and rd.doctor_type_id = 'Graduate'
 				),0) AS DOCTOR_TRAIN_TOTAL
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			LEFT JOIN
 				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
@@ -1232,7 +1234,7 @@
 				(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
 				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				WHERE rdr.RECORD_STATUS = 'Y'
 				and U.RECORD_STATUS = 'Y'
@@ -1248,7 +1250,7 @@
 				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social', 'Graduate')
 				),0) AS DOCTOR_TRAIN_TOTAL
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			LEFT JOIN
 				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
@@ -1318,7 +1320,7 @@
 				(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
 				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				WHERE rdr.RECORD_STATUS = 'Y'
 				and U.RECORD_STATUS = 'Y'
@@ -1334,7 +1336,7 @@
 				and rd.doctor_type_id in ('Company', 'CompanyEntrust', 'Social')
 				),0) AS DOCTOR_TRAIN_TOTAL
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			LEFT JOIN
 				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
@@ -1404,7 +1406,7 @@
 				(SELECT ORG_FLOW FROM RES_JOINT_ORG WHERE RECORD_STATUS = 'Y' AND JOINT_ORG_FLOW = RDR2.JOINT_ORG_FLOW) AS PARENT_ORG_FLOW,
 				RDR2.JOINT_ORG_FLOW,RDR2.JOINT_ORG_NAME,  A.DATA_WRITE_TOTAL, B.DATA_AUDIT_TOTAL,
 				nvl((SELECT COUNT(0) FROM res_doctor_recruit rdr
-				LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 				LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 				WHERE rdr.RECORD_STATUS = 'Y'
 				and U.RECORD_STATUS = 'Y'
@@ -1420,7 +1422,7 @@
 				and rd.doctor_type_id = 'Graduate'
 				),0) AS DOCTOR_TRAIN_TOTAL
 			FROM res_doctor_recruit rdr2
-			LEFT JOIN pdsci.SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr2.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR rd ON rdr2.DOCTOR_FLOW = rd.DOCTOR_FLOW
 			LEFT JOIN
 				(SELECT COUNT(0) AS DATA_WRITE_TOTAL,rr.org_flow FROM res_rec rr
@@ -1552,7 +1554,7 @@
 					and tai.start_time <![CDATA[<]]> #{endDate}
 				left join (
 					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.org_flow FROM res_doctor_recruit rdr
-					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 					WHERE rdr.RECORD_STATUS = 'Y'
 					and U.RECORD_STATUS = 'Y'
@@ -1652,7 +1654,7 @@
 					and tai.start_time <![CDATA[<]]> #{endDate}
 				left join (
 					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.org_flow FROM res_doctor_recruit rdr
-					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 					WHERE rdr.RECORD_STATUS = 'Y'
 					and U.RECORD_STATUS = 'Y'
@@ -1752,7 +1754,7 @@
 					and tai.start_time <![CDATA[<]]> #{endDate}
 				left join (
 					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.org_flow FROM res_doctor_recruit rdr
-					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 					WHERE rdr.RECORD_STATUS = 'Y'
 					and U.RECORD_STATUS = 'Y'
@@ -1856,7 +1858,7 @@
 					and tai.start_time <![CDATA[<]]> #{endDate}
 				left join (
 					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.joint_org_flow FROM res_doctor_recruit rdr
-					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 					WHERE rdr.RECORD_STATUS = 'Y'
 					and U.RECORD_STATUS = 'Y'
@@ -1960,7 +1962,7 @@
 					and tai.start_time <![CDATA[<]]> #{endDate}
 				left join (
 					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.joint_org_flow FROM res_doctor_recruit rdr
-					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 					WHERE rdr.RECORD_STATUS = 'Y'
 					and U.RECORD_STATUS = 'Y'
@@ -2064,7 +2066,7 @@
 					and tai.start_time <![CDATA[<]]> #{endDate}
 				left join (
 					SELECT COUNT(0) as DOCTOR_TRAIN_TOTAL,rdr.joint_org_flow FROM res_doctor_recruit rdr
-					LEFT JOIN pdsci.SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON rdr.DOCTOR_FLOW = u.USER_FLOW
 					LEFT JOIN RES_DOCTOR rd ON rdr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 					WHERE rdr.RECORD_STATUS = 'Y'
 					and U.RECORD_STATUS = 'Y'

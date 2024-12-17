@@ -1,7 +1,5 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.core.model.ResInfoRole;
-import com.pinde.core.model.ResInfoRoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

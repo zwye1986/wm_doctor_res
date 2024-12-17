@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.TeachActivityCfg;
-import com.pinde.sci.model.mo.TeachActivityCfgExample;
+import com.pinde.core.model.TeachActivityCfg;
+import com.pinde.core.model.TeachActivityCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import com.pinde.sci.form.res.ResEvaluationCfgForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationDeptExt;
-import com.pinde.sci.model.mo.ResEvaluationCfg;
+import com.pinde.core.model.ResEvaluationCfg;
 
 import java.util.List;
 

@@ -81,7 +81,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS
+      from RES_SUPERVISIO_SUBJECT_RECORDS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,13 +90,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecordsExample" >
-    delete from PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS
+      delete from RES_SUPERVISIO_SUBJECT_RECORDS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecords" >
-    insert into PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS (RECORD_FLOW, SUBJECT_FLOW, RECORD_STATUS, 
+      insert into RES_SUPERVISIO_SUBJECT_RECORDS (RECORD_FLOW, SUBJECT_FLOW, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, USER_FLOW, ROLE_FLAG, 
       SUB_NUM)
@@ -106,7 +106,7 @@
       #{subNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecords" >
-    insert into PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS
+      insert into RES_SUPERVISIO_SUBJECT_RECORDS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -173,13 +173,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecordsExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS
+      select count(*) from RES_SUPERVISIO_SUBJECT_RECORDS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS
+      update RES_SUPERVISIO_SUBJECT_RECORDS
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT_RECORDS
+      update RES_SUPERVISIO_SUBJECT_RECORDS
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},

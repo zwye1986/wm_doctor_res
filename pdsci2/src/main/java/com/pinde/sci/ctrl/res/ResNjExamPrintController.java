@@ -1,9 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.pinde.core.common.sci.dao.SysOrgMapper;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysOrgExample;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.INjResExamBiz;
@@ -13,8 +11,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.evaAudit.ResNurseController;
 import com.pinde.sci.dao.jsres.SysUserJsresMapper;
-import com.pinde.sci.model.mo.TjDocinfo;
-import com.pinde.sci.model.mo.TjExamInfo;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

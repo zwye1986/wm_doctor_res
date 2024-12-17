@@ -117,7 +117,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_HOSP_SUPERV_SUBJECT
+      from RES_HOSP_SUPERV_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -126,13 +126,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" >
-    delete from PDSCI.RES_HOSP_SUPERV_SUBJECT
+      delete from RES_HOSP_SUPERV_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResHospSupervSubject" >
-    insert into PDSCI.RES_HOSP_SUPERV_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, ORG_FLOW, 
+      insert into RES_HOSP_SUPERV_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, ORG_FLOW,
       ORG_NAME, BASE_CODE, SPE_ID, 
       SPE_NAME, RECORD_STATUS, ORDER_ACTION, 
       LEADER_ONE_NAME, LEADER_ONE_FLOW, LEADER_TWO_NAME, 
@@ -162,7 +162,7 @@
       #{matching,jdbcType=VARCHAR}, #{reviewConfig,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResHospSupervSubject" >
-    insert into PDSCI.RES_HOSP_SUPERV_SUBJECT
+      insert into RES_HOSP_SUPERV_SUBJECT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
         SUBJECT_FLOW,
@@ -415,13 +415,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_HOSP_SUPERV_SUBJECT
+      select count(*) from RES_HOSP_SUPERV_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_HOSP_SUPERV_SUBJECT
+      update RES_HOSP_SUPERV_SUBJECT
     <set >
       <if test="record.subjectFlow != null" >
         SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
@@ -552,7 +552,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_HOSP_SUPERV_SUBJECT
+      update RES_HOSP_SUPERV_SUBJECT
     set SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},

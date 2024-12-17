@@ -96,7 +96,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DOCTOR_DEPT
+      from SCH_DOCTOR_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -108,7 +108,7 @@
   <select id="selectListByRotationFLowListList" resultType="com.pinde.sci.model.mo.SchDoctorDept">
     select
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DOCTOR_DEPT
+      from SCH_DOCTOR_DEPT
     where record_status = 'Y'
     <foreach collection="doctorFlowList" open="and (" separator=" or " close=")" index="i">
       (
@@ -126,21 +126,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DOCTOR_DEPT
+      from SCH_DOCTOR_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_DOCTOR_DEPT
+      delete from SCH_DOCTOR_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchDoctorDeptExample" >
-    delete from PDSCI.SCH_DOCTOR_DEPT
+      delete from SCH_DOCTOR_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SchDoctorDept" >
-    insert into PDSCI.SCH_DOCTOR_DEPT (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+      insert into SCH_DOCTOR_DEPT (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       ROTATION_FLOW, ROTATION_NAME, SESSION_NUMBER, 
       GROUP_FLOW, SCH_MONTH, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, DEPT_FLOW, DEPT_NAME, 
@@ -158,7 +158,7 @@
       #{standardDeptName,jdbcType=VARCHAR}, #{isRequired,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchDoctorDept" >
-    insert into PDSCI.SCH_DOCTOR_DEPT
+      insert into SCH_DOCTOR_DEPT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -303,13 +303,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchDoctorDeptExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_DOCTOR_DEPT
+      select count(*) from SCH_DOCTOR_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_DOCTOR_DEPT
+      update SCH_DOCTOR_DEPT
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -386,7 +386,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_DOCTOR_DEPT
+      update SCH_DOCTOR_DEPT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -415,7 +415,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchDoctorDept" >
-    update PDSCI.SCH_DOCTOR_DEPT
+      update SCH_DOCTOR_DEPT
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -487,7 +487,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchDoctorDept" >
-    update PDSCI.SCH_DOCTOR_DEPT
+      update SCH_DOCTOR_DEPT
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},

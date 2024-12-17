@@ -1,11 +1,10 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
 import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResUserResumeLog;
+import com.pinde.core.model.SysUserLog;
 import org.dom4j.DocumentException;
 
 import java.util.List;

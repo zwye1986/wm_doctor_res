@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      from JSRES_DOCTOR_DEPT_AVG_TEMP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      from JSRES_DOCTOR_DEPT_AVG_TEMP
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      delete
+      from JSRES_DOCTOR_DEPT_AVG_TEMP
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTempExample">
-    delete from PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      delete from JSRES_DOCTOR_DEPT_AVG_TEMP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
-    insert into PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP (RECORD_FLOW, RECRUIT_FLOW, AVG_COMPLETE, 
+      insert into JSRES_DOCTOR_DEPT_AVG_TEMP (RECORD_FLOW, RECRUIT_FLOW, AVG_COMPLETE,
       AVG_AUDIT, AVG_IN_COMPLETE, AVG_OUT_COMPLETE, 
       AVG_COMPLETE_BI_PER, AVG_OUT_COMPLETE_BI_PER, 
       AVG_IN_COMPLETE_BI_PER)
@@ -115,7 +116,7 @@
       #{avgInCompleteBiPer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
-    insert into PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      insert into JSRES_DOCTOR_DEPT_AVG_TEMP
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -176,13 +177,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTempExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      select count(*) from JSRES_DOCTOR_DEPT_AVG_TEMP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +218,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
@@ -232,7 +233,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
-    update PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
     <set>
       <if test="recruitFlow != null">
         RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
@@ -262,7 +263,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
-    update PDSCI.JSRES_DOCTOR_DEPT_AVG_TEMP
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
     set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
       AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},

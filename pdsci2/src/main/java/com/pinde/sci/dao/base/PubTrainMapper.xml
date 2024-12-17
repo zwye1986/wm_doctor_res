@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubTrainMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubTrain" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubTrain">
     <id column="TRAIN_FLOW" property="trainFlow" jdbcType="VARCHAR" />
     <result column="TRAIN_NAME" property="trainName" jdbcType="VARCHAR" />
     <result column="TRAIN_ORG" property="trainOrg" jdbcType="VARCHAR" />
@@ -82,13 +82,13 @@
     TRAIN_TYPE_NAME, TRAIN_LECTURER, TRAIN_ADDRESS, TRAIN_DATE, TRAIN_DAYS, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubTrainExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubTrainExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_TRAIN
+        from PUB_TRAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_TRAIN
+      from PUB_TRAIN
     where TRAIN_FLOW = #{trainFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_TRAIN
+      delete from PUB_TRAIN
     where TRAIN_FLOW = #{trainFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubTrainExample" >
-    delete from PDSCI.PUB_TRAIN
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubTrainExample">
+        delete from PUB_TRAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubTrain" >
-    insert into PDSCI.PUB_TRAIN (TRAIN_FLOW, TRAIN_NAME, TRAIN_ORG, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubTrain">
+        insert into PUB_TRAIN (TRAIN_FLOW, TRAIN_NAME, TRAIN_ORG,
       TRAIN_CATEGORY_ID, TRAIN_CATEGORY_NAME, TRAIN_TYPE_ID, 
       TRAIN_TYPE_NAME, TRAIN_LECTURER, TRAIN_ADDRESS, 
       TRAIN_DATE, TRAIN_DAYS, RECORD_STATUS, 
@@ -126,8 +126,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubTrain" >
-    insert into PDSCI.PUB_TRAIN
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubTrain">
+        insert into PUB_TRAIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="trainFlow != null" >
         TRAIN_FLOW,
@@ -229,14 +229,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubTrainExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_TRAIN
+    <select id="countByExample" parameterType="com.pinde.core.model.PubTrainExample" resultType="java.lang.Integer">
+        select count(*) from PUB_TRAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_TRAIN
+      update PUB_TRAIN
     <set >
       <if test="record.trainFlow != null" >
         TRAIN_FLOW = #{record.trainFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_TRAIN
+      update PUB_TRAIN
     set TRAIN_FLOW = #{record.trainFlow,jdbcType=VARCHAR},
       TRAIN_NAME = #{record.trainName,jdbcType=VARCHAR},
       TRAIN_ORG = #{record.trainOrg,jdbcType=VARCHAR},
@@ -313,8 +313,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubTrain" >
-    update PDSCI.PUB_TRAIN
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubTrain">
+        update PUB_TRAIN
     <set >
       <if test="trainName != null" >
         TRAIN_NAME = #{trainName,jdbcType=VARCHAR},
@@ -364,8 +364,8 @@
     </set>
     where TRAIN_FLOW = #{trainFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubTrain" >
-    update PDSCI.PUB_TRAIN
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubTrain">
+        update PUB_TRAIN
     set TRAIN_NAME = #{trainName,jdbcType=VARCHAR},
       TRAIN_ORG = #{trainOrg,jdbcType=VARCHAR},
       TRAIN_CATEGORY_ID = #{trainCategoryId,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.PubProjMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubProj">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubProj">
     <id column="PROJ_FLOW" jdbcType="VARCHAR" property="projFlow" />
     <result column="PROJ_YEAR" jdbcType="VARCHAR" property="projYear" />
     <result column="PROJ_NAME" jdbcType="VARCHAR" property="projName" />
@@ -50,7 +50,7 @@
     <result column="ACCOUNT_NO" jdbcType="VARCHAR" property="accountNo" />
     <result column="IS_ETHICAL_FLAG" jdbcType="VARCHAR" property="isEthicalFlag" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.PubProj">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.PubProj">
     <result column="PROJ_INFO" jdbcType="CLOB" property="projInfo" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -125,7 +125,8 @@
   <sql id="Blob_Column_List">
     PROJ_INFO
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.PubProjExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.PubProjExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -133,7 +134,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_PROJ
+        from PUB_PROJ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -141,13 +142,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.PubProjExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.PubProjExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ
+        from PUB_PROJ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -160,21 +161,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.PUB_PROJ
+      from PUB_PROJ
     where PROJ_FLOW = #{projFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.PUB_PROJ
+      delete from PUB_PROJ
     where PROJ_FLOW = #{projFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubProjExample">
-    delete from PDSCI.PUB_PROJ
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubProjExample">
+        delete from PUB_PROJ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubProj">
-    insert into PDSCI.PUB_PROJ (PROJ_FLOW, PROJ_YEAR, PROJ_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubProj">
+        insert into PUB_PROJ (PROJ_FLOW, PROJ_YEAR, PROJ_NAME,
       PROJ_SHORT_NAME, PROJ_DECLARER, PROJ_SHORT_DECLARER, 
       PROJ_DECLARER_FLOW, PROJ_CATEGORY_ID, PROJ_CATEGORY_NAME, 
       PROJ_NO, CFDA_NO, PROJ_TYPE_ID, 
@@ -209,8 +210,8 @@
       #{accountNo,jdbcType=VARCHAR}, #{isEthicalFlag,jdbcType=VARCHAR}, #{projInfo,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubProj">
-    insert into PDSCI.PUB_PROJ
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubProj">
+        insert into PUB_PROJ
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="projFlow != null">
         PROJ_FLOW,
@@ -504,14 +505,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubProjExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_PROJ
+    <select id="countByExample" parameterType="com.pinde.core.model.PubProjExample" resultType="java.lang.Integer">
+        select count(*) from PUB_PROJ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.PUB_PROJ
+      update PUB_PROJ
     <set>
       <if test="record.projFlow != null">
         PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
@@ -663,7 +664,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update PDSCI.PUB_PROJ
+      update PUB_PROJ
     set PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       PROJ_YEAR = #{record.projYear,jdbcType=VARCHAR},
       PROJ_NAME = #{record.projName,jdbcType=VARCHAR},
@@ -717,7 +718,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.PUB_PROJ
+      update PUB_PROJ
     set PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       PROJ_YEAR = #{record.projYear,jdbcType=VARCHAR},
       PROJ_NAME = #{record.projName,jdbcType=VARCHAR},
@@ -769,8 +770,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubProj">
-    update PDSCI.PUB_PROJ
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubProj">
+        update PUB_PROJ
     <set>
       <if test="projYear != null">
         PROJ_YEAR = #{projYear,jdbcType=VARCHAR},
@@ -916,8 +917,8 @@
     </set>
     where PROJ_FLOW = #{projFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.PubProj">
-    update PDSCI.PUB_PROJ
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.PubProj">
+        update PUB_PROJ
     set PROJ_YEAR = #{projYear,jdbcType=VARCHAR},
       PROJ_NAME = #{projName,jdbcType=VARCHAR},
       PROJ_SHORT_NAME = #{projShortName,jdbcType=VARCHAR},
@@ -967,8 +968,8 @@
       PROJ_INFO = #{projInfo,jdbcType=CLOB}
     where PROJ_FLOW = #{projFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubProj">
-    update PDSCI.PUB_PROJ
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubProj">
+        update PUB_PROJ
     set PROJ_YEAR = #{projYear,jdbcType=VARCHAR},
       PROJ_NAME = #{projName,jdbcType=VARCHAR},
       PROJ_SHORT_NAME = #{projShortName,jdbcType=VARCHAR},

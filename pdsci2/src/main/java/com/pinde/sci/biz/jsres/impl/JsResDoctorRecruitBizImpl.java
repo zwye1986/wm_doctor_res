@@ -33,17 +33,9 @@ import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsGraduateExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.JsresRecruitDocInfoWithBLOBs;
-import com.pinde.sci.model.mo.JsresRecruitInfo;
-import com.pinde.sci.model.mo.JsresSign;
-import com.pinde.sci.model.mo.JsresSignExample;
-import com.pinde.sci.model.mo.PubUserResume;
-import com.pinde.sci.model.mo.ResBase;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.model.mo.ResTestConfig;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchRotationDept;
@@ -71,6 +63,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -1515,7 +1508,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 					if(StringUtil.isNotBlank(jykhForm.getNineScore())){
 						scoreSum += Double.valueOf(jykhForm.getNineScore());
 					}
-					scoreSum=new BigDecimal(scoreSum).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue();
+                    scoreSum = new BigDecimal(scoreSum).setScale(1, RoundingMode.HALF_UP).doubleValue();
 					jykhForm.setSkillTestScore(scoreSum+"");
 				}
 				BigDecimal skillScore = ext.getSkillScore();
@@ -1584,7 +1577,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			city.put("321300","13");
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
-			String dishiCode= (String) city.get(org.getOrgCityId());
+            String dishiCode = city.get(org.getOrgCityId());
 			String kumu="";
 			//18 ==04  50 ===03
 			if(recruit.getSpeId().equals("18"))
@@ -1669,7 +1662,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			city.put("321300","13");
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
-			String dishiCode= (String) city.get(org.getOrgCityId());
+            String dishiCode = city.get(org.getOrgCityId());
 			String kumu="";
 			if(recruit.getSpeId().equals("52")||recruit.getSpeId().equals("0700"))
 			{
@@ -1708,7 +1701,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
             city.put("321300", com.pinde.core.common.GlobalConstant.FLAG_N);
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(recruit.getOrgFlow());
-			String dishiCode= (String) city.get(org.getOrgCityId());
+            String dishiCode = city.get(org.getOrgCityId());
 			String p="1";//需求说写死
 			//查询当前年份下，当前地市已经结业的流水号
 			String yearbefore=year.substring(0,2);
@@ -1804,7 +1797,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				@Override
 				public String checkExcelData(HashMap data,ExcelUtile eu) {
 					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!"GraduationCertificate".equals(sheetName))
+                    if (!"GraduationCertificate".equals(sheetName))
 					{
 						return errorMsg(eu,"请使用系统提供的结业学员信息模板！！");
 					}
@@ -1946,7 +1939,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				@Override
 				public String checkExcelData(HashMap data,ExcelUtile eu) {
 					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!"GraduationCertificate".equals(sheetName))
+                    if (!"GraduationCertificate".equals(sheetName))
 					{
 						return errorMsg(eu,"请使用系统提供的结业学员信息模板！！");
 					}
@@ -2257,7 +2250,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 				}
 				cellTitle.setCellValue(titles[i]);
 				cellTitle.setCellStyle(styleCenter);
-				sheet.setColumnWidth(i, titles.length * 1 * 156);
+                sheet.setColumnWidth(i, titles.length * 156);
 			}
 			int rowNum = 3;
             String[] resultList = null;
@@ -2457,7 +2450,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 1;
@@ -2826,7 +2819,7 @@ public class JsResDoctorRecruitBizImpl implements IJsResDoctorRecruitBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 1;

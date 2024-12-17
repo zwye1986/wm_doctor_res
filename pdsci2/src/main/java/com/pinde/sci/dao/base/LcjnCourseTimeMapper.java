@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LcjnCourseTime;
-import com.pinde.sci.model.mo.LcjnCourseTimeExample;
+import com.pinde.core.model.LcjnCourseTime;
+import com.pinde.core.model.LcjnCourseTimeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sch.SchDeptExtMapper" >
 	<select id="searchTeachDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
-		SELECT * 
-		FROM PDSCI.SCH_DEPT
+		SELECT *
+        FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND SCH_DEPT_FLOW IN (
 			SELECT DISTINCT SCH_DEPT_FLOW
-			FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
 			WHERE RECORD_STATUS = 'Y'
 			<if test='teacherUserFlow!=null and teacherUserFlow!=""'>
 				AND TEACHER_USER_FLOW = #{teacherUserFlow}
@@ -16,12 +16,12 @@
 	</select>
 	
 	<select id="searchrotationDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
-		SELECT * 
-		FROM PDSCI.SCH_DEPT
+		SELECT *
+        FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND SCH_DEPT_FLOW IN (
 			SELECT DISTINCT SCH_DEPT_FLOW
-			FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
 			WHERE RECORD_STATUS = 'Y'
 			<if test='userFlow!=null and userFlow!=""'>
 				AND DOCTOR_FLOW = #{userFlow}
@@ -30,16 +30,16 @@
 	</select>
 	
 	<select id="countDeptArea" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
-		SELECT * 
-		FROM PDSCI.SCH_DEPT
+		SELECT *
+        FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND SCH_DEPT_FLOW IN (
 			SELECT SCH_DEPT_FLOW
-			FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
 			WHERE RECORD_STATUS = 'Y'
 			AND DOCTOR_FLOW IN(
 				SELECT DOCTOR_FLOW
-				FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
 				WHERE RECORD_STATUS = 'Y'
 				AND SCH_STATUS_ID IS NOT NULL
 				<if test='doctor!=null'>
@@ -65,12 +65,12 @@
 	</select>
 	
 	<select id="userSchDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
-		SELECT * 
-		FROM PDSCI.SCH_DEPT SD
+		SELECT *
+        FROM SCH_DEPT SD
 		WHERE SD.RECORD_STATUS = 'Y'
 		AND SD.DEPT_FLOW IN (
 			SELECT SSD.DEPT_FLOW
-			FROM PDSCI.SYS_DEPT SSD,PDSCI.SYS_USER_DEPT SUD
+        FROM SYS_DEPT SSD, SYS_USER_DEPT SUD
 			WHERE SSD.RECORD_STATUS = 'Y'
 			AND SUD.RECORD_STATUS = 'Y'
 			AND SUD.USER_FLOW = #{userFlow}
@@ -85,7 +85,7 @@
 		and sud.user_flow = #{userFlow}
 		and exists(
 			select null
-			from pdsci.sch_dept_external_rel sder
+        from sch_dept_external_rel sder
 			where sder.record_status = 'Y'
 			and sud.dept_flow = sder.dept_flow
 		)

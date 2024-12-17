@@ -132,7 +132,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_REC
+      from RES_REC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -146,7 +146,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_REC
+      from RES_REC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -159,21 +159,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_REC
+      from RES_REC
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_REC
+      delete from RES_REC
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResRecExample" >
-    delete from PDSCI.RES_REC
+      delete from RES_REC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResRec" >
-    insert into PDSCI.RES_REC (REC_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into RES_REC (REC_FLOW, ORG_FLOW, ORG_NAME,
       DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, REC_TYPE_ID, REC_TYPE_NAME, 
       ITEM_NAME, REC_VERSION, OPER_TIME, 
@@ -211,7 +211,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResRec" >
-    insert into PDSCI.RES_REC
+      insert into RES_REC
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recFlow != null" >
         REC_FLOW,
@@ -500,13 +500,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResRecExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_REC
+      select count(*) from RES_REC
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_REC
+      update RES_REC
     <set >
       <if test="record.recFlow != null" >
         REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
@@ -655,7 +655,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_REC
+      update RES_REC
     set REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -708,7 +708,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_REC
+      update RES_REC
     set REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -760,7 +760,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResRec" >
-    update PDSCI.RES_REC
+      update RES_REC
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -904,7 +904,7 @@
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResRec" >
-    update PDSCI.RES_REC
+      update RES_REC
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
@@ -954,7 +954,7 @@
     where REC_FLOW = #{recFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResRec" >
-    update PDSCI.RES_REC
+      update RES_REC
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},

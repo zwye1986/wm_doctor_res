@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PersonnelStatisticsMapper" >
-    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PersonnelStatisticsByName" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PersonnelStatisticsByName">
         <result column="org_flow" property="orgFlow" jdbcType="VARCHAR" />
         <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
         <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
@@ -112,7 +112,7 @@
             and substr(doh.out_date,0,6) = #{strDateMonth}
         </if>
         and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolInNum
-        FROM PDSCI.SYS_MONTHLY_DOCTOR_INFO t
+        FROM SYS_MONTHLY_DOCTOR_INFO t
         left join res_docotr_delay_teturn rddt on rddt.doctor_flow = t.doctor_flow
         left join jsres_recruit_doc_info dr on dr.doctor_flow=t.doctor_flow
         left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow=t.doctor_flow
@@ -122,7 +122,7 @@
         </if>
         and t.training_spe_id in (
           SELECT DICT_ID
-             FROM PDSCI.SYS_DICT
+        FROM SYS_DICT
              WHERE DICT_TYPE_ID = 'DoctorTrainingSpe'
              and record_status = 'Y')
         group by t.training_spe_name
@@ -218,7 +218,7 @@
             and substr(doh.out_date,0,6) = #{strDateMonth}
         </if>
         and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolInNum
-        FROM PDSCI.SYS_MONTHLY_DOCTOR_INFO t
+        FROM SYS_MONTHLY_DOCTOR_INFO t
         left join res_docotr_delay_teturn rddt on rddt.doctor_flow = t.doctor_flow
         left join jsres_recruit_doc_info dr on dr.doctor_flow=t.doctor_flow
         left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow=t.doctor_flow
@@ -227,7 +227,7 @@
             and t.ORG_FLOW = #{orgFlow}
         </if>
         and t.training_spe_id in (SELECT DICT_ID
-        FROM PDSCI.SYS_DICT
+        FROM SYS_DICT
         WHERE DICT_TYPE_ID = 'DoctorTrainingSpe'
         and record_status = 'Y')
         <if test="trainingSpeName!=null and trainingSpeName!=''">
@@ -326,18 +326,18 @@
             and substr(doh.out_date,0,6) = #{strDateMonth}
         </if>
         and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolInNum
-        FROM PDSCI.SYS_MONTHLY_DOCTOR_INFO t
+        FROM SYS_MONTHLY_DOCTOR_INFO t
         left join res_docotr_delay_teturn rddt on rddt.doctor_flow = t.doctor_flow
         left join jsres_recruit_doc_info dr on dr.doctor_flow=t.doctor_flow
         left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow=t.doctor_flow
         WHERE t.RECORD_STATUS = 'Y'
         and t.training_spe_id in (SELECT DICT_ID
-        FROM PDSCI.SYS_DICT
+        FROM SYS_DICT
         WHERE DICT_TYPE_ID = 'DoctorTrainingSpe'
         and record_status = 'Y')
         and t.org_flow in(
         select joint_org_flow from res_joint_org where org_flow in (
-        select distinct(org_flow) from PDSCI.SYS_MONTHLY_DOCTOR_INFO  where
+        select distinct(org_flow) from SYS_MONTHLY_DOCTOR_INFO where
         <if test="trainingSpeName!=null and trainingSpeName!=''">
             training_spe_name = #{trainingSpeName}
         </if>
@@ -363,14 +363,14 @@
             , u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID
             , u.EDUCATION_NAME, u.POST_ID, u.POST_NAME, ed.ORG_FLOW AS edOrgFlow, ed.ORG_Name AS edOrgName
             , ed.doctor_type_name, ed.doctor_type_id
-            FROM pdsci.RES_DOCTOR_RECRUIT dr
-            LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
             LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
             WHERE dr.RECORD_STATUS = 'Y'
             AND u.RECORD_STATUS = 'Y'
             AND dr.org_flow IN (SELECT ORG_FLOW
-            FROM PDSCI.SYS_ORG
-            WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
             AND dr.AUDIT_STATUS_ID != 'NotSubmit'
             <if test="orgFlow!=null and  orgFlow!=''">
                 AND dr.ORG_FLOW = #{orgFlow}

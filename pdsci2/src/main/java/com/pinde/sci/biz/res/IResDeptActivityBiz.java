@@ -1,7 +1,11 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.QingpuLectureEvalCfg;
 import com.pinde.sci.form.res.ResDeptPlanForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysDeptMonthExamInfo;
+import com.pinde.sci.model.mo.SysDeptMonthPlan;
+import com.pinde.sci.model.mo.SysDeptMonthPlanItem;
+import com.pinde.sci.model.mo.SysDeptMonthPlanItemEval;
 
 import java.util.List;
 import java.util.Map;

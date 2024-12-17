@@ -6,7 +6,7 @@
 		select
 
 		<include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-		from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 		where record_status='Y'
 		and AUDIT_STATUS_ID = 'Passed'
 		and (
@@ -32,7 +32,7 @@
 		select
 
 		<include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-		from PDSCI.JSRES_USER_BALCKLIST
+        from JSRES_USER_BALCKLIST
 		where
 		0=1
 		<if test="userFlow!=''and userFlow!=null">
@@ -53,7 +53,7 @@
 	</select>
 <select id="selectBlack" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
 	select <include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-	from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 </select>
 
 	<select id="searchInfo" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
@@ -63,7 +63,7 @@
 		B.OPER_TYPE_NAME, B.REASON_YJ, B.RECORD_STATUS, B.CREATE_TIME,B.CREATE_USER_FLOW, B.MODIFY_TIME,
 		B.MODIFY_USER_FLOW, B.AUDIT_STATUS_ID, B.AUDIT_STATUS_NAME, B.IS_SYSTEM, B.ATTACHMENT_PATH,
 		B.FILE_NAME, B.CRET_TYPE_ID
-		from PDSCI.JSRES_USER_BALCKLIST B
+        from JSRES_USER_BALCKLIST B
 		LEFT JOIN RES_DOCTOR D ON D.DOCTOR_FLOW=B.USER_FLOW
 		WHERE B.record_status='Y'
 		<if test="jsresUserBalcklist != null">
@@ -102,7 +102,7 @@
 		B.OPER_TYPE_NAME, B.REASON_YJ, B.RECORD_STATUS, B.CREATE_TIME,B.CREATE_USER_FLOW, B.MODIFY_TIME,
 		B.MODIFY_USER_FLOW, B.AUDIT_STATUS_ID, B.AUDIT_STATUS_NAME, B.IS_SYSTEM, B.ATTACHMENT_PATH,
 		B.FILE_NAME, B.CRET_TYPE_ID
-		from PDSCI.JSRES_USER_BALCKLIST B
+        from JSRES_USER_BALCKLIST B
 		LEFT JOIN RES_DOCTOR D ON D.DOCTOR_FLOW=B.USER_FLOW
 		WHERE B.record_status='Y'
 		<if test="jsresUserBalcklist != null">
@@ -150,7 +150,7 @@
 
 <select id="selectByIdNo" parameterType="string" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
 	select <include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-	from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 	where ID_NO= #{userIdNo}
 	and record_status = 'Y'
 </select>

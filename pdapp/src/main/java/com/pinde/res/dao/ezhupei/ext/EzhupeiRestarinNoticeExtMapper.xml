@@ -5,7 +5,7 @@
     <select id="searchByTitleOrgFlowAndWorkOrgId" resultMap="com.pinde.sci.dao.base.ResTarinNoticeMapper.ResultMapWithBLOBs">
         SELECT * FROM (
             SELECT *
-            FROM PDSCI.RES_TARIN_NOTICE
+        FROM RES_TARIN_NOTICE
             WHERE RECORD_STATUS = 'Y'
             <if test="orgFlow !=null and orgFlow !=''">
                 AND ORG_FLOW = #{orgFlow}
@@ -16,7 +16,7 @@
             <if test="doctor!=null">
                 union all
                 SELECT *
-                FROM PDSCI.RES_TARIN_NOTICE
+                FROM RES_TARIN_NOTICE
                 WHERE RECORD_STATUS = 'Y'
                 AND ORG_FLOW IN (
                 SELECT ORG_FLOW FROM SYS_ORG

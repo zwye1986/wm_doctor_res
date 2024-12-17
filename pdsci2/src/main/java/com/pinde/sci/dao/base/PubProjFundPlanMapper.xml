@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubProjFundPlanMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubProjFundPlan" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubProjFundPlan">
     <id column="FUND_PLAN_FLOW" property="fundPlanFlow" jdbcType="VARCHAR" />
     <result column="PROJ_FLOW" property="projFlow" jdbcType="VARCHAR" />
     <result column="PLAN_TYPE_ID" property="planTypeId" jdbcType="VARCHAR" />
@@ -76,13 +76,13 @@
     FUND_PLAN_FLOW, PROJ_FLOW, PLAN_TYPE_ID, PLAN_TYPE_NAME, YEAR, AMOUNT, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubProjFundPlanExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubProjFundPlanExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_FUND_PLAN
+        from PUB_PROJ_FUND_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_FUND_PLAN
+      from PUB_PROJ_FUND_PLAN
     where FUND_PLAN_FLOW = #{fundPlanFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_PROJ_FUND_PLAN
+      delete from PUB_PROJ_FUND_PLAN
     where FUND_PLAN_FLOW = #{fundPlanFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubProjFundPlanExample" >
-    delete from PDSCI.PUB_PROJ_FUND_PLAN
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubProjFundPlanExample">
+        delete from PUB_PROJ_FUND_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubProjFundPlan" >
-    insert into PDSCI.PUB_PROJ_FUND_PLAN (FUND_PLAN_FLOW, PROJ_FLOW, PLAN_TYPE_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubProjFundPlan">
+        insert into PUB_PROJ_FUND_PLAN (FUND_PLAN_FLOW, PROJ_FLOW, PLAN_TYPE_ID,
       PLAN_TYPE_NAME, YEAR, AMOUNT, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -116,8 +116,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubProjFundPlan" >
-    insert into PDSCI.PUB_PROJ_FUND_PLAN
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubProjFundPlan">
+        insert into PUB_PROJ_FUND_PLAN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fundPlanFlow != null" >
         FUND_PLAN_FLOW,
@@ -189,14 +189,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubProjFundPlanExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_PROJ_FUND_PLAN
+    <select id="countByExample" parameterType="com.pinde.core.model.PubProjFundPlanExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_PROJ_FUND_PLAN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_PROJ_FUND_PLAN
+      update PUB_PROJ_FUND_PLAN
     <set >
       <if test="record.fundPlanFlow != null" >
         FUND_PLAN_FLOW = #{record.fundPlanFlow,jdbcType=VARCHAR},
@@ -237,7 +238,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_PROJ_FUND_PLAN
+      update PUB_PROJ_FUND_PLAN
     set FUND_PLAN_FLOW = #{record.fundPlanFlow,jdbcType=VARCHAR},
       PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       PLAN_TYPE_ID = #{record.planTypeId,jdbcType=VARCHAR},
@@ -253,8 +254,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubProjFundPlan" >
-    update PDSCI.PUB_PROJ_FUND_PLAN
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubProjFundPlan">
+        update PUB_PROJ_FUND_PLAN
     <set >
       <if test="projFlow != null" >
         PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
@@ -289,8 +290,8 @@
     </set>
     where FUND_PLAN_FLOW = #{fundPlanFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubProjFundPlan" >
-    update PDSCI.PUB_PROJ_FUND_PLAN
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubProjFundPlan">
+        update PUB_PROJ_FUND_PLAN
     set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
       PLAN_TYPE_ID = #{planTypeId,jdbcType=VARCHAR},
       PLAN_TYPE_NAME = #{planTypeName,jdbcType=VARCHAR},

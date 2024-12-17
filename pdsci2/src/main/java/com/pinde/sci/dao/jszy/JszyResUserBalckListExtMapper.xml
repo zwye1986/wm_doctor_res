@@ -6,7 +6,7 @@
 		select
 
 		<include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-		from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 		where record_status='Y'
 		and (
 			0=1
@@ -31,7 +31,7 @@
 		select
 
 		<include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-		from PDSCI.JSRES_USER_BALCKLIST
+        from JSRES_USER_BALCKLIST
 		where
 		0=1
 		<if test="userFlow!=''and userFlow!=null">
@@ -52,16 +52,16 @@
 	</select>
 <select id="selectBlack" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
 	select <include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-	from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 </select>
 <select id="selectByIdNo" parameterType="string" resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
 	select <include refid="com.pinde.sci.dao.base.JsresUserBalcklistMapper.Base_Column_List" />
-	from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 	where ID_NO= #{userIdNo}
 </select>
 	<select id="searchInfo" parameterType="java.util.Map"  resultMap="com.pinde.sci.dao.base.JsresUserBalcklistMapper.BaseResultMap" >
 		select a.*
-		from PDSCI.JSRES_USER_BALCKLIST a
+        from JSRES_USER_BALCKLIST a
 			left join res_doctor rd on a.user_flow = rd.doctor_flow
 		where a.record_status='Y'
 		<if test="jsresUserBalcklist.sessionNumber!=''and jsresUserBalcklist.sessionNumber!=null">

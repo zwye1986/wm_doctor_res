@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,9 +11,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResGraduationAssessmentMapper;
 import com.pinde.sci.dao.res.ResGraduationAssessmentExtMapper;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +41,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
     @Autowired
     private IFileBiz pubFileBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(ResGraduationAssessmentBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResGraduationAssessmentBizImpl.class);
 
     @Override
     public ResGraduationAssessmentExt getDocGraduationAssessment(String userFlow) {
@@ -160,7 +161,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
 
             String fileType = file.getContentType();//MIME类型;
             String fileName = file.getOriginalFilename();//文件名
-            String suffix = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();;//后缀名
+            String suffix = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();//后缀名
             if(!(mimeList.contains(fileType)&&suffixList.contains(suffix))){
                 return "只支持上传"+InitConfig.getSysCfg("inx_image_support_suffix")+"！";
             }
@@ -250,7 +251,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
             /*设置页面编码为UTF-8*/
             response.setHeader("Content-Type","text/html;charset=UTF-8");
             OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
             outputStream.flush();
             outputStream.close();
         }
@@ -304,7 +305,7 @@ public class ResGraduationAssessmentBizImpl implements IResGraduationAssessmentB
             /*设置页面编码为UTF-8*/
             response.setHeader("Content-Type","text/html;charset=UTF-8");
             OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-            outputStream.write("<a href='javascript:history.go(-1)'>未发现结业考核打分表文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现结业考核打分表文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
             outputStream.flush();
             outputStream.close();
         }

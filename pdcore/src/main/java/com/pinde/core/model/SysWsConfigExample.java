@@ -1,11 +1,17 @@
 package com.pinde.core.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class SysWsConfigExample {
+    @Setter
     protected String orderByClause;
 
+    @Setter
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;

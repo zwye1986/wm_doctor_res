@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresMonthStatisticsMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresMonthStatistics" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresMonthStatistics">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_NUMBER" property="doctorNumber" jdbcType="VARCHAR" />
     <result column="DOCTOR_TOTAL_NUMBER" property="doctorTotalNumber" jdbcType="VARCHAR" />
@@ -81,13 +81,14 @@
     GRADUATE_TOTAL_NUMBER, GRADUATE_AUDIT_NUMBER, ORG_FLOW, ORG_NAME, MONTH_DATE, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresMonthStatisticsExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.JsresMonthStatisticsExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_MONTH_STATISTICS
+        from JSRES_MONTH_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_MONTH_STATISTICS
+      from JSRES_MONTH_STATISTICS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_MONTH_STATISTICS
+      delete from JSRES_MONTH_STATISTICS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresMonthStatisticsExample" >
-    delete from PDSCI.JSRES_MONTH_STATISTICS
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresMonthStatisticsExample">
+        delete from JSRES_MONTH_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
-    insert into PDSCI.JSRES_MONTH_STATISTICS (RECORD_FLOW, DOCTOR_NUMBER, DOCTOR_TOTAL_NUMBER, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresMonthStatistics">
+        insert into JSRES_MONTH_STATISTICS (RECORD_FLOW, DOCTOR_NUMBER, DOCTOR_TOTAL_NUMBER,
       DOCTOR_AUDIT_NUMBER, GRADUATE_NUMBER, GRADUATE_TOTAL_NUMBER, 
       GRADUATE_AUDIT_NUMBER, ORG_FLOW, ORG_NAME, 
       MONTH_DATE, RECORD_STATUS, CREATE_TIME, 
@@ -125,8 +126,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
-    insert into PDSCI.JSRES_MONTH_STATISTICS
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresMonthStatistics">
+        insert into JSRES_MONTH_STATISTICS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -222,14 +223,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresMonthStatisticsExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_MONTH_STATISTICS
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresMonthStatisticsExample"
+            resultType="java.lang.Integer">
+        select count(*) from JSRES_MONTH_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_MONTH_STATISTICS
+      update JSRES_MONTH_STATISTICS
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -282,7 +284,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_MONTH_STATISTICS
+      update JSRES_MONTH_STATISTICS
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_NUMBER = #{record.doctorNumber,jdbcType=VARCHAR},
       DOCTOR_TOTAL_NUMBER = #{record.doctorTotalNumber,jdbcType=VARCHAR},
@@ -302,8 +304,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
-    update PDSCI.JSRES_MONTH_STATISTICS
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresMonthStatistics">
+        update JSRES_MONTH_STATISTICS
     <set >
       <if test="doctorNumber != null" >
         DOCTOR_NUMBER = #{doctorNumber,jdbcType=VARCHAR},
@@ -350,8 +352,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresMonthStatistics" >
-    update PDSCI.JSRES_MONTH_STATISTICS
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresMonthStatistics">
+        update JSRES_MONTH_STATISTICS
     set DOCTOR_NUMBER = #{doctorNumber,jdbcType=VARCHAR},
       DOCTOR_TOTAL_NUMBER = #{doctorTotalNumber,jdbcType=VARCHAR},
       DOCTOR_AUDIT_NUMBER = #{doctorAuditNumber,jdbcType=VARCHAR},

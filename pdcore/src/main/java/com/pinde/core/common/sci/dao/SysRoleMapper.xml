@@ -102,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ROLE
+        from SYS_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -113,21 +113,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ROLE
+      from SYS_ROLE
     where ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_ROLE
+      delete from SYS_ROLE
     where ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.SysRoleExample">
-    delete from PDSCI.SYS_ROLE
+        delete from SYS_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.SysRole">
-    insert into PDSCI.SYS_ROLE (ROLE_FLOW, ROLE_NAME, WS_ID, 
+        insert into SYS_ROLE (ROLE_FLOW, ROLE_NAME, WS_ID,
       WS_NAME, ROLE_LEVEL_ID, ROLE_LEVEL_NAME, 
       PARENT_ROLE_FLOW, PARENT_ROLE_NAME, ALLOW_REG_FLAG, 
       REG_PAGE_ID, REG_PAGE_NAME, ORDINAL, 
@@ -143,7 +143,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.SysRole">
-    insert into PDSCI.SYS_ROLE
+        insert into SYS_ROLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleFlow != null" >
         ROLE_FLOW,
@@ -367,13 +367,13 @@
   </select>
 
     <select id="countByExample" parameterType="com.pinde.core.model.SysRoleExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SYS_ROLE
+        select count(*) from SYS_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_ROLE
+      update SYS_ROLE
     <set >
       <if test="record.roleFlow != null" >
         ROLE_FLOW = #{record.roleFlow,jdbcType=VARCHAR},
@@ -435,7 +435,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_ROLE
+      update SYS_ROLE
     set ROLE_FLOW = #{record.roleFlow,jdbcType=VARCHAR},
       ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
       WS_ID = #{record.wsId,jdbcType=VARCHAR},
@@ -459,7 +459,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysRole">
-    update PDSCI.SYS_ROLE
+        update SYS_ROLE
     <set >
       <if test="roleName != null" >
         ROLE_NAME = #{roleName,jdbcType=VARCHAR},
@@ -516,7 +516,7 @@
     where ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysRole">
-    update PDSCI.SYS_ROLE
+        update SYS_ROLE
     set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
       WS_ID = #{wsId,jdbcType=VARCHAR},
       WS_NAME = #{wsName,jdbcType=VARCHAR},

@@ -11,7 +11,7 @@
 	, LECTURE_DESC, LECTURE_EVA_PERIOD, LECTURE_UNIT_ID, LECTURE_UNIT_NAME, RECORD_STATUS
 	, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, LECTURE_TYPE_ID
 	, LECTURE_TYPE_NAME, LECTURE_CODE_URL, lecture_Description, lecture_Level_Name, COURSEWARE_URL
-		FROM PDSCI.RES_LECTURE_INFO
+        FROM RES_LECTURE_INFO
 		WHERE RECORD_STATUS = 'Y'
 		<if test="orgFlow!=null and orgFlow!=''">
 			AND ORG_FLOW = #{orgFlow}
@@ -287,7 +287,7 @@
 	</select>
 
 	<update id="deleteLectureRole" >
-		update  PDSCI.RES_LECTURE_INFO_ROLE set RECORD_STATUS='N'
+        update RES_LECTURE_INFO_ROLE set RECORD_STATUS='N'
 		where LECTURE_FLOW=#{resLectureInfo.lectureFlow} and RECORD_STATUS='Y'
 		<if test="roleFlows !=null and roleFlows.size()>0">
 			and   LECTURE_ROLE not in
@@ -345,7 +345,7 @@
         LECTURE_FLOW,
         sum(EVA_SCORE) / count(EVA_SCORE) SCORE
     FROM
-        PDSCI.RES_LECTURE_EVA_DETAIL
+        RES_LECTURE_EVA_DETAIL
     WHERE
         RECORD_STATUS = 'Y'
     GROUP BY LECTURE_FLOW

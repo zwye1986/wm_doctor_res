@@ -114,7 +114,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      from JSRES_DOCTOR_DEPT_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -125,21 +125,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      from JSRES_DOCTOR_DEPT_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      delete
+      from JSRES_DOCTOR_DEPT_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorDeptDetailExample">
-    delete from PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      delete from JSRES_DOCTOR_DEPT_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
-    insert into PDSCI.JSRES_DOCTOR_DEPT_DETAIL (RECORD_FLOW, RECRUIT_FLOW, DOCTOR_FLOW, 
+      insert into JSRES_DOCTOR_DEPT_DETAIL (RECORD_FLOW, RECRUIT_FLOW, DOCTOR_FLOW,
       CAT_SPE_ID, CAT_SPE_NAME, SPE_ID, 
       SPE_NAME, TRAIN_YEAR, SESSION_NUMBER, 
       ROTATION_FLOW, SCH_STANDARD_DEPT_FLOW, STANDARD_DEPT_ID, 
@@ -167,7 +168,7 @@
       #{outCompleteBiPer,jdbcType=VARCHAR}, #{inCompleteBiPer,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
-    insert into PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      insert into JSRES_DOCTOR_DEPT_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -402,13 +403,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorDeptDetailExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      select count(*) from JSRES_DOCTOR_DEPT_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      update JSRES_DOCTOR_DEPT_DETAIL
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -530,7 +531,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      update JSRES_DOCTOR_DEPT_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -574,7 +575,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
-    update PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      update JSRES_DOCTOR_DEPT_DETAIL
     <set>
       <if test="recruitFlow != null">
         RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
@@ -691,7 +692,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
-    update PDSCI.JSRES_DOCTOR_DEPT_DETAIL
+      update JSRES_DOCTOR_DEPT_DETAIL
     set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       CAT_SPE_ID = #{catSpeId,jdbcType=VARCHAR},

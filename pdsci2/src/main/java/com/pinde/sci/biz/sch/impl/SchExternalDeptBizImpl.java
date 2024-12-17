@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Service
@@ -181,7 +184,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 					result.setSchStartDate(startDate);
 					result.setSchEndDate(endDate);
 					int month = TimeUtil.getMonths(map);
-					BigDecimal bg = new BigDecimal(month).setScale(1, BigDecimal.ROUND_HALF_UP);
+                    BigDecimal bg = new BigDecimal(month).setScale(1, RoundingMode.HALF_UP);
 					result.setSchMonth(String.valueOf(bg.doubleValue()));
 
 					result.setDeptFlow(schDept.getDeptFlow());
@@ -310,7 +313,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 	@Override
 	public int delExternalDept(String[] recordFlows) {
 		int count=0;
-		if(recordFlows!=null&&recordFlows.length>0)
+        if (recordFlows != null)
 		{
 			for(String recordFlow:recordFlows)
 			{

@@ -33,6 +33,8 @@ public class JsresSign implements java.io.Serializable {
 
     private String useStatusName;
 
+    private String sessionNumber;
+
     public String getSignFlow() {
         return signFlow;
     }
@@ -159,5 +161,13 @@ public class JsresSign implements java.io.Serializable {
 
     public void setUseStatusName(String useStatusName) {
         this.useStatusName = useStatusName;
+    }
+
+    public String getSessionNumber() {
+        return sessionNumber;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
     }
 }

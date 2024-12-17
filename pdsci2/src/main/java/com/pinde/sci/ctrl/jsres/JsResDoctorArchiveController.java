@@ -1,10 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -20,7 +17,15 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.jsres.UserInfoExtLogForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
 import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorOrgHistory;
+import com.pinde.core.model.ResDoctorRecruitLog;
+import com.pinde.core.model.ResDoctorRecruitLogWithBLOBs;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.sci.model.mo.ResRec;
+import com.pinde.sci.model.mo.ResUserResumeLog;
+import com.pinde.core.model.SysUserLog;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.JsresExamSignup;
+import com.pinde.core.model.JsresExamSignupLog;
 import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.sci.model.mo.JsresExamSignup;
-import com.pinde.sci.model.mo.JsresExamSignupLog;
 import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.mo.ResScore;
 

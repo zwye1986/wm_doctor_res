@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.sch.SchRotationGroupExtMapper" >
 	<select id="sumDeptNumByRotation" parameterType="string" resultType="int">
 		SELECT SUM(DEPT_NUM)
-		FROM PDSCI.SCH_ROTATION_GROUP
+        FROM SCH_ROTATION_GROUP
 		WHERE RECORD_STATUS = 'Y'
 		AND ROTATION_FLOW = #{rotationFlow}
 	</select>

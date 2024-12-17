@@ -517,7 +517,7 @@
 	
 	<select id="countProcessByUser" resultMap="processCountMap">
 		SELECT USER_FLOW,COUNT(*) PROCESS_COUNT
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
 		WHERE USER_FLOW IN
 		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
 			#{userFlow}
@@ -709,8 +709,8 @@
 
 	<select id="searchProcessByDoctorNew" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
-		left join PDSCI.RES_DOCTOR RD
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
+        left join RES_DOCTOR RD
 		on RDSP.USER_FLOW = RD.DOCTOR_FLOW
 		left join RES_POWER_CFG RPC
 		on 'res_doctor_web_'||RDSP.USER_FLOW = RPC.CFG_CODE
@@ -776,7 +776,7 @@
 				<if test='roleFlagMap.roleFlag=="head"'>
 					AND ( RDSP.SCH_DEPT_FLOW IN (
 					SELECT SCH_DEPT_FLOW
-					FROM PDSCI.SCH_DEPT
+                    FROM SCH_DEPT
 					WHERE RECORD_STATUS = 'Y'
 					AND DEPT_FLOW IN (
 					SELECT DEPT_FLOW
@@ -792,7 +792,7 @@
 					</if>
 					AND RD.ORG_FLOW IN (
 					SELECT ORG_FLOW
-					FROM PDSCI.SYS_USER
+                    FROM SYS_USER
 					WHERE USER_FLOW = #{roleFlagMap.val}
 					)
 				</if>
@@ -811,8 +811,8 @@
 
 	<select id="searchProcessByMp" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
-		left join PDSCI.RES_DOCTOR RD
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
+        left join RES_DOCTOR RD
 		on RDSP.USER_FLOW = RD.DOCTOR_FLOW
 		left join RES_POWER_CFG RPC
 		on 'res_doctor_web_'||RDSP.USER_FLOW = RPC.CFG_CODE
@@ -882,7 +882,7 @@
 				<if test='roleFlagMap.roleFlag=="head"'>
 					AND ( RDSP.SCH_DEPT_FLOW IN (
 					SELECT SCH_DEPT_FLOW
-					FROM PDSCI.SCH_DEPT
+                    FROM SCH_DEPT
 					WHERE RECORD_STATUS = 'Y'
 					AND DEPT_FLOW IN (
 					SELECT DEPT_FLOW
@@ -895,7 +895,7 @@
 				<if test='roleFlagMap.roleFlag=="secretary"'>
 					AND  RDSP.SCH_DEPT_FLOW IN (
 					SELECT SCH_DEPT_FLOW
-					FROM PDSCI.SCH_DEPT
+                    FROM SCH_DEPT
 					WHERE RECORD_STATUS = 'Y'
 					AND DEPT_FLOW IN (
 					SELECT DEPT_FLOW
@@ -910,7 +910,7 @@
 					</if>
 					AND RD.ORG_FLOW IN (
 					SELECT ORG_FLOW
-					FROM PDSCI.SYS_USER
+                    FROM SYS_USER
 					WHERE USER_FLOW = #{roleFlagMap.val}
 					)
 				</if>
@@ -920,7 +920,7 @@
 					</if>
 					AND RD.ORG_FLOW IN (
 					SELECT ORG_FLOW
-					FROM PDSCI.SYS_USER
+                    FROM SYS_USER
 					WHERE USER_FLOW = #{roleFlagMap.val}
 					)
 				</if>
@@ -1231,7 +1231,7 @@
 					</if>
 					AND RD.ORG_FLOW IN (
 						SELECT ORG_FLOW
-						FROM PDSCI.SYS_USER
+                    FROM SYS_USER
 						WHERE USER_FLOW = #{roleFlagMap.val}
 					)
 				</if>
@@ -1274,7 +1274,7 @@
 
 	<select id="searchProcessByDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_DOCTOR RD
+        FROM RES_DOCTOR_SCH_PROCESS RDSP, RES_DOCTOR RD
 		WHERE RDSP.RECORD_STATUS = 'Y'
 		AND RD.RECORD_STATUS = 'Y'
 		AND RDSP.USER_FLOW = RD.DOCTOR_FLOW
@@ -1313,8 +1313,8 @@
 			<if test='roleFlagMap.roleFlag!=null and roleFlagMap.roleFlag!="" and roleFlagMap.val!=null and roleFlagMap.val!=""'>
 				<if test='roleFlagMap.roleFlag=="head"'>
 					AND ( RDSP.SCH_DEPT_FLOW IN (
-						SELECT SCH_DEPT_FLOW 
-						FROM PDSCI.SCH_DEPT
+						SELECT SCH_DEPT_FLOW
+                    FROM SCH_DEPT
 						WHERE RECORD_STATUS = 'Y'
 						AND DEPT_FLOW IN (
 							SELECT DEPT_FLOW 
@@ -1330,7 +1330,7 @@
 					</if>
 					AND RD.ORG_FLOW IN (
 	    				SELECT ORG_FLOW
-	    				FROM PDSCI.SYS_USER
+                    FROM SYS_USER
 	    				WHERE USER_FLOW = #{roleFlagMap.val}
 	    			)
 				</if>
@@ -1349,7 +1349,7 @@
 	
 	<select id="searchTeachDept" resultType="string">
 		SELECT DISTINCT SCH_DEPT_FLOW
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
 		WHERE RECORD_STATUS = 'Y'
 		<if test='userFlow!=null and userFlow!=""'>
 			AND TEACHER_USER_FLOW = #{userFlow}
@@ -1358,7 +1358,7 @@
 	
 	<select id="searchRotationDoctor" resultType="string">
 		SELECT DISTINCT USER_FLOW
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
 		WHERE RECORD_STATUS = 'Y'
 		AND USER_FLOW IN 
 		<foreach collection="doctorFlows" item="doctorFlow" open="(" separator="," close=")">
@@ -1368,7 +1368,7 @@
 
 	<select id="searchDoctorProcess" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
 		LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||RDSP.USER_FLOW = RPC.CFG_CODE
 		join sys_user su on rdsp.user_flow=su.user_flow
 		WHERE RDSP.RECORD_STATUS = 'Y'
@@ -1416,7 +1416,7 @@
 
 	<select id="searchDoctorProcess2" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
 		LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||RDSP.USER_FLOW = RPC.CFG_CODE
 		join sys_user su on rdsp.user_flow=su.user_flow
 		left join res_doctor rd on su.user_flow=rd.doctor_flow
@@ -1469,7 +1469,7 @@
 
 	<select id="searchCurrentProcessByUserFlow" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
 		LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||RDSP.USER_FLOW = RPC.CFG_CODE
 		WHERE RDSP.RECORD_STATUS = 'Y'
 		<if test='isCurrentFlag!=null and isCurrentFlag!=""'>
@@ -1490,8 +1490,8 @@
 
 		<if test='userFlow!=null and userFlow!=""'>
 			AND EXISTS (
-				SELECT NULL 
-				FROM SYS_USER_DEPT SUD,PDSCI.SCH_DEPT SD
+				SELECT NULL
+            FROM SYS_USER_DEPT SUD, SCH_DEPT SD
 				WHERE SUD.RECORD_STATUS = 'Y'
 				AND SD.RECORD_STATUS = 'Y'
 				AND SUD.DEPT_FLOW = SD.DEPT_FLOW
@@ -1519,7 +1519,7 @@
 		<if test='userFlow!=null and userFlow!=""'>
 			AND EXISTS (
 			SELECT NULL
-			FROM SYS_USER_DEPT SUD,PDSCI.SCH_DEPT SD
+            FROM SYS_USER_DEPT SUD, SCH_DEPT SD
 			WHERE SUD.RECORD_STATUS = 'Y'
 			AND SD.RECORD_STATUS = 'Y'
 			AND SUD.DEPT_FLOW = SD.DEPT_FLOW
@@ -1531,7 +1531,7 @@
 
 	<select id="searchProcessByUserFlow" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
 		LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||RDSP.USER_FLOW = RPC.CFG_CODE
 		left join sys_user su on su.user_flow=rdsp.user_flow
 		left join res_doctor rd on rd.doctor_flow=rdsp.user_flow
@@ -1585,7 +1585,7 @@
 		<if test='userFlow!=null and userFlow!=""'>
 			AND ( RDSP.SCH_DEPT_FLOW IN (
 				SELECT SCH_DEPT_FLOW
-				FROM PDSCI.SCH_DEPT
+            FROM SCH_DEPT
 				WHERE RECORD_STATUS = 'Y'
 					AND DEPT_FLOW IN (
 					SELECT DEPT_FLOW
@@ -1598,7 +1598,7 @@
 	</select>
 	<select id="searchResultsByUserFlow" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
 		SELECT a.*
-        FROM PDSCI.SCH_ARRANGE_RESULT a
+        FROM SCH_ARRANGE_RESULT a
         left join res_doctor rd on a.doctor_flow=rd.doctor_flow
         left join sys_user su on a.doctor_flow=su.user_flow
         LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||su.USER_FLOW = RPC.CFG_CODE
@@ -1752,7 +1752,7 @@
 			AND EXISTS (
 				SELECT NULL
 				FROM SYS_USER_DEPT SUD,
-						PDSCI.SCH_DEPT SD
+            SCH_DEPT SD
 				WHERE SUD.RECORD_STATUS = 'Y'
 				AND SD.RECORD_STATUS = 'Y'
 				AND SUD.DEPT_FLOW = SD.DEPT_FLOW
@@ -1768,7 +1768,7 @@
 
 	<select id="searchProcessByUserSpe" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_DOCTOR RD,PDSCI.RES_USER_SPE RUS
+        FROM RES_DOCTOR_SCH_PROCESS RDSP, RES_DOCTOR RD, RES_USER_SPE RUS
 		WHERE RDSP.RECORD_STATUS = 'Y'
 		AND RD.RECORD_STATUS = 'Y'
 		AND RUS.RECORD_STATUS = 'Y'
@@ -1781,7 +1781,7 @@
 			AND RUS.USER_FLOW = #{userFlow}
 			AND RD.ORG_FLOW IN (
 				SELECT ORG_FLOW
-				FROM PDSCI.SYS_USER
+            FROM SYS_USER
 				WHERE RECORD_STATUS = 'Y'
 				AND USER_FLOW = #{userFlow}
 			)
@@ -3692,8 +3692,8 @@
 		) a
 		where  A.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 
 		<if test="org!=null">
 			<if test="org.orgProvId!=null and org.orgProvId!=''">
@@ -4163,7 +4163,7 @@
 		to_number(NVL(JDW.AUDIT_BI,0)) AUDIT_BI,
 					JDW.rotation_Num
               FROM RES_DOCTOR_RECRUIT dr
-			  left join  pdsci.SYS_USER u
+        left join SYS_USER u
 			  on dr.DOCTOR_FLOW =  u.USER_FLOW
 			  LEFT JOIN RES_DOCTOR RD
 				ON DR.DOCTOR_FLOW = RD.DOCTOR_FLOW
@@ -5130,8 +5130,8 @@
 	</select>
 	<select id="selectProcessByDoctorNew" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
 		SELECT RDSP.*
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
-		left join PDSCI.RES_DOCTOR RD
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
+        left join RES_DOCTOR RD
 		on RDSP.USER_FLOW = RD.DOCTOR_FLOW
 		WHERE RDSP.RECORD_STATUS = 'Y'
 		AND RD.RECORD_STATUS = 'Y'
@@ -5572,7 +5572,7 @@
 		AND R.CAT_SPE_ID=#{trainingTypeId}
 		UNION ALL
 		SELECT COUNT(*) AS HAVE_CK
-		FROM PDSCI.RES_SCH_PROCESS_EXPRESS
+        FROM RES_SCH_PROCESS_EXPRESS
 		WHERE AUDIT_STATUS_ID = 'TeacherAuditY'
 		AND REC_TYPE_ID = 'AfterEvaluation'
 		AND RECORD_STATUS = 'Y'
@@ -5589,7 +5589,7 @@
 			AND R.CAT_SPE_ID= #{trainingTypeId}
 		)
 	</select>
-    <select id="listByDoctorFlow" resultType="com.pinde.sci.model.mo.ResDoctorSchProcess">
+    <select id="listByDoctorFlow" resultType="com.pinde.core.model.ResDoctorSchProcess">
 		select * from RES_DOCTOR_SCH_PROCESS where RECORD_STATUS = 'Y' and USER_FLOW = #{doctorFlow}
 	</select>
 </mapper>

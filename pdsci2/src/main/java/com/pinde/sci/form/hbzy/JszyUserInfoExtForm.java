@@ -1,8 +1,8 @@
 package com.pinde.sci.form.hbzy;
 
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.ResDoctor;
 
 public class JszyUserInfoExtForm implements java.io.Serializable {
 

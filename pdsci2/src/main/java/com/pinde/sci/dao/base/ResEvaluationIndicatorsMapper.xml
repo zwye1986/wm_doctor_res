@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResEvaluationIndicatorsMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResEvaluationIndicators" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResEvaluationIndicators">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
     <result column="FULL_SCORE" property="fullScore" jdbcType="VARCHAR" />
@@ -76,13 +76,14 @@
     RECORD_FLOW, ITEM_ID, FULL_SCORE, ORDER_NUM, INDICATORS, TABLE_PATH_NAME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicatorsExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResEvaluationIndicatorsExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EVALUATION_INDICATORS
+      from RES_EVALUATION_INDICATORS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EVALUATION_INDICATORS
+      from RES_EVALUATION_INDICATORS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_EVALUATION_INDICATORS
+      delete from RES_EVALUATION_INDICATORS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicatorsExample" >
-    delete from PDSCI.RES_EVALUATION_INDICATORS
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResEvaluationIndicatorsExample">
+      delete from RES_EVALUATION_INDICATORS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicators" >
-    insert into PDSCI.RES_EVALUATION_INDICATORS (RECORD_FLOW, ITEM_ID, FULL_SCORE, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResEvaluationIndicators">
+      insert into RES_EVALUATION_INDICATORS (RECORD_FLOW, ITEM_ID, FULL_SCORE,
       ORDER_NUM, INDICATORS, TABLE_PATH_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -116,8 +117,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicators" >
-    insert into PDSCI.RES_EVALUATION_INDICATORS
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResEvaluationIndicators">
+      insert into RES_EVALUATION_INDICATORS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -189,14 +190,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicatorsExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_EVALUATION_INDICATORS
+    <select id="countByExample" parameterType="com.pinde.core.model.ResEvaluationIndicatorsExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_EVALUATION_INDICATORS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_EVALUATION_INDICATORS
+      update RES_EVALUATION_INDICATORS
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -237,7 +239,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_EVALUATION_INDICATORS
+      update RES_EVALUATION_INDICATORS
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
       FULL_SCORE = #{record.fullScore,jdbcType=VARCHAR},
@@ -253,8 +255,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicators" >
-    update PDSCI.RES_EVALUATION_INDICATORS
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResEvaluationIndicators">
+      update RES_EVALUATION_INDICATORS
     <set >
       <if test="itemId != null" >
         ITEM_ID = #{itemId,jdbcType=VARCHAR},
@@ -289,8 +291,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResEvaluationIndicators" >
-    update PDSCI.RES_EVALUATION_INDICATORS
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResEvaluationIndicators">
+      update RES_EVALUATION_INDICATORS
     set ITEM_ID = #{itemId,jdbcType=VARCHAR},
       FULL_SCORE = #{fullScore,jdbcType=VARCHAR},
       ORDER_NUM = #{orderNum,jdbcType=VARCHAR},

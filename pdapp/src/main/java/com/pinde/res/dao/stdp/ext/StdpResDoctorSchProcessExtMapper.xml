@@ -7,7 +7,7 @@
 	</resultMap>
 	<select id="getDocProcessArea" resultMap="areaMap">
 		select min(sch_start_date) MIN_DATE,max(sch_end_date) MAX_DATE
-		from pdsci.res_doctor_sch_process
+        from res_doctor_sch_process
 		where record_status = 'Y'
 		and user_flow = #{doctorFlow}
 	</select>
@@ -17,7 +17,7 @@
 	</resultMap>
 	<select id="countProcessByUser" resultMap="processCountMap">
 		SELECT USER_FLOW,COUNT(*) PROCESS_COUNT
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
 		WHERE USER_FLOW IN
 		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
 			#{userFlow}

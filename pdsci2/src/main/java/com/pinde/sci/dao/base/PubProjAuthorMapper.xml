@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.PubProjAuthorMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubProjAuthor">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubProjAuthor">
     <id column="AUTHOR_FLOW" jdbcType="VARCHAR" property="authorFlow" />
     <result column="PROJ_FLOW" jdbcType="VARCHAR" property="projFlow" />
     <result column="AUTHOR_NAME" jdbcType="VARCHAR" property="authorName" />
@@ -89,13 +89,13 @@
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_FIXED_FLAG, IS_PUBLISH, 
     PROJ_RANKING
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.PubProjAuthorExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.PubProjAuthorExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_AUTHOR
+        from PUB_PROJ_AUTHOR
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -106,21 +106,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_PROJ_AUTHOR
+      from PUB_PROJ_AUTHOR
     where AUTHOR_FLOW = #{authorFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.PUB_PROJ_AUTHOR
+      delete from PUB_PROJ_AUTHOR
     where AUTHOR_FLOW = #{authorFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubProjAuthorExample">
-    delete from PDSCI.PUB_PROJ_AUTHOR
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubProjAuthorExample">
+        delete from PUB_PROJ_AUTHOR
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubProjAuthor">
-    insert into PDSCI.PUB_PROJ_AUTHOR (AUTHOR_FLOW, PROJ_FLOW, AUTHOR_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubProjAuthor">
+        insert into PUB_PROJ_AUTHOR (AUTHOR_FLOW, PROJ_FLOW, AUTHOR_NAME,
       SEX_ID, SEX_NAME, USER_FLOW, 
       DEPT_FLOW, DEPT_NAME, ACH_SCORE, 
       ACH_SCORE_DEPT, BRANCH_ID, BRANCH_NAME, 
@@ -137,8 +137,8 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{isFixedFlag,jdbcType=VARCHAR}, #{isPublish,jdbcType=VARCHAR}, 
       #{projRanking,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubProjAuthor">
-    insert into PDSCI.PUB_PROJ_AUTHOR
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubProjAuthor">
+        insert into PUB_PROJ_AUTHOR
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="authorFlow != null">
         AUTHOR_FLOW,
@@ -276,14 +276,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubProjAuthorExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.PUB_PROJ_AUTHOR
+    <select id="countByExample" parameterType="com.pinde.core.model.PubProjAuthorExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_PROJ_AUTHOR
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.PUB_PROJ_AUTHOR
+      update PUB_PROJ_AUTHOR
     <set>
       <if test="record.authorFlow != null">
         AUTHOR_FLOW = #{record.authorFlow,jdbcType=VARCHAR},
@@ -357,7 +358,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.PUB_PROJ_AUTHOR
+      update PUB_PROJ_AUTHOR
     set AUTHOR_FLOW = #{record.authorFlow,jdbcType=VARCHAR},
       PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
       AUTHOR_NAME = #{record.authorName,jdbcType=VARCHAR},
@@ -384,8 +385,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubProjAuthor">
-    update PDSCI.PUB_PROJ_AUTHOR
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubProjAuthor">
+        update PUB_PROJ_AUTHOR
     <set>
       <if test="projFlow != null">
         PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
@@ -453,8 +454,8 @@
     </set>
     where AUTHOR_FLOW = #{authorFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubProjAuthor">
-    update PDSCI.PUB_PROJ_AUTHOR
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubProjAuthor">
+        update PUB_PROJ_AUTHOR
     set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
       AUTHOR_NAME = #{authorName,jdbcType=VARCHAR},
       SEX_ID = #{sexId,jdbcType=VARCHAR},

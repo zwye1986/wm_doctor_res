@@ -3,14 +3,14 @@
 <mapper namespace="com.pinde.sci.dao.sch.SchRotationDeptExtMapper" >
 	<select id="getUnrelCount" resultType="int">
 		SELECT COUNT(*)
-		FROM PDSCI.SCH_ROTATION_DEPT
+        FROM SCH_ROTATION_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND ROTATION_FLOW = #{rotationFlow}
 		AND ORG_FLOW = #{orgFlow}
 		AND (SCH_DEPT_FLOW IS NULL OR SCH_MONTH = '0' OR SCH_MONTH IS NULL)
 		AND GROUP_FLOW NOT IN (
 			SELECT GROUP_FLOW
-			FROM PDSCI.SCH_ROTATION_GROUP
+        FROM SCH_ROTATION_GROUP
 			WHERE RECORD_STATUS = 'Y'
 			AND ROTATION_FLOW = #{rotationFlow}
 			AND ORG_FLOW = #{orgFlow}
@@ -20,7 +20,7 @@
 	
 	<select id="isUpdateOrg" resultType="string">
 		SELECT DISTINCT ORG_FLOW
-		FROM PDSCI.SCH_ROTATION_DEPT
+        FROM SCH_ROTATION_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND ROTATION_FLOW = #{rotationFlow}
 		AND ORG_FLOW IS NOT NULL
@@ -39,7 +39,7 @@
 	
 	<select id="getSchInUsedCount" resultType="int">
 		SELECT COUNT(*)
-		FROM PDSCI.SCH_ROTATION_DEPT
+        FROM SCH_ROTATION_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		<if test='schDeptFlow!=null and schDeptFlow!=""'>
 			AND SCH_DEPT_FLOW = #{schDeptFlow}
@@ -55,7 +55,7 @@
 	</resultMap>
 	<select id="getRotationMustSum" resultMap="monthSumMap">
 		SELECT ROTATION_FLOW,SUM(SCH_MONTH) MONTH_SUM
-		FROM PDSCI.SCH_ROTATION_DEPT
+        FROM SCH_ROTATION_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND IS_REQUIRED = 'Y'
 		AND ORG_FLOW IS NULL
@@ -65,7 +65,7 @@
 	
 	<select id="getRotationGroupSum" resultMap="monthSumMap">
 		SELECT ROTATION_FLOW,SUM(SCH_MONTH) MONTH_SUM
-		FROM PDSCI.SCH_ROTATION_GROUP
+        FROM SCH_ROTATION_GROUP
 		WHERE RECORD_STATUS = 'Y'
 		AND IS_REQUIRED = 'N'
 		AND ORG_FLOW IS NULL
@@ -74,8 +74,8 @@
 	</select>
 	
 	<select id="searchRotationDeptByStanard" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
-		SELECT SRD.* 
-		FROM PDSCI.SCH_ROTATION_GROUP SRG,PDSCI.SCH_ROTATION_DEPT SRD,PDSCI.SCH_ROTATION_DEPT SRDS
+		SELECT SRD.*
+        FROM SCH_ROTATION_GROUP SRG, SCH_ROTATION_DEPT SRD, SCH_ROTATION_DEPT SRDS
 		WHERE SRG.RECORD_STATUS = 'Y'
 		AND SRD.RECORD_STATUS = 'Y'
 		AND SRDS.RECORD_STATUS = 'Y'
@@ -87,8 +87,8 @@
 	</select>
 	<select id="doctorGetNotSchDept" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
 		SELECT SRD.*
-		FROM PDSCI.SCH_ROTATION_GROUP SRG,
-			PDSCI.SCH_ROTATION_DEPT SRD
+        FROM SCH_ROTATION_GROUP SRG,
+        SCH_ROTATION_DEPT SRD
 		WHERE SRG.RECORD_STATUS = 'Y'
 		AND SRD.RECORD_STATUS = 'Y'
 		AND SRG.GROUP_FLOW = SRD.GROUP_FLOW
@@ -138,7 +138,7 @@
 			resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
 		select
 		RECORD_FLOW
-		from PDSCI.SCH_ROTATION_DEPT
+        from SCH_ROTATION_DEPT
 		<if test="_parameter != null">
 			<where>
 				<foreach collection="oredCriteria" item="criteria" separator="or">

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubMeeting;
-import com.pinde.sci.model.mo.PubMeetingExample;
+import com.pinde.core.model.PubMeeting;
+import com.pinde.core.model.PubMeetingExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

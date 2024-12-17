@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.RecruitCfgInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.RecruitCfgInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitCfgInfo">
     <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
@@ -76,13 +76,13 @@
     CFG_FLOW, ORG_FLOW, RECRUIT_YEAR, RECRUIT_START_DATE, RECRUIT_END_DATE, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_RECRUIT
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.RecruitCfgInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.RecruitCfgInfoExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_CFG_INFO
+      from RECRUIT_CFG_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_CFG_INFO
+      from RECRUIT_CFG_INFO
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RECRUIT_CFG_INFO
+      delete from RECRUIT_CFG_INFO
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.RecruitCfgInfoExample" >
-    delete from PDSCI.RECRUIT_CFG_INFO
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitCfgInfoExample">
+      delete from RECRUIT_CFG_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.RecruitCfgInfo" >
-    insert into PDSCI.RECRUIT_CFG_INFO (CFG_FLOW, ORG_FLOW, RECRUIT_YEAR, 
+    <insert id="insert" parameterType="com.pinde.core.model.RecruitCfgInfo">
+      insert into RECRUIT_CFG_INFO (CFG_FLOW, ORG_FLOW, RECRUIT_YEAR,
       RECRUIT_START_DATE, RECRUIT_END_DATE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, IS_RECRUIT)
@@ -116,8 +116,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{isRecruit,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.RecruitCfgInfo" >
-    insert into PDSCI.RECRUIT_CFG_INFO
+    <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitCfgInfo">
+      insert into RECRUIT_CFG_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
         CFG_FLOW,
@@ -189,14 +189,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.RecruitCfgInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RECRUIT_CFG_INFO
+    <select id="countByExample" parameterType="com.pinde.core.model.RecruitCfgInfoExample"
+            resultType="java.lang.Integer">
+      select count(*) from RECRUIT_CFG_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RECRUIT_CFG_INFO
+      update RECRUIT_CFG_INFO
     <set >
       <if test="record.cfgFlow != null" >
         CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -237,7 +238,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RECRUIT_CFG_INFO
+      update RECRUIT_CFG_INFO
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
@@ -253,8 +254,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.RecruitCfgInfo" >
-    update PDSCI.RECRUIT_CFG_INFO
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitCfgInfo">
+      update RECRUIT_CFG_INFO
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -289,8 +290,8 @@
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.RecruitCfgInfo" >
-    update PDSCI.RECRUIT_CFG_INFO
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitCfgInfo">
+      update RECRUIT_CFG_INFO
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
       RECRUIT_START_DATE = #{recruitStartDate,jdbcType=VARCHAR},

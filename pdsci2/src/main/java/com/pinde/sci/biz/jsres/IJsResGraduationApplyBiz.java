@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.JsresGraduationApply;
-import com.pinde.sci.model.mo.JsresGraduationApplyLog;
-import com.pinde.sci.model.mo.JsresGraduationInfo;
+import com.pinde.core.model.JsresGraduationApply;
+import com.pinde.core.model.JsresGraduationApplyLog;
+import com.pinde.core.model.JsresGraduationInfo;
 import org.dom4j.DocumentException;
 
 import javax.servlet.http.HttpServletResponse;

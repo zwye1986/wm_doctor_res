@@ -4,7 +4,7 @@ import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorOrgHistory;
 import com.pinde.core.model.SysUser;
 
-public class JsResDoctorOrgHistoryExt extends ResDoctorOrgHistory{
+public class JsResDoctorOrgHistoryExt extends ResDoctorOrgHistory {
 
 	/**
 	 * 

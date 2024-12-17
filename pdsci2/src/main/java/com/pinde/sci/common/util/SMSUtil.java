@@ -11,7 +11,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysSmsLogMapper;
 import com.pinde.sci.dao.base.SysSmsTemplateMapper;
-import com.pinde.sci.model.mo.SysSmsTemplate;
+import com.pinde.core.model.SysSmsTemplate;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;

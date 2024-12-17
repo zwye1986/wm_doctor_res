@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DATE_INFO
+      from SYS_DATE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DATE_INFO
+      from SYS_DATE_INFO
     where DATE_FLOW = #{dateFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SYS_DATE_INFO
+      delete from SYS_DATE_INFO
     where DATE_FLOW = #{dateFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDateInfoExample">
-    delete from PDSCI.SYS_DATE_INFO
+      delete from SYS_DATE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysDateInfo">
-    insert into PDSCI.SYS_DATE_INFO (DATE_FLOW, DATE_DAY, DATE_MONTH, 
+      insert into SYS_DATE_INFO (DATE_FLOW, DATE_DAY, DATE_MONTH,
       DATA_YEAR, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysDateInfo">
-    insert into PDSCI.SYS_DATE_INFO
+      insert into SYS_DATE_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="dateFlow != null">
         DATE_FLOW,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysDateInfoExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SYS_DATE_INFO
+      select count(*) from SYS_DATE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SYS_DATE_INFO
+      update SYS_DATE_INFO
     <set>
       <if test="record.dateFlow != null">
         DATE_FLOW = #{record.dateFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SYS_DATE_INFO
+      update SYS_DATE_INFO
     set DATE_FLOW = #{record.dateFlow,jdbcType=VARCHAR},
       DATE_DAY = #{record.dateDay,jdbcType=VARCHAR},
       DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDateInfo">
-    update PDSCI.SYS_DATE_INFO
+      update SYS_DATE_INFO
     <set>
       <if test="dateDay != null">
         DATE_DAY = #{dateDay,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where DATE_FLOW = #{dateFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDateInfo">
-    update PDSCI.SYS_DATE_INFO
+      update SYS_DATE_INFO
     set DATE_DAY = #{dateDay,jdbcType=VARCHAR},
       DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
       DATA_YEAR = #{dataYear,jdbcType=VARCHAR},

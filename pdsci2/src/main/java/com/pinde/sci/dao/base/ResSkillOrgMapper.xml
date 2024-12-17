@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SKILL_ORG
+      from RES_SKILL_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SKILL_ORG
+      from RES_SKILL_ORG
     where SKILL_ORG_FLOW = #{skillOrgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SKILL_ORG
+      delete from RES_SKILL_ORG
     where SKILL_ORG_FLOW = #{skillOrgFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSkillOrgExample" >
-    delete from PDSCI.RES_SKILL_ORG
+      delete from RES_SKILL_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSkillOrg" >
-    insert into PDSCI.RES_SKILL_ORG (SKILL_ORG_FLOW, SKILL_FLOW, ORG_FLOW, 
+      insert into RES_SKILL_ORG (SKILL_ORG_FLOW, SKILL_FLOW, ORG_FLOW,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
     values (#{skillOrgFlow,jdbcType=VARCHAR}, #{skillFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
@@ -112,7 +112,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSkillOrg" >
-    insert into PDSCI.RES_SKILL_ORG
+      insert into RES_SKILL_ORG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="skillOrgFlow != null" >
         SKILL_ORG_FLOW,
@@ -167,13 +167,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSkillOrgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SKILL_ORG
+      select count(*) from RES_SKILL_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SKILL_ORG
+      update RES_SKILL_ORG
     <set >
       <if test="record.skillOrgFlow != null" >
         SKILL_ORG_FLOW = #{record.skillOrgFlow,jdbcType=VARCHAR},
@@ -205,7 +205,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SKILL_ORG
+      update RES_SKILL_ORG
     set SKILL_ORG_FLOW = #{record.skillOrgFlow,jdbcType=VARCHAR},
       SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResSkillOrg" >
-    update PDSCI.RES_SKILL_ORG
+      update RES_SKILL_ORG
     <set >
       <if test="skillFlow != null" >
         SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
     where SKILL_ORG_FLOW = #{skillOrgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResSkillOrg" >
-    update PDSCI.RES_SKILL_ORG
+      update RES_SKILL_ORG
     set SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

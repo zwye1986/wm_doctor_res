@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCRES_RECURIT_MORE_SPE
+      from SCRES_RECURIT_MORE_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCRES_RECURIT_MORE_SPE
+      from SCRES_RECURIT_MORE_SPE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCRES_RECURIT_MORE_SPE
+      delete from SCRES_RECURIT_MORE_SPE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ScresRecuritMoreSpeExample" >
-    delete from PDSCI.SCRES_RECURIT_MORE_SPE
+      delete from SCRES_RECURIT_MORE_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ScresRecuritMoreSpe" >
-    insert into PDSCI.SCRES_RECURIT_MORE_SPE (RECORD_FLOW, RECRUIT_FLOW, ORDER_NUM, 
+      insert into SCRES_RECURIT_MORE_SPE (RECORD_FLOW, RECRUIT_FLOW, ORDER_NUM,
       ORG_FLOW, ORG_NAME, CAT_SPE_ID, 
       CAT_SPE_NAME, SECOND_SPE_ID, SECOND_SPE_NAME, 
       SPE_ID, SPE_NAME, RECORD_STATUS, 
@@ -127,7 +127,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ScresRecuritMoreSpe" >
-    insert into PDSCI.SCRES_RECURIT_MORE_SPE
+      insert into SCRES_RECURIT_MORE_SPE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -230,13 +230,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ScresRecuritMoreSpeExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCRES_RECURIT_MORE_SPE
+      select count(*) from SCRES_RECURIT_MORE_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCRES_RECURIT_MORE_SPE
+      update SCRES_RECURIT_MORE_SPE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCRES_RECURIT_MORE_SPE
+      update SCRES_RECURIT_MORE_SPE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       ORDER_NUM = #{record.orderNum,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ScresRecuritMoreSpe" >
-    update PDSCI.SCRES_RECURIT_MORE_SPE
+      update SCRES_RECURIT_MORE_SPE
     <set >
       <if test="recruitFlow != null" >
         RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ScresRecuritMoreSpe" >
-    update PDSCI.SCRES_RECURIT_MORE_SPE
+      update SCRES_RECURIT_MORE_SPE
     set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
       ORDER_NUM = #{orderNum,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

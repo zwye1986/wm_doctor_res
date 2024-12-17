@@ -96,7 +96,7 @@
       distinct
     </if>
     SCH_MONTH,GROUP_FLOW,STANDARD_DEPT_ID
-    from PDSCI.SCH_DOCTOR_DEPT
+      from SCH_DOCTOR_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

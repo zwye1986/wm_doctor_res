@@ -81,7 +81,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_SUBJ_CODE
+      from SYS_SUBJ_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,21 +92,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_SUBJ_CODE
+      from SYS_SUBJ_CODE
     where SUBJ_FLOW = #{subjFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_SUBJ_CODE
+      delete from SYS_SUBJ_CODE
     where SUBJ_FLOW = #{subjFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysSubjCodeExample" >
-    delete from PDSCI.SYS_SUBJ_CODE
+      delete from SYS_SUBJ_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysSubjCode" >
-    insert into PDSCI.SYS_SUBJ_CODE (SUBJ_FLOW, SUBJ_ID, SUBJ_NAME, 
+      insert into SYS_SUBJ_CODE (SUBJ_FLOW, SUBJ_ID, SUBJ_NAME,
       PAR_SUBJ_ID, ORDINAL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -116,7 +116,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysSubjCode" >
-    insert into PDSCI.SYS_SUBJ_CODE
+      insert into SYS_SUBJ_CODE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjFlow != null" >
         SUBJ_FLOW,
@@ -183,13 +183,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysSubjCodeExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_SUBJ_CODE
+      select count(*) from SYS_SUBJ_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_SUBJ_CODE
+      update SYS_SUBJ_CODE
     <set >
       <if test="record.subjFlow != null" >
         SUBJ_FLOW = #{record.subjFlow,jdbcType=VARCHAR},
@@ -227,7 +227,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_SUBJ_CODE
+      update SYS_SUBJ_CODE
     set SUBJ_FLOW = #{record.subjFlow,jdbcType=VARCHAR},
       SUBJ_ID = #{record.subjId,jdbcType=VARCHAR},
       SUBJ_NAME = #{record.subjName,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysSubjCode" >
-    update PDSCI.SYS_SUBJ_CODE
+      update SYS_SUBJ_CODE
     <set >
       <if test="subjId != null" >
         SUBJ_ID = #{subjId,jdbcType=VARCHAR},
@@ -276,7 +276,7 @@
     where SUBJ_FLOW = #{subjFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysSubjCode" >
-    update PDSCI.SYS_SUBJ_CODE
+      update SYS_SUBJ_CODE
     set SUBJ_ID = #{subjId,jdbcType=VARCHAR},
       SUBJ_NAME = #{subjName,jdbcType=VARCHAR},
       PAR_SUBJ_ID = #{parSubjId,jdbcType=VARCHAR},

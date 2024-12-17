@@ -1,5 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResDiscipleInfo;
+import com.pinde.core.model.ResDiscipleInfoExample;
+import com.pinde.core.model.ResDiscipleReq;
+import com.pinde.core.model.ResDiscipleReqExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDiscipleInfoBiz;
@@ -7,10 +11,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResDiscipleInfoMapper;
 import com.pinde.sci.dao.base.ResDiscipleReqMapper;
 import com.pinde.sci.dao.res.ResDiscipleInfoExtMapper;
-import com.pinde.sci.model.mo.ResDiscipleInfo;
-import com.pinde.sci.model.mo.ResDiscipleInfoExample;
-import com.pinde.sci.model.mo.ResDiscipleReq;
-import com.pinde.sci.model.mo.ResDiscipleReqExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

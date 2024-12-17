@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResAppealMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResAppeal" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResAppeal">
     <id column="APPEAL_FLOW" property="appealFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -103,13 +103,13 @@
     HEAD_AUDIT_STATUS_ID, HEAD_AUDIT_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, ITEM_ID, PROCESS_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResAppealExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResAppealExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_APPEAL
+      from RES_APPEAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +120,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_APPEAL
+      from RES_APPEAL
     where APPEAL_FLOW = #{appealFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_APPEAL
+      delete from RES_APPEAL
     where APPEAL_FLOW = #{appealFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResAppealExample" >
-    delete from PDSCI.RES_APPEAL
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResAppealExample">
+      delete from RES_APPEAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResAppeal" >
-    insert into PDSCI.RES_APPEAL (APPEAL_FLOW, ORG_FLOW, ORG_NAME, 
+  <insert id="insert" parameterType="com.pinde.core.model.ResAppeal">
+      insert into RES_APPEAL (APPEAL_FLOW, ORG_FLOW, ORG_NAME,
       DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW, 
       SCH_DEPT_NAME, REC_TYPE_ID, REC_TYPE_NAME, 
       ITEM_NAME, APPEAL_NUM, APPEAL_REASON, 
@@ -159,8 +159,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
       #{processFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResAppeal" >
-    insert into PDSCI.RES_APPEAL
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResAppeal">
+      insert into RES_APPEAL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appealFlow != null" >
         APPEAL_FLOW,
@@ -370,14 +370,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResAppealExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_APPEAL
+  <select id="countByExample" parameterType="com.pinde.core.model.ResAppealExample" resultType="java.lang.Integer">
+      select count(*) from RES_APPEAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_APPEAL
+      update RES_APPEAL
     <set >
       <if test="record.appealFlow != null" >
         APPEAL_FLOW = #{record.appealFlow,jdbcType=VARCHAR},
@@ -487,7 +487,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_APPEAL
+      update RES_APPEAL
     set APPEAL_FLOW = #{record.appealFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -526,8 +526,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResAppeal" >
-    update PDSCI.RES_APPEAL
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResAppeal">
+      update RES_APPEAL
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -631,8 +631,8 @@
     </set>
     where APPEAL_FLOW = #{appealFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResAppeal" >
-    update PDSCI.RES_APPEAL
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResAppeal">
+      update RES_APPEAL
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},

@@ -1,8 +1,10 @@
 package com.pinde.sci.biz.res;
 
 
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.ResDocotrDelayTeturn;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 

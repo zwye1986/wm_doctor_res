@@ -95,7 +95,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EVALUATION_SCORE
+      from RES_EVALUATION_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -106,21 +106,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_EVALUATION_SCORE
+      from RES_EVALUATION_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_EVALUATION_SCORE
+      delete from RES_EVALUATION_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResEvaluationScoreExample" >
-    delete from PDSCI.RES_EVALUATION_SCORE
+      delete from RES_EVALUATION_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResEvaluationScore" >
-    insert into PDSCI.RES_EVALUATION_SCORE (SCORE_FLOW, SUBJECT_FLOW, SUBJECT_NAME, 
+      insert into RES_EVALUATION_SCORE (SCORE_FLOW, SUBJECT_FLOW, SUBJECT_NAME,
       ORG_FLOW, ORG_NAME, SPE_ID, 
       SPE_NAME, ITEM_ID, ITEM_NAME, 
       EVALUATION_YEAR, OWNER_SCORE, SPE_SCORE, 
@@ -138,7 +138,7 @@
       #{coreIndicators,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResEvaluationScore" >
-    insert into PDSCI.RES_EVALUATION_SCORE
+      insert into RES_EVALUATION_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scoreFlow != null" >
         SCORE_FLOW,
@@ -277,13 +277,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResEvaluationScoreExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_EVALUATION_SCORE
+      select count(*) from RES_EVALUATION_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_EVALUATION_SCORE
+      update RES_EVALUATION_SCORE
     <set >
       <if test="record.scoreFlow != null" >
         SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
@@ -357,7 +357,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_EVALUATION_SCORE
+      update RES_EVALUATION_SCORE
     set SCORE_FLOW = #{record.scoreFlow,jdbcType=VARCHAR},
       SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
@@ -385,7 +385,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResEvaluationScore" >
-    update PDSCI.RES_EVALUATION_SCORE
+      update RES_EVALUATION_SCORE
     <set >
       <if test="subjectFlow != null" >
         SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
@@ -454,7 +454,7 @@
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResEvaluationScore" >
-    update PDSCI.RES_EVALUATION_SCORE
+      update RES_EVALUATION_SCORE
     set SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

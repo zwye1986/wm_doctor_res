@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.osca;
 
-import com.pinde.sci.model.mo.OscaOrgMenu;
+import com.pinde.core.model.OscaOrgMenu;
 import com.pinde.sci.model.osca.OscaOrgMenuExt;
 
 import java.util.List;

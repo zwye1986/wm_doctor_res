@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.pub;
 
-import com.pinde.sci.model.mo.PubFile;
+import com.pinde.core.model.PubFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ public interface IFileBiz {
 	 * @param file userFlow
 	 * @return  文件流水号
 	 */
-	public String addFile(MultipartFile file , String userFlow);
+    String addFile(MultipartFile file, String userFlow);
 	/**
 	 * 新增或修改
 	 * @param file

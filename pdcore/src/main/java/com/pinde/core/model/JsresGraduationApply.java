@@ -111,6 +111,12 @@ public class JsresGraduationApply implements java.io.Serializable {
 
     private String doctorIsApply;
 
+    private String jointLocalAuditStatusId;
+
+    private String jointLocalAuditStatusName;
+
+    private String jointLocalReason;
+
     public String getApplyFlow() {
         return applyFlow;
     }
@@ -549,5 +555,29 @@ public class JsresGraduationApply implements java.io.Serializable {
 
     public void setDoctorIsApply(String doctorIsApply) {
         this.doctorIsApply = doctorIsApply;
+    }
+
+    public String getJointLocalAuditStatusId() {
+        return jointLocalAuditStatusId;
+    }
+
+    public void setJointLocalAuditStatusId(String jointLocalAuditStatusId) {
+        this.jointLocalAuditStatusId = jointLocalAuditStatusId;
+    }
+
+    public String getJointLocalAuditStatusName() {
+        return jointLocalAuditStatusName;
+    }
+
+    public void setJointLocalAuditStatusName(String jointLocalAuditStatusName) {
+        this.jointLocalAuditStatusName = jointLocalAuditStatusName;
+    }
+
+    public String getJointLocalReason() {
+        return jointLocalReason;
+    }
+
+    public void setJointLocalReason(String jointLocalReason) {
+        this.jointLocalReason = jointLocalReason;
     }
 }

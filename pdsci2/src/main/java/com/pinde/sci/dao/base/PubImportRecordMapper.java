@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubImportRecord;
-import com.pinde.sci.model.mo.PubImportRecordExample;
+import com.pinde.core.model.PubImportRecord;
+import com.pinde.core.model.PubImportRecordExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

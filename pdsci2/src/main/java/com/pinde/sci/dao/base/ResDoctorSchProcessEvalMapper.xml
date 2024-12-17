@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorSchProcessEvalMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorSchProcessEval">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorSchProcessEval">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="PROCESS_FLOW" jdbcType="VARCHAR" property="processFlow" />
     <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
@@ -24,7 +24,8 @@
     <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
     <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
     <result column="FORM_CFG" jdbcType="CLOB" property="formCfg" />
     <result column="EVAL_RESULT" jdbcType="CLOB" property="evalResult" />
   </resultMap>
@@ -94,7 +95,8 @@
   <sql id="Blob_Column_List">
     FORM_CFG, EVAL_RESULT
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -102,7 +104,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      from RES_DOCTOR_SCH_PROCESS_EVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -110,13 +112,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      from RES_DOCTOR_SCH_PROCESS_EVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -129,21 +132,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      from RES_DOCTOR_SCH_PROCESS_EVAL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      delete from RES_DOCTOR_SCH_PROCESS_EVAL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalExample">
-    delete from PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalExample">
+      delete from RES_DOCTOR_SCH_PROCESS_EVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs">
-    insert into PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL (RECORD_FLOW, PROCESS_FLOW, DOCTOR_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
+      insert into RES_DOCTOR_SCH_PROCESS_EVAL (RECORD_FLOW, PROCESS_FLOW, DOCTOR_FLOW,
       DOCTOR_NAME, START_TIME, END_TIME, 
       EVAL_USER_FLOW, EVAL_USER_NAME, EVAL_MONTH, 
       EVAL_TIME, IS_FORM, ATTENDANCE, 
@@ -160,8 +163,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{formCfg,jdbcType=CLOB}, #{evalResult,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs">
-    insert into PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
+      insert into RES_DOCTOR_SCH_PROCESS_EVAL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -305,14 +308,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_DOCTOR_SCH_PROCESS_EVAL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      update RES_DOCTOR_SCH_PROCESS_EVAL
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -389,7 +393,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      update RES_DOCTOR_SCH_PROCESS_EVAL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -418,7 +422,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+      update RES_DOCTOR_SCH_PROCESS_EVAL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -444,8 +448,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs">
-    update PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
+      update RES_DOCTOR_SCH_PROCESS_EVAL
     <set>
       <if test="processFlow != null">
         PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
@@ -516,8 +520,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs">
-    update PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
+      update RES_DOCTOR_SCH_PROCESS_EVAL
     set PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -542,8 +546,8 @@
       EVAL_RESULT = #{evalResult,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessEval">
-    update PDSCI.RES_DOCTOR_SCH_PROCESS_EVAL
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorSchProcessEval">
+      update RES_DOCTOR_SCH_PROCESS_EVAL
     set PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

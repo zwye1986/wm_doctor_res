@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEST_PAPER
+      from TEST_PAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.TEST_PAPER
+      from TEST_PAPER
     where PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.TEST_PAPER
+      delete from TEST_PAPER
     where PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.TestPaperExample" >
-    delete from PDSCI.TEST_PAPER
+      delete from TEST_PAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.TestPaper" >
-    insert into PDSCI.TEST_PAPER (PAPER_FLOW, PAPER_NAME, TOTLE_SCORE, 
+      insert into TEST_PAPER (PAPER_FLOW, PAPER_NAME, TOTLE_SCORE,
       PASS_SCORE, TEST_TIME, PAPER_TYPE_ID, 
       PAPER_TYPE_NAME, PAPER_USER_FLOW, PAPER_USER_CODE, 
       PAPER_USER_NAME, PAPER_TIME, RECORD_STATUS, 
@@ -127,7 +127,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.TestPaper" >
-    insert into PDSCI.TEST_PAPER
+      insert into TEST_PAPER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="paperFlow != null" >
         PAPER_FLOW,
@@ -230,13 +230,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.TestPaperExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.TEST_PAPER
+      select count(*) from TEST_PAPER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.TEST_PAPER
+      update TEST_PAPER
     <set >
       <if test="record.paperFlow != null" >
         PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.TEST_PAPER
+      update TEST_PAPER
     set PAPER_FLOW = #{record.paperFlow,jdbcType=VARCHAR},
       PAPER_NAME = #{record.paperName,jdbcType=VARCHAR},
       TOTLE_SCORE = #{record.totleScore,jdbcType=DECIMAL},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TestPaper" >
-    update PDSCI.TEST_PAPER
+      update TEST_PAPER
     <set >
       <if test="paperName != null" >
         PAPER_NAME = #{paperName,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     where PAPER_FLOW = #{paperFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TestPaper" >
-    update PDSCI.TEST_PAPER
+      update TEST_PAPER
     set PAPER_NAME = #{paperName,jdbcType=VARCHAR},
       TOTLE_SCORE = #{totleScore,jdbcType=DECIMAL},
       PASS_SCORE = #{passScore,jdbcType=DECIMAL},

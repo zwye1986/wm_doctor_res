@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.recruit;
 
-import com.pinde.sci.model.mo.RecruitExamRoom;
+import com.pinde.core.model.RecruitExamRoom;
 
 import java.util.List;
 

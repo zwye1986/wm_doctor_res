@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.jsres;
 
 
-import com.pinde.sci.model.mo.JsresLoginInfo;
+import com.pinde.core.model.JsresLoginInfo;
 
 import java.util.List;
 

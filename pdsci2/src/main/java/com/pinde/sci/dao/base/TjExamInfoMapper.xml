@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.TjExamInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.TjExamInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.TjExamInfo">
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
     <result column="EXAM_TIME" property="examTime" jdbcType="VARCHAR" />
@@ -80,13 +80,13 @@
     USER_FLOW, CITY_CODE, EXAM_TIME, EXAM_ADDRESS, SITE_PHONE, TITLE, REMARK, RECORD_FLOW, 
     SPE_NAME, ORG_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.TjExamInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.TjExamInfoExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TJ_EXAM_INFO
+        from TJ_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,14 +94,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.TjExamInfoExample" >
-    delete from PDSCI.TJ_EXAM_INFO
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.TjExamInfoExample">
+        delete from TJ_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.TjExamInfo" >
-    insert into PDSCI.TJ_EXAM_INFO (USER_FLOW, CITY_CODE, EXAM_TIME, 
+    <insert id="insert" parameterType="com.pinde.core.model.TjExamInfo">
+        insert into TJ_EXAM_INFO (USER_FLOW, CITY_CODE, EXAM_TIME,
       EXAM_ADDRESS, SITE_PHONE, TITLE, 
       REMARK, RECORD_FLOW, SPE_NAME, 
       ORG_FLOW, RECORD_STATUS, CREATE_TIME, 
@@ -114,8 +114,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.TjExamInfo" >
-    insert into PDSCI.TJ_EXAM_INFO
+    <insert id="insertSelective" parameterType="com.pinde.core.model.TjExamInfo">
+        insert into TJ_EXAM_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
         USER_FLOW,
@@ -211,14 +211,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.TjExamInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.TJ_EXAM_INFO
+    <select id="countByExample" parameterType="com.pinde.core.model.TjExamInfoExample" resultType="java.lang.Integer">
+        select count(*) from TJ_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.TJ_EXAM_INFO
+      update TJ_EXAM_INFO
     <set >
       <if test="record.userFlow != null" >
         USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -271,7 +271,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.TJ_EXAM_INFO
+      update TJ_EXAM_INFO
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
       EXAM_TIME = #{record.examTime,jdbcType=VARCHAR},

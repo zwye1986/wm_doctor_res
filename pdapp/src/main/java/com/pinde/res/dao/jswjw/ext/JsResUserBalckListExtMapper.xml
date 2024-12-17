@@ -37,7 +37,7 @@
 <select id="selectBlackUserCount" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(1)
 
-		from PDSCI.JSRES_USER_BALCKLIST
+    from JSRES_USER_BALCKLIST
 		where record_status='Y'
 		and (
 			0=1

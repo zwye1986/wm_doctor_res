@@ -94,7 +94,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      from JSSZPORTAL_COMMUNICATION_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -108,7 +108,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      from JSSZPORTAL_COMMUNICATION_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -121,21 +121,22 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      from JSSZPORTAL_COMMUNICATION_MAIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      delete
+      from JSSZPORTAL_COMMUNICATION_MAIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsszportalCommunicationMainExample" >
-    delete from PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      delete from JSSZPORTAL_COMMUNICATION_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsszportalCommunicationMain" >
-    insert into PDSCI.JSSZPORTAL_COMMUNICATION_MAIN (RECORD_FLOW, DISEASE_ID, DISEASE_NAME, 
+      insert into JSSZPORTAL_COMMUNICATION_MAIN (RECORD_FLOW, DISEASE_ID, DISEASE_NAME,
       UPLOAD_TIME, TITLE, UPLOAD_USER_FLOW, 
       UPLOAD_USER_NAME, REPLAY_TIMES, NEWEST_REPLAY_TIME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -149,7 +150,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsszportalCommunicationMain" >
-    insert into PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      insert into JSSZPORTAL_COMMUNICATION_MAIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -246,13 +247,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsszportalCommunicationMainExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      select count(*) from JSSZPORTAL_COMMUNICATION_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      update JSSZPORTAL_COMMUNICATION_MAIN
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -305,7 +306,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      update JSSZPORTAL_COMMUNICATION_MAIN
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DISEASE_ID = #{record.diseaseId,jdbcType=VARCHAR},
       DISEASE_NAME = #{record.diseaseName,jdbcType=VARCHAR},
@@ -326,7 +327,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      update JSSZPORTAL_COMMUNICATION_MAIN
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DISEASE_ID = #{record.diseaseId,jdbcType=VARCHAR},
       DISEASE_NAME = #{record.diseaseName,jdbcType=VARCHAR},
@@ -346,7 +347,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsszportalCommunicationMain" >
-    update PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      update JSSZPORTAL_COMMUNICATION_MAIN
     <set >
       <if test="diseaseId != null" >
         DISEASE_ID = #{diseaseId,jdbcType=VARCHAR},
@@ -394,7 +395,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.JsszportalCommunicationMain" >
-    update PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      update JSSZPORTAL_COMMUNICATION_MAIN
     set DISEASE_ID = #{diseaseId,jdbcType=VARCHAR},
       DISEASE_NAME = #{diseaseName,jdbcType=VARCHAR},
       UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},
@@ -412,7 +413,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsszportalCommunicationMain" >
-    update PDSCI.JSSZPORTAL_COMMUNICATION_MAIN
+      update JSSZPORTAL_COMMUNICATION_MAIN
     set DISEASE_ID = #{diseaseId,jdbcType=VARCHAR},
       DISEASE_NAME = #{diseaseName,jdbcType=VARCHAR},
       UPLOAD_TIME = #{uploadTime,jdbcType=VARCHAR},

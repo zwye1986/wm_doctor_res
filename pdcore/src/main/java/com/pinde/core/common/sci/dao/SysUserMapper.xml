@@ -216,7 +216,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER
+      from SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -227,21 +227,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_USER
+      from SYS_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_USER
+      delete from SYS_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysUserExample" >
-    delete from PDSCI.SYS_USER
+      delete from SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysUser" >
-    insert into PDSCI.SYS_USER (USER_FLOW, USER_CODE, USER_PASSWD, 
+      insert into SYS_USER (USER_FLOW, USER_CODE, USER_PASSWD,
       USER_NAME, SEX_ID, SEX_NAME, 
       STATUS_ID, STATUS_DESC, USER_PHONE, 
       USER_EMAIL, DEPT_FLOW, DEPT_NAME, 
@@ -331,7 +331,7 @@
       #{unLockTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysUser" >
-    insert into PDSCI.SYS_USER
+      insert into SYS_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
         USER_FLOW,
@@ -1088,14 +1088,14 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysUserExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_USER
+      select count(*) from SYS_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
 
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_USER
+      update SYS_USER
     <set >
       <if test="record.userFlow != null" >
         USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -1478,7 +1478,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_USER
+      update SYS_USER
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_CODE = #{record.userCode,jdbcType=VARCHAR},
       USER_PASSWD = #{record.userPasswd,jdbcType=VARCHAR},
@@ -1609,7 +1609,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysUser" >
-    update PDSCI.SYS_USER
+      update SYS_USER
     <set >
       <if test="userCode != null" >
         USER_CODE = #{userCode,jdbcType=VARCHAR},
@@ -1987,7 +1987,7 @@
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysUser" >
-    update PDSCI.SYS_USER
+      update SYS_USER
     set USER_CODE = #{userCode,jdbcType=VARCHAR},
       USER_PASSWD = #{userPasswd,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},

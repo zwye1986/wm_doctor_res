@@ -124,7 +124,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_LECTURE_INFO
+      from RES_LECTURE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -138,7 +138,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_LECTURE_INFO
+      from RES_LECTURE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -151,21 +151,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_LECTURE_INFO
+      from RES_LECTURE_INFO
     where LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_LECTURE_INFO
+      delete from RES_LECTURE_INFO
     where LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResLectureInfoExample" >
-    delete from PDSCI.RES_LECTURE_INFO
+      delete from RES_LECTURE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResLectureInfo" >
-    insert into PDSCI.RES_LECTURE_INFO (LECTURE_FLOW, LECTURE_TEACHER_FLOW, 
+      insert into RES_LECTURE_INFO (LECTURE_FLOW, LECTURE_TEACHER_FLOW,
       LECTURE_TEACHER_NAME, ORG_FLOW, ORG_NAME, 
       LECTURE_TRAIN_DATE, LECTURE_START_TIME, LECTURE_END_TIME, 
       LECTURE_CONTENT, LECTURE_TRAIN_PLACE, LECTURE_DESC, 
@@ -191,7 +191,7 @@
       #{randomSignIn,jdbcType=VARCHAR}, #{evalFormContent,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResLectureInfo" >
-    insert into PDSCI.RES_LECTURE_INFO
+      insert into RES_LECTURE_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="lectureFlow != null" >
         LECTURE_FLOW,
@@ -402,13 +402,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResLectureInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_LECTURE_INFO
+      select count(*) from RES_LECTURE_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_LECTURE_INFO
+      update RES_LECTURE_INFO
     <set >
       <if test="record.lectureFlow != null" >
         LECTURE_FLOW = #{record.lectureFlow,jdbcType=VARCHAR},
@@ -518,7 +518,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_LECTURE_INFO
+      update RES_LECTURE_INFO
     set LECTURE_FLOW = #{record.lectureFlow,jdbcType=VARCHAR},
       LECTURE_TEACHER_FLOW = #{record.lectureTeacherFlow,jdbcType=VARCHAR},
       LECTURE_TEACHER_NAME = #{record.lectureTeacherName,jdbcType=VARCHAR},
@@ -558,7 +558,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_LECTURE_INFO
+      update RES_LECTURE_INFO
     set LECTURE_FLOW = #{record.lectureFlow,jdbcType=VARCHAR},
       LECTURE_TEACHER_FLOW = #{record.lectureTeacherFlow,jdbcType=VARCHAR},
       LECTURE_TEACHER_NAME = #{record.lectureTeacherName,jdbcType=VARCHAR},
@@ -597,7 +597,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResLectureInfo" >
-    update PDSCI.RES_LECTURE_INFO
+      update RES_LECTURE_INFO
     <set >
       <if test="lectureTeacherFlow != null" >
         LECTURE_TEACHER_FLOW = #{lectureTeacherFlow,jdbcType=VARCHAR},
@@ -702,7 +702,7 @@
     where LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResLectureInfo" >
-    update PDSCI.RES_LECTURE_INFO
+      update RES_LECTURE_INFO
     set LECTURE_TEACHER_FLOW = #{lectureTeacherFlow,jdbcType=VARCHAR},
       LECTURE_TEACHER_NAME = #{lectureTeacherName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -739,7 +739,7 @@
     where LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResLectureInfo" >
-    update PDSCI.RES_LECTURE_INFO
+      update RES_LECTURE_INFO
     set LECTURE_TEACHER_FLOW = #{lectureTeacherFlow,jdbcType=VARCHAR},
       LECTURE_TEACHER_NAME = #{lectureTeacherName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -819,7 +819,7 @@
         LECTURE_FLOW,
         sum(EVA_SCORE) / count(EVA_SCORE) SCORE
     FROM
-        PDSCI.RES_LECTURE_EVA_DETAIL
+      RES_LECTURE_EVA_DETAIL
     WHERE
         RECORD_STATUS = 'Y'
     GROUP BY LECTURE_FLOW

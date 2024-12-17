@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.sci.dao.SysRoleMapper;
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysRoleExample;
 import com.pinde.core.model.SysUser;
@@ -14,10 +15,9 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.SysRoleExtMapper;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.SysUserRole;
-import com.pinde.sci.model.mo.SysUserRoleExample;
-import com.pinde.sci.model.mo.SysUserRoleExample.Criteria;
+import com.pinde.core.model.SysUserRole;
+import com.pinde.core.model.SysUserRoleExample;
+import com.pinde.core.model.SysUserRoleExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,7 +101,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
         update.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		GeneralMethod.setRecordInfo(update, false);
 		SysUserRoleExample example = new SysUserRoleExample();
-		com.pinde.sci.model.mo.SysUserRoleExample.Criteria criteria = example.createCriteria();
+		SysUserRoleExample.Criteria criteria = example.createCriteria();
 		criteria.andUserFlowEqualTo(userFlow)
 		.andWsIdEqualTo(workStationId)
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
@@ -221,9 +221,7 @@ public class UserRoleBizImpl implements IUserRoleBiz{
             criteria.andRoleFlowIn(roleFlowList);
             criteria.andUserFlowEqualTo(sysUser.getUserFlow());
             int count = sysUserRoleMapper.countByExample(userRoleExample);
-            if (count > 0) {
-                return true;
-            }
+            return count > 0;
         }
 
         return false;

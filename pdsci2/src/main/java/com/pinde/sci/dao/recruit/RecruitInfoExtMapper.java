@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.recruit;
 
-import com.pinde.sci.model.mo.RecruitInfo;
+import com.pinde.core.model.RecruitInfo;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.apache.ibatis.annotations.Param;
 

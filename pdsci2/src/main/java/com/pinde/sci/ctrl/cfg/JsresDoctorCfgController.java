@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -7,8 +8,7 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/doctorCfg")
 public class JsresDoctorCfgController extends GeneralController{
-	
-	private static Logger logger = LoggerFactory.getLogger(JsresDoctorCfgController.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(JsresDoctorCfgController.class);
 	
 	@Autowired
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
@@ -67,9 +67,9 @@ public class JsresDoctorCfgController extends GeneralController{
      * @throws Exception
      */
 	@RequestMapping(value = {"/userList" })
-	public String userList (Model model,Integer currentPage,HttpServletRequest request,
-							String orgFlow,String sessionNumber,String workOrgId,String userName,String idNo,String userCode,String trainingYears,String trainingTypeId
-							,String datas[]	,String ifOpen,String[] powerTypeId,String checkStatusId,String startTime,String endTime,String doctorCategoryId) throws Exception{
+	public String userList(Model model, Integer currentPage, HttpServletRequest request,
+						   String orgFlow, String sessionNumber, String workOrgId, String userName, String idNo, String userCode, String trainingYears, String trainingTypeId
+			, String[] datas, String ifOpen, String[] powerTypeId, String checkStatusId, String startTime, String endTime, String doctorCategoryId) throws Exception {
 		List<String> docTypeList=new ArrayList<>();
 		if(datas!=null&&datas.length>0) {
 			docTypeList.addAll(Arrays.asList(datas));
@@ -251,7 +251,7 @@ public class JsresDoctorCfgController extends GeneralController{
 	public String importExcel(MultipartFile file){
 		if(file.getSize() > 0){
 			try{
-				ExcelUtile result = (ExcelUtile) jsResPowerCfgBiz.importTime(file);
+				ExcelUtile result = jsResPowerCfgBiz.importTime(file);
 				if(null!=result)
 				{
 					String code= (String) result.get("code");
@@ -279,8 +279,8 @@ public class JsresDoctorCfgController extends GeneralController{
 	 */
 	@RequestMapping("/exportDoctor")
 	@ResponseBody
-	public void exportDoctor(Model model,String orgFlow,String sessionNumber,String workOrgId,String userName,String idNo,String trainingYears,String trainingTypeId
-			,String datas[],HttpServletResponse reponse,String ifOpen,String[] powerTypeId,String checkStatusId) throws IOException{
+	public void exportDoctor(Model model, String orgFlow, String sessionNumber, String workOrgId, String userName, String idNo, String trainingYears, String trainingTypeId
+			, String[] datas, HttpServletResponse reponse, String ifOpen, String[] powerTypeId, String checkStatusId) throws IOException {
 
 		List<String> docTypeList=new ArrayList<>();
 		if(datas!=null&&datas.length>0) {

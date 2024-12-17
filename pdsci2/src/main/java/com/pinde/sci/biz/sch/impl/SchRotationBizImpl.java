@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchSelTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
@@ -691,9 +692,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				}
 			}
 
-			if(rotation!=null){
-				return  rotation;
-			}
+            return rotation;
 		}
 		return null;
 	}
@@ -743,9 +742,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				}
 			}
 
-			if(rotation!=null){
-				return  rotation;
-			}
+            return rotation;
 		}
 		return null;
 	}

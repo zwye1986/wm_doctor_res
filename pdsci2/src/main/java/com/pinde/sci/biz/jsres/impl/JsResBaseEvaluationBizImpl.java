@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +11,6 @@ import com.pinde.sci.dao.base.JsresBaseEvaluationFileMapper;
 import com.pinde.sci.dao.base.JsresBaseEvaluationMapper;
 import com.pinde.sci.dao.base.JsresBaseEvaluationScoreMapper;
 import com.pinde.sci.dao.jsres.JsresBaseEvaluationExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
     @Autowired
     private JsresBaseEvaluationExtMapper jsresBaseEvaluationExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(JsResBaseEvaluationBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResBaseEvaluationBizImpl.class);
 
 
     @Override

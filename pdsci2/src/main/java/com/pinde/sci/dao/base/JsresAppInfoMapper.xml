@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresAppInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresAppInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresAppInfo">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
     <result column="PARENT_ORG_FLOW" property="parentOrgFlow" jdbcType="VARCHAR" />
@@ -86,13 +86,13 @@
     GRADUATE_USE_TOTAL, GRADUATE_RATE, TRAIN_TOTAL, TRAIN_USE, TRAIN_RATE, PROVINCE_ID, 
     CITY_ID
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresAppInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresAppInfoExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_APP_INFO
+        from JSRES_APP_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +103,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_APP_INFO
+      from JSRES_APP_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_APP_INFO
+      delete from JSRES_APP_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresAppInfoExample" >
-    delete from PDSCI.JSRES_APP_INFO
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresAppInfoExample">
+        delete from JSRES_APP_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresAppInfo" >
-    insert into PDSCI.JSRES_APP_INFO (RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresAppInfo">
+        insert into JSRES_APP_INFO (RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW,
       MONTH_DATE, IS_CONTAIN, CREATE_TIME, 
       ORG_FLOW, ORG_NAME, DOCTOR_TRAIN_TOTAL, 
       DOCTOR_USE_TOTAL, DOCTOR_RATE, GRADUATE_TRAIN_TOTAL, 
@@ -132,8 +132,8 @@
       #{trainUse,jdbcType=VARCHAR}, #{trainRate,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, 
       #{cityId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresAppInfo" >
-    insert into PDSCI.JSRES_APP_INFO
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresAppInfo">
+        insert into JSRES_APP_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -253,14 +253,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresAppInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_APP_INFO
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresAppInfoExample" resultType="java.lang.Integer">
+        select count(*) from JSRES_APP_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_APP_INFO
+      update JSRES_APP_INFO
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_APP_INFO
+      update JSRES_APP_INFO
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
       PARENT_ORG_FLOW = #{record.parentOrgFlow,jdbcType=VARCHAR},
@@ -349,8 +349,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresAppInfo" >
-    update PDSCI.JSRES_APP_INFO
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresAppInfo">
+        update JSRES_APP_INFO
     <set >
       <if test="orgCode != null" >
         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
@@ -409,8 +409,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresAppInfo" >
-    update PDSCI.JSRES_APP_INFO
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresAppInfo">
+        update JSRES_APP_INFO
     set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       PARENT_ORG_FLOW = #{parentOrgFlow,jdbcType=VARCHAR},
       MONTH_DATE = #{monthDate,jdbcType=VARCHAR},

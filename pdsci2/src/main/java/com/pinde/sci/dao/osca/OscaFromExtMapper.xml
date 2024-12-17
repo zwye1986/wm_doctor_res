@@ -16,12 +16,12 @@
             ORG_NAME,
             ORG_FLOW,
             IS_REQUIRED
-        FROM PDSCI.OSCA_SUBJECT_STATION_FROM
+        FROM OSCA_SUBJECT_STATION_FROM
         WHERE RECORD_STATUS = 'Y'
         AND ORG_FLOW = 'sign'
         AND STATION_FLOW   IN   (
             SELECT STATION_FLOW
-            FROM PDSCI.OSCA_SUBJECT_STATION
+        FROM OSCA_SUBJECT_STATION
             WHERE RECORD_STATUS = 'Y'
             AND SUBJECT_FLOW = #{flow}
         )

@@ -98,7 +98,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      from SYS_MONTHLY_BLACKLIST_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -109,21 +109,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      from SYS_MONTHLY_BLACKLIST_INFO
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      delete from SYS_MONTHLY_BLACKLIST_INFO
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyBlacklistInfoExample" >
-    delete from PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      delete from SYS_MONTHLY_BLACKLIST_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyBlacklistInfo" >
-    insert into PDSCI.SYS_MONTHLY_BLACKLIST_INFO (SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW, 
+      insert into SYS_MONTHLY_BLACKLIST_INFO (SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW,
       DOCTOR_NAME, ORG_FLOW, ORG_NAME, 
       SESSION_NUMBER, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, 
       TRAINING_YEARS, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, 
@@ -143,7 +143,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyBlacklistInfo" >
-    insert into PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      insert into SYS_MONTHLY_BLACKLIST_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smrdiFlow != null" >
         SMRDI_FLOW,
@@ -300,13 +300,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyBlacklistInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      select count(*) from SYS_MONTHLY_BLACKLIST_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      update SYS_MONTHLY_BLACKLIST_INFO
     <set >
       <if test="record.smrdiFlow != null" >
         SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
@@ -389,7 +389,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      update SYS_MONTHLY_BLACKLIST_INFO
     set SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
       DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -420,7 +420,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyBlacklistInfo" >
-    update PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      update SYS_MONTHLY_BLACKLIST_INFO
     <set >
       <if test="dateMonth != null" >
         DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
@@ -498,7 +498,7 @@
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyBlacklistInfo" >
-    update PDSCI.SYS_MONTHLY_BLACKLIST_INFO
+      update SYS_MONTHLY_BLACKLIST_INFO
     set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

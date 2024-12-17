@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.core.model.JsresRecruitDocInfo;
 import com.pinde.core.model.JsresRecruitDocInfoExample;
 import com.pinde.core.model.JsresRecruitDocInfoWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresRecruitDocInfoMapper {
     int countByExample(JsresRecruitDocInfoExample example);

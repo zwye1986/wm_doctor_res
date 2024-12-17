@@ -95,7 +95,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.STU_FURTHER_STUDY_REGIST
+      from STU_FURTHER_STUDY_REGIST
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -106,21 +106,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.STU_FURTHER_STUDY_REGIST
+      from STU_FURTHER_STUDY_REGIST
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.STU_FURTHER_STUDY_REGIST
+      delete from STU_FURTHER_STUDY_REGIST
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StuFurtherStudyRegistExample">
-    delete from PDSCI.STU_FURTHER_STUDY_REGIST
+      delete from STU_FURTHER_STUDY_REGIST
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.StuFurtherStudyRegist">
-    insert into PDSCI.STU_FURTHER_STUDY_REGIST (RECORD_FLOW, USER_FLOW, DEPT_ID, 
+      insert into STU_FURTHER_STUDY_REGIST (RECORD_FLOW, USER_FLOW, DEPT_ID,
       DEPT_NAME, USER_AGE, ENGAGED_PROFESSION, 
       ADMISSION_TIME, TITLE_ID, TITLE_NAME, 
       STATION_PROPERTY_ID, STATION_PROPERTY_NAME, 
@@ -138,7 +138,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StuFurtherStudyRegist">
-    insert into PDSCI.STU_FURTHER_STUDY_REGIST
+      insert into STU_FURTHER_STUDY_REGIST
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -277,13 +277,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.StuFurtherStudyRegistExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.STU_FURTHER_STUDY_REGIST
+      select count(*) from STU_FURTHER_STUDY_REGIST
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.STU_FURTHER_STUDY_REGIST
+      update STU_FURTHER_STUDY_REGIST
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -357,7 +357,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.STU_FURTHER_STUDY_REGIST
+      update STU_FURTHER_STUDY_REGIST
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       DEPT_ID = #{record.deptId,jdbcType=VARCHAR},
@@ -385,7 +385,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StuFurtherStudyRegist">
-    update PDSCI.STU_FURTHER_STUDY_REGIST
+      update STU_FURTHER_STUDY_REGIST
     <set>
       <if test="userFlow != null">
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -454,7 +454,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StuFurtherStudyRegist">
-    update PDSCI.STU_FURTHER_STUDY_REGIST
+      update STU_FURTHER_STUDY_REGIST
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       DEPT_ID = #{deptId,jdbcType=VARCHAR},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},

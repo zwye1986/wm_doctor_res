@@ -22,8 +22,8 @@
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,ed.doctor_type_name,ed.doctor_type_id
 		,row_number() over(partition by dr.spe_id  order by to_number(decode(dr.totle_result, NULL, '0', dr.totle_result)) DESC) RANK_NUM
-		from pdsci.RES_DOCTOR_RECRUIT dr
-		left join  pdsci.SYS_USER u
+        from RES_DOCTOR_RECRUIT dr
+        left join SYS_USER u
 		on dr.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW

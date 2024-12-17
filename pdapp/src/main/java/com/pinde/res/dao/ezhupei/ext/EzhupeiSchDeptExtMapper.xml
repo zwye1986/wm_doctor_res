@@ -119,11 +119,11 @@
 	</select>
 	<select id="searchrotationDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
 		SELECT *
-		FROM PDSCI.SCH_DEPT
+        FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
 		AND SCH_DEPT_FLOW IN (
 		SELECT DISTINCT SCH_DEPT_FLOW
-		FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
 		WHERE RECORD_STATUS = 'Y'
 		<if test='userFlow!=null and userFlow!=""'>
 			AND DOCTOR_FLOW = #{userFlow}

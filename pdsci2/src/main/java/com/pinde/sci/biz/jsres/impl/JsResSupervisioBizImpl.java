@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.model.SysDept;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.PojoUtils;
@@ -11,7 +11,12 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResEvaluationScore;
+import com.pinde.core.model.ResEvaluationScoreExample;
+import com.pinde.core.model.ResHospScoreTable;
+import com.pinde.sci.model.mo.ResOrgSpeAssign;
+import com.pinde.sci.model.mo.ResScheduleScore;
+import com.pinde.sci.model.mo.ResScheduleScoreExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +50,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
 	private HospSelfAssessmentMapper assessmentMapper;
 	@Autowired
 	private HospSelfAssessmentCfgMapper assessmentCfgMapper;
-    private static Logger logger = LoggerFactory.getLogger(JsResSupervisioBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResSupervisioBizImpl.class);
 
 
 
@@ -621,7 +626,7 @@ public class JsResSupervisioBizImpl implements IJsResSupervisioBiz {
         ResEvaluationScoreExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
 				.andCoreIndicatorsEqualTo("0");
 
-		if (null!=cfgFlow && StringUtil.isNotBlank(cfgFlow)){
+        if (StringUtil.isNotBlank(cfgFlow)) {
 			criteria.andSubjectFlowEqualTo(cfgFlow);
 		}
 		if (StringUtil.isNotBlank(orgFlow)){

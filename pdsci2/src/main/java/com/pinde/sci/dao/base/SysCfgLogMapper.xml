@@ -93,7 +93,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_CFG_LOG
+      from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -107,7 +107,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_CFG_LOG
+      from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +120,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_CFG_LOG
+      from SYS_CFG_LOG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_CFG_LOG
+      delete from SYS_CFG_LOG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysCfgLogExample" >
-    delete from PDSCI.SYS_CFG_LOG
+      delete from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    insert into PDSCI.SYS_CFG_LOG (CFG_FLOW, CFG_CODE, CFG_VALUE, 
+      insert into SYS_CFG_LOG (CFG_FLOW, CFG_CODE, CFG_VALUE,
       CFG_OLD_VALUE, CFG_DESC, WS_ID, 
       WS_NAME, SAVE_TIME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -148,7 +148,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    insert into PDSCI.SYS_CFG_LOG
+      insert into SYS_CFG_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
         CFG_FLOW,
@@ -245,13 +245,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysCfgLogExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_CFG_LOG
+      select count(*) from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     <set >
       <if test="record.cfgFlow != null" >
         CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -304,7 +304,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
@@ -344,7 +344,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     <set >
       <if test="cfgCode != null" >
         CFG_CODE = #{cfgCode,jdbcType=VARCHAR},
@@ -392,7 +392,7 @@
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     set CFG_CODE = #{cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_OLD_VALUE = #{cfgOldValue,jdbcType=VARCHAR},
@@ -410,7 +410,7 @@
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysCfgLog" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     set CFG_CODE = #{cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_OLD_VALUE = #{cfgOldValue,jdbcType=VARCHAR},

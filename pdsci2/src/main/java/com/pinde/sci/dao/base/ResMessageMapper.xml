@@ -88,7 +88,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_MESSAGE
+      from RES_MESSAGE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_MESSAGE
+      from RES_MESSAGE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -115,21 +115,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_MESSAGE
+      from RES_MESSAGE
     where MESSAGE_FLOW = #{messageFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_MESSAGE
+      delete from RES_MESSAGE
     where MESSAGE_FLOW = #{messageFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResMessageExample" >
-    delete from PDSCI.RES_MESSAGE
+      delete from RES_MESSAGE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResMessage" >
-    insert into PDSCI.RES_MESSAGE (MESSAGE_FLOW, MESSAGE_TITLE, ORG_FLOW, 
+      insert into RES_MESSAGE (MESSAGE_FLOW, MESSAGE_TITLE, ORG_FLOW,
       ORG_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       MESSAGE_CONTENT)
@@ -139,7 +139,7 @@
       #{messageContent,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResMessage" >
-    insert into PDSCI.RES_MESSAGE
+      insert into RES_MESSAGE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="messageFlow != null" >
         MESSAGE_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResMessageExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_MESSAGE
+      select count(*) from RES_MESSAGE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_MESSAGE
+      update RES_MESSAGE
     <set >
       <if test="record.messageFlow != null" >
         MESSAGE_FLOW = #{record.messageFlow,jdbcType=VARCHAR},
@@ -250,7 +250,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.RES_MESSAGE
+      update RES_MESSAGE
     set MESSAGE_FLOW = #{record.messageFlow,jdbcType=VARCHAR},
       MESSAGE_TITLE = #{record.messageTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -266,7 +266,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_MESSAGE
+      update RES_MESSAGE
     set MESSAGE_FLOW = #{record.messageFlow,jdbcType=VARCHAR},
       MESSAGE_TITLE = #{record.messageTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -281,7 +281,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResMessage" >
-    update PDSCI.RES_MESSAGE
+      update RES_MESSAGE
     <set >
       <if test="messageTitle != null" >
         MESSAGE_TITLE = #{messageTitle,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     where MESSAGE_FLOW = #{messageFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResMessage" >
-    update PDSCI.RES_MESSAGE
+      update RES_MESSAGE
     set MESSAGE_TITLE = #{messageTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -327,7 +327,7 @@
     where MESSAGE_FLOW = #{messageFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResMessage" >
-    update PDSCI.RES_MESSAGE
+      update RES_MESSAGE
     set MESSAGE_TITLE = #{messageTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

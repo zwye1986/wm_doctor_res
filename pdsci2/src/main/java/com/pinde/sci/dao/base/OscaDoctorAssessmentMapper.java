@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaDoctorAssessment;
-import com.pinde.sci.model.mo.OscaDoctorAssessmentExample;
+import com.pinde.core.model.OscaDoctorAssessment;
+import com.pinde.core.model.OscaDoctorAssessmentExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

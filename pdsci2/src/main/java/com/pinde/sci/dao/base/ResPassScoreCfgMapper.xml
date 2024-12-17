@@ -78,7 +78,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_PASS_SCORE_CFG
+      from RES_PASS_SCORE_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,21 +89,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_PASS_SCORE_CFG
+      from RES_PASS_SCORE_CFG
     where CFG_YEAR = #{cfgYear,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_PASS_SCORE_CFG
+      delete from RES_PASS_SCORE_CFG
     where CFG_YEAR = #{cfgYear,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResPassScoreCfgExample">
-    delete from PDSCI.RES_PASS_SCORE_CFG
+      delete from RES_PASS_SCORE_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
-    insert into PDSCI.RES_PASS_SCORE_CFG (CFG_YEAR, CFG_PASS_SCORE, RECORD_STATUS, 
+      insert into RES_PASS_SCORE_CFG (CFG_YEAR, CFG_PASS_SCORE, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
     values (#{cfgYear,jdbcType=VARCHAR}, #{cfgPassScore,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
@@ -111,7 +111,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
-    insert into PDSCI.RES_PASS_SCORE_CFG
+      insert into RES_PASS_SCORE_CFG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cfgYear != null">
         CFG_YEAR,
@@ -160,13 +160,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResPassScoreCfgExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_PASS_SCORE_CFG
+      select count(*) from RES_PASS_SCORE_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_PASS_SCORE_CFG
+      update RES_PASS_SCORE_CFG
     <set>
       <if test="record.cfgYear != null">
         CFG_YEAR = #{record.cfgYear,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_PASS_SCORE_CFG
+      update RES_PASS_SCORE_CFG
     set CFG_YEAR = #{record.cfgYear,jdbcType=VARCHAR},
       CFG_PASS_SCORE = #{record.cfgPassScore,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
@@ -208,7 +208,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
-    update PDSCI.RES_PASS_SCORE_CFG
+      update RES_PASS_SCORE_CFG
     <set>
       <if test="cfgPassScore != null">
         CFG_PASS_SCORE = #{cfgPassScore,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     where CFG_YEAR = #{cfgYear,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
-    update PDSCI.RES_PASS_SCORE_CFG
+      update RES_PASS_SCORE_CFG
     set CFG_PASS_SCORE = #{cfgPassScore,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},

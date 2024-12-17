@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysWsConfig;
+import com.pinde.core.model.SysWsConfig;
 
 import java.util.List;
 

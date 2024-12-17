@@ -274,9 +274,6 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
         // 评价人数
         int evelCount = lectureInfoExtMapper.countLectureEvel(lectureFlow);
         // 有人签到或评价的讲座信息则不能删除
-        if(signCount > 0 || evelCount > 0){
-            return true;
-        }
-        return false;
+        return signCount > 0 || evelCount > 0;
     }
 }

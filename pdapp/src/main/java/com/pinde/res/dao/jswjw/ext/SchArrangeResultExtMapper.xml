@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper">
 	<select id="checkResultDate" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
-		select * 
-		from pdsci.sch_arrange_result 
+		select *
+        from sch_arrange_result
 		where record_status = 'Y'
 		and doctor_flow = #{doctorFlow}
 		and (
@@ -31,7 +31,7 @@
 	</select>
 	<select id="searchSchArrangeResults" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
 		select *
-		from pdsci.sch_arrange_result
+        from sch_arrange_result
 		where record_status = 'Y'
 		and doctor_flow = #{doctorFlow}
         <if test='startDate!=null and startDate!=""'>
@@ -43,7 +43,7 @@
 	</select>
 	<select id="getResultByDeptFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
 		select *
-		from pdsci.sch_arrange_result
+        from sch_arrange_result
 		where record_status = 'Y'
 		and doctor_flow = #{doctorFlow}
 		and SCH_START_DATE <![CDATA[<=]]>to_char(sysdate,'yyyy-MM-dd')
@@ -61,7 +61,7 @@
 	</resultMap>
 	<select id="countResultByUser" resultMap="resultCountMap">
 		SELECT DOCTOR_FLOW,COUNT(*) RESULT_COUNT
-		FROM PDSCI.SCH_ARRANGE_RESULT
+        FROM SCH_ARRANGE_RESULT
 		WHERE DOCTOR_FLOW IN
 		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
 			#{userFlow}
@@ -76,7 +76,7 @@
 	</resultMap>
 	<select id="getResults" resultMap="resultExtMap">
 		select sar.*,rdsp.*
-		from pdsci.sch_arrange_result sar,pdsci.res_doctor_sch_process rdsp
+        from sch_arrange_result sar, res_doctor_sch_process rdsp
 		where sar.record_status = 'Y'
 		and rdsp.record_status = 'Y'
 		and sar.result_flow = rdsp.sch_result_flow
@@ -507,7 +507,7 @@
 
     <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
         SELECT *
-        FROM PDSCI.SCH_ARRANGE_RESULT sar
+        FROM SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'
         AND DOCTOR_FLOW = #{doctorFlow}
         <if test='schStartDate!=null and schStartDate!=""'>

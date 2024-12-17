@@ -91,7 +91,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TEST_CONFIG
+      from RES_TEST_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,13 +100,13 @@
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResTestConfigExample" >
-    delete from PDSCI.RES_TEST_CONFIG
+      delete from RES_TEST_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResTestConfig" >
-    insert into PDSCI.RES_TEST_CONFIG (TEST_FLOW, TEST_ID, TEST_NAME, 
+      insert into RES_TEST_CONFIG (TEST_FLOW, TEST_ID, TEST_NAME,
       APPLY_START_TIME, APPLY_END_TIME, CITYS_ID, 
       LOCAL_AUDIT, LOCAL_AUDIT_START_TIME, LOCAL_AUDIT_END_TIME, 
       CHARGE_AUDIT, CHARGE_AUDIT_START_TIME, CHARGE_AUDIT_END_TIME, 
@@ -122,7 +122,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResTestConfig" >
-    insert into PDSCI.RES_TEST_CONFIG
+      insert into RES_TEST_CONFIG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="testFlow != null" >
         TEST_FLOW,
@@ -237,13 +237,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResTestConfigExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_TEST_CONFIG
+      select count(*) from RES_TEST_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_TEST_CONFIG
+      update RES_TEST_CONFIG
     <set >
       <if test="record.testFlow != null" >
         TEST_FLOW = #{record.testFlow,jdbcType=VARCHAR},
@@ -305,7 +305,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_TEST_CONFIG
+      update RES_TEST_CONFIG
     set TEST_FLOW = #{record.testFlow,jdbcType=VARCHAR},
       TEST_ID = #{record.testId,jdbcType=VARCHAR},
       TEST_NAME = #{record.testName,jdbcType=VARCHAR},

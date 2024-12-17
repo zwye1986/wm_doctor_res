@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SKILL_CONFIG
+      from RES_SKILL_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SKILL_CONFIG
+      from RES_SKILL_CONFIG
     where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SKILL_CONFIG
+      delete from RES_SKILL_CONFIG
     where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSkillConfigExample" >
-    delete from PDSCI.RES_SKILL_CONFIG
+      delete from RES_SKILL_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSkillConfig" >
-    insert into PDSCI.RES_SKILL_CONFIG (SKILL_FLOW, SKILL_TIME_FLOW, TEST_ID, 
+      insert into RES_SKILL_CONFIG (SKILL_FLOW, SKILL_TIME_FLOW, TEST_ID,
       TEST_NAME, SKILL_START_TIME, SKILL_END_TIME, 
       APPOINT_START_TIME, APPOINT_END_TIME, SKILL_WAY, 
       CITY_ID, RECORD_STATUS, CREATE_TIME, 
@@ -126,7 +126,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSkillConfig" >
-    insert into PDSCI.RES_SKILL_CONFIG
+      insert into RES_SKILL_CONFIG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="skillFlow != null" >
         SKILL_FLOW,
@@ -223,13 +223,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSkillConfigExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SKILL_CONFIG
+      select count(*) from RES_SKILL_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SKILL_CONFIG
+      update RES_SKILL_CONFIG
     <set >
       <if test="record.skillFlow != null" >
         SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SKILL_CONFIG
+      update RES_SKILL_CONFIG
     set SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
       SKILL_TIME_FLOW = #{record.skillTimeFlow,jdbcType=VARCHAR},
       TEST_ID = #{record.testId,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResSkillConfig" >
-    update PDSCI.RES_SKILL_CONFIG
+      update RES_SKILL_CONFIG
     <set >
       <if test="skillTimeFlow != null" >
         SKILL_TIME_FLOW = #{skillTimeFlow,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
     where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResSkillConfig" >
-    update PDSCI.RES_SKILL_CONFIG
+      update RES_SKILL_CONFIG
     set SKILL_TIME_FLOW = #{skillTimeFlow,jdbcType=VARCHAR},
       TEST_ID = #{testId,jdbcType=VARCHAR},
       TEST_NAME = #{testName,jdbcType=VARCHAR},

@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.PersonnelStatisticsByName;
 import com.pinde.sci.biz.res.ResPersonnelStatisticsBiz;
 import com.pinde.sci.dao.base.PersonnelCollaborativeBaseMapper;
 import com.pinde.sci.dao.base.PersonnelStatisticsMapper;
 import com.pinde.sci.dao.base.ResJointOrgMapper;
-import com.pinde.sci.model.mo.PersonnelStatisticsByName;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +39,7 @@ public class ResPersonnelStatisticsImpl implements ResPersonnelStatisticsBiz {
     @Override
     public boolean isCollaborativelBase(String orgFlow) {
         ResJointOrg resJointOrg = resJointOrgMapper.selectByJointOrgFlow(orgFlow);
-        if (resJointOrg!=null){
-            return true;
-        }
-        return false;
+        return resJointOrg != null;
     }
 
     @Override

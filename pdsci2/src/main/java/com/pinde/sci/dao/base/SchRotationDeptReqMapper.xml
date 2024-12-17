@@ -98,7 +98,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_REQ
+      from SCH_ROTATION_DEPT_REQ
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -112,7 +112,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_REQ
+      from SCH_ROTATION_DEPT_REQ
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -124,7 +124,7 @@
   <select id="selectListByPartitionList" resultType="com.pinde.sci.model.mo.SchRotationDeptReq">
     select
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_REQ
+      from SCH_ROTATION_DEPT_REQ
     where record_status = 'Y'
     <foreach collection="relRecordListList" item="relRecordList" open="and (" close=")" separator=" or ">
       REL_RECORD_FLOW in
@@ -139,21 +139,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION_DEPT_REQ
+      from SCH_ROTATION_DEPT_REQ
     where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ROTATION_DEPT_REQ
+      delete from SCH_ROTATION_DEPT_REQ
     where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" >
-    delete from PDSCI.SCH_ROTATION_DEPT_REQ
+      delete from SCH_ROTATION_DEPT_REQ
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
-    insert into PDSCI.SCH_ROTATION_DEPT_REQ (REQ_FLOW, ROTATION_FLOW, STANDARD_DEPT_ID, 
+      insert into SCH_ROTATION_DEPT_REQ (REQ_FLOW, ROTATION_FLOW, STANDARD_DEPT_ID,
       STANDARD_DEPT_NAME, REL_RECORD_FLOW, REC_TYPE_ID, 
       REC_TYPE_NAME, ITEM_NAME, REQ_NUM, 
       REQ_NOTE, RECORD_STATUS, CREATE_TIME, 
@@ -169,7 +169,7 @@
       #{reqStandard,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
-    insert into PDSCI.SCH_ROTATION_DEPT_REQ
+      insert into SCH_ROTATION_DEPT_REQ
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="reqFlow != null" >
         REQ_FLOW,
@@ -290,13 +290,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchRotationDeptReqExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ROTATION_DEPT_REQ
+      select count(*) from SCH_ROTATION_DEPT_REQ
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ROTATION_DEPT_REQ
+      update SCH_ROTATION_DEPT_REQ
     <set >
       <if test="record.reqFlow != null" >
         REQ_FLOW = #{record.reqFlow,jdbcType=VARCHAR},
@@ -361,7 +361,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SCH_ROTATION_DEPT_REQ
+      update SCH_ROTATION_DEPT_REQ
     set REQ_FLOW = #{record.reqFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
@@ -386,7 +386,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ROTATION_DEPT_REQ
+      update SCH_ROTATION_DEPT_REQ
     set REQ_FLOW = #{record.reqFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
@@ -410,7 +410,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
-    update PDSCI.SCH_ROTATION_DEPT_REQ
+      update SCH_ROTATION_DEPT_REQ
     <set >
       <if test="rotationFlow != null" >
         ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
@@ -470,7 +470,7 @@
     where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
-    update PDSCI.SCH_ROTATION_DEPT_REQ
+      update SCH_ROTATION_DEPT_REQ
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
       STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
@@ -492,7 +492,7 @@
     where REQ_FLOW = #{reqFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchRotationDeptReq" >
-    update PDSCI.SCH_ROTATION_DEPT_REQ
+      update SCH_ROTATION_DEPT_REQ
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
       STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},

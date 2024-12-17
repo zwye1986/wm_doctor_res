@@ -10,9 +10,9 @@ import java.util.Map;
 
 public interface OscaDoctorAssessmentExtMapper {
 
-	List<OscaSkillsAssessment> getAuditOscaInfo( @Param("userFlow") String userFlow);
+	List<OscaSkillsAssessment> getAuditOscaInfo(@Param("userFlow") String userFlow);
 
-	List<OscaDoctorAssessment> getAuditOscaDocInfo( @Param("userFlow") String userFlow);
+	List<OscaDoctorAssessment> getAuditOscaDocInfo(@Param("userFlow") String userFlow);
 	//查询某场考核学员信息列表
 	List<Map<String,Object>> searchDoctorList(@Param("clinicalFlow")String clinicalFlow);
 	//根据条件查询学员成绩列表

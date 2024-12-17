@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResAppeal;
-import com.pinde.sci.model.mo.ResAppealExample;
+import com.pinde.core.model.ResAppeal;
+import com.pinde.core.model.ResAppealExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

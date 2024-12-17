@@ -1,12 +1,11 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.res.SchProcessExt;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +40,7 @@ public interface IResDoctorProcessBiz {
 	List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow);
 	List<ResDoctorSchProcess> searchProcessByDoctor(ResDoctorSchProcess resDoctorSchProcess);
 	List<ResDoctorSchProcess> searchProcessByDoctor(ResDoctor doctor,
-			ResDoctorSchProcess process,Map<String,String> roleFlagMap);
+                                                    ResDoctorSchProcess process, Map<String, String> roleFlagMap);
 
 	List<ResDoctorSchProcess> searchProcessByDoctorNew(String isOpen,ResDoctor doctor,
 					ResDoctorSchProcess process,Map<String,String> roleFlagMap,String basicPractice);
@@ -179,7 +178,7 @@ public interface IResDoctorProcessBiz {
 
 	int getTeaDeptNotAuditNum(Map<String, Object> map);
 
-	void exportInfo(HttpServletResponse response, List<SchArrangeResult> arrResultList, Map<String, ResDoctorSchProcess> processMap, Map<String, String> finishPerMap) throws UnsupportedEncodingException, Exception;
+	void exportInfo(HttpServletResponse response, List<SchArrangeResult> arrResultList, Map<String, ResDoctorSchProcess> processMap, Map<String, String> finishPerMap) throws Exception;
 
 	List<Map<String,Object>> jsresSchDoctorSchProcessEval(Map<String, Object> param);
 

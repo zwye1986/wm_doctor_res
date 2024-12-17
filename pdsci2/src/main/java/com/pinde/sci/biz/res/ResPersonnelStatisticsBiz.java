@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.PersonnelStatisticsByName;
+import com.pinde.core.model.PersonnelStatisticsByName;
 
 import java.util.List;
 import java.util.Map;

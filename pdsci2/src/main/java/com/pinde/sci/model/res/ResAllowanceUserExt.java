@@ -2,7 +2,7 @@ package com.pinde.sci.model.res;
 
 import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 
 public class ResAllowanceUserExt extends SysUser {
     private static final long serialVersionUID = -438010526424360691L;

@@ -6,7 +6,7 @@ import com.pinde.core.model.OscaSkillsAssessment;
 import java.util.List;
 
 
-public class OscaSkillsPartnerExt extends OscaSkillsAssessment{
+public class OscaSkillsPartnerExt extends OscaSkillsAssessment {
     private List<OscaSkillRoomTea> roomTeas;
 
     public List<OscaSkillRoomTea> getRoomTeas() {

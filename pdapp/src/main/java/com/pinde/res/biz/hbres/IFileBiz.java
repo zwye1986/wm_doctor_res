@@ -12,7 +12,6 @@ public interface IFileBiz {
 
 	void editFile(PubFile pubFile);
 
-	PubFile readDocGraduationFile(PubFile search);
 
 	PubFile searchByProductFlowAndType(String userFlow, String examTeaSigin);
 

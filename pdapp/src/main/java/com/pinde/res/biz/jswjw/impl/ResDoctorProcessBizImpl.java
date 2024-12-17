@@ -1,5 +1,6 @@
 package com.pinde.res.biz.jswjw.impl;
 
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -7,9 +8,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.core.model.ResDoctorSchProcessExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,18 +50,6 @@ public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 			process = this.resDoctorProcessMapper.selectByPrimaryKey(processFlow);
 		}
 		return process;
-	}
-	
-	@Override
-	public List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow){
-		ResDoctorSchProcessExample example = new ResDoctorSchProcessExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andUserFlowEqualTo(doctorFlow);
-		return resDoctorProcessMapper.selectByExample(example);
-	}
-	
-	@Override
-	public List<ResDoctorSchProcess> searchProcessByDoctor(ResDoctor doctor,ResDoctorSchProcess process,Map<String,String> roleFlagMap){
-		return resDoctorProcessExtMapper.searchProcessByDoctor(doctor, process,roleFlagMap);
 	}
 
 	@Override

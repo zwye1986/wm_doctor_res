@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubAttribute;
-import com.pinde.sci.model.mo.PubAttributeExample;
+import com.pinde.core.model.PubAttribute;
+import com.pinde.core.model.PubAttributeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

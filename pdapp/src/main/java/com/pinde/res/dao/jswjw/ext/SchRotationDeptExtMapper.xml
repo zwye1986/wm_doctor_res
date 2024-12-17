@@ -413,7 +413,7 @@
 			distinct
 		</if>
 		RECORD_FLOW,SCH_MONTH,GROUP_FLOW,STANDARD_DEPT_ID
-		from PDSCI.SCH_ROTATION_DEPT
+        from SCH_ROTATION_DEPT
 		<if test="_parameter != null">
 			<where>
 				<foreach collection="oredCriteria" item="criteria" separator="or">

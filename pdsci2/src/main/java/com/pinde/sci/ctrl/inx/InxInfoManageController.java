@@ -32,7 +32,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/inx/manage/info")
 public class InxInfoManageController extends GeneralController {
-	private static Logger logger = LoggerFactory.getLogger(InxInfoManageController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InxInfoManageController.class);
 	@Autowired
 	private IinxInfoManageBiz infoManageBiz;
 	@Autowired
@@ -157,11 +157,8 @@ public class InxInfoManageController extends GeneralController {
 		if(StringUtil.isEmpty(info.getColumnId())||StringUtil.isBlank(info.getColumnId())){
 			return false;
 		}
-		if(StringUtil.isEmpty(info.getInfoTime())||StringUtil.isBlank(info.getInfoTime())){
-			return false;
-		}
-		return true;
-	}
+        return !StringUtil.isEmpty(info.getInfoTime()) && !StringUtil.isBlank(info.getInfoTime());
+    }
 	/**
 	 * 校验前端输入
 	 * @param info
@@ -180,11 +177,8 @@ public class InxInfoManageController extends GeneralController {
 		if(StringUtil.isEmpty(info.getColumnId())||StringUtil.isBlank(info.getColumnId())){
 			return false;
 		}
-		if(StringUtil.isEmpty(info.getInfoTime())||StringUtil.isBlank(info.getInfoTime())){
-			return false;
-		}
-		return true;
-	}
+        return !StringUtil.isEmpty(info.getInfoTime()) && !StringUtil.isBlank(info.getInfoTime());
+    }
 	/**
 	 * 资讯列表
 	 * @param currentPage 当前页索引

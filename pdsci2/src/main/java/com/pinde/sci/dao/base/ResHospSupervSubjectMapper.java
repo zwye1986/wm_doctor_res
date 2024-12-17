@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResHospSupervSubject;
-import com.pinde.sci.model.mo.ResHospSupervSubjectExample;
+import com.pinde.core.model.ResHospSupervSubject;
+import com.pinde.core.model.ResHospSupervSubjectExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

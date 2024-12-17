@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
@@ -20,7 +19,16 @@ import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
 import com.pinde.sci.form.sch.SchArrangeForm;
 import com.pinde.sci.form.sch.SchDoctorForm;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchDoctorSelectDept;
+import com.pinde.sci.model.mo.SchDoctorSelectDeptExample;
+import com.pinde.sci.model.mo.SchOrgArrangeResult;
+import com.pinde.sci.model.mo.SchOrgArrangeResultExample;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SchRotationGroup;
+import com.pinde.sci.model.mo.SchRotationOrgDept;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
@@ -32,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -77,7 +86,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
     @Autowired
     private ISchRotationGroupBiz schRotationtGroupBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(SchDoctorSelectDeptBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchDoctorSelectDeptBizImpl.class);
 
 
     @Override
@@ -433,7 +442,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                                 //计算实际轮转的月/周数
                                 double realMonthF = (realDays/(step*1.0));
                                 realMonth = BigDecimal.valueOf(realMonthF);
-                                realMonth = realMonth.setScale(1,BigDecimal.ROUND_HALF_UP);
+                                realMonth = realMonth.setScale(1, RoundingMode.HALF_UP);
                             }
                             String schMonth= String.valueOf(realMonth.doubleValue());
                             result.setSchMonth(schMonth);
@@ -485,7 +494,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"ArrangeResult".equals(sheetName))
+                    if (!"ArrangeResult".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");
@@ -1092,7 +1101,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"ArrangeResult".equals(sheetName))
+                    if (!"ArrangeResult".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");
@@ -1455,7 +1464,7 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
         Date date2_1 = sdf.parse(dateStr2_1);
         Date date2_2 = sdf.parse(dateStr2_2);
         boolean b = isDateCross(date1_1, date1_2, date2_1, date2_2);
-        System.out.println(b == true ? "有交集" : "无交集");
+        System.out.println(b ? "有交集" : "无交集");
     }
 
     @Override

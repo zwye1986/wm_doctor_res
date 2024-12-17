@@ -48,7 +48,7 @@
     <select id="selectDeptByOrgFlow" parameterType="String" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
 	SELECT sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL
 			, sd.RECORD_STATUS, cfg.record_flow, cfg.STANDARD_DEPT_NAME
-		FROM pdsci.sys_dept sd
+    FROM sys_dept sd
 			LEFT JOIN SCH_and_Standard_Dept_cfg cfg ON sd.dept_flow = cfg.sch_dept_flow
 		AND cfg.record_status = 'Y'
 		WHERE SD.ORG_FLOW = #{orgFlow}

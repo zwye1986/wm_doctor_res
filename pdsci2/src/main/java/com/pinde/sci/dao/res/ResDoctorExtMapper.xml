@@ -7,7 +7,8 @@
         <association property="userResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.StuUserResume" resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
 					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
-		<association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.PubUserResume" resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs"/>
+        <association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.core.model.PubUserResume"
+                     resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
 	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
         <association property="sysUser" column="user_flow"
@@ -394,7 +395,7 @@
 
     <select id="searchResDoctorByAssessment"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         select ed.* from res_doctor ed
-        LEFT JOIN pdsci.SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
+        LEFT JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
         where ed.record_status='Y'
         AND U.RECORD_STATUS='Y'
 
@@ -511,8 +512,8 @@
 		, su.ID_NO, su.USER_BIRTHDAY, su.TITLE_ID,su.TITLE_NAME, su.DEGREE_ID, su.DEGREE_NAME, su.EDUCATION_ID, su.EDUCATION_NAME,su.POST_ID, su.POST_NAME,
 		rd.ORG_FLOW as edOrgFlow,rd.ORG_Name as edOrgName,rd.doctor_type_name,rd.doctor_type_id,rd.doctor_Name,rd.training_Spe_Name,
 		rd.doctor_Category_Name,rd.training_Years
-		from pdsci.RES_DOCTOR_RECRUIT dr
-		left join  pdsci.SYS_USER su
+        from RES_DOCTOR_RECRUIT dr
+        left join SYS_USER su
 		on dr.DOCTOR_FLOW =  su.USER_FLOW
 		left join  RES_DOCTOR rd
 		on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW
@@ -868,16 +869,19 @@
 	</select>
     <resultMap id="SysUserResDoctorExt" type="com.pinde.sci.model.sys.SysUserResDoctorExt"
                extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
-	   <association property="doctor" column="doctor_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
-       <collection property="resDoctorSchProcessList" ofType="com.pinde.sci.model.mo.ResDoctorSchProcess" column="USER_FLOW">
+        <association property="doctor" column="doctor_FLOW" javaType="com.pinde.core.model.ResDoctor"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+        <collection property="resDoctorSchProcessList" ofType="com.pinde.core.model.ResDoctorSchProcess"
+                    column="USER_FLOW">
 			 	<id column="PROCESS_FLOW" jdbcType="VARCHAR" property="processFlow" />
 			    <result column="SCH_DEPT_FLOW" jdbcType="VARCHAR" property="schDeptFlow" />
 			    <result column="SCH_DEPT_NAME" jdbcType="VARCHAR" property="schDeptName" />
 		</collection>
    </resultMap>
 	<select id="searchSysUserAndResDoctor" parameterType="java.util.Map" resultMap="SysUserResDoctorExt">
-		select * from pdsci.sys_user left JOIN pdsci.res_doctor  on  res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW 
-		left join pdsci.res_doctor_sch_process rdsp on (rdsp.user_flow = res_doctor.doctor_flow and rdsp.is_current_flag = 'Y') 
+        select * from sys_user left JOIN res_doctor on res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW
+        left join res_doctor_sch_process rdsp on (rdsp.user_flow = res_doctor.doctor_flow and rdsp.is_current_flag =
+        'Y')
 		where sys_user.RECORD_STATUS = 'Y' 
 		<if test='schDeptFlow != null and schDeptFlow != ""'>
 		    and rdsp.sch_dept_flow=#{schDeptFlow}
@@ -968,8 +972,8 @@
 		AND res_doctor.RECORD_STATUS = 'Y'
 		and res_doctor.ORG_FLOW in (
 			SELECT ORG_FLOW
-			FROM PDSCI.SYS_ORG
-			WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 			<if test="sysOrg!=null">
 				<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 			    	 AND ORG_PROV_ID = #{sysOrg.orgProvId} 
@@ -1167,7 +1171,7 @@
 
 	<!--<update id="modifyResDoctorRecruit" parameterType="java.util.Map">-->
 	<!--<if test='recruit.examResult!=null and recruit.examResult!="" and recruit.examCode!=null and recruit.examCode!=""'>-->
-	<!--update PDSCI.RES_DOCTOR_RECRUIT set EXAM_RESULT = #{recruit.examResult}-->
+    <!--update  RES_DOCTOR_RECRUIT set EXAM_RESULT = #{recruit.examResult}-->
 	<!--where RECORD_STATUS='Y'-->
 	<!--and EXAM_CODE = #{recruit.examCode}-->
 	<!--and DOCTOR_FLOW = (-->
@@ -1183,7 +1187,7 @@
   	
   	<select id="searchTrainPlanCount" resultMap="trainPlanCountMap">
   		SELECT TRAINING_SPE_ID,COUNT(TRAINING_SPE_ID) TRAIN_PLAN_COUNT
-  		FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
   		WHERE RECORD_STATUS = 'Y'
   		<if test='countType == "Y"'>
   			AND ROTATION_FLOW IS NOT NULL
@@ -1204,7 +1208,7 @@
   	
   	<select id="searGroupRotation" resultMap="doctorRotationMap">
   		SELECT TRAINING_SPE_ID||DOCTOR_CATEGORY_ID ROTATION_KEY,ROTATION_NAME,ROTATION_FLOW
-  		FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
   		WHERE RECORD_STATUS = 'Y'
   		AND ROTATION_FLOW IS NOT NULL
   		<if test="doctor != null">
@@ -1217,9 +1221,9 @@
   		</if>
   		GROUP BY TRAINING_SPE_ID,DOCTOR_CATEGORY_ID,ROTATION_NAME,ROTATION_FLOW
   	</select>
-	
-	<update id="modifyResDoctorRotation" parameterType="com.pinde.sci.model.mo.ResDoctor">
-		UPDATE PDSCI.RES_DOCTOR SET ROTATION_FLOW = #{doctor.rotationFlow},ROTATION_NAME = #{doctor.rotationName}
+
+    <update id="modifyResDoctorRotation" parameterType="com.pinde.core.model.ResDoctor">
+        UPDATE RES_DOCTOR SET ROTATION_FLOW = #{doctor.rotationFlow},ROTATION_NAME = #{doctor.rotationName}
 		WHERE RECORD_STATUS = 'Y'
 		AND ROTATION_FLOW IS NULL
 		AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
@@ -1232,7 +1236,7 @@
 	</update>
 
 	<update id="modifyResDoctorStatus" parameterType="java.util.Map">
-		update PDSCI.RES_DOCTOR SET DOCTOR_STATUS_ID = #{statusId},DOCTOR_STATUS_NAME = #{statusName}
+        update RES_DOCTOR SET DOCTOR_STATUS_ID = #{statusId},DOCTOR_STATUS_NAME = #{statusName}
 		WHERE  RES_DOCTOR.RECORD_STATUS = 'Y' AND RES_DOCTOR.DOCTOR_STATUS_ID=#{oldStatusId} and RES_DOCTOR.session_number = #{regNumber}
 	</update>
 
@@ -1262,8 +1266,8 @@
 	</select>
 	
 	<select id="searchExamDoctor" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
-	    select * from PDSCI.res_exam_doctor where RECORD_STATUS='Y' AND DOCTOR_FLOW=#{doctorFlow}
-	    	and exists (select null from PDSCI.res_exam exam where res_exam_doctor.EXAM_FLOW=exam.EXAM_FLOW
+        select * from res_exam_doctor where RECORD_STATUS='Y' AND DOCTOR_FLOW=#{doctorFlow}
+        and exists (select null from res_exam exam where res_exam_doctor.EXAM_FLOW=exam.EXAM_FLOW
 	    		and exam.RECORD_STATUS='Y'
 	    		and exam.EXAM_TYPE_ID=#{examType}
 	    		and exam.EXAM_YEAR=#{examYear}
@@ -1271,7 +1275,8 @@
 	</select>
 	
 	<resultMap id="ResExamDoctorExtMap" type="com.pinde.sci.model.res.ResExamDoctorExt" extends="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
-	    <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+        <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
         <association property="user" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>
@@ -1346,11 +1351,11 @@
 	</select>
 	
 	<select id="searchRegisterList" parameterType="java.util.Map" resultMap="ResUserDoctorRecruitExt">
-	    select * 
-	    from PDSCI.RES_DOCTOR d
-	    inner join PDSCI.RES_DOCTOR_RECRUIT dr
+	    select *
+        from RES_DOCTOR d
+        inner join RES_DOCTOR_RECRUIT dr
 	    on d.DOCTOR_FLOW = dr.DOCTOR_FLOW
-	    inner join PDSCI.SYS_USER su
+        inner join SYS_USER su
 	    on su.USER_FLOW = d.DOCTOR_FLOW
 	    where d.RECORD_STATUS='Y' and dr.RECORD_STATUS='Y'
 	    and dr.RECRUIT_FLAG = 'Y'
@@ -1373,7 +1378,7 @@
     
 	<select id="searchMonthRotationDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
 		SELECT RD.*
-		FROM PDSCI.SCH_ARRANGE_RESULT SAR,PDSCI.RES_DOCTOR RD
+        FROM SCH_ARRANGE_RESULT SAR, RES_DOCTOR RD
 		WHERE SAR.RECORD_STATUS = 'Y'
 		AND RD.RECORD_STATUS = 'Y'
 		AND RD.DOCTOR_FLOW = SAR.DOCTOR_FLOW
@@ -1421,10 +1426,10 @@
 	
 	<select id="searchSelDeptDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
 		SELECT RD.*
-		FROM PDSCI.RES_DOCTOR RD
+        FROM RES_DOCTOR RD
 		WHERE RD.DOCTOR_FLOW IN (
 			SELECT DISTINCT IRD.DOCTOR_FLOW
-			FROM PDSCI.RES_DOCTOR IRD,PDSCI.SCH_ROTATION_GROUP SRG
+        FROM RES_DOCTOR IRD, SCH_ROTATION_GROUP SRG
 			WHERE IRD.RECORD_STATUS = 'Y'
 			AND SRG.RECORD_STATUS = 'Y'
 			<if test='doctor!=null'>
@@ -1458,12 +1463,12 @@
 	</select>
 	
 	<select id="updateDocSelFlag" resultType="int">
-		UPDATE PDSCI.RES_DOCTOR SET SEL_DEPT_FLAG = 'Y'
+        UPDATE RES_DOCTOR SET SEL_DEPT_FLAG = 'Y'
 		WHERE RECORD_STATUS = 'Y'
 		AND ROTATION_FLOW IS NOT NULL
 		AND DOCTOR_FLOW NOT IN (
 			SELECT DISTINCT IRD.DOCTOR_FLOW
-			FROM PDSCI.RES_DOCTOR IRD,PDSCI.SCH_ROTATION_GROUP SRG
+        FROM RES_DOCTOR IRD, SCH_ROTATION_GROUP SRG
 			WHERE IRD.RECORD_STATUS = 'Y'
 			AND SRG.RECORD_STATUS = 'Y'
 			AND IRD.ROTATION_FLOW = SRG.ROTATION_FLOW
@@ -1475,12 +1480,12 @@
 	
 	<select id="searchDoctorForChange" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
 		SELECT RD.*
-		FROM PDSCI.RES_DOCTOR RD
+        FROM RES_DOCTOR RD
 		WHERE RECORD_STATUS = 'Y'
 		<if test='docOrgHis!=null'>
 			AND RD.DOCTOR_FLOW IN (
-				SELECT DOCTOR_FLOW 
-				FROM PDSCI.RES_DOCTOR_ORG_HISTORY 
+				SELECT DOCTOR_FLOW
+            FROM RES_DOCTOR_ORG_HISTORY
 				WHERE RECORD_STATUS = 'Y'
 				<if test='docOrgHis.changeStatusId!=null and docOrgHis.changeStatusId!=""'>
 					AND CHANGE_STATUS_ID = #{docOrgHis.changeStatusId}
@@ -1496,7 +1501,7 @@
 		<if test='docOrgHis==null'>
 			AND RD.DOCTOR_FLOW NOT IN (
 				SELECT DOCTOR_FLOW
-				FROM PDSCI.RES_DOCTOR_ORG_HISTORY
+            FROM RES_DOCTOR_ORG_HISTORY
 				WHERE RECORD_STATUS = 'Y'
 				<if test='doctor!=null'>
 					<if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
@@ -1593,10 +1598,10 @@
 	</resultMap>
 	<select id="countDocByOrg" resultMap="countNumMap">
 		SELECT ORG_FLOW||TRAINING_SPE_ID KEY,COUNT(*) NUM
-		FROM PDSCI.RES_DOCTOR rd
+        FROM RES_DOCTOR rd
 		WHERE RECORD_STATUS = 'Y'
 		AND exists	(
-			SELECT null FROM PDSCI.SYS_ORG so
+        SELECT null FROM SYS_ORG so
 			WHERE so.RECORD_STATUS = 'Y'
 			AND so.ORG_TYPE_ID = 'Hospital'
 			and so.org_flow=rd.org_flow
@@ -1621,7 +1626,7 @@
 	
 	<select id="countGroupDoc" resultMap="countNumMap">
 		SELECT GROUP_ID KEY,COUNT(*) NUM
-		FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
 		WHERE RECORD_STATUS = 'Y'
 		<if test='doctor!=null'>
 			<if test='doctor.sessionNumber != null and doctor.sessionNumber != ""'>
@@ -1645,8 +1650,8 @@
 	
 	
 	<select id="searchDoctorAccountList" parameterType="java.util.Map" resultMap="ResDoctorExt">
-		select * from PDSCI.RES_DOCTOR d
-		inner join PDSCI.SYS_USER u on d.DOCTOR_FLOW = u.USER_FLOW  
+        select * from RES_DOCTOR d
+        inner join SYS_USER u on d.DOCTOR_FLOW = u.USER_FLOW
 		and u.RECORD_STATUS = 'Y' and d.RECORD_STATUS = 'Y'
 		AND d.OSCA_STUDENT_SUBMIT is null
 		<if test="sysOrg!=null">
@@ -1796,7 +1801,7 @@
     </select>
     <select id="searchOrgFlowByhistoryOrgFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.BaseResultMap">
    		SELECT *
-		FROM PDSCI.RES_DOCTOR_ORG_HISTORY
+        FROM RES_DOCTOR_ORG_HISTORY
 		WHERE RECORD_STATUS = 'Y'
 		<if test="docOrgHistory!=null">
 			<if test="docOrgHistory.orgFlow!=null and docOrgHistory.orgFlow!=''">
@@ -1823,7 +1828,7 @@
 	</select>
 	<select id="searchDocByDiscipleTea"  resultMap="ResDoctorExt">
 		select * from res_doctor ed
-		INNER JOIN pdsci.SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
+        INNER JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
 		INNER join RES_GRADUATION_ASSESSMENT rga on rga.doctor_flow =ED.DOCTOR_FLOW
 		where ed.record_status='Y'
 		AND U.RECORD_STATUS='Y'
@@ -1855,7 +1860,7 @@
 	</select>
 	<select id="searchDocByDiscipleAdmin"  resultMap="ResDoctorExt">
 		select * from res_doctor ed
-		INNER JOIN pdsci.SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
+        INNER JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
 		INNER join RES_GRADUATION_ASSESSMENT rga on rga.doctor_flow =ED.DOCTOR_FLOW
 		LEFT JOIN SYS_USER SU ON ED.DISCIPLE_TEACHER_FLOW=SU.USER_FLOW
 		where ed.record_status='Y'
@@ -1938,7 +1943,7 @@
 		(SELECT COUNT(1) FROM RES_ANNUAL_ASSESSMENT WHERE RECORD_STATUS = 'Y' AND AUDIT_STATUS_ID  !='Apply'  AND DOCTOR_FLOW = RD.DOCTOR_FLOW  AND TEACHER_FLOW=#{teacherFlow} ) AS YEAR_COUNT,
 		(SELECT RECORD_FLOW FROM RES_GRADUATION_ASSESSMENT WHERE RECORD_STATUS='Y' AND AUDIT_STATUS_ID IS NOT NULL  AND DOCTOR_FLOW = RD.DOCTOR_FLOW) GRADUTAION_FLOW
 		FROM RES_DOCTOR RD
-		LEFT JOIN PDSCI.SYS_USER U ON RD.DOCTOR_FLOW = U.USER_FLOW
+        LEFT JOIN SYS_USER U ON RD.DOCTOR_FLOW = U.USER_FLOW
 		WHERE RD.RECORD_STATUS='Y'
 		AND U.RECORD_STATUS='Y'
 		<if test="docTypeList!=null and docTypeList.size>0">
@@ -2200,8 +2205,8 @@
 		and t.DOCTOR_STATUS_ID = '20'
 		AND ORG.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000'
 		<if test="orgFlow!=null and orgFlow!=''">
 			and org_Flow=#{orgFlow}
@@ -2258,8 +2263,8 @@
 		and t.DOCTOR_STATUS_ID = '20'
 		AND ORG.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000'
 		<if test="orgFlow!=null and orgFlow!=''">
 			and org_Flow=#{orgFlow}

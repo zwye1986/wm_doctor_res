@@ -3,17 +3,17 @@
 <mapper namespace="com.pinde.sci.dao.sys.SysDeptExtMapper" >
 	<select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
 		select sd.*
-		from pdsci.sys_dept sd
+        from sys_dept sd
 		where sd.record_status = 'Y'
 		and sd.org_flow = #{orgFlow}
 		and exists(
 			select null
-			from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
 			where rdsp.record_status = 'Y'
 			and rdsp.dept_flow = sd.dept_flow
 			and exists(
 				select null
-				from pdsci.res_rec rr
+        from res_rec rr
 				where rr.record_status = 'Y'
 				and rdsp.process_flow = rr.process_flow
 				<if test='operStartDate!=null and operStartDate!=""'>
@@ -38,13 +38,13 @@
 	</resultMap>
 	<select id="searchDeptByDoctor" resultMap="DoctorMap">
 		select sd.*,so.org_name
-		from pdsci.sys_dept sd
+        from sys_dept sd
 		LEFT join sys_org so
 		on sd.org_flow=so.org_flow
 		where sd.record_status = 'Y'
 		and ( exists (
 				select null
-				from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
 				where rdsp.record_status = 'Y'
 				and rdsp.dept_flow = sd.dept_flow
 				and rdsp.user_flow=#{userFlow}
@@ -57,12 +57,12 @@
 	</select>
 	<select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
 		select sd.*
-		from pdsci.sys_dept sd
+        from sys_dept sd
 		where sd.record_status = 'Y'
 		and sd.org_flow = #{orgFlow}
 		and exists(
 			select null
-			from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
 			where rdsp.record_status = 'Y'
 			and rdsp.dept_flow = sd.dept_flow
 			and exists(
@@ -84,7 +84,7 @@
 				)
 			and exists(
 				select null
-				from pdsci.res_rec rr
+        from res_rec rr
 				where rr.record_status = 'Y'
 				and rdsp.process_flow = rr.process_flow
 				<if test='operStartDate!=null and operStartDate!=""'>
@@ -105,7 +105,7 @@
 	</select>
 	<select id="searchDeptBySpe" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
 		select sd.*
-		from pdsci.sys_dept sd
+        from sys_dept sd
 		where sd.record_status = 'Y'
 		and sd.org_flow = #{orgFlow}
 		and sd.dept_flow in (
@@ -130,7 +130,7 @@
 	<!--  -->
 	<select id="searchDeptByUnion" resultMap="UnionMap">
 		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME
-		from pdsci.sys_dept sd
+        from sys_dept sd
 		left join SCH_and_Standard_Dept_cfg cfg
 		on sd.dept_flow=cfg.sch_dept_flow
 		and cfg.record_status='Y'
@@ -159,10 +159,12 @@
 	<select id="searchDeptByUnionSpe" resultMap="UnionMap">
 		select sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS,cfg.record_flow,cfg.STANDARD_DEPT_NAME,
 		       bst.SPE_BASE_ID SPE_FLOW
-		from pdsci.sys_dept sd
+        from sys_dept sd
 		left join SCH_and_Standard_Dept_cfg cfg on sd.dept_flow=cfg.sch_dept_flow and cfg.record_status='Y'
-		left join pdsci.RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and rd.record_status = 'Y'
-		left join pdsci.RES_SPE_BASE_STD_DEPT bst on bst.standard_dept_flow = rd.standard_dept_flow and bst.record_status = 'Y'
+        left join RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and
+        rd.record_status = 'Y'
+        left join RES_SPE_BASE_STD_DEPT bst on bst.standard_dept_flow = rd.standard_dept_flow and bst.record_status =
+        'Y'
 		where sd.record_status = 'Y'
 		<if test='dept.deptFlow!=null and dept.deptFlow!=""'>
 			and sd.dept_flow = #{dept.deptFlow}
@@ -251,8 +253,8 @@
 	</select>
 
 	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
-		select DISTINCT sd.* from pdsci.sys_dept sd
-		left join pdsci.sch_dept_external_rel sder
+        select DISTINCT sd.* from sys_dept sd
+        left join sch_dept_external_rel sder
 		on sd.dept_flow = sder.dept_flow
 		and sder.record_status = 'Y'
 		where sd.record_status = 'Y'

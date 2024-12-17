@@ -3,7 +3,7 @@ package com.pinde.sci.model.jszy;
 
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.JsresAttendance;
+import com.pinde.core.model.JsresAttendance;
 
 public class JszyResAttendanceExt extends SysUser{
 

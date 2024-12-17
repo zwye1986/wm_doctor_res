@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.lcjn.impl;
 
 import com.pinde.core.common.enums.LcjnFixedAssetsStatusEnum;
-import com.pinde.core.model.SysDict;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,7 +12,6 @@ import com.pinde.sci.dao.base.LcjnFixedAssetsMapper;
 import com.pinde.sci.dao.base.LcjnSuppliesBatchMapper;
 import com.pinde.sci.dao.base.LcjnSuppliesMapper;
 import com.pinde.sci.dao.lcjn.LcjnSuppliesAndAssetsExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -222,9 +221,9 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
 
             int row_num = sheet.getLastRowNum();
@@ -319,9 +318,9 @@ public class LcjnSuppliesAndAssetsBizImpl implements ILcjnSuppliesAndAssetsBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
             int row_num = sheet.getLastRowNum();
             for (int i = 0; i <= row_num; i++) {

@@ -8,7 +8,7 @@ import java.util.Map;
 
 
 public interface IResSignInBiz {
-	public List<Map<String, Object>> searchSignInfo(ResSignin signin, String medicineTypeId);
+	List<Map<String, Object>> searchSignInfo(ResSignin signin, String medicineTypeId);
 
 	List<Map<String, Object>> searchSignInfoByParamMap(
 			Map<String, Object> paramMap);

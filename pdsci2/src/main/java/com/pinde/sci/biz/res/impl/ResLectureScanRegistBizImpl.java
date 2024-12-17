@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.LectureInfoTarget;
+import com.pinde.core.model.LectureInfoTargetExample;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -372,7 +375,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
         return lectureScanRegistMapper.selectByPrimaryKey(recordFlow);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
 
 
 }

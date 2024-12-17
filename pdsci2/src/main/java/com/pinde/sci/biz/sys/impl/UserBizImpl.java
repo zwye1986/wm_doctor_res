@@ -24,16 +24,16 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
-import com.pinde.sci.dao.base.*;
+import com.pinde.sci.dao.base.JsresUserBalcklistMapper;
+import com.pinde.sci.dao.base.SysDeptMapper;
+import com.pinde.sci.dao.base.SysUserRegisterMapper;
+import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.model.mo.JsresUserBalcklist;
-import com.pinde.sci.model.mo.JsresUserBalcklistExample;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
-import com.pinde.core.model.SysRoleExample;
-import com.pinde.sci.model.mo.SysUserRole;
-import com.pinde.sci.model.mo.SysUserRoleExample;
+import com.pinde.core.model.SysUserRole;
+import com.pinde.core.model.SysUserRoleExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
 //@Transactional(rollbackFor=Exception.class)
 public class UserBizImpl implements IUserBiz {
 
-	private static Logger logger = LoggerFactory.getLogger(UserBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserBizImpl.class);
 
 	@Autowired
 	private SysUserMapper sysUserMapper;
@@ -127,7 +127,7 @@ public class UserBizImpl implements IUserBiz {
 		int r1 =  sysUserMapper.updateByPrimaryKeySelective(user);
 
 		SysUserRoleExample example = new SysUserRoleExample();
-		com.pinde.sci.model.mo.SysUserRoleExample.Criteria criteria = example.createCriteria();
+		SysUserRoleExample.Criteria criteria = example.createCriteria();
 		criteria.andUserFlowEqualTo(userFlow);
 		SysUserRole userRole = new SysUserRole();
         userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
@@ -1140,9 +1140,7 @@ public class UserBizImpl implements IUserBiz {
 		List<SysUserRole> list = sysUserRoleMapper.selectByExample(example);
 		if (null!=list && list.size()>0){
 			SysUserRole sysUserRole = list.get(0);
-			if (StringUtil.isNotBlank(sysUserRole.getRoleFlow()) && sysUserRole.getRoleFlow().equals(roleFlow)){
-				return true;
-			}
+            return StringUtil.isNotBlank(sysUserRole.getRoleFlow()) && sysUserRole.getRoleFlow().equals(roleFlow);
 		}
 		return false;
 	}
@@ -1357,7 +1355,7 @@ public class UserBizImpl implements IUserBiz {
 						oldRoles.add(roleFlow);
 					}
 				}
-				if(roles!=null && roles.length>0){
+                if (roles != null) {
 					for(String role:roles){
 						if(!oldRoles.contains(role)){
 							SysUserRole sysUserRole = new SysUserRole();

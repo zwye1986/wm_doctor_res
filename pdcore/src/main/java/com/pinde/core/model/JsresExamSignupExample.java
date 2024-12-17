@@ -2063,6 +2063,706 @@ public class JsresExamSignupExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andLocalAuditStatusIdIsNull() {
+            addCriterion("LOCAL_AUDIT_STATUS_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdIsNotNull() {
+            addCriterion("LOCAL_AUDIT_STATUS_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID =", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdNotEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID <>", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdGreaterThan(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID >", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdGreaterThanOrEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID >=", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdLessThan(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID <", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdLessThanOrEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID <=", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdLike(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID like", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdNotLike(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID not like", value, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdIn(List<String> values) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID in", values, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdNotIn(List<String> values) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID not in", values, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdBetween(String value1, String value2) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID between", value1, value2, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusIdNotBetween(String value1, String value2) {
+            addCriterion("LOCAL_AUDIT_STATUS_ID not between", value1, value2, "localAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameIsNull() {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameIsNotNull() {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME =", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameNotEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME <>", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameGreaterThan(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME >", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameGreaterThanOrEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME >=", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameLessThan(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME <", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameLessThanOrEqualTo(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME <=", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameLike(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME like", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameNotLike(String value) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME not like", value, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameIn(List<String> values) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME in", values, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameNotIn(List<String> values) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME not in", values, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameBetween(String value1, String value2) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME between", value1, value2, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalAuditStatusNameNotBetween(String value1, String value2) {
+            addCriterion("LOCAL_AUDIT_STATUS_NAME not between", value1, value2, "localAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonIsNull() {
+            addCriterion("LOCAL_REASON is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonIsNotNull() {
+            addCriterion("LOCAL_REASON is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonEqualTo(String value) {
+            addCriterion("LOCAL_REASON =", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonNotEqualTo(String value) {
+            addCriterion("LOCAL_REASON <>", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonGreaterThan(String value) {
+            addCriterion("LOCAL_REASON >", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("LOCAL_REASON >=", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonLessThan(String value) {
+            addCriterion("LOCAL_REASON <", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonLessThanOrEqualTo(String value) {
+            addCriterion("LOCAL_REASON <=", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonLike(String value) {
+            addCriterion("LOCAL_REASON like", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonNotLike(String value) {
+            addCriterion("LOCAL_REASON not like", value, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonIn(List<String> values) {
+            addCriterion("LOCAL_REASON in", values, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonNotIn(List<String> values) {
+            addCriterion("LOCAL_REASON not in", values, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonBetween(String value1, String value2) {
+            addCriterion("LOCAL_REASON between", value1, value2, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLocalReasonNotBetween(String value1, String value2) {
+            addCriterion("LOCAL_REASON not between", value1, value2, "localReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdIsNull() {
+            addCriterion("CITY_AUDIT_STATUS_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdIsNotNull() {
+            addCriterion("CITY_AUDIT_STATUS_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID =", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdNotEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID <>", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdGreaterThan(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID >", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdGreaterThanOrEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID >=", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdLessThan(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID <", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdLessThanOrEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID <=", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdLike(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID like", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdNotLike(String value) {
+            addCriterion("CITY_AUDIT_STATUS_ID not like", value, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdIn(List<String> values) {
+            addCriterion("CITY_AUDIT_STATUS_ID in", values, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdNotIn(List<String> values) {
+            addCriterion("CITY_AUDIT_STATUS_ID not in", values, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdBetween(String value1, String value2) {
+            addCriterion("CITY_AUDIT_STATUS_ID between", value1, value2, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusIdNotBetween(String value1, String value2) {
+            addCriterion("CITY_AUDIT_STATUS_ID not between", value1, value2, "cityAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameIsNull() {
+            addCriterion("CITY_AUDIT_STATUS_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameIsNotNull() {
+            addCriterion("CITY_AUDIT_STATUS_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME =", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameNotEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME <>", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameGreaterThan(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME >", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameGreaterThanOrEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME >=", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameLessThan(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME <", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameLessThanOrEqualTo(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME <=", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameLike(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME like", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameNotLike(String value) {
+            addCriterion("CITY_AUDIT_STATUS_NAME not like", value, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameIn(List<String> values) {
+            addCriterion("CITY_AUDIT_STATUS_NAME in", values, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameNotIn(List<String> values) {
+            addCriterion("CITY_AUDIT_STATUS_NAME not in", values, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameBetween(String value1, String value2) {
+            addCriterion("CITY_AUDIT_STATUS_NAME between", value1, value2, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditStatusNameNotBetween(String value1, String value2) {
+            addCriterion("CITY_AUDIT_STATUS_NAME not between", value1, value2, "cityAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonIsNull() {
+            addCriterion("CITY_REASON is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonIsNotNull() {
+            addCriterion("CITY_REASON is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonEqualTo(String value) {
+            addCriterion("CITY_REASON =", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonNotEqualTo(String value) {
+            addCriterion("CITY_REASON <>", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonGreaterThan(String value) {
+            addCriterion("CITY_REASON >", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("CITY_REASON >=", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonLessThan(String value) {
+            addCriterion("CITY_REASON <", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonLessThanOrEqualTo(String value) {
+            addCriterion("CITY_REASON <=", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonLike(String value) {
+            addCriterion("CITY_REASON like", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonNotLike(String value) {
+            addCriterion("CITY_REASON not like", value, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonIn(List<String> values) {
+            addCriterion("CITY_REASON in", values, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonNotIn(List<String> values) {
+            addCriterion("CITY_REASON not in", values, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonBetween(String value1, String value2) {
+            addCriterion("CITY_REASON between", value1, value2, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityReasonNotBetween(String value1, String value2) {
+            addCriterion("CITY_REASON not between", value1, value2, "cityReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdIsNull() {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdIsNotNull() {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID =", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdNotEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID <>", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdGreaterThan(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID >", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdGreaterThanOrEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID >=", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdLessThan(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID <", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdLessThanOrEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID <=", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdLike(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID like", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdNotLike(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID not like", value, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdIn(List<String> values) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID in", values, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdNotIn(List<String> values) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID not in", values, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdBetween(String value1, String value2) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID between", value1, value2, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusIdNotBetween(String value1, String value2) {
+            addCriterion("GLOBAL_AUDIT_STATUS_ID not between", value1, value2, "globalAuditStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameIsNull() {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameIsNotNull() {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME =", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameNotEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME <>", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameGreaterThan(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME >", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameGreaterThanOrEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME >=", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameLessThan(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME <", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameLessThanOrEqualTo(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME <=", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameLike(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME like", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameNotLike(String value) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME not like", value, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameIn(List<String> values) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME in", values, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameNotIn(List<String> values) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME not in", values, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameBetween(String value1, String value2) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME between", value1, value2, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalAuditStatusNameNotBetween(String value1, String value2) {
+            addCriterion("GLOBAL_AUDIT_STATUS_NAME not between", value1, value2, "globalAuditStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonIsNull() {
+            addCriterion("GLOBAL_REASON is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonIsNotNull() {
+            addCriterion("GLOBAL_REASON is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonEqualTo(String value) {
+            addCriterion("GLOBAL_REASON =", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonNotEqualTo(String value) {
+            addCriterion("GLOBAL_REASON <>", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonGreaterThan(String value) {
+            addCriterion("GLOBAL_REASON >", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("GLOBAL_REASON >=", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonLessThan(String value) {
+            addCriterion("GLOBAL_REASON <", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonLessThanOrEqualTo(String value) {
+            addCriterion("GLOBAL_REASON <=", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonLike(String value) {
+            addCriterion("GLOBAL_REASON like", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonNotLike(String value) {
+            addCriterion("GLOBAL_REASON not like", value, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonIn(List<String> values) {
+            addCriterion("GLOBAL_REASON in", values, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonNotIn(List<String> values) {
+            addCriterion("GLOBAL_REASON not in", values, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonBetween(String value1, String value2) {
+            addCriterion("GLOBAL_REASON between", value1, value2, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andGlobalReasonNotBetween(String value1, String value2) {
+            addCriterion("GLOBAL_REASON not between", value1, value2, "globalReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdIsNull() {
+            addCriterion("TEST_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdIsNotNull() {
+            addCriterion("TEST_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdEqualTo(String value) {
+            addCriterion("TEST_ID =", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotEqualTo(String value) {
+            addCriterion("TEST_ID <>", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdGreaterThan(String value) {
+            addCriterion("TEST_ID >", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdGreaterThanOrEqualTo(String value) {
+            addCriterion("TEST_ID >=", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdLessThan(String value) {
+            addCriterion("TEST_ID <", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdLessThanOrEqualTo(String value) {
+            addCriterion("TEST_ID <=", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdLike(String value) {
+            addCriterion("TEST_ID like", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotLike(String value) {
+            addCriterion("TEST_ID not like", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdIn(List<String> values) {
+            addCriterion("TEST_ID in", values, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotIn(List<String> values) {
+            addCriterion("TEST_ID not in", values, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdBetween(String value1, String value2) {
+            addCriterion("TEST_ID between", value1, value2, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotBetween(String value1, String value2) {
+            addCriterion("TEST_ID not between", value1, value2, "testId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

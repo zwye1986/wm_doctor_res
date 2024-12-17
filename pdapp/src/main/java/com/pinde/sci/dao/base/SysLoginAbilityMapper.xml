@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_LOGIN_ABILITY
+      from SYS_LOGIN_ABILITY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_LOGIN_ABILITY
+      from SYS_LOGIN_ABILITY
     where USER_CODE = #{userCode,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_LOGIN_ABILITY
+      delete from SYS_LOGIN_ABILITY
     where USER_CODE = #{userCode,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysLoginAbilityExample" >
-    delete from PDSCI.SYS_LOGIN_ABILITY
+      delete from SYS_LOGIN_ABILITY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysLoginAbility" >
-    insert into PDSCI.SYS_LOGIN_ABILITY (USER_CODE, LOGIN_NUM, IS_LOCK, 
+      insert into SYS_LOGIN_ABILITY (USER_CODE, LOGIN_NUM, IS_LOCK,
       LOGIN_TIME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysLoginAbility" >
-    insert into PDSCI.SYS_LOGIN_ABILITY
+      insert into SYS_LOGIN_ABILITY
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userCode != null" >
         USER_CODE,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysLoginAbilityExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_LOGIN_ABILITY
+      select count(*) from SYS_LOGIN_ABILITY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_LOGIN_ABILITY
+      update SYS_LOGIN_ABILITY
     <set >
       <if test="record.userCode != null" >
         USER_CODE = #{record.userCode,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_LOGIN_ABILITY
+      update SYS_LOGIN_ABILITY
     set USER_CODE = #{record.userCode,jdbcType=VARCHAR},
       LOGIN_NUM = #{record.loginNum,jdbcType=VARCHAR},
       IS_LOCK = #{record.isLock,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysLoginAbility" >
-    update PDSCI.SYS_LOGIN_ABILITY
+      update SYS_LOGIN_ABILITY
     <set >
       <if test="loginNum != null" >
         LOGIN_NUM = #{loginNum,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where USER_CODE = #{userCode,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysLoginAbility" >
-    update PDSCI.SYS_LOGIN_ABILITY
+      update SYS_LOGIN_ABILITY
     set LOGIN_NUM = #{loginNum,jdbcType=VARCHAR},
       IS_LOCK = #{isLock,jdbcType=VARCHAR},
       LOGIN_TIME = #{loginTime,jdbcType=VARCHAR},

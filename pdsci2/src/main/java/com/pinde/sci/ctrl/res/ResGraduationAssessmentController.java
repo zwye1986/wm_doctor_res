@@ -1,6 +1,9 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,11 +15,8 @@ import com.pinde.sci.biz.res.IResGraduationAssessmentBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.DiscipleStatusEnum;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

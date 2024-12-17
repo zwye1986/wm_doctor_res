@@ -2,6 +2,7 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.osca.SignStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorScoreBiz;
 import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
@@ -9,7 +10,6 @@ import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
 import com.pinde.sci.dao.base.OscaSubjectStationMapper;
 import com.pinde.sci.dao.osca.OscaDoctorAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaDoctorScoreInfoMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

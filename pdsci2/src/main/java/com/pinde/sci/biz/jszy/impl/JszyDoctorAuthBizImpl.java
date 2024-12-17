@@ -132,6 +132,6 @@ public class JszyDoctorAuthBizImpl implements IJszyDoctorAuthBiz {
         return doctorAuthMapper.selectByPrimaryKey(recordFlow);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(JszyDoctorAuthBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JszyDoctorAuthBizImpl.class);
 
 }

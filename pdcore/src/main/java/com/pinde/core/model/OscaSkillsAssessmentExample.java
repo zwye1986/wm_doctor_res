@@ -2053,6 +2053,146 @@ public class OscaSkillsAssessmentExample {
             addCriterion("REMARKS not between", value1, value2, "remarks");
             return (Criteria) this;
         }
+
+        public Criteria andTestIdIsNull() {
+            addCriterion("TEST_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdIsNotNull() {
+            addCriterion("TEST_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdEqualTo(String value) {
+            addCriterion("TEST_ID =", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotEqualTo(String value) {
+            addCriterion("TEST_ID <>", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdGreaterThan(String value) {
+            addCriterion("TEST_ID >", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdGreaterThanOrEqualTo(String value) {
+            addCriterion("TEST_ID >=", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdLessThan(String value) {
+            addCriterion("TEST_ID <", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdLessThanOrEqualTo(String value) {
+            addCriterion("TEST_ID <=", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdLike(String value) {
+            addCriterion("TEST_ID like", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotLike(String value) {
+            addCriterion("TEST_ID not like", value, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdIn(List<String> values) {
+            addCriterion("TEST_ID in", values, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotIn(List<String> values) {
+            addCriterion("TEST_ID not in", values, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdBetween(String value1, String value2) {
+            addCriterion("TEST_ID between", value1, value2, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTestIdNotBetween(String value1, String value2) {
+            addCriterion("TEST_ID not between", value1, value2, "testId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneIsNull() {
+            addCriterion("SKILL_ORG_PHONE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneIsNotNull() {
+            addCriterion("SKILL_ORG_PHONE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneEqualTo(String value) {
+            addCriterion("SKILL_ORG_PHONE =", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneNotEqualTo(String value) {
+            addCriterion("SKILL_ORG_PHONE <>", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneGreaterThan(String value) {
+            addCriterion("SKILL_ORG_PHONE >", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("SKILL_ORG_PHONE >=", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneLessThan(String value) {
+            addCriterion("SKILL_ORG_PHONE <", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneLessThanOrEqualTo(String value) {
+            addCriterion("SKILL_ORG_PHONE <=", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneLike(String value) {
+            addCriterion("SKILL_ORG_PHONE like", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneNotLike(String value) {
+            addCriterion("SKILL_ORG_PHONE not like", value, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneIn(List<String> values) {
+            addCriterion("SKILL_ORG_PHONE in", values, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneNotIn(List<String> values) {
+            addCriterion("SKILL_ORG_PHONE not in", values, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneBetween(String value1, String value2) {
+            addCriterion("SKILL_ORG_PHONE between", value1, value2, "skillOrgPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkillOrgPhoneNotBetween(String value1, String value2) {
+            addCriterion("SKILL_ORG_PHONE not between", value1, value2, "skillOrgPhone");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

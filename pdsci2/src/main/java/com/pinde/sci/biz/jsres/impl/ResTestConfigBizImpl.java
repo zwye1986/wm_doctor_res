@@ -231,10 +231,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
                 resTestConfig.getTestEndTime().compareTo(resTest.getTestEndTime()) <= 0)).collect(Collectors.toList());
         List<ResTestConfig> collect = resTestConfigs.stream().filter(resTest -> resTestConfig.getApplyStartTime().compareTo(resTest.getApplyStartTime()) <= 0
                 && resTestConfig.getTestEndTime().compareTo(resTest.getTestEndTime()) >= 0).collect(Collectors.toList());
-        if (list.size() == 0 && collect.size() == 0) {
-            return true;
-        }
-        return false;
+        return list.size() == 0 && collect.size() == 0;
     }
     //根据唯一标识获取考试信息
     @Override

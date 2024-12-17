@@ -1,8 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
+import com.pinde.core.model.ResDoctorSchProcess;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
