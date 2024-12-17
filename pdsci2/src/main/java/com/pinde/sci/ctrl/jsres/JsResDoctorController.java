@@ -38,8 +38,6 @@ import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserInfoExtForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.core.model.PubUserResume;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorOrgHistory;
 import com.pinde.sci.model.mo.ResDoctorReduction;

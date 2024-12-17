@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.res;
 
 
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturnExample;
+import com.pinde.core.model.ResDocotrDelayTeturn;
+import com.pinde.core.model.ResDocotrDelayTeturnExample;
 import com.pinde.sci.model.mo.ResDoctor;
 import org.apache.ibatis.annotations.Param;
 

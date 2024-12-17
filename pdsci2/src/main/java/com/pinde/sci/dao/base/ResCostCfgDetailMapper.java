@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResCostCfgDetail;
-import com.pinde.sci.model.mo.ResCostCfgDetailExample;
+import com.pinde.core.model.ResCostCfgDetail;
+import com.pinde.core.model.ResCostCfgDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

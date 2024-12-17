@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResDiscipleNoteInfo;
+import com.pinde.core.model.ResDiscipleNoteInfoExample;
+import com.pinde.core.model.ResDiscipleNoteInfoWithBLOBs;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -8,7 +11,8 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResDiscipleNoteInfoMapper;
 import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
+import com.pinde.sci.model.mo.ResStudentDiscipleTeacherExample;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +54,7 @@ public class DiscipleBizImpl implements IDiscipleBiz {
     }
 
     @Override
-    public List<ResDiscipleNoteInfo> findResDiscipleNoteInfo(ResDiscipleNoteInfo discipleNoteInfo,List<String> auditStatusList) {
+    public List<ResDiscipleNoteInfo> findResDiscipleNoteInfo(ResDiscipleNoteInfo discipleNoteInfo, List<String> auditStatusList) {
         ResDiscipleNoteInfoExample example = new ResDiscipleNoteInfoExample();
         ResDiscipleNoteInfoExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(StringUtil.isNotBlank(discipleNoteInfo.getDoctorFlow())){

@@ -46,7 +46,6 @@ import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorOrgHistory;
 import com.pinde.sci.model.mo.ResDoctorProcessEvalConfig;

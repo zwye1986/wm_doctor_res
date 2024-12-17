@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResDiscipleRecordInfo;
+import com.pinde.core.model.ResDiscipleRecordInfo;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
 import com.pinde.sci.model.res.ResDoctorExt;
 

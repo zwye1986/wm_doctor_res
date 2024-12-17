@@ -1,16 +1,16 @@
-package com.pinde.sci.model.mo;
+package com.pinde.core.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResBookStudyRecordExample {
+public class ResCostCfgMainExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ResBookStudyRecordExample() {
+    public ResCostCfgMainExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -104,773 +104,773 @@ public class ResBookStudyRecordExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andRecordFlowIsNull() {
-            addCriterion("RECORD_FLOW is null");
+        public Criteria andMainFlowIsNull() {
+            addCriterion("MAIN_FLOW is null");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowIsNotNull() {
-            addCriterion("RECORD_FLOW is not null");
+        public Criteria andMainFlowIsNotNull() {
+            addCriterion("MAIN_FLOW is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowEqualTo(String value) {
-            addCriterion("RECORD_FLOW =", value, "recordFlow");
+        public Criteria andMainFlowEqualTo(String value) {
+            addCriterion("MAIN_FLOW =", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowNotEqualTo(String value) {
-            addCriterion("RECORD_FLOW <>", value, "recordFlow");
+        public Criteria andMainFlowNotEqualTo(String value) {
+            addCriterion("MAIN_FLOW <>", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowGreaterThan(String value) {
-            addCriterion("RECORD_FLOW >", value, "recordFlow");
+        public Criteria andMainFlowGreaterThan(String value) {
+            addCriterion("MAIN_FLOW >", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowGreaterThanOrEqualTo(String value) {
-            addCriterion("RECORD_FLOW >=", value, "recordFlow");
+        public Criteria andMainFlowGreaterThanOrEqualTo(String value) {
+            addCriterion("MAIN_FLOW >=", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowLessThan(String value) {
-            addCriterion("RECORD_FLOW <", value, "recordFlow");
+        public Criteria andMainFlowLessThan(String value) {
+            addCriterion("MAIN_FLOW <", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowLessThanOrEqualTo(String value) {
-            addCriterion("RECORD_FLOW <=", value, "recordFlow");
+        public Criteria andMainFlowLessThanOrEqualTo(String value) {
+            addCriterion("MAIN_FLOW <=", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowLike(String value) {
-            addCriterion("RECORD_FLOW like", value, "recordFlow");
+        public Criteria andMainFlowLike(String value) {
+            addCriterion("MAIN_FLOW like", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowNotLike(String value) {
-            addCriterion("RECORD_FLOW not like", value, "recordFlow");
+        public Criteria andMainFlowNotLike(String value) {
+            addCriterion("MAIN_FLOW not like", value, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowIn(List<String> values) {
-            addCriterion("RECORD_FLOW in", values, "recordFlow");
+        public Criteria andMainFlowIn(List<String> values) {
+            addCriterion("MAIN_FLOW in", values, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowNotIn(List<String> values) {
-            addCriterion("RECORD_FLOW not in", values, "recordFlow");
+        public Criteria andMainFlowNotIn(List<String> values) {
+            addCriterion("MAIN_FLOW not in", values, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowBetween(String value1, String value2) {
-            addCriterion("RECORD_FLOW between", value1, value2, "recordFlow");
+        public Criteria andMainFlowBetween(String value1, String value2) {
+            addCriterion("MAIN_FLOW between", value1, value2, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andRecordFlowNotBetween(String value1, String value2) {
-            addCriterion("RECORD_FLOW not between", value1, value2, "recordFlow");
+        public Criteria andMainFlowNotBetween(String value1, String value2) {
+            addCriterion("MAIN_FLOW not between", value1, value2, "mainFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowIsNull() {
-            addCriterion("DOCTOR_FLOW is null");
+        public Criteria andOrgFlowIsNull() {
+            addCriterion("ORG_FLOW is null");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowIsNotNull() {
-            addCriterion("DOCTOR_FLOW is not null");
+        public Criteria andOrgFlowIsNotNull() {
+            addCriterion("ORG_FLOW is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowEqualTo(String value) {
-            addCriterion("DOCTOR_FLOW =", value, "doctorFlow");
+        public Criteria andOrgFlowEqualTo(String value) {
+            addCriterion("ORG_FLOW =", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowNotEqualTo(String value) {
-            addCriterion("DOCTOR_FLOW <>", value, "doctorFlow");
+        public Criteria andOrgFlowNotEqualTo(String value) {
+            addCriterion("ORG_FLOW <>", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowGreaterThan(String value) {
-            addCriterion("DOCTOR_FLOW >", value, "doctorFlow");
+        public Criteria andOrgFlowGreaterThan(String value) {
+            addCriterion("ORG_FLOW >", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowGreaterThanOrEqualTo(String value) {
-            addCriterion("DOCTOR_FLOW >=", value, "doctorFlow");
+        public Criteria andOrgFlowGreaterThanOrEqualTo(String value) {
+            addCriterion("ORG_FLOW >=", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowLessThan(String value) {
-            addCriterion("DOCTOR_FLOW <", value, "doctorFlow");
+        public Criteria andOrgFlowLessThan(String value) {
+            addCriterion("ORG_FLOW <", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowLessThanOrEqualTo(String value) {
-            addCriterion("DOCTOR_FLOW <=", value, "doctorFlow");
+        public Criteria andOrgFlowLessThanOrEqualTo(String value) {
+            addCriterion("ORG_FLOW <=", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowLike(String value) {
-            addCriterion("DOCTOR_FLOW like", value, "doctorFlow");
+        public Criteria andOrgFlowLike(String value) {
+            addCriterion("ORG_FLOW like", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowNotLike(String value) {
-            addCriterion("DOCTOR_FLOW not like", value, "doctorFlow");
+        public Criteria andOrgFlowNotLike(String value) {
+            addCriterion("ORG_FLOW not like", value, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowIn(List<String> values) {
-            addCriterion("DOCTOR_FLOW in", values, "doctorFlow");
+        public Criteria andOrgFlowIn(List<String> values) {
+            addCriterion("ORG_FLOW in", values, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowNotIn(List<String> values) {
-            addCriterion("DOCTOR_FLOW not in", values, "doctorFlow");
+        public Criteria andOrgFlowNotIn(List<String> values) {
+            addCriterion("ORG_FLOW not in", values, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowBetween(String value1, String value2) {
-            addCriterion("DOCTOR_FLOW between", value1, value2, "doctorFlow");
+        public Criteria andOrgFlowBetween(String value1, String value2) {
+            addCriterion("ORG_FLOW between", value1, value2, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorFlowNotBetween(String value1, String value2) {
-            addCriterion("DOCTOR_FLOW not between", value1, value2, "doctorFlow");
+        public Criteria andOrgFlowNotBetween(String value1, String value2) {
+            addCriterion("ORG_FLOW not between", value1, value2, "orgFlow");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameIsNull() {
-            addCriterion("DOCTOR_NAME is null");
+        public Criteria andOrgNameIsNull() {
+            addCriterion("ORG_NAME is null");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameIsNotNull() {
-            addCriterion("DOCTOR_NAME is not null");
+        public Criteria andOrgNameIsNotNull() {
+            addCriterion("ORG_NAME is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameEqualTo(String value) {
-            addCriterion("DOCTOR_NAME =", value, "doctorName");
+        public Criteria andOrgNameEqualTo(String value) {
+            addCriterion("ORG_NAME =", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameNotEqualTo(String value) {
-            addCriterion("DOCTOR_NAME <>", value, "doctorName");
+        public Criteria andOrgNameNotEqualTo(String value) {
+            addCriterion("ORG_NAME <>", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameGreaterThan(String value) {
-            addCriterion("DOCTOR_NAME >", value, "doctorName");
+        public Criteria andOrgNameGreaterThan(String value) {
+            addCriterion("ORG_NAME >", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameGreaterThanOrEqualTo(String value) {
-            addCriterion("DOCTOR_NAME >=", value, "doctorName");
+        public Criteria andOrgNameGreaterThanOrEqualTo(String value) {
+            addCriterion("ORG_NAME >=", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameLessThan(String value) {
-            addCriterion("DOCTOR_NAME <", value, "doctorName");
+        public Criteria andOrgNameLessThan(String value) {
+            addCriterion("ORG_NAME <", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameLessThanOrEqualTo(String value) {
-            addCriterion("DOCTOR_NAME <=", value, "doctorName");
+        public Criteria andOrgNameLessThanOrEqualTo(String value) {
+            addCriterion("ORG_NAME <=", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameLike(String value) {
-            addCriterion("DOCTOR_NAME like", value, "doctorName");
+        public Criteria andOrgNameLike(String value) {
+            addCriterion("ORG_NAME like", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameNotLike(String value) {
-            addCriterion("DOCTOR_NAME not like", value, "doctorName");
+        public Criteria andOrgNameNotLike(String value) {
+            addCriterion("ORG_NAME not like", value, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameIn(List<String> values) {
-            addCriterion("DOCTOR_NAME in", values, "doctorName");
+        public Criteria andOrgNameIn(List<String> values) {
+            addCriterion("ORG_NAME in", values, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameNotIn(List<String> values) {
-            addCriterion("DOCTOR_NAME not in", values, "doctorName");
+        public Criteria andOrgNameNotIn(List<String> values) {
+            addCriterion("ORG_NAME not in", values, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameBetween(String value1, String value2) {
-            addCriterion("DOCTOR_NAME between", value1, value2, "doctorName");
+        public Criteria andOrgNameBetween(String value1, String value2) {
+            addCriterion("ORG_NAME between", value1, value2, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andDoctorNameNotBetween(String value1, String value2) {
-            addCriterion("DOCTOR_NAME not between", value1, value2, "doctorName");
+        public Criteria andOrgNameNotBetween(String value1, String value2) {
+            addCriterion("ORG_NAME not between", value1, value2, "orgName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowIsNull() {
-            addCriterion("TEACHER_FLOW is null");
+        public Criteria andTypeIdIsNull() {
+            addCriterion("TYPE_ID is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowIsNotNull() {
-            addCriterion("TEACHER_FLOW is not null");
+        public Criteria andTypeIdIsNotNull() {
+            addCriterion("TYPE_ID is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowEqualTo(String value) {
-            addCriterion("TEACHER_FLOW =", value, "teacherFlow");
+        public Criteria andTypeIdEqualTo(String value) {
+            addCriterion("TYPE_ID =", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowNotEqualTo(String value) {
-            addCriterion("TEACHER_FLOW <>", value, "teacherFlow");
+        public Criteria andTypeIdNotEqualTo(String value) {
+            addCriterion("TYPE_ID <>", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowGreaterThan(String value) {
-            addCriterion("TEACHER_FLOW >", value, "teacherFlow");
+        public Criteria andTypeIdGreaterThan(String value) {
+            addCriterion("TYPE_ID >", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowGreaterThanOrEqualTo(String value) {
-            addCriterion("TEACHER_FLOW >=", value, "teacherFlow");
+        public Criteria andTypeIdGreaterThanOrEqualTo(String value) {
+            addCriterion("TYPE_ID >=", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowLessThan(String value) {
-            addCriterion("TEACHER_FLOW <", value, "teacherFlow");
+        public Criteria andTypeIdLessThan(String value) {
+            addCriterion("TYPE_ID <", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowLessThanOrEqualTo(String value) {
-            addCriterion("TEACHER_FLOW <=", value, "teacherFlow");
+        public Criteria andTypeIdLessThanOrEqualTo(String value) {
+            addCriterion("TYPE_ID <=", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowLike(String value) {
-            addCriterion("TEACHER_FLOW like", value, "teacherFlow");
+        public Criteria andTypeIdLike(String value) {
+            addCriterion("TYPE_ID like", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowNotLike(String value) {
-            addCriterion("TEACHER_FLOW not like", value, "teacherFlow");
+        public Criteria andTypeIdNotLike(String value) {
+            addCriterion("TYPE_ID not like", value, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowIn(List<String> values) {
-            addCriterion("TEACHER_FLOW in", values, "teacherFlow");
+        public Criteria andTypeIdIn(List<String> values) {
+            addCriterion("TYPE_ID in", values, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowNotIn(List<String> values) {
-            addCriterion("TEACHER_FLOW not in", values, "teacherFlow");
+        public Criteria andTypeIdNotIn(List<String> values) {
+            addCriterion("TYPE_ID not in", values, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowBetween(String value1, String value2) {
-            addCriterion("TEACHER_FLOW between", value1, value2, "teacherFlow");
+        public Criteria andTypeIdBetween(String value1, String value2) {
+            addCriterion("TYPE_ID between", value1, value2, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherFlowNotBetween(String value1, String value2) {
-            addCriterion("TEACHER_FLOW not between", value1, value2, "teacherFlow");
+        public Criteria andTypeIdNotBetween(String value1, String value2) {
+            addCriterion("TYPE_ID not between", value1, value2, "typeId");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameIsNull() {
-            addCriterion("TEACHER_NAME is null");
+        public Criteria andTypeNameIsNull() {
+            addCriterion("TYPE_NAME is null");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameIsNotNull() {
-            addCriterion("TEACHER_NAME is not null");
+        public Criteria andTypeNameIsNotNull() {
+            addCriterion("TYPE_NAME is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameEqualTo(String value) {
-            addCriterion("TEACHER_NAME =", value, "teacherName");
+        public Criteria andTypeNameEqualTo(String value) {
+            addCriterion("TYPE_NAME =", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameNotEqualTo(String value) {
-            addCriterion("TEACHER_NAME <>", value, "teacherName");
+        public Criteria andTypeNameNotEqualTo(String value) {
+            addCriterion("TYPE_NAME <>", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameGreaterThan(String value) {
-            addCriterion("TEACHER_NAME >", value, "teacherName");
+        public Criteria andTypeNameGreaterThan(String value) {
+            addCriterion("TYPE_NAME >", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameGreaterThanOrEqualTo(String value) {
-            addCriterion("TEACHER_NAME >=", value, "teacherName");
+        public Criteria andTypeNameGreaterThanOrEqualTo(String value) {
+            addCriterion("TYPE_NAME >=", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameLessThan(String value) {
-            addCriterion("TEACHER_NAME <", value, "teacherName");
+        public Criteria andTypeNameLessThan(String value) {
+            addCriterion("TYPE_NAME <", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameLessThanOrEqualTo(String value) {
-            addCriterion("TEACHER_NAME <=", value, "teacherName");
+        public Criteria andTypeNameLessThanOrEqualTo(String value) {
+            addCriterion("TYPE_NAME <=", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameLike(String value) {
-            addCriterion("TEACHER_NAME like", value, "teacherName");
+        public Criteria andTypeNameLike(String value) {
+            addCriterion("TYPE_NAME like", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameNotLike(String value) {
-            addCriterion("TEACHER_NAME not like", value, "teacherName");
+        public Criteria andTypeNameNotLike(String value) {
+            addCriterion("TYPE_NAME not like", value, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameIn(List<String> values) {
-            addCriterion("TEACHER_NAME in", values, "teacherName");
+        public Criteria andTypeNameIn(List<String> values) {
+            addCriterion("TYPE_NAME in", values, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameNotIn(List<String> values) {
-            addCriterion("TEACHER_NAME not in", values, "teacherName");
+        public Criteria andTypeNameNotIn(List<String> values) {
+            addCriterion("TYPE_NAME not in", values, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameBetween(String value1, String value2) {
-            addCriterion("TEACHER_NAME between", value1, value2, "teacherName");
+        public Criteria andTypeNameBetween(String value1, String value2) {
+            addCriterion("TYPE_NAME between", value1, value2, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andTeacherNameNotBetween(String value1, String value2) {
-            addCriterion("TEACHER_NAME not between", value1, value2, "teacherName");
+        public Criteria andTypeNameNotBetween(String value1, String value2) {
+            addCriterion("TYPE_NAME not between", value1, value2, "typeName");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeIsNull() {
-            addCriterion("STUDY_START_TIME is null");
+        public Criteria andStartDateIsNull() {
+            addCriterion("START_DATE is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeIsNotNull() {
-            addCriterion("STUDY_START_TIME is not null");
+        public Criteria andStartDateIsNotNull() {
+            addCriterion("START_DATE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeEqualTo(String value) {
-            addCriterion("STUDY_START_TIME =", value, "studyStartTime");
+        public Criteria andStartDateEqualTo(String value) {
+            addCriterion("START_DATE =", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeNotEqualTo(String value) {
-            addCriterion("STUDY_START_TIME <>", value, "studyStartTime");
+        public Criteria andStartDateNotEqualTo(String value) {
+            addCriterion("START_DATE <>", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeGreaterThan(String value) {
-            addCriterion("STUDY_START_TIME >", value, "studyStartTime");
+        public Criteria andStartDateGreaterThan(String value) {
+            addCriterion("START_DATE >", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeGreaterThanOrEqualTo(String value) {
-            addCriterion("STUDY_START_TIME >=", value, "studyStartTime");
+        public Criteria andStartDateGreaterThanOrEqualTo(String value) {
+            addCriterion("START_DATE >=", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeLessThan(String value) {
-            addCriterion("STUDY_START_TIME <", value, "studyStartTime");
+        public Criteria andStartDateLessThan(String value) {
+            addCriterion("START_DATE <", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeLessThanOrEqualTo(String value) {
-            addCriterion("STUDY_START_TIME <=", value, "studyStartTime");
+        public Criteria andStartDateLessThanOrEqualTo(String value) {
+            addCriterion("START_DATE <=", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeLike(String value) {
-            addCriterion("STUDY_START_TIME like", value, "studyStartTime");
+        public Criteria andStartDateLike(String value) {
+            addCriterion("START_DATE like", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeNotLike(String value) {
-            addCriterion("STUDY_START_TIME not like", value, "studyStartTime");
+        public Criteria andStartDateNotLike(String value) {
+            addCriterion("START_DATE not like", value, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeIn(List<String> values) {
-            addCriterion("STUDY_START_TIME in", values, "studyStartTime");
+        public Criteria andStartDateIn(List<String> values) {
+            addCriterion("START_DATE in", values, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeNotIn(List<String> values) {
-            addCriterion("STUDY_START_TIME not in", values, "studyStartTime");
+        public Criteria andStartDateNotIn(List<String> values) {
+            addCriterion("START_DATE not in", values, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeBetween(String value1, String value2) {
-            addCriterion("STUDY_START_TIME between", value1, value2, "studyStartTime");
+        public Criteria andStartDateBetween(String value1, String value2) {
+            addCriterion("START_DATE between", value1, value2, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyStartTimeNotBetween(String value1, String value2) {
-            addCriterion("STUDY_START_TIME not between", value1, value2, "studyStartTime");
+        public Criteria andStartDateNotBetween(String value1, String value2) {
+            addCriterion("START_DATE not between", value1, value2, "startDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeIsNull() {
-            addCriterion("STUDY_END_TIME is null");
+        public Criteria andEndDateIsNull() {
+            addCriterion("END_DATE is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeIsNotNull() {
-            addCriterion("STUDY_END_TIME is not null");
+        public Criteria andEndDateIsNotNull() {
+            addCriterion("END_DATE is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeEqualTo(String value) {
-            addCriterion("STUDY_END_TIME =", value, "studyEndTime");
+        public Criteria andEndDateEqualTo(String value) {
+            addCriterion("END_DATE =", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeNotEqualTo(String value) {
-            addCriterion("STUDY_END_TIME <>", value, "studyEndTime");
+        public Criteria andEndDateNotEqualTo(String value) {
+            addCriterion("END_DATE <>", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeGreaterThan(String value) {
-            addCriterion("STUDY_END_TIME >", value, "studyEndTime");
+        public Criteria andEndDateGreaterThan(String value) {
+            addCriterion("END_DATE >", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeGreaterThanOrEqualTo(String value) {
-            addCriterion("STUDY_END_TIME >=", value, "studyEndTime");
+        public Criteria andEndDateGreaterThanOrEqualTo(String value) {
+            addCriterion("END_DATE >=", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeLessThan(String value) {
-            addCriterion("STUDY_END_TIME <", value, "studyEndTime");
+        public Criteria andEndDateLessThan(String value) {
+            addCriterion("END_DATE <", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeLessThanOrEqualTo(String value) {
-            addCriterion("STUDY_END_TIME <=", value, "studyEndTime");
+        public Criteria andEndDateLessThanOrEqualTo(String value) {
+            addCriterion("END_DATE <=", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeLike(String value) {
-            addCriterion("STUDY_END_TIME like", value, "studyEndTime");
+        public Criteria andEndDateLike(String value) {
+            addCriterion("END_DATE like", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeNotLike(String value) {
-            addCriterion("STUDY_END_TIME not like", value, "studyEndTime");
+        public Criteria andEndDateNotLike(String value) {
+            addCriterion("END_DATE not like", value, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeIn(List<String> values) {
-            addCriterion("STUDY_END_TIME in", values, "studyEndTime");
+        public Criteria andEndDateIn(List<String> values) {
+            addCriterion("END_DATE in", values, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeNotIn(List<String> values) {
-            addCriterion("STUDY_END_TIME not in", values, "studyEndTime");
+        public Criteria andEndDateNotIn(List<String> values) {
+            addCriterion("END_DATE not in", values, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeBetween(String value1, String value2) {
-            addCriterion("STUDY_END_TIME between", value1, value2, "studyEndTime");
+        public Criteria andEndDateBetween(String value1, String value2) {
+            addCriterion("END_DATE between", value1, value2, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyEndTimeNotBetween(String value1, String value2) {
-            addCriterion("STUDY_END_TIME not between", value1, value2, "studyEndTime");
+        public Criteria andEndDateNotBetween(String value1, String value2) {
+            addCriterion("END_DATE not between", value1, value2, "endDate");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdIsNull() {
-            addCriterion("STUDY_ACTION_ID is null");
+        public Criteria andTeaCostIsNull() {
+            addCriterion("TEA_COST is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdIsNotNull() {
-            addCriterion("STUDY_ACTION_ID is not null");
+        public Criteria andTeaCostIsNotNull() {
+            addCriterion("TEA_COST is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdEqualTo(String value) {
-            addCriterion("STUDY_ACTION_ID =", value, "studyActionId");
+        public Criteria andTeaCostEqualTo(String value) {
+            addCriterion("TEA_COST =", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdNotEqualTo(String value) {
-            addCriterion("STUDY_ACTION_ID <>", value, "studyActionId");
+        public Criteria andTeaCostNotEqualTo(String value) {
+            addCriterion("TEA_COST <>", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdGreaterThan(String value) {
-            addCriterion("STUDY_ACTION_ID >", value, "studyActionId");
+        public Criteria andTeaCostGreaterThan(String value) {
+            addCriterion("TEA_COST >", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdGreaterThanOrEqualTo(String value) {
-            addCriterion("STUDY_ACTION_ID >=", value, "studyActionId");
+        public Criteria andTeaCostGreaterThanOrEqualTo(String value) {
+            addCriterion("TEA_COST >=", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdLessThan(String value) {
-            addCriterion("STUDY_ACTION_ID <", value, "studyActionId");
+        public Criteria andTeaCostLessThan(String value) {
+            addCriterion("TEA_COST <", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdLessThanOrEqualTo(String value) {
-            addCriterion("STUDY_ACTION_ID <=", value, "studyActionId");
+        public Criteria andTeaCostLessThanOrEqualTo(String value) {
+            addCriterion("TEA_COST <=", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdLike(String value) {
-            addCriterion("STUDY_ACTION_ID like", value, "studyActionId");
+        public Criteria andTeaCostLike(String value) {
+            addCriterion("TEA_COST like", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdNotLike(String value) {
-            addCriterion("STUDY_ACTION_ID not like", value, "studyActionId");
+        public Criteria andTeaCostNotLike(String value) {
+            addCriterion("TEA_COST not like", value, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdIn(List<String> values) {
-            addCriterion("STUDY_ACTION_ID in", values, "studyActionId");
+        public Criteria andTeaCostIn(List<String> values) {
+            addCriterion("TEA_COST in", values, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdNotIn(List<String> values) {
-            addCriterion("STUDY_ACTION_ID not in", values, "studyActionId");
+        public Criteria andTeaCostNotIn(List<String> values) {
+            addCriterion("TEA_COST not in", values, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdBetween(String value1, String value2) {
-            addCriterion("STUDY_ACTION_ID between", value1, value2, "studyActionId");
+        public Criteria andTeaCostBetween(String value1, String value2) {
+            addCriterion("TEA_COST between", value1, value2, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionIdNotBetween(String value1, String value2) {
-            addCriterion("STUDY_ACTION_ID not between", value1, value2, "studyActionId");
+        public Criteria andTeaCostNotBetween(String value1, String value2) {
+            addCriterion("TEA_COST not between", value1, value2, "teaCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameIsNull() {
-            addCriterion("STUDY_ACTION_NAME is null");
+        public Criteria andKmCostIsNull() {
+            addCriterion("KM_COST is null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameIsNotNull() {
-            addCriterion("STUDY_ACTION_NAME is not null");
+        public Criteria andKmCostIsNotNull() {
+            addCriterion("KM_COST is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameEqualTo(String value) {
-            addCriterion("STUDY_ACTION_NAME =", value, "studyActionName");
+        public Criteria andKmCostEqualTo(String value) {
+            addCriterion("KM_COST =", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameNotEqualTo(String value) {
-            addCriterion("STUDY_ACTION_NAME <>", value, "studyActionName");
+        public Criteria andKmCostNotEqualTo(String value) {
+            addCriterion("KM_COST <>", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameGreaterThan(String value) {
-            addCriterion("STUDY_ACTION_NAME >", value, "studyActionName");
+        public Criteria andKmCostGreaterThan(String value) {
+            addCriterion("KM_COST >", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameGreaterThanOrEqualTo(String value) {
-            addCriterion("STUDY_ACTION_NAME >=", value, "studyActionName");
+        public Criteria andKmCostGreaterThanOrEqualTo(String value) {
+            addCriterion("KM_COST >=", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameLessThan(String value) {
-            addCriterion("STUDY_ACTION_NAME <", value, "studyActionName");
+        public Criteria andKmCostLessThan(String value) {
+            addCriterion("KM_COST <", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameLessThanOrEqualTo(String value) {
-            addCriterion("STUDY_ACTION_NAME <=", value, "studyActionName");
+        public Criteria andKmCostLessThanOrEqualTo(String value) {
+            addCriterion("KM_COST <=", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameLike(String value) {
-            addCriterion("STUDY_ACTION_NAME like", value, "studyActionName");
+        public Criteria andKmCostLike(String value) {
+            addCriterion("KM_COST like", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameNotLike(String value) {
-            addCriterion("STUDY_ACTION_NAME not like", value, "studyActionName");
+        public Criteria andKmCostNotLike(String value) {
+            addCriterion("KM_COST not like", value, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameIn(List<String> values) {
-            addCriterion("STUDY_ACTION_NAME in", values, "studyActionName");
+        public Criteria andKmCostIn(List<String> values) {
+            addCriterion("KM_COST in", values, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameNotIn(List<String> values) {
-            addCriterion("STUDY_ACTION_NAME not in", values, "studyActionName");
+        public Criteria andKmCostNotIn(List<String> values) {
+            addCriterion("KM_COST not in", values, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameBetween(String value1, String value2) {
-            addCriterion("STUDY_ACTION_NAME between", value1, value2, "studyActionName");
+        public Criteria andKmCostBetween(String value1, String value2) {
+            addCriterion("KM_COST between", value1, value2, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andStudyActionNameNotBetween(String value1, String value2) {
-            addCriterion("STUDY_ACTION_NAME not between", value1, value2, "studyActionName");
+        public Criteria andKmCostNotBetween(String value1, String value2) {
+            addCriterion("KM_COST not between", value1, value2, "kmCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkIsNull() {
-            addCriterion("REMARK is null");
+        public Criteria andHeadCostIsNull() {
+            addCriterion("HEAD_COST is null");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkIsNotNull() {
-            addCriterion("REMARK is not null");
+        public Criteria andHeadCostIsNotNull() {
+            addCriterion("HEAD_COST is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkEqualTo(String value) {
-            addCriterion("REMARK =", value, "remark");
+        public Criteria andHeadCostEqualTo(String value) {
+            addCriterion("HEAD_COST =", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotEqualTo(String value) {
-            addCriterion("REMARK <>", value, "remark");
+        public Criteria andHeadCostNotEqualTo(String value) {
+            addCriterion("HEAD_COST <>", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkGreaterThan(String value) {
-            addCriterion("REMARK >", value, "remark");
+        public Criteria andHeadCostGreaterThan(String value) {
+            addCriterion("HEAD_COST >", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
-            addCriterion("REMARK >=", value, "remark");
+        public Criteria andHeadCostGreaterThanOrEqualTo(String value) {
+            addCriterion("HEAD_COST >=", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLessThan(String value) {
-            addCriterion("REMARK <", value, "remark");
+        public Criteria andHeadCostLessThan(String value) {
+            addCriterion("HEAD_COST <", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLessThanOrEqualTo(String value) {
-            addCriterion("REMARK <=", value, "remark");
+        public Criteria andHeadCostLessThanOrEqualTo(String value) {
+            addCriterion("HEAD_COST <=", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkLike(String value) {
-            addCriterion("REMARK like", value, "remark");
+        public Criteria andHeadCostLike(String value) {
+            addCriterion("HEAD_COST like", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotLike(String value) {
-            addCriterion("REMARK not like", value, "remark");
+        public Criteria andHeadCostNotLike(String value) {
+            addCriterion("HEAD_COST not like", value, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkIn(List<String> values) {
-            addCriterion("REMARK in", values, "remark");
+        public Criteria andHeadCostIn(List<String> values) {
+            addCriterion("HEAD_COST in", values, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotIn(List<String> values) {
-            addCriterion("REMARK not in", values, "remark");
+        public Criteria andHeadCostNotIn(List<String> values) {
+            addCriterion("HEAD_COST not in", values, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkBetween(String value1, String value2) {
-            addCriterion("REMARK between", value1, value2, "remark");
+        public Criteria andHeadCostBetween(String value1, String value2) {
+            addCriterion("HEAD_COST between", value1, value2, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRemarkNotBetween(String value1, String value2) {
-            addCriterion("REMARK not between", value1, value2, "remark");
+        public Criteria andHeadCostNotBetween(String value1, String value2) {
+            addCriterion("HEAD_COST not between", value1, value2, "headCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearIsNull() {
-            addCriterion("RECORD_YEAR is null");
+        public Criteria andSpeCostIsNull() {
+            addCriterion("SPE_COST is null");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearIsNotNull() {
-            addCriterion("RECORD_YEAR is not null");
+        public Criteria andSpeCostIsNotNull() {
+            addCriterion("SPE_COST is not null");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearEqualTo(String value) {
-            addCriterion("RECORD_YEAR =", value, "recordYear");
+        public Criteria andSpeCostEqualTo(String value) {
+            addCriterion("SPE_COST =", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearNotEqualTo(String value) {
-            addCriterion("RECORD_YEAR <>", value, "recordYear");
+        public Criteria andSpeCostNotEqualTo(String value) {
+            addCriterion("SPE_COST <>", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearGreaterThan(String value) {
-            addCriterion("RECORD_YEAR >", value, "recordYear");
+        public Criteria andSpeCostGreaterThan(String value) {
+            addCriterion("SPE_COST >", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearGreaterThanOrEqualTo(String value) {
-            addCriterion("RECORD_YEAR >=", value, "recordYear");
+        public Criteria andSpeCostGreaterThanOrEqualTo(String value) {
+            addCriterion("SPE_COST >=", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearLessThan(String value) {
-            addCriterion("RECORD_YEAR <", value, "recordYear");
+        public Criteria andSpeCostLessThan(String value) {
+            addCriterion("SPE_COST <", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearLessThanOrEqualTo(String value) {
-            addCriterion("RECORD_YEAR <=", value, "recordYear");
+        public Criteria andSpeCostLessThanOrEqualTo(String value) {
+            addCriterion("SPE_COST <=", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearLike(String value) {
-            addCriterion("RECORD_YEAR like", value, "recordYear");
+        public Criteria andSpeCostLike(String value) {
+            addCriterion("SPE_COST like", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearNotLike(String value) {
-            addCriterion("RECORD_YEAR not like", value, "recordYear");
+        public Criteria andSpeCostNotLike(String value) {
+            addCriterion("SPE_COST not like", value, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearIn(List<String> values) {
-            addCriterion("RECORD_YEAR in", values, "recordYear");
+        public Criteria andSpeCostIn(List<String> values) {
+            addCriterion("SPE_COST in", values, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearNotIn(List<String> values) {
-            addCriterion("RECORD_YEAR not in", values, "recordYear");
+        public Criteria andSpeCostNotIn(List<String> values) {
+            addCriterion("SPE_COST not in", values, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearBetween(String value1, String value2) {
-            addCriterion("RECORD_YEAR between", value1, value2, "recordYear");
+        public Criteria andSpeCostBetween(String value1, String value2) {
+            addCriterion("SPE_COST between", value1, value2, "speCost");
             return (Criteria) this;
         }
 
-        public Criteria andRecordYearNotBetween(String value1, String value2) {
-            addCriterion("RECORD_YEAR not between", value1, value2, "recordYear");
+        public Criteria andSpeCostNotBetween(String value1, String value2) {
+            addCriterion("SPE_COST not between", value1, value2, "speCost");
             return (Criteria) this;
         }
 

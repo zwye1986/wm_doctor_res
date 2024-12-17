@@ -39,7 +39,6 @@ import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorExample;
 import com.pinde.sci.model.mo.ResDoctorOrgHistory;

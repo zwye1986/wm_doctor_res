@@ -1,4 +1,4 @@
-package com.pinde.sci.model.mo;
+package com.pinde.core.model;
 
 public class ResCostCfgDetail implements java.io.Serializable {
     private String detailFlow;

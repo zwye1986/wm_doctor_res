@@ -25,7 +25,6 @@ import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
-import com.pinde.sci.model.mo.ResDocotrDelayTeturn;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResRec;

@@ -19,8 +19,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.model.mo.ResDiscipleNoteInfo;
-import com.pinde.sci.model.mo.ResDiscipleNoteInfoWithBLOBs;
 import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 import org.docx4j.openpackaging.io.SaveToZipFile;

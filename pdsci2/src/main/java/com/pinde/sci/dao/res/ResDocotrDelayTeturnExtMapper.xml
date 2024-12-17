@@ -472,7 +472,7 @@
         </where>
     </sql>
     <select id="searchInfoNew" resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap"
-            parameterType="com.pinde.sci.model.mo.ResDocotrDelayTeturnExample">
+            parameterType="com.pinde.core.model.ResDocotrDelayTeturnExample">
         select
         <if test="distinct">
             distinct
