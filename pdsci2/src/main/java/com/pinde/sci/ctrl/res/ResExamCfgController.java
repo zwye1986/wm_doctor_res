@@ -2,10 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -21,7 +18,10 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchExamArrangement;
+import com.pinde.core.model.SchExamDoctorArrangement;
+import com.pinde.core.model.SchExamStandardDept;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

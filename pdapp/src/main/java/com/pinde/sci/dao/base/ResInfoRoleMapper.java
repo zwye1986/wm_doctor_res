@@ -1,7 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import java.util.List;
+import com.pinde.core.model.ResInfoRole;
+import com.pinde.core.model.ResInfoRoleExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResInfoRoleMapper {
     int countByExample(ResInfoRoleExample example);

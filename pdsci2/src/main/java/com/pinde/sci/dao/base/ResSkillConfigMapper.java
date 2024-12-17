@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResSkillConfig;
-import com.pinde.sci.model.mo.ResSkillConfigExample;
+import com.pinde.core.model.ResSkillConfig;
+import com.pinde.core.model.ResSkillConfigExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

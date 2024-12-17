@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResRecruitCfgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResRecruitCfg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResRecruitCfg">
     <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
     <result column="YEAR" property="year" jdbcType="VARCHAR" />
     <result column="REG_BEGIN_DATE" property="regBeginDate" jdbcType="VARCHAR" />
@@ -88,7 +88,7 @@
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, REGISTRATION_BEGIN_DATE, 
     REGISTRATION_END_DATE, GRADUATION_BEGIN_DATE, GRADUATION_END_DATE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResRecruitCfgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResRecruitCfgExample">
     select
     <if test="distinct" >
       distinct
@@ -112,13 +112,13 @@
       delete from RES_RECRUIT_CFG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResRecruitCfgExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResRecruitCfgExample">
       delete from RES_RECRUIT_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResRecruitCfg" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResRecruitCfg">
       insert into RES_RECRUIT_CFG (CFG_FLOW, YEAR, REG_BEGIN_DATE,
       REG_END_DATE, PRINT_BEGIN_DATE, PRINT_END_DATE, 
       WISH_BEGIN_DATE, WISH_END_DATE, ADMIT_BEGIN_DATE, 
@@ -136,7 +136,7 @@
       #{registrationEndDate,jdbcType=VARCHAR}, #{graduationBeginDate,jdbcType=VARCHAR}, 
       #{graduationEndDate,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResRecruitCfg" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResRecruitCfg">
       insert into RES_RECRUIT_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
@@ -269,7 +269,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResRecruitCfgExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResRecruitCfgExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_RECRUIT_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -373,7 +374,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResRecruitCfg" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResRecruitCfg">
       update RES_RECRUIT_CFG
     <set >
       <if test="year != null" >
@@ -439,7 +440,7 @@
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResRecruitCfg" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResRecruitCfg">
       update RES_RECRUIT_CFG
     set YEAR = #{year,jdbcType=VARCHAR},
       REG_BEGIN_DATE = #{regBeginDate,jdbcType=VARCHAR},

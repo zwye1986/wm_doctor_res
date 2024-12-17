@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.SysDateInfoMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysDateInfo">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysDateInfo">
     <id column="DATE_FLOW" jdbcType="VARCHAR" property="dateFlow" />
     <result column="DATE_DAY" jdbcType="VARCHAR" property="dateDay" />
     <result column="DATE_MONTH" jdbcType="VARCHAR" property="dateMonth" />
@@ -74,7 +74,7 @@
     DATE_FLOW, DATE_DAY, DATE_MONTH, DATA_YEAR, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SysDateInfoExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.SysDateInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -98,13 +98,13 @@
       delete from SYS_DATE_INFO
     where DATE_FLOW = #{dateFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDateInfoExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDateInfoExample">
       delete from SYS_DATE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysDateInfo">
+    <insert id="insert" parameterType="com.pinde.core.model.SysDateInfo">
       insert into SYS_DATE_INFO (DATE_FLOW, DATE_DAY, DATE_MONTH,
       DATA_YEAR, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -114,7 +114,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysDateInfo">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysDateInfo">
       insert into SYS_DATE_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="dateFlow != null">
@@ -175,7 +175,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDateInfoExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.SysDateInfoExample" resultType="java.lang.Integer">
       select count(*) from SYS_DATE_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -231,7 +231,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysDateInfo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDateInfo">
       update SYS_DATE_INFO
     <set>
       <if test="dateDay != null">
@@ -261,7 +261,7 @@
     </set>
     where DATE_FLOW = #{dateFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysDateInfo">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDateInfo">
       update SYS_DATE_INFO
     set DATE_DAY = #{dateDay,jdbcType=VARCHAR},
       DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},

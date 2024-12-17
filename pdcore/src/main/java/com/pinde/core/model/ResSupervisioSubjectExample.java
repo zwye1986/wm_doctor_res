@@ -2063,6 +2063,566 @@ public class ResSupervisioSubjectExample {
             addCriterion("SPE_FEEDBACK not between", value1, value2, "speFeedback");
             return (Criteria) this;
         }
+
+        public Criteria andSupervisioAuthorityIsNull() {
+            addCriterion("SUPERVISIO_AUTHORITY is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityIsNotNull() {
+            addCriterion("SUPERVISIO_AUTHORITY is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityEqualTo(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY =", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityNotEqualTo(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY <>", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityGreaterThan(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY >", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityGreaterThanOrEqualTo(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY >=", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityLessThan(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY <", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityLessThanOrEqualTo(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY <=", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityLike(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY like", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityNotLike(String value) {
+            addCriterion("SUPERVISIO_AUTHORITY not like", value, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityIn(List<String> values) {
+            addCriterion("SUPERVISIO_AUTHORITY in", values, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityNotIn(List<String> values) {
+            addCriterion("SUPERVISIO_AUTHORITY not in", values, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityBetween(String value1, String value2) {
+            addCriterion("SUPERVISIO_AUTHORITY between", value1, value2, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioAuthorityNotBetween(String value1, String value2) {
+            addCriterion("SUPERVISIO_AUTHORITY not between", value1, value2, "supervisioAuthority");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackIsNull() {
+            addCriterion("MAJOR_FEED_BACK is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackIsNotNull() {
+            addCriterion("MAJOR_FEED_BACK is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackEqualTo(String value) {
+            addCriterion("MAJOR_FEED_BACK =", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackNotEqualTo(String value) {
+            addCriterion("MAJOR_FEED_BACK <>", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackGreaterThan(String value) {
+            addCriterion("MAJOR_FEED_BACK >", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackGreaterThanOrEqualTo(String value) {
+            addCriterion("MAJOR_FEED_BACK >=", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackLessThan(String value) {
+            addCriterion("MAJOR_FEED_BACK <", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackLessThanOrEqualTo(String value) {
+            addCriterion("MAJOR_FEED_BACK <=", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackLike(String value) {
+            addCriterion("MAJOR_FEED_BACK like", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackNotLike(String value) {
+            addCriterion("MAJOR_FEED_BACK not like", value, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackIn(List<String> values) {
+            addCriterion("MAJOR_FEED_BACK in", values, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackNotIn(List<String> values) {
+            addCriterion("MAJOR_FEED_BACK not in", values, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackBetween(String value1, String value2) {
+            addCriterion("MAJOR_FEED_BACK between", value1, value2, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorFeedBackNotBetween(String value1, String value2) {
+            addCriterion("MAJOR_FEED_BACK not between", value1, value2, "majorFeedBack");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubIsNull() {
+            addCriterion("MANAGE_ALL_SUB is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubIsNotNull() {
+            addCriterion("MANAGE_ALL_SUB is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubEqualTo(String value) {
+            addCriterion("MANAGE_ALL_SUB =", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubNotEqualTo(String value) {
+            addCriterion("MANAGE_ALL_SUB <>", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubGreaterThan(String value) {
+            addCriterion("MANAGE_ALL_SUB >", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubGreaterThanOrEqualTo(String value) {
+            addCriterion("MANAGE_ALL_SUB >=", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubLessThan(String value) {
+            addCriterion("MANAGE_ALL_SUB <", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubLessThanOrEqualTo(String value) {
+            addCriterion("MANAGE_ALL_SUB <=", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubLike(String value) {
+            addCriterion("MANAGE_ALL_SUB like", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubNotLike(String value) {
+            addCriterion("MANAGE_ALL_SUB not like", value, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubIn(List<String> values) {
+            addCriterion("MANAGE_ALL_SUB in", values, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubNotIn(List<String> values) {
+            addCriterion("MANAGE_ALL_SUB not in", values, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubBetween(String value1, String value2) {
+            addCriterion("MANAGE_ALL_SUB between", value1, value2, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andManageAllSubNotBetween(String value1, String value2) {
+            addCriterion("MANAGE_ALL_SUB not between", value1, value2, "manageAllSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubIsNull() {
+            addCriterion("EXPERT_REPORT_SUB is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubIsNotNull() {
+            addCriterion("EXPERT_REPORT_SUB is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubEqualTo(String value) {
+            addCriterion("EXPERT_REPORT_SUB =", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubNotEqualTo(String value) {
+            addCriterion("EXPERT_REPORT_SUB <>", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubGreaterThan(String value) {
+            addCriterion("EXPERT_REPORT_SUB >", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubGreaterThanOrEqualTo(String value) {
+            addCriterion("EXPERT_REPORT_SUB >=", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubLessThan(String value) {
+            addCriterion("EXPERT_REPORT_SUB <", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubLessThanOrEqualTo(String value) {
+            addCriterion("EXPERT_REPORT_SUB <=", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubLike(String value) {
+            addCriterion("EXPERT_REPORT_SUB like", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubNotLike(String value) {
+            addCriterion("EXPERT_REPORT_SUB not like", value, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubIn(List<String> values) {
+            addCriterion("EXPERT_REPORT_SUB in", values, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubNotIn(List<String> values) {
+            addCriterion("EXPERT_REPORT_SUB not in", values, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubBetween(String value1, String value2) {
+            addCriterion("EXPERT_REPORT_SUB between", value1, value2, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertReportSubNotBetween(String value1, String value2) {
+            addCriterion("EXPERT_REPORT_SUB not between", value1, value2, "expertReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubIsNull() {
+            addCriterion("MAJOR_REPORT_SUB is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubIsNotNull() {
+            addCriterion("MAJOR_REPORT_SUB is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubEqualTo(String value) {
+            addCriterion("MAJOR_REPORT_SUB =", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubNotEqualTo(String value) {
+            addCriterion("MAJOR_REPORT_SUB <>", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubGreaterThan(String value) {
+            addCriterion("MAJOR_REPORT_SUB >", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubGreaterThanOrEqualTo(String value) {
+            addCriterion("MAJOR_REPORT_SUB >=", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubLessThan(String value) {
+            addCriterion("MAJOR_REPORT_SUB <", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubLessThanOrEqualTo(String value) {
+            addCriterion("MAJOR_REPORT_SUB <=", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubLike(String value) {
+            addCriterion("MAJOR_REPORT_SUB like", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubNotLike(String value) {
+            addCriterion("MAJOR_REPORT_SUB not like", value, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubIn(List<String> values) {
+            addCriterion("MAJOR_REPORT_SUB in", values, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubNotIn(List<String> values) {
+            addCriterion("MAJOR_REPORT_SUB not in", values, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubBetween(String value1, String value2) {
+            addCriterion("MAJOR_REPORT_SUB between", value1, value2, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andMajorReportSubNotBetween(String value1, String value2) {
+            addCriterion("MAJOR_REPORT_SUB not between", value1, value2, "majorReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubIsNull() {
+            addCriterion("SUPERVISIO_REPORT_SUB is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubIsNotNull() {
+            addCriterion("SUPERVISIO_REPORT_SUB is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubEqualTo(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB =", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubNotEqualTo(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB <>", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubGreaterThan(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB >", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubGreaterThanOrEqualTo(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB >=", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubLessThan(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB <", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubLessThanOrEqualTo(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB <=", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubLike(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB like", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubNotLike(String value) {
+            addCriterion("SUPERVISIO_REPORT_SUB not like", value, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubIn(List<String> values) {
+            addCriterion("SUPERVISIO_REPORT_SUB in", values, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubNotIn(List<String> values) {
+            addCriterion("SUPERVISIO_REPORT_SUB not in", values, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubBetween(String value1, String value2) {
+            addCriterion("SUPERVISIO_REPORT_SUB between", value1, value2, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andSupervisioReportSubNotBetween(String value1, String value2) {
+            addCriterion("SUPERVISIO_REPORT_SUB not between", value1, value2, "supervisioReportSub");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreIsNull() {
+            addCriterion("BASE_MANAGE_SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreIsNotNull() {
+            addCriterion("BASE_MANAGE_SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SCORE =", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreNotEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SCORE <>", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreGreaterThan(String value) {
+            addCriterion("BASE_MANAGE_SCORE >", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SCORE >=", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreLessThan(String value) {
+            addCriterion("BASE_MANAGE_SCORE <", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreLessThanOrEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SCORE <=", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreLike(String value) {
+            addCriterion("BASE_MANAGE_SCORE like", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreNotLike(String value) {
+            addCriterion("BASE_MANAGE_SCORE not like", value, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreIn(List<String> values) {
+            addCriterion("BASE_MANAGE_SCORE in", values, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreNotIn(List<String> values) {
+            addCriterion("BASE_MANAGE_SCORE not in", values, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreBetween(String value1, String value2) {
+            addCriterion("BASE_MANAGE_SCORE between", value1, value2, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageScoreNotBetween(String value1, String value2) {
+            addCriterion("BASE_MANAGE_SCORE not between", value1, value2, "baseManageScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitIsNull() {
+            addCriterion("BASE_MANAGE_SUBMIT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitIsNotNull() {
+            addCriterion("BASE_MANAGE_SUBMIT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT =", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitNotEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT <>", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitGreaterThan(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT >", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitGreaterThanOrEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT >=", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitLessThan(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT <", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitLessThanOrEqualTo(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT <=", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitLike(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT like", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitNotLike(String value) {
+            addCriterion("BASE_MANAGE_SUBMIT not like", value, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitIn(List<String> values) {
+            addCriterion("BASE_MANAGE_SUBMIT in", values, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitNotIn(List<String> values) {
+            addCriterion("BASE_MANAGE_SUBMIT not in", values, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitBetween(String value1, String value2) {
+            addCriterion("BASE_MANAGE_SUBMIT between", value1, value2, "baseManageSubmit");
+            return (Criteria) this;
+        }
+
+        public Criteria andBaseManageSubmitNotBetween(String value1, String value2) {
+            addCriterion("BASE_MANAGE_SUBMIT not between", value1, value2, "baseManageSubmit");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

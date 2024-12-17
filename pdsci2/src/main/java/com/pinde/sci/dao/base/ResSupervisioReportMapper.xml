@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResSupervisioReportMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResSupervisioReport" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSupervisioReport">
     <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="CONTENT_TITLE" property="contentTitle" jdbcType="VARCHAR" />
     <result column="PARTOF" property="partof" jdbcType="VARCHAR" />
@@ -9,7 +9,7 @@
     <result column="ORDER_NAME" property="orderName" jdbcType="VARCHAR" />
     <result column="PARTOF_FLOW" property="partofFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResSupervisioReport" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResSupervisioReport" extends="BaseResultMap">
     <result column="CONTENT_MAS" property="contentMas" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -76,7 +76,8 @@
   <sql id="Blob_Column_List" >
     CONTENT_MAS
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResSupervisioReportExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ResSupervisioReportExample">
     select
     <if test="distinct" >
       distinct
@@ -92,7 +93,8 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResSupervisioReportExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResSupervisioReportExample">
     select
     <if test="distinct" >
       distinct
@@ -106,13 +108,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioReportExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSupervisioReportExample">
       delete from RES_SUPERVISIO_REPORT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSupervisioReport" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResSupervisioReport">
       insert into RES_SUPERVISIO_REPORT (RECORD_FLOW, CONTENT_TITLE, PARTOF,
       SUBJECT_FLOW, ORDER_NAME, PARTOF_FLOW, 
       CONTENT_MAS)
@@ -120,7 +122,7 @@
       #{subjectFlow,jdbcType=VARCHAR}, #{orderName,jdbcType=VARCHAR}, #{partofFlow,jdbcType=VARCHAR}, 
       #{contentMas,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSupervisioReport" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResSupervisioReport">
       insert into RES_SUPERVISIO_REPORT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -169,7 +171,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioReportExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResSupervisioReportExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_SUPERVISIO_REPORT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

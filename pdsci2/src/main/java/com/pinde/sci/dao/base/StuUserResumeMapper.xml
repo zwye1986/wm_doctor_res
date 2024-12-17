@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.StuUserResumeMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StuUserResume" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.StuUserResume">
     <id column="RESUME_FLOW" property="resumeFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="USER_AGE" property="userAge" jdbcType="VARCHAR" />
@@ -66,7 +66,7 @@
     <result column="NURSING_STATUS_ID" property="nursingStatusId" jdbcType="VARCHAR" />
     <result column="NURSING_STATUS_NAME" property="nursingStatusName" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.StuUserResume" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.StuUserResume" extends="BaseResultMap">
     <result column="RESUME_INFO" property="resumeInfo" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -143,7 +143,8 @@
   <sql id="Blob_Column_List" >
     RESUME_INFO
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.StuUserResumeExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.StuUserResumeExample">
     select
     <if test="distinct" >
       distinct
@@ -159,7 +160,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.StuUserResumeExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.StuUserResumeExample">
     select
     <if test="distinct" >
       distinct
@@ -185,13 +186,13 @@
       delete from STU_USER_RESUME
     where RESUME_FLOW = #{resumeFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StuUserResumeExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.StuUserResumeExample">
       delete from STU_USER_RESUME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.StuUserResume" >
+    <insert id="insert" parameterType="com.pinde.core.model.StuUserResume">
       insert into STU_USER_RESUME (RESUME_FLOW, USER_FLOW, USER_AGE,
       TITLE_ID, TITLE_NAME, POST_ID, 
       POST_NAME, DEPT_ID, DEPT_NAME, 
@@ -237,7 +238,7 @@
       #{certificateDate,jdbcType=VARCHAR}, #{reportDate,jdbcType=VARCHAR}, #{nursingStatusId,jdbcType=VARCHAR}, 
       #{nursingStatusName,jdbcType=VARCHAR}, #{resumeInfo,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StuUserResume" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.StuUserResume">
       insert into STU_USER_RESUME
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="resumeFlow != null" >
@@ -628,7 +629,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StuUserResumeExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.StuUserResumeExample"
+            resultType="java.lang.Integer">
       select count(*) from STU_USER_RESUME
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -973,7 +975,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StuUserResume" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StuUserResume">
       update STU_USER_RESUME
     <set >
       <if test="userFlow != null" >
@@ -1168,7 +1170,7 @@
     </set>
     where RESUME_FLOW = #{resumeFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.StuUserResume" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.StuUserResume">
       update STU_USER_RESUME
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_AGE = #{userAge,jdbcType=VARCHAR},
@@ -1235,7 +1237,7 @@
       RESUME_INFO = #{resumeInfo,jdbcType=CLOB}
     where RESUME_FLOW = #{resumeFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StuUserResume" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StuUserResume">
       update STU_USER_RESUME
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_AGE = #{userAge,jdbcType=VARCHAR},

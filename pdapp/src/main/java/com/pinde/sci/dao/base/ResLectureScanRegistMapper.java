@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResLectureScanRegist;
 import com.pinde.core.model.ResLectureScanRegistExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResLectureScanRegistMapper {
     int countByExample(ResLectureScanRegistExample example);

@@ -1,16 +1,14 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.util.StringUtil;
-import com.pinde.res.biz.jswjw.IResScoreBiz;
-import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
-import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.model.ResPassScoreCfgExample;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResScoreExample;
-import com.pinde.core.model.ResScoreExample.Criteria;
+import com.pinde.core.util.StringUtil;
+import com.pinde.res.biz.jswjw.IResScoreBiz;
+import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
+import com.pinde.sci.dao.base.ResScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +29,7 @@ public class ResScoreBizImpl implements IResScoreBiz {
 	@Override
 	public List<ResScore> searchByScoreList(String doctorFlow) {
 		ResScoreExample example=new ResScoreExample();
-		Criteria criteria= example.createCriteria();
+        ResScoreExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
@@ -41,7 +39,7 @@ public class ResScoreBizImpl implements IResScoreBiz {
 	@Override
 	public List<ResScore> selectByExampleWithBLOBs(String doctorFlow) {
 		ResScoreExample example=new ResScoreExample();
-		Criteria criteria= example.createCriteria();
+        ResScoreExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			criteria.andDoctorFlowEqualTo(doctorFlow);
@@ -57,7 +55,7 @@ public class ResScoreBizImpl implements IResScoreBiz {
 		}
 		
 		ResScoreExample example=new ResScoreExample();
-		Criteria criteria= example.createCriteria();
+        ResScoreExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andProcessFlowEqualTo(processFlow);
 		

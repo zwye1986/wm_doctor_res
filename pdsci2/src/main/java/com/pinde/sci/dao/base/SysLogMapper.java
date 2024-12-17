@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysLog;
-import com.pinde.sci.model.mo.SysLogExample;
+import com.pinde.core.model.SysLog;
+import com.pinde.core.model.SysLogExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

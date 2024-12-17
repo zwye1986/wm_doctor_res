@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResProvinceFundDetail;
-import com.pinde.sci.model.mo.ResProvinceFundDetailExample;
+import com.pinde.core.model.ResProvinceFundDetail;
+import com.pinde.core.model.ResProvinceFundDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

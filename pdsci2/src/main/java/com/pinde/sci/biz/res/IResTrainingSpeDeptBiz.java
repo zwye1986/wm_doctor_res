@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResTrainingSpeDept;
+import com.pinde.core.model.ResTrainingSpeDept;
 
 import java.util.List;
 

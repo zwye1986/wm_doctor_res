@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.StuHeadAuditStatus;
-import com.pinde.sci.model.mo.StuHeadAuditStatusExample;
+import com.pinde.core.model.StuHeadAuditStatus;
+import com.pinde.core.model.StuHeadAuditStatusExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

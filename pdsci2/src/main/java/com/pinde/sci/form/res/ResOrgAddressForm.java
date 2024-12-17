@@ -1,8 +1,7 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.ResOrgAddress;
+import com.pinde.core.model.ResOrgAddress;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class ResOrgAddressForm implements java.io.Serializable {

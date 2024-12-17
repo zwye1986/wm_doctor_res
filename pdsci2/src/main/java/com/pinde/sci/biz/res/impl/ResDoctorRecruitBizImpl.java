@@ -13,8 +13,8 @@ import com.pinde.sci.dao.base.JsresExamSignupMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.sci.model.mo.ResScore;
-import com.pinde.sci.model.mo.ResScoreExample;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.ResScoreExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -23,6 +23,8 @@ public class ResOrgAddress implements java.io.Serializable {
 
     private String modifyUserFlow;
 
+    private String addressType;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -109,5 +111,13 @@ public class ResOrgAddress implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
     }
 }

@@ -3,8 +3,7 @@ package com.pinde.sci.biz.sch.impl;
 import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.core.common.sci.dao.SysOrgMapper;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.*;
 import com.pinde.core.util.BeanUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -19,7 +18,6 @@ import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
 import com.pinde.sci.form.sch.SchRotationOrgDeptForm;
 import com.pinde.sci.form.sch.SchRotationOrgGroupForm;
 import com.pinde.sci.form.sch.SchRotationOrgSchDeptForm;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -181,7 +179,7 @@ public class SchRotationCfgBizImpl implements ISchRotationCfgBiz {
     public void saveCfg(List<SchRotationOrgGroupForm> groupForms, String orgFlow, String selectYear, String sessionNumber, String rotationFlow) throws Exception {
         //
         SysOrg org=orgMapper.selectByPrimaryKey(orgFlow);
-        Map<String,SchDept> deptMap=new HashMap<>();
+        Map<String, SchDept> deptMap = new HashMap<>();
         List<SysDept> sysDeptList = sysDeptBiz.searchDeptByOrg(orgFlow);
         if(sysDeptList!=null && sysDeptList.size()>0){
             List<String> deptFlows = new ArrayList<String>();

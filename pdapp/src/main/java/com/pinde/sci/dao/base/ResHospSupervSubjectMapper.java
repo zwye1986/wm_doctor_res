@@ -1,7 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import java.util.List;
+import com.pinde.core.model.ResHospSupervSubject;
+import com.pinde.core.model.ResHospSupervSubjectExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResHospSupervSubjectMapper {
     int countByExample(ResHospSupervSubjectExample example);

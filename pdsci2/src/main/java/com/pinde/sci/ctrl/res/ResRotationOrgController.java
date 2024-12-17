@@ -3,7 +3,7 @@ package com.pinde.sci.ctrl.res;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.ResRotationOrg;
+import com.pinde.core.model.ResRotationOrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

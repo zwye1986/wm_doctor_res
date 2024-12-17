@@ -51,6 +51,10 @@ public class ScresGraduationTicket implements java.io.Serializable {
 
     private String userImg;
 
+    private String theoryOrgName;
+
+    private String theoryOrgAddress;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -249,5 +253,21 @@ public class ScresGraduationTicket implements java.io.Serializable {
 
     public void setUserImg(String userImg) {
         this.userImg = userImg;
+    }
+
+    public String getTheoryOrgName() {
+        return theoryOrgName;
+    }
+
+    public void setTheoryOrgName(String theoryOrgName) {
+        this.theoryOrgName = theoryOrgName;
+    }
+
+    public String getTheoryOrgAddress() {
+        return theoryOrgAddress;
+    }
+
+    public void setTheoryOrgAddress(String theoryOrgAddress) {
+        this.theoryOrgAddress = theoryOrgAddress;
     }
 }

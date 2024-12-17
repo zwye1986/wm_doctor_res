@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResScheduleScore;
 import com.pinde.core.model.ResScheduleScoreExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResScheduleScoreMapper {
     int countByExample(ResScheduleScoreExample example);

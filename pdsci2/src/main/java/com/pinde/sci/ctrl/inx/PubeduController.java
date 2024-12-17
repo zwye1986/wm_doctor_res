@@ -15,7 +15,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.SessionData;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.model.mo.SysLog;
+import com.pinde.core.model.SysLog;
 import com.pinde.core.model.SysUserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

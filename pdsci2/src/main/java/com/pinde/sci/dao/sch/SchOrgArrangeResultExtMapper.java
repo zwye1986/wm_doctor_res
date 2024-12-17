@@ -1,9 +1,9 @@
 package com.pinde.sci.dao.sch;
 
 
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchOrgArrangeResult;
-import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchOrgArrangeResult;
+import com.pinde.core.model.SchRotationDept;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

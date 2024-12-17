@@ -5,8 +5,8 @@ import com.pinde.core.model.SysOrg;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResTeacherTraining;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResTeacherTraining;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

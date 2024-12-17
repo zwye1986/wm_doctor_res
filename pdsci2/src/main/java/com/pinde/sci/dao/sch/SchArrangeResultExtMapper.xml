@@ -24,7 +24,7 @@
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="OutResultMap" type="com.pinde.sci.model.mo.ResOutOfficeLock" >
+    <resultMap id="OutResultMap" type="com.pinde.core.model.ResOutOfficeLock">
         <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
@@ -2450,7 +2450,7 @@
             and rotation_flow = #{rotationFlow}
         </if>
     </select>
-    <select id="getAllByDoctorFlow" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    <select id="getAllByDoctorFlow" resultType="com.pinde.core.model.SchArrangeResult">
         SELECT * FROM SCH_ARRANGE_RESULT
         WHERE DOCTOR_FLOW = #{doctorFlow}
         <choose>
@@ -2481,7 +2481,7 @@
         </foreach>
     </update>
 
-    <select id="selectDoctorSchDate" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    <select id="selectDoctorSchDate" resultType="com.pinde.core.model.SchArrangeResult">
         select sar.* from SCH_ARRANGE_RESULT sar
         where sar.record_status = 'Y'
         and sar.doctor_flow in

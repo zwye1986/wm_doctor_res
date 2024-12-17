@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysDateInfo;
-import com.pinde.sci.model.mo.SysDateInfoExample;
+import com.pinde.core.model.SysDateInfo;
+import com.pinde.core.model.SysDateInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

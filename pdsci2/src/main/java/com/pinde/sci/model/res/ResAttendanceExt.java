@@ -4,7 +4,7 @@ package com.pinde.sci.model.res;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.JsresAttendance;
-import com.pinde.sci.model.mo.SchDept;
+import com.pinde.core.model.SchDept;
 
 public class ResAttendanceExt extends SysUser{
 

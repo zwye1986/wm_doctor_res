@@ -1,7 +1,7 @@
 package com.pinde.sci.form.study;
 
 import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.StudySubject;
+import com.pinde.core.model.StudySubject;
 
 public class StudySubDocDetailForm implements java.io.Serializable {
 	/**

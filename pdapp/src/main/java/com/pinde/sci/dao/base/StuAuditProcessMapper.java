@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.StuAuditProcess;
 import com.pinde.core.model.StuAuditProcessExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StuAuditProcessMapper {
     int countByExample(StuAuditProcessExample example);

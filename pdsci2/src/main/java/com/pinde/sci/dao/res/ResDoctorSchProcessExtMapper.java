@@ -5,7 +5,7 @@ import com.pinde.core.model.TeachingActivityInfo;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResult;
 import com.pinde.sci.model.res.SchProcessExt;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResRecDiseaseRegistry;
-import com.pinde.sci.model.mo.ResRecDiseaseRegistryExample;
+import com.pinde.core.model.ResRecDiseaseRegistry;
+import com.pinde.core.model.ResRecDiseaseRegistryExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

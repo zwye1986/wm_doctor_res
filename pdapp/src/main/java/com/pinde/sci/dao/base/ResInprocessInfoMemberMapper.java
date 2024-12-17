@@ -1,7 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import java.util.List;
+import com.pinde.core.model.ResInprocessInfoMember;
+import com.pinde.core.model.ResInprocessInfoMemberExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResInprocessInfoMemberMapper {
     int countByExample(ResInprocessInfoMemberExample example);

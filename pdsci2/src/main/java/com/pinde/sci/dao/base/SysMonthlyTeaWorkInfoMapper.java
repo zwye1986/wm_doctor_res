@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysMonthlyTeaWorkInfo;
-import com.pinde.sci.model.mo.SysMonthlyTeaWorkInfoExample;
+import com.pinde.core.model.SysMonthlyTeaWorkInfo;
+import com.pinde.core.model.SysMonthlyTeaWorkInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,7 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import java.util.List;
+import com.pinde.core.model.ResGradeBorderline;
+import com.pinde.core.model.ResGradeBorderlineExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResGradeBorderlineMapper {
     int countByExample(ResGradeBorderlineExample example);

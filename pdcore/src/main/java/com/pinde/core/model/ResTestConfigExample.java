@@ -1363,6 +1363,216 @@ public class ResTestConfigExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andJointLocalAuditIsNull() {
+            addCriterion("JOINT_LOCAL_AUDIT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditIsNotNull() {
+            addCriterion("JOINT_LOCAL_AUDIT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT =", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditNotEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT <>", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditGreaterThan(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT >", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditGreaterThanOrEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT >=", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditLessThan(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT <", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditLessThanOrEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT <=", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditLike(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT like", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditNotLike(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT not like", value, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditIn(List<String> values) {
+            addCriterion("JOINT_LOCAL_AUDIT in", values, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditNotIn(List<String> values) {
+            addCriterion("JOINT_LOCAL_AUDIT not in", values, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditBetween(String value1, String value2) {
+            addCriterion("JOINT_LOCAL_AUDIT between", value1, value2, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditNotBetween(String value1, String value2) {
+            addCriterion("JOINT_LOCAL_AUDIT not between", value1, value2, "jointLocalAudit");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeIsNull() {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeIsNotNull() {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME =", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeNotEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME <>", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeGreaterThan(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME >", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME >=", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeLessThan(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME <", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeLessThanOrEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME <=", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeLike(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME like", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeNotLike(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME not like", value, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeIn(List<String> values) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME in", values, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeNotIn(List<String> values) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME not in", values, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeBetween(String value1, String value2) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME between", value1, value2, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditStartTimeNotBetween(String value1, String value2) {
+            addCriterion("JOINT_LOCAL_AUDIT_START_TIME not between", value1, value2, "jointLocalAuditStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeIsNull() {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeIsNotNull() {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME =", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeNotEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME <>", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeGreaterThan(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME >", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME >=", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeLessThan(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME <", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeLessThanOrEqualTo(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME <=", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeLike(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME like", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeNotLike(String value) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME not like", value, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeIn(List<String> values) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME in", values, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeNotIn(List<String> values) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME not in", values, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeBetween(String value1, String value2) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME between", value1, value2, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andJointLocalAuditEndTimeNotBetween(String value1, String value2) {
+            addCriterion("JOINT_LOCAL_AUDIT_END_TIME not between", value1, value2, "jointLocalAuditEndTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.sys;
 
-import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.core.model.SysCfg;
 
 import java.util.List;
 import java.util.Map;

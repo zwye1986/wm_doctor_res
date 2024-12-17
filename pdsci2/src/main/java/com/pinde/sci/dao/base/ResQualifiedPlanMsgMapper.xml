@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResQualifiedPlanMsgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResQualifiedPlanMsg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResQualifiedPlanMsg">
     <id column="MSG_FLOW" property="msgFlow" jdbcType="VARCHAR" />
     <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
     <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
@@ -79,7 +79,8 @@
     MSG_FLOW, PLAN_FLOW, SPE_ID, SPE_NAME, CLASS_NUM, PEOPLE_NUM, ADRESS, PLAN_TARGET, 
     REMARK, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResQualifiedPlanMsgExample">
     select
     <if test="distinct" >
       distinct
@@ -103,13 +104,13 @@
       delete from RES_QUALIFIED_PLAN_MSG
     where MSG_FLOW = #{msgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsgExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResQualifiedPlanMsgExample">
       delete from RES_QUALIFIED_PLAN_MSG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsg" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResQualifiedPlanMsg">
       insert into RES_QUALIFIED_PLAN_MSG (MSG_FLOW, PLAN_FLOW, SPE_ID,
       SPE_NAME, CLASS_NUM, PEOPLE_NUM, 
       ADRESS, PLAN_TARGET, REMARK, 
@@ -121,7 +122,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsg" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResQualifiedPlanMsg">
       insert into RES_QUALIFIED_PLAN_MSG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="msgFlow != null" >
@@ -212,7 +213,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsgExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResQualifiedPlanMsgExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_QUALIFIED_PLAN_MSG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -288,7 +290,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsg" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResQualifiedPlanMsg">
       update RES_QUALIFIED_PLAN_MSG
     <set >
       <if test="planFlow != null" >
@@ -333,7 +335,7 @@
     </set>
     where MSG_FLOW = #{msgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResQualifiedPlanMsg" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResQualifiedPlanMsg">
       update RES_QUALIFIED_PLAN_MSG
     set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},

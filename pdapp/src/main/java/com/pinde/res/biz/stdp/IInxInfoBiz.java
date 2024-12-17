@@ -13,7 +13,7 @@ public interface IInxInfoBiz {
      */
     InxInfo getByInfoFlow(String infoFlow);
 
-    ResReadInfo getReadInfoByFlow(String infoFlow,  String userFlow);
+    ResReadInfo getReadInfoByFlow(String infoFlow, String userFlow);
 
     int saveReadInfo(String userFlow, ResReadInfo resReadInfo);
 }

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchDeptExample;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchDeptExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -9,7 +9,7 @@ import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorOrgHistory;
 import com.pinde.core.model.ResExamDoctor;
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResult;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.res.ResExamDoctorExt;

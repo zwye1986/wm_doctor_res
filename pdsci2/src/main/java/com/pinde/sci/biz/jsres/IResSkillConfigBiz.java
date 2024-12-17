@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.ResDoctorSkill;
-import com.pinde.sci.model.mo.ResSkillConfig;
-import com.pinde.sci.model.mo.ResSkillOrg;
+import com.pinde.core.model.ResSkillConfig;
+import com.pinde.core.model.ResSkillOrg;
 
 import java.util.List;
 import java.util.Map;

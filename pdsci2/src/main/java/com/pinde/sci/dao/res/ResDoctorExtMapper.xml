@@ -4,7 +4,8 @@
     <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-        <association property="userResume" column="USER_FLOW" javaType="com.pinde.sci.model.mo.StuUserResume" resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
+        <association property="userResume" column="USER_FLOW" javaType="com.pinde.core.model.StuUserResume"
+                     resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
 					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
         <association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.core.model.PubUserResume"
@@ -54,7 +55,7 @@
 			<result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
 			<result column="SEX_NAME" property="sexName" jdbcType="VARCHAR" />
 		</association>
-		<association property="resScore" column="SCORE_FLOW" javaType="com.pinde.sci.model.mo.ResScore" >
+        <association property="resScore" column="SCORE_FLOW" javaType="com.pinde.core.model.ResScore">
 			<id column="SCORE_FLOW" property="scoreFlow" jdbcType="VARCHAR" />
 			<result column="MAR_SCORE" property="marScore" jdbcType="DECIMAL" />
 			<result column="JUN_SCORE" property="junScore" jdbcType="DECIMAL" />
@@ -3137,7 +3138,7 @@
 	<select id="getSchools" resultType="string">
 		SELECT DISTINCT SCHOOL FROM RES_DOCTOR WHERE SCHOOL IS NOT NULL
 	</select>
-    <select id="listDoctorResult" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    <select id="listDoctorResult" resultType="com.pinde.core.model.SchArrangeResult">
 		SELECT RESULT_FLOW,DOCTOR_FLOW,DOCTOR_NAME,STANDARD_DEPT_ID,STANDARD_DEPT_NAME,SCH_START_DATE,SCH_END_DATE,SCH_DEPT_FLOW,SCH_DEPT_NAME,SCH_MONTH,RECORD_STATUS
 		FROM SCH_ARRANGE_RESULT
 		WHERE RECORD_STATUS = 'Y'

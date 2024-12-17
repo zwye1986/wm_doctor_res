@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResLectureEvaDetail;
 import com.pinde.core.model.ResLectureEvaDetailExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResLectureEvaDetailMapper {
     int countByExample(ResLectureEvaDetailExample example);

@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.StuUserResume;
+import com.pinde.core.model.StuUserResume;
 import com.pinde.sci.model.res.StuUserExt;
 
 import java.util.List;

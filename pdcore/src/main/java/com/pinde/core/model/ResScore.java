@@ -59,6 +59,18 @@ public class ResScore implements java.io.Serializable {
 
     private String recruitFlow;
 
+    private String isSend;
+
+    private String testId;
+
+    private String isAffirmId;
+
+    private String isAffirmName;
+
+    private String sessionNumber;
+
+    private String realScore;
+
     private String extScore;
 
     public String getScoreFlow() {
@@ -283,6 +295,54 @@ public class ResScore implements java.io.Serializable {
 
     public void setRecruitFlow(String recruitFlow) {
         this.recruitFlow = recruitFlow;
+    }
+
+    public String getIsSend() {
+        return isSend;
+    }
+
+    public void setIsSend(String isSend) {
+        this.isSend = isSend;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
+    }
+
+    public String getIsAffirmId() {
+        return isAffirmId;
+    }
+
+    public void setIsAffirmId(String isAffirmId) {
+        this.isAffirmId = isAffirmId;
+    }
+
+    public String getIsAffirmName() {
+        return isAffirmName;
+    }
+
+    public void setIsAffirmName(String isAffirmName) {
+        this.isAffirmName = isAffirmName;
+    }
+
+    public String getSessionNumber() {
+        return sessionNumber;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+
+    public String getRealScore() {
+        return realScore;
+    }
+
+    public void setRealScore(String realScore) {
+        this.realScore = realScore;
     }
 
     public String getExtScore() {

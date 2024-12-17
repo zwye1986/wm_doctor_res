@@ -9,8 +9,8 @@ import com.pinde.sci.dao.base.ResLectureEvaDetailMapper;
 import com.pinde.sci.dao.res.ResLectureEvaDetailExtMapper;
 import com.pinde.core.model.LectureInfoTarget;
 import com.pinde.core.model.LectureInfoTargetExample;
-import com.pinde.sci.model.mo.ResLectureEvaDetail;
-import com.pinde.sci.model.mo.ResLectureEvaDetailExample;
+import com.pinde.core.model.ResLectureEvaDetail;
+import com.pinde.core.model.ResLectureEvaDetailExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

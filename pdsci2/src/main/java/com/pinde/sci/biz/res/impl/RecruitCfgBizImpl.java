@@ -7,8 +7,8 @@ import com.pinde.sci.biz.res.IRecruitCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResRecruitCfgMapper;
-import com.pinde.sci.model.mo.ResRecruitCfg;
-import com.pinde.sci.model.mo.ResRecruitCfgExample;
+import com.pinde.core.model.ResRecruitCfg;
+import com.pinde.core.model.ResRecruitCfgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

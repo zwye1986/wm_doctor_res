@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
-import com.pinde.sci.model.mo.ResQualifiedPlanMsg;
-import com.pinde.sci.model.mo.ResTeachPlanDoctor;
+import com.pinde.core.model.ResQualifiedPlanMsg;
+import com.pinde.core.model.ResTeachPlanDoctor;
 import com.pinde.core.model.SysUser;
 import org.springframework.web.multipart.MultipartFile;
 

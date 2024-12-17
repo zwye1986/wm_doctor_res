@@ -1,8 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.List;
 import java.util.Map;

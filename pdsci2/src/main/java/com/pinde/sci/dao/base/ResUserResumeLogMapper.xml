@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResUserResumeLogMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResUserResumeLog">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResUserResumeLog">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
     <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone" />
@@ -143,7 +143,7 @@
     REGISTE_MANUA, ARCHIVE_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResUserResumeLogExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResUserResumeLogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -167,13 +167,13 @@
       delete from RES_USER_RESUME_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResUserResumeLogExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResUserResumeLogExample">
       delete from RES_USER_RESUME_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
+    <insert id="insert" parameterType="com.pinde.core.model.ResUserResumeLog">
       insert into RES_USER_RESUME_LOG (RECORD_FLOW, USER_FLOW, TELEPHONE,
       EMERGENCY_ADDRESS, WORK_SCHOOL_NAME, ORG_RANK, 
       ORG_LEVEL, GRADUATED_ID, GRADUATED_NAME, 
@@ -227,7 +227,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResUserResumeLog">
       insert into RES_USER_RESUME_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -624,7 +624,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResUserResumeLogExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.ResUserResumeLogExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_USER_RESUME_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -904,7 +905,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResUserResumeLog">
       update RES_USER_RESUME_LOG
     <set>
       <if test="userFlow != null">
@@ -1102,7 +1103,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResUserResumeLog">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResUserResumeLog">
       update RES_USER_RESUME_LOG
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       TELEPHONE = #{telephone,jdbcType=VARCHAR},

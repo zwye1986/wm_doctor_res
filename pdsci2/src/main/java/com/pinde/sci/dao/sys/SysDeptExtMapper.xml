@@ -285,7 +285,7 @@
 		  and d.record_status  = 'Y'
 		  and d.rotation_flow = #{rotationFlow}
 	</select>
-	<select id="getSchDeptByBzIds" resultType="com.pinde.sci.model.mo.SchAndStandardDeptCfg">
+    <select id="getSchDeptByBzIds" resultType="com.pinde.core.model.SchAndStandardDeptCfg">
 		select distinct t.* from (
 		select * from SCH_AND_STANDARD_DEPT_CFG
 		where record_status = 'Y'
@@ -363,7 +363,7 @@
 		</choose>
 		order by sort_no
 	</select>
-	<select id="getBzDeptListByLzDeptFlows" resultType="com.pinde.sci.model.mo.SchAndStandardDeptCfg">
+    <select id="getBzDeptListByLzDeptFlows" resultType="com.pinde.core.model.SchAndStandardDeptCfg">
 		select d.sch_dept_flow,d.sch_dept_name,d.standard_dept_id,d.standard_dept_name
 		from SCH_AND_STANDARD_DEPT_CFG d
 		where d.record_status = 'Y'
@@ -379,7 +379,7 @@
 			</otherwise>
 		</choose>
 	</select>
-    <select id="getBzDeptByDeptFlow" resultType="com.pinde.sci.model.mo.SchAndStandardDeptCfg">
+    <select id="getBzDeptByDeptFlow" resultType="com.pinde.core.model.SchAndStandardDeptCfg">
 		select d.*
 		from SCH_AND_STANDARD_DEPT_CFG d
 		where d.record_status = 'Y'

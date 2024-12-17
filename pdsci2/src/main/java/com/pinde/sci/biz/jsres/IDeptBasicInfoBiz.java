@@ -4,7 +4,7 @@ import com.pinde.core.model.ResBaseSpeDept;
 import com.pinde.core.model.ResBaseSpeDeptData;
 import com.pinde.core.model.ResBaseSpeDeptInfo;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
-import com.pinde.sci.model.mo.ResTeacherTraining;
+import com.pinde.core.model.ResTeacherTraining;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;

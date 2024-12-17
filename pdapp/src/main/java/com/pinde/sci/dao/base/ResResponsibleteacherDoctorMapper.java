@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResResponsibleteacherDoctor;
 import com.pinde.core.model.ResResponsibleteacherDoctorExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResResponsibleteacherDoctorMapper {
     int countByExample(ResResponsibleteacherDoctorExample example);

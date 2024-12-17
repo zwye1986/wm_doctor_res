@@ -2,12 +2,12 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResStandardDeptPer;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchDoctorDept;
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationGroup;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResStandardDeptPer;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationGroup;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
 import org.dom4j.DocumentException;

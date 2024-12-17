@@ -6,8 +6,8 @@ import com.pinde.core.model.TestPaper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.ResPaperBiz;
 import com.pinde.sci.dao.base.ResPaperMapper;
-import com.pinde.sci.model.mo.ResPaper;
-import com.pinde.sci.model.mo.ResPaperExample;
+import com.pinde.core.model.ResPaper;
+import com.pinde.core.model.ResPaperExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

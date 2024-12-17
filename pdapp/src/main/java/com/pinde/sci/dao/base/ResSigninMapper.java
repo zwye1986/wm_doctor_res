@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResSignin;
 import com.pinde.core.model.ResSigninExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResSigninMapper {
     int countByExample(ResSigninExample example);

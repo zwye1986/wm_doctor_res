@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.mo.StuBatch;
+import com.pinde.core.model.StuBatch;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

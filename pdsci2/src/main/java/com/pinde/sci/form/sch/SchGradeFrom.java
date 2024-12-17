@@ -1,9 +1,7 @@
 package com.pinde.sci.form.sch;
 
 
-import com.pinde.sci.model.mo.SchArrangeResult;
-
-import java.io.Serializable;
+import com.pinde.core.model.SchArrangeResult;
 
 public class SchGradeFrom extends SchArrangeResult implements java.io.Serializable {
 

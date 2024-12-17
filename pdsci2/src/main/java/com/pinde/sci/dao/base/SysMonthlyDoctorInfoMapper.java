@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysMonthlyDoctorInfo;
-import com.pinde.sci.model.mo.SysMonthlyDoctorInfoExample;
+import com.pinde.core.model.SysMonthlyDoctorInfo;
+import com.pinde.core.model.SysMonthlyDoctorInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

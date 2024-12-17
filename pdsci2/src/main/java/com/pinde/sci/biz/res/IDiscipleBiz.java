@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.ResDiscipleNoteInfo;
 import com.pinde.core.model.ResDiscipleNoteInfoWithBLOBs;
-import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
+import com.pinde.core.model.ResStudentDiscipleTeacher;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 
 import java.util.List;

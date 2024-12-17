@@ -1,8 +1,8 @@
 package com.pinde.sci.model.res;
 
 import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SysUser;
 
 

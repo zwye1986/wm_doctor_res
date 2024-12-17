@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResRecruitCfg;
+import com.pinde.core.model.ResRecruitCfg;
 
 /**
  * 招录配置业务接口

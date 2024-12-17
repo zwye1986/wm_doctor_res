@@ -2,7 +2,7 @@ package com.pinde.sci.model.jsres;
 
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.ResMessage;
+import com.pinde.core.model.ResMessage;
 
 import java.util.List;
 

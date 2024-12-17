@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResLectureInfoRole;
-import com.pinde.sci.model.mo.ResLectureInfoRoleExample;
+import com.pinde.core.model.ResLectureInfoRole;
+import com.pinde.core.model.ResLectureInfoRoleExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -2,8 +2,8 @@ package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.ResBaseFundDetail;
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.mo.ResProvinceFundDetail;
-import com.pinde.sci.model.mo.ResSyntheticalFundDetail;
+import com.pinde.core.model.ResProvinceFundDetail;
+import com.pinde.core.model.ResSyntheticalFundDetail;
 
 import java.util.HashMap;
 import java.util.List;

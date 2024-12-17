@@ -13,7 +13,7 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.form.jsres.BackTrainForm;
-import com.pinde.sci.model.mo.ResRec;
+import com.pinde.core.model.ResRec;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

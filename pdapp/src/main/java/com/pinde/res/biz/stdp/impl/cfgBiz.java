@@ -1,7 +1,6 @@
 package com.pinde.res.biz.stdp.impl;
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysCfgExample;
 import com.pinde.core.util.StringUtil;

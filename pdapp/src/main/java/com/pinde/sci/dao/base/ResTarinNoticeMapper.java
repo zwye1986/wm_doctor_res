@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResTarinNotice;
 import com.pinde.core.model.ResTarinNoticeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResTarinNoticeMapper {
     int countByExample(ResTarinNoticeExample example);
