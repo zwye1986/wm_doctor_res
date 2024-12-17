@@ -1983,6 +1983,12 @@
       <if test="unLockTime != null" >
         UN_LOCK_TIME = #{unLockTime,jdbcType=VARCHAR},
       </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
