@@ -4,7 +4,7 @@ package com.pinde.sci.dao.sch;
 import com.pinde.core.model.JsresDoctorDeptDetail;
 import com.pinde.core.model.SysDept;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResOutOfficeLock;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.res.GeneralIdNameModel;

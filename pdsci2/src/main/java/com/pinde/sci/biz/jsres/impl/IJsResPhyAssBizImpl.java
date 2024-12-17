@@ -19,7 +19,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

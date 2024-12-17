@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch;
 
+import com.pinde.core.model.ResDoctorGraduationExam;
 import com.pinde.sci.model.mo.*;
 
 import java.util.List;

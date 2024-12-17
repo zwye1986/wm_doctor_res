@@ -10,7 +10,7 @@ import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchDoctorDeptMapper;
 import com.pinde.sci.dao.sch.SchDoctorDeptExtMapper;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchDoctorDept;
 import com.pinde.sci.model.mo.SchDoctorDeptExample;

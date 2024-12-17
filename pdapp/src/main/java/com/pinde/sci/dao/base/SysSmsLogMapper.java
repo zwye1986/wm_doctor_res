@@ -2,10 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SysSmsLog;
 import com.pinde.core.model.SysSmsLogExample;
-import java.util.List;
-
-import com.pinde.core.model.TestPaperExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysSmsLogMapper {
     int countByExample(SysSmsLogExample example);

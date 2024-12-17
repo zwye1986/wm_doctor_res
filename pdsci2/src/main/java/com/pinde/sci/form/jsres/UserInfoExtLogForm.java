@@ -1,11 +1,9 @@
 package com.pinde.sci.form.jsres;
 
-import com.pinde.sci.model.mo.ResDoctorLog;
-import com.pinde.sci.model.mo.ResDoctorRecruitLog;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorRecruitLog;
 import com.pinde.sci.model.mo.ResUserResumeLog;
-import com.pinde.sci.model.mo.SysUserLog;
-
-import java.io.Serializable;
+import com.pinde.core.model.SysUserLog;
 
 public class UserInfoExtLogForm implements java.io.Serializable {
 

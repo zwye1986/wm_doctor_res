@@ -1,14 +1,10 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 

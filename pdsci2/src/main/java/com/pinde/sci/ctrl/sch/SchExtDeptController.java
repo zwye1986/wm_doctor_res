@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;

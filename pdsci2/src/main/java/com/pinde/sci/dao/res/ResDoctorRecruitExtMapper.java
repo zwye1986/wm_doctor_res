@@ -1,9 +1,9 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.model.SysDict;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.res.ResDoctorRecruitExt;
 import org.apache.ibatis.annotations.Param;
 

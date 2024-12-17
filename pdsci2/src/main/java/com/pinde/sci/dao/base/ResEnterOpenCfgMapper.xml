@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResEnterOpenCfgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResEnterOpenCfg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResEnterOpenCfg">
     <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -77,7 +77,7 @@
     CFG_FLOW, ORG_FLOW, ORG_NAME, START_DATE, END_DATE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, START_MONTH, SESSION_NUMBER
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResEnterOpenCfgExample">
     select
     <if test="distinct" >
       distinct
@@ -101,13 +101,13 @@
       delete from RES_ENTER_OPEN_CFG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfgExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResEnterOpenCfgExample">
       delete from RES_ENTER_OPEN_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfg" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResEnterOpenCfg">
       insert into RES_ENTER_OPEN_CFG (CFG_FLOW, ORG_FLOW, ORG_NAME,
       START_DATE, END_DATE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -119,7 +119,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{startMonth,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfg" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResEnterOpenCfg">
       insert into RES_ENTER_OPEN_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
@@ -198,7 +198,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfgExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResEnterOpenCfgExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_ENTER_OPEN_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -266,7 +267,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfg" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResEnterOpenCfg">
       update RES_ENTER_OPEN_CFG
     <set >
       <if test="orgFlow != null" >
@@ -305,7 +306,7 @@
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResEnterOpenCfg" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResEnterOpenCfg">
       update RES_ENTER_OPEN_CFG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

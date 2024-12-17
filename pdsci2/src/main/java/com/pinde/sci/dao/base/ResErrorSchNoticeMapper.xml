@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResErrorSchNoticeMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResErrorSchNotice">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResErrorSchNotice">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
@@ -77,7 +77,8 @@
     RECORD_FLOW, USER_FLOW, USER_NAME, STATUS_ID, STATUS_NAME, NOTICE_TIME, NOTICE_CONTENT, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResErrorSchNoticeExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResErrorSchNoticeExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -101,13 +102,13 @@
       delete from RES_ERROR_SCH_NOTICE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResErrorSchNoticeExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResErrorSchNoticeExample">
       delete from RES_ERROR_SCH_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
+    <insert id="insert" parameterType="com.pinde.core.model.ResErrorSchNotice">
       insert into RES_ERROR_SCH_NOTICE (RECORD_FLOW, USER_FLOW, USER_NAME,
       STATUS_ID, STATUS_NAME, NOTICE_TIME, 
       NOTICE_CONTENT, RECORD_STATUS, CREATE_TIME, 
@@ -119,7 +120,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResErrorSchNotice">
       insert into RES_ERROR_SCH_NOTICE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -198,7 +199,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResErrorSchNoticeExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.ResErrorSchNoticeExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_ERROR_SCH_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -266,7 +268,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResErrorSchNotice">
       update RES_ERROR_SCH_NOTICE
     <set>
       <if test="userFlow != null">
@@ -305,7 +307,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResErrorSchNotice">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResErrorSchNotice">
       update RES_ERROR_SCH_NOTICE
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},

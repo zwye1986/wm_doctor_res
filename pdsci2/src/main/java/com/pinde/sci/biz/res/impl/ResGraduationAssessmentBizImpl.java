@@ -11,7 +11,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResGraduationAssessmentMapper;
 import com.pinde.sci.dao.res.ResGraduationAssessmentExtMapper;
-import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
+import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

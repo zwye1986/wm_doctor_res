@@ -4,7 +4,7 @@ import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.OscaDoctorAssessment;
 import com.pinde.core.model.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 
 public class OscaCheckInfoExt extends OscaDoctorAssessment{
 

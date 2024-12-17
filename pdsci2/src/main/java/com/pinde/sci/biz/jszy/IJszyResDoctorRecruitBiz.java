@@ -1,12 +1,8 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 
 import java.util.List;
 import java.util.Map;

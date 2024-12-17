@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.jsres.JsResDoctorOrgHistoryExtMapper">
 
 	<resultMap id="docOrgHistoryExtMap" type="com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt" extends="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.BaseResultMap" >
-		<association property="resDoctor" javaType="com.pinde.sci.model.mo.ResDoctor">
+        <association property="resDoctor" javaType="com.pinde.core.model.ResDoctor">
 			<id column="doctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
 			<result column="doctorName" jdbcType="VARCHAR" property="doctorName" />
 			<result column="dsessionNumber" jdbcType="VARCHAR" property="sessionNumber" />

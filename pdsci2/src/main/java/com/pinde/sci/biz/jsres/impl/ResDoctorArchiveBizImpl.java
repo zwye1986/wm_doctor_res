@@ -13,16 +13,16 @@ import com.pinde.sci.dao.jsres.ResArchiveExtMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
 import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorLog;
-import com.pinde.sci.model.mo.ResDoctorLogExample;
-import com.pinde.sci.model.mo.ResDoctorRecruitLog;
-import com.pinde.sci.model.mo.ResDoctorRecruitLogExample;
-import com.pinde.sci.model.mo.ResDoctorRecruitLogWithBLOBs;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorLogExample;
+import com.pinde.core.model.ResDoctorRecruitLog;
+import com.pinde.core.model.ResDoctorRecruitLogExample;
+import com.pinde.core.model.ResDoctorRecruitLogWithBLOBs;
 import com.pinde.sci.model.mo.ResUserResumeLog;
 import com.pinde.sci.model.mo.ResUserResumeLogExample;
-import com.pinde.sci.model.mo.SysUserLog;
-import com.pinde.sci.model.mo.SysUserLogExample;
+import com.pinde.core.model.SysUserLog;
+import com.pinde.core.model.SysUserLogExample;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -253,7 +253,7 @@ public class ResDoctorArchiveBizImpl implements IResDoctorArchiveBiz {
     @Override
     public List<ResDoctorRecruitLogWithBLOBs> searchResDoctorRecruitList(ResDoctorRecruitLog recruit, String orderByClause) {
         ResDoctorRecruitLogExample example = new ResDoctorRecruitLogExample();
-        com.pinde.sci.model.mo.ResDoctorRecruitLogExample.Criteria criteria = example.createCriteria();
+        ResDoctorRecruitLogExample.Criteria criteria = example.createCriteria();
         if(StringUtil.isNotBlank(recruit.getDoctorFlow())){
             criteria.andDoctorFlowEqualTo(recruit.getDoctorFlow());
         }

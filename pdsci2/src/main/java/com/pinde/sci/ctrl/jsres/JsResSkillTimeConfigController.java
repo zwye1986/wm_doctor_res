@@ -29,7 +29,7 @@ import com.pinde.core.model.OscaSkillsAssessment;
 import com.pinde.core.model.OscaSkillsAssessmentTime;
 import com.pinde.core.model.OscaSubjectMain;
 import com.pinde.core.model.OscaSubjectStation;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.mo.*;

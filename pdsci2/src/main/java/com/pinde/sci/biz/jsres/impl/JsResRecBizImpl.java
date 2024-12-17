@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.util.StringUtil;
@@ -12,7 +13,6 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.form.jsres.BackTrainForm;
-import com.pinde.sci.model.mo.ResDoctor;
 import com.pinde.sci.model.mo.ResRec;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -31,7 +31,7 @@ import com.pinde.sci.model.jsres.LoginVo;
 import com.pinde.sci.model.jsres.ResultVo;
 import com.pinde.sci.model.mo.ResMessage;
 import com.pinde.sci.model.mo.SysLog;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.util.jsres.ResultUtil;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.apache.commons.collections4.CollectionUtils;

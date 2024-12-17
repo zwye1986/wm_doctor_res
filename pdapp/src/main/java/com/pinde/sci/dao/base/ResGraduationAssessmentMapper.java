@@ -1,8 +1,5 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.core.model.ResGraduationAssessment;
-import com.pinde.core.model.ResGraduationAssessmentExample;
-import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

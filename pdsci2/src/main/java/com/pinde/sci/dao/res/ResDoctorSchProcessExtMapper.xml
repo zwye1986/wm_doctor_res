@@ -5589,7 +5589,7 @@
 			AND R.CAT_SPE_ID= #{trainingTypeId}
 		)
 	</select>
-    <select id="listByDoctorFlow" resultType="com.pinde.sci.model.mo.ResDoctorSchProcess">
+    <select id="listByDoctorFlow" resultType="com.pinde.core.model.ResDoctorSchProcess">
 		select * from RES_DOCTOR_SCH_PROCESS where RECORD_STATUS = 'Y' and USER_FLOW = #{doctorFlow}
 	</select>
 </mapper>

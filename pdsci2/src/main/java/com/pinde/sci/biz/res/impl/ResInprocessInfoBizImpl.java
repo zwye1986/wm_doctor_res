@@ -10,10 +10,10 @@ import com.pinde.sci.dao.base.ResInprocessInfoMemberMapper;
 import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResInprocessInfoMemberExtMapper;
-import com.pinde.sci.model.mo.ResInprocessInfo;
-import com.pinde.sci.model.mo.ResInprocessInfoExample;
-import com.pinde.sci.model.mo.ResInprocessInfoMember;
-import com.pinde.sci.model.mo.ResInprocessInfoMemberExample;
+import com.pinde.core.model.ResInprocessInfo;
+import com.pinde.core.model.ResInprocessInfoExample;
+import com.pinde.core.model.ResInprocessInfoMember;
+import com.pinde.core.model.ResInprocessInfoMemberExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

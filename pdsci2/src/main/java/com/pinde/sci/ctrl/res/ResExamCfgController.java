@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;

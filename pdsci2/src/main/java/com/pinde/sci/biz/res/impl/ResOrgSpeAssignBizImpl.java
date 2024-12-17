@@ -14,7 +14,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResOrgSpeAssign;
 import com.pinde.sci.model.mo.ResOrgSpeAssignExample;
 import com.pinde.sci.model.mo.ResOrgSpeExample;

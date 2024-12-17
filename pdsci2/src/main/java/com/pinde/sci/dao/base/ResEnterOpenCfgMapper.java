@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResEnterOpenCfg;
-import com.pinde.sci.model.mo.ResEnterOpenCfgExample;
+import com.pinde.core.model.ResEnterOpenCfg;
+import com.pinde.core.model.ResEnterOpenCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

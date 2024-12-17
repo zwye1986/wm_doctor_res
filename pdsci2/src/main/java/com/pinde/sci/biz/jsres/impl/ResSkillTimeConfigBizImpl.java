@@ -13,7 +13,7 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.dao.base.JsresExamSignupMapper;
 import com.pinde.sci.dao.base.ResDoctorSkillMapper;
 import com.pinde.sci.dao.base.ResSkillTimeConfigMapper;
-import com.pinde.sci.model.mo.ResDoctorSkill;
+import com.pinde.core.model.ResDoctorSkill;
 import com.pinde.sci.model.mo.ResSkillTimeConfig;
 import com.pinde.sci.model.mo.ResSkillTimeConfigExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;

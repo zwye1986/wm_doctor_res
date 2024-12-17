@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorProcessEvalConfig;
-import com.pinde.sci.model.mo.ResDoctorProcessEvalConfigExample;
+import com.pinde.core.model.ResDoctorProcessEvalConfig;
+import com.pinde.core.model.ResDoctorProcessEvalConfigExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

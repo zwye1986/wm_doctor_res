@@ -19,7 +19,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.mo.ResTestConfig;
 import org.apache.commons.collections4.CollectionUtils;

@@ -1,9 +1,7 @@
 package com.pinde.sci.form.hbzy;
 
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
-
-import java.io.Serializable;
 
 public class JszyResDoctorInfoForm implements java.io.Serializable {
 

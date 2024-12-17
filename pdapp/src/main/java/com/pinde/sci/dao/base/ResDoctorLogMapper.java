@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResDoctorLog;
 import com.pinde.core.model.ResDoctorLogExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDoctorLogMapper {
     int countByExample(ResDoctorLogExample example);

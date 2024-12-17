@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res;
 
 
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResTarinNotice;
 import com.pinde.sci.model.mo.ResTrainingOpinion;
 

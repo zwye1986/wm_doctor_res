@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorSchProcessMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorSchProcess" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorSchProcess">
     <id column="PROCESS_FLOW" property="processFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -103,7 +103,8 @@
     MODIFY_USER_FLOW, IS_EXTERNAL, SECRETARY_USER_FLOW, SECRETARY_USER_NAME, MONTH_DATE, 
     OUT_DATE, TEMPORARY_OUT, TEMPORARY_AUDIT_STATUS_ID, TEMPORARY_AUDIT_STATUS_NAME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResDoctorSchProcessExample">
     select
     <if test="distinct" >
       distinct
@@ -118,7 +119,7 @@
     </if>
   </select>
 
-  <select id="searchByResultFlowPartitionList" resultType="com.pinde.sci.model.mo.ResDoctorSchProcess">
+    <select id="searchByResultFlowPartitionList" resultType="com.pinde.core.model.ResDoctorSchProcess">
     select
     <include refid="Base_Column_List" />
       from RES_DOCTOR_SCH_PROCESS
@@ -141,13 +142,13 @@
       delete from RES_DOCTOR_SCH_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorSchProcessExample">
       delete from RES_DOCTOR_SCH_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorSchProcess">
       insert into RES_DOCTOR_SCH_PROCESS (PROCESS_FLOW, USER_FLOW, ORG_FLOW,
       ORG_NAME, DEPT_FLOW, DEPT_NAME, 
       SCH_DEPT_FLOW, SCH_DEPT_NAME, SCH_RESULT_FLOW, 
@@ -173,7 +174,7 @@
       #{outDate,jdbcType=VARCHAR}, #{temporaryOut,jdbcType=VARCHAR}, #{temporaryAuditStatusId,jdbcType=VARCHAR}, 
       #{temporaryAuditStatusName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorSchProcess">
       insert into RES_DOCTOR_SCH_PROCESS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="processFlow != null" >
@@ -384,7 +385,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcessExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorSchProcessExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_DOCTOR_SCH_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -540,7 +542,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorSchProcess">
       update RES_DOCTOR_SCH_PROCESS
     <set >
       <if test="userFlow != null" >
@@ -645,7 +647,7 @@
     </set>
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorSchProcess" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorSchProcess">
       update RES_DOCTOR_SCH_PROCESS
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

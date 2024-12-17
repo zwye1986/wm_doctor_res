@@ -5,9 +5,7 @@ import com.google.common.collect.Maps;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -27,7 +25,18 @@ import com.pinde.sci.dao.sch.SchRotationDeptExtMapper;
 import com.pinde.sci.dao.sch.SchRotationDeptReqExtMapper;
 import com.pinde.sci.dao.sch.SchRotationExtendMapper;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResRec;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchDept;
+import com.pinde.sci.model.mo.SchDeptRel;
+import com.pinde.sci.model.mo.SchDoctorDept;
+import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.sci.model.mo.SchRotationDeptExample;
+import com.pinde.sci.model.mo.SchRotationDeptReq;
+import com.pinde.sci.model.mo.SchRotationDeptReqExample;
+import com.pinde.sci.model.mo.SchRotationGroup;
+import com.pinde.sci.model.mo.SchRotationGroupExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -573,7 +582,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	}
 	
 	@Override
-	public int saveSelDepts(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor){
+    public int saveSelDepts(List<String> recordFlows, Map<String, String> schMonthMap, ResDoctor doctor) {
 		if(recordFlows!=null && recordFlows.size()>0){
 			List<SchRotationDept> rotationDeptList = searchRotationDeptByFlows(recordFlows);
 			if(rotationDeptList!=null && rotationDeptList.size()>0){

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch;
 
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysOrg;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
@@ -45,7 +46,7 @@ public interface ISchRotationDeptBiz {
 
 	List<SchRotationDept> searchRotationDeptByFlows(List<String> recordFlows);
 
-	int saveSelDepts(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor);
+    int saveSelDepts(List<String> recordFlows, Map<String, String> schMonthMap, ResDoctor doctor);
 
 
 	List<SchRotationDept> searchDeptByRotations(List<String> rotationFlows);

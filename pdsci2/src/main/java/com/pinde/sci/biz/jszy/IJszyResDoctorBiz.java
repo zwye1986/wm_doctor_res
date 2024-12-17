@@ -5,7 +5,7 @@ import com.pinde.core.model.ResDocotrDelayTeturn;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResRec;
 import org.springframework.web.multipart.MultipartFile;
 

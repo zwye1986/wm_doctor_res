@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysUserRoleMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysUserRole" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysUserRole">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -77,7 +77,7 @@
     RECORD_FLOW, USER_FLOW, ORG_FLOW, WS_ID, ROLE_FLOW, AUTH_TIME, AUTH_USER_FLOW, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysUserRoleExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserRoleExample">
     select
     <if test="distinct" >
       distinct
@@ -101,13 +101,13 @@
       delete from SYS_USER_ROLE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysUserRoleExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysUserRoleExample">
       delete from SYS_USER_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysUserRole" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysUserRole">
       insert into SYS_USER_ROLE (RECORD_FLOW, USER_FLOW, ORG_FLOW,
       WS_ID, ROLE_FLOW, AUTH_TIME, 
       AUTH_USER_FLOW, RECORD_STATUS, CREATE_TIME, 
@@ -119,7 +119,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysUserRole" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysUserRole">
       insert into SYS_USER_ROLE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -198,7 +198,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysUserRoleExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysUserRoleExample" resultType="java.lang.Integer">
       select count(*) from SYS_USER_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -266,7 +266,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysUserRole" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysUserRole">
       update SYS_USER_ROLE
     <set >
       <if test="userFlow != null" >
@@ -305,7 +305,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysUserRole" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysUserRole">
       update SYS_USER_ROLE
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -321,7 +321,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
 
-  <insert id="batchInsert" parameterType="com.pinde.sci.model.mo.SysUserRole">
+    <insert id="batchInsert" parameterType="com.pinde.core.model.SysUserRole">
     INSERT ALL
     <foreach collection="userRoleList" item="userRole" separator=" ">
         into SYS_USER_ROLE (RECORD_FLOW, USER_FLOW, ORG_FLOW,
@@ -338,7 +338,7 @@
     select 1 from dual
   </insert>
 
-  <update id="batchUpdateSelective" parameterType="com.pinde.sci.model.mo.SysUserRole">
+    <update id="batchUpdateSelective" parameterType="com.pinde.core.model.SysUserRole">
     <foreach collection="userRoleList" separator=";" open="begin" close=";end;" item="userRole">
         update SYS_USER_ROLE
       <set >

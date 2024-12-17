@@ -17,7 +17,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

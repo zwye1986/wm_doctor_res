@@ -5,7 +5,8 @@
                extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-        <association property="userRole" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUserRole" resultMap="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap"/>
+        <association property="userRole" column="USER_FLOW" javaType="com.pinde.core.model.SysUserRole"
+                     resultMap="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap"/>
         <association property="sysRole" column="ROLE_FLOW" javaType="com.pinde.core.model.SysRole"
                      resultMap="com.pinde.core.common.sci.dao.SysRoleMapper.BaseResultMap"/>
     </resultMap>

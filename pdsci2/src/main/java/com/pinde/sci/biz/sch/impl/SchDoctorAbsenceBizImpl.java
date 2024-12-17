@@ -17,7 +17,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.SchDoctorAbsenceMapper;
 import com.pinde.sci.dao.sch.SchDoctorAbsenceExtMapper;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.SchDept;
 import com.pinde.sci.model.mo.SchDoctorAbsence;
 import com.pinde.sci.model.mo.SchDoctorAbsenceExample;

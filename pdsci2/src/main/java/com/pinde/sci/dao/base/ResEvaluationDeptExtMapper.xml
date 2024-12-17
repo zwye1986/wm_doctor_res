@@ -63,7 +63,7 @@
         DEPT_FLOW, ORG_FLOW, DEPT_CODE, DEPT_NAME, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
         MODIFY_TIME, MODIFY_USER_FLOW, DEPT_PINYIN, DEPT_ID, DEPT_PID
     </sql>
-    <select id="selectByRecord" resultMap="BaseResultMap"  parameterType="com.pinde.sci.model.mo.ResEvaluationDept" >
+    <select id="selectByRecord" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResEvaluationDept">
         select
         <include refid="Base_Column_List" />
         from RES_EVALUATION_DEPT ED

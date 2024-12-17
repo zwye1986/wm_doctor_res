@@ -1,10 +1,8 @@
 package com.pinde.sci.model.jsres;
 
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
-
-import java.io.Serializable;
 
 /**
  * @创建人 zsq

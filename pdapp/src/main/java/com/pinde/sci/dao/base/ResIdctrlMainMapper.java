@@ -1,7 +1,5 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.core.model.ResIdctrlMain;
-import com.pinde.core.model.ResIdctrlMainExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

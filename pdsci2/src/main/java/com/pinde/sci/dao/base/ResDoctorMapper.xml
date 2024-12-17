@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctor" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctor">
     <id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_CODE" property="doctorCode" jdbcType="VARCHAR" />
     <result column="DOCTOR_HEAD_IMG" property="doctorHeadImg" jdbcType="VARCHAR" />
@@ -220,7 +220,7 @@
     CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, IS_RECRUIT_SEND, IS_ADJUST, SCHOOL, 
     SUBMIT_TIME, CHECK_TIME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResDoctorExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResDoctorExample">
     select
     <if test="distinct" >
       distinct
@@ -259,13 +259,13 @@
       delete from RES_DOCTOR
     where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorExample">
       delete from RES_DOCTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctor" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctor">
       insert into RES_DOCTOR (DOCTOR_FLOW, DOCTOR_CODE, DOCTOR_HEAD_IMG,
       DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, ORG_FLOW, 
       ORG_NAME, DEPT_FLOW, DEPT_NAME, 
@@ -359,7 +359,7 @@
       #{isAdjust,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{submitTime,jdbcType=VARCHAR}, 
       #{checkTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctor" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctor">
       insert into RES_DOCTOR
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="doctorFlow != null" >
@@ -1158,7 +1158,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorExample" resultType="java.lang.Integer">
       select count(*) from RES_DOCTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -1706,7 +1706,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctor" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctor">
       update RES_DOCTOR
     <set >
       <if test="doctorCode != null" >
@@ -2105,7 +2105,7 @@
     </set>
     where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctor" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctor">
       update RES_DOCTOR
     set DOCTOR_CODE = #{doctorCode,jdbcType=VARCHAR},
       DOCTOR_HEAD_IMG = #{doctorHeadImg,jdbcType=VARCHAR},

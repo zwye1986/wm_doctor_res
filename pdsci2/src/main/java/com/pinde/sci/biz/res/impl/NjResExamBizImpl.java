@@ -15,7 +15,7 @@ import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.TjDocinfoMapper;
 import com.pinde.sci.dao.base.TjExamInfoMapper;
 import com.pinde.sci.dao.res.NjDocinfoExtMapper;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;

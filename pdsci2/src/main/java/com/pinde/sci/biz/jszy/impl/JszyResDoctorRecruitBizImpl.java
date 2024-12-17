@@ -20,7 +20,7 @@ import com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.jszy.JszyResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

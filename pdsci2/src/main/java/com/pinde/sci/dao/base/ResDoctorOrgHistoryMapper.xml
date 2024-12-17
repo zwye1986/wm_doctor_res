@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorOrgHistory">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
     <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName" />
@@ -46,7 +46,7 @@
     <result column="HISTORY_SECOND_SPE_NAME" jdbcType="VARCHAR" property="historySecondSpeName" />
     <result column="IS_ONLY_SECOND" jdbcType="VARCHAR" property="isOnlySecond" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.ResDoctorOrgHistory">
     <result column="AUDIT_OPINION" jdbcType="CLOB" property="auditOpinion" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -121,7 +121,8 @@
   <sql id="Blob_Column_List">
     AUDIT_OPINION
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistoryExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.ResDoctorOrgHistoryExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -137,7 +138,8 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistoryExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResDoctorOrgHistoryExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -163,13 +165,13 @@
       delete from RES_DOCTOR_ORG_HISTORY
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistoryExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorOrgHistoryExample">
       delete from RES_DOCTOR_ORG_HISTORY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorOrgHistory">
       insert into RES_DOCTOR_ORG_HISTORY (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       ORG_FLOW, ORG_NAME, HISTORY_ORG_FLOW, 
       HISTORY_ORG_NAME, OUT_DATE, IN_DATE, 
@@ -205,7 +207,7 @@
       #{historySecondSpeName,jdbcType=VARCHAR}, #{isOnlySecond,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorOrgHistory">
       insert into RES_DOCTOR_ORG_HISTORY
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -476,7 +478,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistoryExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorOrgHistoryExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_DOCTOR_ORG_HISTORY
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -721,7 +724,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorOrgHistory">
       update RES_DOCTOR_ORG_HISTORY
     <set>
       <if test="doctorFlow != null">
@@ -856,7 +859,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResDoctorOrgHistory">
       update RES_DOCTOR_ORG_HISTORY
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -903,7 +906,7 @@
       AUDIT_OPINION = #{auditOpinion,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorOrgHistory">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorOrgHistory">
       update RES_DOCTOR_ORG_HISTORY
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

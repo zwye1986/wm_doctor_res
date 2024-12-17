@@ -1,12 +1,13 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.core.model.JsresDoctorDeptDetail;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.model.jsres.ArrangTdVo;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.ResOutOfficeLock;
+import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.sci.model.mo.SchArrangeResultExample;
+import com.pinde.sci.model.mo.SchRotationDept;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +32,7 @@ public interface ISchArrangeResultBiz {
 	
 	int saveSchArrangeResult(SchArrangeResult result);
 
-	int saveProcessAndResult(ResDoctorSchProcess process,SchArrangeResult result);
+    int saveProcessAndResult(ResDoctorSchProcess process, SchArrangeResult result);
 
 	int saveInDept(SchArrangeResult arrangeResult,ResDoctorSchProcess process) throws ParseException;
 

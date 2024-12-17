@@ -1,6 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcess;
 
 public class ResDoctorSchProcessExt extends ResDoctorSchProcess {
 	

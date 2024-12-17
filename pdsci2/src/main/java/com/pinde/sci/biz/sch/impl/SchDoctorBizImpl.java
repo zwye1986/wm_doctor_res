@@ -8,8 +8,8 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.form.sch.DoctorSearchForm;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorExample;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

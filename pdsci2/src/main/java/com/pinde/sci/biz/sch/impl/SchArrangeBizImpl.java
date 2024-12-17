@@ -2,6 +2,8 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorExample;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -185,7 +187,7 @@ public class SchArrangeBizImpl implements ISchArrangeBiz {
 	@Override
 	public List<ResDoctor> searchUnSchDoctor(String orgFlow) {
 		ResDoctorExample example = new ResDoctorExample();
-		com.pinde.sci.model.mo.ResDoctorExample.Criteria creater = example.createCriteria();
+        ResDoctorExample.Criteria creater = example.createCriteria();
         creater.andOrgFlowEqualTo(orgFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_N);
 		return doctorMapper.selectByExample(example); 
 	}

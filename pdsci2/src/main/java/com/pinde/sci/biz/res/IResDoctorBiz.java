@@ -1,16 +1,17 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.core.model.JsresRecruitDocInfoWithBLOBs;
-import com.pinde.core.model.JsresRecruitInfo;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ExtInfoForm;
 import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResExamDoctor;
+import com.pinde.sci.model.mo.ResScore;
+import com.pinde.sci.model.mo.ResSignin;
+import com.pinde.sci.model.mo.ResUserBindMacid;
+import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;

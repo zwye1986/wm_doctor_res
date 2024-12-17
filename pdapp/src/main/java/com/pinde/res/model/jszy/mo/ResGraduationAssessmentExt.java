@@ -1,7 +1,5 @@
 package com.pinde.res.model.jszy.mo;
 
-import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
-
 public class ResGraduationAssessmentExt extends ResGraduationAssessmentWithBLOBs {
 
     private String discipleStartDate;

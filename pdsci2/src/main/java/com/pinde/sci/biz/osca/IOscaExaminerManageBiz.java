@@ -3,7 +3,7 @@ package com.pinde.sci.biz.osca;
 
 import com.pinde.core.model.OscaTeaInfo;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;
 import org.springframework.web.multipart.MultipartFile;
