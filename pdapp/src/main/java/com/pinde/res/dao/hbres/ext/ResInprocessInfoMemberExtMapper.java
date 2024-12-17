@@ -1,5 +1,6 @@
 package com.pinde.res.dao.hbres.ext;
 
+import com.pinde.core.model.ResInprocessInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

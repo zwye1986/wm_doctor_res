@@ -134,7 +134,7 @@
 		</foreach>
 	</select>
 
-	<select id="selectByExampleTwo" parameterType="com.pinde.sci.model.mo.SchRotationDeptExample"
+    <select id="selectByExampleTwo" parameterType="com.pinde.core.model.SchRotationDeptExample"
 			resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
 		select
 		RECORD_FLOW

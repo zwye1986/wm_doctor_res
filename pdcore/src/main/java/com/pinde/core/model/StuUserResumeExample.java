@@ -4373,6 +4373,146 @@ public class StuUserResumeExample {
             addCriterion("REPORT_DATE not between", value1, value2, "reportDate");
             return (Criteria) this;
         }
+
+        public Criteria andNursingStatusIdIsNull() {
+            addCriterion("NURSING_STATUS_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdIsNotNull() {
+            addCriterion("NURSING_STATUS_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdEqualTo(String value) {
+            addCriterion("NURSING_STATUS_ID =", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdNotEqualTo(String value) {
+            addCriterion("NURSING_STATUS_ID <>", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdGreaterThan(String value) {
+            addCriterion("NURSING_STATUS_ID >", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdGreaterThanOrEqualTo(String value) {
+            addCriterion("NURSING_STATUS_ID >=", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdLessThan(String value) {
+            addCriterion("NURSING_STATUS_ID <", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdLessThanOrEqualTo(String value) {
+            addCriterion("NURSING_STATUS_ID <=", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdLike(String value) {
+            addCriterion("NURSING_STATUS_ID like", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdNotLike(String value) {
+            addCriterion("NURSING_STATUS_ID not like", value, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdIn(List<String> values) {
+            addCriterion("NURSING_STATUS_ID in", values, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdNotIn(List<String> values) {
+            addCriterion("NURSING_STATUS_ID not in", values, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdBetween(String value1, String value2) {
+            addCriterion("NURSING_STATUS_ID between", value1, value2, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusIdNotBetween(String value1, String value2) {
+            addCriterion("NURSING_STATUS_ID not between", value1, value2, "nursingStatusId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameIsNull() {
+            addCriterion("NURSING_STATUS_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameIsNotNull() {
+            addCriterion("NURSING_STATUS_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameEqualTo(String value) {
+            addCriterion("NURSING_STATUS_NAME =", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameNotEqualTo(String value) {
+            addCriterion("NURSING_STATUS_NAME <>", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameGreaterThan(String value) {
+            addCriterion("NURSING_STATUS_NAME >", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameGreaterThanOrEqualTo(String value) {
+            addCriterion("NURSING_STATUS_NAME >=", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameLessThan(String value) {
+            addCriterion("NURSING_STATUS_NAME <", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameLessThanOrEqualTo(String value) {
+            addCriterion("NURSING_STATUS_NAME <=", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameLike(String value) {
+            addCriterion("NURSING_STATUS_NAME like", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameNotLike(String value) {
+            addCriterion("NURSING_STATUS_NAME not like", value, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameIn(List<String> values) {
+            addCriterion("NURSING_STATUS_NAME in", values, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameNotIn(List<String> values) {
+            addCriterion("NURSING_STATUS_NAME not in", values, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameBetween(String value1, String value2) {
+            addCriterion("NURSING_STATUS_NAME between", value1, value2, "nursingStatusName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNursingStatusNameNotBetween(String value1, String value2) {
+            addCriterion("NURSING_STATUS_NAME not between", value1, value2, "nursingStatusName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

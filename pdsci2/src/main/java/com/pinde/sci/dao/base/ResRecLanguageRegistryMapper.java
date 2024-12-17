@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResRecLanguageRegistry;
-import com.pinde.sci.model.mo.ResRecLanguageRegistryExample;
+import com.pinde.core.model.ResRecLanguageRegistry;
+import com.pinde.core.model.ResRecLanguageRegistryExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

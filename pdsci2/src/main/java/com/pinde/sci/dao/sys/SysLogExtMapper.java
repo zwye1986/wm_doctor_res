@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.sys;
 
-import com.pinde.sci.model.mo.SysLog;
+import com.pinde.core.model.SysLog;
 
 import java.util.List;
 import java.util.Map;

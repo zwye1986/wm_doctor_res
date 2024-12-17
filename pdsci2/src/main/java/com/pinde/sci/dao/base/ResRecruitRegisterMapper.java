@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResRecruitRegister;
-import com.pinde.sci.model.mo.ResRecruitRegisterExample;
+import com.pinde.core.model.ResRecruitRegister;
+import com.pinde.core.model.ResRecruitRegisterExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

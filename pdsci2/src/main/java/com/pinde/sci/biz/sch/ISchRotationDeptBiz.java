@@ -1,10 +1,8 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -62,7 +60,7 @@ public interface ISchRotationDeptBiz {
 	List<SchRotationDeptReq> searchStandardReqByGroup(String standardGroupFlow,
 			String standardDeptId);
 
-	List<SchRotationDeptReq> searchStandardReqByResult(SchArrangeResult result,ResDoctor doctor);
+    List<SchRotationDeptReq> searchStandardReqByResult(SchArrangeResult result, ResDoctor doctor);
 
 	int updateAreaRule(String rotationFlow, String standardDeptId,
 			String groupFlow, SysOrg org);

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchArrangeTime;
-import com.pinde.sci.model.mo.SchArrangeTimeExample;
+import com.pinde.core.model.SchArrangeTime;
+import com.pinde.core.model.SchArrangeTimeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

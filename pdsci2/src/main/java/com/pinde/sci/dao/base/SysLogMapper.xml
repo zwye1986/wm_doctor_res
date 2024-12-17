@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysLogMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysLog" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysLog">
     <id column="LOG_FLOW" property="logFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
@@ -89,7 +89,7 @@
     WS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     OPER_ID
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysLogExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysLogExample">
     select
     <if test="distinct" >
       distinct
@@ -113,13 +113,13 @@
       delete from SYS_LOG
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysLogExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysLogExample">
       delete from SYS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysLog" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysLog">
       insert into SYS_LOG (LOG_FLOW, USER_FLOW, USER_CODE,
       USER_NAME, ORG_FLOW, ORG_NAME, 
       DEPT_FLOW, DEPT_NAME, REQ_TYPE_ID, 
@@ -137,7 +137,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{operId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysLog" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysLog">
       insert into SYS_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="logFlow != null" >
@@ -276,7 +276,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysLogExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysLogExample" resultType="java.lang.Integer">
       select count(*) from SYS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -384,7 +384,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysLog" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysLog">
       update SYS_LOG
     <set >
       <if test="userFlow != null" >
@@ -453,7 +453,7 @@
     </set>
     where LOG_FLOW = #{logFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysLog" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysLog">
       update SYS_LOG
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_CODE = #{userCode,jdbcType=VARCHAR},

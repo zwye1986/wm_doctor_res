@@ -1713,6 +1713,76 @@ public class SysMonthlyNotUseappInfoExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andTrainingYearsIsNull() {
+            addCriterion("TRAINING_YEARS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsIsNotNull() {
+            addCriterion("TRAINING_YEARS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsEqualTo(String value) {
+            addCriterion("TRAINING_YEARS =", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsNotEqualTo(String value) {
+            addCriterion("TRAINING_YEARS <>", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsGreaterThan(String value) {
+            addCriterion("TRAINING_YEARS >", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsGreaterThanOrEqualTo(String value) {
+            addCriterion("TRAINING_YEARS >=", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsLessThan(String value) {
+            addCriterion("TRAINING_YEARS <", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsLessThanOrEqualTo(String value) {
+            addCriterion("TRAINING_YEARS <=", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsLike(String value) {
+            addCriterion("TRAINING_YEARS like", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsNotLike(String value) {
+            addCriterion("TRAINING_YEARS not like", value, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsIn(List<String> values) {
+            addCriterion("TRAINING_YEARS in", values, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsNotIn(List<String> values) {
+            addCriterion("TRAINING_YEARS not in", values, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsBetween(String value1, String value2) {
+            addCriterion("TRAINING_YEARS between", value1, value2, "trainingYears");
+            return (Criteria) this;
+        }
+
+        public Criteria andTrainingYearsNotBetween(String value1, String value2) {
+            addCriterion("TRAINING_YEARS not between", value1, value2, "trainingYears");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

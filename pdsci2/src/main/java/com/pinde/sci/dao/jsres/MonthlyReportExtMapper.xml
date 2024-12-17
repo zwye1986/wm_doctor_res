@@ -2109,7 +2109,8 @@ ORDER BY
         AND (SCH_start_DATE >= #{startDate}
         and SCH_start_DATE<![CDATA[<=]]> #{endDate} )
     </select>
-    <select id="getCurrentMonthInException" parameterType="java.lang.String" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    <select id="getCurrentMonthInException" parameterType="java.lang.String"
+            resultType="com.pinde.core.model.SchArrangeResult">
         SELECT
          RESULT_FLOW as resultFlow,
          ARRANGE_FLOW as arrangeFlow,

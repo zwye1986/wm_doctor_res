@@ -16,8 +16,8 @@ import com.pinde.sci.dao.base.ResReadInfoMapper;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
 import com.pinde.core.model.ResInfoRole;
 import com.pinde.core.model.ResInfoRoleExample;
-import com.pinde.sci.model.mo.ResReadInfo;
-import com.pinde.sci.model.mo.ResReadInfoExample;
+import com.pinde.core.model.ResReadInfo;
+import com.pinde.core.model.ResReadInfoExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

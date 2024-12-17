@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysCfgExample;
-import com.pinde.sci.model.mo.SysCfgLogWithBLOBs;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
+import com.pinde.core.model.SysCfgLogWithBLOBs;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

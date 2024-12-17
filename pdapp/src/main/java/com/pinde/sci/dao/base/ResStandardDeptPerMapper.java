@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResStandardDeptPer;
 import com.pinde.core.model.ResStandardDeptPerExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResStandardDeptPerMapper {
     int countByExample(ResStandardDeptPerExample example);

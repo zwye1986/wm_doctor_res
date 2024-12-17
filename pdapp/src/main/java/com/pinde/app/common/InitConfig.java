@@ -1,8 +1,8 @@
 package com.pinde.app.common;
 
 import com.pinde.core.common.BaseEnum;
-import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.common.GeneralEnum;
+import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.util.ClassUtil;

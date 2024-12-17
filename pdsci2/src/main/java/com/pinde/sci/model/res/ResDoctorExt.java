@@ -1,7 +1,7 @@
 package com.pinde.sci.model.res;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.mo.StuUserResume;
+import com.pinde.core.model.StuUserResume;
 
 import java.util.List;
 

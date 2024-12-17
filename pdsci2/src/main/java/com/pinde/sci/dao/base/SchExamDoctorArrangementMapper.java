@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
-import com.pinde.sci.model.mo.SchExamDoctorArrangementExample;
+import com.pinde.core.model.SchExamDoctorArrangement;
+import com.pinde.core.model.SchExamDoctorArrangementExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

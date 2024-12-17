@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResSyntheticalFundDetail;
-import com.pinde.sci.model.mo.ResSyntheticalFundDetailExample;
+import com.pinde.core.model.ResSyntheticalFundDetail;
+import com.pinde.core.model.ResSyntheticalFundDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

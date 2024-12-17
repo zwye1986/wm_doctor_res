@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResSignin;
+import com.pinde.core.model.ResSignin;
 
 import java.util.List;
 import java.util.Map;

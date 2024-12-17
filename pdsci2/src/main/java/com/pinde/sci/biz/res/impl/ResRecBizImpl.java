@@ -29,20 +29,20 @@ import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResRecExample;
-import com.pinde.sci.model.mo.ResStandardDeptPer;
-import com.pinde.sci.model.mo.ResStandardDeptPerExample;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchDoctorDept;
-import com.pinde.sci.model.mo.SchDoctorDeptExample;
-import com.pinde.sci.model.mo.SchRotation;
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationDeptExample;
-import com.pinde.sci.model.mo.SchRotationDeptReq;
-import com.pinde.sci.model.mo.SchRotationDeptReqExample;
-import com.pinde.sci.model.mo.SchRotationGroup;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResRecExample;
+import com.pinde.core.model.ResStandardDeptPer;
+import com.pinde.core.model.ResStandardDeptPerExample;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchDoctorDeptExample;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptExample;
+import com.pinde.core.model.SchRotationDeptReq;
+import com.pinde.core.model.SchRotationDeptReqExample;
+import com.pinde.core.model.SchRotationGroup;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
 import com.pinde.sci.model.res.SchArrangeResultExt;
@@ -1355,7 +1355,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(ResRec resRec, String trainYear){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(resRec.getRecTypeId())
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(resRec.getRecTypeId())
 				.andOperUserFlowEqualTo(resRec.getOperUserFlow());
 		if(StringUtil.isNotBlank(trainYear)){
 			criteria.andOperTimeLike(trainYear + "%");
@@ -1376,7 +1376,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(String recTypeId,String schDeptFlow,String operUserFlow,String itemId){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		if(StringUtil.isNotBlank(itemId)){
 			criteria.andItemIdEqualTo(itemId);
@@ -1425,7 +1425,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //	}
 	public List<ResRec> searchRecInfo(ResRec resRec,List<String> operUserFlows){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
 			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
 		}
@@ -4581,7 +4581,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchResRec(List<String> schDeptFlows,ResRec rec){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
 		if(rec!=null){
 			if(StringUtil.isNotBlank(rec.getSchDeptName())){
 				criteria.andSchDeptNameLike("%"+rec.getSchDeptName()+"%");
@@ -5300,7 +5300,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 			//获取所有当前方案下的轮转规则
 			SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-			com.pinde.sci.model.mo.SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample
+            SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample
 					.createCriteria()
                     .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOrgFlowIsNull().andRotationFlowEqualTo(rotationFlow);
@@ -5339,7 +5339,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				//获取所有当前方案下的要求
 				SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-                com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andRotationFlowEqualTo(rotationFlow);
 				if(StringUtil.isNotBlank(relRecordFlow)){
 					reqCriteria.andRelRecordFlowEqualTo(relRecordFlow);
@@ -5425,7 +5425,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //						ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
 //						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 						ResRecExample recExample = new ResRecExample();
-                        com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+                        ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						if(StringUtil.isNotBlank(relRecordFlow)){
 //							campaignRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
 //							caseRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
@@ -5661,7 +5661,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							  String recTypeId) {
 		ResRec rec=null;
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria create=example.createCriteria();
+        ResRecExample.Criteria create = example.createCriteria();
         create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(processFlow)) {
 			create.andSchRotationDeptFlowEqualTo(processFlow);
@@ -6302,7 +6302,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		ResRecExample recExample = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
+        ResRecExample.Criteria recCriteria = recExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			coditionCount++;
@@ -6391,7 +6391,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		ResRecExample recExample = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
+        ResRecExample.Criteria recCriteria = recExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			coditionCount++;
@@ -6428,7 +6428,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-		com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
+        SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(rotationFlow)){
@@ -6508,7 +6508,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		SchRotationDeptExample deptExample = new SchRotationDeptExample();
-		com.pinde.sci.model.mo.SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
+        SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(orgFlow)){
@@ -6544,7 +6544,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		SchDoctorDeptExample docDeptExample = new SchDoctorDeptExample();
-		com.pinde.sci.model.mo.SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
+        SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(doctorFlow)){
@@ -7051,7 +7051,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public int searResRecWan(String processFlow, String recTypeId,
 							 String itemId) {
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(processFlow)) {
 			criteria.andProcessFlowEqualTo(processFlow);
 		}
@@ -7064,7 +7064,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchInfo(ResRec resRec, List<String> operUserFlows,List<String> orgFlowList) {
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
 			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
 		}

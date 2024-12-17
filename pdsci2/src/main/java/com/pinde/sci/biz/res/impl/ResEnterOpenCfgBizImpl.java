@@ -8,8 +8,8 @@ import com.pinde.sci.dao.base.ResEnterOpenCfgMapper;
 import com.pinde.sci.dao.base.SchArrangeTimeMapper;
 import com.pinde.core.model.ResEnterOpenCfg;
 import com.pinde.core.model.ResEnterOpenCfgExample;
-import com.pinde.sci.model.mo.SchArrangeTime;
-import com.pinde.sci.model.mo.SchArrangeTimeExample;
+import com.pinde.core.model.SchArrangeTime;
+import com.pinde.core.model.SchArrangeTimeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

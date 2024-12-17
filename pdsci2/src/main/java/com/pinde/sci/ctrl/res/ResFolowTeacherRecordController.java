@@ -10,7 +10,7 @@ import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
+import com.pinde.core.model.ResStudentDiscipleTeacher;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

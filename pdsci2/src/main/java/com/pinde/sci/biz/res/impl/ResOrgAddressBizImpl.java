@@ -6,8 +6,8 @@ import com.pinde.sci.biz.res.IResOrgAddressBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResOrgAddressMapper;
 import com.pinde.sci.form.res.ResOrgAddressForm;
-import com.pinde.sci.model.mo.ResOrgAddress;
-import com.pinde.sci.model.mo.ResOrgAddressExample;
+import com.pinde.core.model.ResOrgAddress;
+import com.pinde.core.model.ResOrgAddressExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

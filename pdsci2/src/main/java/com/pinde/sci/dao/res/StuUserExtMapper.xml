@@ -4,8 +4,10 @@
 	<resultMap id="StuUserExtMap" type="com.pinde.sci.model.res.StuUserExt" extends="com.pinde.sci.dao.base.StuUserResumeMapper.ResultMapWithBLOBs">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="auditProcess" column="PROCESS_FLOW" javaType="com.pinde.sci.model.mo.StuAuditProcess" resultMap="com.pinde.sci.dao.base.StuAuditProcessMapper.BaseResultMap"/>
-		<association property="stuBatch" column="BATCH_FLOW" javaType="com.pinde.sci.model.mo.StuBatch" resultMap="com.pinde.sci.dao.base.StuBatchMapper.BaseResultMap"/>
+        <association property="auditProcess" column="PROCESS_FLOW" javaType="com.pinde.core.model.StuAuditProcess"
+                     resultMap="com.pinde.sci.dao.base.StuAuditProcessMapper.BaseResultMap"/>
+        <association property="stuBatch" column="BATCH_FLOW" javaType="com.pinde.core.model.StuBatch"
+                     resultMap="com.pinde.sci.dao.base.StuBatchMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="searchStuUser"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
 		SELECT SU.IS_Foreign,SU.USER_FLOW,

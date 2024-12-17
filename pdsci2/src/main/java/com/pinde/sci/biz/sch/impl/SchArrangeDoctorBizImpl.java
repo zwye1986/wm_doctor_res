@@ -5,8 +5,8 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchArrangeDoctorBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchArrangeDoctorMapper;
-import com.pinde.sci.model.mo.SchArrangeDoctor;
-import com.pinde.sci.model.mo.SchArrangeDoctorExample;
+import com.pinde.core.model.SchArrangeDoctor;
+import com.pinde.core.model.SchArrangeDoctorExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

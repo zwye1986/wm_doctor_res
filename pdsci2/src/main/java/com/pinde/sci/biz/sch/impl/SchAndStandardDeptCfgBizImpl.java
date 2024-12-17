@@ -6,8 +6,8 @@ import com.pinde.sci.biz.sch.ISchAndStandardDeptCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.dao.sch.SchAndStandardDeptCfgExtMapper;
-import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
-import com.pinde.sci.model.mo.SchAndStandardDeptCfgExample;
+import com.pinde.core.model.SchAndStandardDeptCfg;
+import com.pinde.core.model.SchAndStandardDeptCfgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

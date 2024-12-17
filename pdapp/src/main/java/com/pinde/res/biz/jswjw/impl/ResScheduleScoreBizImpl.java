@@ -2,7 +2,6 @@ package com.pinde.res.biz.jswjw.impl;
 
 import com.pinde.core.model.ResScheduleScore;
 import com.pinde.core.model.ResScheduleScoreExample;
-import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

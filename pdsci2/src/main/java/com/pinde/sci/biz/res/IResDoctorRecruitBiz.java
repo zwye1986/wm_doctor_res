@@ -4,7 +4,7 @@ import com.pinde.core.model.JsresExamSignup;
 import com.pinde.core.model.JsresExamSignupLog;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
-import com.pinde.sci.model.mo.ResScore;
+import com.pinde.core.model.ResScore;
 
 import java.util.List;
 import java.util.Map;

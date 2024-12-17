@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.StuAuditProcess;
-import com.pinde.sci.model.mo.StuAuditProcessExample;
+import com.pinde.core.model.StuAuditProcess;
+import com.pinde.core.model.StuAuditProcessExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResult;
 
 public class ResAllowancePayment extends SchArrangeResult {
 

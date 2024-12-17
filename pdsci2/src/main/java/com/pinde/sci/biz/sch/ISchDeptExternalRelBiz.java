@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchDeptExternalRel;
+import com.pinde.core.model.SchDeptExternalRel;
 
 import java.util.List;
 

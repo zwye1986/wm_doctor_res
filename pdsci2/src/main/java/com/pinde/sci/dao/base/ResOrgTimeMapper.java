@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResOrgTime;
-import com.pinde.sci.model.mo.ResOrgTimeExample;
+import com.pinde.core.model.ResOrgTime;
+import com.pinde.core.model.ResOrgTimeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

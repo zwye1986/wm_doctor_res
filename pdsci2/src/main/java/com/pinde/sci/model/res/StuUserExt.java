@@ -1,8 +1,8 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.StuAuditProcess;
-import com.pinde.sci.model.mo.StuBatch;
-import com.pinde.sci.model.mo.StuUserResume;
+import com.pinde.core.model.StuAuditProcess;
+import com.pinde.core.model.StuBatch;
+import com.pinde.core.model.StuUserResume;
 import com.pinde.core.model.SysUser;
 
 public class StuUserExt extends StuUserResume {

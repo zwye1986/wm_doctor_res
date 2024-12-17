@@ -57,6 +57,22 @@ public class ResSupervisioSubject implements java.io.Serializable {
 
     private String speFeedback;
 
+    private String supervisioAuthority;
+
+    private String majorFeedBack;
+
+    private String manageAllSub;
+
+    private String expertReportSub;
+
+    private String majorReportSub;
+
+    private String supervisioReportSub;
+
+    private String baseManageScore;
+
+    private String baseManageSubmit;
+
     public String getSubjectFlow() {
         return subjectFlow;
     }
@@ -279,5 +295,69 @@ public class ResSupervisioSubject implements java.io.Serializable {
 
     public void setSpeFeedback(String speFeedback) {
         this.speFeedback = speFeedback;
+    }
+
+    public String getSupervisioAuthority() {
+        return supervisioAuthority;
+    }
+
+    public void setSupervisioAuthority(String supervisioAuthority) {
+        this.supervisioAuthority = supervisioAuthority;
+    }
+
+    public String getMajorFeedBack() {
+        return majorFeedBack;
+    }
+
+    public void setMajorFeedBack(String majorFeedBack) {
+        this.majorFeedBack = majorFeedBack;
+    }
+
+    public String getManageAllSub() {
+        return manageAllSub;
+    }
+
+    public void setManageAllSub(String manageAllSub) {
+        this.manageAllSub = manageAllSub;
+    }
+
+    public String getExpertReportSub() {
+        return expertReportSub;
+    }
+
+    public void setExpertReportSub(String expertReportSub) {
+        this.expertReportSub = expertReportSub;
+    }
+
+    public String getMajorReportSub() {
+        return majorReportSub;
+    }
+
+    public void setMajorReportSub(String majorReportSub) {
+        this.majorReportSub = majorReportSub;
+    }
+
+    public String getSupervisioReportSub() {
+        return supervisioReportSub;
+    }
+
+    public void setSupervisioReportSub(String supervisioReportSub) {
+        this.supervisioReportSub = supervisioReportSub;
+    }
+
+    public String getBaseManageScore() {
+        return baseManageScore;
+    }
+
+    public void setBaseManageScore(String baseManageScore) {
+        this.baseManageScore = baseManageScore;
+    }
+
+    public String getBaseManageSubmit() {
+        return baseManageSubmit;
+    }
+
+    public void setBaseManageSubmit(String baseManageSubmit) {
+        this.baseManageSubmit = baseManageSubmit;
     }
 }

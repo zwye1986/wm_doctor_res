@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ScresRecuritMoreSpe;
-import com.pinde.sci.model.mo.ScresRecuritMoreSpeExample;
+import com.pinde.core.model.ScresRecuritMoreSpe;
+import com.pinde.core.model.ScresRecuritMoreSpeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

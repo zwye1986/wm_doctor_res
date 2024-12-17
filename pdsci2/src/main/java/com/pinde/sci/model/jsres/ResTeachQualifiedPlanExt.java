@@ -1,7 +1,7 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.ResQualifiedPlanMsg;
-import com.pinde.sci.model.mo.ResTeachQualifiedPlan;
+import com.pinde.core.model.ResQualifiedPlanMsg;
+import com.pinde.core.model.ResTeachQualifiedPlan;
 
 import java.util.List;
 

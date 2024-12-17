@@ -11,10 +11,10 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResOrgSpeMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.model.mo.ResOrgSpeExample;
-import com.pinde.sci.model.mo.ResOrgSpeExample.Criteria;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysCfgExample;
+import com.pinde.core.model.ResOrgSpeExample;
+import com.pinde.core.model.ResOrgSpeExample.Criteria;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +44,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	@Override
 	public List<ResOrgSpe> searchResOrgSpeList(ResOrgSpe resOrgSpe, String trainCategoryTypeId) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria();
+		ResOrgSpeExample.Criteria criteria = example.createCriteria();
 		List<String>speTypeIdList=new ArrayList<String>();
 		if (TrainCategoryTypeEnum.BeforeCfgDate.getId().equals(trainCategoryTypeId)) {
             speTypeIdList.add(com.pinde.core.common.enums.DictTypeEnum.WMFirst.getId());
@@ -67,7 +67,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	@Override
 	public List<ResOrgSpe> searchResOrgSpeListNew(ResOrgSpe resOrgSpe,String trainCategoryTypeId,String speFlag) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria();
+		ResOrgSpeExample.Criteria criteria = example.createCriteria();
         if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(speFlag)) {
             criteria.andSpeNameEqualTo("全科");
         }
@@ -239,7 +239,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	@Override
 	public List<ResOrgSpe> searchResOrgSpeList(ResOrgSpe resOrgSpe) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-		com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria =example.createCriteria();
+		ResOrgSpeExample.Criteria criteria = example.createCriteria();
 		andCriteria(resOrgSpe, criteria);
 		example.setOrderByClause("CREATE_TIME DESC");
 		return resOrgSpeMapper.selectByExample(example);
@@ -277,7 +277,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	@Override
 	public List<ResOrgSpe> searchSpeByCondition(ResOrgSpe resOrgSpe, String flag) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-        com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
+		ResOrgSpeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (StringUtil.isNotBlank(resOrgSpe.getOrgFlow())) {
 			criteria.andOrgFlowEqualTo(resOrgSpe.getOrgFlow());
 		}
@@ -305,7 +305,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	@Override
 	public List<ResOrgSpe> searchResOrgSpeListByFlows(List<String> jointOrgFlowList) {
 		ResOrgSpeExample example=new ResOrgSpeExample();
-        com.pinde.sci.model.mo.ResOrgSpeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
+		ResOrgSpeExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if (jointOrgFlowList!=null&&jointOrgFlowList.size()>0) {
 			criteria.andOrgFlowIn(jointOrgFlowList);
 		}

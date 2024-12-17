@@ -1573,6 +1573,146 @@ public class ResScheduleScoreExample {
             addCriterion("SUBJECT_NAME not between", value1, value2, "subjectName");
             return (Criteria) this;
         }
+
+        public Criteria andDeductPointsIsNull() {
+            addCriterion("DEDUCT_POINTS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsIsNotNull() {
+            addCriterion("DEDUCT_POINTS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsEqualTo(String value) {
+            addCriterion("DEDUCT_POINTS =", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsNotEqualTo(String value) {
+            addCriterion("DEDUCT_POINTS <>", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsGreaterThan(String value) {
+            addCriterion("DEDUCT_POINTS >", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsGreaterThanOrEqualTo(String value) {
+            addCriterion("DEDUCT_POINTS >=", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsLessThan(String value) {
+            addCriterion("DEDUCT_POINTS <", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsLessThanOrEqualTo(String value) {
+            addCriterion("DEDUCT_POINTS <=", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsLike(String value) {
+            addCriterion("DEDUCT_POINTS like", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsNotLike(String value) {
+            addCriterion("DEDUCT_POINTS not like", value, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsIn(List<String> values) {
+            addCriterion("DEDUCT_POINTS in", values, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsNotIn(List<String> values) {
+            addCriterion("DEDUCT_POINTS not in", values, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsBetween(String value1, String value2) {
+            addCriterion("DEDUCT_POINTS between", value1, value2, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeductPointsNotBetween(String value1, String value2) {
+            addCriterion("DEDUCT_POINTS not between", value1, value2, "deductPoints");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardIsNull() {
+            addCriterion("SUBSTANDARD is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardIsNotNull() {
+            addCriterion("SUBSTANDARD is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardEqualTo(String value) {
+            addCriterion("SUBSTANDARD =", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardNotEqualTo(String value) {
+            addCriterion("SUBSTANDARD <>", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardGreaterThan(String value) {
+            addCriterion("SUBSTANDARD >", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardGreaterThanOrEqualTo(String value) {
+            addCriterion("SUBSTANDARD >=", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardLessThan(String value) {
+            addCriterion("SUBSTANDARD <", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardLessThanOrEqualTo(String value) {
+            addCriterion("SUBSTANDARD <=", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardLike(String value) {
+            addCriterion("SUBSTANDARD like", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardNotLike(String value) {
+            addCriterion("SUBSTANDARD not like", value, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardIn(List<String> values) {
+            addCriterion("SUBSTANDARD in", values, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardNotIn(List<String> values) {
+            addCriterion("SUBSTANDARD not in", values, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardBetween(String value1, String value2) {
+            addCriterion("SUBSTANDARD between", value1, value2, "substandard");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubstandardNotBetween(String value1, String value2) {
+            addCriterion("SUBSTANDARD not between", value1, value2, "substandard");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

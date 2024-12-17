@@ -46,21 +46,21 @@ import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.ResDoctorSchProcessExample;
 import com.pinde.core.model.ResExamDoctor;
 import com.pinde.core.model.ResJointOrg;
-import com.pinde.sci.model.mo.ResReg;
-import com.pinde.sci.model.mo.ResScore;
-import com.pinde.sci.model.mo.ResSignin;
-import com.pinde.sci.model.mo.ResSigninExample;
-import com.pinde.sci.model.mo.ResTestConfig;
-import com.pinde.sci.model.mo.ResUserBindMacid;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchArrangeResultExample;
-import com.pinde.sci.model.mo.SchDoctorDept;
-import com.pinde.sci.model.mo.SchDoctorDeptExample;
-import com.pinde.sci.model.mo.SchDoctorSelectDept;
-import com.pinde.sci.model.mo.SchDoctorSelectDeptExample;
-import com.pinde.sci.model.mo.SchOrgArrangeResult;
-import com.pinde.sci.model.mo.SchOrgArrangeResultExample;
-import com.pinde.sci.model.mo.SchRotation;
+import com.pinde.core.model.ResReg;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.ResSignin;
+import com.pinde.core.model.ResSigninExample;
+import com.pinde.core.model.ResTestConfig;
+import com.pinde.core.model.ResUserBindMacid;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResultExample;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchDoctorDeptExample;
+import com.pinde.core.model.SchDoctorSelectDept;
+import com.pinde.core.model.SchDoctorSelectDeptExample;
+import com.pinde.core.model.SchOrgArrangeResult;
+import com.pinde.core.model.SchOrgArrangeResultExample;
+import com.pinde.core.model.SchRotation;
 import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
@@ -1947,7 +1947,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	@Override
 	public List<ResSignin> searchSignList(List<String> deptFlows,String signDate) {
 		ResSigninExample signExample = new ResSigninExample();
-		com.pinde.sci.model.mo.ResSigninExample.Criteria criteria =
+        ResSigninExample.Criteria criteria =
                 signExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptFlows);
 		if(StringUtil.isNotBlank(signDate)){
 			criteria.andSignDateEqualTo(signDate);

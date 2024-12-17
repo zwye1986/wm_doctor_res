@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.sci.biz.res.IResSignInBiz;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.model.mo.ResSignin;
+import com.pinde.core.model.ResSignin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

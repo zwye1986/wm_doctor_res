@@ -63,6 +63,8 @@ public class ScresGraduationApply implements java.io.Serializable {
 
     private String chargeRemark;
 
+    private String orgAuditorName;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -309,5 +311,13 @@ public class ScresGraduationApply implements java.io.Serializable {
 
     public void setChargeRemark(String chargeRemark) {
         this.chargeRemark = chargeRemark;
+    }
+
+    public String getOrgAuditorName() {
+        return orgAuditorName;
+    }
+
+    public void setOrgAuditorName(String orgAuditorName) {
+        this.orgAuditorName = orgAuditorName;
     }
 }

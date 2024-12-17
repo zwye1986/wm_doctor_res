@@ -43,6 +43,10 @@ public class ResScheduleScore implements java.io.Serializable {
 
     private String subjectName;
 
+    private String deductPoints;
+
+    private String substandard;
+
     public String getScheduleFlow() {
         return scheduleFlow;
     }
@@ -209,5 +213,21 @@ public class ResScheduleScore implements java.io.Serializable {
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public String getDeductPoints() {
+        return deductPoints;
+    }
+
+    public void setDeductPoints(String deductPoints) {
+        this.deductPoints = deductPoints;
+    }
+
+    public String getSubstandard() {
+        return substandard;
+    }
+
+    public void setSubstandard(String substandard) {
+        this.substandard = substandard;
     }
 }

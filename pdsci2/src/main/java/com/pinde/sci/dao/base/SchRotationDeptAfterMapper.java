@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchRotationDeptAfter;
-import com.pinde.sci.model.mo.SchRotationDeptAfterExample;
-import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
+import com.pinde.core.model.SchRotationDeptAfter;
+import com.pinde.core.model.SchRotationDeptAfterExample;
+import com.pinde.core.model.SchRotationDeptAfterWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

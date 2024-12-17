@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ScresGraduationTicket;
 import com.pinde.core.model.ScresGraduationTicketExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ScresGraduationTicketMapper {
     int countByExample(ScresGraduationTicketExample example);

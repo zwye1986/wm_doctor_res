@@ -1,11 +1,10 @@
 package com.pinde.res.biz.common.impl;
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.model.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfgExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;
-import com.pinde.core.model.ResPowerCfg;
-import com.pinde.core.model.ResPowerCfgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

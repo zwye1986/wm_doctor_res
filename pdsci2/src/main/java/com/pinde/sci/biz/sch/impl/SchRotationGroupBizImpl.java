@@ -7,11 +7,11 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SchRotationGroupMapper;
 import com.pinde.sci.dao.sch.SchRotationGroupExtMapper;
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationDeptExample;
-import com.pinde.sci.model.mo.SchRotationGroup;
-import com.pinde.sci.model.mo.SchRotationGroupExample;
-import com.pinde.sci.model.mo.SchRotationGroupExample.Criteria;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptExample;
+import com.pinde.core.model.SchRotationGroup;
+import com.pinde.core.model.SchRotationGroupExample;
+import com.pinde.core.model.SchRotationGroupExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

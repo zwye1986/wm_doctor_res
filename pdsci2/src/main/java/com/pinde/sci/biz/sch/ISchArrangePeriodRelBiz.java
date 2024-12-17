@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.sch;
 
 
-
-import com.pinde.sci.model.mo.SchArrangePeriodRel;
+import com.pinde.core.model.SchArrangePeriodRel;
 
 import java.util.List;
 

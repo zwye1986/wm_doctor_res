@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysDeptMonthPlanItemMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysDeptMonthPlanItem">
     <id column="ITEM_FLOW" property="itemFlow" jdbcType="VARCHAR" />
     <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
     <result column="PLAN_TIME" property="planTime" jdbcType="VARCHAR" />
@@ -17,7 +17,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SysDeptMonthPlanItem" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SysDeptMonthPlanItem" extends="BaseResultMap">
     <result column="EVAL_CFG" property="evalCfg" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -85,7 +85,8 @@
   <sql id="Blob_Column_List" >
     EVAL_CFG
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.SysDeptMonthPlanItemExample">
     select
     <if test="distinct" >
       distinct
@@ -101,7 +102,8 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SysDeptMonthPlanItemExample">
     select
     <if test="distinct" >
       distinct
@@ -127,13 +129,13 @@
       delete from SYS_DEPT_MONTH_PLAN_ITEM
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanItemExample">
       delete from SYS_DEPT_MONTH_PLAN_ITEM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysDeptMonthPlanItem">
       insert into SYS_DEPT_MONTH_PLAN_ITEM (ITEM_FLOW, PLAN_FLOW, PLAN_TIME,
       ADDRESS, CONTENT, TITLE, 
       ITEM_TYPE_ID, ITEM_TYPE_NAME, JOIN_USER_FLOW, 
@@ -147,7 +149,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{evalCfg,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysDeptMonthPlanItem">
       insert into SYS_DEPT_MONTH_PLAN_ITEM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="itemFlow != null" >
@@ -244,7 +246,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItemExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanItemExample"
+            resultType="java.lang.Integer">
       select count(*) from SYS_DEPT_MONTH_PLAN_ITEM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -344,7 +347,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDeptMonthPlanItem">
       update SYS_DEPT_MONTH_PLAN_ITEM
     <set >
       <if test="planFlow != null" >
@@ -392,7 +395,7 @@
     </set>
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SysDeptMonthPlanItem">
       update SYS_DEPT_MONTH_PLAN_ITEM
     set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
       PLAN_TIME = #{planTime,jdbcType=VARCHAR},
@@ -410,7 +413,7 @@
       EVAL_CFG = #{evalCfg,jdbcType=CLOB}
     where ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysDeptMonthPlanItem" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDeptMonthPlanItem">
       update SYS_DEPT_MONTH_PLAN_ITEM
     set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
       PLAN_TIME = #{planTime,jdbcType=VARCHAR},

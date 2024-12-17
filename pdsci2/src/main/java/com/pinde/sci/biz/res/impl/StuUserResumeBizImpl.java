@@ -6,7 +6,7 @@ import com.pinde.sci.biz.res.IStuUserResumeBiz;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.StuUserResumeMapper;
 import com.pinde.sci.dao.res.StuUserExtMapper;
-import com.pinde.sci.model.mo.StuUserResume;
+import com.pinde.core.model.StuUserResume;
 import com.pinde.sci.model.res.StuUserExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

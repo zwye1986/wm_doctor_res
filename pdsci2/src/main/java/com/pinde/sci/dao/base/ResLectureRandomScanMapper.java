@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResLectureRandomScan;
-import com.pinde.sci.model.mo.ResLectureRandomScanExample;
+import com.pinde.core.model.ResLectureRandomScan;
+import com.pinde.core.model.ResLectureRandomScanExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

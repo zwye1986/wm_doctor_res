@@ -27,13 +27,13 @@ public class SchRotationGroup implements java.io.Serializable {
 
     private String orgName;
 
+    private String standardGroupFlow;
+
     private String selTypeId;
 
     private String selTypeName;
 
     private Integer maxDeptNum;
-
-    private String standardGroupFlow;
 
     private Integer ordinal;
 
@@ -44,6 +44,8 @@ public class SchRotationGroup implements java.io.Serializable {
     private String schStageName;
 
     private String sessionNumber;
+
+    private String schMaxMonth;
 
     public String getGroupFlow() {
         return groupFlow;
@@ -149,6 +151,14 @@ public class SchRotationGroup implements java.io.Serializable {
         this.orgName = orgName;
     }
 
+    public String getStandardGroupFlow() {
+        return standardGroupFlow;
+    }
+
+    public void setStandardGroupFlow(String standardGroupFlow) {
+        this.standardGroupFlow = standardGroupFlow;
+    }
+
     public String getSelTypeId() {
         return selTypeId;
     }
@@ -171,14 +181,6 @@ public class SchRotationGroup implements java.io.Serializable {
 
     public void setMaxDeptNum(Integer maxDeptNum) {
         this.maxDeptNum = maxDeptNum;
-    }
-
-    public String getStandardGroupFlow() {
-        return standardGroupFlow;
-    }
-
-    public void setStandardGroupFlow(String standardGroupFlow) {
-        this.standardGroupFlow = standardGroupFlow;
     }
 
     public Integer getOrdinal() {
@@ -219,5 +221,13 @@ public class SchRotationGroup implements java.io.Serializable {
 
     public void setSessionNumber(String sessionNumber) {
         this.sessionNumber = sessionNumber;
+    }
+
+    public String getSchMaxMonth() {
+        return schMaxMonth;
+    }
+
+    public void setSchMaxMonth(String schMaxMonth) {
+        this.schMaxMonth = schMaxMonth;
     }
 }

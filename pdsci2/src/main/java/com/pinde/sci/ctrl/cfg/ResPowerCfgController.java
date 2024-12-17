@@ -9,7 +9,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
-import com.pinde.sci.model.mo.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfg;
 import com.pinde.core.model.SysUserRole;
 import com.pinde.core.model.SysUserRoleExample;
 import org.springframework.beans.factory.annotation.Autowired;

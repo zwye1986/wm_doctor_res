@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationGroup;
-import com.pinde.sci.model.mo.SchRotationGroupExample;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationGroup;
+import com.pinde.core.model.SchRotationGroupExample;
 
 import java.util.List;
 import java.util.Map;

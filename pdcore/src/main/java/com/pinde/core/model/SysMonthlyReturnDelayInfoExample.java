@@ -3113,6 +3113,146 @@ public class SysMonthlyReturnDelayInfoExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andIdNoIsNull() {
+            addCriterion("ID_NO is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoIsNotNull() {
+            addCriterion("ID_NO is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoEqualTo(String value) {
+            addCriterion("ID_NO =", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoNotEqualTo(String value) {
+            addCriterion("ID_NO <>", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoGreaterThan(String value) {
+            addCriterion("ID_NO >", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoGreaterThanOrEqualTo(String value) {
+            addCriterion("ID_NO >=", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoLessThan(String value) {
+            addCriterion("ID_NO <", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoLessThanOrEqualTo(String value) {
+            addCriterion("ID_NO <=", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoLike(String value) {
+            addCriterion("ID_NO like", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoNotLike(String value) {
+            addCriterion("ID_NO not like", value, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoIn(List<String> values) {
+            addCriterion("ID_NO in", values, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoNotIn(List<String> values) {
+            addCriterion("ID_NO not in", values, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoBetween(String value1, String value2) {
+            addCriterion("ID_NO between", value1, value2, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNoNotBetween(String value1, String value2) {
+            addCriterion("ID_NO not between", value1, value2, "idNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneIsNull() {
+            addCriterion("USER_PHONE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneIsNotNull() {
+            addCriterion("USER_PHONE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneEqualTo(String value) {
+            addCriterion("USER_PHONE =", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneNotEqualTo(String value) {
+            addCriterion("USER_PHONE <>", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneGreaterThan(String value) {
+            addCriterion("USER_PHONE >", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("USER_PHONE >=", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneLessThan(String value) {
+            addCriterion("USER_PHONE <", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneLessThanOrEqualTo(String value) {
+            addCriterion("USER_PHONE <=", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneLike(String value) {
+            addCriterion("USER_PHONE like", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneNotLike(String value) {
+            addCriterion("USER_PHONE not like", value, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneIn(List<String> values) {
+            addCriterion("USER_PHONE in", values, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneNotIn(List<String> values) {
+            addCriterion("USER_PHONE not in", values, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneBetween(String value1, String value2) {
+            addCriterion("USER_PHONE between", value1, value2, "userPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserPhoneNotBetween(String value1, String value2) {
+            addCriterion("USER_PHONE not between", value1, value2, "userPhone");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

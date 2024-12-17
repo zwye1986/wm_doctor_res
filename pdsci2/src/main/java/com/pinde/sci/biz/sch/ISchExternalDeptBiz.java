@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchExternalDept;
-import com.pinde.sci.model.mo.SchRotation;
-import com.pinde.sci.model.mo.SchRotationDept;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchExternalDept;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
 import com.pinde.sci.model.res.ResDoctorExt;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.mo.ResMessage;
+import com.pinde.core.model.ResMessage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

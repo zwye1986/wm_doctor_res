@@ -25,7 +25,7 @@ import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.core.model.PubUserResume;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResJointOrg;
-import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.core.model.SysCfg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;

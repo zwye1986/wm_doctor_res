@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResPassScoreCfgMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResPassScoreCfg">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResPassScoreCfg">
     <id column="CFG_YEAR" jdbcType="VARCHAR" property="cfgYear" />
     <result column="CFG_PASS_SCORE" jdbcType="VARCHAR" property="cfgPassScore" />
     <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
@@ -72,7 +72,7 @@
     CFG_YEAR, CFG_PASS_SCORE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResPassScoreCfgExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResPassScoreCfgExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -96,13 +96,13 @@
       delete from RES_PASS_SCORE_CFG
     where CFG_YEAR = #{cfgYear,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResPassScoreCfgExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResPassScoreCfgExample">
       delete from RES_PASS_SCORE_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
+    <insert id="insert" parameterType="com.pinde.core.model.ResPassScoreCfg">
       insert into RES_PASS_SCORE_CFG (CFG_YEAR, CFG_PASS_SCORE, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -110,7 +110,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResPassScoreCfg">
       insert into RES_PASS_SCORE_CFG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cfgYear != null">
@@ -159,7 +159,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResPassScoreCfgExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.ResPassScoreCfgExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_PASS_SCORE_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -207,7 +208,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResPassScoreCfg">
       update RES_PASS_SCORE_CFG
     <set>
       <if test="cfgPassScore != null">
@@ -231,7 +232,7 @@
     </set>
     where CFG_YEAR = #{cfgYear,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResPassScoreCfg">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResPassScoreCfg">
       update RES_PASS_SCORE_CFG
     set CFG_PASS_SCORE = #{cfgPassScore,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

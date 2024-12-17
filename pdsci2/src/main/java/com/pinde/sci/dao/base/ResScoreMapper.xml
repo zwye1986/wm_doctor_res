@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResScore" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResScore">
     <id column="SCORE_FLOW" property="scoreFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="SCORE_TYPE_ID" property="scoreTypeId" jdbcType="VARCHAR" />
@@ -37,7 +37,7 @@
     <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
     <result column="REAL_SCORE" property="realScore" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResScore" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResScore" extends="BaseResultMap">
     <result column="EXT_SCORE" property="extScore" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -109,7 +109,8 @@
   <sql id="Blob_Column_List" >
     EXT_SCORE
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ResScoreExample">
     select
     <if test="distinct" >
       distinct
@@ -125,7 +126,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResScoreExample">
     select
     <if test="distinct" >
       distinct
@@ -151,13 +152,13 @@
       delete from RES_SCORE
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResScoreExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResScoreExample">
       delete from RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResScore" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResScore">
       insert into RES_SCORE (SCORE_FLOW, DOCTOR_FLOW, SCORE_TYPE_ID,
       SCORE_TYPE_NAME, RESULT_FLOW, PROCESS_FLOW, 
       SCH_DEPT_FLOW, SCH_DEPT_NAME, SCORE_PHASE_ID, 
@@ -183,7 +184,7 @@
       #{isAffirmId,jdbcType=VARCHAR}, #{isAffirmName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, 
       #{realScore,jdbcType=VARCHAR}, #{extScore,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResScore" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResScore">
       insert into RES_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="scoreFlow != null" >
@@ -400,7 +401,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResScoreExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResScoreExample" resultType="java.lang.Integer">
       select count(*) from RES_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -600,7 +601,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResScore" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResScore">
       update RES_SCORE
     <set >
       <if test="doctorFlow != null" >
@@ -708,7 +709,7 @@
     </set>
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResScore" >
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResScore">
       update RES_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},
@@ -746,7 +747,7 @@
       EXT_SCORE = #{extScore,jdbcType=CLOB}
     where SCORE_FLOW = #{scoreFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResScore" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResScore">
       update RES_SCORE
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       SCORE_TYPE_ID = #{scoreTypeId,jdbcType=VARCHAR},

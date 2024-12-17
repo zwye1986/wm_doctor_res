@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResQualifiedPlanMsg;
-import com.pinde.sci.model.mo.ResQualifiedPlanMsgExample;
+import com.pinde.core.model.ResQualifiedPlanMsg;
+import com.pinde.core.model.ResQualifiedPlanMsgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

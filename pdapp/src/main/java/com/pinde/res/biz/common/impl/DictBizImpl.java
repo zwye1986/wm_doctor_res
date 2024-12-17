@@ -2,7 +2,6 @@ package com.pinde.res.biz.common.impl;
 
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysDictExample;
-import com.pinde.core.model.SysDictExample.Criteria;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IDictBiz;
 import com.pinde.sci.dao.base.SysDictMapper;
@@ -26,7 +25,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public SysDict readDict(String dictTypeId,String dictId){
 		SysDictExample example = new SysDictExample();
-		Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 		criteria.andDictTypeIdEqualTo(dictTypeId);
 		criteria.andDictIdEqualTo(dictId);
 		List<SysDict> sysDictList = sysDictMapper.selectByExample(example);
@@ -39,7 +38,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public SysDict readAllSecondLevelDict(String dictTypeId, String dictId){
 		SysDictExample example = new SysDictExample();
-		Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 		criteria.andDictIdEqualTo(dictId);
 		criteria.andDictTypeIdLike(dictTypeId+"%");
 		List<SysDict> sysDictList = sysDictMapper.selectByExample(example);
@@ -52,7 +51,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public SysDict readDict(String dictTypeId,String dictId, String orgFlow){
 		SysDictExample example = new SysDictExample();
-		Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 		criteria.andDictTypeIdEqualTo(dictTypeId);
 		criteria.andDictIdEqualTo(dictId);
 		if(StringUtil.isNotBlank(orgFlow)){
@@ -68,7 +67,7 @@ public class DictBizImpl implements IDictBiz {
     @Override
     public List<SysDict> searchDictListByDictName(SysDict sysDict) {
         SysDictExample example = new SysDictExample();
-        Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
         if(StringUtil.isNotBlank(sysDict.getDictTypeId())){
             criteria.andDictTypeIdEqualTo(sysDict.getDictTypeId());
         }
@@ -81,7 +80,7 @@ public class DictBizImpl implements IDictBiz {
     @Override
 	public List<SysDict> searchDictList(SysDict sysDict) {
 		SysDictExample example = new SysDictExample();
-		Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 //		criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(sysDict.getDictTypeId())){
 			criteria.andDictTypeIdEqualTo(sysDict.getDictTypeId());
@@ -107,7 +106,7 @@ public class DictBizImpl implements IDictBiz {
 	public List<SysDict> searchDictListAllByDictTypeId(String dictTypeId , boolean isShowAll) {
 		
 		SysDictExample example = new SysDictExample();
-		Criteria criteria  = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 		criteria.andDictTypeIdEqualTo(dictTypeId);
 		if(!isShowAll){
             criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
@@ -139,7 +138,7 @@ public class DictBizImpl implements IDictBiz {
     @Override
 	public List<SysDict> searchDictListByDictTypeIdAndDictId(String dictTypeId,String dictId) {
 		SysDictExample example = new SysDictExample();
-        Criteria criteria = example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
+		SysDictExample.Criteria criteria = example.createCriteria().andDictTypeIdEqualTo(dictTypeId).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		if(StringUtil.isNotBlank(dictId))
 		{
 			criteria.andDictIdEqualTo(dictId);
@@ -152,7 +151,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public List<SysDict> searchDictListByDictTypeIdNotIncludeSelf(SysDict dict) {
 		SysDictExample example = new SysDictExample();
-		Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 		if(StringUtil.isNotBlank(dict.getDictTypeId())){
 			criteria.andDictTypeIdEqualTo(dict.getDictTypeId());
 		}
@@ -168,7 +167,7 @@ public class DictBizImpl implements IDictBiz {
 	@Override
 	public List<SysDict> searchAllSecondLevelDictListByDictTypeIdNotIncludeSelf(String dictTypeId ,SysDict dict) {
 		SysDictExample example = new SysDictExample();
-		Criteria criteria = example.createCriteria();
+		SysDictExample.Criteria criteria = example.createCriteria();
 		if(StringUtil.isNotBlank(dict.getDictId())){
 			criteria.andDictIdEqualTo(dict.getDictId());
 		}

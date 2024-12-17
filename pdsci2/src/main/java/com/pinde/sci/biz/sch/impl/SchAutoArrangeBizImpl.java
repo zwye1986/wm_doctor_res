@@ -1,9 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -18,7 +16,13 @@ import com.pinde.sci.dao.base.SchArrangeResultMapper;
 import com.pinde.sci.dao.base.SchAutoArrangeCfgMapper;
 import com.pinde.sci.dao.base.SchAutoArrangeMapper;
 import com.pinde.sci.dao.sch.SchAutoArrangeExtMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.SchAutoArrange;
+import com.pinde.core.model.SchAutoArrangeCfg;
+import com.pinde.core.model.SchAutoArrangeCfgExample;
+import com.pinde.core.model.SchAutoArrangeExample;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

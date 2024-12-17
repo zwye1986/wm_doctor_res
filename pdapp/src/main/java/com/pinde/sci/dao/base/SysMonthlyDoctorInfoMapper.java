@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SysMonthlyDoctorInfo;
 import com.pinde.core.model.SysMonthlyDoctorInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysMonthlyDoctorInfoMapper {
     int countByExample(SysMonthlyDoctorInfoExample example);

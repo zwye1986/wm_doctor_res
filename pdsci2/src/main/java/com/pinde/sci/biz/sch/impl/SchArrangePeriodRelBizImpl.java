@@ -6,8 +6,8 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchArrangePeriodRelBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchArrangePeriodRelMapper;
-import com.pinde.sci.model.mo.SchArrangePeriodRel;
-import com.pinde.sci.model.mo.SchArrangePeriodRelExample;
+import com.pinde.core.model.SchArrangePeriodRel;
+import com.pinde.core.model.SchArrangePeriodRelExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

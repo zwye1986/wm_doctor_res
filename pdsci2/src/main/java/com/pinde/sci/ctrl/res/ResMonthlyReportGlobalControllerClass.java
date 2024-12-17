@@ -17,7 +17,7 @@ import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.pinde.core.model.ResJointOrg;
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

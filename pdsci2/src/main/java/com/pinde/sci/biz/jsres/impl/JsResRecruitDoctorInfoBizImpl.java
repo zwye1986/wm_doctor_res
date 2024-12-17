@@ -16,8 +16,8 @@ import com.pinde.sci.dao.jsres.JsResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResRecruitHistory;
-import com.pinde.sci.model.mo.ResRecruitHistoryExample;
+import com.pinde.core.model.ResRecruitHistory;
+import com.pinde.core.model.ResRecruitHistoryExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

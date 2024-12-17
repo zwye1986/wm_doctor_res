@@ -3,7 +3,7 @@ package com.pinde.sci.biz.jsres;
 import com.pinde.core.model.JsresDeptConfig;
 import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.ResOrgCkxz;
+import com.pinde.core.model.ResOrgCkxz;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

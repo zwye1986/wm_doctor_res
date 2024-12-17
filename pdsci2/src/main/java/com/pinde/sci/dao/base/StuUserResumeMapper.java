@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.StuUserResume;
-import com.pinde.sci.model.mo.StuUserResumeExample;
+import com.pinde.core.model.StuUserResume;
+import com.pinde.core.model.StuUserResumeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

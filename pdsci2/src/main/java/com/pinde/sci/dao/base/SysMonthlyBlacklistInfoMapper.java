@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysMonthlyBlacklistInfo;
-import com.pinde.sci.model.mo.SysMonthlyBlacklistInfoExample;
+import com.pinde.core.model.SysMonthlyBlacklistInfo;
+import com.pinde.core.model.SysMonthlyBlacklistInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

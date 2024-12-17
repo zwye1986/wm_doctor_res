@@ -1,10 +1,10 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
+import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJsResBaseBiz;
 import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
-import com.pinde.core.model.ResPassScoreCfg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

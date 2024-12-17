@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLiveTrainingBiz;
@@ -10,7 +9,6 @@ import com.pinde.sci.dao.base.ResTarinNoticeMapper;
 import com.pinde.sci.dao.base.ResTrainingOpinionMapper;
 import com.pinde.sci.dao.res.ResTrainNoticeExtMapper;
 import com.pinde.sci.dao.res.ResTrainingOpinionExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

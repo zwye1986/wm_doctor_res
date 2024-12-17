@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.SchArrangePeriodRelMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchArrangePeriodRel">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchArrangePeriodRel">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="SCH_DEPT_FLOW" jdbcType="VARCHAR" property="schDeptFlow" />
     <result column="SCH_DEPT_NAME" jdbcType="VARCHAR" property="schDeptName" />
@@ -82,7 +82,8 @@
     ORG_FLOW, ORG_NAME, START_DATE, END_DATE, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, DOCTOR_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRelExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.SchArrangePeriodRelExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -106,13 +107,13 @@
       delete from SCH_ARRANGE_PERIOD_REL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRelExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchArrangePeriodRelExample">
       delete from SCH_ARRANGE_PERIOD_REL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRel">
+    <insert id="insert" parameterType="com.pinde.core.model.SchArrangePeriodRel">
       insert into SCH_ARRANGE_PERIOD_REL (RECORD_FLOW, SCH_DEPT_FLOW, SCH_DEPT_NAME,
       STANDARD_DEPT_ID, STANDARD_DEPT_NAME, ORG_FLOW, 
       ORG_NAME, START_DATE, END_DATE, 
@@ -126,7 +127,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{doctorFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRel">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchArrangePeriodRel">
       insert into SCH_ARRANGE_PERIOD_REL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -229,7 +230,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRelExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.SchArrangePeriodRelExample"
+            resultType="java.lang.Integer">
       select count(*) from SCH_ARRANGE_PERIOD_REL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -313,7 +315,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRel">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchArrangePeriodRel">
       update SCH_ARRANGE_PERIOD_REL
     <set>
       <if test="schDeptFlow != null">
@@ -364,7 +366,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchArrangePeriodRel">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchArrangePeriodRel">
       update SCH_ARRANGE_PERIOD_REL
     set SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR},
       SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},

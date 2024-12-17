@@ -9,7 +9,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;
-import com.pinde.sci.model.mo.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

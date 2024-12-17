@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchDoctorAbsence;
-import com.pinde.sci.model.mo.SchDoctorAbsenceExample;
+import com.pinde.core.model.SchDoctorAbsence;
+import com.pinde.core.model.SchDoctorAbsenceExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

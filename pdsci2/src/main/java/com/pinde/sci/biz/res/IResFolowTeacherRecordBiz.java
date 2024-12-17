@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.ResDiscipleRecordInfo;
-import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
+import com.pinde.core.model.ResStudentDiscipleTeacher;
 import com.pinde.sci.model.res.ResDoctorExt;
 
 import java.util.List;

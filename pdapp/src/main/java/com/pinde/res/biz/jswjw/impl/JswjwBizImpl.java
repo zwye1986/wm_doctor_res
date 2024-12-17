@@ -4498,22 +4498,8 @@ public class JswjwBizImpl implements IJswjwBiz {
                     trainingYears = TrainYearEnum.getNameById(trainingYears);
                     doctor.setTrainingYears(trainingYears);
                 }
-//				SchArrangeResultExample resultExample = new SchArrangeResultExample();
-//				com.pinde.sci.model.mo.SchArrangeResultExample.Criteria resultCriteria = resultExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-//						.andDoctorFlowEqualTo(doctorFlow);
-//				if(StringUtil.isNotBlank(doctor.getRotationFlow())){
-//					resultCriteria.andRotationFlowEqualTo(doctor.getRotationFlow());
-//				}
-//				resultExample.setOrderByClause("SCH_START_DATE");
-//				List<SchArrangeResult> sars = resultMapper.selectByExample(resultExample);
                 // 查询轮转计划开始时间最早的日期
                 String startDate = resultExtMapper.getSchMinStartDate(doctor.getRotationFlow(), doctorFlow);
-//				if(sars!=null && !sars.isEmpty()){
-//					SchArrangeResult sar = sars.get(0);
-//					if(sar!=null){
-//						startDate = sar.getSchStartDate();
-//					}
-//				}
 
                 ResDoctorRecruitExample example = new ResDoctorRecruitExample();
                 example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow);

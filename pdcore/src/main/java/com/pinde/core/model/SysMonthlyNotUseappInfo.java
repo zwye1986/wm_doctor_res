@@ -47,6 +47,8 @@ public class SysMonthlyNotUseappInfo implements java.io.Serializable {
 
     private String modifyUserFlow;
 
+    private String trainingYears;
+
     public String getSmrdiFlow() {
         return smrdiFlow;
     }
@@ -229,5 +231,13 @@ public class SysMonthlyNotUseappInfo implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getTrainingYears() {
+        return trainingYears;
+    }
+
+    public void setTrainingYears(String trainingYears) {
+        this.trainingYears = trainingYears;
     }
 }

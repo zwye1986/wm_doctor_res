@@ -13,7 +13,7 @@ import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
 import com.pinde.core.model.ResDoctorSchProcessExample.Criteria;
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResult;
 import com.pinde.sci.model.res.SchProcessExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;

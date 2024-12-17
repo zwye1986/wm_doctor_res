@@ -6,7 +6,7 @@ import com.pinde.sci.dao.base.GraduationExamResultsMapper;
 import com.pinde.sci.dao.jsres.JsResGraduationMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
+import com.pinde.core.model.SchExamDoctorArrangement;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

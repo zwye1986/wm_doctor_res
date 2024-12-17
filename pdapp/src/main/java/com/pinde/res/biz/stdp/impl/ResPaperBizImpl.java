@@ -22,7 +22,7 @@ public class ResPaperBizImpl implements ResPaperBiz {
 	private TestPaperMapper testPaperMapper;
 
 	@Override
-	public ResPaper getPaperByRotationAndDept(String speId,String standardDeptId) {
+    public ResPaper getPaperByRotationAndDept(String speId, String standardDeptId) {
 		if(!StringUtil.isNotBlank(speId)){
 			return null;
 		}
