@@ -1355,6 +1355,7 @@ public class InxJsResController extends GeneralController {
             // 当前角色放入session
             SysRole role = roleBiz.read(roleFlow);
             GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_NAME, role.getRoleName());
+            GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_FLOW, role.getRoleFlow());
             return RolePathMapper.getPath(roleFlow);
         }
         return "";
