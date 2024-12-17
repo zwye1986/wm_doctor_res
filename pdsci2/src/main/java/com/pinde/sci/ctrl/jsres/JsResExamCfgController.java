@@ -14,7 +14,7 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.SchExamArrangement;
 import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 import com.pinde.sci.model.mo.SchExamStandardDept;

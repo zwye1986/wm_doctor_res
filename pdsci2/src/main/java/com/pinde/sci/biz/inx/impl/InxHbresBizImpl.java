@@ -13,7 +13,7 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

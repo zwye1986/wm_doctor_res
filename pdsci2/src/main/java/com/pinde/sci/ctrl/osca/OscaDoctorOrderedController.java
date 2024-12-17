@@ -21,7 +21,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResPassScoreCfg;
 import com.pinde.sci.model.mo.ResScore;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;

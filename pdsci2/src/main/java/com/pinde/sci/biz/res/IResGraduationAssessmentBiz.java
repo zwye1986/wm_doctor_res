@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.PubFile;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.ResGraduationAssessmentWithBLOBs;
+import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.springframework.web.multipart.MultipartFile;
 

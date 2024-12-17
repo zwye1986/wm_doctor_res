@@ -1,5 +1,8 @@
 package com.pinde.core.model;
 
+import lombok.Data;
+
+@Data
 public class SysWsConfig implements java.io.Serializable {
     private String wsId;
 

@@ -4,7 +4,7 @@ import com.pinde.core.model.DeptTeacherGradeInfo;
 import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.TeachingActivityInfo;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResRec;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;

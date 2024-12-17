@@ -2,8 +2,8 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.jszy.JszyResJointOrgExt;
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.ResJointOrgExample;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResJointOrgExample;
 
 import java.util.List;
 

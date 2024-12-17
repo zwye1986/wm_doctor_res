@@ -85,7 +85,7 @@
     SMS_TEMP_FLOW, TEMP_ID, STATUS_CODE, STATUS_NAME, SMS_RESPONSE_MSG, REL_ID, REL_TYPE, 
     REMARK, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysSmsLogExample">
     select
     <if test="distinct" >
       distinct
@@ -109,7 +109,7 @@
       delete from SYS_SMS_LOG
     where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysSmsLogExample">
       delete from SYS_SMS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -252,7 +252,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysSmsLogExample" resultType="java.lang.Integer">
       select count(*) from SYS_SMS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

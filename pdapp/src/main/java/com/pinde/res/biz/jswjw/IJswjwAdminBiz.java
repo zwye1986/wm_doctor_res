@@ -21,7 +21,7 @@ public interface IJswjwAdminBiz {
 
     List<JsResDoctorOrgHistoryExt> getSpeChangeList(Map<String,Object> param);
 
-    List<ResDocotrDelayTeturn> getOrgDelayReturnInfo(Map<String, Object> param,List<String> flags);
+    List<ResDocotrDelayTeturn> getOrgDelayReturnInfo(Map<String, Object> param, List<String> flags);
 
     List<ResOrgSpe> getOrgSpes(String orgFlow);
 

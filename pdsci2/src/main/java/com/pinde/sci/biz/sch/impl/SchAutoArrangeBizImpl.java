@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;

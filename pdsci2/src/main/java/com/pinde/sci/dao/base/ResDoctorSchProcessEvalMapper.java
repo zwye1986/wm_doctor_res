@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorSchProcessEval;
-import com.pinde.sci.model.mo.ResDoctorSchProcessEvalExample;
-import com.pinde.sci.model.mo.ResDoctorSchProcessEvalWithBLOBs;
+import com.pinde.core.model.ResDoctorSchProcessEval;
+import com.pinde.core.model.ResDoctorSchProcessEvalExample;
+import com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,16 +1,19 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.sci.dao.SysRoleMapper;
-import com.pinde.core.model.SysRole;
-import com.pinde.core.model.SysRoleExample;
+import com.pinde.core.model.*;
 import com.pinde.core.model.SysRoleExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
-import com.pinde.core.model.ActivityCfgExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.sci.model.mo.SysCfgExample;
+import com.pinde.core.model.SysRoleColumn;
+import com.pinde.core.model.SysRoleColumnExample;
+import com.pinde.core.model.SysRolePopedom;
+import com.pinde.core.model.SysRolePopedomExample;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,7 +113,7 @@ public class RoleBizImpl implements IRoleBiz {
 	@Override
 	public List<String> getPopedom(String roleFlow) {
 		SysRolePopedomExample example = new SysRolePopedomExample();
-		com.pinde.sci.model.mo.SysRolePopedomExample.Criteria criteria = example.createCriteria();
+		SysRolePopedomExample.Criteria criteria = example.createCriteria();
         criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRolePopedom> sysRolePopedomList = sysRolePopedomMapper.selectByExample(example);
 		List<String> menuIdList = new ArrayList<String>();
@@ -127,7 +130,7 @@ public class RoleBizImpl implements IRoleBiz {
 		update.setRoleFlow(sysRole.getRoleFlow());
         update.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		SysRolePopedomExample example = new SysRolePopedomExample();
-		com.pinde.sci.model.mo.SysRolePopedomExample.Criteria criteria = example.createCriteria();
+		SysRolePopedomExample.Criteria criteria = example.createCriteria();
         criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		sysRolePopedomMapper.updateByExampleSelective(update, example);
 
@@ -145,7 +148,7 @@ public class RoleBizImpl implements IRoleBiz {
 	public Integer saveRoleAuth(SysRole sysRole,String orgFlow, String[] schoolNames) {
 		int result = 0;
 		SysRoleAuthGxExample example = new SysRoleAuthGxExample();
-		com.pinde.sci.model.mo.SysRoleAuthGxExample.Criteria criteria = example.createCriteria();
+		SysRoleAuthGxExample.Criteria criteria = example.createCriteria();
         criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		SysRoleAuthGx sysRoleAuthGx = new SysRoleAuthGx();
 		List<SysRoleAuthGx> sysRoleAuthGxes = sysRoleAuthGxMapper.selectByExample(example);
@@ -170,7 +173,7 @@ public class RoleBizImpl implements IRoleBiz {
 	public SysRoleAuthGx readRoleAuth(String roleFlow){
 		SysRoleAuthGx sysRoleAuthGx = new SysRoleAuthGx();
 		SysRoleAuthGxExample example = new SysRoleAuthGxExample();
-		com.pinde.sci.model.mo.SysRoleAuthGxExample.Criteria criteria = example.createCriteria();
+		SysRoleAuthGxExample.Criteria criteria = example.createCriteria();
         criteria.andRoleFlowEqualTo(roleFlow).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysRoleAuthGx> sysRoleAuthGxes = sysRoleAuthGxMapper.selectByExample(example);
 		if(CollectionUtils.isNotEmpty(sysRoleAuthGxes)){
@@ -235,7 +238,7 @@ public class RoleBizImpl implements IRoleBiz {
 		update.setRoleFlow(sysRole.getRoleFlow());
         update.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
 		SysRoleColumnExample example = new SysRoleColumnExample();
-		com.pinde.sci.model.mo.SysRoleColumnExample.Criteria criteria = example.createCriteria();
+		SysRoleColumnExample.Criteria criteria = example.createCriteria();
         criteria.andRoleFlowEqualTo(sysRole.getRoleFlow()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		roleColumnMapper.updateByExampleSelective(update, example);
 

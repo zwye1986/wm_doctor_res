@@ -1,6 +1,5 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysUser;
 
@@ -23,10 +22,6 @@ public interface IResDoctorProcessBiz {
 	 * @return
 	 */
 	ResDoctorSchProcess read(String processFlow);
-
-	List<ResDoctorSchProcess> searchProcessByDoctor(String doctorFlow);
-	List<ResDoctorSchProcess> searchProcessByDoctor(ResDoctor doctor,
-													ResDoctorSchProcess process, Map<String, String> roleFlagMap);
 	List<Map<String,String>> schDoctorSchProcessQuery(Map<String, String> map);
 
 	/**

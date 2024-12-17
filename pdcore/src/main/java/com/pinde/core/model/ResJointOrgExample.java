@@ -749,6 +749,12 @@ public class ResJointOrgExample {
             return (Criteria) this;
         }
 
+        public Criteria andSessionNumberEqualTo(String value) {
+            addCriterion("SESSION_NUMBER =", value, "sessionNumber");
+            return (Criteria) this;
+        }
+
+
         public Criteria andModifyUserFlowNotEqualTo(String value) {
             addCriterion("MODIFY_USER_FLOW <>", value, "modifyUserFlow");
             return (Criteria) this;

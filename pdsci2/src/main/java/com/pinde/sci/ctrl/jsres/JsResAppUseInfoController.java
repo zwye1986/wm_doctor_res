@@ -19,7 +19,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

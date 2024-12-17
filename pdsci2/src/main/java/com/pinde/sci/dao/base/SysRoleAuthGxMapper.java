@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysRoleAuthGx;
-import com.pinde.sci.model.mo.SysRoleAuthGxExample;
+import com.pinde.core.model.SysRoleAuthGx;
+import com.pinde.core.model.SysRoleAuthGxExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

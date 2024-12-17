@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysRolePopedomMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysRolePopedom" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysRolePopedom">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ROLE_FLOW" property="roleFlow" jdbcType="VARCHAR" />
     <result column="MENU_ID" property="menuId" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
     RECORD_FLOW, ROLE_FLOW, MENU_ID, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysRolePopedomExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysRolePopedomExample">
     select
     <if test="distinct" >
       distinct
@@ -97,13 +97,13 @@
       delete from SYS_ROLE_POPEDOM
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysRolePopedomExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysRolePopedomExample">
       delete from SYS_ROLE_POPEDOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysRolePopedom" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysRolePopedom">
       insert into SYS_ROLE_POPEDOM (RECORD_FLOW, ROLE_FLOW, MENU_ID,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -111,7 +111,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysRolePopedom" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysRolePopedom">
       insert into SYS_ROLE_POPEDOM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -166,7 +166,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysRolePopedomExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysRolePopedomExample"
+            resultType="java.lang.Integer">
       select count(*) from SYS_ROLE_POPEDOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -218,7 +219,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysRolePopedom" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysRolePopedom">
       update SYS_ROLE_POPEDOM
     <set >
       <if test="roleFlow != null" >
@@ -245,7 +246,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysRolePopedom" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysRolePopedom">
       update SYS_ROLE_POPEDOM
     set ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR},
       MENU_ID = #{menuId,jdbcType=VARCHAR},

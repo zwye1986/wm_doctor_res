@@ -11,7 +11,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.sci.excelListens.model.PbInfoItem;
 import com.pinde.sci.excelListens.model.SchedulingDataInfo;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchRotationDept;
 import lombok.Data;

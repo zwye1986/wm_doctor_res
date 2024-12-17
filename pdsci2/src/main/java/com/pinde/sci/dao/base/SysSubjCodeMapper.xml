@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysSubjCodeMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysSubjCode" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysSubjCode">
     <id column="SUBJ_FLOW" property="subjFlow" jdbcType="VARCHAR" />
     <result column="SUBJ_ID" property="subjId" jdbcType="VARCHAR" />
     <result column="SUBJ_NAME" property="subjName" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
     SUBJ_FLOW, SUBJ_ID, SUBJ_NAME, PAR_SUBJ_ID, ORDINAL, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysSubjCodeExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysSubjCodeExample">
     select
     <if test="distinct" >
       distinct
@@ -99,13 +99,13 @@
       delete from SYS_SUBJ_CODE
     where SUBJ_FLOW = #{subjFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysSubjCodeExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysSubjCodeExample">
       delete from SYS_SUBJ_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysSubjCode" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysSubjCode">
       insert into SYS_SUBJ_CODE (SUBJ_FLOW, SUBJ_ID, SUBJ_NAME,
       PAR_SUBJ_ID, ORDINAL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -115,7 +115,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysSubjCode" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysSubjCode">
       insert into SYS_SUBJ_CODE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjFlow != null" >
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysSubjCodeExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysSubjCodeExample" resultType="java.lang.Integer">
       select count(*) from SYS_SUBJ_CODE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -242,7 +242,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysSubjCode" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysSubjCode">
       update SYS_SUBJ_CODE
     <set >
       <if test="subjId != null" >
@@ -275,7 +275,7 @@
     </set>
     where SUBJ_FLOW = #{subjFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysSubjCode" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysSubjCode">
       update SYS_SUBJ_CODE
     set SUBJ_ID = #{subjId,jdbcType=VARCHAR},
       SUBJ_NAME = #{subjName,jdbcType=VARCHAR},

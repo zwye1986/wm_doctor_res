@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResHospScoreTable;
-import com.pinde.sci.model.mo.ResHospScoreTableExample;
+import com.pinde.core.model.ResHospScoreTable;
+import com.pinde.core.model.ResHospScoreTableExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

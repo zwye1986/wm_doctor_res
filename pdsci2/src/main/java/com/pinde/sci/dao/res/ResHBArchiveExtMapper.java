@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.PubUserResume;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.res.ResDoctorExt;
 

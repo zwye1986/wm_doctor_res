@@ -19,7 +19,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.sci.model.mo.ResTrainingSpeDept;
 import com.pinde.sci.model.mo.SchArrangeResult;
 import com.pinde.sci.model.mo.SchDept;

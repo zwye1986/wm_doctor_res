@@ -11,9 +11,9 @@ import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResDoctorReductionMapper;
 import com.pinde.sci.dao.jszy.JszyResReductionExtMapper;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorReduction;
-import com.pinde.sci.model.mo.ResDoctorReductionExample;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorReduction;
+import com.pinde.core.model.ResDoctorReductionExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

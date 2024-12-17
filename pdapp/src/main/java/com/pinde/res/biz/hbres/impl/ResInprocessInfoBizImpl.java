@@ -1,14 +1,9 @@
 package com.pinde.res.biz.hbres.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.dao.hbres.ext.ResInprocessInfoMemberExtMapper;
 import com.pinde.sci.dao.base.ResInprocessInfoMapper;
 import com.pinde.sci.dao.base.ResInprocessInfoMemberMapper;
-import com.pinde.core.model.ResInprocessInfo;
-import com.pinde.core.model.ResInprocessInfoExample;
-import com.pinde.core.model.ResInprocessInfoMember;
-import com.pinde.core.model.ResInprocessInfoMemberExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

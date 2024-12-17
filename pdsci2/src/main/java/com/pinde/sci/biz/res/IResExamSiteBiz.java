@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResExamSite;
+import com.pinde.core.model.ResExamSite;
 
 import java.util.List;
 

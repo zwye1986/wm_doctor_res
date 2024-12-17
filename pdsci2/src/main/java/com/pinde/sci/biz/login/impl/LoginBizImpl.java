@@ -5,6 +5,7 @@ import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.model.OscaOrgMenu;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;

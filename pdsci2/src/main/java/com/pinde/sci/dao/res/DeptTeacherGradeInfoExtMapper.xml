@@ -19,7 +19,9 @@
         <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
     </resultMap>
     <resultMap type="com.pinde.sci.model.res.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
-        <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorSchProcess" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>
+        <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
+                     javaType="com.pinde.core.model.ResDoctorSchProcess"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>
     </resultMap>
     <select id="processRecShMap" resultMap="processResRecShMap">
         select rdsp.PROCESS_FLOW, rdsp.USER_FLOW,su.USER_NAME,dtgi.REC_CONTENT ,dtgi.REC_Flow,

@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.sch;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;

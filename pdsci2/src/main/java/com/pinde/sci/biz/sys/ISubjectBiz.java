@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysSubjCode;
+import com.pinde.core.model.SysSubjCode;
 
 import java.util.List;
 

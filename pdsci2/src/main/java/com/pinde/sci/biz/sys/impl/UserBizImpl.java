@@ -29,11 +29,11 @@ import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.SysUserRegisterMapper;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
 import com.pinde.sci.model.mo.ResStudentDiscipleTeacher;
-import com.pinde.sci.model.mo.SysUserRole;
-import com.pinde.sci.model.mo.SysUserRoleExample;
+import com.pinde.core.model.SysUserRole;
+import com.pinde.core.model.SysUserRoleExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -127,7 +127,7 @@ public class UserBizImpl implements IUserBiz {
 		int r1 =  sysUserMapper.updateByPrimaryKeySelective(user);
 
 		SysUserRoleExample example = new SysUserRoleExample();
-		com.pinde.sci.model.mo.SysUserRoleExample.Criteria criteria = example.createCriteria();
+		SysUserRoleExample.Criteria criteria = example.createCriteria();
 		criteria.andUserFlowEqualTo(userFlow);
 		SysUserRole userRole = new SysUserRole();
         userRole.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);

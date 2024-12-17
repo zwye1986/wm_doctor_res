@@ -1,6 +1,5 @@
 package com.pinde.res.dao.ezhupei.ext;
 
-import com.pinde.core.model.ResInprocessInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

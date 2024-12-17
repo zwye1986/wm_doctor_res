@@ -2,7 +2,7 @@ package com.pinde.sci.biz.sys;
 
 import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 
 import java.util.List;
 

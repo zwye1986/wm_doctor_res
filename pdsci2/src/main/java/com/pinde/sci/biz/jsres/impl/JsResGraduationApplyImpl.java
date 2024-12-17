@@ -19,7 +19,7 @@ import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.core.model.PubUserResume;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.model.mo.SchRotationDeptAfterWithBLOBs;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

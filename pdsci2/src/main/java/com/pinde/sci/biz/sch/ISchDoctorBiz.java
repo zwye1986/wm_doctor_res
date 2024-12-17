@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.sch;
 
 import com.pinde.sci.form.sch.DoctorSearchForm;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 
 import java.util.List;
 import java.util.Map;

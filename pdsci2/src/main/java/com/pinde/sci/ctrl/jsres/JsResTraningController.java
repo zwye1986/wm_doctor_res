@@ -12,7 +12,7 @@ import com.pinde.sci.biz.res.IResLiveTrainingBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResTarinNotice;
 import com.pinde.sci.model.mo.ResTrainingOpinion;
 import org.springframework.beans.factory.annotation.Autowired;

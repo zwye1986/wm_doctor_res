@@ -1,5 +1,7 @@
 package com.pinde.core.model;
 
+import java.util.List;
+
 public class ResJointOrg implements java.io.Serializable {
     private String jointFlow;
 
@@ -20,6 +22,38 @@ public class ResJointOrg implements java.io.Serializable {
     private String modifyTime;
 
     private String modifyUserFlow;
+
+    private String sessionNumber;
+
+    private String speId;
+
+    private String speName;
+
+    private List<String> jointOrgFlowList;
+
+    public List<String> getJointOrgFlowList() {
+        return jointOrgFlowList;
+    }
+
+    public void setJointOrgFlowList(List<String> jointOrgFlowList) {
+        this.jointOrgFlowList = jointOrgFlowList;
+    }
+
+    public String getSpeName() {
+        return speName;
+    }
+
+    public void setSpeName(String speName) {
+        this.speName = speName;
+    }
+
+    public String getSpeId() {
+        return speId;
+    }
+
+    public void setSpeId(String speId) {
+        this.speId = speId;
+    }
 
     public String getJointFlow() {
         return jointFlow;
@@ -99,5 +133,13 @@ public class ResJointOrg implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getSessionNumber() {
+        return sessionNumber;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
     }
 }

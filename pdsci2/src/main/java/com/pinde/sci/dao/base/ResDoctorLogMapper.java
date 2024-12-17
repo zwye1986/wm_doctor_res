@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorLog;
-import com.pinde.sci.model.mo.ResDoctorLogExample;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorLogExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

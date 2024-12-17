@@ -1,8 +1,6 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.ResEvaluationDept;
-
-import java.io.Serializable;
+import com.pinde.core.model.ResEvaluationDept;
 
 public class ResEvaluationDeptExt extends ResEvaluationDept implements java.io.Serializable {
 

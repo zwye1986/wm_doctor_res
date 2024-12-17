@@ -4,8 +4,6 @@ import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 
-import java.io.Serializable;
-
 public class JsResDoctorInfoForm implements java.io.Serializable {
 
 	/**

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.sch;
 
 
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.SchRotation;
 import com.pinde.sci.model.mo.SchRotationDept;
 import com.pinde.core.model.SysUser;

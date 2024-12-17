@@ -1,8 +1,7 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcess;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**

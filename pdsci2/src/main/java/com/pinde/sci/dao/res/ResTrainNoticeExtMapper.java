@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.mo.ResDoctor;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.mo.ResTarinNotice;
 import org.apache.ibatis.annotations.Param;
 

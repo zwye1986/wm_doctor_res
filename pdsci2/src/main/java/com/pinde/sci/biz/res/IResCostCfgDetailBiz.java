@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.sci.model.mo.ResCostCfgDetail;
+import com.pinde.core.model.ResCostCfgDetail;
 
 import java.util.List;
 

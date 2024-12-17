@@ -2,6 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 
 import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysOrgExample;

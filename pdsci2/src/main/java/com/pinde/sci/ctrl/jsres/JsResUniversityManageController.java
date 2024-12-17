@@ -18,7 +18,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.slf4j.Logger;

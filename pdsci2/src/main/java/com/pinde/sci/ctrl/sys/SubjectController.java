@@ -1,13 +1,12 @@
 package com.pinde.sci.ctrl.sys;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ISubjectBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.SysSubjCode;
+import com.pinde.core.model.SysSubjCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

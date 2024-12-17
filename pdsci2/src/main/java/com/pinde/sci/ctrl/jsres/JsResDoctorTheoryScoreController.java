@@ -3,10 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
-import com.pinde.core.model.ResDoctorRecruit;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -24,7 +21,10 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.sci.model.mo.ResPassScoreCfg;
+import com.pinde.sci.model.mo.ResScore;
+import com.pinde.sci.model.mo.ResTestConfig;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -221,12 +221,12 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
      * @return
      */
     @RequestMapping(value="/doctorTheoryListSun")
-    public String doctorRecruitSun(Model model,Integer currentPage,String roleFlag,
-                                   HttpServletRequest request,ResDoctor doctor,SysUser user,
-                                   String baseId,String jointOrgFlag,String orgFlow2,
-                                   String derateFlag,String orgLevel,String[] datas,
-                                   String graduationYear,String scoreYear,String isHege,String skillIsHege,
-                                   String  theroyScoreYear, String  skillScoreYear,String orgCityId,String testId){
+    public String doctorRecruitSun(Model model, Integer currentPage, String roleFlag,
+                                   HttpServletRequest request, ResDoctor doctor, SysUser user,
+                                   String baseId, String jointOrgFlag, String orgFlow2,
+                                   String derateFlag, String orgLevel, String[] datas,
+                                   String graduationYear, String scoreYear, String isHege, String skillIsHege,
+                                   String theroyScoreYear, String skillScoreYear, String orgCityId, String testId) {
         ResDoctorRecruit resDoctorRecruit= new ResDoctorRecruit();
         if(StringUtil.isNotBlank(graduationYear)){
             resDoctorRecruit.setGraduationYear(graduationYear);

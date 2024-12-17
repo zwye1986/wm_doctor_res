@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.sch.SchSelYearEnum;
+import com.pinde.core.model.ResEnterOpenCfg;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.util.BeanUtil;

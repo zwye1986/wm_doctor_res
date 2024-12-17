@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResJointOrgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResJointOrg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResJointOrg">
     <id column="JOINT_FLOW" property="jointFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -78,7 +78,7 @@
     JOINT_FLOW, ORG_FLOW, ORG_NAME, JOINT_ORG_FLOW, JOINT_ORG_NAME, SESSION_NUMBER, RECORD_STATUS, CREATE_TIME,
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, spe_id, spe_name
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResJointOrgExample">
     select
     <if test="distinct" >
       distinct
@@ -102,13 +102,13 @@
       delete from RES_JOINT_ORG
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResJointOrgExample">
       delete from RES_JOINT_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResJointOrg">
       insert into RES_JOINT_ORG (JOINT_FLOW, ORG_FLOW, ORG_NAME,
       JOINT_ORG_FLOW, JOINT_ORG_NAME, SESSION_NUMBER, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -120,7 +120,7 @@
   </insert>
 
   <!-- 注意一下下面的写法【oracle批量插入】，一定要这样写，差一点都可能出错，搞了很久 -->
-  <insert id="insertAll" parameterType="com.pinde.sci.model.mo.ResJointOrg" useGeneratedKeys="false">
+    <insert id="insertAll" parameterType="com.pinde.core.model.ResJointOrg" useGeneratedKeys="false">
     INSERT ALL
     <foreach collection="resJointOrgList" item="resJointOrg" separator=" ">
         into RES_JOINT_ORG (JOINT_FLOW, ORG_FLOW, ORG_NAME,
@@ -135,7 +135,7 @@
     </foreach>
     select 1 from dual
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResJointOrg">
       insert into RES_JOINT_ORG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="jointFlow != null" >
@@ -220,7 +220,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResJointOrgExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResJointOrgExample" resultType="java.lang.Integer">
       select count(*) from RES_JOINT_ORG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -284,7 +284,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResJointOrg">
       update RES_JOINT_ORG
     <set >
       <if test="orgFlow != null" >
@@ -326,7 +326,7 @@
     </set>
     where JOINT_FLOW = #{jointFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResJointOrg" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResJointOrg">
       update RES_JOINT_ORG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -355,7 +355,7 @@
         and record_status = 'Y'
   </delete>
   <!-- 通过flow来更新，用choose，防止无条件更新全表 -->
-  <delete id="deleteJointOrg" parameterType="com.pinde.sci.model.mo.ResJointOrg">
+    <delete id="deleteJointOrg" parameterType="com.pinde.core.model.ResJointOrg">
       update RES_JOINT_ORG
         set record_status = 'N',
             modify_time = #{modifyTime},

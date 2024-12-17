@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.model.mo.ResDoctorReduction;
+import com.pinde.core.model.ResDoctorReduction;
 
 import java.util.List;
 import java.util.Map;

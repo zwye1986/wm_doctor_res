@@ -13,7 +13,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.mo.ResJointOrg;
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.model.mo.SysCfg;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResEvaluationCfg;
-import com.pinde.sci.model.mo.ResEvaluationCfgExample;
+import com.pinde.core.model.ResEvaluationCfg;
+import com.pinde.core.model.ResEvaluationCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

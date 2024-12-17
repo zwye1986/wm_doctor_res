@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.SysWsConfigMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysWsConfig">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysWsConfig">
     <id column="WS_ID" jdbcType="VARCHAR" property="wsId" />
     <result column="WS_NAME" jdbcType="VARCHAR" property="wsName" />
     <result column="LOGIN_URL" jdbcType="VARCHAR" property="loginUrl" />
@@ -80,7 +80,7 @@
     ADMISSION_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     IS_DEFAULT
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SysWsConfigExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.SysWsConfigExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -104,13 +104,13 @@
       delete from SYS_WS_CONFIG
     where WS_ID = #{wsId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysWsConfigExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysWsConfigExample">
       delete from SYS_WS_CONFIG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    <insert id="insert" parameterType="com.pinde.core.model.SysWsConfig">
       insert into SYS_WS_CONFIG (WS_ID, WS_NAME, LOGIN_URL,
       LOGOUT_URL, SYS_LOGIN_IMG, SYS_HEAD_IMG, 
       SYS_TITLE_NAME, ADMISSION_TIME, RECORD_STATUS, 
@@ -122,7 +122,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysWsConfig">
       insert into SYS_WS_CONFIG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="wsId != null">
@@ -213,7 +213,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysWsConfigExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.SysWsConfigExample" resultType="java.lang.Integer">
       select count(*) from SYS_WS_CONFIG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -289,7 +289,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysWsConfig">
       update SYS_WS_CONFIG
     <set>
       <if test="wsName != null">
@@ -334,7 +334,7 @@
     </set>
     where WS_ID = #{wsId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysWsConfig">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysWsConfig">
       update SYS_WS_CONFIG
     set WS_NAME = #{wsName,jdbcType=VARCHAR},
       LOGIN_URL = #{loginUrl,jdbcType=VARCHAR},

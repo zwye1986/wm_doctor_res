@@ -4,7 +4,8 @@
 	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.sci.model.res.ResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+        <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 
 	<resultMap id="speCountForm" type="com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm">

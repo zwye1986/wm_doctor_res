@@ -16,7 +16,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.TjDocinfoMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

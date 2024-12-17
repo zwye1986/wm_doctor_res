@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResExamMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResExam" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResExam">
     <id column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
     <result column="EXAM_NAME" property="examName" jdbcType="VARCHAR" />
     <result column="EXAM_DATE" property="examDate" jdbcType="VARCHAR" />
@@ -80,7 +80,7 @@
     EXAM_STATUS_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     EXAM_YEAR
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResExamExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResExamExample">
     select
     <if test="distinct" >
       distinct
@@ -104,13 +104,13 @@
       delete from RES_EXAM
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResExamExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResExamExample">
       delete from RES_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResExam" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResExam">
       insert into RES_EXAM (EXAM_FLOW, EXAM_NAME, EXAM_DATE,
       EXAM_TIME, EXAM_TYPE_ID, EXAM_TYPE_NAME, 
       EXAM_STATUS_ID, EXAM_STATUS_NAME, RECORD_STATUS, 
@@ -122,7 +122,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{examYear,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResExam" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResExam">
       insert into RES_EXAM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="examFlow != null" >
@@ -213,7 +213,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResExamExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResExamExample" resultType="java.lang.Integer">
       select count(*) from RES_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -289,7 +289,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResExam" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResExam">
       update RES_EXAM
     <set >
       <if test="examName != null" >
@@ -334,7 +334,7 @@
     </set>
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResExam" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResExam">
       update RES_EXAM
     set EXAM_NAME = #{examName,jdbcType=VARCHAR},
       EXAM_DATE = #{examDate,jdbcType=VARCHAR},
