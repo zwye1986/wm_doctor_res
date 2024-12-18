@@ -5,6 +5,7 @@
 <%@ page import="java.lang.Object" %>
 <%@ page import="java.lang.String" %>
 <%@ page import="java.util.Comparator" %>
+<%@ page import="java.util.Hashtable" %>
 <%
 
 /**
