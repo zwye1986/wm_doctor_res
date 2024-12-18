@@ -1,9 +1,16 @@
-build:
+build1:
   stage: build
   script:
     - mvn clean compile package -s settings.xml -Pdev
     - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdsci2/target/pdsci.war oss://njpdkj/upgrade/jsres/develop/$(date '+%Y%m%d')/ --update --force
     - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdapp/target/pdapp.war oss://njpdkj/upgrade/jsres/develop/$(date '+%Y%m%d')/ --update --force
   only:
-    - master
     - develop
+build2:
+  stage: build
+  script:
+    - mvn clean compile package -s settings.xml -Pdev
+    - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdsci2/target/pdsci.war oss://njpdkj/upgrade/jsres/master/$(date '+%Y%m%d')/ --update --force
+    - ossutil64 cp /home/gitlab-runner/builds/bbPBAsMT/0/research/jsres-doctor-pdsci/pdapp/target/pdapp.war oss://njpdkj/upgrade/jsres/master/$(date '+%Y%m%d')/ --update --force
+  only:
+    - master
