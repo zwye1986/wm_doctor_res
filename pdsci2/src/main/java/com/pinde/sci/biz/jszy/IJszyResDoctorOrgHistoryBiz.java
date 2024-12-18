@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorOrgHistory;
+import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

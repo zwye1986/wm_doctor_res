@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.pub.impl;
 
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.PubUserResumeExample;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.PubUserResumeMapper;
-import com.pinde.core.model.PubUserResume;
-import com.pinde.core.model.PubUserResumeExample;
-import com.pinde.core.model.SysUser;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

@@ -1,12 +1,8 @@
 package com.pinde.sci.dao.sch;
 
 
-import com.pinde.core.model.JsresDoctorDeptDetail;
-import com.pinde.core.model.SysDept;
+import com.pinde.core.model.*;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResOutOfficeLock;
-import com.pinde.core.model.SchArrangeResult;
 import com.pinde.sci.model.res.GeneralIdNameModel;
 import com.pinde.sci.model.res.SchArrangeResultExt;
 import org.apache.ibatis.annotations.Param;

@@ -14,8 +14,6 @@ import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResChartExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.core.model.ResTeacherTraining;
-import com.pinde.core.model.ResTeacherTrainingExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

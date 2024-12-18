@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.ResMessage;
+import com.pinde.core.model.ResMessageExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResMessageBiz;
@@ -7,8 +9,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResMessageMapper;
 import com.pinde.sci.dao.res.ResMessageExtMapper;
-import com.pinde.core.model.ResMessage;
-import com.pinde.core.model.ResMessageExample;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

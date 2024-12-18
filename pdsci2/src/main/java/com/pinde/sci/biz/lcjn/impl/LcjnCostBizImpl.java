@@ -10,10 +10,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
 import com.pinde.sci.dao.lcjn.LcjnCostManagerExtMapper;
-import com.pinde.core.model.LcjnSkillCfgDetail;
-import com.pinde.core.model.LcjnSkillCfgDetailExample;
-import com.pinde.core.model.LcjnSupplies;
-import com.pinde.core.model.LcjnSuppliesExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResSchProcessExpress;
 import com.pinde.core.model.SysUser;
 import org.dom4j.Element;
 

@@ -2,10 +2,10 @@ package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.ResBase;
 import com.pinde.core.model.ResOrgSpe;
+import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.sci.form.jsres.BaseExtInfo;
 import com.pinde.sci.form.jsres.BaseInfoForm;
 import com.pinde.sci.model.jsres.ResBaseExt;
-import com.pinde.core.model.ResPassScoreCfg;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;

@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorOrgHistory;
+import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
 
 import java.util.List;
 

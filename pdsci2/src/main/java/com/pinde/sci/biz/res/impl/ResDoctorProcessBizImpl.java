@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.model.*;
+import com.pinde.core.model.ResDoctorSchProcessExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,8 +13,6 @@ import com.pinde.sci.dao.base.ResDoctorSchProcessEvalMapper;
 import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.core.model.ResDoctorSchProcessExample.Criteria;
-import com.pinde.core.model.SchArrangeResult;
 import com.pinde.sci.model.res.SchProcessExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;

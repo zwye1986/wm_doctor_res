@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.model.SchDeptRel;
+import com.pinde.core.model.SchDeptRelExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptRelBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchDeptRelMapper;
-import com.pinde.core.model.SchDeptRel;
-import com.pinde.core.model.SchDeptRelExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

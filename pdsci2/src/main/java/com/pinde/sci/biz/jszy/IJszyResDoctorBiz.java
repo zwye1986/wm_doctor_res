@@ -1,12 +1,8 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.core.model.JsresUserBalcklist;
-import com.pinde.core.model.ResDocotrDelayTeturn;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResRec;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

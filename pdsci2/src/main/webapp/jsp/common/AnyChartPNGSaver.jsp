@@ -1,3 +1,5 @@
+<%@ page import="java.lang.Error" %>
+<%@ page import="java.lang.String" %>
 <%!
   private byte[] decodeBase64(String base64String) {
     base64String = base64String.replaceAll("\r","").replaceAll("\n","");

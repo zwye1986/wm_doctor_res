@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.form.sch.SchRotationOrgGroupForm;
 import com.pinde.core.model.SchRotationOrgCfg;
 import com.pinde.core.model.SchRotationOrgDept;
 import com.pinde.core.model.SchRotationOrgGroup;
+import com.pinde.sci.form.sch.SchRotationOrgGroupForm;
 
 import java.util.List;
 import java.util.Map;

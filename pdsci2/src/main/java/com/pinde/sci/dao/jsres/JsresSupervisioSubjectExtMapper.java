@@ -1,8 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
 import com.pinde.core.model.*;
-import com.pinde.core.model.ResSupervisioSubject;
-import com.pinde.core.model.ResSupervisioSubjectUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;

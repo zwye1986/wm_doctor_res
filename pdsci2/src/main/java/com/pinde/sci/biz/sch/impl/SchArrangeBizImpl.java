@@ -11,12 +11,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.core.model.SchDoctorDept;
-import com.pinde.core.model.SchDoctorDeptExample;
-import com.pinde.core.model.SchRotationDept;
-import com.pinde.core.model.SchRotationDeptExample;
-import com.pinde.core.model.SchRotationGroup;
-import com.pinde.core.model.SchRotationGroupExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
