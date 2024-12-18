@@ -878,7 +878,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 		}
 		Map<String,Object> paramMap = new HashMap<String, Object>();
-//		paramMap.put("trainingTypeId",com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());	//住院医师
+		paramMap.put("trainingTypeId", trainingTypeId);	//住院医师
 		if(docTypes!=null&&docTypes.length>0){
 			paramMap.put("docTypeList",docTypes);
 		}

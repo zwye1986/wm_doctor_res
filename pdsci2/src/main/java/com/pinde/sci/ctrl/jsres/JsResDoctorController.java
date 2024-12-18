@@ -38,24 +38,6 @@ import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserInfoExtForm;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorOrgHistory;
-import com.pinde.core.model.ResDoctorReduction;
-import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.core.model.ResJointOrg;
-import com.pinde.core.model.ResRec;
-import com.pinde.core.model.ResScore;
-import com.pinde.core.model.ResStandardDeptPer;
-import com.pinde.core.model.ResTestConfig;
-import com.pinde.core.model.ResUserBindMacid;
-import com.pinde.core.model.SchArrangeResult;
-import com.pinde.core.model.SchDoctorDept;
-import com.pinde.core.model.SchRotation;
-import com.pinde.core.model.SchRotationDept;
-import com.pinde.core.model.SchRotationDeptExample;
-import com.pinde.core.model.SchRotationDeptReq;
-import com.pinde.core.model.SchRotationGroup;
-import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.util.jsres.ResultUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -8298,7 +8280,7 @@ public class JsResDoctorController extends GeneralController {
                                 String yearStr, String baseFlag, String rotationFlow) throws UnsupportedEncodingException {
         SysUser currUser = GlobalContext.getCurrentUser();
         String operUserFlow = currUser.getUserFlow();
-        if (StringUtils.isBlank(doctorFlow)) doctorFlow = operUserFlow;
+//        if (StringUtils.isBlank(doctorFlow)) doctorFlow = operUserFlow;
         String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.DoctorAuth.getId();
         //TODO
 //        List<ResRec> resRecList = resRecBiz.searchByUserFlowAndTypeId(operUserFlow, recTypeId);
@@ -8308,7 +8290,11 @@ public class JsResDoctorController extends GeneralController {
         }
         StringBuilder url = new StringBuilder("redirect:/jsres/doctor/process?1=1");
         if (StringUtils.isNotBlank(hideApprove)) url.append("&hideApprove=").append(hideApprove);
-        if (StringUtils.isNotBlank(doctorFlow)) url.append("&doctorFlow=").append(doctorFlow);
+        if (StringUtils.isNotBlank(doctorFlow)) {
+            url.append("&doctorFlow=").append(doctorFlow);
+        }else {
+            url.append("&doctorFlow=").append(operUserFlow);
+        }
         if (StringUtils.isNotBlank(roleFlag)) url.append("&roleFlag=").append(roleFlag);
         if (StringUtils.isNotBlank(search)) url.append("&search=").append(search);
         if (StringUtils.isNotBlank(currentPage)) url.append("&currentPage=").append(currentPage);
