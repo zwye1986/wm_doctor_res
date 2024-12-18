@@ -5562,7 +5562,7 @@ public class JswjwWxController extends GeneralController {
         param.put("isCurrent", isCurrent);
         param.put("deptFlow", deptFlow);
         resultMap.put("nowDate", DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm"));
-        PageHelper.startPage(pageIndex, pageSize);
+//        PageHelper.startPage(pageIndex, pageSize);
         List<Map<String, Object>> list = activityBiz.findActivityList(param);
 //        resultMap.put("list", list);
         resultMap.put("dataCount", PageHelper.total);
