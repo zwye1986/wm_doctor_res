@@ -4809,7 +4809,7 @@ public class JswjwAppController {
                     model.addAttribute("resultType", "你未签到参加该讲座，无法进行签退！");
                     return "res/jswjw/qrCode";
                 }
-                if (regist.getIsScan2().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan2())) {
                     model.addAttribute("resultId", "3011109");
                     model.addAttribute("resultType", "已经扫过码了！");
                     return "res/jswjw/qrCode";
@@ -4987,7 +4987,7 @@ public class JswjwAppController {
             //扫码报名
             ResLectureScanRegist regist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, lectureFlow);
             if (regist != null) {
-                if (regist.getIsScan().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                     model.addAttribute("resultId", "3011109");
                     model.addAttribute("resultType", "已经扫过码了！");
                     return "res/jswjw/qrCode";

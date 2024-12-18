@@ -3765,8 +3765,7 @@ public class JswjwWxController extends GeneralController {
 
     @RequestMapping(value = {"/qrCode"}, method = {RequestMethod.POST})
     @ResponseBody
-    public synchronized Object qrCode(String userFlow, String roleId, String funcTypeId, String funcFlow, String codeInfo, String scanTime,
-                                      HttpServletRequest request) throws ParseException {
+    public synchronized Object qrCode(String userFlow, String roleId, String funcTypeId, String codeInfo, String scanTime) throws ParseException {
         logger.debug("=========二维码扫码成功", JSON.toJSONString(codeInfo));
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
@@ -3893,7 +3892,7 @@ public class JswjwWxController extends GeneralController {
                 //扫码报名
                 ResLectureScanRegist regist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, lectureFlow);
                 if (regist != null) {
-                    if (regist.getIsScan().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                         return ResultDataThrow("已经扫过码了！");
                     }
                     String startDate = info.getLectureTrainDate() + " " + info.getLectureStartTime();
@@ -4053,7 +4052,7 @@ public class JswjwWxController extends GeneralController {
                     if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                         return ResultDataThrow("你未签到参加该讲座，无法进行签退！");
                     }
-                    if (regist.getIsScan2().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan2())) {
                         return ResultDataThrow("已经扫过码了！");
                     }
                     String startDate = info.getLectureTrainDate() + " " + info.getLectureStartTime();

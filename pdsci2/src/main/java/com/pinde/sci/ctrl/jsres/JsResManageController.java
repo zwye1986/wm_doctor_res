@@ -46,28 +46,6 @@ import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorOrgHistory;
-import com.pinde.core.model.ResDoctorProcessEvalConfig;
-import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.core.model.ResJointOrg;
-import com.pinde.core.model.ResRec;
-import com.pinde.core.model.ResScore;
-import com.pinde.core.model.ResTeacherTraining;
-import com.pinde.core.model.ResTeacherTrainingExample;
-import com.pinde.core.model.ResTrainingSpeDept;
-import com.pinde.core.model.SchAndStandardDeptCfg;
-import com.pinde.core.model.SchArrangeResult;
-import com.pinde.core.model.SchDeptExternalRel;
-import com.pinde.core.model.SchDoctorDept;
-import com.pinde.core.model.SchRotation;
-import com.pinde.core.model.SchRotationDept;
-import com.pinde.core.model.SchRotationDeptExample;
-import com.pinde.core.model.SchRotationGroup;
-import com.pinde.core.model.SysCfg;
-import com.pinde.core.model.SysLog;
-import com.pinde.core.model.SysLogExample;
-import com.pinde.core.model.SysUserRole;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -4282,24 +4260,6 @@ public class JsResManageController extends GeneralController {
 			}
 			int result = jsResDoctorRecruitBiz.saveAuditRecruit(recruitWithBLOBs);
             return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
-//			if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
-//				//主基地审核通过 住院医师除在校专硕外 默认APP登录权限
-//				if("Passed".equals(recruitWithBLOBs.getOrgAudit())){
-//					ResDoctor doctor = resDoctorBiz.readDoctor(recruit.getDoctorFlow());
-//					if(null != doctor && "DoctorTrainingSpe".equals(doctor.getTrainingTypeId()) && !"Graduate".equals(doctor.getDoctorTypeId())) {
-//						String cfgCode = "jsres_doctor_app_login_" + doctor.getDoctorFlow();
-//						JsresPowerCfg jsresCfg = new JsresPowerCfg();
-//						jsresCfg.setCfgCode(cfgCode);
-//						jsresCfg.setCfgValue(com.pinde.core.common.GlobalConstant.FLAG_Y);
-//						jsresCfg.setCfgDesc("app登录权限");
-//						jsresCfg.setCheckStatusId("Passed");
-//						jsresCfg.setCheckStatusName("审核通过");
-//						jsresCfg.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-//						jsResPowerCfgBiz.save(jsresCfg);
-//					}
-//				}
-//				return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED;
-//			}
 		}
         return com.pinde.core.common.GlobalConstant.OPRE_FAIL;
 	}
@@ -5681,7 +5641,6 @@ public class JsResManageController extends GeneralController {
 				doctor.setSessionNumber("");
 			}
 		}
-//		doctor.setTrainingTypeId("DoctorTrainingSpe");
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<JsResDoctorOrgHistoryExt> historyExts = jsDocOrgHistoryBiz.seearchInfoByFlow1(orgHistory, changeStatusIdList, docTypeList, doctor, orgFlowList, sessionNumbers);
 		model.addAttribute("historyExts2", historyExts);
@@ -14096,7 +14055,6 @@ public class JsResManageController extends GeneralController {
 			param.put("doctorFlowList",doctorFlowList);
 			param.put("orgFlow", orgFlow);
 			param.put("docTypeList", docTypeList);
-			/*param.put("trainingTypeId", "DoctorTrainingSpe");*///住院医师
 			param.put("sessionNumber", sessionNumber);
 
 			List<Map<String, Object>> list1 = monthlyReportExtMapper2.searchDocCycleList(param);
@@ -14216,7 +14174,6 @@ public class JsResManageController extends GeneralController {
 			param.put("doctorFlowList",doctorFlowList);
 			param.put("orgFlow", orgFlow);
 			param.put("docTypeList", docTypeList);
-			/*param.put("trainingTypeId", "DoctorTrainingSpe");*///住院医师
 			param.put("sessionNumber", sessionNumber);
 
 			List<Map<String, Object>> list1 = monthlyReportExtMapper2.searchDocCycleList(param);

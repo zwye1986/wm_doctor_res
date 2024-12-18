@@ -2,8 +2,9 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.ActivityTypeEnum;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ResDocTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -2211,7 +2212,6 @@ public class JswjwWxAdminController extends GeneralController {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
-//		param.put("trainingTypeId","DoctorTrainingSpe");	//住院医师
 		if(pageIndex==null){
 			return ResultDataThrow("当前页码为空");
 		}
@@ -2219,8 +2219,6 @@ public class JswjwWxAdminController extends GeneralController {
 			return ResultDataThrow("每页条数为空");
 		}
 		PageHelper.startPage(pageIndex, pageSize);
-//		List<Map<String,Object>> list = resStatisticBiz.searchDoctorData(param);
-		//List<Map<String,Object>> list = resStatisticBiz.searchDoctorDataNew(param);
 		List<Map<String,Object>> list = jswjwBiz.searchDoctorDataNew2(param);
 		resultMap.put("list",list);
 		resultMap.put("roleFlag", roleFlag);
