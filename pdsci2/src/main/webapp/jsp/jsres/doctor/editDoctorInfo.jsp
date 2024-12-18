@@ -8,7 +8,14 @@
 <script type="text/javascript" src="<s:url value='/js/ajaxfileupload.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
+
 		$('#practicingScopeId option').hide();
+		if ('${userResumeExt.isMaster}'){
+			checkBx("${userResumeExt.isMaster}", 'master');
+		}
+		if ('${userResumeExt.isDoctor}'){
+			checkBx("${userResumeExt.isDoctor}", 'doctor');
+		}
 		if ('${user.trainingTypeId}'=='DoctorTrainingSpe'){
 			$(".doctorTypeNameTd2").hide();
 			$("#isDZ").hide();
