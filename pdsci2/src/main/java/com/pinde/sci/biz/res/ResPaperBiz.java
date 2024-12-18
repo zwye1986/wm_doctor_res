@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResPaper;
-import com.pinde.sci.model.mo.TestPaper;
+import com.pinde.core.model.ResPaper;
+import com.pinde.core.model.TestPaper;
 
 
 public interface ResPaperBiz {

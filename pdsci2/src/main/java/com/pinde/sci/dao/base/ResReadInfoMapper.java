@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResReadInfo;
-import com.pinde.sci.model.mo.ResReadInfoExample;
+import com.pinde.core.model.ResReadInfo;
+import com.pinde.core.model.ResReadInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

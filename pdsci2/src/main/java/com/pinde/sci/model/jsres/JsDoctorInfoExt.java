@@ -1,11 +1,11 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.PubUserResume;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
 
-public class JsDoctorInfoExt extends ResDoctorRecruit{
+public class JsDoctorInfoExt extends ResDoctorRecruit {
 
 	/**
 	 * 

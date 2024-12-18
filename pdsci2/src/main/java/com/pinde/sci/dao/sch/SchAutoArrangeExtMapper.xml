@@ -99,7 +99,7 @@
                    AND USER_FLOW = DOCTOR_FLOW)
          order by    ROTATION_FLOW,SECOND_ROTATION_FLOW
     </select>
-    <select id="getUserList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserList" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
          SELECT *
           FROM RES_DOCTOR RD
           LEFT JOIN SYS_USER SU

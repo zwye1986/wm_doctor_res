@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.HashMap;
 import java.util.List;

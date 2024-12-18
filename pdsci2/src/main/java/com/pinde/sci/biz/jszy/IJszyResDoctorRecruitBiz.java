@@ -1,9 +1,8 @@
 package com.pinde.sci.biz.jszy;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -38,13 +37,13 @@ public interface IJszyResDoctorRecruitBiz {
     /**
      * 查询
      */
-    List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause);
+    List<com.pinde.core.model.ResDoctorRecruit> searchResDoctorRecruitList(com.pinde.core.model.ResDoctorRecruit recruit, String orderByClause);
 
 
     /**
      * 查询审核通过人数
      */
-    int searchBasePassCount(ResDoctorRecruit recruit, List<String> orgFlowList);
+    int searchBasePassCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList);
 
     /**
      * 保存审核
@@ -53,7 +52,7 @@ public interface IJszyResDoctorRecruitBiz {
 
     List<JszyDoctorInfoExt> searchDoctorInfoResume(Map<String,Object> paramMap);
 
-    int searchDoctorNum(ResDoctorRecruit recruit);
+    int searchDoctorNum(com.pinde.core.model.ResDoctorRecruit recruit);
 
     /**
      * 更新医师走向
@@ -75,10 +74,11 @@ public interface IJszyResDoctorRecruitBiz {
      */
     List<JszyResDoctorRecruitExt>  searchDoctorSkillScore(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String flag, String scoreYear, String isHege, List<String> docTypeList);
 
-    List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit);
+    List<com.pinde.core.model.ResDoctorRecruit> readDoctorRecruits(com.pinde.core.model.ResDoctorRecruit recruit);
 
-    List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(ResDoctorRecruit recruit);
-    List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(ResDoctorRecruit recruit);
+    List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(com.pinde.core.model.ResDoctorRecruit recruit);
+
+    List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(com.pinde.core.model.ResDoctorRecruit recruit);
 
     int updateRecruit(ResDoctorRecruitWithBLOBs resDoctorRecruitWithBLOBs);
 

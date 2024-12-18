@@ -2,6 +2,7 @@ package com.pinde.sci.biz.lcjn.impl;
 
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnCostBiz;
@@ -9,7 +10,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
 import com.pinde.sci.dao.lcjn.LcjnCostManagerExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +40,7 @@ public class LcjnCostBizImpl implements ILcjnCostBiz {
     private LcjnDoctorCourseMapper doctorCourseMapper;
 
     @Override
-    public List<LcjnCourseSupplies> searchSuppliesBySkillFlowAndCourse(String skillFlow,String courseFlow) {
+    public List<LcjnCourseSupplies> searchSuppliesBySkillFlowAndCourse(String skillFlow, String courseFlow) {
         LcjnCourseSuppliesExample example = new LcjnCourseSuppliesExample();
         LcjnCourseSuppliesExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(skillFlow)&&StringUtil.isNotBlank(courseFlow)) {

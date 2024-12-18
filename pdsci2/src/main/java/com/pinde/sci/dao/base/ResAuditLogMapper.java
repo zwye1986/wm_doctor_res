@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResAuditLog;
-import com.pinde.sci.model.mo.ResAuditLogExample;
+import com.pinde.core.model.ResAuditLog;
+import com.pinde.core.model.ResAuditLogExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

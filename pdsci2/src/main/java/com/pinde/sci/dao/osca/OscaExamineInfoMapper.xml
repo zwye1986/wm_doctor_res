@@ -187,7 +187,8 @@
         </if>
     </select>
 
-    <select id="queryOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+    <select id="queryOrg" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
         select so.* from sys_org so
         where so.record_status='Y'
         <if test="orgCityId!=null and orgCityId!=''">

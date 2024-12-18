@@ -1,6 +1,11 @@
 package com.pinde.sci.biz.pub.impl;
 
 
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.PubFileExample;
+import com.pinde.core.model.PubFileExample.Criteria;
+import com.pinde.core.model.ResDoctorRecruitExample;
+import com.pinde.core.model.ResDoctorReduction;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,8 +16,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.PubFileExample.Criteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,7 +141,7 @@ public class FileBizImpl implements IFileBiz {
             /*设置页面编码为UTF-8*/
 			response.setHeader("Content-Type","text/html;charset=UTF-8");
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
 			outputStream.flush();
 			outputStream.close();
 		}
@@ -194,7 +198,7 @@ public class FileBizImpl implements IFileBiz {
 			/*设置页面编码为UTF-8*/
 			response.setHeader("Content-Type","text/html;charset=UTF-8");
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
 			outputStream.flush();
 			outputStream.close();
 		}
@@ -254,7 +258,7 @@ public class FileBizImpl implements IFileBiz {
 							fileName += "." + fileSuffixs[fileSuffixs.length-1];
 						}
 					}
-					fileName = new String(fileName.getBytes("utf-8"),"ISO8859-1" );
+                    fileName = new String(fileName.getBytes(StandardCharsets.UTF_8), "ISO8859-1");
                     response.reset();
                     response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
                     response.addHeader("Content-Length", "" + dataLength);
@@ -276,7 +280,7 @@ public class FileBizImpl implements IFileBiz {
             /*设置页面编码为UTF-8*/
             response.setHeader("Content-Type","text/html;charset=UTF-8");
             OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现文件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
             outputStream.flush();
             outputStream.close();
         }
@@ -705,7 +709,7 @@ public class FileBizImpl implements IFileBiz {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andDoctorFlowEqualTo(doctorFlow).andDoctorStatusNameEqualTo("在培");
-		List<ResDoctorRecruit> recruitList = recruitMapper.selectByExample(example);
+		List<com.pinde.core.model.ResDoctorRecruit> recruitList = recruitMapper.selectByExample(example);
 		if(null != recruitList && !recruitList.isEmpty()){
 			ResDoctorReduction reduction = reductionBiz.findReductionByRecruitFlow(recruitList.get(0).getRecruitFlow());
 			if(null != reduction){
@@ -715,6 +719,6 @@ public class FileBizImpl implements IFileBiz {
 		return null;
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(FileBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileBizImpl.class);
 
 }

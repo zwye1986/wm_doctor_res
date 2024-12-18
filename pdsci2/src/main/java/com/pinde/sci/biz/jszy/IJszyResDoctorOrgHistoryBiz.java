@@ -1,9 +1,8 @@
 package com.pinde.sci.biz.jszy;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorOrgHistory;
 import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorOrgHistory;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public interface IJszyResDoctorOrgHistoryBiz {
     /**
      * 改变状态
      */
-    int changeStatus(ResDoctorOrgHistory history, ResDoctorRecruit recruit);
+    int changeStatus(ResDoctorOrgHistory history, com.pinde.core.model.ResDoctorRecruit recruit);
 
 
     String checkFile(MultipartFile file);

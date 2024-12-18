@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.ResDoctorRecruitExtMapper" >
 	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.res.model.jswjw.mo.ResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
-		<association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+        <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="searchDoctorRecruitAllList" parameterType="java.util.Map" resultType="java.util.Map">
@@ -66,8 +67,8 @@
 
 	<select id="searchDoctorRecruitTrainingAllList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT dr.org_flow,dr.org_name,dr.session_number,count(1) num
-		FROM pdsci.RES_DOCTOR_RECRUIT dr
-		LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
 		LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 		WHERE dr.RECORD_STATUS = 'Y'
 		AND dr.AUDIT_STATUS_ID != 'NotSubmit'
@@ -104,8 +105,8 @@
 
 	<select id="searchDoctorRecruitTrainingList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT dr.org_flow,dr.org_name,dr.session_number,dr.spe_id,dr.spe_name,count(1) num
-		FROM pdsci.RES_DOCTOR_RECRUIT dr
-		LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
 		  LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 		WHERE dr.RECORD_STATUS = 'Y'
 		  AND dr.AUDIT_STATUS_ID != 'NotSubmit'
@@ -409,7 +410,7 @@
 
 	<select id="searchBlackAllList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT a.org_flow, a.org_name, a.session_number, count(1) num
-		FROM PDSCI.JSRES_USER_BALCKLIST a
+        FROM JSRES_USER_BALCKLIST a
 		LEFT JOIN res_doctor rd ON a.user_flow = rd.doctor_flow
 		WHERE a.record_status = 'Y'
 		AND a.org_flow IN (select org_flow from sys_org
@@ -437,7 +438,7 @@
 
 	<select id="searchBlackList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT a.org_flow, a.org_name, rd.training_spe_id as spe_id, rd.training_spe_name as spe_name, a.session_number, count(1) num
-		FROM PDSCI.JSRES_USER_BALCKLIST a
+        FROM JSRES_USER_BALCKLIST a
 		LEFT JOIN res_doctor rd ON a.user_flow = rd.doctor_flow
 		WHERE a.record_status = 'Y'
 		AND a.org_flow IN (select org_flow from sys_org
@@ -465,9 +466,9 @@
 
 	<select id="searchInDeptAllList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT r.org_flow, r.org_name,  count(1) num
-		FROM PDSCI.SCH_ARRANGE_RESULT R
+        FROM SCH_ARRANGE_RESULT R
 		LEFT JOIN SYS_USER U ON U.USER_FLOW = R.DOCTOR_FLOW
-		LEFT JOIN PDSCI.RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
 		WHERE R.RECORD_STATUS = 'Y'
 		<if test="startDate != null and startDate != ''">
 			AND r.SCH_START_DATE >= #{startDate}
@@ -478,7 +479,7 @@
 		AND rd.DOCTOR_STATUS_ID IN ('Training', '20')
 		AND rd.training_type_id IN ('DoctorTrainingSpe', 'AssiGeneral')
 		AND (R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-		FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
 		WHERE RECORD_STATUS = 'Y'
 		<!-- AND SCH_FLAG = 'Y' -->
 		AND (ORG_FLOW in (select org_flow from sys_org
@@ -488,7 +489,7 @@
 		</if>
 		and org_type_id = 'Hospital')
 		OR ORG_FLOW IN (SELECT ORG_FLOW
-		FROM PDSCI.SCH_DEPT_EXTERNAL_REL
+        FROM SCH_DEPT_EXTERNAL_REL
 		WHERE RECORD_STATUS = 'Y'
 		AND REL_ORG_FLOW in (select org_flow from sys_org
 		where record_status = 'Y'
@@ -503,11 +504,11 @@
 		</if>
 		and org_type_id = 'Hospital')
 		AND R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-		FROM PDSCI.RES_DOCTOR
+        FROM RES_DOCTOR
 		WHERE RECORD_STATUS = 'Y'
 	<!--AND SCH_FLAG = 'Y' -->))
     AND EXISTS (SELECT NULL
-    FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+        FROM RES_DOCTOR_SCH_PROCESS
     WHERE RECORD_STATUS = 'Y'
     AND SCH_RESULT_FLOW = R.RESULT_FLOW
     AND (TEACHER_USER_FLOW IS NOT NULL
@@ -530,9 +531,9 @@
 
 <select id="searchInDeptList" parameterType="java.util.Map" resultType="java.util.Map">
     SELECT r.org_flow, r.org_name, r.SESSION_NUMBER, rd.training_spe_id spe_id, rd.training_spe_name spe_name,count(1) num
-    FROM PDSCI.SCH_ARRANGE_RESULT R
+    FROM SCH_ARRANGE_RESULT R
     LEFT JOIN SYS_USER U ON U.USER_FLOW = R.DOCTOR_FLOW
-    LEFT JOIN PDSCI.RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
+    LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
     WHERE R.RECORD_STATUS = 'Y'
     <if test="startDate != null and startDate != ''">
         AND r.SCH_START_DATE >= #{startDate}
@@ -543,7 +544,7 @@
       AND rd.DOCTOR_STATUS_ID IN ('Training', '20')
       AND rd.training_type_id IN ('DoctorTrainingSpe', 'AssiGeneral')
       AND (R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-          FROM PDSCI.RES_DOCTOR
+    FROM RES_DOCTOR
           WHERE RECORD_STATUS = 'Y'
             <!--AND SCH_FLAG = 'Y'-->
             AND (ORG_FLOW in (select org_flow from sys_org
@@ -553,7 +554,7 @@
                     </if>
                     and org_type_id = 'Hospital')
               OR ORG_FLOW IN (SELECT ORG_FLOW
-                FROM PDSCI.SCH_DEPT_EXTERNAL_REL
+    FROM SCH_DEPT_EXTERNAL_REL
                 WHERE RECORD_STATUS = 'Y'
                   AND REL_ORG_FLOW in (select org_flow from sys_org
                     where record_status = 'Y'
@@ -568,11 +569,11 @@
                     </if>
                     and org_type_id = 'Hospital')
         AND R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
-          FROM PDSCI.RES_DOCTOR
+    FROM RES_DOCTOR
           WHERE RECORD_STATUS = 'Y'
             <!--AND SCH_FLAG = 'Y'-->))
       AND EXISTS (SELECT NULL
-          FROM PDSCI.RES_DOCTOR_SCH_PROCESS
+    FROM RES_DOCTOR_SCH_PROCESS
           WHERE RECORD_STATUS = 'Y'
             AND SCH_RESULT_FLOW = R.RESULT_FLOW
             AND (TEACHER_USER_FLOW IS NOT NULL
@@ -800,8 +801,8 @@
 <select id="searchTheoryScoreList" parameterType="java.util.Map" resultType="java.util.Map">
     SELECT score.score_flow, u.USER_NAME,ed.org_flow,ed.org_name,ed.training_spe_id spe_id,
         ed.training_spe_name spe_name, case when score.theory_score = '1' then '合格' else '不合格' end as score
-    FROM pdsci.res_score score
-    LEFT JOIN pdsci.SYS_USER u ON score.DOCTOR_FLOW = u.USER_FLOW
+    FROM res_score score
+    LEFT JOIN SYS_USER u ON score.DOCTOR_FLOW = u.USER_FLOW
     LEFT JOIN RES_DOCTOR ed ON score.DOCTOR_FLOW = ed.DOCTOR_FLOW
     WHERE score.RECORD_STATUS = 'Y'
     AND ed.training_type_id IN ('DoctorTrainingSpe', 'AssiGeneral')
@@ -838,8 +839,8 @@
 <select id="searchSkillScoreList" parameterType="java.util.Map" resultType="java.util.Map">
     SELECT score.score_flow, u.USER_NAME,ed.org_flow,ed.org_name,ed.training_spe_id spe_id,
     ed.training_spe_name spe_name,case when score.skill_score = '1' then '合格' else '不合格' end as score
-    FROM pdsci.res_score score
-    LEFT JOIN pdsci.SYS_USER u ON score.DOCTOR_FLOW = u.USER_FLOW
+    FROM res_score score
+    LEFT JOIN SYS_USER u ON score.DOCTOR_FLOW = u.USER_FLOW
     LEFT JOIN RES_DOCTOR ed ON score.DOCTOR_FLOW = ed.DOCTOR_FLOW
     WHERE score.RECORD_STATUS = 'Y'
     AND ed.training_type_id IN ('DoctorTrainingSpe', 'AssiGeneral')
@@ -1056,8 +1057,8 @@
 		LEFT JOIN RES_DOCTOR R ON D.DOCTOR_FLOW=R.DOCTOR_FLOW
 		where D.org_flow in (
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="searchOrg!=null">
 			<if test="searchOrg.orgProvId!=null and searchOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{searchOrg.orgProvId}
@@ -1098,7 +1099,7 @@
 
 	<select id="searchTeacherUserList" parameterType="map" resultType="map">
 		SELECT su.user_flow,su.user_name,su.org_flow,su.org_name,su.dept_flow,su.dept_name
-		FROM PDSCI.SYS_USER su
+        FROM SYS_USER su
 		WHERE RECORD_STATUS = 'Y'
 		AND NOT EXISTS (SELECT NULL
 		FROM res_doctor rd
@@ -1111,8 +1112,8 @@
 		AND sur.ROLE_FLOW = #{roleFlow})
 		AND su.org_flow in (
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="searchOrg!=null">
 			<if test="searchOrg.orgProvId!=null and searchOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{searchOrg.orgProvId}

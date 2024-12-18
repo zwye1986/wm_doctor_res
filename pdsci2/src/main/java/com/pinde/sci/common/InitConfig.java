@@ -8,17 +8,13 @@ import com.pinde.core.common.GeneralEnum;
 import com.pinde.core.common.enums.DictTypeEnum;
 import com.pinde.core.config.*;
 import com.pinde.core.license.PdLicense;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
+import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IjsresLoginInfoBiz;
 import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.util.RegionUtil;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.model.mo.JsresLoginInfo;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysRole;
+import com.pinde.core.model.SysCfg;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,9 +37,6 @@ public class InitConfig implements ServletContextListener {
 	private final static Logger logger = LoggerFactory.getLogger(InitConfig.class);
 	
 	public static boolean licenseed = false;
-	//public static ProjPage projApplyPage;
-	//科研
-	public static Map<String, Map<String, String>> configMap;
 	//住院医师
 	public static IrbFormRequestUtil resFormRequestUtil;
 	//系统
@@ -53,10 +46,7 @@ public class InitConfig implements ServletContextListener {
 	private static Map<String,MenuSet> menuSetMap;
 	private static Map<String,Map<String,String>> sysDictNameMap;
 	private static Map<String, SysRole> sysRoleMap;
-	private static Map<String,List<SysRole>> sysRoleWsMap = new HashMap<>();
-	private static Map<String,SysOrg> sysOrgMap ;
-	private static Map<String,SysOrg> sysOrgNameMap ;
-	private static List<SysOrg> sysOrgList ;
+	private static Map<String, SysOrg> sysOrgMap ;
 	private static Map<String, SysDept> sysDeptMap;
 	private static Map<String, String> sysCfgMap = new HashMap<String, String>();
 	private static Map<String, String> sysCfgDescMap;
@@ -592,7 +582,6 @@ public class InitConfig implements ServletContextListener {
 			sysRoleWsMap.put(sysRole.getWsId(), roleList);
 		}
 		InitConfig.sysRoleMap = sysRoleMap;
-		InitConfig.sysRoleWsMap = sysRoleWsMap;
 		context.setAttribute("sysRoleMap", sysRoleMap);
 		context.setAttribute("sysRoleWsMap", sysRoleWsMap);
 	}
@@ -621,13 +610,8 @@ public class InitConfig implements ServletContextListener {
 		context.setAttribute("sysOrgList", sysOrgList);
 		context.setAttribute("sysOrgMap", sysOrgMap);
 		InitConfig.sysOrgMap = sysOrgMap;
-		InitConfig.sysOrgNameMap = sysOrgNameMap;
-		InitConfig.sysOrgList = sysOrgList;
 	}
 
-	public static SysOrg getSysOrgByName(String orgName) {
-		return InitConfig.sysOrgNameMap.get(orgName);
-	}
 
 	public static String getDeptNameByFlow(String deptFlow) {
 		if (sysDeptMap != null) {

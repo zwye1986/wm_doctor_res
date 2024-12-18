@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResDiscipleRecordInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDiscipleRecordInfo">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
@@ -86,13 +86,14 @@
     RECORD_YEAR, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     ADDRESS
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap"
+          parameterType="com.pinde.core.model.ResDiscipleRecordInfoExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DISCIPLE_RECORD_INFO
+      from RES_DISCIPLE_RECORD_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +104,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DISCIPLE_RECORD_INFO
+      from RES_DISCIPLE_RECORD_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DISCIPLE_RECORD_INFO
+      delete from RES_DISCIPLE_RECORD_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfoExample" >
-    delete from PDSCI.RES_DISCIPLE_RECORD_INFO
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDiscipleRecordInfoExample">
+      delete from RES_DISCIPLE_RECORD_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    insert into PDSCI.RES_DISCIPLE_RECORD_INFO (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+  <insert id="insert" parameterType="com.pinde.core.model.ResDiscipleRecordInfo">
+      insert into RES_DISCIPLE_RECORD_INFO (RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       TEACHER_FLOW, TEACHER_NAME, START_TIME, 
       END_TIME, DISCIPLE_DATE, AUDIT_STATUS_ID, 
       AUDIT_STATUS_NAME, AUDIT_USER_FLOW, AUDIT_USER_NAME, 
@@ -132,8 +133,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    insert into PDSCI.RES_DISCIPLE_RECORD_INFO
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResDiscipleRecordInfo">
+      insert into RES_DISCIPLE_RECORD_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -253,14 +254,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DISCIPLE_RECORD_INFO
+  <select id="countByExample" parameterType="com.pinde.core.model.ResDiscipleRecordInfoExample"
+          resultType="java.lang.Integer">
+      select count(*) from RES_DISCIPLE_RECORD_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+      update RES_DISCIPLE_RECORD_INFO
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -325,7 +327,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+      update RES_DISCIPLE_RECORD_INFO
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -349,8 +351,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDiscipleRecordInfo">
+      update RES_DISCIPLE_RECORD_INFO
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -409,8 +411,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDiscipleRecordInfo" >
-    update PDSCI.RES_DISCIPLE_RECORD_INFO
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDiscipleRecordInfo">
+      update RES_DISCIPLE_RECORD_INFO
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       TEACHER_FLOW = #{teacherFlow,jdbcType=VARCHAR},

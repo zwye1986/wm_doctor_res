@@ -83,6 +83,26 @@ public class ResHospSupervSubject implements java.io.Serializable {
 
     private String reviewConfig;
 
+    private String leaderThreeName;
+
+    private String leaderThreeFlow;
+
+    private String leaderFourName;
+
+    private String leaderFourFlow;
+
+    private String leaderThreeScore;
+
+    private String leaderFourScore;
+
+    private String leaderThreeStartTime;
+
+    private String leaderThreeEndTime;
+
+    private String leaderFourStartTime;
+
+    private String leaderFourEndTime;
+
     public String getSubjectFlow() {
         return subjectFlow;
     }
@@ -409,5 +429,85 @@ public class ResHospSupervSubject implements java.io.Serializable {
 
     public void setReviewConfig(String reviewConfig) {
         this.reviewConfig = reviewConfig;
+    }
+
+    public String getLeaderThreeName() {
+        return leaderThreeName;
+    }
+
+    public void setLeaderThreeName(String leaderThreeName) {
+        this.leaderThreeName = leaderThreeName;
+    }
+
+    public String getLeaderThreeFlow() {
+        return leaderThreeFlow;
+    }
+
+    public void setLeaderThreeFlow(String leaderThreeFlow) {
+        this.leaderThreeFlow = leaderThreeFlow;
+    }
+
+    public String getLeaderFourName() {
+        return leaderFourName;
+    }
+
+    public void setLeaderFourName(String leaderFourName) {
+        this.leaderFourName = leaderFourName;
+    }
+
+    public String getLeaderFourFlow() {
+        return leaderFourFlow;
+    }
+
+    public void setLeaderFourFlow(String leaderFourFlow) {
+        this.leaderFourFlow = leaderFourFlow;
+    }
+
+    public String getLeaderThreeScore() {
+        return leaderThreeScore;
+    }
+
+    public void setLeaderThreeScore(String leaderThreeScore) {
+        this.leaderThreeScore = leaderThreeScore;
+    }
+
+    public String getLeaderFourScore() {
+        return leaderFourScore;
+    }
+
+    public void setLeaderFourScore(String leaderFourScore) {
+        this.leaderFourScore = leaderFourScore;
+    }
+
+    public String getLeaderThreeStartTime() {
+        return leaderThreeStartTime;
+    }
+
+    public void setLeaderThreeStartTime(String leaderThreeStartTime) {
+        this.leaderThreeStartTime = leaderThreeStartTime;
+    }
+
+    public String getLeaderThreeEndTime() {
+        return leaderThreeEndTime;
+    }
+
+    public void setLeaderThreeEndTime(String leaderThreeEndTime) {
+        this.leaderThreeEndTime = leaderThreeEndTime;
+    }
+
+    public String getLeaderFourStartTime() {
+        return leaderFourStartTime;
+    }
+
+    public void setLeaderFourStartTime(String leaderFourStartTime) {
+        this.leaderFourStartTime = leaderFourStartTime;
+    }
+
+    public String getLeaderFourEndTime() {
+        return leaderFourEndTime;
+    }
+
+    public void setLeaderFourEndTime(String leaderFourEndTime) {
+        this.leaderFourEndTime = leaderFourEndTime;
     }
 }

@@ -86,7 +86,7 @@
     <sql id="Dept_Name_Fuzzy_Level_All_Search_Condition">
         <!-- and top_level_dept_code in
         (select distinct top_level_dept_code
-        from pdsci.RES_STANDARD_DEPT
+        from  RES_STANDARD_DEPT
         where standard_dept_name like concat('%', concat(#{standardDeptNameFuzzy}, '%')))
         -->
         and standard_dept_name like concat('%', concat(#{standardDeptNameFuzzy}, '%'))
@@ -177,7 +177,7 @@
             resultType="com.pinde.core.vo.ResStandardDeptVO">
         select
             <include refid="Base_Column_List_Standard_dept"/>
-        from pdsci.RES_STANDARD_DEPT
+        from RES_STANDARD_DEPT
         where record_status = 'Y'
         <include refid="Base_Standard_Dept_Search_Condition"/>
     </select>
@@ -186,13 +186,13 @@
             resultType="com.pinde.core.vo.ResStandardDeptVO">
         select
         <include refid="Base_Column_List_Standard_dept"/>
-        from pdsci.RES_STANDARD_DEPT
+        from RES_STANDARD_DEPT
         where record_status = 'Y'
         <include refid="Dept_Name_Fuzzy_Level_All_Search_Condition"/>
     </select>
 
     <insert id="saveStandardDept" parameterType="com.pinde.core.vo.ResStandardDeptVO">
-        insert into pdsci.res_standard_dept(<include refid="Base_Column_List_Standard_dept"/>)
+        insert into res_standard_dept(<include refid="Base_Column_List_Standard_dept"/>)
         values(
            #{standardDeptFlow,jdbcType=VARCHAR},
            #{standardDeptCode,jdbcType=VARCHAR},
@@ -211,7 +211,7 @@
     </insert>
 
     <update id="updateStandardDept" parameterType="com.pinde.core.vo.ResStandardDeptVO">
-        update pdsci.res_standard_dept
+        update res_standard_dept
         <set>
             <if test="standardDeptCode != null and standardDeptCode != ''">
                 standard_dept_code = #{standardDeptCode},
@@ -236,7 +236,7 @@
     <!-- 批量更新的写法，另有批量插入的写法，代码里搜insert all -->
     <update id="batchUpdateStandardDeptSelective" parameterType="com.pinde.core.vo.ResStandardDeptVO">
         <foreach collection="standardDeptVOList" separator=";" open="begin" close=";end;" item="standardDeptVO">
-            update pdsci.res_standard_dept
+            update res_standard_dept
             <set>
                 <if test="standardDeptVO.parentDeptCode != null and standardDeptVO.parentDeptCode != ''">
                     parent_dept_code = #{standardDeptVO.parentDeptCode},
@@ -251,7 +251,7 @@
     </update>
 
     <delete id="deleteStandardDept">
-        update pdsci.res_standard_dept
+        update res_standard_dept
         set record_status = 'N'
         where record_status = 'Y'
         and standard_dept_flow = #{standardDeptFlow}
@@ -261,13 +261,13 @@
             resultType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
         select
         <include refid="Base_Column_List_Spe_Base_Std_Dept"/>
-        from pdsci.RES_SPE_BASE_STD_DEPT
+        from RES_SPE_BASE_STD_DEPT
         where record_status = 'Y'
         <include refid="Base_Spe_Base_Std_Dept_Search_Condition"/>
     </select>
 
     <update id="updateSpeBaseStdDept" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
-        update pdsci.RES_SPE_BASE_STD_DEPT
+        update RES_SPE_BASE_STD_DEPT
         set spe_base_id = #{speBaseId,jdbcType=VARCHAR},
             standard_dept_flow = #{standardDeptFlow,jdbcType=VARCHAR},
             rotation_require_status = #{rotationRequireStatus,jdbcType=VARCHAR},
@@ -280,7 +280,7 @@
     </update>
 
     <update id="updateSpeBaseStdDeptSelective" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
-        update pdsci.RES_SPE_BASE_STD_DEPT
+        update RES_SPE_BASE_STD_DEPT
         <set>
             <if test="speBaseId != null and speBaseId != ''">
                 spe_base_id = #{speBaseId},
@@ -309,7 +309,7 @@
     </update>
 
     <insert id="saveSpeBaseStdDept" parameterType="com.pinde.core.vo.ResSpeBaseStdDeptVO">
-        insert into pdsci.RES_SPE_BASE_STD_DEPT(<include refid="Base_Column_List_Spe_Base_Std_Dept"/>)
+        insert into RES_SPE_BASE_STD_DEPT(<include refid="Base_Column_List_Spe_Base_Std_Dept"/>)
         values(
         #{speBaseStdDeptFlow,jdbcType=VARCHAR},
         #{speBaseId,jdbcType=VARCHAR},
@@ -324,7 +324,7 @@
     </insert>
 
     <delete id="deleteSpeBaseStdDeptByKey">
-        update pdsci.RES_SPE_BASE_STD_DEPT
+        update RES_SPE_BASE_STD_DEPT
         set record_status = 'N'
         where record_status = 'Y'
           and spe_base_std_dept_flow = #{speBaseStdDeptFlow,jdbcType=VARCHAR}
@@ -334,7 +334,7 @@
             resultType="com.pinde.core.vo.ResDeptRelStdDeptVO">
         select
         <include refid="Base_Column_List_Dept_Rel_Std_Dept"/>
-        from pdsci.RES_DEPT_REL_STD_DEPT
+        from RES_DEPT_REL_STD_DEPT
         where record_status = 'Y'
         <include refid="Base_Dept_Rel_Std_Dept_Search_Condition"/>
         order by modify_time desc
@@ -346,15 +346,16 @@
             sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL, sd.RECORD_STATUS, sd.CREATE_TIME, sd.CREATE_USER_FLOW,
             sd.MODIFY_TIME, sd.MODIFY_USER_FLOW, sd.DEPT_PINYIN, sd.DEPT_ID, sd.DEPT_PID,
             rd.standard_dept_flow, sttd.standard_dept_name, sttd.standard_dept_code, rd.dept_flow relDeptFlow, rd.dept_status
-        from pdsci.sys_dept sd
-        left join pdsci.RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and rd.record_status = 'Y'
-        left join pdsci.RES_STANDARD_DEPT sttd on rd.standard_dept_flow = sttd.standard_dept_flow and sttd.record_status = 'Y'
+        from sys_dept sd
+        left join RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and
+        rd.record_status = 'Y'
+        left join RES_STANDARD_DEPT sttd on rd.standard_dept_flow = sttd.standard_dept_flow and sttd.record_status = 'Y'
         <include refid="Base_Sys_Dept_Rel_Std_Dept_Search_Condition"/>
         order by sd.RECORD_STATUS DESC,sd.ORDINAL, sd.modify_time desc
     </select>
 
     <insert id="saveDeptRelStdDept">
-        insert into pdsci.RES_DEPT_REL_STD_DEPT(
+        insert into RES_DEPT_REL_STD_DEPT(
             <include refid="Base_Column_List_Dept_Rel_Std_Dept"/>
         )values (
         #{deptFlow, jdbcType=VARCHAR},
@@ -373,7 +374,7 @@
     </insert>
 
     <update id="updateDeptRelStdDept">
-        update pdsci.RES_DEPT_REL_STD_DEPT
+        update RES_DEPT_REL_STD_DEPT
         <set>
             <if test="deptCode != null and deptCode != ''">
                 dept_code = #{deptCode, jdbcType=VARCHAR},
@@ -399,7 +400,7 @@
     </update>
 
     <delete id="deleteBaseDeptRelStdDeptByKey">
-        update pdsci.RES_DEPT_REL_STD_DEPT
+        update RES_DEPT_REL_STD_DEPT
         set record_status = 'N'
         where dept_flow = #{deptFlow, jdbcType=VARCHAR}
         and record_status = 'Y'

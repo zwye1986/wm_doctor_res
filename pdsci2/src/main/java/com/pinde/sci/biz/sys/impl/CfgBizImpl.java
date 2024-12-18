@@ -1,5 +1,9 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
+import com.pinde.core.model.SysCfgExample.Criteria;
+import com.pinde.core.model.SysCfgLogWithBLOBs;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ICfgBiz;
@@ -9,10 +13,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysCfgLogMapper;
 import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.dao.sys.SysCfgExtMapper;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysCfgExample;
-import com.pinde.sci.model.mo.SysCfgExample.Criteria;
-import com.pinde.sci.model.mo.SysCfgLogWithBLOBs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,7 +83,7 @@ public class CfgBizImpl implements ICfgBiz {
 	@Override
 	public String getPageSize(HttpServletRequest request) {
 		String cfgValue = null;
-		String getPath = StringUtil.defaultString(request.getServletPath().toString());
+        String getPath = StringUtil.defaultString(request.getServletPath());
 
 		if(GlobalContext.getCurrentUser()!=null){
 			String cfgCode = getPath + "/" +GlobalContext.getCurrentUser().getUserFlow();

@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_SPEAKER
+      from TEACHING_ACTIVITY_SPEAKER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_SPEAKER
+      from TEACHING_ACTIVITY_SPEAKER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.TEACHING_ACTIVITY_SPEAKER
+      delete from TEACHING_ACTIVITY_SPEAKER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.TeachingActivitySpeakerExample" >
-    delete from PDSCI.TEACHING_ACTIVITY_SPEAKER
+      delete from TEACHING_ACTIVITY_SPEAKER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.TeachingActivitySpeaker" >
-    insert into PDSCI.TEACHING_ACTIVITY_SPEAKER (RECORD_FLOW, ACTIVITY_FLOW, SPEAKER_FLOW, 
+      insert into TEACHING_ACTIVITY_SPEAKER (RECORD_FLOW, ACTIVITY_FLOW, SPEAKER_FLOW,
       SPEAKER_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -115,7 +115,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.TeachingActivitySpeaker" >
-    insert into PDSCI.TEACHING_ACTIVITY_SPEAKER
+      insert into TEACHING_ACTIVITY_SPEAKER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivitySpeakerExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.TEACHING_ACTIVITY_SPEAKER
+      select count(*) from TEACHING_ACTIVITY_SPEAKER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.TEACHING_ACTIVITY_SPEAKER
+      update TEACHING_ACTIVITY_SPEAKER
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +217,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.TEACHING_ACTIVITY_SPEAKER
+      update TEACHING_ACTIVITY_SPEAKER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
       SPEAKER_FLOW = #{record.speakerFlow,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeachingActivitySpeaker" >
-    update PDSCI.TEACHING_ACTIVITY_SPEAKER
+      update TEACHING_ACTIVITY_SPEAKER
     <set >
       <if test="activityFlow != null" >
         ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR},
@@ -262,7 +262,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeachingActivitySpeaker" >
-    update PDSCI.TEACHING_ACTIVITY_SPEAKER
+      update TEACHING_ACTIVITY_SPEAKER
     set ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR},
       SPEAKER_FLOW = #{speakerFlow,jdbcType=VARCHAR},
       SPEAKER_NAME = #{speakerName,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.jszy;
 
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.jszy.JszyResJointOrgExt;
-import com.pinde.sci.model.mo.SysOrg;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

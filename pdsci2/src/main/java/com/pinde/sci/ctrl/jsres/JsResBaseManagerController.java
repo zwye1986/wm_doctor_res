@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.common.enums.ResDocTypeEnum;
+import com.pinde.core.common.sci.dao.SysOrgBatchMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
@@ -30,41 +31,33 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysDeptMapper;
-import com.pinde.sci.dao.base.SysOrgBatchMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.TrainingForm;
 import com.pinde.sci.model.jsres.ResBaseExt;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResBase;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorExample;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.ResJointOrgExample;
-import com.pinde.sci.model.mo.ResOrgSpeExample;
-import com.pinde.sci.model.mo.ResPassScoreCfg;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResScore;
-import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchArrangeResultExample;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationDeptExample;
-import com.pinde.sci.model.mo.SchRotationGroup;
-import com.pinde.sci.model.mo.SchRotationGroupExample;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysCfgExample;
-import com.pinde.sci.model.mo.SysDeptExample;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
-import com.pinde.sci.model.mo.SysUserRole;
-import com.pinde.sci.model.mo.TeachingActivityInfo;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorExample;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResJointOrgExample;
+import com.pinde.core.model.ResOrgSpeExample;
+import com.pinde.core.model.ResPassScoreCfg;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.SchAndStandardDeptCfg;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResultExample;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptExample;
+import com.pinde.core.model.SchRotationGroup;
+import com.pinde.core.model.SchRotationGroupExample;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysCfgExample;
+import com.pinde.core.model.SysDeptExample;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.model.res.SchProcessExt;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.apache.commons.collections4.CollectionUtils;
@@ -1469,7 +1462,8 @@ public class JsResBaseManagerController extends GeneralController {
 			}
 			List<SysOrg> orgList = orgBiz.searchOrg(sysOrg);
 			if(CollectionUtils.isNotEmpty(orgList)) {
-				result = resOrgSpeBiz.saveOrgSpeManageAll(orgSpe, orgList);
+				resOrgSpeBiz.saveOrgSpeManageAll(orgSpe, orgList);
+				return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 			}
 		}else {
 			result = resOrgSpeBiz.saveOrgSpeManage(orgSpe);
@@ -4437,6 +4431,11 @@ public class JsResBaseManagerController extends GeneralController {
 	public void docExport(String trainingTypeId, String trainingSpeId, String sessionNumber, String orgFlow,
 						  String userName, String idNo, String graduationYear, String[] datas, String sort,
 						  Integer currentPage, HttpServletRequest request, Model model, String baseFlag, HttpServletResponse response) throws Exception {
+		String fileName = "学生工作量统计.xls";
+		fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		response.setContentType("application/octet-stream;charset=UTF-8");
+
 		SysUser currentUser = GlobalContext.getCurrentUser();
 		String userOrgFlow = "";
 		if (currentUser != null) {
@@ -4501,10 +4500,7 @@ public class JsResBaseManagerController extends GeneralController {
 		titles[6] = "rotationNum,ylz,schNum:轮转科室(要求数/已轮转/已出科)";
 		titles[7] = "rotationNum,afterNum:出科要求表(要求数/上传数)";
 		ExcleUtile.exportSimpleExcleByObjs(titles, rltLst, response.getOutputStream());
-		String fileName = "学生工作量统计.xls";
-		fileName = URLEncoder.encode(fileName, "UTF-8");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-		response.setContentType("application/octet-stream;charset=UTF-8");
+
 	}
 
 	/**

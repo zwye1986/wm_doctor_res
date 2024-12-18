@@ -1,5 +1,9 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.model.GraduationExamResults;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorGraduationInfo;
+import com.pinde.core.model.ResDoctorGraduationInfoExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
@@ -9,7 +13,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.GraduationExamResultsMapper;
 import com.pinde.sci.dao.base.ResDoctorGraduationInfoMapper;
 import com.pinde.sci.dao.res.ResDoctorGraduationInfoExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -156,7 +159,7 @@ public class JszyGraduationBizImpl implements IJszyGraduationBiz {
         int count= editGraduationInfo(numInfo);
         if(count==1)
         {
-            ResDoctorRecruit recruit=recruitBiz.readResDoctorRecruit(numInfo.getRecruitFlow());
+            com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(numInfo.getRecruitFlow());
             if(recruit!=null)
             {
                 recruit.setDoctorStatusId("21");

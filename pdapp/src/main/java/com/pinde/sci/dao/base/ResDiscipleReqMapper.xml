@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DISCIPLE_REQ
+      from RES_DISCIPLE_REQ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DISCIPLE_REQ
+      from RES_DISCIPLE_REQ
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_DISCIPLE_REQ
+      delete from RES_DISCIPLE_REQ
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDiscipleReqExample">
-    delete from PDSCI.RES_DISCIPLE_REQ
+      delete from RES_DISCIPLE_REQ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResDiscipleReq">
-    insert into PDSCI.RES_DISCIPLE_REQ (RECORD_FLOW, ORG_FLOW, SESSION_NUMBER, 
+      insert into RES_DISCIPLE_REQ (RECORD_FLOW, ORG_FLOW, SESSION_NUMBER,
       TRAINING_TYPE_ID, TRAINING_TYPE_NAME, DISCIPLE_TYPE_ID, 
       DISCIPLE_TYPE_NAME, REQ_NUMBER, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -122,7 +122,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDiscipleReq">
-    insert into PDSCI.RES_DISCIPLE_REQ
+      insert into RES_DISCIPLE_REQ
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -207,13 +207,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResDiscipleReqExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_DISCIPLE_REQ
+      select count(*) from RES_DISCIPLE_REQ
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_DISCIPLE_REQ
+      update RES_DISCIPLE_REQ
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_DISCIPLE_REQ
+      update RES_DISCIPLE_REQ
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
@@ -279,7 +279,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDiscipleReq">
-    update PDSCI.RES_DISCIPLE_REQ
+      update RES_DISCIPLE_REQ
     <set>
       <if test="orgFlow != null">
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -321,7 +321,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDiscipleReq">
-    update PDSCI.RES_DISCIPLE_REQ
+      update RES_DISCIPLE_REQ
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
       TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},

@@ -81,7 +81,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_SKILL_CFG
+      from LCJN_SKILL_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,21 +92,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_SKILL_CFG
+      from LCJN_SKILL_CFG
     where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_SKILL_CFG
+      delete
+      from LCJN_SKILL_CFG
     where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnSkillCfgExample">
-    delete from PDSCI.LCJN_SKILL_CFG
+      delete from LCJN_SKILL_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.LcjnSkillCfg">
-    insert into PDSCI.LCJN_SKILL_CFG (SKILL_FLOW, SKILL_NAME, SKILL_ID, 
+      insert into LCJN_SKILL_CFG (SKILL_FLOW, SKILL_NAME, SKILL_ID,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, ORG_NAME, 
       ORG_FLOW)
@@ -116,7 +117,7 @@
       #{orgFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnSkillCfg">
-    insert into PDSCI.LCJN_SKILL_CFG
+      insert into LCJN_SKILL_CFG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="skillFlow != null">
         SKILL_FLOW,
@@ -183,13 +184,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.LcjnSkillCfgExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_SKILL_CFG
+      select count(*) from LCJN_SKILL_CFG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_SKILL_CFG
+      update LCJN_SKILL_CFG
     <set>
       <if test="record.skillFlow != null">
         SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
@@ -227,7 +228,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_SKILL_CFG
+      update LCJN_SKILL_CFG
     set SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
       SKILL_NAME = #{record.skillName,jdbcType=VARCHAR},
       SKILL_ID = #{record.skillId,jdbcType=VARCHAR},
@@ -243,7 +244,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnSkillCfg">
-    update PDSCI.LCJN_SKILL_CFG
+      update LCJN_SKILL_CFG
     <set>
       <if test="skillName != null">
         SKILL_NAME = #{skillName,jdbcType=VARCHAR},
@@ -276,7 +277,7 @@
     where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnSkillCfg">
-    update PDSCI.LCJN_SKILL_CFG
+      update LCJN_SKILL_CFG
     set SKILL_NAME = #{skillName,jdbcType=VARCHAR},
       SKILL_ID = #{skillId,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

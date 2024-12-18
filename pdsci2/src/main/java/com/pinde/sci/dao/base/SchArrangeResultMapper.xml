@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchArrangeResultMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchArrangeResult" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchArrangeResult">
     <id column="RESULT_FLOW" property="resultFlow" jdbcType="VARCHAR" />
     <result column="ARRANGE_FLOW" property="arrangeFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -104,13 +104,13 @@
     STANDARD_DEPT_NAME, GROUP_FLOW, STANDARD_GROUP_FLOW, IS_ROTATION, AFTER_FILE_FLOW, 
     IS_STEP_B, HAVE_AFTER_PIC, CYCLE_YEAR, MONTH_DATE, BASE_AUDIT
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchArrangeResultExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchArrangeResultExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ARRANGE_RESULT
+      from SCH_ARRANGE_RESULT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -121,21 +121,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ARRANGE_RESULT
+      from SCH_ARRANGE_RESULT
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ARRANGE_RESULT
+      delete from SCH_ARRANGE_RESULT
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchArrangeResultExample" >
-    delete from PDSCI.SCH_ARRANGE_RESULT
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchArrangeResultExample">
+      delete from SCH_ARRANGE_RESULT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchArrangeResult" >
-    insert into PDSCI.SCH_ARRANGE_RESULT (RESULT_FLOW, ARRANGE_FLOW, DOCTOR_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.SchArrangeResult">
+      insert into SCH_ARRANGE_RESULT (RESULT_FLOW, ARRANGE_FLOW, DOCTOR_FLOW,
       DOCTOR_NAME, SESSION_NUMBER, ROTATION_FLOW, 
       ROTATION_NAME, SCH_YEAR, SCH_DEPT_ORDER, 
       SCH_START_DATE, SCH_END_DATE, DEPT_FLOW, 
@@ -160,8 +160,8 @@
       #{isStepB,jdbcType=VARCHAR}, #{haveAfterPic,jdbcType=CHAR}, #{cycleYear,jdbcType=VARCHAR}, 
       #{monthDate,jdbcType=VARCHAR}, #{baseAudit,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchArrangeResult" >
-    insert into PDSCI.SCH_ARRANGE_RESULT
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchArrangeResult">
+      insert into SCH_ARRANGE_RESULT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="resultFlow != null" >
         RESULT_FLOW,
@@ -377,15 +377,16 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchArrangeResultExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ARRANGE_RESULT
+    <select id="countByExample" parameterType="com.pinde.core.model.SchArrangeResultExample"
+            resultType="java.lang.Integer">
+      select count(*) from SCH_ARRANGE_RESULT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
 
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ARRANGE_RESULT
+      update SCH_ARRANGE_RESULT
     <set >
       <if test="record.resultFlow != null" >
         RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
@@ -498,7 +499,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ARRANGE_RESULT
+      update SCH_ARRANGE_RESULT
     set RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
       ARRANGE_FLOW = #{record.arrangeFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -538,8 +539,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchArrangeResult" >
-    update PDSCI.SCH_ARRANGE_RESULT
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchArrangeResult">
+      update SCH_ARRANGE_RESULT
     <set >
       <if test="arrangeFlow != null" >
         ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
@@ -646,8 +647,8 @@
     </set>
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchArrangeResult" >
-    update PDSCI.SCH_ARRANGE_RESULT
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchArrangeResult">
+      update SCH_ARRANGE_RESULT
     set ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -712,7 +713,7 @@
       AND STANDARD_GROUP_FLOW = #{groupFlow}
 
   </select>
-    <select id="infoByDeptFlowSchMon" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    <select id="infoByDeptFlowSchMon" resultType="com.pinde.core.model.SchArrangeResult">
     select * from SCH_ARRANGE_RESULT
     where RECORD_STATUS = 'Y'
     <choose>

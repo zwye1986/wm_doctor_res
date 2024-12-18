@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.portal.impl;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
+import com.pinde.core.model.*;
+import com.pinde.core.model.PortalInfoExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -11,8 +13,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.portal.PortalInfoExtMapper;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.PortalInfoExample.Criteria;
 import com.pinde.sci.model.portal.PortalInfoExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	@Autowired
 	private JsszportalCommunicationReMapper communicationReMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(PortalInfoManageBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(PortalInfoManageBizImpl.class);
 
 
 	@Override
@@ -328,7 +328,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	public static String getPrintSize(long size) {
 		//如果字节数少于1024，则直接以B为单位，否则先除于1024，后3位因太少无意义
 		if (size < 1024) {
-			return String.valueOf(size) + "B";
+            return size + "B";
 		} else {
 			size = size / 1024;
 		}
@@ -336,7 +336,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 		//因为还没有到达要使用另一个单位的时候
 		//接下去以此类推
 		if (size < 1024) {
-			return String.valueOf(size) + "KB";
+            return size + "KB";
 		} else {
 			size = size / 1024;
 		}
@@ -344,13 +344,13 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 			//因为如果以MB为单位的话，要保留最后1位小数，
 			//因此，把此数乘以100之后再取余
 			size = size * 100;
-			return String.valueOf((size / 100)) + "."
-					+ String.valueOf((size % 100)) + "MB";
+            return size / 100 + "."
+                    + size % 100 + "MB";
 		} else {
 			//否则如果要以GB为单位的，先除于1024再作同样的处理
 			size = size * 100 / 1024;
-			return String.valueOf((size / 100)) + "."
-					+ String.valueOf((size % 100)) + "GB";
+            return size / 100 + "."
+                    + size % 100 + "GB";
 		}
 	}
 
@@ -389,7 +389,7 @@ public class PortalInfoManageBizImpl implements IPortalInfoManageBiz {
 	}
 
 	@Override
-	public List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain,String order) {
+	public List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain, String order) {
 		JsszportalCommunicationMainExample example = new JsszportalCommunicationMainExample();
         JsszportalCommunicationMainExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(communicationMain!=null){

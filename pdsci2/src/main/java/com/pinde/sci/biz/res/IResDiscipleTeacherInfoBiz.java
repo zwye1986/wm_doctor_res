@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.sci.model.mo.ResDiscipleTeacherInfo;
+import com.pinde.core.model.ResDiscipleTeacherInfo;
 
 /**
  * Created by Administrator on 2016/10/11.

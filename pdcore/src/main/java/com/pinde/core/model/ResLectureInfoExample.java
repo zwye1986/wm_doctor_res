@@ -2203,6 +2203,216 @@ public class ResLectureInfoExample {
             addCriterion("LECTURE_OUT_URL not between", value1, value2, "lectureOutUrl");
             return (Criteria) this;
         }
+
+        public Criteria andLectureSpeakerRoleIdIsNull() {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdIsNotNull() {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID =", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdNotEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID <>", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdGreaterThan(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID >", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdGreaterThanOrEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID >=", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdLessThan(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID <", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdLessThanOrEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID <=", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdLike(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID like", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdNotLike(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID not like", value, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdIn(List<String> values) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID in", values, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdNotIn(List<String> values) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID not in", values, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdBetween(String value1, String value2) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID between", value1, value2, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleIdNotBetween(String value1, String value2) {
+            addCriterion("LECTURE_SPEAKER_ROLE_ID not between", value1, value2, "lectureSpeakerRoleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameIsNull() {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameIsNotNull() {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME =", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameNotEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME <>", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameGreaterThan(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME >", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameGreaterThanOrEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME >=", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameLessThan(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME <", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameLessThanOrEqualTo(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME <=", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameLike(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME like", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameNotLike(String value) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME not like", value, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameIn(List<String> values) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME in", values, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameNotIn(List<String> values) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME not in", values, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameBetween(String value1, String value2) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME between", value1, value2, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLectureSpeakerRoleNameNotBetween(String value1, String value2) {
+            addCriterion("LECTURE_SPEAKER_ROLE_NAME not between", value1, value2, "lectureSpeakerRoleName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInIsNull() {
+            addCriterion("RANDOM_SIGN_IN is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInIsNotNull() {
+            addCriterion("RANDOM_SIGN_IN is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInEqualTo(String value) {
+            addCriterion("RANDOM_SIGN_IN =", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInNotEqualTo(String value) {
+            addCriterion("RANDOM_SIGN_IN <>", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInGreaterThan(String value) {
+            addCriterion("RANDOM_SIGN_IN >", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInGreaterThanOrEqualTo(String value) {
+            addCriterion("RANDOM_SIGN_IN >=", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInLessThan(String value) {
+            addCriterion("RANDOM_SIGN_IN <", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInLessThanOrEqualTo(String value) {
+            addCriterion("RANDOM_SIGN_IN <=", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInLike(String value) {
+            addCriterion("RANDOM_SIGN_IN like", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInNotLike(String value) {
+            addCriterion("RANDOM_SIGN_IN not like", value, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInIn(List<String> values) {
+            addCriterion("RANDOM_SIGN_IN in", values, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInNotIn(List<String> values) {
+            addCriterion("RANDOM_SIGN_IN not in", values, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInBetween(String value1, String value2) {
+            addCriterion("RANDOM_SIGN_IN between", value1, value2, "randomSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andRandomSignInNotBetween(String value1, String value2) {
+            addCriterion("RANDOM_SIGN_IN not between", value1, value2, "randomSignIn");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

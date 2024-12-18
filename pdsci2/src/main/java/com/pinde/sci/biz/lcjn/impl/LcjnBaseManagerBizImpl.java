@@ -1,9 +1,8 @@
 package com.pinde.sci.biz.lcjn.impl;
 
 import com.pinde.core.common.enums.LcjnAuditStatusEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,7 +13,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.lcjn.LcjnBaseManagerController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.lcjn.LcjnBaseManagerExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
@@ -56,7 +54,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     private LcjnFixedAssetsMapper lfaMapper;
     @Autowired
     private SysUserMapper suMapper;
-    private static Logger logger = LoggerFactory.getLogger(LcjnBaseManagerController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LcjnBaseManagerController.class);
 
     @Override
     public List<Map<String, Object>> queryCourseList(Map<String, String> map) {
@@ -524,7 +522,6 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
     public List<LcjnFixedAssets> queryFixedAssetsList() {
         LcjnFixedAssetsExample example = new LcjnFixedAssetsExample();
         example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
-        ;
         example.setOrderByClause("CREATE_TIME");
         return lfaMapper.selectByExample(example);
     }
@@ -636,7 +633,7 @@ public class LcjnBaseManagerBizImpl implements ILcjnBaseManagerBiz {
                     .andSkillIdEqualTo(String.valueOf(param.get("skillId"))).andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
             if(lscMapper.countByExample(example) > 0){//是否已配置过同技能
                 return -1;
-            };
+            }
             //新增技能表
             LcjnSkillCfg lsc = new LcjnSkillCfg();
             String pk = PkUtil.getUUID();

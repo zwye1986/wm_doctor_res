@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
 
-import com.pinde.sci.model.mo.JsresBaseEvaluation;
+import com.pinde.core.model.JsresBaseEvaluation;
 
 import java.util.List;
 import java.util.Map;

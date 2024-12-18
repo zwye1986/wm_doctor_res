@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResStandardDeptPerMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResStandardDeptPer" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResStandardDeptPer">
     <id column="PER_FLOW" property="perFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
@@ -79,13 +79,14 @@
     SCH_ROTATION_DEPT_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResStandardDeptPerExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResStandardDeptPerExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_STANDARD_DEPT_PER
+      from RES_STANDARD_DEPT_PER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +97,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_STANDARD_DEPT_PER
+      from RES_STANDARD_DEPT_PER
     where PER_FLOW = #{perFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_STANDARD_DEPT_PER
+      delete from RES_STANDARD_DEPT_PER
     where PER_FLOW = #{perFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResStandardDeptPerExample" >
-    delete from PDSCI.RES_STANDARD_DEPT_PER
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResStandardDeptPerExample">
+      delete from RES_STANDARD_DEPT_PER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResStandardDeptPer" >
-    insert into PDSCI.RES_STANDARD_DEPT_PER (PER_FLOW, DOCTOR_FLOW, SESSION_NUMBER, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResStandardDeptPer">
+      insert into RES_STANDARD_DEPT_PER (PER_FLOW, DOCTOR_FLOW, SESSION_NUMBER,
       ROTATION_FLOW, ROTATION_NAME, ALL_PER, 
       PROCESS_PER, SCH_ROTATION_DEPT_FLOW, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,8 +122,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResStandardDeptPer" >
-    insert into PDSCI.RES_STANDARD_DEPT_PER
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResStandardDeptPer">
+      insert into RES_STANDARD_DEPT_PER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="perFlow != null" >
         PER_FLOW,
@@ -206,14 +207,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResStandardDeptPerExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_STANDARD_DEPT_PER
+    <select id="countByExample" parameterType="com.pinde.core.model.ResStandardDeptPerExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_STANDARD_DEPT_PER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_STANDARD_DEPT_PER
+      update RES_STANDARD_DEPT_PER
     <set >
       <if test="record.perFlow != null" >
         PER_FLOW = #{record.perFlow,jdbcType=VARCHAR},
@@ -260,7 +262,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_STANDARD_DEPT_PER
+      update RES_STANDARD_DEPT_PER
     set PER_FLOW = #{record.perFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
@@ -278,8 +280,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResStandardDeptPer" >
-    update PDSCI.RES_STANDARD_DEPT_PER
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResStandardDeptPer">
+      update RES_STANDARD_DEPT_PER
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -320,8 +322,8 @@
     </set>
     where PER_FLOW = #{perFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResStandardDeptPer" >
-    update PDSCI.RES_STANDARD_DEPT_PER
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResStandardDeptPer">
+      update RES_STANDARD_DEPT_PER
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
       ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},

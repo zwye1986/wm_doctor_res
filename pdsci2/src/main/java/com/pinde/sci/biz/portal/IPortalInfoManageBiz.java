@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.portal;
 
+import com.pinde.core.model.*;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.portal.PortalInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -107,7 +107,7 @@ public interface IPortalInfoManageBiz {
     int editSuggest(PortalSuggest suggest);
 
     //医患交流主表列表
-    List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain,String order);
+    List<JsszportalCommunicationMain> searchCommunicationMain(JsszportalCommunicationMain communicationMain, String order);
 
     //获取单个主表
     JsszportalCommunicationMain readCommunicationMain(String recordFlow);

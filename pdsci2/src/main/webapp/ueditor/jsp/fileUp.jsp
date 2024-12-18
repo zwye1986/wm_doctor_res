@@ -1,11 +1,14 @@
-    <%@page import="java.io.File"%>
-        <%@page import="java.util.Properties"%>
+<%@page import="com.pinde.sci.common.ueditor.Uploader" %>
+<%@page import="java.io.File" %>
         <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-        <%@ page import="com.pinde.sci.common.ueditor.Uploader" %>
         <%@ page import="java.io.FileInputStream" %>
+<%@ page import="java.lang.Exception" %>
+<%@ page import="java.lang.String" %>
+<%@ page import="java.lang.System" %>
+<%@ page import="java.util.Properties" %>
 
 
-            <%
+<%
     request.setCharacterEncoding( Uploader.ENCODEING );
     response.setCharacterEncoding( Uploader.ENCODEING );
     

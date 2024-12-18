@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResRingLetterUserMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResRingLetterUser" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResRingLetterUser">
     <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="RING_ID" property="ringId" jdbcType="VARCHAR" />
     <result column="RING_PASS" property="ringPass" jdbcType="VARCHAR" />
@@ -73,13 +73,14 @@
     USER_FLOW, RING_ID, RING_PASS, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResRingLetterUserExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResRingLetterUserExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_RING_LETTER_USER
+      from RES_RING_LETTER_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,29 +91,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_RING_LETTER_USER
+      from RES_RING_LETTER_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_RING_LETTER_USER
+      delete from RES_RING_LETTER_USER
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResRingLetterUserExample" >
-    delete from PDSCI.RES_RING_LETTER_USER
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResRingLetterUserExample">
+      delete from RES_RING_LETTER_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResRingLetterUser" >
-    insert into PDSCI.RES_RING_LETTER_USER (USER_FLOW, RING_ID, RING_PASS, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResRingLetterUser">
+      insert into RES_RING_LETTER_USER (USER_FLOW, RING_ID, RING_PASS,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
     values (#{userFlow,jdbcType=VARCHAR}, #{ringId,jdbcType=VARCHAR}, #{ringPass,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResRingLetterUser" >
-    insert into PDSCI.RES_RING_LETTER_USER
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResRingLetterUser">
+      insert into RES_RING_LETTER_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
         USER_FLOW,
@@ -166,14 +167,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResRingLetterUserExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_RING_LETTER_USER
+    <select id="countByExample" parameterType="com.pinde.core.model.ResRingLetterUserExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_RING_LETTER_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_RING_LETTER_USER
+      update RES_RING_LETTER_USER
     <set >
       <if test="record.userFlow != null" >
         USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -205,7 +207,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_RING_LETTER_USER
+      update RES_RING_LETTER_USER
     set USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       RING_ID = #{record.ringId,jdbcType=VARCHAR},
       RING_PASS = #{record.ringPass,jdbcType=VARCHAR},
@@ -218,8 +220,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResRingLetterUser" >
-    update PDSCI.RES_RING_LETTER_USER
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResRingLetterUser">
+      update RES_RING_LETTER_USER
     <set >
       <if test="ringId != null" >
         RING_ID = #{ringId,jdbcType=VARCHAR},
@@ -245,8 +247,8 @@
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResRingLetterUser" >
-    update PDSCI.RES_RING_LETTER_USER
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResRingLetterUser">
+      update RES_RING_LETTER_USER
     set RING_ID = #{ringId,jdbcType=VARCHAR},
       RING_PASS = #{ringPass,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

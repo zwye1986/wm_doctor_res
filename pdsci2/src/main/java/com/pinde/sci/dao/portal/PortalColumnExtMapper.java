@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.portal;
 
-import com.pinde.sci.model.mo.PortalColumn;
+import com.pinde.core.model.PortalColumn;
 
 import java.util.List;
 import java.util.Map;

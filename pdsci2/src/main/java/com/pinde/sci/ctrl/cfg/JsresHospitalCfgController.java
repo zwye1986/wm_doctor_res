@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.model.JsresPowerCfg;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -8,9 +11,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.SysOrg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/jsres/hospitalCfg")
 public class JsresHospitalCfgController extends GeneralController{
-	
-	private static Logger logger = LoggerFactory.getLogger(JsresHospitalCfgController.class);
+
+    private static final Logger logger = LoggerFactory.getLogger(JsresHospitalCfgController.class);
 
 	@Autowired
 	private IOrgBiz orgBiz;
@@ -299,7 +299,7 @@ public class JsresHospitalCfgController extends GeneralController{
 
     @RequestMapping(value = {"/statisticsList" })
     public String statisticsList (String orgFlow, Integer currentPage, HttpServletRequest request, Model model, String sessionNumber,
-                                  String datas[], String trainingTypeId){
+                                  String[] datas, String trainingTypeId) {
         List<String> docTypeList=new ArrayList<>();
         if(datas!=null&&datas.length>0) {
             docTypeList.addAll(Arrays.asList(datas));
@@ -319,7 +319,7 @@ public class JsresHospitalCfgController extends GeneralController{
     @RequestMapping("/exportStatistics")
     @ResponseBody
     public void exportStatistics(String orgFlow, HttpServletRequest request, String sessionNumber,
-                             String datas[], String trainingTypeId, HttpServletResponse response) throws Exception{
+                                 String[] datas, String trainingTypeId, HttpServletResponse response) throws Exception {
         List<String> docTypeList=new ArrayList<>();
         if(datas!=null&&datas.length>0) {
             docTypeList.addAll(Arrays.asList(datas));

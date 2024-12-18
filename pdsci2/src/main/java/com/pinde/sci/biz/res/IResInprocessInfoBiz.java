@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResInprocessInfo;
-import com.pinde.sci.model.mo.ResInprocessInfoMember;
+import com.pinde.core.model.ResInprocessInfo;
+import com.pinde.core.model.ResInprocessInfoMember;
 
 import java.util.List;
 import java.util.Map;

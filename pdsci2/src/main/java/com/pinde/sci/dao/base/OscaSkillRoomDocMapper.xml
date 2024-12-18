@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.OscaSkillRoomDocMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaSkillRoomDoc">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSkillRoomDoc">
     <id column="DOC_ROOM_FLOW" jdbcType="VARCHAR" property="docRoomFlow" />
     <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
     <result column="DOCTOR_NAME" jdbcType="VARCHAR" property="doctorName" />
@@ -88,13 +88,13 @@
     EXAM_SCORE, WAITING_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW, IS_ADMIN_AUDIT, EXAM_SAVE_SCORE
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDocExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.OscaSkillRoomDocExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILL_ROOM_DOC
+        from OSCA_SKILL_ROOM_DOC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -105,21 +105,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILL_ROOM_DOC
+      from OSCA_SKILL_ROOM_DOC
     where DOC_ROOM_FLOW = #{docRoomFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.OSCA_SKILL_ROOM_DOC
+      delete from OSCA_SKILL_ROOM_DOC
     where DOC_ROOM_FLOW = #{docRoomFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDocExample">
-    delete from PDSCI.OSCA_SKILL_ROOM_DOC
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillRoomDocExample">
+        delete from OSCA_SKILL_ROOM_DOC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDoc">
-    insert into PDSCI.OSCA_SKILL_ROOM_DOC (DOC_ROOM_FLOW, DOCTOR_FLOW, DOCTOR_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.OscaSkillRoomDoc">
+        insert into OSCA_SKILL_ROOM_DOC (DOC_ROOM_FLOW, DOCTOR_FLOW, DOCTOR_NAME,
       ROOM_RECORD_FLOW, ROOM_FLOW, ROOM_NAME, 
       CLINICAL_FLOW, CLINICAL_NAME, STATION_FLOW, 
       STATION_NAME, EXAM_STATUS_ID, EXAM_STATUS_NAME, 
@@ -136,8 +136,8 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{isAdminAudit,jdbcType=CHAR}, #{examSaveScore,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDoc">
-    insert into PDSCI.OSCA_SKILL_ROOM_DOC
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillRoomDoc">
+        insert into OSCA_SKILL_ROOM_DOC
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="docRoomFlow != null">
         DOC_ROOM_FLOW,
@@ -269,14 +269,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDocExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_SKILL_ROOM_DOC
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillRoomDocExample"
+            resultType="java.lang.Integer">
+        select count(*) from OSCA_SKILL_ROOM_DOC
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.OSCA_SKILL_ROOM_DOC
+      update OSCA_SKILL_ROOM_DOC
     <set>
       <if test="record.docRoomFlow != null">
         DOC_ROOM_FLOW = #{record.docRoomFlow,jdbcType=VARCHAR},
@@ -347,7 +348,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.OSCA_SKILL_ROOM_DOC
+      update OSCA_SKILL_ROOM_DOC
     set DOC_ROOM_FLOW = #{record.docRoomFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -373,8 +374,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDoc">
-    update PDSCI.OSCA_SKILL_ROOM_DOC
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillRoomDoc">
+        update OSCA_SKILL_ROOM_DOC
     <set>
       <if test="doctorFlow != null">
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -439,8 +440,8 @@
     </set>
     where DOC_ROOM_FLOW = #{docRoomFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaSkillRoomDoc">
-    update PDSCI.OSCA_SKILL_ROOM_DOC
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillRoomDoc">
+        update OSCA_SKILL_ROOM_DOC
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       ROOM_RECORD_FLOW = #{roomRecordFlow,jdbcType=VARCHAR},

@@ -177,9 +177,6 @@
 		function detail(){
 			jboxLoad("content","<s:url value='/jsp/jsres/doctor/detail.jsp'/>",false);
 		}
-		/* function process(){
-            jboxLoad("content","<s:url value='/jsres/doctor/process'/>",true);
-} */
 		function trainRegister(){
 			jboxLoad("content","<s:url value='/jsres/doctor/trainRegister?roleFlag=doctor'/>",true);
 		}

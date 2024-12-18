@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResDoctorGraduationInfo;
 import com.pinde.core.model.ResDoctorGraduationInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDoctorGraduationInfoMapper {
     int countByExample(ResDoctorGraduationInfoExample example);

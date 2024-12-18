@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.StuUserResume;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IStuUserResumeBiz;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.StuUserResumeMapper;
 import com.pinde.sci.dao.res.StuUserExtMapper;
-import com.pinde.sci.model.mo.StuUserResume;
 import com.pinde.sci.model.res.StuUserExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +76,7 @@ public class StuUserResumeBizImpl implements IStuUserResumeBiz {
         return stuUserExtMapper.searchUser(mp);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(StuUserResumeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(StuUserResumeBizImpl.class);
 
 }
  

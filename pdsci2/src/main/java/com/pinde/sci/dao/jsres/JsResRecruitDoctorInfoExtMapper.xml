@@ -3,7 +3,8 @@
 <mapper namespace="com.pinde.sci.dao.jsres.JsResRecruitDoctorInfoExtMapper">
 
 	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.JsresRecruitDocInfoMapper.BaseResultMap" >
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 			<result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
@@ -38,17 +39,17 @@
 		<if test="isArmy!=null and isArmy!=''">
 			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
 		</if>
-		from pdsci.jsres_recruit_doc_info dr
-		left join  pdsci.SYS_USER u on dr.DOCTOR_FLOW =  u.USER_FLOW
-		left join  pdsci.res_doctor rd on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW
+        from jsres_recruit_doc_info dr
+        left join SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join res_doctor rd on dr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 		left join  jsres_recruit_info ed on dr.doctor_flow =  ed.doctor_flow
 		and dr.session_number=ed.session_number
 		left join  res_doctor_recruit dd on dr.doctor_flow =  dd.doctor_flow
 		and dr.session_number=dd.session_number
 		and dd.recruit_flag = 'Y'
 		AND dd.AUDIT_STATUS_ID = 'Passed'
-		LEFT JOIN pdsci.PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
-		LEFT JOIN pdsci.SYS_ORG s ON s.ORG_FLOW = dr.ORG_FLOW
+        LEFT JOIN PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
+        LEFT JOIN SYS_ORG s ON s.ORG_FLOW = dr.ORG_FLOW
 		where dr.RECORD_STATUS= 'Y' and pur.RECORD_STATUS= 'Y'
 		and ed.RECORD_STATUS= 'Y'
 		and dd.RECORD_STATUS= 'Y'
@@ -162,8 +163,8 @@
 
 		and t.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="orgProvId!=null and orgProvId!=''">
 			AND ORG_PROV_ID = #{orgProvId}
 		</if>
@@ -226,8 +227,8 @@
 
 		and t.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="orgProvId!=null and orgProvId!=''">
 			AND ORG_PROV_ID = #{orgProvId}
 		</if>
@@ -335,8 +336,8 @@
              WHERE T.RECORD_STATUS = 'Y'
                AND ORG.JOINT_ORG_FLOW IN
                    (SELECT ORG_FLOW
-                      FROM PDSCI.SYS_ORG
-                     WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					<if test="orgProvId!=null and orgProvId!=''">
 						AND ORG_PROV_ID = #{orgProvId}
 					</if>
@@ -504,8 +505,8 @@
              WHERE T.RECORD_STATUS = 'Y'
                AND ORG.JOINT_ORG_FLOW IN
                    (SELECT ORG_FLOW
-                      FROM PDSCI.SYS_ORG
-                     WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					<if test="orgProvId!=null and orgProvId!=''">
 						AND ORG_PROV_ID = #{orgProvId}
 					</if>
@@ -607,8 +608,8 @@
 				</if>
                AND ORG.JOINT_ORG_FLOW IN
                    (SELECT ORG_FLOW
-                      FROM PDSCI.SYS_ORG
-                     WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					<if test="orgProvId!=null and orgProvId!=''">
 						AND ORG_PROV_ID = #{orgProvId}
 					</if>
@@ -714,8 +715,8 @@
 		</if>
 		AND ORG.JOINT_ORG_FLOW IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		<if test="orgProvId!=null and orgProvId!=''">
 			AND ORG_PROV_ID = #{orgProvId}
 		</if>
@@ -902,8 +903,8 @@
              WHERE ORG.JOINT_ORG_FLOW IN
                    (
 					  SELECT ORG_FLOW
-                      FROM PDSCI.SYS_ORG
-                     WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					<if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
 						and SYS_ORG.ORG_FLOW in
 						<foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
@@ -913,7 +914,8 @@
 	</select>
 
 	<resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsRecruitDocInfoExt" extends="com.pinde.sci.dao.base.JsresRecruitDocInfoMapper.BaseResultMap" >
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 		<association property="recruitInfo" column="{doctorFlow,sessionNumber}"  resultMap="com.pinde.sci.dao.base.JsresRecruitInfoMapper.BaseResultMap" />
 		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
@@ -929,17 +931,17 @@
 		, u.EDUCATION_ID, u.user_qq, u.EDUCATION_NAME
 		, rd.is_year_graduate, rd.foreign_skills, rd.doctor_type_id, rd.doctor_type_name, rd.work_org_name
 		, rd.session_number, ed.spe_id, ed.spe_name, ed.doctor_type_id, ed.doctor_type_name, pur.*
-		from pdsci.jsres_recruit_doc_info dr
-		left join  pdsci.SYS_USER u on dr.DOCTOR_FLOW =  u.USER_FLOW
-		left join  pdsci.res_doctor rd on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW
+        from jsres_recruit_doc_info dr
+        left join SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join res_doctor rd on dr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 		left join  jsres_recruit_info ed on dr.doctor_flow =  ed.doctor_flow
 		   and dr.session_number=ed.session_number
-		LEFT JOIN pdsci.PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
+        LEFT JOIN PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
 		where dr.RECORD_STATUS= 'Y' and pur.RECORD_STATUS= 'Y'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="orgProvId!=null and orgProvId!=''">
 			AND ORG_PROV_ID = #{orgProvId}
 		</if>
@@ -1056,17 +1058,17 @@
 		, u.EDUCATION_ID, u.user_qq, u.EDUCATION_NAME, rd.is_year_graduate, rd.foreign_skills
 		, rd.work_org_name, rd.session_number, ed.doctor_type_id
 		, ed.doctor_type_name, ed.org_flow as info_org_flow, pur.user_resume
-		from pdsci.jsres_recruit_doc_info dr
-		left join  pdsci.SYS_USER u on dr.DOCTOR_FLOW =  u.USER_FLOW
-		left join  pdsci.res_doctor rd on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW
+        from jsres_recruit_doc_info dr
+        left join SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join res_doctor rd on dr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 		left join  jsres_recruit_info ed on dr.doctor_flow =  ed.doctor_flow
 		and dr.session_number=ed.session_number
-		LEFT JOIN pdsci.PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
+        LEFT JOIN PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
 		where dr.RECORD_STATUS= 'Y' and pur.RECORD_STATUS= 'Y'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="orgProvId!=null and orgProvId!=''">
 			AND ORG_PROV_ID = #{orgProvId}
 		</if>
@@ -1142,23 +1144,23 @@
 <!--		<if test="isArmy!=null and isArmy!=''">-->
 			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
 <!--		</if>-->
-		from pdsci.jsres_recruit_doc_info dr
-		left join  pdsci.SYS_USER u on dr.DOCTOR_FLOW =  u.USER_FLOW
-		left join  pdsci.res_doctor rd on dr.DOCTOR_FLOW =  rd.DOCTOR_FLOW
+        from jsres_recruit_doc_info dr
+        left join SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join res_doctor rd on dr.DOCTOR_FLOW = rd.DOCTOR_FLOW
 		left join  jsres_recruit_info ed on dr.doctor_flow =  ed.doctor_flow
 		and dr.session_number=ed.session_number
 		left join  res_doctor_recruit dd on dr.doctor_flow =  dd.doctor_flow
 		and dr.session_number=dd.session_number
 		and dd.recruit_flag = 'Y'
 		AND dd.AUDIT_STATUS_ID = 'Passed'
-		LEFT JOIN pdsci.PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
+        LEFT JOIN PUB_USER_RESUME pur ON pur.USER_FLOW = dr.DOCTOR_FLOW
 		where dr.RECORD_STATUS= 'Y' and pur.RECORD_STATUS= 'Y'
 		and ed.RECORD_STATUS= 'Y'
 		and dd.RECORD_STATUS= 'Y'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="isArmy!=null and isArmy!='' and isArmy=='Y'.toString()">
 			AND pur.user_resume IS NOT NULL
 			AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL

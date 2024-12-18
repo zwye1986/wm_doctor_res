@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.SchDeptMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchDept">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchDept">
     <id column="SCH_DEPT_FLOW" jdbcType="VARCHAR" property="schDeptFlow" />
     <result column="SCH_DEPT_NAME" jdbcType="VARCHAR" property="schDeptName" />
     <result column="DEPT_FLOW" jdbcType="VARCHAR" property="deptFlow" />
@@ -85,13 +85,13 @@
     EXTERNAL, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     EXTERNAL_ORG_FLOW, EXTERNAL_ORG_NAME, IS_EXTERNAL, DEPT_ID, DEPT_PID
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SchDeptExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.SchDeptExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DEPT
+      from SCH_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,21 +102,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_DEPT
+      from SCH_DEPT
     where SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SCH_DEPT
+      delete from SCH_DEPT
     where SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchDeptExample">
-    delete from PDSCI.SCH_DEPT
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchDeptExample">
+      delete from SCH_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchDept">
-    insert into PDSCI.SCH_DEPT (SCH_DEPT_FLOW, SCH_DEPT_NAME, DEPT_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.SchDept">
+      insert into SCH_DEPT (SCH_DEPT_FLOW, SCH_DEPT_NAME, DEPT_FLOW,
       DEPT_NAME, ORG_FLOW, ORG_NAME, 
       DEPT_NUM, EXTERNAL, ORDINAL, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -131,8 +131,8 @@
       #{externalOrgName,jdbcType=VARCHAR}, #{isExternal,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, 
       #{deptPid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchDept">
-    insert into PDSCI.SCH_DEPT
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchDept">
+      insert into SCH_DEPT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="schDeptFlow != null">
         SCH_DEPT_FLOW,
@@ -252,14 +252,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchDeptExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SCH_DEPT
+    <select id="countByExample" parameterType="com.pinde.core.model.SchDeptExample" resultType="java.lang.Integer">
+      select count(*) from SCH_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SCH_DEPT
+      update SCH_DEPT
     <set>
       <if test="record.schDeptFlow != null">
         SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
@@ -324,7 +324,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SCH_DEPT
+      update SCH_DEPT
     set SCH_DEPT_FLOW = #{record.schDeptFlow,jdbcType=VARCHAR},
       SCH_DEPT_NAME = #{record.schDeptName,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -348,8 +348,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchDept">
-    update PDSCI.SCH_DEPT
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchDept">
+      update SCH_DEPT
     <set>
       <if test="schDeptName != null">
         SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
@@ -408,8 +408,8 @@
     </set>
     where SCH_DEPT_FLOW = #{schDeptFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchDept">
-    update PDSCI.SCH_DEPT
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchDept">
+      update SCH_DEPT
     set SCH_DEPT_NAME = #{schDeptName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},

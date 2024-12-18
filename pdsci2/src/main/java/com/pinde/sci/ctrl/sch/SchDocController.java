@@ -3,10 +3,7 @@ package com.pinde.sci.ctrl.sch;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.sch.SchRotationMedicineType;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
-import com.pinde.core.model.DeptTeacherGradeInfo;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -24,7 +21,22 @@ import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.sch.DoctorSearchForm;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResResponsibleteacherDoctor;
+import com.pinde.core.model.ResRotationOrg;
+import com.pinde.core.model.ResTrainingSpeDept;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchDeptRel;
+import com.pinde.core.model.SchDoctorAbsence;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptReq;
+import com.pinde.core.model.SchRotationGroup;
+import com.pinde.core.model.SysCfg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -3176,7 +3188,7 @@ public class SchDocController extends GeneralController{
 		}
 	}
 	@RequestMapping("/template/guanLian")
-	public String guanLian(String flow,SysOrg org,Model model){
+	public String guanLian(String flow, SysOrg org, Model model) {
 			SchRotation schRotation=schRotationtBiz.readSchRotation(flow);
 			model.addAttribute("schRotation",schRotation);
 			List<SysOrg> sysOrgs=orgBiz.queryAllSysOrg(org);

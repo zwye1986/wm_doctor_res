@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.model.ActivityCfgExt;
+import com.pinde.core.model.JsresDeptConfig;
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -9,8 +12,9 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.keyUtil.PdUtil;
-import com.pinde.sci.model.jsres.ActivityCfgExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResOrgCkxz;
+import com.pinde.core.model.ResOrgCkxzExample;
+import com.pinde.core.model.SysCfg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

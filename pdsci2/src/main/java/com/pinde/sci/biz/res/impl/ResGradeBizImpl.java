@@ -22,12 +22,6 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.res.DeptTeacherGradeInfoExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.model.mo.PubFile;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SysOrg;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
@@ -63,7 +57,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 	private IResSchProcessExpressBiz expressBiz;
 	@Autowired
 	private ResRecExtMapper resRecExtMapper;
-	private static Logger logger = LoggerFactory.getLogger(ResGradeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResGradeBizImpl.class);
 
 
 	@Override
@@ -203,7 +197,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
             criteria.andRecTypeIdIn((ArrayList<String>)itemsMap.get("recTypeIds"));
         }
 		if(null!= itemsMap.get("recFormId")){
-			criteria.andRecTypeIdLike((String) itemsMap.get("recFormId")+"%");
+            criteria.andRecTypeIdLike(itemsMap.get("recFormId") + "%");
 		}
 		if(null!= itemsMap.get("createUserFlow")){
 			criteria.andCreateUserFlowEqualTo((String) itemsMap.get("createUserFlow"));
@@ -616,7 +610,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 				}else {
 					String[] values = req.getParameterValues(itemEle.attributeValue("name"));
 					Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-					if(values != null && values.length > 0) {
+                    if (values != null) {
 						for (String value : values) {
 							Element valueEle = DocumentHelper.createElement("value");
 							if (StringUtil.isNotBlank(value)) {
@@ -690,7 +684,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					} else {
 						String[] values = dataMap.get(itemEle.attributeValue("name"));
 						Element element = rootEle.addElement(itemEle.attributeValue("name"));
-						if (values != null && values.length > 0) {
+                        if (values != null) {
 							for (String value : values) {
 								Element valueEle = element.addElement("value");
 								if (StringUtil.isNotBlank(value)) {
@@ -799,7 +793,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 						}else {
 							String[] values = req.getParameterValues(nodeName);
 							Element element = DocumentHelper.createElement(nodeName);
-							if(values != null && values.length > 0) {
+                            if (values != null) {
 								for (String value : values) {
 									Element valueEle = DocumentHelper.createElement("value");
 									if (StringUtil.isNotBlank(value)) {
@@ -865,9 +859,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 								} else {
 									String[] values = dataMap.get(paramName);
 									List<String> valueList = new ArrayList<String>();
-									for (String temp : values) {
-										valueList.add(temp);
-									}
+                                    Collections.addAll(valueList, values);
 									valueList.add(fileFlow);
 									String[] newValues = new String[valueList.size()];
 									dataMap.put(paramName, valueList.toArray(newValues));
@@ -879,9 +871,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 								} else {
 									String[] values = dataMap.get(paramFileName);
 									List<String> valueList = new ArrayList<String>();
-									for (String temp : values) {
-										valueList.add(temp);
-									}
+                                    Collections.addAll(valueList, values);
 									valueList.add(fileName);
 									String[] newValues = new String[valueList.size()];
 									dataMap.put(paramFileName, valueList.toArray(newValues));
@@ -965,7 +955,7 @@ public class ResGradeBizImpl implements IResGradeBiz {
 					} else {
 						String[] values = req.getParameterValues(itemEle.attributeValue("name"));
 						Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-						if (values != null && values.length > 0) {
+                        if (values != null) {
 							for (String value : values) {
 								Element valueEle = DocumentHelper.createElement("value");
 								if (StringUtil.isNotBlank(value)) {

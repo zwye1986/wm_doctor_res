@@ -1853,6 +1853,146 @@ public class ScresGraduationTicketExample {
             addCriterion("USER_IMG not between", value1, value2, "userImg");
             return (Criteria) this;
         }
+
+        public Criteria andTheoryOrgNameIsNull() {
+            addCriterion("THEORY_ORG_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameIsNotNull() {
+            addCriterion("THEORY_ORG_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameEqualTo(String value) {
+            addCriterion("THEORY_ORG_NAME =", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameNotEqualTo(String value) {
+            addCriterion("THEORY_ORG_NAME <>", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameGreaterThan(String value) {
+            addCriterion("THEORY_ORG_NAME >", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameGreaterThanOrEqualTo(String value) {
+            addCriterion("THEORY_ORG_NAME >=", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameLessThan(String value) {
+            addCriterion("THEORY_ORG_NAME <", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameLessThanOrEqualTo(String value) {
+            addCriterion("THEORY_ORG_NAME <=", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameLike(String value) {
+            addCriterion("THEORY_ORG_NAME like", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameNotLike(String value) {
+            addCriterion("THEORY_ORG_NAME not like", value, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameIn(List<String> values) {
+            addCriterion("THEORY_ORG_NAME in", values, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameNotIn(List<String> values) {
+            addCriterion("THEORY_ORG_NAME not in", values, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameBetween(String value1, String value2) {
+            addCriterion("THEORY_ORG_NAME between", value1, value2, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgNameNotBetween(String value1, String value2) {
+            addCriterion("THEORY_ORG_NAME not between", value1, value2, "theoryOrgName");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressIsNull() {
+            addCriterion("THEORY_ORG_ADDRESS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressIsNotNull() {
+            addCriterion("THEORY_ORG_ADDRESS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressEqualTo(String value) {
+            addCriterion("THEORY_ORG_ADDRESS =", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressNotEqualTo(String value) {
+            addCriterion("THEORY_ORG_ADDRESS <>", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressGreaterThan(String value) {
+            addCriterion("THEORY_ORG_ADDRESS >", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("THEORY_ORG_ADDRESS >=", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressLessThan(String value) {
+            addCriterion("THEORY_ORG_ADDRESS <", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressLessThanOrEqualTo(String value) {
+            addCriterion("THEORY_ORG_ADDRESS <=", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressLike(String value) {
+            addCriterion("THEORY_ORG_ADDRESS like", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressNotLike(String value) {
+            addCriterion("THEORY_ORG_ADDRESS not like", value, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressIn(List<String> values) {
+            addCriterion("THEORY_ORG_ADDRESS in", values, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressNotIn(List<String> values) {
+            addCriterion("THEORY_ORG_ADDRESS not in", values, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressBetween(String value1, String value2) {
+            addCriterion("THEORY_ORG_ADDRESS between", value1, value2, "theoryOrgAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andTheoryOrgAddressNotBetween(String value1, String value2) {
+            addCriterion("THEORY_ORG_ADDRESS not between", value1, value2, "theoryOrgAddress");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.PubMeetingFileMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.PubMeetingFile" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubMeetingFile">
     <id column="FILE_FLOW" property="fileFlow" jdbcType="VARCHAR" />
     <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
     <result column="MEETING_FLOW" property="meetingFlow" jdbcType="VARCHAR" />
@@ -73,13 +73,13 @@
     FILE_FLOW, FILE_NAME, MEETING_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.PubMeetingFileExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubMeetingFileExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MEETING_FILE
+        from PUB_MEETING_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,29 +90,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.PUB_MEETING_FILE
+      from PUB_MEETING_FILE
     where FILE_FLOW = #{fileFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.PUB_MEETING_FILE
+      delete from PUB_MEETING_FILE
     where FILE_FLOW = #{fileFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.PubMeetingFileExample" >
-    delete from PDSCI.PUB_MEETING_FILE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubMeetingFileExample">
+        delete from PUB_MEETING_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.PubMeetingFile" >
-    insert into PDSCI.PUB_MEETING_FILE (FILE_FLOW, FILE_NAME, MEETING_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.PubMeetingFile">
+        insert into PUB_MEETING_FILE (FILE_FLOW, FILE_NAME, MEETING_FLOW,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
     values (#{fileFlow,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{meetingFlow,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.PubMeetingFile" >
-    insert into PDSCI.PUB_MEETING_FILE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubMeetingFile">
+        insert into PUB_MEETING_FILE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fileFlow != null" >
         FILE_FLOW,
@@ -166,14 +166,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.PubMeetingFileExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.PUB_MEETING_FILE
+    <select id="countByExample" parameterType="com.pinde.core.model.PubMeetingFileExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_MEETING_FILE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.PUB_MEETING_FILE
+      update PUB_MEETING_FILE
     <set >
       <if test="record.fileFlow != null" >
         FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
@@ -205,7 +206,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.PUB_MEETING_FILE
+      update PUB_MEETING_FILE
     set FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
       FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
       MEETING_FLOW = #{record.meetingFlow,jdbcType=VARCHAR},
@@ -218,8 +219,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.PubMeetingFile" >
-    update PDSCI.PUB_MEETING_FILE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubMeetingFile">
+        update PUB_MEETING_FILE
     <set >
       <if test="fileName != null" >
         FILE_NAME = #{fileName,jdbcType=VARCHAR},
@@ -245,8 +246,8 @@
     </set>
     where FILE_FLOW = #{fileFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.PubMeetingFile" >
-    update PDSCI.PUB_MEETING_FILE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubMeetingFile">
+        update PUB_MEETING_FILE
     set FILE_NAME = #{fileName,jdbcType=VARCHAR},
       MEETING_FLOW = #{meetingFlow,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

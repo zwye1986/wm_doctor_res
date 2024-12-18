@@ -1,26 +1,30 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.*;
+import com.pinde.sci.biz.jsres.IJsResBaseBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
+import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResPassScoreCfg;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.ResTestConfig;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -49,9 +53,6 @@ import java.util.*;
 public class JsResDoctorTheoryScoreController extends GeneralController {
 
     private static Logger logger = LoggerFactory.getLogger(JsResDoctorTheoryScoreController.class);
-
-    @Autowired
-    private IJsResDoctorBiz jsResDoctorBiz;
     @Autowired
     private IJsResBaseBiz baseBiz;
     @Autowired
@@ -66,8 +67,6 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     private OrgBizImpl orgBiz;
     @Autowired
     private IResJointOrgBiz jointOrgBiz;
-    @Autowired
-    private IDictBiz dictBiz;
     @Autowired
     private IResRecBiz resRecBiz;
     @Autowired
@@ -89,8 +88,6 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
             sysorg.setOrgCityId(org.getOrgCityId());
         }
-//        sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//        List<SysOrg> orgs=orgBiz.searchOrg(sysorg);
         sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
         List<SysOrg> orgs=orgBiz.searchOrgNotCountryOrg(sysorg);
         sysorg.setOrgLevelId(com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId());
@@ -224,12 +221,12 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
      * @return
      */
     @RequestMapping(value="/doctorTheoryListSun")
-    public String doctorRecruitSun(Model model,Integer currentPage,String roleFlag,
-                                   HttpServletRequest request,ResDoctor doctor,SysUser user,
-                                   String baseId,String jointOrgFlag,String orgFlow2,
-                                   String derateFlag,String orgLevel,String[] datas,
-                                   String graduationYear,String scoreYear,String isHege,String skillIsHege,
-                                   String  theroyScoreYear, String  skillScoreYear,String orgCityId,String testId){
+    public String doctorRecruitSun(Model model, Integer currentPage, String roleFlag,
+                                   HttpServletRequest request, ResDoctor doctor, SysUser user,
+                                   String baseId, String jointOrgFlag, String orgFlow2,
+                                   String derateFlag, String orgLevel, String[] datas,
+                                   String graduationYear, String scoreYear, String isHege, String skillIsHege,
+                                   String theroyScoreYear, String skillScoreYear, String orgCityId, String testId) {
         ResDoctorRecruit resDoctorRecruit= new ResDoctorRecruit();
         if(StringUtil.isNotBlank(graduationYear)){
             resDoctorRecruit.setGraduationYear(graduationYear);
@@ -1548,7 +1545,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         {
             if(StringUtil.isNotBlank(recruitFlow))
             {
-                ResDoctorRecruit recruit=resDoctorRecruitBiz.getNewRecruit(doctorFlow);
+                com.pinde.core.model.ResDoctorRecruit recruit = resDoctorRecruitBiz.getNewRecruit(doctorFlow);
                 if(recruit!=null)
                     score.setRecruitFlow(recruit.getRecruitFlow());
             }else {
@@ -1634,7 +1631,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         {
             if(StringUtil.isNotBlank(recruitFlow))
             {
-                ResDoctorRecruit recruit=resDoctorRecruitBiz.getNewRecruit(doctorFlow);
+                com.pinde.core.model.ResDoctorRecruit recruit = resDoctorRecruitBiz.getNewRecruit(doctorFlow);
                 if(recruit!=null)
                     score.setRecruitFlow(recruit.getRecruitFlow());
             }else {

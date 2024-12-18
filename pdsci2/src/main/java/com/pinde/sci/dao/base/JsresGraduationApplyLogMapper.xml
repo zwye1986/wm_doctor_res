@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.JsresGraduationApplyLogMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresGraduationApplyLog">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresGraduationApplyLog">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="APPLY_FLOW" jdbcType="VARCHAR" property="applyFlow" />
     <result column="AUDIT_STATUS_ID" jdbcType="VARCHAR" property="auditStatusId" />
@@ -81,13 +81,14 @@
     AUDIT_REASON, AUDIT_TIME, USER_FLOW, USER_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLogExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.JsresGraduationApplyLogExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_GRADUATION_APPLY_LOG
+        from JSRES_GRADUATION_APPLY_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +99,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_GRADUATION_APPLY_LOG
+      from JSRES_GRADUATION_APPLY_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.JSRES_GRADUATION_APPLY_LOG
+      delete from JSRES_GRADUATION_APPLY_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLogExample">
-    delete from PDSCI.JSRES_GRADUATION_APPLY_LOG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresGraduationApplyLogExample">
+        delete from JSRES_GRADUATION_APPLY_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLog">
-    insert into PDSCI.JSRES_GRADUATION_APPLY_LOG (RECORD_FLOW, APPLY_FLOW, AUDIT_STATUS_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresGraduationApplyLog">
+        insert into JSRES_GRADUATION_APPLY_LOG (RECORD_FLOW, APPLY_FLOW, AUDIT_STATUS_ID,
       AUDIT_STATUS_NAME, AUDIT_ROLE_ID, AUDIT_ROLE_NAME, 
       AUDIT_REASON, AUDIT_TIME, USER_FLOW, 
       USER_NAME, RECORD_STATUS, CREATE_TIME, 
@@ -125,8 +126,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLog">
-    insert into PDSCI.JSRES_GRADUATION_APPLY_LOG
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresGraduationApplyLog">
+        insert into JSRES_GRADUATION_APPLY_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -222,14 +223,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLogExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.JSRES_GRADUATION_APPLY_LOG
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresGraduationApplyLogExample"
+            resultType="java.lang.Integer">
+        select count(*) from JSRES_GRADUATION_APPLY_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.JSRES_GRADUATION_APPLY_LOG
+      update JSRES_GRADUATION_APPLY_LOG
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -282,7 +284,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.JSRES_GRADUATION_APPLY_LOG
+      update JSRES_GRADUATION_APPLY_LOG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
@@ -302,8 +304,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLog">
-    update PDSCI.JSRES_GRADUATION_APPLY_LOG
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresGraduationApplyLog">
+        update JSRES_GRADUATION_APPLY_LOG
     <set>
       <if test="applyFlow != null">
         APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
@@ -350,8 +352,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresGraduationApplyLog">
-    update PDSCI.JSRES_GRADUATION_APPLY_LOG
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresGraduationApplyLog">
+        update JSRES_GRADUATION_APPLY_LOG
     set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
       AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},

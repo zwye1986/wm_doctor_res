@@ -4,6 +4,7 @@ package com.pinde.sci.ctrl.inx;
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.InxInfoExt;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IGateUserManageBiz;
@@ -13,7 +14,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.inx.InxInfoForm;
-import com.pinde.sci.model.mo.SysRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/inx/manage/info")
 public class InxInfoManageController extends GeneralController {
-	private static Logger logger = LoggerFactory.getLogger(InxInfoManageController.class);
+    private static final Logger logger = LoggerFactory.getLogger(InxInfoManageController.class);
 	@Autowired
 	private IinxInfoManageBiz infoManageBiz;
 	@Autowired
@@ -157,11 +157,8 @@ public class InxInfoManageController extends GeneralController {
 		if(StringUtil.isEmpty(info.getColumnId())||StringUtil.isBlank(info.getColumnId())){
 			return false;
 		}
-		if(StringUtil.isEmpty(info.getInfoTime())||StringUtil.isBlank(info.getInfoTime())){
-			return false;
-		}
-		return true;
-	}
+        return !StringUtil.isEmpty(info.getInfoTime()) && !StringUtil.isBlank(info.getInfoTime());
+    }
 	/**
 	 * 校验前端输入
 	 * @param info
@@ -180,11 +177,8 @@ public class InxInfoManageController extends GeneralController {
 		if(StringUtil.isEmpty(info.getColumnId())||StringUtil.isBlank(info.getColumnId())){
 			return false;
 		}
-		if(StringUtil.isEmpty(info.getInfoTime())||StringUtil.isBlank(info.getInfoTime())){
-			return false;
-		}
-		return true;
-	}
+        return !StringUtil.isEmpty(info.getInfoTime()) && !StringUtil.isBlank(info.getInfoTime());
+    }
 	/**
 	 * 资讯列表
 	 * @param currentPage 当前页索引

@@ -2,7 +2,8 @@ package com.pinde.sci.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.model.SysDict;
+import com.pinde.core.common.enums.osca.AssessmentProEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.PkUtil;
@@ -16,12 +17,12 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.osca.AssessmentProEnum;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
 import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -61,7 +62,7 @@ public class OscaProvincialController extends GeneralController{
 	private IDictBiz dictBiz;
 
 	@RequestMapping("/skillsAssessmentList")
-	public String list(OscaSkillsAssessment skillsAssessment, Model model, HttpServletRequest request,Integer currentPage,String trainingTypeId){
+	public String list(OscaSkillsAssessment skillsAssessment, Model model, HttpServletRequest request, Integer currentPage, String trainingTypeId) {
 		SysDict searchDict = new SysDict();
         searchDict.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         searchDict.setDictTypeId(com.pinde.core.common.enums.DictTypeEnum.OscaTrainingType.getId() + "." + trainingTypeId);

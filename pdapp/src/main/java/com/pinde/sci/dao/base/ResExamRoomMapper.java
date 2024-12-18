@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResExamRoom;
 import com.pinde.core.model.ResExamRoomExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResExamRoomMapper {
     int countByExample(ResExamRoomExample example);

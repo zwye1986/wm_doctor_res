@@ -102,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILLS_ASSESSMENT
+      from OSCA_SKILLS_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -113,21 +113,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SKILLS_ASSESSMENT
+      from OSCA_SKILLS_ASSESSMENT
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_SKILLS_ASSESSMENT
+      delete from OSCA_SKILLS_ASSESSMENT
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" >
-    delete from PDSCI.OSCA_SKILLS_ASSESSMENT
+      delete from OSCA_SKILLS_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
-    insert into PDSCI.OSCA_SKILLS_ASSESSMENT (CLINICAL_FLOW, CLINICAL_NAME, CLINICAL_YEAR, 
+      insert into OSCA_SKILLS_ASSESSMENT (CLINICAL_FLOW, CLINICAL_NAME, CLINICAL_YEAR,
       SPE_ID, SPE_NAME, ACTION_TYPE_ID, 
       ACTION_TYPE_NAME, SUBJECT_FLOW, SUBJECT_NAME, 
       APPOINT_START_TIME, APPOINT_END_TIME, APPOINT_NUM, 
@@ -149,7 +149,7 @@
       #{remarks,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
-    insert into PDSCI.OSCA_SKILLS_ASSESSMENT
+      insert into OSCA_SKILLS_ASSESSMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="clinicalFlow != null" >
         CLINICAL_FLOW,
@@ -324,13 +324,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.OSCA_SKILLS_ASSESSMENT
+      select count(*) from OSCA_SKILLS_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_SKILLS_ASSESSMENT
+      update OSCA_SKILLS_ASSESSMENT
     <set >
       <if test="record.clinicalFlow != null" >
         CLINICAL_FLOW = #{record.clinicalFlow,jdbcType=VARCHAR},
@@ -422,7 +422,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_SKILLS_ASSESSMENT
+      update OSCA_SKILLS_ASSESSMENT
     set CLINICAL_FLOW = #{record.clinicalFlow,jdbcType=VARCHAR},
       CLINICAL_NAME = #{record.clinicalName,jdbcType=VARCHAR},
       CLINICAL_YEAR = #{record.clinicalYear,jdbcType=CHAR},
@@ -456,7 +456,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
-    update PDSCI.OSCA_SKILLS_ASSESSMENT
+      update OSCA_SKILLS_ASSESSMENT
     <set >
       <if test="clinicalName != null" >
         CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
@@ -543,7 +543,7 @@
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
-    update PDSCI.OSCA_SKILLS_ASSESSMENT
+      update OSCA_SKILLS_ASSESSMENT
     set CLINICAL_NAME = #{clinicalName,jdbcType=VARCHAR},
       CLINICAL_YEAR = #{clinicalYear,jdbcType=CHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},

@@ -1,5 +1,7 @@
 package com.pinde.core.model;
 
+import java.util.List;
+
 public class SysOrg implements java.io.Serializable {
     private String orgFlow;
 
@@ -85,8 +87,222 @@ public class SysOrg implements java.io.Serializable {
 
     private String baseCode;
 
+    private String orgPersonInCharge;
+
+    private String isAcc;
+
     private String orgInfo;
 
+    private String parentOrgFlow;//父id;
+
+    private String no;//序号
+
+    private Integer trainDoctorTotal;//在培人数
+    private Integer doctorSum;//住院医师人数
+    private Integer masterSum;//在职专硕人数
+
+    private String doctorRate;//住院医师使用率
+    private String masterRate;//在职专硕使用率
+    private String rate;//使用率
+
+
+    private Integer fillNum; //填写量
+    private Integer auditNum; //审核量
+    private String auditRate; //审核比例
+    private String avgfillNum; //平均填写量
+
+
+    private String isContain;
+    private String monthDate;
+    private String recordFlow;
+    private String roleFlag;
+    private String province;
+    private String city;
+    private String university;
+
+    private String notGraduate;
+    private String graduate;
+
+
+    private List<String> doctorFlowsInOrg;//当前学校在该基地的学生doctorFlow
+
+    private List<String> orgLevelIdNotIn;
+
+    public String getNotGraduate() {
+        return notGraduate;
+    }
+
+    public void setNotGraduate(String notGraduate) {
+        this.notGraduate = notGraduate;
+    }
+
+    public String getGraduate() {
+        return graduate;
+    }
+
+    public void setGraduate(String graduate) {
+        this.graduate = graduate;
+    }
+
+    public String getIsContain() {
+        return isContain;
+    }
+
+    public void setIsContain(String isContain) {
+        this.isContain = isContain;
+    }
+
+    public String getMonthDate() {
+        return monthDate;
+    }
+
+    public void setMonthDate(String monthDate) {
+        this.monthDate = monthDate;
+    }
+
+    public String getRecordFlow() {
+        return recordFlow;
+    }
+
+    public void setRecordFlow(String recordFlow) {
+        this.recordFlow = recordFlow;
+    }
+
+    public String getRoleFlag() {
+        return roleFlag;
+    }
+
+    public void setRoleFlag(String roleFlag) {
+        this.roleFlag = roleFlag;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public List<String> getDoctorFlowsInOrg() {
+        return doctorFlowsInOrg;
+    }
+
+    public void setDoctorFlowsInOrg(List<String> doctorFlowsInOrg) {
+        this.doctorFlowsInOrg = doctorFlowsInOrg;
+    }
+
+    public Integer getFillNum() {
+        return fillNum;
+    }
+
+    public void setFillNum(Integer fillNum) {
+        this.fillNum = fillNum;
+    }
+
+    public Integer getAuditNum() {
+        return auditNum;
+    }
+
+    public void setAuditNum(Integer auditNum) {
+        this.auditNum = auditNum;
+    }
+
+    public String getAuditRate() {
+        return auditRate;
+    }
+
+    public void setAuditRate(String auditRate) {
+        this.auditRate = auditRate;
+    }
+
+    public String getAvgfillNum() {
+        return avgfillNum;
+    }
+
+    public void setAvgfillNum(String avgfillNum) {
+        this.avgfillNum = avgfillNum;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
+    }
+
+    public String getDoctorRate() {
+        return doctorRate;
+    }
+
+    public void setDoctorRate(String doctorRate) {
+        this.doctorRate = doctorRate;
+    }
+
+    public String getMasterRate() {
+        return masterRate;
+    }
+
+    public void setMasterRate(String masterRate) {
+        this.masterRate = masterRate;
+    }
+
+    public Integer getDoctorSum() {
+        return doctorSum;
+    }
+
+    public void setDoctorSum(Integer doctorSum) {
+        this.doctorSum = doctorSum;
+    }
+
+    public Integer getMasterSum() {
+        return masterSum;
+    }
+
+    public void setMasterSum(Integer masterSum) {
+        this.masterSum = masterSum;
+    }
+
+    public Integer getTrainDoctorTotal() {
+        return trainDoctorTotal;
+    }
+
+    public void setTrainDoctorTotal(Integer trainDoctorTotal) {
+        this.trainDoctorTotal = trainDoctorTotal;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+    public String getParentOrgFlow() {
+        return parentOrgFlow;
+    }
+
+    public void setParentOrgFlow(String parentOrgFlow) {
+        this.parentOrgFlow = parentOrgFlow;
+    }
     public String getOrgFlow() {
         return orgFlow;
     }
@@ -423,11 +639,35 @@ public class SysOrg implements java.io.Serializable {
         this.baseCode = baseCode;
     }
 
+    public String getOrgPersonInCharge() {
+        return orgPersonInCharge;
+    }
+
+    public void setOrgPersonInCharge(String orgPersonInCharge) {
+        this.orgPersonInCharge = orgPersonInCharge;
+    }
+
+    public String getIsAcc() {
+        return isAcc;
+    }
+
+    public void setIsAcc(String isAcc) {
+        this.isAcc = isAcc;
+    }
+
     public String getOrgInfo() {
         return orgInfo;
     }
 
     public void setOrgInfo(String orgInfo) {
         this.orgInfo = orgInfo;
+    }
+
+    public List<String> getOrgLevelIdNotIn() {
+        return orgLevelIdNotIn;
+    }
+
+    public void setOrgLevelIdNotIn(List<String> orgLevelIdNotIn) {
+        this.orgLevelIdNotIn = orgLevelIdNotIn;
     }
 }

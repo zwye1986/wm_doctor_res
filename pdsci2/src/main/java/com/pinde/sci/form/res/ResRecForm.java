@@ -1,8 +1,6 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.ResRec;
-
-import java.io.Serializable;
+import com.pinde.core.model.ResRec;
 
 public class ResRecForm extends ResRec implements java.io.Serializable {
 

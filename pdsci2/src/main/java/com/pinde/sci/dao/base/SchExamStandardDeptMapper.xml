@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.SchExamStandardDeptMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchExamStandardDept">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchExamStandardDept">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="ARRANGE_FLOW" jdbcType="VARCHAR" property="arrangeFlow" />
     <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
@@ -76,13 +76,14 @@
     RECORD_FLOW, ARRANGE_FLOW, ORG_FLOW, ORG_NAME, STANDARD_DEPT_ID, STANDARD_DEPT_NAME, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.SchExamStandardDeptExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.SchExamStandardDeptExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_EXAM_STANDARD_DEPT
+      from SCH_EXAM_STANDARD_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +94,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_EXAM_STANDARD_DEPT
+      from SCH_EXAM_STANDARD_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SCH_EXAM_STANDARD_DEPT
+      delete from SCH_EXAM_STANDARD_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchExamStandardDeptExample">
-    delete from PDSCI.SCH_EXAM_STANDARD_DEPT
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchExamStandardDeptExample">
+      delete from SCH_EXAM_STANDARD_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchExamStandardDept">
-    insert into PDSCI.SCH_EXAM_STANDARD_DEPT (RECORD_FLOW, ARRANGE_FLOW, ORG_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.SchExamStandardDept">
+      insert into SCH_EXAM_STANDARD_DEPT (RECORD_FLOW, ARRANGE_FLOW, ORG_FLOW,
       ORG_NAME, STANDARD_DEPT_ID, STANDARD_DEPT_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -116,8 +117,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchExamStandardDept">
-    insert into PDSCI.SCH_EXAM_STANDARD_DEPT
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchExamStandardDept">
+      insert into SCH_EXAM_STANDARD_DEPT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -189,14 +190,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchExamStandardDeptExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SCH_EXAM_STANDARD_DEPT
+    <select id="countByExample" parameterType="com.pinde.core.model.SchExamStandardDeptExample"
+            resultType="java.lang.Integer">
+      select count(*) from SCH_EXAM_STANDARD_DEPT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SCH_EXAM_STANDARD_DEPT
+      update SCH_EXAM_STANDARD_DEPT
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -237,7 +239,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SCH_EXAM_STANDARD_DEPT
+      update SCH_EXAM_STANDARD_DEPT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ARRANGE_FLOW = #{record.arrangeFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -253,8 +255,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchExamStandardDept">
-    update PDSCI.SCH_EXAM_STANDARD_DEPT
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchExamStandardDept">
+      update SCH_EXAM_STANDARD_DEPT
     <set>
       <if test="arrangeFlow != null">
         ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
@@ -289,8 +291,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchExamStandardDept">
-    update PDSCI.SCH_EXAM_STANDARD_DEPT
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchExamStandardDept">
+      update SCH_EXAM_STANDARD_DEPT
     set ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

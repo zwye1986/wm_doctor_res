@@ -3,9 +3,13 @@ package com.pinde.res.ctrl.jswjw;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
+import com.pinde.core.common.sci.dao.VerificationCodeRecordMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -18,10 +22,6 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.osca.DoctorScoreEnum;
-import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
-import com.pinde.core.common.enums.osca.SignStatusEnum;
 import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.util.DateTimeUtil;
@@ -464,7 +464,7 @@ public class JswjwAppController {
             return "res/jswjw/rotationList";
         }
         PageHelper.startPage(pageIndex, pageSize);
-        List<ResDoctorRecruit> recruitList = jswjwBiz.getRecruitList(userFlow);
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.getRecruitList(userFlow);
         if (null == recruitList || recruitList.size() == 0) {
             model.addAttribute("resultId", "30204");
             model.addAttribute("resultType", "该学员暂未培训信息！");
@@ -581,7 +581,7 @@ public class JswjwAppController {
                             model.addAttribute("cfgValue","请至少填写未来"+cfgValue+"年的科室轮转情况");
                         }else {
                             //超过了基地设置的时间
-                            ResDoctorRecruit recruit = jswjwBiz.getNewRecruit(userFlow);
+                            com.pinde.core.model.ResDoctorRecruit recruit = jswjwBiz.getNewRecruit(userFlow);
                             //获取学员入培时间和现在时间相差的月份
                             long month = DateUtil.signMonthBetweenTwoMonth(recruit.getRecruitDate(), DateUtil.getCurrDate());
                             //如果相差一年，说明就是现在就是第二年（第二次），否则就是第三次
@@ -4538,43 +4538,36 @@ public class JswjwAppController {
             }
         }
         String key1 = jswjwBiz.getJsResCfgCode("jsres_" + info.getOrgFlow() + "_org_activity_start_time");
-        String end = jswjwBiz.getJsResCfgCode("jsres_" + info.getOrgFlow() + "_org_activity_end_time");
         int startTime = 10;
-        int endTime = 10;
         if (StringUtil.isNotBlank(key1)) {
             startTime = Integer.valueOf(key1);
-        }
-        if (StringUtil.isNotBlank(end)) {
-            endTime = Integer.valueOf(end);
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date;
         String startDate = info.getStartTime();
-        String endDate = info.getEndTime();
+        String endDate = info.getStartTime();
         try {
             date = simpleDateFormat.parse(info.getStartTime());
             Calendar calender = Calendar.getInstance();
             calender.setTime(date);
+
             calender.add(Calendar.MINUTE, -startTime);
-
             startDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
-
-            date = simpleDateFormat.parse(info.getEndTime());
-            calender.setTime(date);
-            calender.add(Calendar.MINUTE, endTime);
+            calender.add(Calendar.MINUTE, startTime << 1);
             endDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
         } catch (ParseException e) {
             startDate = info.getStartTime();
-            endDate = info.getEndTime();
+            endDate = info.getStartTime();
         }
-        if (DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(startDate) < 0) {
+        String nowStr = DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm");
+        if (nowStr.compareTo(startDate) < 0) {
             model.addAttribute("resultId", "3011107");
-            model.addAttribute("resultType", "活动暂未开始，无法参加");
+            model.addAttribute("resultType", "活动签到暂未开始，无法参加活动");
             return "res/jswjw/qrCode";
         }
-        if (DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm").compareTo(endDate) > 0) {
+        if (nowStr.compareTo(endDate) > 0) {
             model.addAttribute("resultId", "3011107");
-            model.addAttribute("resultType", "活动已结束，无法参加");
+            model.addAttribute("resultType", "活动签到已结束，无法参加活动");
             return "res/jswjw/qrCode";
         }
         int count = activityBiz.checkJoin2(activityFlow, userFlow);
@@ -5729,7 +5722,7 @@ public class JswjwAppController {
             model.addAttribute("resultType", "用户标识符为空");
             return "res/jswjw/showCertificate";
         }
-        List<ResDoctorRecruit> recruits = jswjwStudentBiz.findCertificates(userFlow);
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = jswjwStudentBiz.findCertificates(userFlow);
         if (recruits != null && recruits.size() > 0) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             String httpurl = httpRequest.getRequestURL().toString();
@@ -5746,7 +5739,7 @@ public class JswjwAppController {
     public Object showCertificateImage(String recordFlow, HttpServletRequest request, HttpServletResponse response, Model model) {
         Map<String, Object> map = new HashMap<>();
         map.put("code", "0");
-        ResDoctorRecruit recruit = jswjwStudentBiz.readRecruit(recordFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jswjwStudentBiz.readRecruit(recordFlow);
         if (recruit != null) {
             map.put("code", "1");
             map.put("recruit", recruit);
@@ -5830,7 +5823,7 @@ public class JswjwAppController {
     @RequestMapping(value = {"/showCertificateImages"}, method = {RequestMethod.GET})
     @ResponseBody
     public Object showCertificateImages(String userFlow, HttpServletRequest request, HttpServletResponse response, Model model) {
-        List<ResDoctorRecruit> recruits = jswjwStudentBiz.findCertificates(userFlow);
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = jswjwStudentBiz.findCertificates(userFlow);
         return JSON.toJSONString(recruits);
     }
 
@@ -6126,7 +6119,7 @@ public class JswjwAppController {
             //评价的指标
             TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(result.getActivityFlow());
             List<TeachingActivityInfoTarget> infoTargets = activityTargeBiz.readActivityTargets(result.getActivityFlow());
-            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), sysUser.getOrgFlow());
+            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), activityInfo.getOrgFlow());
             List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
             for (TeachingActivityInfoTarget infoTarget : infoTargets) {
                 if (!targetFlowList.contains(infoTarget.getTargetFlow())) {
@@ -7167,7 +7160,7 @@ public class JswjwAppController {
             }
             model.addAttribute("isStrongPasswd", isStrongPasswd);
             if (isDoctor) {
-                ResDoctorRecruit recruit = jswjwBiz.getNewRecruit(userFlow);
+                com.pinde.core.model.ResDoctorRecruit recruit = jswjwBiz.getNewRecruit(userFlow);
                 if (null == recruit || !recruit.getAuditStatusId().equals("Passed") || !recruit.getConfirmFlag().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                     model.addAttribute("resultId", "3010110");
                     model.addAttribute("resultType", "登录失败,你暂无权限使用,请联系培训基地管理员!");
@@ -7534,10 +7527,10 @@ public class JswjwAppController {
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            ResDoctorRecruit recruit = new ResDoctorRecruit();
+            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
             recruit.setDoctorFlow(doctor.getDoctorFlow());
             recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
             //在系统中是否有资格审核记录
             if (recruitList != null && recruitList.size() > 0) {
                 ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
@@ -7676,12 +7669,12 @@ public class JswjwAppController {
         SysUser currUser = jswjwBiz.readSysUser(userFlow);
         model.addAttribute("currUser", currUser);
         String doctorFlow = currUser.getUserFlow();
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         // 在培
 //		recruit.setDoctorStatusId("20");
-        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
 
         if (recruitList != null && !recruitList.isEmpty()) {
             model.addAttribute("recruitList", recruitList);
@@ -7977,7 +7970,7 @@ public class JswjwAppController {
     @RequestMapping(value = {"/asseApply"})
     public synchronized String asseApply(Model model, String recruitFlow, String applyYear, String changeSpeId, String remark, String userFlow, String lawScore, String medicineScore, String clinicalScore, String ckScore) throws DocumentException {
         SysUser user = jswjwBiz.readSysUser(userFlow);
-        ResDoctorRecruit recruit = jswjwBiz.getNewRecruitTwo(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jswjwBiz.getNewRecruitTwo(recruitFlow);
         if (!applyYear.equals(recruit.getGraduationYear())) {
             model.addAttribute("resultId", "200");
             model.addAttribute("resultType", "结业考核年份不是当前年，无法申请！");
@@ -8163,7 +8156,7 @@ public class JswjwAppController {
             return "res/jswjw/asseApply";
         }
 
-        ResDoctorRecruit recruit = jswjwBiz.getNewRecruitTwo(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jswjwBiz.getNewRecruitTwo(recruitFlow);
         if (!applyYear.equals(recruit.getGraduationYear())) {
             model.addAttribute("resultId", "200");
             model.addAttribute("resultType", "结业考核年份不是当前年，无法更新数据！");
@@ -8323,7 +8316,7 @@ public class JswjwAppController {
         return "res/jswjw/asseApply";
     }
 
-    private void showMaterials(Model model, ResDoctorRecruit recruit, String applyYear, JsresGraduationApply jsresGraduationApply) throws DocumentException {
+    private void showMaterials(Model model, com.pinde.core.model.ResDoctorRecruit recruit, String applyYear, JsresGraduationApply jsresGraduationApply) throws DocumentException {
         //培训方案
         SchRotation rotation = null;
         if (recruit != null && StringUtil.isNotBlank(recruit.getRotationFlow())) {
@@ -8724,10 +8717,10 @@ public class JswjwAppController {
         }
         // isAllowApply为N 不能参加补考，无需在做结业申请判断
         if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            ResDoctorRecruit recruit = new ResDoctorRecruit();
+            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
             recruit.setDoctorFlow(doctor.getDoctorFlow());
             recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
             //在系统中是否有资格审核记录
             if (recruitList != null && recruitList.size() > 0) {
                 ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
@@ -9286,11 +9279,11 @@ public class JswjwAppController {
                 }
             }
         }
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setGraduationYear(DateUtil.getYear());
         recruit.setDoctorFlow(sysUser.getUserFlow());
         recruit.setAuditStatusId("Passed");
-        List<ResDoctorRecruit> recruits = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
         String canSave = com.pinde.core.common.GlobalConstant.FLAG_Y;
         if (recruits != null && recruits.size() > 0) {
             String recruitFlow = recruits.get(0).getRecruitFlow();
@@ -9353,11 +9346,11 @@ public class JswjwAppController {
         //qtCountry:如果不是中国，设置地区
         int result = jswjwBiz.saveDoctorInfo(sysUser, doctor, userResumeExt,qtCountry);
         if (com.pinde.core.common.GlobalConstant.ZERO_LINE != result) {
-            ResDoctorRecruit recruit = new ResDoctorRecruit();
+            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
             recruit.setGraduationYear(DateUtil.getYear());
             recruit.setDoctorFlow(sysUser.getUserFlow());
             recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-            List<ResDoctorRecruit> recruits = jswjwBiz.readDoctorRecruits(recruit);
+            List<com.pinde.core.model.ResDoctorRecruit> recruits = jswjwBiz.readDoctorRecruits(recruit);
             String canSave = com.pinde.core.common.GlobalConstant.FLAG_Y;
             if (recruits != null && recruits.size() > 0) {
                 String recruitFlow = recruits.get(0).getRecruitFlow();
@@ -9583,9 +9576,9 @@ public class JswjwAppController {
         passedRec.setDoctorFlow(doctorFlow);
         passedRec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         passedRec.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-        List<ResDoctorRecruit> passedRecruitList = jswjwBiz.searchResDoctorRecruitList(passedRec, "MODIFY_TIME DESC");
+        List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList = jswjwBiz.searchResDoctorRecruitList(passedRec, "MODIFY_TIME DESC");
         //其中一阶段、住院医师审核通过（选二阶段使用）
-        List<ResDoctorRecruit> prevPassedList = new ArrayList<ResDoctorRecruit>();
+        List<com.pinde.core.model.ResDoctorRecruit> prevPassedList = new ArrayList<com.pinde.core.model.ResDoctorRecruit>();
         if (passedRecruitList != null && !passedRecruitList.isEmpty()) {
             model.addAttribute("passedRecruitList", passedRecruitList);
             //记录审核通过的培训类别(不包含首条为二阶段自动生成的一阶段)
@@ -9704,7 +9697,7 @@ public class JswjwAppController {
             docRecWithBLOBs.setIsRetrain(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         }else{
             //非结业记录 判断入培时间 + 培训年限 + 3年  如果没结业 则为重培
-            List<ResDoctorRecruit> recruitList = jswjwBiz.searchRecruitList(docRecWithBLOBs.getDoctorFlow());
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchRecruitList(docRecWithBLOBs.getDoctorFlow());
             if(CollectionUtils.isNotEmpty(recruitList)){
                 for (ResDoctorRecruit resDoctorRecruit : recruitList) {
                     //20 在培 21结业
@@ -9770,14 +9763,14 @@ public class JswjwAppController {
             return "res/jswjw/success";
         }
         //构建查询对象 填充属性 begin
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         PageHelper.startPage(pageIndex, pageSize);
         recruit.setDoctorFlow(userFlow);
         recruit.setRecruitYear(assignYear);
         recruit.setOrgFlow(orgFlow);
         //构建查询对象end
         //根据当前用户的 userFlow  查询属于自己的报名信息
-        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "");
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "");
         model.addAttribute("recruitList",recruitList);
         model.addAttribute("dataCount", PageHelper.total);
         model.addAttribute("userName",sysUser.getUserName());
@@ -9801,11 +9794,11 @@ public class JswjwAppController {
         }
         String doctorFlow = currUser.getUserFlow();
         //构建报名信息类的对象 用于操作数据库
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         ResDoctorRecruitWithBLOBs docRecWithBLOBs = new ResDoctorRecruitWithBLOBs();
         docRecWithBLOBs.setDoctorFlow(doctorFlow);
         docRecWithBLOBs.setRecruitFlow(recruitFlow);
-        List<ResDoctorRecruit> recruits = jswjwBiz.searchResDoctorRecruitList(docRecWithBLOBs,"");
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = jswjwBiz.searchResDoctorRecruitList(docRecWithBLOBs, "");
         model.addAttribute("currUser",currUser);
         ResDoctorRecruit resDoctorRecruit = new ResDoctorRecruit();
         if (recruits.size() > 0){
@@ -9854,9 +9847,9 @@ public class JswjwAppController {
         passedRec.setDoctorFlow(doctorFlow);
         passedRec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         passedRec.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-        List<ResDoctorRecruit> passedRecruitList = jswjwBiz.searchResDoctorRecruitList(passedRec, "MODIFY_TIME DESC");
+        List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList = jswjwBiz.searchResDoctorRecruitList(passedRec, "MODIFY_TIME DESC");
         //其中一阶段、住院医师审核通过（选二阶段使用）
-        List<ResDoctorRecruit> prevPassedList = new ArrayList<ResDoctorRecruit>();
+        List<com.pinde.core.model.ResDoctorRecruit> prevPassedList = new ArrayList<com.pinde.core.model.ResDoctorRecruit>();
         if (passedRecruitList != null && !passedRecruitList.isEmpty()) {
             model.addAttribute("passedRecruitList", passedRecruitList);
             //记录审核通过的培训类别(不包含首条为二阶段自动生成的一阶段)
@@ -9899,7 +9892,7 @@ public class JswjwAppController {
     }
 
     @RequestMapping(value="/doRegister")
-    public String doRegister(ResDoctorRecruit recruit,String userFlow,String prevRecruitFlow, String prevCompleteFileUrl, String prevCompleteCertNo,Model model){
+    public String doRegister(com.pinde.core.model.ResDoctorRecruit recruit, String userFlow, String prevRecruitFlow, String prevCompleteFileUrl, String prevCompleteCertNo, Model model) {
         model.addAttribute("resultId", "200");
         model.addAttribute("resultType", "报到成功！");
         if(StringUtil.isEmpty(userFlow)){
@@ -9915,7 +9908,7 @@ public class JswjwAppController {
         }
         String doctorFlow = currUser.getUserFlow();
         //构建报名信息类的对象 用于操作数据库
-//        ResDoctorRecruit recruit = new ResDoctorRecruit();
+//        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         ResDoctorRecruitWithBLOBs docRecWithBLOBs = new ResDoctorRecruitWithBLOBs();
         docRecWithBLOBs.setDoctorFlow(doctorFlow);
         docRecWithBLOBs.setRecruitFlow(recruit.getRecruitFlow());
@@ -9926,7 +9919,7 @@ public class JswjwAppController {
         }
 
         //确认报到之前，先查询该条记录是否已被基地录取
-        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(docRecWithBLOBs,"");
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(docRecWithBLOBs, "");
         boolean recruitFlag = false;
         if(null != recruitList && recruitList.size() >= 0){
             recruitFlag = com.pinde.core.common.GlobalConstant.FLAG_Y.equalsIgnoreCase(recruitList.get(0).getRecruitFlag()) ? true : false;
@@ -10099,12 +10092,12 @@ public class JswjwAppController {
         //获取培训记录
         SysUser currUser = jswjwBiz.readSysUser(userFlow);
         String doctorFlow = currUser.getUserFlow();
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
         if (recruitList != null && !recruitList.isEmpty()) {
-            List<ResDoctorRecruit> doctorSend = recruitList.stream().filter(r -> StringUtil.isNotEmpty(r.getSignupWay()) && r.getSignupWay().equals("DoctorSend")).collect(Collectors.toList());
+            List<com.pinde.core.model.ResDoctorRecruit> doctorSend = recruitList.stream().filter(r -> StringUtil.isNotEmpty(r.getSignupWay()) && r.getSignupWay().equals("DoctorSend")).collect(Collectors.toList());
             if(CollectionUtils.isNotEmpty(doctorSend)){
                 String recruitFlow = doctorSend.get(0).getRecruitFlow();
                 model.addAttribute("recruitFlow",recruitFlow);
@@ -10174,7 +10167,7 @@ public class JswjwAppController {
         if (CollectionUtils.isNotEmpty(backList)) {
             for (ResDocotrDelayTeturn resDocotrDelayTeturn : backList) {
                 if (StringUtil.isNotEmpty(resDocotrDelayTeturn.getAuditStatusName()) && "审核通过".equals(resDocotrDelayTeturn.getAuditStatusName())) {
-                    List<ResDoctorRecruit> collect = recruitList.stream().filter(ResDoctorRecruit -> ResDoctorRecruit.getDoctorStatusId().equals("20")).collect(Collectors.toList());
+                    List<com.pinde.core.model.ResDoctorRecruit> collect = recruitList.stream().filter(ResDoctorRecruit -> ResDoctorRecruit.getDoctorStatusId().equals("20")).collect(Collectors.toList());
                     if (CollectionUtils.isEmpty(collect)) {
                         isRetrain = com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y;
                     }
@@ -10298,11 +10291,11 @@ public class JswjwAppController {
             return "res/jswjw/success";
         }
         if(StringUtil.isNotBlank(doctorFlow) && StringUtil.isNotBlank(sessionNumber)){
-            ResDoctorRecruit recruit=new ResDoctorRecruit();
+            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
             recruit.setSessionNumber(sessionNumber);
             recruit.setDoctorFlow(doctorFlow);
             recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-            List<ResDoctorRecruit>  recruits=jswjwBiz.readDoctorRecruits(recruit);
+            List<com.pinde.core.model.ResDoctorRecruit> recruits = jswjwBiz.readDoctorRecruits(recruit);
             if(recruit!=null && (!recruits.isEmpty())){
                 model.addAttribute("resultId", "31602");
                 model.addAttribute("resultType", "您在当前届别，已添加过培训记录，无法继续添加！");
@@ -10399,7 +10392,7 @@ public class JswjwAppController {
             docRecWithBLOBs.setIsRetrain(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         } else {
             //非结业记录 判断入培时间 + 培训年限 + 3年  如果没结业 则为重培
-            List<ResDoctorRecruit> recruitList = jswjwBiz.searchRecruitList(docRecWithBLOBs.getDoctorFlow());
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchRecruitList(docRecWithBLOBs.getDoctorFlow());
             if (CollectionUtils.isNotEmpty(recruitList)) {
                 for (ResDoctorRecruit resDoctorRecruit : recruitList) {
                     //20 在培 21结业
@@ -10508,7 +10501,7 @@ public class JswjwAppController {
             ResDoctorRecruit lastRecruit = new ResDoctorRecruit();
             lastRecruit.setDoctorFlow(doctorFlow);
             lastRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(lastRecruit, "CREATE_TIME DESC");
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(lastRecruit, "CREATE_TIME DESC");
             if (recruitList != null && !recruitList.isEmpty()) {
                 lastRecruit = recruitList.get(0);
                 if (lastRecruit.getRecruitFlow().equals(recruitFlow)) {
@@ -10658,11 +10651,11 @@ public class JswjwAppController {
             model.addAttribute("resultType", "用户不存在");
             return "res/jswjw/success";
         }
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(userFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
-        List<ResDoctorRecruit> doctorSend = new ArrayList<>();
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
+        List<com.pinde.core.model.ResDoctorRecruit> doctorSend = new ArrayList<>();
         //筛选报送记录
         if(CollectionUtils.isNotEmpty(recruitList)){
             doctorSend = recruitList.stream().filter(rd -> StringUtil.isNotEmpty(rd.getSignupWay()) && rd.getSignupWay().equals("DoctorSend")).collect(Collectors.toList());
@@ -10704,9 +10697,9 @@ public class JswjwAppController {
         passedRec.setDoctorFlow(doctorFlow);
         passedRec.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         passedRec.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-        List<ResDoctorRecruit> passedRecruitList = jswjwBiz.searchResDoctorRecruitList(passedRec, "MODIFY_TIME DESC");
+        List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList = jswjwBiz.searchResDoctorRecruitList(passedRec, "MODIFY_TIME DESC");
         //其中一阶段、住院医师审核通过（选二阶段使用）
-        List<ResDoctorRecruit> prevPassedList = new ArrayList<ResDoctorRecruit>();
+        List<com.pinde.core.model.ResDoctorRecruit> prevPassedList = new ArrayList<com.pinde.core.model.ResDoctorRecruit>();
         if (passedRecruitList != null && !passedRecruitList.isEmpty()) {
             model.addAttribute("passedRecruitList", passedRecruitList);
             //记录审核通过的培训类别(不包含首条为二阶段自动生成的一阶段)

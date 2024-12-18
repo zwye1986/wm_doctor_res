@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ROLE_POPEDOM
+      from SYS_ROLE_POPEDOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_ROLE_POPEDOM
+      from SYS_ROLE_POPEDOM
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_ROLE_POPEDOM
+      delete from SYS_ROLE_POPEDOM
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysRolePopedomExample" >
-    delete from PDSCI.SYS_ROLE_POPEDOM
+      delete from SYS_ROLE_POPEDOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysRolePopedom" >
-    insert into PDSCI.SYS_ROLE_POPEDOM (RECORD_FLOW, ROLE_FLOW, MENU_ID, 
+      insert into SYS_ROLE_POPEDOM (RECORD_FLOW, ROLE_FLOW, MENU_ID,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
     values (#{recordFlow,jdbcType=VARCHAR}, #{roleFlow,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, 
@@ -112,7 +112,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysRolePopedom" >
-    insert into PDSCI.SYS_ROLE_POPEDOM
+      insert into SYS_ROLE_POPEDOM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -167,13 +167,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysRolePopedomExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_ROLE_POPEDOM
+      select count(*) from SYS_ROLE_POPEDOM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_ROLE_POPEDOM
+      update SYS_ROLE_POPEDOM
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -205,7 +205,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_ROLE_POPEDOM
+      update SYS_ROLE_POPEDOM
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ROLE_FLOW = #{record.roleFlow,jdbcType=VARCHAR},
       MENU_ID = #{record.menuId,jdbcType=VARCHAR},
@@ -219,7 +219,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysRolePopedom" >
-    update PDSCI.SYS_ROLE_POPEDOM
+      update SYS_ROLE_POPEDOM
     <set >
       <if test="roleFlow != null" >
         ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR},
@@ -246,7 +246,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysRolePopedom" >
-    update PDSCI.SYS_ROLE_POPEDOM
+      update SYS_ROLE_POPEDOM
     set ROLE_FLOW = #{roleFlow,jdbcType=VARCHAR},
       MENU_ID = #{menuId,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLectureInfoBiz;
@@ -11,7 +12,6 @@ import com.pinde.sci.dao.res.LectureInfoTargetExtMapper;
 import com.pinde.sci.dao.res.ResLectureEvaDetailExtMapper;
 import com.pinde.sci.dao.res.ResLectureInfoExtMapper;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
     private ResLectureScanRegistMapper lectureScanRegistMapper;
 
     @Override
-    public List<ResLectureInfo> SearchByDateContentTeacherNameType(String orgFlow,String lectureTrainDate, String content, String lectureTeacherName,String lectureTypeId,String place) {
+    public List<ResLectureInfo> SearchByDateContentTeacherNameType(String orgFlow, String lectureTrainDate, String content, String lectureTeacherName, String lectureTypeId, String place) {
         if(StringUtil.isBlank(orgFlow))
             return null;
         ResLectureInfoExample resLectureInfoExample = new ResLectureInfoExample();
@@ -274,9 +274,6 @@ public class ResLectureInfoBizImpl implements IResLectureInfoBiz {
         // 评价人数
         int evelCount = lectureInfoExtMapper.countLectureEvel(lectureFlow);
         // 有人签到或评价的讲座信息则不能删除
-        if(signCount > 0 || evelCount > 0){
-            return true;
-        }
-        return false;
+        return signCount > 0 || evelCount > 0;
     }
 }

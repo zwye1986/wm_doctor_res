@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,java.io.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.apache.commons.fileupload.*" %>
-<%@ page import="org.apache.commons.fileupload.disk.*" %>
-<%@ page import="org.apache.commons.fileupload.servlet.*" %>
-<%@ page import="org.json.simple.*" %>
+<%@ page import="org.apache.commons.fileupload.FileItem,org.apache.commons.fileupload.FileItemFactory" %>
+<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
+<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
+<%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="java.io.File" %>
 <%
 
 /**
@@ -22,7 +21,7 @@ String savePath = pageContext.getServletContext().getRealPath("/") + "attached/"
 String saveUrl  = request.getContextPath() + "/attached/";
 
 //定义允许上传的文件扩展名
-HashMap<String, String> extMap = new HashMap<String, String>();
+java.util.HashMap<String, String> extMap = new java.util.HashMap<String, String>();
 extMap.put("image", "gif,jpg,jpeg,png,bmp");
 extMap.put("flash", "swf,flv");
 extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
@@ -64,8 +63,8 @@ File saveDirFile = new File(savePath);
 if (!saveDirFile.exists()) {
 	saveDirFile.mkdirs();
 }
-SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-String ymd = sdf.format(new Date());
+java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyyMMdd");
+String ymd = sdf.format(new java.util.Date());
 savePath += ymd + "/";
 saveUrl += ymd + "/";
 File dirFile = new File(savePath);
@@ -76,8 +75,8 @@ if (!dirFile.exists()) {
 FileItemFactory factory = new DiskFileItemFactory();
 ServletFileUpload upload = new ServletFileUpload(factory);
 upload.setHeaderEncoding("UTF-8");
-List items = upload.parseRequest(request);
-Iterator itr = items.iterator();
+java.util.List items = upload.parseRequest(request);
+java.util.Iterator itr = items.iterator();
 while (itr.hasNext()) {
 	FileItem item = (FileItem) itr.next();
 	String fileName = item.getName();
@@ -90,13 +89,13 @@ while (itr.hasNext()) {
 		}
 		//检查扩展名
 		String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-		if(!Arrays.<String>asList(extMap.get(dirName).split(",")).contains(fileExt)){
+		if(!java.util.Arrays.<String>asList(extMap.get(dirName).split(",")).contains(fileExt)){
 			out.println(getError("上传文件扩展名是不允许的扩展名。\n只允许" + extMap.get(dirName) + "格式。"));
 			return;
 		}
 
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
-		String newFileName = df.format(new Date()) + "_" + new Random().nextInt(1000) + "." + fileExt;
+		java.text.SimpleDateFormat df = new java.text.SimpleDateFormat("yyyyMMddHHmmss");
+		String newFileName = df.format(new java.util.Date()) + "_" + new java.util.Random().nextInt(1000) + "." + fileExt;
 		try{
 			File uploadedFile = new File(savePath, newFileName);
 			item.write(uploadedFile);

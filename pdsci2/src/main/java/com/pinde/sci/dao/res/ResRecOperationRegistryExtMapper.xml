@@ -18,17 +18,25 @@
 	</resultMap>
 	
 	<resultMap type="com.pinde.sci.model.res.ResRecExt" id="extMap" extends="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
-		<association property="doctorExt" column="OPER_USER_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
-		<association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorSchProcess" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>	
+        <association property="doctorExt" column="OPER_USER_FLOW" javaType="com.pinde.core.model.ResDoctor"
+                     resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
+        <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
+                     javaType="com.pinde.core.model.ResDoctorSchProcess"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.pinde.sci.model.res.ResRecExt" id="extBLOBMap" extends="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
-		<association property="doctorExt" column="OPER_USER_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
-		<association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorSchProcess" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>	
+        <association property="doctorExt" column="OPER_USER_FLOW" javaType="com.pinde.core.model.ResDoctor"
+                     resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
+        <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
+                     javaType="com.pinde.core.model.ResDoctorSchProcess"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.pinde.sci.model.res.ResRecExt" id="recExtMap" extends="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
-		<association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW" javaType="com.pinde.sci.model.mo.ResDoctorSchProcess" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>	
+        <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
+                     javaType="com.pinde.core.model.ResDoctorSchProcess"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>
 	</resultMap>
 	
 	<resultMap type="com.pinde.sci.model.res.ResDoctorSchProcessExt" id="processExt" extends="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
@@ -36,7 +44,7 @@
 	</resultMap>
 	
 	<select id="searchAuditCount" resultMap="auditCountMap">
-		select REC_TYPE_ID,count(REC_TYPE_ID) audit_count from pdsci.RES_REC rr,pdsci.RES_DOCTOR_SCH_PROCESS rdp 
+        select REC_TYPE_ID,count(REC_TYPE_ID) audit_count from RES_REC rr, RES_DOCTOR_SCH_PROCESS rdp
 			where rr.RECORD_STATUS='Y' and rdp.RECORD_STATUS='Y'  and user_flow = oper_user_flow and rr.SCH_DEPT_FLOW= rdp.SCH_DEPT_FLOW
 			   <if test='roleFlag=="teacher"'> 
 			   and TEACHER_USER_FLOW=#{userFlow} and (AUDIT_STATUS_ID is null)
@@ -479,7 +487,9 @@
 		))
 	</select>
 	<select id="searchAuditList" resultMap="extMap">
-		select rr.*,rd.doctor_flow,SPECIALIZED,SESSION_NUMBER,user_name,rotation_flow,rdp.process_flow,rdp.START_DATE,rdp.END_DATE from pdsci.RES_REC rr,pdsci.RES_DOCTOR_SCH_PROCESS rdp,pdsci.res_doctor rd,pdsci.sys_user su 
+        select
+        rr.*,rd.doctor_flow,SPECIALIZED,SESSION_NUMBER,user_name,rotation_flow,rdp.process_flow,rdp.START_DATE,rdp.END_DATE
+        from RES_REC rr, RES_DOCTOR_SCH_PROCESS rdp, res_doctor rd, sys_user su
 			where rr.RECORD_STATUS='Y' and rdp.RECORD_STATUS='Y' and rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'  and rdp.user_flow = oper_user_flow and rr.SCH_DEPT_FLOW= rdp.SCH_DEPT_FLOW
 			      and oper_user_flow = rd.doctor_flow and su.user_flow = rd.doctor_flow and REC_TYPE_ID = #{recTypeId}
 			   <if test='roleFlag=="teacher"'> 
@@ -498,7 +508,8 @@
 	</select>
 	
 	<select id="searchRegistryList" resultMap="extMap">
-		select rr.*,rd.doctor_flow,SPECIALIZED,SESSION_NUMBER,user_name,rotation_flow,rdp.START_DATE,rdp.END_DATE from pdsci.RES_REC rr,pdsci.RES_DOCTOR_SCH_PROCESS rdp,pdsci.res_doctor rd,pdsci.sys_user su 
+        select rr.*,rd.doctor_flow,SPECIALIZED,SESSION_NUMBER,user_name,rotation_flow,rdp.START_DATE,rdp.END_DATE from
+        RES_REC rr, RES_DOCTOR_SCH_PROCESS rdp, res_doctor rd, sys_user su
 			where rr.RECORD_STATUS='Y' and rdp.RECORD_STATUS='Y' and rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'  and rdp.user_flow = oper_user_flow and rr.SCH_DEPT_FLOW= rdp.SCH_DEPT_FLOW
 			      and oper_user_flow = rd.doctor_flow and su.user_flow = rd.doctor_flow 
 			     <if test='rec!=null'>
@@ -521,8 +532,8 @@
 	</select>
 	
 	<select id="searchScoreList" resultMap="extBLOBMap">
-		select rr.*,rdp.*,SPECIALIZED,SESSION_NUMBER,user_name,rotation_flow 
-		from pdsci.RES_REC rr,pdsci.RES_DOCTOR_SCH_PROCESS rdp,pdsci.res_doctor rd,pdsci.sys_user su 
+		select rr.*,rdp.*,SPECIALIZED,SESSION_NUMBER,user_name,rotation_flow
+        from RES_REC rr, RES_DOCTOR_SCH_PROCESS rdp, res_doctor rd, sys_user su
 			where rr.RECORD_STATUS='Y' and rdp.RECORD_STATUS='Y' and rd.RECORD_STATUS='Y' and su.RECORD_STATUS='Y'  and rdp.user_flow = oper_user_flow and rr.SCH_DEPT_FLOW= rdp.SCH_DEPT_FLOW
 			      and oper_user_flow = rd.doctor_flow and su.user_flow = rd.doctor_flow 
 			     <if test='recTypeId!=null and recTypeId!=""'>
@@ -546,7 +557,7 @@
 	<select id="searchTeacherAudit" resultMap="recExtMap">
 		SELECT RR.*,RDB.*
 		FROM
-		PDSCI.RES_DOCTOR_SCH_PROCESS RDB,PDSCI.RES_REC RR
+        RES_DOCTOR_SCH_PROCESS RDB, RES_REC RR
 		WHERE
 		RDB.RECORD_STATUS='Y' 
 		AND RR.RECORD_STATUS='Y'
@@ -565,8 +576,8 @@
 	</select>
 	
 	<select id="searchProcessExt" resultMap="processExt">
-		SELECT RDSP.*,RD.*,SU.* 
-		FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_DOCTOR RD,PDSCI.SYS_USER SU
+		SELECT RDSP.*,RD.*,SU.*
+        FROM RES_DOCTOR_SCH_PROCESS RDSP, RES_DOCTOR RD, SYS_USER SU
 		WHERE
 		RDSP.RECORD_STATUS = 'Y'
 		AND RD.RECORD_STATUS = 'Y'
@@ -603,8 +614,8 @@
 	</select>
 	
 	<select id="searchRecByUserAndSchdept" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
-		SELECT * 
-		FROM PDSCI.RES_REC
+		SELECT *
+        FROM RES_REC
 		WHERE RECORD_STATUS = 'Y'
 		AND OPER_USER_FLOW IN
 		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">  
@@ -623,8 +634,8 @@
 	</select>
 	
 	<select id="searchRecExtByRecExt" resultMap="extMap">
-		SELECT RR.*,RDSP.*,RD.*,SU.* 
-		FROM PDSCI.RES_REC RR,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_DOCTOR RD,PDSCI.SYS_USER SU
+		SELECT RR.*,RDSP.*,RD.*,SU.*
+        FROM RES_REC RR, RES_DOCTOR_SCH_PROCESS RDSP, RES_DOCTOR RD, SYS_USER SU
 		WHERE
 		RR.RECORD_STATUS = 'Y'
 		AND RDSP.RECORD_STATUS = 'Y'
@@ -653,7 +664,7 @@
 	
 	<select id="countRecWithDoc" resultMap="recCountMap">
 		SELECT OPER_USER_FLOW||process_flow||REC_TYPE_ID REC_KEY,COUNT(*) FINISH_COUNT
-		FROM PDSCI.RES_REC
+        FROM RES_REC
 		WHERE RECORD_STATUS = 'Y'
 		AND OPER_USER_FLOW IN 
 		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
@@ -677,7 +688,7 @@
 	
 	<select id="searchByRecForAudit" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
 		SELECT *
-		FROM PDSCI.RES_REC
+        FROM RES_REC
 		WHERE RECORD_STATUS = 'Y'
 		<if test='recTypeId != null and recTypeId != ""'>
 			AND REC_TYPE_ID = #{recTypeId}
@@ -690,8 +701,8 @@
 	</select>
 	
 	<select id="searchTeacherAuditCount" resultMap="teacherAuditCount">
-		SELECT RDSP.TEACHER_USER_FLOW TEACHER_FLOW,RDSP.TEACHER_USER_NAME TEACHER_NAME,COUNT(*) AUDIT_COUNT 
-		FROM PDSCI.RES_REC RR,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		SELECT RDSP.TEACHER_USER_FLOW TEACHER_FLOW,RDSP.TEACHER_USER_NAME TEACHER_NAME,COUNT(*) AUDIT_COUNT
+        FROM RES_REC RR, RES_DOCTOR_SCH_PROCESS RDSP
 		WHERE RR.RECORD_STATUS = 'Y'
 		AND RDSP.RECORD_STATUS = 'Y'
 		AND RR.OPER_USER_FLOW = RDSP.USER_FLOW
@@ -710,8 +721,8 @@
 	</select>
 	
 	<select id="searchDoctorNotAuditCount" resultMap="recCountMap">
-		SELECT RDSP.USER_FLOW REC_KEY,COUNT(*) FINISH_COUNT 
-		FROM PDSCI.RES_REC RR,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		SELECT RDSP.USER_FLOW REC_KEY,COUNT(*) FINISH_COUNT
+        FROM RES_REC RR, RES_DOCTOR_SCH_PROCESS RDSP
 		WHERE RR.RECORD_STATUS = 'Y'
 		AND RDSP.RECORD_STATUS = 'Y'
 		AND RR.OPER_USER_FLOW = RDSP.USER_FLOW
@@ -741,7 +752,7 @@
     <select id="searchAfterAuditRecNew"
             resultMap="com.pinde.core.common.sci.dao.ResSchProcessExpressMapper.ResultMapWithBLOBs">
 		SELECT RR.*
-		FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_SCH_PROCESS_EXPRESS RR
+        FROM SYS_USER SU, RES_DOCTOR_SCH_PROCESS RDSP, RES_SCH_PROCESS_EXPRESS RR
 		WHERE SU.RECORD_STATUS = 'Y'
 		AND RDSP.RECORD_STATUS = 'Y'
 		AND RR.RECORD_STATUS = 'Y'
@@ -784,7 +795,7 @@
 					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 						AND( RR.DEPT_FLOW IN (
 						SELECT SUD.DEPT_FLOW
-						FROM PDSCI.SYS_USER_DEPT SUD
+                        FROM SYS_USER_DEPT SUD
 						WHERE SUD.RECORD_STATUS = 'Y'
 						AND SUD.USER_FLOW = #{roleFlagMap.val}
 						) or rdsp.head_user_flow=#{roleFlagMap.val} )
@@ -795,7 +806,7 @@
 					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 						AND RDSP.USER_FLOW IN (
 						SELECT DOCTOR_FLOW
-						FROM PDSCI.RES_DOCTOR
+                        FROM RES_DOCTOR
 						WHERE RECORD_STATUS = 'Y'
 						<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
 							AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
@@ -803,14 +814,14 @@
 						<if test='roleFlagMap.trainingSpeId==null or roleFlagMap.trainingSpeId==""'>
 							AND TRAINING_SPE_ID IN (
 							SELECT TRAINING_SPE_ID
-							FROM PDSCI.RES_USER_SPE
+                            FROM RES_USER_SPE
 							WHERE RECORD_STATUS = 'Y'
 							AND USER_FLOW = #{roleFlagMap.val}
 							)
 						</if>
 						AND ORG_FLOW IN (
 						SELECT ORG_FLOW
-						FROM PDSCI.SYS_USER
+                        FROM SYS_USER
 						WHERE USER_FLOW = #{roleFlagMap.val}
 						)
 						)
@@ -830,7 +841,7 @@
 
 	<select id="searchAfterAuditRec" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
 	    SELECT RR.*
-	    FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.RES_REC RR
+        FROM SYS_USER SU, RES_DOCTOR_SCH_PROCESS RDSP, RES_REC RR
 	    WHERE SU.RECORD_STATUS = 'Y'
     	AND RDSP.RECORD_STATUS = 'Y'
     	AND RR.RECORD_STATUS = 'Y'
@@ -872,8 +883,8 @@
 		    	<if test='roleFlagMap.roleFlag=="head"'>
 		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 		    			AND( RR.DEPT_FLOW IN (
-		    				SELECT SUD.DEPT_FLOW 
-							FROM PDSCI.SYS_USER_DEPT SUD
+		    				SELECT SUD.DEPT_FLOW
+                        FROM SYS_USER_DEPT SUD
 							WHERE SUD.RECORD_STATUS = 'Y'
 							AND SUD.USER_FLOW = #{roleFlagMap.val}
 						) or rdsp.head_user_flow=#{roleFlagMap.val} )
@@ -884,7 +895,7 @@
 		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 		    			AND RDSP.USER_FLOW IN (
 		    				SELECT DOCTOR_FLOW
-		    				FROM PDSCI.RES_DOCTOR
+                        FROM RES_DOCTOR
 		    				WHERE RECORD_STATUS = 'Y'
 		    				<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
 		    					AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
@@ -892,14 +903,14 @@
 		    				<if test='roleFlagMap.trainingSpeId==null or roleFlagMap.trainingSpeId==""'>
 			    				AND TRAINING_SPE_ID IN (
 			    					SELECT TRAINING_SPE_ID
-			    					FROM PDSCI.RES_USER_SPE
+                                FROM RES_USER_SPE
 			    					WHERE RECORD_STATUS = 'Y'
 			    					AND USER_FLOW = #{roleFlagMap.val}
 			    				)
 		    				</if>
 			    			AND ORG_FLOW IN (
 			    				SELECT ORG_FLOW
-			    				FROM PDSCI.SYS_USER
+                        FROM SYS_USER
 			    				WHERE USER_FLOW = #{roleFlagMap.val}
 			    			)
 		    			)
@@ -917,7 +928,7 @@
 	</select>
 	<select id="searchSXSRecData" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
 	    SELECT RR.*
-	    FROM PDSCI.SYS_USER SU,PDSCI.RES_REC RR
+        FROM SYS_USER SU, RES_REC RR
 	    WHERE SU.RECORD_STATUS = 'Y'
     	AND RR.RECORD_STATUS = 'Y'
     	AND SU.USER_FLOW = RR.OPER_USER_FLOW
@@ -942,7 +953,7 @@
 		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 		    			AND( RR.DEPT_FLOW IN (
 		    				SELECT SUD.DEPT_FLOW
-							FROM PDSCI.SYS_USER_DEPT SUD
+                        FROM SYS_USER_DEPT SUD
 							WHERE SUD.RECORD_STATUS = 'Y'
 							AND SUD.USER_FLOW = #{roleFlagMap.val}
 						) or su.user_flow in ( select user_flow from res_doctor_sch_process rdsp where rdsp.record_status='Y' and rdsp.head_user_flow=#{roleFlagMap.val}) )
@@ -953,14 +964,14 @@
 		    		<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 		    			AND su.USER_FLOW IN (
 		    				SELECT DOCTOR_FLOW
-		    				FROM PDSCI.RES_DOCTOR
+                        FROM RES_DOCTOR
 		    				WHERE RECORD_STATUS = 'Y'
 		    				<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
 		    					AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
 		    				</if>
 			    			AND ORG_FLOW IN (
 			    				SELECT ORG_FLOW
-			    				FROM PDSCI.SYS_USER
+                        FROM SYS_USER
 			    				WHERE USER_FLOW = #{roleFlagMap.val}
 			    			)
 		    			)
@@ -1018,13 +1029,13 @@
 	</resultMap>
 	<select id="searchDeptWillAfter" resultMap="willAfterCount">
 		SELECT RDSP.DEPT_FLOW DEPT_FLOW,COUNT(1) COUNT_NUM
-		FROM  PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
 		WHERE RDSP.RECORD_STATUS = 'Y'
 			AND RDSP.IS_CURRENT_FLAG = 'Y'
 			AND RDSP.ORG_FLOW = #{orgFlow}
 			AND RDSP.PROCESS_FLOW IN (
 			SELECT PROCESS_FLOW
-			FROM  PDSCI.RES_SCH_PROCESS_EXPRESS RR
+        FROM RES_SCH_PROCESS_EXPRESS RR
 			WHERE RR.RECORD_STATUS = 'Y'
 			AND RR.ORG_FLOW = #{orgFlow}
 			AND (RR.REC_TYPE_ID = 'AfterEvaluation' OR RR.REC_TYPE_ID = 'AfterSummary')
@@ -1038,7 +1049,7 @@
 	</resultMap>
 	<select id="searchDeptWillAfterDoc" resultMap="willAfterCountDoc">
 		SELECT RDSP.PROCESS_FLOW PROCESS_FLOW,COUNT(1) COUNT_NUM
-		FROM  PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+        FROM RES_DOCTOR_SCH_PROCESS RDSP
 		WHERE RDSP.RECORD_STATUS = 'Y'
 			AND RDSP.IS_CURRENT_FLAG = 'Y'
 			AND RDSP.ORG_FLOW = #{orgFlow}
@@ -1046,8 +1057,8 @@
 				and dept_flow=#{deptFlow}
 			</if>
 			AND RDSP.PROCESS_FLOW IN (
-			SELECT PROCESS_FLOW 
-			FROM  PDSCI.RES_SCH_PROCESS_EXPRESS RR
+			SELECT PROCESS_FLOW
+        FROM RES_SCH_PROCESS_EXPRESS RR
 			WHERE RR.RECORD_STATUS = 'Y'
 			AND RR.ORG_FLOW = #{orgFlow}
 			AND (RR.REC_TYPE_ID = 'AfterEvaluation' OR RR.REC_TYPE_ID = 'AfterSummary')
@@ -1113,8 +1124,8 @@
 			rr.rec_content CONTENT,
 			rr.rec_flow REC_FLOW,
 			rd.SESSION_NUMBER
-		from pdsci.res_rec rr
-		inner join pdsci.res_doctor_sch_process rdsp
+        from res_rec rr
+        inner join res_doctor_sch_process rdsp
 		on rdsp.record_status = 'Y'
 		and rdsp.process_flow = rr.process_flow
 		left join res_doctor rd
@@ -1168,8 +1179,8 @@
 			rr.rec_content CONTENT,
 			rr.rec_flow REC_FLOW,
 			rd.SESSION_NUMBER
-		from pdsci.DEPT_TEACHER_GRADE_INFO rr
-		inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO rr
+        inner join res_doctor_sch_process rdsp
 		on rdsp.record_status = 'Y'
 		and rdsp.process_flow = rr.process_flow
 		left join res_doctor rd
@@ -1219,7 +1230,7 @@
 	</select>
 
 	<update id="modifyResRegStatus" parameterType="java.util.Map">
-		update PDSCI.RES_REG SET STATUS_ID = #{statusId},STATUS_NAME = #{statusName}
+        update RES_REG SET STATUS_ID = #{statusId},STATUS_NAME = #{statusName}
 		WHERE REG_YEAR = #{regNumber}
 		 and exists(select null from res_doctor where RES_DOCTOR.RECORD_STATUS = 'Y' AND RES_DOCTOR.DOCTOR_STATUS_ID=#{oldStatusId} and RES_REG.user_flow = res_doctor.doctor_flow)
 	</update>
@@ -1242,7 +1253,7 @@
 							   'CampaignRegistry')
 		   AND EXISTS
 		 (SELECT 1
-				  FROM PDSCI.RES_DOCTOR_RECRUIT DR
+        FROM RES_DOCTOR_RECRUIT DR
 				  LEFT JOIN SCH_ROTATION_DEPT T
 					ON DR.ROTATION_FLOW = T.ROTATION_FLOW
 				   AND T.ORG_FLOW IS NULL
@@ -1479,7 +1490,7 @@
 	</select>
 	<select id="searchDelayInfoForUni" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
 		select r.*
-		from PDSCI.RES_REC r
+        from RES_REC r
 		left join RES_DOCTOR d on r.OPER_USER_FLOW = d.DOCTOR_FLOW
 		WHERE r.RECORD_STATUS = 'Y'
 		AND d.RECORD_STATUS = 'Y'
@@ -1695,7 +1706,7 @@
 
 
     <update id="oneKeyAudit" parameterType="map" >
-        update PDSCI.RES_REC
+        update RES_REC
         <set >
             <if test="record.recFlow != null" >
                 REC_FLOW = #{record.recFlow,jdbcType=VARCHAR},
@@ -1871,7 +1882,7 @@
 
 	<select id="searchEvalFormGradeInfo" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
 		SELECT RR.*
-		FROM PDSCI.SYS_USER SU,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP,PDSCI.DEPT_TEACHER_GRADE_INFO RR
+        FROM SYS_USER SU, RES_DOCTOR_SCH_PROCESS RDSP, DEPT_TEACHER_GRADE_INFO RR
 		WHERE SU.RECORD_STATUS = 'Y'
 		AND RDSP.RECORD_STATUS = 'Y'
 		AND RR.RECORD_STATUS = 'Y'
@@ -1913,7 +1924,7 @@
 					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 						AND( RR.DEPT_FLOW IN (
 						SELECT SUD.DEPT_FLOW
-						FROM PDSCI.SYS_USER_DEPT SUD
+                        FROM SYS_USER_DEPT SUD
 						WHERE SUD.RECORD_STATUS = 'Y'
 						AND SUD.USER_FLOW = #{roleFlagMap.val}
 						) or rdsp.head_user_flow=#{roleFlagMap.val} )
@@ -1924,7 +1935,7 @@
 					<if test='roleFlagMap.val!=null and roleFlagMap.val!=""'>
 						AND RDSP.USER_FLOW IN (
 						SELECT DOCTOR_FLOW
-						FROM PDSCI.RES_DOCTOR
+                        FROM RES_DOCTOR
 						WHERE RECORD_STATUS = 'Y'
 						<if test='roleFlagMap.trainingSpeId!=null and roleFlagMap.trainingSpeId!=""'>
 							AND TRAINING_SPE_ID = #{roleFlagMap.trainingSpeId}
@@ -1932,14 +1943,14 @@
 						<if test='roleFlagMap.trainingSpeId==null or roleFlagMap.trainingSpeId==""'>
 							AND TRAINING_SPE_ID IN (
 							SELECT TRAINING_SPE_ID
-							FROM PDSCI.RES_USER_SPE
+                            FROM RES_USER_SPE
 							WHERE RECORD_STATUS = 'Y'
 							AND USER_FLOW = #{roleFlagMap.val}
 							)
 						</if>
 						AND ORG_FLOW IN (
 						SELECT ORG_FLOW
-						FROM PDSCI.SYS_USER
+                        FROM SYS_USER
 						WHERE USER_FLOW = #{roleFlagMap.val}
 						)
 						)
@@ -2147,7 +2158,8 @@
 		group by p.TEACHER_USER_FLOW,rr.oper_user_name
 	</select>
 
-	<select id="searchRecAndActivityByProcess" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.ResRecExample" >
+    <select id="searchRecAndActivityByProcess" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ResRecExample">
 		select * from (
 		SELECT
 		distinct '1' QUERY_TYPE, INFO.ACTIVITY_FLOW REC_FLOW,INFO.ACTIVITY_NAME SCH_DEPT_NAME,SU.USER_NAME  AUDIT_USER_NAME,
@@ -2200,7 +2212,7 @@
 		MANAGER_AUDIT_STATUS_ID, MANAGER_AUDIT_STATUS_NAME, ADMIN_AUDIT_TIME, ADMIN_AUDIT_USER_FLOW,
 		ADMIN_AUDIT_USER_NAME, ADMIN_AUDIT_STATUS_ID, ADMIN_AUDIT_STATUS_NAME, ITEM_ID, PROCESS_FLOW,
 		SCH_ROTATION_DEPT_FLOW, MEDICINE_TYPE,to_char(REC_CONTENT) REC_CONTENT
-		from PDSCI.RES_REC_OPERATION_REGISTRY
+        from RES_REC_OPERATION_REGISTRY
 		WHERE RECORD_STATUS = 'Y'
 		AND REC_TYPE_ID = #{recTypeId}
 		<if test="schRotationDeptFlow !=null and schRotationDeptFlow!=''">

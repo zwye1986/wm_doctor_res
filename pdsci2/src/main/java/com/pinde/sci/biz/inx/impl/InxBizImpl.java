@@ -4,7 +4,9 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.VerificationCodeRecordMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -19,8 +21,9 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.dao.base.*;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
+import com.pinde.sci.dao.base.ResDoctorMapper;
+import com.pinde.sci.dao.base.TjDocinfoMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +60,7 @@ public class InxBizImpl implements IInxBiz{
 	@Autowired
 	private VerificationCodeRecordMapper CodeRecordMap;
 
-    private static Logger logger = LoggerFactory.getLogger(InxBizImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(InxBizImpl.class);
 
 
 	@Override
@@ -285,7 +288,6 @@ public class InxBizImpl implements IInxBiz{
 		doctor.setDoctorFlow(user.getUserFlow());
         doctor.setOscaStudentSubmit(com.pinde.core.common.GlobalConstant.FLAG_Y);
 		ResDoctorExample example = new ResDoctorExample();
-        ResDoctorExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow());
 		int count = resDoctorMapper.countByExample(example);
 		if(count>0){
 			GeneralMethod.setRecordInfo(doctor,false);

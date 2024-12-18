@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.core.model.SysCfgLog;
 import com.pinde.core.model.SysCfgLogExample;
 import com.pinde.core.model.SysCfgLogWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysCfgLogMapper {
     int countByExample(SysCfgLogExample example);

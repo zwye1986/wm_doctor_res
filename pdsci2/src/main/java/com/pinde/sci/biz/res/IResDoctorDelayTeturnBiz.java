@@ -1,7 +1,10 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.PubFile;
+import com.pinde.core.model.ResDocotrDelayTeturn;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,7 +71,7 @@ public interface IResDoctorDelayTeturnBiz {
 
     List<ResDocotrDelayTeturn> searchInfoForUni(ResDocotrDelayTeturn docotrDelayTeturn, ResDoctor currdoctor);
 
-    int checkBackTrain(ResDocotrDelayTeturn docotrDelayTeturn, ResDoctorRecruit recruit)throws DocumentException;
+    int checkBackTrain(ResDocotrDelayTeturn docotrDelayTeturn, com.pinde.core.model.ResDoctorRecruit recruit) throws DocumentException;
 
     int saveDelayInfo(ResDocotrDelayTeturn docotrDelayTeturn);
 

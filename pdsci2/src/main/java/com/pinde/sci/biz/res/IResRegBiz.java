@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResReg;
+import com.pinde.core.model.ResReg;
 
 import java.util.List;
 

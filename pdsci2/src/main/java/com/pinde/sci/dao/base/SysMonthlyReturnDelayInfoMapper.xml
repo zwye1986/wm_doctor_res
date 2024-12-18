@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysMonthlyReturnDelayInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyReturnDelayInfo">
     <id column="SMRDI_FLOW" property="smrdiFlow" jdbcType="VARCHAR" />
     <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
@@ -116,13 +116,14 @@
     AUDIT_OPINION, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
     ID_NO, USER_PHONE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfoExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+      from SYS_MONTHLY_RETURN_DELAY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -133,21 +134,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+      from SYS_MONTHLY_RETURN_DELAY_INFO
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+      delete from SYS_MONTHLY_RETURN_DELAY_INFO
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample" >
-    delete from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfoExample">
+      delete from SYS_MONTHLY_RETURN_DELAY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
-    insert into PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO (SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfo">
+      insert into SYS_MONTHLY_RETURN_DELAY_INFO (SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW,
       DOCTOR_NAME, RECRUIT_FLOW, ORG_FLOW, 
       ORG_NAME, SESSION_NUMBER, DOCTOR_TYPE_ID, 
       DOCTOR_TYPE_NAME, TRAINING_YEARS, TRAINING_TYPE_ID, 
@@ -180,8 +181,8 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
-    insert into PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfo">
+      insert into SYS_MONTHLY_RETURN_DELAY_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smrdiFlow != null" >
         SMRDI_FLOW,
@@ -457,14 +458,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfoExample"
+            resultType="java.lang.Integer">
+      select count(*) from SYS_MONTHLY_RETURN_DELAY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+      update SYS_MONTHLY_RETURN_DELAY_INFO
     <set >
       <if test="record.smrdiFlow != null" >
         SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
@@ -607,7 +609,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+      update SYS_MONTHLY_RETURN_DELAY_INFO
     set SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
       DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -657,8 +659,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
-    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfo">
+      update SYS_MONTHLY_RETURN_DELAY_INFO
     <set >
       <if test="dateMonth != null" >
         DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
@@ -795,8 +797,8 @@
     </set>
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo" >
-    update PDSCI.SYS_MONTHLY_RETURN_DELAY_INFO
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfo">
+      update SYS_MONTHLY_RETURN_DELAY_INFO
     set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

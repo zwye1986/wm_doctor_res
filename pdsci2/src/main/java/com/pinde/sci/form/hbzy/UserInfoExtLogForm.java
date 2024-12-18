@@ -1,11 +1,10 @@
 package com.pinde.sci.form.hbzy;
 
-import com.pinde.sci.model.mo.PubUserResume;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
 
-import java.io.Serializable;
 import java.util.Map;
 
 public class UserInfoExtLogForm implements java.io.Serializable {
@@ -18,7 +17,7 @@ public class UserInfoExtLogForm implements java.io.Serializable {
 	private SysUser sysUser;
 	private ResDoctor doctor;
 	private PubUserResume userResumeExt;
-	private ResDoctorRecruit recruit;
+    private com.pinde.core.model.ResDoctorRecruit recruit;
 	//导出花名册用
 	private Map<String,String> userResumeExtMap;
 
@@ -34,7 +33,7 @@ public class UserInfoExtLogForm implements java.io.Serializable {
 		return recruit;
 	}
 
-	public void setRecruit(ResDoctorRecruit recruit) {
+    public void setRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
 		this.recruit = recruit;
 	}
 

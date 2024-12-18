@@ -716,6 +716,9 @@ public class ResDoctorSchProcessExample {
         }
 
         public Criteria andSchResultFlowIn(List<String> values) {
+            /*if (CollectionUtils.isNotEmpty(values) && values.size() > 100) {
+                values = values.subList(0, 100);
+            }*/
             addCriterion("SCH_RESULT_FLOW in", values, "schResultFlow");
             return (Criteria) this;
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.StudySubjectMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StudySubject" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.StudySubject">
     <id column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
     <result column="SUBJECT_YEAR" property="subjectYear" jdbcType="VARCHAR" />
@@ -83,13 +83,13 @@
     RESERVATIONS_NUM, REMAINDER_NUM, SUBJECT_EXPLAIN, POST_STATUS, OPER_STATUS_ID, OPER_STATUS_NAME, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.StudySubjectExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.StudySubjectExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.STUDY_SUBJECT
+      from STUDY_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.STUDY_SUBJECT
+      from STUDY_SUBJECT
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.STUDY_SUBJECT
+      delete from STUDY_SUBJECT
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StudySubjectExample" >
-    delete from PDSCI.STUDY_SUBJECT
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.StudySubjectExample">
+      delete from STUDY_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.StudySubject" >
-    insert into PDSCI.STUDY_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, SUBJECT_YEAR, 
+    <insert id="insert" parameterType="com.pinde.core.model.StudySubject">
+      insert into STUDY_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, SUBJECT_YEAR,
       SUBJECT_TYPE, SUBJECT_START_TIME, SUBJECT_END_TIME, 
       RESERVATIONS_NUM, REMAINDER_NUM, SUBJECT_EXPLAIN, 
       POST_STATUS, OPER_STATUS_ID, OPER_STATUS_NAME, 
@@ -127,8 +127,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StudySubject" >
-    insert into PDSCI.STUDY_SUBJECT
+    <insert id="insertSelective" parameterType="com.pinde.core.model.StudySubject">
+      insert into STUDY_SUBJECT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
         SUBJECT_FLOW,
@@ -236,14 +236,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StudySubjectExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.STUDY_SUBJECT
+    <select id="countByExample" parameterType="com.pinde.core.model.StudySubjectExample" resultType="java.lang.Integer">
+      select count(*) from STUDY_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.STUDY_SUBJECT
+      update STUDY_SUBJECT
     <set >
       <if test="record.subjectFlow != null" >
         SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.STUDY_SUBJECT
+      update STUDY_SUBJECT
     set SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
       SUBJECT_YEAR = #{record.subjectYear,jdbcType=VARCHAR},
@@ -324,8 +324,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StudySubject" >
-    update PDSCI.STUDY_SUBJECT
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StudySubject">
+      update STUDY_SUBJECT
     <set >
       <if test="subjectName != null" >
         SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
@@ -378,8 +378,8 @@
     </set>
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StudySubject" >
-    update PDSCI.STUDY_SUBJECT
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StudySubject">
+      update STUDY_SUBJECT
     set SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       SUBJECT_YEAR = #{subjectYear,jdbcType=VARCHAR},
       SUBJECT_TYPE = #{subjectType,jdbcType=VARCHAR},

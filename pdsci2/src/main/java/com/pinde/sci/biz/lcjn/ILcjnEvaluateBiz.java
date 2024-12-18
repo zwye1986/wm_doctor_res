@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.List;
 

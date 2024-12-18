@@ -1,7 +1,6 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
 import com.pinde.sci.biz.jsres.IJsResStatisticBiz;
@@ -17,7 +16,8 @@ import com.pinde.sci.ctrl.jsres.JsResManageController;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.SchArrangeResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -66,7 +66,7 @@ public class ResMonthlyReportGlobalControllerClass extends GeneralController {
      * 学院出科
      * @return
      */
-    public   List  doctorOutOfficeInfo_University(String sortFlag,String monthDate,String isContain,List<SysOrg> orgs,List<DoctorOutOfficeParamPO> doctorOutOfficeParamPOList,String[] docTypeList,String role){
+    public List doctorOutOfficeInfo_University(String sortFlag, String monthDate, String isContain, List<SysOrg> orgs, List<DoctorOutOfficeParamPO> doctorOutOfficeParamPOList, String[] docTypeList, String role) {
         SysUser user = GlobalContext.getCurrentUser();
         NumberFormat numberFormat = NumberFormat.getInstance();
         numberFormat.setMaximumFractionDigits(2);//设置精确到小数点后2位

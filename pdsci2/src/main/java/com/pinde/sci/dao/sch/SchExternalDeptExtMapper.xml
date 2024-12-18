@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.sch.SchExternalDeptExtMapper">
     <select id="checkTime"  resultType="int">
         select count(0)
-        from pdsci.SCH_EXTERNAL_DEPT
+        from SCH_EXTERNAL_DEPT
         where record_status = 'Y'
         and STANDARD_DEPT_ID=#{schExternalDept.standardDeptId}
         and sch_dept_flow=#{schExternalDept.schDeptFlow}
@@ -26,7 +26,7 @@
     </select>
     <select id="isHaveSelect" parameterType="map" resultType="java.lang.Integer">
         select count(0)
-        from pdsci.RES_DOCTOR_SCH_PROCESS
+        from RES_DOCTOR_SCH_PROCESS
         where record_status = 'Y'
         and IS_EXTERNAL='Y'
         and sch_dept_flow=#{schDeptFlow}
@@ -62,7 +62,7 @@
 
     <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>
     <select id="getStudents" resultMap="ResDoctorExt">
         select * from res_doctor INNER JOIN  sys_user on  res_doctor.DOCTOR_FLOW = sys_user.USER_FLOW

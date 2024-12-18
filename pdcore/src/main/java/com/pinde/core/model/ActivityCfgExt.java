@@ -4,7 +4,7 @@ package com.pinde.core.model;
 /**
  * 教学活动配置
  */
-public class ActivityCfgExt implements java.io.Serializable {
+public class ActivityCfgExt extends ResDoctorRecruit {
 
     /**
      * 教学活动配置主键
@@ -91,35 +91,43 @@ public class ActivityCfgExt implements java.io.Serializable {
         this.auditRoleName = auditRoleName;
     }
 
+    @Override
     public String getRecordStatus() {
         return recordStatus;
     }
 
+    @Override
     public void setRecordStatus(String recordStatus) {
         this.recordStatus = recordStatus;
     }
 
+    @Override
     public String getCreateTime() {
         return createTime;
     }
 
+    @Override
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
+    @Override
     public String getModifyTime() {
         return modifyTime;
     }
 
+    @Override
     public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
     }
 
+    @Override
     public String getOrgFlow() {
         return orgFlow;
     }
 
+    @Override
     public void setOrgFlow(String orgFlow) {
-        this.orgFlow = orgFlow;
-    }
+		this.orgFlow = orgFlow;
+	}
 }

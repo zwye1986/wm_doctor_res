@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.osca;
 
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.SysOrg;
 import com.pinde.sci.model.osca.OscaOrgMenuExt;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;
 

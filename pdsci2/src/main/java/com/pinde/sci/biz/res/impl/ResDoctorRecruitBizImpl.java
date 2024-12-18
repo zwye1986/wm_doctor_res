@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -14,17 +13,9 @@ import com.pinde.sci.dao.base.JsresExamSignupMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.sci.model.mo.*;
-import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +44,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
                     .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId());
             example.setOrderByClause("MODIFY_TIME DESC");
-            List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
             if (recruitList != null && !recruitList.isEmpty()) {
                 return recruitList.get(0);
             }
@@ -109,13 +100,9 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
         return this.doctorRecruitMapper.selectByPrimaryKey(recruitFlow);
     }
 
-    @Override
-    public ResDoctorRecruitWithBLOBs readResDoctorRecruitWithBLOBs(String recruitFlow) {
-        return this.doctorRecruitMapper.selectByPrimaryKey(recruitFlow);
-    }
 
     @Override
-    public int updateDocrecruit(ResDoctorRecruit recruit) {
+    public int updateDocrecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
         int result = 0;
         if (recruit != null) {
             result = doctorRecruitMapper.updateByPrimaryKey(recruit);
@@ -124,12 +111,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     }
 
     @Override
-    public int updateDocrecruitByFlow(ResDoctorRecruitWithBLOBs recruit) {
-        return doctorRecruitMapper.updateByPrimaryKeySelective(recruit);
-    }
-
-    @Override
-    public List<ResDoctorRecruit> findResDoctorRecruits(String year,
+    public List<com.pinde.core.model.ResDoctorRecruit> findResDoctorRecruits(String year,
                                                         String doctorFlow) {
         ResDoctorRecruit docRecruit = new ResDoctorRecruit();
         docRecruit.setRecruitYear(year);
@@ -137,7 +119,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
         docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
         ResDoctorRecruitExample example = createResDoctorRecruitExample(docRecruit);
         example.setOrderByClause("CREATE_TIME DESC");
-        List<ResDoctorRecruit> recruits = this.doctorRecruitMapper.selectByExample(example);
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = this.doctorRecruitMapper.selectByExample(example);
         return recruits;
 
     }
@@ -145,7 +127,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     private ResDoctorRecruitExample createResDoctorRecruitExample(ResDoctorRecruit docRecruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         if (docRecruit != null) {
-            com.pinde.sci.model.mo.ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
+            ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
             if (StringUtil.isNotBlank(docRecruit.getDoctorFlow())) {
                 criteria.andDoctorFlowEqualTo(docRecruit.getDoctorFlow());
             }
@@ -160,7 +142,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> searchDoctorRecruit(ResDoctorRecruit recruit) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchDoctorRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
@@ -183,12 +165,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> searchDoctorRecruitWithLine(Map<String,Object> paramMap) {
-        return doctorRecruitExtMapper.searchDoctorRecruitWithLine(paramMap);
-    }
-
-    @Override
-    public List<ResDoctorRecruit> searchDoctorRecruits(ResDoctorRecruit recruit) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchDoctorRecruits(com.pinde.core.model.ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
@@ -204,7 +181,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> searchRecruitByDoctor(String doctorFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchRecruitByDoctor(String doctorFlow) {
         if (StringUtil.isNotBlank(doctorFlow)) {
             ResDoctorRecruitExample example = new ResDoctorRecruitExample();
             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
@@ -215,7 +192,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     }
 
     @Override
-    public ResDoctorRecruit searchRecruitByResDoctor(ResDoctorRecruit recruit) {
+    public ResDoctorRecruit searchRecruitByResDoctor(com.pinde.core.model.ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if(null!=recruit){
@@ -242,7 +219,7 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
                 criteria.andRecruitYearEqualTo(recruit.getRecruitYear());
             }
             example.setOrderByClause("CREATE_TIME DESC");
-            List<ResDoctorRecruit> list = doctorRecruitMapper.selectByExample(example);
+            List<com.pinde.core.model.ResDoctorRecruit> list = doctorRecruitMapper.selectByExample(example);
             if(null!=list&&list.size()>0){
                 return list.get(0);
             }else{
@@ -261,198 +238,6 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
     public List<Map<String, Object>> getCurrDocDetails(Map<String, Object> paramMap) {
         return doctorRecruitExtMapper.getCurrDocDetails(paramMap);
     }
-    @Override
-    public List<Map<String, Object>> getcheckDocs(Map<String, Object> paramMap) {
-        return doctorRecruitExtMapper.getcheckDocs(paramMap);
-    }
-
-    @Override
-    public List<ResDoctor> searchDoctorByJd(Map<String, Object> paramMap) {
-        return doctorRecruitExtMapper.searchDoctorByJd(paramMap);
-    }
-
-    @Override
-    public List<ResDoctor> searchDoctorBySpe(Map<String, Object> paramMap) {
-        return doctorRecruitExtMapper.searchDoctorBySpe(paramMap);
-    }
-
-    @Override
-    public void exportForHbGlobal(List<Map<String, Object>> jdDoctorMaps, HttpServletResponse response, List<SysDict> doctorTypeDicts, String flag) throws IOException {
-        //创建工作簿
-        HSSFWorkbook wb = new HSSFWorkbook();
-        // 为工作簿添加sheet
-        HSSFSheet sheet = wb.createSheet("sheet1");
-        //定义将用到的样式
-        HSSFCellStyle styleCenter = wb.createCellStyle(); //居中
-        styleCenter.setAlignment(HorizontalAlignment.CENTER);
-        styleCenter.setVerticalAlignment(VerticalAlignment.CENTER);
-        styleCenter.setWrapText(true);
-        HSSFCellStyle styleLeft = wb.createCellStyle();  //靠左垂直居中
-        styleLeft.setAlignment(HorizontalAlignment.LEFT);
-        styleLeft.setVerticalAlignment(VerticalAlignment.CENTER);
-        styleLeft.setWrapText(true);
-
-        HSSFCellStyle stylevwc = wb.createCellStyle(); //居中
-        stylevwc.setAlignment(HorizontalAlignment.CENTER);
-        stylevwc.setVerticalAlignment(VerticalAlignment.CENTER);
-        styleLeft.setWrapText(true);
-        //列宽自适应
-//		sheet.setDefaultColumnWidth((short)50);
-        HSSFRow rowDep = sheet.createRow(0);//第一行
-        rowDep.setHeightInPoints(20);
-        HSSFCell cellOne = rowDep.createCell(0);
-        cellOne.setCellStyle(styleCenter);
-        if(flag!=null&&"hospitalSearch".equals(flag)){
-            cellOne.setCellValue("基地信息概况");
-        }
-        if(flag!=null&&"speSearch".equals(flag)){
-            cellOne.setCellValue("专业信息概况");
-        }
-
-        HSSFRow rowTwo = sheet.createRow(1);//第二行
-        String[] titles=null;
-        if(flag!=null&&"hospitalSearch".equals(flag)){
-            titles = new String[]{
-                    "编号",
-                    "培训基地",
-                    doctorTypeDicts.get(0).getDictName(),
-                    doctorTypeDicts.get(1).getDictName(),
-                    doctorTypeDicts.get(2).getDictName(),
-                    doctorTypeDicts.get(3).getDictName(),
-                    "总人数"
-            };
-        }
-        if(flag!=null&&"speSearch".equals(flag)){
-            titles = new String[]{
-                    "编号",
-                    "专业",
-                    doctorTypeDicts.get(0).getDictName(),
-                    doctorTypeDicts.get(1).getDictName(),
-                    doctorTypeDicts.get(2).getDictName(),
-                    doctorTypeDicts.get(3).getDictName(),
-                    "总人数"
-            };
-        }
-        HSSFCell cellTitle = null;
-        for (int i = 0; i < titles.length; i++) {
-            cellTitle = rowTwo.createCell(i);
-            cellTitle.setCellValue(titles[i]);
-            cellTitle.setCellStyle(styleCenter);
-            sheet.setColumnWidth(i, titles.length * 2 * 256);
-        }
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));//合并单元格
-        int rowNum = 2;
-        String[] resultList = null;
-        if (jdDoctorMaps != null && !jdDoctorMaps.isEmpty()) {
-            for (int i = 0; i < jdDoctorMaps.size(); i++, rowNum++) {
-                HSSFRow rowFour = sheet.createRow(rowNum);//第二行
-                Object temp1 = jdDoctorMaps.get(i).get(doctorTypeDicts.get(0).getDictId());
-                String stringTemp1 = "";
-                if(temp1==null){
-                    stringTemp1 = "0";
-                }else {
-                    stringTemp1 = temp1.toString();
-                }
-                Object temp2 = jdDoctorMaps.get(i).get(doctorTypeDicts.get(1).getDictId());
-                String stringTemp2 = "";
-                if(temp2==null){
-                    stringTemp2 = "0";
-                }else {
-                    stringTemp2 = temp2.toString();
-                }
-                Object temp3 = jdDoctorMaps.get(i).get(doctorTypeDicts.get(2).getDictId());
-                String stringTemp3 = "";
-                if(temp3==null){
-                    stringTemp3 = "0";
-                }else {
-                    stringTemp3 = temp3.toString();
-                }
-                Object temp4 = jdDoctorMaps.get(i).get(doctorTypeDicts.get(3).getDictId());
-                String stringTemp4 = "";
-                if(temp4==null){
-                    stringTemp4 = "0";
-                }else {
-                    stringTemp4 = temp4.toString();
-                }
-                if(flag!=null&&"hospitalSearch".equals(flag)){
-                    resultList = new String[]{
-                            i+1+"",
-                            jdDoctorMaps.get(i).get("orgName").toString(),
-                            stringTemp1,
-                            stringTemp2,
-                            stringTemp3,
-                            stringTemp4,
-                            jdDoctorMaps.get(i).get("sumCount").toString()
-                    };
-                }
-                if(flag!=null&&"speSearch".equals(flag)){
-                    resultList = new String[]{
-                            i+1+"",
-                            jdDoctorMaps.get(i).get("speName").toString(),
-                            stringTemp1,
-                            stringTemp2,
-                            stringTemp3,
-                            stringTemp4,
-                            jdDoctorMaps.get(i).get("sumCount").toString()
-                    };
-                }
-                for (int j = 0; j < titles.length; j++) {
-                    HSSFCell cellFirst = rowFour.createCell(j);
-                    cellFirst.setCellStyle(styleCenter);
-                    cellFirst.setCellValue(new HSSFRichTextString(resultList[j]));
-                }
-
-            }
-        }
-        String fileName = "";
-        if(flag!=null&&"hospitalSearch".equals(flag)){
-            fileName = "基地信息概况一览表.xls";
-        }
-        if(flag!=null&&"speSearch".equals(flag)){
-            fileName = "专业信息概况一览表.xls";
-        }
-        fileName = URLEncoder.encode(fileName, "UTF-8");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        response.setContentType("application/octet-stream;charset=UTF-8");
-        wb.write(response.getOutputStream());
-    }
-
-    @Override
-    public boolean queryIsConfirmFlag(String doctorFlow) {
-        ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-                .andRecruitFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andConfirmFlagEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
-                .andDoctorFlowEqualTo(doctorFlow);
-        return doctorRecruitMapper.countByExample(example)>0?true:false;
-    }
-
-    @Override
-    public Map<String, Object> queryPlanStatistics(String recruityYear) {
-        List<Map<String,Object>> dataList = doctorRecruitExtMapper.queryPlanStatistics(recruityYear);
-        if(null != dataList && dataList.size() > 0){
-            return dataList.get(0);
-        }
-        return null;
-    }
-
-    @Override
-    public List<Map<String, Object>> queryOrgStatistics(String recruityYear) {
-        return doctorRecruitExtMapper.queryOrgStatistics(recruityYear);
-    }
-
-    @Override
-    public Map<String, Object> queryPlanStatisticsBefore(String recruityYear) {
-        List<Map<String,Object>> dataList = doctorRecruitExtMapper.queryPlanStatisticsBefore(recruityYear);
-        if(null != dataList && dataList.size() > 0){
-            return dataList.get(0);
-        }
-        return null;
-    }
-
-    @Override
-    public List<Map<String, Object>> queryOrgStatisticsBefore(String recruityYear) {
-        return doctorRecruitExtMapper.queryOrgStatisticsBefore(recruityYear);
-    }
 
     @Override
     public ResDoctorRecruit readResDoctorRecruitBySessionNumber(String doctorFlow, String sessionNumber) {
@@ -463,23 +248,10 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
                     .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId())
             .andSessionNumberEqualTo(sessionNumber);
             example.setOrderByClause("MODIFY_TIME DESC");
-            List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
             if (recruitList != null && !recruitList.isEmpty()) {
                 return recruitList.get(0);
             }
-        }
-        return null;
-    }
-
-    @Override
-    public JsresExamSignup getSignUpByYear(String year, String doctorFlow, String typeId) {
-        JsresExamSignupExample examSignupExample=new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-                .andDoctorFlowEqualTo(doctorFlow).andSignupYearEqualTo(year).andSignupTypeIdEqualTo(typeId);
-
-        List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
-        if (recruitList != null && !recruitList.isEmpty()) {
-            return recruitList.get(0);
         }
         return null;
     }
@@ -492,15 +264,6 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
 
         List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
 
-        return recruitList;
-    }
-    //获取该医师某一年份的所有补考记录
-    @Override
-    public List<JsresExamSignup> getSignUpListByYear(String year, String doctorFlow) {
-        JsresExamSignupExample examSignupExample = new JsresExamSignupExample();
-        examSignupExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-                .andDoctorFlowEqualTo(doctorFlow).andSignupYearEqualTo(year);
-        List<JsresExamSignup> recruitList = jsresExamSignupMapper.selectByExample(examSignupExample);
         return recruitList;
     }
 
@@ -608,20 +371,6 @@ public class ResDoctorRecruitBizImpl implements IResDoctorRecruitBiz {
             GeneralMethod.setRecordInfo(log, true);
             return jsresExamSignupLogMapper.insertSelective(log);
         }
-    }
-
-    @Override
-    public ResDoctorRecruit getNewRecruitByDoctorFlow(String doctorFlow) {
-        if (StringUtil.isNotBlank(doctorFlow)) {
-            ResDoctorRecruitExample example = new ResDoctorRecruitExample();
-            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(doctorFlow);
-            example.setOrderByClause("MODIFY_TIME DESC");
-            List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
-            if (recruitList != null && !recruitList.isEmpty()) {
-                return recruitList.get(0);
-            }
-        }
-        return null;
     }
 }
  

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.LectureInfoTarget;
-import com.pinde.sci.model.mo.LectureInfoTargetExample;
+import com.pinde.core.model.LectureInfoTarget;
+import com.pinde.core.model.LectureInfoTargetExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

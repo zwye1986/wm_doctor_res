@@ -2,6 +2,10 @@ package com.pinde.sci.biz.recruit.impl;
 
 import com.pinde.core.common.enums.recruit.RecruitOperEnum;
 import com.pinde.core.common.enums.recruit.RecruitStatusEnum;
+import com.pinde.core.model.RecruitInfo;
+import com.pinde.core.model.RecruitInfoExample;
+import com.pinde.core.model.RecruitInfoLog;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,10 +17,6 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.RecruitInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitInfoExtMapper;
-import com.pinde.sci.model.mo.RecruitInfo;
-import com.pinde.sci.model.mo.RecruitInfoExample;
-import com.pinde.sci.model.mo.RecruitInfoLog;
-import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -47,7 +47,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
     @Autowired
     private IRecruitInfoLogBiz recruitInfoLogBiz;
 
-    private static Logger logger = LoggerFactory.getLogger(RecruitInfoBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RecruitInfoBizImpl.class);
 
 
     /**
@@ -285,7 +285,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"examScore".equals(sheetName))
+                    if (!"examScore".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");
@@ -442,7 +442,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"InterviewScore".equals(sheetName))
+                    if (!"InterviewScore".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");
@@ -601,7 +601,7 @@ public class RecruitInfoBizImpl implements IRecruitInfoBiz {
                 @Override
                 public String checkExcelData(HashMap data,ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"admitResult".equals(sheetName))
+                    if (!"admitResult".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");

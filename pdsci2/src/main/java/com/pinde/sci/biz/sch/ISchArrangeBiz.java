@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.sch;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.SchArrange;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.SchArrange;
 
 import java.util.List;
 

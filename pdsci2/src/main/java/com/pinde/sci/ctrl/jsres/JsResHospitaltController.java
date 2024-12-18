@@ -1,17 +1,20 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
-import com.pinde.core.util.*;
+import com.pinde.core.util.DateUtil;
+import com.pinde.core.util.ExcleUtile;
+import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
-import com.pinde.sci.biz.res.*;
+import com.pinde.sci.biz.res.IResDoctorProcessBiz;
+import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.common.*;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -19,7 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -644,7 +649,7 @@ public class JsResHospitaltController extends GeneralController{
 		List<String> records = Arrays.asList(recruitFlowList);
 		for(int i=0;i<records.size();i++){
 			String recruitFlow = records.get(i);
-			ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+			com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
             if (StringUtil.isBlank(recruit.getRecruitFlag()) || com.pinde.core.common.GlobalConstant.FLAG_N.equals(recruit.getRecruitFlag())) {
 				// 已录取的学员 成绩审核不进行操作
 				ResDoctorRecruitWithBLOBs docRecWithBLOBs = new ResDoctorRecruitWithBLOBs();
@@ -732,7 +737,7 @@ public class JsResHospitaltController extends GeneralController{
 		for(int i=0;i<records.size();i++){
 			String recruitFlow = records.get(i);
 			// 学员已报到则不进行操作
-			ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+			com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 			//学员进行报到操作 更新rotation_flow
 			if(StringUtil.isBlank(recruit.getRotationFlow())){
 				//已报到 则不能一键录取/不录取
@@ -755,8 +760,8 @@ public class JsResHospitaltController extends GeneralController{
 	 * @return
 	 */
 	@RequestMapping(value = "/expertAchievementList")
-	public void expertAchievementList(ResDoctorRecruit resDoctorRecruit, SysUser sysUser,String scoreType, HttpServletResponse response,
-									String sortType,String datas[]) {
+	public void expertAchievementList(ResDoctorRecruit resDoctorRecruit, SysUser sysUser, String scoreType, HttpServletResponse response,
+									  String sortType, String datas[]) {
 
 		try {
 			List<String> sessionNumbers = new ArrayList<String>();//年级多选

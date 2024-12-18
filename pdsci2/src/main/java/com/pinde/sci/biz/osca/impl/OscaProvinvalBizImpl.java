@@ -2,7 +2,7 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.model.SysDict;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,7 +14,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.osca.OscaDoctorAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaSubjectMainExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -57,7 +56,7 @@ public class OscaProvinvalBizImpl implements IOscaProvincialBiz{
 
 
     @Override
-    public List<OscaSkillsAssessment> searchSkillsAssessment(OscaSkillsAssessment skillsAssessment,List<SysDict> dictList) {
+    public List<OscaSkillsAssessment> searchSkillsAssessment(OscaSkillsAssessment skillsAssessment, List<SysDict> dictList) {
         OscaSkillsAssessmentExample example = new OscaSkillsAssessmentExample();
         OscaSkillsAssessmentExample.Criteria criteria = example.createCriteria().
                 andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andIsReleasedEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);

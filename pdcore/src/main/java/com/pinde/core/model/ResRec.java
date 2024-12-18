@@ -95,6 +95,19 @@ public class ResRec implements java.io.Serializable {
 
     private String recContent;
 
+    /**
+     * 查询类型 ：2 教学活动
+     */
+    private String queryType;
+
+    public String getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(String queryType) {
+        this.queryType = queryType;
+    }
+
     public String getRecFlow() {
         return recFlow;
     }

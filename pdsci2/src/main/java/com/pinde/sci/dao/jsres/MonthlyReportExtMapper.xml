@@ -473,10 +473,10 @@ SELECT
 	ed.ORG_Name AS edOrgName,
 	ed.doctor_type_name,
 	ed.doctor_type_id,
-    (select bb.org_code from PDSCI.SYS_ORG bb where dr.org_flow=bb.org_flow) org_code
+        (select bb.org_code from SYS_ORG bb where dr.org_flow=bb.org_flow) org_code
 FROM
-	pdsci.RES_DOCTOR_RECRUIT dr
-LEFT JOIN pdsci.SYS_USER U ON dr.DOCTOR_FLOW = U .USER_FLOW
+        RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER U ON dr.DOCTOR_FLOW = U .USER_FLOW
 LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 WHERE
 	dr.RECORD_STATUS = 'Y'
@@ -485,9 +485,9 @@ AND dr.org_flow IN (
 	SELECT
 		ORG_FLOW
 	FROM
-		PDSCI.SYS_ORG
+        SYS_ORG
 	WHERE
-		PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        SYS_ORG.RECORD_STATUS = 'Y'
 	AND dr.AUDIT_STATUS_ID != 'NotSubmit'
    AND ORG_PROV_ID ='320000'
 	AND ed.DOCTOR_TYPE_ID IN ('Graduate', 'Graduate')
@@ -645,14 +645,14 @@ ORDER BY
 			, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID
 			, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME, ed.ORG_FLOW AS edOrgFlow, ed.ORG_Name AS edOrgName
 			, ed.doctor_type_name, ed.doctor_type_id -->
-		FROM pdsci.RES_DOCTOR_RECRUIT dr
-		LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 		WHERE dr.RECORD_STATUS = 'Y'
 			AND u.RECORD_STATUS = 'Y'
 			AND dr.org_flow IN (SELECT ORG_FLOW
-				FROM PDSCI.SYS_ORG
-				WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					AND dr.AUDIT_STATUS_ID != 'NotSubmit'
         <if test='orgFlow!=null and orgFlow!=""'>
 			   AND dr.ORG_FLOW =#{orgFlow}
@@ -789,7 +789,7 @@ ORDER BY
         AND res.IS_SCAN='Y' AND res.IS_SCAN2='Y'
     </select>
     <!--获取notuseapp在培人数之和、住院医生人数、在职专硕人数-->
-    <select id="getAppDatayuh" resultType="com.pinde.sci.model.mo.SysOrg" parameterType="java.util.Map">
+    <select id="getAppDatayuh" resultType="com.pinde.core.model.SysOrg" parameterType="java.util.Map">
         SELECT s.ORG_FLOW as orgflow, s.ORG_NAME as orgName,
         (select count(0) from SYS_MONTHLY_NOT_USEAPP_INFO s2
         where s2.doctor_type_id != 'Graduate' and s2.org_flow = s.org_flow and s2.RECORD_STATUS='Y'
@@ -1172,8 +1172,8 @@ ORDER BY
         </if>
         GROUP BY s.ORG_FLOW, s.ORG_NAME
     </select>
-    
-    <select id="getUserList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="map">
+
+    <select id="getUserList" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap" parameterType="map">
         SELECT su.* from
         sys_user su
         where su.record_status = 'Y'
@@ -1653,14 +1653,14 @@ ORDER BY
         , u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID
         , u.EDUCATION_NAME, u.POST_ID, u.POST_NAME, ed.ORG_FLOW AS edOrgFlow, ed.ORG_Name AS edOrgName
         , ed.doctor_type_name, ed.doctor_type_id
-		FROM pdsci.RES_DOCTOR_RECRUIT dr
-		LEFT JOIN pdsci.SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+        FROM RES_DOCTOR_RECRUIT dr
+        LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
 			LEFT JOIN RES_DOCTOR ed ON dr.DOCTOR_FLOW = ed.DOCTOR_FLOW
 		WHERE dr.RECORD_STATUS = 'Y'
 			AND u.RECORD_STATUS = 'Y'
 			AND dr.org_flow IN (SELECT ORG_FLOW
-				FROM PDSCI.SYS_ORG
-				WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					AND dr.AUDIT_STATUS_ID != 'NotSubmit'
 					<if test="orgFlow!=null and  orgFlow!=''">
                         AND dr.ORG_FLOW = #{orgFlow}
@@ -1982,7 +1982,7 @@ ORDER BY
         <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
         <result column="REGIEST_NUM" property="regiestNum" jdbcType="VARCHAR" />
         <result column="SCAN_NUM" property="scanNum" jdbcType="VARCHAR" />
-        <collection property="resultList" ofType="com.pinde.sci.model.mo.TeachingActivityResult" >
+        <collection property="resultList" ofType="com.pinde.core.model.TeachingActivityResult">
             <id column="RESULT_FLOW" jdbcType="VARCHAR" property="resultFlow" />
             <result column="ACTIVITY_FLOW" jdbcType="VARCHAR" property="activityFlow" />
             <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
@@ -2109,7 +2109,8 @@ ORDER BY
         AND (SCH_start_DATE >= #{startDate}
         and SCH_start_DATE<![CDATA[<=]]> #{endDate} )
     </select>
-    <select id="getCurrentMonthInException" parameterType="java.lang.String" resultType="com.pinde.sci.model.mo.SchArrangeResult">
+    <select id="getCurrentMonthInException" parameterType="java.lang.String"
+            resultType="com.pinde.core.model.SchArrangeResult">
         SELECT
          RESULT_FLOW as resultFlow,
          ARRANGE_FLOW as arrangeFlow,
@@ -2161,7 +2162,7 @@ ORDER BY
     </select>
 
 
-    <select id="selectFindChangeSpe" parameterType="java.util.Map" resultType="com.pinde.sci.model.mo.PersonChangeEntity">
+    <select id="selectFindChangeSpe" parameterType="java.util.Map" resultType="com.pinde.core.model.PersonChangeEntity">
                WITH aaa AS (
             SELECT
                 org_name,

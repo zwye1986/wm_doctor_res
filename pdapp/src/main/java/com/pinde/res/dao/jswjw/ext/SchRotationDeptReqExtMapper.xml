@@ -96,7 +96,7 @@
       distinct
     </if>
     REL_RECORD_FLOW,REC_TYPE_ID,ITEM_ID,REQ_NUM
-    from PDSCI.SCH_ROTATION_DEPT_REQ
+      from SCH_ROTATION_DEPT_REQ
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>

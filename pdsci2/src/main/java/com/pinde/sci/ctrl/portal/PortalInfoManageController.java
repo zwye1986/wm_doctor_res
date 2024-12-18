@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.portal;
 
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.InfoStatusEnum;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,10 +15,8 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.PortalSuggestMapper;
-import com.pinde.core.common.enums.InfoStatusEnum;
-import com.pinde.core.common.enums.sys.RoleLevelEnum;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.SysCfg;
 import com.pinde.sci.model.portal.PortalInfoExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,7 +129,7 @@ public class PortalInfoManageController extends GeneralController {
 	 * @return
 	 */
 	@RequestMapping(value="/save")
-	public @ResponseBody String save(PortalInfo info,String role){
+	public @ResponseBody String save(PortalInfo info, String role) {
 		if(StringUtil.isNotBlank(info.getInfoFlow())){//更新
 			return updateInfo(info);
 		}else{
@@ -390,7 +390,7 @@ public class PortalInfoManageController extends GeneralController {
 	}
 
 	@RequestMapping("/portalFileList")
-	public String portalFileList(PortalFile file,Integer currentPage, HttpServletRequest request, Model model) {
+	public String portalFileList(PortalFile file, Integer currentPage, HttpServletRequest request, Model model) {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<PortalFile> fileList = this.infoManageBiz.getFileList(file);
 		model.addAttribute("fileList",fileList);
@@ -416,7 +416,7 @@ public class PortalInfoManageController extends GeneralController {
 	}
 
 	@RequestMapping("/portalSuggestList")
-	public String portalSuggestList(PortalSuggest suggest,Integer currentPage, HttpServletRequest request, Model model) {
+	public String portalSuggestList(PortalSuggest suggest, Integer currentPage, HttpServletRequest request, Model model) {
 		PageHelper.startPage(currentPage, getPageSize(request));
 		List<PortalSuggest> portalSuggestList = infoManageBiz.getSuggestList(suggest);
 		model.addAttribute("portalSuggestList",portalSuggestList);

@@ -4,9 +4,8 @@ import com.google.common.collect.Lists;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
 import com.pinde.core.jspform.ItemGroupData;
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.ResSchProcessExpressExample;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
+import com.pinde.core.model.ResAppealExample.Criteria;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -28,8 +27,6 @@ import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.keyUtil.PdUtil;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.ResAppealExample.Criteria;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
 import com.pinde.sci.model.res.SchArrangeResultExt;
@@ -53,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,7 +61,7 @@ import java.util.stream.Collectors;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class ResRecBizImpl implements IResRecBiz {
-	private static Logger logger = LoggerFactory.getLogger(ResRecBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResRecBizImpl.class);
 	/**
 	 * 要求标识
 	 */
@@ -548,7 +546,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}else {
 							String[] values = req.getParameterValues(nodeName);
 							Element element = DocumentHelper.createElement(nodeName);
-							if(values != null && values.length > 0) {
+                            if (values != null) {
 								for (String value : values) {
 									Element valueEle = DocumentHelper.createElement("value");
 									if (StringUtil.isNotBlank(value)) {
@@ -586,7 +584,7 @@ public class ResRecBizImpl implements IResRecBiz {
                     element.addAttribute("isGroup", com.pinde.core.common.GlobalConstant.FLAG_Y);
 					List<Element> igItemList = itemEle.elements();//查找itemGroup所有item子节点
 					if (igItemList != null && igItemList.size() > 0) {
-						String itemName = igItemList.get(0).attributeValue("name");;//查找itemGroup第一个item子节点的name
+                        String itemName = igItemList.get(0).attributeValue("name");//查找itemGroup第一个item子节点的name
 						String[] itemValues = req.getParameterValues(itemName);//获取保存itemGroup中item的组数
 						int	count = itemValues.length;
 						for(int i=0;i<count;i++)
@@ -733,7 +731,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			} else {
 				String[] values = req.getParameterValues(itemEle.attributeValue("name"));
 				Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-				if (values != null && values.length > 0) {
+                if (values != null) {
 					for (String value : values) {
 						Element valueEle = DocumentHelper.createElement("value");
 						if (StringUtil.isNotBlank(value)) {
@@ -876,7 +874,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				} else {
 					String[] values = req.getParameterValues(itemEle.attributeValue("name"));
 					Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-					if (values != null && values.length > 0) {
+                    if (values != null) {
 						for (String value : values) {
 							Element valueEle = DocumentHelper.createElement("value");
 							if (StringUtil.isNotBlank(value)) {
@@ -947,9 +945,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								} else {
 									String[] values = dataMap.get(paramName);
 									List<String> valueList = new ArrayList<String>();
-									for (String temp : values) {
-										valueList.add(temp);
-									}
+                                    Collections.addAll(valueList, values);
 									valueList.add(fileFlow);
 									String[] newValues = new String[valueList.size()];
 									dataMap.put(paramName, valueList.toArray(newValues));
@@ -961,9 +957,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								} else {
 									String[] values = dataMap.get(paramFileName);
 									List<String> valueList = new ArrayList<String>();
-									for (String temp : values) {
-										valueList.add(temp);
-									}
+                                    Collections.addAll(valueList, values);
 									valueList.add(fileName);
 									String[] newValues = new String[valueList.size()];
 									dataMap.put(paramFileName, valueList.toArray(newValues));
@@ -1032,9 +1026,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							} else {
 								String[] values = dataMap.get(paramName);
 								List<String> valueList = new ArrayList<String>();
-								for (String temp : values) {
-									valueList.add(temp);
-								}
+                                Collections.addAll(valueList, values);
 								valueList.add(fileFlow);
 								String[] newValues = new String[valueList.size()];
 								dataMap.put(paramName, valueList.toArray(newValues));
@@ -1046,9 +1038,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							} else {
 								String[] values = dataMap.get(paramFileName);
 								List<String> valueList = new ArrayList<String>();
-								for (String temp : values) {
-									valueList.add(temp);
-								}
+                                Collections.addAll(valueList, values);
 								valueList.add(fileName);
 								String[] newValues = new String[valueList.size()];
 								dataMap.put(paramFileName, valueList.toArray(newValues));
@@ -1146,7 +1136,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				}else {
 					String[] values = req.getParameterValues(itemEle.attributeValue("name"));
 					Element element = DocumentHelper.createElement(itemEle.attributeValue("name"));
-					if(values != null && values.length > 0) {
+                    if (values != null) {
 						for (String value : values) {
 							Element valueEle = DocumentHelper.createElement("value");
 							if (StringUtil.isNotBlank(value)) {
@@ -1349,7 +1339,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(ResRec resRec, String trainYear){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(resRec.getRecTypeId())
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(resRec.getRecTypeId())
 				.andOperUserFlowEqualTo(resRec.getOperUserFlow());
 		if(StringUtil.isNotBlank(trainYear)){
 			criteria.andOperTimeLike(trainYear + "%");
@@ -1370,7 +1360,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchByRecWithBLOBs(String recTypeId,String schDeptFlow,String operUserFlow,String itemId){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRecTypeIdEqualTo(recTypeId)
 				.andSchDeptFlowEqualTo(schDeptFlow).andOperUserFlowEqualTo(operUserFlow);
 		if(StringUtil.isNotBlank(itemId)){
 			criteria.andItemIdEqualTo(itemId);
@@ -1419,7 +1409,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //	}
 	public List<ResRec> searchRecInfo(ResRec resRec,List<String> operUserFlows){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
 			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
 		}
@@ -1947,7 +1937,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				@Override
 				public String checkExcelData(HashMap data,ExcelUtile eu) {
 					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!recTypeId.equals(sheetName))
+                    if (!recTypeId.equals(sheetName))
 					{
 						eu.put("count", 0);
 						eu.put("code", "1");
@@ -2146,7 +2136,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				@Override
 				public String checkExcelData(HashMap data,ExcelUtile eu) {
 					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!recTypeId.equals(sheetName))
+                    if (!recTypeId.equals(sheetName))
 					{
 						eu.put("count", 0);
 						eu.put("code", "1");
@@ -2721,7 +2711,7 @@ public class ResRecBizImpl implements IResRecBiz {
                         if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
-							int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
+                            int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 							reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
 							if (reqNumMap.get(deptReq.getRecTypeId()) == null) {
 								reqNumMap.put(deptReq.getRecTypeId(), (num));
@@ -2753,7 +2743,7 @@ public class ResRecBizImpl implements IResRecBiz {
                         if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
-							int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
+                            int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 							reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
 							if (reqNumMap.get(deptReq.getRecTypeId()) == null) {
 								reqNumMap.put(deptReq.getRecTypeId(), (num));
@@ -2785,7 +2775,7 @@ public class ResRecBizImpl implements IResRecBiz {
                         if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
 								&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
-							int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
+                            int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 							reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
 							if (reqNumMap.get(deptReq.getRecTypeId()) == null) {
 								reqNumMap.put(deptReq.getRecTypeId(), (num));
@@ -3789,7 +3779,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		}
 	}
 	private void countReqFuc(SchRotationDeptReq deptReq, double per, Map<String,Integer> reqNumMap,Map<String,List<String>> itemMap,String typeId) {
-		int num= new BigDecimal(Math.ceil(deptReq.getReqNum().intValue()*per)).intValue();
+        int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 		reqNumMap.put("reqSum",reqNumMap.get("reqSum")+(num));
 		if(reqNumMap.get(deptReq.getRecTypeId())==null){
 			reqNumMap.put(deptReq.getRecTypeId(),(num));
@@ -3854,7 +3844,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		if(JszyTCMPracticEnum.N.getId().equals(dept.getPracticOrTheory())){
             if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("res_registry_type_" + deptReq.getRecTypeId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
-				int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
+                int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 				reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
 				if (reqNumMap.get(deptReq.getRecTypeId()) == null) {
 					reqNumMap.put(deptReq.getRecTypeId(), (num));
@@ -3888,7 +3878,7 @@ public class ResRecBizImpl implements IResRecBiz {
             if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("practic_registry_type_" + deptReq.getRecTypeId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
-				int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
+                int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 				reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
 				if (reqNumMap.get(deptReq.getRecTypeId()) == null) {
 					reqNumMap.put(deptReq.getRecTypeId(), (num));
@@ -3922,7 +3912,7 @@ public class ResRecBizImpl implements IResRecBiz {
             if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(InitConfig.getSysCfg("theoretical_registry_type_" + deptReq.getRecTypeId()))
 					&& PdUtil.findChineseOrWestern(medicineTypeId,deptReq.getRecTypeId())) {
 
-				int num = new BigDecimal(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
+                int num = BigDecimal.valueOf(Math.ceil(deptReq.getReqNum().intValue() * per)).intValue();
 				reqNumMap.put("reqSum", reqNumMap.get("reqSum") + (num));
 				if (reqNumMap.get(deptReq.getRecTypeId()) == null) {
 					reqNumMap.put(deptReq.getRecTypeId(), (num));
@@ -4021,7 +4011,7 @@ public class ResRecBizImpl implements IResRecBiz {
 									itemPre = 1f;
 								}
 
-								BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                                BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, RoundingMode.HALF_UP);
 								finishPerMap.put(resultFlow + recTypeId + itemId, b.toString());
 
 								typePer += (itemPre * itemReqPre);
@@ -4043,7 +4033,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 						finishPerMap.put(resultFlow + recTypeId + "isFinish", isFinish + "");
 
-						BigDecimal b = new BigDecimal(typePer * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(typePer * 100).setScale(0, RoundingMode.HALF_UP);
 						finishPerMap.put(resultFlow + recTypeId, b.toString());
 
 						deptPer += (typeReqPer * typePer);
@@ -4100,7 +4090,7 @@ public class ResRecBizImpl implements IResRecBiz {
 									itemPre = 1f;
 								}
 
-								BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                                BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, RoundingMode.HALF_UP);
 								finishPerMap.put(resultFlow + recTypeId + itemId, b.toString());
 
 								typePer += (itemPre * itemReqPre);
@@ -4122,7 +4112,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 						finishPerMap.put(resultFlow + recTypeId + "isFinish", isFinish + "");
 
-						BigDecimal b = new BigDecimal(typePer * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(typePer * 100).setScale(0, RoundingMode.HALF_UP);
 						finishPerMap.put(resultFlow + recTypeId, b.toString());
 
 						deptPer += (typeReqPer * typePer);
@@ -4179,7 +4169,7 @@ public class ResRecBizImpl implements IResRecBiz {
 									itemPre = 1f;
 								}
 
-								BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                                BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, RoundingMode.HALF_UP);
 								finishPerMap.put(resultFlow + recTypeId + itemId, b.toString());
 
 								typePer += (itemPre * itemReqPre);
@@ -4201,7 +4191,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 						finishPerMap.put(resultFlow + recTypeId + "isFinish", isFinish + "");
 
-						BigDecimal b = new BigDecimal(typePer * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(typePer * 100).setScale(0, RoundingMode.HALF_UP);
 						finishPerMap.put(resultFlow + recTypeId, b.toString());
 
 						deptPer += (typeReqPer * typePer);
@@ -4213,7 +4203,7 @@ public class ResRecBizImpl implements IResRecBiz {
 				deptPer = 1f;
 			}
 
-			BigDecimal b = new BigDecimal(deptPer * 100).setScale(0, BigDecimal.ROUND_HALF_UP);
+            BigDecimal b = new BigDecimal(deptPer * 100).setScale(0, RoundingMode.HALF_UP);
 			finishPerMap.put(resultFlow, b.toString());
 		}
 	}
@@ -4279,7 +4269,7 @@ public class ResRecBizImpl implements IResRecBiz {
 									itemPre = 1f;
 								}
 
-								BigDecimal b = new BigDecimal(itemPre*100).setScale(0,BigDecimal.ROUND_HALF_UP);
+                                BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, RoundingMode.HALF_UP);
 								finishPerMap.put(standardKey+recTypeId+itemId,b.toString());
 
 								typePer+=(itemPre*itemReqPre);
@@ -4302,7 +4292,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 						finishPerMap.put(standardKey+recTypeId+"isFinish",isFinish+"");
 
-						BigDecimal b=new BigDecimal(typePer*100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(typePer * 100).setScale(0, RoundingMode.HALF_UP);
 						finishPerMap.put(standardKey+recTypeId,b.toString());
 
 						deptPer+=(typeReqPer*typePer);
@@ -4356,7 +4346,7 @@ public class ResRecBizImpl implements IResRecBiz {
 									itemPre = 1f;
 								}
 
-								BigDecimal b = new BigDecimal(itemPre*100).setScale(0,BigDecimal.ROUND_HALF_UP);
+                                BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, RoundingMode.HALF_UP);
 								finishPerMap.put(standardKey+recTypeId+itemId,b.toString());
 
 								typePer+=(itemPre*itemReqPre);
@@ -4379,7 +4369,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 						finishPerMap.put(standardKey+recTypeId+"isFinish",isFinish+"");
 
-						BigDecimal b=new BigDecimal(typePer*100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(typePer * 100).setScale(0, RoundingMode.HALF_UP);
 						finishPerMap.put(standardKey+recTypeId,b.toString());
 
 						deptPer+=(typeReqPer*typePer);
@@ -4432,7 +4422,7 @@ public class ResRecBizImpl implements IResRecBiz {
 									itemPre = 1f;
 								}
 
-								BigDecimal b = new BigDecimal(itemPre*100).setScale(0,BigDecimal.ROUND_HALF_UP);
+                                BigDecimal b = new BigDecimal(itemPre * 100).setScale(0, RoundingMode.HALF_UP);
 								finishPerMap.put(standardKey+recTypeId+itemId,b.toString());
 
 								typePer+=(itemPre*itemReqPre);
@@ -4455,7 +4445,7 @@ public class ResRecBizImpl implements IResRecBiz {
 						}
 						finishPerMap.put(standardKey+recTypeId+"isFinish",isFinish+"");
 
-						BigDecimal b=new BigDecimal(typePer*100).setScale(0, BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(typePer * 100).setScale(0, RoundingMode.HALF_UP);
 						finishPerMap.put(standardKey+recTypeId,b.toString());
 
 						deptPer+=(typeReqPer*typePer);
@@ -4465,7 +4455,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			if(deptReq==0){
 				deptPer=1f;
 			}
-			BigDecimal b=new BigDecimal(deptPer*100).setScale(0, BigDecimal.ROUND_HALF_UP);
+            BigDecimal b = new BigDecimal(deptPer * 100).setScale(0, RoundingMode.HALF_UP);
 			finishPerMap.put(standardKey,b.toString());
 		}
 	}
@@ -4575,7 +4565,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchResRec(List<String> schDeptFlows,ResRec rec){
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andSchDeptFlowIn(schDeptFlows);
 		if(rec!=null){
 			if(StringUtil.isNotBlank(rec.getSchDeptName())){
 				criteria.andSchDeptNameLike("%"+rec.getSchDeptName()+"%");
@@ -4816,7 +4806,7 @@ public class ResRecBizImpl implements IResRecBiz {
 					} else {
 						String[] values = dataMap.get(itemEle.attributeValue("name"));
 						Element element = rootEle.addElement(itemEle.attributeValue("name"));
-						if (values != null && values.length > 0) {
+                        if (values != null) {
 							for (String value : values) {
 								Element valueEle = element.addElement("value");
 								if (StringUtil.isNotBlank(value)) {
@@ -5072,7 +5062,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		Element root = DocumentHelper.createElement("annualTrainForm");
 
 		String[] deptFlows = req.getParameterValues("deptFlow");
-		if(deptFlows!=null && deptFlows.length>0){
+        if (deptFlows != null) {
 			for(String flow : deptFlows){
 				Element dept = root.addElement("dept");
 				dept.addAttribute("id",flow);
@@ -5294,7 +5284,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 			//获取所有当前方案下的轮转规则
 			SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-			com.pinde.sci.model.mo.SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample
+            SchRotationDeptExample.Criteria rotationDeptCriteria = rotationDeptExample
 					.createCriteria()
                     .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 					.andOrgFlowIsNull().andRotationFlowEqualTo(rotationFlow);
@@ -5333,7 +5323,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				//获取所有当前方案下的要求
 				SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-                com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 						.andRotationFlowEqualTo(rotationFlow);
 				if(StringUtil.isNotBlank(relRecordFlow)){
 					reqCriteria.andRelRecordFlowEqualTo(relRecordFlow);
@@ -5378,12 +5368,12 @@ public class ResRecBizImpl implements IResRecBiz {
 
 						//各规则下的总要求
 						setNumMap(reqNumMap,rotationDeptFlow,reqNum);
-						BigDecimal b = new BigDecimal(reqNumMap.get(rotationDeptFlow)).setScale(0,BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = BigDecimal.valueOf(reqNumMap.get(rotationDeptFlow)).setScale(0, RoundingMode.HALF_UP);
 						finishedPer.put(rotationDeptFlow+"ReqNum",b.toString());
 
 						//各登记类型下的总要求
 						setNumMap(reqNumMap,recFlowRecType,reqNum);
-						b = new BigDecimal(reqNumMap.get(recFlowRecType)).setScale(0,BigDecimal.ROUND_HALF_UP);
+                        b = BigDecimal.valueOf(reqNumMap.get(recFlowRecType)).setScale(0, RoundingMode.HALF_UP);
 						finishedPer.put(recFlowRecType+"ReqNum",b.toString());
 
 						if(StringUtil.isNotBlank(itemId)){
@@ -5399,7 +5389,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							String recFlowRecTypeItem = recFlowRecType+itemId;
 							//各子项要求
 							setNumMap(reqNumMap,recFlowRecTypeItem,reqNum);
-							b = new BigDecimal(reqNumMap.get(recFlowRecTypeItem)).setScale(0,BigDecimal.ROUND_HALF_UP);
+                            b = BigDecimal.valueOf(reqNumMap.get(recFlowRecTypeItem)).setScale(0, RoundingMode.HALF_UP);
 							finishedPer.put(recFlowRecTypeItem+"ReqNum",b.toString());
 						}
 					}
@@ -5419,7 +5409,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //						ResRecSkillRegistryExample skillRegistryExample = new ResRecSkillRegistryExample();
 //						ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 						ResRecExample recExample = new ResRecExample();
-                        com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
+                        ResRecExample.Criteria recCriteria = recExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andOperUserFlowEqualTo(doctorFlow);
 //						if(StringUtil.isNotBlank(relRecordFlow)){
 //							campaignRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
 //							caseRegistryCriteria.andSchRotationDeptFlowEqualTo(relRecordFlow);
@@ -5481,18 +5471,18 @@ public class ResRecBizImpl implements IResRecBiz {
 
 							//各规则下的总完成数
 							setNumMap(recFinishedMap,rotationDeptFlow,1f);
-							BigDecimal b = new BigDecimal(recFinishedMap.get(rotationDeptFlow)).setScale(0,BigDecimal.ROUND_HALF_UP);
+                            BigDecimal b = BigDecimal.valueOf(recFinishedMap.get(rotationDeptFlow)).setScale(0, RoundingMode.HALF_UP);
 							finishedPer.put(rotationDeptFlow+"Finished",b.toString());
 
 							//各登记类型下的总完成数
 							setNumMap(recFinishedMap,recFlowRecType,1f);
-							b = new BigDecimal(recFinishedMap.get(recFlowRecType)).setScale(0,BigDecimal.ROUND_HALF_UP);
+                            b = BigDecimal.valueOf(recFinishedMap.get(recFlowRecType)).setScale(0, RoundingMode.HALF_UP);
 							finishedPer.put(recFlowRecType+"Finished",b.toString());
 
 							if(StringUtil.isNotBlank(itemId)){
 								//各子项完成数
 								setNumMap(recFinishedMap,recFlowRecTypeItem,1f);
-								b = new BigDecimal(recFinishedMap.get(recFlowRecTypeItem)).setScale(0,BigDecimal.ROUND_HALF_UP);
+                                b = BigDecimal.valueOf(recFinishedMap.get(recFlowRecTypeItem)).setScale(0, RoundingMode.HALF_UP);
 								finishedPer.put(recFlowRecTypeItem+"Finished",b.toString());
 							}
 
@@ -5571,7 +5561,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 										recSumPer+=itemFinPer*itemPer;//((itemFinished/(recItemReqSum+0f))*itemPer);
 
-										BigDecimal b = new BigDecimal(itemFinPer*100).setScale(format,BigDecimal.ROUND_HALF_UP);//(itemFinished/(recItemReqSum+0f))
+                                        BigDecimal b = new BigDecimal(itemFinPer * 100).setScale(format, RoundingMode.HALF_UP);//(itemFinished/(recItemReqSum+0f))
 										finishedPer.put(recordFlowRecTypeItemId,b.toString());
 									}
 								}else{
@@ -5601,7 +5591,7 @@ public class ResRecBizImpl implements IResRecBiz {
 								recSumPer = 1f;
 							}
 
-							BigDecimal b = new BigDecimal(recSumPer*100).setScale(format,BigDecimal.ROUND_HALF_UP);
+                            BigDecimal b = new BigDecimal(recSumPer * 100).setScale(format, RoundingMode.HALF_UP);
 							finishedPer.put(recordFlowRecType,b.toString());
 						}
 
@@ -5609,7 +5599,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							sumPer=1f;
 						}
 
-						BigDecimal b = new BigDecimal(sumPer*100).setScale(format,BigDecimal.ROUND_HALF_UP);
+                        BigDecimal b = new BigDecimal(sumPer * 100).setScale(format, RoundingMode.HALF_UP);
 						finishedPer.put(recordFlow,b.toString());
 					}
 				}
@@ -5655,7 +5645,7 @@ public class ResRecBizImpl implements IResRecBiz {
 							  String recTypeId) {
 		ResRec rec=null;
 		ResRecExample example = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria create=example.createCriteria();
+        ResRecExample.Criteria create = example.createCriteria();
         create.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(processFlow)) {
 			create.andSchRotationDeptFlowEqualTo(processFlow);
@@ -6258,7 +6248,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	 */
 	private void setVal4PerMap(Map<String,Object> perMap,String key,Float val,int format){
 		if(perMap!=null){
-			BigDecimal b = new BigDecimal(val).setScale(format,BigDecimal.ROUND_HALF_UP);
+            BigDecimal b = new BigDecimal(val).setScale(format, RoundingMode.HALF_UP);
 			perMap.put(key,b.toString());
 		}
 	}
@@ -6296,7 +6286,7 @@ public class ResRecBizImpl implements IResRecBiz {
 //		ResRecSkillRegistryExample.Criteria skillRegistryCriteria = skillRegistryExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		ResRecExample recExample = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
+        ResRecExample.Criteria recCriteria = recExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			coditionCount++;
@@ -6385,7 +6375,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		ResRecExample recExample = new ResRecExample();
-		com.pinde.sci.model.mo.ResRecExample.Criteria recCriteria = recExample.createCriteria()
+        ResRecExample.Criteria recCriteria = recExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(userFlow)){
 			coditionCount++;
@@ -6422,7 +6412,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		SchRotationDeptReqExample reqExample = new SchRotationDeptReqExample();
-		com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
+        SchRotationDeptReqExample.Criteria reqCriteria = reqExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(rotationFlow)){
@@ -6502,7 +6492,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		SchRotationDeptExample deptExample = new SchRotationDeptExample();
-		com.pinde.sci.model.mo.SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
+        SchRotationDeptExample.Criteria deptCriteria = deptExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(orgFlow)){
@@ -6538,7 +6528,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		int coditionCount = 0;
 
 		SchDoctorDeptExample docDeptExample = new SchDoctorDeptExample();
-		com.pinde.sci.model.mo.SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
+        SchDoctorDeptExample.Criteria docDeptCriteria = docDeptExample.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 
 		if(StringUtil.isNotBlank(doctorFlow)){
@@ -7045,7 +7035,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public int searResRecWan(String processFlow, String recTypeId,
 							 String itemId) {
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if (StringUtil.isNotBlank(processFlow)) {
 			criteria.andProcessFlowEqualTo(processFlow);
 		}
@@ -7058,7 +7048,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	@Override
 	public List<ResRec> searchInfo(ResRec resRec, List<String> operUserFlows,List<String> orgFlowList) {
 		ResRecExample example = new ResRecExample();
-        com.pinde.sci.model.mo.ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResRecExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resRec.getRecTypeId())){
 			criteria.andRecTypeIdEqualTo(resRec.getRecTypeId());
 		}
@@ -7308,7 +7298,7 @@ public class ResRecBizImpl implements IResRecBiz {
 			if(items!=null && !items.isEmpty()){
 				for(Element item : items){
 					String name = item.getName();
-					if("itemgroup".equals(name.toLowerCase())){
+                    if ("itemgroup".equalsIgnoreCase(name)) {
 
 					}else{
 

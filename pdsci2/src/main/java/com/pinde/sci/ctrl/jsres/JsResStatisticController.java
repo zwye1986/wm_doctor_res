@@ -5,6 +5,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -23,19 +24,14 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResTeacherTraining;
-import com.pinde.sci.model.mo.SysMonthlyAppStatistics;
-import com.pinde.sci.model.mo.SysMonthlyStatistics;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResTeacherTraining;
+import com.pinde.core.model.SysMonthlyAppStatistics;
+import com.pinde.core.model.SysMonthlyStatistics;
+import com.pinde.core.model.SysUserRole;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,7 +118,7 @@ public class JsResStatisticController extends GeneralController {
 		}else {
 			model.addAttribute("sessionNumber", sessionNumber);
 		}
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
@@ -371,7 +367,7 @@ public class JsResStatisticController extends GeneralController {
 		}else {
 			model.addAttribute("sessionNumber", sessionNumber);
 		}
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
@@ -743,7 +739,7 @@ public class JsResStatisticController extends GeneralController {
 	}
 
 	@RequestMapping("/statisticJointOrg")
-	public String statisticJointOrg(Model model,ResDoctorRecruit recruit ,ResDoctor doctor,String orgLevel,String[] datas){
+    public String statisticJointOrg(Model model, com.pinde.core.model.ResDoctorRecruit recruit, ResDoctor doctor, String orgLevel, String[] datas) {
 		String trainTypeId="DoctorTrainingSpe";		//住院医师
 		Map<Object, Object> jointOrgListMap= new HashMap<Object, Object>();//每个符合添加的org的协同基地的map
 		Map<Object, Object> jointOrgSpeMap = new HashMap<Object,Object>();//协同基地的spe
@@ -862,7 +858,7 @@ public class JsResStatisticController extends GeneralController {
 	}
 
 	@RequestMapping("/statisticJointOrgAcc")
-	public String statisticJointOrgAcc(Model model,ResDoctorRecruit recruit ,ResDoctor doctor,String orgLevel,String[] datas,String  trainTypeId){
+    public String statisticJointOrgAcc(Model model, com.pinde.core.model.ResDoctorRecruit recruit, ResDoctor doctor, String orgLevel, String[] datas, String trainTypeId) {
 		trainTypeId="AssiGeneral";		//住院医师
 		Map<Object, Object> jointOrgListMap= new HashMap<Object, Object>();//每个符合添加的org的协同基地的map
 		Map<Object, Object> jointOrgSpeMap = new HashMap<Object,Object>();//协同基地的spe
@@ -1013,7 +1009,7 @@ public class JsResStatisticController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
@@ -1067,7 +1063,7 @@ public class JsResStatisticController extends GeneralController {
 		List<String> timeGapMon=new ArrayList<String>();//存放横坐标
 		SysUser currUser=GlobalContext.getCurrentUser();
 		ResRec resRec=new ResRec();
-		ResDoctorRecruit recruit= new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		if(StringUtil.isNotBlank(orgFlow)){
 			recruit.setOrgFlow(orgFlow);
 			resRec.setOrgFlow(orgFlow);
@@ -1163,7 +1159,7 @@ public class JsResStatisticController extends GeneralController {
 		List<String> timeGapMon=new ArrayList<String>();//存放横坐标
 		SysUser currUser=GlobalContext.getCurrentUser();
 		ResRec resRec=new ResRec();
-		ResDoctorRecruit recruit= new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		if(StringUtil.isNotBlank(orgFlow)){
 			recruit.setOrgFlow(orgFlow);
 			resRec.setOrgFlow(orgFlow);
@@ -1263,7 +1259,7 @@ public class JsResStatisticController extends GeneralController {
 		}
 		ResRec resRec = new ResRec();
 		resRec.setOrgFlow(orgFlow);
-		ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setOrgFlow(orgFlow);
 		if(StringUtil.isBlank(sessionNumber)){
 			if(StringUtil.isNotBlank(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"))){
@@ -1328,7 +1324,7 @@ public class JsResStatisticController extends GeneralController {
 //			endTime=DateUtil.getCurrDate2().substring(0,6);
 //		}
 		String month = DateUtil.getCurrMonth();
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		if(StringUtil.isBlank(sessionNumber)){
 			if(StringUtil.isNotBlank(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"))){
 				recruit.setSessionNumber(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"));
@@ -1436,7 +1432,7 @@ public class JsResStatisticController extends GeneralController {
 //			endTime=DateUtil.getCurrDate2().substring(0,6);
 //		}
 		String month = DateUtil.getCurrMonth();
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		if(StringUtil.isBlank(sessionNumber)){
 			if(StringUtil.isNotBlank(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"))){
 				recruit.setSessionNumber(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"));

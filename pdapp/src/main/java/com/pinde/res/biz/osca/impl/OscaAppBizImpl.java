@@ -8,6 +8,8 @@ import com.pinde.core.common.enums.osca.DoctorScoreEnum;
 import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
 import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.core.common.sci.dao.InxInfoMapper;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;

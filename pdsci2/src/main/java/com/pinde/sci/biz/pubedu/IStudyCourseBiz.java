@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.pubedu;
 
-import com.pinde.sci.model.mo.StudyCourse;
-import com.pinde.sci.model.mo.StudyCourseDetail;
-import com.pinde.sci.model.mo.StudyCourseDetailInfo;
+import com.pinde.core.model.StudyCourse;
+import com.pinde.core.model.StudyCourseDetail;
+import com.pinde.core.model.StudyCourseDetailInfo;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.DoctorUntiedRecordingMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.DoctorUntiedRecording" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.DoctorUntiedRecording">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="LOCK_DATE" property="lockDate" jdbcType="VARCHAR" />
@@ -77,13 +77,14 @@
     RECORD_FLOW, DOCTOR_FLOW, LOCK_DATE, UNTIED_DATE, UNTIED_DESCRIPTION, UNTIED_FILE, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, LOCK_STATUS
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecordingExample" >
+  <select id="selectByExample" resultMap="BaseResultMap"
+          parameterType="com.pinde.core.model.DoctorUntiedRecordingExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_UNTIED_RECORDING
+      from DOCTOR_UNTIED_RECORDING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +95,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_UNTIED_RECORDING
+      from DOCTOR_UNTIED_RECORDING
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.DOCTOR_UNTIED_RECORDING
+      delete from DOCTOR_UNTIED_RECORDING
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecordingExample" >
-    delete from PDSCI.DOCTOR_UNTIED_RECORDING
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.DoctorUntiedRecordingExample">
+      delete from DOCTOR_UNTIED_RECORDING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecording" >
-    insert into PDSCI.DOCTOR_UNTIED_RECORDING (RECORD_FLOW, DOCTOR_FLOW, LOCK_DATE, 
+  <insert id="insert" parameterType="com.pinde.core.model.DoctorUntiedRecording">
+      insert into DOCTOR_UNTIED_RECORDING (RECORD_FLOW, DOCTOR_FLOW, LOCK_DATE,
       UNTIED_DATE, UNTIED_DESCRIPTION, UNTIED_FILE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, LOCK_STATUS
@@ -119,8 +120,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{lockStatus,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecording" >
-    insert into PDSCI.DOCTOR_UNTIED_RECORDING
+  <insert id="insertSelective" parameterType="com.pinde.core.model.DoctorUntiedRecording">
+      insert into DOCTOR_UNTIED_RECORDING
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -198,14 +199,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecordingExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.DOCTOR_UNTIED_RECORDING
+  <select id="countByExample" parameterType="com.pinde.core.model.DoctorUntiedRecordingExample"
+          resultType="java.lang.Integer">
+      select count(*) from DOCTOR_UNTIED_RECORDING
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.DOCTOR_UNTIED_RECORDING
+      update DOCTOR_UNTIED_RECORDING
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -249,7 +251,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.DOCTOR_UNTIED_RECORDING
+      update DOCTOR_UNTIED_RECORDING
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       LOCK_DATE = #{record.lockDate,jdbcType=VARCHAR},
@@ -266,8 +268,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecording" >
-    update PDSCI.DOCTOR_UNTIED_RECORDING
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DoctorUntiedRecording">
+      update DOCTOR_UNTIED_RECORDING
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -305,8 +307,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.DoctorUntiedRecording" >
-    update PDSCI.DOCTOR_UNTIED_RECORDING
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DoctorUntiedRecording">
+      update DOCTOR_UNTIED_RECORDING
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       LOCK_DATE = #{lockDate,jdbcType=VARCHAR},
       UNTIED_DATE = #{untiedDate,jdbcType=VARCHAR},

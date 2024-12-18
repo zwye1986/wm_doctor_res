@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResTarinNoticeMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResTarinNotice">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResTarinNotice">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="RES_NOTICE_TITLE" jdbcType="VARCHAR" property="resNoticeTitle" />
     <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
@@ -13,7 +13,7 @@
     <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
     <result column="NOTICE_PIC_PATH" jdbcType="VARCHAR" property="noticePicPath" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResTarinNotice">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.ResTarinNotice">
     <result column="RES_NOTICE_CONTENT" jdbcType="CLOB" property="resNoticeContent" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -81,7 +81,8 @@
   <sql id="Blob_Column_List">
     RES_NOTICE_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.ResTarinNoticeExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.ResTarinNoticeExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -89,7 +90,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_TARIN_NOTICE
+      from RES_TARIN_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,13 +98,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResTarinNoticeExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResTarinNoticeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TARIN_NOTICE
+      from RES_TARIN_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -116,21 +117,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_TARIN_NOTICE
+      from RES_TARIN_NOTICE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_TARIN_NOTICE
+      delete from RES_TARIN_NOTICE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResTarinNoticeExample">
-    delete from PDSCI.RES_TARIN_NOTICE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResTarinNoticeExample">
+      delete from RES_TARIN_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResTarinNotice">
-    insert into PDSCI.RES_TARIN_NOTICE (RECORD_FLOW, RES_NOTICE_TITLE, ORG_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResTarinNotice">
+      insert into RES_TARIN_NOTICE (RECORD_FLOW, RES_NOTICE_TITLE, ORG_FLOW,
       ORG_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       NOTICE_PIC_PATH, RES_NOTICE_CONTENT)
@@ -139,8 +140,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{noticePicPath,jdbcType=VARCHAR}, #{resNoticeContent,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResTarinNotice">
-    insert into PDSCI.RES_TARIN_NOTICE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResTarinNotice">
+      insert into RES_TARIN_NOTICE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -212,14 +213,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResTarinNoticeExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_TARIN_NOTICE
+    <select id="countByExample" parameterType="com.pinde.core.model.ResTarinNoticeExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_TARIN_NOTICE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_TARIN_NOTICE
+      update RES_TARIN_NOTICE
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -260,7 +262,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update PDSCI.RES_TARIN_NOTICE
+      update RES_TARIN_NOTICE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RES_NOTICE_TITLE = #{record.resNoticeTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -277,7 +279,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_TARIN_NOTICE
+      update RES_TARIN_NOTICE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RES_NOTICE_TITLE = #{record.resNoticeTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -292,8 +294,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResTarinNotice">
-    update PDSCI.RES_TARIN_NOTICE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResTarinNotice">
+      update RES_TARIN_NOTICE
     <set>
       <if test="resNoticeTitle != null">
         RES_NOTICE_TITLE = #{resNoticeTitle,jdbcType=VARCHAR},
@@ -328,8 +330,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResTarinNotice">
-    update PDSCI.RES_TARIN_NOTICE
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResTarinNotice">
+      update RES_TARIN_NOTICE
     set RES_NOTICE_TITLE = #{resNoticeTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -342,8 +344,8 @@
       RES_NOTICE_CONTENT = #{resNoticeContent,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResTarinNotice">
-    update PDSCI.RES_TARIN_NOTICE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResTarinNotice">
+      update RES_TARIN_NOTICE
     set RES_NOTICE_TITLE = #{resNoticeTitle,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

@@ -1,9 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
 import org.dom4j.DocumentException;
@@ -94,7 +92,7 @@ public interface IResRecBiz {
 
 
 	Map<String, Map<String,String>> getFinishPer2List(Map<String, List<SchArrangeResult>> arrResultListMap, List<ResDoctor> resDoctorList, Map<String, SysUser> userFlowToEntityMap,
-									 Map<String, SchArrangeResult> arrangeResultMap, Map<String, SchRotationGroup> rotationGroupFlowToEntityMap, Map<String, SchRotationDept> keyToRotationDepeMap);
+                                                      Map<String, SchArrangeResult> arrangeResultMap, Map<String, SchRotationGroup> rotationGroupFlowToEntityMap, Map<String, SchRotationDept> keyToRotationDepeMap);
 
 	List<ResRec> searchFinishRec2(Map<String, List<String>> medicineToDoctorMap, Map<String, List<String>> medicinToRecTypeMap);
 

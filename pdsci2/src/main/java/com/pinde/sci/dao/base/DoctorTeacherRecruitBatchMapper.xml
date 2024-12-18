@@ -106,7 +106,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+        from DOCTOR_TEACHER_RECRUIT_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -117,21 +117,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+      from DOCTOR_TEACHER_RECRUIT_BATCH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+      delete from DOCTOR_TEACHER_RECRUIT_BATCH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatchExample">
-    delete from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+        delete from DOCTOR_TEACHER_RECRUIT_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
-    insert into PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH (RECORD_FLOW, REF_RECORD_FLOW, USER_FLOW, 
+        insert into DOCTOR_TEACHER_RECRUIT_BATCH (RECORD_FLOW, REF_RECORD_FLOW, USER_FLOW,
       USER_NAME, DOCTOR_FLOW, DOCTOR_NAME, 
       ORG_FLOW, ORG_NAME, SPE_ID, 
       SPE_NAME, RECRUIT_YEAR, DEGREE_TYPE_ID, 
@@ -155,7 +155,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
-    insert into PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+        insert into DOCTOR_TEACHER_RECRUIT_BATCH
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -343,13 +343,13 @@
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatchExample"
             resultType="java.lang.Integer">
-    select count(*) from PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+        select count(*) from DOCTOR_TEACHER_RECRUIT_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+      update DOCTOR_TEACHER_RECRUIT_BATCH
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -447,7 +447,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+      update DOCTOR_TEACHER_RECRUIT_BATCH
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       REF_RECORD_FLOW = #{record.refRecordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -483,7 +483,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
-    update PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+        update DOCTOR_TEACHER_RECRUIT_BATCH
     <set>
       <if test="refRecordFlow != null">
         REF_RECORD_FLOW = #{refRecordFlow,jdbcType=VARCHAR},
@@ -576,7 +576,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DoctorTeacherRecruitBatch">
-    update PDSCI.DOCTOR_TEACHER_RECRUIT_BATCH
+        update DOCTOR_TEACHER_RECRUIT_BATCH
     set REF_RECORD_FLOW = #{refRecordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.QingpuLectureEvalCfg;
-import com.pinde.sci.model.mo.QingpuLectureEvalCfgExample;
+import com.pinde.core.model.QingpuLectureEvalCfg;
+import com.pinde.core.model.QingpuLectureEvalCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

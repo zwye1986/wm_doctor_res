@@ -1,14 +1,14 @@
 package com.pinde.sci.biz.inx.impl;
 
+import com.pinde.core.model.InxColumn;
+import com.pinde.core.model.InxColumnExample;
+import com.pinde.core.model.InxColumnExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.InxColumnMapper;
 import com.pinde.sci.dao.inx.InxColumnExtMapper;
-import com.pinde.sci.model.mo.InxColumn;
-import com.pinde.sci.model.mo.InxColumnExample;
-import com.pinde.sci.model.mo.InxColumnExample.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +68,7 @@ public class InxColumnManageBizImpl implements IinxColumnManageBiz {
 			int length = bigestColumnId.length();
 			String leftPart = bigestColumnId.substring(0, length-2);
 			String rightPart = bigestColumnId.substring(length-2);
-			int idValue = new Integer(rightPart).intValue();
+            int idValue = Integer.parseInt(rightPart);
 			idValue++;
 			if(idValue<10){
 				rightPart = "0"+idValue;

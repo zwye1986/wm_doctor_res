@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResAnnualAssessmentRecord;
+import com.pinde.core.model.ResAnnualAssessmentRecord;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

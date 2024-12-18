@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchArrangeResultExample;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchArrangeResultExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

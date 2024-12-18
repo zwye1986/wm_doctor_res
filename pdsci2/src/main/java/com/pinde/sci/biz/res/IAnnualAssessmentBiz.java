@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResAnnualAssessment;
-import com.pinde.sci.model.mo.ResAnnualAssessmentWithBLOBs;
+import com.pinde.core.model.ResAnnualAssessment;
+import com.pinde.core.model.ResAnnualAssessmentWithBLOBs;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 
 import java.util.List;

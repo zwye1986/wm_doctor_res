@@ -121,13 +121,14 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_ORG
+      from SYS_ORG
     where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
   </select>
 
-  <select id="searchOrgNotJointOrg" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+  <select id="searchOrgNotJointOrg" parameterType="java.util.Map"
+          resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
     select o.ORG_FLOW, o.ORG_NAME
-    from PDSCI.SYS_ORG o
+      from SYS_ORG o
     where o.RECORD_STATUS='Y'
     and o.ORG_TYPE_ID = #{sysOrg.orgTypeId}
     and o.ORG_CITY_ID = #{sysOrg.orgCityId}
@@ -140,13 +141,13 @@
     WHERE J.RECORD_STATUS = 'Y'
     AND J.JOINT_ORG_FLOW = O.ORG_FLOW)
   </select>
-  <select id="searchJointOrgsByOrg" resultMap="com.pinde.sci.dao.base.SysOrgMapper.BaseResultMap">
+  <select id="searchJointOrgsByOrg" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
     select *
-    from PDSCI.SYS_ORG
+      from SYS_ORG
     where RECORD_STATUS='Y'
     and ORG_FLOW in (
     select rjo.JOINT_ORG_FLOW
-    from  PDSCI.RES_JOINT_ORG rjo
+      from RES_JOINT_ORG rjo
     where rjo.RECORD_STATUS='Y'
     <if test="_parameter != null and _parameter != ''">
       and rjo.ORG_FLOW = #{orgFlow}

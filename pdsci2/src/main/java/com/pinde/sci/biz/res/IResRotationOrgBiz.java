@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResRotationOrg;
+import com.pinde.core.model.ResRotationOrg;
 
 import java.util.List;
 

@@ -102,7 +102,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SUPERVISIO_SUBJECT
+      from RES_SUPERVISIO_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -113,21 +113,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SUPERVISIO_SUBJECT
+      from RES_SUPERVISIO_SUBJECT
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SUPERVISIO_SUBJECT
+      delete from RES_SUPERVISIO_SUBJECT
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectExample" >
-    delete from PDSCI.RES_SUPERVISIO_SUBJECT
+      delete from RES_SUPERVISIO_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResSupervisioSubject" >
-    insert into PDSCI.RES_SUPERVISIO_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, OPEN_TIME, 
+      insert into RES_SUPERVISIO_SUBJECT (SUBJECT_FLOW, SUBJECT_NAME, OPEN_TIME,
       ORG_FLOW, ORG_NAME, SPE_ID, 
       SPE_NAME, SUPERVISIO_SUMMARY, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -151,7 +151,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResSupervisioSubject" >
-    insert into PDSCI.RES_SUPERVISIO_SUBJECT
+      insert into RES_SUPERVISIO_SUBJECT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
         SUBJECT_FLOW,
@@ -326,13 +326,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SUPERVISIO_SUBJECT
+      select count(*) from RES_SUPERVISIO_SUBJECT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT
+      update RES_SUPERVISIO_SUBJECT
     <set >
       <if test="record.subjectFlow != null" >
         SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
@@ -424,7 +424,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT
+      update RES_SUPERVISIO_SUBJECT
     set SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
       OPEN_TIME = #{record.openTime,jdbcType=VARCHAR},
@@ -458,7 +458,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSupervisioSubject" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT
+      update RES_SUPERVISIO_SUBJECT
     <set >
       <if test="subjectName != null" >
         SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
@@ -545,7 +545,7 @@
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSupervisioSubject" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT
+      update RES_SUPERVISIO_SUBJECT
     set SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       OPEN_TIME = #{openTime,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

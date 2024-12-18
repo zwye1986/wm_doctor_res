@@ -25,7 +25,8 @@
         and audit_status_id in ('Auditing','TeacherPass','HeadPass','TutorPass','ManagerPass','Passed')
     </select>
 
-    <select id="searchUserWithRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="searchUserWithRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"
+            parameterType="java.util.Map">
         select distinct su.* from sys_user su
         left join sys_user_role sur on su.user_flow = sur.user_flow
         where su.RECORD_STATUS = 'Y'

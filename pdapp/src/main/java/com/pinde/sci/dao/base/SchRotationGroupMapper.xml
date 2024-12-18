@@ -95,7 +95,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_GROUP
+      from SCH_ROTATION_GROUP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -106,21 +106,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_GROUP
+      from SCH_ROTATION_GROUP
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.SCH_ROTATION_GROUP
+      delete from SCH_ROTATION_GROUP
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationGroupExample">
-    delete from PDSCI.SCH_ROTATION_GROUP
+      delete from SCH_ROTATION_GROUP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SchRotationGroup">
-    insert into PDSCI.SCH_ROTATION_GROUP (GROUP_FLOW, ROTATION_FLOW, GROUP_NAME, 
+      insert into SCH_ROTATION_GROUP (GROUP_FLOW, ROTATION_FLOW, GROUP_NAME,
       DEPT_NUM, SCH_MONTH, GROUP_NOTE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, 
@@ -138,7 +138,7 @@
       #{sessionNumber,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationGroup">
-    insert into PDSCI.SCH_ROTATION_GROUP
+      insert into SCH_ROTATION_GROUP
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="groupFlow != null">
         GROUP_FLOW,
@@ -277,13 +277,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SchRotationGroupExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.SCH_ROTATION_GROUP
+      select count(*) from SCH_ROTATION_GROUP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.SCH_ROTATION_GROUP
+      update SCH_ROTATION_GROUP
     <set>
       <if test="record.groupFlow != null">
         GROUP_FLOW = #{record.groupFlow,jdbcType=VARCHAR},
@@ -357,7 +357,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.SCH_ROTATION_GROUP
+      update SCH_ROTATION_GROUP
     set GROUP_FLOW = #{record.groupFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
@@ -385,7 +385,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationGroup">
-    update PDSCI.SCH_ROTATION_GROUP
+      update SCH_ROTATION_GROUP
     <set>
       <if test="rotationFlow != null">
         ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
@@ -454,7 +454,7 @@
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationGroup">
-    update PDSCI.SCH_ROTATION_GROUP
+      update SCH_ROTATION_GROUP
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       GROUP_NAME = #{groupName,jdbcType=VARCHAR},
       DEPT_NUM = #{deptNum,jdbcType=DECIMAL},

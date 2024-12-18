@@ -37,6 +37,12 @@ public class ResTestConfig implements java.io.Serializable {
 
     private String modifyUserFlow;
 
+    private String jointLocalAudit;
+
+    private String jointLocalAuditStartTime;
+
+    private String jointLocalAuditEndTime;
+
     public String getTestFlow() {
         return testFlow;
     }
@@ -179,5 +185,29 @@ public class ResTestConfig implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getJointLocalAudit() {
+        return jointLocalAudit;
+    }
+
+    public void setJointLocalAudit(String jointLocalAudit) {
+        this.jointLocalAudit = jointLocalAudit;
+    }
+
+    public String getJointLocalAuditStartTime() {
+        return jointLocalAuditStartTime;
+    }
+
+    public void setJointLocalAuditStartTime(String jointLocalAuditStartTime) {
+        this.jointLocalAuditStartTime = jointLocalAuditStartTime;
+    }
+
+    public String getJointLocalAuditEndTime() {
+        return jointLocalAuditEndTime;
+    }
+
+    public void setJointLocalAuditEndTime(String jointLocalAuditEndTime) {
+        this.jointLocalAuditEndTime = jointLocalAuditEndTime;
     }
 }

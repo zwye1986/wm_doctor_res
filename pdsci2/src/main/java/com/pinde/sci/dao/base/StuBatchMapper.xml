@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.StuBatchMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StuBatch">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.StuBatch">
     <id column="BATCH_FLOW" jdbcType="VARCHAR" property="batchFlow" />
     <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo" />
     <result column="BATCH_REG_DATE" jdbcType="VARCHAR" property="batchRegDate" />
@@ -76,13 +76,13 @@
     BATCH_FLOW, BATCH_NO, BATCH_REG_DATE, MONTH_FEE, IS_DEFAULT, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, BATCH_DATE, BATCH_STATUS
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.StuBatchExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.StuBatchExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.STU_BATCH
+      from STU_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.STU_BATCH
+      from STU_BATCH
     where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.STU_BATCH
+      delete from STU_BATCH
     where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StuBatchExample">
-    delete from PDSCI.STU_BATCH
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.StuBatchExample">
+      delete from STU_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.StuBatch">
-    insert into PDSCI.STU_BATCH (BATCH_FLOW, BATCH_NO, BATCH_REG_DATE, 
+    <insert id="insert" parameterType="com.pinde.core.model.StuBatch">
+      insert into STU_BATCH (BATCH_FLOW, BATCH_NO, BATCH_REG_DATE,
       MONTH_FEE, IS_DEFAULT, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       BATCH_DATE, BATCH_STATUS)
@@ -116,8 +116,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{batchDate,jdbcType=VARCHAR}, #{batchStatus,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StuBatch">
-    insert into PDSCI.STU_BATCH
+    <insert id="insertSelective" parameterType="com.pinde.core.model.StuBatch">
+      insert into STU_BATCH
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="batchFlow != null">
         BATCH_FLOW,
@@ -189,14 +189,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StuBatchExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.STU_BATCH
+    <select id="countByExample" parameterType="com.pinde.core.model.StuBatchExample" resultType="java.lang.Integer">
+      select count(*) from STU_BATCH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.STU_BATCH
+      update STU_BATCH
     <set>
       <if test="record.batchFlow != null">
         BATCH_FLOW = #{record.batchFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.STU_BATCH
+      update STU_BATCH
     set BATCH_FLOW = #{record.batchFlow,jdbcType=VARCHAR},
       BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
       BATCH_REG_DATE = #{record.batchRegDate,jdbcType=VARCHAR},
@@ -253,8 +253,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StuBatch">
-    update PDSCI.STU_BATCH
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StuBatch">
+      update STU_BATCH
     <set>
       <if test="batchNo != null">
         BATCH_NO = #{batchNo,jdbcType=VARCHAR},
@@ -289,8 +289,8 @@
     </set>
     where BATCH_FLOW = #{batchFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StuBatch">
-    update PDSCI.STU_BATCH
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StuBatch">
+      update STU_BATCH
     set BATCH_NO = #{batchNo,jdbcType=VARCHAR},
       BATCH_REG_DATE = #{batchRegDate,jdbcType=VARCHAR},
       MONTH_FEE = #{monthFee,jdbcType=DECIMAL},

@@ -5,7 +5,7 @@ import com.pinde.core.model.ResAnnualAssessmentWithBLOBs;
 /**
  * Created by www.0001.Ga on 2016-10-18.
  */
-public class AnnualAssessmentExt extends ResAnnualAssessmentWithBLOBs{
+public class AnnualAssessmentExt extends ResAnnualAssessmentWithBLOBs {
     private String discipleStartDate;
     private String discipleEndDate;
     private String daySelectCount;

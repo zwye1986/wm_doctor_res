@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.OscaExamDifferScoreMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.OscaExamDifferScore" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaExamDifferScore">
     <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -74,13 +74,14 @@
     CFG_FLOW, ORG_FLOW, ORG_NAME, DIFFER_SCORE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.OscaExamDifferScoreExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.OscaExamDifferScoreExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_EXAM_DIFFER_SCORE
+        from OSCA_EXAM_DIFFER_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +92,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_EXAM_DIFFER_SCORE
+      from OSCA_EXAM_DIFFER_SCORE
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_EXAM_DIFFER_SCORE
+      delete from OSCA_EXAM_DIFFER_SCORE
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.OscaExamDifferScoreExample" >
-    delete from PDSCI.OSCA_EXAM_DIFFER_SCORE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaExamDifferScoreExample">
+        delete from OSCA_EXAM_DIFFER_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.OscaExamDifferScore" >
-    insert into PDSCI.OSCA_EXAM_DIFFER_SCORE (CFG_FLOW, ORG_FLOW, ORG_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.OscaExamDifferScore">
+        insert into OSCA_EXAM_DIFFER_SCORE (CFG_FLOW, ORG_FLOW, ORG_NAME,
       DIFFER_SCORE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
@@ -114,8 +115,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.OscaExamDifferScore" >
-    insert into PDSCI.OSCA_EXAM_DIFFER_SCORE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.OscaExamDifferScore">
+        insert into OSCA_EXAM_DIFFER_SCORE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
         CFG_FLOW,
@@ -175,14 +176,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.OscaExamDifferScoreExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.OSCA_EXAM_DIFFER_SCORE
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaExamDifferScoreExample"
+            resultType="java.lang.Integer">
+        select count(*) from OSCA_EXAM_DIFFER_SCORE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_EXAM_DIFFER_SCORE
+      update OSCA_EXAM_DIFFER_SCORE
     <set >
       <if test="record.cfgFlow != null" >
         CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -217,7 +219,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_EXAM_DIFFER_SCORE
+      update OSCA_EXAM_DIFFER_SCORE
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -231,8 +233,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.OscaExamDifferScore" >
-    update PDSCI.OSCA_EXAM_DIFFER_SCORE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaExamDifferScore">
+        update OSCA_EXAM_DIFFER_SCORE
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -261,8 +263,8 @@
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.OscaExamDifferScore" >
-    update PDSCI.OSCA_EXAM_DIFFER_SCORE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaExamDifferScore">
+        update OSCA_EXAM_DIFFER_SCORE
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       DIFFER_SCORE = #{differScore,jdbcType=DECIMAL},

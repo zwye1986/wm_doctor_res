@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfgExample;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResPowerCfgBiz;
@@ -9,9 +12,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.ResPowerCfgMapper;
-import com.pinde.sci.model.mo.ResPowerCfg;
-import com.pinde.sci.model.mo.ResPowerCfgExample;
-import com.pinde.core.model.SysUser;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -145,7 +145,7 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
                 @Override
                 public String checkExcelData(HashMap data, ExcelUtile eu) {
                     String sheetName = (String) eu.get("SheetName");
-                    if (sheetName == null || !"Powers".equals(sheetName)) {
+                    if (!"Powers".equals(sheetName)) {
                         eu.put("count", 0);
                         eu.put("code", "1");
                         eu.put("msg", "请使用系统提供的模板！！");
@@ -286,6 +286,6 @@ public class IResPowerCfgBizImpl implements IResPowerCfgBiz{
 
     }
 
-    private static Logger logger = LoggerFactory.getLogger(IResPowerCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(IResPowerCfgBizImpl.class);
 
 }

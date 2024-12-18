@@ -21,7 +21,7 @@
         SELECT DISTINCT U.USER_FLOW, U.USER_CODE, U.USER_NAME, U.SEX_ID, U.SEX_NAME
         , U.TITLE_ID, U.TITLE_NAME, U.USER_PHONE, U.ORG_FLOW, U.ORG_NAME
         , U.RECORD_STATUS, U.WORK_ORG_NAME,U.STATUS_ID
-        FROM PDSCI.SYS_USER U
+        FROM SYS_USER U
         LEFT JOIN osca_tea_info oti ON oti.user_flow = u.user_flow and oti.record_status = 'Y'
         WHERE  u.record_status = 'Y'
         and u.status_id in ('Activated','Locked')

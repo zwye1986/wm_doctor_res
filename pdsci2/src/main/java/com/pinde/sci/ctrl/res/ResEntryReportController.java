@@ -1,14 +1,14 @@
 package com.pinde.sci.ctrl.res;
 
 
+import com.pinde.core.common.sci.dao.SysUserDeptMapper;
+import com.pinde.core.model.SysUserDept;
+import com.pinde.core.model.SysUserDeptExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEntryReportBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.SysUserDeptMapper;
-import com.pinde.core.model.SysUserDept;
-import com.pinde.core.model.SysUserDeptExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

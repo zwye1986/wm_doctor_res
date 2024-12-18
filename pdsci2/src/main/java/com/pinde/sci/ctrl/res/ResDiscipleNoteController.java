@@ -1,8 +1,9 @@
 package com.pinde.sci.ctrl.res;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.common.enums.NoteTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.Docx4jUtil;
@@ -18,9 +19,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.core.common.enums.DiscipleStatusEnum;
-import com.pinde.core.common.enums.NoteTypeEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;

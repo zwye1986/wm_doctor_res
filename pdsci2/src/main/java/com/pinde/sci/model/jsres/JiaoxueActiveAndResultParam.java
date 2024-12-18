@@ -1,7 +1,6 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-import com.pinde.sci.model.mo.TeachingActivityResult;
+import com.pinde.core.model.TeachingActivityResult;
 
 import java.util.List;
 

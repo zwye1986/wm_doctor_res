@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
-import com.pinde.core.model.ResOrgSpe;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -14,7 +14,6 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -55,7 +54,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     @Autowired
     private JsresDoctorSpeMapper doctorSpeMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(ResOrgSpeAssignBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResOrgSpeAssignBizImpl.class);
 
 
     @Override
@@ -511,9 +510,9 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
                         flag = com.pinde.core.common.GlobalConstant.UPLOAD_FAIL;
                         problemsMap.put(i + 1, "操作成绩数值错误");
                     } else {
-                        List<ResDoctorRecruit> recruitList = recruitMapper.selectByExample(recruitExample);
+                        List<com.pinde.core.model.ResDoctorRecruit> recruitList = recruitMapper.selectByExample(recruitExample);
                         if (null != recruitList && recruitList.size() > 0) {
-                            ResDoctorRecruit recruitTemp = recruitList.get(0);
+                            com.pinde.core.model.ResDoctorRecruit recruitTemp = recruitList.get(0);
 
                             BigDecimal examResult = recruitTemp.getExamResult();
                             BigDecimal auditionResult = recruitTemp.getAuditionResult();
@@ -569,10 +568,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
     private boolean isNumericzidai(String str) {
         Pattern pattern = Pattern.compile("-?[0-9]+\\.?[0-9]*");
         Matcher isNum = pattern.matcher(str);
-        if (!isNum.matches()) {
-            return false;
-        }
-        return true;
+        return isNum.matches();
     }
 
     @Override
@@ -715,7 +711,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         if (StringUtil.isBlank(String.valueOf(param.get("assignYearEdit")))) {
             count = recruitExtMapper.countAssignInfoByParam(param);
             if (count > 0) {
-                return String.valueOf(param.get("assignYear")) + "年的报送计划已存在";
+                return param.get("assignYear") + "年的报送计划已存在";
             }
         }
         SysUser currUser = GlobalContext.getCurrentUser();
@@ -724,10 +720,10 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         for (Map<String, String> map : (List<Map>) param.get("assignList")) {
             map.put("modifyUserFlow", currUser.getUserFlow());
             map.put("modifyTime", DateUtil.getCurrDateTime());
-            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passed");
                 map.put("auditStatusName", "审核通过");
-            } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
+            } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passing");
                 map.put("auditStatusName", "待审核");
             }
@@ -776,7 +772,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
 //			return "请先完善报考信息";
 //		}
         // 查询招录信息
-        List<ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             // 招录表 待审核 或 招录表医师状态审核通过    审核通过且 医师表 医师状态为在培的
@@ -807,7 +803,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
 //			return "请先完善报考信息";
 //		}
         // 查询招录信息
-        List<ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             // 招录表 待审核 或 招录表医师状态审核通过    审核通过且 医师表 医师状态为在培的
@@ -952,7 +948,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         ResDoctorRecruitExample doctorRecruitExample = new ResDoctorRecruitExample();
         doctorRecruitExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andDoctorStatusIdNotIn(Arrays.asList("21", "23", "24"));
         doctorRecruitExample.setOrderByClause("create_time desc");
-        List<ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = this.recruitMapper.selectByExample(doctorRecruitExample);
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             //有报送记录只能走报送通道
@@ -1091,7 +1087,7 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         if (StringUtil.isBlank(String.valueOf(param.get("assignYearEdit")))) {
             count = recruitExtMapper.countSendInfoByParam(param);
             if (count > 0) {
-                return String.valueOf(param.get("assignYear")) + "年的报送计划已存在";
+                return param.get("assignYear") + "年的报送计划已存在";
             }
         }
         SysUser currUser = GlobalContext.getCurrentUser();
@@ -1100,10 +1096,10 @@ public class ResOrgSpeAssignBizImpl implements IResOrgSpeAssignBiz {
         for (Map<String, String> map : (List<Map>) param.get("assignList")) {
             map.put("modifyUserFlow", currUser.getUserFlow());
             map.put("modifyTime", DateUtil.getCurrDateTime());
-            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals((String) param.get("isJointOrg"))) {
+            if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passed");
                 map.put("auditStatusName", "审核通过");
-            } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals((String) param.get("isJointOrg"))) {
+            } else if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(param.get("isJointOrg"))) {
                 map.put("auditStatusId", "Passing");
                 map.put("auditStatusName", "待审核");
             }

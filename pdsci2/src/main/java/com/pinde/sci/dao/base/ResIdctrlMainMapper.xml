@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResIdctrlMainMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResIdctrlMain" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResIdctrlMain">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="OPER_USER_FLOW" property="operUserFlow" jdbcType="VARCHAR" />
     <result column="OPER_USER_NAME" property="operUserName" jdbcType="VARCHAR" />
@@ -83,13 +83,13 @@
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, DOCUMENT_MAKER_NAME, 
     DOCUMENT_MAKER_FLOW, AUDITOR_NAME, AUDITOR_NAME_FLOW, STATUS_NAME, STATUS_ID
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResIdctrlMainExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResIdctrlMainExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_IDCTRL_MAIN
+      from RES_IDCTRL_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_IDCTRL_MAIN
+      from RES_IDCTRL_MAIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_IDCTRL_MAIN
+      delete from RES_IDCTRL_MAIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResIdctrlMainExample" >
-    delete from PDSCI.RES_IDCTRL_MAIN
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResIdctrlMainExample">
+      delete from RES_IDCTRL_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResIdctrlMain" >
-    insert into PDSCI.RES_IDCTRL_MAIN (RECORD_FLOW, OPER_USER_FLOW, OPER_USER_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResIdctrlMain">
+      insert into RES_IDCTRL_MAIN (RECORD_FLOW, OPER_USER_FLOW, OPER_USER_NAME,
       ORG_FLOW, ORG_NAME, ID_NUMBER, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, DOCUMENT_MAKER_NAME, 
@@ -127,8 +127,8 @@
       #{documentMakerFlow,jdbcType=VARCHAR}, #{auditorName,jdbcType=VARCHAR}, #{auditorNameFlow,jdbcType=VARCHAR}, 
       #{statusName,jdbcType=VARCHAR}, #{statusId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResIdctrlMain" >
-    insert into PDSCI.RES_IDCTRL_MAIN
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResIdctrlMain">
+      insert into RES_IDCTRL_MAIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -236,14 +236,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResIdctrlMainExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_IDCTRL_MAIN
+    <select id="countByExample" parameterType="com.pinde.core.model.ResIdctrlMainExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_IDCTRL_MAIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_IDCTRL_MAIN
+      update RES_IDCTRL_MAIN
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -302,7 +303,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_IDCTRL_MAIN
+      update RES_IDCTRL_MAIN
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{record.operUserName,jdbcType=VARCHAR},
@@ -324,8 +325,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResIdctrlMain" >
-    update PDSCI.RES_IDCTRL_MAIN
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResIdctrlMain">
+      update RES_IDCTRL_MAIN
     <set >
       <if test="operUserFlow != null" >
         OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
@@ -378,8 +379,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResIdctrlMain" >
-    update PDSCI.RES_IDCTRL_MAIN
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResIdctrlMain">
+      update RES_IDCTRL_MAIN
     set OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{operUserName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

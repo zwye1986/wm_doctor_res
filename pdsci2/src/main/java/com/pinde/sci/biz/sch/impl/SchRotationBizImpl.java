@@ -5,7 +5,8 @@ import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchSelTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
+import com.pinde.core.model.SchRotationExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -17,8 +18,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationExtMapper;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SchRotationExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -666,7 +665,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	}
 
 	@Override
-	public SchRotation getRotationByRecruit(ResDoctorRecruit recruit) {
+    public SchRotation getRotationByRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
 		if(recruit!=null){
 			SchRotation rotation = null;
 
@@ -690,9 +689,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				}
 			}
 
-			if(rotation!=null){
-				return  rotation;
-			}
+            return rotation;
 		}
 		return null;
 	}
@@ -718,7 +715,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
     }
 
 	@Override
-	public SchRotation getRotationByRecruitNew(ResDoctorRecruit recruit) {
+    public SchRotation getRotationByRecruitNew(com.pinde.core.model.ResDoctorRecruit recruit) {
 		if(recruit!=null){
 			SchRotation rotation = null;
 
@@ -742,9 +739,7 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 				}
 			}
 
-			if(rotation!=null){
-				return  rotation;
-			}
+            return rotation;
 		}
 		return null;
 	}

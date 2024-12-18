@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.LcjnTeaEvaluateMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.LcjnTeaEvaluate">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnTeaEvaluate">
     <id column="TEA_EVALUATE_FLOW" jdbcType="VARCHAR" property="teaEvaluateFlow" />
     <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />
     <result column="COURSE_NAME" jdbcType="VARCHAR" property="courseName" />
@@ -79,13 +79,13 @@
     USER_NAME, EVAL_CONTENT, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluateExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.LcjnTeaEvaluateExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_TEA_EVALUATE
+        from LCJN_TEA_EVALUATE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_TEA_EVALUATE
+      from LCJN_TEA_EVALUATE
     where TEA_EVALUATE_FLOW = #{teaEvaluateFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_TEA_EVALUATE
+      delete from LCJN_TEA_EVALUATE
     where TEA_EVALUATE_FLOW = #{teaEvaluateFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluateExample">
-    delete from PDSCI.LCJN_TEA_EVALUATE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnTeaEvaluateExample">
+        delete from LCJN_TEA_EVALUATE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluate">
-    insert into PDSCI.LCJN_TEA_EVALUATE (TEA_EVALUATE_FLOW, COURSE_FLOW, COURSE_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
+        insert into LCJN_TEA_EVALUATE (TEA_EVALUATE_FLOW, COURSE_FLOW, COURSE_NAME,
       DOCTOR_FLOW, DOCTOR_NAME, USER_FLOW, 
       USER_NAME, EVAL_CONTENT, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,8 +121,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluate">
-    insert into PDSCI.LCJN_TEA_EVALUATE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
+        insert into LCJN_TEA_EVALUATE
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="teaEvaluateFlow != null">
         TEA_EVALUATE_FLOW,
@@ -206,14 +206,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluateExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_TEA_EVALUATE
+    <select id="countByExample" parameterType="com.pinde.core.model.LcjnTeaEvaluateExample"
+            resultType="java.lang.Integer">
+        select count(*) from LCJN_TEA_EVALUATE
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_TEA_EVALUATE
+      update LCJN_TEA_EVALUATE
     <set>
       <if test="record.teaEvaluateFlow != null">
         TEA_EVALUATE_FLOW = #{record.teaEvaluateFlow,jdbcType=VARCHAR},
@@ -260,7 +261,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_TEA_EVALUATE
+      update LCJN_TEA_EVALUATE
     set TEA_EVALUATE_FLOW = #{record.teaEvaluateFlow,jdbcType=VARCHAR},
       COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{record.courseName,jdbcType=VARCHAR},
@@ -278,8 +279,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluate">
-    update PDSCI.LCJN_TEA_EVALUATE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
+        update LCJN_TEA_EVALUATE
     <set>
       <if test="courseFlow != null">
         COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
@@ -320,8 +321,8 @@
     </set>
     where TEA_EVALUATE_FLOW = #{teaEvaluateFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.LcjnTeaEvaluate">
-    update PDSCI.LCJN_TEA_EVALUATE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnTeaEvaluate">
+        update LCJN_TEA_EVALUATE
     set COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
       COURSE_NAME = #{courseName,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

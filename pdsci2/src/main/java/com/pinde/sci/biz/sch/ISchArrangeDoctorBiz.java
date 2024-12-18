@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchArrangeDoctor;
+import com.pinde.core.model.SchArrangeDoctor;
 
 import java.util.List;
 

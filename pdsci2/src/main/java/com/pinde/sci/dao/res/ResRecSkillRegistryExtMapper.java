@@ -1,11 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.core.model.DeptTeacherGradeInfo;
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.TeachingActivityInfo;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
 import org.apache.ibatis.annotations.Param;
@@ -103,7 +98,7 @@ public interface ResRecSkillRegistryExtMapper {
 	 * 获取已审核数
 	 * @return
 	 */
-	public List<Map<String,String>> isNotAuditedMaps(Map<String, Object> paramMap);
+    List<Map<String, String>> isNotAuditedMaps(Map<String, Object> paramMap);
 
 
 	/**

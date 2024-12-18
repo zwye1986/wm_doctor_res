@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.sch;
 
 
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchExternalDept;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchExternalDept;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.ibatis.annotations.Param;
 

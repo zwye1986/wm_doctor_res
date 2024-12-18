@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResAuditLog;
 import com.pinde.core.model.ResAuditLogExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResAuditLogMapper {
     int countByExample(ResAuditLogExample example);

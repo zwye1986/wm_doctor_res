@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResRotationOrg;
 import com.pinde.core.model.ResRotationOrgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResRotationOrgMapper {
     int countByExample(ResRotationOrgExample example);

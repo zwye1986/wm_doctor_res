@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.JobIntensionInfo;
 import com.pinde.core.model.JobIntensionInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JobIntensionInfoMapper {
     int countByExample(JobIntensionInfoExample example);

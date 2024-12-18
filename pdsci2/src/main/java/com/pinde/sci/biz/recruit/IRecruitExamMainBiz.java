@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.recruit;
 
+import com.pinde.core.model.RecruitCfgInfo;
+import com.pinde.core.model.RecruitExamMain;
+import com.pinde.core.model.RecruitInfo;
 import com.pinde.sci.form.recruit.ExamInfoFlowForm;
 import com.pinde.sci.form.recruit.ExamInfoForm;
-import com.pinde.sci.model.mo.RecruitCfgInfo;
-import com.pinde.sci.model.mo.RecruitExamMain;
-import com.pinde.sci.model.mo.RecruitInfo;
 
 import java.util.List;
 

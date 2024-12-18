@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.res;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -8,9 +10,8 @@ import com.pinde.sci.biz.res.*;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.common.enums.DiscipleStatusEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResGraduationAssessmentWithBLOBs;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 import com.pinde.sci.model.res.ResGraduationAssessmentExt;
 import org.slf4j.Logger;

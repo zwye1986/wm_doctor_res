@@ -121,7 +121,8 @@
 			order by a.create_time
 	</select>
 
-	<select id="getStudents" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="getStudents" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"
+            parameterType="java.util.Map">
 		select sys_user.* from sys_user,sys_user_role
 		WHERE sys_user.user_flow = sys_user_role.user_flow and sys_user_role.ws_id = 'lcjn'
 		and sys_user.record_status = 'Y' and sys_user_role.RECORD_STATUS = 'Y'

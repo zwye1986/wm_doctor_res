@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SysMonthlyChangeInfo;
 import com.pinde.core.model.SysMonthlyChangeInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysMonthlyChangeInfoMapper {
     int countByExample(SysMonthlyChangeInfoExample example);

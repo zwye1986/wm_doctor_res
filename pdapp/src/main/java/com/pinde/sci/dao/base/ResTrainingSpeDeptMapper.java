@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResTrainingSpeDept;
 import com.pinde.core.model.ResTrainingSpeDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResTrainingSpeDeptMapper {
     int countByExample(ResTrainingSpeDeptExample example);

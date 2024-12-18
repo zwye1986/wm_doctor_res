@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitExample;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruitExample;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public interface ResDoctorRecruitMapper {
 
     List<ResDoctorRecruitWithBLOBs> selectByExampleWithBLOBs(ResDoctorRecruitExample example);
 
-    List<ResDoctorRecruit> selectByExample(ResDoctorRecruitExample example);
+    List<com.pinde.core.model.ResDoctorRecruit> selectByExample(ResDoctorRecruitExample example);
 
     ResDoctorRecruitWithBLOBs selectByPrimaryKey(String recruitFlow);
 
@@ -36,7 +36,7 @@ public interface ResDoctorRecruitMapper {
 
     int updateByPrimaryKey(ResDoctorRecruit record);
 
-    List<ResDoctorRecruit> selectByDoctorFlow(@Param("docotrFlows") List<String> docotrFlows);
+    List<com.pinde.core.model.ResDoctorRecruit> selectByDoctorFlow(@Param("docotrFlows") List<String> docotrFlows);
 
     int updateCertificateNo(@Param("no") String no, @Param("recordFlow") String recordFlo,@Param("CERTIFICATE_ISSUING_STATUS") String CERTIFICATE_ISSUING_STATUS);
 

@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,7 +15,6 @@ import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.base.TjDocinfoMapper;
 import com.pinde.sci.dao.base.TjExamInfoMapper;
 import com.pinde.sci.dao.res.NjDocinfoExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.NjDocinfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
@@ -107,7 +106,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                     if(idNo.length() < 4){
                         continue;
                     }
-                    String replace = idNo.substring(idNo.length()-4,idNo.length());
+                    String replace = idNo.substring(idNo.length() - 4);
                     String cityCode = docinfo.getCityCode();
                     Map<String, String> speMap = InitConfig.getDictNameMap("DoctorTrainingSpe");
                     speMap.putAll(InitConfig.getDictNameMap("AssiGeneral"));
@@ -190,7 +189,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                             if(idNo.length() < 4){
                                 continue;
                             }
-                            String replace = idNo.substring(idNo.length()-4,idNo.length());
+                        String replace = idNo.substring(idNo.length() - 4);
                             String cityCode = currInfo.getCityCode();
                             Map<String, String> speMap = InitConfig.getDictNameMap("DoctorTrainingSpe");
                             speMap.putAll(InitConfig.getDictNameMap("AssiGeneral"));
@@ -286,7 +285,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                             if(idNo.length() < 4){
                                 continue;
                             }
-                            String replace = idNo.substring(idNo.length()-4,idNo.length());
+                            String replace = idNo.substring(idNo.length() - 4);
                             String cityCode = currInfo.getCityCode();
                             Map<String, String> speMap = InitConfig.getDictNameMap("DoctorTrainingSpe");
                             speMap.putAll(InitConfig.getDictNameMap("AssiGeneral"));
@@ -460,7 +459,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                 if(idNo.length() < 4){
                     return 0;
                 }
-                String replace = idNo.substring(idNo.length()-4,idNo.length());
+                String replace = idNo.substring(idNo.length() - 4);
                 String cityCode = docinfo.getCityCode();
                 Map<String, String> speMap = InitConfig.getDictNameMap("DoctorTrainingSpe");
                 speMap.putAll(InitConfig.getDictNameMap("AssiGeneral"));
@@ -585,7 +584,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                 }
                 Long i = Long.parseLong(s);
                 String ticketNum1 = docInfo.getTicketNum();
-                docInfo.setTicketNum(i+1+ticketNum1.substring(ticketNum1.length() - 2,ticketNum1.length()));
+                docInfo.setTicketNum(i + 1 + ticketNum1.substring(ticketNum1.length() - 2));
             }
 //            docInfo.setCreateUserFlow(docInfo.getUserFlow());
         }
@@ -783,7 +782,7 @@ public class NjResExamBizImpl implements INjResExamBiz {
                 s = s.replace("X","9");
             }
             Long i = Long.parseLong(s);
-            ticketNum = i+1+ticketNum.substring(ticketNum.length() - 2,ticketNum.length());
+            ticketNum = i + 1 + ticketNum.substring(ticketNum.length() - 2);
         }
         return  ticketNum;
     }

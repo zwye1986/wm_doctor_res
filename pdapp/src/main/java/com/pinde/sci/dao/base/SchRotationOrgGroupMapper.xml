@@ -99,7 +99,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_GROUP
+      from SCH_ROTATION_ORG_GROUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -110,21 +110,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_GROUP
+      from SCH_ROTATION_ORG_GROUP
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ROTATION_ORG_GROUP
+      delete from SCH_ROTATION_ORG_GROUP
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationOrgGroupExample" >
-    delete from PDSCI.SCH_ROTATION_ORG_GROUP
+      delete from SCH_ROTATION_ORG_GROUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SchRotationOrgGroup" >
-    insert into PDSCI.SCH_ROTATION_ORG_GROUP (GROUP_FLOW, ROTATION_FLOW, GROUP_NAME, 
+      insert into SCH_ROTATION_ORG_GROUP (GROUP_FLOW, ROTATION_FLOW, GROUP_NAME,
       DEPT_NUM, SCH_MONTH, ONE_SCH_MONTH, 
       TWO_SCH_MONTH, THREE_SCH_MONTH, GROUP_NOTE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -144,7 +144,7 @@
       #{sessionNumber,jdbcType=VARCHAR}, #{selectYear,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationOrgGroup" >
-    insert into PDSCI.SCH_ROTATION_ORG_GROUP
+      insert into SCH_ROTATION_ORG_GROUP
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="groupFlow != null" >
         GROUP_FLOW,
@@ -307,13 +307,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SchRotationOrgGroupExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ROTATION_ORG_GROUP
+      select count(*) from SCH_ROTATION_ORG_GROUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_GROUP
+      update SCH_ROTATION_ORG_GROUP
     <set >
       <if test="record.groupFlow != null" >
         GROUP_FLOW = #{record.groupFlow,jdbcType=VARCHAR},
@@ -399,7 +399,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_GROUP
+      update SCH_ROTATION_ORG_GROUP
     set GROUP_FLOW = #{record.groupFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       GROUP_NAME = #{record.groupName,jdbcType=VARCHAR},
@@ -431,7 +431,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationOrgGroup" >
-    update PDSCI.SCH_ROTATION_ORG_GROUP
+      update SCH_ROTATION_ORG_GROUP
     <set >
       <if test="rotationFlow != null" >
         ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
@@ -512,7 +512,7 @@
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationOrgGroup" >
-    update PDSCI.SCH_ROTATION_ORG_GROUP
+      update SCH_ROTATION_ORG_GROUP
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       GROUP_NAME = #{groupName,jdbcType=VARCHAR},
       DEPT_NUM = #{deptNum,jdbcType=DECIMAL},

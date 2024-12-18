@@ -14,13 +14,13 @@
 
 	<!--<select id="searchAppealFormList" resultMap="appealFormMap">-->
 	<!--SELECT REC_TYPE_ID,ITEM_NAME,SUM(APPEAL_NUM) APPEAL_NUM-->
-	<!--FROM PDSCI.RES_APPEAL-->
+    <!--FROM  RES_APPEAL-->
 	<!--GROUP BY REC_TYPE_ID-->
 	<!--</select>-->
 	
 	<select id="appealCountWithUser" resultMap="appealCountMap">
 		SELECT OPER_USER_FLOW||PROCESS_FLOW||REC_TYPE_ID APPEAL_KEY,SUM(APPEAL_NUM) APPEAL_SUM
-		FROM PDSCI.RES_APPEAL
+        FROM RES_APPEAL
 		WHERE RECORD_STATUS = 'Y'
 		AND OPER_USER_FLOW IN 
 		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
@@ -38,7 +38,7 @@
 	
 	<select id="searchAppealForAudit" resultMap="com.pinde.sci.dao.base.ResAppealMapper.BaseResultMap">
 		SELECT *
-		FROM PDSCI.RES_APPEAL
+        FROM RES_APPEAL
 		WHERE RECORD_STATUS = 'Y'
 		<if test='recTypeId != null and recTypeId != ""'>
 			AND REC_TYPE_ID = #{recTypeId}
@@ -52,7 +52,7 @@
 	
 	<select id="searchAppealCount" resultMap="appealCountMap">
 		SELECT REC_TYPE_ID AS APPEAL_KEY,Count(*) APPEAL_SUM
-		FROM PDSCI.RES_APPEAL
+        FROM RES_APPEAL
 		WHERE RECORD_STATUS = 'Y'
 		<if test='operUserFlow != null and operUserFlow != ""'>
 			AND OPER_USER_FLOW = #{operUserFlow}
@@ -64,8 +64,8 @@
 	</select>
 	
 	<select id="searchNotAuditAppealCount" resultMap="appealCountMap">
-		SELECT RDSP.USER_FLOW APPEAL_KEY,COUNT(*) APPEAL_SUM 
-		FROM PDSCI.RES_APPEAL RA,PDSCI.RES_DOCTOR_SCH_PROCESS RDSP
+		SELECT RDSP.USER_FLOW APPEAL_KEY,COUNT(*) APPEAL_SUM
+        FROM RES_APPEAL RA, RES_DOCTOR_SCH_PROCESS RDSP
 		WHERE RA.RECORD_STATUS = 'Y'
 		AND RDSP.RECORD_STATUS = 'Y'
 		AND RA.OPER_USER_FLOW = RDSP.USER_FLOW
@@ -87,7 +87,7 @@
 	</select>
 
     <update id="oneKeyAudit" parameterType="map" >
-    update PDSCI.RES_APPEAL
+        update RES_APPEAL
     <set >
         <if test="record.appealFlow != null" >
             APPEAL_FLOW = #{record.appealFlow,jdbcType=VARCHAR},

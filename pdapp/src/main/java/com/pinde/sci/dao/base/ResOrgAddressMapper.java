@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResOrgAddress;
 import com.pinde.core.model.ResOrgAddressExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResOrgAddressMapper {
     int countByExample(ResOrgAddressExample example);

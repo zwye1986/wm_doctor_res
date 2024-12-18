@@ -13,13 +13,13 @@
 
     <!--<changeSet id="20240703-02" author="zxr">
         <sql>
-            insert into pdsci.test_liquibase(id, name) values (lower(sys_guid()), 'first record');
+            insert into  test_liquibase(id, name) values (lower(sys_guid()), 'first record');
         </sql>
     </changeSet>-->
 
     <!--<changeSet id="20240703-03" author="zxr">
         <sql>
-            insert into pdsci.test_liquibase(id, name) values (lower(sys_guid()), 'second record');
+            insert into  test_liquibase(id, name) values (lower(sys_guid()), 'second record');
         </sql>
     </changeSet>-->
 

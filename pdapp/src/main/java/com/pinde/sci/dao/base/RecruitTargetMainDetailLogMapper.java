@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.RecruitTargetMainDetailLog;
 import com.pinde.core.model.RecruitTargetMainDetailLogExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RecruitTargetMainDetailLogMapper {
     int countByExample(RecruitTargetMainDetailLogExample example);

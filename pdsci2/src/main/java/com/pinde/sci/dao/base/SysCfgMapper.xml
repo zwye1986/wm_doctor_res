@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysCfgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysCfg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysCfg">
     <id column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR" />
     <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR" />
     <result column="CFG_DESC" property="cfgDesc" jdbcType="VARCHAR" />
@@ -13,7 +13,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SysCfg" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SysCfg" extends="BaseResultMap">
     <result column="CFG_BIG_VALUE" property="cfgBigValue" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -81,7 +81,8 @@
   <sql id="Blob_Column_List" >
     CFG_BIG_VALUE
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SysCfgExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.SysCfgExample">
     select
     <if test="distinct" >
       distinct
@@ -89,7 +90,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_CFG
+      from SYS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,13 +98,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysCfgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysCfgExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_CFG
+      from SYS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -116,21 +117,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_CFG
+      from SYS_CFG
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_CFG
+      delete from SYS_CFG
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysCfgExample" >
-    delete from PDSCI.SYS_CFG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysCfgExample">
+      delete from SYS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysCfg" >
-    insert into PDSCI.SYS_CFG (CFG_CODE, CFG_VALUE, CFG_DESC, 
+    <insert id="insert" parameterType="com.pinde.core.model.SysCfg">
+      insert into SYS_CFG (CFG_CODE, CFG_VALUE, CFG_DESC,
       WS_ID, WS_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, CFG_BIG_VALUE)
@@ -139,8 +140,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR}, #{cfgBigValue,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysCfg" >
-    insert into PDSCI.SYS_CFG
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysCfg">
+      insert into SYS_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgCode != null" >
         CFG_CODE,
@@ -212,14 +213,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysCfgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_CFG
+    <select id="countByExample" parameterType="com.pinde.core.model.SysCfgExample" resultType="java.lang.Integer">
+      select count(*) from SYS_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_CFG
+      update SYS_CFG
     <set >
       <if test="record.cfgCode != null" >
         CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
@@ -260,7 +261,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SYS_CFG
+      update SYS_CFG
     set CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
       CFG_DESC = #{record.cfgDesc,jdbcType=VARCHAR},
@@ -277,7 +278,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_CFG
+      update SYS_CFG
     set CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
       CFG_DESC = #{record.cfgDesc,jdbcType=VARCHAR},
@@ -292,8 +293,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysCfg" >
-    update PDSCI.SYS_CFG
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysCfg">
+      update SYS_CFG
     <set >
       <if test="cfgValue != null" >
         CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
@@ -328,8 +329,8 @@
     </set>
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SysCfg" >
-    update PDSCI.SYS_CFG
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SysCfg">
+      update SYS_CFG
     set CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_DESC = #{cfgDesc,jdbcType=VARCHAR},
       WS_ID = #{wsId,jdbcType=VARCHAR},
@@ -342,8 +343,8 @@
       CFG_BIG_VALUE = #{cfgBigValue,jdbcType=CLOB}
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysCfg" >
-    update PDSCI.SYS_CFG
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysCfg">
+      update SYS_CFG
     set CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_DESC = #{cfgDesc,jdbcType=VARCHAR},
       WS_ID = #{wsId,jdbcType=VARCHAR},

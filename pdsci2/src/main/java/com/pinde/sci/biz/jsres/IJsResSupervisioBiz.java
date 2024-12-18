@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.SysDept;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
@@ -64,7 +63,7 @@ public interface IJsResSupervisioBiz {
 
     List<ResEvaluationScore> findHospSelfAssessmentAllScore(ResEvaluationScore score,String subjectType);
 
-    HospSelfAssessment findHospSelfAssessment(String sessionNumber,String orgFlow,String speId,String subjectType);
+    HospSelfAssessment findHospSelfAssessment(String sessionNumber, String orgFlow, String speId, String subjectType);
 
     List<HospSelfAssessment> findAllAssessmentBySpeAndYear(HospSelfAssessment assessment);
 

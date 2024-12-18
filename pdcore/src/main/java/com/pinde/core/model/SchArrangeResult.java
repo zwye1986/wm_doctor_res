@@ -73,6 +73,15 @@ public class SchArrangeResult implements java.io.Serializable {
 
     private String baseAudit;
 
+    private Long timecha;
+
+    public Long getTimecha() {
+        return timecha;
+    }
+
+    public void setTimecha(Long timecha) {
+        this.timecha = timecha;
+    }
     public String getResultFlow() {
         return resultFlow;
     }

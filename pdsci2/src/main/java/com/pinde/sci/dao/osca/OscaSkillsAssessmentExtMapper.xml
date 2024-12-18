@@ -242,8 +242,8 @@
 
     <select id="countOrderedTime" resultType="java.lang.Integer" parameterType="java.util.Map">
         SELECT COUNT(0)
-        FROM pdsci.osca_doctor_assessment oda
-        left join pdsci.OSCA_SKILLS_ASSESSMENT osa
+        FROM osca_doctor_assessment oda
+        left join OSCA_SKILLS_ASSESSMENT osa
         on oda.clinical_flow=osa.clinical_flow
         and osa.record_status='Y'
         WHERE oda.record_status = 'Y'
@@ -258,7 +258,7 @@
         OR oda.exam_start_time <![CDATA[>=]]> #{examStartTime}
         AND oda.exam_end_time <![CDATA[<=]]> #{examEndTime})
     </select>
-    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorRecruit" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorRecruit">
         <id column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
         <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />

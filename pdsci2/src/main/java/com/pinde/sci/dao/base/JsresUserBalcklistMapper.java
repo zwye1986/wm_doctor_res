@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JsresUserBalcklist;
-import com.pinde.sci.model.mo.JsresUserBalcklistExample;
+import com.pinde.core.model.JsresUserBalcklist;
+import com.pinde.core.model.JsresUserBalcklistExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

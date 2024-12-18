@@ -1,9 +1,8 @@
 package com.pinde.sci.dao.osca;
 
-import com.pinde.sci.model.mo.OscaSkillDocStation;
-import com.pinde.sci.model.mo.OscaSkillsAssessment;
-import com.pinde.sci.model.mo.OscaSubjectStation;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.core.model.OscaSkillDocStation;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.OscaSubjectStation;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,7 +42,7 @@ public interface OscaSkillsAssessmentExtMapper {
 
     int countOrderedTime(Map<String, String> map);
 
-    List<ResDoctorRecruit> searchDoctorGraduationYear(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> searchDoctorGraduationYear(String doctorFlow);
 
     //查询某市的考核信息
     List<OscaSkillsAssessment> searchCitySkillsAssessment(Map<String,Object> paramMap);

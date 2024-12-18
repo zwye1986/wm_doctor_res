@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.ResBaseSpeDept;
+import com.pinde.core.model.ResBaseSpeDept;
 
 public interface IResBaseSpeDeptBiz {
 

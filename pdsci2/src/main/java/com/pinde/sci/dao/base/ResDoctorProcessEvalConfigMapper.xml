@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorProcessEvalConfigMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorProcessEvalConfig">
     <id column="CONFIG_FLOW" jdbcType="VARCHAR" property="configFlow" />
     <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
     <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
@@ -12,7 +12,7 @@
     <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
     <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.ResDoctorProcessEvalConfig">
     <result column="FORM_CFG" jdbcType="CLOB" property="formCfg" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -80,7 +80,8 @@
   <sql id="Blob_Column_List">
     FORM_CFG
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfigExample" resultMap="ResultMapWithBLOBs">
+    <select id="selectByExampleWithBLOBs" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfigExample"
+            resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -88,7 +89,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      from RES_DOCTOR_PROCESS_EVAL_CONFIG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,13 +97,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfigExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfigExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      from RES_DOCTOR_PROCESS_EVAL_CONFIG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -115,21 +117,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      from RES_DOCTOR_PROCESS_EVAL_CONFIG
     where CONFIG_FLOW = #{configFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      delete from RES_DOCTOR_PROCESS_EVAL_CONFIG
     where CONFIG_FLOW = #{configFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfigExample">
-    delete from PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfigExample">
+      delete from RES_DOCTOR_PROCESS_EVAL_CONFIG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
-    insert into PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG (CONFIG_FLOW, ORG_FLOW, ORG_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfig">
+      insert into RES_DOCTOR_PROCESS_EVAL_CONFIG (CONFIG_FLOW, ORG_FLOW, ORG_NAME,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, ROLE_ID, 
       FORM_CFG)
@@ -138,8 +140,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
       #{formCfg,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
-    insert into PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfig">
+      insert into RES_DOCTOR_PROCESS_EVAL_CONFIG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="configFlow != null">
         CONFIG_FLOW,
@@ -205,14 +207,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfigExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfigExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_DOCTOR_PROCESS_EVAL_CONFIG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      update RES_DOCTOR_PROCESS_EVAL_CONFIG
     <set>
       <if test="record.configFlow != null">
         CONFIG_FLOW = #{record.configFlow,jdbcType=VARCHAR},
@@ -250,7 +253,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
-    update PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      update RES_DOCTOR_PROCESS_EVAL_CONFIG
     set CONFIG_FLOW = #{record.configFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -266,7 +269,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+      update RES_DOCTOR_PROCESS_EVAL_CONFIG
     set CONFIG_FLOW = #{record.configFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -280,8 +283,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
-    update PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfig">
+      update RES_DOCTOR_PROCESS_EVAL_CONFIG
     <set>
       <if test="orgFlow != null">
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -313,8 +316,8 @@
     </set>
     where CONFIG_FLOW = #{configFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
-    update PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfig">
+      update RES_DOCTOR_PROCESS_EVAL_CONFIG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
@@ -326,8 +329,8 @@
       FORM_CFG = #{formCfg,jdbcType=CLOB}
     where CONFIG_FLOW = #{configFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorProcessEvalConfig">
-    update PDSCI.RES_DOCTOR_PROCESS_EVAL_CONFIG
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorProcessEvalConfig">
+      update RES_DOCTOR_PROCESS_EVAL_CONFIG
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_AUTH
+        from DOCTOR_AUTH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_AUTH
+      from DOCTOR_AUTH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.DOCTOR_AUTH
+      delete from DOCTOR_AUTH
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
     <delete id="deleteByExample" parameterType="com.pinde.core.model.DoctorAuthExample">
-    delete from PDSCI.DOCTOR_AUTH
+        delete from DOCTOR_AUTH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.DoctorAuth">
-    insert into PDSCI.DOCTOR_AUTH (RECORD_FLOW, REC_TYPE_ID, REC_TYPE_NAME, 
+        insert into DOCTOR_AUTH (RECORD_FLOW, REC_TYPE_ID, REC_TYPE_NAME,
       IMAGE_URL, OPER_TIME, OPER_USER_FLOW, 
       OPER_USER_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +120,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.DoctorAuth">
-    insert into PDSCI.DOCTOR_AUTH
+        insert into DOCTOR_AUTH
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
     <select id="countByExample" parameterType="com.pinde.core.model.DoctorAuthExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.DOCTOR_AUTH
+        select count(*) from DOCTOR_AUTH
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.DOCTOR_AUTH
+      update DOCTOR_AUTH
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.DOCTOR_AUTH
+      update DOCTOR_AUTH
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       REC_TYPE_ID = #{record.recTypeId,jdbcType=VARCHAR},
       REC_TYPE_NAME = #{record.recTypeName,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DoctorAuth">
-    update PDSCI.DOCTOR_AUTH
+        update DOCTOR_AUTH
     <set>
       <if test="recTypeId != null">
         REC_TYPE_ID = #{recTypeId,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DoctorAuth">
-    update PDSCI.DOCTOR_AUTH
+        update DOCTOR_AUTH
     set REC_TYPE_ID = #{recTypeId,jdbcType=VARCHAR},
       REC_TYPE_NAME = #{recTypeName,jdbcType=VARCHAR},
       IMAGE_URL = #{imageUrl,jdbcType=VARCHAR},

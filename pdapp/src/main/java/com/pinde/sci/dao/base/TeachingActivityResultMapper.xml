@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_RESULT
+      from TEACHING_ACTIVITY_RESULT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_RESULT
+      from TEACHING_ACTIVITY_RESULT
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.TEACHING_ACTIVITY_RESULT
+      delete from TEACHING_ACTIVITY_RESULT
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.TeachingActivityResultExample">
-    delete from PDSCI.TEACHING_ACTIVITY_RESULT
+      delete from TEACHING_ACTIVITY_RESULT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.TeachingActivityResult">
-    insert into PDSCI.TEACHING_ACTIVITY_RESULT (RESULT_FLOW, ACTIVITY_FLOW, USER_FLOW, 
+      insert into TEACHING_ACTIVITY_RESULT (RESULT_FLOW, ACTIVITY_FLOW, USER_FLOW,
       EVAL_SCORE, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       IS_REGIEST, IS_SCAN, REGIEST_TIME, 
@@ -127,7 +127,7 @@
       #{scanTime2,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.TeachingActivityResult">
-    insert into PDSCI.TEACHING_ACTIVITY_RESULT
+      insert into TEACHING_ACTIVITY_RESULT
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="resultFlow != null">
         RESULT_FLOW,
@@ -230,13 +230,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivityResultExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.TEACHING_ACTIVITY_RESULT
+      select count(*) from TEACHING_ACTIVITY_RESULT
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.TEACHING_ACTIVITY_RESULT
+      update TEACHING_ACTIVITY_RESULT
     <set>
       <if test="record.resultFlow != null">
         RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.TEACHING_ACTIVITY_RESULT
+      update TEACHING_ACTIVITY_RESULT
     set RESULT_FLOW = #{record.resultFlow,jdbcType=VARCHAR},
       ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeachingActivityResult">
-    update PDSCI.TEACHING_ACTIVITY_RESULT
+      update TEACHING_ACTIVITY_RESULT
     <set>
       <if test="activityFlow != null">
         ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     where RESULT_FLOW = #{resultFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeachingActivityResult">
-    update PDSCI.TEACHING_ACTIVITY_RESULT
+      update TEACHING_ACTIVITY_RESULT
     set ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       EVAL_SCORE = #{evalScore,jdbcType=DECIMAL},

@@ -1,7 +1,7 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResScore;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResScore;
 import com.pinde.core.model.SysUser;
 
 import java.math.BigDecimal;

@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_CFG
+      from SCH_ROTATION_ORG_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_CFG
+      from SCH_ROTATION_ORG_CFG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ROTATION_ORG_CFG
+      delete from SCH_ROTATION_ORG_CFG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationOrgCfgExample" >
-    delete from PDSCI.SCH_ROTATION_ORG_CFG
+      delete from SCH_ROTATION_ORG_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SchRotationOrgCfg" >
-    insert into PDSCI.SCH_ROTATION_ORG_CFG (RECORD_FLOW, ROTATION_FLOW, ORG_FLOW, 
+      insert into SCH_ROTATION_ORG_CFG (RECORD_FLOW, ROTATION_FLOW, ORG_FLOW,
       SESSION_NUMBER, CYCLE_TYPE_ID, CYCLE_TYPE_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -117,7 +117,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationOrgCfg" >
-    insert into PDSCI.SCH_ROTATION_ORG_CFG
+      insert into SCH_ROTATION_ORG_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -190,13 +190,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SchRotationOrgCfgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ROTATION_ORG_CFG
+      select count(*) from SCH_ROTATION_ORG_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_CFG
+      update SCH_ROTATION_ORG_CFG
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_CFG
+      update SCH_ROTATION_ORG_CFG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationOrgCfg" >
-    update PDSCI.SCH_ROTATION_ORG_CFG
+      update SCH_ROTATION_ORG_CFG
     <set >
       <if test="rotationFlow != null" >
         ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationOrgCfg" >
-    update PDSCI.SCH_ROTATION_ORG_CFG
+      update SCH_ROTATION_ORG_CFG
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},

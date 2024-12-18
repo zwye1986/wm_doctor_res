@@ -1,8 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
 
-import com.pinde.core.model.ResDoctorRecruit;
-
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +56,7 @@ public interface ResDoctorRecruitExtMapper {
 
 	List<Map<String,String>> searchAssignOrgSpeListNew(Map<String, String> param);
 
-	List<ResDoctorRecruit> getDoctorRecruitInfo(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> getDoctorRecruitInfo(String doctorFlow);
 
     List<Map<String, Object>> searchDoctorDataNew2(Map<String, Object> param);
 

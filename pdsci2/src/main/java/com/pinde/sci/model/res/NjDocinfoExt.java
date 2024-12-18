@@ -1,6 +1,6 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.sci.model.mo.TjDocinfo;
+import com.pinde.core.model.TjDocinfo;
 
 /**
  * Created by www.0001.Ga on 2016-11-02.

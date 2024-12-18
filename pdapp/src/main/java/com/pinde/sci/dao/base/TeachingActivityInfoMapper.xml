@@ -112,7 +112,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_INFO
+      from TEACHING_ACTIVITY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -126,7 +126,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_INFO
+      from TEACHING_ACTIVITY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -139,21 +139,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.TEACHING_ACTIVITY_INFO
+      from TEACHING_ACTIVITY_INFO
     where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.TEACHING_ACTIVITY_INFO
+      delete from TEACHING_ACTIVITY_INFO
     where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.TeachingActivityInfoExample" >
-    delete from PDSCI.TEACHING_ACTIVITY_INFO
+      delete from TEACHING_ACTIVITY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.TeachingActivityInfo" >
-    insert into PDSCI.TEACHING_ACTIVITY_INFO (ACTIVITY_FLOW, ACTIVITY_NAME, DEPT_FLOW, 
+      insert into TEACHING_ACTIVITY_INFO (ACTIVITY_FLOW, ACTIVITY_NAME, DEPT_FLOW,
       ORG_FLOW, SPEAKER_FLOW, SPEAKER_PHONE, 
       ACTIVITY_TYPE_ID, ACTIVITY_TYPE_NAME, START_TIME, 
       END_TIME, ACTIVITY_ADDRESS, ACTIVITY_REMARK, 
@@ -177,7 +177,7 @@
       #{imageUrl,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.TeachingActivityInfo" >
-    insert into PDSCI.TEACHING_ACTIVITY_INFO
+      insert into TEACHING_ACTIVITY_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="activityFlow != null" >
         ACTIVITY_FLOW,
@@ -370,13 +370,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivityInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.TEACHING_ACTIVITY_INFO
+      select count(*) from TEACHING_ACTIVITY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.TEACHING_ACTIVITY_INFO
+      update TEACHING_ACTIVITY_INFO
     <set >
       <if test="record.activityFlow != null" >
         ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
@@ -477,7 +477,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.TEACHING_ACTIVITY_INFO
+      update TEACHING_ACTIVITY_INFO
     set ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
       ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -514,7 +514,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.TEACHING_ACTIVITY_INFO
+      update TEACHING_ACTIVITY_INFO
     set ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
       ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -550,7 +550,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeachingActivityInfo" >
-    update PDSCI.TEACHING_ACTIVITY_INFO
+      update TEACHING_ACTIVITY_INFO
     <set >
       <if test="activityName != null" >
         ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
@@ -646,7 +646,7 @@
     where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.TeachingActivityInfo" >
-    update PDSCI.TEACHING_ACTIVITY_INFO
+      update TEACHING_ACTIVITY_INFO
     set ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -680,7 +680,7 @@
     where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeachingActivityInfo" >
-    update PDSCI.TEACHING_ACTIVITY_INFO
+      update TEACHING_ACTIVITY_INFO
     set ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

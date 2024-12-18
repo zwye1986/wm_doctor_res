@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -16,10 +17,10 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResDoctorKqMapper;
-import com.pinde.core.common.enums.ResDoctorKqStatusEnum;
 import com.pinde.sci.form.res.ResOrgAddressForm;
 import com.pinde.sci.form.res.TimeSetFrom;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResKgCfg;
+import com.pinde.core.model.ResOrgAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -32,8 +32,8 @@ public interface JsResRecruitDoctorInfoExtMapper {
 	 * @Author shengl
 	 * @Description // 查询录取学员数据
 	 * @Date  2020-08-28
-	 * @Param [orgFlow] 
-	 * @return java.util.List<com.pinde.sci.model.mo.JsresRecruitDocInfo>
+	 * @Param [orgFlow]
+     * @return java.util.List<com.pinde.core.model.JsresRecruitDocInfo>
 	**/
     List<Map<String,Object>> getRecruitSpeInfo(@Param("orgFlow") String orgFlow,@Param("sessionNumber") String sessionNumber,@Param("flag") String flag);
 

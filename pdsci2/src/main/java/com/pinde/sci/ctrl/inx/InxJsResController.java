@@ -6,8 +6,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.jsres.JsresSendMessageEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
-import com.pinde.core.model.InxInfo;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.ClientIPUtils;
 import com.pinde.core.util.DateUtil;
@@ -30,7 +29,6 @@ import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.model.jsres.LoginVo;
 import com.pinde.sci.model.jsres.ResultVo;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.util.jsres.ResultUtil;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -1354,6 +1352,7 @@ public class InxJsResController extends GeneralController {
             // 当前角色放入session
             SysRole role = roleBiz.read(roleFlow);
             GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_NAME, role.getRoleName());
+            GlobalContext.setSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE_FLOW, role.getRoleFlow());
             return RolePathMapper.getPath(roleFlow);
         }
         return "";

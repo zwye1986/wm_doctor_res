@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.osca;
 
 import com.alibaba.fastjson.JSONArray;
-import com.pinde.core.model.SysDict;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.Map;
 
 public interface IOscaProvincialBiz {
     //根据条件查询预约信息
-    List<OscaSkillsAssessment> searchSkillsAssessment(OscaSkillsAssessment skillsAssessment,List<SysDict> dictList);
+    List<OscaSkillsAssessment> searchSkillsAssessment(OscaSkillsAssessment skillsAssessment, List<SysDict> dictList);
     //查询某场考核学员通过审核报名人数
     int queryDoctorNum(String clinicalFlow);
     //查询某场考核学员信息列表
@@ -18,7 +17,7 @@ public interface IOscaProvincialBiz {
     //根据条件查询学员成绩
     List<Map<String,Object>> searchDoctorScoreList(Map<String,Object> paramMap);
     //查询某学员某次考试所有站点得分
-    List<OscaSkillRoomDoc> queryDocScores(String doctorFlow,String clinicalFlow);
+    List<OscaSkillRoomDoc> queryDocScores(String doctorFlow, String clinicalFlow);
     //按次序查询某学员某次考试所有站点得分
     List<Map<String,Object>> queryDocScoresByOrder(String doctorFlow,String clinicalFlow);
     //查找所有考核方案

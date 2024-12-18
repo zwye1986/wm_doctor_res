@@ -1083,6 +1083,76 @@ public class JsresDeptConfigExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andScoreToplimitIsNull() {
+            addCriterion("SCORE_TOPLIMIT is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitIsNotNull() {
+            addCriterion("SCORE_TOPLIMIT is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitEqualTo(String value) {
+            addCriterion("SCORE_TOPLIMIT =", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitNotEqualTo(String value) {
+            addCriterion("SCORE_TOPLIMIT <>", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitGreaterThan(String value) {
+            addCriterion("SCORE_TOPLIMIT >", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitGreaterThanOrEqualTo(String value) {
+            addCriterion("SCORE_TOPLIMIT >=", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitLessThan(String value) {
+            addCriterion("SCORE_TOPLIMIT <", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitLessThanOrEqualTo(String value) {
+            addCriterion("SCORE_TOPLIMIT <=", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitLike(String value) {
+            addCriterion("SCORE_TOPLIMIT like", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitNotLike(String value) {
+            addCriterion("SCORE_TOPLIMIT not like", value, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitIn(List<String> values) {
+            addCriterion("SCORE_TOPLIMIT in", values, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitNotIn(List<String> values) {
+            addCriterion("SCORE_TOPLIMIT not in", values, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitBetween(String value1, String value2) {
+            addCriterion("SCORE_TOPLIMIT between", value1, value2, "scoreToplimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andScoreToplimitNotBetween(String value1, String value2) {
+            addCriterion("SCORE_TOPLIMIT not between", value1, value2, "scoreToplimit");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

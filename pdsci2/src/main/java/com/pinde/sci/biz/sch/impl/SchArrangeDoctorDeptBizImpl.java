@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.model.SchArrangeDoctorDept;
+import com.pinde.core.model.SchArrangeDoctorDeptExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchArrangeDoctorDeptBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper;
-import com.pinde.sci.model.mo.SchArrangeDoctorDept;
-import com.pinde.sci.model.mo.SchArrangeDoctorDeptExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

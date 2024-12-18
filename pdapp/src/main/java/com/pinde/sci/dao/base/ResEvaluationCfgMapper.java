@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResEvaluationCfg;
 import com.pinde.core.model.ResEvaluationCfgExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResEvaluationCfgMapper {
     int countByExample(ResEvaluationCfgExample example);

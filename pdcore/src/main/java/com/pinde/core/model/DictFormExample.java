@@ -1,8 +1,11 @@
 package com.pinde.core.model;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class DictFormExample {
     protected String orderByClause;
 
@@ -18,20 +21,8 @@ public class DictFormExample {
         this.orderByClause = orderByClause;
     }
 
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
-    }
-
-    public boolean isDistinct() {
-        return distinct;
-    }
-
-    public List<Criteria> getOredCriteria() {
-        return oredCriteria;
     }
 
     public void or(Criteria criteria) {

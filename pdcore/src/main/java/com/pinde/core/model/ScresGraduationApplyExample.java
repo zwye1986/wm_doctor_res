@@ -2273,6 +2273,76 @@ public class ScresGraduationApplyExample {
             addCriterion("CHARGE_REMARK not between", value1, value2, "chargeRemark");
             return (Criteria) this;
         }
+
+        public Criteria andOrgAuditorNameIsNull() {
+            addCriterion("ORG_AUDITOR_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameIsNotNull() {
+            addCriterion("ORG_AUDITOR_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameEqualTo(String value) {
+            addCriterion("ORG_AUDITOR_NAME =", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameNotEqualTo(String value) {
+            addCriterion("ORG_AUDITOR_NAME <>", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameGreaterThan(String value) {
+            addCriterion("ORG_AUDITOR_NAME >", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameGreaterThanOrEqualTo(String value) {
+            addCriterion("ORG_AUDITOR_NAME >=", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameLessThan(String value) {
+            addCriterion("ORG_AUDITOR_NAME <", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameLessThanOrEqualTo(String value) {
+            addCriterion("ORG_AUDITOR_NAME <=", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameLike(String value) {
+            addCriterion("ORG_AUDITOR_NAME like", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameNotLike(String value) {
+            addCriterion("ORG_AUDITOR_NAME not like", value, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameIn(List<String> values) {
+            addCriterion("ORG_AUDITOR_NAME in", values, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameNotIn(List<String> values) {
+            addCriterion("ORG_AUDITOR_NAME not in", values, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameBetween(String value1, String value2) {
+            addCriterion("ORG_AUDITOR_NAME between", value1, value2, "orgAuditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrgAuditorNameNotBetween(String value1, String value2) {
+            addCriterion("ORG_AUDITOR_NAME not between", value1, value2, "orgAuditorName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -5,10 +5,9 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.jsres.JsResTeacherLevelEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -25,12 +24,13 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.dao.base.*;
+import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
+import com.pinde.sci.dao.base.SysDeptMapper;
+import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.jsres.ChartExtMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -44,6 +44,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +83,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Autowired
 	private SysUserMapper sysUserMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(JsResStatisticBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResStatisticBizImpl.class);
 
 	@Override
 	public int statisticCountyOrgCount(SysOrg org) {
@@ -103,7 +104,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return sysOrgMapper.countByExample(example);
 	}
 	@Override
-	public int statisticDoctorCount(ResDoctorRecruit recruit, List<String> cityIdList) {
+    public int statisticDoctorCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> cityIdList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("cityIdList", cityIdList);
@@ -142,7 +143,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	}
 
 	@Override
-	public List<Map<String, Object>> statisticJointCountByOrg(ResDoctorRecruit recruit, List<String> orgFlowList, String trainTypeId, List<String> docTypeList) {
+    public List<Map<String, Object>> statisticJointCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String trainTypeId, List<String> docTypeList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -191,20 +192,20 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return chartExtMapper.findOrgGraduateCount(sessionNumber);
 	}
 	@Override
-	public List<Map<String,String>> doctorNumForUni1(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni1(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni1(recruit,orgFlows,org);
 	}
 	@Override
-	public List<Map<String,String>> doctorNumForUni1DaoChu(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni1DaoChu(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni1DaoChu(recruit,orgFlows,org);
 	}
 	@Override
-	public List<Map<String,String>> doctorNumForUni2(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni2(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni2(recruit,orgFlows,org);
 	}
 
 	@Override
-	public List<Map<String,String>> doctorNumForUni2DaoChu(ResDoctorRecruit recruit, List<String> orgFlows,SysOrg org){
+    public List<Map<String, String>> doctorNumForUni2DaoChu(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org) {
 		return chartExtMapper.doctorNumForUni2DaoChu(recruit,orgFlows,org);
 	}
 
@@ -403,7 +404,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			/*设置页面编码为UTF-8*/
 			response.setHeader("Content-Type","text/html;charset=UTF-8");
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-			outputStream.write("<a href='javascript:history.go(-1)'>未发现证书附件,点击返回上一页</a>".getBytes("UTF-8"));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
+            outputStream.write("<a href='javascript:history.go(-1)'>未发现证书附件,点击返回上一页</a>".getBytes(StandardCharsets.UTF_8));//将字符串转化为一个字节数组（以UTF-8编码格式，默认本地编码）
 			outputStream.flush();
 			outputStream.close();
 		}
@@ -665,7 +666,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	return doctorExtMapper.statisticYearCondocCount(paramMap);
 	}
 	@Override
-	public List<Map<String,Object>>  statisticDocCouByType(ResDoctorRecruit recruit, List<String> orgFlowList,ResDoctor doctor,List<String>docTypeList) {
+    public List<Map<String, Object>> statisticDocCouByType(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> docTypeList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("doctor", doctor);
@@ -674,7 +675,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticDocCouByType(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticJointCount(ResDoctorRecruit recruit, List<String> orgFlowList,ResDoctor doctor, List<String> docTypeList) {
+    public List<Map<String, Object>> statisticJointCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> docTypeList) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("doctor", doctor);
 		paramMap.put("recruit", recruit);
@@ -722,8 +723,8 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			    		HSSFCell orgCell = rowDep.createCell(colnum);
 			    		orgCell.setCellValue(so.getOrgName());
 			    		orgCell.setCellStyle(styleCenter);
-			    		
-			    		Integer dateNewWidth = so.getOrgName().getBytes().length*1*256;
+
+                        Integer dateNewWidth = so.getOrgName().getBytes().length * 256;
 			    		width = width<dateNewWidth?dateNewWidth:width;
 			    		sheet.setColumnWidth(colnum,width);
 			    		colWidthAuto.put(colnum,width);
@@ -806,7 +807,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 			    wb.write(response.getOutputStream());
 	}
 	@Override
-	public List<Map<String, Object>> statisticDocCountByOrg(ResDoctorRecruit recruit,List<String> orgFlowList,String graduate) {
+    public List<Map<String, Object>> statisticDocCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String graduate) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -822,7 +823,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticDocCountByOrg(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticAppCountByOrg(ResDoctorRecruit recruit,ResRec resRec,String endTime,String startTime,List<String> delTypeList,String graduate) {
+    public List<Map<String, Object>> statisticAppCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, ResRec resRec, String endTime, String startTime, List<String> delTypeList, String graduate) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("resRec", resRec);
@@ -841,7 +842,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticAppCountByOrg(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticRealAppCount(List<String> delTypeList,ResDoctorRecruit recruit,String endTime,String startTime, List<String> orgFlowList, String jointFlag,String month) {
+    public List<Map<String, Object>> statisticRealAppCount(List<String> delTypeList, com.pinde.core.model.ResDoctorRecruit recruit, String endTime, String startTime, List<String> orgFlowList, String jointFlag, String month) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("endTime", endTime);
 		paramMap.put("delTypeList", delTypeList);
@@ -853,7 +854,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticRealAppCount(paramMap);
 	}
 	@Override
-	public List<Map<String, Object>> statisticDocCountByOrgForTime(String jointFlag, List<String> orgFlowList, String startTime,String endTime,ResDoctorRecruit recruit) {
+    public List<Map<String, Object>> statisticDocCountByOrgForTime(String jointFlag, List<String> orgFlowList, String startTime, String endTime, com.pinde.core.model.ResDoctorRecruit recruit) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("jointFlag", jointFlag);
 		paramMap.put("orgFlowList", orgFlowList);
@@ -863,7 +864,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 		return recruitExtMapper.statisticDocCountByOrgForTime(paramMap);
 	}
 	@Override
-	public List<JsDoctorInfoExt> statisticNoAppUser(ResDoctorRecruit recruit,ResRec resRec, List<String> delTypeList,String startDate,String endDate,String graduate) {
+    public List<JsDoctorInfoExt> statisticNoAppUser(com.pinde.core.model.ResDoctorRecruit recruit, ResRec resRec, List<String> delTypeList, String startDate, String endDate, String graduate) {
 		Map<String, Object> paramMap=new HashMap<String, Object>();
 		paramMap.put("recruit", recruit);
 		paramMap.put("resRec", resRec);
@@ -983,7 +984,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo(ResTeacherTraining resTeacherTraining) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1033,7 +1034,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo2(ResTeacherTraining resTeacherTraining,String dataFlag) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1073,7 +1074,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo3(ResTeacherTraining resTeacherTraining,String dataFlag) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1122,7 +1123,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfoByCharge(ResTeacherTraining resTeacherTraining, String dataFlag, List<String> orgFlows) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1164,7 +1165,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfoByCharge2(ResTeacherTraining resTeacherTraining, String dataFlag, List<String> orgNames) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}

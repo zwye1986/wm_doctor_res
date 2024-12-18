@@ -1,8 +1,8 @@
 package com.pinde.res.biz.jswjw.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,7 +12,6 @@ import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.sci.dao.base.*;
-import com.pinde.sci.util.DateTimeUtil;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

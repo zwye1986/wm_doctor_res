@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResPowerCfg;
-import com.pinde.sci.model.mo.ResPowerCfgExample;
+import com.pinde.core.model.ResPowerCfg;
+import com.pinde.core.model.ResPowerCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

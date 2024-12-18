@@ -137,7 +137,7 @@ public class OscaDoctorOrderdeBizImpl implements IOscaDoctorOrderdeBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow) {
         return oscaSkillsAssessmentExtMapper.searchDoctorGraduationYear(doctorFlow);
     }
 

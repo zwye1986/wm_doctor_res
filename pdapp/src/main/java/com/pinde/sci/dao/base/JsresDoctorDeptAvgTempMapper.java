@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.JsresDoctorDeptAvgTemp;
 import com.pinde.core.model.JsresDoctorDeptAvgTempExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface JsresDoctorDeptAvgTempMapper {
     int countByExample(JsresDoctorDeptAvgTempExample example);

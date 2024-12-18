@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresPowerCfgMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresPowerCfg" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresPowerCfg">
     <id column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR" />
     <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR" />
     <result column="CFG_DESC" property="cfgDesc" jdbcType="VARCHAR" />
@@ -77,13 +77,13 @@
     CFG_CODE, CFG_VALUE, CFG_DESC, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW, POWER_START_TIME, POWER_END_TIME, CHECK_STATUS_ID, CHECK_STATUS_NAME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresPowerCfgExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresPowerCfgExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_POWER_CFG
+        from JSRES_POWER_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_POWER_CFG
+      from JSRES_POWER_CFG
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_POWER_CFG
+      delete from JSRES_POWER_CFG
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresPowerCfgExample" >
-    delete from PDSCI.JSRES_POWER_CFG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresPowerCfgExample">
+        delete from JSRES_POWER_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresPowerCfg" >
-    insert into PDSCI.JSRES_POWER_CFG (CFG_CODE, CFG_VALUE, CFG_DESC, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresPowerCfg">
+        insert into JSRES_POWER_CFG (CFG_CODE, CFG_VALUE, CFG_DESC,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, POWER_START_TIME, 
       POWER_END_TIME, CHECK_STATUS_ID, CHECK_STATUS_NAME
@@ -119,8 +119,8 @@
       #{powerEndTime,jdbcType=VARCHAR}, #{checkStatusId,jdbcType=VARCHAR}, #{checkStatusName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresPowerCfg" >
-    insert into PDSCI.JSRES_POWER_CFG
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresPowerCfg">
+        insert into JSRES_POWER_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgCode != null" >
         CFG_CODE,
@@ -198,14 +198,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresPowerCfgExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_POWER_CFG
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresPowerCfgExample"
+            resultType="java.lang.Integer">
+        select count(*) from JSRES_POWER_CFG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_POWER_CFG
+      update JSRES_POWER_CFG
     <set >
       <if test="record.cfgCode != null" >
         CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
@@ -249,7 +250,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_POWER_CFG
+      update JSRES_POWER_CFG
     set CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
       CFG_DESC = #{record.cfgDesc,jdbcType=VARCHAR},
@@ -266,8 +267,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresPowerCfg" >
-    update PDSCI.JSRES_POWER_CFG
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresPowerCfg">
+        update JSRES_POWER_CFG
     <set >
       <if test="cfgValue != null" >
         CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
@@ -305,8 +306,8 @@
     </set>
     where CFG_CODE = #{cfgCode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresPowerCfg" >
-    update PDSCI.JSRES_POWER_CFG
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresPowerCfg">
+        update JSRES_POWER_CFG
     set CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_DESC = #{cfgDesc,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

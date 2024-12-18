@@ -1,15 +1,14 @@
 package com.pinde.sci.ctrl.sys;
 
+import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.model.SysRole;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.core.common.PasswordHelper;
-import com.pinde.core.common.enums.sys.RoleLevelEnum;
-import com.pinde.sci.model.mo.SysRole;
-import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,6 @@ public class RegisterController extends GeneralController {
 	private IUserBiz userBiz;
 	@Autowired
 	private IRoleBiz roleBiz;
-	@Autowired
-	private IOrgBiz orgBiz;
 	
 	@ModelAttribute("sysRoleList")
 	public List<SysRole> initInterests() {

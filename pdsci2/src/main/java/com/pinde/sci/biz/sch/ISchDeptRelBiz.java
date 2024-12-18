@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchDeptRel;
+import com.pinde.core.model.SchDeptRel;
 
 import java.util.List;
 

@@ -99,7 +99,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCRES_GRADUATION_TICKET
+      from SCRES_GRADUATION_TICKET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -110,21 +110,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCRES_GRADUATION_TICKET
+      from SCRES_GRADUATION_TICKET
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCRES_GRADUATION_TICKET
+      delete from SCRES_GRADUATION_TICKET
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ScresGraduationTicketExample" >
-    delete from PDSCI.SCRES_GRADUATION_TICKET
+      delete from SCRES_GRADUATION_TICKET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ScresGraduationTicket" >
-    insert into PDSCI.SCRES_GRADUATION_TICKET (RECORD_FLOW, APPLY_FLOW, DOCTOR_NAME, 
+      insert into SCRES_GRADUATION_TICKET (RECORD_FLOW, APPLY_FLOW, DOCTOR_NAME,
       DOCTOR_FLOW, GRADUATION_YEAR, TICKET_NUMBER, 
       ID_NO, THEORY_EXAM_DATE, THEORY_EXAM_TIME1, 
       THEORY_EXAM_TIME1_BARCH, THEORY_EXAM_TIME2, 
@@ -144,7 +144,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ScresGraduationTicket" >
-    insert into PDSCI.SCRES_GRADUATION_TICKET
+      insert into SCRES_GRADUATION_TICKET
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -301,13 +301,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ScresGraduationTicketExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCRES_GRADUATION_TICKET
+      select count(*) from SCRES_GRADUATION_TICKET
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCRES_GRADUATION_TICKET
+      update SCRES_GRADUATION_TICKET
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -390,7 +390,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCRES_GRADUATION_TICKET
+      update SCRES_GRADUATION_TICKET
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -421,7 +421,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ScresGraduationTicket" >
-    update PDSCI.SCRES_GRADUATION_TICKET
+      update SCRES_GRADUATION_TICKET
     <set >
       <if test="applyFlow != null" >
         APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
@@ -499,7 +499,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ScresGraduationTicket" >
-    update PDSCI.SCRES_GRADUATION_TICKET
+      update SCRES_GRADUATION_TICKET
     set APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},

@@ -87,7 +87,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.STU_AUDIT_PROCESS
+      from STU_AUDIT_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -98,21 +98,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.STU_AUDIT_PROCESS
+      from STU_AUDIT_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.STU_AUDIT_PROCESS
+      delete from STU_AUDIT_PROCESS
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.StuAuditProcessExample" >
-    delete from PDSCI.STU_AUDIT_PROCESS
+      delete from STU_AUDIT_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.StuAuditProcess" >
-    insert into PDSCI.STU_AUDIT_PROCESS (PROCESS_FLOW, RESUME_FLOW, USER_FLOW, 
+      insert into STU_AUDIT_PROCESS (PROCESS_FLOW, RESUME_FLOW, USER_FLOW,
       STU_STATUS_ID, STU_STATUS_NAME, PROCESS_REMARK, 
       AUDIT_CONTENT, OPER_USER_FLOW, OPER_USER_NAME, 
       OPER_TIME, RECORD_STATUS, CREATE_TIME, 
@@ -126,7 +126,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.StuAuditProcess" >
-    insert into PDSCI.STU_AUDIT_PROCESS
+      insert into STU_AUDIT_PROCESS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="processFlow != null" >
         PROCESS_FLOW,
@@ -223,13 +223,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.StuAuditProcessExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.STU_AUDIT_PROCESS
+      select count(*) from STU_AUDIT_PROCESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.STU_AUDIT_PROCESS
+      update STU_AUDIT_PROCESS
     <set >
       <if test="record.processFlow != null" >
         PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
@@ -282,7 +282,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.STU_AUDIT_PROCESS
+      update STU_AUDIT_PROCESS
     set PROCESS_FLOW = #{record.processFlow,jdbcType=VARCHAR},
       RESUME_FLOW = #{record.resumeFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
@@ -303,7 +303,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StuAuditProcess" >
-    update PDSCI.STU_AUDIT_PROCESS
+      update STU_AUDIT_PROCESS
     <set >
       <if test="resumeFlow != null" >
         RESUME_FLOW = #{resumeFlow,jdbcType=VARCHAR},
@@ -351,7 +351,7 @@
     where PROCESS_FLOW = #{processFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StuAuditProcess" >
-    update PDSCI.STU_AUDIT_PROCESS
+      update STU_AUDIT_PROCESS
     set RESUME_FLOW = #{resumeFlow,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       STU_STATUS_ID = #{stuStatusId,jdbcType=VARCHAR},

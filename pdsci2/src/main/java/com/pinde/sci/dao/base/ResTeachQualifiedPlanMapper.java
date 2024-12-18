@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResTeachQualifiedPlan;
-import com.pinde.sci.model.mo.ResTeachQualifiedPlanExample;
+import com.pinde.core.model.ResTeachQualifiedPlan;
+import com.pinde.core.model.ResTeachQualifiedPlanExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

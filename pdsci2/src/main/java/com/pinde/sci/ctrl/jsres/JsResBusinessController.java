@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -21,7 +23,8 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SysLogMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.SysLog;
+import com.pinde.core.model.SysLogExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.lcjn;
 
 
-import com.pinde.sci.model.mo.LcjnCourseInfo;
-import com.pinde.sci.model.mo.LcjnCourseTime;
-import com.pinde.sci.model.mo.LcjnDoctorCourse;
+import com.pinde.core.model.LcjnCourseInfo;
+import com.pinde.core.model.LcjnCourseTime;
+import com.pinde.core.model.LcjnDoctorCourse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

@@ -4,7 +4,10 @@ package com.pinde.sci.biz.sys.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.common.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.sci.dao.SysUserDeptMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
+import com.pinde.core.model.SysDeptExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
@@ -15,15 +18,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.dao.base.SysUserDeptMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
-import com.pinde.sci.model.mo.SchAndStandardDeptCfg;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SysDeptExample;
-import com.pinde.sci.model.mo.SysDeptExample.Criteria;
-import com.pinde.sci.model.mo.SysLog;
-import com.pinde.sci.model.mo.SysOrg;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -45,7 +40,7 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class DeptBizImpl implements IDeptBiz {
-	private static Logger logger = LoggerFactory.getLogger(DeptBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeptBizImpl.class);
 	
 	@Autowired
 	private SysDeptMapper sysDeptMapper;

@@ -1,13 +1,12 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ExtInfoForm;
 import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;
@@ -194,7 +193,7 @@ public interface IResDoctorBiz {
 	 * @param sysOrg
 	 * @return
 	 */
-	List<ResDoctorExt> searchDoctorAccountList(SysUser sysUser, SysOrg sysOrg,String baseFlag,String orgFlow,String lockStatus,String trainingSpeId,String trainingTypeId);
+    List<ResDoctorExt> searchDoctorAccountList(SysUser sysUser, SysOrg sysOrg, String baseFlag, String orgFlow, String lockStatus, String trainingSpeId, String trainingTypeId);
 	int importStudentMainExcel(MultipartFile file, String orgFlow);
 	
 	/**

@@ -7,7 +7,7 @@ import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
-import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -4498,27 +4498,13 @@ public class JswjwBizImpl implements IJswjwBiz {
                     trainingYears = TrainYearEnum.getNameById(trainingYears);
                     doctor.setTrainingYears(trainingYears);
                 }
-//				SchArrangeResultExample resultExample = new SchArrangeResultExample();
-//				com.pinde.sci.model.mo.SchArrangeResultExample.Criteria resultCriteria = resultExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-//						.andDoctorFlowEqualTo(doctorFlow);
-//				if(StringUtil.isNotBlank(doctor.getRotationFlow())){
-//					resultCriteria.andRotationFlowEqualTo(doctor.getRotationFlow());
-//				}
-//				resultExample.setOrderByClause("SCH_START_DATE");
-//				List<SchArrangeResult> sars = resultMapper.selectByExample(resultExample);
                 // 查询轮转计划开始时间最早的日期
                 String startDate = resultExtMapper.getSchMinStartDate(doctor.getRotationFlow(), doctorFlow);
-//				if(sars!=null && !sars.isEmpty()){
-//					SchArrangeResult sar = sars.get(0);
-//					if(sar!=null){
-//						startDate = sar.getSchStartDate();
-//					}
-//				}
 
                 ResDoctorRecruitExample example = new ResDoctorRecruitExample();
                 example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(doctorFlow);
                 example.setOrderByClause("CREATE_TIME DESC");
-                List<ResDoctorRecruit> resDoctorRecruits = recruitMapper.selectByExample(example);
+                List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = recruitMapper.selectByExample(example);
                 ResDoctorRecruit resDoctorRecruit = null;
                 if (resDoctorRecruits != null && resDoctorRecruits.size() > 0) {
                     resDoctorRecruit = resDoctorRecruits.get(0);
@@ -6164,7 +6150,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 .andDoctorFlowEqualTo(doctorFlow);
         recruitExample.setOrderByClause("CREATE_TIME DESC");
 
-        List<ResDoctorRecruit> recruits = recruitMapper.selectByExample(recruitExample);
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = recruitMapper.selectByExample(recruitExample);
         if (recruits != null && recruits.size() > 0) {
             return BaseStatusEnum.Passed.getId().equals(recruits.get(0).getAuditStatusId());
         }
@@ -6182,12 +6168,12 @@ public class JswjwBizImpl implements IJswjwBiz {
                 .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo("Passed");
         recruitExample.setOrderByClause("CREATE_TIME DESC");
 
-        List<ResDoctorRecruit> recruits = recruitMapper.selectByExample(recruitExample);
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = recruitMapper.selectByExample(recruitExample);
         if (recruits == null || recruits.isEmpty()) {
             return null;
         }
 
-        ResDoctorRecruit recruit = recruits.get(0);
+        com.pinde.core.model.ResDoctorRecruit recruit = recruits.get(0);
         return recruit;
 
     }
@@ -7644,7 +7630,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> getRecruitList(String userFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> getRecruitList(String userFlow) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
@@ -7708,7 +7694,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchResDoctorRecruitList(com.pinde.core.model.ResDoctorRecruit recruit, String orderByClause) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(recruit.getDoctorFlow())) {
@@ -7871,7 +7857,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public SchRotation getRotationByRecruit(ResDoctorRecruit recruit) {
+    public SchRotation getRotationByRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
         if (recruit != null) {
             SchRotation rotation = null;
 
@@ -8137,7 +8123,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     .andDoctorFlowEqualTo(doctorFlow).andAuditStatusIdEqualTo(com.pinde.core.common.enums.ResBaseStatusEnum.Passed.getId())
                     .andSessionNumberEqualTo(sessionNumber);
             example.setOrderByClause("MODIFY_TIME DESC");
-            List<ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
+            List<com.pinde.core.model.ResDoctorRecruit> recruitList = doctorRecruitMapper.selectByExample(example);
             if (recruitList != null && !recruitList.isEmpty()) {
                 return recruitList.get(0);
             }
@@ -8314,12 +8300,12 @@ public class JswjwBizImpl implements IJswjwBiz {
                 .andRecruitFlowEqualTo(recruitFlow).andAuditStatusIdEqualTo("Passed");
         recruitExample.setOrderByClause("CREATE_TIME DESC");
 
-        List<ResDoctorRecruit> recruits = recruitMapper.selectByExample(recruitExample);
+        List<com.pinde.core.model.ResDoctorRecruit> recruits = recruitMapper.selectByExample(recruitExample);
         if (recruits == null || recruits.isEmpty()) {
             return null;
         }
 
-        ResDoctorRecruit recruit = recruits.get(0);
+        com.pinde.core.model.ResDoctorRecruit recruit = recruits.get(0);
         return recruit;
 
     }
@@ -9107,7 +9093,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit) {
+    public List<com.pinde.core.model.ResDoctorRecruit> readDoctorRecruits(com.pinde.core.model.ResDoctorRecruit recruit) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         if (StringUtil.isNotBlank(recruit.getOrgFlow())) {
@@ -9166,7 +9152,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             return "请先完善报考信息";
         }
         // 查询招录信息
-        List<ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> doctorRecruitList = recruitExtMapper.getDoctorRecruitInfo(sysUser.getUserFlow());
         if (null != doctorRecruitList && 0 < doctorRecruitList.size()) {
             ResDoctorRecruit doctorRecruit = doctorRecruitList.get(0);
             //有报送记录只能走报送通道
@@ -9327,7 +9313,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public List<ResDoctorRecruit> searchRecruitList(String doctorFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchRecruitList(String doctorFlow) {
         ResDoctorRecruitExample example = new ResDoctorRecruitExample();
         ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
@@ -9515,7 +9501,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         exitRec.setDoctorStatusId("Auditing");
         exitRec.setDoctorStatusName("待审核");
 
-        List<ResDoctorRecruit> passedRecruitList = searchResDoctorRecruitList(exitRec, "CREATE_TIME");
+        List<com.pinde.core.model.ResDoctorRecruit> passedRecruitList = searchResDoctorRecruitList(exitRec, "CREATE_TIME");
         boolean firstIsWMSecond = false;//首条是否为二阶段(有自动生成一阶段)
         if (passedRecruitList != null && !passedRecruitList.isEmpty()) {
             for (ResDoctorRecruit rec : passedRecruitList) {

@@ -81,7 +81,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.DICT_FORM
+      from DICT_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,21 +92,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.DICT_FORM
+      from DICT_FORM
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.DICT_FORM
+      delete from DICT_FORM
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.DictFormExample">
-    delete from PDSCI.DICT_FORM
+      delete from DICT_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.DictForm">
-    insert into PDSCI.DICT_FORM (RECORD_FLOW, DICT_FLOW, DETAIL_ORDER, 
+      insert into DICT_FORM (RECORD_FLOW, DICT_FLOW, DETAIL_ORDER,
       DETAIL_KEY, INPUT_TYPE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -116,7 +116,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.DictForm">
-    insert into PDSCI.DICT_FORM
+      insert into DICT_FORM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -183,13 +183,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.DictFormExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.DICT_FORM
+      select count(*) from DICT_FORM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.DICT_FORM
+      update DICT_FORM
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -227,7 +227,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.DICT_FORM
+      update DICT_FORM
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       DICT_FLOW = #{record.dictFlow,jdbcType=VARCHAR},
       DETAIL_ORDER = #{record.detailOrder,jdbcType=VARCHAR},
@@ -243,7 +243,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.DictForm">
-    update PDSCI.DICT_FORM
+      update DICT_FORM
     <set >
       <if test="dictFlow != null" >
         DICT_FLOW = #{dictFlow,jdbcType=VARCHAR},
@@ -276,7 +276,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.DictForm">
-    update PDSCI.DICT_FORM
+      update DICT_FORM
     set DICT_FLOW = #{dictFlow,jdbcType=VARCHAR},
       DETAIL_ORDER = #{detailOrder,jdbcType=VARCHAR},
       DETAIL_KEY = #{detailKey,jdbcType=VARCHAR},

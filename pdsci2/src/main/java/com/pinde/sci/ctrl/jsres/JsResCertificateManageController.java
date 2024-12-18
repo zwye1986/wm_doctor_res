@@ -1,8 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -20,7 +19,9 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.ResTestConfig;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -684,7 +685,7 @@ public class JsResCertificateManageController extends GeneralController {
 
 	@RequestMapping(value = "/showCertificate")
 	public String showCertificate(String recruitFlow,Model model) {
-		ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+		com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 		if(recruit!=null&&StringUtil.isNotBlank(recruit.getGraduationCertificateNo())) {
 			SysUser sysUser = userBiz.findByFlow(recruit.getDoctorFlow());
 			String completeNo = "";
@@ -768,7 +769,7 @@ public class JsResCertificateManageController extends GeneralController {
 		return "jsres/global/showCertificate/info";
 	}
 
-	private String getShowCountryOrProvince(ResDoctorRecruit recruit) {
+	private String getShowCountryOrProvince(com.pinde.core.model.ResDoctorRecruit recruit) {
 		String completeNo="";
 		String sessionNumber=recruit.getSessionNumber();
 		if(StringUtil.isBlank(sessionNumber))
@@ -960,7 +961,7 @@ public class JsResCertificateManageController extends GeneralController {
 		if (StringUtil.isBlank(recruitFlow)) {
 			return "请选择需要生成证书的人员信息！";
 		}
-		ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+		com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
         if (recruit == null || com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(recruit.getRecordStatus())) {
 			return "培训信息不存在，请刷新列表！";
 		}
@@ -991,7 +992,7 @@ public class JsResCertificateManageController extends GeneralController {
 			String[] recordFlows = recruitFlowStr.split(",");
 			List<String> recruitFlowList = Arrays.asList(recordFlows);
 			if (recruitFlowList != null && recruitFlowList.size() > 0) {
-				List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitListByFlows(recruitFlowList);
+				List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitListByFlows(recruitFlowList);
 				if (recruitList != null && recruitList.size() > 0) {
 					for (ResDoctorRecruit rdr: recruitList) {
 						if (rdr != null && StringUtil.isBlank(rdr.getGraduationCertificateNo())) {
@@ -1014,7 +1015,7 @@ public class JsResCertificateManageController extends GeneralController {
 
 	@RequestMapping(value = "/showCertificateNew")
 	public String showCertificateNew(String recruitFlow,String tabTag,Model model) {
-		ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+		com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
 		if(recruit!=null&&StringUtil.isNotBlank(recruit.getGraduationCertificateNo())) {
 			SysUser sysUser = userBiz.findByFlow(recruit.getDoctorFlow());
 			String completeNo = "";

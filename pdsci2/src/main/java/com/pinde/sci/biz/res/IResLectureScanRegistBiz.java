@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.LectureInfoTarget;
-import com.pinde.sci.model.mo.ResLectureInfo;
-import com.pinde.sci.model.mo.ResLectureScanRegist;
+import com.pinde.core.model.LectureInfoTarget;
+import com.pinde.core.model.ResLectureInfo;
+import com.pinde.core.model.ResLectureScanRegist;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

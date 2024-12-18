@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -13,7 +13,6 @@ import com.pinde.sci.dao.base.JsresDeptConfigMapper;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -41,7 +40,7 @@ import java.util.*;
 public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
 
 
-    private static Logger logger = LoggerFactory.getLogger(JsResPowerCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResPowerCfgBizImpl.class);
 
 
     @Autowired
@@ -398,7 +397,7 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
                 @Override
                 public String checkExcelData(HashMap data, ExcelUtile eu) {
                     String sheetName=(String)eu.get("SheetName");
-                    if(sheetName==null||!"ImportTime".equals(sheetName))
+                    if (!"ImportTime".equals(sheetName))
                     {
                         eu.put("count", 0);
                         eu.put("code", "1");

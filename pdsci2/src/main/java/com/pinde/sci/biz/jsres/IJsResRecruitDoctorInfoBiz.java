@@ -1,12 +1,11 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.JsresRecruitDocInfo;
+import com.pinde.core.model.JsresRecruitInfo;
+import com.pinde.core.model.ResRecruitHistory;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.JsresRecruitDocInfo;
-import com.pinde.sci.model.mo.JsresRecruitInfo;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResRecruitHistory;
 
 import java.util.List;
 import java.util.Map;
@@ -57,13 +56,13 @@ public interface IJsResRecruitDoctorInfoBiz {
      * @Date  2020-09-25
      * @Param [doctorFlow]
      **/
-    List<ResDoctorRecruit> searchRecruitList(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> searchRecruitList(String doctorFlow);
 
     List<JsresDoctorInfoExt> searchRecruitDoctorInfosByResume2(Map<String, Object> param);
 
     List<JsresDoctorInfoExt> searchRecruitDoctorInfosByResume3(Map<String, Object> param);
 
-    List<ResDoctorRecruit> searchRecruitListNew(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> searchRecruitListNew(String doctorFlow);
 
     List<JsResDoctorRecruitExt> searchRecruitExtList(Map<String, Object> param);
 

@@ -86,7 +86,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_SMS_TEMPLATE
+      from SYS_SMS_TEMPLATE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,21 +97,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_SMS_TEMPLATE
+      from SYS_SMS_TEMPLATE
     where SMS_TEMP_FLOW = #{smsTempFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_SMS_TEMPLATE
+      delete from SYS_SMS_TEMPLATE
     where SMS_TEMP_FLOW = #{smsTempFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysSmsTemplateExample" >
-    delete from PDSCI.SYS_SMS_TEMPLATE
+      delete from SYS_SMS_TEMPLATE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysSmsTemplate" >
-    insert into PDSCI.SYS_SMS_TEMPLATE (SMS_TEMP_FLOW, WS_ID, TEMP_NAME, 
+      insert into SYS_SMS_TEMPLATE (SMS_TEMP_FLOW, WS_ID, TEMP_NAME,
       TEMP_CONTENT, TEMP_ID, TEMP_FORMART, 
       TEMP_TYPE, IS_ENABLED, TEMP_REMARK, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -123,7 +123,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysSmsTemplate" >
-    insert into PDSCI.SYS_SMS_TEMPLATE
+      insert into SYS_SMS_TEMPLATE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smsTempFlow != null" >
         SMS_TEMP_FLOW,
@@ -214,13 +214,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysSmsTemplateExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_SMS_TEMPLATE
+      select count(*) from SYS_SMS_TEMPLATE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_SMS_TEMPLATE
+      update SYS_SMS_TEMPLATE
     <set >
       <if test="record.smsTempFlow != null" >
         SMS_TEMP_FLOW = #{record.smsTempFlow,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_SMS_TEMPLATE
+      update SYS_SMS_TEMPLATE
     set SMS_TEMP_FLOW = #{record.smsTempFlow,jdbcType=VARCHAR},
       WS_ID = #{record.wsId,jdbcType=VARCHAR},
       TEMP_NAME = #{record.tempName,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysSmsTemplate" >
-    update PDSCI.SYS_SMS_TEMPLATE
+      update SYS_SMS_TEMPLATE
     <set >
       <if test="wsId != null" >
         WS_ID = #{wsId,jdbcType=VARCHAR},
@@ -335,7 +335,7 @@
     where SMS_TEMP_FLOW = #{smsTempFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysSmsTemplate" >
-    update PDSCI.SYS_SMS_TEMPLATE
+      update SYS_SMS_TEMPLATE
     set WS_ID = #{wsId,jdbcType=VARCHAR},
       TEMP_NAME = #{tempName,jdbcType=VARCHAR},
       TEMP_CONTENT = #{tempContent,jdbcType=VARCHAR},

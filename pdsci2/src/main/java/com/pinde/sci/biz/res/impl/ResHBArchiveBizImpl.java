@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -8,7 +8,6 @@ import com.pinde.sci.biz.res.IResHBArchiveBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResHBArchiveExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,9 +74,7 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
             int d2 = archiveExtMapper.saveResumeLog(paramMap);
             int e = archiveExtMapper.createResRecruitRegisterLog(paramMap);
             int e2 = archiveExtMapper.saveResRecruitRegisterLog(paramMap);
-            if (a2 >= 0 && b2 >= 0 && c2 >= 0 && d2 >= 0 && e2 >= 0) {
-                return true;
-            }
+            return a2 >= 0 && b2 >= 0 && c2 >= 0 && d2 >= 0 && e2 >= 0;
         }
         return false;
     }

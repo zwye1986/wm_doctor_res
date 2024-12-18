@@ -469,6 +469,7 @@
             jboxLoad("content", "<s:url value='/jsres/doctorActivityStatistics/main'/>", true);
         }
 
+        // 与正常查询时的条件保持一致，这里写的不好，应该把这些查询进行页面后再进行的
         function cycle(data) {
             var docTypes = "";
             <c:forEach items="${resDocTypeEnumList}" var="type">
@@ -478,7 +479,21 @@
                 docTypes += "&docTypes=" + "${type.id}";
             }
             </c:forEach>
-            var url = "<s:url value='/jsres/doctorRecruit/cycle'/>?" + docTypes;
+            var endDate = new Date();
+            var year = endDate.getFullYear();
+            var month = endDate.getMonth() + 1; // 月份是从0开始的
+            var day = endDate.getDate();
+            month = ('0' + month).slice(-2);
+            day = ('0' + day).slice(-2);
+            var url = "<s:url value='/jsres/doctorRecruit/cycle'/>?" + docTypes + "&trainingTypeId=DoctorTrainingSpe&endDate=" + year + "-" + month + "-" + day;
+            var startDate = endDate.setMonth(endDate.getMonth() - 6);
+            year = endDate.getFullYear();
+            month = endDate.getMonth() + 1; // 月份是从0开始的
+            day = endDate.getDate();
+            month = ('0' + month).slice(-2);
+            day = ('0' + day).slice(-2);
+            url += "&startDate=" +  + year + "-" + month + "-" + day;
+
             jboxStartLoading();
             jboxPost(url, data, function (resp) {
                 $("#content").html(resp);

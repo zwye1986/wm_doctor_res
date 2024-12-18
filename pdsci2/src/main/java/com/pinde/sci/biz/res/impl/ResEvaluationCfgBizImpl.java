@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEvaluationCfgBiz;
@@ -14,10 +13,6 @@ import com.pinde.sci.form.res.ResEvaluationCfgForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationDeptExt;
-import com.pinde.sci.model.mo.ResEvaluationCfg;
-import com.pinde.sci.model.mo.ResEvaluationCfgExample;
-import com.pinde.sci.model.mo.ResEvaluationDept;
-import com.pinde.sci.model.mo.ResEvaluationDeptExample;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +39,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Autowired
     private ResEvaluationDeptExtMapper evaluationDeptExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(ResEvaluationCfgBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResEvaluationCfgBizImpl.class);
 
 
     @Override
@@ -170,7 +165,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
     @Override
     public List<ResEvaluationCfg> searchEvaluationCfgList(ResEvaluationCfg evaluationCfg) {
         ResEvaluationCfgExample example = new ResEvaluationCfgExample();
-        com.pinde.sci.model.mo.ResEvaluationCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        ResEvaluationCfgExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(evaluationCfg.getAssessTypeId())){
 			criteria.andAssessTypeIdEqualTo(evaluationCfg.getAssessTypeId());
 		}
@@ -258,7 +253,7 @@ public class ResEvaluationCfgBizImpl implements IResEvaluationCfgBiz {
             int length = bigestColumnId.length();
             String leftPart = bigestColumnId.substring(0, length-2);
             String rightPart = bigestColumnId.substring(length-2);
-            int idValue = new Integer(rightPart).intValue();
+            int idValue = Integer.parseInt(rightPart);
             idValue++;
             if(idValue<10){
                 rightPart = "0"+idValue;

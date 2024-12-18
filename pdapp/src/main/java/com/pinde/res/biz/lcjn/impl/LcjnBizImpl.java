@@ -1,8 +1,8 @@
 package com.pinde.res.biz.lcjn.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;

@@ -2,9 +2,9 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaExaminerManageBiz;
@@ -15,17 +15,12 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.OscaTeaInfoMapper;
-import com.pinde.sci.dao.base.SysOrgMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.osca.OscaExaminerMapper;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -172,9 +167,9 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
 
             int row_num = sheet.getLastRowNum();
@@ -350,9 +345,9 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
             List<String> colnames = new ArrayList<String>();
             Sheet sheet;
             try {
-                sheet = (HSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             } catch (Exception e) {
-                sheet = (XSSFSheet) wb.getSheetAt(0);
+                sheet = wb.getSheetAt(0);
             }
 
             int row_num = sheet.getLastRowNum();

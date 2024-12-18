@@ -195,6 +195,10 @@ public class ResDoctorRecruit implements java.io.Serializable {
 
     private String signupWay;
 
+    private String recruitFlagReason;
+
+    private String reviewFlag;
+
     public String getRecruitFlow() {
         return recruitFlow;
     }
@@ -961,5 +965,21 @@ public class ResDoctorRecruit implements java.io.Serializable {
 
     public void setSignupWay(String signupWay) {
         this.signupWay = signupWay;
+    }
+
+    public String getRecruitFlagReason() {
+        return recruitFlagReason;
+    }
+
+    public void setRecruitFlagReason(String recruitFlagReason) {
+        this.recruitFlagReason = recruitFlagReason;
+    }
+
+    public String getReviewFlag() {
+        return reviewFlag;
+    }
+
+    public void setReviewFlag(String reviewFlag) {
+        this.reviewFlag = reviewFlag;
     }
 }

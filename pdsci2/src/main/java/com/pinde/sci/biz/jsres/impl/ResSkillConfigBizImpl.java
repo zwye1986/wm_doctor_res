@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,7 +11,6 @@ import com.pinde.sci.dao.base.ResDoctorSkillMapper;
 import com.pinde.sci.dao.base.ResSkillConfigMapper;
 import com.pinde.sci.dao.base.ResSkillOrgMapper;
 import com.pinde.sci.dao.jsres.ResSkillOrgExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

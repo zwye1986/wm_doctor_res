@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.StudyCourseDetailInfo;
-import com.pinde.sci.model.mo.StudyCourseDetailInfoExample;
+import com.pinde.core.model.StudyCourseDetailInfo;
+import com.pinde.core.model.StudyCourseDetailInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubUserGenericContent;
-import com.pinde.sci.model.mo.PubUserGenericContentExample;
-import com.pinde.sci.model.mo.PubUserGenericContentKey;
+import com.pinde.core.model.PubUserGenericContent;
+import com.pinde.core.model.PubUserGenericContentExample;
+import com.pinde.core.model.PubUserGenericContentKey;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

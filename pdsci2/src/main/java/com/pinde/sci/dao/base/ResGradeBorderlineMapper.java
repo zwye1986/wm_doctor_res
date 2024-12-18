@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResGradeBorderline;
-import com.pinde.sci.model.mo.ResGradeBorderlineExample;
+import com.pinde.core.model.ResGradeBorderline;
+import com.pinde.core.model.ResGradeBorderlineExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

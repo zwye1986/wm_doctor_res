@@ -738,7 +738,7 @@
     </select>
 
     <!--获取学员轮转统计数据-->
-    <select id="getRotationData" resultType="com.pinde.sci.model.mo.SysOrg" parameterType="java.util.Map">
+    <select id="getRotationData" resultType="com.pinde.core.model.SysOrg" parameterType="java.util.Map">
         <!--select aa.trainDoctorTotal,aa.org_flow,aa.org_name,nvl(rr.fillNum,0) fillNum,nvl(rr.auditNum,0) auditNum from
         (SELECT nvl(COUNT(DISTINCT d.doctor_flow), 0) AS trainDoctorTotal,rdr.org_flow,rdr.org_name
         FROM RES_DOCTOR_RECRUIT rdr , res_doctor d WHERE rdr.doctor_flow = d.doctor_flow
@@ -852,7 +852,8 @@
     </select>
 
 
-    <select id="getPersonStaticData" resultType="com.pinde.sci.model.mo.PersonStaticExample" parameterType="java.util.Map">
+    <select id="getPersonStaticData" resultType="com.pinde.core.model.PersonStaticExample"
+            parameterType="java.util.Map">
        <!-- SELECT
         t.org_flow,
         t.org_name,
@@ -873,7 +874,7 @@
         SUM(CASE WHEN doh.history_org_flow=t.org_flow and doh.RECORD_STATUS = 'Y' AND doh.CHANGE_TYPE_ID = 'BaseChange' AND doh.CHANGE_STATUS_ID = 'GlobalApplyPass' and substr(doh.out_date,0,6)='201910' and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolOutNum,
         SUM(CASE WHEN doh.org_flow=t.org_flow and doh.RECORD_STATUS = 'Y' AND doh.CHANGE_TYPE_ID = 'BaseChange' AND doh.CHANGE_STATUS_ID = 'GlobalApplyPass' and substr(doh.in_date,0,6)='201909' and t.doctor_type_id in ('Social','Company','CompanyEntrust') THEN 1 ELSE 0 END) residentInNum,
         SUM(CASE WHEN doh.org_flow=t.org_flow and doh.RECORD_STATUS = 'Y' AND doh.CHANGE_TYPE_ID = 'BaseChange' AND doh.CHANGE_STATUS_ID = 'GlobalApplyPass' and substr(doh.in_date,0,6)='201910' and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolInNum
-        FROM PDSCI.SYS_MONTHLY_DOCTOR_INFO t
+        FROM  SYS_MONTHLY_DOCTOR_INFO t
         left join res_docotr_delay_teturn rddt on rddt.doctor_flow = t.doctor_flow
         left join jsres_recruit_doc_info dr on dr.doctor_flow=t.doctor_flow
         left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow=t.doctor_flow
@@ -902,7 +903,7 @@
           SUM(CASE WHEN doh.history_org_flow=t.org_flow and doh.RECORD_STATUS = 'Y' AND doh.CHANGE_TYPE_ID = 'BaseChange' AND doh.CHANGE_STATUS_ID = 'GlobalApplyPass' and substr(doh.out_date,0,6)=#{monthdate} and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolOutNum,
           SUM(CASE WHEN doh.org_flow=t.org_flow and doh.RECORD_STATUS = 'Y' AND doh.CHANGE_TYPE_ID = 'BaseChange' AND doh.CHANGE_STATUS_ID = 'GlobalApplyPass' and substr(doh.in_date,0,6)=#{lastMonthdate} and t.doctor_type_id in ('Social','Company','CompanyEntrust') THEN 1 ELSE 0 END) residentInNum,
           SUM(CASE WHEN doh.org_flow=t.org_flow and doh.RECORD_STATUS = 'Y' AND doh.CHANGE_TYPE_ID = 'BaseChange' AND doh.CHANGE_STATUS_ID = 'GlobalApplyPass' and substr(doh.in_date,0,6)=#{monthdate} and t.doctor_type_id ='Graduate' THEN 1 ELSE 0 END) inSchoolInNum
-          FROM PDSCI.SYS_MONTHLY_DOCTOR_INFO t
+        FROM SYS_MONTHLY_DOCTOR_INFO t
           left join res_docotr_delay_teturn rddt on rddt.doctor_flow = t.doctor_flow
           left join jsres_recruit_doc_info dr on dr.doctor_flow=t.doctor_flow
           left join RES_DOCTOR_ORG_HISTORY doh on doh.doctor_flow=t.doctor_flow
@@ -927,7 +928,8 @@
           group by <!--t.session_number,-->t.org_flow,t.org_name
     </select>
 
-    <select id="getPersonStaticDataNEWyuh" resultType="com.pinde.sci.model.mo.PersonStaticExample" parameterType="java.util.Map">
+    <select id="getPersonStaticDataNEWyuh" resultType="com.pinde.core.model.PersonStaticExample"
+            parameterType="java.util.Map">
         WITH aa as(
           SELECT
             T .org_flow,
@@ -1062,7 +1064,7 @@
                 END
             ) inSchoolExaminedNum
         FROM
-            PDSCI.SYS_MONTHLY_DOCTOR_INFO T
+        SYS_MONTHLY_DOCTOR_INFO T
         WHERE
             T .RECORD_STATUS = 'Y'
         and t.ORG_FLOW=#{orgFlow}
@@ -1244,13 +1246,13 @@
 from(
 		SELECT dr.RECRUIT_FLOW,dr.doctor_flow,DR.org_flow,dr.org_name,
 			DR.MODIFY_TIME
-		FROM pdsci.jsres_recruit_doc_info dr
+        FROM jsres_recruit_doc_info dr
 			LEFT JOIN jsres_recruit_info ed ON dr.doctor_flow = ed.doctor_flow
 		AND dr.session_number = ed.session_number
 		WHERE dr.RECORD_STATUS = 'Y'
 			AND dr.org_flow IN (SELECT ORG_FLOW
-				FROM PDSCI.SYS_ORG
-				WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 					AND ORG_PROV_ID = '320000'
 					AND ORG_LEVEL_ID = 'CountryOrg'
 					AND ORG_TYPE_ID = 'Hospital')
@@ -1284,13 +1286,13 @@ AND SUBSTR(DR.MODIFY_TIME, 0, 6) = #{monthdate}
         from(
         SELECT dr.RECRUIT_FLOW,dr.doctor_flow,DR.org_flow,dr.org_name,
         DR.MODIFY_TIME
-        FROM pdsci.jsres_recruit_doc_info dr
+        FROM jsres_recruit_doc_info dr
         LEFT JOIN jsres_recruit_info ed ON dr.doctor_flow = ed.doctor_flow
         AND dr.session_number = ed.session_number
         WHERE dr.RECORD_STATUS = 'Y'
         AND dr.org_flow IN (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '320000'
         AND ORG_LEVEL_ID = 'CountryOrg'
         AND ORG_TYPE_ID = 'Hospital')

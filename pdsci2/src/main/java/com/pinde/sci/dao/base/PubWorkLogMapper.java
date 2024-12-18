@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubWorkLog;
-import com.pinde.sci.model.mo.PubWorkLogExample;
+import com.pinde.core.model.PubWorkLog;
+import com.pinde.core.model.PubWorkLogExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

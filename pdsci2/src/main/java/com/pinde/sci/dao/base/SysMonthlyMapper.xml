@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysMonthlyMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthly" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthly">
     <id column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
     <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
@@ -70,13 +70,13 @@
   <sql id="Base_Column_List" >
     DATE_MONTH, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysMonthlyExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY
+      from SYS_MONTHLY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,29 +87,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_MONTHLY
+      from SYS_MONTHLY
     where DATE_MONTH = #{dateMonth,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_MONTHLY
+      delete from SYS_MONTHLY
     where DATE_MONTH = #{dateMonth,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyExample" >
-    delete from PDSCI.SYS_MONTHLY
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyExample">
+      delete from SYS_MONTHLY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthly" >
-    insert into PDSCI.SYS_MONTHLY (DATE_MONTH, RECORD_STATUS, CREATE_TIME, 
+    <insert id="insert" parameterType="com.pinde.core.model.SysMonthly">
+      insert into SYS_MONTHLY (DATE_MONTH, RECORD_STATUS, CREATE_TIME,
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
       )
     values (#{dateMonth,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthly" >
-    insert into PDSCI.SYS_MONTHLY
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthly">
+      insert into SYS_MONTHLY
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="dateMonth != null" >
         DATE_MONTH,
@@ -151,14 +151,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_MONTHLY
+    <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyExample" resultType="java.lang.Integer">
+      select count(*) from SYS_MONTHLY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_MONTHLY
+      update SYS_MONTHLY
     <set >
       <if test="record.dateMonth != null" >
         DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
@@ -184,7 +184,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_MONTHLY
+      update SYS_MONTHLY
     set DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
@@ -195,8 +195,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthly" >
-    update PDSCI.SYS_MONTHLY
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthly">
+      update SYS_MONTHLY
     <set >
       <if test="recordStatus != null" >
         RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
@@ -216,8 +216,8 @@
     </set>
     where DATE_MONTH = #{dateMonth,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthly" >
-    update PDSCI.SYS_MONTHLY
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthly">
+      update SYS_MONTHLY
     set RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},

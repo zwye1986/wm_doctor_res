@@ -86,7 +86,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_FIXED_ASSETS
+      from LCJN_FIXED_ASSETS
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,21 +97,22 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.LCJN_FIXED_ASSETS
+      from LCJN_FIXED_ASSETS
     where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.LCJN_FIXED_ASSETS
+      delete
+      from LCJN_FIXED_ASSETS
     where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.LcjnFixedAssetsExample">
-    delete from PDSCI.LCJN_FIXED_ASSETS
+      delete from LCJN_FIXED_ASSETS
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.LcjnFixedAssets">
-    insert into PDSCI.LCJN_FIXED_ASSETS (FIXED_FLOW, DICT_ID, DICT_NAME, 
+      insert into LCJN_FIXED_ASSETS (FIXED_FLOW, DICT_ID, DICT_NAME,
       FIXED_PRICE, FIXED_CODE, STATUS_ID, 
       STATUS_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -123,7 +124,7 @@
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.LcjnFixedAssets">
-    insert into PDSCI.LCJN_FIXED_ASSETS
+      insert into LCJN_FIXED_ASSETS
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="fixedFlow != null">
         FIXED_FLOW,
@@ -214,13 +215,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.LcjnFixedAssetsExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.LCJN_FIXED_ASSETS
+      select count(*) from LCJN_FIXED_ASSETS
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.LCJN_FIXED_ASSETS
+      update LCJN_FIXED_ASSETS
     <set>
       <if test="record.fixedFlow != null">
         FIXED_FLOW = #{record.fixedFlow,jdbcType=VARCHAR},
@@ -270,7 +271,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.LCJN_FIXED_ASSETS
+      update LCJN_FIXED_ASSETS
     set FIXED_FLOW = #{record.fixedFlow,jdbcType=VARCHAR},
       DICT_ID = #{record.dictId,jdbcType=VARCHAR},
       DICT_NAME = #{record.dictName,jdbcType=VARCHAR},
@@ -290,7 +291,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.LcjnFixedAssets">
-    update PDSCI.LCJN_FIXED_ASSETS
+      update LCJN_FIXED_ASSETS
     <set>
       <if test="dictId != null">
         DICT_ID = #{dictId,jdbcType=VARCHAR},
@@ -335,7 +336,7 @@
     where FIXED_FLOW = #{fixedFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.LcjnFixedAssets">
-    update PDSCI.LCJN_FIXED_ASSETS
+      update LCJN_FIXED_ASSETS
     set DICT_ID = #{dictId,jdbcType=VARCHAR},
       DICT_NAME = #{dictName,jdbcType=VARCHAR},
       FIXED_PRICE = #{fixedPrice,jdbcType=VARCHAR},

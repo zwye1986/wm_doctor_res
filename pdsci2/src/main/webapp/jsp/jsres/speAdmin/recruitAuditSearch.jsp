@@ -119,7 +119,7 @@
         </form>
     </div>
     <div class="search_table">
-        <table border="0" cellpadding="0" cellspacing="0" class="grid" >
+        <table border="0" cellpadding="0" cellspacing="0" class="grid" style="width: auto">
         <tr>
             <th style="min-width: 80px;max-width: 80px;">姓名</th>
             <th style="min-width: 80px;max-width: 80px;">人员类型</th>

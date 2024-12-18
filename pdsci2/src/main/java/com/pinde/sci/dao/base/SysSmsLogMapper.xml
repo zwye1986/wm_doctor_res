@@ -85,13 +85,13 @@
     SMS_TEMP_FLOW, TEMP_ID, STATUS_CODE, STATUS_NAME, SMS_RESPONSE_MSG, REL_ID, REL_TYPE, 
     REMARK, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysSmsLogExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_SMS_LOG
+      from SYS_SMS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -102,21 +102,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_SMS_LOG
+      from SYS_SMS_LOG
     where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_SMS_LOG
+      delete from SYS_SMS_LOG
     where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" >
-    delete from PDSCI.SYS_SMS_LOG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysSmsLogExample">
+      delete from SYS_SMS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
     <insert id="insert" parameterType="com.pinde.core.model.SysSmsLog">
-    insert into PDSCI.SYS_SMS_LOG (SMS_LOG_FLOW, SMS_USER_NAME, SMS_SEND_TIME, 
+        insert into SYS_SMS_LOG (SMS_LOG_FLOW, SMS_USER_NAME, SMS_SEND_TIME,
       SMS_MOBILE, SMS_CONTENT, SMS_RECEIVER_COUNT, 
       SMS_TEMP_FLOW, TEMP_ID, STATUS_CODE, 
       STATUS_NAME, SMS_RESPONSE_MSG, REL_ID, 
@@ -132,7 +132,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
     <insert id="insertSelective" parameterType="com.pinde.core.model.SysSmsLog">
-    insert into PDSCI.SYS_SMS_LOG
+        insert into SYS_SMS_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="smsLogFlow != null" >
         SMS_LOG_FLOW,
@@ -252,14 +252,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysSmsLogExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_SMS_LOG
+    <select id="countByExample" parameterType="com.pinde.core.model.SysSmsLogExample" resultType="java.lang.Integer">
+      select count(*) from SYS_SMS_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_SMS_LOG
+      update SYS_SMS_LOG
     <set >
       <if test="record.smsLogFlow != null" >
         SMS_LOG_FLOW = #{record.smsLogFlow,jdbcType=VARCHAR},
@@ -324,7 +324,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_SMS_LOG
+      update SYS_SMS_LOG
     set SMS_LOG_FLOW = #{record.smsLogFlow,jdbcType=VARCHAR},
       SMS_USER_NAME = #{record.smsUserName,jdbcType=VARCHAR},
       SMS_SEND_TIME = #{record.smsSendTime,jdbcType=VARCHAR},
@@ -349,7 +349,7 @@
     </if>
   </update>
     <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysSmsLog">
-    update PDSCI.SYS_SMS_LOG
+        update SYS_SMS_LOG
     <set >
       <if test="smsUserName != null" >
         SMS_USER_NAME = #{smsUserName,jdbcType=VARCHAR},
@@ -409,7 +409,7 @@
     where SMS_LOG_FLOW = #{smsLogFlow,jdbcType=VARCHAR}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysSmsLog">
-    update PDSCI.SYS_SMS_LOG
+        update SYS_SMS_LOG
     set SMS_USER_NAME = #{smsUserName,jdbcType=VARCHAR},
       SMS_SEND_TIME = #{smsSendTime,jdbcType=VARCHAR},
       SMS_MOBILE = #{smsMobile,jdbcType=VARCHAR},

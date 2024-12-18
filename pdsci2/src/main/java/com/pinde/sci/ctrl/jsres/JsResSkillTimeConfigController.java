@@ -1,8 +1,10 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.enums.osca.DoctorScoreEnum;
+import com.pinde.core.common.enums.osca.SignStatusEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
@@ -15,11 +17,21 @@ import com.pinde.sci.biz.osca.IOscaDoctorScoreBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.common.*;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
-import com.pinde.core.common.enums.osca.DoctorScoreEnum;
-import com.pinde.core.common.enums.osca.SignStatusEnum;
-import com.pinde.sci.model.mo.*;
+import com.pinde.sci.common.GeneralController;
+import com.pinde.sci.common.GeneralMethod;
+import com.pinde.sci.common.GlobalContext;
+import com.pinde.sci.common.InitConfig;
+import com.pinde.core.model.OscaDoctorAssessment;
+import com.pinde.core.model.OscaOrgSpe;
+import com.pinde.core.model.OscaSkillRoom;
+import com.pinde.core.model.OscaSkillRoomTea;
+import com.pinde.core.model.OscaSkillsAssessment;
+import com.pinde.core.model.OscaSkillsAssessmentTime;
+import com.pinde.core.model.OscaSubjectMain;
+import com.pinde.core.model.OscaSubjectStation;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResPassScoreCfg;
+import com.pinde.core.model.ResScore;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 import org.apache.poi.hssf.usermodel.*;
@@ -785,7 +797,7 @@ public class JsResSkillTimeConfigController extends GeneralController {
             }
             orgFlow=resDoctor.getOrgFlow();
         }
-        List<ResDoctorRecruit> resDoctorRecruits=oscaDoctorOrderdeBiz.selectDoctorGraduationYear(GlobalContext.getCurrentUser().getUserFlow());
+        List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = oscaDoctorOrderdeBiz.selectDoctorGraduationYear(GlobalContext.getCurrentUser().getUserFlow());
         if(resDoctorRecruits!=null&&resDoctorRecruits.size()>0&&resDoctorRecruits.get(0)!=null){
             graduationYear=resDoctorRecruits.get(0).getGraduationYear();
         }
@@ -931,10 +943,10 @@ public class JsResSkillTimeConfigController extends GeneralController {
     public String ordered(String clinicalFlow,String doctorFlow,String appointNum,String flag){
         doctorFlow = GlobalContext.getCurrentUser().getUserFlow();
         String isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;//结业资格审核
-        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-        List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+        List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
         //在系统中是否有资格审核记录
         String signupFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
         if (recruitList != null && recruitList.size() > 0) {

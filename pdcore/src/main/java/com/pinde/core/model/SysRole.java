@@ -1,6 +1,9 @@
 package com.pinde.core.model;
 
+import java.io.Serializable;
+
 public class SysRole implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String roleFlow;
 
     private String roleName;

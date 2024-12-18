@@ -3183,6 +3183,76 @@ public class ResDocotrDelayTeturnExample {
             addCriterion("GLOBAL_CHECK_FILE not between", value1, value2, "globalCheckFile");
             return (Criteria) this;
         }
+
+        public Criteria andCityAuditOpinionIsNull() {
+            addCriterion("CITY_AUDIT_OPINION is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionIsNotNull() {
+            addCriterion("CITY_AUDIT_OPINION is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionEqualTo(String value) {
+            addCriterion("CITY_AUDIT_OPINION =", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionNotEqualTo(String value) {
+            addCriterion("CITY_AUDIT_OPINION <>", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionGreaterThan(String value) {
+            addCriterion("CITY_AUDIT_OPINION >", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionGreaterThanOrEqualTo(String value) {
+            addCriterion("CITY_AUDIT_OPINION >=", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionLessThan(String value) {
+            addCriterion("CITY_AUDIT_OPINION <", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionLessThanOrEqualTo(String value) {
+            addCriterion("CITY_AUDIT_OPINION <=", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionLike(String value) {
+            addCriterion("CITY_AUDIT_OPINION like", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionNotLike(String value) {
+            addCriterion("CITY_AUDIT_OPINION not like", value, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionIn(List<String> values) {
+            addCriterion("CITY_AUDIT_OPINION in", values, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionNotIn(List<String> values) {
+            addCriterion("CITY_AUDIT_OPINION not in", values, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionBetween(String value1, String value2) {
+            addCriterion("CITY_AUDIT_OPINION between", value1, value2, "cityAuditOpinion");
+            return (Criteria) this;
+        }
+
+        public Criteria andCityAuditOpinionNotBetween(String value1, String value2) {
+            addCriterion("CITY_AUDIT_OPINION not between", value1, value2, "cityAuditOpinion");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResRecruitHistoryMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResRecruitHistory" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResRecruitHistory">
     <id column="HISTORY_FLOW" property="historyFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -83,13 +83,14 @@
     RECRUIT_NUMBER, PHOTO_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW, COMPANY_ENTRUST_NUMBER, SOCIAL_NUMBER, REMARKS
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResRecruitHistoryExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResRecruitHistoryExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_RECRUIT_HISTORY
+      from RES_RECRUIT_HISTORY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +101,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_RECRUIT_HISTORY
+      from RES_RECRUIT_HISTORY
     where HISTORY_FLOW = #{historyFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_RECRUIT_HISTORY
+      delete from RES_RECRUIT_HISTORY
     where HISTORY_FLOW = #{historyFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResRecruitHistoryExample" >
-    delete from PDSCI.RES_RECRUIT_HISTORY
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResRecruitHistoryExample">
+      delete from RES_RECRUIT_HISTORY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResRecruitHistory" >
-    insert into PDSCI.RES_RECRUIT_HISTORY (HISTORY_FLOW, ORG_FLOW, ORG_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResRecruitHistory">
+      insert into RES_RECRUIT_HISTORY (HISTORY_FLOW, ORG_FLOW, ORG_NAME,
       SPE_ID, SPE_NAME, COMPANY_NUMBER, 
       GRADUATE_NUMBER, RECRUIT_NUMBER, PHOTO_TIME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -127,8 +128,8 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{companyEntrustNumber,jdbcType=VARCHAR}, 
       #{socialNumber,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResRecruitHistory" >
-    insert into PDSCI.RES_RECRUIT_HISTORY
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResRecruitHistory">
+      insert into RES_RECRUIT_HISTORY
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="historyFlow != null" >
         HISTORY_FLOW,
@@ -236,14 +237,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResRecruitHistoryExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_RECRUIT_HISTORY
+    <select id="countByExample" parameterType="com.pinde.core.model.ResRecruitHistoryExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_RECRUIT_HISTORY
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_RECRUIT_HISTORY
+      update RES_RECRUIT_HISTORY
     <set >
       <if test="record.historyFlow != null" >
         HISTORY_FLOW = #{record.historyFlow,jdbcType=VARCHAR},
@@ -302,7 +304,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_RECRUIT_HISTORY
+      update RES_RECRUIT_HISTORY
     set HISTORY_FLOW = #{record.historyFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -324,8 +326,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResRecruitHistory" >
-    update PDSCI.RES_RECRUIT_HISTORY
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResRecruitHistory">
+      update RES_RECRUIT_HISTORY
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -378,8 +380,8 @@
     </set>
     where HISTORY_FLOW = #{historyFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResRecruitHistory" >
-    update PDSCI.RES_RECRUIT_HISTORY
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResRecruitHistory">
+      update RES_RECRUIT_HISTORY
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},

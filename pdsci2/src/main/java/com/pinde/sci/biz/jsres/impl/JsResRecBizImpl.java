@@ -1,8 +1,11 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
+import com.pinde.core.model.ResRec;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.jsres.IJsResRecBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -11,10 +14,6 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.form.jsres.BackTrainForm;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
-import com.pinde.sci.model.mo.ResRec;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +28,6 @@ import java.util.Map;
 public class JsResRecBizImpl implements IJsResRecBiz {
     @Autowired
     private IResDoctorRecruitBiz recruitBiz;
-    @Autowired
-    private IJsResDoctorRecruitBiz jsResDoctorRecruitBiz;
     @Autowired
     private IResDoctorBiz resDoctorBiz;
     @Autowired
@@ -55,7 +52,7 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         Document dom = null;
         Element root = null;
         ResRec resRec = new ResRec();
-        ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
+        com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
         ResDoctor doctor = resDoctorBiz.readDoctor(recruit.getDoctorFlow());
         resRec.setOrgFlow(recruit.getOrgFlow());
         resRec.setOrgName(recruit.getOrgName());
@@ -141,7 +138,7 @@ public class JsResRecBizImpl implements IJsResRecBiz {
         Document dom = null;
         Element root = null;
         ResRec resRec = new ResRec();
-        ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
+    com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
         ResDoctor doctor = resDoctorBiz.readDoctor(recruit.getDoctorFlow());
         resRec.setOrgFlow(recruit.getOrgFlow());
         resRec.setOrgName(recruit.getOrgName());
@@ -281,7 +278,7 @@ public class JsResRecBizImpl implements IJsResRecBiz {
     @Override
     public int saveDelayInfo(BackTrainForm backTrainForm, ResDoctorRecruitWithBLOBs recruitWithBLOBs) {
         ResRec resRec = new ResRec();
-        ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
+    com.pinde.core.model.ResDoctorRecruit recruit = recruitBiz.readResDoctorRecruit(recruitWithBLOBs.getRecruitFlow());
         resRec.setOrgFlow(recruit.getOrgFlow());
         resRec.setOrgName(recruit.getOrgName());
         ResDoctor doctor = resDoctorBiz.readDoctor(recruitWithBLOBs.getDoctorFlow());
@@ -343,7 +340,7 @@ public class JsResRecBizImpl implements IJsResRecBiz {
     }
 
     @Override
-    public int checkBackTrain(ResRec resRec, BackTrainForm form,ResDoctorRecruit doctorRecruit) throws DocumentException {
+    public int checkBackTrain(ResRec resRec, BackTrainForm form, ResDoctorRecruit doctorRecruit) throws DocumentException {
         String content = resRec.getRecContent();
         String auditStatusId = StringUtil.defaultIfEmpty(form.getAuditStatusId(), "");
         String auditStatusName = StringUtil.defaultIfEmpty(form.getAuditStatusName(), "");

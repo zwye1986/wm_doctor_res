@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResRecruitDoctorInfoBiz;
 import com.pinde.sci.dao.base.JsresRecruitDocInfoMapper;
@@ -12,7 +13,6 @@ import com.pinde.sci.dao.jsres.JsResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -135,7 +135,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	}
 
 	@Override
-	public List<ResDoctorRecruit> searchRecruitList(String doctorFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchRecruitList(String doctorFlow) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
@@ -155,7 +155,7 @@ public class JsResRecruitDoctorInfoBizImpl implements IJsResRecruitDoctorInfoBiz
 	}
 
 	@Override
-	public List<ResDoctorRecruit> searchRecruitListNew(String doctorFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> searchRecruitListNew(String doctorFlow) {
 		ResDoctorRecruitExample example = new ResDoctorRecruitExample();
 		ResDoctorRecruitExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)

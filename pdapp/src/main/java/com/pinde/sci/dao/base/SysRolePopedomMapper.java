@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SysRolePopedom;
 import com.pinde.core.model.SysRolePopedomExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysRolePopedomMapper {
     int countByExample(SysRolePopedomExample example);

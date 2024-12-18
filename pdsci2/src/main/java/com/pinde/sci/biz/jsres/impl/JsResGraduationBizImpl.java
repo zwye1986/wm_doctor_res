@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.GraduationExamResults;
+import com.pinde.core.model.SchExamDoctorArrangement;
 import com.pinde.sci.biz.jsres.IJsResGraduationBiz;
 import com.pinde.sci.dao.base.GraduationExamResultsMapper;
 import com.pinde.sci.dao.jsres.JsResGraduationMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
-import com.pinde.sci.model.mo.GraduationExamResults;
-import com.pinde.sci.model.mo.SchExamDoctorArrangement;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

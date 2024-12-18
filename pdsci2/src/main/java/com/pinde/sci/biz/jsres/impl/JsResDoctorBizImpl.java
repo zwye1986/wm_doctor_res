@@ -3,9 +3,7 @@ package com.pinde.sci.biz.jsres.impl;
 import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -27,7 +25,6 @@ import com.pinde.sci.form.jsres.BackTrainForm;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.sci.model.mo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -46,13 +43,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 
-	private static Logger logger = LoggerFactory.getLogger(JsResDoctorBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResDoctorBizImpl.class);
 
 	@Autowired
 	private IPubUserResumeBiz userResumeBiz;
@@ -1265,7 +1263,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
             cellTitle = rowThree.createCell(i);
             cellTitle.setCellValue(titles[i]);
             cellTitle.setCellStyle(styleCenter);
-            sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
         }
 
         int rowNum = 3;
@@ -1554,7 +1552,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
             cellTitle = rowThree.createCell(i);
             cellTitle.setCellValue(titles[i]);
             cellTitle.setCellStyle(styleCenter);
-            sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
         }
 
         int rowNum = 1;
@@ -1962,7 +1960,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 3;
@@ -2587,7 +2585,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 1;
@@ -3095,7 +3093,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 3;
@@ -3778,7 +3776,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 1;
@@ -3803,16 +3801,16 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				}
 				if (orgAndJointNameMap.containsKey(doctorInfoExts.get(i).getOrgFlow())) {
 					orgName = (String) orgAndJointNameMap.get(doctorInfoExts.get(i).getOrgFlow());
-					joinName = (String)doctorInfoExts.get(i).getOrgName();
+                    joinName = doctorInfoExts.get(i).getOrgName();
 					jointFlag = "是";
 				} else {
 					jointFlag = "否";
-					orgName = (String)doctorInfoExts.get(i).getOrgName();
+                    orgName = doctorInfoExts.get(i).getOrgName();
 				}
 
 				String age ="";
-				if(StringUtil.isNotBlank((String)doctorInfoExts.get(i).getUserBirthday())) {
-					String birthDay = (String)doctorInfoExts.get(i).getUserBirthday();
+                if (StringUtil.isNotBlank(doctorInfoExts.get(i).getUserBirthday())) {
+                    String birthDay = doctorInfoExts.get(i).getUserBirthday();
 					age = (Integer.parseInt(DateUtil.getCurrDate().substring(0, 4)) - Integer.parseInt(birthDay.substring(0, 4))) + "";
 				}
 //				SysUser sysUser = doctorInfoExt.getSysUser();
@@ -3904,7 +3902,7 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				String yydc="";
 				String hospitalCateName="";
 				String hospitalAttrName="";
-				String workOrg = (String)doctorInfoExts.get(i).getWorkOrgName();
+                String workOrg = doctorInfoExts.get(i).getWorkOrgName();
 				String graduatedWorkOrg = "";
                 if (com.pinde.core.common.enums.ResDocTypeEnum.Company.getId().equals(doctorInfoExts.get(i).getDoctorTypeId())) {
 //					ResBase resBase = resBaseMapper.selectByPrimaryKey((String)doctorInfoExts.get(i).getInfoOrgFlow());
@@ -4002,8 +4000,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				}
 				//规培年限
 				String trainYear = "";
-				if(StringUtil.isNotBlank((String)doctorInfoExts.get(i).getTrainYear())){
-					trainYear = (String)doctorInfoExts.get(i).getTrainYear();
+                if (StringUtil.isNotBlank(doctorInfoExts.get(i).getTrainYear())) {
+                    trainYear = doctorInfoExts.get(i).getTrainYear();
 				}
 				switch (trainYear){
 					case "OneYear":{trainYear="一年";break;}
@@ -4012,27 +4010,27 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				}
 				dataList = new String[]{
 //						orgName,
-						(String)doctorInfoExts.get(i).getOrgName(),
-						(String)doctorInfoExts.get(i).getUserName(),
-						(String)doctorInfoExts.get(i).getSexName(),
-						(String)doctorInfoExts.get(i).getUserBirthday(),
+                        doctorInfoExts.get(i).getOrgName(),
+                        doctorInfoExts.get(i).getUserName(),
+                        doctorInfoExts.get(i).getSexName(),
+                        doctorInfoExts.get(i).getUserBirthday(),
 						CretType,
-						(String)doctorInfoExts.get(i).getIdNo(),
+                        doctorInfoExts.get(i).getIdNo(),
 						area,
-						(String)doctorInfoExts.get(i).getNationName(),
-						(String)doctorInfoExts.get(i).getUserPhone(),
-						(String)doctorInfoExts.get(i).getUserEmail(),
-						(String)doctorInfoExts.get(i).getUserQq(),
+                        doctorInfoExts.get(i).getNationName(),
+                        doctorInfoExts.get(i).getUserPhone(),
+                        doctorInfoExts.get(i).getUserEmail(),
+                        doctorInfoExts.get(i).getUserQq(),
 						isYearGraduate,
-						(String)doctorInfoExts.get(i).getSpeName(),
+                        doctorInfoExts.get(i).getSpeName(),
 						qualificationFlag,
 						userResumeExt.getDoctorQualificationCertificateCode(),
-						(String)doctorInfoExts.get(i).getSessionNumber(),
+                        doctorInfoExts.get(i).getSessionNumber(),
 						recruitDate,
 						"否",
 						"",
 						trainYear,
-						(String)doctorInfoExts.get(i).getDoctorTypeName(),
+                        doctorInfoExts.get(i).getDoctorTypeName(),
 						userResumeExt.getGraduatedName(),
 						graduationTime,
 						userResumeExt.getSpecialized(),
@@ -4129,8 +4127,8 @@ public class JsResDoctorBizImpl implements IJsResDoctorBiz{
 				fileName = java.net.URLEncoder.encode(fileName, "UTF-8");
 			} else {
 				// 非IE浏览器的处理：
-				fileName = new String(fileName.getBytes("UTF-8"),
-						"ISO-8859-1");
+                fileName = new String(fileName.getBytes(StandardCharsets.UTF_8),
+                        StandardCharsets.ISO_8859_1);
 			}
 			response.setContentType("application/octet-stream");
 			response.setCharacterEncoding("UTF-8");

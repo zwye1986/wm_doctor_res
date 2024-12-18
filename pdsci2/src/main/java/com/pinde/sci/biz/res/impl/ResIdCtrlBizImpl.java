@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -13,7 +13,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResIdctrlDetailMapper;
 import com.pinde.sci.dao.base.ResIdctrlMainMapper;
 import com.pinde.sci.dao.res.ResIdCtrlExtMapper;
-import com.pinde.sci.model.mo.*;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

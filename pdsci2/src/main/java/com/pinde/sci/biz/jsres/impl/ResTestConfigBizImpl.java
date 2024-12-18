@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.model.ResTestConfig;
+import com.pinde.core.model.ResTestConfigExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResTestConfigMapper;
-import com.pinde.sci.model.mo.ResTestConfig;
-import com.pinde.sci.model.mo.ResTestConfigExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -231,10 +231,7 @@ public class ResTestConfigBizImpl implements IResTestConfigBiz {
                 resTestConfig.getTestEndTime().compareTo(resTest.getTestEndTime()) <= 0)).collect(Collectors.toList());
         List<ResTestConfig> collect = resTestConfigs.stream().filter(resTest -> resTestConfig.getApplyStartTime().compareTo(resTest.getApplyStartTime()) <= 0
                 && resTestConfig.getTestEndTime().compareTo(resTest.getTestEndTime()) >= 0).collect(Collectors.toList());
-        if (list.size() == 0 && collect.size() == 0) {
-            return true;
-        }
-        return false;
+        return list.size() == 0 && collect.size() == 0;
     }
     //根据唯一标识获取考试信息
     @Override

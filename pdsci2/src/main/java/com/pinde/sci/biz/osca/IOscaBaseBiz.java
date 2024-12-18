@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.osca;
 
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.osca.OscaCheckInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -6434,6 +6434,496 @@ public class ResDoctorRecruitExample {
             addCriterion("ORG_AUDIT not between", value1, value2, "orgAudit");
             return (Criteria) this;
         }
+
+        public Criteria andProvinceCertificateNoIsNull() {
+            addCriterion("PROVINCE_CERTIFICATE_NO is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoIsNotNull() {
+            addCriterion("PROVINCE_CERTIFICATE_NO is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO =", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoNotEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO <>", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoGreaterThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO >", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoGreaterThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO >=", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoLessThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO <", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoLessThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO <=", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO like", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoNotLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_NO not like", value, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_NO in", values, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoNotIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_NO not in", values, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_NO between", value1, value2, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateNoNotBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_NO not between", value1, value2, "provinceCertificateNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowIsNull() {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowIsNotNull() {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW =", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowNotEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW <>", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowGreaterThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW >", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowGreaterThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW >=", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowLessThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW <", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowLessThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW <=", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW like", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowNotLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW not like", value, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW in", values, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowNotIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW not in", values, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW between", value1, value2, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateFlowNotBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_FLOW not between", value1, value2, "provinceCertificateFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusIsNull() {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusIsNotNull() {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS =", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusNotEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS <>", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusGreaterThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS >", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS >=", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusLessThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS <", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusLessThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS <=", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS like", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusNotLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS not like", value, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS in", values, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusNotIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS not in", values, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS between", value1, value2, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateStatusNotBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_STATUS not between", value1, value2, "provinceCertificateStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateIsNull() {
+            addCriterion("PROVINCE_CERTIFICATE_DATE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateIsNotNull() {
+            addCriterion("PROVINCE_CERTIFICATE_DATE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE =", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateNotEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE <>", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateGreaterThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE >", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateGreaterThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE >=", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateLessThan(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE <", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateLessThanOrEqualTo(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE <=", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE like", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateNotLike(String value) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE not like", value, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE in", values, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateNotIn(List<String> values) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE not in", values, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE between", value1, value2, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andProvinceCertificateDateNotBetween(String value1, String value2) {
+            addCriterion("PROVINCE_CERTIFICATE_DATE not between", value1, value2, "provinceCertificateDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayIsNull() {
+            addCriterion("SIGNUP_WAY is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayIsNotNull() {
+            addCriterion("SIGNUP_WAY is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayEqualTo(String value) {
+            addCriterion("SIGNUP_WAY =", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayNotEqualTo(String value) {
+            addCriterion("SIGNUP_WAY <>", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayGreaterThan(String value) {
+            addCriterion("SIGNUP_WAY >", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayGreaterThanOrEqualTo(String value) {
+            addCriterion("SIGNUP_WAY >=", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayLessThan(String value) {
+            addCriterion("SIGNUP_WAY <", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayLessThanOrEqualTo(String value) {
+            addCriterion("SIGNUP_WAY <=", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayLike(String value) {
+            addCriterion("SIGNUP_WAY like", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayNotLike(String value) {
+            addCriterion("SIGNUP_WAY not like", value, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayIn(List<String> values) {
+            addCriterion("SIGNUP_WAY in", values, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayNotIn(List<String> values) {
+            addCriterion("SIGNUP_WAY not in", values, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayBetween(String value1, String value2) {
+            addCriterion("SIGNUP_WAY between", value1, value2, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignupWayNotBetween(String value1, String value2) {
+            addCriterion("SIGNUP_WAY not between", value1, value2, "signupWay");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonIsNull() {
+            addCriterion("RECRUIT_FLAG_REASON is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonIsNotNull() {
+            addCriterion("RECRUIT_FLAG_REASON is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonEqualTo(String value) {
+            addCriterion("RECRUIT_FLAG_REASON =", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonNotEqualTo(String value) {
+            addCriterion("RECRUIT_FLAG_REASON <>", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonGreaterThan(String value) {
+            addCriterion("RECRUIT_FLAG_REASON >", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("RECRUIT_FLAG_REASON >=", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonLessThan(String value) {
+            addCriterion("RECRUIT_FLAG_REASON <", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonLessThanOrEqualTo(String value) {
+            addCriterion("RECRUIT_FLAG_REASON <=", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonLike(String value) {
+            addCriterion("RECRUIT_FLAG_REASON like", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonNotLike(String value) {
+            addCriterion("RECRUIT_FLAG_REASON not like", value, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonIn(List<String> values) {
+            addCriterion("RECRUIT_FLAG_REASON in", values, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonNotIn(List<String> values) {
+            addCriterion("RECRUIT_FLAG_REASON not in", values, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonBetween(String value1, String value2) {
+            addCriterion("RECRUIT_FLAG_REASON between", value1, value2, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecruitFlagReasonNotBetween(String value1, String value2) {
+            addCriterion("RECRUIT_FLAG_REASON not between", value1, value2, "recruitFlagReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagIsNull() {
+            addCriterion("REVIEW_FLAG is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagIsNotNull() {
+            addCriterion("REVIEW_FLAG is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagEqualTo(String value) {
+            addCriterion("REVIEW_FLAG =", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagNotEqualTo(String value) {
+            addCriterion("REVIEW_FLAG <>", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagGreaterThan(String value) {
+            addCriterion("REVIEW_FLAG >", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagGreaterThanOrEqualTo(String value) {
+            addCriterion("REVIEW_FLAG >=", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagLessThan(String value) {
+            addCriterion("REVIEW_FLAG <", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagLessThanOrEqualTo(String value) {
+            addCriterion("REVIEW_FLAG <=", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagLike(String value) {
+            addCriterion("REVIEW_FLAG like", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagNotLike(String value) {
+            addCriterion("REVIEW_FLAG not like", value, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagIn(List<String> values) {
+            addCriterion("REVIEW_FLAG in", values, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagNotIn(List<String> values) {
+            addCriterion("REVIEW_FLAG not in", values, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagBetween(String value1, String value2) {
+            addCriterion("REVIEW_FLAG between", value1, value2, "reviewFlag");
+            return (Criteria) this;
+        }
+
+        public Criteria andReviewFlagNotBetween(String value1, String value2) {
+            addCriterion("REVIEW_FLAG not between", value1, value2, "reviewFlag");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

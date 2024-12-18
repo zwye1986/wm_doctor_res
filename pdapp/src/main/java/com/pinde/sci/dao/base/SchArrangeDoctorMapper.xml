@@ -85,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ARRANGE_DOCTOR
+      from SCH_ARRANGE_DOCTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,21 +96,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ARRANGE_DOCTOR
+      from SCH_ARRANGE_DOCTOR
     where ARR_DOC_FLOW = #{arrDocFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ARRANGE_DOCTOR
+      delete from SCH_ARRANGE_DOCTOR
     where ARR_DOC_FLOW = #{arrDocFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SchArrangeDoctorExample" >
-    delete from PDSCI.SCH_ARRANGE_DOCTOR
+      delete from SCH_ARRANGE_DOCTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SchArrangeDoctor" >
-    insert into PDSCI.SCH_ARRANGE_DOCTOR (ARR_DOC_FLOW, ARRANGE_FLOW, DOCTOR_FLOW, 
+      insert into SCH_ARRANGE_DOCTOR (ARR_DOC_FLOW, ARRANGE_FLOW, DOCTOR_FLOW,
       DOCTOR_NAME, ROTATION_FLOW, ROTATION_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, 
@@ -122,7 +122,7 @@
       #{orgName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchArrangeDoctor" >
-    insert into PDSCI.SCH_ARRANGE_DOCTOR
+      insert into SCH_ARRANGE_DOCTOR
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="arrDocFlow != null" >
         ARR_DOC_FLOW,
@@ -207,13 +207,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SchArrangeDoctorExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ARRANGE_DOCTOR
+      select count(*) from SCH_ARRANGE_DOCTOR
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ARRANGE_DOCTOR
+      update SCH_ARRANGE_DOCTOR
     <set >
       <if test="record.arrDocFlow != null" >
         ARR_DOC_FLOW = #{record.arrDocFlow,jdbcType=VARCHAR},
@@ -260,7 +260,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ARRANGE_DOCTOR
+      update SCH_ARRANGE_DOCTOR
     set ARR_DOC_FLOW = #{record.arrDocFlow,jdbcType=VARCHAR},
       ARRANGE_FLOW = #{record.arrangeFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
@@ -279,7 +279,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchArrangeDoctor" >
-    update PDSCI.SCH_ARRANGE_DOCTOR
+      update SCH_ARRANGE_DOCTOR
     <set >
       <if test="arrangeFlow != null" >
         ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
@@ -321,7 +321,7 @@
     where ARR_DOC_FLOW = #{arrDocFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchArrangeDoctor" >
-    update PDSCI.SCH_ARRANGE_DOCTOR
+      update SCH_ARRANGE_DOCTOR
     set ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},

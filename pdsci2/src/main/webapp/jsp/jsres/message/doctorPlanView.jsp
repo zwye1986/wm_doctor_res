@@ -16,8 +16,8 @@
 
         // 点击报名 展示详细的报考信息
         function editDoctorRecruit(speId){
-            var jointOrgFlow= $("#jointOrg").val();
-            var jointOrgName= $("#jointOrg").find("option:selected").text();
+            var jointOrgFlow= $("#jointOrg").val() || '';
+            var jointOrgName= $("#jointOrg").find("option:selected").text() || '';
             var speId = speId;
             var orgFlow = $("#orgFlow").val();
             var assignYear = $("#assignYear").val();

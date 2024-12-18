@@ -89,6 +89,8 @@ public class ResDocotrDelayTeturn implements java.io.Serializable {
 
     private String globalCheckFile;
 
+    private String cityAuditOpinion;
+
     public String getRecordFlow() {
         return recordFlow;
     }
@@ -439,5 +441,13 @@ public class ResDocotrDelayTeturn implements java.io.Serializable {
 
     public void setGlobalCheckFile(String globalCheckFile) {
         this.globalCheckFile = globalCheckFile;
+    }
+
+    public String getCityAuditOpinion() {
+        return cityAuditOpinion;
+    }
+
+    public void setCityAuditOpinion(String cityAuditOpinion) {
+        this.cityAuditOpinion = cityAuditOpinion;
     }
 }

@@ -1,9 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.common.enums.*;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -21,7 +20,18 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorReduction;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.ResTestConfig;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptAfterWithBLOBs;
+import com.pinde.core.model.SchRotationGroup;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -108,7 +118,7 @@ public class JsResDoctorAsseController extends GeneralController {
     public String recruitDetailData(String recruitFlow,Model model,String applyYear) {
 
         //培训记录
-        ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
         model.addAttribute("recruit", recruit);
         //培训方案
         SchRotation rotation = rotationBiz.getRotationByRecruit(recruit);
@@ -262,7 +272,7 @@ public class JsResDoctorAsseController extends GeneralController {
     public String showScore(String recruitFlow,String scoreFlow,Model model) throws DocumentException {
 
         //培训记录
-        ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
         model.addAttribute("recruit", recruit);
         ResScore score=resScoreBiz.searchByScoreFlow(scoreFlow);
         model.addAttribute("score",score);
@@ -307,7 +317,7 @@ public class JsResDoctorAsseController extends GeneralController {
     @RequestMapping(value="/showAllInfoMain")
     public String showAllInfoMain(String recruitFlow,Model model,String isShow) throws DocumentException {
         //培训记录
-        ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
         model.addAttribute("recruit", recruit);
         return "jsres/doctor/asseApplication/showAllInfo/main";
     }
@@ -315,7 +325,7 @@ public class JsResDoctorAsseController extends GeneralController {
     @RequestMapping(value="/AsseInfo")
     public String AsseInfo(String recruitFlow,Model model,String applyYear,String applyFlow,String flag,String roleFlag) throws DocumentException {
         //培训记录
-        ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
         model.addAttribute("doctorRecruit", recruit);
         //查询减免信息
         ResDoctorReduction reduction = reductionBiz.findReductionByRecruitFlowandStatusId(recruitFlow,"GlobalPassed");
@@ -654,7 +664,7 @@ public class JsResDoctorAsseController extends GeneralController {
     @RequestMapping(value="/AsseFile")
     public String AsseFile(String recruitFlow,String applyYear,Model model) throws DocumentException {
         //培训记录
-        ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
+        com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(recruitFlow);
         model.addAttribute("recruit", recruit);
 
         JsresGraduationApply jsresGraduationApply = graduationApplyBiz.searchByRecruitFlow(recruitFlow, applyYear);
@@ -1267,7 +1277,7 @@ public class JsResDoctorAsseController extends GeneralController {
         }
         JsresGraduationApply apply=graduationApplyBiz.readByFlow(applyFlow);
         if (apply != null) {
-            ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
+            com.pinde.core.model.ResDoctorRecruit recruit = jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
             if (StringUtil.isBlank(auditStatusId)) {
                 return "请选择审核结果！";
             }

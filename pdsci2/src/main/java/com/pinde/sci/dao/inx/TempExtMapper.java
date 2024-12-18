@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.inx;
 
-import com.pinde.sci.model.mo.PubProjRec;
-import com.pinde.sci.model.mo.PubUserResume;
-import com.pinde.sci.model.mo.ResRec;
+import com.pinde.core.model.PubProjRec;
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.ResRec;
 
 import java.util.List;
 

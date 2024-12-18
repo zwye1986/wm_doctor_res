@@ -47,6 +47,26 @@ public class ResBase implements java.io.Serializable {
 
     private String baseInfo;
 
+    private String sessionNumber;
+
+    private String baseExtInfo;
+
+    public String getBaseExtInfo() {
+        return baseExtInfo;
+    }
+
+    public void setBaseExtInfo(String baseExtInfo) {
+        this.baseExtInfo = baseExtInfo;
+    }
+
+    public String getSessionNumber() {
+        return sessionNumber;
+    }
+
+    public void setSessionNumber(String sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+
     public String getOrgFlow() {
         return orgFlow;
     }

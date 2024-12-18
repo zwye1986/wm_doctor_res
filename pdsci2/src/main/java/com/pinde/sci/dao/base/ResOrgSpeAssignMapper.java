@@ -1,9 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResOrgSpeAssign;
-import com.pinde.sci.model.mo.ResOrgSpeAssignExample;
-import java.util.List;
+import com.pinde.core.model.ResOrgSpeAssign;
+import com.pinde.core.model.ResOrgSpeAssignExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResOrgSpeAssignMapper {
     int countByExample(ResOrgSpeAssignExample example);

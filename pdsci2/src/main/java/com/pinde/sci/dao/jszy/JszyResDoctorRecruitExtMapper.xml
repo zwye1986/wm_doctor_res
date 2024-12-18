@@ -3,7 +3,8 @@
 <mapper namespace="com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper">
 	
 	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 		    <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
@@ -11,7 +12,8 @@
 		</association>
 	</resultMap>
 	<resultMap id="DoctorScoreRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resScore" column="user_flow"  resultMap="com.pinde.sci.dao.base.ResScoreMapper.ResultMapWithBLOBs" />
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
@@ -20,13 +22,15 @@
 		</association>
 	</resultMap>
 	<resultMap id="doctorInfo" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
 	</resultMap>
 	
 	<resultMap id="doctorInfoSun" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 	</resultMap>
 	 <select id="searchDoctorRecruit"  parameterType="java.util.Map" resultMap="doctorInfoSun">
 	 	  select 	dr.*,		
@@ -41,8 +45,8 @@
 					u.NATION_NAME,
 					u.USER_BIRTHDAY,
 					u.USER_EMAIL
-		    from pdsci.RES_DOCTOR_RECRUIT dr
-		    inner join pdsci.SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW 
+         from RES_DOCTOR_RECRUIT dr
+         inner join SYS_USER u on dr.DOCTOR_FLOW = u.USER_FLOW
 		    where dr.RECORD_STATUS = 'Y' AND u.RECORD_STATUS = 'Y'  AND dr.RECRUIT_FLAG = 'Y'
 		     <if test="doctorRecruit!=null">
 				 <if test="doctorRecruit.speId!=null and doctorRecruit.speId!=''">
@@ -103,16 +107,16 @@
 	 <select id="searchDoctorInfoExts"  parameterType="java.util.Map" resultMap="doctorInfo">
     		select *
          <if test='zlFlag == "Y"'>
-             from pdsci.Jsres_Recruit_doc_Info dr
+             from Jsres_Recruit_doc_Info dr
          </if>
          <if test='zlFlag != "Y"'>
-             from pdsci.RES_DOCTOR_RECRUIT dr
+             from RES_DOCTOR_RECRUIT dr
          </if>
 			 left join  RES_DOCTOR ed
 			 on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
-    		left join  pdsci.SYS_USER u
+         left join SYS_USER u
     		on dr.DOCTOR_FLOW =  u.USER_FLOW
-    		left join pdsci.PUB_USER_RESUME pur
+         left join PUB_USER_RESUME pur
     		on pur.USER_FLOW=dr.DOCTOR_FLOW
     		where dr.RECORD_STATUS= 'Y'
          <if test='zlFlag != "Y"'>
@@ -120,8 +124,8 @@
          </if>
     		and dr.org_flow in(
     			SELECT ORG_FLOW
-			FROM PDSCI.SYS_ORG
-			WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+         FROM SYS_ORG
+         WHERE SYS_ORG.RECORD_STATUS='Y'
 			<if test="sysOrg!=null">
 				<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 			    	 AND ORG_PROV_ID = #{sysOrg.orgProvId} 
@@ -222,7 +226,7 @@
     </select> 
     <select id="searchDoctorInfo"  parameterType="java.util.Map" resultMap="doctorInfo">
     	SELECT *
-			from pdsci.RES_DOCTOR_RECRUIT dr, pdsci.SYS_USER u,  pdsci.RES_DOCTOR ed,pdsci.PUB_USER_RESUME pur
+        from RES_DOCTOR_RECRUIT dr, SYS_USER u, RES_DOCTOR ed, PUB_USER_RESUME pur
 			where dr.RECORD_STATUS = 'Y' and u.RECORD_STATUS = 'Y' and ed.RECORD_STATUS = 'Y'  and pur.RECORD_STATUS = 'Y' 
     		and dr.DOCTOR_FLOW=u.USER_FLOW and u.USER_FLOW=ed.DOCTOR_FLOW and ed.DOCTOR_FLOW=pur.USER_FLOW
     		and dr.DOCTOR_FLOW=ed.DOCTOR_FLOW and u.USER_FLOW=pur.USER_FLOW 
@@ -246,8 +250,8 @@
     		)
     		and exists (
 					SELECT ORG_FLOW
-					FROM PDSCI.SYS_ORG
-					WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 					and ed.org_flow =org_flow 
 			<if test="sysOrg!=null">
 				<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
@@ -324,8 +328,8 @@
 		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
-		from pdsci.res_score score
-		left join  pdsci.SYS_USER u
+        from res_score score
+        left join SYS_USER u
 		on score.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -343,8 +347,8 @@
 		where score.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
 		and  EXISTS (
 		SELECT null
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="sysOrg!=null">
 			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -452,7 +456,7 @@
 		AND T.SCORE_TYPE_ID IN ('SkillScore')) B
 		ON T.DOCTOR_FLOW = B.DOCTOR_FLOW
 		AND T.SCORE_PHASE_ID = B.SCORE_PHASE_ID ) score
-		left join  pdsci.SYS_USER u
+        left join SYS_USER u
 		on score.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -470,8 +474,8 @@
 		where  u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
 		and  EXISTS (
 		SELECT null
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="sysOrg!=null">
 			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -557,8 +561,8 @@
 		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
-		from pdsci.res_score score
-		left join  pdsci.SYS_USER u
+        from res_score score
+        left join SYS_USER u
 		on score.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -576,8 +580,8 @@
 		where score.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
 		and  EXISTS (
 		SELECT null
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="sysOrg!=null">
 			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -657,8 +661,8 @@
 		select score.score_flow,score.theory_score,score.skill_score,score.ext_score,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName,dr.*
-		from pdsci.res_score score
-		left join  pdsci.SYS_USER u
+        from res_score score
+        left join SYS_USER u
 		on score.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on score.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -676,8 +680,8 @@
 		where score.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and  dr.RECORD_STATUS= 'Y'
 		and  EXISTS (
 		SELECT null
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="sysOrg!=null">
 			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -765,12 +769,12 @@
 	, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 	ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName
         <if test='zlFlag == "Y"'>
-            from pdsci.Jsres_Recruit_doc_Info dr
+            from Jsres_Recruit_doc_Info dr
         </if>
         <if test='zlFlag != "Y"'>
-            from pdsci.RES_DOCTOR_RECRUIT dr
+            from RES_DOCTOR_RECRUIT dr
         </if>
-	left join  pdsci.SYS_USER u
+        left join SYS_USER u
 	on dr.DOCTOR_FLOW =  u.USER_FLOW
 	left join  RES_DOCTOR ed
 	on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -780,8 +784,8 @@
     </if>
 	and dr.org_flow in(
 	SELECT ORG_FLOW
-	FROM PDSCI.SYS_ORG
-	WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 	<if test="sysOrg!=null">
 		<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 			AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -900,8 +904,8 @@
 		,RESUME.USER_RESUME,TS.SCORE_TYPE_ID,TS.SCORE_FLOW,TS.THEORY_SCORE,TS.THEORY_SCORE_YEAR,SS.SKILL_SCORE_FLOW,SS.SKILL_SCORE,SS.EXT_SCORE,SS.SKILL_SCORE_YEAR
 		,PS.PUBLIC_SCORE_FLOW,PS.PUBLIC_ALL,PS.PUBLIC_NOTALL_PASS, PS.PUBLIC_NOTALL_SCORE,   PS.PUBLIC_SCORE_YEAR,ed.DISAGREE_REASON,dr.DOCTOR_FLOW,ed.GRADUATION_STATUS_ID
 		,ed.CERTIFICATE_NO
-		from pdsci.RES_DOCTOR_RECRUIT dr
-		left join  pdsci.SYS_USER u
+        from RES_DOCTOR_RECRUIT dr
+        left join SYS_USER u
 		on dr.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
@@ -955,8 +959,8 @@
 		where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="sysOrg!=null">
 			<if test="sysOrg.orgProvId!=null and sysOrg.orgProvId!=''">
 				AND ORG_PROV_ID = #{sysOrg.orgProvId}
@@ -1380,7 +1384,8 @@
 		group by rec.org_flow
     </select> 
     <resultMap id="info" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
-		<association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 	</resultMap>
 	<select id="statisticNoAppUser"  parameterType="java.util.Map" resultMap="info">
@@ -1641,8 +1646,8 @@
 		WHERE T.RECORD_STATUS = 'Y'
 		AND t.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000')
 		and rd.doctor_type_id in ('Company', 'Graduate', 'Social','CompanyEntrust')
 		and t.session_number is not null
@@ -1708,8 +1713,8 @@
 		WHERE T.RECORD_STATUS = 'Y'
 		AND ORG.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000')
 		<if test="docTypeList!=null and docTypeList.size>0">
 			and rd.DOCTOR_TYPE_ID in
@@ -1756,8 +1761,8 @@
 		WHERE T.RECORD_STATUS = 'Y'
 		AND ORG.JOINT_ORG_FLOW IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000')
 		<if test="docTypeList!=null and docTypeList.size>0">
 			and rd.DOCTOR_TYPE_ID in
@@ -1833,8 +1838,8 @@
 		and t.audit_status_id = 'Passed'
 		AND ORG.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000'
 		<if test="orgFlow!=null and orgFlow!=''">
 			and org_Flow=#{orgFlow}
@@ -1890,8 +1895,8 @@
 		and t.type_id = 'ReturnTraining'
 		AND ORG.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000')
 		and not exists(
 		select 1
@@ -1940,8 +1945,8 @@
 		WHERE T.RECORD_STATUS = 'Y'
 		AND ORG.org_flow IN
 		(SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
 		AND ORG_PROV_ID = '320000'
 		<if test="orgFlow!=null and orgFlow!=''">
 			and org_Flow=#{orgFlow}
@@ -1975,16 +1980,16 @@
 		select dr.*,u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID, u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL
 		, u.ID_NO, u.USER_BIRTHDAY, u.TITLE_ID, u.TITLE_NAME, u.DEGREE_ID, u.DEGREE_NAME, u.EDUCATION_ID, u.EDUCATION_NAME, u.POST_ID, u.POST_NAME,
 		ed.ORG_FLOW as edOrgFlow,ed.ORG_Name as edOrgName
-		from pdsci.RES_DOCTOR_RECRUIT dr
-		left join  pdsci.SYS_USER u
+        from RES_DOCTOR_RECRUIT dr
+        left join SYS_USER u
 		on dr.DOCTOR_FLOW =  u.USER_FLOW
 		left join  RES_DOCTOR ed
 		on dr.DOCTOR_FLOW =  ed.DOCTOR_FLOW
 		where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
 		and dr.org_flow in(
 		SELECT ORG_FLOW
-		FROM PDSCI.SYS_ORG
-		WHERE PDSCI.SYS_ORG.RECORD_STATUS='Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS='Y'
 		<if test="orgProvId!=null and orgProvId!=''">
 			AND ORG_PROV_ID = #{orgProvId}
 		</if>
@@ -2104,8 +2109,8 @@
                  WHERE T.RECORD_STATUS = 'Y'
                    AND T.AUDIT_STATUS_ID = 'Passed'
                    AND T.ORG_FLOW IN (SELECT ORG_FLOW
-                                        FROM PDSCI.SYS_ORG
-                                       WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
                                          AND ORG_PROV_ID = '320000')
                    AND U.RECORD_STATUS = 'Y'
                     <if test="docTypeList!=null and docTypeList.size>0">
@@ -2189,8 +2194,8 @@
         LEFT JOIN RES_DOCTOR RD ON H.DOCTOR_FLOW = RD.DOCTOR_FLOW
         LEFT JOIN SYS_USER U ON H.DOCTOR_FLOW = U.USER_FLOW
         WHERE H.ORG_FLOW IN (SELECT ORG_FLOW
-        FROM PDSCI.SYS_ORG
-        WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
         AND ORG_PROV_ID = '320000')
         <if test="docTypeList!=null and docTypeList.size>0">
             AND RD.DOCTOR_TYPE_ID IN
@@ -2291,8 +2296,8 @@ SELECT DISTINCT H.DOCTOR_FLOW,
      LEFT JOIN RES_DOCTOR RD ON H.DOCTOR_FLOW = RD.DOCTOR_FLOW
      LEFT JOIN SYS_USER U ON H.DOCTOR_FLOW = U.USER_FLOW
      WHERE H.ORG_FLOW IN (SELECT ORG_FLOW
-     FROM PDSCI.SYS_ORG
-     WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+     FROM SYS_ORG
+     WHERE SYS_ORG.RECORD_STATUS = 'Y'
      AND ORG_PROV_ID = '320000')
      <if test="docTypeList!=null and docTypeList.size>0">
          AND RD.DOCTOR_TYPE_ID IN

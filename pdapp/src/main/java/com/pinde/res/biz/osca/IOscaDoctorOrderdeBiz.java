@@ -71,7 +71,7 @@ public interface IOscaDoctorOrderdeBiz {
      * @param doctorFlow
      * @return
      */
-    List<ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow);
 
     List<ResScore> selectResScore(String doctorFlow, String year);
 

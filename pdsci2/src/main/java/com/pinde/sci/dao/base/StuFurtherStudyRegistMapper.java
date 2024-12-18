@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.StuFurtherStudyRegist;
-import com.pinde.sci.model.mo.StuFurtherStudyRegistExample;
+import com.pinde.core.model.StuFurtherStudyRegist;
+import com.pinde.core.model.StuFurtherStudyRegistExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

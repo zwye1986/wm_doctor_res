@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.DoctorUntiedRecording;
+import com.pinde.core.model.DoctorUntiedRecording;
 
 import java.util.List;
 

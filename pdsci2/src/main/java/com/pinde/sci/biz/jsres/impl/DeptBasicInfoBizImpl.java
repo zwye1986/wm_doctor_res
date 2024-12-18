@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -22,7 +21,6 @@ import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.sch.ResBaseSpeDeptDataExtMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
-import com.pinde.sci.model.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +58,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     @Autowired
     private ResBaseSpeDeptDataExtMapper resBaseSpeDeptDataExtMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(DeptBasicInfoBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeptBasicInfoBizImpl.class);
 
 
     @Override
@@ -335,7 +333,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     }
 
     @Override
-    public ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow, String orgFlow, String speFlow, String deptFlow, String type,String sessionNumber,String infoType) {
+    public ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow, String orgFlow, String speFlow, String deptFlow, String type, String sessionNumber, String infoType) {
         ResBaseSpeDeptDataExample example = new ResBaseSpeDeptDataExample();
         ResBaseSpeDeptDataExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);

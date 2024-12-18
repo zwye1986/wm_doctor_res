@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResTrainingOpinionMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResTrainingOpinion" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResTrainingOpinion">
     <id column="TRAINING_OPINION_FLOW" property="trainingOpinionFlow" jdbcType="VARCHAR" />
     <result column="OPINION_USER_FLOW" property="opinionUserFlow" jdbcType="VARCHAR" />
     <result column="OPINION_USER_NAME" property="opinionUserName" jdbcType="VARCHAR" />
@@ -82,13 +82,14 @@
     EVA_TIME, ORG_FLOW, ORG_NAME, OPINION_REPLY_USER_FLOW, OPINION_REPLY_NAME, OPINION_REPLY_CONTENT, 
     REPLY_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResTrainingOpinionExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResTrainingOpinionExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TRAINING_OPINION
+      from RES_TRAINING_OPINION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_TRAINING_OPINION
+      from RES_TRAINING_OPINION
     where TRAINING_OPINION_FLOW = #{trainingOpinionFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_TRAINING_OPINION
+      delete from RES_TRAINING_OPINION
     where TRAINING_OPINION_FLOW = #{trainingOpinionFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResTrainingOpinionExample" >
-    delete from PDSCI.RES_TRAINING_OPINION
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResTrainingOpinionExample">
+      delete from RES_TRAINING_OPINION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResTrainingOpinion" >
-    insert into PDSCI.RES_TRAINING_OPINION (TRAINING_OPINION_FLOW, OPINION_USER_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResTrainingOpinion">
+      insert into RES_TRAINING_OPINION (TRAINING_OPINION_FLOW, OPINION_USER_FLOW,
       OPINION_USER_NAME, OPINION_USER_CONTENT, EVA_TIME, 
       ORG_FLOW, ORG_NAME, OPINION_REPLY_USER_FLOW, 
       OPINION_REPLY_NAME, OPINION_REPLY_CONTENT, 
@@ -128,8 +129,8 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResTrainingOpinion" >
-    insert into PDSCI.RES_TRAINING_OPINION
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResTrainingOpinion">
+      insert into RES_TRAINING_OPINION
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="trainingOpinionFlow != null" >
         TRAINING_OPINION_FLOW,
@@ -231,14 +232,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResTrainingOpinionExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_TRAINING_OPINION
+    <select id="countByExample" parameterType="com.pinde.core.model.ResTrainingOpinionExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_TRAINING_OPINION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_TRAINING_OPINION
+      update RES_TRAINING_OPINION
     <set >
       <if test="record.trainingOpinionFlow != null" >
         TRAINING_OPINION_FLOW = #{record.trainingOpinionFlow,jdbcType=VARCHAR},
@@ -294,7 +296,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_TRAINING_OPINION
+      update RES_TRAINING_OPINION
     set TRAINING_OPINION_FLOW = #{record.trainingOpinionFlow,jdbcType=VARCHAR},
       OPINION_USER_FLOW = #{record.opinionUserFlow,jdbcType=VARCHAR},
       OPINION_USER_NAME = #{record.opinionUserName,jdbcType=VARCHAR},
@@ -315,8 +317,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResTrainingOpinion" >
-    update PDSCI.RES_TRAINING_OPINION
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResTrainingOpinion">
+      update RES_TRAINING_OPINION
     <set >
       <if test="opinionUserFlow != null" >
         OPINION_USER_FLOW = #{opinionUserFlow,jdbcType=VARCHAR},
@@ -366,8 +368,8 @@
     </set>
     where TRAINING_OPINION_FLOW = #{trainingOpinionFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResTrainingOpinion" >
-    update PDSCI.RES_TRAINING_OPINION
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResTrainingOpinion">
+      update RES_TRAINING_OPINION
     set OPINION_USER_FLOW = #{opinionUserFlow,jdbcType=VARCHAR},
       OPINION_USER_NAME = #{opinionUserName,jdbcType=VARCHAR},
       OPINION_USER_CONTENT = #{opinionUserContent,jdbcType=VARCHAR},

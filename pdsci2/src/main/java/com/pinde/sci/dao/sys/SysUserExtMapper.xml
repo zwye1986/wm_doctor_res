@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sys.SysUserExtMapper" >
-	<select id="selectIrbUserByForm" parameterType="com.pinde.sci.form.sys.SysUserForm" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
-		select <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List"/> from PDSCI.sys_user u where record_status = 'Y' and  not exists(
-		  select null from PDSCI.irb_info_user iu where record_status = 'Y' and u.user_flow = iu.user_flow
+    <select id="selectIrbUserByForm" parameterType="com.pinde.sci.form.sys.SysUserForm"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select
+        <include refid="com.pinde.core.common.sci.dao.SysUserMapper.Base_Column_List"/>
+        from sys_user u where record_status = 'Y' and not exists(
+        select null from irb_info_user iu where record_status = 'Y' and u.user_flow = iu.user_flow
 		  	<if test='irbInfoFlow!=null and irbInfoFlow!=""'>
 				and irb_info_flow = #{irbInfoFlow}
 			</if>	
@@ -27,9 +30,12 @@
 		</if>
 		order by nlssort(user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-	<select id="selectResUserByForm" parameterType="com.pinde.sci.form.sys.SysUserForm" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
-		select <include refid="com.pinde.sci.dao.base.SysUserMapper.Base_Column_List"/> from PDSCI.sys_user u where record_status = 'Y' and  not exists(
-		  select null from PDSCI.pub_proj_user iu where record_status = 'Y' and u.user_flow = iu.user_flow
+    <select id="selectResUserByForm" parameterType="com.pinde.sci.form.sys.SysUserForm"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select
+        <include refid="com.pinde.core.common.sci.dao.SysUserMapper.Base_Column_List"/>
+        from sys_user u where record_status = 'Y' and not exists(
+        select null from pub_proj_user iu where record_status = 'Y' and u.user_flow = iu.user_flow
 		  	<if test='projFlow!=null and projFlow!=""'>
 				and proj_flow = #{projFlow}
 			</if>	
@@ -54,13 +60,14 @@
 	</select>
 	
 	<!-- searchUserListByOrgFlow -->
-	<select id="searchUserListByOrgFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="searchUserListByOrgFlow" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
     	select u.USER_FLOW,u.USER_CODE,u.USER_PASSWD,u.USER_NAME,u.SEX_ID,u.SEX_NAME,u.STATUS_ID,u.STATUS_DESC,u.USER_PHONE,u.USER_EMAIL,
 			u.DEPT_FLOW,u.DEPT_NAME,u.ORG_FLOW,u.ORG_NAME,u.ID_NO,u.USER_BIRTHDAY,u.TITLE_ID,u.TITLE_NAME,u.DEGREE_ID,u.DEGREE_NAME,u.EDUCATION_ID,
 			u.EDUCATION_NAME,u.POST_ID,u.POST_NAME,u.SRM_EXPERT_FLAG,u.RECORD_STATUS,u.CREATE_TIME,u.CREATE_USER_FLOW,u.MODIFY_TIME,
 			u.MODIFY_USER_FLOW,u.WEI_XIN_ID,u.WEI_XIN_NAME,u.WEI_XIN_STATUS_ID,u.WEI_XIN_STATUS_DESC
-		from PDSCI.SYS_USER u 
-		inner join PDSCI.SYS_USER_ROLE ur
+        from SYS_USER u
+        inner join SYS_USER_ROLE ur
 		on u.USER_FLOW = ur.USER_FLOW
 		where u.RECORD_STATUS ='Y' and ur.RECORD_STATUS = 'Y'
 		<if test='roleFlow != null and roleFlow != "" '>
@@ -70,8 +77,9 @@
 			and u.ORG_FLOW = #{orgFlow}
        	</if>
 	</select>
-	
-	<select id="teacherRoleCheckUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="teacherRoleCheckUser" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 	   select su.* from SYS_USER su,SYS_USER_ROLE sur
 		where su.RECORD_STATUS='Y'
 		and sur.RECORD_STATUS='Y'
@@ -106,9 +114,10 @@
 			and su.DEPT_FLOW = #{speAdminAdeptFlow}
 		</if>
 	</select>
-	
-	
-	<select id="selectUserByOrgFlowAndRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+
+    <select id="selectUserByOrgFlowAndRoleFlow" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 	    select su.* from 
 	    sys_user su , 
 	    sys_user_role sur 
@@ -125,8 +134,9 @@
 	    </if>
 		ORDER BY NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
 	</select>
-	
-	<select id="selectTeacherUserByOrgFlowAndRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="selectTeacherUserByOrgFlowAndRoleFlow" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 	    select su.* from 
 	    sys_user su , 
 	    sys_user_role sur 
@@ -153,7 +163,8 @@
 		ORDER BY su.create_time desc
 	</select>
 
-	<select id="selectHeadUserByOrgFlowAndRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="selectHeadUserByOrgFlowAndRoleFlow" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select su.* from
 		sys_user su ,
 		sys_user_role sur
@@ -190,7 +201,7 @@
 	</select>
 
 
-	<!--<select id="selectUserByRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">-->
+    <!--<select id="selectUserByRoleFlow" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">-->
 	<!--select su.* from -->
 	<!--sys_user su , -->
 	<!--sys_user_role sur -->
@@ -204,8 +215,8 @@
 	<!--and sur.ROLE_FLOW=#{roleFlow}-->
 	<!--</if>-->
 	<!--</select>-->
-	
-	<select id="searchUserByRoleAndOrgFlows" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="searchUserByRoleAndOrgFlows" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		SELECT SU.*
 		FROM SYS_USER SU,SYS_USER_ROLE SUR
 		WHERE
@@ -223,8 +234,9 @@
 		</if>
 		ORDER BY SU.CREATE_TIME
 	</select>
-	
-	<select id="selectUserByMenuId" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="selectUserByMenuId" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 	    select * from SYS_USER
         where record_status='Y' and status_id='Activated' and user_flow in (
         select user_flow from SYS_USER_ROLE
@@ -235,11 +247,12 @@
            and dept_flow=#{deptFlow}
         </if>
 	</select>
-	
-	<select id="searchResManageUser" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
-    	select su.* from PDSCI.SYS_USER su
+
+    <select id="searchResManageUser" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select su.* from SYS_USER su
 		<if test='roleFlow!=null and roleFlow!=""'>
-		left join 	PDSCI.SYS_USER_ROLE sur on su.user_flow = sur.user_flow
+            left join SYS_USER_ROLE sur on su.user_flow = sur.user_flow
 		</if>
 		where su.RECORD_STATUS ='Y'
 		and not exists (select null from res_doctor rd where su.user_flow=rd.doctor_flow and rd.RECORD_STATUS='Y')
@@ -318,8 +331,9 @@
 		</if>
 		order by NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
 	</select>
-	<select id="searchResManageUserNotSelf" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
-    	select su.* from PDSCI.SYS_USER su
+    <select id="searchResManageUserNotSelf" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select su.* from SYS_USER su
 		where RECORD_STATUS ='Y'
 		and not exists (select null from res_doctor rd where su.user_flow=rd.doctor_flow and rd.RECORD_STATUS='Y')
        	<if test='userFlow!=null and userFlow!=""'>
@@ -405,8 +419,8 @@
 		</if>
 		order by NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
 	</select>
-	
-	<select id="searchUserByDeptAndRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="searchUserByDeptAndRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select DISTINCT su.*
 		from sys_user su
 		inner join sys_user_role sur
@@ -426,12 +440,12 @@
 		or su.dept_flow =  #{deptFlow}
 		)
 	</select>
-	<select id="searchOtherUserByDeptAndRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="searchOtherUserByDeptAndRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		SELECT DISTINCT SU.*
 		FROM
-			PDSCI.SYS_USER SU,
-			PDSCI.SYS_USER_ROLE SUR,
-			PDSCI.SYS_USER_DEPT SUD
+        SYS_USER SU,
+        SYS_USER_ROLE SUR,
+        SYS_USER_DEPT SUD
 		WHERE SU.RECORD_STATUS = 'Y'
 		AND SUR.RECORD_STATUS = 'Y'
 		AND SUD.RECORD_STATUS = 'Y'
@@ -445,9 +459,9 @@
 		AND SU.USER_FLOW NOT IN (
 				SELECT  SU.USER_FLOW
 				FROM
-					PDSCI.SYS_USER SU,
-					PDSCI.SYS_USER_ROLE SUR,
-					PDSCI.SYS_USER_DEPT SUD
+        SYS_USER SU,
+        SYS_USER_ROLE SUR,
+        SYS_USER_DEPT SUD
 				WHERE SU.RECORD_STATUS = 'Y'
 				AND SUR.RECORD_STATUS = 'Y'
 				AND SUD.RECORD_STATUS = 'Y'
@@ -460,13 +474,13 @@
 		)
 	</select>
 
-	<!--<select id="searchAfterAuditUser" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">-->
+    <!--<select id="searchAfterAuditUser" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">-->
 	<!--SELECT SU.*-->
-	<!--FROM PDSCI.SYS_USER SU-->
+    <!--FROM  SYS_USER SU-->
 	<!--WHERE SU.RECORD_STATUS = 'Y'-->
 	<!--AND SU.USER_FLOW IN (-->
 	<!--SELECT RDSP.USER_FLOW-->
-	<!--FROM PDSCI.RES_DOCTOR_SCH_PROCESS RDSP-->
+    <!--FROM  RES_DOCTOR_SCH_PROCESS RDSP-->
 	<!--WHERE RDSP.RECORD_STATUS = 'Y'-->
 	<!--<if test='process!=null'>-->
 	<!--<if test='process.teacherUserFlow!=null and process.teacherUserFlow!=""'>-->
@@ -488,32 +502,32 @@
 	<!--</select>-->
 	
 	<update id="lockHaveNotRegOverMonth">
-		update pdsci.sys_user su
+        update sys_user su
 		set su.status_id = 'Locked' , 
 			su.status_desc = '锁定' ,
 			su.lock_time = to_char(sysDate,'yyyymmddhh24miss')
 		where su.record_status = 'Y'
 		and not exists(
 			select null
-			from pdsci.res_rec rr
+        from res_rec rr
 			where rr.record_status = 'Y'
 			and su.user_flow = rr.oper_user_flow
 			and rr.oper_time like CONCAT(#{month},'%')
 		)
 		and exists(
 			select null
-			from pdsci.res_doctor rd
+        from res_doctor rd
 			where su.user_flow = rd.doctor_flow
 		)
 	</update>
-	
-	<select id="getUserByRec" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+
+    <select id="getUserByRec" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select su.*
-		from pdsci.sys_user su
+        from sys_user su
 		where su.record_status = 'Y'
 		and exists(
 			select null
-			from pdsci.sys_user_role sur
+        from sys_user_role sur
 			where record_status = 'Y'
 			and sur.user_flow = su.user_flow
 			and sur.role_flow = #{roleFlow}
@@ -521,12 +535,12 @@
 		and su.org_flow = #{orgFlow}
 		and exists(
 			select null
-			from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
 			where rdsp.record_status = 'Y'
 			and rdsp.teacher_user_flow = su.user_flow
 			and exists(
 				select null
-				from pdsci.res_rec rr
+        from res_rec rr
 				where rr.record_status = 'Y'
 				and rdsp.process_flow = rr.process_flow
 				<if test='operStartDate!=null and operStartDate!=""'>
@@ -552,13 +566,13 @@
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
 	</select>
 
-	<select id="getUserByRecForUni" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select su.*
-		from pdsci.sys_user su
+        from sys_user su
 		where su.record_status = 'Y'
 		and exists(
 			select null
-			from pdsci.sys_user_role sur
+        from sys_user_role sur
 			where record_status = 'Y'
 			and sur.user_flow = su.user_flow
 			and sur.role_flow = #{roleFlow}
@@ -566,7 +580,7 @@
 		and su.org_flow = #{orgFlow}
 		and exists(
 			select null
-			from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
 			where rdsp.record_status = 'Y'
 			and rdsp.teacher_user_flow = su.user_flow
 			and exists(
@@ -588,7 +602,7 @@
 			)
 			and exists(
 				select null
-				from pdsci.res_rec rr
+        from res_rec rr
 				where rr.record_status = 'Y'
 				and rdsp.process_flow = rr.process_flow
 				<if test='operStartDate!=null and operStartDate!=""'>
@@ -614,7 +628,8 @@
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
 
-	<select id="searchUserWithRole" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="searchUserWithRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"
+            parameterType="java.util.Map">
 		select distinct su.USER_FLOW,su.USER_CODE,su.USER_PASSWD,su.USER_NAME,su.SEX_ID,su.SEX_NAME,su.STATUS_ID,su.STATUS_DESC,su.
 		USER_PHONE,su.USER_EMAIL,su.DEPT_FLOW,su.DEPT_NAME,su.ORG_FLOW,su.ORG_NAME,su.ID_NO,su.USER_BIRTHDAY,su.
 		TITLE_ID,su.TITLE_NAME,su.DEGREE_ID,su.DEGREE_NAME,su.EDUCATION_ID,su.EDUCATION_NAME,su.POST_ID,su.
@@ -698,7 +713,8 @@
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
 
-	<select id="searchUserWithRoleByJx" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="searchUserWithRoleByJx" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"
+            parameterType="java.util.Map">
 		select distinct su.* from sys_user su
 		left join sys_user_role sur on su.user_flow = sur.user_flow
 		where su.RECORD_STATUS = 'Y'
@@ -738,7 +754,8 @@
 	</select>
 
 
-    <select id="searchUserWithRoleByJx2" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="searchUserWithRoleByJx2" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"
+            parameterType="java.util.Map">
         select distinct su.* from sys_user su
         left join sys_user_role sur on su.user_flow = sur.user_flow
         where su.RECORD_STATUS = 'Y'
@@ -774,7 +791,7 @@
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
 
-    <select id="readDeptTeachAndHead" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+    <select id="readDeptTeachAndHead" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select distinct su.* from sys_user su
 		left join sys_user_role sur on su.user_flow = sur.user_flow
 		where su.RECORD_STATUS = 'Y'
@@ -793,7 +810,7 @@
 		  and sur.RECORD_STATUS = 'Y' and su.status_id ='Activated'
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-    <select id="readOrgTeas" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+    <select id="readOrgTeas" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select distinct su.* from sys_user su
 		left join sys_user_role sur on su.user_flow = sur.user_flow
 		where su.RECORD_STATUS = 'Y'
@@ -806,7 +823,7 @@
 		  and sur.RECORD_STATUS = 'Y'
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-	<select id="readUserBySpe" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+    <select id="readUserBySpe" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select distinct su.* from sys_user su
 		left join sys_user_role sur on su.user_flow = sur.user_flow
 		where su.RECORD_STATUS = 'Y'
@@ -829,7 +846,7 @@
 		  and sur.RECORD_STATUS = 'Y'
 		order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
-    <select id="queryTeaList" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap" >
+    <select id="queryTeaList" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		select su.* from sys_user su
 		where su.RECORD_STATUS = 'Y'
 		and su.org_flow=#{orgFlow}
@@ -1068,7 +1085,7 @@
 		   and d.record_status = 'Y'
 		   and d.role_flow = #{stuRole}
 	</select>
-	<select id="findByNotBlackIdNo" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="findByNotBlackIdNo" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
 		SELECT a.*
 		FROM sys_user a
 		WHERE (a.record_status = 'Y'
@@ -1085,8 +1102,9 @@
 		)
 
 	</select>
-	<select id="searchRecruitManagers" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
-		select su.* from PDSCI.SYS_USER su
+    <select id="searchRecruitManagers" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select su.* from SYS_USER su
 		where su.RECORD_STATUS ='Y'
 		<if test='userFlow!=null and userFlow!=""'>
 			and su.user_flow != #{userFlow}
@@ -1176,23 +1194,24 @@
 		</foreach>
 	</update>
 
-	<select id="searchUserList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
-		select u.* from PDSCI.sys_user u
+    <select id="searchUserList" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select u.* from sys_user u
 		where record_status='Y'
 		and status_id='Activated'
 		and u.user_flow in(
 		select u.user_flow
-		from PDSCI.sys_user_role iu, sys_user u
+        from sys_user_role iu, sys_user u
 		where iu.user_flow = u.user_flow and iu.record_status = 'Y'
 		and iu.role_flow = #{roleFlow}
 		and u.dept_flow = #{sysDeptFlow}
 		union
 		select u.user_flow
-		from PDSCI.sys_user_role iu, sys_user u
+        from sys_user_role iu, sys_user u
 		where iu.user_flow = u.user_flow and iu.record_status = 'Y'
 		and iu.role_flow = #{roleFlow}
 		and exists(select 1
-		from pdsci.sys_user_dept sud
+        from sys_user_dept sud
 		where sud.record_status = 'Y'
 		and u.user_flow = sud.user_flow
 		and sud.dept_flow = #{sysDeptFlow})

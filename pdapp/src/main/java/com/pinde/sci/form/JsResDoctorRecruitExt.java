@@ -5,7 +5,7 @@ import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.SysUser;
 
-public class JsResDoctorRecruitExt extends ResDoctorRecruit{
+public class JsResDoctorRecruitExt extends ResDoctorRecruit {
 
 	/**
 	 * 

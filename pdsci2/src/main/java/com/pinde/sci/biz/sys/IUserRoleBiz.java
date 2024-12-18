@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.mo.SysRole;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
+import com.pinde.core.model.SysUserRole;
 
 import java.util.List;
 
@@ -20,13 +20,8 @@ public interface IUserRoleBiz {
 
 	int saveSysUserRole(SysUserRole userRole);
 
-//	List<SysUserRole> searchUserByRoles(List<String> roleList, String orgFlow);
 
 	int saveSysUserRole(String userFlow, String roleFlow, String wsId);
-
-	void saveSysUserRoleNoDel(String userFlow, String roleFlow);
-
-	void saveSysUserRoleNoDel(String userFlow, String roleFlow, String docRole);
 
 	/**
 	 * 根据用户和角色获取当前用户
@@ -35,14 +30,6 @@ public interface IUserRoleBiz {
 	 * @return
 	 */
 	SysUserRole readUserRole(String userFlow, String roleFlow);
-
-	/**
-	 *
-	 * @param userFlow
-	 * @param roleFlow
-     * @return
-     */
-	SysUserRole readUserRoleNoReoordStatus(String userFlow, String roleFlow);
 
 	int addSysUserRole(SysUserRole userRole);
 
@@ -55,10 +42,6 @@ public interface IUserRoleBiz {
 	 * 根据主键读取一条sysRole
 	 */
 	SysRole read(String roleFlow);
-	/**
-	 * 查询某工作站下所有角色
-	 */
-	List<SysRole> getByWisd(String wisd);
 
 	/**
 	 * 用户是否存在权限

@@ -1,7 +1,7 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.ResBase;
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.ResBase;
+import com.pinde.core.model.SysOrg;
 
 public class ResBaseExt extends ResBase{
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.JxNationalHolidaysRegisterMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JxNationalHolidaysRegister">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JxNationalHolidaysRegister">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="NATIONAL_HOLIDAY_NAME" jdbcType="VARCHAR" property="nationalHolidayName" />
     <result column="BEGIN_DATE" jdbcType="VARCHAR" property="beginDate" />
@@ -74,13 +74,14 @@
     RECORD_FLOW, NATIONAL_HOLIDAY_NAME, BEGIN_DATE, END_DATE, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegisterExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.JxNationalHolidaysRegisterExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+        from JX_NATIONAL_HOLIDAYS_REGISTER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +92,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+      from JX_NATIONAL_HOLIDAYS_REGISTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+      delete from JX_NATIONAL_HOLIDAYS_REGISTER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegisterExample">
-    delete from PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JxNationalHolidaysRegisterExample">
+        delete from JX_NATIONAL_HOLIDAYS_REGISTER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegister">
-    insert into PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER (RECORD_FLOW, NATIONAL_HOLIDAY_NAME, 
+    <insert id="insert" parameterType="com.pinde.core.model.JxNationalHolidaysRegister">
+        insert into JX_NATIONAL_HOLIDAYS_REGISTER (RECORD_FLOW, NATIONAL_HOLIDAY_NAME,
       BEGIN_DATE, END_DATE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -114,8 +115,8 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegister">
-    insert into PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JxNationalHolidaysRegister">
+        insert into JX_NATIONAL_HOLIDAYS_REGISTER
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -175,14 +176,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegisterExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+    <select id="countByExample" parameterType="com.pinde.core.model.JxNationalHolidaysRegisterExample"
+            resultType="java.lang.Integer">
+        select count(*) from JX_NATIONAL_HOLIDAYS_REGISTER
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+      update JX_NATIONAL_HOLIDAYS_REGISTER
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -217,7 +219,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+      update JX_NATIONAL_HOLIDAYS_REGISTER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       NATIONAL_HOLIDAY_NAME = #{record.nationalHolidayName,jdbcType=VARCHAR},
       BEGIN_DATE = #{record.beginDate,jdbcType=VARCHAR},
@@ -231,8 +233,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegister">
-    update PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JxNationalHolidaysRegister">
+        update JX_NATIONAL_HOLIDAYS_REGISTER
     <set>
       <if test="nationalHolidayName != null">
         NATIONAL_HOLIDAY_NAME = #{nationalHolidayName,jdbcType=VARCHAR},
@@ -261,8 +263,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JxNationalHolidaysRegister">
-    update PDSCI.JX_NATIONAL_HOLIDAYS_REGISTER
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JxNationalHolidaysRegister">
+        update JX_NATIONAL_HOLIDAYS_REGISTER
     set NATIONAL_HOLIDAY_NAME = #{nationalHolidayName,jdbcType=VARCHAR},
       BEGIN_DATE = #{beginDate,jdbcType=VARCHAR},
       END_DATE = #{endDate,jdbcType=VARCHAR},

@@ -1,9 +1,9 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.ResDoctorLog;
-import com.pinde.sci.model.mo.ResDoctorRecruitLog;
-import com.pinde.sci.model.mo.ResUserResumeLog;
-import com.pinde.sci.model.mo.SysUserLog;
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorRecruitLog;
+import com.pinde.core.model.ResUserResumeLog;
+import com.pinde.core.model.SysUserLog;
 
 public class JsDoctorInfoLogExt extends ResDoctorRecruitLog {
 

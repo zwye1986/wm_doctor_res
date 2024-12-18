@@ -37,28 +37,19 @@ import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.ArrangTdVo;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.ExamResults;
-import com.pinde.sci.model.mo.JsresPowerCfg;
-import com.pinde.sci.model.mo.ResArchiveSequence;
-import com.pinde.sci.model.mo.ResAssessCfg;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
-import com.pinde.sci.model.mo.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResDoctorSchProcessExample;
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.ResOutOfficeLock;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResResponsibleteacherDoctor;
-import com.pinde.sci.model.mo.ResScore;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchRotation;
-import com.pinde.sci.model.mo.SchRotationDept;
-import com.pinde.sci.model.mo.SchRotationDeptExample;
-import com.pinde.sci.model.mo.SchRotationGroup;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.TeachingActivityInfo;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorSchProcess;
+import com.pinde.core.model.ResDoctorSchProcessExample;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResOutOfficeLock;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResResponsibleteacherDoctor;
+import com.pinde.core.model.ResScore;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptExample;
+import com.pinde.core.model.SchRotationGroup;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -887,7 +878,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 			trainingSpeId = GlobalContext.getCurrentUser().getResTrainingSpeId();
 		}
 		Map<String,Object> paramMap = new HashMap<String, Object>();
-//		paramMap.put("trainingTypeId",com.pinde.core.common.enums.TrainCategoryEnum.DoctorTrainingSpe.getId());	//住院医师
+		paramMap.put("trainingTypeId", trainingTypeId);	//住院医师
 		if(docTypes!=null&&docTypes.length>0){
 			paramMap.put("docTypeList",docTypes);
 		}
@@ -2861,7 +2852,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		int noStudyCount=0;
 		int uploadCount=0;
 		SysUser currUser=GlobalContext.getCurrentUser();
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+        com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
 			recruit.setOrgFlow(currUser.getOrgFlow());
@@ -2958,11 +2949,11 @@ public class JsResDoctorRecruitController extends GeneralController {
 	@ResponseBody
 	public String validate(Model model,String doctorFlow,String sessionNumber){
 		if(StringUtil.isNotBlank(doctorFlow) && StringUtil.isNotBlank(sessionNumber)){
-			ResDoctorRecruit recruit=new ResDoctorRecruit();
+            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 			recruit.setSessionNumber(sessionNumber);
 			recruit.setDoctorFlow(doctorFlow);
             recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
-			List<ResDoctorRecruit>  recruits=jsResDoctorRecruitBiz.readDoctorRecruits(recruit);
+            List<com.pinde.core.model.ResDoctorRecruit> recruits = jsResDoctorRecruitBiz.readDoctorRecruits(recruit);
 			if(recruit!=null && (!recruits.isEmpty())){
                 return com.pinde.core.common.GlobalConstant.FLAG_N;
 			}else{

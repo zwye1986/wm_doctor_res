@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.TeachingActivityFormValue;
-import com.pinde.sci.model.mo.TeachingActivityFormValueExample;
+import com.pinde.core.model.TeachingActivityFormValue;
+import com.pinde.core.model.TeachingActivityFormValueExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

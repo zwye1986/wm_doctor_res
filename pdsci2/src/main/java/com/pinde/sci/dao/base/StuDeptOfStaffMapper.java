@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.StuDeptOfStaff;
-import com.pinde.sci.model.mo.StuDeptOfStaffExample;
+import com.pinde.core.model.StuDeptOfStaff;
+import com.pinde.core.model.StuDeptOfStaffExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

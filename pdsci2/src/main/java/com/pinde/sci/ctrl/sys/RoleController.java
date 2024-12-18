@@ -1,7 +1,11 @@
 package com.pinde.sci.ctrl.sys;
 
 
+import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.model.PortalColumn;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysRole;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
@@ -9,11 +13,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.sys.RoleLevelEnum;
-import com.pinde.sci.model.mo.PortalColumn;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysRoleAuthGx;
+import com.pinde.core.model.SysRoleAuthGx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -260,7 +260,7 @@ public class RoleController extends GeneralController{
 	 */	
 	@RequestMapping(value="/savepop",method=RequestMethod.POST)
 	@ResponseBody
-	public String savepop(SysRole sysRole,@RequestParam(value="menuId",required=false) String [] menuIds,Model model) {
+	public String savepop(SysRole sysRole, @RequestParam(value = "menuId", required = false) String[] menuIds, Model model) {
 		roleBiz.savePop(sysRole, menuIds);
         return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}

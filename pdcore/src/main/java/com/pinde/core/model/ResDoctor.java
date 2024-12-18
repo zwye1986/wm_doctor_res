@@ -1,5 +1,7 @@
 package com.pinde.core.model;
 
+import java.util.List;
+
 public class ResDoctor implements java.io.Serializable {
     private String doctorFlow;
 
@@ -264,6 +266,29 @@ public class ResDoctor implements java.io.Serializable {
     private String submitTime;
 
     private String checkTime;
+
+    // 自定义字段开始
+    private List<String> trainingSpeIdList;
+
+    private String schStartDate;
+
+    private String schEndDate;
+
+    public String getSchStartDate() {
+        return schStartDate;
+    }
+
+    public void setSchStartDate(String schStartDate) {
+        this.schStartDate = schStartDate;
+    }
+
+    public String getSchEndDate() {
+        return schEndDate;
+    }
+
+    public void setSchEndDate(String schEndDate) {
+        this.schEndDate = schEndDate;
+    }
 
     public String getDoctorFlow() {
         return doctorFlow;
@@ -1319,5 +1344,13 @@ public class ResDoctor implements java.io.Serializable {
 
     public void setCheckTime(String checkTime) {
         this.checkTime = checkTime;
+    }
+
+    public List<String> getTrainingSpeIdList() {
+        return trainingSpeIdList;
+    }
+
+    public void setTrainingSpeIdList(List<String> trainingSpeIdList) {
+        this.trainingSpeIdList = trainingSpeIdList;
     }
 }

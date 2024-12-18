@@ -1,4 +1,3 @@
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>

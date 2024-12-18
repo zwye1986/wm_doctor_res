@@ -9,7 +9,7 @@
 
     <select id="findMessageOrgAndCount" resultMap="findMessageOrgAndCountMap">
 	    SELECT ORG_FLOW,ORG_NAME,COUNT(*) NUM
-		FROM PDSCI.RES_MESSAGE
+        FROM RES_MESSAGE
 		WHERE RECORD_STATUS = 'Y'
         <if test="sessionNumber!=null and sessionNumber!=''">
             AND  substr(CREATE_TIME,0,4) = #{sessionNumber}
@@ -20,7 +20,7 @@
 
     <select id="findMessageOrgAndTime" parameterType="string" resultMap="findMessageOrgAndCountMap">
         SELECT ORG_FLOW,ORG_NAME,COUNT(*) NUM
-        FROM PDSCI.RES_MESSAGE
+        FROM RES_MESSAGE
         WHERE RECORD_STATUS = 'Y'
         AND CREATE_TIME >= #{time}
         GROUP BY ORG_FLOW, ORG_NAME
@@ -31,7 +31,7 @@
     <select id="findMessageByOrgFlow" parameterType="string" resultMap="com.pinde.sci.dao.base.ResMessageMapper.ResultMapWithBLOBs">
        	SELECT MESSAGE_FLOW, MESSAGE_TITLE, ORG_FLOW, ORG_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
     MODIFY_TIME, MODIFY_USER_FLOW, MESSAGE_CONTENT
-	    FROM PDSCI.RES_MESSAGE
+        FROM RES_MESSAGE
 	    WHERE RECORD_STATUS = 'Y'
 		AND ORG_FLOW = #{orgFlow}
 		AND  substr(CREATE_TIME,0,4) = #{sessionNumber}

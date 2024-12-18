@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.PubElement;
 import com.pinde.core.model.PubElementExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PubElementMapper {
     int countByExample(PubElementExample example);

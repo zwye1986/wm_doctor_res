@@ -1,9 +1,8 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorOrgHistory;
 import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorOrgHistory;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
 
 import java.util.List;
 
@@ -90,7 +89,7 @@ public interface IJsResDoctorOrgHistoryBiz {
     /**
      * 改变状态
      */
-    int changeStatus(ResDoctorOrgHistory history, ResDoctorRecruit recruit);
+    int changeStatus(ResDoctorOrgHistory history, com.pinde.core.model.ResDoctorRecruit recruit);
 
     /****************************高******校******管******理******员******角******色************************************************/
 

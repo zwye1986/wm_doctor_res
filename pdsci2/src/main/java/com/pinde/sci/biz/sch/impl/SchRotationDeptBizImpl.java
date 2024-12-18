@@ -5,8 +5,7 @@ import com.google.common.collect.Maps;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.EnumUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -26,7 +25,6 @@ import com.pinde.sci.dao.sch.SchRotationDeptExtMapper;
 import com.pinde.sci.dao.sch.SchRotationDeptReqExtMapper;
 import com.pinde.sci.dao.sch.SchRotationExtendMapper;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -91,7 +89,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Autowired
 	private SchRotationExtendMapper rotationExtendMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(SchRotationDeptBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SchRotationDeptBizImpl.class);
 
     //	}
 	@Override
@@ -572,7 +570,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 //	}
 	
 	@Override
-	public int saveSelDepts(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor){
+    public int saveSelDepts(List<String> recordFlows, Map<String, String> schMonthMap, ResDoctor doctor) {
 		if(recordFlows!=null && recordFlows.size()>0){
 			List<SchRotationDept> rotationDeptList = searchRotationDeptByFlows(recordFlows);
 			if(rotationDeptList!=null && rotationDeptList.size()>0){
@@ -608,13 +606,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		}
         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
 	}
-	
-	@Override
-	public int saveSelDeptsAndResult(List<String> recordFlows,Map<String,String> schMonthMap,ResDoctor doctor){
-		saveSelDepts(recordFlows,schMonthMap,doctor);
-        //doctor.setSchFlag(com.pinde.core.common.GlobalConstant.FLAG_Y);
-		return schArrangeResultBiz.saveResultByDoctor(doctor);
-	}
+
 	
 	@Override
 	public List<SchRotationDept> searchDeptByRotations(List<String> rotationFlows){
@@ -657,7 +649,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public SchRotationDept readStandardRotationDeptByLocal(String rotationFlow,String groupFlow,String standardDeptId){
 		SchRotationDeptExample example = new SchRotationDeptExample();
-        com.pinde.sci.model.mo.SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+        SchRotationDeptExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 				.andOrgFlowIsNull();
 		if(StringUtil.isNotBlank(groupFlow)){
 			SchRotationGroup group = rotationGroupBiz.readSchRotationGroup(groupFlow);
@@ -693,107 +685,9 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		}
 		return rotationDeptMapper.selectByExampleWithBLOBs(example);
 	}
-	
-	/**
-	 * 更新指定区域规则
-	 */
-	@Override
-	public int updateAreaRule(String rotationFlow,String standardDeptId,String groupFlow,SysOrg org){
-		String oldRotationFlow = rotationFlow;
-		String oldGroupFlow = groupFlow;
-		//删除原区域数据
-		SchRotationDept rotationDept = new SchRotationDept();
-        rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
-		SchRotationDeptExample example = new SchRotationDeptExample();
-		com.pinde.sci.model.mo.SchRotationDeptExample.Criteria criteria = example.createCriteria()
-                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-				.andOrgFlowEqualTo(org.getOrgFlow());
-		if(StringUtil.isNotBlank(groupFlow)){
-			criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
-		}else{
-            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
-		}
-		int oldDeptNum = rotationDeptMapper.updateByExampleSelective(rotationDept,example);
 
-		//找到原区域标准数据
-		example.clear();
-        criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-				.andOrgFlowIsNull();
-		SchRotationGroup group = null;
-		if(StringUtil.isNotBlank(groupFlow)){
-			group = rotationGroupBiz.readSchRotationGroup(groupFlow);
-			if(StringUtil.isNotBlank(group.getStandardGroupFlow())){
-				groupFlow = group.getStandardGroupFlow();
-			}
-			criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
-		}else{
-            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
-		}
-		List<SchRotationDept> standardRotationDept = rotationDeptMapper.selectByExample(example);
-		if(standardRotationDept!=null && standardRotationDept.size()>0){
-			rotationDept = standardRotationDept.get(0);
-			if(rotationDept!=null && org!=null){
-				List<SchDeptRel> deptRelList = deptRelBiz.searchRelByStandard(org.getOrgFlow(),standardDeptId);
-				if(deptRelList!=null && deptRelList.size()>0){
-                    if (group != null && com.pinde.core.common.GlobalConstant.FLAG_N.equals(group.getIsRequired())) {
-						int newDeptNum = deptRelList.size();
-						if(SchSelTypeEnum.Free.getId().equals(group.getSelTypeId())){
-							int currNum = group.getMaxDeptNum();
-							group.setMaxDeptNum(currNum+(newDeptNum-oldDeptNum));
-						}else{
-							int currNum = group.getDeptNum();
-							group.setDeptNum(currNum+(newDeptNum-oldDeptNum));
-						}
-						rotationGroupBiz.update(group);
-					}
-					
-					rotationDept.setOrgFlow(org.getOrgFlow());
-					rotationDept.setOrgName(org.getOrgName());
-					rotationDept.setGroupFlow(oldGroupFlow);
-					rotationDept.setRotationFlow(oldRotationFlow);
-					
-					boolean first = true;
-					for(SchDeptRel deptRel : deptRelList){
-						rotationDept.setRecordFlow(null);
-						rotationDept.setSchDeptFlow(deptRel.getSchDeptFlow());
-						rotationDept.setSchDeptName(deptRel.getSchDeptName());
-						SchDept dept = schDeptBiz.readSchDept(deptRel.getSchDeptFlow());
-						if(dept!=null){
-							rotationDept.setDeptFlow(dept.getDeptFlow());
-							rotationDept.setDeptName(dept.getDeptName());
-						}
-						
-						if(!first){
-							rotationDept.setSchMonth("0");
-						}
-						
-						saveSchRotationDept(rotationDept);
-						
-						first = false;
-					}
-				}
-			}
-		}
 
-        return com.pinde.core.common.GlobalConstant.ONE_LINE;
-	}
 
-	/*******************************************************
-	 * 要求
-	 *****************************************************/
-
-//	@Override
-//	public List<SchRotationDeptReq> searchDeptReq(String rotationFlow,String schDeptFlow,String recTypeId){
-//		if(StringUtil.isNotBlank(rotationFlow) && StringUtil.isNotBlank(schDeptFlow) && StringUtil.isNotBlank(recTypeId)){
-//			SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-//			example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
-//			.andRecTypeIdEqualTo(recTypeId)
-//			.andStandardDeptIdEqualTo(schDeptFlow);
-//			return deptReqMapper.selectByExample(example);
-//		}
-//		return null;
-//	}
-	
 	@Override
 	public List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow,String recTypeId){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
@@ -856,14 +750,9 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	}
 
 	@Override
-	public List<SchRotationDeptReq> searchDeptReqByExample(SchRotationDeptReqExample example){
-		return deptReqMapper.selectByExample(example);
-	}
-	
-	@Override
 	public List<SchRotationDeptReq> searchDeptReqByRel(String relRecordFlow,String recTypeId,String itemId){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-        com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+        SchRotationDeptReqExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
 		.andRelRecordFlowEqualTo(relRecordFlow);
 		if(StringUtil.isNotBlank(recTypeId)){
 			criteria.andRecTypeIdEqualTo(recTypeId);
@@ -889,7 +778,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	@Override
 	public List<SchRotationDeptReq> searchDeptReqByItemId(String rotationFlow,String schDeptFlow,String itemId){
 		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-		com.pinde.sci.model.mo.SchRotationDeptReqExample.Criteria criteria = example.createCriteria()
+        SchRotationDeptReqExample.Criteria criteria = example.createCriteria()
                 .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andRotationFlowEqualTo(rotationFlow)
 				.andStandardDeptIdEqualTo(schDeptFlow);
 		if(StringUtil.isNotBlank(itemId)){
@@ -1039,27 +928,88 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		return reqList;
 	}
 
+    /**
+     * 更新指定区域规则
+     */
 	@Override
-	public List<SchRotationDeptReq> searchStandardReqByGroupAndOrgSessionNumber(String standardGroupFlow, String standardDeptId,
-																				String orgFlow, String sessionNumber) {
+    public int updateAreaRule(String rotationFlow, String standardDeptId, String groupFlow, SysOrg org) {
+        String oldRotationFlow = rotationFlow;
+        String oldGroupFlow = groupFlow;
+        //删除原区域数据
+        SchRotationDept rotationDept = new SchRotationDept();
+        rotationDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+        SchRotationDeptExample example = new SchRotationDeptExample();
+        SchRotationDeptExample.Criteria criteria = example.createCriteria()
+                .andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andOrgFlowEqualTo(org.getOrgFlow());
+        if (StringUtil.isNotBlank(groupFlow)) {
+            criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
+        } else {
+            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
+        }
+        int oldDeptNum = rotationDeptMapper.updateByExampleSelective(rotationDept, example);
 
-		if (!StringUtil.isNotBlank(standardDeptId) || !StringUtil.isNotBlank(standardGroupFlow)||
-				!StringUtil.isNotBlank(orgFlow) || !StringUtil.isNotBlank(sessionNumber)) {
-			return null;
-		}
-		SchRotationDeptExample rotationDeptExample = new SchRotationDeptExample();
-        rotationDeptExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-				.andGroupFlowEqualTo(standardGroupFlow)
-				.andStandardDeptIdEqualTo(standardDeptId)
-				.andOrgFlowEqualTo(orgFlow).andSessionNumberEqualTo(sessionNumber);
-		List<SchRotationDept> rotationDeptList = rotationDeptMapper.selectByExample(rotationDeptExample);
+        //找到原区域标准数据
+        example.clear();
+        criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andOrgFlowIsNull();
+        SchRotationGroup group = null;
+        if (StringUtil.isNotBlank(groupFlow)) {
+            group = rotationGroupBiz.readSchRotationGroup(groupFlow);
+            if (StringUtil.isNotBlank(group.getStandardGroupFlow())) {
+                groupFlow = group.getStandardGroupFlow();
+            }
+            criteria.andGroupFlowEqualTo(groupFlow).andStandardDeptIdEqualTo(standardDeptId);
+        } else {
+            criteria.andIsRequiredEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andRotationFlowEqualTo(rotationFlow).andStandardDeptIdEqualTo(standardDeptId);
+        }
+        List<SchRotationDept> standardRotationDept = rotationDeptMapper.selectByExample(example);
+        if (standardRotationDept != null && standardRotationDept.size() > 0) {
+            rotationDept = standardRotationDept.get(0);
+            if (rotationDept != null && org != null) {
+                List<SchDeptRel> deptRelList = deptRelBiz.searchRelByStandard(org.getOrgFlow(), standardDeptId);
+                if (deptRelList != null && deptRelList.size() > 0) {
+                    if (group != null && com.pinde.core.common.GlobalConstant.FLAG_N.equals(group.getIsRequired())) {
+                        int newDeptNum = deptRelList.size();
+                        if (SchSelTypeEnum.Free.getId().equals(group.getSelTypeId())) {
+                            int currNum = group.getMaxDeptNum();
+                            group.setMaxDeptNum(currNum + (newDeptNum - oldDeptNum));
+                        } else {
+                            int currNum = group.getDeptNum();
+                            group.setDeptNum(currNum + (newDeptNum - oldDeptNum));
+                        }
+                        rotationGroupBiz.update(group);
+                    }
 
-		List<SchRotationDeptReq> reqList = null;
-		if (rotationDeptList != null && rotationDeptList.size() > 0) {
-			String relRecordFlow = rotationDeptList.get(0).getRecordFlow();
-			reqList = searchDeptReqByRel(relRecordFlow);
-		}
-		return reqList;
+                    rotationDept.setOrgFlow(org.getOrgFlow());
+                    rotationDept.setOrgName(org.getOrgName());
+                    rotationDept.setGroupFlow(oldGroupFlow);
+                    rotationDept.setRotationFlow(oldRotationFlow);
+
+                    boolean first = true;
+                    for (SchDeptRel deptRel : deptRelList) {
+                        rotationDept.setRecordFlow(null);
+                        rotationDept.setSchDeptFlow(deptRel.getSchDeptFlow());
+                        rotationDept.setSchDeptName(deptRel.getSchDeptName());
+                        SchDept dept = schDeptBiz.readSchDept(deptRel.getSchDeptFlow());
+                        if (dept != null) {
+                            rotationDept.setDeptFlow(dept.getDeptFlow());
+                            rotationDept.setDeptName(dept.getDeptName());
+                        }
+
+                        if (!first) {
+                            rotationDept.setSchMonth("0");
+                        }
+
+                        saveSchRotationDept(rotationDept);
+
+                        first = false;
+                    }
+                }
+            }
+        }
+
+        return com.pinde.core.common.GlobalConstant.ONE_LINE;
 	}
 
 	@Override
@@ -1093,22 +1043,6 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				.andRelRecordFlowEqualTo(relRecordFlow).andRecTypeIdEqualTo(recTypeId);
 		return deptReqMapper.selectByExampleWithBLOBs(example);
 	}
-	@Override
-	public void initSchRotationDeptReq(List<SchRotationDeptReq> schRotationDeptReqList){
-		if (schRotationDeptReqList != null && schRotationDeptReqList.size() > 0) {
-			for(SchRotationDeptReq temp : schRotationDeptReqList){
-				temp.setReqFlow(PkUtil.getUUID());
-				GeneralMethod.setRecordInfo(temp, true);
-				deptReqMapper.insertSelective(temp);
-			}
-		}
-	}
-
-	@Override
-	public List<SchRotationDept> doctorGetNotSchDept(String rotationFlow, String doctorFlow) {
-		return rotationDeptExtMapper.doctorGetNotSchDept(rotationFlow,doctorFlow);
-	}
-
 	@Override
 	public int synchronizeReq(String relRecordFlow,String currRelRecordFlow,String recTypeId){
 		List<SchRotationDeptReq> schRotationDeptReqList = searchSchRotationDeptReq(relRecordFlow);
@@ -1258,10 +1192,6 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		return rotationDept;
 	}
 
-	@Override
-	public List<SchRotationDept> readStandardRotationDeptByExample(SchRotationDeptExample example) {
-		return rotationDeptMapper.selectByExample(example);
-	}
 
 	@Override
 	public int getUnrelCount(String orgFlow,String rotationFlow){
@@ -1289,21 +1219,6 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 	}
 
 	@Override
-	public List<SchRotationDept> searchRotationDeptByFlows() {
-		SchRotationDeptExample example = new SchRotationDeptExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
-		.andOrgFlowIsNull();
-		return rotationDeptMapper.selectByExampleWithBLOBs(example);
-	}
-
-	@Override
-	public List<SchRotationDeptReq> searchSchRotationDeptReqOrgNull() {
-		SchRotationDeptReqExample example = new SchRotationDeptReqExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		return 	deptReqMapper.selectByExampleWithBLOBs(example);
-	
-	}
-	@Override
 	public SchRotationDept searchGroupFlowAndStandardDeptIdQuery(
 			String groupFlow, String standardDeptId) {
 		SchRotationDeptExample example = new SchRotationDeptExample();
@@ -1322,25 +1237,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 		}
 		return rotationDept;
 	}
-	@Override
-	public SchRotationDept searchGroupFlowAndStandardDeptIdQueryTwo(
-			String groupFlow, String standardDeptId) {
-		SchRotationDeptExample example = new SchRotationDeptExample();
-		SchRotationDeptExample.Criteria criter=example.createCriteria();
-        criter.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		if (StringUtil.isNotBlank(groupFlow)) {
-			criter.andGroupFlowEqualTo(groupFlow);
-		}
-		if (StringUtil.isNotBlank(standardDeptId)) {
-			criter.andStandardDeptIdEqualTo(standardDeptId);
-		}
-		List<SchRotationDept> rotationDeptList = rotationDeptExtMapper.selectByExampleTwo(example);
-		SchRotationDept rotationDept = null;
-		if(rotationDeptList!=null && rotationDeptList.size()>0){
-			rotationDept = rotationDeptList.get(0);
-		}
-		return rotationDept;
-	}
+
 
 	@Override
 	public List<SchRotationDept> searchOrgSchRotationDeptBySessionNumber(String rotationFlow, String orgFlow, String sessionNumber) {
@@ -1796,7 +1693,7 @@ public class SchRotationDeptBizImpl implements ISchRotationDeptBiz {
 				Integer maxDeptNnum = 0;
 				Row r = sheet.getRow(i);
 				boolean rowEmpty = isRowEmpty(r);
-				if (rowEmpty == false) {
+                if (!rowEmpty) {
 					SchRotationDept schRotationDept = new SchRotationDept();
 					SchRotation schRotation = new SchRotation();
 					SchRotationGroup schRotationGroupNew = new SchRotationGroup();

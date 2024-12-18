@@ -1,10 +1,8 @@
 package com.pinde.sci.form.hbzy;
 
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysUser;
-
-import java.io.Serializable;
 
 public class JszyUserInfoExtForm implements java.io.Serializable {
 
@@ -16,11 +14,12 @@ public class JszyUserInfoExtForm implements java.io.Serializable {
 	private SysUser sysUser;
 	private ResDoctor doctor;
 	private BaseUserResumeExtInfoForm userResumeExt;
-	private ResDoctorRecruit recruit;
+    private com.pinde.core.model.ResDoctorRecruit recruit;
 	public ResDoctorRecruit getRecruit() {
 		return recruit;
 	}
-	public void setRecruit(ResDoctorRecruit recruit) {
+
+    public void setRecruit(com.pinde.core.model.ResDoctorRecruit recruit) {
 		this.recruit = recruit;
 	}
 	public SysUser getSysUser() {

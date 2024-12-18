@@ -1,8 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.mo.PersonStaticExample;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.PersonStaticExample;
+import com.pinde.core.model.SysOrg;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,10 +29,13 @@ public interface ChartExtMapper {
 
 	List<Map<String,String>> findOrgGraduateCount( @Param(value = "sessionNumber")String sessionNumber);
 
-	List<Map<String,String>> doctorNumForUni1(@Param(value = "recruit")ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org")SysOrg org);
-	List<Map<String,String>> doctorNumForUni1DaoChu(@Param(value = "recruit")ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org")SysOrg org);
-	List<Map<String,String>> doctorNumForUni2(@Param(value = "recruit")ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org")SysOrg org);
-	List<Map<String,String>> doctorNumForUni2DaoChu(@Param(value = "recruit")ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org")SysOrg org);
+    List<Map<String, String>> doctorNumForUni1(@Param(value = "recruit") com.pinde.core.model.ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org") SysOrg org);
+
+    List<Map<String, String>> doctorNumForUni1DaoChu(@Param(value = "recruit") com.pinde.core.model.ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org") SysOrg org);
+
+    List<Map<String, String>> doctorNumForUni2(@Param(value = "recruit") com.pinde.core.model.ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org") SysOrg org);
+
+    List<Map<String, String>> doctorNumForUni2DaoChu(@Param(value = "recruit") com.pinde.core.model.ResDoctorRecruit recruit, @Param(value = "orgFlows") List<String> orgFlows, @Param(value = "org") SysOrg org);
 	//学员轮转数据
 	List<SysOrg> getRotationData(Map<String,Object> paramMap);
 	//人员统计数据

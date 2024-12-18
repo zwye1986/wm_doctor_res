@@ -1,7 +1,5 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.core.model.TeachingActivitySpeakerExample;
-
 public class DoctorSignup implements java.io.Serializable {
     private String recordFlow;
 

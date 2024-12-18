@@ -99,7 +99,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_EXAM_ARRANGEMENT
+      from SCH_EXAM_ARRANGEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -110,21 +110,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_EXAM_ARRANGEMENT
+      from SCH_EXAM_ARRANGEMENT
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_EXAM_ARRANGEMENT
+      delete from SCH_EXAM_ARRANGEMENT
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SchExamArrangementExample" >
-    delete from PDSCI.SCH_EXAM_ARRANGEMENT
+      delete from SCH_EXAM_ARRANGEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SchExamArrangement" >
-    insert into PDSCI.SCH_EXAM_ARRANGEMENT (ARRANGE_FLOW, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, 
+      insert into SCH_EXAM_ARRANGEMENT (ARRANGE_FLOW, TRAINING_TYPE_ID, TRAINING_TYPE_NAME,
       TRAINING_SPE_ID, TRAINING_SPE_NAME, SESSION_NUMBER, 
       ASSESSMENT_YEAR, EXAMPAPER_TYPE, ORG_FLOW, 
       ORG_NAME, ASSESSMENT_START_TIME, ASSESSMENT_END_TIME, 
@@ -144,7 +144,7 @@
       #{isOpenResult,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchExamArrangement" >
-    insert into PDSCI.SCH_EXAM_ARRANGEMENT
+      insert into SCH_EXAM_ARRANGEMENT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="arrangeFlow != null" >
         ARRANGE_FLOW,
@@ -301,13 +301,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SchExamArrangementExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_EXAM_ARRANGEMENT
+      select count(*) from SCH_EXAM_ARRANGEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_EXAM_ARRANGEMENT
+      update SCH_EXAM_ARRANGEMENT
     <set >
       <if test="record.arrangeFlow != null" >
         ARRANGE_FLOW = #{record.arrangeFlow,jdbcType=VARCHAR},
@@ -390,7 +390,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_EXAM_ARRANGEMENT
+      update SCH_EXAM_ARRANGEMENT
     set ARRANGE_FLOW = #{record.arrangeFlow,jdbcType=VARCHAR},
       TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
       TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
@@ -421,7 +421,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchExamArrangement" >
-    update PDSCI.SCH_EXAM_ARRANGEMENT
+      update SCH_EXAM_ARRANGEMENT
     <set >
       <if test="trainingTypeId != null" >
         TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
@@ -499,7 +499,7 @@
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchExamArrangement" >
-    update PDSCI.SCH_EXAM_ARRANGEMENT
+      update SCH_EXAM_ARRANGEMENT
     set TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
       TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
       TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},

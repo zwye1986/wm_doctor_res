@@ -92,7 +92,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      from SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -106,7 +106,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      from SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -119,21 +119,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      from SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     where EVAL_FLOW = #{evalFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      delete from SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     where EVAL_FLOW = #{evalFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEvalExample" >
-    delete from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      delete from SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEval" >
-    insert into PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL (EVAL_FLOW, ITEM_FLOW, OPER_USER_FLOW, 
+      insert into SYS_DEPT_MONTH_PLAN_ITEM_EVAL (EVAL_FLOW, ITEM_FLOW, OPER_USER_FLOW,
       OPER_USER_NAME, ORG_FLOW, ORG_NAME, 
       EVAL_CONTENT, EVAL_SCORE, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -145,7 +145,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{evalFormContent,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEval" >
-    insert into PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      insert into SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="evalFlow != null" >
         EVAL_FLOW,
@@ -236,13 +236,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEvalExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      select count(*) from SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      update SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <set >
       <if test="record.evalFlow != null" >
         EVAL_FLOW = #{record.evalFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      update SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     set EVAL_FLOW = #{record.evalFlow,jdbcType=VARCHAR},
       ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
@@ -312,7 +312,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      update SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     set EVAL_FLOW = #{record.evalFlow,jdbcType=VARCHAR},
       ITEM_FLOW = #{record.itemFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{record.operUserFlow,jdbcType=VARCHAR},
@@ -331,7 +331,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEval" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      update SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     <set >
       <if test="itemFlow != null" >
         ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR},
@@ -376,7 +376,7 @@
     where EVAL_FLOW = #{evalFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEval" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      update SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     set ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{operUserName,jdbcType=VARCHAR},
@@ -393,7 +393,7 @@
     where EVAL_FLOW = #{evalFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDeptMonthPlanItemEval" >
-    update PDSCI.SYS_DEPT_MONTH_PLAN_ITEM_EVAL
+      update SYS_DEPT_MONTH_PLAN_ITEM_EVAL
     set ITEM_FLOW = #{itemFlow,jdbcType=VARCHAR},
       OPER_USER_FLOW = #{operUserFlow,jdbcType=VARCHAR},
       OPER_USER_NAME = #{operUserName,jdbcType=VARCHAR},

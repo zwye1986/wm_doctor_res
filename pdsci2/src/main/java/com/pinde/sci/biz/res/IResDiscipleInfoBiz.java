@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResDiscipleInfo;
-import com.pinde.sci.model.mo.ResDiscipleReq;
+import com.pinde.core.model.ResDiscipleInfo;
+import com.pinde.core.model.ResDiscipleReq;
 
 import java.util.List;
 import java.util.Map;

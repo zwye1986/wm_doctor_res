@@ -43,7 +43,7 @@
 			, CONSULT_TYPE_SON_ID, CONSULT_TYPE_SON_NAME, IS_ANSWER, IS_POLICY, ORG_CITY_ID
 			, ORG_CITY_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME
 			, MODIFY_USER_FLOW, CONSULT_ANSWER ,CHARGE_NAME
-		FROM PDSCI.CONSULT_INFO c
+        FROM CONSULT_INFO c
 		WHERE RECORD_STATUS = 'Y'
         <if test="consultQuestion !=null and consultQuestion !=''">
             AND (dbms_lob.instr(CONSULT_ANSWER,#{consultQuestion},1,1)&lt;&gt;0

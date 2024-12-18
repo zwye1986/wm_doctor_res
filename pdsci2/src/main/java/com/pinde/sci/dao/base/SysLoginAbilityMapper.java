@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysLoginAbility;
-import com.pinde.sci.model.mo.SysLoginAbilityExample;
+import com.pinde.core.model.SysLoginAbility;
+import com.pinde.core.model.SysLoginAbilityExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

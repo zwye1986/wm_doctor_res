@@ -1004,6 +1004,76 @@ public class SchRotationGroupExample {
             return (Criteria) this;
         }
 
+        public Criteria andStandardGroupFlowIsNull() {
+            addCriterion("STANDARD_GROUP_FLOW is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowIsNotNull() {
+            addCriterion("STANDARD_GROUP_FLOW is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowEqualTo(String value) {
+            addCriterion("STANDARD_GROUP_FLOW =", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowNotEqualTo(String value) {
+            addCriterion("STANDARD_GROUP_FLOW <>", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowGreaterThan(String value) {
+            addCriterion("STANDARD_GROUP_FLOW >", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowGreaterThanOrEqualTo(String value) {
+            addCriterion("STANDARD_GROUP_FLOW >=", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowLessThan(String value) {
+            addCriterion("STANDARD_GROUP_FLOW <", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowLessThanOrEqualTo(String value) {
+            addCriterion("STANDARD_GROUP_FLOW <=", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowLike(String value) {
+            addCriterion("STANDARD_GROUP_FLOW like", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowNotLike(String value) {
+            addCriterion("STANDARD_GROUP_FLOW not like", value, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowIn(List<String> values) {
+            addCriterion("STANDARD_GROUP_FLOW in", values, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowNotIn(List<String> values) {
+            addCriterion("STANDARD_GROUP_FLOW not in", values, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowBetween(String value1, String value2) {
+            addCriterion("STANDARD_GROUP_FLOW between", value1, value2, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andStandardGroupFlowNotBetween(String value1, String value2) {
+            addCriterion("STANDARD_GROUP_FLOW not between", value1, value2, "standardGroupFlow");
+            return (Criteria) this;
+        }
+
         public Criteria andSelTypeIdIsNull() {
             addCriterion("SEL_TYPE_ID is null");
             return (Criteria) this;
@@ -1201,76 +1271,6 @@ public class SchRotationGroupExample {
 
         public Criteria andMaxDeptNumNotBetween(Integer value1, Integer value2) {
             addCriterion("MAX_DEPT_NUM not between", value1, value2, "maxDeptNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowIsNull() {
-            addCriterion("STANDARD_GROUP_FLOW is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowIsNotNull() {
-            addCriterion("STANDARD_GROUP_FLOW is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowEqualTo(String value) {
-            addCriterion("STANDARD_GROUP_FLOW =", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowNotEqualTo(String value) {
-            addCriterion("STANDARD_GROUP_FLOW <>", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowGreaterThan(String value) {
-            addCriterion("STANDARD_GROUP_FLOW >", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowGreaterThanOrEqualTo(String value) {
-            addCriterion("STANDARD_GROUP_FLOW >=", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowLessThan(String value) {
-            addCriterion("STANDARD_GROUP_FLOW <", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowLessThanOrEqualTo(String value) {
-            addCriterion("STANDARD_GROUP_FLOW <=", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowLike(String value) {
-            addCriterion("STANDARD_GROUP_FLOW like", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowNotLike(String value) {
-            addCriterion("STANDARD_GROUP_FLOW not like", value, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowIn(List<String> values) {
-            addCriterion("STANDARD_GROUP_FLOW in", values, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowNotIn(List<String> values) {
-            addCriterion("STANDARD_GROUP_FLOW not in", values, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowBetween(String value1, String value2) {
-            addCriterion("STANDARD_GROUP_FLOW between", value1, value2, "standardGroupFlow");
-            return (Criteria) this;
-        }
-
-        public Criteria andStandardGroupFlowNotBetween(String value1, String value2) {
-            addCriterion("STANDARD_GROUP_FLOW not between", value1, value2, "standardGroupFlow");
             return (Criteria) this;
         }
 
@@ -1611,6 +1611,76 @@ public class SchRotationGroupExample {
 
         public Criteria andSessionNumberNotBetween(String value1, String value2) {
             addCriterion("SESSION_NUMBER not between", value1, value2, "sessionNumber");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthIsNull() {
+            addCriterion("SCH_MAX_MONTH is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthIsNotNull() {
+            addCriterion("SCH_MAX_MONTH is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthEqualTo(String value) {
+            addCriterion("SCH_MAX_MONTH =", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthNotEqualTo(String value) {
+            addCriterion("SCH_MAX_MONTH <>", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthGreaterThan(String value) {
+            addCriterion("SCH_MAX_MONTH >", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthGreaterThanOrEqualTo(String value) {
+            addCriterion("SCH_MAX_MONTH >=", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthLessThan(String value) {
+            addCriterion("SCH_MAX_MONTH <", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthLessThanOrEqualTo(String value) {
+            addCriterion("SCH_MAX_MONTH <=", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthLike(String value) {
+            addCriterion("SCH_MAX_MONTH like", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthNotLike(String value) {
+            addCriterion("SCH_MAX_MONTH not like", value, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthIn(List<String> values) {
+            addCriterion("SCH_MAX_MONTH in", values, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthNotIn(List<String> values) {
+            addCriterion("SCH_MAX_MONTH not in", values, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthBetween(String value1, String value2) {
+            addCriterion("SCH_MAX_MONTH between", value1, value2, "schMaxMonth");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchMaxMonthNotBetween(String value1, String value2) {
+            addCriterion("SCH_MAX_MONTH not between", value1, value2, "schMaxMonth");
             return (Criteria) this;
         }
     }

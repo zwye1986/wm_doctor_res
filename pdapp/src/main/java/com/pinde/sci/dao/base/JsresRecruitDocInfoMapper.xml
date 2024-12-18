@@ -158,7 +158,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.JSRES_RECRUIT_DOC_INFO
+      from JSRES_RECRUIT_DOC_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -172,7 +172,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_RECRUIT_DOC_INFO
+      from JSRES_RECRUIT_DOC_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -185,21 +185,22 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.JSRES_RECRUIT_DOC_INFO
+      from JSRES_RECRUIT_DOC_INFO
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_RECRUIT_DOC_INFO
+      delete
+      from JSRES_RECRUIT_DOC_INFO
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresRecruitDocInfoExample" >
-    delete from PDSCI.JSRES_RECRUIT_DOC_INFO
+      delete from JSRES_RECRUIT_DOC_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
-    insert into PDSCI.JSRES_RECRUIT_DOC_INFO (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW, 
+      insert into JSRES_RECRUIT_DOC_INFO (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW,
       ORG_NAME, SPE_ID, SPE_NAME, 
       SWAP_FLAG, RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME, 
       RECRUIT_YEAR, RETEST_FLAG, EXAM_RESULT, 
@@ -253,7 +254,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
-    insert into PDSCI.JSRES_RECRUIT_DOC_INFO
+      insert into JSRES_RECRUIT_DOC_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recruitFlow != null" >
         RECRUIT_FLOW,
@@ -680,13 +681,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsresRecruitDocInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_RECRUIT_DOC_INFO
+      select count(*) from JSRES_RECRUIT_DOC_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_RECRUIT_DOC_INFO
+      update JSRES_RECRUIT_DOC_INFO
     <set >
       <if test="record.recruitFlow != null" >
         RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
@@ -904,7 +905,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.JSRES_RECRUIT_DOC_INFO
+      update JSRES_RECRUIT_DOC_INFO
     set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -980,7 +981,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_RECRUIT_DOC_INFO
+      update JSRES_RECRUIT_DOC_INFO
     set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -1053,7 +1054,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
-    update PDSCI.JSRES_RECRUIT_DOC_INFO
+      update JSRES_RECRUIT_DOC_INFO
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -1266,7 +1267,7 @@
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
-    update PDSCI.JSRES_RECRUIT_DOC_INFO
+      update JSRES_RECRUIT_DOC_INFO
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
@@ -1339,7 +1340,7 @@
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresRecruitDocInfo" >
-    update PDSCI.JSRES_RECRUIT_DOC_INFO
+      update JSRES_RECRUIT_DOC_INFO
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

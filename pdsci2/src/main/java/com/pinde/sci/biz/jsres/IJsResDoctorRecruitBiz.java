@@ -1,11 +1,10 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,7 +52,7 @@ public interface IJsResDoctorRecruitBiz {
 
     int queryCountByDoctFlow(String doctorFlow);
 
-    int resDoctorRecruitRefresh(ResDoctorRecruit recruit);
+    int resDoctorRecruitRefresh(com.pinde.core.model.ResDoctorRecruit recruit);
 
     /**
      * 查询
@@ -61,7 +60,7 @@ public interface IJsResDoctorRecruitBiz {
      * @param recruit
      * @return
      */
-    List<ResDoctorRecruit> searchResDoctorRecruitList(ResDoctorRecruit recruit, String orderByClause);
+    List<com.pinde.core.model.ResDoctorRecruit> searchResDoctorRecruitList(com.pinde.core.model.ResDoctorRecruit recruit, String orderByClause);
 
     /**
      * 查询审核通过人数
@@ -69,7 +68,7 @@ public interface IJsResDoctorRecruitBiz {
      * @param recruit
      * @return
      */
-    int searchBasePassCount(ResDoctorRecruit recruit, List<String> orgFlowList,String year);
+    int searchBasePassCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String year);
 
     /**
      * 保存学员审核成绩
@@ -104,7 +103,7 @@ public interface IJsResDoctorRecruitBiz {
     List<JsDoctorInfoExt> searchDoctorInfoResume3(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser user, SysOrg sysOrg, List<String> jointOrgFlowList, String flag, List<String> docTypeList, List<String>trainYearList,List<String> sessionNumbers,String baseFlag,String isPostpone,String isArmy, String workOrgId,String workOrgName);
 
 
-    int searchDoctorNum(ResDoctorRecruit recruit);
+    int searchDoctorNum(com.pinde.core.model.ResDoctorRecruit recruit);
 
     /**
      * 更新医师走向
@@ -155,19 +154,13 @@ public interface IJsResDoctorRecruitBiz {
      * @return
      */
     List<JsResDoctorRecruitExt>  searchDoctorTheoryScore( ResDoctorRecruit resDoctorRecruit,ResDoctor doctor, SysUser  sysUser,SysOrg  org,List<String>  jointOrgFlowList,  String flag , String  scoreYear, String  isHege,List<String> docTypeList,String testId);
-/**
-     * 公共科目成绩查询
-     * @return
-     */
-    List<JsResDoctorRecruitExt>  searchDoctorPublicScore( ResDoctorRecruit resDoctorRecruit,ResDoctor doctor, SysUser  sysUser,SysOrg  org,List<String>  jointOrgFlowList,  String flag , String  scoreYear, String  notAllQualified,String allQualified,List<String> docTypeList);
-    List<JsResDoctorRecruitExt>  searchDoctorPublicScore1( ResDoctorRecruit resDoctorRecruit,ResDoctor doctor, SysUser  sysUser,SysOrg  org,List<String>  jointOrgFlowList,  String flag , String  scoreYear, String  notAllQualified,String allQualified,List<String> docTypeList,List<String> sessionNumbers);
 
-//	List<ResDoctorRecruit> searchRecruitByDoc(String doctorFlow, String orgFlow);
+    List<JsResDoctorRecruitExt> searchDoctorPublicScore1(ResDoctorRecruit resDoctorRecruit, ResDoctor doctor, SysUser sysUser, SysOrg org, List<String> jointOrgFlowList, String flag, String scoreYear, String notAllQualified, String allQualified, List<String> docTypeList, List<String> sessionNumbers);
 
-    List<ResDoctorRecruit> readDoctorRecruits(ResDoctorRecruit recruit);
-    List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(ResDoctorRecruit recruit);
 
-    List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(ResDoctorRecruit recruit);
+    List<com.pinde.core.model.ResDoctorRecruit> readDoctorRecruits(com.pinde.core.model.ResDoctorRecruit recruit);
+
+    List<ResDoctorRecruitWithBLOBs> searchRecruitWithBLOBs(com.pinde.core.model.ResDoctorRecruit recruit);
 
     int updateRecruit(ResDoctorRecruitWithBLOBs resDoctorRecruitWithBLOBs);
 
@@ -206,7 +199,7 @@ public interface IJsResDoctorRecruitBiz {
     List<JsResDoctorRecruitExt> searchDoctorSkillScoreForUni(Map<String, Object> param);
     List<JsResDoctorRecruitExt> searchDoctorSkillScoreForUni1(Map<String, Object> param);
 
-    List<JsDoctorInfoExt> searchDoctorInfoResumeForUni(ResDoctorRecruit recruit, ResDoctor doctor, SysUser sysUser, SysOrg org, String derateFlag, List<String> docTypeList, SysUser exSysUser);
+    List<JsDoctorInfoExt> searchDoctorInfoResumeForUni(com.pinde.core.model.ResDoctorRecruit recruit, ResDoctor doctor, SysUser sysUser, SysOrg org, String derateFlag, List<String> docTypeList, SysUser exSysUser);
 
     List<Map<String,String>> searchOrgNotUseAppDoc(Map<String, Object> param);
     List<Map<String,String>> findSchArrengResultByDoctorAndYearMonth(Map<String, Object> param);
@@ -230,9 +223,9 @@ public interface IJsResDoctorRecruitBiz {
     //2017结业考核人员导出所需信息
     List<JykhInfoForm> graduateExtList(Map<String, Object> parMap) throws Exception;
 
-    void createCertificateNo(List<ResDoctorRecruit> resDoctorRecruits);
+    void createCertificateNo(List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits);
 
-    void createNotCertificateNo(List<ResDoctorRecruit> resDoctorRecruits);
+    void createNotCertificateNo(List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits);
 
     /**
      * 证书查询
@@ -243,13 +236,13 @@ public interface IJsResDoctorRecruitBiz {
     List<JsResDoctorRecruitExt> searchDoctorCertificateList2(Map<String, Object> param);
     /**
      * 导入发证学员
-     * @param param
+     * @param file
      * @return
      */
     ExcelUtile importDoctorCertificateNoFromExcel(MultipartFile file);
     /**
      * 导入发证学员
-     * @param param
+     * @param file
      * @return
      */
     ExcelUtile importDoctorCertificateNoFromExcel2(MultipartFile file);
@@ -261,33 +254,13 @@ public interface IJsResDoctorRecruitBiz {
     List<Map<String,Object>> zlxytjJoint(Map<String, Object> param);
 
     HSSFWorkbook createCycleResultsByDoc(String doctorFlow, String roleId, String schStartDate, String schEndDate);
-    /**
-     * 查询当前机构下的医师
-     */
-    List<JsDoctorInfoExt> resDoctorInfoExtList(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers);
     void exportForDetailByOrg(List<JsDoctorInfoExt> doctorInfoExts,String titleYsar, HttpServletResponse response) throws Exception;
 
     void exportRecruitList(List<JsResDoctorRecruitExt> recruitList, HttpServletResponse response) throws Exception;
 
-    String saveDoctorRecruitNew(ResDoctorRecruitWithBLOBs docRecWithBLOBs);
-
-    int saveDoctorRecruitInfo(ResDoctorRecruitInfo resDoctorRecruitInfo);
-
-    /**
-     * @Department：研发部
-     * @Description 查询招录报名信息
-     * @Author Zjie
-     * @Date 0028, 2020年11月28日
-     */
-    ResDoctorRecruitInfo findRecruitInfo(String recruitFlow);
-
-    List<JsResDoctorRecruitExt> resDoctorRecruitExtList1New(ResDoctorRecruit resDoctorRecruit, SysUser user, List<String> org,List<String> docTypeList,List<String> sessionNumbers);
-
-    List<ResDoctorRecruit> searchResDoctorRecruitListNew(ResDoctorRecruit recruit, String orderByClause);
 
 
     List<JsResDoctorRecruitExt> searchResDoctorRecruitExtList1(ResDoctorRecruit resDoctorRecruit, SysUser sysUser, List<String> orgFlowList, List<String> docTypeList, List<String> sessionNumbers, String isJointOrg);
-    List<JsResDoctorRecruitExt> searchResDoctorRecruitExtList2(ResDoctorRecruit resDoctorRecruit, SysUser sysUser, List<String> orgFlowList, List<String> docTypeList, List<String> sessionNumbers, String isJointOrg);
 
     List<JsDoctorInfoExt> resDoctorInfoExtListNew(ResDoctorRecruit resDoctorRecruit, SysUser sysUser, List<String> orgFlowList, List<String> docTypeList, List<String> sessionNumbers, String isJointOrg);
 
@@ -295,7 +268,9 @@ public interface IJsResDoctorRecruitBiz {
 
     int createCertificate(ResDoctorRecruit old,String tabTag);
 
-    List<ResDoctorRecruit> searchResDoctorRecruitListByFlows(List<String> recruitFlows);
+    List<com.pinde.core.model.ResDoctorRecruit> searchResDoctorRecruitListByFlows(List<String> recruitFlows);
 
     int findSignupCount(String doctorFlow, String year);
+
+    List<ResDoctorRecruitWithBLOBs> readDoctorRecruitBlobs(com.pinde.core.model.ResDoctorRecruit recruit);
 }

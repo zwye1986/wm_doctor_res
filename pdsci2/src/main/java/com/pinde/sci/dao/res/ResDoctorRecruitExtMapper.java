@@ -1,10 +1,9 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
 import com.pinde.core.model.SysDict;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
-import com.pinde.sci.model.mo.ResDoctor;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs;
 import com.pinde.sci.model.res.ResDoctorRecruitExt;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,7 +43,7 @@ public interface ResDoctorRecruitExtMapper {
 	//湖北各基地招录信息统计
 	List<Map<String,Object>> queryOrgStatistics(@Param("recruitYear") String recruitYear);
 
-	List<ResDoctorRecruit> searchDoctorRecruitWithLine(Map<String,Object> paramMap);
+    List<com.pinde.core.model.ResDoctorRecruit> searchDoctorRecruitWithLine(Map<String, Object> paramMap);
 	//查询湖北历年招录总数
 	List<Map<String,Object>> getHBRecruitInfo(Map<String,Object> paramMap);
 	//查询江苏历年招录总数
@@ -137,7 +136,7 @@ public interface ResDoctorRecruitExtMapper {
 	 * @Author fengxf
 	 * @Date 2020/6/7
 	 */
-	List<ResDoctorRecruit> getDoctorRecruitInfo(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> getDoctorRecruitInfo(String doctorFlow);
 
 	int updateAssignAudit(Map<String, Object> param);
 

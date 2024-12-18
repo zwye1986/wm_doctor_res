@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.JxTuitionManagement;
-import com.pinde.sci.model.mo.JxTuitionManagementExample;
+import com.pinde.core.model.JxTuitionManagement;
+import com.pinde.core.model.JxTuitionManagementExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

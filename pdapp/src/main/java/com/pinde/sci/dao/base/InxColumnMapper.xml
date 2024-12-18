@@ -81,7 +81,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.INX_COLUMN
+      from INX_COLUMN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,21 +92,22 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.INX_COLUMN
+      from INX_COLUMN
     where COLUMN_FLOW = #{columnFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.INX_COLUMN
+      delete
+      from INX_COLUMN
     where COLUMN_FLOW = #{columnFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.InxColumnExample" >
-    delete from PDSCI.INX_COLUMN
+      delete from INX_COLUMN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.InxColumn" >
-    insert into PDSCI.INX_COLUMN (COLUMN_FLOW, COLUMN_ID, COLUMN_NAME, 
+      insert into INX_COLUMN (COLUMN_FLOW, COLUMN_ID, COLUMN_NAME,
       PARENT_COLUMN_ID, ORDINAL, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -116,7 +117,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.InxColumn" >
-    insert into PDSCI.INX_COLUMN
+      insert into INX_COLUMN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="columnFlow != null" >
         COLUMN_FLOW,
@@ -183,13 +184,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.InxColumnExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.INX_COLUMN
+      select count(*) from INX_COLUMN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.INX_COLUMN
+      update INX_COLUMN
     <set >
       <if test="record.columnFlow != null" >
         COLUMN_FLOW = #{record.columnFlow,jdbcType=VARCHAR},
@@ -227,7 +228,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.INX_COLUMN
+      update INX_COLUMN
     set COLUMN_FLOW = #{record.columnFlow,jdbcType=VARCHAR},
       COLUMN_ID = #{record.columnId,jdbcType=VARCHAR},
       COLUMN_NAME = #{record.columnName,jdbcType=VARCHAR},
@@ -243,7 +244,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.InxColumn" >
-    update PDSCI.INX_COLUMN
+      update INX_COLUMN
     <set >
       <if test="columnId != null" >
         COLUMN_ID = #{columnId,jdbcType=VARCHAR},
@@ -276,7 +277,7 @@
     where COLUMN_FLOW = #{columnFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.InxColumn" >
-    update PDSCI.INX_COLUMN
+      update INX_COLUMN
     set COLUMN_ID = #{columnId,jdbcType=VARCHAR},
       COLUMN_NAME = #{columnName,jdbcType=VARCHAR},
       PARENT_COLUMN_ID = #{parentColumnId,jdbcType=VARCHAR},

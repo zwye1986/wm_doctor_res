@@ -3,8 +3,9 @@
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorRecruitExtMapper" >
 	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.sci.model.res.ResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
-		<association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.sci.model.mo.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
+        <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor"
+                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 
 	<resultMap id="speCountForm" type="com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm">
@@ -306,7 +307,8 @@
 		</if>
 		ORDER BY dr.TOTLE_RESULT DESC nulls last
 	</select>
-	<resultMap id="docRecruitClobMap" type="com.pinde.sci.model.mo.ResDoctorRecruitWithBLOBs" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.ResultMapWithBLOBs">
+    <resultMap id="docRecruitClobMap" type="com.pinde.core.model.ResDoctorRecruitWithBLOBs"
+               extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.ResultMapWithBLOBs">
 	</resultMap>
 	<select id="docRecruitClobSearch" parameterType="java.util.Map" resultMap="docRecruitClobMap">
 		SELECT * FROM RES_DOCTOR_RECRUIT rdr

@@ -1,8 +1,10 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.model.PubFile;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.Docx4jUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -20,7 +22,9 @@ import com.pinde.sci.dao.base.ResTeachPlanDoctorMapper;
 import com.pinde.sci.dao.base.ResTeachQualifiedPlanMapper;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;
 import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResQualifiedPlanMsg;
+import com.pinde.core.model.ResTeachPlanDoctor;
+import com.pinde.core.model.ResTeachQualifiedPlan;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;

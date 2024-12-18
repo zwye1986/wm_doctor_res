@@ -1,6 +1,10 @@
 package com.pinde.res.biz.osca.impl;
 
 import com.pinde.core.common.enums.UserStatusEnum;
+import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.model.OscaDoctorRegist;
+import com.pinde.core.model.OscaDoctorRegistExample;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -8,11 +12,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.res.dao.osca.ext.OscaDoctorRegistExtMapper;
-import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
-import com.pinde.core.model.OscaDoctorRegist;
-import com.pinde.core.model.OscaDoctorRegistExample;
-import com.pinde.core.model.ResDoctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

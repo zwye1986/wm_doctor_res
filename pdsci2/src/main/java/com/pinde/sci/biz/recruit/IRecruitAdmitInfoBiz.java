@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.recruit;
 
-import com.pinde.sci.model.mo.RecruitAdmitInfo;
+import com.pinde.core.model.RecruitAdmitInfo;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 

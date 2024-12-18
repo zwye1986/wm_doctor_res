@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResAllowanceUserExtMapper">
-    <resultMap id="ResAllowanceUserExt" type="com.pinde.sci.model.res.ResAllowanceUserExt" extends="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <resultMap id="ResAllowanceUserExt" type="com.pinde.sci.model.res.ResAllowanceUserExt"
+               extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
-                     resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap"/>
-        <association property="userRole" column="USER_FLOW" javaType="com.pinde.sci.model.mo.SysUserRole" resultMap="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap"/>
-        <association property="sysRole" column="ROLE_FLOW" javaType="com.pinde.sci.model.mo.SysRole" resultMap="com.pinde.sci.dao.base.SysRoleMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
+        <association property="userRole" column="USER_FLOW" javaType="com.pinde.core.model.SysUserRole"
+                     resultMap="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap"/>
+        <association property="sysRole" column="ROLE_FLOW" javaType="com.pinde.core.model.SysRole"
+                     resultMap="com.pinde.core.common.sci.dao.SysRoleMapper.BaseResultMap"/>
     </resultMap>
     <resultMap id="userMap" type="com.pinde.sci.model.res.ResAllowanceUserExt">
         <result  property="userFlow" column="USER_FLOW" javaType="string"/>

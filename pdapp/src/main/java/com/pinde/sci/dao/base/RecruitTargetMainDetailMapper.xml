@@ -84,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      from RECRUIT_TARGET_MAIN_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +95,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      from RECRUIT_TARGET_MAIN_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      delete from RECRUIT_TARGET_MAIN_DETAIL
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitTargetMainDetailExample">
-    delete from PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      delete from RECRUIT_TARGET_MAIN_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.RecruitTargetMainDetail">
-    insert into PDSCI.RECRUIT_TARGET_MAIN_DETAIL (RECORD_FLOW, RARGET_FLOW, ORG_FLOW, 
+      insert into RECRUIT_TARGET_MAIN_DETAIL (RECORD_FLOW, RARGET_FLOW, ORG_FLOW,
       ORG_NAME, ACADEMIC_NUM, SPECIALIZED_NUM, 
       ALL_NUM, IS_REPORT, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -121,7 +121,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitTargetMainDetail">
-    insert into PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      insert into RECRUIT_TARGET_MAIN_DETAIL
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -206,13 +206,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.RecruitTargetMainDetailExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      select count(*) from RECRUIT_TARGET_MAIN_DETAIL
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      update RECRUIT_TARGET_MAIN_DETAIL
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -259,7 +259,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      update RECRUIT_TARGET_MAIN_DETAIL
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       RARGET_FLOW = #{record.rargetFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
@@ -278,7 +278,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitTargetMainDetail">
-    update PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      update RECRUIT_TARGET_MAIN_DETAIL
     <set>
       <if test="rargetFlow != null">
         RARGET_FLOW = #{rargetFlow,jdbcType=VARCHAR},
@@ -320,7 +320,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitTargetMainDetail">
-    update PDSCI.RECRUIT_TARGET_MAIN_DETAIL
+      update RECRUIT_TARGET_MAIN_DETAIL
     set RARGET_FLOW = #{rargetFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},

@@ -177,11 +177,11 @@
                     )
                 </if>
                and info.dept_flow in ( select sd.dept_flow
-                from pdsci.sys_dept sd
+                from sys_dept sd
                 where sd.record_status = 'Y'
                 and ( exists (
                         select null
-                        from pdsci.res_doctor_sch_process rdsp
+                from res_doctor_sch_process rdsp
                         where rdsp.record_status = 'Y'
                         and rdsp.org_flow = sd.org_flow
                         and rdsp.user_flow=#{userFlow}
@@ -403,11 +403,11 @@
                     )
                 </if>
                 and info.dept_flow in ( select sd.dept_flow
-                from pdsci.sys_dept sd
+                from sys_dept sd
                 where sd.record_status = 'Y'
                 and ( exists (
                 select null
-                from pdsci.res_doctor_sch_process rdsp
+                from res_doctor_sch_process rdsp
                 where rdsp.record_status = 'Y'
                 and rdsp.dept_flow = sd.dept_flow
                 and rdsp.user_flow=#{userFlow}
@@ -563,11 +563,11 @@
                 </if>
 
                 and info.dept_flow in ( select sd.dept_flow
-                from pdsci.sys_dept sd
+                from sys_dept sd
                 where sd.record_status = 'Y'
                 and ( exists (
                 select null
-                from pdsci.res_doctor_sch_process rdsp
+                from res_doctor_sch_process rdsp
                 where rdsp.record_status = 'Y'
                 and rdsp.dept_flow = sd.dept_flow
                 and rdsp.user_flow=#{userFlow}
@@ -827,11 +827,11 @@
                 </if>
 
                 and info.dept_flow in ( select sd.dept_flow
-                from pdsci.sys_dept sd
+                from sys_dept sd
                 where sd.record_status = 'Y'
                 and ( exists (
                 select null
-                from pdsci.res_doctor_sch_process rdsp
+                from res_doctor_sch_process rdsp
                 where rdsp.record_status = 'Y'
                 and rdsp.dept_flow = sd.dept_flow
                 and rdsp.user_flow=#{userFlow}
@@ -977,7 +977,7 @@
                 DEPT_FLOW, ORG_FLOW, DEPT_CODE, DEPT_NAME, ORDINAL
                 , RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
                 , DEPT_PINYIN, DEPT_ID, DEPT_PID
-            FROM PDSCI.SYS_DEPT S
+        FROM SYS_DEPT S
             WHERE RECORD_STATUS = 'Y'
             <if test='deptFlow!=null and deptFlow!=""'>
                 AND DEPT_FLOW = #{deptFlow}
@@ -1302,7 +1302,7 @@
         SELECT EVAL_FLOW, RESULT_FLOW, USER_FLOW, TARGET_FLOW, TARGET_NAME
             , ORDINAL, EVAL_SCORE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW
             , MODIFY_TIME, MODIFY_USER_FLOW, IS_TEXT, EVAL_REMARKS
-        FROM PDSCI.TEACHING_ACTIVITY_EVAL
+        FROM TEACHING_ACTIVITY_EVAL
         WHERE RECORD_STATUS = 'Y'
             AND RESULT_FLOW  IN(
             SELECT INFO.RESULT_FLOW
@@ -1440,7 +1440,7 @@
     <select id="getTeacherActivityStatistics" resultMap="TeacherActivityStatistics">
         select *
         from ( SELECT SU.USER_FLOW, SU.USER_NAME, DEPT.DEPT_FLOW, DEPT.DEPT_NAME,SU.ORG_FLOW,SU.ORG_NAME
-                FROM PDSCI.SYS_USER su
+        FROM SYS_USER su
                   LEFT JOIN SYS_USER_DEPT SUD
                     ON SU.USER_FLOW = SUD.USER_FLOW
                   LEFT JOIN SYS_DEPT DEPT
@@ -1600,7 +1600,7 @@
     <select id="getTeacherActivityStatistics2" resultMap="TeacherActivityStatistics2">
         select A.*, nvl(B.NUM, '0') AS NUM
         from ( SELECT SU.USER_FLOW, SU.USER_NAME, DEPT.DEPT_FLOW, DEPT.DEPT_NAME,SU.ORG_FLOW,SU.ORG_NAME
-        FROM PDSCI.SYS_USER su
+        FROM SYS_USER su
         LEFT JOIN SYS_USER_DEPT SUD
         ON SU.USER_FLOW = SUD.USER_FLOW
         LEFT JOIN SYS_DEPT DEPT

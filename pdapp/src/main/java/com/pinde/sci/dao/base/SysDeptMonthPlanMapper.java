@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SysDeptMonthPlan;
 import com.pinde.core.model.SysDeptMonthPlanExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysDeptMonthPlanMapper {
     int countByExample(SysDeptMonthPlanExample example);

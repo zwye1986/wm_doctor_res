@@ -1713,6 +1713,76 @@ public class ResDoctorReductionExample {
             addCriterion("REQUIRE_XT_ADUIT not between", value1, value2, "requireXtAduit");
             return (Criteria) this;
         }
+
+        public Criteria andProveFilePathIsNull() {
+            addCriterion("PROVE_FILE_PATH is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathIsNotNull() {
+            addCriterion("PROVE_FILE_PATH is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathEqualTo(String value) {
+            addCriterion("PROVE_FILE_PATH =", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathNotEqualTo(String value) {
+            addCriterion("PROVE_FILE_PATH <>", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathGreaterThan(String value) {
+            addCriterion("PROVE_FILE_PATH >", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathGreaterThanOrEqualTo(String value) {
+            addCriterion("PROVE_FILE_PATH >=", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathLessThan(String value) {
+            addCriterion("PROVE_FILE_PATH <", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathLessThanOrEqualTo(String value) {
+            addCriterion("PROVE_FILE_PATH <=", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathLike(String value) {
+            addCriterion("PROVE_FILE_PATH like", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathNotLike(String value) {
+            addCriterion("PROVE_FILE_PATH not like", value, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathIn(List<String> values) {
+            addCriterion("PROVE_FILE_PATH in", values, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathNotIn(List<String> values) {
+            addCriterion("PROVE_FILE_PATH not in", values, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathBetween(String value1, String value2) {
+            addCriterion("PROVE_FILE_PATH between", value1, value2, "proveFilePath");
+            return (Criteria) this;
+        }
+
+        public Criteria andProveFilePathNotBetween(String value1, String value2) {
+            addCriterion("PROVE_FILE_PATH not between", value1, value2, "proveFilePath");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.ResAuditLogMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResAuditLog">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResAuditLog">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="PARENT_RECORD_FLOW" jdbcType="VARCHAR" property="parentRecordFlow" />
     <result column="AUDIT_ROLE" jdbcType="VARCHAR" property="auditRole" />
@@ -80,13 +80,13 @@
     AUDIT_ACTIONS, REMARKS, PRODUCT_TYPE_ID, PRODUCT_TYPE_NAME, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.ResAuditLogExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.pinde.core.model.ResAuditLogExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_AUDIT_LOG
+      from RES_AUDIT_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,21 +97,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_AUDIT_LOG
+      from RES_AUDIT_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.RES_AUDIT_LOG
+      delete from RES_AUDIT_LOG
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResAuditLogExample">
-    delete from PDSCI.RES_AUDIT_LOG
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResAuditLogExample">
+      delete from RES_AUDIT_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResAuditLog">
-    insert into PDSCI.RES_AUDIT_LOG (RECORD_FLOW, PARENT_RECORD_FLOW, AUDIT_ROLE, 
+  <insert id="insert" parameterType="com.pinde.core.model.ResAuditLog">
+      insert into RES_AUDIT_LOG (RECORD_FLOW, PARENT_RECORD_FLOW, AUDIT_ROLE,
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_ACTIONS, 
       REMARKS, PRODUCT_TYPE_ID, PRODUCT_TYPE_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
@@ -122,8 +122,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResAuditLog">
-    insert into PDSCI.RES_AUDIT_LOG
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResAuditLog">
+      insert into RES_AUDIT_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
         RECORD_FLOW,
@@ -213,14 +213,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResAuditLogExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.RES_AUDIT_LOG
+  <select id="countByExample" parameterType="com.pinde.core.model.ResAuditLogExample" resultType="java.lang.Integer">
+      select count(*) from RES_AUDIT_LOG
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.RES_AUDIT_LOG
+      update RES_AUDIT_LOG
     <set>
       <if test="record.recordFlow != null">
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.RES_AUDIT_LOG
+      update RES_AUDIT_LOG
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       PARENT_RECORD_FLOW = #{record.parentRecordFlow,jdbcType=VARCHAR},
       AUDIT_ROLE = #{record.auditRole,jdbcType=VARCHAR},
@@ -289,8 +289,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResAuditLog">
-    update PDSCI.RES_AUDIT_LOG
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResAuditLog">
+      update RES_AUDIT_LOG
     <set>
       <if test="parentRecordFlow != null">
         PARENT_RECORD_FLOW = #{parentRecordFlow,jdbcType=VARCHAR},
@@ -334,8 +334,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResAuditLog">
-    update PDSCI.RES_AUDIT_LOG
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResAuditLog">
+      update RES_AUDIT_LOG
     set PARENT_RECORD_FLOW = #{parentRecordFlow,jdbcType=VARCHAR},
       AUDIT_ROLE = #{auditRole,jdbcType=VARCHAR},
       AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},

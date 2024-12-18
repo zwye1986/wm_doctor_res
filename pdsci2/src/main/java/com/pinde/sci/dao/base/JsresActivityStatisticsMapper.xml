@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.JsresActivityStatisticsMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.JsresActivityStatistics" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresActivityStatistics">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
     <result column="PARENT_ORG_FLOW" property="parentOrgFlow" jdbcType="VARCHAR" />
@@ -78,13 +78,14 @@
     RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW, ORG_FLOW, ORG_NAME, MONTH_DATE, DOCTOR_TRAIN_TOTAL, 
     ACTIVITY_NUM, DOCTOR_JOINT_NUM, AVG_JOINT_NUM, AVG_TIME, DOCTOR_TYPE_ID, CREATE_TIME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.JsresActivityStatisticsExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.JsresActivityStatisticsExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_ACTIVITY_STATISTICS
+        from JSRES_ACTIVITY_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,21 +96,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_ACTIVITY_STATISTICS
+      from JSRES_ACTIVITY_STATISTICS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_ACTIVITY_STATISTICS
+      delete from JSRES_ACTIVITY_STATISTICS
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.JsresActivityStatisticsExample" >
-    delete from PDSCI.JSRES_ACTIVITY_STATISTICS
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresActivityStatisticsExample">
+        delete from JSRES_ACTIVITY_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.JsresActivityStatistics" >
-    insert into PDSCI.JSRES_ACTIVITY_STATISTICS (RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.JsresActivityStatistics">
+        insert into JSRES_ACTIVITY_STATISTICS (RECORD_FLOW, ORG_CODE, PARENT_ORG_FLOW,
       ORG_FLOW, ORG_NAME, MONTH_DATE, 
       DOCTOR_TRAIN_TOTAL, ACTIVITY_NUM, DOCTOR_JOINT_NUM, 
       AVG_JOINT_NUM, AVG_TIME, DOCTOR_TYPE_ID, 
@@ -120,8 +121,8 @@
       #{avgJointNum,jdbcType=VARCHAR}, #{avgTime,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.JsresActivityStatistics" >
-    insert into PDSCI.JSRES_ACTIVITY_STATISTICS
+    <insert id="insertSelective" parameterType="com.pinde.core.model.JsresActivityStatistics">
+        insert into JSRES_ACTIVITY_STATISTICS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -205,14 +206,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.JsresActivityStatisticsExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_ACTIVITY_STATISTICS
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresActivityStatisticsExample"
+            resultType="java.lang.Integer">
+        select count(*) from JSRES_ACTIVITY_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_ACTIVITY_STATISTICS
+      update JSRES_ACTIVITY_STATISTICS
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -259,7 +261,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_ACTIVITY_STATISTICS
+      update JSRES_ACTIVITY_STATISTICS
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_CODE = #{record.orgCode,jdbcType=VARCHAR},
       PARENT_ORG_FLOW = #{record.parentOrgFlow,jdbcType=VARCHAR},
@@ -277,8 +279,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.JsresActivityStatistics" >
-    update PDSCI.JSRES_ACTIVITY_STATISTICS
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresActivityStatistics">
+        update JSRES_ACTIVITY_STATISTICS
     <set >
       <if test="orgCode != null" >
         ORG_CODE = #{orgCode,jdbcType=VARCHAR},
@@ -319,8 +321,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.JsresActivityStatistics" >
-    update PDSCI.JSRES_ACTIVITY_STATISTICS
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresActivityStatistics">
+        update JSRES_ACTIVITY_STATISTICS
     set ORG_CODE = #{orgCode,jdbcType=VARCHAR},
       PARENT_ORG_FLOW = #{parentOrgFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

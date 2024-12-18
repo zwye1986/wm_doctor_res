@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchRotationOrgDeptMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationOrgDept" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationOrgDept">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
     <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
@@ -28,7 +28,7 @@
     <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
     <result column="SELECT_YEAR" property="selectYear" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SchRotationOrgDept" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SchRotationOrgDept" extends="BaseResultMap">
     <result column="SCH_STANDARD" property="schStandard" jdbcType="CLOB" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -98,7 +98,8 @@
   <sql id="Blob_Column_List" >
     SCH_STANDARD
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationOrgDeptExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.SchRotationOrgDeptExample">
     select
     <if test="distinct" >
       distinct
@@ -106,7 +107,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_DEPT
+      from SCH_ROTATION_ORG_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -114,13 +115,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchRotationOrgDeptExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SchRotationOrgDeptExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_DEPT
+      from SCH_ROTATION_ORG_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -133,21 +135,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SCH_ROTATION_ORG_DEPT
+      from SCH_ROTATION_ORG_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SCH_ROTATION_ORG_DEPT
+      delete from SCH_ROTATION_ORG_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchRotationOrgDeptExample" >
-    delete from PDSCI.SCH_ROTATION_ORG_DEPT
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationOrgDeptExample">
+      delete from SCH_ROTATION_ORG_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchRotationOrgDept" >
-    insert into PDSCI.SCH_ROTATION_ORG_DEPT (RECORD_FLOW, ROTATION_FLOW, DEPT_FLOW, 
+    <insert id="insert" parameterType="com.pinde.core.model.SchRotationOrgDept">
+      insert into SCH_ROTATION_ORG_DEPT (RECORD_FLOW, ROTATION_FLOW, DEPT_FLOW,
       DEPT_NAME, SCH_DEPT_FLOW, SCH_DEPT_NAME, 
       SCH_MONTH, ONE_SCH_MONTH, TWO_SCH_MONTH, 
       THREE_SCH_MONTH, IS_REQUIRED, GROUP_FLOW, 
@@ -166,8 +168,8 @@
       #{standardDeptId,jdbcType=VARCHAR}, #{standardDeptName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, 
       #{selectYear,jdbcType=VARCHAR}, #{schStandard,jdbcType=CLOB})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchRotationOrgDept" >
-    insert into PDSCI.SCH_ROTATION_ORG_DEPT
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationOrgDept">
+      insert into SCH_ROTATION_ORG_DEPT
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -329,14 +331,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchRotationOrgDeptExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SCH_ROTATION_ORG_DEPT
+    <select id="countByExample" parameterType="com.pinde.core.model.SchRotationOrgDeptExample"
+            resultType="java.lang.Integer">
+      select count(*) from SCH_ROTATION_ORG_DEPT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_DEPT
+      update SCH_ROTATION_ORG_DEPT
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -422,7 +425,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_DEPT
+      update SCH_ROTATION_ORG_DEPT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -454,7 +457,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SCH_ROTATION_ORG_DEPT
+      update SCH_ROTATION_ORG_DEPT
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
@@ -484,8 +487,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchRotationOrgDept" >
-    update PDSCI.SCH_ROTATION_ORG_DEPT
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationOrgDept">
+      update SCH_ROTATION_ORG_DEPT
     <set >
       <if test="rotationFlow != null" >
         ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
@@ -565,8 +568,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SchRotationOrgDept" >
-    update PDSCI.SCH_ROTATION_ORG_DEPT
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SchRotationOrgDept">
+      update SCH_ROTATION_ORG_DEPT
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},
@@ -594,8 +597,8 @@
       SCH_STANDARD = #{schStandard,jdbcType=CLOB}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchRotationOrgDept" >
-    update PDSCI.SCH_ROTATION_ORG_DEPT
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationOrgDept">
+      update SCH_ROTATION_ORG_DEPT
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
       DEPT_NAME = #{deptName,jdbcType=VARCHAR},

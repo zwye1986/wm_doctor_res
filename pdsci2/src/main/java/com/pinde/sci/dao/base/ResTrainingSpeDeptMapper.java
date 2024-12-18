@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResTrainingSpeDept;
-import com.pinde.sci.model.mo.ResTrainingSpeDeptExample;
+import com.pinde.core.model.ResTrainingSpeDept;
+import com.pinde.core.model.ResTrainingSpeDeptExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,9 +1,8 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.core.model.SysDict;
+import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -28,7 +27,7 @@ public interface IResStatisticBiz {
      * @param cityIdList
      * @return
      */
-    int statisticDoctorCount(ResDoctorRecruit recruit, List<String> cityIdList);
+    int statisticDoctorCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> cityIdList);
 
     /**
      * 统计协同基地的数量
@@ -50,12 +49,12 @@ public interface IResStatisticBiz {
     /**
      * 统计每个国家基地的总数和协同基地的总数
      */
-    List<Map<String, Object>> statisticDocCouByType(ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> docTypeList);
+    List<Map<String, Object>> statisticDocCouByType(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> docTypeList);
 
     /**
      * 统计每家基地的协同基地的每个专业的培训记录数
      */
-    List<Map<String, Object>> statisticJointCount(ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> dicTypeList);
+    List<Map<String, Object>> statisticJointCount(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, ResDoctor doctor, List<String> dicTypeList);
 
     /**
      * 导出excel
@@ -67,27 +66,27 @@ public interface IResStatisticBiz {
     /**
      * 计算每家医院的的人数
      */
-    List<Map<String, Object>> statisticDocCountByOrg(ResDoctorRecruit recruit, List<String> orgFlowList, String graduate);
+    List<Map<String, Object>> statisticDocCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String graduate);
 
     /**
      * 统计每家医院使用APP的人数 return time
      */
-    List<Map<String, Object>> statisticAppCountByOrg(ResDoctorRecruit recruit, ResRec resRec, String endTime, String startTime, List<String> delTypeList, String graduate);
+    List<Map<String, Object>> statisticAppCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, ResRec resRec, String endTime, String startTime, List<String> delTypeList, String graduate);
 
     /**
      * 统计每家医院使用APP的人数 return orgFlow
      */
-    List<Map<String, Object>> statisticRealAppCount(List<String> delTypeList, ResDoctorRecruit recruit, String endTime, String startTime, List<String> orgFlowList, String jointFlag, String month);
+    List<Map<String, Object>> statisticRealAppCount(List<String> delTypeList, com.pinde.core.model.ResDoctorRecruit recruit, String endTime, String startTime, List<String> orgFlowList, String jointFlag, String month);
 
     /**
      * 计算每家医院的的人数 for time
      */
-    List<Map<String, Object>> statisticDocCountByOrgForTime(String jointFlag, List<String> orgFlowList, String startTime, String endTime, ResDoctorRecruit recruit);
+    List<Map<String, Object>> statisticDocCountByOrgForTime(String jointFlag, List<String> orgFlowList, String startTime, String endTime, com.pinde.core.model.ResDoctorRecruit recruit);
 
     /**
      * 统计登录的人数详细信息
      */
-    List<JsDoctorInfoExt> statisticNoAppUser(ResDoctorRecruit recruit, ResRec resRec, List<String> delTypeList, String startDate, String endDate, String graduate);
+    List<JsDoctorInfoExt> statisticNoAppUser(com.pinde.core.model.ResDoctorRecruit recruit, ResRec resRec, List<String> delTypeList, String startDate, String endDate, String graduate);
 
     /**
      * 导入医师信息
@@ -129,7 +128,7 @@ public interface IResStatisticBiz {
      * @param docTypeList
      * @return
      */
-    List<Map<String,Object>> statisticJointCountByOrg(ResDoctorRecruit recruit, List<String> orgFlowList, String trainTypeId, List<String> docTypeList);
+    List<Map<String, Object>> statisticJointCountByOrg(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlowList, String trainTypeId, List<String> docTypeList);
 
     List<Map<String,String>> findCountryDocCount(String sessionNumber);
     List<Map<String,String>> findCountrySpeDocCount(String sessionNumber);
@@ -139,11 +138,13 @@ public interface IResStatisticBiz {
 
     List<Map<String,Object>> getCurrDocDetailsForUni(Map<String, Object> paramMap);
 
-    List<Map<String,String>> doctorNumForUni1(ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org);
-    List<Map<String,String>> doctorNumForUni2(ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org);
+    List<Map<String, String>> doctorNumForUni1(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org);
 
-    List<Map<String,String>> doctorNumForUni1DaoChu(ResDoctorRecruit recruit, List<String> orgFlows, SysOrg sysorg);
-    List<Map<String,String>> doctorNumForUni2DaoChu(ResDoctorRecruit recruit, List<String> orgFlows, SysOrg sysorg);
+    List<Map<String, String>> doctorNumForUni2(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg org);
+
+    List<Map<String, String>> doctorNumForUni1DaoChu(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg sysorg);
+
+    List<Map<String, String>> doctorNumForUni2DaoChu(com.pinde.core.model.ResDoctorRecruit recruit, List<String> orgFlows, SysOrg sysorg);
 
     //学员报到统计-基地
     List<Map<String,String>> registStatistic(String recruitYear);

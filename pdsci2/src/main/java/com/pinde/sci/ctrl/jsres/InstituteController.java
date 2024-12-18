@@ -2,10 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.ResOrgSpe;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -32,7 +29,17 @@ import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.PubUserResume;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResDoctorOrgHistory;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResRec;
+import com.pinde.core.model.ResTeacherTraining;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationGroup;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -381,7 +388,7 @@ public class InstituteController extends GeneralController {
 				}
 				userInfoExtForm.setSysUser(su);
 				userInfoExtForm.setDoctor(d.getResDoctor());
-				ResDoctorRecruit recruit3 = d;
+				com.pinde.core.model.ResDoctorRecruit recruit3 = d;
 				userInfoExtForm.setRecruit(recruit3);
 				if(StringUtil.isNotBlank(d.getTrainYear())){
                     d.setTrainYear(com.pinde.core.common.enums.JsResTrainYearEnum.getNameById(d.getTrainYear()));
@@ -493,11 +500,11 @@ public class InstituteController extends GeneralController {
 
 	@RequestMapping(value={"/doctorPassedList"})
 	public String doctorPassedList(Model model, String doctorFlow, String studyFlag){
-		ResDoctorRecruit recruit = new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());//  页面过滤 方便判断是否允许退回
 		recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
+		List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
 		model.addAttribute("recruitList", recruitList);
 		if(StringUtil.isNotBlank(studyFlag)){
             if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(studyFlag)) {
@@ -1238,10 +1245,10 @@ public class InstituteController extends GeneralController {
 	 */
 	@RequestMapping(value={"/getChangeOrgDetail"})
 	public String getChangeOrgDetail(String doctorFlow, String recordFlow, Model model){
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-		List<ResDoctorRecruit> recruitsList=jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
+		List<com.pinde.core.model.ResDoctorRecruit> recruitsList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME");
 		model.addAttribute("recruitsList", recruitsList);
 		ResRec resRec =new ResRec();
 		List<String> operUserFlowList =new ArrayList<String>();
@@ -1287,7 +1294,7 @@ public class InstituteController extends GeneralController {
 			ResDoctorRecruit lastRecruit = new ResDoctorRecruit();
 			lastRecruit.setDoctorFlow(doctorFlow);
             lastRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-			List<ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(lastRecruit, "CREATE_TIME DESC");
+			List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(lastRecruit, "CREATE_TIME DESC");
 			if(recruitList != null && !recruitList.isEmpty()){
 				lastRecruit = recruitList.get(0);
 				if(lastRecruit.getRecruitFlow().equals(recruitFlow)){
@@ -1406,7 +1413,7 @@ public class InstituteController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
@@ -1501,7 +1508,7 @@ public class InstituteController extends GeneralController {
 				docTypeList.add(s);
 			}
 		}
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setSessionNumber(sessionNumber);
 		recruit.setCatSpeId(trainTypeId);
         recruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
@@ -1549,7 +1556,7 @@ public class InstituteController extends GeneralController {
 	}
 
 	@RequestMapping("/statisticJointOrg")
-	public String statisticJointOrg(Model model,ResDoctorRecruit recruit ,ResDoctor doctor,String orgLevel,String trainTypeId,String[] datas){
+	public String statisticJointOrg(Model model, com.pinde.core.model.ResDoctorRecruit recruit, ResDoctor doctor, String orgLevel, String trainTypeId, String[] datas) {
 		Map<Object, Object> jointOrgListMap= new HashMap<Object, Object>();//每个符合添加的org的协同基地的map
 		Map<Object, Object> jointOrgSpeMap = new HashMap<Object,Object>();//协同基地的spe
 		Map<Object, Object> jointOrgDocCountMap = new HashMap<Object,Object>();//协同基地每个soe的总数
@@ -1654,7 +1661,7 @@ public class InstituteController extends GeneralController {
 			}
 		}
 		String month = DateUtil.getCurrDate2().substring(0, 6);
-		ResDoctorRecruit recruit=new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		if(StringUtil.isNotBlank(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"))){
 			recruit.setSessionNumber(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"));
 		}
@@ -1729,7 +1736,7 @@ public class InstituteController extends GeneralController {
 		List<String> timeGapMon=new ArrayList<String>();//存放横坐标
 		SysUser currUser=GlobalContext.getCurrentUser();
 		ResRec resRec=new ResRec();
-		ResDoctorRecruit recruit= new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		if(StringUtil.isNotBlank(orgFlow)){
 			recruit.setOrgFlow(orgFlow);
 			resRec.setOrgFlow(orgFlow);
@@ -1843,7 +1850,7 @@ public class InstituteController extends GeneralController {
 		}
 		ResRec resRec = new ResRec();
 		resRec.setOrgFlow(orgFlow);
-		ResDoctorRecruit recruit = new ResDoctorRecruit();
+		com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
 		recruit.setOrgFlow(orgFlow);
 		if(StringUtil.isNotBlank(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"))){
 			recruit.setSessionNumber(InitConfig.getSysCfg("jsres_doctorCount_sessionNumber"));

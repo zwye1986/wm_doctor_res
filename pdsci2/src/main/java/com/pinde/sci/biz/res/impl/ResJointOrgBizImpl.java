@@ -1,19 +1,19 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResJointOrgExample;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysOrgExample;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResJointOrgMapper;
-import com.pinde.sci.dao.base.SysOrgMapper;
 import com.pinde.sci.dao.jszy.JszyResJointOrgExtMapper;
 import com.pinde.sci.model.jszy.JszyResJointOrgExt;
-import com.pinde.sci.model.mo.ResJointOrg;
-import com.pinde.sci.model.mo.ResJointOrgExample;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.sci.model.mo.SysOrgExample;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

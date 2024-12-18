@@ -7,7 +7,7 @@ import com.pinde.sci.biz.lcjn.ILcjnStudentBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.core.common.PasswordHelper;
-import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

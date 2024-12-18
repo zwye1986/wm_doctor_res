@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResDoctorGraduationExamMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResDoctorGraduationExam" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResDoctorGraduationExam">
     <id column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="EXAM_YEAR" property="examYear" jdbcType="VARCHAR" />
@@ -73,13 +73,14 @@
     EXAM_FLOW, DOCTOR_FLOW, EXAM_YEAR, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExamExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResDoctorGraduationExamExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_GRADUATION_EXAM
+      from RES_DOCTOR_GRADUATION_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,29 +91,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_DOCTOR_GRADUATION_EXAM
+      from RES_DOCTOR_GRADUATION_EXAM
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_DOCTOR_GRADUATION_EXAM
+      delete from RES_DOCTOR_GRADUATION_EXAM
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExamExample" >
-    delete from PDSCI.RES_DOCTOR_GRADUATION_EXAM
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResDoctorGraduationExamExample">
+      delete from RES_DOCTOR_GRADUATION_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExam" >
-    insert into PDSCI.RES_DOCTOR_GRADUATION_EXAM (EXAM_FLOW, DOCTOR_FLOW, EXAM_YEAR, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorGraduationExam">
+      insert into RES_DOCTOR_GRADUATION_EXAM (EXAM_FLOW, DOCTOR_FLOW, EXAM_YEAR,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
     values (#{examFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{examYear,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExam" >
-    insert into PDSCI.RES_DOCTOR_GRADUATION_EXAM
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorGraduationExam">
+      insert into RES_DOCTOR_GRADUATION_EXAM
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="examFlow != null" >
         EXAM_FLOW,
@@ -166,14 +167,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExamExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_DOCTOR_GRADUATION_EXAM
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorGraduationExamExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_DOCTOR_GRADUATION_EXAM
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_DOCTOR_GRADUATION_EXAM
+      update RES_DOCTOR_GRADUATION_EXAM
     <set >
       <if test="record.examFlow != null" >
         EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
@@ -205,7 +207,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_DOCTOR_GRADUATION_EXAM
+      update RES_DOCTOR_GRADUATION_EXAM
     set EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       EXAM_YEAR = #{record.examYear,jdbcType=VARCHAR},
@@ -218,8 +220,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExam" >
-    update PDSCI.RES_DOCTOR_GRADUATION_EXAM
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResDoctorGraduationExam">
+      update RES_DOCTOR_GRADUATION_EXAM
     <set >
       <if test="doctorFlow != null" >
         DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
@@ -245,8 +247,8 @@
     </set>
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResDoctorGraduationExam" >
-    update PDSCI.RES_DOCTOR_GRADUATION_EXAM
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorGraduationExam">
+      update RES_DOCTOR_GRADUATION_EXAM
     set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
       EXAM_YEAR = #{examYear,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

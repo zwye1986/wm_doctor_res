@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.test;
 
-import com.pinde.sci.model.mo.TestResult;
+import com.pinde.core.model.TestResult;
 
 import java.util.List;
 

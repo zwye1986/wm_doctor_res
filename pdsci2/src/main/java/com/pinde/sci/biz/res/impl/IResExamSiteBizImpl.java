@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResExamSite;
+import com.pinde.core.model.ResExamSiteExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResExamSiteBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResExamSiteMapper;
-import com.pinde.sci.model.mo.ResExamSite;
-import com.pinde.sci.model.mo.ResExamSiteExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +52,7 @@ public class IResExamSiteBizImpl implements IResExamSiteBiz{
 	@Override
 	public List<ResExamSite> searchExamSiteList(ResExamSite examSite) {
 		ResExamSiteExample example = new ResExamSiteExample();
-		com.pinde.sci.model.mo.ResExamSiteExample.Criteria criteria = example.createCriteria();
+        ResExamSiteExample.Criteria criteria = example.createCriteria();
 		if(StringUtil.isNotBlank(examSite.getExamFlow())){
 			criteria.andExamFlowEqualTo(examSite.getExamFlow());
 		}

@@ -86,7 +86,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SUBJECT_STATION
+      from OSCA_SUBJECT_STATION
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,21 +97,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_SUBJECT_STATION
+      from OSCA_SUBJECT_STATION
     where STATION_FLOW = #{stationFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from PDSCI.OSCA_SUBJECT_STATION
+      delete from OSCA_SUBJECT_STATION
     where STATION_FLOW = #{stationFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaSubjectStationExample">
-    delete from PDSCI.OSCA_SUBJECT_STATION
+      delete from OSCA_SUBJECT_STATION
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.OscaSubjectStation">
-    insert into PDSCI.OSCA_SUBJECT_STATION (STATION_FLOW, STATION_NAME, SUBJECT_NAME, 
+      insert into OSCA_SUBJECT_STATION (STATION_FLOW, STATION_NAME, SUBJECT_NAME,
       SUBJECT_FLOW, EXAMINED_CONTENT, STATION_SCORE, 
       ORDINAL, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
@@ -123,7 +123,7 @@
       #{partName,jdbcType=VARCHAR}, #{partFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSubjectStation">
-    insert into PDSCI.OSCA_SUBJECT_STATION
+      insert into OSCA_SUBJECT_STATION
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="stationFlow != null">
         STATION_FLOW,
@@ -214,13 +214,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.OscaSubjectStationExample" resultType="java.lang.Integer">
-    select count(*) from PDSCI.OSCA_SUBJECT_STATION
+      select count(*) from OSCA_SUBJECT_STATION
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update PDSCI.OSCA_SUBJECT_STATION
+      update OSCA_SUBJECT_STATION
     <set>
       <if test="record.stationFlow != null">
         STATION_FLOW = #{record.stationFlow,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update PDSCI.OSCA_SUBJECT_STATION
+      update OSCA_SUBJECT_STATION
     set STATION_FLOW = #{record.stationFlow,jdbcType=VARCHAR},
       STATION_NAME = #{record.stationName,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
@@ -290,7 +290,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaSubjectStation">
-    update PDSCI.OSCA_SUBJECT_STATION
+      update OSCA_SUBJECT_STATION
     <set>
       <if test="stationName != null">
         STATION_NAME = #{stationName,jdbcType=VARCHAR},
@@ -335,7 +335,7 @@
     where STATION_FLOW = #{stationFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaSubjectStation">
-    update PDSCI.OSCA_SUBJECT_STATION
+      update OSCA_SUBJECT_STATION
     set STATION_NAME = #{stationName,jdbcType=VARCHAR},
       SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},

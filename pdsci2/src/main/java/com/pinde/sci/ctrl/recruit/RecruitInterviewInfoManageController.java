@@ -1,6 +1,9 @@
 package com.pinde.sci.ctrl.recruit;
 
 import com.alibaba.fastjson.JSONArray;
+import com.pinde.core.model.RecruitInfo;
+import com.pinde.core.model.RecruitInterviewInfo;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
@@ -8,9 +11,6 @@ import com.pinde.sci.biz.recruit.IRecruitInterviewInfoBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.RecruitInfo;
-import com.pinde.sci.model.mo.RecruitInterviewInfo;
-import com.pinde.core.model.SysUser;
 import com.pinde.sci.model.recruit.RecruitInfoExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

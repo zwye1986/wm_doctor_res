@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.DoctorDataMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.DoctorData" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.DoctorData">
     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
     <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
@@ -77,13 +77,13 @@
     USER_NAME, DOCTOR_FLOW, USER_PHONE, ID_NO, SESSION_NUMBER, ORG_FLOW, SPE_ID, SPE_NAME, 
     DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, COMPLETE_NUM, REQ_NUM
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.DoctorDataExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.DoctorDataExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.DOCTOR_DATA
+        from DOCTOR_DATA
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,14 +91,14 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.DoctorDataExample" >
-    delete from PDSCI.DOCTOR_DATA
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.DoctorDataExample">
+        delete from DOCTOR_DATA
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.DoctorData" >
-    insert into PDSCI.DOCTOR_DATA (USER_NAME, DOCTOR_FLOW, USER_PHONE, 
+    <insert id="insert" parameterType="com.pinde.core.model.DoctorData">
+        insert into DOCTOR_DATA (USER_NAME, DOCTOR_FLOW, USER_PHONE,
       ID_NO, SESSION_NUMBER, ORG_FLOW, 
       SPE_ID, SPE_NAME, DOCTOR_TYPE_ID, 
       DOCTOR_TYPE_NAME, COMPLETE_NUM, REQ_NUM
@@ -109,8 +109,8 @@
       #{doctorTypeName,jdbcType=VARCHAR}, #{completeNum,jdbcType=VARCHAR}, #{reqNum,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.DoctorData" >
-    insert into PDSCI.DOCTOR_DATA
+    <insert id="insertSelective" parameterType="com.pinde.core.model.DoctorData">
+        insert into DOCTOR_DATA
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userName != null" >
         USER_NAME,
@@ -188,14 +188,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.DoctorDataExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.DOCTOR_DATA
+    <select id="countByExample" parameterType="com.pinde.core.model.DoctorDataExample" resultType="java.lang.Integer">
+        select count(*) from DOCTOR_DATA
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.DOCTOR_DATA
+      update DOCTOR_DATA
     <set >
       <if test="record.userName != null" >
         USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -239,7 +239,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.DOCTOR_DATA
+      update DOCTOR_DATA
     set USER_NAME = #{record.userName,jdbcType=VARCHAR},
       DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
       USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},

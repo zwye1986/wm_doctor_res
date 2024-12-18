@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.OscaSkillsStationFile;
-import com.pinde.sci.model.mo.OscaSkillsStationFileExample;
+import com.pinde.core.model.OscaSkillsStationFile;
+import com.pinde.core.model.OscaSkillsStationFileExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

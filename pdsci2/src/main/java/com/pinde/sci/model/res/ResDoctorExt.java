@@ -1,7 +1,7 @@
 package com.pinde.sci.model.res;
 
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
+import com.pinde.core.model.StuUserResume;
 
 import java.util.List;
 

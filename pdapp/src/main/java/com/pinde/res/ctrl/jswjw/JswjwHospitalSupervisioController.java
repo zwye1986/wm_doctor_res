@@ -1,14 +1,14 @@
 package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwHospitalSupervisioBiz;
 import com.pinde.res.biz.stdp.IResActivityBiz;
 import com.pinde.sci.dao.base.SysDeptMapper;
-import com.pinde.sci.dao.base.SysOrgMapper;
-import com.pinde.sci.dao.base.SysUserMapper;
 import com.pinde.sci.dao.base.TeachingActivityInfoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

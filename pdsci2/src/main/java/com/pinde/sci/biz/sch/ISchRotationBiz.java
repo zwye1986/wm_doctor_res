@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public interface ISchRotationBiz {
      */
 	List<SchRotation> schRotations(List<SchRotation> rotationList ,String orgFlow);
 
-	SchRotation getRotationByRecruit(ResDoctorRecruit recruit);
+    SchRotation getRotationByRecruit(com.pinde.core.model.ResDoctorRecruit recruit);
 
 	/**
 	 * 审核通过更新状态
@@ -71,7 +71,7 @@ public interface ISchRotationBiz {
 
 	int updateResSchProcessExpressStatus(String doctorFlow);
 
-	SchRotation getRotationByRecruitNew(ResDoctorRecruit recruit);
+    SchRotation getRotationByRecruitNew(com.pinde.core.model.ResDoctorRecruit recruit);
 
 	SchRotation searchDoctorBySpeId(String speId);
 

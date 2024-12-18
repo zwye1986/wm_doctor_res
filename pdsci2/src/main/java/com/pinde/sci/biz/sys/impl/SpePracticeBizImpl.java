@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.model.JsresSpeContrastPractice;
+import com.pinde.core.model.JsresSpeContrastPracticeExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ISpePracticeBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.JsresSpeContrastPracticeMapper;
-import com.pinde.sci.model.mo.JsresSpeContrastPractice;
-import com.pinde.sci.model.mo.JsresSpeContrastPracticeExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import java.util.List;
 //@Transactional(rollbackFor=Exception.class)
 public class SpePracticeBizImpl implements ISpePracticeBiz {
 
-	private static Logger logger = LoggerFactory.getLogger(SpePracticeBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SpePracticeBizImpl.class);
 
 	@Autowired
 	private JsresSpeContrastPracticeMapper scpMapper;

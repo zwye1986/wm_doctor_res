@@ -345,7 +345,7 @@ public class JswjwStudentBizImpl implements IJswjwStudentBiz{
 	}
 
 	@Override
-	public List<ResDoctorRecruit> findCertificates(String userFlow) {
+    public List<com.pinde.core.model.ResDoctorRecruit> findCertificates(String userFlow) {
 		if(StringUtil.isNotBlank(userFlow))
 		{
 			ResDoctorRecruitExample example=new ResDoctorRecruitExample();

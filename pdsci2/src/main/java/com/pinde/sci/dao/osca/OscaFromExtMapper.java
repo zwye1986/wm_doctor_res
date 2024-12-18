@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.osca;
 
-import com.pinde.sci.model.mo.OscaSubjectStationFrom;
+import com.pinde.core.model.OscaSubjectStationFrom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResScheduleScore;
-import com.pinde.sci.model.mo.ResScheduleScoreExample;
+import com.pinde.core.model.ResScheduleScore;
+import com.pinde.core.model.ResScheduleScoreExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

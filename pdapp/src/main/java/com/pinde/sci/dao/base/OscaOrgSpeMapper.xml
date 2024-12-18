@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_ORG_SPE
+      from OSCA_ORG_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.OSCA_ORG_SPE
+      from OSCA_ORG_SPE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.OSCA_ORG_SPE
+      delete from OSCA_ORG_SPE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.OscaOrgSpeExample" >
-    delete from PDSCI.OSCA_ORG_SPE
+      delete from OSCA_ORG_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.OscaOrgSpe" >
-    insert into PDSCI.OSCA_ORG_SPE (RECORD_FLOW, ORG_FLOW, ORG_NAME, 
+      insert into OSCA_ORG_SPE (RECORD_FLOW, ORG_FLOW, ORG_NAME,
       SPE_ID, SPE_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, TYPE_ID, TYPE_NAME
@@ -120,7 +120,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.OscaOrgSpe" >
-    insert into PDSCI.OSCA_ORG_SPE
+      insert into OSCA_ORG_SPE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -199,13 +199,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.OscaOrgSpeExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.OSCA_ORG_SPE
+      select count(*) from OSCA_ORG_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.OSCA_ORG_SPE
+      update OSCA_ORG_SPE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.OSCA_ORG_SPE
+      update OSCA_ORG_SPE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
@@ -267,7 +267,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.OscaOrgSpe" >
-    update PDSCI.OSCA_ORG_SPE
+      update OSCA_ORG_SPE
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -306,7 +306,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.OscaOrgSpe" >
-    update PDSCI.OSCA_ORG_SPE
+      update OSCA_ORG_SPE
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
       SPE_ID = #{speId,jdbcType=VARCHAR},

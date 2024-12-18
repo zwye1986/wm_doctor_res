@@ -1,6 +1,10 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.model.ResDoctorRecruit;
+import com.pinde.core.model.SysLog;
+import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IInxBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -13,10 +17,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.SessionData;
 import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.model.mo.ResDoctorRecruit;
-import com.pinde.sci.model.mo.SysLog;
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.SysUserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +99,7 @@ public class PubeduController extends GeneralController {
                 resDoctorRecruit.setDoctorFlow(user.getUserFlow());
                 resDoctorRecruit.setAuditStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.Passed.getId());
                 //查询res_doctor_recruit表中按创建时间为最新的且审核通过的数据
-                List<ResDoctorRecruit> resDoctorRecruitList = resDoctorRecruitBiz.searchDoctorRecruits(resDoctorRecruit);
+                List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruitList = resDoctorRecruitBiz.searchDoctorRecruits(resDoctorRecruit);
                 if (!resDoctorRecruitList.isEmpty()) {
                     //取第一条数据
                     resDoctorRecruit = resDoctorRecruitList.get(0);
@@ -134,7 +134,7 @@ public class PubeduController extends GeneralController {
         return "redirect:/inx/pubedu";
     }
 
-    private static Logger logger = LoggerFactory.getLogger(PubeduController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PubeduController.class);
 
 
 

@@ -1,9 +1,8 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.ResCostCfgDetail;
-import com.pinde.sci.model.mo.ResCostCfgMain;
+import com.pinde.core.model.ResCostCfgDetail;
+import com.pinde.core.model.ResCostCfgMain;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 public class FormulaForm implements java.io.Serializable {

@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.osca;
 
 
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
 
 import java.util.List;
@@ -71,7 +71,7 @@ public interface IOscaDoctorOrderdeBiz {
      * @param doctorFlow
      * @return
      */
-    List<ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow);
+    List<com.pinde.core.model.ResDoctorRecruit> selectDoctorGraduationYear(String doctorFlow);
 
     List<ResScore> selectResScore(String doctorFlow,String year);
 

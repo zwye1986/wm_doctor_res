@@ -3,8 +3,9 @@ package com.pinde.sci.dao.base;
 import com.pinde.core.model.ResDiscipleNoteInfo;
 import com.pinde.core.model.ResDiscipleNoteInfoExample;
 import com.pinde.core.model.ResDiscipleNoteInfoWithBLOBs;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResDiscipleNoteInfoMapper {
     int countByExample(ResDiscipleNoteInfoExample example);

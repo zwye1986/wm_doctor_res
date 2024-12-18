@@ -34,14 +34,15 @@
 		 ORDER BY B.READ_FLAG DESC,INFO.CREATE_TIME DESC
 	</select>
 	<update id="updateInfoState" parameterType="com.pinde.res.model.stdp.mo.InxInfoForm">
-		update  PDSCI.INX_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID <![CDATA[<>]]> 'Failure' and   info_flow in
+        update INX_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID
+        <![CDATA[<>]]> 'Failure' and info_flow in
 		<foreach collection="infoFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
 		<if test='infoStatusId=="Passing"'>
 			and (INFO_STATUS_ID = 'Edit' or INFO_STATUS_ID = 'NoPassed')
 		</if>
 	</update>
 	<update id="deleteInfoRole" >
-		update  PDSCI.RES_INFO_ROLE set RECORD_STATUS='N'
+        update RES_INFO_ROLE set RECORD_STATUS='N'
 		where INFO_FLOW=#{info.infoFlow} and RECORD_STATUS='Y'
 		<if test="roleFlows !=null and roleFlows.size()>0">
 			and   INFO_ROLE in
@@ -54,7 +55,7 @@
 	</resultMap>
 	<select id="searchInfoByOrgBeforeDate" resultMap="infoMap">
 		SELECT info.*,r.record_flow
-		FROM PDSCI.INX_INFO info
+        FROM INX_INFO info
 		left join RES_READ_INFO R
 		on info.info_flow=r.info_flow
 		and r.user_flow=#{userFlow}
@@ -93,7 +94,7 @@
 	</select>
 	<select id="searchInfoByOrgNotRead" resultMap="infoMap">
 		SELECT info.*,r.record_flow
-		FROM PDSCI.INX_INFO info
+        FROM INX_INFO info
 		left join RES_READ_INFO R
 		on info.info_flow=r.info_flow
 		and r.user_flow=#{userFlow}
@@ -128,7 +129,7 @@
     <select id="findNoticeWithBLOBsNotHaveRole"
             resultMap="com.pinde.core.common.sci.dao.InxInfoMapper.ResultMapWithBLOBs">
 		SELECT *
-		FROM PDSCI.INX_INFO
+        FROM INX_INFO
 		WHERE RECORD_STATUS = 'Y'
 		<if test='info.columnId!=null and info.columnId!=""'>
 			AND COLUMN_ID = #{info.columnId}

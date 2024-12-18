@@ -2973,6 +2973,706 @@ public class ResHospSupervSubjectExample {
             addCriterion("REVIEW_CONFIG not between", value1, value2, "reviewConfig");
             return (Criteria) this;
         }
+
+        public Criteria andLeaderThreeNameIsNull() {
+            addCriterion("LEADER_THREE_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameIsNotNull() {
+            addCriterion("LEADER_THREE_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameEqualTo(String value) {
+            addCriterion("LEADER_THREE_NAME =", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameNotEqualTo(String value) {
+            addCriterion("LEADER_THREE_NAME <>", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameGreaterThan(String value) {
+            addCriterion("LEADER_THREE_NAME >", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_NAME >=", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameLessThan(String value) {
+            addCriterion("LEADER_THREE_NAME <", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_NAME <=", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameLike(String value) {
+            addCriterion("LEADER_THREE_NAME like", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameNotLike(String value) {
+            addCriterion("LEADER_THREE_NAME not like", value, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameIn(List<String> values) {
+            addCriterion("LEADER_THREE_NAME in", values, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameNotIn(List<String> values) {
+            addCriterion("LEADER_THREE_NAME not in", values, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_NAME between", value1, value2, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeNameNotBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_NAME not between", value1, value2, "leaderThreeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowIsNull() {
+            addCriterion("LEADER_THREE_FLOW is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowIsNotNull() {
+            addCriterion("LEADER_THREE_FLOW is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowEqualTo(String value) {
+            addCriterion("LEADER_THREE_FLOW =", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowNotEqualTo(String value) {
+            addCriterion("LEADER_THREE_FLOW <>", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowGreaterThan(String value) {
+            addCriterion("LEADER_THREE_FLOW >", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_FLOW >=", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowLessThan(String value) {
+            addCriterion("LEADER_THREE_FLOW <", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_FLOW <=", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowLike(String value) {
+            addCriterion("LEADER_THREE_FLOW like", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowNotLike(String value) {
+            addCriterion("LEADER_THREE_FLOW not like", value, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowIn(List<String> values) {
+            addCriterion("LEADER_THREE_FLOW in", values, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowNotIn(List<String> values) {
+            addCriterion("LEADER_THREE_FLOW not in", values, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_FLOW between", value1, value2, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeFlowNotBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_FLOW not between", value1, value2, "leaderThreeFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameIsNull() {
+            addCriterion("LEADER_FOUR_NAME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameIsNotNull() {
+            addCriterion("LEADER_FOUR_NAME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameEqualTo(String value) {
+            addCriterion("LEADER_FOUR_NAME =", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameNotEqualTo(String value) {
+            addCriterion("LEADER_FOUR_NAME <>", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameGreaterThan(String value) {
+            addCriterion("LEADER_FOUR_NAME >", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_NAME >=", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameLessThan(String value) {
+            addCriterion("LEADER_FOUR_NAME <", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_NAME <=", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameLike(String value) {
+            addCriterion("LEADER_FOUR_NAME like", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameNotLike(String value) {
+            addCriterion("LEADER_FOUR_NAME not like", value, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameIn(List<String> values) {
+            addCriterion("LEADER_FOUR_NAME in", values, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameNotIn(List<String> values) {
+            addCriterion("LEADER_FOUR_NAME not in", values, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_NAME between", value1, value2, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourNameNotBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_NAME not between", value1, value2, "leaderFourName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowIsNull() {
+            addCriterion("LEADER_FOUR_FLOW is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowIsNotNull() {
+            addCriterion("LEADER_FOUR_FLOW is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowEqualTo(String value) {
+            addCriterion("LEADER_FOUR_FLOW =", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowNotEqualTo(String value) {
+            addCriterion("LEADER_FOUR_FLOW <>", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowGreaterThan(String value) {
+            addCriterion("LEADER_FOUR_FLOW >", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_FLOW >=", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowLessThan(String value) {
+            addCriterion("LEADER_FOUR_FLOW <", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_FLOW <=", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowLike(String value) {
+            addCriterion("LEADER_FOUR_FLOW like", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowNotLike(String value) {
+            addCriterion("LEADER_FOUR_FLOW not like", value, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowIn(List<String> values) {
+            addCriterion("LEADER_FOUR_FLOW in", values, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowNotIn(List<String> values) {
+            addCriterion("LEADER_FOUR_FLOW not in", values, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_FLOW between", value1, value2, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourFlowNotBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_FLOW not between", value1, value2, "leaderFourFlow");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreIsNull() {
+            addCriterion("LEADER_THREE_SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreIsNotNull() {
+            addCriterion("LEADER_THREE_SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreEqualTo(String value) {
+            addCriterion("LEADER_THREE_SCORE =", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreNotEqualTo(String value) {
+            addCriterion("LEADER_THREE_SCORE <>", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreGreaterThan(String value) {
+            addCriterion("LEADER_THREE_SCORE >", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_SCORE >=", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreLessThan(String value) {
+            addCriterion("LEADER_THREE_SCORE <", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_SCORE <=", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreLike(String value) {
+            addCriterion("LEADER_THREE_SCORE like", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreNotLike(String value) {
+            addCriterion("LEADER_THREE_SCORE not like", value, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreIn(List<String> values) {
+            addCriterion("LEADER_THREE_SCORE in", values, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreNotIn(List<String> values) {
+            addCriterion("LEADER_THREE_SCORE not in", values, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_SCORE between", value1, value2, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeScoreNotBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_SCORE not between", value1, value2, "leaderThreeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreIsNull() {
+            addCriterion("LEADER_FOUR_SCORE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreIsNotNull() {
+            addCriterion("LEADER_FOUR_SCORE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreEqualTo(String value) {
+            addCriterion("LEADER_FOUR_SCORE =", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreNotEqualTo(String value) {
+            addCriterion("LEADER_FOUR_SCORE <>", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreGreaterThan(String value) {
+            addCriterion("LEADER_FOUR_SCORE >", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_SCORE >=", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreLessThan(String value) {
+            addCriterion("LEADER_FOUR_SCORE <", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_SCORE <=", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreLike(String value) {
+            addCriterion("LEADER_FOUR_SCORE like", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreNotLike(String value) {
+            addCriterion("LEADER_FOUR_SCORE not like", value, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreIn(List<String> values) {
+            addCriterion("LEADER_FOUR_SCORE in", values, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreNotIn(List<String> values) {
+            addCriterion("LEADER_FOUR_SCORE not in", values, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_SCORE between", value1, value2, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourScoreNotBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_SCORE not between", value1, value2, "leaderFourScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeIsNull() {
+            addCriterion("LEADER_THREE_START_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeIsNotNull() {
+            addCriterion("LEADER_THREE_START_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeEqualTo(String value) {
+            addCriterion("LEADER_THREE_START_TIME =", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeNotEqualTo(String value) {
+            addCriterion("LEADER_THREE_START_TIME <>", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeGreaterThan(String value) {
+            addCriterion("LEADER_THREE_START_TIME >", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_START_TIME >=", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeLessThan(String value) {
+            addCriterion("LEADER_THREE_START_TIME <", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_START_TIME <=", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeLike(String value) {
+            addCriterion("LEADER_THREE_START_TIME like", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeNotLike(String value) {
+            addCriterion("LEADER_THREE_START_TIME not like", value, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeIn(List<String> values) {
+            addCriterion("LEADER_THREE_START_TIME in", values, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeNotIn(List<String> values) {
+            addCriterion("LEADER_THREE_START_TIME not in", values, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_START_TIME between", value1, value2, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeStartTimeNotBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_START_TIME not between", value1, value2, "leaderThreeStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeIsNull() {
+            addCriterion("LEADER_THREE_END_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeIsNotNull() {
+            addCriterion("LEADER_THREE_END_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeEqualTo(String value) {
+            addCriterion("LEADER_THREE_END_TIME =", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeNotEqualTo(String value) {
+            addCriterion("LEADER_THREE_END_TIME <>", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeGreaterThan(String value) {
+            addCriterion("LEADER_THREE_END_TIME >", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_END_TIME >=", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeLessThan(String value) {
+            addCriterion("LEADER_THREE_END_TIME <", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_THREE_END_TIME <=", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeLike(String value) {
+            addCriterion("LEADER_THREE_END_TIME like", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeNotLike(String value) {
+            addCriterion("LEADER_THREE_END_TIME not like", value, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeIn(List<String> values) {
+            addCriterion("LEADER_THREE_END_TIME in", values, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeNotIn(List<String> values) {
+            addCriterion("LEADER_THREE_END_TIME not in", values, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_END_TIME between", value1, value2, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderThreeEndTimeNotBetween(String value1, String value2) {
+            addCriterion("LEADER_THREE_END_TIME not between", value1, value2, "leaderThreeEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeIsNull() {
+            addCriterion("LEADER_FOUR_START_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeIsNotNull() {
+            addCriterion("LEADER_FOUR_START_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeEqualTo(String value) {
+            addCriterion("LEADER_FOUR_START_TIME =", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeNotEqualTo(String value) {
+            addCriterion("LEADER_FOUR_START_TIME <>", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeGreaterThan(String value) {
+            addCriterion("LEADER_FOUR_START_TIME >", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_START_TIME >=", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeLessThan(String value) {
+            addCriterion("LEADER_FOUR_START_TIME <", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_START_TIME <=", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeLike(String value) {
+            addCriterion("LEADER_FOUR_START_TIME like", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeNotLike(String value) {
+            addCriterion("LEADER_FOUR_START_TIME not like", value, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeIn(List<String> values) {
+            addCriterion("LEADER_FOUR_START_TIME in", values, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeNotIn(List<String> values) {
+            addCriterion("LEADER_FOUR_START_TIME not in", values, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_START_TIME between", value1, value2, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourStartTimeNotBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_START_TIME not between", value1, value2, "leaderFourStartTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeIsNull() {
+            addCriterion("LEADER_FOUR_END_TIME is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeIsNotNull() {
+            addCriterion("LEADER_FOUR_END_TIME is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeEqualTo(String value) {
+            addCriterion("LEADER_FOUR_END_TIME =", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeNotEqualTo(String value) {
+            addCriterion("LEADER_FOUR_END_TIME <>", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeGreaterThan(String value) {
+            addCriterion("LEADER_FOUR_END_TIME >", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeGreaterThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_END_TIME >=", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeLessThan(String value) {
+            addCriterion("LEADER_FOUR_END_TIME <", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeLessThanOrEqualTo(String value) {
+            addCriterion("LEADER_FOUR_END_TIME <=", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeLike(String value) {
+            addCriterion("LEADER_FOUR_END_TIME like", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeNotLike(String value) {
+            addCriterion("LEADER_FOUR_END_TIME not like", value, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeIn(List<String> values) {
+            addCriterion("LEADER_FOUR_END_TIME in", values, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeNotIn(List<String> values) {
+            addCriterion("LEADER_FOUR_END_TIME not in", values, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_END_TIME between", value1, value2, "leaderFourEndTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderFourEndTimeNotBetween(String value1, String value2) {
+            addCriterion("LEADER_FOUR_END_TIME not between", value1, value2, "leaderFourEndTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

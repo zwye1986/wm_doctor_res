@@ -1,8 +1,8 @@
 package com.pinde.sci.model.jsres;
 
 
-import com.pinde.sci.model.mo.JsresBaseEvaluation;
-import com.pinde.sci.model.mo.SysOrg;
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.JsresBaseEvaluation;
 
 public class JsresBaseEvaluationExt extends JsresBaseEvaluation{
     private SysOrg sysOrg;

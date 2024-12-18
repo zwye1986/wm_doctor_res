@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResInprocessInfo;
-import com.pinde.sci.model.mo.ResInprocessInfoExample;
+import com.pinde.core.model.ResInprocessInfo;
+import com.pinde.core.model.ResInprocessInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

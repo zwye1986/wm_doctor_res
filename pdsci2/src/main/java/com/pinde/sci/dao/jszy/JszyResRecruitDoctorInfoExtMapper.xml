@@ -20,8 +20,8 @@
   LEFT JOIN SYS_USER U ON T.DOCTOR_FLOW = U.USER_FLOW
  WHERE T.RECORD_STATUS = 'Y'
    AND T.ORG_FLOW IN (SELECT ORG_FLOW
-                          FROM PDSCI.SYS_ORG
-                         WHERE PDSCI.SYS_ORG.RECORD_STATUS = 'Y'
+        FROM SYS_ORG
+        WHERE SYS_ORG.RECORD_STATUS = 'Y'
                            AND ORG_PROV_ID = '320000')
    AND U.RECORD_STATUS = 'Y'
         <if test="docTypeList!=null and docTypeList.size>0">

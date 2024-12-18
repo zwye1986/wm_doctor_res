@@ -1,6 +1,6 @@
 package com.pinde.sci.form.jsres.BaseSpeDept;
 
-import com.pinde.sci.model.mo.ResBaseSpeDept;
+import com.pinde.core.model.ResBaseSpeDept;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

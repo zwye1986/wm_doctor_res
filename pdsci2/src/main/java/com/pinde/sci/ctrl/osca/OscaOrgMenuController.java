@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.osca;
 
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -8,9 +10,7 @@ import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.mo.OscaOrgMenu;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.OscaOrgMenu;
 import com.pinde.sci.model.osca.OscaOrgMenuExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

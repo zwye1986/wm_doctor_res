@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -13,7 +13,6 @@ import com.pinde.sci.dao.base.LectureInfoTargetMapper;
 import com.pinde.sci.dao.base.ResLectureScanRegistMapper;
 import com.pinde.sci.dao.res.LectureInfoTargetExtMapper;
 import com.pinde.sci.dao.res.ResLectureInfoExtMapper;
-import com.pinde.sci.model.mo.*;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -372,7 +371,7 @@ public class ResLectureScanRegistBizImpl implements IResLectureScanRegistBiz {
         return lectureScanRegistMapper.selectByPrimaryKey(recordFlow);
     }
 
-    private static Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResLectureScanRegist.class);
 
 
 }

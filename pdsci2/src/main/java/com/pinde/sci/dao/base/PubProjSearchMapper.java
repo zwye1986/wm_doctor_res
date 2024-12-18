@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.PubProjSearch;
-import com.pinde.sci.model.mo.PubProjSearchExample;
+import com.pinde.core.model.PubProjSearch;
+import com.pinde.core.model.PubProjSearchExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

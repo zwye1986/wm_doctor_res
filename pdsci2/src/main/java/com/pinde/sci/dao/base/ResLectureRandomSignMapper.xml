@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResLectureRandomSignMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResLectureRandomSign" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResLectureRandomSign">
     <id column="RANDOM_FLOW" property="randomFlow" jdbcType="VARCHAR" />
     <result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
     <result column="CODE_START_TIME" property="codeStartTime" jdbcType="VARCHAR" />
@@ -76,13 +76,14 @@
     RANDOM_FLOW, LECTURE_FLOW, CODE_START_TIME, CODE_END_TIME, CODE_STATUS_TYPE, CODE_STATUS_NAME, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResLectureRandomSignExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResLectureRandomSignExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_LECTURE_RANDOM_SIGN
+      from RES_LECTURE_RANDOM_SIGN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_LECTURE_RANDOM_SIGN
+      from RES_LECTURE_RANDOM_SIGN
     where RANDOM_FLOW = #{randomFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_LECTURE_RANDOM_SIGN
+      delete from RES_LECTURE_RANDOM_SIGN
     where RANDOM_FLOW = #{randomFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResLectureRandomSignExample" >
-    delete from PDSCI.RES_LECTURE_RANDOM_SIGN
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResLectureRandomSignExample">
+      delete from RES_LECTURE_RANDOM_SIGN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResLectureRandomSign" >
-    insert into PDSCI.RES_LECTURE_RANDOM_SIGN (RANDOM_FLOW, LECTURE_FLOW, CODE_START_TIME, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResLectureRandomSign">
+      insert into RES_LECTURE_RANDOM_SIGN (RANDOM_FLOW, LECTURE_FLOW, CODE_START_TIME,
       CODE_END_TIME, CODE_STATUS_TYPE, CODE_STATUS_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -116,8 +117,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResLectureRandomSign" >
-    insert into PDSCI.RES_LECTURE_RANDOM_SIGN
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResLectureRandomSign">
+      insert into RES_LECTURE_RANDOM_SIGN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="randomFlow != null" >
         RANDOM_FLOW,
@@ -189,14 +190,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResLectureRandomSignExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_LECTURE_RANDOM_SIGN
+    <select id="countByExample" parameterType="com.pinde.core.model.ResLectureRandomSignExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_LECTURE_RANDOM_SIGN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_LECTURE_RANDOM_SIGN
+      update RES_LECTURE_RANDOM_SIGN
     <set >
       <if test="record.randomFlow != null" >
         RANDOM_FLOW = #{record.randomFlow,jdbcType=VARCHAR},
@@ -237,7 +239,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_LECTURE_RANDOM_SIGN
+      update RES_LECTURE_RANDOM_SIGN
     set RANDOM_FLOW = #{record.randomFlow,jdbcType=VARCHAR},
       LECTURE_FLOW = #{record.lectureFlow,jdbcType=VARCHAR},
       CODE_START_TIME = #{record.codeStartTime,jdbcType=VARCHAR},
@@ -253,8 +255,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResLectureRandomSign" >
-    update PDSCI.RES_LECTURE_RANDOM_SIGN
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResLectureRandomSign">
+      update RES_LECTURE_RANDOM_SIGN
     <set >
       <if test="lectureFlow != null" >
         LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
@@ -289,8 +291,8 @@
     </set>
     where RANDOM_FLOW = #{randomFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResLectureRandomSign" >
-    update PDSCI.RES_LECTURE_RANDOM_SIGN
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResLectureRandomSign">
+      update RES_LECTURE_RANDOM_SIGN
     set LECTURE_FLOW = #{lectureFlow,jdbcType=VARCHAR},
       CODE_START_TIME = #{codeStartTime,jdbcType=VARCHAR},
       CODE_END_TIME = #{codeEndTime,jdbcType=VARCHAR},

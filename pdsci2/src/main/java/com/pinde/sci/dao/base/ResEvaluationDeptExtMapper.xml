@@ -63,10 +63,10 @@
         DEPT_FLOW, ORG_FLOW, DEPT_CODE, DEPT_NAME, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
         MODIFY_TIME, MODIFY_USER_FLOW, DEPT_PINYIN, DEPT_ID, DEPT_PID
     </sql>
-    <select id="selectByRecord" resultMap="BaseResultMap"  parameterType="com.pinde.sci.model.mo.ResEvaluationDept" >
+    <select id="selectByRecord" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResEvaluationDept">
         select
         <include refid="Base_Column_List" />
-        from PDSCI.RES_EVALUATION_DEPT ED
+        from RES_EVALUATION_DEPT ED
         LEFT JOIN SYS_DEPT SD ON ED.DEPT_FLOW = SD.DEPT_FLOW
         where 1=1
         <if test="record.recordFlow != null" >
@@ -86,7 +86,7 @@
     <select id="getDeptExt" resultMap="DeptResultMap" >
         select
         <include refid="Dept_Column_List" />
-        from PDSCI.SYS_DEPT ED
+        from SYS_DEPT ED
         WHERE ED.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
         AND ED.record_status = 'Y'
         AND NOT EXISTS (SELECT 1

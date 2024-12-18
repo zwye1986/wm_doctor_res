@@ -210,6 +210,7 @@ public class GlobalConstant {
     public static final String CURRENT_USER_NAME = "currUserName";
     // 当前登录用户角色
     public static final String CURRENT_ROLE = "currRole";
+    public static final String CURRENT_ROLE_FLOW = "currRoleFlow";
 
     // 当前登录用户角色名称
     public static final String CURRENT_ROLE_NAME = "currRoleName";

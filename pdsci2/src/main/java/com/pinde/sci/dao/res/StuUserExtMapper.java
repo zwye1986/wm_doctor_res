@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.mo.StuHeadAuditStatus;
+import com.pinde.core.model.StuHeadAuditStatus;
 import com.pinde.sci.model.res.StuUserExt;
 import org.apache.ibatis.annotations.Param;
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.sci.dao.recruit.RecruitCfgInfoExtMapper">
 
     <select id="searchAllRecruitYear" resultType="java.lang.String">
-    select RECRUIT_YEAR from PDSCI.RECRUIT_CFG_INFO
+        select RECRUIT_YEAR from RECRUIT_CFG_INFO
     where
     RECORD_STATUS = 'Y'
         <if test="orgFlow !=null and orgFlow !=''">
@@ -13,7 +13,7 @@
   </select>
 
     <update id="changeIsRecruit">
-        update PDSCI.RECRUIT_CFG_INFO set IS_RECRUIT = 'N'
+        update RECRUIT_CFG_INFO set IS_RECRUIT = 'N'
         where
         RECORD_STATUS = 'Y'
         <if test="orgFlow !=null and orgFlow !=''">

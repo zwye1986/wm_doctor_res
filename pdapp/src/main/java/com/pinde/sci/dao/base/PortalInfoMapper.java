@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.PortalInfo;
 import com.pinde.core.model.PortalInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface PortalInfoMapper {
     int countByExample(PortalInfoExample example);

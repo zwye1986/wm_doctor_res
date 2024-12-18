@@ -2,8 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -18,7 +17,7 @@ import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -959,7 +958,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                 JsresGraduationApply apply = graduationApplyBiz.readByFlow(applyFlow);
                 if (apply != null) {
 //                    if (com.pinde.core.common.enums.JsResAuditStatusEnum.NotPassed.getId().equals(apply.getCityAuditStatusId())) {
-//                        ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
+//                        com.pinde.core.model.ResDoctorRecruit recruit=jsResDoctorRecruitBiz.readRecruit(apply.getRecruitFlow());
 //                        SysUser doc=userBiz.findByFlow(recruit.getDoctorFlow());
 //                        return "市局已退回学员【"+doc.getUserName()+"】考核资格申请信息，无法审核！";
 //                    }

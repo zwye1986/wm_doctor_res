@@ -1,5 +1,5 @@
 <%@ page import="com.pinde.core.util.StringUtil" %>
-<%@ page import="com.pinde.sci.model.mo.ResTarinNotice" %>
+<%@ page import="com.pinde.core.model.ResTarinNotice" %>
 <%@ page import="com.pinde.res.biz.jswjw.IResLiveTrainingBiz" %>
 <%@ page import="com.pinde.res.biz.jswjw.impl.ResLiveTrainingBizImpl" %>
 <%@ page import="com.pinde.sci.dao.base.ResTarinNoticeMapper" %>

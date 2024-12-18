@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysCfgLogMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysCfgLog" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysCfgLog">
     <id column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
     <result column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR" />
     <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR" />
@@ -16,7 +16,7 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" extends="BaseResultMap" >
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.SysCfgLogWithBLOBs" extends="BaseResultMap">
     <result column="CFG_BIG_VALUE" property="cfgBigValue" jdbcType="CLOB" />
     <result column="CFG_OLD_BIG_VALUE" property="cfgOldBigValue" jdbcType="CLOB" />
   </resultMap>
@@ -85,7 +85,8 @@
   <sql id="Blob_Column_List" >
     CFG_BIG_VALUE, CFG_OLD_BIG_VALUE
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.sci.model.mo.SysCfgLogExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.SysCfgLogExample">
     select
     <if test="distinct" >
       distinct
@@ -93,7 +94,7 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_CFG_LOG
+      from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -101,13 +102,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysCfgLogExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysCfgLogExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_CFG_LOG
+      from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -120,21 +121,21 @@
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
-    from PDSCI.SYS_CFG_LOG
+      from SYS_CFG_LOG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_CFG_LOG
+      delete from SYS_CFG_LOG
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysCfgLogExample" >
-    delete from PDSCI.SYS_CFG_LOG
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysCfgLogExample">
+      delete from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    insert into PDSCI.SYS_CFG_LOG (CFG_FLOW, CFG_CODE, CFG_VALUE, 
+    <insert id="insert" parameterType="com.pinde.core.model.SysCfgLogWithBLOBs">
+      insert into SYS_CFG_LOG (CFG_FLOW, CFG_CODE, CFG_VALUE,
       CFG_OLD_VALUE, CFG_DESC, WS_ID, 
       WS_NAME, SAVE_TIME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
@@ -147,8 +148,8 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{cfgBigValue,jdbcType=CLOB}, #{cfgOldBigValue,jdbcType=CLOB}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    insert into PDSCI.SYS_CFG_LOG
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysCfgLogWithBLOBs">
+      insert into SYS_CFG_LOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
         CFG_FLOW,
@@ -244,14 +245,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysCfgLogExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_CFG_LOG
+    <select id="countByExample" parameterType="com.pinde.core.model.SysCfgLogExample" resultType="java.lang.Integer">
+      select count(*) from SYS_CFG_LOG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     <set >
       <if test="record.cfgFlow != null" >
         CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
@@ -304,7 +305,7 @@
     </if>
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
@@ -325,7 +326,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_CFG_LOG
+      update SYS_CFG_LOG
     set CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
       CFG_CODE = #{record.cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{record.cfgValue,jdbcType=VARCHAR},
@@ -343,8 +344,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    update PDSCI.SYS_CFG_LOG
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysCfgLogWithBLOBs">
+      update SYS_CFG_LOG
     <set >
       <if test="cfgCode != null" >
         CFG_CODE = #{cfgCode,jdbcType=VARCHAR},
@@ -391,8 +392,8 @@
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.sci.model.mo.SysCfgLogWithBLOBs" >
-    update PDSCI.SYS_CFG_LOG
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.SysCfgLogWithBLOBs">
+      update SYS_CFG_LOG
     set CFG_CODE = #{cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_OLD_VALUE = #{cfgOldValue,jdbcType=VARCHAR},
@@ -409,8 +410,8 @@
       CFG_OLD_BIG_VALUE = #{cfgOldBigValue,jdbcType=CLOB}
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysCfgLog" >
-    update PDSCI.SYS_CFG_LOG
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysCfgLog">
+      update SYS_CFG_LOG
     set CFG_CODE = #{cfgCode,jdbcType=VARCHAR},
       CFG_VALUE = #{cfgValue,jdbcType=VARCHAR},
       CFG_OLD_VALUE = #{cfgOldValue,jdbcType=VARCHAR},

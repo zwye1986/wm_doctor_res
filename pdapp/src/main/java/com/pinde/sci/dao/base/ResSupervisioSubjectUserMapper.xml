@@ -88,7 +88,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      from RES_SUPERVISIO_SUBJECT_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -99,21 +99,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      from RES_SUPERVISIO_SUBJECT_USER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      delete from RES_SUPERVISIO_SUBJECT_USER
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectUserExample" >
-    delete from PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      delete from RES_SUPERVISIO_SUBJECT_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResSupervisioSubjectUser" >
-    insert into PDSCI.RES_SUPERVISIO_SUBJECT_USER (RECORD_FLOW, SUBJECT_FLOW, SUBJECT_NAME, 
+      insert into RES_SUPERVISIO_SUBJECT_USER (RECORD_FLOW, SUBJECT_FLOW, SUBJECT_NAME,
       USER_FLOW, USER_NAME, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, SPE_SCORE_TOTAL, EVALUATION_DATE, 
@@ -127,7 +127,7 @@
       #{supervisioResults,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResSupervisioSubjectUser" >
-    insert into PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      insert into RES_SUPERVISIO_SUBJECT_USER
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -230,13 +230,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectUserExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      select count(*) from RES_SUPERVISIO_SUBJECT_USER
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      update RES_SUPERVISIO_SUBJECT_USER
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -292,7 +292,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      update RES_SUPERVISIO_SUBJECT_USER
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
@@ -314,7 +314,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSupervisioSubjectUser" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      update RES_SUPERVISIO_SUBJECT_USER
     <set >
       <if test="subjectFlow != null" >
         SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
@@ -365,7 +365,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSupervisioSubjectUser" >
-    update PDSCI.RES_SUPERVISIO_SUBJECT_USER
+      update RES_SUPERVISIO_SUBJECT_USER
     set SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
       SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},

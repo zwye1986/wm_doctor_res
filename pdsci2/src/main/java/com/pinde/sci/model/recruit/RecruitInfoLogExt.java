@@ -1,8 +1,8 @@
 package com.pinde.sci.model.recruit;
 
 
-import com.pinde.sci.model.mo.RecruitInfo;
-import com.pinde.sci.model.mo.RecruitInfoLog;
+import com.pinde.core.model.RecruitInfo;
+import com.pinde.core.model.RecruitInfoLog;
 import com.pinde.core.model.SysUser;
 
 public class RecruitInfoLogExt extends RecruitInfoLog {

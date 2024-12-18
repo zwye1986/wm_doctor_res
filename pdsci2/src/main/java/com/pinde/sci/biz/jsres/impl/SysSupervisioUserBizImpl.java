@@ -2,9 +2,8 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserExample;
+import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
 import com.pinde.core.util.PkUtil;
@@ -15,7 +14,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -61,7 +59,7 @@ public class SysSupervisioUserBizImpl implements ISysSupervisioUserBiz {
 	@Autowired
 	private ResHospSupervSubjectMapper hospSupervSubjectMapper;
 
-    private static Logger logger = LoggerFactory.getLogger(SysSupervisioUserBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SysSupervisioUserBizImpl.class);
 
 	@Override
 	public List<ResSupervisioSubject> selectBaseSubjectList(Map<String, Object> param) {

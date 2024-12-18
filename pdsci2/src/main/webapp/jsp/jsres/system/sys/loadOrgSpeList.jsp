@@ -91,7 +91,7 @@ function saveOrgSpeManage(speTypeId,speTypeName,speId,speName,status){
 	});
 }
 
-function dialogCapacity(speTypeId, speId) {
+function dialogCapacity(speTypeId, speId, speTypeName, speName) {
 	var orgFlow="${orgFlow}";
 	var sessionYear="${sessionYear}";
 	var id = "pop" + speTypeId + speId;
@@ -117,7 +117,9 @@ function dialogCapacity(speTypeId, speId) {
 							"speTypeId":speTypeId,
 							"orgFlow":orgFlow,
 							"sessionYear":sessionYear,
-							minRecruitCapacity: capacity
+							minRecruitCapacity: capacity,
+							speTypeName: speTypeName,
+							speName: speName
 						}
 						var url = "<s:url value='/jsres/base/saveOrgSpeManage'/>";
 						jboxPost(url, data,
@@ -202,7 +204,7 @@ function dialogCapacity(speTypeId, speId) {
 							</td>
 							<c:if test="${not empty orgFlow and sessionYear eq pdfn:getCurrYear().toString()}">
 							<td>
-								<input type="text" id='${key}Capacity' class="input" value="${null != orgSpeMap[key] ? orgSpeMap[key].minRecruitCapacity : ''}" <c:if test="${orgSpeMap[key].status eq 'close' or orgSpeMap[key].status eq 'stop'}">disabled</c:if> readonly onclick="dialogCapacity('${speType.id }', '${dict.dictId }')">
+								<input type="text" id='${key}Capacity' class="input" value="${null != orgSpeMap[key] ? orgSpeMap[key].minRecruitCapacity : ''}" <c:if test="${orgSpeMap[key].status eq 'close' or orgSpeMap[key].status eq 'stop'}">disabled</c:if> readonly onclick="dialogCapacity('${speType.id }', '${dict.dictId }', '${speType.name}','${dict.dictName}')">
 							</td>
 							</c:if>
 						</tr>

@@ -10,8 +10,7 @@ import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
@@ -40,7 +39,6 @@ import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;
@@ -72,6 +70,7 @@ import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -152,7 +151,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	private static final String EXT_INFO_ROOT = "extInfo";
 	private static final String EXT_INFO_ELE = "extInfoForm";
 
-	private static Logger logger = LoggerFactory.getLogger(ResDoctorBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResDoctorBizImpl.class);
 
 
 	public static String _doubleTrans(double d) {
@@ -1015,7 +1014,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	public int resetDoctorRecruit(String doctorFlow){
 		if (StringUtil.isNotBlank(doctorFlow)) {
 			String regYear = InitConfig.getSysCfg("res_reg_year");
-			List<ResDoctorRecruit> doctorRecruits = doctorRecruitBiz.findResDoctorRecruits(regYear, doctorFlow);
+			List<com.pinde.core.model.ResDoctorRecruit> doctorRecruits = doctorRecruitBiz.findResDoctorRecruits(regYear, doctorFlow);
 			ResDoctorRecruitWithBLOBs recruit = null;
 			if (doctorRecruits != null && doctorRecruits.size() >0) {
 				int size = doctorRecruits.size();
@@ -1107,7 +1106,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	}
 
 	@Override
-	public List<ResDoctorExt> searchDoctorAccountList(SysUser sysUser, SysOrg sysOrg,String baseFlag,String orgFlow,String lockStatus,String trainingSpeId,String trainingTypeId) {
+	public List<ResDoctorExt> searchDoctorAccountList(SysUser sysUser, SysOrg sysOrg, String baseFlag, String orgFlow, String lockStatus, String trainingSpeId, String trainingTypeId) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("sysUser", sysUser);
 		paramMap.put("sysOrg", sysOrg);
@@ -1925,7 +1924,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 	@Override
 	public List<ResSignin> searchSignList(List<String> deptFlows,String signDate) {
 		ResSigninExample signExample = new ResSigninExample();
-		com.pinde.sci.model.mo.ResSigninExample.Criteria criteria =
+        ResSigninExample.Criteria criteria =
                 signExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDeptFlowIn(deptFlows);
 		if(StringUtil.isNotBlank(signDate)){
 			criteria.andSignDateEqualTo(signDate);
@@ -2065,8 +2064,8 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			Class<?> objClass = obj.getClass();
 			String firstLetter = attrName.substring(0,1).toUpperCase();
 			String methedName = "set"+firstLetter+attrName.substring(1);
-			Method setMethod = objClass.getMethod(methedName,new Class[] {String.class});
-			setMethod.invoke(obj,new Object[] {attrValue});
+            Method setMethod = objClass.getMethod(methedName, String.class);
+            setMethod.invoke(obj, attrValue);
 		}catch(Exception e){
 			logger.error("", e);
 		}
@@ -2138,7 +2137,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 							resDoctor.setDoctorFlow(sysUser.getUserFlow());
 							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
                             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
-							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+							List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 							if (CollectionUtils.isNotEmpty(resDoctorRecruits)) {
 								resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
 							}
@@ -2160,7 +2159,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				@Override
 				public String checkExcelData(HashMap data, ExcelUtile eu) {
 					String sheetName = (String) eu.get("SheetName");
-					if (sheetName == null || !"TheoryScore".equals(sheetName)) {
+                    if (!"TheoryScore".equals(sheetName)) {
 						eu.put("count", 0);
 						eu.put("code", "1");
 						eu.put("msg", "请使用系统提供的理论成绩模板！！");
@@ -2311,7 +2310,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 		if (StringUtil.isNotBlank(sessionNumber)) {
 			ResDoctorRecruitExample example = new ResDoctorRecruitExample();
             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(sessionNumber);
-			List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+			List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 			if (resDoctorRecruits.size() == 0) {
 				msg[0] += "导入文件第" + (rowNum + 1) + "行,该学员在当前届别下没有培训记录，请确认后提交！！</br>";
 				return null;
@@ -2412,7 +2411,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 
 							ResDoctorRecruitExample example = new ResDoctorRecruitExample();
                             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andSessionNumberEqualTo(resScore.getSessionNumber());
-							List<ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
+							List<com.pinde.core.model.ResDoctorRecruit> resDoctorRecruits = doctorRecruitMapper.selectByExample(example);
 							if (CollectionUtils.isNotEmpty(resDoctorRecruits)) {
 								resScore.setRecruitFlow(resDoctorRecruits.get(0).getRecruitFlow());
 							}
@@ -2443,7 +2442,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				@Override
 				public String checkExcelData(HashMap data, ExcelUtile eu) {
 					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!"SkillScore".equals(sheetName))
+                    if (!"SkillScore".equals(sheetName))
 					{
 						eu.put("count", 0);
 						eu.put("code", "1");
@@ -2636,7 +2635,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
                         resScore.setScoreTypeId(com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getId());
                         resScore.setScoreTypeName(com.pinde.core.common.enums.ResScoreTypeEnum.PublicScore.getName());
                         resScore.setPaperFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
-						ResDoctorRecruit recruit=doctorRecruitBiz.getNewRecruit(sysUser.getUserFlow());
+						com.pinde.core.model.ResDoctorRecruit recruit = doctorRecruitBiz.getNewRecruit(sysUser.getUserFlow());
 						if(recruit!=null)
 							resScore.setRecruitFlow(recruit.getRecruitFlow());
 						//处理各个站的成绩
@@ -2656,7 +2655,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 				@Override
 				public String checkExcelData(HashMap data, ExcelUtile eu) {
 					String sheetName=(String)eu.get("SheetName");
-					if(sheetName==null||!"PublicScore".equals(sheetName))
+                    if (!"PublicScore".equals(sheetName))
 					{
 						eu.put("count", 0);
 						eu.put("code", "1");
@@ -2857,7 +2856,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 						ResDoctorRecruit docRecruit =  new ResDoctorRecruit();
 						docRecruit.setDoctorFlow(doctorFlow);
                         docRecruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-						List<ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
+						List<com.pinde.core.model.ResDoctorRecruit> docRecruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(docRecruit, "CREATE_TIME DESC");
 						if(docRecruitList != null && !docRecruitList.isEmpty()) {
 							docRecruit = docRecruitList.get(0);
 							//DoctorRecruit回写
@@ -2905,7 +2904,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			city.put("321300","13");
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(resDoctor.getOrgFlow());
-			String dishiCode= (String) city.get(org.getOrgCityId());
+            String dishiCode = city.get(org.getOrgCityId());
 			String kumu="";
 			//18 ==04  50 ===03
 			if(resDoctor.getTrainingSpeId().equals("18"))
@@ -2989,7 +2988,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			city.put("321300","13");
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(resDoctor.getOrgFlow());
-			String dishiCode= (String) city.get(org.getOrgCityId());
+            String dishiCode = city.get(org.getOrgCityId());
 			String kumu="";
 			if(resDoctor.getTrainingSpeId().equals("52")||resDoctor.getTrainingSpeId().equals("0700"))
 			{
@@ -3028,7 +3027,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
             city.put("321300", com.pinde.core.common.GlobalConstant.FLAG_N);
 			String year=DateUtil.getYear();
 			SysOrg org = orgBiz.readSysOrg(resDoctor.getOrgFlow());
-			String dishiCode= (String) city.get(org.getOrgCityId());
+            String dishiCode = city.get(org.getOrgCityId());
 			String p="1";//需求说写死
 			//查询当前年份下，当前地市已经结业的流水号
 			String yearbefore=year.substring(0,2);
@@ -3272,7 +3271,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 3;
@@ -3731,7 +3730,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 3;
@@ -4287,7 +4286,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 45);
+            sheet.setColumnWidth(i, titles.length * 45);
 		}
 
 		int rowNum = 3;
@@ -4837,7 +4836,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 1;
@@ -4962,7 +4961,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			cellTitle = rowThree.createCell(i);
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 
 		int rowNum = 1;
@@ -5754,7 +5753,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 			}
 			cellTitle.setCellValue(titles[i]);
 			cellTitle.setCellStyle(styleCenter);
-			sheet.setColumnWidth(i, titles.length * 1 * 156);
+            sheet.setColumnWidth(i, titles.length * 156);
 		}
 		// 用户名用以给压缩文件命名
 		String doctorName = "";
@@ -5953,7 +5952,7 @@ public class ResDoctorBizImpl implements IResDoctorBiz{
 					int len = 2048;
 					byte[] b = new byte[len];
 					while ((len = bis.read(b)) != -1) {
-						dowland += new String(b, "UTF-8").trim();
+                        dowland += new String(b, StandardCharsets.UTF_8).trim();
 					}
 					if(StringUtil.isNotBlank(dowland)) {
 						dowland=java.net.URLDecoder.decode(dowland, "UTF-8");

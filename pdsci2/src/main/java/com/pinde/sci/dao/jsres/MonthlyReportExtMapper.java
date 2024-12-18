@@ -1,8 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.sci.model.mo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public interface MonthlyReportExtMapper {
 	List<ResDoctor> getDoctorList(Map<String, Object> paramMap);
 
 	//查询recruit表信息
-	List<ResDoctorRecruit> getRecruitList(Map<String, Object> paramMap);
+    List<com.pinde.core.model.ResDoctorRecruit> getRecruitList(Map<String, Object> paramMap);
 
 	//基地查询出入科人数详情（图5）
 	List<Map<String, String>> getHospitalChart5Detail(Map<String, Object> paramMap);

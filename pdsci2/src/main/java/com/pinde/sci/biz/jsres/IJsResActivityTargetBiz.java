@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.TeachingActivityEval;
-import com.pinde.sci.model.mo.TeachingActivityFormValue;
-import com.pinde.sci.model.mo.TeachingActivityInfoTarget;
-import com.pinde.sci.model.mo.TeachingActivityTarget;
+import com.pinde.core.model.TeachingActivityEval;
+import com.pinde.core.model.TeachingActivityFormValue;
+import com.pinde.core.model.TeachingActivityInfoTarget;
+import com.pinde.core.model.TeachingActivityTarget;
 
 import java.util.List;
 import java.util.Map;

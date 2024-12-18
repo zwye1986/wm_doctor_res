@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.GraduationExamResults;
+import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -16,7 +18,9 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.ResPaper;
+import com.pinde.core.model.ResScore;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

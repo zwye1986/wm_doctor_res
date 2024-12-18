@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.login;
 
-import com.pinde.sci.model.mo.SysLog;
-import com.pinde.sci.model.mo.SysLoginAbility;
+import com.pinde.core.model.SysLog;
+import com.pinde.core.model.SysLoginAbility;
 import com.pinde.core.model.SysUser;
 
 import java.util.List;
@@ -12,16 +12,16 @@ import java.util.Map;
  */
 public interface ILoginBiz {
 
-    public void loadSysRole(String userFlow);
+    void loadSysRole(String userFlow);
 
     //加载特定工作站
-    public void loadSysRole(String userFlow,String workStation);
+    void loadSysRole(String userFlow, String workStation);
 
-    public void addSysLog(SysLog sysLog);
+    void addSysLog(SysLog sysLog);
 
-    public List<SysLog> getCurrWsSysLog(String startDate,String endDate,SysLog log);
+    List<SysLog> getCurrWsSysLog(String startDate, String endDate, SysLog log);
 
-    public void loadSysRoleOsce(String userFlow);
+    void loadSysRoleOsce(String userFlow);
 
     Map<String,Object> loadSysRole2(String userFlow);
 

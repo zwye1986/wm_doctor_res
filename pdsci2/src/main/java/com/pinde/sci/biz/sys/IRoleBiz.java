@@ -1,10 +1,9 @@
 package com.pinde.sci.biz.sys;
 
-import com.pinde.sci.model.jsres.ActivityCfgExt;
-import com.pinde.core.model.ActivityAuditCfg;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysRole;
-import com.pinde.sci.model.mo.SysRoleAuthGx;
+import com.pinde.core.model.SysRole;
+import com.pinde.core.model.ActivityCfgExt;
+import com.pinde.core.model.SysCfg;
+import com.pinde.core.model.SysRoleAuthGx;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +54,6 @@ public interface IRoleBiz {
     int updActivityCfg(Map<String,String> param);
 
     List<ActivityCfgExt> searchActvity(Map<String,String> param);
-    List<ActivityAuditCfg> searchActvityNew(Map<String,String> param);
 
 
     List<SysCfg> searchRoleList();

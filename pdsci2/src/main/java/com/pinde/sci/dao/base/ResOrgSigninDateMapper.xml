@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResOrgSigninDateMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResOrgSigninDate" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResOrgSigninDate">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="SIGNIN_DATE" property="signinDate" jdbcType="VARCHAR" />
@@ -73,13 +73,13 @@
     RECORD_FLOW, ORG_FLOW, SIGNIN_DATE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResOrgSigninDateExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResOrgSigninDateExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ORG_SIGNIN_DATE
+      from RES_ORG_SIGNIN_DATE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,29 +90,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_ORG_SIGNIN_DATE
+      from RES_ORG_SIGNIN_DATE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_ORG_SIGNIN_DATE
+      delete from RES_ORG_SIGNIN_DATE
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResOrgSigninDateExample" >
-    delete from PDSCI.RES_ORG_SIGNIN_DATE
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResOrgSigninDateExample">
+      delete from RES_ORG_SIGNIN_DATE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResOrgSigninDate" >
-    insert into PDSCI.RES_ORG_SIGNIN_DATE (RECORD_FLOW, ORG_FLOW, SIGNIN_DATE, 
+    <insert id="insert" parameterType="com.pinde.core.model.ResOrgSigninDate">
+      insert into RES_ORG_SIGNIN_DATE (RECORD_FLOW, ORG_FLOW, SIGNIN_DATE,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
     values (#{recordFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{signinDate,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResOrgSigninDate" >
-    insert into PDSCI.RES_ORG_SIGNIN_DATE
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResOrgSigninDate">
+      insert into RES_ORG_SIGNIN_DATE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -166,14 +166,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResOrgSigninDateExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_ORG_SIGNIN_DATE
+    <select id="countByExample" parameterType="com.pinde.core.model.ResOrgSigninDateExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_ORG_SIGNIN_DATE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_ORG_SIGNIN_DATE
+      update RES_ORG_SIGNIN_DATE
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -205,7 +206,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_ORG_SIGNIN_DATE
+      update RES_ORG_SIGNIN_DATE
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       SIGNIN_DATE = #{record.signinDate,jdbcType=VARCHAR},
@@ -218,8 +219,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResOrgSigninDate" >
-    update PDSCI.RES_ORG_SIGNIN_DATE
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResOrgSigninDate">
+      update RES_ORG_SIGNIN_DATE
     <set >
       <if test="orgFlow != null" >
         ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
@@ -245,8 +246,8 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResOrgSigninDate" >
-    update PDSCI.RES_ORG_SIGNIN_DATE
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResOrgSigninDate">
+      update RES_ORG_SIGNIN_DATE
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       SIGNIN_DATE = #{signinDate,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

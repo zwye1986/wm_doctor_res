@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SchDeptExternalRel;
 import com.pinde.core.model.SchDeptExternalRelExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchDeptExternalRelMapper {
     int countByExample(SchDeptExternalRelExample example);

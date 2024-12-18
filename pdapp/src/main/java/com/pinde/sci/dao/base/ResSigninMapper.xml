@@ -89,7 +89,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SIGNIN
+      from RES_SIGNIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,21 +100,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.RES_SIGNIN
+      from RES_SIGNIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.RES_SIGNIN
+      delete from RES_SIGNIN
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSigninExample" >
-    delete from PDSCI.RES_SIGNIN
+      delete from RES_SIGNIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.ResSignin" >
-    insert into PDSCI.RES_SIGNIN (RECORD_FLOW, USER_FLOW, USER_NAME, 
+      insert into RES_SIGNIN (RECORD_FLOW, USER_FLOW, USER_NAME,
       ORG_FLOW, ORG_NAME, DEPT_FLOW, 
       DEPT_NAME, SCH_DEPT_FLOW, SCH_DEPT_NAME, 
       SIGN_DATE, SIGN_TYPE_ID, SIGN_TYPE_NAME, 
@@ -128,7 +128,7 @@
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResSignin" >
-    insert into PDSCI.RES_SIGNIN
+      insert into RES_SIGNIN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
         RECORD_FLOW,
@@ -237,13 +237,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResSigninExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.RES_SIGNIN
+      select count(*) from RES_SIGNIN
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.RES_SIGNIN
+      update RES_SIGNIN
     <set >
       <if test="record.recordFlow != null" >
         RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
@@ -302,7 +302,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.RES_SIGNIN
+      update RES_SIGNIN
     set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
       USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
       USER_NAME = #{record.userName,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSignin" >
-    update PDSCI.RES_SIGNIN
+      update RES_SIGNIN
     <set >
       <if test="userFlow != null" >
         USER_FLOW = #{userFlow,jdbcType=VARCHAR},
@@ -379,7 +379,7 @@
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSignin" >
-    update PDSCI.RES_SIGNIN
+      update RES_SIGNIN
     set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
       USER_NAME = #{userName,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

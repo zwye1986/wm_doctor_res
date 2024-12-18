@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.ActivityTypeEnum;
-import com.pinde.core.model.SysDept;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -21,7 +21,6 @@ import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -35,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -81,7 +81,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Autowired
 	private IUserBiz userBiz;
 
-	private static Logger logger = LoggerFactory.getLogger(JsResActivityBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResActivityBizImpl.class);
 
 	@Override
 	public List<Map<String, Object>> findActivityList(Map<String, String> param) {
@@ -311,7 +311,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				saveResultEval(eval);
 			}
 			int count= evals.size()- remarks;
-			BigDecimal evalScore=new BigDecimal(sum/count).setScale(0,BigDecimal.ROUND_HALF_UP);
+            BigDecimal evalScore = new BigDecimal(sum / count).setScale(0, RoundingMode.HALF_UP);
 			result.setEvalScore(evalScore);
 			return saveResult(result);
 

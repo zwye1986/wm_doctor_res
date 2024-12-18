@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_LOGIN_INFO
+      from JSRES_LOGIN_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,22 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.JSRES_LOGIN_INFO
+      from JSRES_LOGIN_INFO
     where REOCRD_FLOW = #{reocrdFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.JSRES_LOGIN_INFO
+      delete
+      from JSRES_LOGIN_INFO
     where REOCRD_FLOW = #{reocrdFlow,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresLoginInfoExample" >
-    delete from PDSCI.JSRES_LOGIN_INFO
+      delete from JSRES_LOGIN_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.pinde.core.model.JsresLoginInfo" >
-    insert into PDSCI.JSRES_LOGIN_INFO (REOCRD_FLOW, LOGIN_DOMAIN, LOGIN_DOMAIN_SUFFIX, 
+      insert into JSRES_LOGIN_INFO (REOCRD_FLOW, LOGIN_DOMAIN, LOGIN_DOMAIN_SUFFIX,
       LOGIN_URL, LOGIN_TITLE, TYPE_ID, 
       TYPE_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
@@ -120,7 +121,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresLoginInfo" >
-    insert into PDSCI.JSRES_LOGIN_INFO
+      insert into JSRES_LOGIN_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="reocrdFlow != null" >
         REOCRD_FLOW,
@@ -199,13 +200,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.JsresLoginInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.JSRES_LOGIN_INFO
+      select count(*) from JSRES_LOGIN_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.JSRES_LOGIN_INFO
+      update JSRES_LOGIN_INFO
     <set >
       <if test="record.reocrdFlow != null" >
         REOCRD_FLOW = #{record.reocrdFlow,jdbcType=VARCHAR},
@@ -249,7 +250,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.JSRES_LOGIN_INFO
+      update JSRES_LOGIN_INFO
     set REOCRD_FLOW = #{record.reocrdFlow,jdbcType=VARCHAR},
       LOGIN_DOMAIN = #{record.loginDomain,jdbcType=VARCHAR},
       LOGIN_DOMAIN_SUFFIX = #{record.loginDomainSuffix,jdbcType=VARCHAR},
@@ -267,7 +268,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresLoginInfo" >
-    update PDSCI.JSRES_LOGIN_INFO
+      update JSRES_LOGIN_INFO
     <set >
       <if test="loginDomain != null" >
         LOGIN_DOMAIN = #{loginDomain,jdbcType=VARCHAR},
@@ -306,7 +307,7 @@
     where REOCRD_FLOW = #{reocrdFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresLoginInfo" >
-    update PDSCI.JSRES_LOGIN_INFO
+      update JSRES_LOGIN_INFO
     set LOGIN_DOMAIN = #{loginDomain,jdbcType=VARCHAR},
       LOGIN_DOMAIN_SUFFIX = #{loginDomainSuffix,jdbcType=VARCHAR},
       LOGIN_URL = #{loginUrl,jdbcType=VARCHAR},

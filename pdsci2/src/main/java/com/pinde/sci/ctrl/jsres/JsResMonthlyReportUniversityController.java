@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,9 +15,14 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.ResBaseMapper;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
-import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.SysMonthly;
+import com.pinde.core.model.SysMonthlyChangeInfo;
+import com.pinde.core.model.SysMonthlyDocCycleInfo;
+import com.pinde.core.model.SysMonthlyDoctorDetailInfo;
+import com.pinde.core.model.SysMonthlyDoctorInfo;
+import com.pinde.core.model.SysMonthlyReturnDelayInfo;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -389,7 +395,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		List<SysMonthlyDoctorDetailInfo> sysMonthlyDoctorDetailInfoList = monthlyReportBiz.getMonthlyDoctorDetailInfo(search2);
 		List<SysUser> userList = monthlyReportExtMapper.getUserList(paramMap);
 		List<ResDoctor> doctorList = monthlyReportExtMapper.getDoctorList(paramMap);
-		List<ResDoctorRecruit> recruitList = monthlyReportExtMapper.getRecruitList(paramMap);
+		List<com.pinde.core.model.ResDoctorRecruit> recruitList = monthlyReportExtMapper.getRecruitList(paramMap);
 
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
@@ -412,7 +418,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		Map<String,SysMonthlyDoctorDetailInfo> detailInfoMap = new HashMap<>();
 		Map<String,SysUser> userMap = new HashMap<>();
 		Map<String,ResDoctor> doctorMap = new HashMap<>();
-		Map<String,ResDoctorRecruit> recruitMap = new HashMap<>();
+		Map<String, ResDoctorRecruit> recruitMap = new HashMap<>();
 
 		if(!doctorInfoListFinal.isEmpty()){
 			for(SysMonthlyDoctorInfo sysMonthlyDoctorInfo:doctorInfoListFinal){
@@ -558,7 +564,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				String CretType = "";
@@ -822,7 +828,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 		List<SysMonthlyDoctorDetailInfo> sysMonthlyDoctorDetailInfoList = monthlyReportBiz.getMonthlyDoctorDetailInfo(search2);
 		List<SysUser> userList = monthlyReportExtMapper.getUserList(paramMap);
 		List<ResDoctor> doctorList = monthlyReportExtMapper.getDoctorList(paramMap);
-		List<ResDoctorRecruit> recruitList = monthlyReportExtMapper.getRecruitList(paramMap);
+		List<com.pinde.core.model.ResDoctorRecruit> recruitList = monthlyReportExtMapper.getRecruitList(paramMap);
 
 		List<SysMonthlyChangeInfo> speChangeList = new ArrayList<>();
 		List<SysMonthlyChangeInfo> baseChangeList = new ArrayList<>();
@@ -1030,7 +1036,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				String CretType = "";
@@ -1315,7 +1321,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				String CretType = "";
@@ -1601,7 +1607,7 @@ public class JsResMonthlyReportUniversityController extends GeneralController {
 				}
 				SysUser sysUser = userMap.get(currentDoctorFlow);
 				ResDoctor doctor = doctorMap.get(currentDoctorFlow);
-				ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
+				com.pinde.core.model.ResDoctorRecruit recruit = recruitMap.get(currentDoctorFlow);
 				SysMonthlyDoctorDetailInfo detailInfo = detailInfoMap.get(currentDoctorFlow);
 
 				String CretType = "";

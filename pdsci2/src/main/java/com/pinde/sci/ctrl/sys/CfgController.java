@@ -1,5 +1,7 @@
 package com.pinde.sci.ctrl.sys;
 
+import com.pinde.core.model.SysOrg;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
@@ -10,10 +12,8 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysCfgMapper;
-import com.pinde.sci.model.mo.ResTestConfig;
-import com.pinde.sci.model.mo.SysCfg;
-import com.pinde.sci.model.mo.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.ResTestConfig;
+import com.pinde.core.model.SysCfg;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

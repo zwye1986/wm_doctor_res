@@ -285,8 +285,8 @@
         dtgi.rec_content CONTENT,
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -341,8 +341,8 @@
         dtgi.rec_content CONTENT,
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd
@@ -389,13 +389,13 @@
         order by dtgi.oper_time
     </select>
 
-    <select id="getUserByRec" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRec" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select su.*
-        from pdsci.sys_user su
+        from sys_user su
         where su.record_status = 'Y'
         and exists(
         select null
-        from pdsci.sys_user_role sur
+        from sys_user_role sur
         where record_status = 'Y'
         and sur.user_flow = su.user_flow
         and sur.role_flow = #{roleFlow}
@@ -403,12 +403,12 @@
         and su.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and rdsp.teacher_user_flow = su.user_flow
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -435,17 +435,17 @@
     </select>
     <select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
         select sd.*
-        from pdsci.sys_dept sd
+        from sys_dept sd
         where sd.record_status = 'Y'
         and sd.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and rdsp.dept_flow = sd.dept_flow
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -505,13 +505,13 @@
         ))
     </select>
 
-    <select id="getUserByRecForUni" resultMap="com.pinde.sci.dao.base.SysUserMapper.BaseResultMap">
+    <select id="getUserByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select su.*
-        from pdsci.sys_user su
+        from sys_user su
         where su.record_status = 'Y'
         and exists(
         select null
-        from pdsci.sys_user_role sur
+        from sys_user_role sur
         where record_status = 'Y'
         and sur.user_flow = su.user_flow
         and sur.role_flow = #{roleFlow}
@@ -519,7 +519,7 @@
         and su.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and rdsp.teacher_user_flow = su.user_flow
         and exists(
@@ -541,7 +541,7 @@
         )
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -569,12 +569,12 @@
 
     <select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
         select sd.*
-        from pdsci.sys_dept sd
+        from sys_dept sd
         where sd.record_status = 'Y'
         and sd.org_flow = #{orgFlow}
         and exists(
         select null
-        from pdsci.res_doctor_sch_process rdsp
+        from res_doctor_sch_process rdsp
         where rdsp.record_status = 'Y'
         and rdsp.dept_flow = sd.dept_flow
         and exists(
@@ -596,7 +596,7 @@
         )
         and exists(
         select null
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
+        from DEPT_TEACHER_GRADE_INFO dtgi
         where dtgi.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         <if test='operStartDate!=null and operStartDate!=""'>
@@ -629,8 +629,8 @@
         dtgi.rec_content CONTENT,
         dtgi.rec_flow REC_FLOW,
         rd.SESSION_NUMBER
-        from pdsci.DEPT_TEACHER_GRADE_INFO dtgi
-        inner join pdsci.res_doctor_sch_process rdsp
+        from DEPT_TEACHER_GRADE_INFO dtgi
+        inner join res_doctor_sch_process rdsp
         on rdsp.record_status = 'Y'
         and rdsp.process_flow = dtgi.process_flow
         left join res_doctor rd

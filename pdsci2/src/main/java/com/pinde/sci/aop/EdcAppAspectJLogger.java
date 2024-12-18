@@ -16,8 +16,8 @@ import java.util.Date;
  */
 @Aspect 
 public class EdcAppAspectJLogger {
-	
-	private static Logger logger = LoggerFactory.getLogger(EdcAppAspectJLogger.class);
+
+	private static final Logger logger = LoggerFactory.getLogger(EdcAppAspectJLogger.class);
 
     /**
      * 必须为final String类型的,注解里要使用的变量只能是静态常量类型的

@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SchAutoArrangeCfg;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchAutoArrangeCfg;
 import com.pinde.core.model.SysUser;
 
 import java.util.List;

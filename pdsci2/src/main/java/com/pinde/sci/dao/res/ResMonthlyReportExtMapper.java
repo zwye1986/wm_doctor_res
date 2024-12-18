@@ -1,7 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,7 @@ public interface ResMonthlyReportExtMapper {
 	//查询RES_DOCTOR表信息
 	List<ResDoctor> getDoctorList(Map<String, Object> paramMap);
 	//查询recruit表信息
-	List<ResDoctorRecruit> getRecruitList(Map<String, Object> paramMap);
+    List<com.pinde.core.model.ResDoctorRecruit> getRecruitList(Map<String, Object> paramMap);
 
 	//基地查询出入科人数详情（图5）
 	List<Map<String,String>> getHospitalChart5Detail(Map<String, Object> paramMap);

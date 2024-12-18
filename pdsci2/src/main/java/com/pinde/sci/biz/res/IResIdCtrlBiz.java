@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResIdctrlDetail;
-import com.pinde.sci.model.mo.ResIdctrlMain;
+import com.pinde.core.model.ResIdctrlDetail;
+import com.pinde.core.model.ResIdctrlMain;
 
 import java.util.List;
 import java.util.Map;

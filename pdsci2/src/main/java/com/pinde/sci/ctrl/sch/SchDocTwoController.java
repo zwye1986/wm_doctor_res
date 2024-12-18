@@ -5,8 +5,7 @@ import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.common.enums.ResDoctorStatusEnum;
 import com.pinde.core.common.enums.sch.SchRotationMedicineType;
 import com.pinde.core.common.enums.sch.SchStatusEnum;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -23,7 +22,17 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.form.sch.DoctorSearchForm;
 import com.pinde.sci.form.sch.SchArrangeResultForm;
 import com.pinde.sci.form.sch.SchRotationDeptForm;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.ResRotationOrg;
+import com.pinde.core.model.SchArrangeResult;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchDeptRel;
+import com.pinde.core.model.SchDoctorAbsence;
+import com.pinde.core.model.SchDoctorDept;
+import com.pinde.core.model.SchRotation;
+import com.pinde.core.model.SchRotationDept;
+import com.pinde.core.model.SchRotationDeptReq;
+import com.pinde.core.model.SchRotationGroup;
+import com.pinde.core.model.SysCfg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -2949,7 +2958,7 @@ public class SchDocTwoController extends GeneralController{
 		}
 	}
 	@RequestMapping("/template/guanLian")
-	public String guanLian(String flow,SysOrg org,Model model){
+	public String guanLian(String flow, SysOrg org, Model model) {
 			SchRotation schRotation=schRotationtBiz.readSchRotation(flow);
 			model.addAttribute("schRotation",schRotation);
 			List<SysOrg> sysOrgs=orgBiz.queryAllSysOrg(org);

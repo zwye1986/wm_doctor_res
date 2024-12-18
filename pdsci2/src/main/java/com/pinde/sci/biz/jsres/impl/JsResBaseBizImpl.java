@@ -2,8 +2,8 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.ResOrgSpe;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.sci.dao.SysRoleMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
 import com.pinde.core.util.PkUtil;
@@ -16,11 +16,13 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
+import com.pinde.sci.dao.base.ResBaseMapper;
+import com.pinde.sci.dao.base.ResOrgSpeMapper;
+import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
+import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
-import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -780,6 +782,6 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		return  resBase ;
 	}
 
-    private static Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsResBaseBizImpl.class);
 
 }

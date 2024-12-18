@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysDeptMonthExamInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysDeptMonthExamInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysDeptMonthExamInfo">
     <id column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
     <result column="PLAN_FLOW" property="planFlow" jdbcType="VARCHAR" />
     <result column="USER_TYPE_ID" property="userTypeId" jdbcType="VARCHAR" />
@@ -76,13 +76,14 @@
     EXAM_FLOW, PLAN_FLOW, USER_TYPE_ID, USER_TYPE_NAME, EXAM_USER_FLOW, EXAM_USER_NAME, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SysDeptMonthExamInfoExample">
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+      from SYS_DEPT_MONTH_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +94,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+      from SYS_DEPT_MONTH_EXAM_INFO
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+      delete from SYS_DEPT_MONTH_EXAM_INFO
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfoExample" >
-    delete from PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDeptMonthExamInfoExample">
+      delete from SYS_DEPT_MONTH_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfo" >
-    insert into PDSCI.SYS_DEPT_MONTH_EXAM_INFO (EXAM_FLOW, PLAN_FLOW, USER_TYPE_ID, 
+    <insert id="insert" parameterType="com.pinde.core.model.SysDeptMonthExamInfo">
+      insert into SYS_DEPT_MONTH_EXAM_INFO (EXAM_FLOW, PLAN_FLOW, USER_TYPE_ID,
       USER_TYPE_NAME, EXAM_USER_FLOW, EXAM_USER_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -116,8 +117,8 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfo" >
-    insert into PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysDeptMonthExamInfo">
+      insert into SYS_DEPT_MONTH_EXAM_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="examFlow != null" >
         EXAM_FLOW,
@@ -189,14 +190,15 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfoExample" resultType="java.lang.Integer" >
-    select count(*) from PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+    <select id="countByExample" parameterType="com.pinde.core.model.SysDeptMonthExamInfoExample"
+            resultType="java.lang.Integer">
+      select count(*) from SYS_DEPT_MONTH_EXAM_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+      update SYS_DEPT_MONTH_EXAM_INFO
     <set >
       <if test="record.examFlow != null" >
         EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
@@ -237,7 +239,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+      update SYS_DEPT_MONTH_EXAM_INFO
     set EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
       PLAN_FLOW = #{record.planFlow,jdbcType=VARCHAR},
       USER_TYPE_ID = #{record.userTypeId,jdbcType=VARCHAR},
@@ -253,8 +255,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfo" >
-    update PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysDeptMonthExamInfo">
+      update SYS_DEPT_MONTH_EXAM_INFO
     <set >
       <if test="planFlow != null" >
         PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
@@ -289,8 +291,8 @@
     </set>
     where EXAM_FLOW = #{examFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysDeptMonthExamInfo" >
-    update PDSCI.SYS_DEPT_MONTH_EXAM_INFO
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysDeptMonthExamInfo">
+      update SYS_DEPT_MONTH_EXAM_INFO
     set PLAN_FLOW = #{planFlow,jdbcType=VARCHAR},
       USER_TYPE_ID = #{userTypeId,jdbcType=VARCHAR},
       USER_TYPE_NAME = #{userTypeName,jdbcType=VARCHAR},

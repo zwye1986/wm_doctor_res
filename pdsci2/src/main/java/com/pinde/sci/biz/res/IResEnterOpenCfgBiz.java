@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.sci.model.mo.ResEnterOpenCfg;
-import com.pinde.sci.model.mo.SchArrangeTime;
+import com.pinde.core.model.ResEnterOpenCfg;
+import com.pinde.core.model.SchArrangeTime;
 
 import java.util.List;
 
