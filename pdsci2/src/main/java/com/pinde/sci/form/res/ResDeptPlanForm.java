@@ -1,10 +1,9 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.SysDeptMonthExamInfo;
-import com.pinde.sci.model.mo.SysDeptMonthPlan;
-import com.pinde.sci.model.mo.SysDeptMonthPlanItem;
+import com.pinde.core.model.SysDeptMonthExamInfo;
+import com.pinde.core.model.SysDeptMonthPlan;
+import com.pinde.core.model.SysDeptMonthPlanItem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

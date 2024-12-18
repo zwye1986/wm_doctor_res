@@ -4,7 +4,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.model.mo.ResTestConfig;
+import com.pinde.core.model.ResTestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

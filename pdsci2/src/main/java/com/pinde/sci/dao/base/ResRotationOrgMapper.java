@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResRotationOrg;
-import com.pinde.sci.model.mo.ResRotationOrgExample;
+import com.pinde.core.model.ResRotationOrg;
+import com.pinde.core.model.ResRotationOrgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

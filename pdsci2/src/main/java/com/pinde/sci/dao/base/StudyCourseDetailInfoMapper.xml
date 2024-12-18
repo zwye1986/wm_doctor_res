@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pinde.sci.dao.base.StudyCourseDetailInfoMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.StudyCourseDetailInfo">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.StudyCourseDetailInfo">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="DETAIL_FLOW" jdbcType="VARCHAR" property="detailFlow" />
     <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />
@@ -79,7 +79,8 @@
     DETAIL_URL, PAGER_NUMBER, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfoExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="com.pinde.core.model.StudyCourseDetailInfoExample"
+            resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -103,13 +104,13 @@
       delete from STUDY_COURSE_DETAIL_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfoExample">
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.StudyCourseDetailInfoExample">
       delete from STUDY_COURSE_DETAIL_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfo">
+    <insert id="insert" parameterType="com.pinde.core.model.StudyCourseDetailInfo">
       insert into STUDY_COURSE_DETAIL_INFO (RECORD_FLOW, DETAIL_FLOW, COURSE_FLOW,
       DETAIL_TYPE_ID, DETAIL_TYPE_NAME, DETAIL_NAME, 
       DETAIL_URL, PAGER_NUMBER, RECORD_STATUS, 
@@ -121,7 +122,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfo">
+    <insert id="insertSelective" parameterType="com.pinde.core.model.StudyCourseDetailInfo">
       insert into STUDY_COURSE_DETAIL_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordFlow != null">
@@ -206,7 +207,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfoExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.StudyCourseDetailInfoExample"
+            resultType="java.lang.Integer">
       select count(*) from STUDY_COURSE_DETAIL_INFO
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -278,7 +280,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfo">
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StudyCourseDetailInfo">
       update STUDY_COURSE_DETAIL_INFO
     <set>
       <if test="detailFlow != null">
@@ -320,7 +322,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.StudyCourseDetailInfo">
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StudyCourseDetailInfo">
       update STUDY_COURSE_DETAIL_INFO
     set DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR},
       COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},

@@ -16,7 +16,7 @@
     </resultMap>
 
     <!--保存讲座活动评价指标信息-->
-    <insert id="saveLectureInfoTarget" parameterType="com.pinde.sci.model.mo.ResLectureInfo">
+    <insert id="saveLectureInfoTarget" parameterType="com.pinde.core.model.ResLectureInfo">
         INSERT INTO LECTURE_INFO_TARGET (
             RECORD_FLOW,
             LECTURE_FLOW,
@@ -48,7 +48,7 @@
     </insert>
 
     <!--删除讲座活动评价指标信息-->
-    <update id="delLectureInfoTarget" parameterType="com.pinde.sci.model.mo.ResLectureInfo">
+    <update id="delLectureInfoTarget" parameterType="com.pinde.core.model.ResLectureInfo">
         UPDATE LECTURE_INFO_TARGET
         SET
             RECORD_STATUS = #{recordStatus},

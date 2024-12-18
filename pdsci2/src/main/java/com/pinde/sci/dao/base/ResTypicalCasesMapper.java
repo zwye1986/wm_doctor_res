@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResTypicalCases;
-import com.pinde.sci.model.mo.ResTypicalCasesExample;
+import com.pinde.core.model.ResTypicalCases;
+import com.pinde.core.model.ResTypicalCasesExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

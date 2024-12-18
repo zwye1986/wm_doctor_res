@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.core.model.ResDoctorGraduationExam;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.List;
 import java.util.Map;

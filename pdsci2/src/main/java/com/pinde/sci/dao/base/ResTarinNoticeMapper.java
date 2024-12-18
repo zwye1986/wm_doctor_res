@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResTarinNotice;
-import com.pinde.sci.model.mo.ResTarinNoticeExample;
+import com.pinde.core.model.ResTarinNotice;
+import com.pinde.core.model.ResTarinNoticeExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

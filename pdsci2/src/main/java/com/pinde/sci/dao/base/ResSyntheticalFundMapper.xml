@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResSyntheticalFundMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResSyntheticalFund" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSyntheticalFund">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="REPORT_DATE" property="reportDate" jdbcType="VARCHAR" />
     <result column="IN_PLACE_DATE" property="inPlaceDate" jdbcType="VARCHAR" />
@@ -78,7 +78,8 @@
     RECORD_FLOW, REPORT_DATE, IN_PLACE_DATE, ORG_FLOW, ORG_NAME, AMOUNT_OF_INCOME, AMOUNT_OF_EXPENSES, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_SEND
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResSyntheticalFundExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResSyntheticalFundExample">
     select
     <if test="distinct" >
       distinct
@@ -102,13 +103,13 @@
       delete from RES_SYNTHETICAL_FUND
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSyntheticalFundExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSyntheticalFundExample">
       delete from RES_SYNTHETICAL_FUND
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResSyntheticalFund">
       insert into RES_SYNTHETICAL_FUND (RECORD_FLOW, REPORT_DATE, IN_PLACE_DATE,
       ORG_FLOW, ORG_NAME, AMOUNT_OF_INCOME, 
       AMOUNT_OF_EXPENSES, RECORD_STATUS, CREATE_TIME, 
@@ -120,7 +121,7 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{isSend,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResSyntheticalFund">
       insert into RES_SYNTHETICAL_FUND
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -205,7 +206,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSyntheticalFundExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResSyntheticalFundExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_SYNTHETICAL_FUND
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -277,7 +279,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSyntheticalFund">
       update RES_SYNTHETICAL_FUND
     <set >
       <if test="reportDate != null" >
@@ -319,7 +321,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResSyntheticalFund" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSyntheticalFund">
       update RES_SYNTHETICAL_FUND
     set REPORT_DATE = #{reportDate,jdbcType=VARCHAR},
       IN_PLACE_DATE = #{inPlaceDate,jdbcType=VARCHAR},

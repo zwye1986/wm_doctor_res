@@ -2,6 +2,10 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.model.OscaDoctorRegist;
+import com.pinde.core.model.OscaDoctorRegistExample;
+import com.pinde.core.model.ResDoctor;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorRegistBiz;
@@ -12,10 +16,6 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
-import com.pinde.core.model.OscaDoctorRegist;
-import com.pinde.core.model.OscaDoctorRegistExample;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

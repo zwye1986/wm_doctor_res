@@ -2,10 +2,10 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SchArrangeResultExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface SchArrangeResultMapper {
     int countByExample(SchArrangeResultExample example);

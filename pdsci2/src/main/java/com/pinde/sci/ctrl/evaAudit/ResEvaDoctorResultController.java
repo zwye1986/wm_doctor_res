@@ -15,7 +15,7 @@ import com.pinde.sci.form.res.ResAssessCfgItemForm;
 import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.SchDept;
+import com.pinde.core.model.SchDept;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

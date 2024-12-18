@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ScresGraduationApply;
-import com.pinde.sci.model.mo.ScresGraduationApplyExample;
+import com.pinde.core.model.ScresGraduationApply;
+import com.pinde.core.model.ScresGraduationApplyExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

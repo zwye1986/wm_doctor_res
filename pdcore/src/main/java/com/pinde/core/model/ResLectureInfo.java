@@ -61,6 +61,12 @@ public class ResLectureInfo implements java.io.Serializable {
 
     private String lectureOutUrl;
 
+    private String lectureSpeakerRoleId;
+
+    private String lectureSpeakerRoleName;
+
+    private String randomSignIn;
+
     private String evalFormContent;
 
     public String getLectureFlow() {
@@ -301,6 +307,30 @@ public class ResLectureInfo implements java.io.Serializable {
 
     public void setLectureOutUrl(String lectureOutUrl) {
         this.lectureOutUrl = lectureOutUrl;
+    }
+
+    public String getLectureSpeakerRoleId() {
+        return lectureSpeakerRoleId;
+    }
+
+    public void setLectureSpeakerRoleId(String lectureSpeakerRoleId) {
+        this.lectureSpeakerRoleId = lectureSpeakerRoleId;
+    }
+
+    public String getLectureSpeakerRoleName() {
+        return lectureSpeakerRoleName;
+    }
+
+    public void setLectureSpeakerRoleName(String lectureSpeakerRoleName) {
+        this.lectureSpeakerRoleName = lectureSpeakerRoleName;
+    }
+
+    public String getRandomSignIn() {
+        return randomSignIn;
+    }
+
+    public void setRandomSignIn(String randomSignIn) {
+        this.randomSignIn = randomSignIn;
     }
 
     public String getEvalFormContent() {

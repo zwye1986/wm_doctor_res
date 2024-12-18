@@ -1,5 +1,9 @@
 package com.pinde.res.biz.hbres.impl;
 
+import com.pinde.core.model.ResInprocessInfo;
+import com.pinde.core.model.ResInprocessInfoExample;
+import com.pinde.core.model.ResInprocessInfoMember;
+import com.pinde.core.model.ResInprocessInfoMemberExample;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.dao.hbres.ext.ResInprocessInfoMemberExtMapper;
 import com.pinde.sci.dao.base.ResInprocessInfoMapper;

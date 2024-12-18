@@ -71,6 +71,14 @@ public class SysMonthlyChangeInfo implements java.io.Serializable {
 
     private String modifyUserFlow;
 
+    private String doctorName;
+
+    private String idNo;
+
+    private String userPhone;
+
+    private String trainingYears;
+
     public String getSmciFlow() {
         return smciFlow;
     }
@@ -349,5 +357,37 @@ public class SysMonthlyChangeInfo implements java.io.Serializable {
 
     public void setModifyUserFlow(String modifyUserFlow) {
         this.modifyUserFlow = modifyUserFlow;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public String getTrainingYears() {
+        return trainingYears;
+    }
+
+    public void setTrainingYears(String trainingYears) {
+        this.trainingYears = trainingYears;
     }
 }

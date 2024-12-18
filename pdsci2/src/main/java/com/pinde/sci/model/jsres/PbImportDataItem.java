@@ -1,9 +1,5 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.SchRotationDept;
-
-import java.io.Serializable;
-
 /**
  * ~~~~~~~~~溺水的鱼~~~~~~~~
  *

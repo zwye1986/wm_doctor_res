@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResSkillTimeConfigMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResSkillTimeConfig" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSkillTimeConfig">
     <id column="SKILL_TIME_FLOW" property="skillTimeFlow" jdbcType="VARCHAR" />
     <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
     <result column="TEST_NAME" property="testName" jdbcType="VARCHAR" />
@@ -87,7 +87,8 @@
     CHARGE_AUDIT_END_TIME, SKILL_START_TIME, SKILL_END_TIME, TEST_END_TIME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfigExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResSkillTimeConfigExample">
     select
     <if test="distinct" >
       distinct
@@ -111,13 +112,13 @@
       delete from RES_SKILL_TIME_CONFIG
     where SKILL_TIME_FLOW = #{skillTimeFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfigExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSkillTimeConfigExample">
       delete from RES_SKILL_TIME_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfig" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResSkillTimeConfig">
       insert into RES_SKILL_TIME_CONFIG (SKILL_TIME_FLOW, TEST_ID, TEST_NAME,
       APPLY_START_TIME, APPLY_END_TIME, CITYS_ID, 
       LOCAL_AUDIT, LOCAL_AUDIT_START_TIME, LOCAL_AUDIT_END_TIME, 
@@ -133,7 +134,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfig" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResSkillTimeConfig">
       insert into RES_SKILL_TIME_CONFIG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="skillTimeFlow != null" >
@@ -260,7 +261,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfigExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResSkillTimeConfigExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_SKILL_TIME_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -360,7 +362,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfig" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSkillTimeConfig">
       update RES_SKILL_TIME_CONFIG
     <set >
       <if test="testId != null" >
@@ -423,7 +425,7 @@
     </set>
     where SKILL_TIME_FLOW = #{skillTimeFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResSkillTimeConfig" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSkillTimeConfig">
       update RES_SKILL_TIME_CONFIG
     set TEST_ID = #{testId,jdbcType=VARCHAR},
       TEST_NAME = #{testName,jdbcType=VARCHAR},

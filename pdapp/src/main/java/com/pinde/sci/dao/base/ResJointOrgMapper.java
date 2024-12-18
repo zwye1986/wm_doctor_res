@@ -1,7 +1,10 @@
 package com.pinde.sci.dao.base;
 
-import java.util.List;
+import com.pinde.core.model.ResJointOrg;
+import com.pinde.core.model.ResJointOrgExample;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResJointOrgMapper {
     int countByExample(ResJointOrgExample example);

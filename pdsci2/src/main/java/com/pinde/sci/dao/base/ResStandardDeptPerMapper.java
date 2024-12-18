@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResStandardDeptPer;
-import com.pinde.sci.model.mo.ResStandardDeptPerExample;
+import com.pinde.core.model.ResStandardDeptPer;
+import com.pinde.core.model.ResStandardDeptPerExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

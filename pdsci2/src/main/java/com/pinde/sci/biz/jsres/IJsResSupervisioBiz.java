@@ -1,9 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.*;
-import com.pinde.core.model.ResHospScoreTable;
-import com.pinde.sci.model.mo.ResOrgSpeAssign;
-import com.pinde.sci.model.mo.ResScheduleScore;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;

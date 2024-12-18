@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResReadInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResReadInfo" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResReadInfo">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="INFO_FLOW" property="infoFlow" jdbcType="VARCHAR" />
     <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
     RECORD_FLOW, INFO_FLOW, USER_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResReadInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResReadInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -97,13 +97,13 @@
       delete from RES_READ_INFO
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResReadInfoExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResReadInfoExample">
       delete from RES_READ_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResReadInfo" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResReadInfo">
       insert into RES_READ_INFO (RECORD_FLOW, INFO_FLOW, USER_FLOW,
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW)
@@ -111,7 +111,7 @@
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResReadInfo" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResReadInfo">
       insert into RES_READ_INFO
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResReadInfoExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResReadInfoExample" resultType="java.lang.Integer">
       select count(*) from RES_READ_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -218,7 +218,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResReadInfo" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResReadInfo">
       update RES_READ_INFO
     <set >
       <if test="infoFlow != null" >
@@ -245,7 +245,7 @@
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResReadInfo" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResReadInfo">
       update RES_READ_INFO
     set INFO_FLOW = #{infoFlow,jdbcType=VARCHAR},
       USER_FLOW = #{userFlow,jdbcType=VARCHAR},

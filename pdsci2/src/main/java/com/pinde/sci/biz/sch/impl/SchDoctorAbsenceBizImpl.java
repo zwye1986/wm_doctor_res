@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.AbsenceTypeEnum;
-import com.pinde.core.model.PubFile;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
@@ -17,10 +16,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.SchDoctorAbsenceMapper;
 import com.pinde.sci.dao.sch.SchDoctorAbsenceExtMapper;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchDoctorAbsence;
-import com.pinde.sci.model.mo.SchDoctorAbsenceExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -156,7 +151,7 @@ public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 	@Override
 	public List<SchDoctorAbsence> searchSchDoctorAbsenceList(SchDoctorAbsence doctorAbsence) {
 		SchDoctorAbsenceExample example = new SchDoctorAbsenceExample();
-        com.pinde.sci.model.mo.SchDoctorAbsenceExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        SchDoctorAbsenceExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(doctorAbsence.getAbsenceTypeId())){
 			criteria.andAbsenceTypeIdEqualTo(doctorAbsence.getAbsenceTypeId());
 		}

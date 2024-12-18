@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResOrgAddress;
-import com.pinde.sci.model.mo.ResOrgAddressExample;
+import com.pinde.core.model.ResOrgAddress;
+import com.pinde.core.model.ResOrgAddressExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

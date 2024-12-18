@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SchDoctorDept;
 import com.pinde.core.model.SchDoctorDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchDoctorDeptMapper {
     int countByExample(SchDoctorDeptExample example);

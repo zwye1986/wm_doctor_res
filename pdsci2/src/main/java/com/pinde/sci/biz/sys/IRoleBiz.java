@@ -2,7 +2,7 @@ package com.pinde.sci.biz.sys;
 
 import com.pinde.core.model.SysRole;
 import com.pinde.core.model.ActivityCfgExt;
-import com.pinde.sci.model.mo.SysCfg;
+import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysRoleAuthGx;
 
 import java.util.List;

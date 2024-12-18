@@ -1,9 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.SysUserRole;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
@@ -20,7 +18,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
-import com.pinde.sci.model.mo.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -62,7 +59,7 @@ public class JsResLectureController extends GeneralController {
      * 所有讲座查询
      */
     @RequestMapping("/getLectures")
-    public String lectureView(ResLectureInfo resLectureInfo,String lectureTrainStartDate,String lectureTrainEndDate, Model model, Integer currentPage,HttpServletRequest request) {
+    public String lectureView(ResLectureInfo resLectureInfo, String lectureTrainStartDate, String lectureTrainEndDate, Model model, Integer currentPage, HttpServletRequest request) {
 
         PageHelper.startPage(currentPage, getPageSize(request));
         String lectureTrainDate = resLectureInfo.getLectureTrainDate();

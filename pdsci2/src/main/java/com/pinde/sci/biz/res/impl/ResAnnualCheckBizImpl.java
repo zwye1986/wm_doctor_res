@@ -2,6 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.model.ResAnnualAssessmentRecord;
 import com.pinde.core.model.ResAnnualAssessmentRecordExample;
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -13,7 +14,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.ResAnnualAssessmentRecordMapper;
-import com.pinde.core.model.ResDoctor;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;

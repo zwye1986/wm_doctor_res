@@ -1213,6 +1213,16 @@ public class SysDictExample {
             addCriterion("DICT_NAME_EN not between", value1, value2, "dictNameEn");
             return (Criteria) this;
         }
+
+        public Criteria andIsSubmitIdEqualTo(String value) {
+            addCriterion("IS_SUBMIT_ID =", value, "isSubmitId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCheckStatusIdEqualTo(String value) {
+            addCriterion("CHECK_STATUS_ID =", value, "checkStatusId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

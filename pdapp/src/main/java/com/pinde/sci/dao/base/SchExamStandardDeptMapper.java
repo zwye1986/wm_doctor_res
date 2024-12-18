@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SchExamStandardDept;
 import com.pinde.core.model.SchExamStandardDeptExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SchExamStandardDeptMapper {
     int countByExample(SchExamStandardDeptExample example);

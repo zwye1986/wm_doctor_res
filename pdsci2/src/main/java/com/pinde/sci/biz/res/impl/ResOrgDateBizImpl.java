@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.model.ResOrgSigninDate;
+import com.pinde.core.model.ResOrgSigninDateExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgDateBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.ResOrgSigninDateMapper;
-import com.pinde.sci.model.mo.ResOrgSigninDate;
-import com.pinde.sci.model.mo.ResOrgSigninDateExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

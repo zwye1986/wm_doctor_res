@@ -88,7 +88,7 @@
     ORG_NAME, ORG_FLOW, DICT_NAME_EN, IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID,
     CHECK_STATUS_NAME, CHECK_REASON
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysDictExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysDictExample">
     select
     <if test="distinct" >
       distinct
@@ -112,7 +112,7 @@
       delete from SYS_DICT
     where DICT_FLOW = #{dictFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysDictExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysDictExample">
       delete from SYS_DICT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -235,7 +235,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysDictExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysDictExample" resultType="java.lang.Integer">
       select count(*) from SYS_DICT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

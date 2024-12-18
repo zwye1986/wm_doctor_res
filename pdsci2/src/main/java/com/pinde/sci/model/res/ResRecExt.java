@@ -1,7 +1,7 @@
 package com.pinde.sci.model.res;
 
 import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResRec;
+import com.pinde.core.model.ResRec;
 
 public class ResRecExt extends ResRec {
 

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchEntryReport;
-import com.pinde.sci.model.mo.SchEntryReportExample;
+import com.pinde.core.model.SchEntryReport;
+import com.pinde.core.model.SchEntryReportExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

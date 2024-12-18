@@ -433,7 +433,7 @@ select * from (
         </if>
     </select>
 
-    <resultMap id="ResSupervisioSubjectUserList" type="com.pinde.sci.model.mo.ResSupervisioSubjectUser" >
+    <resultMap id="ResSupervisioSubjectUserList" type="com.pinde.core.model.ResSupervisioSubjectUser">
         <result column="SUBJECT_FLOW" jdbcType="VARCHAR" property="subjectFlow"/>
         <result column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow"/>
         <result column="SUBJECT_NAME" jdbcType="VARCHAR" property="subjectName"/>
@@ -869,7 +869,7 @@ select * from (
         )
         group by  subject_activiti_flows
     </select>
-    <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResOrgSpeAssign" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResOrgSpeAssign">
         <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
         <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />

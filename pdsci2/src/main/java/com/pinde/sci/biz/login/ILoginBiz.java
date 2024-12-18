@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.login;
 
-import com.pinde.sci.model.mo.SysLog;
-import com.pinde.sci.model.mo.SysLoginAbility;
+import com.pinde.core.model.SysLog;
+import com.pinde.core.model.SysLoginAbility;
 import com.pinde.core.model.SysUser;
 
 import java.util.List;

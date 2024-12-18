@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.ResLectureInfoRole;
 import com.pinde.core.model.ResLectureInfoRoleExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ResLectureInfoRoleMapper {
     int countByExample(ResLectureInfoRoleExample example);

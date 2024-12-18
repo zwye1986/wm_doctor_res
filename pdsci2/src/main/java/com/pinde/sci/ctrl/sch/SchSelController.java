@@ -1,9 +1,7 @@
 package com.pinde.sci.ctrl.sch;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResEnterOpenCfg;
-import com.pinde.core.model.SysDict;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -18,7 +16,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
-import com.pinde.sci.model.mo.*;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;

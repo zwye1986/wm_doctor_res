@@ -27,7 +27,7 @@ import com.pinde.sci.form.jszy.JszyBackTrainForm;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResRec;
+import com.pinde.core.model.ResRec;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

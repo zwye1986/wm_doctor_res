@@ -2,6 +2,8 @@ package com.pinde.sci.biz.osca.impl;
 
 
 import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.model.OscaOrgSpe;
+import com.pinde.core.model.OscaOrgSpeExample;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysOrgExample;
 import com.pinde.core.util.PkUtil;
@@ -10,8 +12,6 @@ import com.pinde.sci.biz.osca.ISiteInformationBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.base.OscaOrgSpeMapper;
 import com.pinde.sci.dao.osca.OscaSysOrgExtMapper;
-import com.pinde.core.model.OscaOrgSpe;
-import com.pinde.core.model.OscaOrgSpeExample;
 import com.pinde.sci.model.osca.OscaOrgSpeExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

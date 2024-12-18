@@ -94,7 +94,7 @@
             <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
             <result column="TEACHER_REMARKS" property="teacherRemarks" jdbcType="VARCHAR" />
         </association>
-        <association property="schDept" column="deptFlow" javaType="com.pinde.sci.model.mo.SchDept">
+        <association property="schDept" column="deptFlow" javaType="com.pinde.core.model.SchDept">
             <id column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
             <result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
             <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />

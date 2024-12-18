@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchRotationOrgGroupMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchRotationOrgGroup" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationOrgGroup">
     <id column="GROUP_FLOW" property="groupFlow" jdbcType="VARCHAR" />
     <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
     <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR" />
@@ -93,7 +93,8 @@
     MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME, SEL_TYPE_ID, SEL_TYPE_NAME, MAX_DEPT_NUM, STANDARD_GROUP_FLOW, 
     ORDINAL, IS_REQUIRED, SCH_STAGE_ID, SCH_STAGE_NAME, SESSION_NUMBER, SELECT_YEAR
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroupExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SchRotationOrgGroupExample">
     select
     <if test="distinct" >
       distinct
@@ -117,13 +118,13 @@
       delete from SCH_ROTATION_ORG_GROUP
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroupExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchRotationOrgGroupExample">
       delete from SCH_ROTATION_ORG_GROUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroup" >
+    <insert id="insert" parameterType="com.pinde.core.model.SchRotationOrgGroup">
       insert into SCH_ROTATION_ORG_GROUP (GROUP_FLOW, ROTATION_FLOW, GROUP_NAME,
       DEPT_NUM, SCH_MONTH, ONE_SCH_MONTH, 
       TWO_SCH_MONTH, THREE_SCH_MONTH, GROUP_NOTE, 
@@ -143,7 +144,7 @@
       #{isRequired,jdbcType=VARCHAR}, #{schStageId,jdbcType=VARCHAR}, #{schStageName,jdbcType=VARCHAR}, 
       #{sessionNumber,jdbcType=VARCHAR}, #{selectYear,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroup" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationOrgGroup">
       insert into SCH_ROTATION_ORG_GROUP
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="groupFlow != null" >
@@ -306,7 +307,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroupExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SchRotationOrgGroupExample"
+            resultType="java.lang.Integer">
       select count(*) from SCH_ROTATION_ORG_GROUP
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -430,7 +432,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroup" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchRotationOrgGroup">
       update SCH_ROTATION_ORG_GROUP
     <set >
       <if test="rotationFlow != null" >
@@ -511,7 +513,7 @@
     </set>
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchRotationOrgGroup" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchRotationOrgGroup">
       update SCH_ROTATION_ORG_GROUP
     set ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
       GROUP_NAME = #{groupName,jdbcType=VARCHAR},

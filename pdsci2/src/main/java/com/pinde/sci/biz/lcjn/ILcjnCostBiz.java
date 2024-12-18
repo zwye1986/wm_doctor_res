@@ -1,10 +1,6 @@
 package com.pinde.sci.biz.lcjn;
 
-import com.pinde.core.model.LcjnCourseInfo;
-import com.pinde.core.model.LcjnCourseSkill;
-import com.pinde.core.model.LcjnCourseSupplies;
-import com.pinde.core.model.LcjnSkillCfgDetail;
-import com.pinde.core.model.LcjnSupplies;
+import com.pinde.core.model.*;
 
 import java.util.List;
 import java.util.Map;

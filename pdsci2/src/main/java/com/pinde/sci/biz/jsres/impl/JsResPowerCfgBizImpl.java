@@ -13,8 +13,6 @@ import com.pinde.sci.dao.base.JsresDeptConfigMapper;
 import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
-import com.pinde.sci.model.mo.ResOrgCkxz;
-import com.pinde.sci.model.mo.ResOrgCkxzExample;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

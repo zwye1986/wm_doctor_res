@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SysMonthlyAppStatisticsMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyAppStatistics">
     <id column="APP_FLOW" property="appFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="ALL_NUM" property="allNum" jdbcType="DECIMAL" />
@@ -71,7 +71,8 @@
   <sql id="Base_Column_List" >
     APP_FLOW, ORG_FLOW, ALL_NUM, USER_NUM, PER_NUM, DATE_MONTH, DOCTOR_TYPE_ID
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SysMonthlyAppStatisticsExample">
     select
     <if test="distinct" >
       distinct
@@ -95,13 +96,13 @@
       delete from SYS_MONTHLY_APP_STATISTICS
     where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyAppStatisticsExample">
       delete from SYS_MONTHLY_APP_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    <insert id="insert" parameterType="com.pinde.core.model.SysMonthlyAppStatistics">
       insert into SYS_MONTHLY_APP_STATISTICS (APP_FLOW, ORG_FLOW, ALL_NUM,
       USER_NUM, PER_NUM, DATE_MONTH, 
       DOCTOR_TYPE_ID)
@@ -109,7 +110,7 @@
       #{userNum,jdbcType=DECIMAL}, #{perNum,jdbcType=DECIMAL}, #{dateMonth,jdbcType=VARCHAR}, 
       #{doctorTypeId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyAppStatistics">
       insert into SYS_MONTHLY_APP_STATISTICS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appFlow != null" >
@@ -158,7 +159,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatisticsExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyAppStatisticsExample"
+            resultType="java.lang.Integer">
       select count(*) from SYS_MONTHLY_APP_STATISTICS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -206,7 +208,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthlyAppStatistics">
       update SYS_MONTHLY_APP_STATISTICS
     <set >
       <if test="orgFlow != null" >
@@ -230,7 +232,7 @@
     </set>
     where APP_FLOW = #{appFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SysMonthlyAppStatistics" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthlyAppStatistics">
       update SYS_MONTHLY_APP_STATISTICS
     set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ALL_NUM = #{allNum,jdbcType=DECIMAL},

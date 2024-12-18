@@ -81,7 +81,7 @@
     ORG_SPE_FLOW, ORG_FLOW, ORG_NAME, SPE_TYPE_ID, SPE_TYPE_NAME, SPE_ID, SPE_NAME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SESSION_YEAR, STATUS, MIN_RECRUIT_CAPACITY,BASE_CAPACITY
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResOrgSpeExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResOrgSpeExample">
     select
     <if test="distinct" >
       distinct
@@ -105,7 +105,7 @@
       delete from RES_ORG_SPE
     where ORG_SPE_FLOW = #{orgSpeFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResOrgSpeExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResOrgSpeExample">
       delete from RES_ORG_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -220,7 +220,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResOrgSpeExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResOrgSpeExample" resultType="java.lang.Integer">
       select count(*) from RES_ORG_SPE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

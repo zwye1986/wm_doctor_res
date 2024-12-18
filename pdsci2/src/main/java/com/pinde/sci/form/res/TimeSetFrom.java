@@ -1,8 +1,7 @@
 package com.pinde.sci.form.res;
 
-import com.pinde.sci.model.mo.ResKgCfg;
+import com.pinde.core.model.ResKgCfg;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class TimeSetFrom implements java.io.Serializable {

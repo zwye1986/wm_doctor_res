@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SchRotationOrgCfg;
-import com.pinde.sci.model.mo.SchRotationOrgCfgExample;
+import com.pinde.core.model.SchRotationOrgCfg;
+import com.pinde.core.model.SchRotationOrgCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

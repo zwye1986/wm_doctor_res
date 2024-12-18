@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.ResMessage;
+import com.pinde.core.model.ResMessage;
 
 import java.util.List;
 import java.util.Map;

@@ -1,10 +1,9 @@
 package com.pinde.sci.form.sch;
 
-import com.pinde.sci.model.mo.SchArrangeDoctor;
-import com.pinde.sci.model.mo.SchArrangeDoctorDept;
-import com.pinde.sci.model.mo.SchArrangeResult;
+import com.pinde.core.model.SchArrangeDoctor;
+import com.pinde.core.model.SchArrangeDoctorDept;
+import com.pinde.core.model.SchArrangeResult;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class SchArrangeResultForm implements java.io.Serializable {

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResSkillTimeConfig;
-import com.pinde.sci.model.mo.ResSkillTimeConfigExample;
+import com.pinde.core.model.ResSkillTimeConfig;
+import com.pinde.core.model.ResSkillTimeConfigExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

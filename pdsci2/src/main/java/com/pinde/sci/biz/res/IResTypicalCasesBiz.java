@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResTypicalCases;
+import com.pinde.core.model.ResTypicalCases;
 import com.pinde.sci.model.res.ResDoctorExt;
 
 import java.util.List;

@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.SysDeptMonthExamInfo;
 import com.pinde.core.model.SysDeptMonthExamInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SysDeptMonthExamInfoMapper {
     int countByExample(SysDeptMonthExamInfoExample example);

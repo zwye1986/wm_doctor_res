@@ -21,8 +21,6 @@ import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.sch.ResBaseSpeDeptDataExtMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
-import com.pinde.sci.model.mo.ResTeacherTraining;
-import com.pinde.sci.model.mo.ResTeacherTrainingExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

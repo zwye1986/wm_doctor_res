@@ -2,12 +2,6 @@ package com.pinde.sci.dao.jsres;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.model.jsres.*;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.SchArrangeResult;
-import com.pinde.sci.model.mo.SysMonthlyChangeInfo;
-import com.pinde.sci.model.mo.SysMonthlyDocCycleInfo;
-import com.pinde.sci.model.mo.SysMonthlyNotUseappInfo;
-import com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResSupervisioSubjectRecordsMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResSupervisioSubjectRecords" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSupervisioSubjectRecords">
     <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
@@ -75,7 +75,8 @@
     RECORD_FLOW, SUBJECT_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW, USER_FLOW, ROLE_FLAG, SUB_NUM
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecordsExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResSupervisioSubjectRecordsExample">
     select
     <if test="distinct" >
       distinct
@@ -89,13 +90,13 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecordsExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectRecordsExample">
       delete from RES_SUPERVISIO_SUBJECT_RECORDS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecords" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResSupervisioSubjectRecords">
       insert into RES_SUPERVISIO_SUBJECT_RECORDS (RECORD_FLOW, SUBJECT_FLOW, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW, USER_FLOW, ROLE_FLAG, 
@@ -105,7 +106,7 @@
       #{modifyUserFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{roleFlag,jdbcType=VARCHAR}, 
       #{subNum,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecords" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResSupervisioSubjectRecords">
       insert into RES_SUPERVISIO_SUBJECT_RECORDS
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -172,7 +173,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResSupervisioSubjectRecordsExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectRecordsExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_SUPERVISIO_SUBJECT_RECORDS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

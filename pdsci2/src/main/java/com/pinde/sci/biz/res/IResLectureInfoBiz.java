@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.res;
 
+import com.pinde.core.model.ResLectureInfo;
+import com.pinde.core.model.ResLectureInfoRole;
+import com.pinde.core.model.ResLectureScanRegist;
 import com.pinde.sci.model.jsres.ParticipateInfoExt;
-import com.pinde.sci.model.mo.ResLectureInfo;
-import com.pinde.sci.model.mo.ResLectureInfoRole;
-import com.pinde.sci.model.mo.ResLectureScanRegist;
 
 import java.util.List;
 import java.util.Map;

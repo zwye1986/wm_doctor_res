@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.ResLectureRandomScan;
-import com.pinde.sci.model.mo.ResLectureRandomSign;
+import com.pinde.core.model.ResLectureRandomScan;
+import com.pinde.core.model.ResLectureRandomSign;
 
 import java.util.List;
 

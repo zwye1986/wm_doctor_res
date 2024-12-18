@@ -873,6 +873,76 @@ public class ResOrgAddressExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andAddressTypeIsNull() {
+            addCriterion("ADDRESS_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeIsNotNull() {
+            addCriterion("ADDRESS_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeEqualTo(String value) {
+            addCriterion("ADDRESS_TYPE =", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotEqualTo(String value) {
+            addCriterion("ADDRESS_TYPE <>", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeGreaterThan(String value) {
+            addCriterion("ADDRESS_TYPE >", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("ADDRESS_TYPE >=", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeLessThan(String value) {
+            addCriterion("ADDRESS_TYPE <", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeLessThanOrEqualTo(String value) {
+            addCriterion("ADDRESS_TYPE <=", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeLike(String value) {
+            addCriterion("ADDRESS_TYPE like", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotLike(String value) {
+            addCriterion("ADDRESS_TYPE not like", value, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeIn(List<String> values) {
+            addCriterion("ADDRESS_TYPE in", values, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotIn(List<String> values) {
+            addCriterion("ADDRESS_TYPE not in", values, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeBetween(String value1, String value2) {
+            addCriterion("ADDRESS_TYPE between", value1, value2, "addressType");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressTypeNotBetween(String value1, String value2) {
+            addCriterion("ADDRESS_TYPE not between", value1, value2, "addressType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

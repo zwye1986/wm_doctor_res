@@ -123,6 +123,10 @@ public class StuUserResume implements java.io.Serializable {
 
     private String reportDate;
 
+    private String nursingStatusId;
+
+    private String nursingStatusName;
+
     private String resumeInfo;
 
     public String getResumeFlow() {
@@ -611,6 +615,22 @@ public class StuUserResume implements java.io.Serializable {
 
     public void setReportDate(String reportDate) {
         this.reportDate = reportDate;
+    }
+
+    public String getNursingStatusId() {
+        return nursingStatusId;
+    }
+
+    public void setNursingStatusId(String nursingStatusId) {
+        this.nursingStatusId = nursingStatusId;
+    }
+
+    public String getNursingStatusName() {
+        return nursingStatusName;
+    }
+
+    public void setNursingStatusName(String nursingStatusName) {
+        this.nursingStatusName = nursingStatusName;
     }
 
     public String getResumeInfo() {

@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.ResUserSpe;
+import com.pinde.core.model.ResUserSpe;
 
 import java.util.List;
 

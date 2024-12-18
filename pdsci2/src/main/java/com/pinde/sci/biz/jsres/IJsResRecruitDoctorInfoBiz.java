@@ -2,10 +2,10 @@ package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.JsresRecruitDocInfo;
 import com.pinde.core.model.JsresRecruitInfo;
+import com.pinde.core.model.ResRecruitHistory;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.mo.ResRecruitHistory;
 
 import java.util.List;
 import java.util.Map;

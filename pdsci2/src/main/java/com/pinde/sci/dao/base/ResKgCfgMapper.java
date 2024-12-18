@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResKgCfg;
-import com.pinde.sci.model.mo.ResKgCfgExample;
+import com.pinde.core.model.ResKgCfg;
+import com.pinde.core.model.ResKgCfgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

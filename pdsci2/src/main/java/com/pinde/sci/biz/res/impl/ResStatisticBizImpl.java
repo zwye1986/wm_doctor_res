@@ -2,10 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 
 import com.pinde.core.common.sci.dao.SysOrgMapper;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysOrgExample;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResStatisticBiz;
@@ -17,7 +14,6 @@ import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResChartExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.mo.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

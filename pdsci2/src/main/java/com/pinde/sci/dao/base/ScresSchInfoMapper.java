@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ScresSchInfo;
-import com.pinde.sci.model.mo.ScresSchInfoExample;
+import com.pinde.core.model.ScresSchInfo;
+import com.pinde.core.model.ScresSchInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

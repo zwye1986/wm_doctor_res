@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.sch;
 
 import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.SchDept;
-import com.pinde.sci.model.mo.SchDeptExternalRel;
+import com.pinde.core.model.SchDept;
+import com.pinde.core.model.SchDeptExternalRel;
 
 import java.util.List;
 import java.util.Map;

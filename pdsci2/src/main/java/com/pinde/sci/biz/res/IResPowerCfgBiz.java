@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
 
+import com.pinde.core.model.ResPowerCfg;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.mo.ResPowerCfg;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

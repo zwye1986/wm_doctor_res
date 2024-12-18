@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.SysMonthlyReturnDelayInfo;
-import com.pinde.sci.model.mo.SysMonthlyReturnDelayInfoExample;
+import com.pinde.core.model.SysMonthlyReturnDelayInfo;
+import com.pinde.core.model.SysMonthlyReturnDelayInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

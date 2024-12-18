@@ -2,8 +2,7 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StatisticsUtil;
@@ -14,7 +13,6 @@ import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper;
 import com.pinde.sci.dao.base.SchArrangeMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
-import com.pinde.sci.model.mo.*;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -151,7 +149,7 @@ public class SchArrangeBizTask {
 		String firthStartYear = DateUtil.transDateTime(arrange.getBeginDate(), DateUtil.defDtPtn04, "yyyy");
 		
 		SchArrangeResultExample example = new SchArrangeResultExample();
-		com.pinde.sci.model.mo.SchArrangeResultExample.Criteria criteria = example.createCriteria();
+        SchArrangeResultExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		criteria.andOrgFlowEqualTo(currUser.getOrgFlow());
 		criteria.andSchYearGreaterThanOrEqualTo(firthStartYear);

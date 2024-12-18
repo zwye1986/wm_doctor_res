@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.ResUserBindMacidMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.ResUserBindMacid" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResUserBindMacid">
     <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
     <result column="MAC_ID" property="macId" jdbcType="VARCHAR" />
     <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
@@ -71,7 +71,7 @@
   <sql id="Base_Column_List" >
     USER_FLOW, MAC_ID, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.ResUserBindMacidExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResUserBindMacidExample">
     select
     <if test="distinct" >
       distinct
@@ -95,13 +95,13 @@
       delete from RES_USER_BIND_MACID
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.ResUserBindMacidExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResUserBindMacidExample">
       delete from RES_USER_BIND_MACID
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.ResUserBindMacid" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResUserBindMacid">
       insert into RES_USER_BIND_MACID (USER_FLOW, MAC_ID, RECORD_STATUS,
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
       MODIFY_USER_FLOW)
@@ -109,7 +109,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.ResUserBindMacid" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResUserBindMacid">
       insert into RES_USER_BIND_MACID
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userFlow != null" >
@@ -158,7 +158,8 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.ResUserBindMacidExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResUserBindMacidExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_USER_BIND_MACID
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -206,7 +207,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.ResUserBindMacid" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResUserBindMacid">
       update RES_USER_BIND_MACID
     <set >
       <if test="macId != null" >
@@ -230,7 +231,7 @@
     </set>
     where USER_FLOW = #{userFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.ResUserBindMacid" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResUserBindMacid">
       update RES_USER_BIND_MACID
     set MAC_ID = #{macId,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},

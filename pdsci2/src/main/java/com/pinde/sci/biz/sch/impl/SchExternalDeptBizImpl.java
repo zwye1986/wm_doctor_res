@@ -1,8 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
+import com.pinde.core.model.SchExternalDeptExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.TimeUtil;
@@ -16,8 +15,6 @@ import com.pinde.sci.dao.base.SchExternalDeptMapper;
 import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.dao.base.SchRotationMapper;
 import com.pinde.sci.dao.sch.SchExternalDeptExtMapper;
-import com.pinde.sci.model.mo.*;
-import com.pinde.sci.model.mo.SchExternalDeptExample.Criteria;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,7 +117,7 @@ public class SchExternalDeptBizImpl implements ISchExternalDeptBiz {
 	public String addDoctorProcess(String recordFlow, String schDeptFlow, String[] recordFlows, String[] doctorFlows) throws Exception {
 		SchRotationDept dept =schRotationDeptBiz.readSchRotationDept(recordFlow);//标准科室
 		SchRotation rotation=rotationMapper.selectByPrimaryKey(dept.getRotationFlow());
-		SchDept  schDept=schDeptBiz.readSchDept(schDeptFlow);//轮转科室
+        SchDept schDept = schDeptBiz.readSchDept(schDeptFlow);//轮转科室
 		List<SchExternalDept> externalDepts=getSchDeptExtDeptsByFlows(Arrays.asList(recordFlows));//开放科室的时间
 		List<Map<String,String>> times=new ArrayList<>();
 		List<SysUser> doctors=new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.mo.ResTestConfig;
+import com.pinde.core.model.ResTestConfig;
 
 import java.util.List;
 import java.util.Map;

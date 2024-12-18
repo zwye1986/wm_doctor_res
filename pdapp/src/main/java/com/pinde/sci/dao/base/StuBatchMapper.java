@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.StuBatch;
 import com.pinde.core.model.StuBatchExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StuBatchMapper {
     int countByExample(StuBatchExample example);

@@ -803,6 +803,11 @@ public class SysCfgExample {
             addCriterion("MODIFY_USER_FLOW not between", value1, value2, "modifyUserFlow");
             return (Criteria) this;
         }
+
+        public Criteria andCfgBigValueEqualTo(String value) {
+            addCriterion("to_char(CFG_BIG_VALUE) =", value, "cfgBigValue");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.mo.SysMonthlyAppStatistics;
-import com.pinde.sci.model.mo.SysMonthlyStatistics;
+import com.pinde.core.model.SysMonthlyAppStatistics;
+import com.pinde.core.model.SysMonthlyStatistics;
 
 import java.util.List;
 

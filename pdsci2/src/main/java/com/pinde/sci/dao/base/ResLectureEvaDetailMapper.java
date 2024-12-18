@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.mo.ResLectureEvaDetail;
-import com.pinde.sci.model.mo.ResLectureEvaDetailExample;
+import com.pinde.core.model.ResLectureEvaDetail;
+import com.pinde.core.model.ResLectureEvaDetailExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

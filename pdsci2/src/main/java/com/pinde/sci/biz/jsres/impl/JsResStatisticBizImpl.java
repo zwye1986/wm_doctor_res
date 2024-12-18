@@ -31,13 +31,6 @@ import com.pinde.sci.dao.jsres.ChartExtMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.ResRec;
-import com.pinde.sci.model.mo.ResTeacherTraining;
-import com.pinde.sci.model.mo.ResTeacherTrainingExample;
-import com.pinde.sci.model.mo.SysDeptExample;
-import com.pinde.sci.model.mo.SysDictExample;
-import com.pinde.core.model.SysUserRole;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -991,7 +984,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo(ResTeacherTraining resTeacherTraining) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1041,7 +1034,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo2(ResTeacherTraining resTeacherTraining,String dataFlag) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1081,7 +1074,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfo3(ResTeacherTraining resTeacherTraining,String dataFlag) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1130,7 +1123,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfoByCharge(ResTeacherTraining resTeacherTraining, String dataFlag, List<String> orgFlows) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}
@@ -1172,7 +1165,7 @@ public class JsResStatisticBizImpl implements IJsResStatisticBiz{
 	@Override
 	public List<ResTeacherTraining> searchTeacherInfoByCharge2(ResTeacherTraining resTeacherTraining, String dataFlag, List<String> orgNames) {
 		ResTeacherTrainingExample example=new ResTeacherTrainingExample();
-        com.pinde.sci.model.mo.ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+		ResTeacherTrainingExample.Criteria criteria = example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		if(StringUtil.isNotBlank(resTeacherTraining.getDoctorName())){
 			criteria.andDoctorNameLike("%"+resTeacherTraining.getDoctorName()+"%");
 		}

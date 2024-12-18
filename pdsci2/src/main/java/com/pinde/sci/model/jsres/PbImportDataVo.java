@@ -1,9 +1,7 @@
 package com.pinde.sci.model.jsres;
 
-import com.pinde.sci.model.mo.SchRotationDept;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

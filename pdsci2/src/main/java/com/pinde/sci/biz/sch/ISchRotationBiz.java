@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.sch;
 
-import com.pinde.core.model.ResDoctor;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 
 import java.util.List;
 

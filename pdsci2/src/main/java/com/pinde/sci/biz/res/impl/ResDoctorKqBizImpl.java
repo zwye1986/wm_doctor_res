@@ -9,8 +9,6 @@ import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorKqExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.form.res.TimeSetFrom;
-import com.pinde.sci.model.mo.ResKgCfg;
-import com.pinde.sci.model.mo.ResKgCfgExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

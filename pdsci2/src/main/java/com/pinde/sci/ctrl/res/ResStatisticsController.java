@@ -11,7 +11,7 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.core.model.ResJointOrg;
-import com.pinde.sci.model.mo.SysMonthlyStatistics;
+import com.pinde.core.model.SysMonthlyStatistics;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

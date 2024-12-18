@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.res;
 
+import com.pinde.core.model.ResTrainingOpinion;
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.mo.ResTrainingOpinion;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,11 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.core.model.DeptTeacherGradeInfo;
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysUser;
-import com.pinde.core.model.TeachingActivityInfo;
-import com.pinde.core.model.ResDoctorSchProcess;
-import com.pinde.sci.model.mo.ResRec;
+import com.pinde.core.model.*;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
 import org.apache.ibatis.annotations.Param;

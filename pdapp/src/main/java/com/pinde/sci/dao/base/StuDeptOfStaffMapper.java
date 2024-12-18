@@ -2,8 +2,9 @@ package com.pinde.sci.dao.base;
 
 import com.pinde.core.model.StuDeptOfStaff;
 import com.pinde.core.model.StuDeptOfStaffExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface StuDeptOfStaffMapper {
     int countByExample(StuDeptOfStaffExample example);

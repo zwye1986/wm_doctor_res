@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.base.SchArrangeMapper" >
-  <resultMap id="BaseResultMap" type="com.pinde.sci.model.mo.SchArrange" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchArrange">
     <id column="ARRANGE_FLOW" property="arrangeFlow" jdbcType="VARCHAR" />
     <result column="DOCTOR_NUM" property="doctorNum" jdbcType="DECIMAL" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -86,7 +86,7 @@
     BEGIN_INDEX, END_INDEX, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.sci.model.mo.SchArrangeExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchArrangeExample">
     select
     <if test="distinct" >
       distinct
@@ -110,13 +110,13 @@
       delete from SCH_ARRANGE
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.pinde.sci.model.mo.SchArrangeExample" >
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.SchArrangeExample">
       delete from SCH_ARRANGE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.sci.model.mo.SchArrange" >
+    <insert id="insert" parameterType="com.pinde.core.model.SchArrange">
       insert into SCH_ARRANGE (ARRANGE_FLOW, DOCTOR_NUM, ORG_FLOW,
       ORG_NAME, OPER_TIME, OPER_USER_FLOW, 
       OPER_USER_NAME, ARRANGE_TYPE_ID, ARRANGE_TYPE_NAME, 
@@ -132,7 +132,7 @@
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
       #{modifyUserFlow,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pinde.sci.model.mo.SchArrange" >
+    <insert id="insertSelective" parameterType="com.pinde.core.model.SchArrange">
       insert into SCH_ARRANGE
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="arrangeFlow != null" >
@@ -253,7 +253,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.sci.model.mo.SchArrangeExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SchArrangeExample" resultType="java.lang.Integer">
       select count(*) from SCH_ARRANGE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -349,7 +349,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.sci.model.mo.SchArrange" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SchArrange">
       update SCH_ARRANGE
     <set >
       <if test="doctorNum != null" >
@@ -409,7 +409,7 @@
     </set>
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.pinde.sci.model.mo.SchArrange" >
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SchArrange">
       update SCH_ARRANGE
     set DOCTOR_NUM = #{doctorNum,jdbcType=DECIMAL},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},

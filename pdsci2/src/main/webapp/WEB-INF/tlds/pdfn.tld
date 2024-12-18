@@ -284,7 +284,7 @@
 		<description></description>
 		<name>resPowerCfgMap</name>
 		<function-class>com.pinde.sci.ctrl.cfg.ResPowerCfgController</function-class>
-		<function-signature>com.pinde.sci.model.mo.ResPowerCfg resPowerCfgMap(java.lang.String)</function-signature>
+		<function-signature>com.pinde.core.model.ResPowerCfg resPowerCfgMap(java.lang.String)</function-signature>
 	</function>
 	<function>
 		<description></description>

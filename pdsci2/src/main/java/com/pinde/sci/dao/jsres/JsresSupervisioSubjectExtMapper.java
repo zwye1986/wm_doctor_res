@@ -1,10 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.core.model.ResHospScoreTable;
-import com.pinde.core.model.ResHospSupervSubject;
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.mo.*;
+import com.pinde.core.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
