@@ -127,6 +127,8 @@
     <result column="BANK_ACCOUNT_NUMBER" property="bankAccountNumber" jdbcType="VARCHAR" />
     <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
     <result column="UN_LOCK_TIME" property="unLockTime" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -208,7 +210,8 @@
     NATIONALITY, LAST_LOGIN_ERROR_TIME, LOGIN_ERROR_COUNT, CHANGE_PASSWORD_TIME, IS_SUBMIT_ID, 
     IS_SUBMIT_NAME, CHECK_STATUS_ID, CHECK_STATUS_NAME, CHECK_REASON, APP_LAST_LOGIN_ERROR_TIME, 
     APP_LOGIN_ERROR_COUNT, AUDIT_STATUS, ORG_FLOW_GX, SCHOOL, USER_LEVEL_ID, USER_LEVEL_NAME, 
-    USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME
+    USER_SIGN_URL, BANK_OF_DEPOSIT, BANK_ACCOUNT_NUMBER, OPEN_ID, UN_LOCK_TIME,TRAINING_TYPE_ID,
+    TRAINING_TYPE_NAME
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserExample" >
     select
