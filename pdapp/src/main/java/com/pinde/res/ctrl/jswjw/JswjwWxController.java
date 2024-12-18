@@ -3789,7 +3789,7 @@ public class JswjwWxController extends GeneralController {
 //		}
         Map<String, String> paramMap = new HashMap<String, String>();
         transCodeInfo(paramMap, codeInfo);
-        funcFlow = paramMap.get("funcFlow");
+        String funcFlow = paramMap.get("funcFlow");
         //讲座签到
         if (StringUtil.isEquals(funcFlow, "lectureSignin")) {
             String lectureFlow = paramMap.get("lectureFlow");
