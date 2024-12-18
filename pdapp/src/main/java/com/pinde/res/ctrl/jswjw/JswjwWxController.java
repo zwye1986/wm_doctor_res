@@ -3765,8 +3765,7 @@ public class JswjwWxController extends GeneralController {
 
     @RequestMapping(value = {"/qrCode"}, method = {RequestMethod.POST})
     @ResponseBody
-    public synchronized Object qrCode(String userFlow, String roleId, String funcTypeId, String funcFlow, String codeInfo, String scanTime,
-                                      HttpServletRequest request) throws ParseException {
+    public synchronized Object qrCode(String userFlow, String roleId, String funcTypeId, String codeInfo, String scanTime) throws ParseException {
         logger.debug("=========二维码扫码成功", JSON.toJSONString(codeInfo));
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
