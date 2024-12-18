@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,java.io.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="org.json.simple.*" %>
+<%@ page import="org.json.simple.JSONObject,java.io.File" %>
+<%@ page import="java.lang.Boolean" %>
+<%@ page import="java.lang.Long" %>
+<%@ page import="java.lang.Object" %>
+<%@ page import="java.lang.String" %>
+<%@ page import="java.util.Comparator" %>
 <%
 
 /**
@@ -21,7 +24,7 @@ String[] fileTypes = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};
 
 String dirName = request.getParameter("dir");
 if (dirName != null) {
-	if(!Arrays.<String>asList(new String[]{"image", "flash", "media", "file"}).contains(dirName)){
+	if (!java.util.Arrays.<String>asList(new String[]{"image", "flash", "media", "file"}).contains(dirName)) {
 		out.println("Invalid Directory name.");
 		return;
 	}
@@ -64,10 +67,10 @@ if(!currentPathFile.isDirectory()){
 }
 
 //遍历目录取的文件信息
-List<Hashtable> fileList = new ArrayList<Hashtable>();
+	java.util.List<java.util.Hashtable> fileList = new java.util.ArrayList<java.util.Hashtable>();
 if(currentPathFile.listFiles() != null) {
 	for (File file : currentPathFile.listFiles()) {
-		Hashtable<String, Object> hash = new Hashtable<String, Object>();
+		java.util.Hashtable<String, Object> hash = new java.util.Hashtable<String, Object>();
 		String fileName = file.getName();
 		if(file.isDirectory()) {
 			hash.put("is_dir", true);
@@ -80,21 +83,21 @@ if(currentPathFile.listFiles() != null) {
 			hash.put("is_dir", false);
 			hash.put("has_file", false);
 			hash.put("filesize", file.length());
-			hash.put("is_photo", Arrays.<String>asList(fileTypes).contains(fileExt));
+			hash.put("is_photo", java.util.Arrays.<String>asList(fileTypes).contains(fileExt));
 			hash.put("filetype", fileExt);
 		}
 		hash.put("filename", fileName);
-		hash.put("datetime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(file.lastModified()));
+		hash.put("datetime", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(file.lastModified()));
 		fileList.add(hash);
 	}
 }
 
 if ("size".equals(order)) {
-	Collections.sort(fileList, new SizeComparator());
+	java.util.Collections.sort(fileList, new SizeComparator());
 } else if ("type".equals(order)) {
-	Collections.sort(fileList, new TypeComparator());
+	java.util.Collections.sort(fileList, new TypeComparator());
 } else {
-	Collections.sort(fileList, new NameComparator());
+	java.util.Collections.sort(fileList, new NameComparator());
 }
 JSONObject result = new JSONObject();
 result.put("moveup_dir_path", moveupDirPath);
@@ -107,10 +110,10 @@ response.setContentType("application/json; charset=UTF-8");
 out.println(result.toJSONString());
 %>
 <%!
-public class NameComparator implements Comparator {
+	public class NameComparator implements java.util.Comparator {
 	public int compare(Object a, Object b) {
-		Hashtable hashA = (Hashtable)a;
-		Hashtable hashB = (Hashtable)b;
+		java.util.Hashtable hashA = (java.util.Hashtable) a;
+		java.util.Hashtable hashB = (java.util.Hashtable) b;
 		if (((Boolean)hashA.get("is_dir")) && !((Boolean)hashB.get("is_dir"))) {
 			return -1;
 		} else if (!((Boolean)hashA.get("is_dir")) && ((Boolean)hashB.get("is_dir"))) {
@@ -120,7 +123,8 @@ public class NameComparator implements Comparator {
 		}
 	}
 }
-public class SizeComparator implements Comparator {
+
+	public class SizeComparator implements java.util.Comparator {
 	public int compare(Object a, Object b) {
 		Hashtable hashA = (Hashtable)a;
 		Hashtable hashB = (Hashtable)b;

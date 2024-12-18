@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.inx;
 
+import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.TjDocinfo;
-import com.pinde.core.model.ResDoctor;
 
 public interface IInxBiz {
     SysUser login(String userCode, String passwd);

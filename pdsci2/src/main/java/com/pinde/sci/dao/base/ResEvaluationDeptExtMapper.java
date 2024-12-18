@@ -1,9 +1,9 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.core.model.SysDept;
-import com.pinde.sci.form.res.ResEvaluationDeptExt;
 import com.pinde.core.model.ResEvaluationCfg;
 import com.pinde.core.model.ResEvaluationDept;
+import com.pinde.core.model.SysDept;
+import com.pinde.sci.form.res.ResEvaluationDeptExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.jszy.impl;
 
-import com.pinde.core.model.JsresRecruitDocInfo;
-import com.pinde.core.model.JsresRecruitDocInfoExample;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
@@ -11,9 +10,6 @@ import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResDoctorReductionMapper;
 import com.pinde.sci.dao.jszy.JszyResReductionExtMapper;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorReduction;
-import com.pinde.core.model.ResDoctorReductionExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

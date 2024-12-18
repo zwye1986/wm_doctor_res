@@ -4,6 +4,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.SysUserRole;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -16,7 +17,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.sci.dao.base.TjDocinfoMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.core.model.SysUserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

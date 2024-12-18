@@ -1,7 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEvaluationCfgBiz;
@@ -14,10 +13,6 @@ import com.pinde.sci.form.res.ResEvaluationCfgForm;
 import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
 import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
 import com.pinde.sci.form.res.ResEvaluationDeptExt;
-import com.pinde.core.model.ResEvaluationCfg;
-import com.pinde.core.model.ResEvaluationCfgExample;
-import com.pinde.core.model.ResEvaluationDept;
-import com.pinde.core.model.ResEvaluationDeptExample;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

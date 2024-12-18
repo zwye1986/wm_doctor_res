@@ -1,8 +1,8 @@
 package com.pinde.sci.biz.res;
 
 
-import com.pinde.sci.form.res.ResOrgTimeForm;
 import com.pinde.core.model.ResOrgTime;
+import com.pinde.sci.form.res.ResOrgTimeForm;
 
 import java.util.List;
 

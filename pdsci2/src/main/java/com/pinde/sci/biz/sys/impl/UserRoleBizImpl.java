@@ -1,10 +1,8 @@
 package com.pinde.sci.biz.sys.impl;
 
 import com.pinde.core.common.sci.dao.SysRoleMapper;
-import com.pinde.core.model.JsresPowerCfg;
-import com.pinde.core.model.SysRole;
-import com.pinde.core.model.SysRoleExample;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
+import com.pinde.core.model.SysUserRoleExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -15,9 +13,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.SysRoleExtMapper;
-import com.pinde.core.model.SysUserRole;
-import com.pinde.core.model.SysUserRoleExample;
-import com.pinde.core.model.SysUserRoleExample.Criteria;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

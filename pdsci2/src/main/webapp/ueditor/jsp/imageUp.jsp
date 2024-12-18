@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-        <%@ page import="java.util.Properties" %>
-        <%@ page import="java.util.List" %>
-        <%@ page import="java.util.Iterator" %>
-        <%@ page import="java.util.Arrays" %>
-        <%@ page import="java.io.FileInputStream" %>
         <%@ page import="com.pinde.sci.common.ueditor.Uploader" %>
         <%@ page import="java.io.File" %>
-        <%@ page import="java.util.Map" %>
+<%@ page import="java.io.FileInputStream" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Properties" %>
 
-            <%
+<%
 
 request.setCharacterEncoding( Uploader.ENCODEING );
 response.setCharacterEncoding( Uploader.ENCODEING );

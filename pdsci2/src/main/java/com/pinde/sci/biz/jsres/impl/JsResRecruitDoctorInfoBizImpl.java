@@ -1,10 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
-import com.pinde.core.model.JsresRecruitDocInfo;
-import com.pinde.core.model.JsresRecruitInfo;
-import com.pinde.core.model.JsresRecruitInfoExample;
-import com.pinde.core.model.ResDoctorRecruitExample;
+import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResRecruitDoctorInfoBiz;
 import com.pinde.sci.dao.base.JsresRecruitDocInfoMapper;
@@ -16,8 +13,6 @@ import com.pinde.sci.dao.jsres.JsResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.core.model.ResRecruitHistory;
-import com.pinde.core.model.ResRecruitHistoryExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

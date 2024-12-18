@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.base;
 
-import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import com.pinde.core.model.ResLectureInfo;
 import com.pinde.core.model.ResLectureInfoExample;
+import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

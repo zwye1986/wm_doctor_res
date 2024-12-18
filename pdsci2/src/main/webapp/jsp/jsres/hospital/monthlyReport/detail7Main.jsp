@@ -1,4 +1,4 @@
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
+
 <%@include file="/jsp/common/doctype.jsp" %>
 <jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
     <jsp:param name="basic" value="true"/>

@@ -3,8 +3,8 @@ package com.pinde.sci.biz.jsres;
 import com.pinde.core.model.ResBaseSpeDept;
 import com.pinde.core.model.ResBaseSpeDeptData;
 import com.pinde.core.model.ResBaseSpeDeptInfo;
-import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.core.model.ResTeacherTraining;
+import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;

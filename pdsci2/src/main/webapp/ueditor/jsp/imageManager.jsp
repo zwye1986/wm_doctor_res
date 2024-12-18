@@ -1,16 +1,19 @@
+<%@page import="com.pinde.core.util.StringUtil" %>
 <%@page import="com.pinde.sci.common.InitConfig"%>
-<%@page import="com.pinde.core.util.StringUtil"%>
 <%@ page language="java" pageEncoding="utf-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
 <%@ page import="javax.servlet.ServletContext"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<% 
+<%@ page import="java.io.File" %>
+<%@ page import="java.lang.String" %>
+<%@ page import="java.lang.System" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Iterator" %>
+<%
     //仅做示例用，请自行修改
 	String path = "images";
 	String imgStr ="";
 	String realpath = StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir"))+"\\"+path;
-	List<File> files = getFiles(realpath,new ArrayList());
+	List<File> files = getFiles(realpath, new java.util.ArrayList());
 	for(File file :files ){
 		imgStr+=file.getPath().replace(StringUtil.defaultString(InitConfig.getSysCfg("upload_base_dir")),"")+"ue_separate_ue";
 	}

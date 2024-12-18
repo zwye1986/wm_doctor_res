@@ -13,8 +13,6 @@ import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.SchArrangeDoctorDeptMapper;
 import com.pinde.sci.dao.base.SchArrangeMapper;
 import com.pinde.sci.dao.base.SchArrangeResultMapper;
-import com.pinde.core.model.SchArrangeResult;
-import com.pinde.core.model.SchArrangeResultExample;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
