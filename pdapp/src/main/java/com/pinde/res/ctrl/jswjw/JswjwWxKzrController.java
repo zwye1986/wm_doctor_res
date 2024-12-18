@@ -2,7 +2,6 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
@@ -1855,7 +1854,7 @@ public class JswjwWxKzrController extends GeneralController {
 			resultMap.put("roleFlag", roleId);
 
             boolean showEdit = (roleId.equals("teacher") && (null == rec || StringUtil.isBlank(rec.getAuditStatusId())) || (roleId.equals("teacher") && (!cksh.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) || ((null == rec || StringUtil.isBlank(rec.getManagerAuditUserFlow()))))))
-                    || (roleId.equals("Head") || roleId.equals("Seretary")) && (cksh.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) || (null != rec && StringUtil.isNotBlank(rec.getManagerAuditUserFlow())));
+                    || (roleId.equals("Head") || roleId.equals("Seretary") ||roleId.equals("TeachingSeretary")) && (cksh.equals(com.pinde.core.common.GlobalConstant.FLAG_Y) || (null != rec && StringUtil.isNotBlank(rec.getManagerAuditUserFlow())));
 			boolean showSave = false;
 			if(null == rec){
 				if(roleId.equals("teacher")){

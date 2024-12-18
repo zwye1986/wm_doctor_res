@@ -1536,13 +1536,13 @@
                             <dd class="menu_item"><a onclick="localDoctorException()">学员轮转异常统计</a></dd>
 <%--                            <dd class="menu_item"><a onclick="localMonthlyReport()">月度报表</a></dd>--%>
                         </dl>
-                        <dl class="menu">
+                        <%--<dl class="menu">
                             <dt class="menu_title">
                                 <i class="icon_menu menu_setup"></i>月度报表
                             </dt>
                             <dd class="menu_item"><a href="javascript:reportDept();">科室报表</a></dd>
                             <dd class="menu_item"><a href="javascript:reportDoc();">人员报表</a></dd>
-                        </dl>
+                        </dl>--%>
                         <dl class="menu">
                             <dt class="menu_title">
                                 <i class="icon_menu menu_system"></i>系统设置

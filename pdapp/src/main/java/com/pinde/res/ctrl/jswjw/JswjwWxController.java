@@ -225,16 +225,16 @@ public class JswjwWxController extends GeneralController {
         }
 //        List<SysUser> sysUsers = jswjwBiz.selectByUserPhoneAndIsVerify(userPhone);
 //        if (sysUsers != null && sysUsers.size() > 0) {
-            SMSUtil smsUtil = new SMSUtil(userPhone);
-            int code = (int) ((Math.random() * 9 + 1) * 1000);
+        SMSUtil smsUtil = new SMSUtil(userPhone);
+        int code = (int) ((Math.random() * 9 + 1) * 1000);
         SysSmsLog sSmsRecord = smsUtil.send("10001", "516946", "R101", code);
-            if (!"100".equals(sSmsRecord.getStatusCode())) {
-                return ResultDataThrow(sSmsRecord.getStatusName());
-            }
-            resultMap.put("resultId", "200");
-            resultMap.put("resultType", "发送成功");
-            resultMap.put("phoneCode", code);
-            return resultMap;
+        if (!"100".equals(sSmsRecord.getStatusCode())) {
+            return ResultDataThrow(sSmsRecord.getStatusName());
+        }
+        resultMap.put("resultId", "200");
+        resultMap.put("resultType", "发送成功");
+        resultMap.put("phoneCode", code);
+        return resultMap;
 //        }
 //        return ResultDataThrow("用户不存在");
     }
