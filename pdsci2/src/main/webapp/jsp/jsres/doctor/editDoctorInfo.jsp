@@ -1338,7 +1338,7 @@
 	}
 
 	function xz(){
-		if(${empty doctor.trainingTypeId}){
+		if(${empty user.trainingTypeId}){
 			var url="<s:url value='/jsres/doctor/chooseType'/>";
 			jboxOpen(url, "人员类型", 350, 200);
 		}
