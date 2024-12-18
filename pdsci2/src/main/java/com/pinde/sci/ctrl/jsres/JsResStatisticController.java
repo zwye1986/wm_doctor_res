@@ -25,13 +25,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResJointOrg;
-import com.pinde.core.model.ResRec;
-import com.pinde.core.model.ResTeacherTraining;
-import com.pinde.core.model.SysMonthlyAppStatistics;
-import com.pinde.core.model.SysMonthlyStatistics;
-import com.pinde.core.model.SysUserRole;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -3074,10 +3067,7 @@ public class JsResStatisticController extends GeneralController {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
-//		param.put("trainingTypeId","DoctorTrainingSpe");	//住院医师
 		PageHelper.startPage(currentPage, getPageSize(request));
-//		List<Map<String,Object>> list = resStatisticBiz.searchDoctorData(param);
-		//List<Map<String,Object>> list = resStatisticBiz.searchDoctorDataNew(param);
 		List<Map<String,Object>> list = resStatisticBiz.searchDoctorDataNew2(param);
 		model.addAttribute("list",list);
 		model.addAttribute("roleFlag", roleFlag);
@@ -3165,9 +3155,6 @@ public class JsResStatisticController extends GeneralController {
 			param.put("orgFlow",orgFlow);
 		}
 		param.put("searchOrg",searchOrg);
-//		param.put("trainingTypeId","DoctorTrainingSpe");	//住院医师
-//		List<Map<String,Object>> list = resStatisticBiz.searchDoctorData(param);
-		//List<Map<String,Object>> list = resStatisticBiz.searchDoctorDataNew(param);
 		List<Map<String,Object>> list = resStatisticBiz.searchDoctorDataNew2(param);
 		if(CollectionUtils.isNotEmpty(list)){
 			for (Map<String, Object> stringObjectMap : list) {
