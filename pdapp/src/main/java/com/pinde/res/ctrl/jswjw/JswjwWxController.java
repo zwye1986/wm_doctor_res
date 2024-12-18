@@ -3893,7 +3893,7 @@ public class JswjwWxController extends GeneralController {
                 //扫码报名
                 ResLectureScanRegist regist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, lectureFlow);
                 if (regist != null) {
-                    if (regist.getIsScan().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                         return ResultDataThrow("已经扫过码了！");
                     }
                     String startDate = info.getLectureTrainDate() + " " + info.getLectureStartTime();
@@ -4053,7 +4053,7 @@ public class JswjwWxController extends GeneralController {
                     if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan())) {
                         return ResultDataThrow("你未签到参加该讲座，无法进行签退！");
                     }
-                    if (regist.getIsScan2().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
+                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan2())) {
                         return ResultDataThrow("已经扫过码了！");
                     }
                     String startDate = info.getLectureTrainDate() + " " + info.getLectureStartTime();
