@@ -5717,7 +5717,7 @@ public class JswjwWxController extends GeneralController {
             //评价的指标
             TeachingActivityInfo activityInfo = activityBiz.readActivityInfo(result.getActivityFlow());
             List<TeachingActivityInfoTarget> infoTargets = activityTargeBiz.readActivityTargets(result.getActivityFlow());
-            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNew(activityInfo.getActivityTypeId(), activityInfo.getOrgFlow());
+            List<TeachingActivityTarget> targetList = activityTargeBiz.readByOrgNewNoStatus(activityInfo.getActivityTypeId(), activityInfo.getOrgFlow());
             List<String> targetFlowList = targetList.stream().map(TeachingActivityTarget::getTargetFlow).collect(Collectors.toList());
             for (TeachingActivityInfoTarget infoTarget : infoTargets) {
                 if (!targetFlowList.contains(infoTarget.getTargetFlow())) {

@@ -34,6 +34,8 @@ public interface IResActivityTargetBiz {
 
     List<TeachingActivityTarget> readByOrgNew(String activityTypeId, String orgFlow);
 
+    List<TeachingActivityTarget> readByOrgNewNoStatus(String activityTypeId, String orgFlow);
+
     List<String> selectJointOrgFlow(String userFlow);
 
     List<String> selectMainOrgFlow(String userFlow);
