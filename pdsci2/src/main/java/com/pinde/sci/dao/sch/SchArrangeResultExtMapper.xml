@@ -1991,6 +1991,9 @@
         <if test='school!=null and school!=""'>
             and dr.SCHOOL = #{school}
         </if>
+        <if test='idNo!=null and idNo!=""'>
+            and u.id_No = #{idNo}
+        </if>
         and dr.org_flow is not null
         order by u.USER_NAME
     </select>
