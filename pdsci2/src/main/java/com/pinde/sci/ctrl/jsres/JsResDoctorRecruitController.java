@@ -182,7 +182,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 
 	@RequestMapping(value="/provinceDoctorList")
 	public String provinceDoctorList(Model model,String roleFlag,String isArchive,String []datas,String userName,
-									 String isBack,String orgCityId,String yearStr,String baseFlag) throws UnsupportedEncodingException {
+									 String isBack,String orgCityId,String yearStr,String baseFlag, String sessionNumber) throws UnsupportedEncodingException {
 		// 登录用户信息
 		SysUser sysuser=GlobalContext.getCurrentUser();
 		SysOrg org=orgBiz.readSysOrg(sysuser.getOrgFlow());
@@ -248,7 +248,7 @@ public class JsResDoctorRecruitController extends GeneralController {
 		}
 		model.addAttribute("userName",userName);
 		model.addAttribute("yearDatas",StringUtil.isNotBlank(yearStr)?yearStr.split(","):null);
-
+		model.addAttribute("sessionNumber", sessionNumber);
 		return  "jsres/doctorList";
 	}
 

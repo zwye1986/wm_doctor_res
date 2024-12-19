@@ -177,6 +177,7 @@ public class JsResTeacherController extends GeneralController{
 		Map<String,Object> readSchRotationGroupMap=new HashMap<String,Object>();
 		Map<String,Object> resRecMap=new HashMap<String,Object>();
 		Map<String,Integer> resRecCountMap=new HashMap<String,Integer>();
+		Map<String, Boolean> notAuditAllMap = new HashMap<>();
 		for (Map<String, String> map : resDoctorSchProcess) {
 			SchArrangeResult schArrangeResult=schArrangeResultBiz.readSchArrangeResult(map.get("schResultFlow"));
 			if (schArrangeResult!=null) {
@@ -190,6 +191,7 @@ public class JsResTeacherController extends GeneralController{
 				}
 			}
 			List<ResRec> resRecList=iResRecBiz.searchRecByProcess(map.get("processFlow"),map.get("userFlow"));
+			boolean notAuditAll = false;
 			for (ResRec resRec : resRecList) {
 				String k = map.get("processFlow")+resRec.getRecTypeId();
 				String k2 = k+"notAudit";
@@ -200,6 +202,9 @@ public class JsResTeacherController extends GeneralController{
 				i++;
 				resRecCountMap.put(k,i);
 				if(!StringUtil.isNotBlank(resRec.getAuditStatusId())){
+					if(!notAuditAll) {
+						notAuditAll = true;
+					}
 					Integer j = resRecCountMap.get(k2);
 					if(j==null){
 						j=0;
@@ -217,9 +222,9 @@ public class JsResTeacherController extends GeneralController{
 					resRecMap.put(map.get("processFlow"),express);
 				}
 			}
-
-
+			notAuditAllMap.put(map.get("processFlow"), notAuditAll);
 		}
+		model.addAttribute("notAuditAllMap", notAuditAllMap);
 		model.addAttribute("resRecMap", resRecMap);
 		model.addAttribute("resRecCountMap", resRecCountMap);
 		model.addAttribute("schRotationDeptMap", schRotationDeptMap);
@@ -2011,6 +2016,7 @@ public class JsResTeacherController extends GeneralController{
 			String processFlow,
 			String schDeptFlow,
 			String recFlow,
+			boolean notAuditAll,
 			Model model) throws Exception{
         String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterEvaluation.getId();
 		ResDoctor doctor=null;
@@ -2019,6 +2025,7 @@ public class JsResTeacherController extends GeneralController{
 		String orgFlow = GlobalContext.getCurrentUser().getOrgFlow();
 		ResDoctorSchProcess process = iResDoctorProcessBiz.read(processFlow);
 		model.addAttribute("currRegProcess",process);
+		model.addAttribute("notAuditAll", notAuditAll);
 		//查询科室是否配置出科设置
 		JsresPowerCfg jsresPowerCfg= jsResPowerCfgBiz.read("out_test_check_" + orgFlow);
 		if(StringUtil.isNotBlank(operUserFlow)){
