@@ -7001,7 +7001,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 				// 如果已超出了却没到100%，说明可能是两个科室一起轮的，当成0（原来就是当成0的）
 				if(isOverFinish(resultMap, processFlow+recTypeId)  && typePer < 1F) {
-					typePer = 0f;
+					typePer = 1F;
 				}
 
 				setVal4PerMap(resultMap,processFlow+recTypeId,typePer*100,format);
@@ -7012,7 +7012,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 			// 如果请求数为0，或者已经超了，认为完成了，超了可以是因为两个科室一起轮的
 			if((haveNoReqFull && deptReq==0) || isOverFinish(resultMap, processFlow)){
-				deptPer = 1f;
+				deptPer = 1F;
 			}
 
 //			if(isOverFinish(resultMap, processFlow) && deptPer < 1F) {
