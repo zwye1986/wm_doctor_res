@@ -4056,7 +4056,6 @@ public class JswjwWxController extends GeneralController {
                 oscaDoctorAssessment.setIsPassName(DoctorScoreEnum.PendingEnter.getName());
             }
             SysUser user = jswjwBiz.readSysUser(userFlow);
-            int count = jswjwStudentBiz.editOscaDoctorAssessment(oscaDoctorAssessment, user);
 
             List<OscaSubjectStation> stations = oscaAppBiz.getOscaSubjectStations(skillsAssessment.getSubjectFlow());
             List<OscaSkillDocStation> docStations = new ArrayList<>();
