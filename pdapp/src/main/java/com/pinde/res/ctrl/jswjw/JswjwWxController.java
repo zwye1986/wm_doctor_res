@@ -3766,7 +3766,6 @@ public class JswjwWxController extends GeneralController {
     @RequestMapping(value = {"/qrCode"}, method = {RequestMethod.POST})
     @ResponseBody
     public synchronized Object qrCode(String userFlow, String roleId, String funcTypeId, String codeInfo, String scanTime) throws ParseException {
-        logger.debug("=========二维码扫码成功", JSON.toJSONString(codeInfo));
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "交易成功");
@@ -3782,11 +3781,6 @@ public class JswjwWxController extends GeneralController {
         if (StringUtil.isNotEquals("qrCode", funcTypeId)) {
             return ResultDataThrow("功能类型错误");
         }
-//		if(StringUtil.isEmpty(funcFlow)){
-//			model.addAttribute("resultId", "3011105");
-//			model.addAttribute("resultType", "功能标识为空");
-//			return "res/jswjw/qrCode";
-//		}
         Map<String, String> paramMap = new HashMap<String, String>();
         transCodeInfo(paramMap, codeInfo);
         String funcFlow = paramMap.get("funcFlow");
@@ -3809,16 +3803,7 @@ public class JswjwWxController extends GeneralController {
             }
             ResDoctor doctor = null;
             String orgFlow = currUser.getOrgFlow();
-            //获取当前配置的医师角色
-            String doctorRole = jswjwBiz.getCfgCode("res_doctor_role_flow");
-            //获取当前配置的老师角色
-            String teacherRole = jswjwBiz.getCfgCode("res_teacher_role_flow");
-            //获取当前配置的科主任角色
-            String headRole = jswjwBiz.getCfgCode("res_head_role_flow");
-            //获取当前配置的科秘角色
-            String seretaryRole = jswjwBiz.getCfgCode("res_segcretary_role_flow");
 
-            String roleFlow = "";
             if ("Student".equals(roleId)) {
                 doctor = jswjwBiz.readResDoctor(currUser.getUserFlow());
                 if (doctor == null) {
@@ -3829,13 +3814,6 @@ public class JswjwWxController extends GeneralController {
                 } else {
                     orgFlow = doctor.getOrgFlow();
                 }
-                roleFlow = doctorRole;
-            }
-            if ("Teacher".equals(roleId)) {
-                roleFlow = teacherRole;
-            }
-            if ("Head".equals(roleId)) {
-                roleFlow = headRole;
             }
 
             String currDate = DateUtil.getCurrDate();
@@ -3997,31 +3975,11 @@ public class JswjwWxController extends GeneralController {
                 return ResultDataThrow("用户不存在！");
             }
             ResDoctor doctor = null;
-            String orgFlow = currUser.getOrgFlow();
-            //获取当前配置的医师角色
-            String doctorRole = jswjwBiz.getCfgCode("res_doctor_role_flow");
-            //获取当前配置的老师角色
-            String teacherRole = jswjwBiz.getCfgCode("res_teacher_role_flow");
-            //获取当前配置的科主任角色
-            String headRole = jswjwBiz.getCfgCode("res_head_role_flow");
-            String roleFlow = "";
             if ("Student".equals(roleId)) {
                 doctor = jswjwBiz.readResDoctor(currUser.getUserFlow());
                 if (doctor == null) {
                     return ResultDataThrow("学员医师信息不存在！");
                 }
-                if (StringUtil.isNotBlank(doctor.getSecondOrgFlow())) {
-                    orgFlow = doctor.getSecondOrgFlow();
-                } else {
-                    orgFlow = doctor.getOrgFlow();
-                }
-                roleFlow = doctorRole;
-            }
-            if ("Teacher".equals(roleId)) {
-                roleFlow = teacherRole;
-            }
-            if ("Head".equals(roleId)) {
-                roleFlow = headRole;
             }
             ResLectureInfo info = jswjwBiz.read(lectureFlow);
             if (info != null) {
@@ -4042,10 +4000,6 @@ public class JswjwWxController extends GeneralController {
                     }
                 }
                 String key2 = jswjwBiz.getJsResCfgCode("jsres_" + info.getOrgFlow() + "_org_jiangzuo_end_time");
-                int endTime = 10;
-                if (StringUtil.isNotBlank(key2)) {
-                    endTime = Integer.valueOf(key2);
-                }
                 //扫码报名
                 ResLectureScanRegist regist = jswjwBiz.searchByUserFlowAndLectureFlow(userFlow, lectureFlow);
                 if (regist != null) {
@@ -4055,33 +4009,6 @@ public class JswjwWxController extends GeneralController {
                     if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(regist.getIsScan2())) {
                         return ResultDataThrow("已经扫过码了！");
                     }
-                    String startDate = info.getLectureTrainDate() + " " + info.getLectureStartTime();
-                    String endDate = info.getLectureTrainDate() + " " + info.getLectureEndTime();
-
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                    Date date;
-                    try {
-                        date = simpleDateFormat.parse(endDate);
-                        Calendar calender = Calendar.getInstance();
-                        calender.setTime(date);
-                        calender.add(Calendar.MINUTE, -endTime);
-                        startDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
-
-                        calender.add(Calendar.MINUTE, endTime * 2);
-                        endDate = DateUtil.formatDate(calender.getTime(), "yyyy-MM-dd HH:mm");
-                    } catch (ParseException e) {
-                    }
-                    String nowDate = DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm");
-                   /* if (nowDate.compareTo(startDate) < 0) {
-                        model.addAttribute("resultId", "3011107");
-                        model.addAttribute("resultType", "不在扫码时间范围内，无法扫码！");
-                        return "res/jswjw/qrCode";
-                    }
-                    if (nowDate.compareTo(endDate) > 0) {
-                        model.addAttribute("resultId", "3011107");
-                        model.addAttribute("resultType", "不在扫码时间范围内，无法扫码！");
-                        return "res/jswjw/qrCode";
-                    }*/
                     regist.setIsScan2(com.pinde.core.common.GlobalConstant.FLAG_Y);
                     regist.setScan2Time(DateUtil.getCurrDateTime());
                 } else {
@@ -4097,7 +4024,6 @@ public class JswjwWxController extends GeneralController {
                 return ResultDataThrow("二维码已失效！讲座信息不存在！");
             }
 
-//            return resultMap;
         } else if (StringUtil.isEquals(funcFlow, "queryQrCode")) {//技能考核签到
             String recordFlow = paramMap.get("recordFlow");
             if (StringUtil.isNotBlank(recordFlow)) {
@@ -4130,7 +4056,6 @@ public class JswjwWxController extends GeneralController {
                 oscaDoctorAssessment.setIsPassName(DoctorScoreEnum.PendingEnter.getName());
             }
             SysUser user = jswjwBiz.readSysUser(userFlow);
-            int count = jswjwStudentBiz.editOscaDoctorAssessment(oscaDoctorAssessment, user);
 
             List<OscaSubjectStation> stations = oscaAppBiz.getOscaSubjectStations(skillsAssessment.getSubjectFlow());
             List<OscaSkillDocStation> docStations = new ArrayList<>();
