@@ -1,6 +1,5 @@
 package com.pinde.res.biz.stdp.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -163,6 +162,22 @@ criteria.andActivityFlowEqualTo(activityFlow);
 
 		return activityTargetMapper.selectMainOrgFlow(userFlow);
 
+	}
+
+	@Override
+	public List<TeachingActivityTarget> readByOrgNewNoStatus(String activityTypeId,String orgFlow) {
+		TeachingActivityTargetExample example=new TeachingActivityTargetExample();
+		TeachingActivityTargetExample.Criteria criteria = example.createCriteria();
+		criteria.andOrgFlowEqualTo(orgFlow);
+		// 查询评价指标活动形式和教学活动的活动形式一致的评价指标
+		if(StringUtil.isNotBlank(activityTypeId)){
+			criteria.andActivityTypeIdEqualTo(activityTypeId);
+		}
+		// 查询类型是教学活动的评价指标
+		criteria.andTargetTypeEqualTo("JX");
+		example.setOrderByClause("ordinal ");
+		List<TeachingActivityTarget> list= activityTargetMapper.selectByExample(example);
+		return list;
 	}
 
 

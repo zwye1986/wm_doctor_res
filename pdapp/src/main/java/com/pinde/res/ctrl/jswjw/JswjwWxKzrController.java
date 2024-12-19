@@ -1870,6 +1870,9 @@ public class JswjwWxKzrController extends GeneralController {
 				if(roleId.equals("Seretary") && StringUtil.isNotBlank(rec.getManagerAuditUserFlow())){
 					showSave = true;
 				}
+				if(roleId.equals("TeachingSeretary") && StringUtil.isNotBlank(rec.getManagerAuditUserFlow())){
+					showSave = true;
+				}
 			}
 
 			boolean readonly = false;
