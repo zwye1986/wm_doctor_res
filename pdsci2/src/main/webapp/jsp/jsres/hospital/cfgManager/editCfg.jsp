@@ -451,6 +451,24 @@
                             <input type="hidden" name="${key}_desc" value="是否强制带教对学员进行月度考评">
                         </td>
                     </tr>
+
+                    <tr>
+                        <td style="text-align: right;">出科时培训数据必须审核：</td>
+                        <td style="text-align: left;padding-left: 5px" width="200px">
+                            <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_outDept_trainingAudit" var="key"/>
+                            <input type="hidden" name="cfgCode" value="${key}">
+                            &nbsp;
+                            <input type="radio" id="${key}_y" name="${key}" value="Y"
+                                   <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                            <label for="${key}_y">是</label>&#12288;
+                            <input type="radio" id="${key}_n" name="${key}" value="N"
+                                   <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
+                            <label for="${key}_n">否</label>
+                            <input type="hidden" name="${key}_ws_id" value="res">
+                            <input type="hidden" name="${key}_desc" value="出科时培训数据必须审核">
+                        </td>
+                    </tr>
+
                     <tr>
                         <td style="text-align: right">是否开启出科考核校验：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">

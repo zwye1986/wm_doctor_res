@@ -89,10 +89,21 @@
             var form = $("#searchForm").serialize();
             recruitAuditSearch(form);
         }
-        function evaluation(doctorFlow, processFlow, deptFlow, recFlow, recordFlow) {
+        function evaluation(doctorFlow, processFlow, deptFlow, recFlow, recordFlow, notAuditAll) {
             <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_process_eval" var="key"/>
+            <c:set value="jsres_${sessionScope.currUser.orgFlow }_org_outDept_trainingAudit" var="key2"/>
             var roleFlag = '${GlobalConstant.RES_ROLE_SCOPE_TEACHER}';
             var url = "<s:url value='/jsres/teacher/evaluationSun'/>?roleFlag=" + roleFlag + "&operUserFlow=" + doctorFlow + "&processFlow=" + processFlow + "&schDeptFlow=" + deptFlow + "&recFlow=" + recFlow + "&recordFlow=" + recordFlow;
+            if(${pdfn:jsresPowerCfgMap(key2) eq 'Y'}) {
+                if(!notAuditAll) {
+                    notAuditAll = false;
+                }else {
+                    notAuditAll = true;
+                }
+                url += "&notAuditAll=" + notAuditAll;
+            } else {
+                url += "&notAuditAll=false";
+            }
             if(${pdfn:jsresPowerCfgMap(key) eq 'Y'})
             {
                 jboxPost("<s:url value='/jsres/teacher/checkProcessEval'/>?processFlow="+processFlow,null,function(resp){
@@ -210,7 +221,7 @@
                         </c:if>
                     </c:forEach>
                     <td>
-                        <a onclick="evaluation('${process.userFlow}','${process.processFlow}','${process.deptFlow}','${resRecMap[process.processFlow].recFlow}','${schRotationDeptMap[process.processFlow].recordFlow}');">
+                        <a onclick="evaluation('${process.userFlow}','${process.processFlow}','${process.deptFlow}','${resRecMap[process.processFlow].recFlow}','${schRotationDeptMap[process.processFlow].recordFlow}', ${notAuditAllMap[process.processFlow]});">
                             <c:if test="${empty resRecMap[process.processFlow]}">
                                 <img src="<s:url value='/css/skin/${skinPath}/images/unchecked.png'/>"/>
                             </c:if>
