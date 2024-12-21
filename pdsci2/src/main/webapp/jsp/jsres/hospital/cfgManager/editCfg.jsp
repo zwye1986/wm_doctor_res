@@ -508,7 +508,7 @@
                     <tr>
                         <td style="text-align: right;">360评价是否为必评项：</td>
                         <td style="text-align: left;padding-left: 5px" width="200px">
-                            <c:set value="jsres_${sessionScope.currUser.orgFlow }_360evaluate" var="key"/>
+                            <%--<c:set value="jsres_${sessionScope.currUser.orgFlow }_360evaluate" var="key"/>
                             <input type="hidden" name="cfgCode" value="${key}">
                             &nbsp;
                             <input type="radio" id="${key}_y" name="${key}" value="Y"
@@ -518,7 +518,34 @@
                                    <c:if test="${empty pdfn:jsresPowerCfgMap(key) or pdfn:jsresPowerCfgMap(key) eq 'N'}">checked</c:if>/>
                             <label for="${key}_n">否</label>
                             <input type="hidden" name="${key}_ws_id" value="res">
-                            <input type="hidden" name="${key}_desc" value="360评价是否为必评项">
+                            <input type="hidden" name="${key}_desc" value="360评价是否为必评项">--%>
+
+                            <c:set value="jsres_${sessionScope.currUser.orgFlow }_360evaluate" var="key"/>
+                            <input type="hidden" name="cfgCode" value="${key}">
+                            <label><input type="checkbox"  value="Y" id="360evaluate_checkbox" onclick="chooseActivityDelete('360evaluate')" class="autoValue"
+                                          <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                                学员评价</label>&#12288;&#12288;
+                            <input type="hidden" name="${key}"  id="360evaluate" value="${pdfn:jsresPowerCfgMap(key)}">
+                            <input type="hidden" name="${key}_ws_id" value="res">
+                            <input type="hidden" name="${key}_desc" value="360评价是否为必评项-学员评价">
+
+                            <c:set value="jsres_${sessionScope.currUser.orgFlow }_teacher_360evaluate" var="key"/>
+                            <input type="hidden" name="cfgCode" value="${key}">
+                            <label><input type="checkbox" value="Y" id="teacher_360evaluate_checkbox"  onclick="chooseActivityDelete('teacher_360evaluate')" class="autoValue"
+                                          <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                                带教评价</label>&#12288;&#12288;
+                            <input type="hidden" name="${key}"  id="teacher_360evaluate" value="${pdfn:jsresPowerCfgMap(key)}">
+                            <input type="hidden" name="${key}_ws_id" value="res">
+                            <input type="hidden" name="${key}_desc" value="360评价是否为必评项-带教评价">
+
+                            <c:set value="jsres_${sessionScope.currUser.orgFlow }_nurse_360evaluate" var="key"/>
+                            <input type="hidden" name="cfgCode" value="${key}">
+                            <label><input type="checkbox" value="Y" id="nurse_360evaluate_checkbox"  onclick="chooseActivityDelete('nurse_360evaluate')" class="autoValue"
+                                          <c:if test="${pdfn:jsresPowerCfgMap(key) eq 'Y'}">checked</c:if>/>
+                                护士评价</label>&#12288;&#12288;
+                            <input type="hidden" name="${key}"  id="nurse_360evaluate" value="${pdfn:jsresPowerCfgMap(key)}">
+                            <input type="hidden" name="${key}_ws_id" value="res">
+                            <input type="hidden" name="${key}_desc" value="360评价是否为必评项-护士评价">
                         </td>
                     </tr>
 

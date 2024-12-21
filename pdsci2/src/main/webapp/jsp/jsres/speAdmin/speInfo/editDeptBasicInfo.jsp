@@ -27,8 +27,12 @@
     $(document).ready(function () {
         toRead('drxw','drxwEdit');
         toRead('masterxw','masterEdit');
+        // 有必填项没填，增加暂存按钮
+        if(!$("#groupMemberTb tr").length) {
+            $("#bth-temp-save").show();
+            showBaseInfoTemp();
+        }
     });
-
     function toZero(obj) {
         $("#"+obj).val("0");
     }
@@ -40,6 +44,68 @@
             $("."+cls).attr("readonly","readonly");
             $("."+cls).val("");
         }
+    }
+
+    function showBaseInfoTemp() {
+        var formJson = localStorage.getItem('${sessionScope.currUser.userFlow}${sessionNumber}${speFlow}' + "speBasicInfo");
+        if(formJson) {
+            var formData = JSON.parse(formJson);
+            if(formData.expire && formData.expire < new Date().getTime()) {
+                localStorage.removeItem('${sessionScope.currUser.userFlow}${sessionNumber}${speFlow}' + "speBasicInfo");
+                return;
+            }
+
+            for (var key in formData) {
+                var val = formData[key];
+                var ele = $("input[name='" + key + "']");
+                if(ele.attr("type") == 'hidden') {
+                    continue;
+                }
+                if(ele.attr("type") == 'radio' && val) {
+                    for(var i = 0; i < ele.length; i++) {
+                        if(ele[i].value == val) {
+                            ele[i].checked = true;
+                        }
+                    }
+                    continue;
+                }
+                if(key.startsWith('deptBasicInfoForm.teachingGroupMemberList')) {
+                    while (!ele.length) {
+                        addGroupMember('groupMember');
+                        ele = $("input[name='" + key + "']");
+                    }
+                    if(val) {
+                        ele.val(val);
+                    }
+                    continue;
+                }
+
+                // 剩下的text
+                if(val) {
+                    ele.val(val);
+                    continue;
+                }
+            }
+        }
+    }
+
+    function saveBaseInfoTemp() {
+        var formJson = formToJSON($("#BaseInfoForm")[0]);
+        // localStorage存一天
+        formJson.expire = new Date().getTime() + 1000 * 60 * 60 *24;
+        console.log("formJson", formJson);
+        localStorage.setItem('${sessionScope.currUser.userFlow}${sessionNumber}${speFlow}' + "speBasicInfo", JSON.stringify(formJson));
+        jboxTip("暂存成功！");
+    }
+
+
+    function formToJSON(form) {
+        const formData = new FormData(form);
+        const json = {};
+        for (const [key, value] of formData.entries()) {
+            json[key] = value;
+        }
+        return json;
     }
 
     function saveBaseInfo() {
@@ -194,7 +260,7 @@
                         <input type="text" style="width: 200px" name="deptBasicInfoForm.speRespName" class='input validate[required]' value="${deptBasicInfoForm.speRespName}"/>
                     </td>
                     <td>
-                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                        <input type="text" class='input validate[required,custom[phone],minSize[11],maxSize[11]]' style="width: 200px"
                                name="deptBasicInfoForm.speRespPhone" oninput="valueUpdate(this);"
                                value="${deptBasicInfoForm.speRespPhone }"/>
                     </td>
@@ -222,7 +288,7 @@
                         <input type="text" style="width: 200px" name="deptBasicInfoForm.speDirName" class='input validate[required]' value="${deptBasicInfoForm.speDirName}"/>
                     </td>
                     <td>
-                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                        <input type="text" class='input validate[required,custom[phone],minSize[11],maxSize[11]]' style="width: 200px"
                                name="deptBasicInfoForm.speDirPhone" oninput="valueUpdate(this);"
                                value="${deptBasicInfoForm.speDirPhone }"/>
                     </td>
@@ -250,7 +316,7 @@
                         <input type="text" style="width: 200px" name="deptBasicInfoForm.speSceName" class='input validate[required]' value="${deptBasicInfoForm.speSceName}"/>
                     </td>
                     <td>
-                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                        <input type="text" class='input validate[required,custom[phone],minSize[11],maxSize[11]]' style="width: 200px"
                                name="deptBasicInfoForm.speScePhone" oninput="valueUpdate(this);"
                                value="${deptBasicInfoForm.speScePhone }"/>
                     </td>
@@ -278,7 +344,7 @@
                         <input type="text" style="width: 200px" name="deptBasicInfoForm.teachingGroupLeaderName" class='input validate[required]' value="${deptBasicInfoForm.teachingGroupLeaderName}"/>
                     </td>
                     <td>
-                        <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                        <input type="text" class='input validate[required,custom[phone],minSize[11],maxSize[11]]' style="width: 200px"
                                name="deptBasicInfoForm.teachingGroupLeaderPhone" oninput="valueUpdate(this);"
                                value="${deptBasicInfoForm.teachingGroupLeaderPhone }"/>
                     </td>
@@ -308,7 +374,7 @@
                                    value="${groupMember.teachingGroupMemberName }"/>
                         </td>
                         <td>
-                            <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                            <input type="text" class='input validate[required,custom[phone],minSize[11],maxSize[11]]' style="width: 200px"
                                    name="deptBasicInfoForm.teachingGroupMemberList[${status.index}].teachingGroupMemberPhone" oninput="valueUpdate(this);"
                                    value="${groupMember.teachingGroupMemberPhone }"/>
                         </td>
@@ -791,6 +857,7 @@
         </div>--%>
     </div>
     <div class="btn_info">
+        <input class="btn_green" id="bth-temp-save" style="display: none" onclick="saveBaseInfoTemp()" type="button" value="暂&#12288;存"/>
         <input class="btn_green" onclick="saveBaseInfo()" type="button" value="保&#12288;存"/>
     </div>
 </form>
@@ -802,7 +869,7 @@
                        name="deptBasicInfoForm.teachingGroupMemberList[{index}].teachingGroupMemberName" oninput="valueUpdate(this);" />
             </td>
             <td>
-                <input type="text" class='input validate[required,custom[phone]]' style="width: 200px"
+                <input type="text" class='input validate[required,custom[phone],minSize[11],maxSize[11]]' style="width: 200px"
                        name="deptBasicInfoForm.teachingGroupMemberList[{index}].teachingGroupMemberPhone" oninput="valueUpdate(this);" />
             </td>
             <td>

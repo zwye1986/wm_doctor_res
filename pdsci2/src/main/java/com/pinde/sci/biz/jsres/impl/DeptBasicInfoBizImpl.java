@@ -376,12 +376,12 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
                 GeneralMethod.setRecordInfo(speDeptData, true);
                 return baseSpeDeptDataMapper.insert(speDeptData);
             } else {
-                if (StringUtil.isNotBlank(speDeptData.getInfo())) {
+//                if (StringUtil.isNotBlank(speDeptData.getInfo())) {
                     deptData.setInfo(speDeptData.getInfo());
-                }
-                if (StringUtil.isNotBlank(speDeptData.getInfoTwo())) {
+//                }
+//                if (StringUtil.isNotBlank(speDeptData.getInfoTwo())) {
                     deptData.setInfoTwo(speDeptData.getInfoTwo());
-                }
+//                }
                 GeneralMethod.setRecordInfo(deptData, false);
                 return baseSpeDeptDataMapper.updateByPrimaryKey(deptData);
             }

@@ -320,21 +320,20 @@ function checkedHadEvaluate(processFlow, deptRecordFlow) {
 	}
 	var url = "<s:url value='/jsres/doctor/checkedHadEvaluate'/>?processFlow=" + processFlow + "&deptRecordFlow=" + deptRecordFlow;
 	jboxGetAsync(url, null, function (resp) {
-		debugger
 		if (resp == '${GlobalConstant.FLAG_Y}') {
 			respVari = true;
 		} else {
 			if (deptRecordFlow) {
-				if (resp=='E'){
-					jboxTip("请先完成相关科室的360评价！");
-				}else {
+				if (resp=='N'){
 					jboxTip("请先完成相关科室的双向评价！");
+				}else {
+					jboxTip(resp);
 				}
 			} else {
-				if (resp=='E'){
-					jboxTip("请先完成本科室的360评价！");
-				}else {
+				if (resp=='N'){
 					jboxTip("请先完成本科室的双向评价！");
+				}else {
+					jboxTip(resp);
 				}
 			}
 			respVari = false;
