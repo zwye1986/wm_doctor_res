@@ -31,45 +31,32 @@
     }
 
     function saveNum(infoFlow,p) {
-        if (null == p || p==''){
-            p=0;
-        }
-        // var reg=/^[0-9]*[0-9][0-9]*$/;
-        var num = $("#"+infoFlow).val();
-      /*  if (num>=0){
-            if (!reg.test(num)|| Number(num)<Number(p)){
-                $("#"+infoFlow).val("");
-                jboxTip("填写数量少于国家标准"+p);
-                return;
+        setTimeout(function() {
+            if (null == p || p==''){
+                p=0;
             }
-        }*/
+            var num = $("#"+infoFlow).val();
 
-
-        var orgFlow = $("#orgFlow").val();
-        var deptFlow = $("input[name='resBaseSpeDept.deptFlow']").val();
-        jboxPost("<s:url value='/jsres/kzr/saveNum'/>",{infoType:"DiagDisease",sessionNumber:"${sessionNumber}",infoFlow:infoFlow,info:num,orgFlow:orgFlow,deptFlow:deptFlow,type:"dept",speFlow:"${speFlow}"},function(resp){
-            jboxTip(resp);
-        },null,false);
+            var orgFlow = $("#orgFlow").val();
+            var deptFlow = $("input[name='resBaseSpeDept.deptFlow']").val();
+            jboxPost("<s:url value='/jsres/kzr/saveNum'/>",{infoType:"DiagDisease",sessionNumber:"${sessionNumber}",infoFlow:infoFlow,info:num,orgFlow:orgFlow,deptFlow:deptFlow,type:"dept",speFlow:"${speFlow}"},function(resp){
+                // jboxTip(resp);
+            },null,false);
+        }, 1);
     }
     function saveNum2(infoFlow) {
-        if (null == p || p==''){
-            p=0;
-        }
-        // var reg=/^[0-9]*[0-9][0-9]*$/;
-        var num = $("#"+infoFlow+"2").val();
-     /*   if (num>=0){
-            if (!reg.test(num)|| Number(num)<Number(p)){
-                $("#"+infoFlow).val("");
-                jboxTip("填写数量少于国家标准"+p);
-                return;
+        setTimeout(function() {
+            if (null == p || p==''){
+                p=0;
             }
-        }*/
+            var num = $("#"+infoFlow+"2").val();
 
-        var orgFlow = $("#orgFlow").val();
-        var deptFlow = $("#deptFlow").val();
-        jboxPost("<s:url value='/jsres/kzr/saveNum'/>",{infoType:"DiagDisease",sessionNumber:"${sessionNumber}",infoFlow:infoFlow,infoTwo:num,orgFlow:orgFlow,deptFlow:deptFlow,type:"dept",speFlow:"${speFlow}"},function(resp){
-            jboxTip(resp);
-        },null,false);
+            var orgFlow = $("#orgFlow").val();
+            var deptFlow = $("#deptFlow").val();
+            jboxPost("<s:url value='/jsres/kzr/saveNum'/>",{infoType:"DiagDisease",sessionNumber:"${sessionNumber}",infoFlow:infoFlow,infoTwo:num,orgFlow:orgFlow,deptFlow:deptFlow,type:"dept",speFlow:"${speFlow}"},function(resp){
+                // jboxTip(resp);
+            },null,false);
+        }, 1);
     }
 </script>
 <input type="hidden" id="resBase" name="resBase" value="${resBase}"/>

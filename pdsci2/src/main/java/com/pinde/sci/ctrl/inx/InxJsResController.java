@@ -107,10 +107,10 @@ public class InxJsResController extends GeneralController {
 //		int count = logMapper.countByExample(example);
 //		model.addAttribute("count", count);
 //		System.out.println("SysLog count..............." + count);
-        String url = "/inx/jsres";
-        String title = "江苏省住院医师规范化培训管理平台";
-        request.getSession().setAttribute("loginUrl", url);
-        request.getSession().setAttribute("sysTitle", title);
+//        String url = "/inx/jsres";
+//        String title = "江苏省住院医师规范化培训管理平台";
+//        request.getSession().setAttribute("loginUrl", url);
+//        request.getSession().setAttribute("sysTitle", title);
         // 获取公钥系数和公钥指数
         KeyPair defaultKeyPair = RSAUtils.getDefaultKeyPair();
         setSessionAttribute("defaultKeyPair",defaultKeyPair);
@@ -926,12 +926,11 @@ public class InxJsResController extends GeneralController {
             if (!StringUtil.isNotBlank(url)) {
                 url = "/inx/jsres";
             }
-
-            if (!StringUtil.isNotBlank(title)) {
-                title = (String) application.getAttribute("sysTitle");
-            }
             if (!StringUtil.isNotBlank(title)) {
                 title = InitConfig.jsResLoginTitleMap.get(url);
+            }
+            if (!StringUtil.isNotBlank(title)) {
+                title = (String) application.getAttribute("sysTitle");
             }
             if (!StringUtil.isNotBlank(title)) {
                 title = "江苏省住院医师规范化培训管理平台";
@@ -1131,12 +1130,11 @@ public class InxJsResController extends GeneralController {
             if (!StringUtil.isNotBlank(url)) {
                 url = "/inx/jsres";
             }
-
-            if (!StringUtil.isNotBlank(title)) {
-                title = (String) application.getAttribute("sysTitle");
-            }
             if (!StringUtil.isNotBlank(title)) {
                 title = InitConfig.jsResLoginTitleMap.get(url);
+            }
+            if (!StringUtil.isNotBlank(title)) {
+                title = (String) application.getAttribute("sysTitle");
             }
             if (!StringUtil.isNotBlank(title)) {
                 title = "江苏省住院医师规范化培训管理平台";
@@ -1379,10 +1377,10 @@ public class InxJsResController extends GeneralController {
             url = (String) application.getAttribute("loginUrl");
         }
         if (!StringUtil.isNotBlank(title)) {
-            title = (String) application.getAttribute("sysTitle");
+            title = InitConfig.jsResLoginTitleMap.get(url);
         }
         if (!StringUtil.isNotBlank(title)) {
-            title = InitConfig.jsResLoginTitleMap.get(url);
+            title = (String) application.getAttribute("sysTitle");
         }
         request.getSession().invalidate();
         request.getSession().setAttribute("loginUrl", url);

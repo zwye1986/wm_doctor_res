@@ -1650,12 +1650,12 @@ public class JsResHeadDeptController extends GeneralController{
 		}
 
 		deptData.setType(type);
-		if (StringUtil.isNotBlank(info)){
+//		if (StringUtil.isNotBlank(info)){
 			deptData.setInfo(info);
-		}
-		if (StringUtil.isNotBlank(infoTwo)){
+//		}
+//		if (StringUtil.isNotBlank(infoTwo)){
 			deptData.setInfoTwo(infoTwo);
-		}
+//		}
 
 		if (deptBasicInfoBiz.saveResBaseSpeDeptInfoData(deptData)<=0){
             return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
