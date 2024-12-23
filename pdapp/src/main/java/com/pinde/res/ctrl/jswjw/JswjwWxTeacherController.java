@@ -3,8 +3,10 @@ package com.pinde.res.ctrl.jswjw;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.enums.*;
+import com.pinde.core.common.enums.ActivityTypeEnum;
+import com.pinde.core.common.enums.CheckStatusEnum;
+import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -6334,7 +6336,7 @@ public class JswjwWxTeacherController extends GeneralController {
 
 
 
-	@RequestMapping(value={"/userCenter"},method={RequestMethod.GET})
+	@RequestMapping(value={"/userCenter"},method={RequestMethod.POST})
 	@ResponseBody
 	public Object userCenter(String userFlow, HttpServletRequest request, HttpServletResponse response){
 		Map<String,Object> resultMap = new HashMap<>();
@@ -6342,10 +6344,16 @@ public class JswjwWxTeacherController extends GeneralController {
 		resultMap.put("resultType", "success");
 
 		List<String> list = jswjwBiz.studentList(userFlow,null);
+
+		if(list!=null){
+			resultMap.put("teachNumCount", list.size());
+		}
+
 		List<String> rotatinglist = jswjwBiz.studentList(userFlow,"true");
 
-		resultMap.put("teachNumCount", list.size());
-		resultMap.put("teachNum", rotatinglist.size());
+		if(rotatinglist!=null){
+			resultMap.put("teachNum", rotatinglist.size());
+		}
 
 		return resultMap;
 	}
