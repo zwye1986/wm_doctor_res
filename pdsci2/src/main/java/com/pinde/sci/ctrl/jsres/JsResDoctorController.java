@@ -1,10 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.PasswordHelper;
-import com.pinde.core.common.enums.AfterRecTypeEnum;
-import com.pinde.core.common.enums.BaseStatusEnum;
-import com.pinde.core.common.enums.RecDocCategoryEnum;
-import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
@@ -949,7 +946,7 @@ public class JsResDoctorController extends GeneralController {
                 datas[i++] = e.getId();
             }
         }
-        docotrDelayTeturn.setTrainingTypeId("DoctorTrainingSpe");
+        docotrDelayTeturn.setTrainingTypeId(DictTypeEnum.DoctorTrainingSpe.getId());
         List<ResDocotrDelayTeturn> resRecList = resDoctorDelayTeturnBiz.searchInfo2(docotrDelayTeturn, orgFlowList, null, docTypeList, null);
 
         String[] titles = new String[]{

@@ -6999,15 +6999,25 @@ public class ResRecBizImpl implements IResRecBiz {
 					typePer = 1f;
 				}
 
+				// 如果已超出了却没到100%，说明可能是两个科室一起轮的，当成0（原来就是当成0的）
+				if(isOverFinish(resultMap, processFlow+recTypeId)  && typePer < 1F) {
+					typePer = 1F;
+				}
+
 				setVal4PerMap(resultMap,processFlow+recTypeId,typePer*100,format);
 				setVal4PerMap(resultMap,resultFlow+recTypeId,typePer*100,format);
 
 				deptPer+=(typePer*typeReqPer);
 			}
 
-			if(haveNoReqFull && deptReq==0){
-				deptPer = 1f;
+			// 如果请求数为0，或者已经超了，认为完成了，超了可以是因为两个科室一起轮的
+			if((haveNoReqFull && deptReq==0) || isOverFinish(resultMap, processFlow)){
+				deptPer = 1F;
 			}
+
+//			if(isOverFinish(resultMap, processFlow) && deptPer < 1F) {
+//				deptPer = 0f;
+//			}
 
 			setVal4PerMap(resultMap,processFlow,deptPer*100,format);
 			setVal4PerMap(resultMap,resultFlow,deptPer*100,format);
@@ -7015,6 +7025,15 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		return resultMap;
 	}
+
+	private boolean isOverFinish(Map<String, Object> resultMap, String processFlow) {
+		if(new BigDecimal((String)resultMap.getOrDefault(processFlow + REQ_NUM, "0")).compareTo(new BigDecimal((String)resultMap.getOrDefault(processFlow + FINISHED, "0"))) < 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * 百分比及各数据统计计算END
 	 */

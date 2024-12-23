@@ -1048,19 +1048,33 @@ function save(){
                     <c:if test="${statusId eq 'Passed'}">
                         <c:if test="${empty rec}">
                             <c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_TEACHER}">
-                                <input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
+								<c:choose>
+									<c:when test="${notAuditAll}">
+										<span style="color: red">该学员还有未审核培训数据</span>
+									</c:when>
+									<c:otherwise>
+										<input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
+									</c:otherwise>
+								</c:choose>
                             </c:if>
                         </c:if>
                         <c:if test="${not empty rec}">
-                            <c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_TEACHER and empty rec.managerAuditUserFlow  }">
-                                <input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
-                            </c:if>
-                            <c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_HEAD and not empty rec.managerAuditUserFlow }">
-                                <input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
-                            </c:if>
-                            <c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_SECRETARY and not empty rec.managerAuditUserFlow }">
-                                <input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
-                            </c:if>
+							<c:choose>
+								<c:when test="${notAuditAll}">
+									<span style="color: red">该学员还有未审核培训数据</span>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_TEACHER and empty rec.managerAuditUserFlow  }">
+										<input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
+									</c:if>
+									<c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_HEAD and not empty rec.managerAuditUserFlow }">
+										<input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
+									</c:if>
+									<c:if test="${roleFlag eq GlobalConstant.RES_ROLE_SCOPE_SECRETARY and not empty rec.managerAuditUserFlow }">
+										<input class="btn_green" type="button" value="保&#12288;存"  onclick="save();"/>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
                         </c:if>
                     </c:if>
 						<%--&#12288;<input class="btn_green" type="button" value="关&#12288;闭"  onclick="top.jboxClose();"/>--%>

@@ -457,14 +457,8 @@ function lookSearchFile(activityFlow,role) {
 						</c:if>
 						<c:if test="${!(((param.roleFlag eq 'teach'or param.roleFlag eq 'head') and sessionScope.currUser.userFlow eq b.speakerFlow)
 											or param.roleFlag eq 'secretary')}">
-							<c:if test="${empty b.fileFlow}">
-								无
-							</c:if>
-							<c:if test="${not empty b.fileFlow}">
-<%--								<a href="<s:url value='/jsres/activityQuery/downFile'/>?fileFlow=${b.fileFlow}">--%>
-<%--									<img style="cursor:pointer" title="${b.fileName}" src="<s:url value='/jsp/jsres/images/manual.png'/>"></a>--%>
-								<a  href="javascript:void(0);" onclick="lookSearchFile('${b.activityFlow}','${param.roleFlag}');">查看</a>
-							</c:if>
+							<a href="javascript:void(0);"
+							   onclick="lookSearchFile('${b.activityFlow}','${param.roleFlag}');">查看</a>
 						</c:if>
 					</td>
                      <%-- 操作 --%>

@@ -332,7 +332,8 @@
 
         function doctorList() {
             var roleFlag = "${GlobalConstant.USER_LIST_LOCAL}";
-            jboxLoad("content", "<s:url value='/jsres/doctorRecruit/provinceDoctorListAcc'/>?roleFlag=" + roleFlag + "&orgFlow=${sessionScope.currUser.orgFlow}", true);
+            var sessionNumber = "${sysCfgMap['jsres_doctorCount_sessionNumber']}";
+            jboxLoad("content", "<s:url value='/jsres/doctorRecruit/provinceDoctorListAcc'/>?roleFlag=" + roleFlag + "&orgFlow=${sessionScope.currUser.orgFlow}" + "&sessionNumber=" + sessionNumber, true);
         }
 
         function temporaryOutSearch() {
@@ -1477,11 +1478,11 @@
                                     <ul class="inner">
                                         <li class="index_item" style="width:50%; float:left;">
                                             <a href="javascript:selectMenu('auditDoctors');">
-					  <span class="tap_inner">
+					  <span class="tap_inner" style="cursor: pointer" onclick="doctorList()">
 						<i class="crowd"></i>
 						<c:set var="key" value="${sysCfgMap['jsres_doctorCount_sessionNumber']}pl"></c:set>
-						<em class="number"><label
-                                id="trainDoctor">${doctorCountExtMap[key]["DOCTORCOUNT"]}人</label></em>
+						<em class="number"><span
+                                id="trainDoctor">${doctorCountExtMap[key]["DOCTORCOUNT"]}人</span></em>
 						<strong class="title">${sysCfgMap['jsres_doctorCount_sessionNumber']}
 							<c:if test="${not empty sysCfgMap['jsres_doctorCount_sessionNumber'] }">届</c:if>培训医师数</strong>
 					  </span>
