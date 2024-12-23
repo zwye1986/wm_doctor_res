@@ -5587,6 +5587,9 @@ public class JswjwWxTeacherController extends GeneralController {
 		if(null == activity.get("opinion")){
 			activity.put("opinion","");
 		}
+		//解决序列化问题，删除不可序列化的属性
+		activity.remove("FILE_FLOWS");
+
 		resultMap.put("activity", activity);
         resultMap.put("isUpload", activity.get("speakerFlow").equals(userinfo.getUserFlow()) && StringUtil.isNotBlank((String) activity.get("activityFlow")) ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N);
 //		resultMap.put("user",userinfo);
