@@ -4772,9 +4772,14 @@
 		</if>
 		ORDER by su.user_code,rdsp.sch_start_date
 	</select>
-
-	<select id="jsresSearchTeacherWorkInfo" resultType="java.util.Map" parameterType="java.util.Map">
-		SELECT A.USER_FLOW, A.USER_NAME, A.USER_CODE,WM_CONCAT(TRIM(SUD.DEPT_FLOW)) DEPT_FLOW ,WM_CONCAT(TRIM(SUD.DEPT_NAME)) DEPT_NAME ,
+	<resultMap id="jsresSearchTeacherWorkInfoMap" type="java.util.Map">
+		<result column="DEPT_FLOW" property="DEPT_FLOW" javaType="java.lang.String"/>
+		<result column="DEPT_NAME" property="DEPT_NAME" javaType="java.lang.String"/>
+	</resultMap>
+	<select id="jsresSearchTeacherWorkInfo" resultMap="jsresSearchTeacherWorkInfoMap" parameterType="java.util.Map">
+		SELECT A.USER_FLOW, A.USER_NAME, A.USER_CODE,
+		WM_CONCAT(TRIM(SUD.DEPT_FLOW)) DEPT_FLOW ,
+		WM_CONCAT(TRIM(SUD.DEPT_NAME)) DEPT_NAME ,
 		A.activityNum,A.currStudentHe,A.currStudentCount
 		from (
 		SELECT su.user_flow,
