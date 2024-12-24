@@ -138,7 +138,7 @@
 //                    $("#qrcode2").hide();
                 }else{
                     ctx.fillText("                                                                ", 0, 415);
-                    ctx.fillText("【签到二维码】（此二维码在讲座开始前${startTime}分钟至结束后${endTime}分钟内有效）", 0, 415);   // 文字
+                    ctx.fillText("【签到二维码】（此二维码在活动开始前${startTime}分钟至开始后${endTime}分钟内有效）", 0, 415);   // 文字
 //                    $("#qrcode").hide();
                 }
 //                $("#qrcode3").show();
@@ -149,7 +149,7 @@
         }
         function  down(name)
         {
-            $('#qrcode canvas').downCanvasImg("${activity.activityName}【签到二维码】（此二维码在讲座开始前${startTime}分钟至结束后${endTime}分钟内有效）.png");
+            $('#qrcode canvas').downCanvasImg("${activity.activityName}【签到二维码】（此二维码在活动开始前${startTime}分钟至开始后${endTime}分钟内有效）.png");
         }
         function  down2(name)
         {
@@ -187,7 +187,7 @@
     <div id="qrcode" style="text-align: center;margin-top: 5px;">
     </div>
     <div>
-        【签到二维码】（此二维码在讲座开始前${startTime}分钟至结束后${endTime}分钟内有效）
+        【签到二维码】（此二维码在讲座开始前${startTime}分钟至开始后${endTime}分钟内有效）
     </div>
     <div id="downDiv"  style="text-align: center;margin-top: 5px;">
         ${pdfn:jsresPowerCfgMap(key) eq 'Y'? '<font color="red">此二维码为动态二维码，每15秒钟刷新一次</font>':''}
