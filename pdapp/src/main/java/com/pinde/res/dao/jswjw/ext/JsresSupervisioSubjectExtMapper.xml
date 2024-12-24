@@ -16,8 +16,8 @@
         <result column="SUBJECT_YEAR" jdbcType="VARCHAR" property="subjectYear"/>
         <result column="SUBJECT_EDIT" jdbcType="VARCHAR" property="subjectEdit"/>
         <result column="AVG_SCORE" jdbcType="VARCHAR" property="avgScore"/>
-        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow"/>
-        <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
+        <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" javaType="java.lang.String"/>
+        <result column="USER_NAME" jdbcType="VARCHAR" property="userName" javaType="java.lang.String"/>
         <result column="REQEDIT" jdbcType="VARCHAR" property="reqedit"/>
         <result column="MANAGE_USER_FLOW" jdbcType="VARCHAR" property="manageUserFlow"/>
         <result column="MANAGE_USER_NAME" jdbcType="VARCHAR" property="manageUserName"/>
