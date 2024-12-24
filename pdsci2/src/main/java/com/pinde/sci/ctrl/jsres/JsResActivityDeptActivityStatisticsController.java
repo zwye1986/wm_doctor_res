@@ -198,9 +198,9 @@ public class JsResActivityDeptActivityStatisticsController extends GeneralContro
 			}
 			sheet.setColumnWidth(key, width);
 		}
-		wb.write(response.getOutputStream());
 		String fileName = new String("科室活动统计.xls".getBytes(), "ISO-8859-1");
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		response.setContentType("application/octet-stream;charset=UTF-8");
+		wb.write(response.getOutputStream());
 	}
 }
