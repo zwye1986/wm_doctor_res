@@ -2081,6 +2081,18 @@ public class JswjwTeacherAppController{
             model.addAttribute("resultType", "无操作权限，请联系基地管理员！");
             return "res/jswjw/success";
         }
+		// 出科时培训数据必须审核
+		String trainingAuditKey ="jsres_"+currUser.getOrgFlow()+"_org_outDept_trainingAudit" ;
+		String trainingAudit = jswjwBiz.getJsResCfgCode(trainingAuditKey);
+		if(GlobalConstant.FLAG_Y.equals(trainingAudit)){
+			// 查询是否存在未审核培训数据
+			int count = jswjwBiz.countNotAuditResRec(processFlow, docFlow);
+			if(count > 0){
+				model.addAttribute("resultId", "3011101");
+				model.addAttribute("resultType", "该学员还有未审核培训数据!");
+				return "res/jswjw/teacher/evaluationSun";
+			}
+		}
 		if(StringUtil.isNotBlank(docFlow)){
 			doctor  = jswjwBiz.readResDoctor(docFlow);
 			model.addAttribute("doctor", doctor);
