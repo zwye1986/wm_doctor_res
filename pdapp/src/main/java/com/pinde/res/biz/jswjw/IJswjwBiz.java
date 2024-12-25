@@ -806,4 +806,12 @@ public interface IJswjwBiz {
 	Map<String, Object> getDoctorSchInfo(String userFlow);
 
 	List<String> studentList(String userFlow,String isNow);
+
+	/**
+	 * @Department：研发部
+	 * @Description 查询未审核的培训数据数量
+	 * @Author fengxf
+	 * @Date 2024/12/25
+	 */
+	int countNotAuditResRec(String processFlow, String doctorFlow);
 }

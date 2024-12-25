@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
 import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.sci.dao.*;
@@ -10472,5 +10473,21 @@ public class JswjwBizImpl implements IJswjwBiz {
     public List<String> studentList(String userFlow,String isNow) {
 
         return resDoctorProcessExtMapper.studentList(userFlow,isNow);
+    }
+
+    /**
+     * @param processFlow
+     * @param doctorFlow
+     * @Department：研发部
+     * @Description 查询未审核的培训数据数量
+     * @Author fengxf
+     * @Date 2024/12/25
+     */
+    @Override
+    public int countNotAuditResRec(String processFlow, String doctorFlow) {
+        ResRecExample example = new ResRecExample();
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
+                .andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andAuditStatusIdIsNull();
+        return recMapper.countByExample(example);
     }
 }
