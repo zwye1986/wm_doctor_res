@@ -3,6 +3,7 @@ package com.pinde.res.ctrl.jswjw;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.enums.CheckStatusEnum;
 import com.pinde.core.common.enums.RecStatusEnum;
@@ -2145,6 +2146,16 @@ public class JswjwWxTeacherController extends GeneralController {
         if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(appMenu)) {
 			return ResultDataThrow("无操作权限，请联系基地管理员！");
         }
+		// 出科时培训数据必须审核
+		String trainingAuditKey ="jsres_"+currUser.getOrgFlow()+"_org_outDept_trainingAudit" ;
+		String trainingAudit = jswjwBiz.getJsResCfgCode(trainingAuditKey);
+		if(GlobalConstant.FLAG_Y.equals(trainingAudit)){
+			// 查询是否存在未审核培训数据
+			int count = jswjwBiz.countNotAuditResRec(processFlow, docFlow);
+			if(count > 0){
+				return ResultDataThrow("该学员还有未审核培训数据");
+			}
+		}
 		if(StringUtil.isNotBlank(docFlow)){
 			doctor  = jswjwBiz.readResDoctor(docFlow);
 //			resultMap.put("doctor", doctor);

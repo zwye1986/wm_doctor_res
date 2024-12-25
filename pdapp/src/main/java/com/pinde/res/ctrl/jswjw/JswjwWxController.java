@@ -202,7 +202,7 @@ public class JswjwWxController extends GeneralController {
         }
         if(user.getUserPhone()==null||"".equals(user.getUserPhone())){
             resultMap.put("resultId", "1005");
-            resultMap.put("resultType", "未绑定手机号");
+            resultMap.put("resultType", "未绑定手机号，用户名：" + user.getUserCode());
             resultMap.put("access_token", "");
             return resultMap;
         }
@@ -6374,6 +6374,11 @@ public class JswjwWxController extends GeneralController {
     }
 
     private Object getUserInfo(SysUser userinfo, Map<String, Object> resultMap, String userPasswd, String uuid, String openId,HttpServletRequest request) {
+        // 微信公众号拉取授权登录时提示用户名
+        String userCodeMsg = "";
+        if(StringUtil.isNotBlank(openId)){
+            userCodeMsg = "用户名：" + userinfo.getUserCode() + "，";
+        }
         //是否招录
         String isRecruit = com.pinde.core.common.GlobalConstant.FLAG_N;
         //超级密码
@@ -6436,13 +6441,13 @@ public class JswjwWxController extends GeneralController {
         }
         String userStatus = userinfo.getStatusId();
         if (UserStatusEnum.SysLocked.getId().equals(userStatus)) {
-            return ResultDataThrow("该用户已被锁定，请联系培训基地进行解锁");
+            return ResultDataThrow(userCodeMsg + "该用户已被锁定，请联系培训基地进行解锁");
         }
         if (UserStatusEnum.Locked.getId().equals(userStatus)) {
-            return ResultDataThrow("该用户已被停用，请联系培训基地进行启用");
+            return ResultDataThrow(userCodeMsg + "该用户已被停用，请联系培训基地进行启用");
         }
         if (UserStatusEnum.Lifted.getId().equals(userStatus)) {
-            return ResultDataThrow("你暂无权限使用,请联系培训基地管理员！");
+            return ResultDataThrow(userCodeMsg + "你暂无权限使用,请联系培训基地管理员！");
         }
 
         if (userFlag) {
@@ -6451,7 +6456,11 @@ public class JswjwWxController extends GeneralController {
             List<SysUserRole> userRoles = jswjwBiz.getSysUserRole(userFlow);
 
             if (userRoles == null || userRoles.isEmpty()) {
-                return ResultDataThrow("用户未赋权");
+                if(StringUtil.isNotBlank(openId)){
+                    userinfo.setOpenId("");
+                    jswjwBiz.updateUser(userinfo);
+                }
+                return ResultDataThrow(userCodeMsg + "用户未赋权");
             }
 
             boolean isDoctor = false;
@@ -6634,7 +6643,7 @@ public class JswjwWxController extends GeneralController {
                     boolean isAudited = jswjwBiz.getRecruitStatus(userinfo.getUserFlow());
                     if (!isRecruit.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
                         if (doctor == null) {
-                            return ResultDataThrow("登录失败,学员数据出错!");
+                            return ResultDataThrow(userCodeMsg + "登录失败,学员数据出错!");
                         }
                         String orgFlow = "";
 
@@ -6681,7 +6690,7 @@ public class JswjwWxController extends GeneralController {
                         }
                         int blackCount = balcklistExtMapper.selectBlackUser(map);
                         if (blackCount > 0) {
-                            return ResultDataThrow("该用户由于个人原因造成违约，用户信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
+                            return ResultDataThrow(userCodeMsg + "该用户由于个人原因造成违约，用户信息已被纳入我省医务人员诚信系统，5年内不得进入我省培训基地接受住院医师规范化培训。如有相关疑问，请与相关管理部门联系。");
                         }
                         if ("test".equals(userinfo.getUserCode())) {
                             return resultMap;
@@ -6690,23 +6699,23 @@ public class JswjwWxController extends GeneralController {
                         // 学员n个月不填写数据，限制登录APP add@shengl
 //                        checkDoctorDataFilling(resultMap, doctor);
                         if (checkDoctorDataFilling(doctor)) {
-                            return ResultDataThrow("由于您长时间未填写培训数据，现无法继续使用APP，请联系管理员！");
+                            return ResultDataThrow(userCodeMsg + "由于您长时间未填写培训数据，现无法继续使用APP，请联系管理员！");
                         }
 
                         if (doctor != null) {
                             if (!isAudited) {
-                                return ResultDataThrow("请先等待培训信息审核通过!");
+                                return ResultDataThrow(userCodeMsg + "请先等待培训信息审核通过！");
                             }
                             //学员app登录权限审核通过
                             String isAppStatus = jswjwBiz.getJsResCfgCheckByCode("jsres_doctor_app_login_" + userFlow);
                             if (!BaseStatusEnum.Passed.getId().equals(isAppStatus)) {
-                                return ResultDataThrow("你暂无权限使用,请联系培训基地管理员或学校培养部门!");
+                                return ResultDataThrow(userCodeMsg + "你暂无权限使用，请联系培训基地管理员或学校培养部门！");
                             }
                             int authCount = jswjwBiz.getDoctorAuth(userinfo.getUserFlow());
                             if (authCount > 0) {
                                 resultMap.put("authFlag", com.pinde.core.common.GlobalConstant.FLAG_Y);
                             } else {
-                                return ResultDataThrow("登录失败,请先上传学员培训数据登记诚信声明!");
+                                return ResultDataThrow(userCodeMsg + "登录失败，请先上传学员培训数据登记诚信声明！");
                             }
                             if (StringUtil.isNotBlank(doctor.getTrainingSpeId())) {
                                 String trainingType = doctor.getTrainingTypeId();
@@ -6721,17 +6730,17 @@ public class JswjwWxController extends GeneralController {
                                 }
 
                                 if (StringUtil.isBlank(doctor.getRotationFlow())) {
-                                    return ResultDataThrow("轮转方案未设置,请联系管理员!");
+                                    return ResultDataThrow(userCodeMsg + "轮转方案未设置，请联系管理员！");
                                 } else {
                                     if (isReduction) {
                                         int doctorDeptCount = jswjwBiz.countDoctorSchRotationDept(doctor.getDoctorFlow(), doctor.getRotationFlow());
                                         if (doctorDeptCount == 0) {
-                                            return ResultDataThrow("轮转方案未调整减免，请联系管理员！");
+                                            return ResultDataThrow(userCodeMsg + "轮转方案未调整减免，请联系管理员！");
                                         }
                                     }
                                 }
                             } else {
-                                return ResultDataThrow("培训信息暂未审核通过!");
+                                return ResultDataThrow(userCodeMsg + "培训信息暂未审核通过！");
                             }
                         }
 
@@ -6748,7 +6757,7 @@ public class JswjwWxController extends GeneralController {
                 }
                 String isAppFlag = jswjwBiz.getJsResCfgCode("jsres_teacher_app_login_" + userFlow);
                 if (!(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isAppFlag) && "Passed".equals(user.getCheckStatusId()))) {
-                    return ResultDataThrow("登录失败,你暂无权限使用,请联系培训基地管理员!");
+                    return ResultDataThrow(userCodeMsg + "登录失败，你暂无权限使用，请联系培训基地管理员！");
                 }
                 resultMap.put("userinfo", userinfo);
                 List<SysDept> depts = jswjwBiz.getHeadDeptList(userFlow, userinfo.getDeptFlow());
@@ -6757,7 +6766,7 @@ public class JswjwWxController extends GeneralController {
             } else if (isHead || isSeretary || isAdmin) {
                 String orgGuoChent = jswjwBiz.getJsResCfgCode("jsres_" + userinfo.getOrgFlow() + "_guocheng");
                 if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgGuoChent)) {
-                    return ResultDataThrow("登录失败,你暂无权限使用,请联系培训基地管理员!");
+                    return ResultDataThrow(userCodeMsg + "登录失败，你暂无权限使用,请联系培训基地管理员！");
                 }
                 List<SysDept> depts = jswjwBiz.getHeadDeptList(userFlow, userinfo.getDeptFlow());
                 resultMap.put("depts", depts);
@@ -6766,7 +6775,11 @@ public class JswjwWxController extends GeneralController {
             } else if (isNurse) {
 
             } else {
-                return ResultDataThrow("用户未赋权");
+                if(StringUtil.isNotBlank(openId)){
+                    userinfo.setOpenId("");
+                    jswjwBiz.updateUser(userinfo);
+                }
+                return ResultDataThrow(userCodeMsg + "用户未赋权");
             }
 
             if (userinfo != null && (isTeacher || isHead || isCharge || isNurse)) {
