@@ -1,4 +1,4 @@
-<jsp:include page="/jsp/hbres/htmlhead-hbres.jsp">
+<jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
 	<jsp:param name="font" value="true"/>
 </jsp:include>
 <script type="text/javascript">
