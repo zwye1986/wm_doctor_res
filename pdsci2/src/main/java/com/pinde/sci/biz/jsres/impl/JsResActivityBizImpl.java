@@ -902,7 +902,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		}
 
 		String[] fileType=new String[]{"files","kj","zp"};
-		int fileCount = 0;
 		for (String s : fileType) {
 			List<MultipartFile> fileList = fileMap.get(s);
 			if (s.equals("files")){
@@ -910,7 +909,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}else{
 				saveActivityFileNew2(newFlow,fileList,fileFlow,s);
 			}
-			fileCount += fileList.size();
 		}
 
 
@@ -939,8 +937,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
             return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
 		else {
 			saveActivityTarget(activity,targets);
-			activity.setFileFlow(String.valueOf(fileCount));
-			activityInfoMapper.updateByPrimaryKey(activity);
             return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
 	}
