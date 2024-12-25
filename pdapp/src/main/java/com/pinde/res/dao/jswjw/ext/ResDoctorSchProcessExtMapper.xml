@@ -79,6 +79,8 @@
         AND ( ( a.SCH_START_DATE  <![CDATA[ <= ]]> A.power_start_time AND a.SCH_END_DATE >= A.power_END_time)
         or (a.SCH_START_DATE  <![CDATA[ >= ]]> A.power_start_time AND a.SCH_START_DATE <![CDATA[ <= ]]>A.power_END_time)
         or (a.SCH_END_DATE  <![CDATA[ >= ]]> A.power_start_time AND a.SCH_END_DATE <![CDATA[ <= ]]>A.power_END_time))
+        and a.SCH_START_DATE <![CDATA[<=]]> to_char(sysdate,'yyyy-MM-dd')
+        and a.SCH_END_DATE <![CDATA[>=]]> to_char(sysdate,'yyyy-MM-dd')
         <if test="deptFlow!=null and deptFlow!=''">
             and a.DEPT_FLOW=#{deptFlow}
         </if>
