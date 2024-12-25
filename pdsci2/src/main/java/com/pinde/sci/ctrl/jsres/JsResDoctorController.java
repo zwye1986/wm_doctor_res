@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.pub.UserNationEnum;
@@ -9121,21 +9122,34 @@ public class JsResDoctorController extends GeneralController {
         SysUser currentUser = GlobalContext.getCurrentUser();
         String cfgCode = "jsres_doctor_app_menu_" + currentUser.getUserFlow();
         String evaluateCfgCode =  "jsres_" + currentUser.getOrgFlow()+"_360evaluate";
+        String teacherEvaluateCfgCode =  "jsres_" + currentUser.getOrgFlow()+"_teacher_360evaluate";
+        String nurseEvaluateCfgCode =  "jsres_" + currentUser.getOrgFlow()+"_nurse_360evaluate";
         JsresPowerCfgMapper jsresPowerCfgMapper = SpringUtil.getBean(JsresPowerCfgMapper.class);
         JsresPowerCfg jsresPowerCfg = jsresPowerCfgMapper.selectByPrimaryKey(cfgCode);
         JsresPowerCfg powerCfg = jsresPowerCfgMapper.selectByPrimaryKey(evaluateCfgCode);
+        JsresPowerCfg teacherPowerCfg = jsresPowerCfgMapper.selectByPrimaryKey(teacherEvaluateCfgCode);
+        JsresPowerCfg nursePowerCfg = jsresPowerCfgMapper.selectByPrimaryKey(nurseEvaluateCfgCode);
         String value = "";
         String evaluateValue="";
+        String teacherEvaluateValue = "";
+        String nurseEvaluateValue = "";
         if (jsresPowerCfg != null) {
             value = jsresPowerCfg.getCfgValue();
             if (null!=powerCfg){
                 evaluateValue=powerCfg.getCfgValue();
             }
+            if(null != teacherPowerCfg) {
+                teacherEvaluateValue = teacherPowerCfg.getCfgValue();
+            }
+            if(null != nursePowerCfg) {
+                nurseEvaluateValue = nursePowerCfg.getCfgValue();
+            }
             if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(value)) {  //双向评价没有开
-                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(evaluateValue)) { //360评价没有开
+                if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(evaluateValue) && !GlobalConstant.FLAG_Y.equals(teacherEvaluateValue)
+                    && !GlobalConstant.FLAG_Y.equals(nurseEvaluateValue)) { //360评价没有开
                     return com.pinde.core.common.GlobalConstant.FLAG_Y;
                 }else {
-                    if (evaluateValue.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {  //开启360评价必填
+                    if (GlobalConstant.FLAG_Y.equals(evaluateValue) || GlobalConstant.FLAG_Y.equals(teacherEvaluateValue) || GlobalConstant.FLAG_Y.equals(nurseEvaluateValue)) {  //开启360评价必填
                         List<String> processFlows = new ArrayList<>();
                         if (StringUtil.isNotBlank(deptRecordFlow)) {
                             SchRotationDept schRotationDept = rotationDeptBiz.readSchRotationDept(deptRecordFlow);
@@ -9159,26 +9173,44 @@ public class JsResDoctorController extends GeneralController {
                             paramsMap.put("doctorFlow", currentUser.getUserFlow());
                             List<Map<String, String>> hadEvaluateByProcesses = resGradeBiz.getHadEvaluateByProcesses(paramsMap);
                             if (hadEvaluateByProcesses != null && hadEvaluateByProcesses.size() > 0) {
+                                boolean evaluateFlag = false;
+                                boolean teacherEvaluateFlag = false;
+                                boolean nurseEvaluateFlag = false;
                                 for (String temp : processFlows) {
-                                    boolean evaluateFlag = false;
                                     for (Map<String, String> tempEva : hadEvaluateByProcesses) {
                                         if (tempEva.get("processFlow") != null && tempEva.get("recTypeId") != null
                                                 && temp.equals(tempEva.get("processFlow"))) {
                                             if (com.pinde.core.common.enums.ResRecTypeEnum.TeacherAssess.getId().equals(tempEva.get("recTypeId"))
                                                     || ResAssessTypeEnum.DoctorTeacherAssessTwo360.getId().equals(tempEva.get("recTypeId"))) {
-                                                evaluateFlag=true;
+                                                evaluateFlag = true;
                                             }
-                                        } else {
-                                            continue;
+                                            if (com.pinde.core.common.enums.ResAssessTypeEnum.TeacherDoctorAssess360.getId().equals(tempEva.get("recTypeId"))
+                                                    || ResAssessTypeEnum.TeacherDoctorAssessTwo360.getId().equals(tempEva.get("recTypeId"))) {
+                                                teacherEvaluateFlag = true;
+                                            }
+                                            if (com.pinde.core.common.enums.ResAssessTypeEnum.NurseDoctorAssess360.getId().equals(tempEva.get("recTypeId"))) {
+                                                nurseEvaluateFlag = true;
+                                            }
                                         }
                                     }
-                                    if (evaluateFlag){
-                                        return com.pinde.core.common.GlobalConstant.FLAG_Y;
-                                    }
                                 }
+                                String res = "";
+                                if(GlobalConstant.FLAG_Y.equals(evaluateValue) && !evaluateFlag) {
+                                    res += "学员360评价未完成;";
+                                }
+                                if(GlobalConstant.FLAG_Y.equals(teacherEvaluateValue) && !teacherEvaluateFlag) {
+                                    res += "带教360评价未完成;";
+                                }
+                                if(GlobalConstant.FLAG_Y.equals(nurseEvaluateValue) && !nurseEvaluateFlag) {
+                                    res += "护士360评价未完成;";
+                                }
+                                if(StringUtils.isEmpty(res)) {
+                                    res = GlobalConstant.FLAG_Y;
+                                }
+                                return res;
                             }
                         }
-                        return  "E";
+                        return  GlobalConstant.FLAG_Y;
                     }
                 }
             }
@@ -9210,10 +9242,12 @@ public class JsResDoctorController extends GeneralController {
             paramsMap.put("doctorFlow", currentUser.getUserFlow());
             List<Map<String, String>> hadEvaluateByProcesses = resGradeBiz.getHadEvaluateByProcesses(paramsMap);
             if (hadEvaluateByProcesses != null && hadEvaluateByProcesses.size() > 0) {
+                boolean evaluateFlag = false;
+                boolean teacherEvaluateFlag = false;
+                boolean nurseEvaluateFlag = false;
                 for (String temp : processFlows) {
                     boolean hadEvaTeacher = false;
                     boolean hadEvaDept = false;
-                    boolean evaluateFlag = false;
                     for (Map<String, String> tempEva : hadEvaluateByProcesses) {
                         if (tempEva.get("processFlow") != null && tempEva.get("recTypeId") != null
                                 && temp.equals(tempEva.get("processFlow"))) {
@@ -9227,18 +9261,33 @@ public class JsResDoctorController extends GeneralController {
                                     || ResAssessTypeEnum.DoctorTeacherAssessTwo360.getId().equals(tempEva.get("recTypeId"))) {
                                 evaluateFlag=true;
                             }
-                        } else {
-                            continue;
+                            if (com.pinde.core.common.enums.ResAssessTypeEnum.TeacherDoctorAssess360.getId().equals(tempEva.get("recTypeId"))
+                                    || ResAssessTypeEnum.TeacherDoctorAssessTwo360.getId().equals(tempEva.get("recTypeId"))) {
+                                teacherEvaluateFlag = true;
+                            }
+                            if (com.pinde.core.common.enums.ResAssessTypeEnum.NurseDoctorAssess360.getId().equals(tempEva.get("recTypeId"))) {
+                                nurseEvaluateFlag = true;
+                            }
                         }
                     }
                     if (!hadEvaTeacher || !hadEvaDept) {
                         return com.pinde.core.common.GlobalConstant.FLAG_N;
                     }
-                    if (!evaluateFlag && evaluateValue.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
-                        return "E";
-                    }
                 }
-                return com.pinde.core.common.GlobalConstant.FLAG_Y;
+                String res = "";
+                if(GlobalConstant.FLAG_Y.equals(evaluateValue) && !evaluateFlag) {
+                    res += "学员360评价未完成;";
+                }
+                if(GlobalConstant.FLAG_Y.equals(teacherEvaluateValue) && !teacherEvaluateFlag) {
+                    res += "带教360评价未完成;";
+                }
+                if(GlobalConstant.FLAG_Y.equals(nurseEvaluateValue) && !nurseEvaluateFlag) {
+                    res += "护士360评价未完成;";
+                }
+                if(StringUtils.isEmpty(res)) {
+                    res = GlobalConstant.FLAG_Y;
+                }
+                return res;
             } else {
                 return com.pinde.core.common.GlobalConstant.FLAG_N;
             }

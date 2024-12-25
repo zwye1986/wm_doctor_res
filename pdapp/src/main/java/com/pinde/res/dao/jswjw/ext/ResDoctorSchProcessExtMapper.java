@@ -193,5 +193,5 @@ public interface ResDoctorSchProcessExtMapper {
 
     List<Map<String, String>> schProcessStudentDistinctQuery2(Map<String, Object> map);
 
-	List<String> studentList(String userFlow,String isNow);
+	List<String> studentList(@Param("userFlow")String userFlow,@Param("isNow")String isNow);
 }

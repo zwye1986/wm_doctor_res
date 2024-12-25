@@ -1133,9 +1133,6 @@
                 #{processFlow}
             </foreach>
         </if>
-        <if test='doctorFlow!=null and doctorFlow!=""'>
-            and dtgi.oper_user_flow = #{doctorFlow}
-        </if>
         group by process_flow,rec_type_id
     </select>
     <resultMap id="teacherRecMap" type="com.pinde.core.model.TeacherRec">

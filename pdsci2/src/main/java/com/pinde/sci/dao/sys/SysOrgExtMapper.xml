@@ -545,7 +545,8 @@
 
 	<select id="searchOrgListNew" resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT ORG_FLOW, ORG_PROV_ID, ORG_CITY_ID, ORG_AREA_ID, ORG_LEVEL_ID
-  			,CASE WHEN OLD_ORG_NAME IS NULL THEN ORG_NAME ELSE wm_concat(ORG_NAME||'('||OLD_ORG_NAME||')') END ORG_NAME
+		,CASE WHEN OLD_ORG_NAME IS NULL THEN ORG_NAME ELSE to_char(wm_concat(ORG_NAME||'('||OLD_ORG_NAME||')')) END AS
+		ORG_NAME
         FROM SYS_ORG
 		WHERE RECORD_STATUS = 'Y'
 		<if test="sysorg != null">
