@@ -192,12 +192,13 @@ public class JsResExamCfgController extends GeneralController {
         if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(schExamArrangement.getRecordStatus()))
         {
             int checkCount=examCfgBiz.checkHaveExam(schExamArrangement.getArrangeFlow());
-            if(checkCount>0)
+            if(checkCount>0) {
                 return "已有学员参加过考试，无法删除！";
-        }
+            }
 
-        // 同步对考试系统删除试卷
-        examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+            // 同步对考试系统删除试卷
+            examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+        }
 
         int result=examCfgBiz.updateCfg(schExamArrangement);
         if(result==0)
