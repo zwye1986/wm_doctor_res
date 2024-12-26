@@ -4,7 +4,6 @@ package com.pinde.sci.dao.sch;
 import com.pinde.core.model.*;
 import com.pinde.sci.form.sch.SchGradeFrom;
 import com.pinde.sci.model.res.GeneralIdNameModel;
-import com.pinde.sci.model.res.SchArrangeResultExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -88,7 +87,7 @@ public interface SchArrangeResultExtMapper {
 	 * @param paramMap
 	 * @return
 	 */
-	List<SchArrangeResultExt> getResults(Map<String,Object> paramMap);
+	List<com.pinde.core.model.SchArrangeResultExt> getResults(Map<String, Object> paramMap);
 
 
 	/**

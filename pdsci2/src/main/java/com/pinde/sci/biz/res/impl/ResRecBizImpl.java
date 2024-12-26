@@ -29,7 +29,6 @@ import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.sci.model.res.ResDoctorSchProcessExt;
 import com.pinde.sci.model.res.ResRecExt;
-import com.pinde.sci.model.res.SchArrangeResultExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -6454,7 +6453,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	 * @return
 	 * 至少有传参数
 	 */
-	public List<SchArrangeResultExt> getResults(String userFlow,String resultFlow,String processFlow){
+	public List<com.pinde.core.model.SchArrangeResultExt> getResults(String userFlow, String resultFlow, String processFlow) {
 		int coditionCount = 0;
 
 		Map<String,Object> paramMap = new HashMap<String, Object>();
@@ -6744,7 +6743,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		}
 
 		//获取该医师的计划
-		List<SchArrangeResultExt> resultExts = getResults(doctorFlow,null,processFlow);
+		List<com.pinde.core.model.SchArrangeResultExt> resultExts = getResults(doctorFlow, null, processFlow);
 		if(resultExts==null || resultExts.isEmpty()){
 			return null;
 		}
@@ -6760,7 +6759,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 			depts = getDept(null,rotationFlow,null);
 		}else{
-			SchArrangeResultExt resultExt = resultExts.get(0);
+			com.pinde.core.model.SchArrangeResultExt resultExt = resultExts.get(0);
 			if(resultExt!=null){
 				String standardGroupFlow = resultExt.getStandardGroupFlow();
 				String standardDeptId = resultExt.getStandardDeptId();
@@ -6836,7 +6835,7 @@ public class ResRecBizImpl implements IResRecBiz {
 		}
 
 		//获取该医师的计划
-		List<SchArrangeResultExt> resultExts = getResults(doctorFlow,null,processFlow);
+		List<com.pinde.core.model.SchArrangeResultExt> resultExts = getResults(doctorFlow, null, processFlow);
 		if(resultExts==null || resultExts.isEmpty()){
 			return null;
 		}
@@ -6852,7 +6851,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 			depts = getDept(null,rotationFlow,null);
 		}else{
-			SchArrangeResultExt resultExt = resultExts.get(0);
+			com.pinde.core.model.SchArrangeResultExt resultExt = resultExts.get(0);
 			if(resultExt!=null){
 				String standardGroupFlow = resultExt.getStandardGroupFlow();
 				String standardDeptId = resultExt.getStandardDeptId();
@@ -6898,7 +6897,7 @@ public class ResRecBizImpl implements IResRecBiz {
 	public Map<String,Object> getRecProgress(
 			boolean haveNoReqFull,
 			int format,
-			List<SchArrangeResultExt> resultExts,
+			List<com.pinde.core.model.SchArrangeResultExt> resultExts,
 			Map<String,Float> recCountMap,
 			Map<String,Float> reqCountMap,
 			List<String> recTypeIds,
@@ -6913,7 +6912,7 @@ public class ResRecBizImpl implements IResRecBiz {
 
 		//为各科室计算比例
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		for(SchArrangeResultExt sarExt : resultExts){//可变列表,可由process/result/rotationDept构成
+		for (com.pinde.core.model.SchArrangeResultExt sarExt : resultExts) {//可变列表,可由process/result/rotationDept构成
 			ResDoctorSchProcess process = sarExt.getProcess();
 			if(process==null){
 				continue;
