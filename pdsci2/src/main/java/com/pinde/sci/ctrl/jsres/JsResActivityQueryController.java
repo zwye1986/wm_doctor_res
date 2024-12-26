@@ -20,8 +20,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.base.TeachingActivitySpeakerMapper;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUserRole;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -212,7 +211,11 @@ public class JsResActivityQueryController extends GeneralController {
 				{
 					List<Map<String,Object>>  results=activityBiz.readActivityResults((String) info.get("activityFlow"));
 					resultMap.put((String) info.get("activityFlow"),results);
+					//查询附件
+					List<PubFile> fileList = fileBiz.findFileByTypeFlow("activity", (String) info.get("activityFlow"));
+					if (CollectionUtils.isNotEmpty(fileList)) info.put("fileFlow", fileList.size());
 				}
+
 			}
 		}
 		model.addAttribute("resultMap",resultMap);

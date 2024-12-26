@@ -154,14 +154,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		return activityInfoExtMapper.getTeacherActivityStatisticsReport(param);
 	}
 
-	@Override
-	public String getRealitSpeaker(String userFlow, String deptFlow, String orgFlow) {
-		String realitSpeaker = activityInfoExtMapper.getRealitSpeaker(userFlow, deptFlow, orgFlow);
-		if (StringUtil.isEmpty(realitSpeaker)){
-			return "";
-		}
-		return realitSpeaker;
-	}
 
 	@Override
 	public String getRealitSpeaker2(String userFlow, String deptFlow, String orgFlow, String startTime, String endTime) {
@@ -735,199 +727,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 		}
 		return activityCfgMapper.selectByExample(example);
 	}
-
-	@Override
-	public String editActivityNew(TeachingActivityInfo activity, String isRes, List<MultipartFile> fileList, String data, String[] fileFlow) throws ParseException {
-		List<TeachingActivityTarget> targets=targetBiz.readByOrgNew(activity.getActivityTypeId(),GlobalContext.getCurrentUser().getOrgFlow());
-		if(targets==null||targets.size()<=0) {
-			return "暂未配置活动指标，请联系基地管理员！";
-		}
-		//校验活动时间是否重复
-		int count=checkTime(activity);
-		if(count>0) {
-			return "该主讲人在时间段内已开展其他活动！";
-		}
-
-		//校验当前时间与活动开始时间是否符合配置要求
-		String startDateTime = activity.getStartTime();
-		String currDate = DateUtil.getCurrDateTime("yyyy-MM-dd");
-		String currTime = DateUtil.getCurrDateTime("HH:mm:ss");
-		String keyOfDay = "jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_org_activity_add_day";
-		String keyOfTime = "jsres_" + GlobalContext.getCurrentUser().getOrgFlow() + "_org_activity_add_time";
-		String day = JsresPowerCfgController.jsresPowerCfgMap(keyOfDay);
-		String time = JsresPowerCfgController.jsresPowerCfgMap(keyOfTime);
-		if (StringUtil.isNotBlank(day) && StringUtil.isNotBlank(time)) {
-			String startDate = startDateTime.substring(0, 10).trim();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			java.util.Date startDate1 = sdf.parse(currDate);
-			Date endDate = sdf.parse(startDate);
-			Calendar startCal = Calendar.getInstance();
-			startCal.setTime(startDate1);
-			Calendar endCal = Calendar.getInstance();
-			endCal.setTime(endDate);
-			long days = 0;
-			if (startCal.before(endCal)) {
-				while (startCal.before(endCal)) {
-					startCal.add(Calendar.DAY_OF_MONTH, 1);
-					days++;
-				}
-			}
-			if (endCal.before(startCal)) {
-				while (endCal.before(startCal)) {
-					endCal.add(Calendar.DAY_OF_MONTH, 1);
-					days--;
-				}
-			}
-			if ((days == new Long(day) && currTime.compareTo(time) > 0) || days < new Long(day)) {
-				return "请在活动开始前" + day + "天" + time + "点前设置活动!";
-			}
-		}
-
-//		if(file!=null&&!file.isEmpty()&&file.getSize()>0) {
-//			String fileFlow=saveActivityFile(activity.getFileFlow(),file);
-//			activity.setFileFlow(fileFlow);
-//		}else if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRe)){
-//			activity.setFileFlow("");
-//		}
-		if(StringUtil.isNotBlank(activity.getActivityTypeId())) {
-            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRes)) {
-                activity.setActivityTypeName(com.pinde.core.common.enums.DictTypeEnum.ActivityType.getDictNameById(activity.getActivityTypeId()));
-			}else{
-				activity.setActivityTypeName(ActivityTypeEnum.getNameById(activity.getActivityTypeId()));
-			}
-		}
-		activity.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
-		Map<String,String> param = new HashMap<>();
-		param.put("orgFlow",activity.getOrgFlow());
-		SysCfgExample example = new SysCfgExample();
-		SysCfgExample.Criteria criteria = example.createCriteria();
-		List<String> userRoleList = new ArrayList();
-		// 由于科主任和教秘 前台传入role都是head 无法区分 改为获取当前登录角色
-		String roleFlow = "";
-        String currentRole = (String) GlobalContext.getSessionAttribute(com.pinde.core.common.GlobalConstant.CURRENT_ROLE);
-        if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_HEAD.equals(currentRole)) {
-			userRoleList.add("res_head_role_flow");
-			roleFlow = InitConfig.getSysCfg("res_head_role_flow");
-        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_TEACHER.equals(currentRole)) {
-			userRoleList.add("res_teacher_role_flow");
-			roleFlow = InitConfig.getSysCfg("res_teacher_role_flow");
-        } else if (com.pinde.core.common.GlobalConstant.RES_ROLE_SCOPE_SECRETARY.equals(currentRole)) {
-			userRoleList.add("res_secretary_role_flow");
-			roleFlow = InitConfig.getSysCfg("res_secretary_role_flow");
-		}
-		criteria.andCfgCodeIn(userRoleList);
-		SysCfg sysCfg= sysCfgMapper.selectByExample(example).get(0);     //获取该用户当前角色信息
-		List<SysUserRole> subRoleList = userRoleBiz.getByUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-		List<TeachActivityCfg> cfgList = this.searchActivityCfgs(roleFlow,GlobalContext.getCurrentUser().getOrgFlow());
-		if(null != cfgList && cfgList.size()>0){
-			TeachActivityCfg cfg = cfgList.get(0);
-			if(cfg.getSubmitRole().equals(roleFlow)){
-				activity.setSubmitRole(cfg.getSubmitRole());
-				activity.setAuditRole(cfg.getAuditRole());
-				activity.setActivityStatus("audit");
-				//判断由谁审核
-				if(cfg.getAuditRole().equals(roleFlow)){
-					//当前角色审核
-					activity.setActivityStatus("pass");
-				}else{
-					//当前登录人拥有多个角色
-					for(SysUserRole sur:subRoleList){
-						if(sur.getRoleFlow().equals(cfg.getAuditRole())){
-							activity.setActivityStatus("pass");
-							break;
-						}
-					}
-				}
-			}else {
-				return "该角色无法发起教学活动，请联系基地管理员！";
-			}
-		}else{
-			return "该角色无法发起教学活动，请联系基地管理员！";
-		}
-		int c ;
-		String newFlow ;
-		if (StringUtil.isBlank(activity.getActivityFlow())) {
-			newFlow = PkUtil.getUUID();
-            activity.setFileFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
-			activity.setActivityFlow(newFlow);
-			GeneralMethod.setRecordInfo(activity, true);
-			c =  activityInfoMapper.insertSelective(activity);
-			logger.info("准备创建项目");
-			//创建院级督导的项目
-			ResHospSupervSubject subject = new ResHospSupervSubject();
-			subject.setSubjectFlow(PkUtil.getUUID());
-			subject.setSubjectName(activity.getActivityName());
-			subject.setActivityFlow(newFlow);
-			subject.setActivityName(activity.getActivityName());
-			SysOrgExt orgExt = sysOrgExtMapper.searchOrgFlow(activity.getOrgFlow());
-			subject.setOrgFlow(orgExt.getOrgFlow());
-			subject.setOrgName(orgExt.getOrgName());
-			subject.setBaseCode(orgExt.getBaseCode());
-			subject.setOrderAction("free");
-			subject.setCreateTime(DateUtil.getCurrDateTime2());
-			subject.setCreateUserFlow(GlobalContext.getCurrentUser().getUserFlow());
-			subject.setSubjectYear(DateUtil.getYear());
-			SysDept dept = deptBiz.readSysDept(activity.getDeptFlow());
-			subject.setDeptFlow(activity.getDeptFlow());
-			subject.setDeptName(dept.getDeptName());
-			subject.setInspectionType(activity.getActivityTypeId());
-			subject.setTeachFlow(GlobalContext.getCurrentUser().getUserFlow());
-			subject.setTeachName(GlobalContext.getCurrentUser().getUserName());
-            subject.setRecordStatus(com.pinde.core.common.GlobalConstant.FLAG_Y);
-			subject.setActualSpeaker(activity.getRealitySpeaker());
-			subject.setActivityStartTime(activity.getStartTime());
-			subject.setActivityEndTime(activity.getEndTime());
-			int insert = hospSupervSubjectMapper.insert(subject);
-			if (insert>0){
-				logger.info("院级督导项目创建完成");
-			}else {
-				logger.info("院级督导项目创建失败");
-			}
-		} else {
-			newFlow = activity.getActivityFlow();
-            activity.setFileFlow(com.pinde.core.common.GlobalConstant.FLAG_Y);
-			GeneralMethod.setRecordInfo(activity, false);
-			c =  activityInfoMapper.updateByPrimaryKeySelective(activity);
-
-			//修改院级督导项目
-			ResHospSupervSubject subject = supervisioUserBiz.selectHospByActivityFlow(activity.getActivityFlow());
-			if (null != subject){
-				subject.setActualSpeaker(activity.getRealitySpeaker());
-				supervisioUserBiz.updateHospSupervisioBySubjectFlow(subject);
-			}
-		}
-
-		saveActivityFileNew(newFlow,fileList,fileFlow);
-
-		if(StringUtil.isNotBlank(data)){
-			List<Map<String,Object>> mapList = JSON.parseObject(data,ArrayList.class);
-			if(mapList!=null&&mapList.size()>0){
-				for(Map<String,Object> map:mapList){
-					String recordFlow = (String)map.get("recordFlow");
-					String formFlow = (String)map.get("formFlow");
-					String detailValue = (String)map.get("detailValue");
-					String activityFlow = (String)map.get("activityFlow");
-					if(StringUtil.isBlank(activityFlow)){
-						activityFlow = newFlow;
-					}
-
-					TeachingActivityFormValue save = new TeachingActivityFormValue();
-					save.setRecordFlow(recordFlow);
-					save.setFormFlow(formFlow);
-					save.setDetailValue(detailValue);
-					save.setActivityFlow(activityFlow);
-					editActivityFormValue(save);
-				}
-			}
-		}
-		if(c==0)
-            return com.pinde.core.common.GlobalConstant.SAVE_FAIL;
-		else {
-			saveActivityTarget(activity,targets);
-            return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
-		}
-	}
-
 	@Override
 	public String editActivityNew2(TeachingActivityInfo activity, String isRes, Map<String, List<MultipartFile>> fileMap, String data, String[] fileFlow) throws ParseException {
 		List<TeachingActivityTarget> targets=targetBiz.readByOrgNew(activity.getActivityTypeId(),GlobalContext.getCurrentUser().getOrgFlow());
@@ -1112,6 +911,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			}
 		}
 
+
 		if(StringUtil.isNotBlank(data)){
 			List<Map<String,Object>> mapList = JSON.parseObject(data,ArrayList.class);
 			if(mapList!=null&&mapList.size()>0){
@@ -1139,12 +939,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 			saveActivityTarget(activity,targets);
             return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 		}
-	}
-
-	@Override
-	public String editActivityFiles(String activityFlow, List<MultipartFile> fileList, String[] fileFlow) {
-		saveActivityFileNew(activityFlow,fileList,fileFlow);
-        return com.pinde.core.common.GlobalConstant.SAVE_SUCCESSED;
 	}
 
 	@Override
@@ -1203,7 +997,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 				try {
 					fileList.get(i).transferTo(newFile);
 				} catch (Exception e) {
-					throw new RuntimeException("文件上传异常");
+					throw new RuntimeException("文件上传异常", e);
 				}
 				String filePath = File.separator + "activityFile" + File.separator + dateString + File.separator + originalFileName;
 				pubFile.setFilePath(filePath);

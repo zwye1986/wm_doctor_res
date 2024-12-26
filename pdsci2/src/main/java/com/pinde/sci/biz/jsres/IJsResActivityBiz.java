@@ -47,8 +47,6 @@ public interface IJsResActivityBiz {
 
     List<Map<String,String>> getTeacherActivityStatisticsReport(Map<String, Object> param);
 
-    String getRealitSpeaker(String userFlow,String deptFlow,String orgFlow);
-
     String getRealitSpeaker2(String userFlow,String deptFlow,String orgFlow, String startTime, String endTime);
 
     Map<String,Object> getDoctorActivityStatisticsMap(String doctorFlow, String startTime, String endTime, String isDept, String userFlow);
@@ -106,11 +104,9 @@ public interface IJsResActivityBiz {
 
     List<TeachActivityCfg> searchActivityCfgs(String roleFlow, String orgFlow);
 
-    String editActivityNew(TeachingActivityInfo activity, String isRes, List<MultipartFile> fileList, String data, String[] fileFlow) throws ParseException;
 
     String editActivityNew2(TeachingActivityInfo activity, String isRes, Map<String,List<MultipartFile>> fileMap, String data, String[] fileFlow) throws ParseException;
 
-    String editActivityFiles(String activityFlow, List<MultipartFile> fileList, String[] fileFlow);
 
     String editActivityFiles(String activityFlow, Map<String,List<MultipartFile>> fileMap, String[] fileFlow);
 
