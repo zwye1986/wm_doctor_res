@@ -79,9 +79,9 @@
 			},null,true);
 		});
 	}
-	function del(arrangeFlow) {
+	function del(arrangeFlow, paperFlow) {
 		jboxConfirm("确认删除该年度考核吗？",function () {
-			var url = "<s:url value='/jsres/examCfg/updateCfg?arrangeFlow='/>" + arrangeFlow+ "&recordStatus=N";
+			var url = "<s:url value='/jsres/examCfg/updateCfg?arrangeFlow='/>" + arrangeFlow+ "&recordStatus=N" + "&paperFlow=" + paperFlow;
 			jboxGet(url,null,function(resp){
 				if(resp=="操作成功！")
 					toPage(1);

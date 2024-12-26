@@ -68,7 +68,7 @@
 							<a href="javascript:openInfo('${b.arrangeFlow}','Y');" class="btn">开放</a>
 						</c:if>
 						<a href="javascript:edit('${b.arrangeFlow}');" class="btn">编辑</a>
-						<a href="javascript:del('${b.arrangeFlow}');" class="btn">删除</a>
+						<a href="javascript:del('${b.arrangeFlow}', '${b.paperFlow}');" class="btn">删除</a>
 						<c:if test="${b.exampaperType eq '2'}">
 							<a href="javascript:lookScore('${b.arrangeFlow}','${b.trainingSpeName}','${b.examStartTime}','${b.examEndTime}','${b.examNumber}','${b.examDuration}');" class="btn">查看试卷</a>
 						</c:if>
