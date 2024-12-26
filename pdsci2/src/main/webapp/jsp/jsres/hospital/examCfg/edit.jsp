@@ -59,7 +59,7 @@
             startView: 2,
             maxView: 4,
             minView:0,
-            format:'yyyy-mm-dd hh:ii',
+            format:'yyyy-mm-dd hh:ii:ss',
             autoclose:true
 		});
         $('#examEndTime').datetimepicker({
@@ -67,7 +67,7 @@
             startView: 2,
             maxView: 4,
             minView:0,
-            format:'yyyy-mm-dd hh:ii',
+            format:'yyyy-mm-dd hh:ii:ss',
             autoclose:true
 		});
 
@@ -209,6 +209,7 @@
 			<input type="hidden" id="isOpen" name="isOpen" value="${ment.isOpen }"/>
 			<input type="hidden" id="orgFlow" name="orgFlow" value="${currentOrg.orgFlow }"/>
 			<input type="hidden" id="orgName" name="orgName" value="${currentOrg.orgName }"/>
+			<input type="hidden" id="paperFlow" name="paperFlow" value="${ment.paperFlow }"/>
 			<table border="0" cellpadding="0" cellspacing="0" class="base_info">
 				<tbody>
 					<tr>
@@ -219,10 +220,10 @@
 						<th style="width:10%;"><font color="red">*</font>培训类别：</th>
 						<td style="width:15%;">
 							<select style="width: 106px;margin-left: 4px;    margin-bottom: 0;" name="trainingTypeId" id="trainingTypeId" class="validate[required] select" onchange="changeTrainSpes(this)">
-								<option value="">请选择</option>
-								<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
+								<option value="DoctorTrainingSpe">住院医师</option>
+								<%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
 									<option value="${trainCategory.id}" <c:if test="${ment.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
-								</c:forEach>
+								</c:forEach>--%>
 							</select>
 						</td>
 						<th style="width:10%;"><font color="red">*</font>培训专业：</th>
@@ -257,11 +258,11 @@
 					</tr>
 					<tr>
 						<td>
-							<input class="validate[required] input" name="exampaperType" <c:if test="${ment.exampaperType eq 2 }">checked</c:if> onchange="changePaperType(2);" type="radio" value="2" />固定试卷
+							<input class="validate[required] input" disabled name="exampaperType" <c:if test="${ment.exampaperType eq 2 }">checked</c:if> onchange="changePaperType(2);" type="radio" value="2" />固定试卷
 						</td>
 						<th><font id="examScope" color="red">*</font>考试范围：</th>
 						<td colspan="5">&nbsp;
-							<input type="button" id="editExamScope" class="btn_green" onclick="editScope();" value="已设置">
+							<input type="button" id="editExamScope" disabled class="btn_grey" onclick="editScope();" value="已设置">
 						</td>
 					</tr>
 					<tr>
@@ -301,7 +302,7 @@
 							<input id="isApp" hidden name="isApp" value="${empty ment.isApp ?'N':ment.isApp}">
 							<input id="isWeb" hidden name="isWeb" value="${empty ment.isWeb ?'N':ment.isWeb}">
 							<input class="validate[required] input" name="examType" id="isAppCheck" <c:if test="${ment.isApp eq 'Y' }">checked</c:if> type="checkbox" value="Y" /><label style="width:50px;    display: initial" for="isAppCheck">APP端</label>
-							<input class="validate[required] input" name="examType" id="isWebCheck" <c:if test="${ment.isWeb eq 'Y' }">checked</c:if> type="checkbox" value="Y" /><label style="width:50px;    display: initial" for="isWebCheck">WEB端</label>
+							<input class="validate[required] input" name="examType" id="isWebCheck" <c:if test="${ment.isWeb eq 'Y' }">checked</c:if> type="checkbox" value="Y" disabled /><label style="width:50px;    display: initial" for="isWebCheck">WEB端</label>
 						</td>
 					</tr>
 					<tr>

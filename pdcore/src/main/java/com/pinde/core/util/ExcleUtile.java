@@ -154,6 +154,109 @@ public class ExcleUtile {
 		 }
 	 }
 
+	public static byte[] exportExcelFileByObjs(String[] titles,List dataList) throws Exception{
+		byte[] res = null;
+		HSSFWorkbook wb = null;
+		ByteArrayOutputStream byteArrayOutputStream = null;
+		try {
+			wb = new HSSFWorkbook();
+			// 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
+			HSSFSheet sheet = wb.createSheet("sheet1");
+			// 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short
+			HSSFRow row = sheet.createRow((int) 0);
+			// 第四步，创建单元格，并设置值表头 设置表头居中
+			HSSFCellStyle style = wb.createCellStyle();
+
+			//添加设置列为文本格式
+			HSSFDataFormat format = wb.createDataFormat();
+			style.setDataFormat(format.getFormat("@"));
+			// 创建一个居中格式
+			style.setAlignment(HorizontalAlignment.CENTER);
+
+			Font font = wb.createFont();
+			font.setFontHeightInPoints((short) 12);
+			font.setBold(true);
+			style.setFont(font);
+
+
+			List<String> paramIds = new ArrayList<String>();
+
+			HSSFCell cell = null;
+			for(int i = 0 ; i<titles.length ; i++){
+				String[] title = titles[i].split(":");
+				cell = row.createCell(i);
+				cell.setCellValue(title[1]);
+				cell.setCellStyle(style);
+				cell.setCellType(CellType.STRING);
+				paramIds.add(title[0]);
+				int length = title[1].length();
+				sheet.setColumnWidth(i, length*800);
+			}
+			if(dataList!=null){
+				for(int i=0; i<dataList.size() ; i++){
+					Object item = dataList.get(i);
+					row = sheet.createRow(i + 1);
+					Object result = null;
+					for(int j = 0 ; j <paramIds.size();j++){
+						String paramId = paramIds.get(j);
+						result = getValueByAttrs(paramId,item);
+						Boolean isNum = false;//data是否为数值型
+						Boolean isInteger=false;//data是否为整数
+						Boolean isPercent=false;//data是否为百分数
+						if (result != null || !"".equals(result)) {
+							//判断data是否为数值型
+							isNum = result.toString().matches("^(-?\\d+)(\\.\\d+)?$");
+							//判断data是否为整数（小数部分是否为0）
+							isInteger=result.toString().matches("^[-\\+]?[\\d]*$");
+							//判断data是否为百分数（是否包含“%”）
+							isPercent=result.toString().contains("%");
+						}
+						//如果单元格内容是数值类型，涉及到金钱（金额、本、利），则设置cell的类型为数值型，设置data的类型为数值类型
+						if (isNum && !isPercent) {
+							//						 HSSFCellStyle contextstyle =wb.createCellStyle();
+							//						 HSSFDataFormat df = wb.createDataFormat(); // 此处设置数据格式
+                             /*if (isInteger) {
+                                 contextstyle.setDataFormat(df.getBuiltinFormat("#,#0"));//数据格式只显示整数
+                             }else{
+                                 contextstyle.setDataFormat(df.getBuiltinFormat("#,##0.00"));//保留两位小数点
+                             }*/
+							// 设置单元格格式
+							//						 contentCell.setCellStyle(contextstyle);
+							// 设置单元格内容为double类型
+							//						 contentCell.setCellValue();
+							if(result.toString().length() < 15) {
+								row.createCell(j).setCellValue(Double.parseDouble(result.toString()));
+							}else{
+								row.createCell(j).setCellValue(result.toString().length()>32767?result.toString().substring(0,32767):result.toString());
+							}
+						} else {
+							//						 contentCell.setCellStyle(contextstyle);
+							//						 // 设置单元格内容为字符型
+							row.createCell(j).setCellValue(result.toString());
+							//						 row.createCell(j).setCellValue(result.toString().length()>32767?result.toString().substring(0,32767):result.toString());
+						}
+
+					}
+
+				}
+			}
+			byteArrayOutputStream = new ByteArrayOutputStream();
+			wb.write(byteArrayOutputStream);
+			res = byteArrayOutputStream.toByteArray();
+		} catch (Exception e) {
+			logger.error("", e);
+		}finally {
+			if(wb != null) {
+				wb.close();
+			}
+			if(byteArrayOutputStream != null) {
+				byteArrayOutputStream.close();
+			}
+		}
+
+		return res;
+	}
+
 	//column为设置文本格式数组（处理首字母为0的数字字符串）
 	public static void exportSimpleExcleByObjs(String[] titles,List dataList,OutputStream os,String [] column) throws Exception{
 		HSSFWorkbook wb = new HSSFWorkbook();
@@ -576,7 +679,7 @@ public class ExcleUtile {
 						 if(null == ob || ob.equals("")){
 							 result = "";
 						 }else{
-                             result = com.pinde.core.common.enums.ArmyTypeEnum.getNameById(getValueByAttrs(paramId, item).toString());
+                             result = ArmyTypeEnum.getNameById(getValueByAttrs(paramId, item).toString());
 						 }
 					 }else{
 						 result = getValueByAttrs(paramId,item);
@@ -839,7 +942,7 @@ public class ExcleUtile {
 		zip.delete();//删除服务器上压缩文件
 	}
 	//压缩文件
-	public static void ZipFiles(java.io.File[] srcfile, java.io.File zipfile) {
+	public static void ZipFiles(File[] srcfile, File zipfile) {
 		byte[] buf = new byte[1024];
 		ZipOutputStream out=null;
 		try {

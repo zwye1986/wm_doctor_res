@@ -5913,7 +5913,7 @@ public class JswjwWxController extends GeneralController {
      */
     @RequestMapping(value = {"/toYearTest"}, method = {RequestMethod.POST})
     @ResponseBody
-    public Object toYearTest(String arrangeFlow, String userFlow) throws UnsupportedEncodingException {
+    public Object toYearTest(String arrangeFlow, String userFlow, HttpServletRequest request) throws UnsupportedEncodingException {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", ResultEnum.Success.getName());
@@ -5964,7 +5964,7 @@ public class JswjwWxController extends GeneralController {
         }
         standarDeptNames = (String) map.get("standardDeptNames");
         //试类型 (年度考试)（传递）1：出科考试；2：年度考试
-        String ExamTestType = "2";
+        String ExamTestType = "3";
         //时间戳
         String Date = "0";
         //试卷类型
@@ -6016,18 +6016,42 @@ public class JswjwWxController extends GeneralController {
         }
 
         testUrl = testUrl + "?Action=YearExam&CardID=" + user.getUserCode()
-                + "&ExamTestType=" + ExamTestType
-                + "&ExamSoluClass=" + paperType
-                + "&TestNumber=" + examNumber
+                + "&ProcessFlow=" + recordFlow
+                + "&paperType=" + "5" // 写死是5，不知有没有用到
+                + "&count=" + examNumber
+                + "&Date=" + Date
+                + "&userFlow=" + user.getUserFlow()
+                + "paperFlow=" + ment.getPaperFlow()
+                + "&ExamTestType=" + ExamTestType // 写死是3，看测试环境这个是3
                 + "&ExamKnowledge=" + standarDeptNames
                 + "&SpecName=" + doctor.getTrainingSpeName()
-                + "&ProcessFlow=" + recordFlow
-                + "&Date=" + Date
-                + "&StartTime=" + StartTime
-                + "&EndTime=" + EndTime
-                + "&SoluTime=" + SoluTime;
+                + "&StartTime=" + URLEncoder.encode(StartTime, "utf-8")
+                + "&EndTime=" + URLEncoder.encode(EndTime, "utf-8")
+                + "&SoluTime=" + SoluTime
+                + "&systemName=" + "jsxy-zp-ks" // 江苏西医-住培-考试
+                + "&token=" + request.getSession().getId();
+
         resultMap.put("testUrl", testUrl);
-        //System.out.println("testUrl="+testUrl);
+
+        // 现在拼的url
+        /*systemName=jsxy-zp-ks
+        Action=YearExam&CardID=userCode&&ProcessFlow=recordFlow&paperType=paperType&count=examNumber&Date=Date
+                &ExamTestType=ExamTestType&ExamKnowledge=standarDeptNames&SpecName=trainingSpeName
+            &StartTime=StartTime&EndTime=EndTime&SoluTime=SoluTime*/
+
+        // 原来的url
+        /*testUrl = testUrl + "?Action=YearExam&CardID=" + user.getUserCode()
+        + "&ExamTestType=" + ExamTestType
+        + "&ExamSoluClass=" + paperType
+        + "&TestNumber=" + examNumber
+        + "&ExamKnowledge=" + standarDeptNames
+        + "&SpecName=" + doctor.getTrainingSpeName()
+        + "&ProcessFlow=" + recordFlow
+        + "&Date=" + Date
+        + "&StartTime=" + StartTime
+        + "&EndTime=" + EndTime
+        + "&SoluTime=" + SoluTime;;*/
+
         return resultMap;
     }
 
