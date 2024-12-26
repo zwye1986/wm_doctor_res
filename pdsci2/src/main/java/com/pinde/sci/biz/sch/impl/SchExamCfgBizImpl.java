@@ -20,11 +20,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +62,12 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 	private  SysDeptMapper sysDeptMapper;
 	@Autowired
 	private  SchDeptMapper schDeptMapper;
+
+	private static final String HTTP_STATUS_OK = "200";
+
+	private static final String HTTP_RESP_CODE = "code";
+
+	private static final String HTTP_RESP_MSG = "msg";
 
 	/***
 	 * key和iv值可以随机生成,确保与前端的key,iv对应
@@ -132,6 +142,10 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
 		String resultContent = httpResult.getStringContent();
 		JSONObject resultJson = JSONObject.parseObject(resultContent);
+		if(!HTTP_STATUS_OK.equals(resultJson.get(HTTP_RESP_CODE))) {
+			throw new RuntimeException("生成年度试卷失败，失败信息：" + resultJson.get(HTTP_RESP_MSG));
+		}
+
 		String paperFlow = resultJson.getJSONObject("data").getString("paperFlow");
 
 		// 生成试卷后开启试卷（允许使用）
@@ -141,6 +155,11 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		switchOnParams.put("isStop", "true");
 		// 暂时不看结果，简单处理
 		httpResult = HttpClientUtil.sendPostForm(switchOnTestUrl, switchOnParams, headers, null, "UTF-8");
+		String switchOnContent = httpResult.getStringContent();
+		JSONObject switchOnJson = JSONObject.parseObject(switchOnContent);
+		if(!HTTP_STATUS_OK.equals(switchOnJson.get(HTTP_RESP_CODE))) {
+			throw new RuntimeException("开启年度试卷失败，失败信息：" + switchOnJson.get(HTTP_RESP_MSG));
+		}
 
 		return paperFlow;
 	}
@@ -242,13 +261,29 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		httpPost.addHeader(new BasicHeader("applicationname", InitConfig.getSysCfg("jsres_yearly_test_applicationname")));
 		httpPost.addHeader(new BasicHeader("projectname", InitConfig.getSysCfg("jsres_yearly_test_projectname")));
 		HttpResponse response = null;
+		String failReason = "";
         try {
 			response = httpClient.execute(httpPost);
-        } catch (IOException e) {
+			StatusLine statusLine = response.getStatusLine();
+			HttpEntity httpEntity = response.getEntity();
+
+			if(statusLine.getStatusCode() != 200) {
+				throw new RuntimeException("生成学员年度试卷失败，请求失败, 状态码：{}" + statusLine.getStatusCode());
+			}
+
+			if (statusLine.getStatusCode() == 200) {
+				String resp = EntityUtils.toString(httpEntity);
+				JSONObject respJson = JSONObject.parseObject(resp);
+				if(!HTTP_STATUS_OK.equals(respJson.get(HTTP_RESP_CODE))) {
+					throw new RuntimeException("生成学员年度试卷失败，信息：" + respJson.get(HTTP_RESP_MSG));
+				}
+			}
+        } catch (Exception e) {
 			log.error("generateDoctorExam warn, send post error", e);
+			throw new RuntimeException(e);
 		}finally {
 			if(file != null && file.exists()) {
-//				file.delete();
+				file.delete();
 			}
 		}
     }
