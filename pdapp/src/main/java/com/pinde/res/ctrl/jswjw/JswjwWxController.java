@@ -6510,7 +6510,7 @@ public class JswjwWxController extends GeneralController {
                         map.put("roleId", "Seretary");
                         map.put("roleName", "科秘");
                         roles.add(map);
-                    } else if (sur.getRoleFlow().equals(roleMap.get("RES_SECRETARYER_ROLE_FLOW"))) {
+                    } else if (sur.getRoleFlow().equals(roleMap.get("RES_TEACHING_SECRETARY_ROLE_FLOW"))) {
                         isTeachingSeretary = true;
                         map.put("roleId", "TeachingSeretary");
                         map.put("roleName", "教学秘书");
