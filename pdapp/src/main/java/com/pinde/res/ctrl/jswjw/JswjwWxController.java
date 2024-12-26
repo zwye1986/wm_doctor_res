@@ -6510,7 +6510,7 @@ public class JswjwWxController extends GeneralController {
                         map.put("roleId", "Seretary");
                         map.put("roleName", "科秘");
                         roles.add(map);
-                    } else if (sur.getRoleFlow().equals(roleMap.get("RES_TEACHING_SECRETARY_ROLE_FLOW"))) {
+                    } else if (sur.getRoleFlow().equals(roleMap.get("RES_SECRETARYER_ROLE_FLOW"))) {
                         isTeachingSeretary = true;
                         map.put("roleId", "TeachingSeretary");
                         map.put("roleName", "教学秘书");
@@ -6556,6 +6556,14 @@ public class JswjwWxController extends GeneralController {
             if (isTeacher) {
                 resultMap.put("roleId", "Teacher");
                 resultMap.put("roleName", "带教老师");
+            }
+            if (isTeachingSeretary) {
+                resultMap.put("roleId", "TeachingSeretary");
+                resultMap.put("roleName", "教学秘书");
+            }
+            if (isTeachingHead) {
+                resultMap.put("roleId", "TeachingHead");
+                resultMap.put("roleName", "教学主任");
             }
             if (isCharge) {
                 resultMap.put("roleId", "Charge");
@@ -6763,7 +6771,7 @@ public class JswjwWxController extends GeneralController {
                 List<SysDept> depts = jswjwBiz.getHeadDeptList(userFlow, userinfo.getDeptFlow());
                 resultMap.put("depts", depts);
 
-            } else if (isHead || isSeretary || isAdmin) {
+            } else if (isHead || isSeretary || isAdmin || isTeachingSeretary || isTeachingHead) {
                 String orgGuoChent = jswjwBiz.getJsResCfgCode("jsres_" + userinfo.getOrgFlow() + "_guocheng");
                 if (!com.pinde.core.common.GlobalConstant.FLAG_Y.equals(orgGuoChent)) {
                     return ResultDataThrow(userCodeMsg + "登录失败，你暂无权限使用,请联系培训基地管理员！");
