@@ -12,7 +12,7 @@ public enum ResAssessTypeEnum implements GeneralEnum<String> {
 
     TeacherDoctorAssess360("TeacherDoctorAssess", "临床专业指导医师评估住院医师量表"),
     TeacherDoctorAssessTwo360("TeacherDoctorAssessTwo", "医技专业指导医师评估住院医师量表"),
-    NurseDoctorAssess360("NurseDoctorAssess", "临床专业护士评估住院医师"),
+    NurseDoctorAssess360("NurseDoctorGrade", "临床专业护士评估住院医师"),
     DoctorTeacherAssess360("TeacherAssess", "住院医师评临床专业指导医师估量表"),
     DoctorTeacherAssessTwo360("TeacherAssessTwo", "住院医师评估医技专业指导医师量表"),
     DoctorHeadAssess360("DeptAssess", "学员评价科室"),
