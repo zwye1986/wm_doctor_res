@@ -249,6 +249,7 @@ public class UserInterceptor implements HandlerInterceptor {
 
 		myMenus.add("/main");
 		myMenus.add("/osca");
+		myMenus.add("/sys/user");
 
 		for (String menuUrl : myMenus) {
 			if (servletPath.startsWith(menuUrl) || menuUrl.startsWith(servletPath)) {
