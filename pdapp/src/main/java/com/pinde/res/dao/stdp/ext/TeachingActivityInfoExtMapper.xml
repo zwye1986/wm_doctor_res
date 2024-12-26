@@ -21,6 +21,7 @@
         <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />
         <result column="AUDIT_ROLE" property="auditRole" jdbcType="VARCHAR" />
         <result column="OPINION" property="opinion" jdbcType="VARCHAR" />
+        <result column="FILE_FLOWS" property="fileFlows" jdbcType="VARCHAR" javaType="String" />
     </resultMap>
     <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
