@@ -892,7 +892,7 @@
         where d.record_status='Y'
         and d.attendance_flow=t.attendance_flow
         )
-        LEFT JOIN (SELECT p.user_flow, WM_CONCAT(DISTINCT p.dept_name) AS dept_name
+        LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
         FROM res_doctor_sch_process p
         WHERE p.record_status = 'Y'
         <if test='deptFlow != null and deptFlow!=""' >
@@ -1004,7 +1004,7 @@
             where d.record_status='Y'
             and d.attendance_flow=t.attendance_flow
         )
-   LEFT JOIN (SELECT p.user_flow, WM_CONCAT(DISTINCT p.dept_name) AS dept_name
+        LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
           FROM res_doctor_sch_process p
          WHERE p.record_status = 'Y'
         <if test='deptFlow != null and deptFlow!=""' >
@@ -1097,7 +1097,7 @@
     left join JSRES_ATTENDANCE t
     on t.doctor_flow=rd.doctor_flow
     and t.attend_date=a.date_time
-   LEFT JOIN (SELECT p.user_flow, WM_CONCAT(DISTINCT p.dept_name) AS dept_name
+        LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
           FROM res_doctor_sch_process p
          WHERE p.record_status = 'Y'
         <if test='deptFlow != null and deptFlow!=""' >
@@ -1212,7 +1212,7 @@
         </foreach>
     from sys_user su
     left join res_doctor rd on su.user_flow=rd.doctor_flow
-       LEFT JOIN (SELECT p.user_flow, WM_CONCAT(DISTINCT p.dept_name) AS dept_name
+        LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
             FROM res_doctor_sch_process p
             WHERE p.record_status = 'Y'
             <if test='deptFlow != null and deptFlow!=""' >
@@ -1302,7 +1302,7 @@
         </foreach>
         from sys_user su
         left join res_doctor rd on su.user_flow=rd.doctor_flow
-        LEFT JOIN (SELECT p.user_flow, WM_CONCAT(DISTINCT p.dept_name) AS dept_name
+        LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
         FROM res_doctor_sch_process p
         WHERE p.record_status = 'Y'
         <if test='deptFlow != null and deptFlow!=""' >
