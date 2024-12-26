@@ -25,7 +25,10 @@
         left join SYS_USER u on u.USER_FLOW=oda.DOCTOR_FLOW
         left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
         left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
-        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW,wm_concat(osrd.STATION_NAME) STATION_NAME,wm_concat(nvl(osrd.EXAM_SCORE,'*')) EXAM_SCORE
+        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW,
+        to_char(wm_concat(osrd.STATION_FLOW)) STATION_FLOW,
+        to_char(wm_concat(osrd.STATION_NAME)) STATION_NAME,
+        to_char(wm_concat(nvl(osrd.EXAM_SCORE,'*'))) EXAM_SCORE
         from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
         <if test='clinicalFlow!=null and clinicalFlow!=""'>
             and osrd.CLINICAL_FLOW = #{clinicalFlow}
@@ -113,7 +116,10 @@
         left join SYS_USER u on u.USER_FLOW=oda.DOCTOR_FLOW
         left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
         left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
-        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW,wm_concat(osrd.STATION_NAME) STATION_NAME,wm_concat(nvl(osrd.EXAM_SCORE,'*')) EXAM_SCORE
+        left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW,
+        to_char(wm_concat(osrd.STATION_FLOW)) STATION_FLOW,
+        to_char(wm_concat(osrd.STATION_NAME)) STATION_NAME,
+        to_char(wm_concat(nvl(osrd.EXAM_SCORE,'*'))) EXAM_SCORE
         from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
         group by osrd.DOCTOR_FLOW,osrd.CLINICAL_FLOW) a on oda.DOCTOR_FLOW = a.DOCTOR_FLOW and a.CLINICAL_FLOW=oda.clinical_flow
         left join (select osrd.CLINICAL_FLOW,osrd.DOCTOR_FLOW, sum(osrd.EXAM_SCORE) SCORESUM from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'

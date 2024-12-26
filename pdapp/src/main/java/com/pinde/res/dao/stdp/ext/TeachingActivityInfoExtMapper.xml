@@ -211,7 +211,7 @@
             AND R.USER_FLOW=#{userFlow}
         </if>
         LEFT JOIN (
-        SELECT wm_concat(file_flow) as file_flows,product_flow
+        SELECT to_char(wm_concat(file_flow) ) as file_flows,product_flow
         from PUB_FILE
         where RECORD_STATUS = 'Y' and product_flow is not null
         group by product_flow
@@ -779,7 +779,7 @@
             ON RESULT.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
           <!--LEFT JOIN PUB_FILE F ON INFO.FILE_FLOW=F.FILE_FLOW AND F.RECORD_STATUS='Y'-->
           LEFT JOIN (
-				SELECT WM_CONCAT(file_flow) AS file_flows, product_flow
+        SELECT to_char(WM_CONCAT(file_flow)) AS file_flows, product_flow
 				FROM PUB_FILE
 				WHERE RECORD_STATUS = 'Y'
 				GROUP BY product_flow

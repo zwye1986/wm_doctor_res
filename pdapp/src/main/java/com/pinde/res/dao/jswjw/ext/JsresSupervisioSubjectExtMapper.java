@@ -1,6 +1,5 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.core.model.ResSupervisioSubject;
 import com.pinde.core.model.ResSupervisioSubjectUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,11 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface JsresSupervisioSubjectExtMapper {
-    //管理专家和专业专家信息不分开
-	List<ResSupervisioSubject> selectSubjectList(Map<String, Object> param);
-
-	//管理专家和专业专家信息分开
-	List<ResSupervisioSubject> selectSubjectListInfo(Map<String, Object> param);
 
     int delSubjectUserBySubjectFlow(@Param("subjectFlow") String subjectFlow);
 

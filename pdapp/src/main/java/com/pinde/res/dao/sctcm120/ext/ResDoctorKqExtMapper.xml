@@ -153,7 +153,7 @@
         MANAGER_AGREE_FLAG, MANAGER_AUDIT_TIME, MANAGER_AUDIT_INFO, PROCESS_FLOW, SESSION_NUMBER_NOW,
         AUDIT_ROLE_NOW,CREATE_TIME,CASE WHEN PF.FILE_FLOWS IS NULL THEN 'N' ELSE 'Y' END AS FILE_FLOWS
         FROM RES_DOCTOR_KQ K
-        left join(select product_flow,wm_concat(file_flow) AS FILE_FLOWS
+        left join(select product_flow,to_char(wm_concat(file_flow)) AS FILE_FLOWS
         from PUB_FILE
         where record_status = 'Y'
         AND product_type = 'ResDoctorKqFile'

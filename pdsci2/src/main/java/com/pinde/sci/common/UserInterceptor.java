@@ -1,7 +1,7 @@
 package com.pinde.sci.common;
 
-import com.pinde.core.util.StringUtil;
 import com.pinde.core.model.SysUser;
+import com.pinde.core.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -9,7 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class UserInterceptor implements HandlerInterceptor {
 
@@ -244,6 +246,9 @@ public class UserInterceptor implements HandlerInterceptor {
 		if (myMenus.contains(servletPath)) {
 			return true;
 		}
+
+		myMenus.add("/main");
+		myMenus.add("/osca");
 
 		for (String menuUrl : myMenus) {
 			if (servletPath.startsWith(menuUrl) || menuUrl.startsWith(servletPath)) {

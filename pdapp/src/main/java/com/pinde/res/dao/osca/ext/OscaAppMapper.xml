@@ -454,9 +454,9 @@
         SU.USER_CODE,
         SU.SEX_NAME,
         SU.TITLE_NAME,
-        wm_concat(distinct ODA.clinical_name) clinical_name,
-        wm_concat(distinct OSA.spe_name) spe_name,
-        wm_concat(distinct room_name) room_name
+        to_char(wm_concat(distinct ODA.clinical_name)) clinical_name,
+        to_char(wm_concat(distinct OSA.spe_name)) spe_name,
+        to_char(wm_concat(distinct room_name)) room_name
         FROM OSCA_SKILL_ROOM_TEA ODA, OSCA_SKILLS_ASSESSMENT OSA, sys_user su
         WHERE ODA.RECORD_STATUS = 'Y'
         AND SU.RECORD_STATUS = 'Y'
@@ -663,7 +663,7 @@
         SELECT DISTINCT
                         OSRT.PARTNER_FLOW,
                         OSRT.PARTNER_NAME,
-                        wm_concat(DISTINCT OSA.SPE_NAME) SPE_NAME,
+                        to_char(wm_concat(DISTINCT OSA.SPE_NAME)) SPE_NAME,
                         DOCTOR_INFO.STATION_FLOW,
                         DOCTOR_INFO.STATION_NAME,
                         DOCTOR_INFO.DOCTOR_FLOW,
@@ -750,7 +750,7 @@
     <select id="getCalendarInfo" resultType="hashmap">
         SELECT DATE_DAY,
         COUNT(DISTINCT OSA.CLINICAL_FLOW) QTY,
-        WM_CONCAT(DISTINCT OSA.IS_LOCAL) IS_LOCAL
+               to_char(WM_CONCAT(DISTINCT OSA.IS_LOCAL)) IS_LOCAL
         FROM SYS_DATE_INFO D
         LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
         ON OSAT.RECORD_STATUS = 'Y'
@@ -805,7 +805,7 @@
     <select id="getMonthInfo" resultType="hashmap">
         SELECT DATE_MONTH,
         COUNT(DISTINCT OSA.CLINICAL_FLOW) QTY,
-        WM_CONCAT(DISTINCT OSA.IS_LOCAL) IS_LOCAL
+               to_char(WM_CONCAT(DISTINCT OSA.IS_LOCAL)) IS_LOCAL
         FROM SYS_DATE_INFO D
         LEFT JOIN OSCA_SKILLS_ASSESSMENT_TIME OSAT
         ON OSAT.RECORD_STATUS = 'Y'

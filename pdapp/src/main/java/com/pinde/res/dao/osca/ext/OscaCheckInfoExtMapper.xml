@@ -170,8 +170,12 @@
 			 from OSCA_DOCTOR_ASSESSMENT oda
 		left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
 		left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
-		left join (select osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW, wm_concat(osrd.STATION_NAME) STATION_NAME, wm_concat(osrd.EXAM_STATUS_ID) EXAM_STATUS_ID,
-					wm_concat(osrd.EXAM_STATUS_NAME) EXAM_STATUS_NAME from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS='Y'
+		left join (select osrd.DOCTOR_FLOW,
+		to_char(wm_concat(osrd.STATION_FLOW)) STATION_FLOW,
+		to_char(wm_concat(osrd.STATION_NAME)) STATION_NAME,
+		to_char(wm_concat(osrd.EXAM_STATUS_ID)) EXAM_STATUS_ID,
+		to_char(wm_concat(osrd.EXAM_STATUS_NAME)) EXAM_STATUS_NAME from OSCA_SKILL_ROOM_DOC osrd where
+		osrd.RECORD_STATUS='Y'
 			<if test='clinicalFlow!=null and clinicalFlow!=""'>
 				and osrd.CLINICAL_FLOW = #{clinicalFlow}
 			</if>
@@ -261,7 +265,10 @@
 			from OSCA_DOCTOR_ASSESSMENT oda
 		left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
 		left join OSCA_SKILLS_ASSESSMENT oss on oda.CLINICAL_FLOW = oss.CLINICAL_FLOW
-		left join (select osrd.DOCTOR_FLOW,wm_concat(osrd.STATION_FLOW) STATION_FLOW,wm_concat(osrd.STATION_NAME) STATION_NAME,wm_concat(nvl(osrd.EXAM_SCORE,'*')) EXAM_SCORE
+		left join (select osrd.DOCTOR_FLOW,
+		to_char(wm_concat(osrd.STATION_FLOW)) STATION_FLOW,
+		to_char(wm_concat(osrd.STATION_NAME)) STATION_NAME,
+		to_char(wm_concat(nvl(osrd.EXAM_SCORE,'*'))) EXAM_SCORE
 						from OSCA_SKILL_ROOM_DOC osrd where osrd.RECORD_STATUS = 'Y'
 			<if test='clinicalFlow!=null and clinicalFlow!=""'>
 				and osrd.CLINICAL_FLOW = #{clinicalFlow}
@@ -318,10 +325,10 @@
 				oss.CLINICAL_FLOW,
 				oss.CLINICAL_NAME,
 				oda.IS_PASS,
-				wm_concat(osrd.DOC_ROOM_FLOW) DOC_ROOM_FLOW,
-				wm_concat(osrd.STATION_FLOW) STATION_FLOW,
-				wm_concat(osrd.STATION_NAME) STATION_NAME,
-				wm_concat(nvl(osrd.EXAM_SCORE,'0')) EXAM_SCORE
+		to_char(wm_concat(osrd.DOC_ROOM_FLOW)) DOC_ROOM_FLOW,
+		to_char(wm_concat(osrd.STATION_FLOW)) STATION_FLOW,
+		to_char(wm_concat(osrd.STATION_NAME)) STATION_NAME,
+		to_char(wm_concat(nvl(osrd.EXAM_SCORE,'0'))) EXAM_SCORE
 		  from OSCA_DOCTOR_ASSESSMENT oda
 		left join RES_DOCTOR rd on rd.DOCTOR_FLOW = oda.DOCTOR_FLOW
 		left join OSCA_SKILLS_ASSESSMENT oss on oss.CLINICAL_FLOW = oda.CLINICAL_FLOW
@@ -352,7 +359,10 @@
 	<select id="queryRoomDoctorList"  parameterType="java.util.Map" resultType="java.util.Map">
 		select d.room_flow,d.room_name,d.doctor_name,d.spe_name,d.pd_num,d.pd_doctor_name_list
 			from( select e.room_flow,e.room_name,e.doctor_name,e.spe_name,e.pd_num,max(e.pd_doctor_name_list) pd_doctor_name_list
-				from (select c.room_flow,c.room_name,c.doctor_name,c.spe_name,c.pd_num,wm_concat(c.pd_doctor_name)over(partition by c.room_flow order by c.group_idx) pd_doctor_name_list
+		from (select c.room_flow,c.room_name,c.doctor_name,c.spe_name,c.pd_num,
+		-- wm_concat(c.pd_doctor_name)over(partition by c.room_flow order by c.group_idx) pd_doctor_name_list
+		listagg(c.pd_doctor_name,',') within group (order by c.pd_doctor_name) over(partition by c.room_flow )
+		pd_doctor_name_list,
 					from (select osrd.room_flow,osrd.room_name,a.doctor_name,a.spe_name,b.pd_num,b.doctor_name pd_doctor_name,b.group_idx
 						  from osca_skill_room_doc osrd
 						  left join (select doctor_flow,doctor_name,osa.spe_name,room_flow,row_number() over(partition by room_flow order by room_flow) group_idx
@@ -420,7 +430,7 @@
 		where a.group_idx = 1
 		and a.room_flow = osr.room_flow) doctor_name,
 
-		(select wm_concat(oda.doctor_name||'('||osa.spe_name||')')
+		(select to_char(wm_concat(oda.doctor_name||'('||osa.spe_name||')'))
 		from osca_doctor_assessment oda
 		left join osca_skills_assessment osa on oda.clinical_flow = osa.clinical_flow
 		where oda.record_status = 'Y' and osa.record_status = 'Y'
@@ -500,7 +510,13 @@
 		select distinct a.*, b.exam_start_time_list, b.exam_end_time_list, nvl(d.dsh_num, 0) dsh_num, nvl(f.use_num, 0) use_num
 		  from osca_skills_assessment a
 		  left join (select clinical_flow,max(exam_start_time_list) exam_start_time_list,max(exam_end_time_list) exam_end_time_list from(
-							select clinical_flow,wm_concat(exam_start_time) over(partition by clinical_flow order by exam_start_time) exam_start_time_list,wm_concat(exam_end_time) over(partition by clinical_flow) exam_end_time_list
+		select clinical_flow,
+		-- wm_concat(exam_start_time) over(partition by clinical_flow order by exam_start_time) exam_start_time_list,
+		-- wm_concat(exam_end_time) over(partition by clinical_flow) exam_end_time_list
+		listagg(exam_start_time,',') within group (order by exam_start_time) over(partition by clinical_flow )
+		exam_start_time_list,
+		listagg(exam_end_time,',') within group (order by exam_end_time) over(partition by clinical_flow)
+		exam_end_time_list
 								from osca_skills_assessment_time where record_status='Y')group by clinical_flow) b
 			on a.clinical_flow = b.clinical_flow
 		  left join (select c.clinical_flow,
@@ -560,7 +576,8 @@
 	</select>
 
 	<select id="queryOsaTime" parameterType="java.lang.String" resultType="java.util.Map">
-		select wm_concat(osat.exam_start_time) exam_start_time,wm_concat(osat.exam_end_time) exam_end_time
+		select to_char(wm_concat(osat.exam_start_time)) exam_start_time,
+			   to_char(wm_concat(osat.exam_end_time))   exam_end_time
 		from osca_skills_assessment_time osat
 		where osat.record_status='Y'
 		and osat.clinical_flow=#{clinicalFlow}
@@ -579,7 +596,7 @@
 		SELECT *
 		FROM (
 		SELECT osr.ROOM_flow, osr.ROOM_NAME, (
-		SELECT WM_CONCAT(DISTINCT PARTNER_NAME)
+		SELECT to_char(WM_CONCAT(DISTINCT PARTNER_NAME))
 		FROM OSCA_SKILL_ROOM_TEA osrt
 		WHERE osrt.record_status = 'Y'
 		AND osr.ROOM_FLOW = osrt.ROOM_FLOW
@@ -590,7 +607,7 @@
 			and osr.clinical_Flow = #{clinicalFlow}
 		</if>
 		) AS PARTNER_NAME, (
-		SELECT WM_CONCAT(DISTINCT DOCTOR_NAME)
+		SELECT to_char(WM_CONCAT(DISTINCT DOCTOR_NAME))
 		FROM OSCA_SKILL_ROOM_DOC osrd
 		WHERE osrd.record_status = 'Y'
 		AND osr.ROOM_FLOW = osrd.ROOM_FLOW
