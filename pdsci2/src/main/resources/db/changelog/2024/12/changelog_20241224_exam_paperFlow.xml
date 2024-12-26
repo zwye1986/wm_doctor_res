@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="add-column-exam-paperFlow" author="zhangxinren">
+        <sql>
+            alter table SCH_EXAM_ARRANGEMENT add PAPER_FLOW varchar2(50);
+            comment on column SCH_EXAM_ARRANGEMENT.PAPER_FLOW is '生成的试卷的id';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

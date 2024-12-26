@@ -1,10 +1,11 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.model.SysDept;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.alibaba.excel.util.StringUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.util.HttpClientUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sch.ISchExamCfgBiz;
@@ -14,10 +15,9 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SchExamArrangement;
-import com.pinde.core.model.SchExamDoctorArrangement;
-import com.pinde.core.model.SchExamStandardDept;
+import com.pinde.sci.common.InitConfig;
+import org.apache.http.Header;
+import org.apache.http.message.BasicHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,6 +103,12 @@ public class JsResExamCfgController extends GeneralController {
         {
             return "cannotInsert";
         }
+        String accessToken = loginAndToken();
+        // 增加考试操作：新增试卷，导入排班关联学员考试
+        String paperFlow = examCfgBiz.generateExam(schExamArrangement, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+        // 生成试卷后再导入排班
+        examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+
         int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_N);
         if(result==0)
         {
@@ -126,13 +132,59 @@ public class JsResExamCfgController extends GeneralController {
         {
             return "cannotInsert";
         }
-        int result=examCfgBiz.updateArrangements(schExamArrangement,standardDeptId,Arrays.asList(itemId),Arrays.asList(sessionNumbers.split(",")));
+
+        Map<String, String> speSessionToPaperFlowMap = new HashMap<>();
+        String accessToken = loginAndToken();
+        // 增加考试操作：新增试卷，导入排班关联学员考试
+        for(String trainingSpeId: Arrays.asList(itemId)) {
+            for(String sessionNumber: sessionNumbers.split(",")) {
+                String paperFlow = examCfgBiz.generateExam(schExamArrangement, trainingSpeId, sessionNumber, accessToken);
+
+                if(StringUtils.isEmpty(paperFlow)) {
+                    return "生成试卷失败！";
+                }
+
+                speSessionToPaperFlowMap.put(trainingSpeId + sessionNumber, paperFlow);
+                // 生成试卷后再导入排班
+                examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, trainingSpeId, sessionNumber, accessToken);
+            }
+        }
+
+        int result=examCfgBiz.updateArrangements(schExamArrangement,standardDeptId,Arrays.asList(itemId),Arrays.asList(sessionNumbers.split(",")), speSessionToPaperFlowMap);
         if(result==0)
         {
             return "操作失败！";
         }
+
         return "操作成功！";
     }
+
+    private String loginAndToken() {
+        String userName = InitConfig.getSysCfg("jsres_yearly_test_username");
+        String password = InitConfig.getSysCfg("jsres_yearly_test_password");
+        Map<String, String> params = new HashMap<>();
+        params.put("username", userName);
+        params.put("password", password);
+        params.put("reqType", "we_chat");
+
+        String projectName = InitConfig.getSysCfg("jsres_yearly_test_projectname");
+        String applicationName = InitConfig.getSysCfg("jsres_yearly_test_applicationname");
+        Header[] headers = new Header[]{
+                new BasicHeader("projectname", projectName),
+                new BasicHeader("applicationname", applicationName)
+        };
+
+        String loginUrl = InitConfig.getSysCfg("jsres_yearly_test_login_url");
+        HttpClientUtil.HttpResult httpResult = HttpClientUtil.sendPostForm(loginUrl, params, headers, null, "UTF-8");
+        String result = httpResult.getStringContent();
+        JSONObject resultJson = JSONObject.parseObject(result);
+        if(null != resultJson && resultJson.getJSONObject("data") != null) {
+            return "bearer" + resultJson.getJSONObject("data").getString("access_token");
+        }
+
+        return null;
+    }
+
     @RequestMapping(value="/updateCfg")
     @ResponseBody
     public String updateCfg(Model model,  SchExamArrangement schExamArrangement  ){
@@ -143,6 +195,10 @@ public class JsResExamCfgController extends GeneralController {
             if(checkCount>0)
                 return "已有学员参加过考试，无法删除！";
         }
+
+        // 同步对考试系统删除试卷
+        examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+
         int result=examCfgBiz.updateCfg(schExamArrangement);
         if(result==0)
         {

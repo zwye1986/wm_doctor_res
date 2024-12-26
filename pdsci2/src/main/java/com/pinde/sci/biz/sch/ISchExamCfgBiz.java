@@ -8,6 +8,12 @@ import java.util.Map;
 
 public interface ISchExamCfgBiz {
 
+	String generateExam(SchExamArrangement schExamArrangement, String trainingSpeId, String sessionNumber, String accessToken);
+
+	void generateDoctorExam(SchExamArrangement schExamArrangement, String paperFlow, String trainingSpeId, String sessionNumber, String accessToken);
+
+	boolean deleteExam(String paperFlow, String accessToken);
+
 	List<SchExamArrangement> searchList(SchExamArrangement schExamArrangement);
 
 	int updateCfg(SchExamArrangement schExamArrangement);
@@ -54,7 +60,7 @@ public interface ISchExamCfgBiz {
 
 	int checkExists(SchExamArrangement schExamArrangement, List<String> speIds, List<String> sessinNumbers);
 
-	int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers);
+	int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers, Map<String, String> speSessionToPaperFlowMap);
 
 	SchExamDoctorArrangement readExamResult(String processFlow);
 

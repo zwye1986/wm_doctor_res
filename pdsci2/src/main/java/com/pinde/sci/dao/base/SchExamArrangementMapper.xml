@@ -27,6 +27,7 @@
     <result column="IS_APP" property="isApp" jdbcType="VARCHAR" />
     <result column="IS_WEB" property="isWeb" jdbcType="VARCHAR" />
     <result column="IS_OPEN_RESULT" property="isOpenResult" jdbcType="VARCHAR" />
+    <result column="PAPER_FLOW" property="paperFlow" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -91,7 +92,7 @@
     SESSION_NUMBER, ASSESSMENT_YEAR, EXAMPAPER_TYPE, ORG_FLOW, ORG_NAME, ASSESSMENT_START_TIME, 
     ASSESSMENT_END_TIME, IS_OPEN, EXAM_NUMBER, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, EXAM_DURATION, EXAM_START_TIME, EXAM_END_TIME, IS_APP, 
-    IS_WEB, IS_OPEN_RESULT
+    IS_WEB, IS_OPEN_RESULT,PAPER_FLOW
   </sql>
     <select id="selectByExample" resultMap="BaseResultMap"
             parameterType="com.pinde.core.model.SchExamArrangementExample">
@@ -222,6 +223,9 @@
       <if test="isOpenResult != null" >
         IS_OPEN_RESULT,
       </if>
+      <if test="paperFlow != null" >
+        paper_flow,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="arrangeFlow != null" >
@@ -298,6 +302,9 @@
       </if>
       <if test="isOpenResult != null" >
         #{isOpenResult,jdbcType=VARCHAR},
+      </if>
+      <if test="paperFlow != null" >
+        #{paperFlow,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -497,6 +504,10 @@
       <if test="isOpenResult != null" >
         IS_OPEN_RESULT = #{isOpenResult,jdbcType=VARCHAR},
       </if>
+
+      <if test="paperFlow != null" >
+        paper_flow = #{paperFlow,jdbcType=VARCHAR},
+      </if>
     </set>
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
@@ -528,4 +539,43 @@
       IS_OPEN_RESULT = #{isOpenResult,jdbcType=VARCHAR}
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectExamUserList" resultType="com.pinde.core.vo.sch.SchExamArrangementVO" parameterType="com.pinde.core.vo.sch.SchExamArrangementVO">
+    SELECT
+    su.USER_NAME,
+    rd.TRAINING_SPE_NAME,
+    su.USER_CODE,
+    su.USER_PHONE,
+    su.ID_NO,
+    LISTAGG(sasdc.STANDARD_DEPT_NAME, ',') WITHIN GROUP (ORDER BY 1) AS DEPT_NAME
+    FROM
+    RES_DOCTOR_SCH_PROCESS rdsp,
+    SCH_AND_STANDARD_DEPT_CFG sasdc ,
+    SYS_USER su,
+    RES_DOCTOR rd
+    WHERE
+    RDSP.USER_FLOW = su.USER_FLOW
+    AND rd.DOCTOR_FLOW = su.USER_FLOW
+    AND su.RECORD_STATUS = 'Y'
+    AND rd.RECORD_STATUS = 'Y'
+    AND RDSP.SCH_START_DATE >= #{schStartDate}
+    AND RDSP.SCH_END_DATE &lt;= #{schEndDate}
+    AND RDSP.RECORD_STATUS = 'Y'
+    AND sasdc.RECORD_STATUS = 'Y'
+    AND sasdc.sch_dept_flow = rdsp.sch_dept_flow
+    AND rdsp.org_flow = sasdc.org_flow
+    and rd.TRAINING_SPE_ID = #{trainingSpeId}
+    and rd.SESSION_NUMBER = #{sessionNumber}
+    and rd.org_flow = #{orgFlow}
+    and rd.TRAINING_SPE_NAME is not null
+    and su.USER_CODE is not null
+    and su.USER_PHONE is not null
+    and su.ID_NO is not null
+    GROUP BY
+    su.USER_NAME,
+    rd.TRAINING_SPE_NAME,
+    su.USER_CODE,
+    su.USER_PHONE,
+    su.ID_NO
+  </select>
 </mapper>
