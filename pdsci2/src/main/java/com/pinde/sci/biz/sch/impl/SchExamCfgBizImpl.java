@@ -143,7 +143,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		String resultContent = httpResult.getStringContent();
 		JSONObject resultJson = JSONObject.parseObject(resultContent);
 		if(!HTTP_STATUS_OK.equals(resultJson.get(HTTP_RESP_CODE))) {
-			throw new RuntimeException("生成年度试卷失败，失败信息：" + resultJson.get(HTTP_RESP_MSG));
+			throw new RuntimeException("生成/修改年度试卷失败，失败信息：" + resultJson.get(HTTP_RESP_MSG));
 		}
 
 		String paperFlow = resultJson.getJSONObject("data").getString("paperFlow");
@@ -292,6 +292,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 	public boolean deleteExam(String paperFlow, String accessToken) {
 		if(StringUtils.isEmpty(paperFlow) || StringUtils.isEmpty(accessToken)) {
 			log.warn("deleteExam fail, paper flow or access token is empty");
+			throw new RuntimeException("删除年度试卷失败，必填参数没有值：paperFlow或者accessToken");
 		}
 
 		Header[] headers = new Header[]{new BasicHeader("authorization", accessToken),
@@ -305,6 +306,11 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
 		// 暂时不看结果，简单处理
 		HttpClientUtil.HttpResult httpResult = HttpClientUtil.sendPostForm(statusChangeUrl, map, headers, null, "UTF-8");
+
+		JSONObject respJson = JSONObject.parseObject(httpResult.getStringContent());
+		if(!HTTP_STATUS_OK.equals(respJson.get(HTTP_RESP_CODE))) {
+			throw new RuntimeException("删除年度试卷失败，信息：" + respJson.get(HTTP_RESP_MSG));
+		}
 
 		return true;
 	}
