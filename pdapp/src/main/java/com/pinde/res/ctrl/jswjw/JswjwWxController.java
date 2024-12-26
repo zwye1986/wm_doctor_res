@@ -5837,8 +5837,8 @@ public class JswjwWxController extends GeneralController {
                         if (StringUtil.isNotBlank(tempExam.getExamStartTime()) &&
                                 StringUtil.isNotBlank(tempExam.getExamEndTime())) {
                             Date today = DateUtil.parseDate(DateUtil.getCurrDateTime2(), DateUtil.defDtPtn02);
-                            Date examStartTime = DateUtil.parseDate(tempExam.getExamStartTime(), "yyyy-MM-dd HH:mm");
-                            Date examEndTime = DateUtil.parseDate(tempExam.getExamEndTime(), "yyyy-MM-dd HH:mm");
+                            Date examStartTime = DateUtil.parseDate(tempExam.getExamStartTime(), "yyyy-MM-dd HH:mm:ss");
+                            Date examEndTime = DateUtil.parseDate(tempExam.getExamEndTime(), "yyyy-MM-dd HH:mm:ss");
                             if (examStartTime.after(today)) {
                                 paramTempMap.put("canExam", com.pinde.core.common.GlobalConstant.FLAG_N);
                                 paramTempMap.put("isNoStart", com.pinde.core.common.GlobalConstant.FLAG_Y);
@@ -5857,8 +5857,8 @@ public class JswjwWxController extends GeneralController {
                         if (StringUtil.isNotBlank(tempExam.getExamStartTime()) &&
                                 StringUtil.isNotBlank(tempExam.getExamEndTime())) {
                             Date today = DateUtil.parseDate(DateUtil.getCurrDateTime2(), DateUtil.defDtPtn02);
-                            Date examStartTime = DateUtil.parseDate(tempExam.getExamStartTime(), "yyyy-MM-dd HH:mm");
-                            Date examEndTime = DateUtil.parseDate(tempExam.getExamEndTime(), "yyyy-MM-dd HH:mm");
+                            Date examStartTime = DateUtil.parseDate(tempExam.getExamStartTime(), "yyyy-MM-dd HH:mm:ss");
+                            Date examEndTime = DateUtil.parseDate(tempExam.getExamEndTime(), "yyyy-MM-dd HH:mm:ss");
                             if (examStartTime.after(today)) {
                                 paramTempMap.put("canExam", com.pinde.core.common.GlobalConstant.FLAG_N);
                                 paramTempMap.put("isNoStart", com.pinde.core.common.GlobalConstant.FLAG_Y);
@@ -6021,7 +6021,7 @@ public class JswjwWxController extends GeneralController {
                 + "&count=" + examNumber
                 + "&Date=" + Date
                 + "&userFlow=" + user.getUserFlow()
-                + "paperFlow=" + ment.getPaperFlow()
+                + "&paperFlow=" + ment.getPaperFlow()
                 + "&ExamTestType=" + ExamTestType // 写死是3，看测试环境这个是3
                 + "&ExamKnowledge=" + standarDeptNames
                 + "&SpecName=" + doctor.getTrainingSpeName()

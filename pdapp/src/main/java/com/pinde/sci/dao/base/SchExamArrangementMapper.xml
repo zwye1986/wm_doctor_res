@@ -27,6 +27,7 @@
     <result column="IS_APP" property="isApp" jdbcType="VARCHAR" />
     <result column="IS_WEB" property="isWeb" jdbcType="VARCHAR" />
     <result column="IS_OPEN_RESULT" property="isOpenResult" jdbcType="VARCHAR" />
+    <result column="PAPER_FLOW" property="paperFlow" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -91,7 +92,7 @@
     SESSION_NUMBER, ASSESSMENT_YEAR, EXAMPAPER_TYPE, ORG_FLOW, ORG_NAME, ASSESSMENT_START_TIME, 
     ASSESSMENT_END_TIME, IS_OPEN, EXAM_NUMBER, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
     MODIFY_TIME, MODIFY_USER_FLOW, EXAM_DURATION, EXAM_START_TIME, EXAM_END_TIME, IS_APP, 
-    IS_WEB, IS_OPEN_RESULT
+    IS_WEB, IS_OPEN_RESULT, PAPER_FLOW
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SchExamArrangementExample" >
     select
