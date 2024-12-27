@@ -177,7 +177,7 @@ public class UserInterceptor implements HandlerInterceptor {
 						if (StringUtil.isNotBlank(schoolAccessAuthority)) {
 							myMenus.addAll(Arrays.asList(schoolAccessAuthority.split(",")));
 						}
-					} else if (roleFlow.equals(InitConfig.getSysCfg("res_head_role_flow"))) {//科主任
+					} else if (roleFlow.equals(InitConfig.getSysCfg("res_head_role_flow")) || roleFlow.equals(InitConfig.getSysCfg("res_teaching_head_role_flow"))) {//科主任
 						if (StringUtil.isNotBlank(headAccessAuthority)) {
 							myMenus.addAll(Arrays.asList(headAccessAuthority.split(",")));
 						}
