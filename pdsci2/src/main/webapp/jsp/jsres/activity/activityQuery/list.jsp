@@ -131,7 +131,7 @@ function effectiveInfo(activityFlow,roleFlag,isEffective,flag,_this){
 		}
 		var url = "<s:url value='/jsres/activityQuery/effectiveActivity'/>?activityFlow=" + activityFlow+"&isEffective="+isEffective;
 		jboxConfirm(msg, function(){
-			jboxPost(url,null,function(resp){
+			jboxPostAsync(url, null, function (resp) {
 				if(resp=="审核成功"){
 					if(isEffective=="Y")
 					{
