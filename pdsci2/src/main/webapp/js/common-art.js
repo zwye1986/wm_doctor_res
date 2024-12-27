@@ -1,14 +1,15 @@
 //////////////////// art相关  ////////////////////////
 function jboxStartLoading(){
+	var dialogOpened;
 	if(window.parent.frames['mainIframe']!=null){
-		top.dialog({
+		dialogOpened = top.dialog({
 			id:'artLoading',
 		    backdropOpacity: 0.1,
 			width: 40,
 			height: 40
 		}).showModal(); 
 	}else{
-		dialog({
+		dialogOpened = dialog({
 			id:'artLoading',
 		    backdropOpacity: 0.1,
 			width: 40,
@@ -16,12 +17,14 @@ function jboxStartLoading(){
 		}).showModal(); 
 	}
 	jboxCenter();
+
+	return dialogOpened;
 }
-function jboxEndLoading(){
-	_dialogClose('artLoading');
+function jboxEndLoading(dialogId){
+	_dialogClose(dialogId || 'artLoading');
 }
 function _dialogClose(dialogId){
-	var myDialog = top.dialog.get(dialogId);
+	var myDialog = top.dialog.get(dialogId) || dialog.get(dialogId);
 	if(myDialog!=null&&myDialog.open){
 		top.$("[name='jbox-iframe']").attr("name","");
 		myDialog.close().remove();
