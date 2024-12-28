@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SchArrangeDoctorMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.SchArrangeDoctorMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SchArrangeDoctor">
     <id column="ARR_DOC_FLOW" property="arrDocFlow" jdbcType="VARCHAR" />
     <result column="ARRANGE_FLOW" property="arrangeFlow" jdbcType="VARCHAR" />

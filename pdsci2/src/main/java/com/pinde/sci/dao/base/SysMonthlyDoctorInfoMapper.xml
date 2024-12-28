@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SysMonthlyDoctorInfoMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.SysMonthlyDoctorInfoMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyDoctorInfo">
     <id column="SMDI_FLOW" property="smdiFlow" jdbcType="VARCHAR" />
     <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />

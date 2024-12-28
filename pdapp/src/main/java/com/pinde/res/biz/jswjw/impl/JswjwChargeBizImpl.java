@@ -7,7 +7,7 @@ import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysOrgExample;
 import com.pinde.res.biz.jswjw.IJswjwChargeBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorRecruitExtMapper;
-import com.pinde.sci.dao.base.SysDictMapper;
+import com.pinde.core.common.sci.dao.SysDictMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

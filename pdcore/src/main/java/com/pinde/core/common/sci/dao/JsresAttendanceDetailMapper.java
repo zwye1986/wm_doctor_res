@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.JsresAttendanceDetail;
+import com.pinde.core.model.JsresAttendanceDetailExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface JsresAttendanceDetailMapper {
+    int countByExample(JsresAttendanceDetailExample example);
+
+    int deleteByExample(JsresAttendanceDetailExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(JsresAttendanceDetail record);
+
+    int insertSelective(JsresAttendanceDetail record);
+
+    List<JsresAttendanceDetail> selectByExample(JsresAttendanceDetailExample example);
+
+    JsresAttendanceDetail selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") JsresAttendanceDetail record, @Param("example") JsresAttendanceDetailExample example);
+
+    int updateByExample(@Param("record") JsresAttendanceDetail record, @Param("example") JsresAttendanceDetailExample example);
+
+    int updateByPrimaryKeySelective(JsresAttendanceDetail record);
+
+    int updateByPrimaryKey(JsresAttendanceDetail record);
+}

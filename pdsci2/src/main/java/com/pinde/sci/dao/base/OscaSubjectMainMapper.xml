@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.OscaSubjectMainMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.OscaSubjectMainMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSubjectMain">
     <id column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />

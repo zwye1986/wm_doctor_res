@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper">
-	<select id="checkResultDate" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+	<select id="checkResultDate" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
 		select *
         from sch_arrange_result
 		where record_status = 'Y'
@@ -29,7 +29,7 @@
 			and rotation_flow = #{rotationFlow}
 		</if>
 	</select>
-	<select id="searchSchArrangeResults" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+	<select id="searchSchArrangeResults" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
 		select *
         from sch_arrange_result
 		where record_status = 'Y'
@@ -41,7 +41,7 @@
 			and rotation_flow = #{rotationFlow}
 		</if>
 	</select>
-	<select id="getResultByDeptFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+	<select id="getResultByDeptFlow" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
 		select *
         from sch_arrange_result
 		where record_status = 'Y'
@@ -70,9 +70,9 @@
 		GROUP BY DOCTOR_FLOW
 	</select>
 	<resultMap id="resultExtMap" type="com.pinde.core.model.SchArrangeResultExt"
-			   extends="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+			   extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
 		<association property="process" javaType="com.pinde.core.model.ResDoctorSchProcess"
-					 resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"></association>
+					 resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"></association>
 	</resultMap>
 	<select id="getResults" resultMap="resultExtMap">
 		select sar.*,rdsp.*
@@ -137,7 +137,7 @@
 		AND #{endTime} >= MODIFY_TIME
 	</select>
 
-	<select id="queryDoctorUnLockDate" resultMap="com.pinde.sci.dao.base.DoctorUntiedRecordingMapper.BaseResultMap">
+	<select id="queryDoctorUnLockDate" resultMap="com.pinde.core.common.sci.dao.DoctorUntiedRecordingMapper.BaseResultMap">
 		select * from DOCTOR_UNTIED_RECORDING
 		where RECORD_STATUS = 'Y'
 		AND LOCK_STATUS = 'UnLock'
@@ -145,7 +145,7 @@
 		ORDER BY MODIFY_TIME DESC
 	</select>
 
-	<select id="deptDoctorAllWorkDetailByNow"   resultMap="com.pinde.sci.dao.base.JsresDoctorDeptDetailMapper.BaseResultMap">
+	<select id="deptDoctorAllWorkDetailByNow"   resultMap="com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper.BaseResultMap">
          SELECT sys_guid() RECORD_FLOW ,
            A.RECRUIT_FLOW,
            A.DOCTOR_FLOW,
@@ -505,7 +505,7 @@
         order by dr.SESSION_NUMBER desc,dr.TRAINING_Type_ID,dr.TRAINING_SPE_ID,u.user_flow
     </select>
 
-    <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT *
         FROM SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'

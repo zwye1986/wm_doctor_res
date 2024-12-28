@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.JsresGraduationApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresGraduationApply" >
+    <id column="APPLY_FLOW" property="applyFlow" jdbcType="VARCHAR" />
+    <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_NAME" property="rotationName" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="LOCAL_AUDIT_STATUS_ID" property="localAuditStatusId" jdbcType="VARCHAR" />
+    <result column="LOCAL_AUDIT_STATUS_NAME" property="localAuditStatusName" jdbcType="VARCHAR" />
+    <result column="LOCAL_REASON" property="localReason" jdbcType="VARCHAR" />
+    <result column="CITY_AUDIT_STATUS_ID" property="cityAuditStatusId" jdbcType="VARCHAR" />
+    <result column="CITY_AUDIT_STATUS_NAME" property="cityAuditStatusName" jdbcType="VARCHAR" />
+    <result column="CITY_REASON" property="cityReason" jdbcType="VARCHAR" />
+    <result column="GLOBAL_AUDIT_STATUS_ID" property="globalAuditStatusId" jdbcType="VARCHAR" />
+    <result column="GLOBAL_AUDIT_STATUS_NAME" property="globalAuditStatusName" jdbcType="VARCHAR" />
+    <result column="GLOBAL_REASON" property="globalReason" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="AVG_COMPLETE" property="avgComplete" jdbcType="VARCHAR" />
+    <result column="AVG_AUDIT" property="avgAudit" jdbcType="VARCHAR" />
+    <result column="MATERIAL_ID" property="materialId" jdbcType="VARCHAR" />
+    <result column="PRACTICING_SCOPE_ID" property="practicingScopeId" jdbcType="VARCHAR" />
+    <result column="PRACTICING_SCOPE_NAME" property="practicingScopeName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_URI" property="certificateUri" jdbcType="VARCHAR" />
+    <result column="QUALIFICATION_MATERIAL_URI" property="qualificationMaterialUri" jdbcType="VARCHAR" />
+    <result column="SPECIAL_CERTIFICATION_URI" property="specialCertificationUri" jdbcType="VARCHAR" />
+    <result column="QUALIFICATION_MATERIAL_CODE" property="qualificationMaterialCode" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="REGISTE_MANUA" property="registeManua" jdbcType="VARCHAR" />
+    <result column="APPLY_YEAR" property="applyYear" jdbcType="VARCHAR" />
+    <result column="AVG_IN_COMPLETE" property="avgInComplete" jdbcType="VARCHAR" />
+    <result column="AVG_OUT_COMPLETE" property="avgOutComplete" jdbcType="VARCHAR" />
+    <result column="AVG_COMPLETE_BI_PER" property="avgCompleteBiPer" jdbcType="VARCHAR" />
+    <result column="AVG_OUT_COMPLETE_BI_PER" property="avgOutCompleteBiPer" jdbcType="VARCHAR" />
+    <result column="AVG_IN_COMPLETE_BI_PER" property="avgInCompleteBiPer" jdbcType="VARCHAR" />
+    <result column="GRADUATION_MATERIAL_ID" property="graduationMaterialId" jdbcType="VARCHAR" />
+    <result column="GRADUATION_MATERIAL_NAME" property="graduationMaterialName" jdbcType="VARCHAR" />
+    <result column="GRADUATION_MATERIAL_CODE" property="graduationMaterialCode" jdbcType="VARCHAR" />
+    <result column="GRADUATION_MATERIAL_URI" property="graduationMaterialUri" jdbcType="VARCHAR" />
+    <result column="GRADUATION_CATEGORY_ID" property="graduationCategoryId" jdbcType="VARCHAR" />
+    <result column="GRADUATION_CATEGORY_NAME" property="graduationCategoryName" jdbcType="VARCHAR" />
+    <result column="GRADUATION_SCOPE_ID" property="graduationScopeId" jdbcType="VARCHAR" />
+    <result column="GRADUATION_SCOPE_NAME" property="graduationScopeName" jdbcType="VARCHAR" />
+    <result column="MAKE_UP" property="makeUp" jdbcType="VARCHAR" />
+    <result column="IS_THEROY" property="isTheroy" jdbcType="VARCHAR" />
+    <result column="IS_SKILL" property="isSkill" jdbcType="VARCHAR" />
+    <result column="IS_FIVE" property="isFive" jdbcType="VARCHAR" />
+    <result column="IS_TEN" property="isTen" jdbcType="VARCHAR" />
+    <result column="GRADUATION_MATERIAL_TIME" property="graduationMaterialTime" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_NO" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="DOCTOR_IS_APPLY" property="doctorIsApply" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    APPLY_FLOW, RECRUIT_FLOW, ROTATION_FLOW, ROTATION_NAME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, 
+    LOCAL_AUDIT_STATUS_ID, LOCAL_AUDIT_STATUS_NAME, LOCAL_REASON, CITY_AUDIT_STATUS_ID, 
+    CITY_AUDIT_STATUS_NAME, CITY_REASON, GLOBAL_AUDIT_STATUS_ID, GLOBAL_AUDIT_STATUS_NAME, 
+    GLOBAL_REASON, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    AVG_COMPLETE, AVG_AUDIT, MATERIAL_ID, PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME, 
+    CERTIFICATE_URI, QUALIFICATION_MATERIAL_URI, SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE, 
+    TYPE_ID, REGISTE_MANUA, APPLY_YEAR, AVG_IN_COMPLETE, AVG_OUT_COMPLETE, AVG_COMPLETE_BI_PER, 
+    AVG_OUT_COMPLETE_BI_PER, AVG_IN_COMPLETE_BI_PER, GRADUATION_MATERIAL_ID, GRADUATION_MATERIAL_NAME, 
+    GRADUATION_MATERIAL_CODE, GRADUATION_MATERIAL_URI, GRADUATION_CATEGORY_ID, GRADUATION_CATEGORY_NAME, 
+    GRADUATION_SCOPE_ID, GRADUATION_SCOPE_NAME, MAKE_UP, IS_THEROY, IS_SKILL, IS_FIVE, 
+    IS_TEN, GRADUATION_MATERIAL_TIME, CERTIFICATE_NO, TEST_ID, REMARK, DOCTOR_IS_APPLY
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresGraduationApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from JSRES_GRADUATION_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from JSRES_GRADUATION_APPLY
+    where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete
+      from JSRES_GRADUATION_APPLY
+    where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresGraduationApplyExample" >
+      delete from JSRES_GRADUATION_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.JsresGraduationApply" >
+      insert into JSRES_GRADUATION_APPLY (APPLY_FLOW, RECRUIT_FLOW, ROTATION_FLOW,
+      ROTATION_NAME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, 
+      LOCAL_AUDIT_STATUS_ID, LOCAL_AUDIT_STATUS_NAME, 
+      LOCAL_REASON, CITY_AUDIT_STATUS_ID, CITY_AUDIT_STATUS_NAME, 
+      CITY_REASON, GLOBAL_AUDIT_STATUS_ID, GLOBAL_AUDIT_STATUS_NAME, 
+      GLOBAL_REASON, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      AVG_COMPLETE, AVG_AUDIT, MATERIAL_ID, 
+      PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME, 
+      CERTIFICATE_URI, QUALIFICATION_MATERIAL_URI, 
+      SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE, 
+      TYPE_ID, REGISTE_MANUA, APPLY_YEAR, 
+      AVG_IN_COMPLETE, AVG_OUT_COMPLETE, AVG_COMPLETE_BI_PER, 
+      AVG_OUT_COMPLETE_BI_PER, AVG_IN_COMPLETE_BI_PER, 
+      GRADUATION_MATERIAL_ID, GRADUATION_MATERIAL_NAME, 
+      GRADUATION_MATERIAL_CODE, GRADUATION_MATERIAL_URI, 
+      GRADUATION_CATEGORY_ID, GRADUATION_CATEGORY_NAME, 
+      GRADUATION_SCOPE_ID, GRADUATION_SCOPE_NAME, 
+      MAKE_UP, IS_THEROY, IS_SKILL, 
+      IS_FIVE, IS_TEN, GRADUATION_MATERIAL_TIME, 
+      CERTIFICATE_NO, TEST_ID, REMARK, 
+      DOCTOR_IS_APPLY)
+    values (#{applyFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR}, 
+      #{rotationName,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, 
+      #{localAuditStatusId,jdbcType=VARCHAR}, #{localAuditStatusName,jdbcType=VARCHAR}, 
+      #{localReason,jdbcType=VARCHAR}, #{cityAuditStatusId,jdbcType=VARCHAR}, #{cityAuditStatusName,jdbcType=VARCHAR}, 
+      #{cityReason,jdbcType=VARCHAR}, #{globalAuditStatusId,jdbcType=VARCHAR}, #{globalAuditStatusName,jdbcType=VARCHAR}, 
+      #{globalReason,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{avgComplete,jdbcType=VARCHAR}, #{avgAudit,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, 
+      #{practicingScopeId,jdbcType=VARCHAR}, #{practicingScopeName,jdbcType=VARCHAR}, 
+      #{certificateUri,jdbcType=VARCHAR}, #{qualificationMaterialUri,jdbcType=VARCHAR}, 
+      #{specialCertificationUri,jdbcType=VARCHAR}, #{qualificationMaterialCode,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=VARCHAR}, #{registeManua,jdbcType=VARCHAR}, #{applyYear,jdbcType=VARCHAR}, 
+      #{avgInComplete,jdbcType=VARCHAR}, #{avgOutComplete,jdbcType=VARCHAR}, #{avgCompleteBiPer,jdbcType=VARCHAR}, 
+      #{avgOutCompleteBiPer,jdbcType=VARCHAR}, #{avgInCompleteBiPer,jdbcType=VARCHAR}, 
+      #{graduationMaterialId,jdbcType=VARCHAR}, #{graduationMaterialName,jdbcType=VARCHAR}, 
+      #{graduationMaterialCode,jdbcType=VARCHAR}, #{graduationMaterialUri,jdbcType=VARCHAR}, 
+      #{graduationCategoryId,jdbcType=VARCHAR}, #{graduationCategoryName,jdbcType=VARCHAR}, 
+      #{graduationScopeId,jdbcType=VARCHAR}, #{graduationScopeName,jdbcType=VARCHAR}, 
+      #{makeUp,jdbcType=VARCHAR}, #{isTheroy,jdbcType=VARCHAR}, #{isSkill,jdbcType=VARCHAR}, 
+      #{isFive,jdbcType=VARCHAR}, #{isTen,jdbcType=VARCHAR}, #{graduationMaterialTime,jdbcType=VARCHAR}, 
+      #{certificateNo,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{doctorIsApply,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresGraduationApply" >
+      insert into JSRES_GRADUATION_APPLY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applyFlow != null" >
+        APPLY_FLOW,
+      </if>
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW,
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW,
+      </if>
+      <if test="rotationName != null" >
+        ROTATION_NAME,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="localAuditStatusId != null" >
+        LOCAL_AUDIT_STATUS_ID,
+      </if>
+      <if test="localAuditStatusName != null" >
+        LOCAL_AUDIT_STATUS_NAME,
+      </if>
+      <if test="localReason != null" >
+        LOCAL_REASON,
+      </if>
+      <if test="cityAuditStatusId != null" >
+        CITY_AUDIT_STATUS_ID,
+      </if>
+      <if test="cityAuditStatusName != null" >
+        CITY_AUDIT_STATUS_NAME,
+      </if>
+      <if test="cityReason != null" >
+        CITY_REASON,
+      </if>
+      <if test="globalAuditStatusId != null" >
+        GLOBAL_AUDIT_STATUS_ID,
+      </if>
+      <if test="globalAuditStatusName != null" >
+        GLOBAL_AUDIT_STATUS_NAME,
+      </if>
+      <if test="globalReason != null" >
+        GLOBAL_REASON,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="avgComplete != null" >
+        AVG_COMPLETE,
+      </if>
+      <if test="avgAudit != null" >
+        AVG_AUDIT,
+      </if>
+      <if test="materialId != null" >
+        MATERIAL_ID,
+      </if>
+      <if test="practicingScopeId != null" >
+        PRACTICING_SCOPE_ID,
+      </if>
+      <if test="practicingScopeName != null" >
+        PRACTICING_SCOPE_NAME,
+      </if>
+      <if test="certificateUri != null" >
+        CERTIFICATE_URI,
+      </if>
+      <if test="qualificationMaterialUri != null" >
+        QUALIFICATION_MATERIAL_URI,
+      </if>
+      <if test="specialCertificationUri != null" >
+        SPECIAL_CERTIFICATION_URI,
+      </if>
+      <if test="qualificationMaterialCode != null" >
+        QUALIFICATION_MATERIAL_CODE,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="registeManua != null" >
+        REGISTE_MANUA,
+      </if>
+      <if test="applyYear != null" >
+        APPLY_YEAR,
+      </if>
+      <if test="avgInComplete != null" >
+        AVG_IN_COMPLETE,
+      </if>
+      <if test="avgOutComplete != null" >
+        AVG_OUT_COMPLETE,
+      </if>
+      <if test="avgCompleteBiPer != null" >
+        AVG_COMPLETE_BI_PER,
+      </if>
+      <if test="avgOutCompleteBiPer != null" >
+        AVG_OUT_COMPLETE_BI_PER,
+      </if>
+      <if test="avgInCompleteBiPer != null" >
+        AVG_IN_COMPLETE_BI_PER,
+      </if>
+      <if test="graduationMaterialId != null" >
+        GRADUATION_MATERIAL_ID,
+      </if>
+      <if test="graduationMaterialName != null" >
+        GRADUATION_MATERIAL_NAME,
+      </if>
+      <if test="graduationMaterialCode != null" >
+        GRADUATION_MATERIAL_CODE,
+      </if>
+      <if test="graduationMaterialUri != null" >
+        GRADUATION_MATERIAL_URI,
+      </if>
+      <if test="graduationCategoryId != null" >
+        GRADUATION_CATEGORY_ID,
+      </if>
+      <if test="graduationCategoryName != null" >
+        GRADUATION_CATEGORY_NAME,
+      </if>
+      <if test="graduationScopeId != null" >
+        GRADUATION_SCOPE_ID,
+      </if>
+      <if test="graduationScopeName != null" >
+        GRADUATION_SCOPE_NAME,
+      </if>
+      <if test="makeUp != null" >
+        MAKE_UP,
+      </if>
+      <if test="isTheroy != null" >
+        IS_THEROY,
+      </if>
+      <if test="isSkill != null" >
+        IS_SKILL,
+      </if>
+      <if test="isFive != null" >
+        IS_FIVE,
+      </if>
+      <if test="isTen != null" >
+        IS_TEN,
+      </if>
+      <if test="graduationMaterialTime != null" >
+        GRADUATION_MATERIAL_TIME,
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO,
+      </if>
+      <if test="testId != null" >
+        TEST_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="doctorIsApply != null" >
+        DOCTOR_IS_APPLY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applyFlow != null" >
+        #{applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null" >
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationName != null" >
+        #{rotationName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="localAuditStatusId != null" >
+        #{localAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="localAuditStatusName != null" >
+        #{localAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="localReason != null" >
+        #{localReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAuditStatusId != null" >
+        #{cityAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAuditStatusName != null" >
+        #{cityAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityReason != null" >
+        #{cityReason,jdbcType=VARCHAR},
+      </if>
+      <if test="globalAuditStatusId != null" >
+        #{globalAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="globalAuditStatusName != null" >
+        #{globalAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="globalReason != null" >
+        #{globalReason,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="avgComplete != null" >
+        #{avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgAudit != null" >
+        #{avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeId != null" >
+        #{practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeName != null" >
+        #{practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUri != null" >
+        #{certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialUri != null" >
+        #{qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertificationUri != null" >
+        #{specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialCode != null" >
+        #{qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="registeManua != null" >
+        #{registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="applyYear != null" >
+        #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInComplete != null" >
+        #{avgInComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutComplete != null" >
+        #{avgOutComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgCompleteBiPer != null" >
+        #{avgCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutCompleteBiPer != null" >
+        #{avgOutCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInCompleteBiPer != null" >
+        #{avgInCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialId != null" >
+        #{graduationMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialName != null" >
+        #{graduationMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialCode != null" >
+        #{graduationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialUri != null" >
+        #{graduationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCategoryId != null" >
+        #{graduationCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCategoryName != null" >
+        #{graduationCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationScopeId != null" >
+        #{graduationScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationScopeName != null" >
+        #{graduationScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="makeUp != null" >
+        #{makeUp,jdbcType=VARCHAR},
+      </if>
+      <if test="isTheroy != null" >
+        #{isTheroy,jdbcType=VARCHAR},
+      </if>
+      <if test="isSkill != null" >
+        #{isSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="isFive != null" >
+        #{isFive,jdbcType=VARCHAR},
+      </if>
+      <if test="isTen != null" >
+        #{isTen,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialTime != null" >
+        #{graduationMaterialTime,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorIsApply != null" >
+        #{doctorIsApply,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresGraduationApplyExample" resultType="java.lang.Integer" >
+      select count(*) from JSRES_GRADUATION_APPLY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update JSRES_GRADUATION_APPLY
+    <set >
+      <if test="record.applyFlow != null" >
+        APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitFlow != null" >
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationFlow != null" >
+        ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationName != null" >
+        ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localAuditStatusId != null" >
+        LOCAL_AUDIT_STATUS_ID = #{record.localAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localAuditStatusName != null" >
+        LOCAL_AUDIT_STATUS_NAME = #{record.localAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localReason != null" >
+        LOCAL_REASON = #{record.localReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityAuditStatusId != null" >
+        CITY_AUDIT_STATUS_ID = #{record.cityAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityAuditStatusName != null" >
+        CITY_AUDIT_STATUS_NAME = #{record.cityAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityReason != null" >
+        CITY_REASON = #{record.cityReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.globalAuditStatusId != null" >
+        GLOBAL_AUDIT_STATUS_ID = #{record.globalAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.globalAuditStatusName != null" >
+        GLOBAL_AUDIT_STATUS_NAME = #{record.globalAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.globalReason != null" >
+        GLOBAL_REASON = #{record.globalReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgComplete != null" >
+        AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgAudit != null" >
+        AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialId != null" >
+        MATERIAL_ID = #{record.materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScopeId != null" >
+        PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScopeName != null" >
+        PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateUri != null" >
+        CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialUri != null" >
+        QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialCertificationUri != null" >
+        SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialCode != null" >
+        QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeManua != null" >
+        REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyYear != null" >
+        APPLY_YEAR = #{record.applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgInComplete != null" >
+        AVG_IN_COMPLETE = #{record.avgInComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgOutComplete != null" >
+        AVG_OUT_COMPLETE = #{record.avgOutComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgCompleteBiPer != null" >
+        AVG_COMPLETE_BI_PER = #{record.avgCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgOutCompleteBiPer != null" >
+        AVG_OUT_COMPLETE_BI_PER = #{record.avgOutCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgInCompleteBiPer != null" >
+        AVG_IN_COMPLETE_BI_PER = #{record.avgInCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationMaterialId != null" >
+        GRADUATION_MATERIAL_ID = #{record.graduationMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationMaterialName != null" >
+        GRADUATION_MATERIAL_NAME = #{record.graduationMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationMaterialCode != null" >
+        GRADUATION_MATERIAL_CODE = #{record.graduationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationMaterialUri != null" >
+        GRADUATION_MATERIAL_URI = #{record.graduationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationCategoryId != null" >
+        GRADUATION_CATEGORY_ID = #{record.graduationCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationCategoryName != null" >
+        GRADUATION_CATEGORY_NAME = #{record.graduationCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationScopeId != null" >
+        GRADUATION_SCOPE_ID = #{record.graduationScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationScopeName != null" >
+        GRADUATION_SCOPE_NAME = #{record.graduationScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.makeUp != null" >
+        MAKE_UP = #{record.makeUp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTheroy != null" >
+        IS_THEROY = #{record.isTheroy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSkill != null" >
+        IS_SKILL = #{record.isSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFive != null" >
+        IS_FIVE = #{record.isFive,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTen != null" >
+        IS_TEN = #{record.isTen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationMaterialTime != null" >
+        GRADUATION_MATERIAL_TIME = #{record.graduationMaterialTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateNo != null" >
+        CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testId != null" >
+        TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorIsApply != null" >
+        DOCTOR_IS_APPLY = #{record.doctorIsApply,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update JSRES_GRADUATION_APPLY
+    set APPLY_FLOW = #{record.applyFlow,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      LOCAL_AUDIT_STATUS_ID = #{record.localAuditStatusId,jdbcType=VARCHAR},
+      LOCAL_AUDIT_STATUS_NAME = #{record.localAuditStatusName,jdbcType=VARCHAR},
+      LOCAL_REASON = #{record.localReason,jdbcType=VARCHAR},
+      CITY_AUDIT_STATUS_ID = #{record.cityAuditStatusId,jdbcType=VARCHAR},
+      CITY_AUDIT_STATUS_NAME = #{record.cityAuditStatusName,jdbcType=VARCHAR},
+      CITY_REASON = #{record.cityReason,jdbcType=VARCHAR},
+      GLOBAL_AUDIT_STATUS_ID = #{record.globalAuditStatusId,jdbcType=VARCHAR},
+      GLOBAL_AUDIT_STATUS_NAME = #{record.globalAuditStatusName,jdbcType=VARCHAR},
+      GLOBAL_REASON = #{record.globalReason,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      MATERIAL_ID = #{record.materialId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      APPLY_YEAR = #{record.applyYear,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE = #{record.avgInComplete,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE = #{record.avgOutComplete,jdbcType=VARCHAR},
+      AVG_COMPLETE_BI_PER = #{record.avgCompleteBiPer,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE_BI_PER = #{record.avgOutCompleteBiPer,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE_BI_PER = #{record.avgInCompleteBiPer,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_ID = #{record.graduationMaterialId,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_NAME = #{record.graduationMaterialName,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_CODE = #{record.graduationMaterialCode,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_URI = #{record.graduationMaterialUri,jdbcType=VARCHAR},
+      GRADUATION_CATEGORY_ID = #{record.graduationCategoryId,jdbcType=VARCHAR},
+      GRADUATION_CATEGORY_NAME = #{record.graduationCategoryName,jdbcType=VARCHAR},
+      GRADUATION_SCOPE_ID = #{record.graduationScopeId,jdbcType=VARCHAR},
+      GRADUATION_SCOPE_NAME = #{record.graduationScopeName,jdbcType=VARCHAR},
+      MAKE_UP = #{record.makeUp,jdbcType=VARCHAR},
+      IS_THEROY = #{record.isTheroy,jdbcType=VARCHAR},
+      IS_SKILL = #{record.isSkill,jdbcType=VARCHAR},
+      IS_FIVE = #{record.isFive,jdbcType=VARCHAR},
+      IS_TEN = #{record.isTen,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_TIME = #{record.graduationMaterialTime,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
+      TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      DOCTOR_IS_APPLY = #{record.doctorIsApply,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresGraduationApply" >
+      update JSRES_GRADUATION_APPLY
+    <set >
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationName != null" >
+        ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="localAuditStatusId != null" >
+        LOCAL_AUDIT_STATUS_ID = #{localAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="localAuditStatusName != null" >
+        LOCAL_AUDIT_STATUS_NAME = #{localAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="localReason != null" >
+        LOCAL_REASON = #{localReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAuditStatusId != null" >
+        CITY_AUDIT_STATUS_ID = #{cityAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityAuditStatusName != null" >
+        CITY_AUDIT_STATUS_NAME = #{cityAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityReason != null" >
+        CITY_REASON = #{cityReason,jdbcType=VARCHAR},
+      </if>
+      <if test="globalAuditStatusId != null" >
+        GLOBAL_AUDIT_STATUS_ID = #{globalAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="globalAuditStatusName != null" >
+        GLOBAL_AUDIT_STATUS_NAME = #{globalAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="globalReason != null" >
+        GLOBAL_REASON = #{globalReason,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="avgComplete != null" >
+        AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgAudit != null" >
+        AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        MATERIAL_ID = #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeId != null" >
+        PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeName != null" >
+        PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUri != null" >
+        CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialUri != null" >
+        QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertificationUri != null" >
+        SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialCode != null" >
+        QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="registeManua != null" >
+        REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="applyYear != null" >
+        APPLY_YEAR = #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInComplete != null" >
+        AVG_IN_COMPLETE = #{avgInComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutComplete != null" >
+        AVG_OUT_COMPLETE = #{avgOutComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgCompleteBiPer != null" >
+        AVG_COMPLETE_BI_PER = #{avgCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutCompleteBiPer != null" >
+        AVG_OUT_COMPLETE_BI_PER = #{avgOutCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInCompleteBiPer != null" >
+        AVG_IN_COMPLETE_BI_PER = #{avgInCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialId != null" >
+        GRADUATION_MATERIAL_ID = #{graduationMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialName != null" >
+        GRADUATION_MATERIAL_NAME = #{graduationMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialCode != null" >
+        GRADUATION_MATERIAL_CODE = #{graduationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialUri != null" >
+        GRADUATION_MATERIAL_URI = #{graduationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCategoryId != null" >
+        GRADUATION_CATEGORY_ID = #{graduationCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCategoryName != null" >
+        GRADUATION_CATEGORY_NAME = #{graduationCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationScopeId != null" >
+        GRADUATION_SCOPE_ID = #{graduationScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationScopeName != null" >
+        GRADUATION_SCOPE_NAME = #{graduationScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="makeUp != null" >
+        MAKE_UP = #{makeUp,jdbcType=VARCHAR},
+      </if>
+      <if test="isTheroy != null" >
+        IS_THEROY = #{isTheroy,jdbcType=VARCHAR},
+      </if>
+      <if test="isSkill != null" >
+        IS_SKILL = #{isSkill,jdbcType=VARCHAR},
+      </if>
+      <if test="isFive != null" >
+        IS_FIVE = #{isFive,jdbcType=VARCHAR},
+      </if>
+      <if test="isTen != null" >
+        IS_TEN = #{isTen,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationMaterialTime != null" >
+        GRADUATION_MATERIAL_TIME = #{graduationMaterialTime,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        TEST_ID = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorIsApply != null" >
+        DOCTOR_IS_APPLY = #{doctorIsApply,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresGraduationApply" >
+      update JSRES_GRADUATION_APPLY
+    set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      LOCAL_AUDIT_STATUS_ID = #{localAuditStatusId,jdbcType=VARCHAR},
+      LOCAL_AUDIT_STATUS_NAME = #{localAuditStatusName,jdbcType=VARCHAR},
+      LOCAL_REASON = #{localReason,jdbcType=VARCHAR},
+      CITY_AUDIT_STATUS_ID = #{cityAuditStatusId,jdbcType=VARCHAR},
+      CITY_AUDIT_STATUS_NAME = #{cityAuditStatusName,jdbcType=VARCHAR},
+      CITY_REASON = #{cityReason,jdbcType=VARCHAR},
+      GLOBAL_AUDIT_STATUS_ID = #{globalAuditStatusId,jdbcType=VARCHAR},
+      GLOBAL_AUDIT_STATUS_NAME = #{globalAuditStatusName,jdbcType=VARCHAR},
+      GLOBAL_REASON = #{globalReason,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      MATERIAL_ID = #{materialId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      APPLY_YEAR = #{applyYear,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE = #{avgInComplete,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE = #{avgOutComplete,jdbcType=VARCHAR},
+      AVG_COMPLETE_BI_PER = #{avgCompleteBiPer,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE_BI_PER = #{avgOutCompleteBiPer,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE_BI_PER = #{avgInCompleteBiPer,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_ID = #{graduationMaterialId,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_NAME = #{graduationMaterialName,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_CODE = #{graduationMaterialCode,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_URI = #{graduationMaterialUri,jdbcType=VARCHAR},
+      GRADUATION_CATEGORY_ID = #{graduationCategoryId,jdbcType=VARCHAR},
+      GRADUATION_CATEGORY_NAME = #{graduationCategoryName,jdbcType=VARCHAR},
+      GRADUATION_SCOPE_ID = #{graduationScopeId,jdbcType=VARCHAR},
+      GRADUATION_SCOPE_NAME = #{graduationScopeName,jdbcType=VARCHAR},
+      MAKE_UP = #{makeUp,jdbcType=VARCHAR},
+      IS_THEROY = #{isTheroy,jdbcType=VARCHAR},
+      IS_SKILL = #{isSkill,jdbcType=VARCHAR},
+      IS_FIVE = #{isFive,jdbcType=VARCHAR},
+      IS_TEN = #{isTen,jdbcType=VARCHAR},
+      GRADUATION_MATERIAL_TIME = #{graduationMaterialTime,jdbcType=VARCHAR},
+      CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
+      TEST_ID = #{testId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      DOCTOR_IS_APPLY = #{doctorIsApply,jdbcType=VARCHAR}
+    where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

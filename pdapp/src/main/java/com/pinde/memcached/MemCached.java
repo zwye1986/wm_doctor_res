@@ -70,12 +70,4 @@ public class MemCached
         return mcc.get(key);
     }
 
-    public static void main(String[] args)
-    {
-        MemCached cache = MemCached.getInstance();
-        //cache.add("hello2", 234);
-        //cache.add("aa", "bb", new Date(1000 * 60));
-        //System.out.println("aa get value : " + cache.get("aa"));
-        //System.out.println("hello2 get value : " + cache.get("hello2"));
-    }
 }

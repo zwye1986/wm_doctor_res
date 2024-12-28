@@ -132,12 +132,12 @@
 		 on rd.doctor_flow=dr.doctor_flow
 		 where dr.record_status='Y' and audit_status_Id='NotPassed'and recruit_flow=#{recruitFlow}
 	</insert>
-	<select id="selectRecruitDocInfo" resultMap="com.pinde.sci.dao.base.JsresRecruitDocInfoMapper.ResultMapWithBLOBs">
+	<select id="selectRecruitDocInfo" resultMap="com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper.ResultMapWithBLOBs">
 		select recruit_flow, doctor_flow, org_flow, org_name, spe_id, spe_name, swap_flag, recruit_type_id, recruit_type_name, recruit_year, retest_flag, exam_result, audition_result, oper_result, totle_result, admit_flag, recruit_flag, confirm_flag, record_status, create_time, create_user_flow, modify_time, modify_user_flow, swap_spe_id, swap_spe_name, recruit_date, retest_notice, admit_notice, cat_spe_id, cat_spe_name, session_number, yet_train_year, doctor_status_id, doctor_status_name, doctor_strike_id, doctor_strike_name, train_no, audit_status_id, audit_status_name, train_year, place_id, place_name, prove_file_url, complete_cert_no, complete_file_url, curr_degree_category_id, curr_degree_category_name, prov_remark, graduation_year, admin_swap_flag, rotation_flow, rotation_name, special_cert_no, special_file_url, avg_complete, avg_audit, material_id, practicing_scope_id, practicing_scope_name, certificate_uri, qualification_material_uri, special_certification_uri, qualification_material_code, type_id, registe_manua, second_spe_id, second_spe_name, graduation_certificate_no, certificate_date, graduation_certificate_type
 		   from res_doctor_recruit
 		 where record_status='Y' and audit_status_Id='Passed' and recruit_flow=#{recruitFlow}
 	</select>
-	<select id="selectRecruitInfo" resultMap="com.pinde.sci.dao.base.JsresRecruitInfoMapper.BaseResultMap">
+	<select id="selectRecruitInfo" resultMap="com.pinde.core.common.sci.dao.JsresRecruitInfoMapper.BaseResultMap">
 		select recruit_flow record_flow,dr.doctor_flow,rd.doctor_type_id,rd.doctor_type_name,dr.org_flow,dr.org_name,dr.spe_id,dr.spe_name,dr.cat_spe_id,dr.cat_spe_name,dr.train_year train_years,dr.session_number,dr.graduation_year,dr.doctor_status_id, dr.doctor_status_name, dr.record_status, dr.create_time, dr.create_user_flow, dr.modify_time, dr.modify_user_flow
 		 from res_doctor_recruit dr
 		 left join res_doctor rd

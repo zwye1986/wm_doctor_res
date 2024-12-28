@@ -5,7 +5,7 @@ import com.pinde.core.model.ExamResults;
 import com.pinde.core.model.ExamResultsExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IExamResultsBiz;
-import com.pinde.sci.dao.base.ExamResultsMapper;
+import com.pinde.core.common.sci.dao.ExamResultsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

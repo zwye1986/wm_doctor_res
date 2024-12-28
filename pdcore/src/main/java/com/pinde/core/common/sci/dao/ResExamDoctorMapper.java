@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.ResExamDoctor;
+import com.pinde.core.model.ResExamDoctorExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface ResExamDoctorMapper {
+    int countByExample(ResExamDoctorExample example);
+
+    int deleteByExample(ResExamDoctorExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(ResExamDoctor record);
+
+    int insertSelective(ResExamDoctor record);
+
+    List<ResExamDoctor> selectByExample(ResExamDoctorExample example);
+
+    ResExamDoctor selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") ResExamDoctor record, @Param("example") ResExamDoctorExample example);
+
+    int updateByExample(@Param("record") ResExamDoctor record, @Param("example") ResExamDoctorExample example);
+
+    int updateByPrimaryKeySelective(ResExamDoctor record);
+
+    int updateByPrimaryKey(ResExamDoctor record);
+}

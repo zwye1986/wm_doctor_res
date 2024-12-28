@@ -4,7 +4,7 @@ import com.pinde.core.model.SysDict;
 import com.pinde.core.model.SysDictExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IDictBiz;
-import com.pinde.sci.dao.base.SysDictMapper;
+import com.pinde.core.common.sci.dao.SysDictMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

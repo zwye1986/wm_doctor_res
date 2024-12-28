@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SysMonthlyAppStatisticsMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.SysMonthlyAppStatisticsMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyAppStatistics">
     <id column="APP_FLOW" property="appFlow" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />

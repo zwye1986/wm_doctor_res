@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.ResDoctorLog;
+import com.pinde.core.model.ResDoctorLogExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface ResDoctorLogMapper {
+    int countByExample(ResDoctorLogExample example);
+
+    int deleteByExample(ResDoctorLogExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(ResDoctorLog record);
+
+    int insertSelective(ResDoctorLog record);
+
+    List<ResDoctorLog> selectByExample(ResDoctorLogExample example);
+
+    ResDoctorLog selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") ResDoctorLog record, @Param("example") ResDoctorLogExample example);
+
+    int updateByExample(@Param("record") ResDoctorLog record, @Param("example") ResDoctorLogExample example);
+
+    int updateByPrimaryKeySelective(ResDoctorLog record);
+
+    int updateByPrimaryKey(ResDoctorLog record);
+}

@@ -1,7 +1,7 @@
 package com.pinde.res.biz.osca.impl;
 
 
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -12,7 +12,6 @@ import com.pinde.res.dao.jswjw.ext.OscaSkillRoomDocExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
 import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
-import com.pinde.sci.dao.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +26,9 @@ public class OscaStudentBizImpl implements IOscaStudentBiz{
 	@Autowired
 	private  OscaDoctorAssessmentMapper oscaDoctorAssessmentMapper;
 	@Autowired
-	private  JsresDoctorPaperMapper paperMapper;
+	private JsresDoctorPaperMapper paperMapper;
 	@Autowired
-	private  JsresDoctorParticipationMapper partMapper;
+	private JsresDoctorParticipationMapper partMapper;
 	@Autowired
 	private  OscaDoctorAssessmentExtMapper oscaDoctorAssessmentExtMapper;
 	@Autowired
@@ -37,11 +36,11 @@ public class OscaStudentBizImpl implements IOscaStudentBiz{
 	@Autowired
 	private  OscaSubjectMainExtMapper oscaSubjectMainExtMapper;
 	@Autowired
-	private  OscaSubjectMainMapper oscaSubjectMainMapper;
+	private OscaSubjectMainMapper oscaSubjectMainMapper;
 	@Autowired
 	private  OscaSubjectStationMapper stationMapper;
 	@Autowired
-	private  OscaSkillRoomMapper roomMapper;
+	private OscaSkillRoomMapper roomMapper;
 
 	@Autowired
 	private  OscaSkillRoomExtMapper roomExtMapper;
@@ -49,7 +48,7 @@ public class OscaStudentBizImpl implements IOscaStudentBiz{
 	@Autowired
 	private  OscaSkillRoomDocExtMapper roomDocExtMapper;
 	@Autowired
-	private  OscaSkillRoomDocMapper roomDocMapper;
+	private OscaSkillRoomDocMapper roomDocMapper;
 	@Autowired
 	private  ResErrorSchNoticeMapper resErrorSchNoticeMapper;
 	@Autowired

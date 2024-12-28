@@ -3,7 +3,7 @@ package com.pinde.res.biz.jswjw.impl;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResDoctorBiz;
-import com.pinde.sci.dao.base.ResDoctorMapper;
+import com.pinde.core.common.sci.dao.ResDoctorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

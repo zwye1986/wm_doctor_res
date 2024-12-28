@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sch.SchDeptExtMapper" >
-	<select id="searchTeachDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+	<select id="searchTeachDept" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap">
 		SELECT *
         FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
@@ -15,7 +15,7 @@
 		)
 	</select>
 	
-	<select id="searchrotationDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+	<select id="searchrotationDept" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap">
 		SELECT *
         FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
@@ -29,7 +29,7 @@
 		)
 	</select>
 	
-	<select id="countDeptArea" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+	<select id="countDeptArea" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap">
 		SELECT *
         FROM SCH_DEPT
 		WHERE RECORD_STATUS = 'Y'
@@ -64,7 +64,7 @@
 		ORDER BY ORDINAL
 	</select>
 	
-	<select id="userSchDept" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+	<select id="userSchDept" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap">
 		SELECT *
         FROM SCH_DEPT SD
 		WHERE SD.RECORD_STATUS = 'Y'
@@ -90,7 +90,7 @@
 			and sud.dept_flow = sder.dept_flow
 		)
 	</select>
-	<select id="searchSchDeptHadRelated" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap" parameterType="map">
+	<select id="searchSchDeptHadRelated" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap" parameterType="map">
 		select * from sch_dept sd
 		where exists (
 			   select 1 from  Sch_And_Standard_Dept_Cfg sas
@@ -102,7 +102,7 @@
 			  and sd.org_flow = #{orgFlow}
 		  </if>
 	</select>
-	<select id="readSchDeptByOrgAndStandardId" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap" >
+	<select id="readSchDeptByOrgAndStandardId" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap" >
 		select dept.* from Sch_Dept_Rel rel
 		join
 		sch_dept dept on rel.sch_dept_flow=dept.sch_dept_flow
@@ -112,7 +112,7 @@
 		and rel.standard_dept_id=#{standardDeptId}
 		order by rel.create_time
 	</select>
-	<select id="searchRelByStandard" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap" >
+	<select id="searchRelByStandard" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap" >
 		select DISTINCT dept.*
 		from Sch_Dept_Rel rel
 		join sch_dept dept

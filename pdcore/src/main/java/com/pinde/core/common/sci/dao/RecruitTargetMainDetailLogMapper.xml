@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.core.common.sci.dao.RecruitTargetMainDetailLogMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitTargetMainDetailLog">
+    <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+    <result column="REF_RECORD_FLOW" jdbcType="VARCHAR" property="refRecordFlow" />
+    <result column="ACADEMIC_NUM" jdbcType="VARCHAR" property="academicNum" />
+    <result column="ACADEMIC_MODIFY_NUM" jdbcType="VARCHAR" property="academicModifyNum" />
+    <result column="SPECIALIZED_NUM" jdbcType="VARCHAR" property="specializedNum" />
+    <result column="SPECIALIZED_MODIFY_NUM" jdbcType="VARCHAR" property="specializedModifyNum" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RECORD_FLOW, REF_RECORD_FLOW, ACADEMIC_NUM, ACADEMIC_MODIFY_NUM, SPECIALIZED_NUM, 
+    SPECIALIZED_MODIFY_NUM, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.core.model.RecruitTargetMainDetailLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from RECRUIT_TARGET_MAIN_DETAIL_LOG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+      from RECRUIT_TARGET_MAIN_DETAIL_LOG
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete from RECRUIT_TARGET_MAIN_DETAIL_LOG
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitTargetMainDetailLogExample">
+      delete from RECRUIT_TARGET_MAIN_DETAIL_LOG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.RecruitTargetMainDetailLog">
+      insert into RECRUIT_TARGET_MAIN_DETAIL_LOG (RECORD_FLOW, REF_RECORD_FLOW, ACADEMIC_NUM,
+      ACADEMIC_MODIFY_NUM, SPECIALIZED_NUM, SPECIALIZED_MODIFY_NUM, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{refRecordFlow,jdbcType=VARCHAR}, #{academicNum,jdbcType=VARCHAR}, 
+      #{academicModifyNum,jdbcType=VARCHAR}, #{specializedNum,jdbcType=VARCHAR}, #{specializedModifyNum,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitTargetMainDetailLog">
+      insert into RECRUIT_TARGET_MAIN_DETAIL_LOG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        RECORD_FLOW,
+      </if>
+      <if test="refRecordFlow != null">
+        REF_RECORD_FLOW,
+      </if>
+      <if test="academicNum != null">
+        ACADEMIC_NUM,
+      </if>
+      <if test="academicModifyNum != null">
+        ACADEMIC_MODIFY_NUM,
+      </if>
+      <if test="specializedNum != null">
+        SPECIALIZED_NUM,
+      </if>
+      <if test="specializedModifyNum != null">
+        SPECIALIZED_MODIFY_NUM,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="refRecordFlow != null">
+        #{refRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="academicNum != null">
+        #{academicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="academicModifyNum != null">
+        #{academicModifyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="specializedNum != null">
+        #{specializedNum,jdbcType=VARCHAR},
+      </if>
+      <if test="specializedModifyNum != null">
+        #{specializedModifyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.RecruitTargetMainDetailLogExample" resultType="java.lang.Integer">
+      select count(*) from RECRUIT_TARGET_MAIN_DETAIL_LOG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+      update RECRUIT_TARGET_MAIN_DETAIL_LOG
+    <set>
+      <if test="record.recordFlow != null">
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refRecordFlow != null">
+        REF_RECORD_FLOW = #{record.refRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academicNum != null">
+        ACADEMIC_NUM = #{record.academicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.academicModifyNum != null">
+        ACADEMIC_MODIFY_NUM = #{record.academicModifyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specializedNum != null">
+        SPECIALIZED_NUM = #{record.specializedNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specializedModifyNum != null">
+        SPECIALIZED_MODIFY_NUM = #{record.specializedModifyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+      update RECRUIT_TARGET_MAIN_DETAIL_LOG
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      REF_RECORD_FLOW = #{record.refRecordFlow,jdbcType=VARCHAR},
+      ACADEMIC_NUM = #{record.academicNum,jdbcType=VARCHAR},
+      ACADEMIC_MODIFY_NUM = #{record.academicModifyNum,jdbcType=VARCHAR},
+      SPECIALIZED_NUM = #{record.specializedNum,jdbcType=VARCHAR},
+      SPECIALIZED_MODIFY_NUM = #{record.specializedModifyNum,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitTargetMainDetailLog">
+      update RECRUIT_TARGET_MAIN_DETAIL_LOG
+    <set>
+      <if test="refRecordFlow != null">
+        REF_RECORD_FLOW = #{refRecordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="academicNum != null">
+        ACADEMIC_NUM = #{academicNum,jdbcType=VARCHAR},
+      </if>
+      <if test="academicModifyNum != null">
+        ACADEMIC_MODIFY_NUM = #{academicModifyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="specializedNum != null">
+        SPECIALIZED_NUM = #{specializedNum,jdbcType=VARCHAR},
+      </if>
+      <if test="specializedModifyNum != null">
+        SPECIALIZED_MODIFY_NUM = #{specializedModifyNum,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitTargetMainDetailLog">
+      update RECRUIT_TARGET_MAIN_DETAIL_LOG
+    set REF_RECORD_FLOW = #{refRecordFlow,jdbcType=VARCHAR},
+      ACADEMIC_NUM = #{academicNum,jdbcType=VARCHAR},
+      ACADEMIC_MODIFY_NUM = #{academicModifyNum,jdbcType=VARCHAR},
+      SPECIALIZED_NUM = #{specializedNum,jdbcType=VARCHAR},
+      SPECIALIZED_MODIFY_NUM = #{specializedModifyNum,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

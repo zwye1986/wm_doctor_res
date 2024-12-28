@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.JsresPowerCfgMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.JsresPowerCfgMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresPowerCfg">
     <id column="CFG_CODE" property="cfgCode" jdbcType="VARCHAR" />
     <result column="CFG_VALUE" property="cfgValue" jdbcType="VARCHAR" />

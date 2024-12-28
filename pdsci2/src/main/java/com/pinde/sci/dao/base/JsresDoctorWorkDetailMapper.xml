@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pinde.sci.dao.base.JsresDoctorWorkDetailMapper">
+<mapper namespace="com.pinde.core.common.sci.dao.JsresDoctorWorkDetailMapper">
     <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresDoctorWorkDetail">
     <id column="DETAIL_FLOW" jdbcType="VARCHAR" property="detailFlow" />
     <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />

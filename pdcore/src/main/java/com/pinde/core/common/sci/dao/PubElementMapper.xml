@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.PubElementMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.PubElement" >
+    <id column="ELEMENT_FLOW" property="elementFlow" jdbcType="VARCHAR" />
+    <result column="ELEMENT_NAME" property="elementName" jdbcType="VARCHAR" />
+    <result column="ELEMENT_CODE" property="elementCode" jdbcType="VARCHAR" />
+    <result column="ELEMENT_VAR_NAME" property="elementVarName" jdbcType="VARCHAR" />
+    <result column="MODULE_CODE" property="moduleCode" jdbcType="VARCHAR" />
+    <result column="ELEMENT_SERIAL" property="elementSerial" jdbcType="VARCHAR" />
+    <result column="COLUMN_COUNT" property="columnCount" jdbcType="VARCHAR" />
+    <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ELEMENT_FLOW, ELEMENT_NAME, ELEMENT_CODE, ELEMENT_VAR_NAME, MODULE_CODE, ELEMENT_SERIAL, 
+    COLUMN_COUNT, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubElementExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from PUB_ELEMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from PUB_ELEMENT
+    where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from PUB_ELEMENT
+    where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.PubElementExample" >
+      delete from PUB_ELEMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.PubElement" >
+      insert into PUB_ELEMENT (ELEMENT_FLOW, ELEMENT_NAME, ELEMENT_CODE,
+      ELEMENT_VAR_NAME, MODULE_CODE, ELEMENT_SERIAL, 
+      COLUMN_COUNT, ORDINAL, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{elementFlow,jdbcType=VARCHAR}, #{elementName,jdbcType=VARCHAR}, #{elementCode,jdbcType=VARCHAR}, 
+      #{elementVarName,jdbcType=VARCHAR}, #{moduleCode,jdbcType=VARCHAR}, #{elementSerial,jdbcType=VARCHAR}, 
+      #{columnCount,jdbcType=VARCHAR}, #{ordinal,jdbcType=DECIMAL}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.PubElement" >
+      insert into PUB_ELEMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="elementFlow != null" >
+        ELEMENT_FLOW,
+      </if>
+      <if test="elementName != null" >
+        ELEMENT_NAME,
+      </if>
+      <if test="elementCode != null" >
+        ELEMENT_CODE,
+      </if>
+      <if test="elementVarName != null" >
+        ELEMENT_VAR_NAME,
+      </if>
+      <if test="moduleCode != null" >
+        MODULE_CODE,
+      </if>
+      <if test="elementSerial != null" >
+        ELEMENT_SERIAL,
+      </if>
+      <if test="columnCount != null" >
+        COLUMN_COUNT,
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="elementFlow != null" >
+        #{elementFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="elementName != null" >
+        #{elementName,jdbcType=VARCHAR},
+      </if>
+      <if test="elementCode != null" >
+        #{elementCode,jdbcType=VARCHAR},
+      </if>
+      <if test="elementVarName != null" >
+        #{elementVarName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleCode != null" >
+        #{moduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="elementSerial != null" >
+        #{elementSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="columnCount != null" >
+        #{columnCount,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.PubElementExample" resultType="java.lang.Integer" >
+      select count(*) from PUB_ELEMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update PUB_ELEMENT
+    <set >
+      <if test="record.elementFlow != null" >
+        ELEMENT_FLOW = #{record.elementFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.elementName != null" >
+        ELEMENT_NAME = #{record.elementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.elementCode != null" >
+        ELEMENT_CODE = #{record.elementCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.elementVarName != null" >
+        ELEMENT_VAR_NAME = #{record.elementVarName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.moduleCode != null" >
+        MODULE_CODE = #{record.moduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.elementSerial != null" >
+        ELEMENT_SERIAL = #{record.elementSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.columnCount != null" >
+        COLUMN_COUNT = #{record.columnCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordinal != null" >
+        ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update PUB_ELEMENT
+    set ELEMENT_FLOW = #{record.elementFlow,jdbcType=VARCHAR},
+      ELEMENT_NAME = #{record.elementName,jdbcType=VARCHAR},
+      ELEMENT_CODE = #{record.elementCode,jdbcType=VARCHAR},
+      ELEMENT_VAR_NAME = #{record.elementVarName,jdbcType=VARCHAR},
+      MODULE_CODE = #{record.moduleCode,jdbcType=VARCHAR},
+      ELEMENT_SERIAL = #{record.elementSerial,jdbcType=VARCHAR},
+      COLUMN_COUNT = #{record.columnCount,jdbcType=VARCHAR},
+      ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubElement" >
+      update PUB_ELEMENT
+    <set >
+      <if test="elementName != null" >
+        ELEMENT_NAME = #{elementName,jdbcType=VARCHAR},
+      </if>
+      <if test="elementCode != null" >
+        ELEMENT_CODE = #{elementCode,jdbcType=VARCHAR},
+      </if>
+      <if test="elementVarName != null" >
+        ELEMENT_VAR_NAME = #{elementVarName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleCode != null" >
+        MODULE_CODE = #{moduleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="elementSerial != null" >
+        ELEMENT_SERIAL = #{elementSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="columnCount != null" >
+        COLUMN_COUNT = #{columnCount,jdbcType=VARCHAR},
+      </if>
+      <if test="ordinal != null" >
+        ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubElement" >
+      update PUB_ELEMENT
+    set ELEMENT_NAME = #{elementName,jdbcType=VARCHAR},
+      ELEMENT_CODE = #{elementCode,jdbcType=VARCHAR},
+      ELEMENT_VAR_NAME = #{elementVarName,jdbcType=VARCHAR},
+      MODULE_CODE = #{moduleCode,jdbcType=VARCHAR},
+      ELEMENT_SERIAL = #{elementSerial,jdbcType=VARCHAR},
+      COLUMN_COUNT = #{columnCount,jdbcType=VARCHAR},
+      ORDINAL = #{ordinal,jdbcType=DECIMAL},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where ELEMENT_FLOW = #{elementFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.OscaSubjectStationScoreMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.OscaSubjectStationScoreMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaSubjectStationScore">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />

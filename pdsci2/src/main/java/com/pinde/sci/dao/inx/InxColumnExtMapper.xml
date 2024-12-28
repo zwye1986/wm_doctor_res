@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.inx.InxColumnExtMapper" >
     <resultMap id="extResultMap" type="com.pinde.core.model.InxColumnExt"
-               extends="com.pinde.sci.dao.base.InxColumnMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.InxColumnMapper.BaseResultMap">
         <association property="parentColumn" column="parent_column_id" javaType="com.pinde.core.model.InxColumn">
 			<id column="PAR_COLUMN_FLOW" property="columnFlow" jdbcType="VARCHAR" />
 		    <result column="PAR_COLUMN_ID" property="columnId" jdbcType="VARCHAR" />
@@ -14,7 +14,7 @@
 	</resultMap>
 	<!--<select id="selectByForm" parameterType="com.pinde.sci.form.inx.InxColumnForm" resultMap="extResultMap">-->
 	<!--select t1.*,t2.COLUMN_ID as PAR_COLUMN_ID,t2.COLUMN_NAME as PAR_COLUMN_NAME,t2.PARENT_COLUMN_ID as PAR_PARENT_COLUMN_ID,t2.ORDINAL as PAR_ORDINAL,t2.RECORD_STATUS as PAR_RECORD_STATUS from (select tt.* from -->
-    <!--(select t.*,rownum as myrownum from (select <include refid="com.pinde.sci.dao.base.InxColumnMapper.Base_Column_List" /> from  INX_COLUMN-->
+    <!--(select t.*,rownum as myrownum from (select <include refid="com.pinde.core.common.sci.dao.InxColumnMapper.Base_Column_List" /> from  INX_COLUMN-->
 	<!--<where>-->
 	<!--<if test='parentColumnId != null and parentColumnId != ""'>-->
 	<!--<if test='parentColumnId!="0"'>-->
@@ -67,7 +67,7 @@
 	<!--</where>-->
 	<!--</select>-->
   
-  <select id="searchInxColumnList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.InxColumnMapper.BaseResultMap">
+  <select id="searchInxColumnList" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.InxColumnMapper.BaseResultMap">
       select * from INX_COLUMN
 	    where RECORD_STATUS = 'Y'
 		<if test='columnId != null and columnId != ""'>

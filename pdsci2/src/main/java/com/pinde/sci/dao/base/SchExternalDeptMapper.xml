@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pinde.sci.dao.base.SchExternalDeptMapper">
+<mapper namespace="com.pinde.core.common.sci.dao.SchExternalDeptMapper">
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SchExternalDept">
     <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
     <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />

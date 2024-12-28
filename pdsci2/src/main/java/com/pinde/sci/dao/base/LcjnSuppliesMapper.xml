@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pinde.sci.dao.base.LcjnSuppliesMapper">
+<mapper namespace="com.pinde.core.common.sci.dao.LcjnSuppliesMapper">
     <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnSupplies">
     <id column="SUPPLIES_FLOW" jdbcType="VARCHAR" property="suppliesFlow" />
     <result column="DICT_ID" jdbcType="VARCHAR" property="dictId" />

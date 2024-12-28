@@ -3501,7 +3501,7 @@
          and rr.rec_flow is not null
         </if>
     </select>
-    <resultMap id="absenceMap" type="hashmap" extends="com.pinde.sci.dao.base.SchDoctorAbsenceMapper.BaseResultMap">
+    <resultMap id="absenceMap" type="hashmap" extends="com.pinde.core.common.sci.dao.SchDoctorAbsenceMapper.BaseResultMap">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="user_Head_Img" property="userHeadImg" jdbcType="VARCHAR" />
     </resultMap>
@@ -3822,7 +3822,7 @@
     </select>
 
     <resultMap id="docOrgHistoryExtMap" type="com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt"
-               extends="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.ResDoctorOrgHistoryMapper.BaseResultMap">
         <association property="resDoctor" javaType="com.pinde.core.model.ResDoctor">
             <id column="doctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>
             <result column="doctorName" jdbcType="VARCHAR" property="doctorName"/>
@@ -4233,7 +4233,7 @@
         ORDER BY DATE_DAY DESC
     </select>
 
-    <select id="searchProcessByDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="searchProcessByDoctor" resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         SELECT RDSP.*
         FROM RES_DOCTOR_SCH_PROCESS RDSP, RES_DOCTOR RD
         WHERE RDSP.RECORD_STATUS = 'Y'
@@ -4325,7 +4325,7 @@
     </select>
 
     <select id="searchCurrentProcessByUserFlow"
-            resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         SELECT
         <!-- 		DISTINCT RDSP.PROCESS_FLOW, -->
         RDSP.*
@@ -4347,7 +4347,7 @@
         </if>
     </select>
 
-    <select id="searchProcessByUserSpe" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="searchProcessByUserSpe" resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         SELECT RDSP.*
         FROM RES_DOCTOR_SCH_PROCESS RDSP, RES_DOCTOR RD, RES_USER_SPE RUS
         WHERE RDSP.RECORD_STATUS = 'Y'
@@ -4978,7 +4978,7 @@
         </if>
         order by NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
     </select>
-    <select id="searchCycleArrangeResults" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchCycleArrangeResults" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select ar.*
         from SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW
@@ -5543,7 +5543,7 @@
         </if>
         ORDER BY a.SCH_START_DATE DESC
     </select>
-    <select id="searchProcessByDoctorNew" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="searchProcessByDoctorNew" resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         SELECT RDSP.*
         FROM RES_DOCTOR_SCH_PROCESS RDSP
         left join RES_DOCTOR RD
@@ -5728,7 +5728,7 @@
             </if>
     </select>
 
-    <resultMap id="DoctorRecruit" type="hashmap" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+    <resultMap id="DoctorRecruit" type="hashmap" extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap" >
         <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
         <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
@@ -5981,7 +5981,7 @@
                 and (a.status_id='isCurrent'or a.status_id='isSch')
         ORDER BY a.SCH_START_DATE DESC,a.sch_end_date
     </select>
-    <select id="readSchDeptList" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+    <select id="readSchDeptList" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap">
         select  * from sch_dept
         where record_status='Y'
         and dept_flow in  (
@@ -5997,7 +5997,7 @@
             and sud.user_flow=#{userFlow}
         )
     </select>
-    <select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+    <select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
         		SELECT INFO.*
 		  FROM TEACHING_ACTIVITY_RESULT R
 		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -6022,7 +6022,7 @@
              SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
     </select>
 
-    <select id="searchJoinActivityByProcessFlowNotScore" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+    <select id="searchJoinActivityByProcessFlowNotScore" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
         		SELECT INFO.*
 		  FROM TEACHING_ACTIVITY_RESULT R
 		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -6108,7 +6108,7 @@
 			 and t.apply_year=#{applyYear}
 	</select>
 
-    <select id="selectProcessByDoctorNew" resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="selectProcessByDoctorNew" resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         SELECT RDSP.*
         FROM RES_DOCTOR_SCH_PROCESS RDSP
         left join RES_DOCTOR RD

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pinde.sci.dao.base.LcjnTeaEvaluateMapper">
+<mapper namespace="com.pinde.core.common.sci.dao.LcjnTeaEvaluateMapper">
     <resultMap id="BaseResultMap" type="com.pinde.core.model.LcjnTeaEvaluate">
     <id column="TEA_EVALUATE_FLOW" jdbcType="VARCHAR" property="teaEvaluateFlow" />
     <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />

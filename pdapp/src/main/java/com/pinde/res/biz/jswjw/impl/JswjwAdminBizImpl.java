@@ -2,8 +2,7 @@ package com.pinde.res.biz.jswjw.impl;
 
 
 import com.pinde.core.common.enums.NoticeStatusEnum;
-import com.pinde.core.common.sci.dao.SysOrgMapper;
-import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
@@ -12,7 +11,6 @@ import com.pinde.res.biz.stdp.IResErrorSchNoticeBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysDeptExtMapper;
 import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
-import com.pinde.sci.dao.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

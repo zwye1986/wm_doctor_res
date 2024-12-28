@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.JsresBaseEvaluationFile;
+import com.pinde.core.model.JsresBaseEvaluationFileExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface JsresBaseEvaluationFileMapper {
+    int countByExample(JsresBaseEvaluationFileExample example);
+
+    int deleteByExample(JsresBaseEvaluationFileExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(JsresBaseEvaluationFile record);
+
+    int insertSelective(JsresBaseEvaluationFile record);
+
+    List<JsresBaseEvaluationFile> selectByExample(JsresBaseEvaluationFileExample example);
+
+    JsresBaseEvaluationFile selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") JsresBaseEvaluationFile record, @Param("example") JsresBaseEvaluationFileExample example);
+
+    int updateByExample(@Param("record") JsresBaseEvaluationFile record, @Param("example") JsresBaseEvaluationFileExample example);
+
+    int updateByPrimaryKeySelective(JsresBaseEvaluationFile record);
+
+    int updateByPrimaryKey(JsresBaseEvaluationFile record);
+}

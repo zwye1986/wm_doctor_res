@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.OscaRoomFileMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.OscaRoomFileMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.OscaRoomFile">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />

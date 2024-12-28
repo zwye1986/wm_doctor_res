@@ -3,12 +3,12 @@
 <mapper namespace="com.pinde.res.dao.jswjw.ext.HospitalSupervisioExtMapper">
 
 
-    <select id="queryMyreviewItems"  parameterType="string" resultMap="com.pinde.sci.dao.base.ResHospSupervSubjectMapper.BaseResultMap">
+    <select id="queryMyreviewItems"  parameterType="string" resultMap="com.pinde.core.common.sci.dao.ResHospSupervSubjectMapper.BaseResultMap">
         select * from RES_HOSP_SUPERV_SUBJECT where LEADER_ONE_FLOW=#{userFlow} and RECORD_STATUS='Y' union all
         select * from RES_HOSP_SUPERV_SUBJECT where LEADER_TWO_FLOW=#{userFlow}
     </select>
 
-    <select id="queryAllSubject"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResHospSupervSubjectMapper.BaseResultMap">
+    <select id="queryAllSubject"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResHospSupervSubjectMapper.BaseResultMap">
         select * from (
 	       select SUBJECT_FLOW, SUBJECT_NAME,ORG_FLOW,ORG_NAME,SPE_ID,SPE_NAME,ACTIVITY_NAME,ACTIVITY_FLOW,LEADER_SUB_NUM,
 	            RECORD_STATUS,INSPECTION_TYPE,ORDER_ACTION, NVL(LEADER_ONE_FLOW, '0000') LEADER_ONE_FLOW,NVL(LEADER_TWO_FLOW, '0000') LEADER_TWO_FLOW,
@@ -45,7 +45,7 @@
     </select>
 
 
-    <select id="selectDeptByOrgFlow" parameterType="String" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="selectDeptByOrgFlow" parameterType="String" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 	SELECT sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL
 			, sd.RECORD_STATUS, cfg.record_flow, cfg.STANDARD_DEPT_NAME
     FROM sys_dept sd

@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.ResUserBindMacid;
+import com.pinde.core.model.ResUserBindMacidExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface ResUserBindMacidMapper {
+    int countByExample(ResUserBindMacidExample example);
+
+    int deleteByExample(ResUserBindMacidExample example);
+
+    int deleteByPrimaryKey(String userFlow);
+
+    int insert(ResUserBindMacid record);
+
+    int insertSelective(ResUserBindMacid record);
+
+    List<ResUserBindMacid> selectByExample(ResUserBindMacidExample example);
+
+    ResUserBindMacid selectByPrimaryKey(String userFlow);
+
+    int updateByExampleSelective(@Param("record") ResUserBindMacid record, @Param("example") ResUserBindMacidExample example);
+
+    int updateByExample(@Param("record") ResUserBindMacid record, @Param("example") ResUserBindMacidExample example);
+
+    int updateByPrimaryKeySelective(ResUserBindMacid record);
+
+    int updateByPrimaryKey(ResUserBindMacid record);
+}

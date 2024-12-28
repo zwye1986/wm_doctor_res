@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.SysDeptExtMapper" >
-	<select id="getExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getExtDept" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select *
         from sys_dept sd
                  inner join sch_dept_external_rel sder
@@ -12,7 +12,7 @@
 		order by nlssort(sder.org_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
 	
-	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select DISTINCT sd.* from sys_dept sd
         left join sch_dept_external_rel sder
 		on sd.dept_flow = sder.dept_flow
@@ -24,7 +24,7 @@
 		</if>
 		order by sd.dept_code
 	</select>
-	<select id="getHeadDeptList" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getHeadDeptList" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select distinct sd.* from sys_dept sd
 		inner join SYS_USER_DEPT sud
 		on sd.DEPT_FLOW=sud.DEPT_FLOW
@@ -37,7 +37,7 @@
 		)
 		order by sd.dept_code
 	</select>
-	<select id="getSpeDeptList" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getSpeDeptList" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select distinct sd.* from sys_dept sd
 		where sd.record_status='Y'
 		and sd.dept_flow in (select D.DEPT_FLOW
@@ -47,7 +47,7 @@
 		)
 		order by sd.dept_code
 	</select>
-	<select id="getErrorSchDepts" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getErrorSchDepts" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select DISTINCT sd.*
         from sys_dept sd
 		where sd.org_flow=#{orgFlow} and

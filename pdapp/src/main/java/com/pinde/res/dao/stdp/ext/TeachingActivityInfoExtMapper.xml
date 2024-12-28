@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper">
-    <resultMap id="activityMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+    <resultMap id="activityMap" type="hashmap" extends="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
         <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
         <result column="OPINION" property="opinion" jdbcType="VARCHAR" />
         <result column="FILE_FLOWS" property="fileFlows" jdbcType="VARCHAR" javaType="String" />
     </resultMap>
-    <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
+    <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.core.common.sci.dao.TeachingActivityResultMapper.BaseResultMap">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
         <result column="TRAINING_SPE_NAME" property="speName" jdbcType="VARCHAR" />
@@ -35,7 +35,7 @@
         <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />
         <result column="AUDIT_ROLE" property="auditRole" jdbcType="VARCHAR" />
     </resultMap>
-    <resultMap id="activityTargetEvalMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper.BaseResultMap">
+    <resultMap id="activityTargetEvalMap" type="hashmap" extends="com.pinde.core.common.sci.dao.TeachingActivityInfoTargetMapper.BaseResultMap">
         <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
     </resultMap>
     <select id="findActivityList" resultMap="activityMap">
@@ -1092,7 +1092,7 @@
             </if>
             order by dr.org_flow,dr.session_number desc,DR.SPE_ID,su.user_name
     </select>
-    <select id="checkJoinList" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+    <select id="checkJoinList" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
         SELECT *
         FROM TEACHING_ACTIVITY_INFO INFO
         WHERE INFO.RECORD_STATUS='Y'
@@ -1133,7 +1133,7 @@
         )
     </select>
 
-    <select id="getActivityListByRole" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+    <select id="getActivityListByRole" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
         SELECT * FROM TEACHING_ACTIVITY_INFO
         WHERE RECORD_STATUS = 'Y'
         <if test='Month != null and Month != ""'>
@@ -1161,7 +1161,7 @@
         </if>
     </select>
 
-	<resultMap id="DoctorMap" type="map" extends="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<resultMap id="DoctorMap" type="map" extends="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
 	</resultMap>
 	<select id="searchDeptByDoctor" resultMap="DoctorMap">

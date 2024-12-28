@@ -1,0 +1,1173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.core.common.sci.dao.ResUserResumeLogMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResUserResumeLog">
+    <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+    <result column="USER_FLOW" jdbcType="VARCHAR" property="userFlow" />
+    <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone" />
+    <result column="EMERGENCY_ADDRESS" jdbcType="VARCHAR" property="emergencyAddress" />
+    <result column="WORK_SCHOOL_NAME" jdbcType="VARCHAR" property="workSchoolName" />
+    <result column="ORG_RANK" jdbcType="VARCHAR" property="orgRank" />
+    <result column="ORG_LEVEL" jdbcType="VARCHAR" property="orgLevel" />
+    <result column="GRADUATED_ID" jdbcType="VARCHAR" property="graduatedId" />
+    <result column="GRADUATED_NAME" jdbcType="VARCHAR" property="graduatedName" />
+    <result column="SPECIALIZED" jdbcType="VARCHAR" property="specialized" />
+    <result column="GRADUATION_TIME" jdbcType="VARCHAR" property="graduationTime" />
+    <result column="COLLEGE_CERTIFICATE_NO" jdbcType="VARCHAR" property="collegeCertificateNo" />
+    <result column="CERTIFICATE_URI" jdbcType="VARCHAR" property="certificateUri" />
+    <result column="DEGREE_URI" jdbcType="VARCHAR" property="degreeUri" />
+    <result column="DEGREE_ID" jdbcType="VARCHAR" property="degreeId" />
+    <result column="DEGREE_NAME" jdbcType="VARCHAR" property="degreeName" />
+    <result column="IS_MASTER" jdbcType="VARCHAR" property="isMaster" />
+    <result column="MASTER_DEGREE_ID" jdbcType="VARCHAR" property="masterDegreeId" />
+    <result column="MASTER_DEGREE_NAME" jdbcType="VARCHAR" property="masterDegreeName" />
+    <result column="MASTER_DEGREE_TYPE_ID" jdbcType="VARCHAR" property="masterDegreeTypeId" />
+    <result column="MASTER_DEGREE_TYPE_NAME" jdbcType="VARCHAR" property="masterDegreeTypeName" />
+    <result column="MASTER_GRA_SCHOOL_ID" jdbcType="VARCHAR" property="masterGraSchoolId" />
+    <result column="MASTER_GRA_SCHOOL_NAME" jdbcType="VARCHAR" property="masterGraSchoolName" />
+    <result column="MASTER_GRA_TIME" jdbcType="VARCHAR" property="masterGraTime" />
+    <result column="MASTER_MAJOR" jdbcType="VARCHAR" property="masterMajor" />
+    <result column="IS_DOCTOR" jdbcType="VARCHAR" property="isDoctor" />
+    <result column="DOCTOR_DEGREE_ID" jdbcType="VARCHAR" property="doctorDegreeId" />
+    <result column="DOCTOR_DEGREE_NAME" jdbcType="VARCHAR" property="doctorDegreeName" />
+    <result column="DOCTOR_DEGREE_TYPE_ID" jdbcType="VARCHAR" property="doctorDegreeTypeId" />
+    <result column="DOCTOR_DEGREE_TYPE_NAME" jdbcType="VARCHAR" property="doctorDegreeTypeName" />
+    <result column="DOCTOR_GRA_SCHOOL_ID" jdbcType="VARCHAR" property="doctorGraSchoolId" />
+    <result column="DOCTOR_GRA_SCHOOL_NAME" jdbcType="VARCHAR" property="doctorGraSchoolName" />
+    <result column="DOCTOR_GRA_TIME" jdbcType="VARCHAR" property="doctorGraTime" />
+    <result column="DOCTOR_MAJOR" jdbcType="VARCHAR" property="doctorMajor" />
+    <result column="MEDICAL_HEAITH_ORG_ID" jdbcType="VARCHAR" property="medicalHeaithOrgId" />
+    <result column="MEDICAL_HEAITH_ORG_NAME" jdbcType="VARCHAR" property="medicalHeaithOrgName" />
+    <result column="HOSPITAL_ATTR_ID" jdbcType="VARCHAR" property="hospitalAttrId" />
+    <result column="HOSPITAL_ATTR_NAME" jdbcType="VARCHAR" property="hospitalAttrName" />
+    <result column="HOSPITAL_CATEGORY_ID" jdbcType="VARCHAR" property="hospitalCategoryId" />
+    <result column="HOSPITAL_CATEGORY_NAME" jdbcType="VARCHAR" property="hospitalCategoryName" />
+    <result column="BASE_ATTRIBUTE_ID" jdbcType="VARCHAR" property="baseAttributeId" />
+    <result column="BASE_ATTRIBUTE_NAME" jdbcType="VARCHAR" property="baseAttributeName" />
+    <result column="BASIC_HEALTH_ORG_ID" jdbcType="VARCHAR" property="basicHealthOrgId" />
+    <result column="BASIC_HEALTH_ORG_NAME" jdbcType="VARCHAR" property="basicHealthOrgName" />
+    <result column="TECHNOLOGY_QUALIFICATION_ID" jdbcType="VARCHAR" property="technologyQualificationId" />
+    <result column="TECHNOLOGY_QUALIFICATION_NAME" jdbcType="VARCHAR" property="technologyQualificationName" />
+    <result column="TECHNOLOGY_QUALIFICATION_DATE" jdbcType="VARCHAR" property="technologyQualificationDate" />
+    <result column="QUALIFICATION_MATERIAL_ID" jdbcType="VARCHAR" property="qualificationMaterialId" />
+    <result column="QUALIFICATION_MATERIAL_NAME" jdbcType="VARCHAR" property="qualificationMaterialName" />
+    <result column="QUALIFICATION_MATERIAL_CODE" jdbcType="VARCHAR" property="qualificationMaterialCode" />
+    <result column="QUALIFICATION_MATERIAL_URI" jdbcType="VARCHAR" property="qualificationMaterialUri" />
+    <result column="SPECIAL_CERTIFICATION_URI" jdbcType="VARCHAR" property="specialCertificationUri" />
+    <result column="PRACTICING_CATEGORY_ID" jdbcType="VARCHAR" property="practicingCategoryId" />
+    <result column="PRACTICING_CATEGORY_NAME" jdbcType="VARCHAR" property="practicingCategoryName" />
+    <result column="PRACTICING_SCOPE_ID" jdbcType="VARCHAR" property="practicingScopeId" />
+    <result column="PRACTICING_SCOPE_NAME" jdbcType="VARCHAR" property="practicingScopeName" />
+    <result column="PRACTICING_SCOPE" jdbcType="VARCHAR" property="practicingScope" />
+    <result column="IS_GENERAL_ORDER_ORIENTATION" jdbcType="VARCHAR" property="isGeneralOrderOrientation" />
+    <result column="REGISTE_MANUA" jdbcType="VARCHAR" property="registeManua" />
+    <result column="ARCHIVE_FLOW" jdbcType="VARCHAR" property="archiveFlow" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RECORD_FLOW, USER_FLOW, TELEPHONE, EMERGENCY_ADDRESS, WORK_SCHOOL_NAME, ORG_RANK, 
+    ORG_LEVEL, GRADUATED_ID, GRADUATED_NAME, SPECIALIZED, GRADUATION_TIME, COLLEGE_CERTIFICATE_NO, 
+    CERTIFICATE_URI, DEGREE_URI, DEGREE_ID, DEGREE_NAME, IS_MASTER, MASTER_DEGREE_ID, 
+    MASTER_DEGREE_NAME, MASTER_DEGREE_TYPE_ID, MASTER_DEGREE_TYPE_NAME, MASTER_GRA_SCHOOL_ID, 
+    MASTER_GRA_SCHOOL_NAME, MASTER_GRA_TIME, MASTER_MAJOR, IS_DOCTOR, DOCTOR_DEGREE_ID, 
+    DOCTOR_DEGREE_NAME, DOCTOR_DEGREE_TYPE_ID, DOCTOR_DEGREE_TYPE_NAME, DOCTOR_GRA_SCHOOL_ID, 
+    DOCTOR_GRA_SCHOOL_NAME, DOCTOR_GRA_TIME, DOCTOR_MAJOR, MEDICAL_HEAITH_ORG_ID, MEDICAL_HEAITH_ORG_NAME, 
+    HOSPITAL_ATTR_ID, HOSPITAL_ATTR_NAME, HOSPITAL_CATEGORY_ID, HOSPITAL_CATEGORY_NAME, 
+    BASE_ATTRIBUTE_ID, BASE_ATTRIBUTE_NAME, BASIC_HEALTH_ORG_ID, BASIC_HEALTH_ORG_NAME, 
+    TECHNOLOGY_QUALIFICATION_ID, TECHNOLOGY_QUALIFICATION_NAME, TECHNOLOGY_QUALIFICATION_DATE, 
+    QUALIFICATION_MATERIAL_ID, QUALIFICATION_MATERIAL_NAME, QUALIFICATION_MATERIAL_CODE, 
+    QUALIFICATION_MATERIAL_URI, SPECIAL_CERTIFICATION_URI, PRACTICING_CATEGORY_ID, PRACTICING_CATEGORY_NAME, 
+    PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME, PRACTICING_SCOPE, IS_GENERAL_ORDER_ORIENTATION, 
+    REGISTE_MANUA, ARCHIVE_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.core.model.ResUserResumeLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from RES_USER_RESUME_LOG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+      from RES_USER_RESUME_LOG
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete from RES_USER_RESUME_LOG
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.ResUserResumeLogExample">
+      delete from RES_USER_RESUME_LOG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.ResUserResumeLog">
+      insert into RES_USER_RESUME_LOG (RECORD_FLOW, USER_FLOW, TELEPHONE,
+      EMERGENCY_ADDRESS, WORK_SCHOOL_NAME, ORG_RANK, 
+      ORG_LEVEL, GRADUATED_ID, GRADUATED_NAME, 
+      SPECIALIZED, GRADUATION_TIME, COLLEGE_CERTIFICATE_NO, 
+      CERTIFICATE_URI, DEGREE_URI, DEGREE_ID, 
+      DEGREE_NAME, IS_MASTER, MASTER_DEGREE_ID, 
+      MASTER_DEGREE_NAME, MASTER_DEGREE_TYPE_ID, MASTER_DEGREE_TYPE_NAME, 
+      MASTER_GRA_SCHOOL_ID, MASTER_GRA_SCHOOL_NAME, 
+      MASTER_GRA_TIME, MASTER_MAJOR, IS_DOCTOR, 
+      DOCTOR_DEGREE_ID, DOCTOR_DEGREE_NAME, DOCTOR_DEGREE_TYPE_ID, 
+      DOCTOR_DEGREE_TYPE_NAME, DOCTOR_GRA_SCHOOL_ID, 
+      DOCTOR_GRA_SCHOOL_NAME, DOCTOR_GRA_TIME, DOCTOR_MAJOR, 
+      MEDICAL_HEAITH_ORG_ID, MEDICAL_HEAITH_ORG_NAME, 
+      HOSPITAL_ATTR_ID, HOSPITAL_ATTR_NAME, HOSPITAL_CATEGORY_ID, 
+      HOSPITAL_CATEGORY_NAME, BASE_ATTRIBUTE_ID, 
+      BASE_ATTRIBUTE_NAME, BASIC_HEALTH_ORG_ID, BASIC_HEALTH_ORG_NAME, 
+      TECHNOLOGY_QUALIFICATION_ID, TECHNOLOGY_QUALIFICATION_NAME, 
+      TECHNOLOGY_QUALIFICATION_DATE, QUALIFICATION_MATERIAL_ID, 
+      QUALIFICATION_MATERIAL_NAME, QUALIFICATION_MATERIAL_CODE, 
+      QUALIFICATION_MATERIAL_URI, SPECIAL_CERTIFICATION_URI, 
+      PRACTICING_CATEGORY_ID, PRACTICING_CATEGORY_NAME, 
+      PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME, 
+      PRACTICING_SCOPE, IS_GENERAL_ORDER_ORIENTATION, 
+      REGISTE_MANUA, ARCHIVE_FLOW, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{emergencyAddress,jdbcType=VARCHAR}, #{workSchoolName,jdbcType=VARCHAR}, #{orgRank,jdbcType=VARCHAR}, 
+      #{orgLevel,jdbcType=VARCHAR}, #{graduatedId,jdbcType=VARCHAR}, #{graduatedName,jdbcType=VARCHAR}, 
+      #{specialized,jdbcType=VARCHAR}, #{graduationTime,jdbcType=VARCHAR}, #{collegeCertificateNo,jdbcType=VARCHAR}, 
+      #{certificateUri,jdbcType=VARCHAR}, #{degreeUri,jdbcType=VARCHAR}, #{degreeId,jdbcType=VARCHAR}, 
+      #{degreeName,jdbcType=VARCHAR}, #{isMaster,jdbcType=VARCHAR}, #{masterDegreeId,jdbcType=VARCHAR}, 
+      #{masterDegreeName,jdbcType=VARCHAR}, #{masterDegreeTypeId,jdbcType=VARCHAR}, #{masterDegreeTypeName,jdbcType=VARCHAR}, 
+      #{masterGraSchoolId,jdbcType=VARCHAR}, #{masterGraSchoolName,jdbcType=VARCHAR}, 
+      #{masterGraTime,jdbcType=VARCHAR}, #{masterMajor,jdbcType=VARCHAR}, #{isDoctor,jdbcType=VARCHAR}, 
+      #{doctorDegreeId,jdbcType=VARCHAR}, #{doctorDegreeName,jdbcType=VARCHAR}, #{doctorDegreeTypeId,jdbcType=VARCHAR}, 
+      #{doctorDegreeTypeName,jdbcType=VARCHAR}, #{doctorGraSchoolId,jdbcType=VARCHAR}, 
+      #{doctorGraSchoolName,jdbcType=VARCHAR}, #{doctorGraTime,jdbcType=VARCHAR}, #{doctorMajor,jdbcType=VARCHAR}, 
+      #{medicalHeaithOrgId,jdbcType=VARCHAR}, #{medicalHeaithOrgName,jdbcType=VARCHAR}, 
+      #{hospitalAttrId,jdbcType=VARCHAR}, #{hospitalAttrName,jdbcType=VARCHAR}, #{hospitalCategoryId,jdbcType=VARCHAR}, 
+      #{hospitalCategoryName,jdbcType=VARCHAR}, #{baseAttributeId,jdbcType=VARCHAR}, 
+      #{baseAttributeName,jdbcType=VARCHAR}, #{basicHealthOrgId,jdbcType=VARCHAR}, #{basicHealthOrgName,jdbcType=VARCHAR}, 
+      #{technologyQualificationId,jdbcType=VARCHAR}, #{technologyQualificationName,jdbcType=VARCHAR}, 
+      #{technologyQualificationDate,jdbcType=VARCHAR}, #{qualificationMaterialId,jdbcType=VARCHAR}, 
+      #{qualificationMaterialName,jdbcType=VARCHAR}, #{qualificationMaterialCode,jdbcType=VARCHAR}, 
+      #{qualificationMaterialUri,jdbcType=VARCHAR}, #{specialCertificationUri,jdbcType=VARCHAR}, 
+      #{practicingCategoryId,jdbcType=VARCHAR}, #{practicingCategoryName,jdbcType=VARCHAR}, 
+      #{practicingScopeId,jdbcType=VARCHAR}, #{practicingScopeName,jdbcType=VARCHAR}, 
+      #{practicingScope,jdbcType=VARCHAR}, #{isGeneralOrderOrientation,jdbcType=VARCHAR}, 
+      #{registeManua,jdbcType=VARCHAR}, #{archiveFlow,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.ResUserResumeLog">
+      insert into RES_USER_RESUME_LOG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        RECORD_FLOW,
+      </if>
+      <if test="userFlow != null">
+        USER_FLOW,
+      </if>
+      <if test="telephone != null">
+        TELEPHONE,
+      </if>
+      <if test="emergencyAddress != null">
+        EMERGENCY_ADDRESS,
+      </if>
+      <if test="workSchoolName != null">
+        WORK_SCHOOL_NAME,
+      </if>
+      <if test="orgRank != null">
+        ORG_RANK,
+      </if>
+      <if test="orgLevel != null">
+        ORG_LEVEL,
+      </if>
+      <if test="graduatedId != null">
+        GRADUATED_ID,
+      </if>
+      <if test="graduatedName != null">
+        GRADUATED_NAME,
+      </if>
+      <if test="specialized != null">
+        SPECIALIZED,
+      </if>
+      <if test="graduationTime != null">
+        GRADUATION_TIME,
+      </if>
+      <if test="collegeCertificateNo != null">
+        COLLEGE_CERTIFICATE_NO,
+      </if>
+      <if test="certificateUri != null">
+        CERTIFICATE_URI,
+      </if>
+      <if test="degreeUri != null">
+        DEGREE_URI,
+      </if>
+      <if test="degreeId != null">
+        DEGREE_ID,
+      </if>
+      <if test="degreeName != null">
+        DEGREE_NAME,
+      </if>
+      <if test="isMaster != null">
+        IS_MASTER,
+      </if>
+      <if test="masterDegreeId != null">
+        MASTER_DEGREE_ID,
+      </if>
+      <if test="masterDegreeName != null">
+        MASTER_DEGREE_NAME,
+      </if>
+      <if test="masterDegreeTypeId != null">
+        MASTER_DEGREE_TYPE_ID,
+      </if>
+      <if test="masterDegreeTypeName != null">
+        MASTER_DEGREE_TYPE_NAME,
+      </if>
+      <if test="masterGraSchoolId != null">
+        MASTER_GRA_SCHOOL_ID,
+      </if>
+      <if test="masterGraSchoolName != null">
+        MASTER_GRA_SCHOOL_NAME,
+      </if>
+      <if test="masterGraTime != null">
+        MASTER_GRA_TIME,
+      </if>
+      <if test="masterMajor != null">
+        MASTER_MAJOR,
+      </if>
+      <if test="isDoctor != null">
+        IS_DOCTOR,
+      </if>
+      <if test="doctorDegreeId != null">
+        DOCTOR_DEGREE_ID,
+      </if>
+      <if test="doctorDegreeName != null">
+        DOCTOR_DEGREE_NAME,
+      </if>
+      <if test="doctorDegreeTypeId != null">
+        DOCTOR_DEGREE_TYPE_ID,
+      </if>
+      <if test="doctorDegreeTypeName != null">
+        DOCTOR_DEGREE_TYPE_NAME,
+      </if>
+      <if test="doctorGraSchoolId != null">
+        DOCTOR_GRA_SCHOOL_ID,
+      </if>
+      <if test="doctorGraSchoolName != null">
+        DOCTOR_GRA_SCHOOL_NAME,
+      </if>
+      <if test="doctorGraTime != null">
+        DOCTOR_GRA_TIME,
+      </if>
+      <if test="doctorMajor != null">
+        DOCTOR_MAJOR,
+      </if>
+      <if test="medicalHeaithOrgId != null">
+        MEDICAL_HEAITH_ORG_ID,
+      </if>
+      <if test="medicalHeaithOrgName != null">
+        MEDICAL_HEAITH_ORG_NAME,
+      </if>
+      <if test="hospitalAttrId != null">
+        HOSPITAL_ATTR_ID,
+      </if>
+      <if test="hospitalAttrName != null">
+        HOSPITAL_ATTR_NAME,
+      </if>
+      <if test="hospitalCategoryId != null">
+        HOSPITAL_CATEGORY_ID,
+      </if>
+      <if test="hospitalCategoryName != null">
+        HOSPITAL_CATEGORY_NAME,
+      </if>
+      <if test="baseAttributeId != null">
+        BASE_ATTRIBUTE_ID,
+      </if>
+      <if test="baseAttributeName != null">
+        BASE_ATTRIBUTE_NAME,
+      </if>
+      <if test="basicHealthOrgId != null">
+        BASIC_HEALTH_ORG_ID,
+      </if>
+      <if test="basicHealthOrgName != null">
+        BASIC_HEALTH_ORG_NAME,
+      </if>
+      <if test="technologyQualificationId != null">
+        TECHNOLOGY_QUALIFICATION_ID,
+      </if>
+      <if test="technologyQualificationName != null">
+        TECHNOLOGY_QUALIFICATION_NAME,
+      </if>
+      <if test="technologyQualificationDate != null">
+        TECHNOLOGY_QUALIFICATION_DATE,
+      </if>
+      <if test="qualificationMaterialId != null">
+        QUALIFICATION_MATERIAL_ID,
+      </if>
+      <if test="qualificationMaterialName != null">
+        QUALIFICATION_MATERIAL_NAME,
+      </if>
+      <if test="qualificationMaterialCode != null">
+        QUALIFICATION_MATERIAL_CODE,
+      </if>
+      <if test="qualificationMaterialUri != null">
+        QUALIFICATION_MATERIAL_URI,
+      </if>
+      <if test="specialCertificationUri != null">
+        SPECIAL_CERTIFICATION_URI,
+      </if>
+      <if test="practicingCategoryId != null">
+        PRACTICING_CATEGORY_ID,
+      </if>
+      <if test="practicingCategoryName != null">
+        PRACTICING_CATEGORY_NAME,
+      </if>
+      <if test="practicingScopeId != null">
+        PRACTICING_SCOPE_ID,
+      </if>
+      <if test="practicingScopeName != null">
+        PRACTICING_SCOPE_NAME,
+      </if>
+      <if test="practicingScope != null">
+        PRACTICING_SCOPE,
+      </if>
+      <if test="isGeneralOrderOrientation != null">
+        IS_GENERAL_ORDER_ORIENTATION,
+      </if>
+      <if test="registeManua != null">
+        REGISTE_MANUA,
+      </if>
+      <if test="archiveFlow != null">
+        ARCHIVE_FLOW,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="userFlow != null">
+        #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyAddress != null">
+        #{emergencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="workSchoolName != null">
+        #{workSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgRank != null">
+        #{orgRank,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null">
+        #{orgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedId != null">
+        #{graduatedId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedName != null">
+        #{graduatedName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialized != null">
+        #{specialized,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null">
+        #{graduationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeCertificateNo != null">
+        #{collegeCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUri != null">
+        #{certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeUri != null">
+        #{degreeUri,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeId != null">
+        #{degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeName != null">
+        #{degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMaster != null">
+        #{isMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeId != null">
+        #{masterDegreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeName != null">
+        #{masterDegreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeTypeId != null">
+        #{masterDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeTypeName != null">
+        #{masterDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraSchoolId != null">
+        #{masterGraSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraSchoolName != null">
+        #{masterGraSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraTime != null">
+        #{masterGraTime,jdbcType=VARCHAR},
+      </if>
+      <if test="masterMajor != null">
+        #{masterMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="isDoctor != null">
+        #{isDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeId != null">
+        #{doctorDegreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeName != null">
+        #{doctorDegreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeId != null">
+        #{doctorDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeName != null">
+        #{doctorDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraSchoolId != null">
+        #{doctorGraSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraSchoolName != null">
+        #{doctorGraSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraTime != null">
+        #{doctorGraTime,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorMajor != null">
+        #{doctorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalHeaithOrgId != null">
+        #{medicalHeaithOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalHeaithOrgName != null">
+        #{medicalHeaithOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalAttrId != null">
+        #{hospitalAttrId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalAttrName != null">
+        #{hospitalAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalCategoryId != null">
+        #{hospitalCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalCategoryName != null">
+        #{hospitalCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAttributeId != null">
+        #{baseAttributeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAttributeName != null">
+        #{baseAttributeName,jdbcType=VARCHAR},
+      </if>
+      <if test="basicHealthOrgId != null">
+        #{basicHealthOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="basicHealthOrgName != null">
+        #{basicHealthOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyQualificationId != null">
+        #{technologyQualificationId,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyQualificationName != null">
+        #{technologyQualificationName,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyQualificationDate != null">
+        #{technologyQualificationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialId != null">
+        #{qualificationMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialName != null">
+        #{qualificationMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialCode != null">
+        #{qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialUri != null">
+        #{qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertificationUri != null">
+        #{specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingCategoryId != null">
+        #{practicingCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingCategoryName != null">
+        #{practicingCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeId != null">
+        #{practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeName != null">
+        #{practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScope != null">
+        #{practicingScope,jdbcType=VARCHAR},
+      </if>
+      <if test="isGeneralOrderOrientation != null">
+        #{isGeneralOrderOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="registeManua != null">
+        #{registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveFlow != null">
+        #{archiveFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.ResUserResumeLogExample" resultType="java.lang.Integer">
+      select count(*) from RES_USER_RESUME_LOG
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+      update RES_USER_RESUME_LOG
+    <set>
+      <if test="record.recordFlow != null">
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userFlow != null">
+        USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null">
+        TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyAddress != null">
+        EMERGENCY_ADDRESS = #{record.emergencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workSchoolName != null">
+        WORK_SCHOOL_NAME = #{record.workSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgRank != null">
+        ORG_RANK = #{record.orgRank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgLevel != null">
+        ORG_LEVEL = #{record.orgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduatedId != null">
+        GRADUATED_ID = #{record.graduatedId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduatedName != null">
+        GRADUATED_NAME = #{record.graduatedName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialized != null">
+        SPECIALIZED = #{record.specialized,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationTime != null">
+        GRADUATION_TIME = #{record.graduationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collegeCertificateNo != null">
+        COLLEGE_CERTIFICATE_NO = #{record.collegeCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateUri != null">
+        CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeUri != null">
+        DEGREE_URI = #{record.degreeUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeId != null">
+        DEGREE_ID = #{record.degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.degreeName != null">
+        DEGREE_NAME = #{record.degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMaster != null">
+        IS_MASTER = #{record.isMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterDegreeId != null">
+        MASTER_DEGREE_ID = #{record.masterDegreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterDegreeName != null">
+        MASTER_DEGREE_NAME = #{record.masterDegreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterDegreeTypeId != null">
+        MASTER_DEGREE_TYPE_ID = #{record.masterDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterDegreeTypeName != null">
+        MASTER_DEGREE_TYPE_NAME = #{record.masterDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterGraSchoolId != null">
+        MASTER_GRA_SCHOOL_ID = #{record.masterGraSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterGraSchoolName != null">
+        MASTER_GRA_SCHOOL_NAME = #{record.masterGraSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterGraTime != null">
+        MASTER_GRA_TIME = #{record.masterGraTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterMajor != null">
+        MASTER_MAJOR = #{record.masterMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDoctor != null">
+        IS_DOCTOR = #{record.isDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorDegreeId != null">
+        DOCTOR_DEGREE_ID = #{record.doctorDegreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorDegreeName != null">
+        DOCTOR_DEGREE_NAME = #{record.doctorDegreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorDegreeTypeId != null">
+        DOCTOR_DEGREE_TYPE_ID = #{record.doctorDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorDegreeTypeName != null">
+        DOCTOR_DEGREE_TYPE_NAME = #{record.doctorDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorGraSchoolId != null">
+        DOCTOR_GRA_SCHOOL_ID = #{record.doctorGraSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorGraSchoolName != null">
+        DOCTOR_GRA_SCHOOL_NAME = #{record.doctorGraSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorGraTime != null">
+        DOCTOR_GRA_TIME = #{record.doctorGraTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorMajor != null">
+        DOCTOR_MAJOR = #{record.doctorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalHeaithOrgId != null">
+        MEDICAL_HEAITH_ORG_ID = #{record.medicalHeaithOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicalHeaithOrgName != null">
+        MEDICAL_HEAITH_ORG_NAME = #{record.medicalHeaithOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalAttrId != null">
+        HOSPITAL_ATTR_ID = #{record.hospitalAttrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalAttrName != null">
+        HOSPITAL_ATTR_NAME = #{record.hospitalAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalCategoryId != null">
+        HOSPITAL_CATEGORY_ID = #{record.hospitalCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalCategoryName != null">
+        HOSPITAL_CATEGORY_NAME = #{record.hospitalCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseAttributeId != null">
+        BASE_ATTRIBUTE_ID = #{record.baseAttributeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseAttributeName != null">
+        BASE_ATTRIBUTE_NAME = #{record.baseAttributeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicHealthOrgId != null">
+        BASIC_HEALTH_ORG_ID = #{record.basicHealthOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.basicHealthOrgName != null">
+        BASIC_HEALTH_ORG_NAME = #{record.basicHealthOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technologyQualificationId != null">
+        TECHNOLOGY_QUALIFICATION_ID = #{record.technologyQualificationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technologyQualificationName != null">
+        TECHNOLOGY_QUALIFICATION_NAME = #{record.technologyQualificationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technologyQualificationDate != null">
+        TECHNOLOGY_QUALIFICATION_DATE = #{record.technologyQualificationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialId != null">
+        QUALIFICATION_MATERIAL_ID = #{record.qualificationMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialName != null">
+        QUALIFICATION_MATERIAL_NAME = #{record.qualificationMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialCode != null">
+        QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialUri != null">
+        QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialCertificationUri != null">
+        SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingCategoryId != null">
+        PRACTICING_CATEGORY_ID = #{record.practicingCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingCategoryName != null">
+        PRACTICING_CATEGORY_NAME = #{record.practicingCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScopeId != null">
+        PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScopeName != null">
+        PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScope != null">
+        PRACTICING_SCOPE = #{record.practicingScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isGeneralOrderOrientation != null">
+        IS_GENERAL_ORDER_ORIENTATION = #{record.isGeneralOrderOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeManua != null">
+        REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="record.archiveFlow != null">
+        ARCHIVE_FLOW = #{record.archiveFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+      update RES_USER_RESUME_LOG
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      USER_FLOW = #{record.userFlow,jdbcType=VARCHAR},
+      TELEPHONE = #{record.telephone,jdbcType=VARCHAR},
+      EMERGENCY_ADDRESS = #{record.emergencyAddress,jdbcType=VARCHAR},
+      WORK_SCHOOL_NAME = #{record.workSchoolName,jdbcType=VARCHAR},
+      ORG_RANK = #{record.orgRank,jdbcType=VARCHAR},
+      ORG_LEVEL = #{record.orgLevel,jdbcType=VARCHAR},
+      GRADUATED_ID = #{record.graduatedId,jdbcType=VARCHAR},
+      GRADUATED_NAME = #{record.graduatedName,jdbcType=VARCHAR},
+      SPECIALIZED = #{record.specialized,jdbcType=VARCHAR},
+      GRADUATION_TIME = #{record.graduationTime,jdbcType=VARCHAR},
+      COLLEGE_CERTIFICATE_NO = #{record.collegeCertificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      DEGREE_URI = #{record.degreeUri,jdbcType=VARCHAR},
+      DEGREE_ID = #{record.degreeId,jdbcType=VARCHAR},
+      DEGREE_NAME = #{record.degreeName,jdbcType=VARCHAR},
+      IS_MASTER = #{record.isMaster,jdbcType=VARCHAR},
+      MASTER_DEGREE_ID = #{record.masterDegreeId,jdbcType=VARCHAR},
+      MASTER_DEGREE_NAME = #{record.masterDegreeName,jdbcType=VARCHAR},
+      MASTER_DEGREE_TYPE_ID = #{record.masterDegreeTypeId,jdbcType=VARCHAR},
+      MASTER_DEGREE_TYPE_NAME = #{record.masterDegreeTypeName,jdbcType=VARCHAR},
+      MASTER_GRA_SCHOOL_ID = #{record.masterGraSchoolId,jdbcType=VARCHAR},
+      MASTER_GRA_SCHOOL_NAME = #{record.masterGraSchoolName,jdbcType=VARCHAR},
+      MASTER_GRA_TIME = #{record.masterGraTime,jdbcType=VARCHAR},
+      MASTER_MAJOR = #{record.masterMajor,jdbcType=VARCHAR},
+      IS_DOCTOR = #{record.isDoctor,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_ID = #{record.doctorDegreeId,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_NAME = #{record.doctorDegreeName,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_ID = #{record.doctorDegreeTypeId,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_NAME = #{record.doctorDegreeTypeName,jdbcType=VARCHAR},
+      DOCTOR_GRA_SCHOOL_ID = #{record.doctorGraSchoolId,jdbcType=VARCHAR},
+      DOCTOR_GRA_SCHOOL_NAME = #{record.doctorGraSchoolName,jdbcType=VARCHAR},
+      DOCTOR_GRA_TIME = #{record.doctorGraTime,jdbcType=VARCHAR},
+      DOCTOR_MAJOR = #{record.doctorMajor,jdbcType=VARCHAR},
+      MEDICAL_HEAITH_ORG_ID = #{record.medicalHeaithOrgId,jdbcType=VARCHAR},
+      MEDICAL_HEAITH_ORG_NAME = #{record.medicalHeaithOrgName,jdbcType=VARCHAR},
+      HOSPITAL_ATTR_ID = #{record.hospitalAttrId,jdbcType=VARCHAR},
+      HOSPITAL_ATTR_NAME = #{record.hospitalAttrName,jdbcType=VARCHAR},
+      HOSPITAL_CATEGORY_ID = #{record.hospitalCategoryId,jdbcType=VARCHAR},
+      HOSPITAL_CATEGORY_NAME = #{record.hospitalCategoryName,jdbcType=VARCHAR},
+      BASE_ATTRIBUTE_ID = #{record.baseAttributeId,jdbcType=VARCHAR},
+      BASE_ATTRIBUTE_NAME = #{record.baseAttributeName,jdbcType=VARCHAR},
+      BASIC_HEALTH_ORG_ID = #{record.basicHealthOrgId,jdbcType=VARCHAR},
+      BASIC_HEALTH_ORG_NAME = #{record.basicHealthOrgName,jdbcType=VARCHAR},
+      TECHNOLOGY_QUALIFICATION_ID = #{record.technologyQualificationId,jdbcType=VARCHAR},
+      TECHNOLOGY_QUALIFICATION_NAME = #{record.technologyQualificationName,jdbcType=VARCHAR},
+      TECHNOLOGY_QUALIFICATION_DATE = #{record.technologyQualificationDate,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_ID = #{record.qualificationMaterialId,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_NAME = #{record.qualificationMaterialName,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      PRACTICING_CATEGORY_ID = #{record.practicingCategoryId,jdbcType=VARCHAR},
+      PRACTICING_CATEGORY_NAME = #{record.practicingCategoryName,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      PRACTICING_SCOPE = #{record.practicingScope,jdbcType=VARCHAR},
+      IS_GENERAL_ORDER_ORIENTATION = #{record.isGeneralOrderOrientation,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      ARCHIVE_FLOW = #{record.archiveFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResUserResumeLog">
+      update RES_USER_RESUME_LOG
+    <set>
+      <if test="userFlow != null">
+        USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyAddress != null">
+        EMERGENCY_ADDRESS = #{emergencyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="workSchoolName != null">
+        WORK_SCHOOL_NAME = #{workSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgRank != null">
+        ORG_RANK = #{orgRank,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null">
+        ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedId != null">
+        GRADUATED_ID = #{graduatedId,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedName != null">
+        GRADUATED_NAME = #{graduatedName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialized != null">
+        SPECIALIZED = #{specialized,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null">
+        GRADUATION_TIME = #{graduationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="collegeCertificateNo != null">
+        COLLEGE_CERTIFICATE_NO = #{collegeCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUri != null">
+        CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeUri != null">
+        DEGREE_URI = #{degreeUri,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeId != null">
+        DEGREE_ID = #{degreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="degreeName != null">
+        DEGREE_NAME = #{degreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isMaster != null">
+        IS_MASTER = #{isMaster,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeId != null">
+        MASTER_DEGREE_ID = #{masterDegreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeName != null">
+        MASTER_DEGREE_NAME = #{masterDegreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeTypeId != null">
+        MASTER_DEGREE_TYPE_ID = #{masterDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterDegreeTypeName != null">
+        MASTER_DEGREE_TYPE_NAME = #{masterDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraSchoolId != null">
+        MASTER_GRA_SCHOOL_ID = #{masterGraSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraSchoolName != null">
+        MASTER_GRA_SCHOOL_NAME = #{masterGraSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraTime != null">
+        MASTER_GRA_TIME = #{masterGraTime,jdbcType=VARCHAR},
+      </if>
+      <if test="masterMajor != null">
+        MASTER_MAJOR = #{masterMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="isDoctor != null">
+        IS_DOCTOR = #{isDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeId != null">
+        DOCTOR_DEGREE_ID = #{doctorDegreeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeName != null">
+        DOCTOR_DEGREE_NAME = #{doctorDegreeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeId != null">
+        DOCTOR_DEGREE_TYPE_ID = #{doctorDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeName != null">
+        DOCTOR_DEGREE_TYPE_NAME = #{doctorDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraSchoolId != null">
+        DOCTOR_GRA_SCHOOL_ID = #{doctorGraSchoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraSchoolName != null">
+        DOCTOR_GRA_SCHOOL_NAME = #{doctorGraSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraTime != null">
+        DOCTOR_GRA_TIME = #{doctorGraTime,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorMajor != null">
+        DOCTOR_MAJOR = #{doctorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalHeaithOrgId != null">
+        MEDICAL_HEAITH_ORG_ID = #{medicalHeaithOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="medicalHeaithOrgName != null">
+        MEDICAL_HEAITH_ORG_NAME = #{medicalHeaithOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalAttrId != null">
+        HOSPITAL_ATTR_ID = #{hospitalAttrId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalAttrName != null">
+        HOSPITAL_ATTR_NAME = #{hospitalAttrName,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalCategoryId != null">
+        HOSPITAL_CATEGORY_ID = #{hospitalCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalCategoryName != null">
+        HOSPITAL_CATEGORY_NAME = #{hospitalCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAttributeId != null">
+        BASE_ATTRIBUTE_ID = #{baseAttributeId,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAttributeName != null">
+        BASE_ATTRIBUTE_NAME = #{baseAttributeName,jdbcType=VARCHAR},
+      </if>
+      <if test="basicHealthOrgId != null">
+        BASIC_HEALTH_ORG_ID = #{basicHealthOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="basicHealthOrgName != null">
+        BASIC_HEALTH_ORG_NAME = #{basicHealthOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyQualificationId != null">
+        TECHNOLOGY_QUALIFICATION_ID = #{technologyQualificationId,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyQualificationName != null">
+        TECHNOLOGY_QUALIFICATION_NAME = #{technologyQualificationName,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyQualificationDate != null">
+        TECHNOLOGY_QUALIFICATION_DATE = #{technologyQualificationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialId != null">
+        QUALIFICATION_MATERIAL_ID = #{qualificationMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialName != null">
+        QUALIFICATION_MATERIAL_NAME = #{qualificationMaterialName,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialCode != null">
+        QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialUri != null">
+        QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertificationUri != null">
+        SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingCategoryId != null">
+        PRACTICING_CATEGORY_ID = #{practicingCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingCategoryName != null">
+        PRACTICING_CATEGORY_NAME = #{practicingCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeId != null">
+        PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeName != null">
+        PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScope != null">
+        PRACTICING_SCOPE = #{practicingScope,jdbcType=VARCHAR},
+      </if>
+      <if test="isGeneralOrderOrientation != null">
+        IS_GENERAL_ORDER_ORIENTATION = #{isGeneralOrderOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="registeManua != null">
+        REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveFlow != null">
+        ARCHIVE_FLOW = #{archiveFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResUserResumeLog">
+      update RES_USER_RESUME_LOG
+    set USER_FLOW = #{userFlow,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      EMERGENCY_ADDRESS = #{emergencyAddress,jdbcType=VARCHAR},
+      WORK_SCHOOL_NAME = #{workSchoolName,jdbcType=VARCHAR},
+      ORG_RANK = #{orgRank,jdbcType=VARCHAR},
+      ORG_LEVEL = #{orgLevel,jdbcType=VARCHAR},
+      GRADUATED_ID = #{graduatedId,jdbcType=VARCHAR},
+      GRADUATED_NAME = #{graduatedName,jdbcType=VARCHAR},
+      SPECIALIZED = #{specialized,jdbcType=VARCHAR},
+      GRADUATION_TIME = #{graduationTime,jdbcType=VARCHAR},
+      COLLEGE_CERTIFICATE_NO = #{collegeCertificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      DEGREE_URI = #{degreeUri,jdbcType=VARCHAR},
+      DEGREE_ID = #{degreeId,jdbcType=VARCHAR},
+      DEGREE_NAME = #{degreeName,jdbcType=VARCHAR},
+      IS_MASTER = #{isMaster,jdbcType=VARCHAR},
+      MASTER_DEGREE_ID = #{masterDegreeId,jdbcType=VARCHAR},
+      MASTER_DEGREE_NAME = #{masterDegreeName,jdbcType=VARCHAR},
+      MASTER_DEGREE_TYPE_ID = #{masterDegreeTypeId,jdbcType=VARCHAR},
+      MASTER_DEGREE_TYPE_NAME = #{masterDegreeTypeName,jdbcType=VARCHAR},
+      MASTER_GRA_SCHOOL_ID = #{masterGraSchoolId,jdbcType=VARCHAR},
+      MASTER_GRA_SCHOOL_NAME = #{masterGraSchoolName,jdbcType=VARCHAR},
+      MASTER_GRA_TIME = #{masterGraTime,jdbcType=VARCHAR},
+      MASTER_MAJOR = #{masterMajor,jdbcType=VARCHAR},
+      IS_DOCTOR = #{isDoctor,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_ID = #{doctorDegreeId,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_NAME = #{doctorDegreeName,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_ID = #{doctorDegreeTypeId,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_NAME = #{doctorDegreeTypeName,jdbcType=VARCHAR},
+      DOCTOR_GRA_SCHOOL_ID = #{doctorGraSchoolId,jdbcType=VARCHAR},
+      DOCTOR_GRA_SCHOOL_NAME = #{doctorGraSchoolName,jdbcType=VARCHAR},
+      DOCTOR_GRA_TIME = #{doctorGraTime,jdbcType=VARCHAR},
+      DOCTOR_MAJOR = #{doctorMajor,jdbcType=VARCHAR},
+      MEDICAL_HEAITH_ORG_ID = #{medicalHeaithOrgId,jdbcType=VARCHAR},
+      MEDICAL_HEAITH_ORG_NAME = #{medicalHeaithOrgName,jdbcType=VARCHAR},
+      HOSPITAL_ATTR_ID = #{hospitalAttrId,jdbcType=VARCHAR},
+      HOSPITAL_ATTR_NAME = #{hospitalAttrName,jdbcType=VARCHAR},
+      HOSPITAL_CATEGORY_ID = #{hospitalCategoryId,jdbcType=VARCHAR},
+      HOSPITAL_CATEGORY_NAME = #{hospitalCategoryName,jdbcType=VARCHAR},
+      BASE_ATTRIBUTE_ID = #{baseAttributeId,jdbcType=VARCHAR},
+      BASE_ATTRIBUTE_NAME = #{baseAttributeName,jdbcType=VARCHAR},
+      BASIC_HEALTH_ORG_ID = #{basicHealthOrgId,jdbcType=VARCHAR},
+      BASIC_HEALTH_ORG_NAME = #{basicHealthOrgName,jdbcType=VARCHAR},
+      TECHNOLOGY_QUALIFICATION_ID = #{technologyQualificationId,jdbcType=VARCHAR},
+      TECHNOLOGY_QUALIFICATION_NAME = #{technologyQualificationName,jdbcType=VARCHAR},
+      TECHNOLOGY_QUALIFICATION_DATE = #{technologyQualificationDate,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_ID = #{qualificationMaterialId,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_NAME = #{qualificationMaterialName,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      PRACTICING_CATEGORY_ID = #{practicingCategoryId,jdbcType=VARCHAR},
+      PRACTICING_CATEGORY_NAME = #{practicingCategoryName,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      PRACTICING_SCOPE = #{practicingScope,jdbcType=VARCHAR},
+      IS_GENERAL_ORDER_ORIENTATION = #{isGeneralOrderOrientation,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      ARCHIVE_FLOW = #{archiveFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>
