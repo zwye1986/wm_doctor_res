@@ -10,6 +10,8 @@ import com.pinde.core.common.enums.pub.UserNationEnum;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper;
+import com.pinde.core.common.sci.dao.JsresRecruitInfoMapper;
 import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;

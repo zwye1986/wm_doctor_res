@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.RecStatusEnum;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -18,7 +19,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.model.jsres.JsEvalCfgItemExt;
 import com.pinde.sci.model.jsres.JsEvalCfgTitleExt;
 import com.pinde.sci.model.jsres.JsResAttendanceExt;

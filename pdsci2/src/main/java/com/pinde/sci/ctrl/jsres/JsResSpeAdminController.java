@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -24,7 +25,6 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
@@ -122,8 +122,6 @@ public class JsResSpeAdminController extends GeneralController{
 	@Autowired
 	private IUserRoleBiz userRoleBiz;
 	@Autowired
-	private IResDoctorBiz doctorBiz;
-	@Autowired
 	private IJsResActivityTargetBiz activityTargeBiz;
 	@Autowired
 	private IResJointOrgBiz jointOrgBiz;
@@ -133,10 +131,6 @@ public class JsResSpeAdminController extends GeneralController{
 	private ISchRotationBiz schRotationtBiz;
 	@Autowired
 	private ISchAndStandardDeptCfgBiz deptCfgBiz;
-	@Autowired
-	private ISchAndStandardDeptCfgBiz schAndStandardDeptCfgBiz;
-	@Autowired
-	private SchAndStandardDeptCfgMapper schAndStandardDeptCfgMapper;
 
 	@Autowired
 	private IJsResDeptManagementBiz deptManagementBiz;

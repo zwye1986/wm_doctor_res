@@ -16,6 +16,7 @@
     <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SCORE_TOPLIMIT" property="scoreToplimit" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -77,7 +78,8 @@
   </sql>
   <sql id="Base_Column_List" >
     CFG_FLOW, ORG_FLOW, DEPT_FLOW, DEPT_NAME, TEST_NUM, SCORE_PASS, IS_TEST_OUT, TEST_OUT_TIME, 
-    TEACHER_WRITE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+    TEACHER_WRITE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    SCORE_TOPLIMIT
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresDeptConfigExample" >
     select
@@ -115,12 +117,14 @@
       DEPT_NAME, TEST_NUM, SCORE_PASS, 
       IS_TEST_OUT, TEST_OUT_TIME, TEACHER_WRITE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
-      MODIFY_TIME, MODIFY_USER_FLOW)
+      MODIFY_TIME, MODIFY_USER_FLOW, SCORE_TOPLIMIT
+      )
     values (#{cfgFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, 
       #{deptName,jdbcType=VARCHAR}, #{testNum,jdbcType=VARCHAR}, #{scorePass,jdbcType=VARCHAR}, 
       #{isTestOut,jdbcType=VARCHAR}, #{testOutTime,jdbcType=VARCHAR}, #{teacherWrite,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{scoreToplimit,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDeptConfig" >
       insert into JSRES_DEPT_CONFIG
@@ -167,6 +171,9 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
       </if>
+      <if test="scoreToplimit != null" >
+        SCORE_TOPLIMIT,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cfgFlow != null" >
@@ -211,10 +218,14 @@
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+      <if test="scoreToplimit != null" >
+        #{scoreToplimit,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.JsresDeptConfigExample" resultType="java.lang.Integer" >
-      select count(*) from JSRES_DEPT_CONFIG
+    <select id="countByExample" parameterType="com.pinde.core.model.JsresDeptConfigExample"
+            resultType="java.lang.Integer">
+        select count(*) from JSRES_DEPT_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -264,6 +275,9 @@
       <if test="record.modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       </if>
+      <if test="record.scoreToplimit != null" >
+        SCORE_TOPLIMIT = #{record.scoreToplimit,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -284,7 +298,8 @@
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SCORE_TOPLIMIT = #{record.scoreToplimit,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -331,6 +346,9 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+      <if test="scoreToplimit != null" >
+        SCORE_TOPLIMIT = #{scoreToplimit,jdbcType=VARCHAR},
+      </if>
     </set>
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
@@ -348,7 +366,8 @@
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SCORE_TOPLIMIT = #{scoreToplimit,jdbcType=VARCHAR}
     where CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

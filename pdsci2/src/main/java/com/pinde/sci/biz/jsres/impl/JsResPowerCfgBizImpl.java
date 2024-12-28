@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.sci.dao.JsresDeptConfigMapper;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,10 +11,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.dao.base.JsresDeptConfigMapper;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.dao.base.ResOrgCkxzMapper;
-import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -49,8 +48,6 @@ public class JsResPowerCfgBizImpl implements IJsResPowerCfgBiz {
     private IUserBiz userBiz;
     @Autowired
     private JsresDeptConfigMapper deptConfigMapper;
-    @Autowired
-    private ResDoctorExtMapper resDoctorExtMapper;
     @Autowired
     private ResOrgCkxzMapper resOrgCkxzMapper;
 

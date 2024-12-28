@@ -57,6 +57,9 @@
     <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
     <result column="REMARK" property="remark" jdbcType="VARCHAR" />
     <result column="DOCTOR_IS_APPLY" property="doctorIsApply" jdbcType="VARCHAR" />
+    <result column="JOINT_LOCAL_AUDIT_STATUS_ID" property="jointLocalAuditStatusId" jdbcType="VARCHAR" />
+    <result column="JOINT_LOCAL_AUDIT_STATUS_NAME" property="jointLocalAuditStatusName" jdbcType="VARCHAR" />
+    <result column="JOINT_LOCAL_REASON" property="jointLocalReason" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -127,9 +130,11 @@
     AVG_OUT_COMPLETE_BI_PER, AVG_IN_COMPLETE_BI_PER, GRADUATION_MATERIAL_ID, GRADUATION_MATERIAL_NAME, 
     GRADUATION_MATERIAL_CODE, GRADUATION_MATERIAL_URI, GRADUATION_CATEGORY_ID, GRADUATION_CATEGORY_NAME, 
     GRADUATION_SCOPE_ID, GRADUATION_SCOPE_NAME, MAKE_UP, IS_THEROY, IS_SKILL, IS_FIVE, 
-    IS_TEN, GRADUATION_MATERIAL_TIME, CERTIFICATE_NO, TEST_ID, REMARK, DOCTOR_IS_APPLY
+    IS_TEN, GRADUATION_MATERIAL_TIME, CERTIFICATE_NO, TEST_ID, REMARK, DOCTOR_IS_APPLY, 
+    JOINT_LOCAL_AUDIT_STATUS_ID, JOINT_LOCAL_AUDIT_STATUS_NAME, JOINT_LOCAL_REASON
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresGraduationApplyExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.JsresGraduationApplyExample">
     select
     <if test="distinct" >
       distinct
@@ -182,7 +187,9 @@
       MAKE_UP, IS_THEROY, IS_SKILL, 
       IS_FIVE, IS_TEN, GRADUATION_MATERIAL_TIME, 
       CERTIFICATE_NO, TEST_ID, REMARK, 
-      DOCTOR_IS_APPLY)
+      DOCTOR_IS_APPLY, JOINT_LOCAL_AUDIT_STATUS_ID, 
+      JOINT_LOCAL_AUDIT_STATUS_NAME, JOINT_LOCAL_REASON
+      )
     values (#{applyFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR}, 
       #{rotationName,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, 
       #{localAuditStatusId,jdbcType=VARCHAR}, #{localAuditStatusName,jdbcType=VARCHAR}, 
@@ -204,7 +211,9 @@
       #{makeUp,jdbcType=VARCHAR}, #{isTheroy,jdbcType=VARCHAR}, #{isSkill,jdbcType=VARCHAR}, 
       #{isFive,jdbcType=VARCHAR}, #{isTen,jdbcType=VARCHAR}, #{graduationMaterialTime,jdbcType=VARCHAR}, 
       #{certificateNo,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{doctorIsApply,jdbcType=VARCHAR})
+      #{doctorIsApply,jdbcType=VARCHAR}, #{jointLocalAuditStatusId,jdbcType=VARCHAR}, 
+      #{jointLocalAuditStatusName,jdbcType=VARCHAR}, #{jointLocalReason,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.JsresGraduationApply" >
       insert into JSRES_GRADUATION_APPLY
@@ -374,6 +383,15 @@
       <if test="doctorIsApply != null" >
         DOCTOR_IS_APPLY,
       </if>
+      <if test="jointLocalAuditStatusId != null" >
+        JOINT_LOCAL_AUDIT_STATUS_ID,
+      </if>
+      <if test="jointLocalAuditStatusName != null" >
+        JOINT_LOCAL_AUDIT_STATUS_NAME,
+      </if>
+      <if test="jointLocalReason != null" >
+        JOINT_LOCAL_REASON,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="applyFlow != null" >
@@ -540,6 +558,15 @@
       </if>
       <if test="doctorIsApply != null" >
         #{doctorIsApply,jdbcType=VARCHAR},
+      </if>
+      <if test="jointLocalAuditStatusId != null" >
+        #{jointLocalAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="jointLocalAuditStatusName != null" >
+        #{jointLocalAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="jointLocalReason != null" >
+        #{jointLocalReason,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -717,6 +744,15 @@
       <if test="record.doctorIsApply != null" >
         DOCTOR_IS_APPLY = #{record.doctorIsApply,jdbcType=VARCHAR},
       </if>
+      <if test="record.jointLocalAuditStatusId != null" >
+        JOINT_LOCAL_AUDIT_STATUS_ID = #{record.jointLocalAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jointLocalAuditStatusName != null" >
+        JOINT_LOCAL_AUDIT_STATUS_NAME = #{record.jointLocalAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jointLocalReason != null" >
+        JOINT_LOCAL_REASON = #{record.jointLocalReason,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -778,7 +814,10 @@
       CERTIFICATE_NO = #{record.certificateNo,jdbcType=VARCHAR},
       TEST_ID = #{record.testId,jdbcType=VARCHAR},
       REMARK = #{record.remark,jdbcType=VARCHAR},
-      DOCTOR_IS_APPLY = #{record.doctorIsApply,jdbcType=VARCHAR}
+      DOCTOR_IS_APPLY = #{record.doctorIsApply,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT_STATUS_ID = #{record.jointLocalAuditStatusId,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT_STATUS_NAME = #{record.jointLocalAuditStatusName,jdbcType=VARCHAR},
+      JOINT_LOCAL_REASON = #{record.jointLocalReason,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -948,6 +987,15 @@
       <if test="doctorIsApply != null" >
         DOCTOR_IS_APPLY = #{doctorIsApply,jdbcType=VARCHAR},
       </if>
+      <if test="jointLocalAuditStatusId != null" >
+        JOINT_LOCAL_AUDIT_STATUS_ID = #{jointLocalAuditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="jointLocalAuditStatusName != null" >
+        JOINT_LOCAL_AUDIT_STATUS_NAME = #{jointLocalAuditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="jointLocalReason != null" >
+        JOINT_LOCAL_REASON = #{jointLocalReason,jdbcType=VARCHAR},
+      </if>
     </set>
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </update>
@@ -1006,7 +1054,10 @@
       CERTIFICATE_NO = #{certificateNo,jdbcType=VARCHAR},
       TEST_ID = #{testId,jdbcType=VARCHAR},
       REMARK = #{remark,jdbcType=VARCHAR},
-      DOCTOR_IS_APPLY = #{doctorIsApply,jdbcType=VARCHAR}
+      DOCTOR_IS_APPLY = #{doctorIsApply,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT_STATUS_ID = #{jointLocalAuditStatusId,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT_STATUS_NAME = #{jointLocalAuditStatusName,jdbcType=VARCHAR},
+      JOINT_LOCAL_REASON = #{jointLocalReason,jdbcType=VARCHAR}
     where APPLY_FLOW = #{applyFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

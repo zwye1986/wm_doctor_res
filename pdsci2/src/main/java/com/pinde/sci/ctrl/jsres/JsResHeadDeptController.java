@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -22,7 +23,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;
 import com.pinde.sci.form.res.ResAssessCfgItemForm;
@@ -116,8 +116,6 @@ public class JsResHeadDeptController extends GeneralController{
     @Autowired
     private JsresPowerCfgMapper jsresPowerCfgMapper;
     @Autowired
-	private IResBaseSpeDeptBiz baseSpeDeptBiz;
-    @Autowired
 	private IDeptBasicInfoBiz deptBasicInfoBiz;
     @Autowired
 	private ISchAndStandardDeptCfgBiz schAndStandardDeptCfgBiz;
@@ -128,8 +126,6 @@ public class JsResHeadDeptController extends GeneralController{
 	@Autowired
 	private IUserBiz userBiz;
 
-	@Autowired
-	private IJsResDeptManagementBiz deptManagementBiz;
     private static Logger logger = LoggerFactory.getLogger(JsResHeadDeptController.class);
 
 	/**

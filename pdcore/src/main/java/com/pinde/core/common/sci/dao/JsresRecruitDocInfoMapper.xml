@@ -69,6 +69,7 @@
     <result column="GRADUATION_CERTIFICATE_NO" property="graduationCertificateNo" jdbcType="VARCHAR" />
     <result column="CERTIFICATE_DATE" property="certificateDate" jdbcType="VARCHAR" />
     <result column="GRADUATION_CERTIFICATE_TYPE" property="graduationCertificateType" jdbcType="VARCHAR" />
+    <result column="SIGNUP_WAY" property="signupWay" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" extends="BaseResultMap" >
     <result column="RETEST_NOTICE" property="retestNotice" jdbcType="CLOB" />
