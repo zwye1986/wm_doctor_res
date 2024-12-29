@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.sci.dao.JsresSupervisioFileMapper;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;

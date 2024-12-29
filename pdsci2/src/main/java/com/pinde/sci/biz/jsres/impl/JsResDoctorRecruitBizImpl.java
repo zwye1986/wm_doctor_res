@@ -6,6 +6,7 @@ import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.BaseStatusEnum;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
+import com.pinde.core.common.sci.dao.JsresSignMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;

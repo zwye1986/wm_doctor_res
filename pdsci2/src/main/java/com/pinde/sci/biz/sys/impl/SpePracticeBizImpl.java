@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.common.sci.dao.JsresSpeContrastPracticeMapper;
 import com.pinde.core.model.JsresSpeContrastPractice;
 import com.pinde.core.model.JsresSpeContrastPracticeExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.ISpePracticeBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.JsresSpeContrastPracticeMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
