@@ -2597,7 +2597,7 @@ ORDER BY
         ORDER BY so.org_code
     </select>
 
-    <select id="searchDataStatistics" parameterType="map" resultMap="com.pinde.sci.dao.base.JsresDataStatisticsMapper.BaseResultMap">
+    <select id="searchDataStatistics" parameterType="map" resultMap="com.pinde.core.common.sci.dao.JsresDataStatisticsMapper.BaseResultMap">
         select * from jsres_data_statistics
         where record_status = 'Y'
         <if test="monthDate!=null and monthDate!=''">
@@ -2624,7 +2624,7 @@ ORDER BY
         from dual
     </select>
 
-    <select id="searchMonthDataList" parameterType="map" resultMap="com.pinde.sci.dao.base.JsresMonthStatisticsMapper.BaseResultMap">
+    <select id="searchMonthDataList" parameterType="map" resultMap="com.pinde.core.common.sci.dao.JsresMonthStatisticsMapper.BaseResultMap">
         select * from jsres_month_statistics
         where record_status = 'Y'
         <if test="monthDate!=null and monthDate!=''">

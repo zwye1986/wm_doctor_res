@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.sci.dao.HospSelfAssessmentCfgMapper;
+import com.pinde.core.common.sci.dao.HospSelfAssessmentMapper;
 import com.pinde.core.common.sci.dao.JsresSupervisioFileMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;

@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.model.PersonnelChangeReport;
 import com.pinde.sci.biz.res.ResPersonnelChangeReportBiz;
-import com.pinde.sci.dao.base.PersonnelChangeReportMapper;
+import com.pinde.core.common.sci.dao.PersonnelChangeReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

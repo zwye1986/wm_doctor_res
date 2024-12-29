@@ -9,7 +9,7 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.JsresExamSignupLogMapper;
+import com.pinde.core.common.sci.dao.JsresExamSignupLogMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;

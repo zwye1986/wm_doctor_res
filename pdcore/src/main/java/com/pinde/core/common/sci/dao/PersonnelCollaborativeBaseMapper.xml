@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.PersonnelCollaborativeBaseMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PersonnelStatisticsByName">
+        <result column="org_flow" property="orgFlow" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectCollaborativeBaseFlow" resultMap="BaseResultMap">
+        select distinct(org_flow) from SYS_MONTHLY_DOCTOR_INFO
+        where org_name = #{orgName}
+    </select>
+</mapper>
