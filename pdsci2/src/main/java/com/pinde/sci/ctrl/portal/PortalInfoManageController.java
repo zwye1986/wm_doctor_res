@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.portal;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
 import com.pinde.core.common.enums.sys.RoleLevelEnum;
+import com.pinde.core.common.sci.dao.PortalSuggestMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -14,7 +15,6 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.PortalSuggestMapper;
 import com.pinde.sci.form.portal.PortalInfoForm;
 import com.pinde.core.model.SysCfg;
 import com.pinde.sci.model.portal.PortalInfoExt;

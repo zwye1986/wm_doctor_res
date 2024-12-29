@@ -8,7 +8,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.sci.biz.recruit.IRecruitInfoLogBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.RecruitInfoLogMapper;
+import com.pinde.core.common.sci.dao.RecruitInfoLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
