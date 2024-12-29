@@ -2,6 +2,7 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -11,7 +12,6 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.osca.OscaDoctorAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaSubjectMainExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;

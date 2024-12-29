@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
+import com.pinde.core.common.sci.dao.OscaDoctorAssessmentMapper;
+import com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper;
+import com.pinde.core.common.sci.dao.OscaSkillsAssessmentTimeMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaDoctorOrderdeBiz;
-import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
-import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
-import com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper;
 import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
 import com.pinde.sci.dao.osca.OscaSubjectMainExtMapper;

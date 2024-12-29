@@ -30,6 +30,8 @@
     <result column="IS_SHOW_FROOM" property="isShowFroom" jdbcType="CHAR" />
     <result column="SKILL_ORDER" property="skillOrder" jdbcType="VARCHAR" />
     <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
+    <result column="SKILL_ORG_PHONE" property="skillOrgPhone" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -94,9 +96,10 @@
     SUBJECT_FLOW, SUBJECT_NAME, APPOINT_START_TIME, APPOINT_END_TIME, APPOINT_NUM, EXAM_ADDRESS, 
     IS_LOCAL, ORG_FLOW, ORG_NAME, IS_SHOW, IS_RELEASED, CODE_INFO, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_GRADE_RELEASED, IS_SHOW_FROOM, 
-    SKILL_ORDER, REMARKS
+    SKILL_ORDER, REMARKS, TEST_ID, SKILL_ORG_PHONE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.OscaSkillsAssessmentExample">
     select
     <if test="distinct" >
       distinct
@@ -136,7 +139,8 @@
       CODE_INFO, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       IS_GRADE_RELEASED, IS_SHOW_FROOM, SKILL_ORDER, 
-      REMARKS)
+      REMARKS, TEST_ID, SKILL_ORG_PHONE
+      )
     values (#{clinicalFlow,jdbcType=VARCHAR}, #{clinicalName,jdbcType=VARCHAR}, #{clinicalYear,jdbcType=CHAR}, 
       #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, #{actionTypeId,jdbcType=VARCHAR}, 
       #{actionTypeName,jdbcType=VARCHAR}, #{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
@@ -146,7 +150,8 @@
       #{codeInfo,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{isGradeReleased,jdbcType=CHAR}, #{isShowFroom,jdbcType=CHAR}, #{skillOrder,jdbcType=VARCHAR}, 
-      #{remarks,jdbcType=VARCHAR})
+      #{remarks,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, #{skillOrgPhone,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.OscaSkillsAssessment" >
       insert into OSCA_SKILLS_ASSESSMENT
@@ -235,6 +240,12 @@
       <if test="remarks != null" >
         REMARKS,
       </if>
+      <if test="testId != null" >
+        TEST_ID,
+      </if>
+      <if test="skillOrgPhone != null" >
+        SKILL_ORG_PHONE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="clinicalFlow != null" >
@@ -321,10 +332,17 @@
       <if test="remarks != null" >
         #{remarks,jdbcType=VARCHAR},
       </if>
+      <if test="testId != null" >
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgPhone != null" >
+        #{skillOrgPhone,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample" resultType="java.lang.Integer" >
-      select count(*) from OSCA_SKILLS_ASSESSMENT
+    <select id="countByExample" parameterType="com.pinde.core.model.OscaSkillsAssessmentExample"
+            resultType="java.lang.Integer">
+        select count(*) from OSCA_SKILLS_ASSESSMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -416,6 +434,12 @@
       <if test="record.remarks != null" >
         REMARKS = #{record.remarks,jdbcType=VARCHAR},
       </if>
+      <if test="record.testId != null" >
+        TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillOrgPhone != null" >
+        SKILL_ORG_PHONE = #{record.skillOrgPhone,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -450,7 +474,9 @@
       IS_GRADE_RELEASED = #{record.isGradeReleased,jdbcType=CHAR},
       IS_SHOW_FROOM = #{record.isShowFroom,jdbcType=CHAR},
       SKILL_ORDER = #{record.skillOrder,jdbcType=VARCHAR},
-      REMARKS = #{record.remarks,jdbcType=VARCHAR}
+      REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      SKILL_ORG_PHONE = #{record.skillOrgPhone,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -539,6 +565,12 @@
       <if test="remarks != null" >
         REMARKS = #{remarks,jdbcType=VARCHAR},
       </if>
+      <if test="testId != null" >
+        TEST_ID = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="skillOrgPhone != null" >
+        SKILL_ORG_PHONE = #{skillOrgPhone,jdbcType=VARCHAR},
+      </if>
     </set>
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </update>
@@ -570,7 +602,9 @@
       IS_GRADE_RELEASED = #{isGradeReleased,jdbcType=CHAR},
       IS_SHOW_FROOM = #{isShowFroom,jdbcType=CHAR},
       SKILL_ORDER = #{skillOrder,jdbcType=VARCHAR},
-      REMARKS = #{remarks,jdbcType=VARCHAR}
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      TEST_ID = #{testId,jdbcType=VARCHAR},
+      SKILL_ORG_PHONE = #{skillOrgPhone,jdbcType=VARCHAR}
     where CLINICAL_FLOW = #{clinicalFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.osca.impl;
 
 
+import com.pinde.core.common.sci.dao.OscaFromMapper;
 import com.pinde.core.model.OscaFrom;
 import com.pinde.core.model.OscaFromExample;
 import com.pinde.core.model.OscaSubjectStationFrom;
@@ -9,7 +10,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaFormCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.OscaFromMapper;
 import com.pinde.sci.dao.osca.OscaFromExtMapper;
 import com.pinde.sci.model.osca.OscaFromCfgExt;
 import com.pinde.sci.model.osca.OscaFromCfgItemExt;
