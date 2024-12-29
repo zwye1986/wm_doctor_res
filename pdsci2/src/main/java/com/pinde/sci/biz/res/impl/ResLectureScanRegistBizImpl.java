@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.LectureInfoTargetMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -9,7 +10,6 @@ import com.pinde.sci.biz.res.IResLectureScanRegistBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.LectureInfoTargetMapper;
 import com.pinde.sci.dao.base.ResLectureScanRegistMapper;
 import com.pinde.sci.dao.res.LectureInfoTargetExtMapper;
 import com.pinde.sci.dao.res.ResLectureInfoExtMapper;

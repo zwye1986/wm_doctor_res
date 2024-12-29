@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.lcjn.impl;
 
 
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnEvaluateBiz;
