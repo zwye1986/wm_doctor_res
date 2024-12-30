@@ -918,7 +918,7 @@
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
 		<association property="recruitInfo" column="{doctorFlow,sessionNumber}"  resultMap="com.pinde.core.common.sci.dao.JsresRecruitInfoMapper.BaseResultMap" />
-		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
+		<association property="userResume" column="userFlow"  resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs" />
 	</resultMap>
 	<select id="searchRecruitDoctorInfosByResume" resultMap="doctorInfo">
 		select dr.ORG_NAME, dr.IS_SEND, dr.TRAIN_YEAR

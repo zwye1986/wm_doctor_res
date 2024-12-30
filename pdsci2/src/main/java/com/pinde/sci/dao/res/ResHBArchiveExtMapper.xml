@@ -89,14 +89,14 @@
 
     <insert id="saveResumeLog" parameterType="java.util.Map">
         insert into resume_${archiveTime}_${sessionNumber} (
-        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Base_Column_List" />
+        <include refid="com.pinde.core.common.sci.dao.PubUserResumeMapper.Base_Column_List" />
         ,
-        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Blob_Column_List" />
+        <include refid="com.pinde.core.common.sci.dao.PubUserResumeMapper.Blob_Column_List" />
         )
         select
-        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Base_Column_List" />
+        <include refid="com.pinde.core.common.sci.dao.PubUserResumeMapper.Base_Column_List" />
         ,
-        <include refid="com.pinde.sci.dao.base.PubUserResumeMapper.Blob_Column_List" />
+        <include refid="com.pinde.core.common.sci.dao.PubUserResumeMapper.Blob_Column_List" />
         from PUB_USER_RESUME pur
         where pur.RECORD_STATUS='Y'
         and pur.user_flow in (
@@ -225,7 +225,7 @@
         select * from doctor_${archiveTime}_${sessionNumber} where doctor_flow = #{userFlow}
     </select>
 
-    <select id="readUserResume" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs">
+    <select id="readUserResume" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs">
         select * from resume_${archiveTime}_${sessionNumber} where user_flow = #{userFlow}
     </select>
 </mapper>
