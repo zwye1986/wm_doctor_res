@@ -72,7 +72,7 @@
             DR.SPE_ID,
             DR.SESSION_NUMBER
     </select>
-    <select id="getDoctorArrangements" resultMap="com.pinde.sci.dao.base.SchExamDoctorArrangementMapper.BaseResultMap">
+    <select id="getDoctorArrangements" resultMap="com.pinde.core.common.sci.dao.SchExamDoctorArrangementMapper.BaseResultMap">
         SELECT RECORD_FLOW,
                 ARRANGE_FLOW,
                 ASSESSMENT_YEAR,

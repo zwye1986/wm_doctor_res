@@ -6,7 +6,7 @@ import com.pinde.core.model.PubFileExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
-import com.pinde.sci.dao.base.PubFileMapper;
+import com.pinde.core.common.sci.dao.PubFileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

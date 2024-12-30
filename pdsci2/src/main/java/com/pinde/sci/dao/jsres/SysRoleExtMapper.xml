@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.SysRoleExtMapper" >
     <resultMap type="com.pinde.core.model.SysUserRole" id="BaseResultMap"
-               extends="com.pinde.sci.dao.base.SysUserRoleMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.SysUserRoleMapper.BaseResultMap">
 	</resultMap>
 
 	<select id="getByUserFlow" resultMap="BaseResultMap" >

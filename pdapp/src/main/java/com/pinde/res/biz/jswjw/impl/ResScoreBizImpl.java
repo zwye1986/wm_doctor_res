@@ -7,8 +7,8 @@ import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResScoreExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IResScoreBiz;
-import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
-import com.pinde.sci.dao.base.ResScoreMapper;
+import com.pinde.core.common.sci.dao.ResPassScoreCfgMapper;
+import com.pinde.core.common.sci.dao.ResScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresDoctorDeptDetail">
+    <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+    <result column="RECRUIT_FLOW" jdbcType="VARCHAR" property="recruitFlow" />
+    <result column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
+    <result column="CAT_SPE_ID" jdbcType="VARCHAR" property="catSpeId" />
+    <result column="CAT_SPE_NAME" jdbcType="VARCHAR" property="catSpeName" />
+    <result column="SPE_ID" jdbcType="VARCHAR" property="speId" />
+    <result column="SPE_NAME" jdbcType="VARCHAR" property="speName" />
+    <result column="TRAIN_YEAR" jdbcType="VARCHAR" property="trainYear" />
+    <result column="SESSION_NUMBER" jdbcType="VARCHAR" property="sessionNumber" />
+    <result column="ROTATION_FLOW" jdbcType="VARCHAR" property="rotationFlow" />
+    <result column="SCH_STANDARD_DEPT_FLOW" jdbcType="VARCHAR" property="schStandardDeptFlow" />
+    <result column="STANDARD_DEPT_ID" jdbcType="VARCHAR" property="standardDeptId" />
+    <result column="STANDARD_DEPT_NAME" jdbcType="VARCHAR" property="standardDeptName" />
+    <result column="SCH_MONTH" jdbcType="VARCHAR" property="schMonth" />
+    <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="COMPLETE_NUM" jdbcType="VARCHAR" property="completeNum" />
+    <result column="AUDIT_NUM" jdbcType="VARCHAR" property="auditNum" />
+    <result column="REQ_NUM" jdbcType="VARCHAR" property="reqNum" />
+    <result column="OLD_REQ_NUM" jdbcType="VARCHAR" property="oldReqNum" />
+    <result column="COMPLETE_BI" jdbcType="VARCHAR" property="completeBi" />
+    <result column="AUDIT_BI" jdbcType="VARCHAR" property="auditBi" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+    <result column="GROUP_FLOW" jdbcType="VARCHAR" property="groupFlow" />
+    <result column="IS_SHORT" jdbcType="VARCHAR" property="isShort" />
+    <result column="OUT_COMPLETE_NUM" jdbcType="VARCHAR" property="outCompleteNum" />
+    <result column="IN_COMPLETE_NUM" jdbcType="VARCHAR" property="inCompleteNum" />
+    <result column="APPLY_YEAR" jdbcType="VARCHAR" property="applyYear" />
+    <result column="OUT_COMPLETE_BI" jdbcType="VARCHAR" property="outCompleteBi" />
+    <result column="IN_COMPLETE_BI" jdbcType="VARCHAR" property="inCompleteBi" />
+    <result column="IS_ADD" jdbcType="VARCHAR" property="isAdd" />
+    <result column="COMPLETE_BI_PER" jdbcType="VARCHAR" property="completeBiPer" />
+    <result column="OUT_COMPLETE_BI_PER" jdbcType="VARCHAR" property="outCompleteBiPer" />
+    <result column="IN_COMPLETE_BI_PER" jdbcType="VARCHAR" property="inCompleteBiPer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RECORD_FLOW, RECRUIT_FLOW, DOCTOR_FLOW, CAT_SPE_ID, CAT_SPE_NAME, SPE_ID, SPE_NAME, 
+    TRAIN_YEAR, SESSION_NUMBER, ROTATION_FLOW, SCH_STANDARD_DEPT_FLOW, STANDARD_DEPT_ID, 
+    STANDARD_DEPT_NAME, SCH_MONTH, ORG_FLOW, ORG_NAME, COMPLETE_NUM, AUDIT_NUM, REQ_NUM, 
+    OLD_REQ_NUM, COMPLETE_BI, AUDIT_BI, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+    MODIFY_TIME, MODIFY_USER_FLOW, GROUP_FLOW, IS_SHORT, OUT_COMPLETE_NUM, IN_COMPLETE_NUM, 
+    APPLY_YEAR, OUT_COMPLETE_BI, IN_COMPLETE_BI, IS_ADD, COMPLETE_BI_PER, OUT_COMPLETE_BI_PER, 
+    IN_COMPLETE_BI_PER
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.core.model.JsresDoctorDeptDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from JSRES_DOCTOR_DEPT_DETAIL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+      from JSRES_DOCTOR_DEPT_DETAIL
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete
+      from JSRES_DOCTOR_DEPT_DETAIL
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorDeptDetailExample">
+      delete from JSRES_DOCTOR_DEPT_DETAIL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
+      insert into JSRES_DOCTOR_DEPT_DETAIL (RECORD_FLOW, RECRUIT_FLOW, DOCTOR_FLOW,
+      CAT_SPE_ID, CAT_SPE_NAME, SPE_ID, 
+      SPE_NAME, TRAIN_YEAR, SESSION_NUMBER, 
+      ROTATION_FLOW, SCH_STANDARD_DEPT_FLOW, STANDARD_DEPT_ID, 
+      STANDARD_DEPT_NAME, SCH_MONTH, ORG_FLOW, 
+      ORG_NAME, COMPLETE_NUM, AUDIT_NUM, 
+      REQ_NUM, OLD_REQ_NUM, COMPLETE_BI, 
+      AUDIT_BI, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      GROUP_FLOW, IS_SHORT, OUT_COMPLETE_NUM, 
+      IN_COMPLETE_NUM, APPLY_YEAR, OUT_COMPLETE_BI, 
+      IN_COMPLETE_BI, IS_ADD, COMPLETE_BI_PER, 
+      OUT_COMPLETE_BI_PER, IN_COMPLETE_BI_PER)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
+      #{catSpeId,jdbcType=VARCHAR}, #{catSpeName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
+      #{speName,jdbcType=VARCHAR}, #{trainYear,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, 
+      #{rotationFlow,jdbcType=VARCHAR}, #{schStandardDeptFlow,jdbcType=VARCHAR}, #{standardDeptId,jdbcType=VARCHAR}, 
+      #{standardDeptName,jdbcType=VARCHAR}, #{schMonth,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{completeNum,jdbcType=VARCHAR}, #{auditNum,jdbcType=VARCHAR}, 
+      #{reqNum,jdbcType=VARCHAR}, #{oldReqNum,jdbcType=VARCHAR}, #{completeBi,jdbcType=VARCHAR}, 
+      #{auditBi,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{groupFlow,jdbcType=VARCHAR}, #{isShort,jdbcType=VARCHAR}, #{outCompleteNum,jdbcType=VARCHAR}, 
+      #{inCompleteNum,jdbcType=VARCHAR}, #{applyYear,jdbcType=VARCHAR}, #{outCompleteBi,jdbcType=VARCHAR}, 
+      #{inCompleteBi,jdbcType=VARCHAR}, #{isAdd,jdbcType=VARCHAR}, #{completeBiPer,jdbcType=VARCHAR}, 
+      #{outCompleteBiPer,jdbcType=VARCHAR}, #{inCompleteBiPer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
+      insert into JSRES_DOCTOR_DEPT_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        RECORD_FLOW,
+      </if>
+      <if test="recruitFlow != null">
+        RECRUIT_FLOW,
+      </if>
+      <if test="doctorFlow != null">
+        DOCTOR_FLOW,
+      </if>
+      <if test="catSpeId != null">
+        CAT_SPE_ID,
+      </if>
+      <if test="catSpeName != null">
+        CAT_SPE_NAME,
+      </if>
+      <if test="speId != null">
+        SPE_ID,
+      </if>
+      <if test="speName != null">
+        SPE_NAME,
+      </if>
+      <if test="trainYear != null">
+        TRAIN_YEAR,
+      </if>
+      <if test="sessionNumber != null">
+        SESSION_NUMBER,
+      </if>
+      <if test="rotationFlow != null">
+        ROTATION_FLOW,
+      </if>
+      <if test="schStandardDeptFlow != null">
+        SCH_STANDARD_DEPT_FLOW,
+      </if>
+      <if test="standardDeptId != null">
+        STANDARD_DEPT_ID,
+      </if>
+      <if test="standardDeptName != null">
+        STANDARD_DEPT_NAME,
+      </if>
+      <if test="schMonth != null">
+        SCH_MONTH,
+      </if>
+      <if test="orgFlow != null">
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null">
+        ORG_NAME,
+      </if>
+      <if test="completeNum != null">
+        COMPLETE_NUM,
+      </if>
+      <if test="auditNum != null">
+        AUDIT_NUM,
+      </if>
+      <if test="reqNum != null">
+        REQ_NUM,
+      </if>
+      <if test="oldReqNum != null">
+        OLD_REQ_NUM,
+      </if>
+      <if test="completeBi != null">
+        COMPLETE_BI,
+      </if>
+      <if test="auditBi != null">
+        AUDIT_BI,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="groupFlow != null">
+        GROUP_FLOW,
+      </if>
+      <if test="isShort != null">
+        IS_SHORT,
+      </if>
+      <if test="outCompleteNum != null">
+        OUT_COMPLETE_NUM,
+      </if>
+      <if test="inCompleteNum != null">
+        IN_COMPLETE_NUM,
+      </if>
+      <if test="applyYear != null">
+        APPLY_YEAR,
+      </if>
+      <if test="outCompleteBi != null">
+        OUT_COMPLETE_BI,
+      </if>
+      <if test="inCompleteBi != null">
+        IN_COMPLETE_BI,
+      </if>
+      <if test="isAdd != null">
+        IS_ADD,
+      </if>
+      <if test="completeBiPer != null">
+        COMPLETE_BI_PER,
+      </if>
+      <if test="outCompleteBiPer != null">
+        OUT_COMPLETE_BI_PER,
+      </if>
+      <if test="inCompleteBiPer != null">
+        IN_COMPLETE_BI_PER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null">
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null">
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeId != null">
+        #{catSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeName != null">
+        #{catSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null">
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null">
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainYear != null">
+        #{trainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null">
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null">
+        #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schStandardDeptFlow != null">
+        #{schStandardDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptId != null">
+        #{standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptName != null">
+        #{standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="schMonth != null">
+        #{schMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null">
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="completeNum != null">
+        #{completeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="auditNum != null">
+        #{auditNum,jdbcType=VARCHAR},
+      </if>
+      <if test="reqNum != null">
+        #{reqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="oldReqNum != null">
+        #{oldReqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="completeBi != null">
+        #{completeBi,jdbcType=VARCHAR},
+      </if>
+      <if test="auditBi != null">
+        #{auditBi,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="groupFlow != null">
+        #{groupFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isShort != null">
+        #{isShort,jdbcType=VARCHAR},
+      </if>
+      <if test="outCompleteNum != null">
+        #{outCompleteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="inCompleteNum != null">
+        #{inCompleteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyYear != null">
+        #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="outCompleteBi != null">
+        #{outCompleteBi,jdbcType=VARCHAR},
+      </if>
+      <if test="inCompleteBi != null">
+        #{inCompleteBi,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdd != null">
+        #{isAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="completeBiPer != null">
+        #{completeBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="outCompleteBiPer != null">
+        #{outCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="inCompleteBiPer != null">
+        #{inCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorDeptDetailExample" resultType="java.lang.Integer">
+      select count(*) from JSRES_DOCTOR_DEPT_DETAIL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+      update JSRES_DOCTOR_DEPT_DETAIL
+    <set>
+      <if test="record.recordFlow != null">
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitFlow != null">
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null">
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catSpeId != null">
+        CAT_SPE_ID = #{record.catSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catSpeName != null">
+        CAT_SPE_NAME = #{record.catSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null">
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null">
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainYear != null">
+        TRAIN_YEAR = #{record.trainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null">
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationFlow != null">
+        ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schStandardDeptFlow != null">
+        SCH_STANDARD_DEPT_FLOW = #{record.schStandardDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDeptId != null">
+        STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.standardDeptName != null">
+        STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schMonth != null">
+        SCH_MONTH = #{record.schMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null">
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null">
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeNum != null">
+        COMPLETE_NUM = #{record.completeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditNum != null">
+        AUDIT_NUM = #{record.auditNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqNum != null">
+        REQ_NUM = #{record.reqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldReqNum != null">
+        OLD_REQ_NUM = #{record.oldReqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeBi != null">
+        COMPLETE_BI = #{record.completeBi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditBi != null">
+        AUDIT_BI = #{record.auditBi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupFlow != null">
+        GROUP_FLOW = #{record.groupFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShort != null">
+        IS_SHORT = #{record.isShort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outCompleteNum != null">
+        OUT_COMPLETE_NUM = #{record.outCompleteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inCompleteNum != null">
+        IN_COMPLETE_NUM = #{record.inCompleteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyYear != null">
+        APPLY_YEAR = #{record.applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outCompleteBi != null">
+        OUT_COMPLETE_BI = #{record.outCompleteBi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inCompleteBi != null">
+        IN_COMPLETE_BI = #{record.inCompleteBi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAdd != null">
+        IS_ADD = #{record.isAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeBiPer != null">
+        COMPLETE_BI_PER = #{record.completeBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outCompleteBiPer != null">
+        OUT_COMPLETE_BI_PER = #{record.outCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inCompleteBiPer != null">
+        IN_COMPLETE_BI_PER = #{record.inCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+      update JSRES_DOCTOR_DEPT_DETAIL
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      CAT_SPE_ID = #{record.catSpeId,jdbcType=VARCHAR},
+      CAT_SPE_NAME = #{record.catSpeName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      TRAIN_YEAR = #{record.trainYear,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      SCH_STANDARD_DEPT_FLOW = #{record.schStandardDeptFlow,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
+      SCH_MONTH = #{record.schMonth,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      COMPLETE_NUM = #{record.completeNum,jdbcType=VARCHAR},
+      AUDIT_NUM = #{record.auditNum,jdbcType=VARCHAR},
+      REQ_NUM = #{record.reqNum,jdbcType=VARCHAR},
+      OLD_REQ_NUM = #{record.oldReqNum,jdbcType=VARCHAR},
+      COMPLETE_BI = #{record.completeBi,jdbcType=VARCHAR},
+      AUDIT_BI = #{record.auditBi,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      GROUP_FLOW = #{record.groupFlow,jdbcType=VARCHAR},
+      IS_SHORT = #{record.isShort,jdbcType=VARCHAR},
+      OUT_COMPLETE_NUM = #{record.outCompleteNum,jdbcType=VARCHAR},
+      IN_COMPLETE_NUM = #{record.inCompleteNum,jdbcType=VARCHAR},
+      APPLY_YEAR = #{record.applyYear,jdbcType=VARCHAR},
+      OUT_COMPLETE_BI = #{record.outCompleteBi,jdbcType=VARCHAR},
+      IN_COMPLETE_BI = #{record.inCompleteBi,jdbcType=VARCHAR},
+      IS_ADD = #{record.isAdd,jdbcType=VARCHAR},
+      COMPLETE_BI_PER = #{record.completeBiPer,jdbcType=VARCHAR},
+      OUT_COMPLETE_BI_PER = #{record.outCompleteBiPer,jdbcType=VARCHAR},
+      IN_COMPLETE_BI_PER = #{record.inCompleteBiPer,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
+      update JSRES_DOCTOR_DEPT_DETAIL
+    <set>
+      <if test="recruitFlow != null">
+        RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null">
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeId != null">
+        CAT_SPE_ID = #{catSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeName != null">
+        CAT_SPE_NAME = #{catSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null">
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null">
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainYear != null">
+        TRAIN_YEAR = #{trainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null">
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null">
+        ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="schStandardDeptFlow != null">
+        SCH_STANDARD_DEPT_FLOW = #{schStandardDeptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptId != null">
+        STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="standardDeptName != null">
+        STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      </if>
+      <if test="schMonth != null">
+        SCH_MONTH = #{schMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null">
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="completeNum != null">
+        COMPLETE_NUM = #{completeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="auditNum != null">
+        AUDIT_NUM = #{auditNum,jdbcType=VARCHAR},
+      </if>
+      <if test="reqNum != null">
+        REQ_NUM = #{reqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="oldReqNum != null">
+        OLD_REQ_NUM = #{oldReqNum,jdbcType=VARCHAR},
+      </if>
+      <if test="completeBi != null">
+        COMPLETE_BI = #{completeBi,jdbcType=VARCHAR},
+      </if>
+      <if test="auditBi != null">
+        AUDIT_BI = #{auditBi,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="groupFlow != null">
+        GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isShort != null">
+        IS_SHORT = #{isShort,jdbcType=VARCHAR},
+      </if>
+      <if test="outCompleteNum != null">
+        OUT_COMPLETE_NUM = #{outCompleteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="inCompleteNum != null">
+        IN_COMPLETE_NUM = #{inCompleteNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applyYear != null">
+        APPLY_YEAR = #{applyYear,jdbcType=VARCHAR},
+      </if>
+      <if test="outCompleteBi != null">
+        OUT_COMPLETE_BI = #{outCompleteBi,jdbcType=VARCHAR},
+      </if>
+      <if test="inCompleteBi != null">
+        IN_COMPLETE_BI = #{inCompleteBi,jdbcType=VARCHAR},
+      </if>
+      <if test="isAdd != null">
+        IS_ADD = #{isAdd,jdbcType=VARCHAR},
+      </if>
+      <if test="completeBiPer != null">
+        COMPLETE_BI_PER = #{completeBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="outCompleteBiPer != null">
+        OUT_COMPLETE_BI_PER = #{outCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="inCompleteBiPer != null">
+        IN_COMPLETE_BI_PER = #{inCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorDeptDetail">
+      update JSRES_DOCTOR_DEPT_DETAIL
+    set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      CAT_SPE_ID = #{catSpeId,jdbcType=VARCHAR},
+      CAT_SPE_NAME = #{catSpeName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      TRAIN_YEAR = #{trainYear,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      SCH_STANDARD_DEPT_FLOW = #{schStandardDeptFlow,jdbcType=VARCHAR},
+      STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
+      STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
+      SCH_MONTH = #{schMonth,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      COMPLETE_NUM = #{completeNum,jdbcType=VARCHAR},
+      AUDIT_NUM = #{auditNum,jdbcType=VARCHAR},
+      REQ_NUM = #{reqNum,jdbcType=VARCHAR},
+      OLD_REQ_NUM = #{oldReqNum,jdbcType=VARCHAR},
+      COMPLETE_BI = #{completeBi,jdbcType=VARCHAR},
+      AUDIT_BI = #{auditBi,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR},
+      IS_SHORT = #{isShort,jdbcType=VARCHAR},
+      OUT_COMPLETE_NUM = #{outCompleteNum,jdbcType=VARCHAR},
+      IN_COMPLETE_NUM = #{inCompleteNum,jdbcType=VARCHAR},
+      APPLY_YEAR = #{applyYear,jdbcType=VARCHAR},
+      OUT_COMPLETE_BI = #{outCompleteBi,jdbcType=VARCHAR},
+      IN_COMPLETE_BI = #{inCompleteBi,jdbcType=VARCHAR},
+      IS_ADD = #{isAdd,jdbcType=VARCHAR},
+      COMPLETE_BI_PER = #{completeBiPer,jdbcType=VARCHAR},
+      OUT_COMPLETE_BI_PER = #{outCompleteBiPer,jdbcType=VARCHAR},
+      IN_COMPLETE_BI_PER = #{inCompleteBiPer,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

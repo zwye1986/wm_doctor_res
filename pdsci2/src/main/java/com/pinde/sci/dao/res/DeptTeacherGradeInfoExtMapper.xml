@@ -18,7 +18,7 @@
         <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
         <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
     </resultMap>
-    <resultMap type="com.pinde.sci.model.res.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <resultMap type="com.pinde.sci.model.res.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
                      javaType="com.pinde.core.model.ResDoctorSchProcess"
                      resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap"/>
@@ -72,7 +72,7 @@
     </select>
 
 
-    <select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  dtgi
         where dtgi.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -109,7 +109,7 @@
         ))
     </select>
 
-    <select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  dtgi
         where dtgi.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -728,7 +728,7 @@
         </if>
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
     </select>
-    <select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="getDeptByRec" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select distinct sd.dept_flow,sd.dept_name,sd.ordinal
         FROM res_doctor_sch_process rdsp
         join DEPT_TEACHER_GRADE_INFO dtgi
@@ -806,7 +806,7 @@
         group by sd.dept_flow,sd.dept_name
         order by  sd.dept_flow,sd.dept_name
     </select>
-    <select id="getDeptDoctorEvalStaticDetail" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="getDeptDoctorEvalStaticDetail" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select dtgi.*
         FROM res_doctor_sch_process rdsp
         join DEPT_TEACHER_GRADE_INFO dtgi
@@ -900,7 +900,7 @@
         </if>
         order by rr.oper_time desc
     </select>
-    <select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  rr
         where rr.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -920,7 +920,7 @@
         and rr.rec_type_id ='TeacherGrade'
         ))
     </select>
-    <select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  rr
         where rr.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -1006,7 +1006,7 @@
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
 
-    <select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="getDeptByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select sd.*
         from sys_dept sd
         where sd.record_status = 'Y'

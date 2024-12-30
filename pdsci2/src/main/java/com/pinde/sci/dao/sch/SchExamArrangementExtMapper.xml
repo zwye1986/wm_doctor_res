@@ -65,7 +65,7 @@
         ) b
         group by arrange_flow
     </select>
-    <select id="getSuiJiConfigs" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="getSuiJiConfigs" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT r.sch_start_date,r.sch_end_date,c.standard_dept_Id,c.standard_dept_name
         FROM SCH_ARRANGE_RESULT R
         left join SCH_AND_STANDARD_DEPT_CFG C
@@ -91,7 +91,7 @@
 							)
 							)
     </select>
-    <select id="getGuDingConfigs" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="getGuDingConfigs" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT r.sch_start_date,r.sch_end_date,c.standard_dept_Id,c.standard_dept_name
         FROM SCH_ARRANGE_RESULT R
         left join SCH_AND_STANDARD_DEPT_CFG C

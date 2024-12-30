@@ -7,7 +7,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJsResSupervisioFileBiz;
-import com.pinde.sci.dao.base.JsresSupervisioFileMapper;
+import com.pinde.core.common.sci.dao.JsresSupervisioFileMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,7 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.sci.dao.OscaTeaInfoMapper;
 import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
@@ -14,7 +15,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.dao.base.OscaTeaInfoMapper;
 import com.pinde.sci.dao.osca.OscaExaminerMapper;
 import com.pinde.sci.model.osca.OscaExaminerExt;
 import com.pinde.sci.model.osca.OscaTypeSpeExt;
@@ -41,8 +41,6 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
     @Autowired
     private IOrgBiz orgBiz;
     @Autowired
-    private IResDoctorBiz resDoctorBiz;
-    @Autowired
     private IDictBiz dictBiz;
     @Autowired
     private SysOrgMapper sysOrgMapper;
@@ -54,8 +52,6 @@ public class OscaExaminerManageBizImpl implements IOscaExaminerManageBiz{
     private IUserRoleBiz userRoleBiz;
     @Autowired
     private IUserBiz userBiz;
-    @Autowired
-    private IRoleBiz roleBiz;
 
     @Override
     public List<OscaExaminerExt> searchAllExam(Map<String, Object> map) {

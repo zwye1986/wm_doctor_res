@@ -1,0 +1,32 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.SchAutoArrangeCfg;
+import com.pinde.core.model.SchAutoArrangeCfgExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface SchAutoArrangeCfgMapper {
+    int countByExample(SchAutoArrangeCfgExample example);
+
+    int deleteByExample(SchAutoArrangeCfgExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(SchAutoArrangeCfg record);
+
+    int insertSelective(SchAutoArrangeCfg record);
+
+    List<SchAutoArrangeCfg> selectByExample(SchAutoArrangeCfgExample example);
+
+    SchAutoArrangeCfg selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") SchAutoArrangeCfg record, @Param("example") SchAutoArrangeCfgExample example);
+
+    int updateByExample(@Param("record") SchAutoArrangeCfg record, @Param("example") SchAutoArrangeCfgExample example);
+
+    int updateByPrimaryKeySelective(SchAutoArrangeCfg record);
+
+    int updateByPrimaryKey(SchAutoArrangeCfg record);
+
+}

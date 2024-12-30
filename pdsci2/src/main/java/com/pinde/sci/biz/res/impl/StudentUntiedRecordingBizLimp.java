@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.DoctorUntiedRecordingMapper;
 import com.pinde.core.model.DoctorUntiedRecording;
 import com.pinde.core.model.DoctorUntiedRecordingExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IStudentUntiedRecordingBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.DoctorUntiedRecordingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

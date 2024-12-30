@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.sci.dao.PubFileMapper;
 import com.pinde.core.model.PubFile;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysDict;
@@ -17,7 +18,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.PubFileMapper;
 import com.pinde.sci.dao.base.ResTeachPlanDoctorMapper;
 import com.pinde.sci.dao.base.ResTeachQualifiedPlanMapper;
 import com.pinde.sci.dao.jsres.PhyAssExtMapper;

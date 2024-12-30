@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.core.common.sci.dao.JsresDoctorDeptAvgTempMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresDoctorDeptAvgTemp">
+    <id column="RECORD_FLOW" jdbcType="VARCHAR" property="recordFlow" />
+    <result column="RECRUIT_FLOW" jdbcType="VARCHAR" property="recruitFlow" />
+    <result column="AVG_COMPLETE" jdbcType="VARCHAR" property="avgComplete" />
+    <result column="AVG_AUDIT" jdbcType="VARCHAR" property="avgAudit" />
+    <result column="AVG_IN_COMPLETE" jdbcType="VARCHAR" property="avgInComplete" />
+    <result column="AVG_OUT_COMPLETE" jdbcType="VARCHAR" property="avgOutComplete" />
+    <result column="AVG_COMPLETE_BI_PER" jdbcType="VARCHAR" property="avgCompleteBiPer" />
+    <result column="AVG_OUT_COMPLETE_BI_PER" jdbcType="VARCHAR" property="avgOutCompleteBiPer" />
+    <result column="AVG_IN_COMPLETE_BI_PER" jdbcType="VARCHAR" property="avgInCompleteBiPer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RECORD_FLOW, RECRUIT_FLOW, AVG_COMPLETE, AVG_AUDIT, AVG_IN_COMPLETE, AVG_OUT_COMPLETE, 
+    AVG_COMPLETE_BI_PER, AVG_OUT_COMPLETE_BI_PER, AVG_IN_COMPLETE_BI_PER
+  </sql>
+  <select id="selectByExample" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTempExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from JSRES_DOCTOR_DEPT_AVG_TEMP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+      from JSRES_DOCTOR_DEPT_AVG_TEMP
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete
+      from JSRES_DOCTOR_DEPT_AVG_TEMP
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTempExample">
+      delete from JSRES_DOCTOR_DEPT_AVG_TEMP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
+      insert into JSRES_DOCTOR_DEPT_AVG_TEMP (RECORD_FLOW, RECRUIT_FLOW, AVG_COMPLETE,
+      AVG_AUDIT, AVG_IN_COMPLETE, AVG_OUT_COMPLETE, 
+      AVG_COMPLETE_BI_PER, AVG_OUT_COMPLETE_BI_PER, 
+      AVG_IN_COMPLETE_BI_PER)
+    values (#{recordFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{avgComplete,jdbcType=VARCHAR}, 
+      #{avgAudit,jdbcType=VARCHAR}, #{avgInComplete,jdbcType=VARCHAR}, #{avgOutComplete,jdbcType=VARCHAR}, 
+      #{avgCompleteBiPer,jdbcType=VARCHAR}, #{avgOutCompleteBiPer,jdbcType=VARCHAR}, 
+      #{avgInCompleteBiPer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
+      insert into JSRES_DOCTOR_DEPT_AVG_TEMP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        RECORD_FLOW,
+      </if>
+      <if test="recruitFlow != null">
+        RECRUIT_FLOW,
+      </if>
+      <if test="avgComplete != null">
+        AVG_COMPLETE,
+      </if>
+      <if test="avgAudit != null">
+        AVG_AUDIT,
+      </if>
+      <if test="avgInComplete != null">
+        AVG_IN_COMPLETE,
+      </if>
+      <if test="avgOutComplete != null">
+        AVG_OUT_COMPLETE,
+      </if>
+      <if test="avgCompleteBiPer != null">
+        AVG_COMPLETE_BI_PER,
+      </if>
+      <if test="avgOutCompleteBiPer != null">
+        AVG_OUT_COMPLETE_BI_PER,
+      </if>
+      <if test="avgInCompleteBiPer != null">
+        AVG_IN_COMPLETE_BI_PER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordFlow != null">
+        #{recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlow != null">
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="avgComplete != null">
+        #{avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgAudit != null">
+        #{avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInComplete != null">
+        #{avgInComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutComplete != null">
+        #{avgOutComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgCompleteBiPer != null">
+        #{avgCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutCompleteBiPer != null">
+        #{avgOutCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInCompleteBiPer != null">
+        #{avgInCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTempExample" resultType="java.lang.Integer">
+      select count(*) from JSRES_DOCTOR_DEPT_AVG_TEMP
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
+    <set>
+      <if test="record.recordFlow != null">
+        RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitFlow != null">
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgComplete != null">
+        AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgAudit != null">
+        AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgInComplete != null">
+        AVG_IN_COMPLETE = #{record.avgInComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgOutComplete != null">
+        AVG_OUT_COMPLETE = #{record.avgOutComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgCompleteBiPer != null">
+        AVG_COMPLETE_BI_PER = #{record.avgCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgOutCompleteBiPer != null">
+        AVG_OUT_COMPLETE_BI_PER = #{record.avgOutCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgInCompleteBiPer != null">
+        AVG_IN_COMPLETE_BI_PER = #{record.avgInCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
+    set RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR},
+      RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE = #{record.avgInComplete,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE = #{record.avgOutComplete,jdbcType=VARCHAR},
+      AVG_COMPLETE_BI_PER = #{record.avgCompleteBiPer,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE_BI_PER = #{record.avgOutCompleteBiPer,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE_BI_PER = #{record.avgInCompleteBiPer,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
+    <set>
+      <if test="recruitFlow != null">
+        RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="avgComplete != null">
+        AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgAudit != null">
+        AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInComplete != null">
+        AVG_IN_COMPLETE = #{avgInComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutComplete != null">
+        AVG_OUT_COMPLETE = #{avgOutComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgCompleteBiPer != null">
+        AVG_COMPLETE_BI_PER = #{avgCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgOutCompleteBiPer != null">
+        AVG_OUT_COMPLETE_BI_PER = #{avgOutCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+      <if test="avgInCompleteBiPer != null">
+        AVG_IN_COMPLETE_BI_PER = #{avgInCompleteBiPer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresDoctorDeptAvgTemp">
+      update JSRES_DOCTOR_DEPT_AVG_TEMP
+    set RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE = #{avgInComplete,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE = #{avgOutComplete,jdbcType=VARCHAR},
+      AVG_COMPLETE_BI_PER = #{avgCompleteBiPer,jdbcType=VARCHAR},
+      AVG_OUT_COMPLETE_BI_PER = #{avgOutCompleteBiPer,jdbcType=VARCHAR},
+      AVG_IN_COMPLETE_BI_PER = #{avgInCompleteBiPer,jdbcType=VARCHAR}
+    where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

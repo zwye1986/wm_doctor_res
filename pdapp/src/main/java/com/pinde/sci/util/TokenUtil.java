@@ -67,13 +67,6 @@ public class TokenUtil
         return token;
     }
 
-    //
-    public static String clearToken(String userFlow) {
-        String token= new SimpleHash("md5", userFlow, ByteSource.Util.bytes(userFlow), 2).toHex().toUpperCase();
-        memCached.add(userFlow, token, new Date(0));//30天
-        return token;
-    }
-
     //用户传递的token比较
     public static boolean tokenEquals(String userFlow,String pToken) {
         if(StringUtil.isBlank(userFlow))

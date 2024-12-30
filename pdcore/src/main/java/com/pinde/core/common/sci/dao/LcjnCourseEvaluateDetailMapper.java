@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.LcjnCourseEvaluateDetail;
+import com.pinde.core.model.LcjnCourseEvaluateDetailExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface LcjnCourseEvaluateDetailMapper {
+    int countByExample(LcjnCourseEvaluateDetailExample example);
+
+    int deleteByExample(LcjnCourseEvaluateDetailExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(LcjnCourseEvaluateDetail record);
+
+    int insertSelective(LcjnCourseEvaluateDetail record);
+
+    List<LcjnCourseEvaluateDetail> selectByExample(LcjnCourseEvaluateDetailExample example);
+
+    LcjnCourseEvaluateDetail selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") LcjnCourseEvaluateDetail record, @Param("example") LcjnCourseEvaluateDetailExample example);
+
+    int updateByExample(@Param("record") LcjnCourseEvaluateDetail record, @Param("example") LcjnCourseEvaluateDetailExample example);
+
+    int updateByPrimaryKeySelective(LcjnCourseEvaluateDetail record);
+
+    int updateByPrimaryKey(LcjnCourseEvaluateDetail record);
+}

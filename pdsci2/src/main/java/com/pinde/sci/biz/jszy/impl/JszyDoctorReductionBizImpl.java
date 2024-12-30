@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.jszy.impl;
 
+import com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyDoctorReductionBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.JsresRecruitDocInfoMapper;
 import com.pinde.sci.dao.base.ResDoctorMapper;
 import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import com.pinde.sci.dao.base.ResDoctorReductionMapper;
@@ -32,7 +32,7 @@ public class JszyDoctorReductionBizImpl implements IJszyDoctorReductionBiz {
     @Autowired
     private ResDoctorMapper resDoctorMapper;
     @Autowired
-    private JsresRecruitDocInfoMapper   jsresRecruitDocInfoMapper;
+    private JsresRecruitDocInfoMapper jsresRecruitDocInfoMapper;
 
     @Override
     public ResDoctorReduction findReductionByRecruitFlow(String recruitFlow) {

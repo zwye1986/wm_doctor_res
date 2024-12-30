@@ -3,7 +3,7 @@
 <mapper namespace="com.pinde.res.dao.osca.ext.OscaAppMapper">
 
     <select id="getTeaDocStation" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSubjectStationMapper.BaseResultMap">
 		SELECT distinct S.*
 		  FROM OSCA_SKILL_ROOM_TEA T
 		  join OSCA_SUBJECT_STATION S ON T.STATION_FLOW=S.STATION_FLOW
@@ -14,7 +14,7 @@
 
 	</select>
     <select id="getTeaSubDocStation" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSubjectStationMapper.BaseResultMap">
 		SELECT  S.*
 		  FROM OSCA_SUBJECT_STATION S
 		 WHERE S.STATION_FLOW IN (
@@ -28,7 +28,7 @@
 		   ORDER BY S.ORDINAL ASC
 	</select>
     <select id="getStationExamFroms" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaSubjectStationFromMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSubjectStationFromMapper.BaseResultMap">
 		SELECT 	   SCORE_FLOW RECORD_FLOW,
 				   CLINICAL_FLOW,
 				   CLINICAL_NAME,
@@ -45,7 +45,7 @@
 		    AND STATION_FLOW=#{stationFlow}
 	</select>
     <select id="getTeaRooms" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaSkillRoomTeaMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillRoomTeaMapper.BaseResultMap">
 		SELECT t.*
 		  FROM OSCA_SKILL_ROOM_TEA T
 		  join OSCA_SUBJECT_STATION S ON T.STATION_FLOW=S.STATION_FLOW
@@ -57,7 +57,7 @@
 
 	</select>
     <select id="getOscaSkillRoomDocByDoc" parameterType="string"
-            resultMap="com.pinde.sci.dao.base.OscaSkillRoomDocMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillRoomDocMapper.BaseResultMap">
 		SELECT *
 		FROM OSCA_SKILL_ROOM_DOC OSRD
 		WHERE OSRD.RECORD_STATUS = 'Y'
@@ -67,7 +67,7 @@
 		order by create_time desc
 	</select>
     <select id="getOscaSkillRoomTeaScoreByDoc" parameterType="string"
-            resultMap="com.pinde.sci.dao.base.OscaSkillDocTeaScoreMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillDocTeaScoreMapper.BaseResultMap">
 		SELECT *
 		FROM OSCA_SKILL_DOC_TEA_SCORE OSRD
 		WHERE OSRD.RECORD_STATUS = 'Y'
@@ -77,7 +77,7 @@
 		AND OSRD.STATION_FLOW = #{stationFlow}
 		order by create_time desc
 	</select>
-    <select id="getOscaSkillDocTeaScores" parameterType="string" resultMap="com.pinde.sci.dao.base.OscaSkillDocTeaScoreMapper.BaseResultMap">
+    <select id="getOscaSkillDocTeaScores" parameterType="string" resultMap="com.pinde.core.common.sci.dao.OscaSkillDocTeaScoreMapper.BaseResultMap">
 		SELECT *
 		FROM OSCA_SKILL_DOC_TEA_SCORE OSRD
 		WHERE OSRD.RECORD_STATUS = 'Y'
@@ -88,7 +88,7 @@
 		order by EXAM_SCORE desc
 	</select>
     <select id="getDocScoreByParam" parameterType="string"
-            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
         SELECT *
         FROM OSCA_SKILL_DOC_SCORE OSRD
         WHERE OSRD.RECORD_STATUS = 'Y'
@@ -101,7 +101,7 @@
         </if>
         order by create_time desc
     </select>
-    <select id="getNoFromScoreByParam" resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+    <select id="getNoFromScoreByParam" resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
         SELECT *
         FROM OSCA_SKILL_DOC_SCORE OSRD
         WHERE OSRD.RECORD_STATUS = 'Y'
@@ -116,7 +116,7 @@
         order by create_time desc
     </select>
     <select id="getNotRequiredFromScoreByParam"
-            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
         SELECT *
         FROM OSCA_SKILL_DOC_SCORE OSRD
         WHERE OSRD.RECORD_STATUS = 'Y'
@@ -131,7 +131,7 @@
         order by create_time desc
     </select>
     <select id="getRequiredFromScoreByParam"
-            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
         SELECT *
         FROM OSCA_SKILL_DOC_SCORE OSRD
         WHERE OSRD.RECORD_STATUS = 'Y'
@@ -185,7 +185,7 @@
         order by SU.USER_NAME desc
     </select>
     <select id="getOscaTeaScanDoc" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaTeaScanDocMapper.BaseResultMap">
 		SELECT *
 		FROM OSCA_TEA_SCAN_DOC OSRD
 		WHERE
@@ -195,7 +195,7 @@
 		order by create_time desc
 	</select>
     <select id="getScanDocList" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaTeaScanDocMapper.BaseResultMap">
         SELECT *
         FROM OSCA_TEA_SCAN_DOC OSRD
         WHERE
@@ -224,7 +224,7 @@
         AND OSRD.PARTNER_FLOW = #{partnerFlow}
         ORDER BY OSRD.EXAM_TIME DESC
     </select>
-    <select id="getTeaDocScores" resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.BaseResultMap">
+    <select id="getTeaDocScores" resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.BaseResultMap">
         SELECT * FROM OSCA_SKILL_DOC_SCORE A
         WHERE A.RECORD_STATUS='Y'
         <if test='list!=null and list.size>0'>
@@ -243,7 +243,7 @@
         AND A.PARTNER_FLOW=B.PARTNER_FLOW
         )
     </select>
-    <select id="findStationFiles" resultMap="com.pinde.sci.dao.base.PubFileMapper.BaseResultMap">
+    <select id="findStationFiles" resultMap="com.pinde.core.common.sci.dao.PubFileMapper.BaseResultMap">
 		SELECT *
 		FROM PUB_FILE F
 		WHERE RECORD_STATUS = 'Y'
@@ -255,7 +255,7 @@
 		AND OSSF.ORG_FLOW = #{orgFlow})
 		order by F.CREATE_TIME ASC
 	</select>
-    <select id="getFromByScoreFlow" resultMap="com.pinde.sci.dao.base.OscaFromMapper.ResultMapWithBLOBs">
+    <select id="getFromByScoreFlow" resultMap="com.pinde.core.common.sci.dao.OscaFromMapper.ResultMapWithBLOBs">
 		SELECT FROM_FLOW, FROM_NAME, FROM_TYPE_ID,
 			   FROM_URL,FROM_SCORE,
 			  FROM_CONTENT RROM_CONTENT
@@ -263,7 +263,7 @@
 		WHERE A.RECORD_STATUS='Y'
 		AND A.SCORE_FLOW=#{recordFlow}
 	</select>
-    <select id="getSelectDateSkills" resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+    <select id="getSelectDateSkills" resultMap="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
 		SELECT *
 		  FROM OSCA_SKILLS_ASSESSMENT
 		 WHERE RECORD_STATUS = 'Y'
@@ -277,9 +277,9 @@
 	</select>
 
     <resultMap id="SelectDateDocSkills" type="com.pinde.res.model.osca.mo.OscaDoctorSkillsExt"
-               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
         <collection property="doctorAssessments" ofType="com.pinde.core.model.OscaDoctorAssessment"
-                    resultMap="com.pinde.sci.dao.base.OscaDoctorAssessmentMapper.BaseResultMap"/>
+                    resultMap="com.pinde.core.common.sci.dao.OscaDoctorAssessmentMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateDocSkills" resultMap="SelectDateDocSkills">
 		SELECT ODA.*,OSA.*
@@ -338,9 +338,9 @@
 					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
 	</select>
     <resultMap id="SelectDateSkillRooms" type="com.pinde.res.model.osca.mo.OscaSkillsRoomExt"
-               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
         <collection property="skillRooms" ofType="com.pinde.core.model.OscaSkillRoom"
-                    resultMap="com.pinde.sci.dao.base.OscaSkillRoomMapper.BaseResultMap"/>
+                    resultMap="com.pinde.core.common.sci.dao.OscaSkillRoomMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateSkillRooms" resultMap="SelectDateSkillRooms">
 		SELECT ODA.*,OSA.*
@@ -358,9 +358,9 @@
 					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
 	</select>
     <resultMap id="SelectDateSkillPartners" type="com.pinde.res.model.osca.mo.OscaSkillsPartnerExt"
-               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
         <collection property="roomTeas" ofType="com.pinde.core.model.OscaSkillRoomTea"
-                    resultMap="com.pinde.sci.dao.base.OscaSkillRoomTeaMapper.BaseResultMap"/>
+                    resultMap="com.pinde.core.common.sci.dao.OscaSkillRoomTeaMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateSkillPartners" resultMap="SelectDateSkillPartners">
 		SELECT ODA.*,OSA.*
@@ -378,9 +378,9 @@
 					AND SUBSTR(EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate})
 	</select>
     <resultMap id="SelectDateSkillTimes" type="com.pinde.res.model.osca.mo.OscaSkillsTimeExt"
-               extends="com.pinde.sci.dao.base.OscaSkillsAssessmentMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
         <collection property="times" ofType="com.pinde.core.model.OscaSkillsAssessmentTime"
-                    resultMap="com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper.BaseResultMap"/>
+                    resultMap="com.pinde.core.common.sci.dao.OscaSkillsAssessmentTimeMapper.BaseResultMap"/>
     </resultMap>
     <select id="getSelectDateSkillTimes" resultMap="SelectDateSkillTimes">
 		SELECT ODA.*,OSA.*
@@ -617,7 +617,7 @@
 		   and doctor_flow = #{doctorFlow}
 		    AND CLINICAL_FLOW=#{clinicalFlow}
     </select>
-    <select id="getOrgRoomList" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+    <select id="getOrgRoomList" resultMap="com.pinde.core.common.sci.dao.SysDictMapper.BaseResultMap">
         SELECT DISTINCT ROOM.*
       FROM SYS_DICT ROOM
       LEFT JOIN OSCA_SKILL_ROOM OSR
@@ -639,7 +639,7 @@
         </if>
        order by ROOM.DICT_NAME,ROOM.DICT_ID
     </select>
-    <select id="getOrgRooms" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+    <select id="getOrgRooms" resultMap="com.pinde.core.common.sci.dao.SysDictMapper.BaseResultMap">
         SELECT  ROOM.*
       FROM SYS_DICT ROOM
      WHERE ROOM.DICT_TYPE_ID = 'ExamRoom'
@@ -858,7 +858,7 @@
         AND SUBSTR(ODA.EXAM_END_TIME,0,10) <![CDATA[>=]]> #{selectDate}
     </select>
 
-    <select id="findClinicalStationFiles"  resultMap="com.pinde.sci.dao.base.PubFileMapper.BaseResultMap">
+    <select id="findClinicalStationFiles"  resultMap="com.pinde.core.common.sci.dao.PubFileMapper.BaseResultMap">
 		SELECT *
 	  FROM PUB_FILE F
 	 WHERE RECORD_STATUS = 'Y'

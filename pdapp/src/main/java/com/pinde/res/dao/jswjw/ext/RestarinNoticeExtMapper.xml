@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.RestarinNoticeExtMapper" >
 
-    <select id="searchByTitleOrgFlowAndWorkOrgId" resultMap="com.pinde.sci.dao.base.ResTarinNoticeMapper.ResultMapWithBLOBs">
+    <select id="searchByTitleOrgFlowAndWorkOrgId" resultMap="com.pinde.core.common.sci.dao.ResTarinNoticeMapper.ResultMapWithBLOBs">
         SELECT
             RECORD_FLOW,
             RES_NOTICE_TITLE,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sch.SchRotationExtMapper" >
-<!-- 	<select id="searchRotationByRole" resultMap="com.pinde.sci.dao.base.SchRotationMapper.BaseResultMap"> -->
+<!-- 	<select id="searchRotationByRole" resultMap="com.pinde.core.common.sci.dao.SchRotationMapper.BaseResultMap"> -->
 <!-- 		SELECT *  -->
     <!-- 		FROM  SCH_ROTATION -->
 <!-- 		WHERE RECORD_STATUS = 'Y' -->
@@ -30,7 +30,7 @@
 <!-- 		ORDER BY ORDINAL -->
 <!-- 	</select> -->
 	
-<!-- 	<select id="searchNotExistRotation" resultMap="com.pinde.sci.dao.base.SchRotationMapper.ResultMapWithBLOBs"> -->
+<!-- 	<select id="searchNotExistRotation" resultMap="com.pinde.core.common.sci.dao.SchRotationMapper.ResultMapWithBLOBs"> -->
 <!-- 		SELECT *  -->
     <!-- 		FROM  SCH_ROTATION -->
 <!-- 		WHERE RECORD_STATUS = 'Y' -->
@@ -45,7 +45,7 @@
 <!-- 		) -->
 <!-- 	</select> -->
 
-	<select id="searchNotExistRotation" resultMap="com.pinde.sci.dao.base.SchRotationMapper.BaseResultMap">
+	<select id="searchNotExistRotation" resultMap="com.pinde.core.common.sci.dao.SchRotationMapper.BaseResultMap">
 		SELECT *
         FROM SCH_ROTATION
 		WHERE RECORD_STATUS = 'Y'

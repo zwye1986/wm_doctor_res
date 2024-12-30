@@ -146,7 +146,7 @@
 		order by sys_user.create_time desc,sys_user.user_code
 	</select>
 
-	<select id="queryCourseTimeList"  resultMap="com.pinde.sci.dao.base.LcjnCourseTimeMapper.BaseResultMap">
+	<select id="queryCourseTimeList"  resultMap="com.pinde.core.common.sci.dao.LcjnCourseTimeMapper.BaseResultMap">
 		select * from lcjn_course_time
 			where record_status = 'Y'
 				and course_flow in (select course_flow from lcjn_course_info where record_status = 'Y' and is_released = 'Y')
@@ -155,7 +155,7 @@
 				order by start_time
 	</select>
     <select id="searchStartDictList" parameterType="com.pinde.core.model.SysDict"
-            resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.SysDictMapper.BaseResultMap">
 		select a.* from sys_dict a
 			where a.record_status='Y'
 				and a.org_flow = #{orgFlow}

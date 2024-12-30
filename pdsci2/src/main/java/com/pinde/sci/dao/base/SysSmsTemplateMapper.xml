@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SysSmsTemplateMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.SysSmsTemplateMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SysSmsTemplate">
     <id column="SMS_TEMP_FLOW" property="smsTempFlow" jdbcType="VARCHAR" />
     <result column="WS_ID" property="wsId" jdbcType="VARCHAR" />

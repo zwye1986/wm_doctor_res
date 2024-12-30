@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
+import com.pinde.core.common.sci.dao.JsresDoctorSpeMapper;
+import com.pinde.core.common.sci.dao.JsresSignMapper;
 import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;

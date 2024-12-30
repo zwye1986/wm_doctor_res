@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResEntryReportExtMapper" >
-    <resultMap type="HashMap" id="reportMap" extends="com.pinde.sci.dao.base.SchEntryReportMapper.BaseResultMap">
+    <resultMap type="HashMap" id="reportMap" extends="com.pinde.core.common.sci.dao.SchEntryReportMapper.BaseResultMap">
         <result  property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
         <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
         <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>

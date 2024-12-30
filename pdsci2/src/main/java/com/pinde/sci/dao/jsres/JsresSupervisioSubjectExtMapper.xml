@@ -990,7 +990,7 @@ select * from (
         ORDER BY ACTIVITY_START_TIME DESC
     </select>
 
-    <select id="selectDeptByOrgFlow" parameterType="String" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="selectDeptByOrgFlow" parameterType="String" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 	SELECT sd.DEPT_FLOW, sd.ORG_FLOW, sd.DEPT_CODE, sd.DEPT_NAME, sd.ORDINAL
 			, sd.RECORD_STATUS, cfg.record_flow, cfg.STANDARD_DEPT_NAME
         FROM sys_dept sd

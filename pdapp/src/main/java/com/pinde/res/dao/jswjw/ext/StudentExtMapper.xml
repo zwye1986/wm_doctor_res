@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.StudentExtMapper">
-    <resultMap type="HashMap" id="signinMap" extends="com.pinde.sci.dao.base.ResDoctorSigninMapper.BaseResultMap">
+    <resultMap type="HashMap" id="signinMap" extends="com.pinde.core.common.sci.dao.ResDoctorSigninMapper.BaseResultMap">
         <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
         <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
         <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
@@ -175,7 +175,7 @@
         </if>-->
     </sql>
 
-    <select id="searchResDoctorKq"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorKqMapper.BaseResultMap">
+    <select id="searchResDoctorKq"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResDoctorKqMapper.BaseResultMap">
         select
         RECORD_FLOW, DOCTOR_FLOW, DOCTOR_NAME, START_DATE, END_DATE
         , INTERVAL_DAYS, SCH_DEPT_FLOW, SCH_DEPT_NAME, SCH_DEPT_START_DATE, SCH_DEPT_END_DATE
@@ -215,7 +215,7 @@
 
     </select>
 
-    <select id="searchAuditResDoctorKq" resultMap="com.pinde.sci.dao.base.ResDoctorKqMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="searchAuditResDoctorKq" resultMap="com.pinde.core.common.sci.dao.ResDoctorKqMapper.BaseResultMap" parameterType="java.util.Map">
         select
         rdk.RECORD_FLOW, rdk.DOCTOR_FLOW, rdk.DOCTOR_NAME, rdk.START_DATE, rdk.END_DATE
         , rdk.INTERVAL_DAYS, rdk.SCH_DEPT_FLOW, rdk.SCH_DEPT_NAME, rdk.SCH_DEPT_START_DATE, rdk.SCH_DEPT_END_DATE

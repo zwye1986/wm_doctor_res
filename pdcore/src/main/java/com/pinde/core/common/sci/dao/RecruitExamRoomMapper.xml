@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.RecruitExamRoomMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitExamRoom">
+    <id column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ROOM_NAME" property="roomName" jdbcType="VARCHAR" />
+    <result column="ROOM_ADDRESS" property="roomAddress" jdbcType="VARCHAR" />
+    <result column="EXAM_NUM" property="examNum" jdbcType="VARCHAR" />
+    <result column="ROOM_DEMO" property="roomDemo" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ROOM_FLOW, ORG_FLOW, ROOM_NAME, ROOM_ADDRESS, EXAM_NUM, ROOM_DEMO, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="searchAllExamRoomNameByOrgFlow" resultType="java.lang.String" parameterType="java.lang.String">
+      select ROOM_NAME from RECRUIT_EXAM_ROOM where ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+  </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.RecruitExamRoomExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from RECRUIT_EXAM_ROOM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from RECRUIT_EXAM_ROOM
+    where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from RECRUIT_EXAM_ROOM
+    where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitExamRoomExample">
+      delete from RECRUIT_EXAM_ROOM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+    <insert id="insert" parameterType="com.pinde.core.model.RecruitExamRoom">
+      insert into RECRUIT_EXAM_ROOM (ROOM_FLOW, ORG_FLOW, ROOM_NAME,
+      ROOM_ADDRESS, EXAM_NUM, ROOM_DEMO, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{roomFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{roomName,jdbcType=VARCHAR}, 
+      #{roomAddress,jdbcType=VARCHAR}, #{examNum,jdbcType=VARCHAR}, #{roomDemo,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitExamRoom">
+      insert into RECRUIT_EXAM_ROOM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomFlow != null" >
+        ROOM_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="roomName != null" >
+        ROOM_NAME,
+      </if>
+      <if test="roomAddress != null" >
+        ROOM_ADDRESS,
+      </if>
+      <if test="examNum != null" >
+        EXAM_NUM,
+      </if>
+      <if test="roomDemo != null" >
+        ROOM_DEMO,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomFlow != null" >
+        #{roomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomAddress != null" >
+        #{roomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum != null" >
+        #{examNum,jdbcType=VARCHAR},
+      </if>
+      <if test="roomDemo != null" >
+        #{roomDemo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.pinde.core.model.RecruitExamRoomExample"
+            resultType="java.lang.Integer">
+      select count(*) from RECRUIT_EXAM_ROOM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update RECRUIT_EXAM_ROOM
+    <set >
+      <if test="record.roomFlow != null" >
+        ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomName != null" >
+        ROOM_NAME = #{record.roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomAddress != null" >
+        ROOM_ADDRESS = #{record.roomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examNum != null" >
+        EXAM_NUM = #{record.examNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roomDemo != null" >
+        ROOM_DEMO = #{record.roomDemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update RECRUIT_EXAM_ROOM
+    set ROOM_FLOW = #{record.roomFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ROOM_NAME = #{record.roomName,jdbcType=VARCHAR},
+      ROOM_ADDRESS = #{record.roomAddress,jdbcType=VARCHAR},
+      EXAM_NUM = #{record.examNum,jdbcType=VARCHAR},
+      ROOM_DEMO = #{record.roomDemo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitExamRoom">
+      update RECRUIT_EXAM_ROOM
+    <set >
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="roomName != null" >
+        ROOM_NAME = #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomAddress != null" >
+        ROOM_ADDRESS = #{roomAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum != null" >
+        EXAM_NUM = #{examNum,jdbcType=VARCHAR},
+      </if>
+      <if test="roomDemo != null" >
+        ROOM_DEMO = #{roomDemo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitExamRoom">
+      update RECRUIT_EXAM_ROOM
+    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ROOM_NAME = #{roomName,jdbcType=VARCHAR},
+      ROOM_ADDRESS = #{roomAddress,jdbcType=VARCHAR},
+      EXAM_NUM = #{examNum,jdbcType=VARCHAR},
+      ROOM_DEMO = #{roomDemo,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where ROOM_FLOW = #{roomFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

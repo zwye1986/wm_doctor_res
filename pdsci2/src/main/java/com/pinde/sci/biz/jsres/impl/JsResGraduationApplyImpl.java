@@ -1,6 +1,9 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
+import com.pinde.core.common.sci.dao.JsresGraduationApplyLogMapper;
+import com.pinde.core.common.sci.dao.JsresGraduationApplyMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,11 +13,7 @@ import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
-import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.JsresDoctorDeptDetailMapper;
-import com.pinde.sci.dao.base.JsresGraduationApplyLogMapper;
-import com.pinde.sci.dao.base.JsresGraduationApplyMapper;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
@@ -32,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -47,27 +47,25 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
-    @Autowired
+    @Resource
     private JsresGraduationApplyMapper graduationApplyMapper;
-    @Autowired
+    @Resource
     private JsresGraduationApplyLogMapper graduationApplyLogMapper;
-    @Autowired
+    @Resource
     private JsresDoctorDeptDetailMapper jsresDoctorDeptDetailMapper;
-    @Autowired
+    @Resource
     private JsresGraduationApplyExtMapper graduationApplyExtMapper;
-    @Autowired
-    private ISchArrangeResultBiz resultBiz;
-    @Autowired
+    @Resource
     private IResDoctorRecruitBiz doctorRecruitBiz;
-    @Autowired
+    @Resource
     private IResSchProcessExpressBiz expressBiz;
-    @Autowired
+    @Resource
     private ISchRotationDeptAfterBiz afterBiz;
-    @Autowired
+    @Resource
     private TempMapper tempMapper;
-    @Autowired
+    @Resource
     private IPubUserResumeBiz userResumeBiz;
-    @Autowired
+    @Resource
     private IResJointOrgBiz jointOrgBiz;
 
     private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);

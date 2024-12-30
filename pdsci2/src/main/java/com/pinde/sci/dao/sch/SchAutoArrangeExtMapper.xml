@@ -64,7 +64,7 @@
                                         ) A
              WHERE SCH_COUNT <![CDATA[<=]]> 0
     </select>
-    <select id="getSchRotations" resultMap="com.pinde.sci.dao.base.SchRotationMapper.BaseResultMap">
+    <select id="getSchRotations" resultMap="com.pinde.core.common.sci.dao.SchRotationMapper.BaseResultMap">
          SELECT *
           FROM SCH_ROTATION
          WHERE RECORD_STATUS = 'Y'
@@ -232,7 +232,7 @@
           and IS_EXTERNAL='Y'
         )
     </select>
-    <select id="getSchRotationDepts" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+    <select id="getSchRotationDepts" resultMap="com.pinde.core.common.sci.dao.SchRotationDeptMapper.BaseResultMap">
         SELECT D.*
         FROM SCH_ROTATION_DEPT D
         LEFT JOIN SCH_ROTATION_GROUP G

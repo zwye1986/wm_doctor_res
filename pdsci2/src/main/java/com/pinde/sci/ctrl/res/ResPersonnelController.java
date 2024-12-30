@@ -7,7 +7,7 @@ import com.pinde.sci.biz.res.impl.ResPersonnelChangeReportImpl;
 import com.pinde.sci.biz.res.impl.ResPersonnelStatisticsImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.PersonnelCollaborativeBaseMapper;
+import com.pinde.core.common.sci.dao.PersonnelCollaborativeBaseMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.ResLectureInfoExtMapper" >
-	<select id="searchLecturesList" resultMap="com.pinde.sci.dao.base.ResLectureInfoMapper.BaseResultMap">
+	<select id="searchLecturesList" resultMap="com.pinde.core.common.sci.dao.ResLectureInfoMapper.BaseResultMap">
 		SELECT LECTURE_FLOW, LECTURE_TEACHER_FLOW, LECTURE_TEACHER_NAME, ORG_FLOW, ORG_NAME
 	, LECTURE_TRAIN_DATE, LECTURE_START_TIME, LECTURE_END_TIME, LECTURE_CONTENT, LECTURE_TRAIN_PLACE
 	, LECTURE_DESC, LECTURE_EVA_PERIOD, LECTURE_UNIT_ID, LECTURE_UNIT_NAME, RECORD_STATUS
@@ -133,7 +133,7 @@
 		AND T.LECTURE_FLOW=#{lectureFlow}
 		GROUP BY LIMIT_NUM
 	</select>
-	<select id="checkJoinList" resultMap="com.pinde.sci.dao.base.ResLectureInfoMapper.BaseResultMap">
+	<select id="checkJoinList" resultMap="com.pinde.core.common.sci.dao.ResLectureInfoMapper.BaseResultMap">
 		SELECT *
 		FROM RES_LECTURE_INFO INFO
 		WHERE INFO.RECORD_STATUS='Y'

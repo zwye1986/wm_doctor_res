@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper">
-    <resultMap id="activityMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+    <resultMap id="activityMap" type="hashmap" extends="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
         <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
         <result column="REALITY_SPEAKER_USER_CODE" property="realitySpeakerUserCode" jdbcType="VARCHAR" />
 
     </resultMap>
-    <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap">
+    <resultMap id="activityResultMap" type="hashmap" extends="com.pinde.core.common.sci.dao.TeachingActivityResultMapper.BaseResultMap">
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
         <result column="TRAINING_SPE_NAME" property="speName" jdbcType="VARCHAR" />
@@ -41,7 +41,7 @@
         <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />
         <result column="AUDIT_ROLE" property="auditRole" jdbcType="VARCHAR" />
     </resultMap>
-    <resultMap id="activityTargetEvalMap" type="hashmap" extends="com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper.BaseResultMap">
+    <resultMap id="activityTargetEvalMap" type="hashmap" extends="com.pinde.core.common.sci.dao.TeachingActivityInfoTargetMapper.BaseResultMap">
         <result column="EVAL_SCORE" property="evalScore" jdbcType="VARCHAR" />
     </resultMap>
 
@@ -1298,7 +1298,7 @@
          ORDER BY ORDINAL
     </select>
 
-    <select id="readTeachingEvals" resultMap="com.pinde.sci.dao.base.TeachingActivityEvalMapper.BaseResultMap">
+    <select id="readTeachingEvals" resultMap="com.pinde.core.common.sci.dao.TeachingActivityEvalMapper.BaseResultMap">
         SELECT EVAL_FLOW, RESULT_FLOW, USER_FLOW, TARGET_FLOW, TARGET_NAME
             , ORDINAL, EVAL_SCORE, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW
             , MODIFY_TIME, MODIFY_USER_FLOW, IS_TEXT, EVAL_REMARKS
@@ -1394,7 +1394,7 @@
           )
         )
     </select>
-    <select id="checkJoinList" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+    <select id="checkJoinList" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
         SELECT *
           FROM TEACHING_ACTIVITY_INFO INFO
          WHERE INFO.RECORD_STATUS='Y'

@@ -105,7 +105,7 @@
             DR.SPE_ID,
             DR.DOCTOR_FLOW
     </select>
-    <select id="getDoctorArrangements" resultMap="com.pinde.sci.dao.base.SchExamDoctorArrangementMapper.BaseResultMap">
+    <select id="getDoctorArrangements" resultMap="com.pinde.core.common.sci.dao.SchExamDoctorArrangementMapper.BaseResultMap">
         SELECT RECORD_FLOW,
                 ARRANGE_FLOW,
                 DOCTOR_FLOW,

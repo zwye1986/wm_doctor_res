@@ -47,7 +47,7 @@
             )
         )
     </select>
-    <select id="getNotSelfSchDeptByDeptIdAndExternal" resultMap="com.pinde.sci.dao.base.SchDeptMapper.BaseResultMap">
+    <select id="getNotSelfSchDeptByDeptIdAndExternal" resultMap="com.pinde.core.common.sci.dao.SchDeptMapper.BaseResultMap">
         SELECT * FROM
         SCH_DEPT
         WHERE RECORD_STATUS='Y'

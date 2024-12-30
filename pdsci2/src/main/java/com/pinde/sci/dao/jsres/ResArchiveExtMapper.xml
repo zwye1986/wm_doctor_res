@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.ResArchiveExtMapper">
     <resultMap id="DoctorRecruitLog" type="com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitLogMapper.BaseResultMap" >
-        <association property="sysUser" column="user_flow"  resultMap="com.pinde.sci.dao.base.SysUserLogMapper.BaseResultMap" />
+        <association property="sysUser" column="user_flow"  resultMap="com.pinde.core.common.sci.dao.SysUserLogMapper.BaseResultMap" />
         <association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorLogMapper.BaseResultMap" >
             <id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
             <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
@@ -10,7 +10,7 @@
         </association>
     </resultMap>
     <resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoLogExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitLogMapper.BaseResultMap" >
-        <association property="sysUser" column="userFlow"  resultMap="com.pinde.sci.dao.base.SysUserLogMapper.BaseResultMap" />
+        <association property="sysUser" column="userFlow"  resultMap="com.pinde.core.common.sci.dao.SysUserLogMapper.BaseResultMap" />
         <association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorLogMapper.BaseResultMap" />
         <association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.ResUserResumeLogMapper.BaseResultMap" />
     </resultMap>

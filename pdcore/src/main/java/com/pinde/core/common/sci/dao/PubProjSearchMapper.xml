@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.PubProjSearchMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.PubProjSearch">
+    <id column="PROJ_SEARCH_FLOW" property="projSearchFlow" jdbcType="VARCHAR" />
+    <result column="PROJ_FLOW" property="projFlow" jdbcType="VARCHAR" />
+    <result column="SEARCH_COLUMN" property="searchColumn" jdbcType="VARCHAR" />
+    <result column="SEARCH_VALUE" property="searchValue" jdbcType="VARCHAR" />
+    <result column="SEARCH_REMARK" property="searchRemark" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROJ_SEARCH_FLOW, PROJ_FLOW, SEARCH_COLUMN, SEARCH_VALUE, SEARCH_REMARK, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.PubProjSearchExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+        from PUB_PROJ_SEARCH
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from PUB_PROJ_SEARCH
+    where PROJ_SEARCH_FLOW = #{projSearchFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from PUB_PROJ_SEARCH
+    where PROJ_SEARCH_FLOW = #{projSearchFlow,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.PubProjSearchExample">
+        delete from PUB_PROJ_SEARCH
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+    <insert id="insert" parameterType="com.pinde.core.model.PubProjSearch">
+        insert into PUB_PROJ_SEARCH (PROJ_SEARCH_FLOW, PROJ_FLOW, SEARCH_COLUMN,
+      SEARCH_VALUE, SEARCH_REMARK, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW)
+    values (#{projSearchFlow,jdbcType=VARCHAR}, #{projFlow,jdbcType=VARCHAR}, #{searchColumn,jdbcType=VARCHAR}, 
+      #{searchValue,jdbcType=VARCHAR}, #{searchRemark,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pinde.core.model.PubProjSearch">
+        insert into PUB_PROJ_SEARCH
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projSearchFlow != null" >
+        PROJ_SEARCH_FLOW,
+      </if>
+      <if test="projFlow != null" >
+        PROJ_FLOW,
+      </if>
+      <if test="searchColumn != null" >
+        SEARCH_COLUMN,
+      </if>
+      <if test="searchValue != null" >
+        SEARCH_VALUE,
+      </if>
+      <if test="searchRemark != null" >
+        SEARCH_REMARK,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projSearchFlow != null" >
+        #{projSearchFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="projFlow != null" >
+        #{projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="searchColumn != null" >
+        #{searchColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="searchValue != null" >
+        #{searchValue,jdbcType=VARCHAR},
+      </if>
+      <if test="searchRemark != null" >
+        #{searchRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.pinde.core.model.PubProjSearchExample"
+            resultType="java.lang.Integer">
+        select count(*) from PUB_PROJ_SEARCH
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update PUB_PROJ_SEARCH
+    <set >
+      <if test="record.projSearchFlow != null" >
+        PROJ_SEARCH_FLOW = #{record.projSearchFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projFlow != null" >
+        PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.searchColumn != null" >
+        SEARCH_COLUMN = #{record.searchColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.searchValue != null" >
+        SEARCH_VALUE = #{record.searchValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.searchRemark != null" >
+        SEARCH_REMARK = #{record.searchRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update PUB_PROJ_SEARCH
+    set PROJ_SEARCH_FLOW = #{record.projSearchFlow,jdbcType=VARCHAR},
+      PROJ_FLOW = #{record.projFlow,jdbcType=VARCHAR},
+      SEARCH_COLUMN = #{record.searchColumn,jdbcType=VARCHAR},
+      SEARCH_VALUE = #{record.searchValue,jdbcType=VARCHAR},
+      SEARCH_REMARK = #{record.searchRemark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.PubProjSearch">
+        update PUB_PROJ_SEARCH
+    <set >
+      <if test="projFlow != null" >
+        PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="searchColumn != null" >
+        SEARCH_COLUMN = #{searchColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="searchValue != null" >
+        SEARCH_VALUE = #{searchValue,jdbcType=VARCHAR},
+      </if>
+      <if test="searchRemark != null" >
+        SEARCH_REMARK = #{searchRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROJ_SEARCH_FLOW = #{projSearchFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.PubProjSearch">
+        update PUB_PROJ_SEARCH
+    set PROJ_FLOW = #{projFlow,jdbcType=VARCHAR},
+      SEARCH_COLUMN = #{searchColumn,jdbcType=VARCHAR},
+      SEARCH_VALUE = #{searchValue,jdbcType=VARCHAR},
+      SEARCH_REMARK = #{searchRemark,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where PROJ_SEARCH_FLOW = #{projSearchFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

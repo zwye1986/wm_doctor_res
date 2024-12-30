@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.sci.dao.JsresBaseEvaluationFileMapper;
+import com.pinde.core.common.sci.dao.JsresBaseEvaluationMapper;
+import com.pinde.core.common.sci.dao.JsresBaseEvaluationScoreMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -7,9 +10,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResBaseEvaluationBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.JsresBaseEvaluationFileMapper;
-import com.pinde.sci.dao.base.JsresBaseEvaluationMapper;
-import com.pinde.sci.dao.base.JsresBaseEvaluationScoreMapper;
 import com.pinde.sci.dao.jsres.JsresBaseEvaluationExtMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,13 +28,13 @@ import java.util.Map;
 //@Transactional(rollbackFor=Exception.class)
 public class JsResBaseEvaluationBizImpl implements IJsResBaseEvaluationBiz{
 
-    @Autowired
+    @Resource
     private JsresBaseEvaluationMapper jsresBaseEvaluationMapper;
-    @Autowired
+    @Resource
     private JsresBaseEvaluationFileMapper jsresBaseEvaluationFileMapper;
-    @Autowired
+    @Resource
     private JsresBaseEvaluationScoreMapper jsresBaseEvaluationScoreMapper;
-    @Autowired
+    @Resource
     private JsresBaseEvaluationExtMapper jsresBaseEvaluationExtMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(JsResBaseEvaluationBizImpl.class);

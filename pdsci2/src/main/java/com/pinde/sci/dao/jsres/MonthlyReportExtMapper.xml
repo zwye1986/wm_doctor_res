@@ -217,7 +217,7 @@
         where a.activitySum!=0
     </select>
 
-    <select id="getSysMonthlyChangeInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyChangeInfoMapper.BaseResultMap"
+    <select id="getSysMonthlyChangeInfo" resultMap="com.pinde.core.common.sci.dao.SysMonthlyChangeInfoMapper.BaseResultMap"
             parameterType="map">
         select s.* from
         Sys_Monthly_Change_Info s
@@ -248,7 +248,7 @@
         </if>
     </select>
 
-    <select id="getSysMonthlyReturnDelayInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyReturnDelayInfoMapper.BaseResultMap"
+    <select id="getSysMonthlyReturnDelayInfo" resultMap="com.pinde.core.common.sci.dao.SysMonthlyReturnDelayInfoMapper.BaseResultMap"
             parameterType="map">
         select s.* from
         Sys_Monthly_Return_Delay_Info s
@@ -278,7 +278,7 @@
         </if>
     </select>
 
-    <select id="getSysMonthlyDocCycleInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyDocCycleInfoMapper.BaseResultMap"
+    <select id="getSysMonthlyDocCycleInfo" resultMap="com.pinde.core.common.sci.dao.SysMonthlyDocCycleInfoMapper.BaseResultMap"
             parameterType="map">
         select s.* from
         Sys_Monthly_Doc_Cycle_Info s
@@ -754,13 +754,13 @@ ORDER BY
         and result.SCAN_NUM>0  <!--有效的-->
 		ORDER BY START_TIME DESC, END_TIME DESC, RESULT.EVAL_SCORE DESC
     </select>
-    <select id="getScanTime1AndScanTime2" parameterType="java.lang.String" resultMap="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap" >
+    <select id="getScanTime1AndScanTime2" parameterType="java.lang.String" resultMap="com.pinde.core.common.sci.dao.TeachingActivityResultMapper.BaseResultMap" >
         select *
         from TEACHING_ACTIVITY_RESULT
         WHERE ACTIVITY_FLOW=#{activityFlow}
         AND IS_SCAN='Y' AND IS_SCAN2='Y'
     </select>
-    <select id="getScanTime1AndScanTime2LeftjoinUserFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.TeachingActivityResultMapper.BaseResultMap" >
+    <select id="getScanTime1AndScanTime2LeftjoinUserFlow" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.TeachingActivityResultMapper.BaseResultMap" >
         select RES.*
         from TEACHING_ACTIVITY_RESULT res
         LEFT JOIN RES_DOCTOR_RECRUIT a ON res.user_flow=a.doctor_flow
@@ -957,7 +957,7 @@ ORDER BY
         </if>
     </select>
 
-    <select id="getAppDataDetail" resultMap="com.pinde.sci.dao.base.SysMonthlyNotUseappInfoMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="getAppDataDetail" resultMap="com.pinde.core.common.sci.dao.SysMonthlyNotUseappInfoMapper.BaseResultMap" parameterType="java.util.Map">
         SELECT *
         FROM SYS_MONTHLY_NOT_USEAPP_INFO s
         where s.record_status='Y'
@@ -1097,7 +1097,7 @@ ORDER BY
         GROUP BY s.ORG_FLOW, s.ORG_NAME
     </select>
 
-    <select id="getAppData3Detail" resultMap="com.pinde.sci.dao.base.SysMonthlyNotUseappInfoMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="getAppData3Detail" resultMap="com.pinde.core.common.sci.dao.SysMonthlyNotUseappInfoMapper.BaseResultMap" parameterType="java.util.Map">
         SELECT s.*
         FROM (select a.* from (
         select * from SYS_MONTHLY_NOT_USEAPP_INFO smn where smn.DATE_MONTH = #{dateMonth1} ) a
@@ -2002,7 +2002,7 @@ ORDER BY
         </collection>
     </resultMap>
     <!--以下学员轮转异常统计-->
-    <select id="searchCycleArrangeResults" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchCycleArrangeResults" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         with KK as(
             SELECT DISTINCT u.USER_NAME AS user_name, u.user_flow, dr.TRAINING_SPE_NAME AS training_spe_name, dr.DOCTOR_Flow AS doctor_flow, dr.SESSION_NUMBER AS session_number
             , dr.TRAINING_YEARS AS training_years, dr.TRAINING_SPE_ID AS training_spe_id, dr.TRAINING_Type_ID
@@ -2597,7 +2597,7 @@ ORDER BY
         ORDER BY so.org_code
     </select>
 
-    <select id="searchDataStatistics" parameterType="map" resultMap="com.pinde.sci.dao.base.JsresDataStatisticsMapper.BaseResultMap">
+    <select id="searchDataStatistics" parameterType="map" resultMap="com.pinde.core.common.sci.dao.JsresDataStatisticsMapper.BaseResultMap">
         select * from jsres_data_statistics
         where record_status = 'Y'
         <if test="monthDate!=null and monthDate!=''">
@@ -2624,7 +2624,7 @@ ORDER BY
         from dual
     </select>
 
-    <select id="searchMonthDataList" parameterType="map" resultMap="com.pinde.sci.dao.base.JsresMonthStatisticsMapper.BaseResultMap">
+    <select id="searchMonthDataList" parameterType="map" resultMap="com.pinde.core.common.sci.dao.JsresMonthStatisticsMapper.BaseResultMap">
         select * from jsres_month_statistics
         where record_status = 'Y'
         <if test="monthDate!=null and monthDate!=''">

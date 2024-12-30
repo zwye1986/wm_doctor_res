@@ -1099,7 +1099,7 @@
 
 	<resultMap id="resultMap" type="com.pinde.sci.model.res.SchProcessExt"
 			   extends="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
-		<association property="schArrangeResult" column="sch_Month"  resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap" />
+		<association property="schArrangeResult" column="sch_Month"  resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap" />
 
 	</resultMap>
 	<select id="searchProcessAndResultByDoctorFlow" resultMap="resultMap">
@@ -1596,7 +1596,7 @@
 			) or rdsp.head_user_flow=#{userFlow} )
 		</if>
 	</select>
-	<select id="searchResultsByUserFlow" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+	<select id="searchResultsByUserFlow" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
 		SELECT a.*
         FROM SCH_ARRANGE_RESULT a
         left join res_doctor rd on a.doctor_flow=rd.doctor_flow
@@ -3003,7 +3003,7 @@
 		</if>
 		order by NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
 	</select>
-	<select id="searchCycleArrangeResults" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+	<select id="searchCycleArrangeResults" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
 		select ar.*
 		from SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
 		where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
@@ -5105,7 +5105,7 @@
 			ORDER BY ${orderItem} ${sortName} ,user_flow
 		</if>
 	</select>
-	<select id="queryActivityList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="queryActivityList" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		select tai.* from teaching_activity_info tai
 		where tai.record_status='Y'
 		<if test='speakerFlow!=null and speakerFlow!=""'>

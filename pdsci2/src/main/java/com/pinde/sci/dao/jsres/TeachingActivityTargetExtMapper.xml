@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.TeachingActivityTargetExtMapper">
     <resultMap id="targetMap" type="com.pinde.core.model.TeachingActivityTarget"
-               extends="com.pinde.sci.dao.base.TeachingActivityTargetMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.TeachingActivityTargetMapper.BaseResultMap">
         <id column="TARGET_FLOW" property="targetFlow" jdbcType="VARCHAR" />
         <result column="TARGET_NAME" property="targetName" jdbcType="VARCHAR" />
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />

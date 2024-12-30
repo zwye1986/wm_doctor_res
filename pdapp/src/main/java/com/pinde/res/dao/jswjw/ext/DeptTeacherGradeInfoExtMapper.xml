@@ -48,7 +48,7 @@
             and dtgi.OPER_TIME<![CDATA[<=]]>#{endDate}
         </if>
     </select>
-    <select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  dtgi
         where dtgi.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -85,7 +85,7 @@
         ))
     </select>
 
-    <select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  dtgi
         where dtgi.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -122,7 +122,7 @@
         ))
     </select>
 
-    <select id="searchHbresDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="searchHbresDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  dtgi
         where dtgi.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -173,7 +173,7 @@
         ))
     </select>
 
-    <select id="searchHbresProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="searchHbresProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select *
         from DEPT_TEACHER_GRADE_INFO  dtgi
         where dtgi.RECORD_STATUS='Y'
@@ -433,7 +433,7 @@
         )
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),su.user_code
     </select>
-    <select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="getDeptByRec" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select sd.*
         from sys_dept sd
         where sd.record_status = 'Y'
@@ -464,7 +464,7 @@
         </if>
         order by sd.ordinal
     </select>
-    <select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  rr
         where rr.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -484,7 +484,7 @@
         and rr.rec_type_id ='TeacherGrade'
         ))
     </select>
-    <select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         select * from DEPT_TEACHER_GRADE_INFO  rr
         where rr.RECORD_STATUS='Y'
         <if test="startDate!=null and startDate!=''">
@@ -567,7 +567,7 @@
         order by nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
 
-    <select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="getDeptByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select sd.*
         from sys_dept sd
         where sd.record_status = 'Y'

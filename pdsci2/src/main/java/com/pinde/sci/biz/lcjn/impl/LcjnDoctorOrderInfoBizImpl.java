@@ -2,14 +2,14 @@ package com.pinde.sci.biz.lcjn.impl;
 
 import com.pinde.core.common.enums.LcjnAuditStatusEnum;
 import com.pinde.core.common.enums.LcjnDoctorScoreEnum;
+import com.pinde.core.common.sci.dao.LcjnCourseInfoMapper;
+import com.pinde.core.common.sci.dao.LcjnCourseTimeMapper;
+import com.pinde.core.common.sci.dao.LcjnDoctorCourseMapper;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnDoctorOrderInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.LcjnCourseInfoMapper;
-import com.pinde.sci.dao.base.LcjnCourseTimeMapper;
-import com.pinde.sci.dao.base.LcjnDoctorCourseMapper;
 import com.pinde.sci.dao.lcjn.LcjnDoctorTrainExtMapper;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

@@ -1524,7 +1524,7 @@
 		</if>
 		order by r.create_time desc
 	</select>
-	<select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		FROM TEACHING_ACTIVITY_RESULT R
 		LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1548,7 +1548,7 @@
 		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
 		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
 	</select>
-	<select id="searchJoinActivityByProcessFlow2" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByProcessFlow2" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		FROM TEACHING_ACTIVITY_RESULT R
 		LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1573,7 +1573,7 @@
 		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
 		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
 	</select>
-	<select id="searchJoinActivityByStrandDeptFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByStrandDeptFlow" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		  FROM TEACHING_ACTIVITY_RESULT R
 		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1599,7 +1599,7 @@
 			   SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
 	</select>
 
-	<select id="searchJoinActivityByStrandDeptFlowAndNotScore" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByStrandDeptFlowAndNotScore" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		  FROM TEACHING_ACTIVITY_RESULT R
 		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1880,7 +1880,7 @@
 
     </update>
 
-	<select id="searchEvalFormGradeInfo" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+	<select id="searchEvalFormGradeInfo" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
 		SELECT RR.*
         FROM SYS_USER SU, RES_DOCTOR_SCH_PROCESS RDSP, DEPT_TEACHER_GRADE_INFO RR
 		WHERE SU.RECORD_STATUS = 'Y'

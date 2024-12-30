@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.core.common.enums.ActivityTypeEnum;
+import com.pinde.core.common.sci.dao.PubFileMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -59,8 +60,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	@Autowired
 	private TeachingActivityFormValueMapper activityFormValueMapper;
 	@Autowired
-	private IRoleBiz roleBiz;
-	@Autowired
 	private IUserRoleBiz userRoleBiz;
 	@Autowired
 	private SysCfgMapper sysCfgMapper;
@@ -74,8 +73,6 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	private ResHospSupervSubjectMapper hospSupervSubjectMapper;
 	@Autowired
 	private ISysSupervisioUserBiz supervisioUserBiz;
-	@Autowired
-	private IJsResSupervisioBiz supervisioBiz;
 	@Autowired
 	private TeachingActivitySpeakerMapper activitySpeakerMapper;
 	@Autowired

@@ -1,0 +1,23 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.ResTestConfig;
+import com.pinde.core.model.ResTestConfigExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface ResTestConfigMapper {
+    int countByExample(ResTestConfigExample example);
+
+    int deleteByExample(ResTestConfigExample example);
+
+    int insert(ResTestConfig record);
+
+    int insertSelective(ResTestConfig record);
+
+    List<ResTestConfig> selectByExample(ResTestConfigExample example);
+
+    int updateByExampleSelective(@Param("record") ResTestConfig record, @Param("example") ResTestConfigExample example);
+
+    int updateByExample(@Param("record") ResTestConfig record, @Param("example") ResTestConfigExample example);
+}

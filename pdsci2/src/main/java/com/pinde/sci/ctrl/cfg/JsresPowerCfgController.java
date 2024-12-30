@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.cfg;
 
 import com.pinde.core.common.enums.jsres.CheckStatusEnum;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.JsresPowerCfg;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.util.DateUtil;
@@ -11,7 +12,6 @@ import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
