@@ -1018,7 +1018,7 @@ public class ResActivityBizImpl implements IResActivityBiz {
 	}
 
 	@Override
-	public List<TeachingActivityInfo> getActivityListByRole(Map<String, Object> param) {
+	public List<Map<String, Object>> getActivityListByRole(Map<String, Object> param) {
 		return activityInfoExtMapper.getActivityListByRole(param);
 	}
 }

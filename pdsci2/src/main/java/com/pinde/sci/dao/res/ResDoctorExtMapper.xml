@@ -9,7 +9,7 @@
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
 					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
         <association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.core.model.PubUserResume"
-                     resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs"/>
+                     resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
 	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
         <association property="sysUser" column="user_flow"

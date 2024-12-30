@@ -42,7 +42,7 @@ public interface TeachingActivityInfoExtMapper {
 
 	List<TeachingActivityInfo> checkJoinList(@Param("activityFlow") String activityFlow, @Param("userFlow") String userFlow);
 
-	List<TeachingActivityInfo> getActivityListByRole(Map<String, Object> param);
+	List<Map<String, Object>> getActivityListByRole(Map<String, Object> param);
 
 	List<Map<String,Object>> searchDeptByDoctor(@Param("userFlow") String userFlow, @Param("orgFlow") String orgFlow);
 

@@ -25,7 +25,7 @@
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
-		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
+		<association property="userResume" column="userFlow"  resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs" />
 	</resultMap>
 	
 	<resultMap id="doctorInfoSun" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >

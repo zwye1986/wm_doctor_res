@@ -81,5 +81,5 @@ public interface IResActivityBiz {
 
     List<TeachingActivityTarget> readByOrg(String activityTypeId, String orgFlow);
 
-    List<TeachingActivityInfo> getActivityListByRole(Map<String, Object> param);
+    List<Map<String, Object>> getActivityListByRole(Map<String, Object> param);
 }
