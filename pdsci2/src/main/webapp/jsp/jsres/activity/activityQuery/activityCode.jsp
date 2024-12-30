@@ -187,7 +187,7 @@
     <div id="qrcode" style="text-align: center;margin-top: 5px;">
     </div>
     <div>
-        【签到二维码】（此二维码在讲座开始前${startTime}分钟至开始后${endTime}分钟内有效）
+        【签到二维码】（此二维码在活动开始前${startTime}分钟至开始后${endTime}分钟内有效）
     </div>
     <div id="downDiv"  style="text-align: center;margin-top: 5px;">
         ${pdfn:jsresPowerCfgMap(key) eq 'Y'? '<font color="red">此二维码为动态二维码，每15秒钟刷新一次</font>':''}
