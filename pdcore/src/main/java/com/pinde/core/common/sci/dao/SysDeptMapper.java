@@ -28,4 +28,6 @@ public interface SysDeptMapper {
     int updateByPrimaryKeySelective(SysDept record);
 
     int updateByPrimaryKey(SysDept record);
+
+    int deleteDeptByKey(@Param("deptFlow") String deptFlow);
 }

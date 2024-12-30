@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper">
-	
-	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+
+    <resultMap id="DoctorRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="user_flow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
+        <association property="resDoctor" column="doctorFlow"
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 		    <result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
 		</association>
 	</resultMap>
-	<resultMap id="DoctorScoreRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+    <resultMap id="DoctorScoreRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="user_flow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="resScore" column="user_flow"  resultMap="com.pinde.sci.dao.base.ResScoreMapper.ResultMapWithBLOBs" />
-		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
+        <association property="resScore" column="user_flow"
+                     resultMap="com.pinde.core.common.sci.dao.ResScoreMapper.ResultMapWithBLOBs"/>
+        <association property="resDoctor" column="doctorFlow"
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 			<result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
 		</association>
 	</resultMap>
-	<resultMap id="doctorInfo" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+    <resultMap id="doctorInfo" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
-		<association property="userResume" column="userFlow"  resultMap="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs" />
+        <association property="resDoctor" column="doctorFlow"
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
+        <association property="userResume" column="userFlow"
+                     resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
-	
-	<resultMap id="doctorInfoSun" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+
+    <resultMap id="doctorInfoSun" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 	</resultMap>
@@ -1382,11 +1391,13 @@
     		<foreach collection="delTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
     		</if>
 		group by rec.org_flow
-    </select> 
-    <resultMap id="info" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+    </select>
+    <resultMap id="info" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
+        <association property="resDoctor" column="doctorFlow"
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="statisticNoAppUser"  parameterType="java.util.Map" resultMap="info">
 	select rd.RECRUIT_FLOW ,rd.doctor_flow,su.user_flow,rd.spe_name ,su.user_name,su.USER_PHONE

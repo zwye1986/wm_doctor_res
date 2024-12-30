@@ -43,6 +43,16 @@
     <result column="ACTIVITY_END_TIME" property="activityEndTime" jdbcType="VARCHAR" />
     <result column="MATCHING" property="matching" jdbcType="VARCHAR" />
     <result column="REVIEW_CONFIG" property="reviewConfig" jdbcType="VARCHAR" />
+      <result column="LEADER_THREE_NAME" property="leaderThreeName" jdbcType="VARCHAR"/>
+      <result column="LEADER_THREE_FLOW" property="leaderThreeFlow" jdbcType="VARCHAR"/>
+      <result column="LEADER_FOUR_NAME" property="leaderFourName" jdbcType="VARCHAR"/>
+      <result column="LEADER_FOUR_FLOW" property="leaderFourFlow" jdbcType="VARCHAR"/>
+      <result column="LEADER_THREE_SCORE" property="leaderThreeScore" jdbcType="VARCHAR"/>
+      <result column="LEADER_FOUR_SCORE" property="leaderFourScore" jdbcType="VARCHAR"/>
+      <result column="LEADER_THREE_START_TIME" property="leaderThreeStartTime" jdbcType="VARCHAR"/>
+      <result column="LEADER_THREE_END_TIME" property="leaderThreeEndTime" jdbcType="VARCHAR"/>
+      <result column="LEADER_FOUR_START_TIME" property="leaderFourStartTime" jdbcType="VARCHAR"/>
+      <result column="LEADER_FOUR_END_TIME" property="leaderFourEndTime" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -109,7 +119,10 @@
     MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_YEAR, INSPECTION_TYPE, DEPT_FLOW, DEPT_NAME, 
     TEACH_FLOW, TEACH_NAME, LEADER_ONE_SCORE, LEADER_TWO_SCORE, AVG_SCORE, LEADER_ONE_START_TIME, 
     LEADER_ONE_END_TIME, LEADER_TWO_START_TIME, LEADER_TWO_END_TIME, LEADER_SUB_NUM, 
-    ACTUAL_SPEAKER, ACTIVITY_START_TIME, ACTIVITY_END_TIME, MATCHING, REVIEW_CONFIG
+    ACTUAL_SPEAKER, ACTIVITY_START_TIME, ACTIVITY_END_TIME, MATCHING, REVIEW_CONFIG, 
+    LEADER_THREE_NAME, LEADER_THREE_FLOW, LEADER_FOUR_NAME, LEADER_FOUR_FLOW, LEADER_THREE_SCORE, 
+    LEADER_FOUR_SCORE, LEADER_THREE_START_TIME, LEADER_THREE_END_TIME, LEADER_FOUR_START_TIME, 
+    LEADER_FOUR_END_TIME
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" >
     select
@@ -144,8 +157,12 @@
       TEACH_NAME, LEADER_ONE_SCORE, LEADER_TWO_SCORE, 
       AVG_SCORE, LEADER_ONE_START_TIME, LEADER_ONE_END_TIME, 
       LEADER_TWO_START_TIME, LEADER_TWO_END_TIME, LEADER_SUB_NUM, 
-      ACTUAL_SPEAKER, ACTIVITY_START_TIME, ACTIVITY_END_TIME, 
-      MATCHING, REVIEW_CONFIG)
+      ACTUAL_SPEAKER, ACTIVITY_START_TIME, ACTIVITY_END_TIME,
+                                           MATCHING, REVIEW_CONFIG, LEADER_THREE_NAME,
+                                           LEADER_THREE_FLOW, LEADER_FOUR_NAME, LEADER_FOUR_FLOW,
+                                           LEADER_THREE_SCORE, LEADER_FOUR_SCORE, LEADER_THREE_START_TIME,
+                                           LEADER_THREE_END_TIME, LEADER_FOUR_START_TIME,
+                                           LEADER_FOUR_END_TIME)
     values (#{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
       #{orgName,jdbcType=VARCHAR}, #{baseCode,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
       #{speName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{orderAction,jdbcType=VARCHAR}, 
@@ -158,8 +175,13 @@
       #{teachName,jdbcType=VARCHAR}, #{leaderOneScore,jdbcType=VARCHAR}, #{leaderTwoScore,jdbcType=VARCHAR}, 
       #{avgScore,jdbcType=VARCHAR}, #{leaderOneStartTime,jdbcType=VARCHAR}, #{leaderOneEndTime,jdbcType=VARCHAR}, 
       #{leaderTwoStartTime,jdbcType=VARCHAR}, #{leaderTwoEndTime,jdbcType=VARCHAR}, #{leaderSubNum,jdbcType=VARCHAR}, 
-      #{actualSpeaker,jdbcType=VARCHAR}, #{activityStartTime,jdbcType=VARCHAR}, #{activityEndTime,jdbcType=VARCHAR}, 
-      #{matching,jdbcType=VARCHAR}, #{reviewConfig,jdbcType=VARCHAR})
+      #{actualSpeaker,jdbcType=VARCHAR}, #{activityStartTime,jdbcType=VARCHAR}, #{activityEndTime,jdbcType=VARCHAR},
+            #{matching,jdbcType=VARCHAR}, #{reviewConfig,jdbcType=VARCHAR}, #{leaderThreeName,jdbcType=VARCHAR},
+            #{leaderThreeFlow,jdbcType=VARCHAR}, #{leaderFourName,jdbcType=VARCHAR}, #{leaderFourFlow,jdbcType=VARCHAR},
+            #{leaderThreeScore,jdbcType=VARCHAR}, #{leaderFourScore,jdbcType=VARCHAR},
+            #{leaderThreeStartTime,jdbcType=VARCHAR},
+            #{leaderThreeEndTime,jdbcType=VARCHAR}, #{leaderFourStartTime,jdbcType=VARCHAR},
+            #{leaderFourEndTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResHospSupervSubject" >
       insert into RES_HOSP_SUPERV_SUBJECT
@@ -287,6 +309,36 @@
       <if test="reviewConfig != null" >
         REVIEW_CONFIG,
       </if>
+        <if test="leaderThreeName != null">
+            LEADER_THREE_NAME,
+        </if>
+        <if test="leaderThreeFlow != null">
+            LEADER_THREE_FLOW,
+        </if>
+        <if test="leaderFourName != null">
+            LEADER_FOUR_NAME,
+        </if>
+        <if test="leaderFourFlow != null">
+            LEADER_FOUR_FLOW,
+        </if>
+        <if test="leaderThreeScore != null">
+            LEADER_THREE_SCORE,
+        </if>
+        <if test="leaderFourScore != null">
+            LEADER_FOUR_SCORE,
+        </if>
+        <if test="leaderThreeStartTime != null">
+            LEADER_THREE_START_TIME,
+        </if>
+        <if test="leaderThreeEndTime != null">
+            LEADER_THREE_END_TIME,
+        </if>
+        <if test="leaderFourStartTime != null">
+            LEADER_FOUR_START_TIME,
+        </if>
+        <if test="leaderFourEndTime != null">
+            LEADER_FOUR_END_TIME,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
@@ -412,6 +464,36 @@
       <if test="reviewConfig != null" >
         #{reviewConfig,jdbcType=VARCHAR},
       </if>
+        <if test="leaderThreeName != null">
+            #{leaderThreeName,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderThreeFlow != null">
+            #{leaderThreeFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderFourName != null">
+            #{leaderFourName,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderFourFlow != null">
+            #{leaderFourFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderThreeScore != null">
+            #{leaderThreeScore,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderFourScore != null">
+            #{leaderFourScore,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderThreeStartTime != null">
+            #{leaderThreeStartTime,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderThreeEndTime != null">
+            #{leaderThreeEndTime,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderFourStartTime != null">
+            #{leaderFourStartTime,jdbcType=VARCHAR},
+        </if>
+        <if test="leaderFourEndTime != null">
+            #{leaderFourEndTime,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResHospSupervSubjectExample" resultType="java.lang.Integer" >
@@ -546,6 +628,36 @@
       <if test="record.reviewConfig != null" >
         REVIEW_CONFIG = #{record.reviewConfig,jdbcType=VARCHAR},
       </if>
+        <if test="record.leaderThreeName != null">
+            LEADER_THREE_NAME = #{record.leaderThreeName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderThreeFlow != null">
+            LEADER_THREE_FLOW = #{record.leaderThreeFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderFourName != null">
+            LEADER_FOUR_NAME = #{record.leaderFourName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderFourFlow != null">
+            LEADER_FOUR_FLOW = #{record.leaderFourFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderThreeScore != null">
+            LEADER_THREE_SCORE = #{record.leaderThreeScore,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderFourScore != null">
+            LEADER_FOUR_SCORE = #{record.leaderFourScore,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderThreeStartTime != null">
+            LEADER_THREE_START_TIME = #{record.leaderThreeStartTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderThreeEndTime != null">
+            LEADER_THREE_END_TIME = #{record.leaderThreeEndTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderFourStartTime != null">
+            LEADER_FOUR_START_TIME = #{record.leaderFourStartTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.leaderFourEndTime != null">
+            LEADER_FOUR_END_TIME = #{record.leaderFourEndTime,jdbcType=VARCHAR},
+        </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -593,7 +705,17 @@
       ACTIVITY_START_TIME = #{record.activityStartTime,jdbcType=VARCHAR},
       ACTIVITY_END_TIME = #{record.activityEndTime,jdbcType=VARCHAR},
       MATCHING = #{record.matching,jdbcType=VARCHAR},
-      REVIEW_CONFIG = #{record.reviewConfig,jdbcType=VARCHAR}
+      REVIEW_CONFIG = #{record.reviewConfig,jdbcType=VARCHAR},
+      LEADER_THREE_NAME = #{record.leaderThreeName,jdbcType=VARCHAR},
+      LEADER_THREE_FLOW = #{record.leaderThreeFlow,jdbcType=VARCHAR},
+      LEADER_FOUR_NAME = #{record.leaderFourName,jdbcType=VARCHAR},
+      LEADER_FOUR_FLOW = #{record.leaderFourFlow,jdbcType=VARCHAR},
+      LEADER_THREE_SCORE = #{record.leaderThreeScore,jdbcType=VARCHAR},
+      LEADER_FOUR_SCORE = #{record.leaderFourScore,jdbcType=VARCHAR},
+      LEADER_THREE_START_TIME = #{record.leaderThreeStartTime,jdbcType=VARCHAR},
+      LEADER_THREE_END_TIME = #{record.leaderThreeEndTime,jdbcType=VARCHAR},
+      LEADER_FOUR_START_TIME = #{record.leaderFourStartTime,jdbcType=VARCHAR},
+      LEADER_FOUR_END_TIME = #{record.leaderFourEndTime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

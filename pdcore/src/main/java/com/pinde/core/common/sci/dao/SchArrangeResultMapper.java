@@ -30,5 +30,18 @@ public interface SchArrangeResultMapper {
 
     int updateByPrimaryKey(SchArrangeResult record);
 
+    int updateAfterPbRequiest(@Param("resultFlow") String resultFlow);
+
+    int updateAfterPbGroup(@Param("resultFlow") String resultFlow);
+
+    Double schMon(@Param("doctorFlow") String doctorFlow,
+                  @Param("rotationFlow") String rotationFlow,
+                  @Param("standDeptId") String standDeptId,
+                  @Param("groupFlow") String groupFlow);
+
+    SchArrangeResult infoByDeptFlowSchMon(@Param("schDeptFlow") String schDeptFlow,
+                                          @Param("schStartDate") String schStartDate,
+                                          @Param("schEndDate") String schEndDate,
+                                          @Param("doctorFlow") String doctorFlow);
     List<SchArrangeResult> searchArrangeResultByDateAndOrgByMapNew(Map<String, Object> map);
 }

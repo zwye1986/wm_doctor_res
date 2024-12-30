@@ -1,15 +1,13 @@
 package com.pinde.sci.ctrl.recruit;
 
+import com.pinde.core.common.enums.pub.UserSexEnum;
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.recruit.IRecruitCfgInfoBiz;
-import com.pinde.sci.biz.recruit.IRecruitInfoBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.enums.pub.UserSexEnum;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +23,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/recruit/user")
 public class RecruitUserInfoController extends GeneralController {
-
-    @Autowired
-    private IRecruitCfgInfoBiz recruitCfgInfoBiz;
-
-    @Autowired
-    private IRecruitInfoBiz recruitInfoBiz;
 
     @Autowired
     private IUserBiz userBiz;

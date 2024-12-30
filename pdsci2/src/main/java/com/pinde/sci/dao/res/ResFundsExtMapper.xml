@@ -3,7 +3,8 @@
 <mapper namespace="com.pinde.sci.dao.res.ResFundsExtMapper" >
 
 
-    <select id="resBaseFundList"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResBaseFundDetailMapper.BaseResultMap">
+    <select id="resBaseFundList" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResBaseFundDetailMapper.BaseResultMap">
       SELECT *
         FROM res_base_fund_detail rbfd
         WHERE  rbfd.RECORD_STATUS = 'Y'
@@ -29,7 +30,8 @@
         )
     </select>
 
-    <select id="resResSyntheticalFundDetailList"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResSyntheticalFundDetailMapper.BaseResultMap">
+    <select id="resResSyntheticalFundDetailList" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResSyntheticalFundDetailMapper.BaseResultMap">
       SELECT *
         FROM res_synthetical_fund_detail rbfd
         WHERE  rbfd.RECORD_STATUS = 'Y'
@@ -62,11 +64,12 @@
         ORDER BY ORDINAL, RECORD_STATUS DESC, ORG_FLOW
     </select>
 
-    <select id="queryFundDetaiList" resultMap="com.pinde.sci.dao.base.ResProvinceFundDetailMapper.BaseResultMap" >
+    <select id="queryFundDetaiList" resultMap="com.pinde.core.common.sci.dao.ResProvinceFundDetailMapper.BaseResultMap">
         select MAIN_FLOW from RES_PROVINCE_FUND_DETAIL where RECORD_STATUS = 'Y'  GROUP BY MAIN_FLOW
     </select>
 
-    <select id="searchResProvinceFundDetailMoney"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResProvinceFundDetailMapper.BaseResultMap" >
+    <select id="searchResProvinceFundDetailMoney" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResProvinceFundDetailMapper.BaseResultMap">
         select *
         from RES_PROVINCE_FUND_DETAIL
         where RECORD_STATUS = 'Y'

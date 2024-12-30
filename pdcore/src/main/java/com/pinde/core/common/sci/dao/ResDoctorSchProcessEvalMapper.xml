@@ -24,7 +24,8 @@
     <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
     <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+               type="com.pinde.core.model.ResDoctorSchProcessEvalWithBLOBs">
     <result column="FORM_CFG" jdbcType="CLOB" property="formCfg" />
     <result column="EVAL_RESULT" jdbcType="CLOB" property="evalResult" />
   </resultMap>

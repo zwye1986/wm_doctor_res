@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jszy.JszyResBaseExtMapper">
 
-	<resultMap id="resBaseExtMap" type="com.pinde.sci.model.jszy.JszyResBaseExt" extends="com.pinde.sci.dao.base.ResBaseMapper.BaseResultMap" >
+    <resultMap id="resBaseExtMap" type="com.pinde.sci.model.jszy.JszyResBaseExt"
+               extends="com.pinde.core.common.sci.dao.ResBaseMapper.BaseResultMap">
         <association property="sysOrg" column="sysOrgFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap"/>
 	</resultMap>

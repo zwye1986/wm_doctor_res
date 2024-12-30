@@ -1704,7 +1704,7 @@
     <resultMap id="resultExtMap" type="com.pinde.core.model.SchArrangeResultExt"
                extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         <association property="process" javaType="com.pinde.core.model.ResDoctorSchProcess"
-                     resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         </association>
     </resultMap>
     <select id="getResults" resultMap="resultExtMap">

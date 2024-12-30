@@ -8,6 +8,7 @@
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
         <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR"/>
         <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
         <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
         <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
@@ -22,6 +23,7 @@
                 DR.ORG_NAME,
                 DR.ORG_FLOW,
                 SU.USER_NAME,
+        SU.ID_NO,
                 DR.SPE_ID,
                 DR.SPE_NAME,
                 DR.CAT_SPE_ID,
@@ -64,6 +66,7 @@
             and rd.DOCTOR_TYPE_ID in
             <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
+        AND dr.audit_status_id = 'Passed'
         order by
             DR.CAT_SPE_ID,
             DR.SPE_ID,

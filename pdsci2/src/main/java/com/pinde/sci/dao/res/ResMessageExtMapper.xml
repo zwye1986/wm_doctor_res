@@ -28,7 +28,8 @@
     </select>
 
 
-    <select id="findMessageByOrgFlow" parameterType="string" resultMap="com.pinde.sci.dao.base.ResMessageMapper.ResultMapWithBLOBs">
+    <select id="findMessageByOrgFlow" parameterType="string"
+            resultMap="com.pinde.core.common.sci.dao.ResMessageMapper.ResultMapWithBLOBs">
        	SELECT MESSAGE_FLOW, MESSAGE_TITLE, ORG_FLOW, ORG_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
     MODIFY_TIME, MODIFY_USER_FLOW, MESSAGE_CONTENT
         FROM RES_MESSAGE

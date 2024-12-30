@@ -4,12 +4,11 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.CertificateTypeEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.common.sci.dao.SysLogMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.biz.login.ILoginBiz;
-import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
@@ -19,7 +18,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.SessionData;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.dao.base.SysLogMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,10 +38,6 @@ public class InxRecruitController extends GeneralController{
 	private IRoleBiz roleBiz;
 	@Autowired
 	private IUserBiz userBiz;
-	@Autowired
-	private IResDoctorBiz resDoctorBiz;
-	@Autowired
-	private INoticeBiz noticeBiz;
 	@Autowired
 	private SysLogMapper logMapper;
 	@Autowired

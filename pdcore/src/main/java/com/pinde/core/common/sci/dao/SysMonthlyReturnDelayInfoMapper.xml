@@ -45,6 +45,8 @@
     <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+      <result column="ID_NO" property="idNo" jdbcType="VARCHAR"/>
+      <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -111,9 +113,11 @@
     GRADUATION_YEAR, TYPE_ID, TYPE_NAME, POLICY_ID, POLICY_NAME, POLICY, REASON_ID, REASON_NAME, 
     REASON, DISPOSITON, REMARK, DELAYREASON, POLICY_TIME, POLICY_USER_FLOW, POLICY_USER_NAME, 
     AUDIT_TIME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, AUDIT_USER_NAME, 
-    AUDIT_OPINION, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+    AUDIT_OPINION, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+    ID_NO, USER_PHONE
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -157,8 +161,8 @@
       POLICY_USER_FLOW, POLICY_USER_NAME, AUDIT_TIME, 
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, 
       AUDIT_USER_NAME, AUDIT_OPINION, RECORD_STATUS, 
-      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
-      MODIFY_USER_FLOW)
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+                                                 MODIFY_USER_FLOW, ID_NO, USER_PHONE)
     values (#{smrdiFlow,jdbcType=VARCHAR}, #{dateMonth,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
       #{doctorName,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
       #{orgName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, 
@@ -172,8 +176,8 @@
       #{policyUserFlow,jdbcType=VARCHAR}, #{policyUserName,jdbcType=VARCHAR}, #{auditTime,jdbcType=VARCHAR}, 
       #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{auditUserFlow,jdbcType=VARCHAR}, 
       #{auditUserName,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
-      #{modifyUserFlow,jdbcType=VARCHAR})
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR},
+            #{modifyUserFlow,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfo" >
       insert into SYS_MONTHLY_RETURN_DELAY_INFO
@@ -307,6 +311,12 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
       </if>
+        <if test="idNo != null">
+            ID_NO,
+        </if>
+        <if test="userPhone != null">
+            USER_PHONE,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="smrdiFlow != null" >
@@ -438,6 +448,12 @@
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="idNo != null">
+            #{idNo,jdbcType=VARCHAR},
+        </if>
+        <if test="userPhone != null">
+            #{userPhone,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyReturnDelayInfoExample" resultType="java.lang.Integer" >
@@ -578,6 +594,12 @@
       <if test="record.modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="record.idNo != null">
+            ID_NO = #{record.idNo,jdbcType=VARCHAR},
+        </if>
+        <if test="record.userPhone != null">
+            USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -627,7 +649,9 @@
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      USER_PHONE = #{record.userPhone,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -761,6 +785,12 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="idNo != null">
+            ID_NO = #{idNo,jdbcType=VARCHAR},
+        </if>
+        <if test="userPhone != null">
+            USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+        </if>
     </set>
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
@@ -807,7 +837,9 @@
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+        ID_NO            = #{idNo,jdbcType=VARCHAR},
+        USER_PHONE       = #{userPhone,jdbcType=VARCHAR}
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

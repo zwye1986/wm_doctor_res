@@ -31,7 +31,10 @@
     <result column="JOIN_NUM" property="joinNum" jdbcType="DECIMAL" />
     <result column="ADD_ROLE_FLOW" property="addRoleFlow" jdbcType="VARCHAR" />
     <result column="AUDIT_ROLE_FLOW" property="auditRoleFlow" jdbcType="VARCHAR" />
+      <result column="ROLE_ID" property="roleId" jdbcType="VARCHAR"/>
     <result column="LIMIT_NUM" property="limitNum" jdbcType="VARCHAR" />
+      <result column="REASON_FOR_DISAGREEMENT" property="reasonForDisagreement" jdbcType="VARCHAR"/>
+      <result column="IS_LOOK" property="isLook" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.TeachingActivityInfo" extends="BaseResultMap" >
     <result column="IMAGE_URL" property="imageUrl" jdbcType="CLOB" />
@@ -99,7 +102,8 @@
     ACTIVITY_TYPE_NAME, START_TIME, END_TIME, ACTIVITY_ADDRESS, ACTIVITY_REMARK, FILE_FLOW, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_EFFECTIVE, 
     REALITY_SPEAKER, ACTIVITY_STATUS, SUBMIT_ROLE, AUDIT_ROLE, OPINION, MANUAL_END_STATUS, 
-    MANUAL_END_TIEM, JOIN_NUM, ADD_ROLE_FLOW, AUDIT_ROLE_FLOW, LIMIT_NUM
+    MANUAL_END_TIEM, JOIN_NUM, ADD_ROLE_FLOW, AUDIT_ROLE_FLOW, ROLE_ID, LIMIT_NUM, REASON_FOR_DISAGREEMENT, 
+    IS_LOOK
   </sql>
   <sql id="Blob_Column_List" >
     IMAGE_URL
@@ -161,8 +165,9 @@
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
       IS_EFFECTIVE, REALITY_SPEAKER, ACTIVITY_STATUS, 
       SUBMIT_ROLE, AUDIT_ROLE, OPINION, 
-      MANUAL_END_STATUS, MANUAL_END_TIEM, JOIN_NUM, 
-      ADD_ROLE_FLOW, AUDIT_ROLE_FLOW, LIMIT_NUM, 
+      MANUAL_END_STATUS, MANUAL_END_TIEM, JOIN_NUM,
+                                          ADD_ROLE_FLOW, AUDIT_ROLE_FLOW, ROLE_ID,
+                                          LIMIT_NUM, REASON_FOR_DISAGREEMENT, IS_LOOK,
       IMAGE_URL)
     values (#{activityFlow,jdbcType=VARCHAR}, #{activityName,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, 
       #{orgFlow,jdbcType=VARCHAR}, #{speakerFlow,jdbcType=VARCHAR}, #{speakerPhone,jdbcType=VARCHAR}, 
@@ -172,8 +177,9 @@
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
       #{isEffective,jdbcType=VARCHAR}, #{realitySpeaker,jdbcType=VARCHAR}, #{activityStatus,jdbcType=VARCHAR}, 
       #{submitRole,jdbcType=VARCHAR}, #{auditRole,jdbcType=VARCHAR}, #{opinion,jdbcType=VARCHAR}, 
-      #{manualEndStatus,jdbcType=VARCHAR}, #{manualEndTiem,jdbcType=VARCHAR}, #{joinNum,jdbcType=DECIMAL}, 
-      #{addRoleFlow,jdbcType=VARCHAR}, #{auditRoleFlow,jdbcType=VARCHAR}, #{limitNum,jdbcType=VARCHAR}, 
+      #{manualEndStatus,jdbcType=VARCHAR}, #{manualEndTiem,jdbcType=VARCHAR}, #{joinNum,jdbcType=DECIMAL},
+            #{addRoleFlow,jdbcType=VARCHAR}, #{auditRoleFlow,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR},
+            #{limitNum,jdbcType=VARCHAR}, #{reasonForDisagreement,jdbcType=VARCHAR}, #{isLook,jdbcType=VARCHAR},
       #{imageUrl,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.TeachingActivityInfo" >
@@ -266,8 +272,17 @@
       <if test="auditRoleFlow != null" >
         AUDIT_ROLE_FLOW,
       </if>
+        <if test="roleId != null">
+            ROLE_ID,
+      </if>
       <if test="limitNum != null" >
         LIMIT_NUM,
+      </if>
+        <if test="reasonForDisagreement != null">
+            REASON_FOR_DISAGREEMENT,
+        </if>
+        <if test="isLook != null">
+            IS_LOOK,
       </if>
       <if test="imageUrl != null" >
         IMAGE_URL,
@@ -361,16 +376,26 @@
       <if test="auditRoleFlow != null" >
         #{auditRoleFlow,jdbcType=VARCHAR},
       </if>
+        <if test="roleId != null">
+            #{roleId,jdbcType=VARCHAR},
+        </if>
       <if test="limitNum != null" >
         #{limitNum,jdbcType=VARCHAR},
       </if>
+        <if test="reasonForDisagreement != null">
+            #{reasonForDisagreement,jdbcType=VARCHAR},
+        </if>
+        <if test="isLook != null">
+            #{isLook,jdbcType=VARCHAR},
+        </if>
       <if test="imageUrl != null" >
         #{imageUrl,jdbcType=CLOB},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivityInfoExample" resultType="java.lang.Integer" >
-      select count(*) from TEACHING_ACTIVITY_INFO
+    <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivityInfoExample"
+            resultType="java.lang.Integer">
+        select count(*) from TEACHING_ACTIVITY_INFO
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -465,8 +490,17 @@
       <if test="record.auditRoleFlow != null" >
         AUDIT_ROLE_FLOW = #{record.auditRoleFlow,jdbcType=VARCHAR},
       </if>
+        <if test="record.roleId != null">
+            ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      </if>
       <if test="record.limitNum != null" >
         LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR},
+      </if>
+        <if test="record.reasonForDisagreement != null">
+            REASON_FOR_DISAGREEMENT = #{record.reasonForDisagreement,jdbcType=VARCHAR},
+        </if>
+        <if test="record.isLook != null">
+            IS_LOOK = #{record.isLook,jdbcType=VARCHAR},
       </if>
       <if test="record.imageUrl != null" >
         IMAGE_URL = #{record.imageUrl,jdbcType=CLOB},
@@ -507,7 +541,10 @@
       JOIN_NUM = #{record.joinNum,jdbcType=DECIMAL},
       ADD_ROLE_FLOW = #{record.addRoleFlow,jdbcType=VARCHAR},
       AUDIT_ROLE_FLOW = #{record.auditRoleFlow,jdbcType=VARCHAR},
+      ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
       LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR},
+      REASON_FOR_DISAGREEMENT = #{record.reasonForDisagreement,jdbcType=VARCHAR},
+      IS_LOOK = #{record.isLook,jdbcType=VARCHAR},
       IMAGE_URL = #{record.imageUrl,jdbcType=CLOB}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -544,7 +581,10 @@
       JOIN_NUM = #{record.joinNum,jdbcType=DECIMAL},
       ADD_ROLE_FLOW = #{record.addRoleFlow,jdbcType=VARCHAR},
       AUDIT_ROLE_FLOW = #{record.auditRoleFlow,jdbcType=VARCHAR},
-      LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR}
+      ROLE_ID = #{record.roleId,jdbcType=VARCHAR},
+      LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR},
+      REASON_FOR_DISAGREEMENT = #{record.reasonForDisagreement,jdbcType=VARCHAR},
+      IS_LOOK = #{record.isLook,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -636,9 +676,18 @@
       <if test="auditRoleFlow != null" >
         AUDIT_ROLE_FLOW = #{auditRoleFlow,jdbcType=VARCHAR},
       </if>
+        <if test="roleId != null">
+            ROLE_ID = #{roleId,jdbcType=VARCHAR},
+        </if>
       <if test="limitNum != null" >
         LIMIT_NUM = #{limitNum,jdbcType=VARCHAR},
       </if>
+        <if test="reasonForDisagreement != null">
+            REASON_FOR_DISAGREEMENT = #{reasonForDisagreement,jdbcType=VARCHAR},
+        </if>
+        <if test="isLook != null">
+            IS_LOOK = #{isLook,jdbcType=VARCHAR},
+        </if>
       <if test="imageUrl != null" >
         IMAGE_URL = #{imageUrl,jdbcType=CLOB},
       </if>
@@ -675,7 +724,10 @@
       JOIN_NUM = #{joinNum,jdbcType=DECIMAL},
       ADD_ROLE_FLOW = #{addRoleFlow,jdbcType=VARCHAR},
       AUDIT_ROLE_FLOW = #{auditRoleFlow,jdbcType=VARCHAR},
+        ROLE_ID                 = #{roleId,jdbcType=VARCHAR},
       LIMIT_NUM = #{limitNum,jdbcType=VARCHAR},
+        REASON_FOR_DISAGREEMENT = #{reasonForDisagreement,jdbcType=VARCHAR},
+        IS_LOOK                 = #{isLook,jdbcType=VARCHAR},
       IMAGE_URL = #{imageUrl,jdbcType=CLOB}
     where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
   </update>
@@ -709,7 +761,10 @@
       JOIN_NUM = #{joinNum,jdbcType=DECIMAL},
       ADD_ROLE_FLOW = #{addRoleFlow,jdbcType=VARCHAR},
       AUDIT_ROLE_FLOW = #{auditRoleFlow,jdbcType=VARCHAR},
-      LIMIT_NUM = #{limitNum,jdbcType=VARCHAR}
+        ROLE_ID                 = #{roleId,jdbcType=VARCHAR},
+        LIMIT_NUM               = #{limitNum,jdbcType=VARCHAR},
+        REASON_FOR_DISAGREEMENT = #{reasonForDisagreement,jdbcType=VARCHAR},
+        IS_LOOK                 = #{isLook,jdbcType=VARCHAR}
     where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

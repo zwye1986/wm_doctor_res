@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.sci.dao.ResTestConfigMapper;
 import com.pinde.core.model.ResTestConfig;
 import com.pinde.core.model.ResTestConfigExample;
 import com.pinde.core.util.DateUtil;
@@ -7,7 +8,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResTestConfigBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResTestConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

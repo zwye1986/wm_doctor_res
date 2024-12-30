@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResInprocessInfoMapper;
+import com.pinde.core.common.sci.dao.ResInprocessInfoMemberMapper;
 import com.pinde.core.model.ResInprocessInfo;
 import com.pinde.core.model.ResInprocessInfoExample;
 import com.pinde.core.model.ResInprocessInfoMember;
@@ -8,11 +10,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResInprocessInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResDiscipleNoteInfoMapper;
-import com.pinde.sci.dao.base.ResInprocessInfoMapper;
-import com.pinde.sci.dao.base.ResInprocessInfoMemberMapper;
-import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
-import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResInprocessInfoMemberExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +23,6 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class ResInprocessInfoBizImpl implements IResInprocessInfoBiz {
-    @Autowired
-    private ResStudentDiscipleTeacherMapper teacherMapper;
-    @Autowired
-    private ResDiscipleNoteInfoMapper noteInfoMapper;
-    @Autowired
-    private DiscipleDoctorExtMapper doctorExtMapper;
     @Autowired
     private ResInprocessInfoMapper inprocessInfoMapper;
     @Autowired

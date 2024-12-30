@@ -1,5 +1,8 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.sci.dao.SchExternalDeptMapper;
+import com.pinde.core.common.sci.dao.SchRotationDeptMapper;
+import com.pinde.core.common.sci.dao.SchRotationMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.SchExternalDeptExample.Criteria;
 import com.pinde.core.util.PkUtil;
@@ -11,9 +14,6 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.SchExternalDeptMapper;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.dao.base.SchRotationMapper;
 import com.pinde.sci.dao.sch.SchExternalDeptExtMapper;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;

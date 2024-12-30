@@ -1,11 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.PersonnelCollaborativeBaseMapper;
+import com.pinde.core.common.sci.dao.PersonnelStatisticsMapper;
+import com.pinde.core.common.sci.dao.ResJointOrgMapper;
 import com.pinde.core.model.PersonnelStatisticsByName;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.sci.biz.res.ResPersonnelStatisticsBiz;
-import com.pinde.core.common.sci.dao.PersonnelCollaborativeBaseMapper;
-import com.pinde.core.common.sci.dao.PersonnelStatisticsMapper;
-import com.pinde.sci.dao.base.ResJointOrgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

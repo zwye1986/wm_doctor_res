@@ -1,6 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.sci.dao.ResBaseSpeDeptDataMapper;
+import com.pinde.core.common.sci.dao.ResBaseSpeDeptInfoMapper;
+import com.pinde.core.common.sci.dao.ResBaseSpeDeptMapper;
+import com.pinde.core.common.sci.dao.ResTeacherTrainingMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
@@ -14,10 +18,6 @@ import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResBaseSpeDeptDataMapper;
-import com.pinde.sci.dao.base.ResBaseSpeDeptInfoMapper;
-import com.pinde.sci.dao.base.ResBaseSpeDeptMapper;
-import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.sch.ResBaseSpeDeptDataExtMapper;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptExtForm;
 import com.pinde.sci.form.jsres.BaseSpeDept.BaseSpeDeptForm;

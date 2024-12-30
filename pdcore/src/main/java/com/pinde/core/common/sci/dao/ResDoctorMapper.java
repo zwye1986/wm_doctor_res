@@ -5,6 +5,7 @@ import com.pinde.core.model.ResDoctorExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ResDoctorMapper {
     int countByExample(ResDoctorExample example);
@@ -18,6 +19,8 @@ public interface ResDoctorMapper {
     int insertSelective(ResDoctor record);
 
     List<ResDoctor> selectByExample(ResDoctorExample example);
+
+    List<Map<String, Object>> readDoctorCountBySpe(ResDoctor resDoctor);
 
     ResDoctor selectByPrimaryKey(String doctorFlow);
 

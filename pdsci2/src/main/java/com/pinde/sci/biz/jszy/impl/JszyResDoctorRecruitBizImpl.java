@@ -3,23 +3,19 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.enums.JsResTrainYearEnum;
 import com.pinde.core.common.enums.JszyBaseStatusEnum;
-import com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper;
-import com.pinde.core.common.sci.dao.JsresRecruitInfoMapper;
+import com.pinde.core.common.sci.dao.ResDoctorRecruitMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jszy.IJszyResDoctorRecruitBiz;
 import com.pinde.sci.biz.pub.IMsgBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.sch.ISchRotationBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper;
-import com.pinde.sci.dao.jszy.JszyResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
 import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +32,6 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	private IResDoctorBiz resDoctorBiz;
 	@Autowired
 	private ResDoctorRecruitMapper doctorRecruitMapper;
-    @Autowired
-    private JsresRecruitDocInfoMapper jsResDoctorRecruitMapper;
-    @Autowired
-    private JsresRecruitInfoMapper recruitInfoMapper;
     @Autowired
 	private JszyResDoctorRecruitExtMapper jszyResDoctorRecruitExtMapper;
 	@Autowired

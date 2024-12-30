@@ -1,6 +1,9 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.JsresExamSignupLogMapper;
 import com.pinde.core.common.sci.dao.JsresExamSignupMapper;
+import com.pinde.core.common.sci.dao.ResDoctorRecruitMapper;
+import com.pinde.core.common.sci.dao.ResScoreMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,9 +12,6 @@ import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.core.common.sci.dao.JsresExamSignupLogMapper;
-import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
-import com.pinde.sci.dao.base.ResScoreMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

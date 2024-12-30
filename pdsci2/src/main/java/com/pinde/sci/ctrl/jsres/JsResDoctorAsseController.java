@@ -18,20 +18,7 @@ import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResDoctorReduction;
-import com.pinde.core.model.ResJointOrg;
-import com.pinde.core.model.ResRec;
-import com.pinde.core.model.ResScore;
-import com.pinde.core.model.ResTestConfig;
-import com.pinde.core.model.SchArrangeResult;
-import com.pinde.core.model.SchDoctorDept;
-import com.pinde.core.model.SchRotation;
-import com.pinde.core.model.SchRotationDept;
-import com.pinde.core.model.SchRotationDeptAfterWithBLOBs;
-import com.pinde.core.model.SchRotationGroup;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -80,15 +67,7 @@ public class JsResDoctorAsseController extends GeneralController {
     @Autowired
     private ISchRotationGroupBiz groupBiz;
     @Autowired
-    private SchRotationDeptMapper rotationDeptMapper;
-    @Autowired
-    private IResDoctorProcessBiz processBiz;
-    @Autowired
     private IResJointOrgBiz jointOrgBiz;
-    @Autowired
-    private ISchRotationDeptBiz schRotationDeptBiz;
-    @Autowired
-    private IJsResRecBiz jsResRecBiz;
     @Autowired
     private ISchDoctorDeptBiz doctorDeptBiz;
     @Autowired

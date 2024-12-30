@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResRecruitCfgMapper;
 import com.pinde.core.model.ResRecruitCfg;
 import com.pinde.core.model.ResRecruitCfgExample;
 import com.pinde.core.util.DateUtil;
@@ -8,7 +9,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IRecruitCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResRecruitCfgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

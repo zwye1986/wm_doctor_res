@@ -25,6 +25,7 @@
     <result column="XT_LOCAL_AUDIT_TIME" property="xtLocalAuditTime" jdbcType="VARCHAR" />
     <result column="XT_LOCAL_AUDIT_USER_FLOW" property="xtLocalAuditUserFlow" jdbcType="VARCHAR" />
     <result column="REQUIRE_XT_ADUIT" property="requireXtAduit" jdbcType="VARCHAR" />
+      <result column="PROVE_FILE_PATH" property="proveFilePath" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -89,7 +90,7 @@
     AUDIT_STATUS_ID, AUDIT_STATUS_NAME, LOCAL_AUDIT_OPINION, LOCAL_AUDIT_TIME, LOCAL_AUDIT_USER_FLOW, 
     GLOBAL_AUDIT_OPINION, GLOBAL_AUDIT_TIME, GLOBAL_AUDIT_USER_FLOW, RECORD_STATUS, CREATE_TIME, 
     CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, XT_LOCAL_AUDIT_OPINION, XT_LOCAL_AUDIT_TIME, 
-    XT_LOCAL_AUDIT_USER_FLOW, REQUIRE_XT_ADUIT
+    XT_LOCAL_AUDIT_USER_FLOW, REQUIRE_XT_ADUIT, PROVE_FILE_PATH
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResDoctorReductionExample" >
     select
@@ -128,16 +129,17 @@
       LOCAL_AUDIT_TIME, LOCAL_AUDIT_USER_FLOW, GLOBAL_AUDIT_OPINION, 
       GLOBAL_AUDIT_TIME, GLOBAL_AUDIT_USER_FLOW, RECORD_STATUS, 
       CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
-      MODIFY_USER_FLOW, XT_LOCAL_AUDIT_OPINION, XT_LOCAL_AUDIT_TIME, 
-      XT_LOCAL_AUDIT_USER_FLOW, REQUIRE_XT_ADUIT)
+      MODIFY_USER_FLOW, XT_LOCAL_AUDIT_OPINION, XT_LOCAL_AUDIT_TIME,
+                                        XT_LOCAL_AUDIT_USER_FLOW, REQUIRE_XT_ADUIT, PROVE_FILE_PATH)
     values (#{recordFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{recruitFlow,jdbcType=VARCHAR}, 
       #{defaultTrainYear,jdbcType=VARCHAR}, #{reduceYear,jdbcType=VARCHAR}, #{afterReduceTrainYear,jdbcType=VARCHAR}, 
       #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{localAuditOpinion,jdbcType=VARCHAR}, 
       #{localAuditTime,jdbcType=VARCHAR}, #{localAuditUserFlow,jdbcType=VARCHAR}, #{globalAuditOpinion,jdbcType=VARCHAR}, 
       #{globalAuditTime,jdbcType=VARCHAR}, #{globalAuditUserFlow,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
-      #{modifyUserFlow,jdbcType=VARCHAR}, #{xtLocalAuditOpinion,jdbcType=VARCHAR}, #{xtLocalAuditTime,jdbcType=VARCHAR}, 
-      #{xtLocalAuditUserFlow,jdbcType=VARCHAR}, #{requireXtAduit,jdbcType=VARCHAR})
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{xtLocalAuditOpinion,jdbcType=VARCHAR}, #{xtLocalAuditTime,jdbcType=VARCHAR},
+            #{xtLocalAuditUserFlow,jdbcType=VARCHAR}, #{requireXtAduit,jdbcType=VARCHAR},
+            #{proveFilePath,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorReduction" >
       insert into RES_DOCTOR_REDUCTION
@@ -211,6 +213,9 @@
       <if test="requireXtAduit != null" >
         REQUIRE_XT_ADUIT,
       </if>
+        <if test="proveFilePath != null">
+            PROVE_FILE_PATH,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -282,9 +287,13 @@
       <if test="requireXtAduit != null" >
         #{requireXtAduit,jdbcType=VARCHAR},
       </if>
+        <if test="proveFilePath != null">
+            #{proveFilePath,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorReductionExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorReductionExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_DOCTOR_REDUCTION
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -362,6 +371,9 @@
       <if test="record.requireXtAduit != null" >
         REQUIRE_XT_ADUIT = #{record.requireXtAduit,jdbcType=VARCHAR},
       </if>
+        <if test="record.proveFilePath != null">
+            PROVE_FILE_PATH = #{record.proveFilePath,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -391,7 +403,8 @@
       XT_LOCAL_AUDIT_OPINION = #{record.xtLocalAuditOpinion,jdbcType=VARCHAR},
       XT_LOCAL_AUDIT_TIME = #{record.xtLocalAuditTime,jdbcType=VARCHAR},
       XT_LOCAL_AUDIT_USER_FLOW = #{record.xtLocalAuditUserFlow,jdbcType=VARCHAR},
-      REQUIRE_XT_ADUIT = #{record.requireXtAduit,jdbcType=VARCHAR}
+      REQUIRE_XT_ADUIT = #{record.requireXtAduit,jdbcType=VARCHAR},
+      PROVE_FILE_PATH = #{record.proveFilePath,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -465,6 +478,9 @@
       <if test="requireXtAduit != null" >
         REQUIRE_XT_ADUIT = #{requireXtAduit,jdbcType=VARCHAR},
       </if>
+        <if test="proveFilePath != null">
+            PROVE_FILE_PATH = #{proveFilePath,jdbcType=VARCHAR},
+        </if>
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
@@ -491,7 +507,8 @@
       XT_LOCAL_AUDIT_OPINION = #{xtLocalAuditOpinion,jdbcType=VARCHAR},
       XT_LOCAL_AUDIT_TIME = #{xtLocalAuditTime,jdbcType=VARCHAR},
       XT_LOCAL_AUDIT_USER_FLOW = #{xtLocalAuditUserFlow,jdbcType=VARCHAR},
-      REQUIRE_XT_ADUIT = #{requireXtAduit,jdbcType=VARCHAR}
+        REQUIRE_XT_ADUIT = #{requireXtAduit,jdbcType=VARCHAR},
+        PROVE_FILE_PATH  = #{proveFilePath,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -19,6 +19,8 @@ public interface SchDoctorDeptMapper {
 
     List<SchDoctorDept> selectByExample(SchDoctorDeptExample example);
 
+    List<SchDoctorDept> selectListByRotationFLowListList(@Param("doctorFlowList") List<String> doctorFlowList, @Param("rotationFlowListList") List<List<String>> rotationFlowListList);
+
     SchDoctorDept selectByPrimaryKey(String recordFlow);
 
     int updateByExampleSelective(@Param("record") SchDoctorDept record, @Param("example") SchDoctorDeptExample example);

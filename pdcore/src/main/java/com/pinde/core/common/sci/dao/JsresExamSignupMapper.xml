@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.core.common.sci.dao.JsresExamSignupMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresExamSignup"
-               extends="com.pinde.sci.dao.base.PubUserResumeMapper.ResultMapWithBLOBs">
+               extends="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs">
     <id column="SIGNUP_FLOW" property="signupFlow" jdbcType="VARCHAR" />
     <result column="SIGNUP_YEAR" property="signupYear" jdbcType="VARCHAR" />
     <result column="SIGNUP_TYPE_ID" property="signupTypeId" jdbcType="VARCHAR" />

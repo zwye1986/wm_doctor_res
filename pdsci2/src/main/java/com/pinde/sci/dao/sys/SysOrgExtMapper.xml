@@ -636,7 +636,7 @@
 	</select>
 
 
-	<select id="searchByCountOrg"  resultMap="com.pinde.sci.dao.base.ResOrgSpeMapper.BaseResultMap">
+    <select id="searchByCountOrg" resultMap="com.pinde.core.common.sci.dao.ResOrgSpeMapper.BaseResultMap">
 		SELECT R.ORG_FLOW, R.ORG_NAME, R.SPE_ID, R.SPE_NAME
         FROM RES_ORG_SPE R
 		LEFT JOIN SYS_ORG S

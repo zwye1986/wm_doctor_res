@@ -1,29 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.core.common.sci.dao.SchRotationGroupMapper">
-  <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationGroup">
-    <id column="GROUP_FLOW" jdbcType="VARCHAR" property="groupFlow" />
-    <result column="ROTATION_FLOW" jdbcType="VARCHAR" property="rotationFlow" />
-    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
-    <result column="DEPT_NUM" jdbcType="DECIMAL" property="deptNum" />
-    <result column="SCH_MONTH" jdbcType="VARCHAR" property="schMonth" />
-    <result column="GROUP_NOTE" jdbcType="VARCHAR" property="groupNote" />
-    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
-    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
-    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
-    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
-    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
-    <result column="ORG_FLOW" jdbcType="VARCHAR" property="orgFlow" />
-    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
-    <result column="SEL_TYPE_ID" jdbcType="VARCHAR" property="selTypeId" />
-    <result column="SEL_TYPE_NAME" jdbcType="VARCHAR" property="selTypeName" />
-    <result column="MAX_DEPT_NUM" jdbcType="DECIMAL" property="maxDeptNum" />
-    <result column="STANDARD_GROUP_FLOW" jdbcType="VARCHAR" property="standardGroupFlow" />
-    <result column="ORDINAL" jdbcType="DECIMAL" property="ordinal" />
-    <result column="IS_REQUIRED" jdbcType="VARCHAR" property="isRequired" />
-    <result column="SCH_STAGE_ID" jdbcType="VARCHAR" property="schStageId" />
-    <result column="SCH_STAGE_NAME" jdbcType="VARCHAR" property="schStageName" />
-    <result column="SESSION_NUMBER" jdbcType="VARCHAR" property="sessionNumber" />
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationGroup">
+        <id column="GROUP_FLOW" property="groupFlow" jdbcType="VARCHAR"/>
+        <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR"/>
+        <result column="GROUP_NAME" property="groupName" jdbcType="VARCHAR"/>
+        <result column="DEPT_NUM" property="deptNum" jdbcType="DECIMAL"/>
+        <result column="SCH_MONTH" property="schMonth" jdbcType="VARCHAR"/>
+        <result column="GROUP_NOTE" property="groupNote" jdbcType="VARCHAR"/>
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR"/>
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR"/>
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR"/>
+        <result column="STANDARD_GROUP_FLOW" property="standardGroupFlow" jdbcType="VARCHAR"/>
+        <result column="SEL_TYPE_ID" property="selTypeId" jdbcType="VARCHAR"/>
+        <result column="SEL_TYPE_NAME" property="selTypeName" jdbcType="VARCHAR"/>
+        <result column="MAX_DEPT_NUM" property="maxDeptNum" jdbcType="DECIMAL"/>
+        <result column="ORDINAL" property="ordinal" jdbcType="DECIMAL"/>
+        <result column="IS_REQUIRED" property="isRequired" jdbcType="VARCHAR"/>
+        <result column="SCH_STAGE_ID" property="schStageId" jdbcType="VARCHAR"/>
+        <result column="SCH_STAGE_NAME" property="schStageName" jdbcType="VARCHAR"/>
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR"/>
+        <result column="SCH_MAX_MONTH" property="schMaxMonth" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -86,8 +87,8 @@
   <sql id="Base_Column_List">
     GROUP_FLOW, ROTATION_FLOW, GROUP_NAME, DEPT_NUM, SCH_MONTH, GROUP_NOTE, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, ORG_NAME, 
-    SEL_TYPE_ID, SEL_TYPE_NAME, MAX_DEPT_NUM, STANDARD_GROUP_FLOW, ORDINAL, IS_REQUIRED, 
-    SCH_STAGE_ID, SCH_STAGE_NAME, SESSION_NUMBER
+    STANDARD_GROUP_FLOW, SEL_TYPE_ID, SEL_TYPE_NAME, MAX_DEPT_NUM, ORDINAL, IS_REQUIRED, 
+    SCH_STAGE_ID, SCH_STAGE_NAME, SESSION_NUMBER, SCH_MAX_MONTH
   </sql>
   <select id="selectByExample" parameterType="com.pinde.core.model.SchRotationGroupExample" resultMap="BaseResultMap">
     select
@@ -123,19 +124,19 @@
       insert into SCH_ROTATION_GROUP (GROUP_FLOW, ROTATION_FLOW, GROUP_NAME,
       DEPT_NUM, SCH_MONTH, GROUP_NOTE, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
-      MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW, 
-      ORG_NAME, SEL_TYPE_ID, SEL_TYPE_NAME, 
-      MAX_DEPT_NUM, STANDARD_GROUP_FLOW, ORDINAL, 
-      IS_REQUIRED, SCH_STAGE_ID, SCH_STAGE_NAME, 
-      SESSION_NUMBER)
+      MODIFY_TIME, MODIFY_USER_FLOW, ORG_FLOW,
+                                      ORG_NAME, STANDARD_GROUP_FLOW, SEL_TYPE_ID,
+                                      SEL_TYPE_NAME, MAX_DEPT_NUM, ORDINAL,
+      IS_REQUIRED, SCH_STAGE_ID, SCH_STAGE_NAME,
+                                      SESSION_NUMBER, SCH_MAX_MONTH)
     values (#{groupFlow,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, 
       #{deptNum,jdbcType=DECIMAL}, #{schMonth,jdbcType=VARCHAR}, #{groupNote,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
-      #{orgName,jdbcType=VARCHAR}, #{selTypeId,jdbcType=VARCHAR}, #{selTypeName,jdbcType=VARCHAR}, 
-      #{maxDeptNum,jdbcType=DECIMAL}, #{standardGroupFlow,jdbcType=VARCHAR}, #{ordinal,jdbcType=DECIMAL}, 
-      #{isRequired,jdbcType=VARCHAR}, #{schStageId,jdbcType=VARCHAR}, #{schStageName,jdbcType=VARCHAR}, 
-      #{sessionNumber,jdbcType=VARCHAR})
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR},
+            #{orgName,jdbcType=VARCHAR}, #{standardGroupFlow,jdbcType=VARCHAR}, #{selTypeId,jdbcType=VARCHAR},
+            #{selTypeName,jdbcType=VARCHAR}, #{maxDeptNum,jdbcType=DECIMAL}, #{ordinal,jdbcType=DECIMAL},
+      #{isRequired,jdbcType=VARCHAR}, #{schStageId,jdbcType=VARCHAR}, #{schStageName,jdbcType=VARCHAR},
+            #{sessionNumber,jdbcType=VARCHAR}, #{schMaxMonth,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SchRotationGroup">
       insert into SCH_ROTATION_GROUP
@@ -179,7 +180,10 @@
       <if test="orgName != null">
         ORG_NAME,
       </if>
-      <if test="selTypeId != null">
+        <if test="standardGroupFlow != null">
+            STANDARD_GROUP_FLOW,
+        </if>
+        <if test="selTypeId != null">
         SEL_TYPE_ID,
       </if>
       <if test="selTypeName != null">
@@ -187,9 +191,6 @@
       </if>
       <if test="maxDeptNum != null">
         MAX_DEPT_NUM,
-      </if>
-      <if test="standardGroupFlow != null">
-        STANDARD_GROUP_FLOW,
       </if>
       <if test="ordinal != null">
         ORDINAL,
@@ -205,6 +206,9 @@
       </if>
       <if test="sessionNumber != null">
         SESSION_NUMBER,
+      </if>
+        <if test="schMaxMonth != null">
+            SCH_MAX_MONTH,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -247,7 +251,10 @@
       <if test="orgName != null">
         #{orgName,jdbcType=VARCHAR},
       </if>
-      <if test="selTypeId != null">
+        <if test="standardGroupFlow != null">
+            #{standardGroupFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="selTypeId != null">
         #{selTypeId,jdbcType=VARCHAR},
       </if>
       <if test="selTypeName != null">
@@ -255,9 +262,6 @@
       </if>
       <if test="maxDeptNum != null">
         #{maxDeptNum,jdbcType=DECIMAL},
-      </if>
-      <if test="standardGroupFlow != null">
-        #{standardGroupFlow,jdbcType=VARCHAR},
       </if>
       <if test="ordinal != null">
         #{ordinal,jdbcType=DECIMAL},
@@ -274,9 +278,13 @@
       <if test="sessionNumber != null">
         #{sessionNumber,jdbcType=VARCHAR},
       </if>
+        <if test="schMaxMonth != null">
+            #{schMaxMonth,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.SchRotationGroupExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.pinde.core.model.SchRotationGroupExample"
+            resultType="java.lang.Integer">
       select count(*) from SCH_ROTATION_GROUP
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -324,7 +332,10 @@
       <if test="record.orgName != null">
         ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
       </if>
-      <if test="record.selTypeId != null">
+        <if test="record.standardGroupFlow != null">
+            STANDARD_GROUP_FLOW = #{record.standardGroupFlow,jdbcType=VARCHAR},
+      </if>
+        <if test="record.selTypeId != null">
         SEL_TYPE_ID = #{record.selTypeId,jdbcType=VARCHAR},
       </if>
       <if test="record.selTypeName != null">
@@ -332,9 +343,6 @@
       </if>
       <if test="record.maxDeptNum != null">
         MAX_DEPT_NUM = #{record.maxDeptNum,jdbcType=DECIMAL},
-      </if>
-      <if test="record.standardGroupFlow != null">
-        STANDARD_GROUP_FLOW = #{record.standardGroupFlow,jdbcType=VARCHAR},
       </if>
       <if test="record.ordinal != null">
         ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
@@ -351,6 +359,9 @@
       <if test="record.sessionNumber != null">
         SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
       </if>
+        <if test="record.schMaxMonth != null">
+            SCH_MAX_MONTH = #{record.schMaxMonth,jdbcType=VARCHAR},
+        </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -371,16 +382,17 @@
       MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      STANDARD_GROUP_FLOW = #{record.standardGroupFlow,jdbcType=VARCHAR},
       SEL_TYPE_ID = #{record.selTypeId,jdbcType=VARCHAR},
       SEL_TYPE_NAME = #{record.selTypeName,jdbcType=VARCHAR},
       MAX_DEPT_NUM = #{record.maxDeptNum,jdbcType=DECIMAL},
-      STANDARD_GROUP_FLOW = #{record.standardGroupFlow,jdbcType=VARCHAR},
       ORDINAL = #{record.ordinal,jdbcType=DECIMAL},
       IS_REQUIRED = #{record.isRequired,jdbcType=VARCHAR},
       SCH_STAGE_ID = #{record.schStageId,jdbcType=VARCHAR},
       SCH_STAGE_NAME = #{record.schStageName,jdbcType=VARCHAR},
-      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      SCH_MAX_MONTH = #{record.schMaxMonth,jdbcType=VARCHAR}
+      <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
@@ -423,7 +435,10 @@
       <if test="orgName != null">
         ORG_NAME = #{orgName,jdbcType=VARCHAR},
       </if>
-      <if test="selTypeId != null">
+        <if test="standardGroupFlow != null">
+            STANDARD_GROUP_FLOW = #{standardGroupFlow,jdbcType=VARCHAR},
+        </if>
+        <if test="selTypeId != null">
         SEL_TYPE_ID = #{selTypeId,jdbcType=VARCHAR},
       </if>
       <if test="selTypeName != null">
@@ -431,9 +446,6 @@
       </if>
       <if test="maxDeptNum != null">
         MAX_DEPT_NUM = #{maxDeptNum,jdbcType=DECIMAL},
-      </if>
-      <if test="standardGroupFlow != null">
-        STANDARD_GROUP_FLOW = #{standardGroupFlow,jdbcType=VARCHAR},
       </if>
       <if test="ordinal != null">
         ORDINAL = #{ordinal,jdbcType=DECIMAL},
@@ -449,6 +461,9 @@
       </if>
       <if test="sessionNumber != null">
         SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+        <if test="schMaxMonth != null">
+            SCH_MAX_MONTH = #{schMaxMonth,jdbcType=VARCHAR},
       </if>
     </set>
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
@@ -467,15 +482,16 @@
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
       ORG_NAME = #{orgName,jdbcType=VARCHAR},
+        STANDARD_GROUP_FLOW = #{standardGroupFlow,jdbcType=VARCHAR},
       SEL_TYPE_ID = #{selTypeId,jdbcType=VARCHAR},
       SEL_TYPE_NAME = #{selTypeName,jdbcType=VARCHAR},
       MAX_DEPT_NUM = #{maxDeptNum,jdbcType=DECIMAL},
-      STANDARD_GROUP_FLOW = #{standardGroupFlow,jdbcType=VARCHAR},
       ORDINAL = #{ordinal,jdbcType=DECIMAL},
       IS_REQUIRED = #{isRequired,jdbcType=VARCHAR},
       SCH_STAGE_ID = #{schStageId,jdbcType=VARCHAR},
       SCH_STAGE_NAME = #{schStageName,jdbcType=VARCHAR},
-      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
+        SESSION_NUMBER      = #{sessionNumber,jdbcType=VARCHAR},
+        SCH_MAX_MONTH       = #{schMaxMonth,jdbcType=VARCHAR}
     where GROUP_FLOW = #{groupFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

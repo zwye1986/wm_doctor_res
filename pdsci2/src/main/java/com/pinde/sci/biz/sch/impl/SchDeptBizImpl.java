@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.sci.dao.SchDeptMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -9,7 +10,6 @@ import com.pinde.sci.biz.sch.ISchDeptRelBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.SchDeptMapper;
 import com.pinde.sci.dao.sch.SchDeptExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

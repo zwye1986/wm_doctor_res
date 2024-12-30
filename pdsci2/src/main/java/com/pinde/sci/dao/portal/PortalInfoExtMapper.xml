@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.portal.PortalInfoExtMapper" >
-	<resultMap id="extResultMap" type="com.pinde.sci.model.portal.PortalInfoExt" extends="com.pinde.sci.dao.base.PortalInfoMapper.BaseResultMap" >
+    <resultMap id="extResultMap" type="com.pinde.sci.model.portal.PortalInfoExt"
+               extends="com.pinde.core.common.sci.dao.PortalInfoMapper.BaseResultMap">
         <association property="column" column="column_id" javaType="com.pinde.core.model.PortalColumn">
 			<id column="COLUMN_FLOW" jdbcType="VARCHAR" property="columnFlow" />
 		    <result column="COLUMN_ID" jdbcType="VARCHAR" property="columnId" />
@@ -15,7 +16,8 @@
 		    <result column="t2_MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
 		</association>
 	</resultMap>
-	<resultMap id="extResultMapWithBLOBs" type="com.pinde.sci.model.portal.PortalInfoExt" extends="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs" >
+    <resultMap id="extResultMapWithBLOBs" type="com.pinde.sci.model.portal.PortalInfoExt"
+               extends="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
         <association property="column" column="column_id" javaType="com.pinde.core.model.PortalColumn">
 			<id column="COLUMN_FLOW" jdbcType="VARCHAR" property="columnFlow" />
 		    <result column="COLUMN_ID" jdbcType="VARCHAR" property="columnId" />
@@ -49,8 +51,9 @@
 		   <foreach collection="roleFlows" open="(" separator="," close=")" item="item">#{item}</foreach>
 	   </if>
   </update>
-  
-  <select id="searchInfoByOrgBeforeDate" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
+
+    <select id="searchInfoByOrgBeforeDate"
+            resultMap="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
       FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
@@ -81,7 +84,7 @@
 		  )
   	ORDER BY INFO_TIME DESC
   </select>
-  <select id="searchInfoByOrg" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
+    <select id="searchInfoByOrg" resultMap="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
       FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
@@ -96,7 +99,7 @@
 		</if>
   	ORDER BY INFO_TIME DESC
   </select>
-  <select id="searchInfoByParam" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
+    <select id="searchInfoByParam" resultMap="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
       FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
@@ -114,7 +117,8 @@
 		</if>
   	ORDER BY INFO_TIME DESC
   </select>
-  <select id="searchInfoByOrgNoRoleFlow" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
+    <select id="searchInfoByOrgNoRoleFlow"
+            resultMap="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
       FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
@@ -132,7 +136,7 @@
 		  )
   	ORDER BY INFO_TIME DESC
   </select>
-  <select id="searchInfoNotRead" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
+    <select id="searchInfoNotRead" resultMap="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
       FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'
@@ -164,7 +168,8 @@
 	  	)
   	ORDER BY INFO_TIME DESC
   </select>
-  <select id="findNoticeWithBLOBsNotHaveRole" resultMap="com.pinde.sci.dao.base.PortalInfoMapper.ResultMapWithBLOBs">
+    <select id="findNoticeWithBLOBsNotHaveRole"
+            resultMap="com.pinde.core.common.sci.dao.PortalInfoMapper.ResultMapWithBLOBs">
   	SELECT *
       FROM PORTAL_INFO
   	WHERE RECORD_STATUS = 'Y'

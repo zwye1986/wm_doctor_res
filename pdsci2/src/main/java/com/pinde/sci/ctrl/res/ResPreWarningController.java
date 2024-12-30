@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 
+import com.pinde.core.common.sci.dao.SysDeptMapper;
 import com.pinde.core.model.SysDept;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.util.DateUtil;
@@ -8,7 +9,6 @@ import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.SysDeptMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.model.res.GeneralIdNameModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

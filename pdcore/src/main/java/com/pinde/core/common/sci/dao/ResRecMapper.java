@@ -5,6 +5,7 @@ import com.pinde.core.model.ResRecExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ResRecMapper {
     int countByExample(ResRecExample example);
@@ -21,6 +22,8 @@ public interface ResRecMapper {
 
     List<ResRec> selectByExample(ResRecExample example);
 
+    List<ResRec> selectByUserAndRecTypeList(@Param("userFlowList") List<String> userFlowList, @Param("recTypeIdList") List<String> recTypeIdList);
+
     ResRec selectByPrimaryKey(String recFlow);
 
     int updateByExampleSelective(@Param("record") ResRec record, @Param("example") ResRecExample example);
@@ -34,4 +37,8 @@ public interface ResRecMapper {
     int updateByPrimaryKeyWithBLOBs(ResRec record);
 
     int updateByPrimaryKey(ResRec record);
+
+    List<Map<String, Object>> searchRecActivity(Map<String, Object> paramMap);
+
+    List<ResRec> searchRecAndActivityByProcess(Map<String, Object> paramMap);
 }

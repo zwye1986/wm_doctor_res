@@ -15,6 +15,8 @@ public interface ResJointOrgMapper {
 
     int insert(ResJointOrg record);
 
+    int insertAll(@Param("resJointOrgList") List<ResJointOrg> resJointOrgList);
+
     int insertSelective(ResJointOrg record);
 
     List<ResJointOrg> selectByExample(ResJointOrgExample example);
@@ -28,4 +30,16 @@ public interface ResJointOrgMapper {
     int updateByPrimaryKeySelective(ResJointOrg record);
 
     int updateByPrimaryKey(ResJointOrg record);
+
+    /**
+     * 查看是否为协同基地
+     *
+     * @param orgFlow
+     * @return
+     */
+    ResJointOrg selectByJointOrgFlow(String orgFlow);
+
+    int deleteByOrgFlow(@Param("orgFlow") String orgFlow, @Param("sessionNumber") String sessionNumber);
+
+    int deleteJointOrg(ResJointOrg jointOrg);
 }

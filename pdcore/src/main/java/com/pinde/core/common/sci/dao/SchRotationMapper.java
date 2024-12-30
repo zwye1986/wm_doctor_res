@@ -23,6 +23,7 @@ public interface SchRotationMapper {
 
     SchRotation selectByPrimaryKey(String rotationFlow);
 
+    List<SchRotation> readSchRotationByPartitionList(@Param("rotationFlowListList") List<List<String>> rotationFlowListList);
     int updateByExampleSelective(@Param("record") SchRotation record, @Param("example") SchRotationExample example);
 
     int updateByExampleWithBLOBs(@Param("record") SchRotation record, @Param("example") SchRotationExample example);
@@ -34,4 +35,14 @@ public interface SchRotationMapper {
     int updateByPrimaryKeyWithBLOBs(SchRotation record);
 
     int updateByPrimaryKey(SchRotation record);
+
+    int updateResDoctorSchProcessStatus(String doctorFlow);
+
+    int updateSchArrangeResultStatus(String doctorFlow);
+
+    int updateResrecStatus(String doctorFlow);
+
+    int updateResSchProcessExpressStatus(String doctorFlow);
+
+
 }

@@ -1,6 +1,9 @@
 package com.pinde.sci.biz.sch.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.sci.dao.SchArrangeResultMapper;
+import com.pinde.core.common.sci.dao.SchAutoArrangeCfgMapper;
+import com.pinde.core.common.sci.dao.SchAutoArrangeMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -12,9 +15,6 @@ import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchAutoArrangeBiz;
 import com.pinde.sci.biz.sch.ISchRotationGroupBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.SchArrangeResultMapper;
-import com.pinde.sci.dao.base.SchAutoArrangeCfgMapper;
-import com.pinde.sci.dao.base.SchAutoArrangeMapper;
 import com.pinde.sci.dao.sch.SchAutoArrangeExtMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

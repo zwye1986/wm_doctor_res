@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResAppealExtMapper" >
-	<resultMap type="com.pinde.sci.form.res.AppealForm" id="appealFormMap">
+    <resultMap type="com.pinde.core.model.AppealForm" id="appealFormMap">
 		<result column="REC_TYPE_ID" jdbcType="VARCHAR" property="recTypeId"/>
 		<result column="ITEM_NAME" jdbcType="VARCHAR" property="itemName"/>
 		<result column="APPEAL_NUM" jdbcType="DECIMAL" property="appealNum"/>
@@ -35,8 +35,8 @@
 		</if>
 		GROUP BY OPER_USER_FLOW,PROCESS_FLOW,SCH_DEPT_FLOW,REC_TYPE_ID
 	</select>
-	
-	<select id="searchAppealForAudit" resultMap="com.pinde.sci.dao.base.ResAppealMapper.BaseResultMap">
+
+    <select id="searchAppealForAudit" resultMap="com.pinde.core.common.sci.dao.ResAppealMapper.BaseResultMap">
 		SELECT *
         FROM RES_APPEAL
 		WHERE RECORD_STATUS = 'Y'

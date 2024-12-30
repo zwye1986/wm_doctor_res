@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResRegMapper;
 import com.pinde.core.model.ResReg;
 import com.pinde.core.model.ResRegExample;
 import com.pinde.core.model.ResRegExample.Criteria;
@@ -7,7 +8,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResRegBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResRegMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,12 @@
 package com.pinde.core.common.sci.dao;
 
+import com.pinde.core.model.ParticipateInfoExt;
 import com.pinde.core.model.ResLectureInfo;
 import com.pinde.core.model.ResLectureInfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ResLectureInfoMapper {
     int countByExample(ResLectureInfoExample example);
@@ -34,4 +36,16 @@ public interface ResLectureInfoMapper {
     int updateByPrimaryKeyWithBLOBs(ResLectureInfo record);
 
     int updateByPrimaryKey(ResLectureInfo record);
+
+    /**
+     * 查询所有讲座通知对象
+     *
+     * @param orgFlow
+     * @return
+     */
+    List<Map<String, Object>> queryNotification(String orgFlow);
+
+    List<ParticipateInfoExt> queryParticipateList(String orgFlow);
+
+    List<Map<String, Object>> queryAssessScoreList(String orgFlow);
 }

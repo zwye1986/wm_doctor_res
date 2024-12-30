@@ -22,8 +22,6 @@ public interface ResDoctorRecruitMapper {
 
     List<com.pinde.core.model.ResDoctorRecruit> selectByExample(ResDoctorRecruitExample example);
 
-    List<com.pinde.core.model.ResDoctorRecruit> selectByDoctorFlow(@Param("docotrFlows") List<String> docotrFlows);
-
     ResDoctorRecruitWithBLOBs selectByPrimaryKey(String recruitFlow);
 
     int updateByExampleSelective(@Param("record") ResDoctorRecruitWithBLOBs record, @Param("example") ResDoctorRecruitExample example);
@@ -37,6 +35,8 @@ public interface ResDoctorRecruitMapper {
     int updateByPrimaryKeyWithBLOBs(ResDoctorRecruitWithBLOBs record);
 
     int updateByPrimaryKey(ResDoctorRecruit record);
+
+    List<com.pinde.core.model.ResDoctorRecruit> selectByDoctorFlow(@Param("docotrFlows") List<String> docotrFlows);
 
     int updateCertificateNo(@Param("no") String no, @Param("recordFlow") String recordFlo, @Param("CERTIFICATE_ISSUING_STATUS") String CERTIFICATE_ISSUING_STATUS);
 

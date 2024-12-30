@@ -1,5 +1,8 @@
 package com.pinde.sci.ctrl.sys;
 
+import com.pinde.core.common.sci.dao.SysWsConfigMapper;
+import com.pinde.core.model.SysWsConfig;
+import com.pinde.core.model.SysWsConfigExample;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
 import com.pinde.core.util.StringUtil;
@@ -7,9 +10,6 @@ import com.pinde.sci.biz.sys.IWsCfgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SysWsConfigMapper;
-import com.pinde.core.model.SysWsConfig;
-import com.pinde.core.model.SysWsConfigExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

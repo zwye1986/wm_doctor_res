@@ -1,8 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
-import com.pinde.core.common.sci.dao.HospSelfAssessmentCfgMapper;
-import com.pinde.core.common.sci.dao.HospSelfAssessmentMapper;
-import com.pinde.core.common.sci.dao.JsresSupervisioFileMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -12,7 +10,6 @@ import com.pinde.sci.biz.jsres.IJsResSupervisioBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.JsresSupervisioSubjectExtMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

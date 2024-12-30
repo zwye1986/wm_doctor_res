@@ -117,7 +117,21 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+
+    <select id="searchByResultFlowPartitionList" resultType="com.pinde.core.model.ResDoctorSchProcess">
+        select
+        <include refid="Base_Column_List"/>
+        from RES_DOCTOR_SCH_PROCESS
+        where record_status = 'Y'
+        <foreach collection="resultFlowListList" item="resultFlowList" open="and (" close=")" separator=" or ">
+            sch_result_flow in
+            <foreach collection="resultFlowList" item="resultFlow" open="(" close=")" separator=",">
+                #{resultFlow,jdbcType=VARCHAR}
+            </foreach>
+        </foreach>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
       from RES_DOCTOR_SCH_PROCESS

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResPowerCfgMapper;
 import com.pinde.core.model.ResPowerCfg;
 import com.pinde.core.model.ResPowerCfgExample;
 import com.pinde.core.model.SysUser;
@@ -11,7 +12,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.dao.base.ResPowerCfgMapper;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;

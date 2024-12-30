@@ -1,23 +1,13 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
-import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
-import com.pinde.sci.biz.jsres.IJsResRecBiz;
-import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.IDictBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.impl.OrgBizImpl;
+import com.pinde.sci.biz.res.IResRecBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.core.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,48 +24,9 @@ import java.util.Map;
 @RequestMapping("/jsres/doctorDataAudit")
 public class JsResDoctorDataAuditController extends GeneralController {
     @Autowired
-    private IJsResDoctorBiz jsResDoctorBiz;
-    @Autowired
-    private IJsResDoctorRecruitBiz jsResDoctorRecruitBiz;
-    @Autowired
-    private IUserBiz userBiz;
-    @Autowired
-    private IResDoctorBiz resDoctorBiz;
-    @Autowired
-    private IPubUserResumeBiz userResumeBiz;
-    @Autowired
-    private OrgBizImpl orgBiz;
-    @Autowired
-    private IDictBiz dictBiz;
-    @Autowired
     private IResRecBiz resRecBiz;
     @Autowired
-    private IResScoreBiz resScoreBiz;
-    @Autowired
-    private ISchRotationBiz rotationBiz;
-    @Autowired
-    private ISchArrangeResultBiz resultBiz;
-    @Autowired
-    private ISchRotationGroupBiz groupBiz;
-    @Autowired
-    private SchRotationDeptMapper rotationDeptMapper;
-    @Autowired
-    private IResDoctorProcessBiz processBiz;
-    @Autowired
-    private IResJointOrgBiz jointOrgBiz;
-    @Autowired
-    private ISchRotationDeptBiz schRotationDeptBiz;
-    @Autowired
-    private IJsResRecBiz jsResRecBiz;
-    @Autowired
-    private ISchDoctorDeptBiz doctorDeptBiz;
-    @Autowired
-    private ISchRotationDeptBiz rotationDeptBiz;
-    public static final String SCOREYEAR_NOT_FIND="请选择成绩年份";
-    @Autowired
     private IJsResGraduationApplyBiz graduationApplyBiz;
-    @Autowired
-    private IFileBiz fileBiz;
 
     /**
      *
