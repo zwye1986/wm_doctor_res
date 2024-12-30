@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.OscaSkillScoreDeatil;
+import com.pinde.core.model.OscaSkillScoreDeatilExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface OscaSkillScoreDeatilMapper {
+    int countByExample(OscaSkillScoreDeatilExample example);
+
+    int deleteByExample(OscaSkillScoreDeatilExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(OscaSkillScoreDeatil record);
+
+    int insertSelective(OscaSkillScoreDeatil record);
+
+    List<OscaSkillScoreDeatil> selectByExample(OscaSkillScoreDeatilExample example);
+
+    OscaSkillScoreDeatil selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") OscaSkillScoreDeatil record, @Param("example") OscaSkillScoreDeatilExample example);
+
+    int updateByExample(@Param("record") OscaSkillScoreDeatil record, @Param("example") OscaSkillScoreDeatilExample example);
+
+    int updateByPrimaryKeySelective(OscaSkillScoreDeatil record);
+
+    int updateByPrimaryKey(OscaSkillScoreDeatil record);
+}

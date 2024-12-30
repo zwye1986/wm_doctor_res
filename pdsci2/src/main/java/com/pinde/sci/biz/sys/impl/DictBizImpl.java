@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.common.sci.dao.DictFormMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.SysDictExample.Criteria;
 import com.pinde.core.util.PkUtil;
@@ -7,7 +8,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sys.IDictBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.DictFormMapper;
 import com.pinde.sci.dao.base.SysDictMapper;
 import com.pinde.sci.dao.sys.SysCfgExtMapper;
 import com.pinde.sci.form.sys.SubDictEditForm;

@@ -6,8 +6,8 @@ import com.pinde.core.model.ResOrgTime;
 import com.pinde.core.model.ResOrgTimeExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IResOrgTimeBiz;
-import com.pinde.sci.dao.base.ResOrgAddressMapper;
-import com.pinde.sci.dao.base.ResOrgTimeMapper;
+import com.pinde.core.common.sci.dao.ResOrgAddressMapper;
+import com.pinde.core.common.sci.dao.ResOrgTimeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

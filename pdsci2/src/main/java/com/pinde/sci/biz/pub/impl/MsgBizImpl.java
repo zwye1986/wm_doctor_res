@@ -11,7 +11,7 @@ import com.pinde.sci.biz.pub.IMsgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.SMSUtil;
-import com.pinde.sci.dao.base.PubMsgMapper;
+import com.pinde.core.common.sci.dao.PubMsgMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

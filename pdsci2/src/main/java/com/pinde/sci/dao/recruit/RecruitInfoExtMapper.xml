@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.recruit.RecruitInfoExtMapper">
-    <resultMap id="RecruitInfoExt" type="com.pinde.sci.model.recruit.RecruitInfoExt" extends="com.pinde.sci.dao.base.RecruitInfoMapper.BaseResultMap" >
+    <resultMap id="RecruitInfoExt" type="com.pinde.sci.model.recruit.RecruitInfoExt" extends="com.pinde.core.common.sci.dao.RecruitInfoMapper.BaseResultMap" >
         <association property="sysUser" javaType="com.pinde.core.model.SysUser">
             <result column="USER_NAME" property="userName"/>
             <result column="SEX_NAME" property="sexName"/>
@@ -131,7 +131,7 @@
         </if>
     </select>
 
-    <resultMap id="CanExamRecruitInfo" type="com.pinde.sci.model.recruit.RecruitInfoExt" extends="com.pinde.sci.dao.base.RecruitInfoMapper.BaseResultMap" >
+    <resultMap id="CanExamRecruitInfo" type="com.pinde.sci.model.recruit.RecruitInfoExt" extends="com.pinde.core.common.sci.dao.RecruitInfoMapper.BaseResultMap" >
         <association property="sysUser" javaType="com.pinde.core.model.SysUser">
             <result column="USER_NAME" property="userName"/>
             <result column="SEX_NAME" property="sexName"/>

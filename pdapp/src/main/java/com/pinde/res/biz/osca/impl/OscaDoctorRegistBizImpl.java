@@ -12,7 +12,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.osca.IOscaDoctorRegistBiz;
 import com.pinde.res.dao.osca.ext.OscaDoctorRegistExtMapper;
-import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
+import com.pinde.core.common.sci.dao.OscaDoctorRegistMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

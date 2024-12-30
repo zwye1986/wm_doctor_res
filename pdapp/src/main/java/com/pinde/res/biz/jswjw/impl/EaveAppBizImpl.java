@@ -1,7 +1,7 @@
 package com.pinde.res.biz.jswjw.impl;
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -10,7 +10,6 @@ import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.dao.jswjw.ext.StudentExtMapper;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
-import com.pinde.sci.dao.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

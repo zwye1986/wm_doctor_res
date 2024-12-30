@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.TeachingActivityInfoMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.TeachingActivityInfo">
     <id column="ACTIVITY_FLOW" property="activityFlow" jdbcType="VARCHAR" />
     <result column="ACTIVITY_NAME" property="activityName" jdbcType="VARCHAR" />

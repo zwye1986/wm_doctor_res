@@ -330,7 +330,7 @@
 		group by rdsp.TEACHER_USER_FLOW
 	</select>
 
-	<select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="resSearchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
 		select * from DEPT_TEACHER_GRADE_INFO  rr
 		where rr.RECORD_STATUS='Y'
 		<if test="startDate!=null and startDate!=''">
@@ -350,7 +350,7 @@
 		and rr.rec_type_id ='TeacherGrade'
 		))
 	</select>
-	<select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="searchProssFlowRecRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
 		select * from DEPT_TEACHER_GRADE_INFO  rr
 		where rr.RECORD_STATUS='Y'
 		<if test="startDate!=null and startDate!=''">
@@ -388,7 +388,7 @@
 	 	))
 	</select>
 	
-	<select id="searchProssFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="searchProssFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
    			 select rr.* from RES_DOCTOR_SCH_PROCESS rdsp
    			  inner join SCH_ARRANGE_RESULT sar on rdsp.SCH_RESULT_FLOW=sar.RESULT_FLOW
    			  inner join SCH_ROTATION_DEPT srd on srd.GROUP_FLOW=sar.STANDARD_GROUP_FLOW 
@@ -402,7 +402,7 @@
 			  and rr.rec_type_id ='AfterSummary'
 	</select>
 	
-	<select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="searchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
 		select * from DEPT_TEACHER_GRADE_INFO  rr
 		where rr.RECORD_STATUS='Y'
 		<if test="startDate!=null and startDate!=''">
@@ -440,7 +440,7 @@
 	 	))
 	</select>
 
-	<select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="resSearchDeptFlowRec"  parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
 		select * from DEPT_TEACHER_GRADE_INFO  rr
 		where rr.RECORD_STATUS='Y'
 		<if test="startDate!=null and startDate!=''">
@@ -461,7 +461,7 @@
 		))
 	</select>
 	
-	<select id="searchRecByUserAndSchdept" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
+	<select id="searchRecByUserAndSchdept" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.BaseResultMap">
 		SELECT *
         FROM RES_REC
 		WHERE RECORD_STATUS = 'Y'
@@ -505,7 +505,7 @@
 		GROUP BY OPER_USER_FLOW,REC_TYPE_ID,SCH_DEPT_FLOW,process_flow
 	</select>
 	
-	<select id="searchByRecForAudit" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
+	<select id="searchByRecForAudit" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.BaseResultMap">
 		SELECT *
         FROM RES_REC
 		WHERE RECORD_STATUS = 'Y'
@@ -658,7 +658,7 @@
 	</select>
 
 
-	<select id="searchAfterAuditRec" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="searchAfterAuditRec" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
 	    SELECT RR.*
         FROM SYS_USER SU, RES_DOCTOR_SCH_PROCESS RDSP, RES_REC RR
 	    WHERE SU.RECORD_STATUS = 'Y'
@@ -745,7 +745,7 @@
 		    </if>
 	    </if>
 	</select>
-	<select id="searchSXSRecData" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs">
+	<select id="searchSXSRecData" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
 	    SELECT RR.*
         FROM SYS_USER SU, RES_REC RR
 	    WHERE SU.RECORD_STATUS = 'Y'
@@ -896,7 +896,7 @@
         ADMIN_AUDIT_USER_NAME, ADMIN_AUDIT_STATUS_ID, ADMIN_AUDIT_STATUS_NAME, ITEM_ID, PROCESS_FLOW,
         REC_FORM, SCH_ROTATION_DEPT_FLOW, MEDICINE_TYPE
     </sql>
-	<select id="searchProssingRec" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResRecMapper.BaseResultMap">
+	<select id="searchProssingRec" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.BaseResultMap">
 		select <include refid="Res_Base_Column_List" />
 		 from res_rec_operation_registry rr
 		where rr.record_status = 'Y'
@@ -1086,7 +1086,7 @@
 				   AND T.RECORD_FLOW IS NOT NULL
 				   AND T.RECORD_FLOW = RES_REC.SCH_ROTATION_DEPT_FLOW)
 	</update>
-	<select id="searchByRecWithBLOBsByMap4Hb" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
+	<select id="searchByRecWithBLOBsByMap4Hb" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
 		select * from res_rec
 			   where record_status='Y'
 			   <if test="recTypeId != null and recTypeId != ''">
@@ -1309,7 +1309,7 @@
 		</if>
 		order by A.create_time desc
 	</select>
-	<select id="searchDelayInfoForUni" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
+	<select id="searchDelayInfoForUni" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
 		select r.*
         from RES_REC r
 		left join RES_DOCTOR d on r.OPER_USER_FLOW = d.DOCTOR_FLOW
@@ -1345,7 +1345,7 @@
 		</if>
 		order by r.create_time desc
 	</select>
-	<select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByProcessFlow" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		FROM TEACHING_ACTIVITY_RESULT R
 		LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1369,7 +1369,7 @@
 		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
 		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
 	</select>
-	<select id="searchJoinActivityByProcessFlow2" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByProcessFlow2" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		FROM TEACHING_ACTIVITY_RESULT R
 		LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1394,7 +1394,7 @@
 		(SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
 		SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
 	</select>
-	<select id="searchJoinActivityByStrandDeptFlow" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByStrandDeptFlow" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		  FROM TEACHING_ACTIVITY_RESULT R
 		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1420,7 +1420,7 @@
 			   SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
 	</select>
 
-	<select id="searchJoinActivityByStrandDeptFlowAndNotScore" resultMap="com.pinde.sci.dao.base.TeachingActivityInfoMapper.BaseResultMap">
+	<select id="searchJoinActivityByStrandDeptFlowAndNotScore" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.BaseResultMap">
 		SELECT INFO.*
 		  FROM TEACHING_ACTIVITY_RESULT R
 		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
@@ -1701,7 +1701,7 @@
 
     </update>
 
-	<select id="searchEvalFormGradeInfo" resultMap="com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+	<select id="searchEvalFormGradeInfo" resultMap="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
 		SELECT RR.*
         FROM SYS_USER SU, RES_DOCTOR_SCH_PROCESS RDSP, DEPT_TEACHER_GRADE_INFO RR
 		WHERE SU.RECORD_STATUS = 'Y'
@@ -1979,7 +1979,7 @@
 		group by p.TEACHER_USER_FLOW,rr.oper_user_name
 	</select>
 
-	<select id="searchRecAndActivityByProcess" resultMap="com.pinde.sci.dao.base.ResRecMapper.ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResRecExample" >
+	<select id="searchRecAndActivityByProcess" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResRecExample" >
 		select * from (
 		SELECT
 		distinct '1' QUERY_TYPE, INFO.ACTIVITY_FLOW REC_FLOW,INFO.ACTIVITY_NAME SCH_DEPT_NAME,SU.USER_NAME  AUDIT_USER_NAME,

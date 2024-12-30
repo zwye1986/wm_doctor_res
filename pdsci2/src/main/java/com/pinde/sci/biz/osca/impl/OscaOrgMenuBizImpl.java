@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.osca.impl;
 
+import com.pinde.core.common.sci.dao.OscaOrgMenuMapper;
 import com.pinde.core.model.OscaOrgMenu;
 import com.pinde.core.model.OscaOrgMenuExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
-import com.pinde.sci.dao.base.OscaOrgMenuMapper;
 import com.pinde.sci.dao.osca.OscaOrgMenuExtMapper;
 import com.pinde.sci.dao.osca.OscaSysOrgExtMapper;
 import com.pinde.sci.model.osca.OscaOrgMenuExt;
@@ -18,8 +18,6 @@ import java.util.Map;
 @Service
 //@Transactional(rollbackFor = Exception.class)
 public class OscaOrgMenuBizImpl implements IOscaOrgMenuBiz{
-    @Autowired
-    private OscaSysOrgExtMapper oscaSysOrgExtMapper;
     @Autowired
     private OscaOrgMenuMapper oscaOrgMenuMapper;
     @Autowired

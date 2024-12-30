@@ -1148,14 +1148,14 @@ COMPLETE_BI_PER=(CASE
         AVG_IN_COMPLETE_BI_PER=( select nvl(AVG_IN_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow})
         WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_FLOW=#{applyFlow}
     </update>
-    <select id="queryProcess"  resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="queryProcess"  resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
 
     select * from res_doctor_sch_process where user_flow in (
       select user_flow from sys_user where user_code=#{userCode} and record_status='Y'
     )
     and record_status='Y' order by sch_start_date
     </select>
-    <select id="queryDelProcess"  resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="queryDelProcess"  resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         select * from res_doctor_sch_process p where user_flow in (
           select user_flow from sys_user where user_code=#{userCode} and record_status='Y'
         )
@@ -1170,7 +1170,7 @@ COMPLETE_BI_PER=(CASE
     <select id="examTeaRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         select * from sys_user where is_exam_tea='Y'
     </select>
-    <select id="getOscaNotSubmitInfo"  resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+    <select id="getOscaNotSubmitInfo"  resultMap="com.pinde.core.common.sci.dao.OscaTeaScanDocMapper.BaseResultMap">
         SELECT *
         FROM OSCA_TEA_SCAN_DOC OSRD
         WHERE
@@ -1216,7 +1216,7 @@ COMPLETE_BI_PER=(CASE
         WHERE DR.RECORD_STATUS='Y' and apply_year=#{applyYear}
     </select>
 
-    <select id="getTeaDocScores" resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.BaseResultMap">
+    <select id="getTeaDocScores" resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.BaseResultMap">
         SELECT * FROM OSCA_SKILL_DOC_SCORE A
         WHERE A.RECORD_STATUS='Y'
         AND A.DOCTOR_FLOW =#{doctorFlow}
@@ -1232,7 +1232,7 @@ COMPLETE_BI_PER=(CASE
     </select>
 
     <select id="getOscaSkillRoomDocByDoc" parameterType="string"
-            resultMap="com.pinde.sci.dao.base.OscaSkillRoomDocMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillRoomDocMapper.BaseResultMap">
         SELECT *
         FROM OSCA_SKILL_ROOM_DOC OSRD
         WHERE OSRD.RECORD_STATUS = 'Y'
@@ -1303,7 +1303,7 @@ COMPLETE_BI_PER=(CASE
           GROUP BY B.DOCTOR_FLOW, B.CLINICAL_FLOW, B.STATION_FLOW
 	</select>
     <select id="getTeaDocStation" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSubjectStationMapper.BaseResultMap">
         SELECT distinct S.*
         FROM OSCA_SKILL_ROOM_TEA T
         join OSCA_SUBJECT_STATION S ON T.STATION_FLOW=S.STATION_FLOW
@@ -1314,7 +1314,7 @@ COMPLETE_BI_PER=(CASE
 
     </select>
     <select id="getTeaSubDocStation" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaSubjectStationMapper.BaseResultMap">
         SELECT  S.*
         FROM OSCA_SUBJECT_STATION S
         WHERE S.STATION_FLOW IN (
@@ -1328,7 +1328,7 @@ COMPLETE_BI_PER=(CASE
         ORDER BY S.ORDINAL ASC
     </select>
     <select id="getDocScoreByParam" parameterType="string"
-            resultMap="com.pinde.sci.dao.base.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
+            resultMap="com.pinde.core.common.sci.dao.OscaSkillDocScoreMapper.ResultMapWithBLOBs">
         SELECT *
         FROM OSCA_SKILL_DOC_SCORE OSRD
         WHERE OSRD.RECORD_STATUS = 'Y'
@@ -1342,7 +1342,7 @@ COMPLETE_BI_PER=(CASE
         order by create_time desc
     </select>
     <select id="getOscaTeaScanDoc" parameterType="map"
-            resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.OscaTeaScanDocMapper.BaseResultMap">
         SELECT *
         FROM OSCA_TEA_SCAN_DOC OSRD
         WHERE

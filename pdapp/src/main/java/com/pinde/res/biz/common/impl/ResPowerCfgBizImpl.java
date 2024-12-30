@@ -4,7 +4,7 @@ import com.pinde.core.model.ResPowerCfg;
 import com.pinde.core.model.ResPowerCfgExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.common.IResPowerCfgBiz;
-import com.pinde.sci.dao.base.ResPowerCfgMapper;
+import com.pinde.core.common.sci.dao.ResPowerCfgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

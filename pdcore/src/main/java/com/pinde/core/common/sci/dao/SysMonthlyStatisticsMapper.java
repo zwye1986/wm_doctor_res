@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.SysMonthlyStatistics;
+import com.pinde.core.model.SysMonthlyStatisticsExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface SysMonthlyStatisticsMapper {
+    int countByExample(SysMonthlyStatisticsExample example);
+
+    int deleteByExample(SysMonthlyStatisticsExample example);
+
+    int deleteByPrimaryKey(String statisticFlow);
+
+    int insert(SysMonthlyStatistics record);
+
+    int insertSelective(SysMonthlyStatistics record);
+
+    List<SysMonthlyStatistics> selectByExample(SysMonthlyStatisticsExample example);
+
+    SysMonthlyStatistics selectByPrimaryKey(String statisticFlow);
+
+    int updateByExampleSelective(@Param("record") SysMonthlyStatistics record, @Param("example") SysMonthlyStatisticsExample example);
+
+    int updateByExample(@Param("record") SysMonthlyStatistics record, @Param("example") SysMonthlyStatisticsExample example);
+
+    int updateByPrimaryKeySelective(SysMonthlyStatistics record);
+
+    int updateByPrimaryKey(SysMonthlyStatistics record);
+}

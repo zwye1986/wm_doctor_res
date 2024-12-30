@@ -1,7 +1,7 @@
 package com.pinde.res.biz.jswjw.impl;
 
 import com.pinde.app.common.InitConfig;
-import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.FtpHelperUtil;
@@ -9,7 +9,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.ISysSupervisioUserBiz;
 import com.pinde.res.dao.jswjw.ext.JsresSupervisioSubjectExtMapper;
-import com.pinde.sci.dao.base.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

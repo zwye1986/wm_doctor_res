@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.inx.impl;
 
+import com.pinde.core.common.sci.dao.InxColumnMapper;
 import com.pinde.core.model.InxColumn;
 import com.pinde.core.model.InxColumnExample;
 import com.pinde.core.model.InxColumnExample.Criteria;
@@ -7,20 +8,20 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.InxColumnMapper;
 import com.pinde.sci.dao.inx.InxColumnExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 @Service
 //@Transactional(rollbackFor=Exception.class)
 public class InxColumnManageBizImpl implements IinxColumnManageBiz {
-	@Autowired
+	@Resource
 	private InxColumnMapper inxColumnMapper;
-	@Autowired
+	@Resource
 	private InxColumnExtMapper inxColumnExtMapper;
 
 	@Override

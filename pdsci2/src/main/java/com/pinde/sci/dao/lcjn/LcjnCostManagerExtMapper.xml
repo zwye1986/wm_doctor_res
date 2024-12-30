@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.lcjn.LcjnCostManagerExtMapper">
 
-	<select id="searchCfgByCourseFlow" resultMap="com.pinde.sci.dao.base.LcjnSkillCfgDetailMapper.BaseResultMap">
+	<select id="searchCfgByCourseFlow" resultMap="com.pinde.core.common.sci.dao.LcjnSkillCfgDetailMapper.BaseResultMap">
 		select
 		lscd.record_flow recordFlow,
 		lscd.skill_flow skillFlow,

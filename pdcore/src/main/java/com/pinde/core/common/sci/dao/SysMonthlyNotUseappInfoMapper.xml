@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.SysMonthlyNotUseappInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.SysMonthlyNotUseappInfo" >
+    <id column="SMRDI_FLOW" property="smrdiFlow" jdbcType="VARCHAR" />
+    <result column="DATE_MONTH" property="dateMonth" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="USER_EMAIL" property="userEmail" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_ID" property="secondSpeId" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_NAME" property="secondSpeName" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW, DOCTOR_NAME, ID_NO, USER_EMAIL, USER_PHONE, 
+    DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, 
+    TRAINING_SPE_NAME, SECOND_SPE_ID, SECOND_SPE_NAME, SESSION_NUMBER, ORG_FLOW, ORG_NAME, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from SYS_MONTHLY_NOT_USEAPP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from SYS_MONTHLY_NOT_USEAPP_INFO
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from SYS_MONTHLY_NOT_USEAPP_INFO
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfoExample" >
+      delete from SYS_MONTHLY_NOT_USEAPP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfo" >
+      insert into SYS_MONTHLY_NOT_USEAPP_INFO (SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW,
+      DOCTOR_NAME, ID_NO, USER_EMAIL, 
+      USER_PHONE, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, 
+      TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, 
+      TRAINING_SPE_NAME, SECOND_SPE_ID, SECOND_SPE_NAME, 
+      SESSION_NUMBER, ORG_FLOW, ORG_NAME, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW)
+    values (#{smrdiFlow,jdbcType=VARCHAR}, #{dateMonth,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
+      #{doctorName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, #{doctorTypeName,jdbcType=VARCHAR}, 
+      #{trainingTypeId,jdbcType=VARCHAR}, #{trainingTypeName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, 
+      #{trainingSpeName,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR}, 
+      #{sessionNumber,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfo" >
+      insert into SYS_MONTHLY_NOT_USEAPP_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smrdiFlow != null" >
+        SMRDI_FLOW,
+      </if>
+      <if test="dateMonth != null" >
+        DATE_MONTH,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID,
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME,
+      </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID,
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME,
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID,
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME,
+      </if>
+      <if test="secondSpeId != null" >
+        SECOND_SPE_ID,
+      </if>
+      <if test="secondSpeName != null" >
+        SECOND_SPE_NAME,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smrdiFlow != null" >
+        #{smrdiFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="dateMonth != null" >
+        #{dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeId != null" >
+        #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeId != null" >
+        #{secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeName != null" >
+        #{secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfoExample" resultType="java.lang.Integer" >
+      select count(*) from SYS_MONTHLY_NOT_USEAPP_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update SYS_MONTHLY_NOT_USEAPP_INFO
+    <set >
+      <if test="record.smrdiFlow != null" >
+        SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateMonth != null" >
+        DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorName != null" >
+        DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userEmail != null" >
+        USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeId != null" >
+        TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSpeId != null" >
+        SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSpeName != null" >
+        SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update SYS_MONTHLY_NOT_USEAPP_INFO
+    set SMRDI_FLOW = #{record.smrdiFlow,jdbcType=VARCHAR},
+      DATE_MONTH = #{record.dateMonth,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      USER_EMAIL = #{record.userEmail,jdbcType=VARCHAR},
+      USER_PHONE = #{record.userPhone,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
+      TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfo" >
+      update SYS_MONTHLY_NOT_USEAPP_INFO
+    <set >
+      <if test="dateMonth != null" >
+        DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorName != null" >
+        DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null" >
+        USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeId != null" >
+        SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeName != null" >
+        SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfo" >
+      update SYS_MONTHLY_NOT_USEAPP_INFO
+    set DATE_MONTH = #{dateMonth,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      USER_EMAIL = #{userEmail,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,1413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.JsresRecruitDocInfo" >
+    <id column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="SPE_ID" property="speId" jdbcType="VARCHAR" />
+    <result column="SPE_NAME" property="speName" jdbcType="VARCHAR" />
+    <result column="SWAP_FLAG" property="swapFlag" jdbcType="VARCHAR" />
+    <result column="RECRUIT_TYPE_ID" property="recruitTypeId" jdbcType="VARCHAR" />
+    <result column="RECRUIT_TYPE_NAME" property="recruitTypeName" jdbcType="VARCHAR" />
+    <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
+    <result column="RETEST_FLAG" property="retestFlag" jdbcType="VARCHAR" />
+    <result column="EXAM_RESULT" property="examResult" jdbcType="DECIMAL" />
+    <result column="AUDITION_RESULT" property="auditionResult" jdbcType="DECIMAL" />
+    <result column="OPER_RESULT" property="operResult" jdbcType="DECIMAL" />
+    <result column="TOTLE_RESULT" property="totleResult" jdbcType="DECIMAL" />
+    <result column="ADMIT_FLAG" property="admitFlag" jdbcType="VARCHAR" />
+    <result column="RECRUIT_FLAG" property="recruitFlag" jdbcType="VARCHAR" />
+    <result column="CONFIRM_FLAG" property="confirmFlag" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="SWAP_SPE_ID" property="swapSpeId" jdbcType="VARCHAR" />
+    <result column="SWAP_SPE_NAME" property="swapSpeName" jdbcType="VARCHAR" />
+    <result column="RECRUIT_DATE" property="recruitDate" jdbcType="VARCHAR" />
+    <result column="CAT_SPE_ID" property="catSpeId" jdbcType="VARCHAR" />
+    <result column="CAT_SPE_NAME" property="catSpeName" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="YET_TRAIN_YEAR" property="yetTrainYear" jdbcType="VARCHAR" />
+    <result column="DOCTOR_STATUS_ID" property="doctorStatusId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_STATUS_NAME" property="doctorStatusName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_STRIKE_ID" property="doctorStrikeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_STRIKE_NAME" property="doctorStrikeName" jdbcType="VARCHAR" />
+    <result column="TRAIN_NO" property="trainNo" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="TRAIN_YEAR" property="trainYear" jdbcType="VARCHAR" />
+    <result column="PLACE_ID" property="placeId" jdbcType="VARCHAR" />
+    <result column="PLACE_NAME" property="placeName" jdbcType="VARCHAR" />
+    <result column="PROVE_FILE_URL" property="proveFileUrl" jdbcType="VARCHAR" />
+    <result column="COMPLETE_CERT_NO" property="completeCertNo" jdbcType="VARCHAR" />
+    <result column="COMPLETE_FILE_URL" property="completeFileUrl" jdbcType="VARCHAR" />
+    <result column="CURR_DEGREE_CATEGORY_ID" property="currDegreeCategoryId" jdbcType="VARCHAR" />
+    <result column="CURR_DEGREE_CATEGORY_NAME" property="currDegreeCategoryName" jdbcType="VARCHAR" />
+    <result column="GRADUATION_YEAR" property="graduationYear" jdbcType="VARCHAR" />
+    <result column="ADMIN_SWAP_FLAG" property="adminSwapFlag" jdbcType="VARCHAR" />
+    <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />
+    <result column="ROTATION_NAME" property="rotationName" jdbcType="VARCHAR" />
+    <result column="SPECIAL_CERT_NO" property="specialCertNo" jdbcType="VARCHAR" />
+    <result column="SPECIAL_FILE_URL" property="specialFileUrl" jdbcType="VARCHAR" />
+    <result column="AVG_COMPLETE" property="avgComplete" jdbcType="VARCHAR" />
+    <result column="AVG_AUDIT" property="avgAudit" jdbcType="VARCHAR" />
+    <result column="MATERIAL_ID" property="materialId" jdbcType="VARCHAR" />
+    <result column="PRACTICING_SCOPE_ID" property="practicingScopeId" jdbcType="VARCHAR" />
+    <result column="PRACTICING_SCOPE_NAME" property="practicingScopeName" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_URI" property="certificateUri" jdbcType="VARCHAR" />
+    <result column="QUALIFICATION_MATERIAL_URI" property="qualificationMaterialUri" jdbcType="VARCHAR" />
+    <result column="SPECIAL_CERTIFICATION_URI" property="specialCertificationUri" jdbcType="VARCHAR" />
+    <result column="QUALIFICATION_MATERIAL_CODE" property="qualificationMaterialCode" jdbcType="VARCHAR" />
+    <result column="TYPE_ID" property="typeId" jdbcType="VARCHAR" />
+    <result column="REGISTE_MANUA" property="registeManua" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_ID" property="secondSpeId" jdbcType="VARCHAR" />
+    <result column="SECOND_SPE_NAME" property="secondSpeName" jdbcType="VARCHAR" />
+    <result column="GRADUATION_CERTIFICATE_NO" property="graduationCertificateNo" jdbcType="VARCHAR" />
+    <result column="CERTIFICATE_DATE" property="certificateDate" jdbcType="VARCHAR" />
+    <result column="GRADUATION_CERTIFICATE_TYPE" property="graduationCertificateType" jdbcType="VARCHAR" />
+    <result column="SIGNUP_WAY" property="signupWay" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" extends="BaseResultMap" >
+    <result column="RETEST_NOTICE" property="retestNotice" jdbcType="CLOB" />
+    <result column="ADMIT_NOTICE" property="admitNotice" jdbcType="CLOB" />
+    <result column="PROV_REMARK" property="provRemark" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, SWAP_FLAG, RECRUIT_TYPE_ID, 
+    RECRUIT_TYPE_NAME, RECRUIT_YEAR, RETEST_FLAG, EXAM_RESULT, AUDITION_RESULT, OPER_RESULT, 
+    TOTLE_RESULT, ADMIT_FLAG, RECRUIT_FLAG, CONFIRM_FLAG, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SWAP_SPE_ID, SWAP_SPE_NAME, RECRUIT_DATE, 
+    CAT_SPE_ID, CAT_SPE_NAME, SESSION_NUMBER, YET_TRAIN_YEAR, DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME, 
+    DOCTOR_STRIKE_ID, DOCTOR_STRIKE_NAME, TRAIN_NO, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, 
+    TRAIN_YEAR, PLACE_ID, PLACE_NAME, PROVE_FILE_URL, COMPLETE_CERT_NO, COMPLETE_FILE_URL, 
+    CURR_DEGREE_CATEGORY_ID, CURR_DEGREE_CATEGORY_NAME, GRADUATION_YEAR, ADMIN_SWAP_FLAG, 
+    ROTATION_FLOW, ROTATION_NAME, SPECIAL_CERT_NO, SPECIAL_FILE_URL, AVG_COMPLETE, AVG_AUDIT, 
+    MATERIAL_ID, PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME, CERTIFICATE_URI, QUALIFICATION_MATERIAL_URI, 
+    SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE, TYPE_ID, REGISTE_MANUA, SECOND_SPE_ID, 
+    SECOND_SPE_NAME, GRADUATION_CERTIFICATE_NO, CERTIFICATE_DATE, GRADUATION_CERTIFICATE_TYPE
+  </sql>
+  <sql id="Blob_Column_List" >
+    RETEST_NOTICE, ADMIT_NOTICE, PROV_REMARK
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.JsresRecruitDocInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from JSRES_RECRUIT_DOC_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.JsresRecruitDocInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from JSRES_RECRUIT_DOC_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from JSRES_RECRUIT_DOC_INFO
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete
+      from JSRES_RECRUIT_DOC_INFO
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.JsresRecruitDocInfoExample" >
+      delete from JSRES_RECRUIT_DOC_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
+      insert into JSRES_RECRUIT_DOC_INFO (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW,
+      ORG_NAME, SPE_ID, SPE_NAME, 
+      SWAP_FLAG, RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME, 
+      RECRUIT_YEAR, RETEST_FLAG, EXAM_RESULT, 
+      AUDITION_RESULT, OPER_RESULT, TOTLE_RESULT, 
+      ADMIT_FLAG, RECRUIT_FLAG, CONFIRM_FLAG, 
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
+      MODIFY_TIME, MODIFY_USER_FLOW, SWAP_SPE_ID, 
+      SWAP_SPE_NAME, RECRUIT_DATE, CAT_SPE_ID, 
+      CAT_SPE_NAME, SESSION_NUMBER, YET_TRAIN_YEAR, 
+      DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME, DOCTOR_STRIKE_ID, 
+      DOCTOR_STRIKE_NAME, TRAIN_NO, AUDIT_STATUS_ID, 
+      AUDIT_STATUS_NAME, TRAIN_YEAR, PLACE_ID, 
+      PLACE_NAME, PROVE_FILE_URL, COMPLETE_CERT_NO, 
+      COMPLETE_FILE_URL, CURR_DEGREE_CATEGORY_ID, 
+      CURR_DEGREE_CATEGORY_NAME, GRADUATION_YEAR, 
+      ADMIN_SWAP_FLAG, ROTATION_FLOW, ROTATION_NAME, 
+      SPECIAL_CERT_NO, SPECIAL_FILE_URL, AVG_COMPLETE, 
+      AVG_AUDIT, MATERIAL_ID, PRACTICING_SCOPE_ID, 
+      PRACTICING_SCOPE_NAME, CERTIFICATE_URI, QUALIFICATION_MATERIAL_URI, 
+      SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE, 
+      TYPE_ID, REGISTE_MANUA, SECOND_SPE_ID, 
+      SECOND_SPE_NAME, GRADUATION_CERTIFICATE_NO, 
+      CERTIFICATE_DATE, GRADUATION_CERTIFICATE_TYPE, 
+      RETEST_NOTICE, ADMIT_NOTICE, PROV_REMARK
+      )
+    values (#{recruitFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, 
+      #{orgName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, 
+      #{swapFlag,jdbcType=VARCHAR}, #{recruitTypeId,jdbcType=VARCHAR}, #{recruitTypeName,jdbcType=VARCHAR}, 
+      #{recruitYear,jdbcType=VARCHAR}, #{retestFlag,jdbcType=VARCHAR}, #{examResult,jdbcType=DECIMAL}, 
+      #{auditionResult,jdbcType=DECIMAL}, #{operResult,jdbcType=DECIMAL}, #{totleResult,jdbcType=DECIMAL}, 
+      #{admitFlag,jdbcType=VARCHAR}, #{recruitFlag,jdbcType=VARCHAR}, #{confirmFlag,jdbcType=VARCHAR}, 
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{swapSpeId,jdbcType=VARCHAR}, 
+      #{swapSpeName,jdbcType=VARCHAR}, #{recruitDate,jdbcType=VARCHAR}, #{catSpeId,jdbcType=VARCHAR}, 
+      #{catSpeName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, #{yetTrainYear,jdbcType=VARCHAR}, 
+      #{doctorStatusId,jdbcType=VARCHAR}, #{doctorStatusName,jdbcType=VARCHAR}, #{doctorStrikeId,jdbcType=VARCHAR}, 
+      #{doctorStrikeName,jdbcType=VARCHAR}, #{trainNo,jdbcType=VARCHAR}, #{auditStatusId,jdbcType=VARCHAR}, 
+      #{auditStatusName,jdbcType=VARCHAR}, #{trainYear,jdbcType=VARCHAR}, #{placeId,jdbcType=VARCHAR}, 
+      #{placeName,jdbcType=VARCHAR}, #{proveFileUrl,jdbcType=VARCHAR}, #{completeCertNo,jdbcType=VARCHAR}, 
+      #{completeFileUrl,jdbcType=VARCHAR}, #{currDegreeCategoryId,jdbcType=VARCHAR}, 
+      #{currDegreeCategoryName,jdbcType=VARCHAR}, #{graduationYear,jdbcType=VARCHAR}, 
+      #{adminSwapFlag,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR}, #{rotationName,jdbcType=VARCHAR}, 
+      #{specialCertNo,jdbcType=VARCHAR}, #{specialFileUrl,jdbcType=VARCHAR}, #{avgComplete,jdbcType=VARCHAR}, 
+      #{avgAudit,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{practicingScopeId,jdbcType=VARCHAR}, 
+      #{practicingScopeName,jdbcType=VARCHAR}, #{certificateUri,jdbcType=VARCHAR}, #{qualificationMaterialUri,jdbcType=VARCHAR}, 
+      #{specialCertificationUri,jdbcType=VARCHAR}, #{qualificationMaterialCode,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=VARCHAR}, #{registeManua,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR}, 
+      #{secondSpeName,jdbcType=VARCHAR}, #{graduationCertificateNo,jdbcType=VARCHAR}, 
+      #{certificateDate,jdbcType=VARCHAR}, #{graduationCertificateType,jdbcType=VARCHAR}, 
+      #{retestNotice,jdbcType=CLOB}, #{admitNotice,jdbcType=CLOB}, #{provRemark,jdbcType=CLOB}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
+      insert into JSRES_RECRUIT_DOC_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME,
+      </if>
+      <if test="speId != null" >
+        SPE_ID,
+      </if>
+      <if test="speName != null" >
+        SPE_NAME,
+      </if>
+      <if test="swapFlag != null" >
+        SWAP_FLAG,
+      </if>
+      <if test="recruitTypeId != null" >
+        RECRUIT_TYPE_ID,
+      </if>
+      <if test="recruitTypeName != null" >
+        RECRUIT_TYPE_NAME,
+      </if>
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR,
+      </if>
+      <if test="retestFlag != null" >
+        RETEST_FLAG,
+      </if>
+      <if test="examResult != null" >
+        EXAM_RESULT,
+      </if>
+      <if test="auditionResult != null" >
+        AUDITION_RESULT,
+      </if>
+      <if test="operResult != null" >
+        OPER_RESULT,
+      </if>
+      <if test="totleResult != null" >
+        TOTLE_RESULT,
+      </if>
+      <if test="admitFlag != null" >
+        ADMIT_FLAG,
+      </if>
+      <if test="recruitFlag != null" >
+        RECRUIT_FLAG,
+      </if>
+      <if test="confirmFlag != null" >
+        CONFIRM_FLAG,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="swapSpeId != null" >
+        SWAP_SPE_ID,
+      </if>
+      <if test="swapSpeName != null" >
+        SWAP_SPE_NAME,
+      </if>
+      <if test="recruitDate != null" >
+        RECRUIT_DATE,
+      </if>
+      <if test="catSpeId != null" >
+        CAT_SPE_ID,
+      </if>
+      <if test="catSpeName != null" >
+        CAT_SPE_NAME,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="yetTrainYear != null" >
+        YET_TRAIN_YEAR,
+      </if>
+      <if test="doctorStatusId != null" >
+        DOCTOR_STATUS_ID,
+      </if>
+      <if test="doctorStatusName != null" >
+        DOCTOR_STATUS_NAME,
+      </if>
+      <if test="doctorStrikeId != null" >
+        DOCTOR_STRIKE_ID,
+      </if>
+      <if test="doctorStrikeName != null" >
+        DOCTOR_STRIKE_NAME,
+      </if>
+      <if test="trainNo != null" >
+        TRAIN_NO,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="trainYear != null" >
+        TRAIN_YEAR,
+      </if>
+      <if test="placeId != null" >
+        PLACE_ID,
+      </if>
+      <if test="placeName != null" >
+        PLACE_NAME,
+      </if>
+      <if test="proveFileUrl != null" >
+        PROVE_FILE_URL,
+      </if>
+      <if test="completeCertNo != null" >
+        COMPLETE_CERT_NO,
+      </if>
+      <if test="completeFileUrl != null" >
+        COMPLETE_FILE_URL,
+      </if>
+      <if test="currDegreeCategoryId != null" >
+        CURR_DEGREE_CATEGORY_ID,
+      </if>
+      <if test="currDegreeCategoryName != null" >
+        CURR_DEGREE_CATEGORY_NAME,
+      </if>
+      <if test="graduationYear != null" >
+        GRADUATION_YEAR,
+      </if>
+      <if test="adminSwapFlag != null" >
+        ADMIN_SWAP_FLAG,
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW,
+      </if>
+      <if test="rotationName != null" >
+        ROTATION_NAME,
+      </if>
+      <if test="specialCertNo != null" >
+        SPECIAL_CERT_NO,
+      </if>
+      <if test="specialFileUrl != null" >
+        SPECIAL_FILE_URL,
+      </if>
+      <if test="avgComplete != null" >
+        AVG_COMPLETE,
+      </if>
+      <if test="avgAudit != null" >
+        AVG_AUDIT,
+      </if>
+      <if test="materialId != null" >
+        MATERIAL_ID,
+      </if>
+      <if test="practicingScopeId != null" >
+        PRACTICING_SCOPE_ID,
+      </if>
+      <if test="practicingScopeName != null" >
+        PRACTICING_SCOPE_NAME,
+      </if>
+      <if test="certificateUri != null" >
+        CERTIFICATE_URI,
+      </if>
+      <if test="qualificationMaterialUri != null" >
+        QUALIFICATION_MATERIAL_URI,
+      </if>
+      <if test="specialCertificationUri != null" >
+        SPECIAL_CERTIFICATION_URI,
+      </if>
+      <if test="qualificationMaterialCode != null" >
+        QUALIFICATION_MATERIAL_CODE,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="registeManua != null" >
+        REGISTE_MANUA,
+      </if>
+      <if test="secondSpeId != null" >
+        SECOND_SPE_ID,
+      </if>
+      <if test="secondSpeName != null" >
+        SECOND_SPE_NAME,
+      </if>
+      <if test="graduationCertificateNo != null" >
+        GRADUATION_CERTIFICATE_NO,
+      </if>
+      <if test="certificateDate != null" >
+        CERTIFICATE_DATE,
+      </if>
+      <if test="graduationCertificateType != null" >
+        GRADUATION_CERTIFICATE_TYPE,
+      </if>
+      <if test="retestNotice != null" >
+        RETEST_NOTICE,
+      </if>
+      <if test="admitNotice != null" >
+        ADMIT_NOTICE,
+      </if>
+      <if test="provRemark != null" >
+        PROV_REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recruitFlow != null" >
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="swapFlag != null" >
+        #{swapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitTypeId != null" >
+        #{recruitTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitTypeName != null" >
+        #{recruitTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitYear != null" >
+        #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="retestFlag != null" >
+        #{retestFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="examResult != null" >
+        #{examResult,jdbcType=DECIMAL},
+      </if>
+      <if test="auditionResult != null" >
+        #{auditionResult,jdbcType=DECIMAL},
+      </if>
+      <if test="operResult != null" >
+        #{operResult,jdbcType=DECIMAL},
+      </if>
+      <if test="totleResult != null" >
+        #{totleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="admitFlag != null" >
+        #{admitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlag != null" >
+        #{recruitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmFlag != null" >
+        #{confirmFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="swapSpeId != null" >
+        #{swapSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="swapSpeName != null" >
+        #{swapSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDate != null" >
+        #{recruitDate,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeId != null" >
+        #{catSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeName != null" >
+        #{catSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="yetTrainYear != null" >
+        #{yetTrainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStatusId != null" >
+        #{doctorStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStatusName != null" >
+        #{doctorStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStrikeId != null" >
+        #{doctorStrikeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStrikeName != null" >
+        #{doctorStrikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainNo != null" >
+        #{trainNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainYear != null" >
+        #{trainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null" >
+        #{placeId,jdbcType=VARCHAR},
+      </if>
+      <if test="placeName != null" >
+        #{placeName,jdbcType=VARCHAR},
+      </if>
+      <if test="proveFileUrl != null" >
+        #{proveFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="completeCertNo != null" >
+        #{completeCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="completeFileUrl != null" >
+        #{completeFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="currDegreeCategoryId != null" >
+        #{currDegreeCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="currDegreeCategoryName != null" >
+        #{currDegreeCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null" >
+        #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="adminSwapFlag != null" >
+        #{adminSwapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationName != null" >
+        #{rotationName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertNo != null" >
+        #{specialCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="specialFileUrl != null" >
+        #{specialFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="avgComplete != null" >
+        #{avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgAudit != null" >
+        #{avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeId != null" >
+        #{practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeName != null" >
+        #{practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUri != null" >
+        #{certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialUri != null" >
+        #{qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertificationUri != null" >
+        #{specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialCode != null" >
+        #{qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="registeManua != null" >
+        #{registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeId != null" >
+        #{secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeName != null" >
+        #{secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCertificateNo != null" >
+        #{graduationCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateDate != null" >
+        #{certificateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCertificateType != null" >
+        #{graduationCertificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="retestNotice != null" >
+        #{retestNotice,jdbcType=CLOB},
+      </if>
+      <if test="admitNotice != null" >
+        #{admitNotice,jdbcType=CLOB},
+      </if>
+      <if test="provRemark != null" >
+        #{provRemark,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.JsresRecruitDocInfoExample" resultType="java.lang.Integer" >
+      select count(*) from JSRES_RECRUIT_DOC_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update JSRES_RECRUIT_DOC_INFO
+    <set >
+      <if test="record.recruitFlow != null" >
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgName != null" >
+        ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speId != null" >
+        SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speName != null" >
+        SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.swapFlag != null" >
+        SWAP_FLAG = #{record.swapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitTypeId != null" >
+        RECRUIT_TYPE_ID = #{record.recruitTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitTypeName != null" >
+        RECRUIT_TYPE_NAME = #{record.recruitTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitYear != null" >
+        RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retestFlag != null" >
+        RETEST_FLAG = #{record.retestFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examResult != null" >
+        EXAM_RESULT = #{record.examResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.auditionResult != null" >
+        AUDITION_RESULT = #{record.auditionResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operResult != null" >
+        OPER_RESULT = #{record.operResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totleResult != null" >
+        TOTLE_RESULT = #{record.totleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.admitFlag != null" >
+        ADMIT_FLAG = #{record.admitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitFlag != null" >
+        RECRUIT_FLAG = #{record.recruitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmFlag != null" >
+        CONFIRM_FLAG = #{record.confirmFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.swapSpeId != null" >
+        SWAP_SPE_ID = #{record.swapSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.swapSpeName != null" >
+        SWAP_SPE_NAME = #{record.swapSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitDate != null" >
+        RECRUIT_DATE = #{record.recruitDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catSpeId != null" >
+        CAT_SPE_ID = #{record.catSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catSpeName != null" >
+        CAT_SPE_NAME = #{record.catSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yetTrainYear != null" >
+        YET_TRAIN_YEAR = #{record.yetTrainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorStatusId != null" >
+        DOCTOR_STATUS_ID = #{record.doctorStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorStatusName != null" >
+        DOCTOR_STATUS_NAME = #{record.doctorStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorStrikeId != null" >
+        DOCTOR_STRIKE_ID = #{record.doctorStrikeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorStrikeName != null" >
+        DOCTOR_STRIKE_NAME = #{record.doctorStrikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainNo != null" >
+        TRAIN_NO = #{record.trainNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainYear != null" >
+        TRAIN_YEAR = #{record.trainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.placeId != null" >
+        PLACE_ID = #{record.placeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.placeName != null" >
+        PLACE_NAME = #{record.placeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proveFileUrl != null" >
+        PROVE_FILE_URL = #{record.proveFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeCertNo != null" >
+        COMPLETE_CERT_NO = #{record.completeCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.completeFileUrl != null" >
+        COMPLETE_FILE_URL = #{record.completeFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currDegreeCategoryId != null" >
+        CURR_DEGREE_CATEGORY_ID = #{record.currDegreeCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currDegreeCategoryName != null" >
+        CURR_DEGREE_CATEGORY_NAME = #{record.currDegreeCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationYear != null" >
+        GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminSwapFlag != null" >
+        ADMIN_SWAP_FLAG = #{record.adminSwapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationFlow != null" >
+        ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rotationName != null" >
+        ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialCertNo != null" >
+        SPECIAL_CERT_NO = #{record.specialCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialFileUrl != null" >
+        SPECIAL_FILE_URL = #{record.specialFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgComplete != null" >
+        AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avgAudit != null" >
+        AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialId != null" >
+        MATERIAL_ID = #{record.materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScopeId != null" >
+        PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.practicingScopeName != null" >
+        PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateUri != null" >
+        CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialUri != null" >
+        QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialCertificationUri != null" >
+        SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationMaterialCode != null" >
+        QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registeManua != null" >
+        REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSpeId != null" >
+        SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondSpeName != null" >
+        SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationCertificateNo != null" >
+        GRADUATION_CERTIFICATE_NO = #{record.graduationCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateDate != null" >
+        CERTIFICATE_DATE = #{record.certificateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationCertificateType != null" >
+        GRADUATION_CERTIFICATE_TYPE = #{record.graduationCertificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retestNotice != null" >
+        RETEST_NOTICE = #{record.retestNotice,jdbcType=CLOB},
+      </if>
+      <if test="record.admitNotice != null" >
+        ADMIT_NOTICE = #{record.admitNotice,jdbcType=CLOB},
+      </if>
+      <if test="record.provRemark != null" >
+        PROV_REMARK = #{record.provRemark,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+      update JSRES_RECRUIT_DOC_INFO
+    set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      SWAP_FLAG = #{record.swapFlag,jdbcType=VARCHAR},
+      RECRUIT_TYPE_ID = #{record.recruitTypeId,jdbcType=VARCHAR},
+      RECRUIT_TYPE_NAME = #{record.recruitTypeName,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      RETEST_FLAG = #{record.retestFlag,jdbcType=VARCHAR},
+      EXAM_RESULT = #{record.examResult,jdbcType=DECIMAL},
+      AUDITION_RESULT = #{record.auditionResult,jdbcType=DECIMAL},
+      OPER_RESULT = #{record.operResult,jdbcType=DECIMAL},
+      TOTLE_RESULT = #{record.totleResult,jdbcType=DECIMAL},
+      ADMIT_FLAG = #{record.admitFlag,jdbcType=VARCHAR},
+      RECRUIT_FLAG = #{record.recruitFlag,jdbcType=VARCHAR},
+      CONFIRM_FLAG = #{record.confirmFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SWAP_SPE_ID = #{record.swapSpeId,jdbcType=VARCHAR},
+      SWAP_SPE_NAME = #{record.swapSpeName,jdbcType=VARCHAR},
+      RECRUIT_DATE = #{record.recruitDate,jdbcType=VARCHAR},
+      CAT_SPE_ID = #{record.catSpeId,jdbcType=VARCHAR},
+      CAT_SPE_NAME = #{record.catSpeName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      YET_TRAIN_YEAR = #{record.yetTrainYear,jdbcType=VARCHAR},
+      DOCTOR_STATUS_ID = #{record.doctorStatusId,jdbcType=VARCHAR},
+      DOCTOR_STATUS_NAME = #{record.doctorStatusName,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_ID = #{record.doctorStrikeId,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_NAME = #{record.doctorStrikeName,jdbcType=VARCHAR},
+      TRAIN_NO = #{record.trainNo,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      TRAIN_YEAR = #{record.trainYear,jdbcType=VARCHAR},
+      PLACE_ID = #{record.placeId,jdbcType=VARCHAR},
+      PLACE_NAME = #{record.placeName,jdbcType=VARCHAR},
+      PROVE_FILE_URL = #{record.proveFileUrl,jdbcType=VARCHAR},
+      COMPLETE_CERT_NO = #{record.completeCertNo,jdbcType=VARCHAR},
+      COMPLETE_FILE_URL = #{record.completeFileUrl,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_ID = #{record.currDegreeCategoryId,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_NAME = #{record.currDegreeCategoryName,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      ADMIN_SWAP_FLAG = #{record.adminSwapFlag,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
+      SPECIAL_CERT_NO = #{record.specialCertNo,jdbcType=VARCHAR},
+      SPECIAL_FILE_URL = #{record.specialFileUrl,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      MATERIAL_ID = #{record.materialId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_NO = #{record.graduationCertificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_DATE = #{record.certificateDate,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_TYPE = #{record.graduationCertificateType,jdbcType=VARCHAR},
+      RETEST_NOTICE = #{record.retestNotice,jdbcType=CLOB},
+      ADMIT_NOTICE = #{record.admitNotice,jdbcType=CLOB},
+      PROV_REMARK = #{record.provRemark,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update JSRES_RECRUIT_DOC_INFO
+    set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{record.orgName,jdbcType=VARCHAR},
+      SPE_ID = #{record.speId,jdbcType=VARCHAR},
+      SPE_NAME = #{record.speName,jdbcType=VARCHAR},
+      SWAP_FLAG = #{record.swapFlag,jdbcType=VARCHAR},
+      RECRUIT_TYPE_ID = #{record.recruitTypeId,jdbcType=VARCHAR},
+      RECRUIT_TYPE_NAME = #{record.recruitTypeName,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      RETEST_FLAG = #{record.retestFlag,jdbcType=VARCHAR},
+      EXAM_RESULT = #{record.examResult,jdbcType=DECIMAL},
+      AUDITION_RESULT = #{record.auditionResult,jdbcType=DECIMAL},
+      OPER_RESULT = #{record.operResult,jdbcType=DECIMAL},
+      TOTLE_RESULT = #{record.totleResult,jdbcType=DECIMAL},
+      ADMIT_FLAG = #{record.admitFlag,jdbcType=VARCHAR},
+      RECRUIT_FLAG = #{record.recruitFlag,jdbcType=VARCHAR},
+      CONFIRM_FLAG = #{record.confirmFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      SWAP_SPE_ID = #{record.swapSpeId,jdbcType=VARCHAR},
+      SWAP_SPE_NAME = #{record.swapSpeName,jdbcType=VARCHAR},
+      RECRUIT_DATE = #{record.recruitDate,jdbcType=VARCHAR},
+      CAT_SPE_ID = #{record.catSpeId,jdbcType=VARCHAR},
+      CAT_SPE_NAME = #{record.catSpeName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      YET_TRAIN_YEAR = #{record.yetTrainYear,jdbcType=VARCHAR},
+      DOCTOR_STATUS_ID = #{record.doctorStatusId,jdbcType=VARCHAR},
+      DOCTOR_STATUS_NAME = #{record.doctorStatusName,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_ID = #{record.doctorStrikeId,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_NAME = #{record.doctorStrikeName,jdbcType=VARCHAR},
+      TRAIN_NO = #{record.trainNo,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      TRAIN_YEAR = #{record.trainYear,jdbcType=VARCHAR},
+      PLACE_ID = #{record.placeId,jdbcType=VARCHAR},
+      PLACE_NAME = #{record.placeName,jdbcType=VARCHAR},
+      PROVE_FILE_URL = #{record.proveFileUrl,jdbcType=VARCHAR},
+      COMPLETE_CERT_NO = #{record.completeCertNo,jdbcType=VARCHAR},
+      COMPLETE_FILE_URL = #{record.completeFileUrl,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_ID = #{record.currDegreeCategoryId,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_NAME = #{record.currDegreeCategoryName,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{record.graduationYear,jdbcType=VARCHAR},
+      ADMIN_SWAP_FLAG = #{record.adminSwapFlag,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{record.rotationFlow,jdbcType=VARCHAR},
+      ROTATION_NAME = #{record.rotationName,jdbcType=VARCHAR},
+      SPECIAL_CERT_NO = #{record.specialCertNo,jdbcType=VARCHAR},
+      SPECIAL_FILE_URL = #{record.specialFileUrl,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{record.avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{record.avgAudit,jdbcType=VARCHAR},
+      MATERIAL_ID = #{record.materialId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{record.practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{record.practicingScopeName,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{record.certificateUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{record.qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{record.specialCertificationUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{record.qualificationMaterialCode,jdbcType=VARCHAR},
+      TYPE_ID = #{record.typeId,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{record.registeManua,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_NO = #{record.graduationCertificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_DATE = #{record.certificateDate,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_TYPE = #{record.graduationCertificateType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
+      update JSRES_RECRUIT_DOC_INFO
+    <set >
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="speId != null" >
+        SPE_ID = #{speId,jdbcType=VARCHAR},
+      </if>
+      <if test="speName != null" >
+        SPE_NAME = #{speName,jdbcType=VARCHAR},
+      </if>
+      <if test="swapFlag != null" >
+        SWAP_FLAG = #{swapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitTypeId != null" >
+        RECRUIT_TYPE_ID = #{recruitTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitTypeName != null" >
+        RECRUIT_TYPE_NAME = #{recruitTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="retestFlag != null" >
+        RETEST_FLAG = #{retestFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="examResult != null" >
+        EXAM_RESULT = #{examResult,jdbcType=DECIMAL},
+      </if>
+      <if test="auditionResult != null" >
+        AUDITION_RESULT = #{auditionResult,jdbcType=DECIMAL},
+      </if>
+      <if test="operResult != null" >
+        OPER_RESULT = #{operResult,jdbcType=DECIMAL},
+      </if>
+      <if test="totleResult != null" >
+        TOTLE_RESULT = #{totleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="admitFlag != null" >
+        ADMIT_FLAG = #{admitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitFlag != null" >
+        RECRUIT_FLAG = #{recruitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmFlag != null" >
+        CONFIRM_FLAG = #{confirmFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="swapSpeId != null" >
+        SWAP_SPE_ID = #{swapSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="swapSpeName != null" >
+        SWAP_SPE_NAME = #{swapSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDate != null" >
+        RECRUIT_DATE = #{recruitDate,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeId != null" >
+        CAT_SPE_ID = #{catSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="catSpeName != null" >
+        CAT_SPE_NAME = #{catSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="yetTrainYear != null" >
+        YET_TRAIN_YEAR = #{yetTrainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStatusId != null" >
+        DOCTOR_STATUS_ID = #{doctorStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStatusName != null" >
+        DOCTOR_STATUS_NAME = #{doctorStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStrikeId != null" >
+        DOCTOR_STRIKE_ID = #{doctorStrikeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorStrikeName != null" >
+        DOCTOR_STRIKE_NAME = #{doctorStrikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainNo != null" >
+        TRAIN_NO = #{trainNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainYear != null" >
+        TRAIN_YEAR = #{trainYear,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null" >
+        PLACE_ID = #{placeId,jdbcType=VARCHAR},
+      </if>
+      <if test="placeName != null" >
+        PLACE_NAME = #{placeName,jdbcType=VARCHAR},
+      </if>
+      <if test="proveFileUrl != null" >
+        PROVE_FILE_URL = #{proveFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="completeCertNo != null" >
+        COMPLETE_CERT_NO = #{completeCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="completeFileUrl != null" >
+        COMPLETE_FILE_URL = #{completeFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="currDegreeCategoryId != null" >
+        CURR_DEGREE_CATEGORY_ID = #{currDegreeCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="currDegreeCategoryName != null" >
+        CURR_DEGREE_CATEGORY_NAME = #{currDegreeCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationYear != null" >
+        GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      </if>
+      <if test="adminSwapFlag != null" >
+        ADMIN_SWAP_FLAG = #{adminSwapFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationFlow != null" >
+        ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="rotationName != null" >
+        ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertNo != null" >
+        SPECIAL_CERT_NO = #{specialCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="specialFileUrl != null" >
+        SPECIAL_FILE_URL = #{specialFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="avgComplete != null" >
+        AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      </if>
+      <if test="avgAudit != null" >
+        AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null" >
+        MATERIAL_ID = #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeId != null" >
+        PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      </if>
+      <if test="practicingScopeName != null" >
+        PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateUri != null" >
+        CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialUri != null" >
+        QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCertificationUri != null" >
+        SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationMaterialCode != null" >
+        QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="registeManua != null" >
+        REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeId != null" >
+        SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="secondSpeName != null" >
+        SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCertificateNo != null" >
+        GRADUATION_CERTIFICATE_NO = #{graduationCertificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateDate != null" >
+        CERTIFICATE_DATE = #{certificateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationCertificateType != null" >
+        GRADUATION_CERTIFICATE_TYPE = #{graduationCertificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="retestNotice != null" >
+        RETEST_NOTICE = #{retestNotice,jdbcType=CLOB},
+      </if>
+      <if test="admitNotice != null" >
+        ADMIT_NOTICE = #{admitNotice,jdbcType=CLOB},
+      </if>
+      <if test="provRemark != null" >
+        PROV_REMARK = #{provRemark,jdbcType=CLOB},
+      </if>
+    </set>
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.JsresRecruitDocInfoWithBLOBs" >
+      update JSRES_RECRUIT_DOC_INFO
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      SWAP_FLAG = #{swapFlag,jdbcType=VARCHAR},
+      RECRUIT_TYPE_ID = #{recruitTypeId,jdbcType=VARCHAR},
+      RECRUIT_TYPE_NAME = #{recruitTypeName,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      RETEST_FLAG = #{retestFlag,jdbcType=VARCHAR},
+      EXAM_RESULT = #{examResult,jdbcType=DECIMAL},
+      AUDITION_RESULT = #{auditionResult,jdbcType=DECIMAL},
+      OPER_RESULT = #{operResult,jdbcType=DECIMAL},
+      TOTLE_RESULT = #{totleResult,jdbcType=DECIMAL},
+      ADMIT_FLAG = #{admitFlag,jdbcType=VARCHAR},
+      RECRUIT_FLAG = #{recruitFlag,jdbcType=VARCHAR},
+      CONFIRM_FLAG = #{confirmFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SWAP_SPE_ID = #{swapSpeId,jdbcType=VARCHAR},
+      SWAP_SPE_NAME = #{swapSpeName,jdbcType=VARCHAR},
+      RECRUIT_DATE = #{recruitDate,jdbcType=VARCHAR},
+      CAT_SPE_ID = #{catSpeId,jdbcType=VARCHAR},
+      CAT_SPE_NAME = #{catSpeName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      YET_TRAIN_YEAR = #{yetTrainYear,jdbcType=VARCHAR},
+      DOCTOR_STATUS_ID = #{doctorStatusId,jdbcType=VARCHAR},
+      DOCTOR_STATUS_NAME = #{doctorStatusName,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_ID = #{doctorStrikeId,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_NAME = #{doctorStrikeName,jdbcType=VARCHAR},
+      TRAIN_NO = #{trainNo,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      TRAIN_YEAR = #{trainYear,jdbcType=VARCHAR},
+      PLACE_ID = #{placeId,jdbcType=VARCHAR},
+      PLACE_NAME = #{placeName,jdbcType=VARCHAR},
+      PROVE_FILE_URL = #{proveFileUrl,jdbcType=VARCHAR},
+      COMPLETE_CERT_NO = #{completeCertNo,jdbcType=VARCHAR},
+      COMPLETE_FILE_URL = #{completeFileUrl,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_ID = #{currDegreeCategoryId,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_NAME = #{currDegreeCategoryName,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      ADMIN_SWAP_FLAG = #{adminSwapFlag,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
+      SPECIAL_CERT_NO = #{specialCertNo,jdbcType=VARCHAR},
+      SPECIAL_FILE_URL = #{specialFileUrl,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      MATERIAL_ID = #{materialId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_NO = #{graduationCertificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_DATE = #{certificateDate,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_TYPE = #{graduationCertificateType,jdbcType=VARCHAR},
+      RETEST_NOTICE = #{retestNotice,jdbcType=CLOB},
+      ADMIT_NOTICE = #{admitNotice,jdbcType=CLOB},
+      PROV_REMARK = #{provRemark,jdbcType=CLOB}
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.JsresRecruitDocInfo" >
+      update JSRES_RECRUIT_DOC_INFO
+    set DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      SPE_ID = #{speId,jdbcType=VARCHAR},
+      SPE_NAME = #{speName,jdbcType=VARCHAR},
+      SWAP_FLAG = #{swapFlag,jdbcType=VARCHAR},
+      RECRUIT_TYPE_ID = #{recruitTypeId,jdbcType=VARCHAR},
+      RECRUIT_TYPE_NAME = #{recruitTypeName,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      RETEST_FLAG = #{retestFlag,jdbcType=VARCHAR},
+      EXAM_RESULT = #{examResult,jdbcType=DECIMAL},
+      AUDITION_RESULT = #{auditionResult,jdbcType=DECIMAL},
+      OPER_RESULT = #{operResult,jdbcType=DECIMAL},
+      TOTLE_RESULT = #{totleResult,jdbcType=DECIMAL},
+      ADMIT_FLAG = #{admitFlag,jdbcType=VARCHAR},
+      RECRUIT_FLAG = #{recruitFlag,jdbcType=VARCHAR},
+      CONFIRM_FLAG = #{confirmFlag,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      SWAP_SPE_ID = #{swapSpeId,jdbcType=VARCHAR},
+      SWAP_SPE_NAME = #{swapSpeName,jdbcType=VARCHAR},
+      RECRUIT_DATE = #{recruitDate,jdbcType=VARCHAR},
+      CAT_SPE_ID = #{catSpeId,jdbcType=VARCHAR},
+      CAT_SPE_NAME = #{catSpeName,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      YET_TRAIN_YEAR = #{yetTrainYear,jdbcType=VARCHAR},
+      DOCTOR_STATUS_ID = #{doctorStatusId,jdbcType=VARCHAR},
+      DOCTOR_STATUS_NAME = #{doctorStatusName,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_ID = #{doctorStrikeId,jdbcType=VARCHAR},
+      DOCTOR_STRIKE_NAME = #{doctorStrikeName,jdbcType=VARCHAR},
+      TRAIN_NO = #{trainNo,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      TRAIN_YEAR = #{trainYear,jdbcType=VARCHAR},
+      PLACE_ID = #{placeId,jdbcType=VARCHAR},
+      PLACE_NAME = #{placeName,jdbcType=VARCHAR},
+      PROVE_FILE_URL = #{proveFileUrl,jdbcType=VARCHAR},
+      COMPLETE_CERT_NO = #{completeCertNo,jdbcType=VARCHAR},
+      COMPLETE_FILE_URL = #{completeFileUrl,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_ID = #{currDegreeCategoryId,jdbcType=VARCHAR},
+      CURR_DEGREE_CATEGORY_NAME = #{currDegreeCategoryName,jdbcType=VARCHAR},
+      GRADUATION_YEAR = #{graduationYear,jdbcType=VARCHAR},
+      ADMIN_SWAP_FLAG = #{adminSwapFlag,jdbcType=VARCHAR},
+      ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR},
+      ROTATION_NAME = #{rotationName,jdbcType=VARCHAR},
+      SPECIAL_CERT_NO = #{specialCertNo,jdbcType=VARCHAR},
+      SPECIAL_FILE_URL = #{specialFileUrl,jdbcType=VARCHAR},
+      AVG_COMPLETE = #{avgComplete,jdbcType=VARCHAR},
+      AVG_AUDIT = #{avgAudit,jdbcType=VARCHAR},
+      MATERIAL_ID = #{materialId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_ID = #{practicingScopeId,jdbcType=VARCHAR},
+      PRACTICING_SCOPE_NAME = #{practicingScopeName,jdbcType=VARCHAR},
+      CERTIFICATE_URI = #{certificateUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_URI = #{qualificationMaterialUri,jdbcType=VARCHAR},
+      SPECIAL_CERTIFICATION_URI = #{specialCertificationUri,jdbcType=VARCHAR},
+      QUALIFICATION_MATERIAL_CODE = #{qualificationMaterialCode,jdbcType=VARCHAR},
+      TYPE_ID = #{typeId,jdbcType=VARCHAR},
+      REGISTE_MANUA = #{registeManua,jdbcType=VARCHAR},
+      SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
+      SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_NO = #{graduationCertificateNo,jdbcType=VARCHAR},
+      CERTIFICATE_DATE = #{certificateDate,jdbcType=VARCHAR},
+      GRADUATION_CERTIFICATE_TYPE = #{graduationCertificateType,jdbcType=VARCHAR}
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

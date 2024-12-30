@@ -5,7 +5,7 @@ import com.pinde.core.model.SysUser;
 import com.pinde.res.biz.jswjw.IJswjwKzrBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
-import com.pinde.sci.dao.base.ResScoreMapper;
+import com.pinde.core.common.sci.dao.ResScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

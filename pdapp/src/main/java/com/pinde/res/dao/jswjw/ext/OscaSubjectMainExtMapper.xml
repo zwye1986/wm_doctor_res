@@ -17,7 +17,7 @@
 
     </select>
 
-    <select id="searchSubjectsForDoctor" parameterType="string" resultMap="com.pinde.sci.dao.base.OscaSubjectStationMapper.BaseResultMap">
+    <select id="searchSubjectsForDoctor" parameterType="string" resultMap="com.pinde.core.common.sci.dao.OscaSubjectStationMapper.BaseResultMap">
         select oss.* from osca_subject_station oss
         left join osca_skills_assessment osa on oss.subject_flow = osa.subject_flow
         where osa.Record_status ='Y' AND oss.Record_status ='Y'

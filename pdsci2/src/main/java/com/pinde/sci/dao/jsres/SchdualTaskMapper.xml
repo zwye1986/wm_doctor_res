@@ -912,14 +912,14 @@
 		  )
 	</insert>
 	
-	<select id="searchJointData" parameterType="map" resultMap="com.pinde.sci.dao.base.JsresAppInfoMapper.BaseResultMap">
+	<select id="searchJointData" parameterType="map" resultMap="com.pinde.core.common.sci.dao.JsresAppInfoMapper.BaseResultMap">
 		SELECT * FROM JSRES_APP_INFO
 		WHERE MONTH_DATE = #{monthDate}
 		AND ORG_FLOW = #{orgFlow}
 		and is_contain = 'N'
 	</select>
 
-	<select id="searchLocalData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresAppInfoMapper.BaseResultMap">
+	<select id="searchLocalData" parameterType="map"  resultMap="com.pinde.core.common.sci.dao.JsresAppInfoMapper.BaseResultMap">
 		SELECT * FROM JSRES_APP_INFO
 		WHERE MONTH_DATE = #{monthDate}
 		<if test="orgFlows!=null and orgFlows.size>0">
@@ -929,7 +929,7 @@
 		and is_contain = 'N'
 	</select>
 	
-	<select id="searchAllData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresAppInfoMapper.BaseResultMap">
+	<select id="searchAllData" parameterType="map"  resultMap="com.pinde.core.common.sci.dao.JsresAppInfoMapper.BaseResultMap">
 		SELECT * FROM JSRES_APP_INFO
 		WHERE MONTH_DATE = #{monthDate}
 		and is_contain = 'N'
@@ -1478,7 +1478,7 @@
 		)
 	</insert>
 	
-	<select id="selectLunzhuanData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresSchDataStatisticsMapper.BaseResultMap">
+	<select id="selectLunzhuanData" parameterType="map"  resultMap="com.pinde.core.common.sci.dao.JsresSchDataStatisticsMapper.BaseResultMap">
 		SELECT * FROM JSRES_SCH_DATA_STATISTICS
 		WHERE MONTH_DATE = #{monthDate}
 		AND DOCTOR_TYPE_ID = #{doctorTypeId}
@@ -1501,7 +1501,7 @@
 		</if>
 	</select>
 
-	<select id="selectOrgLunzhuanData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresSchDataStatisticsMapper.BaseResultMap">
+	<select id="selectOrgLunzhuanData" parameterType="map"  resultMap="com.pinde.core.common.sci.dao.JsresSchDataStatisticsMapper.BaseResultMap">
 		SELECT * FROM JSRES_SCH_DATA_STATISTICS
 		WHERE MONTH_DATE = #{monthDate}
 		AND DOCTOR_TYPE_ID = #{doctorTypeId}
@@ -2147,14 +2147,14 @@
 			)
 	</insert>
 
-	<select id="selectAllActivityData" parameterType="string"  resultMap="com.pinde.sci.dao.base.JsresActivityStatisticsMapper.BaseResultMap">
+	<select id="selectAllActivityData" parameterType="string"  resultMap="com.pinde.core.common.sci.dao.JsresActivityStatisticsMapper.BaseResultMap">
 		SELECT * FROM JSRES_ACTIVITY_STATISTICS
 		WHERE MONTH_DATE = #{monthDate}
 		AND DOCTOR_TYPE_ID = 'All'
 		ORDER BY ORG_CODE
 	</select>
 
-	<select id="searchLocalActivityData" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresActivityStatisticsMapper.BaseResultMap">
+	<select id="searchLocalActivityData" parameterType="map"  resultMap="com.pinde.core.common.sci.dao.JsresActivityStatisticsMapper.BaseResultMap">
 		SELECT * FROM JSRES_ACTIVITY_STATISTICS
 		WHERE MONTH_DATE = #{monthDate}
 		AND DOCTOR_TYPE_ID = #{doctorTypeId}
@@ -2380,7 +2380,7 @@
 			and so.org_code is not null
 	</insert>
 
-	<select id="searchOutDeptDate" parameterType="map"  resultMap="com.pinde.sci.dao.base.JsresOutDeptStatisticsMapper.BaseResultMap">
+	<select id="searchOutDeptDate" parameterType="map"  resultMap="com.pinde.core.common.sci.dao.JsresOutDeptStatisticsMapper.BaseResultMap">
 		SELECT * FROM JSRES_OUT_DEPT_STATISTICS
 		WHERE MONTH_DATE = #{monthDate}
 		AND DOCTOR_TYPE_ID = #{doctorTypeId}

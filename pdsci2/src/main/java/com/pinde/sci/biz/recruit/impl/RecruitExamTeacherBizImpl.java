@@ -8,7 +8,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamTeacherBiz;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.RecruitExamTeacherMapper;
+import com.pinde.core.common.sci.dao.RecruitExamTeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

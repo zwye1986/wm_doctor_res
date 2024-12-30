@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.sys.SysDeptExtMapper" >
-	<select id="getDeptByRec" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getDeptByRec" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select sd.*
         from sys_dept sd
 		where sd.record_status = 'Y'
@@ -33,7 +33,7 @@
 		order by sd.ordinal
 	</select>
 
-	<resultMap id="DoctorMap" type="map" extends="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<resultMap id="DoctorMap" type="map" extends="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
 	</resultMap>
 	<select id="searchDeptByDoctor" resultMap="DoctorMap">
@@ -55,7 +55,7 @@
 		)
 		order by sd.org_flow,sd.ordinal
 	</select>
-	<select id="getDeptByRecForUni" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getDeptByRecForUni" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select sd.*
         from sys_dept sd
 		where sd.record_status = 'Y'
@@ -103,7 +103,7 @@
 		</if>
 		order by sd.ordinal
 	</select>
-	<select id="searchDeptBySpe" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="searchDeptBySpe" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select sd.*
         from sys_dept sd
 		where sd.record_status = 'Y'
@@ -252,7 +252,7 @@
 		order by schd.RECORD_STATUS DESC, schd.ORDINAL,schd.sch_dept_flow
 	</select>
 
-	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+	<select id="getBaseAndExtDept" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         select DISTINCT sd.* from sys_dept sd
         left join sch_dept_external_rel sder
 		on sd.dept_flow = sder.dept_flow

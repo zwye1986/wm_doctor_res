@@ -3,6 +3,8 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.enums.JsResTrainYearEnum;
 import com.pinde.core.common.enums.JszyBaseStatusEnum;
+import com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper;
+import com.pinde.core.common.sci.dao.JsresRecruitInfoMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -35,8 +37,6 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	@Autowired
 	private ResDoctorRecruitMapper doctorRecruitMapper;
     @Autowired
-    private JszyResRecruitDoctorInfoExtMapper jszyResDoctorRecruitInfoExtMapper;
-    @Autowired
     private JsresRecruitDocInfoMapper jsResDoctorRecruitMapper;
     @Autowired
     private JsresRecruitInfoMapper recruitInfoMapper;
@@ -46,12 +46,6 @@ public class JszyResDoctorRecruitBizImpl implements IJszyResDoctorRecruitBiz {
 	private IMsgBiz msgBiz;
 	@Autowired
 	private ISchRotationBiz rotationBiz;
-	@Autowired
-	private SchRotationMapper rotationMapper;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
-	private ResBaseMapper resBaseMapper;
 	@Autowired
 	private IUserBiz userBiz;
 

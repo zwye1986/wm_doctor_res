@@ -1,6 +1,5 @@
 package com.pinde.res.biz.osca.impl;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaDoctorOrderdeBiz;
@@ -8,10 +7,10 @@ import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
 import com.pinde.res.dao.osca.ext.OscaSkillsAssessmentExtMapper;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
-import com.pinde.sci.dao.base.OscaDoctorAssessmentMapper;
-import com.pinde.sci.dao.base.OscaSkillsAssessmentMapper;
-import com.pinde.sci.dao.base.OscaSkillsAssessmentTimeMapper;
-import com.pinde.sci.dao.base.ResScoreMapper;
+import com.pinde.core.common.sci.dao.OscaDoctorAssessmentMapper;
+import com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper;
+import com.pinde.core.common.sci.dao.OscaSkillsAssessmentTimeMapper;
+import com.pinde.core.common.sci.dao.ResScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

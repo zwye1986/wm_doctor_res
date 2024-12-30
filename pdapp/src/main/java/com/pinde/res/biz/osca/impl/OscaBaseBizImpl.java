@@ -1,6 +1,7 @@
 package com.pinde.res.biz.osca.impl;
 
 import com.pinde.core.common.enums.osca.*;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -9,7 +10,6 @@ import com.pinde.res.biz.osca.IOscaBaseBiz;
 import com.pinde.res.dao.osca.ext.OscaCheckInfoExtMapper;
 import com.pinde.res.dao.osca.ext.OscaSkillsAssessmentExtMapper;
 import com.pinde.res.model.osca.mo.OscaCheckInfoExt;
-import com.pinde.sci.dao.base.*;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;

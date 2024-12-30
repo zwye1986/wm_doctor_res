@@ -8,7 +8,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.RecruitExamInfoMapper;
+import com.pinde.core.common.sci.dao.RecruitExamInfoMapper;
 import com.pinde.sci.dao.recruit.RecruitExamInfoExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

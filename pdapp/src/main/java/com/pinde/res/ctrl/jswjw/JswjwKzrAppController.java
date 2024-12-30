@@ -1,6 +1,5 @@
 package com.pinde.res.ctrl.jswjw;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
@@ -16,7 +15,7 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

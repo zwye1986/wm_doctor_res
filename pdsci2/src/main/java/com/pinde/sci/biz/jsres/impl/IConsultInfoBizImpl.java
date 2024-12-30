@@ -6,7 +6,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IConsultInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ConsultInfoMapper;
+import com.pinde.core.common.sci.dao.ConsultInfoMapper;
 import com.pinde.sci.dao.jsres.ConsultInfoExtMapper;
 import com.pinde.sci.util.jsres.SensitiveFilterUtil;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.pinde.res.biz.lcjn.impl;
 
 
 import com.pinde.core.common.PasswordHelper;
-import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -10,7 +10,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.lcjn.ILcjnBiz;
 import com.pinde.res.dao.jswjw.ext.SysUserExtMapper;
 import com.pinde.res.dao.lcjn.ext.LcjnCourseInfoExtMapper;
-import com.pinde.sci.dao.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

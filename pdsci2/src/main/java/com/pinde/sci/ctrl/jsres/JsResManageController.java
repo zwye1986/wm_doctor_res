@@ -11,6 +11,7 @@ import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.common.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.sci.dao.PubFileMapper;
 import com.pinde.core.common.sci.dao.SysUserDeptMapper;
 import com.pinde.core.common.sci.dao.SysUserMapper;
 import com.pinde.core.model.*;

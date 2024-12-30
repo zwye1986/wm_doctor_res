@@ -163,7 +163,7 @@
           or (p.SCH_START_DATE  <![CDATA[ >= ]]> #{startDate} AND p.SCH_START_DATE <![CDATA[ <= ]]>#{endDate})
            or (p.SCH_END_DATE  <![CDATA[ >= ]]> #{startDate} AND p.SCH_END_DATE <![CDATA[ <= ]]>#{endDate}))
     </select>
-    <select id="readOrgArrangeResult" resultMap="com.pinde.sci.dao.base.SchOrgArrangeResultMapper.BaseResultMap">
+    <select id="readOrgArrangeResult" resultMap="com.pinde.core.common.sci.dao.SchOrgArrangeResultMapper.BaseResultMap">
         select *
          from  SCH_ORG_ARRANGE_RESULT p
         where record_status='Y'
@@ -178,7 +178,7 @@
           or (substr(p.SCH_START_DATE,0,7)   <![CDATA[ >= ]]> #{startDate} AND substr(p.SCH_START_DATE,0,7)  <![CDATA[ <= ]]>#{endDate})
            or (substr(p.SCH_END_DATE,0,7)  <![CDATA[ >= ]]> #{startDate} AND substr(p.SCH_END_DATE,0,7) <![CDATA[ <= ]]>#{endDate}))
     </select>
-    <select id="readArrangeResultsByMap" resultMap="com.pinde.sci.dao.base.SchOrgArrangeResultMapper.BaseResultMap">
+    <select id="readArrangeResultsByMap" resultMap="com.pinde.core.common.sci.dao.SchOrgArrangeResultMapper.BaseResultMap">
         select *
          from  SCH_ORG_ARRANGE_RESULT p
         where record_status='Y'
@@ -193,7 +193,7 @@
         </if>
         order by SCH_START_DATE asc
     </select>
-    <select id="readArrangeResultsByTimeMap" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="readArrangeResultsByTimeMap" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select *
          from  sch_arrange_result p
         where record_status='Y'
@@ -205,7 +205,7 @@
         </if>
         order by SCH_START_DATE asc
     </select>
-    <select id="readRotationDeptBySchDept" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+    <select id="readRotationDeptBySchDept" resultMap="com.pinde.core.common.sci.dao.SchRotationDeptMapper.BaseResultMap">
         select *
          from  sch_rotation_dept p
         where record_status='Y'
@@ -242,7 +242,7 @@
         and doctor_flow=#{doctorFlow}
         group by select_Year
     </select>
-    <select id="getCycleResults" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="getCycleResults" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select *
          from  SCH_ARRANGE_RESULT p
         where record_status in ('Y','D')

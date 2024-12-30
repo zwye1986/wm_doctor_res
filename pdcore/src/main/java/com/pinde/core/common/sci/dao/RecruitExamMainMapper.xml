@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.RecruitExamMainMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitExamMain">
+    <id column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
+    <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
+    <result column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="IS_PUBLISH" property="isPublish" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.RecruitExamMain" extends="BaseResultMap">
+    <result column="MAIN_NOTE" property="mainNote" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MAIN_FLOW, RECRUIT_YEAR, CFG_FLOW, ORG_FLOW, START_TIME, END_TIME, IS_PUBLISH, RECORD_STATUS, 
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+  <sql id="Blob_Column_List" >
+    MAIN_NOTE
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.RecruitExamMainExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from RECRUIT_EXAM_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.RecruitExamMainExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from RECRUIT_EXAM_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from RECRUIT_EXAM_MAIN
+    where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from RECRUIT_EXAM_MAIN
+    where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitExamMainExample">
+      delete from RECRUIT_EXAM_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+    <insert id="insert" parameterType="com.pinde.core.model.RecruitExamMain">
+      insert into RECRUIT_EXAM_MAIN (MAIN_FLOW, RECRUIT_YEAR, CFG_FLOW,
+      ORG_FLOW, START_TIME, END_TIME, 
+      IS_PUBLISH, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      MAIN_NOTE)
+    values (#{mainFlow,jdbcType=VARCHAR}, #{recruitYear,jdbcType=VARCHAR}, #{cfgFlow,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, 
+      #{isPublish,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{mainNote,jdbcType=CLOB})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitExamMain">
+      insert into RECRUIT_EXAM_MAIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mainFlow != null" >
+        MAIN_FLOW,
+      </if>
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR,
+      </if>
+      <if test="cfgFlow != null" >
+        CFG_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="isPublish != null" >
+        IS_PUBLISH,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="mainNote != null" >
+        MAIN_NOTE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mainFlow != null" >
+        #{mainFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitYear != null" >
+        #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="cfgFlow != null" >
+        #{cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublish != null" >
+        #{isPublish,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="mainNote != null" >
+        #{mainNote,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.pinde.core.model.RecruitExamMainExample"
+            resultType="java.lang.Integer">
+      select count(*) from RECRUIT_EXAM_MAIN
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update RECRUIT_EXAM_MAIN
+    <set >
+      <if test="record.mainFlow != null" >
+        MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitYear != null" >
+        RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cfgFlow != null" >
+        CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        START_TIME = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isPublish != null" >
+        IS_PUBLISH = #{record.isPublish,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainNote != null" >
+        MAIN_NOTE = #{record.mainNote,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+      update RECRUIT_EXAM_MAIN
+    set MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      START_TIME = #{record.startTime,jdbcType=VARCHAR},
+      END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      IS_PUBLISH = #{record.isPublish,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      MAIN_NOTE = #{record.mainNote,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update RECRUIT_EXAM_MAIN
+    set MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      START_TIME = #{record.startTime,jdbcType=VARCHAR},
+      END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      IS_PUBLISH = #{record.isPublish,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitExamMain">
+      update RECRUIT_EXAM_MAIN
+    <set >
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="cfgFlow != null" >
+        CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublish != null" >
+        IS_PUBLISH = #{isPublish,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="mainNote != null" >
+        MAIN_NOTE = #{mainNote,jdbcType=CLOB},
+      </if>
+    </set>
+    where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.RecruitExamMain">
+      update RECRUIT_EXAM_MAIN
+    set RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      IS_PUBLISH = #{isPublish,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      MAIN_NOTE = #{mainNote,jdbcType=CLOB}
+    where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitExamMain">
+      update RECRUIT_EXAM_MAIN
+    set RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      CFG_FLOW = #{cfgFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      IS_PUBLISH = #{isPublish,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

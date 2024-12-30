@@ -5,9 +5,9 @@
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
         <association property="auditProcess" column="PROCESS_FLOW" javaType="com.pinde.core.model.StuAuditProcess"
-                     resultMap="com.pinde.sci.dao.base.StuAuditProcessMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.StuAuditProcessMapper.BaseResultMap"/>
         <association property="stuBatch" column="BATCH_FLOW" javaType="com.pinde.core.model.StuBatch"
-                     resultMap="com.pinde.sci.dao.base.StuBatchMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.StuBatchMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="searchStuUser"  parameterType="java.util.Map"  resultMap="StuUserExtMap">
 		SELECT SU.IS_Foreign,SU.USER_FLOW,

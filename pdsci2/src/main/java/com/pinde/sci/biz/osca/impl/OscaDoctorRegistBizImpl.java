@@ -2,6 +2,7 @@ package com.pinde.sci.biz.osca.impl;
 
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.sci.dao.OscaDoctorRegistMapper;
 import com.pinde.core.model.OscaDoctorRegist;
 import com.pinde.core.model.OscaDoctorRegistExample;
 import com.pinde.core.model.ResDoctor;
@@ -14,7 +15,6 @@ import com.pinde.sci.biz.sys.IRoleBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.OscaDoctorRegistMapper;
 import com.pinde.sci.dao.osca.OscaDoctorRegistExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,10 +29,6 @@ public class OscaDoctorRegistBizImpl implements IOscaDoctorRegistBiz {
     private OscaDoctorRegistMapper oscaDoctorRegistMapper;
     @Autowired
     private OscaDoctorRegistExtMapper oscaDoctorRegistExtMapper;
-    @Autowired
-    private IRoleBiz roleBiz;
-    @Autowired
-    private IUserRoleBiz userRoleBiz;
     @Autowired
     private IUserBiz userBiz;
     @Autowired

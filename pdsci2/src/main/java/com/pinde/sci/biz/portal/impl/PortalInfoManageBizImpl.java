@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.portal.impl;
 
 import com.pinde.core.common.enums.InfoStatusEnum;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.model.PortalInfoExample.Criteria;
 import com.pinde.core.util.DateUtil;

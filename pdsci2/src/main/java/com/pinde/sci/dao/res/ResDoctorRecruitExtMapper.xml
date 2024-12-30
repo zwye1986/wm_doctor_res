@@ -44,7 +44,7 @@
 		ORDER BY dr.recruit_year desc ,dr.TOTLE_RESULT DESC nulls last
 	</select>
 	
-	<select id="searchTrainSpeList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SysDictMapper.BaseResultMap">
+	<select id="searchTrainSpeList" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SysDictMapper.BaseResultMap">
 	select * from sys_dict where RECORD_STATUS = 'Y'
 		AND DICT_TYPE_ID = #{dictTypeId}
 		<if test='key!=null and key!=""'>
@@ -638,7 +638,7 @@
 		and rbs.recruit_year=#{recruitYear}
 		order by rbs.org_code
 	</select>
-	<resultMap id="signUpMap" type="hashmap" extends="com.pinde.sci.dao.base.JsresExamSignupMapper.BaseResultMap">
+	<resultMap id="signUpMap" type="hashmap" extends="com.pinde.core.common.sci.dao.JsresExamSignupMapper.BaseResultMap">
 		<result column="ID_NO" jdbcType="VARCHAR" property="idNo" />
 		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
 		<result column="SU_USER_NAME" jdbcType="VARCHAR"  property="userName"/>

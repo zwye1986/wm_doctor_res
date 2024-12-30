@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.ResDoctorRecruitExtMapper" >
-	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.res.model.jswjw.mo.ResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
+	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.res.model.jswjw.mo.ResDoctorRecruitExt" extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+		<association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 	<select id="searchDoctorRecruitAllList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT org_flow,org_name,session_number,count(1) as num
@@ -1158,7 +1158,7 @@
 		group by p.TEACHER_USER_FLOW
 	</select>
 
-	<resultMap id="signUpMap" type="hashmap" extends="com.pinde.sci.dao.base.JsresExamSignupMapper.BaseResultMap">
+	<resultMap id="signUpMap" type="hashmap" extends="com.pinde.core.common.sci.dao.JsresExamSignupMapper.BaseResultMap">
 		<result column="ID_NO" jdbcType="VARCHAR" property="idNo" />
 		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
 		<result column="SU_USER_NAME" jdbcType="VARCHAR"  property="userName"/>

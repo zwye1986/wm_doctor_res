@@ -18,7 +18,7 @@
 
 
     <resultMap id="gradeMap" type="com.pinde.sci.form.sch.SchGradeFrom"
-               extends="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         <result column="isHead"   property="isHead" jdbcType="VARCHAR"/>
         <result column="isTeacher" property="isTeacher" jdbcType="VARCHAR"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
@@ -118,7 +118,7 @@
     </select>
 
 
-    <select id="searchCycleArrangeResults" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchCycleArrangeResults" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select ar.*
         from SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
@@ -187,7 +187,7 @@
     </select>
 
     <select id="searchArrangeResultByDateAndDoctorFlow"
-            resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select *
         from SCH_ARRANGE_RESULT
         where RECORD_STATUS= 'Y'
@@ -205,7 +205,7 @@
     </select>
 
     <select id="searchArrangeResultByDateAndDoctorFlows" parameterType="java.util.Map"
-            resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select *
         from SCH_ARRANGE_RESULT
         where RECORD_STATUS= 'Y'
@@ -246,7 +246,7 @@
     </select>
 
     <select id="searchSchArrangeResultByDoctor4Sort"
-            resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT sar.*
         FROM sch_arrange_result sar
         left join res_doctor_sch_process rdsp
@@ -263,7 +263,7 @@
         , sar.SCH_START_DATE, sar.SCH_DEPT_ORDER
     </select>
     <select id="searchSchArrangeResultBySpeAndDoc"
-            resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT sar.*
         FROM sch_arrange_result sar
         left join sch_rotation sro
@@ -552,7 +552,7 @@
         LEFT JOIN RES_JOINT_ORG B on B.JOINT_ORG_FLOW = a.ORG_FLOW and B.RECORD_STATUS = 'Y'
     </select>
 
-    <select id="searchSchArrangeResultByDoctorAndDate" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchSchArrangeResultByDoctorAndDate" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT *
         FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
@@ -565,7 +565,7 @@
         ORDER BY SCH_START_DATE
     </select>
 
-    <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT *
         FROM SCH_ARRANGE_RESULT sar
         WHERE RECORD_STATUS = 'Y'
@@ -593,7 +593,7 @@
             sar.DEPT_FLOW = #{deptFlow})
         </if>
     </select>
-    <select id="deptDoctorAllWorkDetailByNow"   resultMap="com.pinde.sci.dao.base.JsresDoctorDeptDetailMapper.BaseResultMap">
+    <select id="deptDoctorAllWorkDetailByNow"   resultMap="com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper.BaseResultMap">
          SELECT sys_guid() RECORD_FLOW ,
            A.RECRUIT_FLOW,
            A.DOCTOR_FLOW,
@@ -976,7 +976,7 @@
         AND RECORD_STATUS = 'Y'
         GROUP BY DOCTOR_FLOW
     </select>
-    <select id="schArrangeResultQuery" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="schArrangeResultQuery" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select sar.*
         from sch_arrange_result sar
         where sar.RECORD_STATUS='Y'
@@ -1012,7 +1012,7 @@
         </if>
         ORDER BY sar.SCH_START_DATE DESC nulls last
     </select>
-    <select id="searchArrangeResultByDateAndOrgByMap" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchArrangeResultByDateAndOrgByMap" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select sar.*
         from sch_arrange_result sar
         where sar.RECORD_STATUS='Y'
@@ -1043,7 +1043,7 @@
         </if>
         ORDER BY sar.SCH_START_DATE DESC
     </select>
-    <select id="findDeptsByDoctor" resultMap="com.pinde.sci.dao.base.SysDeptMapper.BaseResultMap">
+    <select id="findDeptsByDoctor" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
         SELECT * FROM SYS_DEPT
         WHERE RECORD_STATUS='Y'
         AND DEPT_FLOW IN (
@@ -1142,7 +1142,7 @@
         GROUP BY SCH_DEPT_FLOW
     </select>
 
-    <select id="searchInMonthResult" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchInMonthResult" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT *
         FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
@@ -1180,7 +1180,7 @@
         ORDER BY SCH_START_DATE
     </select>
 
-    <select id="willInDoctor" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="willInDoctor" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT *
         FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
@@ -1235,7 +1235,7 @@
         )
         ORDER BY SCH_START_DATE
     </select>
-    <select id="willInDoctor2" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="willInDoctor2" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT distinct a.*
         FROM SCH_ARRANGE_RESULT a
         left join res_doctor rd on a.doctor_flow=rd.doctor_flow
@@ -1631,7 +1631,7 @@
 		AND ROTATION_FLOW = #{rotationFlow}
 	</select>
 
-    <select id="cutAfterResult" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="cutAfterResult" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT *
         FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
@@ -1674,7 +1674,7 @@
 		WHERE RECORD_STATUS = 'Y' AND SARF.DOCTOR_FLOW = #{doctorFlow}
 	</update>
 
-    <select id="searchResultByDoctor" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchResultByDoctor" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT SAR.*
         FROM SCH_ARRANGE_RESULT SAR, RES_DOCTOR RD
         WHERE SAR.RECORD_STATUS = 'Y'
@@ -1702,7 +1702,7 @@
 
 
     <resultMap id="resultExtMap" type="com.pinde.core.model.SchArrangeResultExt"
-               extends="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+               extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         <association property="process" javaType="com.pinde.core.model.ResDoctorSchProcess"
                      resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
         </association>
@@ -1952,7 +1952,7 @@
         order by u.USER_NAME
     </select>
 
-    <select id="searchCycleArrangeResultsForUni" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchCycleArrangeResultsForUni" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select ar.*
         from SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
@@ -1997,7 +1997,7 @@
         and dr.org_flow is not null
         order by u.USER_NAME
     </select>
-    <select id="searchCycleArrangeResultsForUniTwo" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchCycleArrangeResultsForUniTwo" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         SELECT ar.RESULT_FLOW,ar.DOCTOR_FLOW,ar.SCH_START_DATE,ar.SCH_END_DATE,ar.STANDARD_DEPT_ID,ar.STANDARD_GROUP_FLOW
         FROM SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
         where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
@@ -2036,7 +2036,7 @@
         and dr.org_flow is not null
         order by u.USER_NAME
     </select>
-    <select id="getResultBySchRotationDept" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="getResultBySchRotationDept" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select ar.*
         from SCH_ARRANGE_RESULT ar
         where session_number=#{sessionNumber}
@@ -2175,7 +2175,7 @@
                and dept.record_flow = #{schRotationDeptFlow})
     </update>
 
-    <select id="searchArrangeResultByDateAndOrgByMapNew" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="searchArrangeResultByDateAndOrgByMapNew" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select * from (
         select rd.DOCTOR_TYPE_ID,sar.*,rd.DOCTOR_STATUS_ID
         from sch_arrange_result sar
@@ -2425,7 +2425,7 @@
     </select>
 
 
-    <select id="checkResultDateList" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.SchArrangeResultMapper.BaseResultMap">
+    <select id="checkResultDateList" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         select *
         from sch_arrange_result
         where record_status = 'Y'

@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.RecruitInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.RecruitInfo">
+    <id column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
+    <result column="RECRUIT_YEAR" property="recruitYear" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_ID" property="doctorTypeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
+    <result column="LINK_MAN" property="linkMan" jdbcType="VARCHAR" />
+    <result column="LINK_MAN_PHONE" property="linkManPhone" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_NAME" property="workOrgName" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_LEVEL_ID" property="workOrgLevelId" jdbcType="VARCHAR" />
+    <result column="WORK_ORG_LEVEL_NAME" property="workOrgLevelName" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+    <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+    <result column="IS_SWAP" property="isSwap" jdbcType="VARCHAR" />
+    <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+    <result column="TRAINING_YEAR" property="trainingYear" jdbcType="VARCHAR" />
+    <result column="GRADUATION_TIME" property="graduationTime" jdbcType="VARCHAR" />
+    <result column="GRADUATED_NAME" property="graduatedName" jdbcType="VARCHAR" />
+    <result column="GRADUATED_MAJOR" property="graduatedMajor" jdbcType="VARCHAR" />
+    <result column="MASTERDEGREE_TYPE_ID" property="masterdegreeTypeId" jdbcType="VARCHAR" />
+    <result column="MASTERDEGREE_TYPE_NAME" property="masterdegreeTypeName" jdbcType="VARCHAR" />
+    <result column="MASTER_GRASCHOOL_NAME" property="masterGraschoolName" jdbcType="VARCHAR" />
+    <result column="MASTER_GRATIME" property="masterGratime" jdbcType="VARCHAR" />
+    <result column="MASTER_MAJOR" property="masterMajor" jdbcType="VARCHAR" />
+    <result column="DOCTOR_DEGREE_TYPE_ID" property="doctorDegreeTypeId" jdbcType="VARCHAR" />
+    <result column="DOCTOR_DEGREE_TYPE_NAME" property="doctorDegreeTypeName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_GRASCHOOL_NAME" property="doctorGraschoolName" jdbcType="VARCHAR" />
+    <result column="DOCTOR_GRATIME" property="doctorGratime" jdbcType="VARCHAR" />
+    <result column="DOCTOR_MAJOR" property="doctorMajor" jdbcType="VARCHAR" />
+    <result column="IS_YEAR_GRADUATE" property="isYearGraduate" jdbcType="VARCHAR" />
+    <result column="IS_HAVE_QUALIFICATION" property="isHaveQualification" jdbcType="VARCHAR" />
+    <result column="QUALIFICATION_CODE" property="qualificationCode" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+    <result column="WRITE_EXAM_FLAG" property="writeExamFlag" jdbcType="VARCHAR" />
+    <result column="EXAM_SCORE" property="examScore" jdbcType="VARCHAR" />
+    <result column="EXAM_IS_PASS" property="examIsPass" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_FLAG" property="interviewFlag" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_SCORE" property="interviewScore" jdbcType="VARCHAR" />
+    <result column="INTERVIEW_IS_PASS" property="interviewIsPass" jdbcType="VARCHAR" />
+    <result column="TICKET_NUMBER" property="ticketNumber" jdbcType="VARCHAR" />
+    <result column="ADMIT_FLAG" property="admitFlag" jdbcType="VARCHAR" />
+    <result column="ADMIT_IS_PASS" property="admitIsPass" jdbcType="VARCHAR" />
+    <result column="MAIN_FLOW" property="mainFlow" jdbcType="VARCHAR" />
+    <result column="EXAM_FLOW" property="examFlow" jdbcType="VARCHAR" />
+    <result column="EXAM_ROOM_FLOW" property="examRoomFlow" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="AUDIT_CONTENT" property="auditContent" jdbcType="VARCHAR" />
+    <result column="SAVE_TIME" property="saveTime" jdbcType="VARCHAR" />
+    <result column="SUBMIT_TIME" property="submitTime" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RECRUIT_FLOW, ORG_FLOW, DOCTOR_FLOW, RECRUIT_YEAR, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, 
+    LINK_MAN, LINK_MAN_PHONE, WORK_ORG_NAME, WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, 
+    TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, IS_SWAP, 
+    SESSION_NUMBER, TRAINING_YEAR, GRADUATION_TIME, GRADUATED_NAME, GRADUATED_MAJOR, 
+    MASTERDEGREE_TYPE_ID, MASTERDEGREE_TYPE_NAME, MASTER_GRASCHOOL_NAME, MASTER_GRATIME, 
+    MASTER_MAJOR, DOCTOR_DEGREE_TYPE_ID, DOCTOR_DEGREE_TYPE_NAME, DOCTOR_GRASCHOOL_NAME, 
+    DOCTOR_GRATIME, DOCTOR_MAJOR, IS_YEAR_GRADUATE, IS_HAVE_QUALIFICATION, QUALIFICATION_CODE, 
+    AUDIT_STATUS_ID, AUDIT_STATUS_NAME, WRITE_EXAM_FLAG, EXAM_SCORE, EXAM_IS_PASS, INTERVIEW_FLAG, 
+    INTERVIEW_SCORE, INTERVIEW_IS_PASS, TICKET_NUMBER, ADMIT_FLAG, ADMIT_IS_PASS, MAIN_FLOW, 
+    EXAM_FLOW, EXAM_ROOM_FLOW, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+    MODIFY_USER_FLOW, AUDIT_CONTENT, SAVE_TIME, SUBMIT_TIME, AUDIT_TIME
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.RecruitInfoExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from RECRUIT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from RECRUIT_INFO
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from RECRUIT_INFO
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.RecruitInfoExample">
+      delete from RECRUIT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+    <insert id="insert" parameterType="com.pinde.core.model.RecruitInfo">
+      insert into RECRUIT_INFO (RECRUIT_FLOW, ORG_FLOW, DOCTOR_FLOW,
+      RECRUIT_YEAR, DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, 
+      LINK_MAN, LINK_MAN_PHONE, WORK_ORG_NAME, 
+      WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, TRAINING_TYPE_ID, 
+      TRAINING_TYPE_NAME, TRAINING_SPE_ID, TRAINING_SPE_NAME, 
+      IS_SWAP, SESSION_NUMBER, TRAINING_YEAR, 
+      GRADUATION_TIME, GRADUATED_NAME, GRADUATED_MAJOR, 
+      MASTERDEGREE_TYPE_ID, MASTERDEGREE_TYPE_NAME, 
+      MASTER_GRASCHOOL_NAME, MASTER_GRATIME, MASTER_MAJOR, 
+      DOCTOR_DEGREE_TYPE_ID, DOCTOR_DEGREE_TYPE_NAME, 
+      DOCTOR_GRASCHOOL_NAME, DOCTOR_GRATIME, DOCTOR_MAJOR, 
+      IS_YEAR_GRADUATE, IS_HAVE_QUALIFICATION, QUALIFICATION_CODE, 
+      AUDIT_STATUS_ID, AUDIT_STATUS_NAME, WRITE_EXAM_FLAG, 
+      EXAM_SCORE, EXAM_IS_PASS, INTERVIEW_FLAG, 
+      INTERVIEW_SCORE, INTERVIEW_IS_PASS, TICKET_NUMBER, 
+      ADMIT_FLAG, ADMIT_IS_PASS, MAIN_FLOW, 
+      EXAM_FLOW, EXAM_ROOM_FLOW, RECORD_STATUS, 
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
+      MODIFY_USER_FLOW, AUDIT_CONTENT, SAVE_TIME, 
+      SUBMIT_TIME, AUDIT_TIME)
+    values (#{recruitFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
+      #{recruitYear,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, #{doctorTypeName,jdbcType=VARCHAR}, 
+      #{linkMan,jdbcType=VARCHAR}, #{linkManPhone,jdbcType=VARCHAR}, #{workOrgName,jdbcType=VARCHAR}, 
+      #{workOrgLevelId,jdbcType=VARCHAR}, #{workOrgLevelName,jdbcType=VARCHAR}, #{trainingTypeId,jdbcType=VARCHAR}, 
+      #{trainingTypeName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, #{trainingSpeName,jdbcType=VARCHAR}, 
+      #{isSwap,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, #{trainingYear,jdbcType=VARCHAR}, 
+      #{graduationTime,jdbcType=VARCHAR}, #{graduatedName,jdbcType=VARCHAR}, #{graduatedMajor,jdbcType=VARCHAR}, 
+      #{masterdegreeTypeId,jdbcType=VARCHAR}, #{masterdegreeTypeName,jdbcType=VARCHAR}, 
+      #{masterGraschoolName,jdbcType=VARCHAR}, #{masterGratime,jdbcType=VARCHAR}, #{masterMajor,jdbcType=VARCHAR}, 
+      #{doctorDegreeTypeId,jdbcType=VARCHAR}, #{doctorDegreeTypeName,jdbcType=VARCHAR}, 
+      #{doctorGraschoolName,jdbcType=VARCHAR}, #{doctorGratime,jdbcType=VARCHAR}, #{doctorMajor,jdbcType=VARCHAR}, 
+      #{isYearGraduate,jdbcType=VARCHAR}, #{isHaveQualification,jdbcType=VARCHAR}, #{qualificationCode,jdbcType=VARCHAR}, 
+      #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{writeExamFlag,jdbcType=VARCHAR}, 
+      #{examScore,jdbcType=VARCHAR}, #{examIsPass,jdbcType=VARCHAR}, #{interviewFlag,jdbcType=VARCHAR}, 
+      #{interviewScore,jdbcType=VARCHAR}, #{interviewIsPass,jdbcType=VARCHAR}, #{ticketNumber,jdbcType=VARCHAR}, 
+      #{admitFlag,jdbcType=VARCHAR}, #{admitIsPass,jdbcType=VARCHAR}, #{mainFlow,jdbcType=VARCHAR}, 
+      #{examFlow,jdbcType=VARCHAR}, #{examRoomFlow,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
+      #{modifyUserFlow,jdbcType=VARCHAR}, #{auditContent,jdbcType=VARCHAR}, #{saveTime,jdbcType=VARCHAR}, 
+      #{submitTime,jdbcType=VARCHAR}, #{auditTime,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.pinde.core.model.RecruitInfo">
+      insert into RECRUIT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recruitFlow != null" >
+        RECRUIT_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW,
+      </if>
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR,
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID,
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME,
+      </if>
+      <if test="linkMan != null" >
+        LINK_MAN,
+      </if>
+      <if test="linkManPhone != null" >
+        LINK_MAN_PHONE,
+      </if>
+      <if test="workOrgName != null" >
+        WORK_ORG_NAME,
+      </if>
+      <if test="workOrgLevelId != null" >
+        WORK_ORG_LEVEL_ID,
+      </if>
+      <if test="workOrgLevelName != null" >
+        WORK_ORG_LEVEL_NAME,
+      </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID,
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME,
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID,
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME,
+      </if>
+      <if test="isSwap != null" >
+        IS_SWAP,
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER,
+      </if>
+      <if test="trainingYear != null" >
+        TRAINING_YEAR,
+      </if>
+      <if test="graduationTime != null" >
+        GRADUATION_TIME,
+      </if>
+      <if test="graduatedName != null" >
+        GRADUATED_NAME,
+      </if>
+      <if test="graduatedMajor != null" >
+        GRADUATED_MAJOR,
+      </if>
+      <if test="masterdegreeTypeId != null" >
+        MASTERDEGREE_TYPE_ID,
+      </if>
+      <if test="masterdegreeTypeName != null" >
+        MASTERDEGREE_TYPE_NAME,
+      </if>
+      <if test="masterGraschoolName != null" >
+        MASTER_GRASCHOOL_NAME,
+      </if>
+      <if test="masterGratime != null" >
+        MASTER_GRATIME,
+      </if>
+      <if test="masterMajor != null" >
+        MASTER_MAJOR,
+      </if>
+      <if test="doctorDegreeTypeId != null" >
+        DOCTOR_DEGREE_TYPE_ID,
+      </if>
+      <if test="doctorDegreeTypeName != null" >
+        DOCTOR_DEGREE_TYPE_NAME,
+      </if>
+      <if test="doctorGraschoolName != null" >
+        DOCTOR_GRASCHOOL_NAME,
+      </if>
+      <if test="doctorGratime != null" >
+        DOCTOR_GRATIME,
+      </if>
+      <if test="doctorMajor != null" >
+        DOCTOR_MAJOR,
+      </if>
+      <if test="isYearGraduate != null" >
+        IS_YEAR_GRADUATE,
+      </if>
+      <if test="isHaveQualification != null" >
+        IS_HAVE_QUALIFICATION,
+      </if>
+      <if test="qualificationCode != null" >
+        QUALIFICATION_CODE,
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID,
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME,
+      </if>
+      <if test="writeExamFlag != null" >
+        WRITE_EXAM_FLAG,
+      </if>
+      <if test="examScore != null" >
+        EXAM_SCORE,
+      </if>
+      <if test="examIsPass != null" >
+        EXAM_IS_PASS,
+      </if>
+      <if test="interviewFlag != null" >
+        INTERVIEW_FLAG,
+      </if>
+      <if test="interviewScore != null" >
+        INTERVIEW_SCORE,
+      </if>
+      <if test="interviewIsPass != null" >
+        INTERVIEW_IS_PASS,
+      </if>
+      <if test="ticketNumber != null" >
+        TICKET_NUMBER,
+      </if>
+      <if test="admitFlag != null" >
+        ADMIT_FLAG,
+      </if>
+      <if test="admitIsPass != null" >
+        ADMIT_IS_PASS,
+      </if>
+      <if test="mainFlow != null" >
+        MAIN_FLOW,
+      </if>
+      <if test="examFlow != null" >
+        EXAM_FLOW,
+      </if>
+      <if test="examRoomFlow != null" >
+        EXAM_ROOM_FLOW,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="auditContent != null" >
+        AUDIT_CONTENT,
+      </if>
+      <if test="saveTime != null" >
+        SAVE_TIME,
+      </if>
+      <if test="submitTime != null" >
+        SUBMIT_TIME,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recruitFlow != null" >
+        #{recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitYear != null" >
+        #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan != null" >
+        #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManPhone != null" >
+        #{linkManPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgName != null" >
+        #{workOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgLevelId != null" >
+        #{workOrgLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgLevelName != null" >
+        #{workOrgLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeId != null" >
+        #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSwap != null" >
+        #{isSwap,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingYear != null" >
+        #{trainingYear,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null" >
+        #{graduationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedName != null" >
+        #{graduatedName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedMajor != null" >
+        #{graduatedMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="masterdegreeTypeId != null" >
+        #{masterdegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterdegreeTypeName != null" >
+        #{masterdegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraschoolName != null" >
+        #{masterGraschoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGratime != null" >
+        #{masterGratime,jdbcType=VARCHAR},
+      </if>
+      <if test="masterMajor != null" >
+        #{masterMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeId != null" >
+        #{doctorDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeName != null" >
+        #{doctorDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraschoolName != null" >
+        #{doctorGraschoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGratime != null" >
+        #{doctorGratime,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorMajor != null" >
+        #{doctorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="isYearGraduate != null" >
+        #{isYearGraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="isHaveQualification != null" >
+        #{isHaveQualification,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationCode != null" >
+        #{qualificationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="writeExamFlag != null" >
+        #{writeExamFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="examScore != null" >
+        #{examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examIsPass != null" >
+        #{examIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewFlag != null" >
+        #{interviewFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewScore != null" >
+        #{interviewScore,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewIsPass != null" >
+        #{interviewIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNumber != null" >
+        #{ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="admitFlag != null" >
+        #{admitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="admitIsPass != null" >
+        #{admitIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="mainFlow != null" >
+        #{mainFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="examFlow != null" >
+        #{examFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="examRoomFlow != null" >
+        #{examRoomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditContent != null" >
+        #{auditContent,jdbcType=VARCHAR},
+      </if>
+      <if test="saveTime != null" >
+        #{saveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null" >
+        #{submitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.pinde.core.model.RecruitInfoExample" resultType="java.lang.Integer">
+      select count(*) from RECRUIT_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update RECRUIT_INFO
+    <set >
+      <if test="record.recruitFlow != null" >
+        RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorFlow != null" >
+        DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recruitYear != null" >
+        RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkMan != null" >
+        LINK_MAN = #{record.linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkManPhone != null" >
+        LINK_MAN_PHONE = #{record.linkManPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workOrgName != null" >
+        WORK_ORG_NAME = #{record.workOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workOrgLevelId != null" >
+        WORK_ORG_LEVEL_ID = #{record.workOrgLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workOrgLevelName != null" >
+        WORK_ORG_LEVEL_NAME = #{record.workOrgLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeId != null" >
+        TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSwap != null" >
+        IS_SWAP = #{record.isSwap,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionNumber != null" >
+        SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainingYear != null" >
+        TRAINING_YEAR = #{record.trainingYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationTime != null" >
+        GRADUATION_TIME = #{record.graduationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduatedName != null" >
+        GRADUATED_NAME = #{record.graduatedName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduatedMajor != null" >
+        GRADUATED_MAJOR = #{record.graduatedMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterdegreeTypeId != null" >
+        MASTERDEGREE_TYPE_ID = #{record.masterdegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterdegreeTypeName != null" >
+        MASTERDEGREE_TYPE_NAME = #{record.masterdegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterGraschoolName != null" >
+        MASTER_GRASCHOOL_NAME = #{record.masterGraschoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterGratime != null" >
+        MASTER_GRATIME = #{record.masterGratime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterMajor != null" >
+        MASTER_MAJOR = #{record.masterMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorDegreeTypeId != null" >
+        DOCTOR_DEGREE_TYPE_ID = #{record.doctorDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorDegreeTypeName != null" >
+        DOCTOR_DEGREE_TYPE_NAME = #{record.doctorDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorGraschoolName != null" >
+        DOCTOR_GRASCHOOL_NAME = #{record.doctorGraschoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorGratime != null" >
+        DOCTOR_GRATIME = #{record.doctorGratime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctorMajor != null" >
+        DOCTOR_MAJOR = #{record.doctorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isYearGraduate != null" >
+        IS_YEAR_GRADUATE = #{record.isYearGraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHaveQualification != null" >
+        IS_HAVE_QUALIFICATION = #{record.isHaveQualification,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationCode != null" >
+        QUALIFICATION_CODE = #{record.qualificationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusId != null" >
+        AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.writeExamFlag != null" >
+        WRITE_EXAM_FLAG = #{record.writeExamFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examScore != null" >
+        EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examIsPass != null" >
+        EXAM_IS_PASS = #{record.examIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewFlag != null" >
+        INTERVIEW_FLAG = #{record.interviewFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewScore != null" >
+        INTERVIEW_SCORE = #{record.interviewScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interviewIsPass != null" >
+        INTERVIEW_IS_PASS = #{record.interviewIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketNumber != null" >
+        TICKET_NUMBER = #{record.ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.admitFlag != null" >
+        ADMIT_FLAG = #{record.admitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.admitIsPass != null" >
+        ADMIT_IS_PASS = #{record.admitIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainFlow != null" >
+        MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examFlow != null" >
+        EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examRoomFlow != null" >
+        EXAM_ROOM_FLOW = #{record.examRoomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditContent != null" >
+        AUDIT_CONTENT = #{record.auditContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saveTime != null" >
+        SAVE_TIME = #{record.saveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitTime != null" >
+        SUBMIT_TIME = #{record.submitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update RECRUIT_INFO
+    set RECRUIT_FLOW = #{record.recruitFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{record.doctorFlow,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{record.recruitYear,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{record.doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{record.doctorTypeName,jdbcType=VARCHAR},
+      LINK_MAN = #{record.linkMan,jdbcType=VARCHAR},
+      LINK_MAN_PHONE = #{record.linkManPhone,jdbcType=VARCHAR},
+      WORK_ORG_NAME = #{record.workOrgName,jdbcType=VARCHAR},
+      WORK_ORG_LEVEL_ID = #{record.workOrgLevelId,jdbcType=VARCHAR},
+      WORK_ORG_LEVEL_NAME = #{record.workOrgLevelName,jdbcType=VARCHAR},
+      TRAINING_TYPE_ID = #{record.trainingTypeId,jdbcType=VARCHAR},
+      TRAINING_TYPE_NAME = #{record.trainingTypeName,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{record.trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{record.trainingSpeName,jdbcType=VARCHAR},
+      IS_SWAP = #{record.isSwap,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{record.sessionNumber,jdbcType=VARCHAR},
+      TRAINING_YEAR = #{record.trainingYear,jdbcType=VARCHAR},
+      GRADUATION_TIME = #{record.graduationTime,jdbcType=VARCHAR},
+      GRADUATED_NAME = #{record.graduatedName,jdbcType=VARCHAR},
+      GRADUATED_MAJOR = #{record.graduatedMajor,jdbcType=VARCHAR},
+      MASTERDEGREE_TYPE_ID = #{record.masterdegreeTypeId,jdbcType=VARCHAR},
+      MASTERDEGREE_TYPE_NAME = #{record.masterdegreeTypeName,jdbcType=VARCHAR},
+      MASTER_GRASCHOOL_NAME = #{record.masterGraschoolName,jdbcType=VARCHAR},
+      MASTER_GRATIME = #{record.masterGratime,jdbcType=VARCHAR},
+      MASTER_MAJOR = #{record.masterMajor,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_ID = #{record.doctorDegreeTypeId,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_NAME = #{record.doctorDegreeTypeName,jdbcType=VARCHAR},
+      DOCTOR_GRASCHOOL_NAME = #{record.doctorGraschoolName,jdbcType=VARCHAR},
+      DOCTOR_GRATIME = #{record.doctorGratime,jdbcType=VARCHAR},
+      DOCTOR_MAJOR = #{record.doctorMajor,jdbcType=VARCHAR},
+      IS_YEAR_GRADUATE = #{record.isYearGraduate,jdbcType=VARCHAR},
+      IS_HAVE_QUALIFICATION = #{record.isHaveQualification,jdbcType=VARCHAR},
+      QUALIFICATION_CODE = #{record.qualificationCode,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{record.auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{record.auditStatusName,jdbcType=VARCHAR},
+      WRITE_EXAM_FLAG = #{record.writeExamFlag,jdbcType=VARCHAR},
+      EXAM_SCORE = #{record.examScore,jdbcType=VARCHAR},
+      EXAM_IS_PASS = #{record.examIsPass,jdbcType=VARCHAR},
+      INTERVIEW_FLAG = #{record.interviewFlag,jdbcType=VARCHAR},
+      INTERVIEW_SCORE = #{record.interviewScore,jdbcType=VARCHAR},
+      INTERVIEW_IS_PASS = #{record.interviewIsPass,jdbcType=VARCHAR},
+      TICKET_NUMBER = #{record.ticketNumber,jdbcType=VARCHAR},
+      ADMIT_FLAG = #{record.admitFlag,jdbcType=VARCHAR},
+      ADMIT_IS_PASS = #{record.admitIsPass,jdbcType=VARCHAR},
+      MAIN_FLOW = #{record.mainFlow,jdbcType=VARCHAR},
+      EXAM_FLOW = #{record.examFlow,jdbcType=VARCHAR},
+      EXAM_ROOM_FLOW = #{record.examRoomFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      AUDIT_CONTENT = #{record.auditContent,jdbcType=VARCHAR},
+      SAVE_TIME = #{record.saveTime,jdbcType=VARCHAR},
+      SUBMIT_TIME = #{record.submitTime,jdbcType=VARCHAR},
+      AUDIT_TIME = #{record.auditTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.RecruitInfo">
+      update RECRUIT_INFO
+    <set >
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorFlow != null" >
+        DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitYear != null" >
+        RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeId != null" >
+        DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorTypeName != null" >
+        DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkMan != null" >
+        LINK_MAN = #{linkMan,jdbcType=VARCHAR},
+      </if>
+      <if test="linkManPhone != null" >
+        LINK_MAN_PHONE = #{linkManPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgName != null" >
+        WORK_ORG_NAME = #{workOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgLevelId != null" >
+        WORK_ORG_LEVEL_ID = #{workOrgLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="workOrgLevelName != null" >
+        WORK_ORG_LEVEL_NAME = #{workOrgLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeId != null" >
+        TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingTypeName != null" >
+        TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeId != null" >
+        TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingSpeName != null" >
+        TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      </if>
+      <if test="isSwap != null" >
+        IS_SWAP = #{isSwap,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionNumber != null" >
+        SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="trainingYear != null" >
+        TRAINING_YEAR = #{trainingYear,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null" >
+        GRADUATION_TIME = #{graduationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedName != null" >
+        GRADUATED_NAME = #{graduatedName,jdbcType=VARCHAR},
+      </if>
+      <if test="graduatedMajor != null" >
+        GRADUATED_MAJOR = #{graduatedMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="masterdegreeTypeId != null" >
+        MASTERDEGREE_TYPE_ID = #{masterdegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="masterdegreeTypeName != null" >
+        MASTERDEGREE_TYPE_NAME = #{masterdegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGraschoolName != null" >
+        MASTER_GRASCHOOL_NAME = #{masterGraschoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="masterGratime != null" >
+        MASTER_GRATIME = #{masterGratime,jdbcType=VARCHAR},
+      </if>
+      <if test="masterMajor != null" >
+        MASTER_MAJOR = #{masterMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeId != null" >
+        DOCTOR_DEGREE_TYPE_ID = #{doctorDegreeTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorDegreeTypeName != null" >
+        DOCTOR_DEGREE_TYPE_NAME = #{doctorDegreeTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGraschoolName != null" >
+        DOCTOR_GRASCHOOL_NAME = #{doctorGraschoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorGratime != null" >
+        DOCTOR_GRATIME = #{doctorGratime,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorMajor != null" >
+        DOCTOR_MAJOR = #{doctorMajor,jdbcType=VARCHAR},
+      </if>
+      <if test="isYearGraduate != null" >
+        IS_YEAR_GRADUATE = #{isYearGraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="isHaveQualification != null" >
+        IS_HAVE_QUALIFICATION = #{isHaveQualification,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationCode != null" >
+        QUALIFICATION_CODE = #{qualificationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusId != null" >
+        AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatusName != null" >
+        AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      </if>
+      <if test="writeExamFlag != null" >
+        WRITE_EXAM_FLAG = #{writeExamFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="examScore != null" >
+        EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      </if>
+      <if test="examIsPass != null" >
+        EXAM_IS_PASS = #{examIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewFlag != null" >
+        INTERVIEW_FLAG = #{interviewFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewScore != null" >
+        INTERVIEW_SCORE = #{interviewScore,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewIsPass != null" >
+        INTERVIEW_IS_PASS = #{interviewIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketNumber != null" >
+        TICKET_NUMBER = #{ticketNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="admitFlag != null" >
+        ADMIT_FLAG = #{admitFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="admitIsPass != null" >
+        ADMIT_IS_PASS = #{admitIsPass,jdbcType=VARCHAR},
+      </if>
+      <if test="mainFlow != null" >
+        MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="examFlow != null" >
+        EXAM_FLOW = #{examFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="examRoomFlow != null" >
+        EXAM_ROOM_FLOW = #{examRoomFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditContent != null" >
+        AUDIT_CONTENT = #{auditContent,jdbcType=VARCHAR},
+      </if>
+      <if test="saveTime != null" >
+        SAVE_TIME = #{saveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="submitTime != null" >
+        SUBMIT_TIME = #{submitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.RecruitInfo">
+      update RECRUIT_INFO
+    set ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR},
+      RECRUIT_YEAR = #{recruitYear,jdbcType=VARCHAR},
+      DOCTOR_TYPE_ID = #{doctorTypeId,jdbcType=VARCHAR},
+      DOCTOR_TYPE_NAME = #{doctorTypeName,jdbcType=VARCHAR},
+      LINK_MAN = #{linkMan,jdbcType=VARCHAR},
+      LINK_MAN_PHONE = #{linkManPhone,jdbcType=VARCHAR},
+      WORK_ORG_NAME = #{workOrgName,jdbcType=VARCHAR},
+      WORK_ORG_LEVEL_ID = #{workOrgLevelId,jdbcType=VARCHAR},
+      WORK_ORG_LEVEL_NAME = #{workOrgLevelName,jdbcType=VARCHAR},
+      TRAINING_TYPE_ID = #{trainingTypeId,jdbcType=VARCHAR},
+      TRAINING_TYPE_NAME = #{trainingTypeName,jdbcType=VARCHAR},
+      TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR},
+      TRAINING_SPE_NAME = #{trainingSpeName,jdbcType=VARCHAR},
+      IS_SWAP = #{isSwap,jdbcType=VARCHAR},
+      SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR},
+      TRAINING_YEAR = #{trainingYear,jdbcType=VARCHAR},
+      GRADUATION_TIME = #{graduationTime,jdbcType=VARCHAR},
+      GRADUATED_NAME = #{graduatedName,jdbcType=VARCHAR},
+      GRADUATED_MAJOR = #{graduatedMajor,jdbcType=VARCHAR},
+      MASTERDEGREE_TYPE_ID = #{masterdegreeTypeId,jdbcType=VARCHAR},
+      MASTERDEGREE_TYPE_NAME = #{masterdegreeTypeName,jdbcType=VARCHAR},
+      MASTER_GRASCHOOL_NAME = #{masterGraschoolName,jdbcType=VARCHAR},
+      MASTER_GRATIME = #{masterGratime,jdbcType=VARCHAR},
+      MASTER_MAJOR = #{masterMajor,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_ID = #{doctorDegreeTypeId,jdbcType=VARCHAR},
+      DOCTOR_DEGREE_TYPE_NAME = #{doctorDegreeTypeName,jdbcType=VARCHAR},
+      DOCTOR_GRASCHOOL_NAME = #{doctorGraschoolName,jdbcType=VARCHAR},
+      DOCTOR_GRATIME = #{doctorGratime,jdbcType=VARCHAR},
+      DOCTOR_MAJOR = #{doctorMajor,jdbcType=VARCHAR},
+      IS_YEAR_GRADUATE = #{isYearGraduate,jdbcType=VARCHAR},
+      IS_HAVE_QUALIFICATION = #{isHaveQualification,jdbcType=VARCHAR},
+      QUALIFICATION_CODE = #{qualificationCode,jdbcType=VARCHAR},
+      AUDIT_STATUS_ID = #{auditStatusId,jdbcType=VARCHAR},
+      AUDIT_STATUS_NAME = #{auditStatusName,jdbcType=VARCHAR},
+      WRITE_EXAM_FLAG = #{writeExamFlag,jdbcType=VARCHAR},
+      EXAM_SCORE = #{examScore,jdbcType=VARCHAR},
+      EXAM_IS_PASS = #{examIsPass,jdbcType=VARCHAR},
+      INTERVIEW_FLAG = #{interviewFlag,jdbcType=VARCHAR},
+      INTERVIEW_SCORE = #{interviewScore,jdbcType=VARCHAR},
+      INTERVIEW_IS_PASS = #{interviewIsPass,jdbcType=VARCHAR},
+      TICKET_NUMBER = #{ticketNumber,jdbcType=VARCHAR},
+      ADMIT_FLAG = #{admitFlag,jdbcType=VARCHAR},
+      ADMIT_IS_PASS = #{admitIsPass,jdbcType=VARCHAR},
+      MAIN_FLOW = #{mainFlow,jdbcType=VARCHAR},
+      EXAM_FLOW = #{examFlow,jdbcType=VARCHAR},
+      EXAM_ROOM_FLOW = #{examRoomFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      AUDIT_CONTENT = #{auditContent,jdbcType=VARCHAR},
+      SAVE_TIME = #{saveTime,jdbcType=VARCHAR},
+      SUBMIT_TIME = #{submitTime,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=VARCHAR}
+    where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

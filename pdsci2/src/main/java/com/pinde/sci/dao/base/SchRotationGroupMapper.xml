@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SchRotationGroupMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.SchRotationGroupMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SchRotationGroup">
     <id column="GROUP_FLOW" property="groupFlow" jdbcType="VARCHAR" />
     <result column="ROTATION_FLOW" property="rotationFlow" jdbcType="VARCHAR" />

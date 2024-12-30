@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pinde.sci.dao.base.SysRoleColumnMapper" >
+<mapper namespace="com.pinde.core.common.sci.dao.SysRoleColumnMapper" >
     <resultMap id="BaseResultMap" type="com.pinde.core.model.SysRoleColumn">
     <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
     <result column="ROLE_FLOW" property="roleFlow" jdbcType="VARCHAR" />

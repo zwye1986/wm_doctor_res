@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.OscaSkillRoomDocExtMapper">
-	<select id="getOscaSkillRoomDocByDoc" parameterType="string" resultMap="com.pinde.sci.dao.base.OscaSkillRoomDocMapper.BaseResultMap">
+	<select id="getOscaSkillRoomDocByDoc" parameterType="string" resultMap="com.pinde.core.common.sci.dao.OscaSkillRoomDocMapper.BaseResultMap">
 		SELECT *
 	   FROM OSCA_SKILL_ROOM_DOC OSRD
 	  WHERE OSRD.RECORD_STATUS = 'Y'
@@ -177,7 +177,7 @@
                            A.PARTNER_FLOW
 	</select>
 
-    <select id="getOscaNotSubmitInfo"  resultMap="com.pinde.sci.dao.base.OscaTeaScanDocMapper.BaseResultMap">
+    <select id="getOscaNotSubmitInfo"  resultMap="com.pinde.core.common.sci.dao.OscaTeaScanDocMapper.BaseResultMap">
         SELECT *
         FROM OSCA_TEA_SCAN_DOC OSRD
         WHERE

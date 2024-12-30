@@ -7,10 +7,10 @@ import com.pinde.core.model.SchExamDoctorArrangement;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.ISchExamCfgBiz;
-import com.pinde.sci.dao.base.ResDoctorGraduationExamMapper;
-import com.pinde.sci.dao.base.SchExamArrangementExtMapper;
-import com.pinde.sci.dao.base.SchExamArrangementMapper;
-import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
+import com.pinde.core.common.sci.dao.ResDoctorGraduationExamMapper;
+import com.pinde.core.common.sci.dao.SchExamArrangementExtMapper;
+import com.pinde.core.common.sci.dao.SchExamArrangementMapper;
+import com.pinde.core.common.sci.dao.SchExamDoctorArrangementMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

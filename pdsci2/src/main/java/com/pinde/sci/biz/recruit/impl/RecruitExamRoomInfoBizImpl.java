@@ -6,7 +6,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.recruit.IRecruitExamRoomInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.RecruitExamRoomInfoMapper;
+import com.pinde.core.common.sci.dao.RecruitExamRoomInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

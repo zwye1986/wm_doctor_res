@@ -17,7 +17,7 @@ import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;

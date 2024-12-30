@@ -177,7 +177,7 @@
         where a.activitySum!=0
     </select>
 
-    <select id="getSysMonthlyChangeInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyChangeInfoMapper.BaseResultMap"
+    <select id="getSysMonthlyChangeInfo" resultMap="com.pinde.core.common.sci.dao.SysMonthlyChangeInfoMapper.BaseResultMap"
             parameterType="map">
         select s.* from
         Sys_Monthly_Change_Info s
@@ -197,7 +197,7 @@
         </if>
     </select>
 
-    <select id="getSysMonthlyReturnDelayInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyReturnDelayInfoMapper.BaseResultMap"
+    <select id="getSysMonthlyReturnDelayInfo" resultMap="com.pinde.core.common.sci.dao.SysMonthlyReturnDelayInfoMapper.BaseResultMap"
             parameterType="map">
         select s.* from
         Sys_Monthly_Return_Delay_Info s
@@ -221,7 +221,7 @@
         </if>
     </select>
 
-    <select id="getSysMonthlyDocCycleInfo" resultMap="com.pinde.sci.dao.base.SysMonthlyDocCycleInfoMapper.BaseResultMap"
+    <select id="getSysMonthlyDocCycleInfo" resultMap="com.pinde.core.common.sci.dao.SysMonthlyDocCycleInfoMapper.BaseResultMap"
             parameterType="map">
         select s.* from
         Sys_Monthly_Doc_Cycle_Info s

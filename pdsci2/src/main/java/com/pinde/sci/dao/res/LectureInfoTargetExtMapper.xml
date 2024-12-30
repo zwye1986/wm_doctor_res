@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.LectureInfoTargetExtMapper">
-    <resultMap id="lectureTargetMap" type="hashmap" extends="com.pinde.sci.dao.base.LectureInfoTargetMapper.BaseResultMap">
+    <resultMap id="lectureTargetMap" type="hashmap" extends="com.pinde.core.common.sci.dao.LectureInfoTargetMapper.BaseResultMap">
         <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
         <result column="LECTURE_FLOW" property="lectureFlow" jdbcType="VARCHAR" />
         <result column="TARGET_FLOW" property="targetFlow" jdbcType="VARCHAR" />

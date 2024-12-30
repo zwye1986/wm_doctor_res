@@ -16,7 +16,7 @@ import com.pinde.res.model.jswjw.mo.FromItem;
 import com.pinde.res.model.jswjw.mo.FromTitle;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
 import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
-import com.pinde.sci.dao.base.JsresPowerCfgMapper;
+import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

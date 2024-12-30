@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.TeachingActivityInfo" >
+    <id column="ACTIVITY_FLOW" property="activityFlow" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_NAME" property="activityName" jdbcType="VARCHAR" />
+    <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
+    <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+    <result column="SPEAKER_FLOW" property="speakerFlow" jdbcType="VARCHAR" />
+    <result column="SPEAKER_PHONE" property="speakerPhone" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_TYPE_ID" property="activityTypeId" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_TYPE_NAME" property="activityTypeName" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="VARCHAR" />
+    <result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_ADDRESS" property="activityAddress" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_REMARK" property="activityRemark" jdbcType="VARCHAR" />
+    <result column="FILE_FLOW" property="fileFlow" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+    <result column="IS_EFFECTIVE" property="isEffective" jdbcType="VARCHAR" />
+    <result column="REALITY_SPEAKER" property="realitySpeaker" jdbcType="VARCHAR" />
+    <result column="ACTIVITY_STATUS" property="activityStatus" jdbcType="VARCHAR" />
+    <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />
+    <result column="AUDIT_ROLE" property="auditRole" jdbcType="VARCHAR" />
+    <result column="OPINION" property="opinion" jdbcType="VARCHAR" />
+    <result column="MANUAL_END_STATUS" property="manualEndStatus" jdbcType="VARCHAR" />
+    <result column="MANUAL_END_TIEM" property="manualEndTiem" jdbcType="VARCHAR" />
+    <result column="JOIN_NUM" property="joinNum" jdbcType="DECIMAL" />
+    <result column="ADD_ROLE_FLOW" property="addRoleFlow" jdbcType="VARCHAR" />
+    <result column="AUDIT_ROLE_FLOW" property="auditRoleFlow" jdbcType="VARCHAR" />
+    <result column="LIMIT_NUM" property="limitNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.TeachingActivityInfo" extends="BaseResultMap" >
+    <result column="IMAGE_URL" property="imageUrl" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ACTIVITY_FLOW, ACTIVITY_NAME, DEPT_FLOW, ORG_FLOW, SPEAKER_FLOW, SPEAKER_PHONE, ACTIVITY_TYPE_ID, 
+    ACTIVITY_TYPE_NAME, START_TIME, END_TIME, ACTIVITY_ADDRESS, ACTIVITY_REMARK, FILE_FLOW, 
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, IS_EFFECTIVE, 
+    REALITY_SPEAKER, ACTIVITY_STATUS, SUBMIT_ROLE, AUDIT_ROLE, OPINION, MANUAL_END_STATUS, 
+    MANUAL_END_TIEM, JOIN_NUM, ADD_ROLE_FLOW, AUDIT_ROLE_FLOW, LIMIT_NUM
+  </sql>
+  <sql id="Blob_Column_List" >
+    IMAGE_URL
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.TeachingActivityInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from TEACHING_ACTIVITY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.TeachingActivityInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from TEACHING_ACTIVITY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+      from TEACHING_ACTIVITY_INFO
+    where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from TEACHING_ACTIVITY_INFO
+    where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pinde.core.model.TeachingActivityInfoExample" >
+      delete from TEACHING_ACTIVITY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pinde.core.model.TeachingActivityInfo" >
+      insert into TEACHING_ACTIVITY_INFO (ACTIVITY_FLOW, ACTIVITY_NAME, DEPT_FLOW,
+      ORG_FLOW, SPEAKER_FLOW, SPEAKER_PHONE, 
+      ACTIVITY_TYPE_ID, ACTIVITY_TYPE_NAME, START_TIME, 
+      END_TIME, ACTIVITY_ADDRESS, ACTIVITY_REMARK, 
+      FILE_FLOW, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
+      IS_EFFECTIVE, REALITY_SPEAKER, ACTIVITY_STATUS, 
+      SUBMIT_ROLE, AUDIT_ROLE, OPINION, 
+      MANUAL_END_STATUS, MANUAL_END_TIEM, JOIN_NUM, 
+      ADD_ROLE_FLOW, AUDIT_ROLE_FLOW, LIMIT_NUM, 
+      IMAGE_URL)
+    values (#{activityFlow,jdbcType=VARCHAR}, #{activityName,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, 
+      #{orgFlow,jdbcType=VARCHAR}, #{speakerFlow,jdbcType=VARCHAR}, #{speakerPhone,jdbcType=VARCHAR}, 
+      #{activityTypeId,jdbcType=VARCHAR}, #{activityTypeName,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{activityAddress,jdbcType=VARCHAR}, #{activityRemark,jdbcType=VARCHAR}, 
+      #{fileFlow,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
+      #{isEffective,jdbcType=VARCHAR}, #{realitySpeaker,jdbcType=VARCHAR}, #{activityStatus,jdbcType=VARCHAR}, 
+      #{submitRole,jdbcType=VARCHAR}, #{auditRole,jdbcType=VARCHAR}, #{opinion,jdbcType=VARCHAR}, 
+      #{manualEndStatus,jdbcType=VARCHAR}, #{manualEndTiem,jdbcType=VARCHAR}, #{joinNum,jdbcType=DECIMAL}, 
+      #{addRoleFlow,jdbcType=VARCHAR}, #{auditRoleFlow,jdbcType=VARCHAR}, #{limitNum,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pinde.core.model.TeachingActivityInfo" >
+      insert into TEACHING_ACTIVITY_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityFlow != null" >
+        ACTIVITY_FLOW,
+      </if>
+      <if test="activityName != null" >
+        ACTIVITY_NAME,
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW,
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW,
+      </if>
+      <if test="speakerFlow != null" >
+        SPEAKER_FLOW,
+      </if>
+      <if test="speakerPhone != null" >
+        SPEAKER_PHONE,
+      </if>
+      <if test="activityTypeId != null" >
+        ACTIVITY_TYPE_ID,
+      </if>
+      <if test="activityTypeName != null" >
+        ACTIVITY_TYPE_NAME,
+      </if>
+      <if test="startTime != null" >
+        START_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="activityAddress != null" >
+        ACTIVITY_ADDRESS,
+      </if>
+      <if test="activityRemark != null" >
+        ACTIVITY_REMARK,
+      </if>
+      <if test="fileFlow != null" >
+        FILE_FLOW,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+      <if test="isEffective != null" >
+        IS_EFFECTIVE,
+      </if>
+      <if test="realitySpeaker != null" >
+        REALITY_SPEAKER,
+      </if>
+      <if test="activityStatus != null" >
+        ACTIVITY_STATUS,
+      </if>
+      <if test="submitRole != null" >
+        SUBMIT_ROLE,
+      </if>
+      <if test="auditRole != null" >
+        AUDIT_ROLE,
+      </if>
+      <if test="opinion != null" >
+        OPINION,
+      </if>
+      <if test="manualEndStatus != null" >
+        MANUAL_END_STATUS,
+      </if>
+      <if test="manualEndTiem != null" >
+        MANUAL_END_TIEM,
+      </if>
+      <if test="joinNum != null" >
+        JOIN_NUM,
+      </if>
+      <if test="addRoleFlow != null" >
+        ADD_ROLE_FLOW,
+      </if>
+      <if test="auditRoleFlow != null" >
+        AUDIT_ROLE_FLOW,
+      </if>
+      <if test="limitNum != null" >
+        LIMIT_NUM,
+      </if>
+      <if test="imageUrl != null" >
+        IMAGE_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityFlow != null" >
+        #{activityFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerFlow != null" >
+        #{speakerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerPhone != null" >
+        #{speakerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTypeId != null" >
+        #{activityTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTypeName != null" >
+        #{activityTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAddress != null" >
+        #{activityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="activityRemark != null" >
+        #{activityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileFlow != null" >
+        #{fileFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null" >
+        #{isEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="realitySpeaker != null" >
+        #{realitySpeaker,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null" >
+        #{activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="submitRole != null" >
+        #{submitRole,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRole != null" >
+        #{auditRole,jdbcType=VARCHAR},
+      </if>
+      <if test="opinion != null" >
+        #{opinion,jdbcType=VARCHAR},
+      </if>
+      <if test="manualEndStatus != null" >
+        #{manualEndStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="manualEndTiem != null" >
+        #{manualEndTiem,jdbcType=VARCHAR},
+      </if>
+      <if test="joinNum != null" >
+        #{joinNum,jdbcType=DECIMAL},
+      </if>
+      <if test="addRoleFlow != null" >
+        #{addRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRoleFlow != null" >
+        #{auditRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="limitNum != null" >
+        #{limitNum,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pinde.core.model.TeachingActivityInfoExample" resultType="java.lang.Integer" >
+      select count(*) from TEACHING_ACTIVITY_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update TEACHING_ACTIVITY_INFO
+    <set >
+      <if test="record.activityFlow != null" >
+        ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityName != null" >
+        ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deptFlow != null" >
+        DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgFlow != null" >
+        ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speakerFlow != null" >
+        SPEAKER_FLOW = #{record.speakerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.speakerPhone != null" >
+        SPEAKER_PHONE = #{record.speakerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityTypeId != null" >
+        ACTIVITY_TYPE_ID = #{record.activityTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityTypeName != null" >
+        ACTIVITY_TYPE_NAME = #{record.activityTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        START_TIME = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityAddress != null" >
+        ACTIVITY_ADDRESS = #{record.activityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityRemark != null" >
+        ACTIVITY_REMARK = #{record.activityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileFlow != null" >
+        FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEffective != null" >
+        IS_EFFECTIVE = #{record.isEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realitySpeaker != null" >
+        REALITY_SPEAKER = #{record.realitySpeaker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityStatus != null" >
+        ACTIVITY_STATUS = #{record.activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.submitRole != null" >
+        SUBMIT_ROLE = #{record.submitRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditRole != null" >
+        AUDIT_ROLE = #{record.auditRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opinion != null" >
+        OPINION = #{record.opinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manualEndStatus != null" >
+        MANUAL_END_STATUS = #{record.manualEndStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manualEndTiem != null" >
+        MANUAL_END_TIEM = #{record.manualEndTiem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinNum != null" >
+        JOIN_NUM = #{record.joinNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addRoleFlow != null" >
+        ADD_ROLE_FLOW = #{record.addRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditRoleFlow != null" >
+        AUDIT_ROLE_FLOW = #{record.auditRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.limitNum != null" >
+        LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageUrl != null" >
+        IMAGE_URL = #{record.imageUrl,jdbcType=CLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+      update TEACHING_ACTIVITY_INFO
+    set ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
+      ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
+      DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      SPEAKER_FLOW = #{record.speakerFlow,jdbcType=VARCHAR},
+      SPEAKER_PHONE = #{record.speakerPhone,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_ID = #{record.activityTypeId,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_NAME = #{record.activityTypeName,jdbcType=VARCHAR},
+      START_TIME = #{record.startTime,jdbcType=VARCHAR},
+      END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      ACTIVITY_ADDRESS = #{record.activityAddress,jdbcType=VARCHAR},
+      ACTIVITY_REMARK = #{record.activityRemark,jdbcType=VARCHAR},
+      FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      IS_EFFECTIVE = #{record.isEffective,jdbcType=VARCHAR},
+      REALITY_SPEAKER = #{record.realitySpeaker,jdbcType=VARCHAR},
+      ACTIVITY_STATUS = #{record.activityStatus,jdbcType=VARCHAR},
+      SUBMIT_ROLE = #{record.submitRole,jdbcType=VARCHAR},
+      AUDIT_ROLE = #{record.auditRole,jdbcType=VARCHAR},
+      OPINION = #{record.opinion,jdbcType=VARCHAR},
+      MANUAL_END_STATUS = #{record.manualEndStatus,jdbcType=VARCHAR},
+      MANUAL_END_TIEM = #{record.manualEndTiem,jdbcType=VARCHAR},
+      JOIN_NUM = #{record.joinNum,jdbcType=DECIMAL},
+      ADD_ROLE_FLOW = #{record.addRoleFlow,jdbcType=VARCHAR},
+      AUDIT_ROLE_FLOW = #{record.auditRoleFlow,jdbcType=VARCHAR},
+      LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR},
+      IMAGE_URL = #{record.imageUrl,jdbcType=CLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update TEACHING_ACTIVITY_INFO
+    set ACTIVITY_FLOW = #{record.activityFlow,jdbcType=VARCHAR},
+      ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
+      DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{record.orgFlow,jdbcType=VARCHAR},
+      SPEAKER_FLOW = #{record.speakerFlow,jdbcType=VARCHAR},
+      SPEAKER_PHONE = #{record.speakerPhone,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_ID = #{record.activityTypeId,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_NAME = #{record.activityTypeName,jdbcType=VARCHAR},
+      START_TIME = #{record.startTime,jdbcType=VARCHAR},
+      END_TIME = #{record.endTime,jdbcType=VARCHAR},
+      ACTIVITY_ADDRESS = #{record.activityAddress,jdbcType=VARCHAR},
+      ACTIVITY_REMARK = #{record.activityRemark,jdbcType=VARCHAR},
+      FILE_FLOW = #{record.fileFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      IS_EFFECTIVE = #{record.isEffective,jdbcType=VARCHAR},
+      REALITY_SPEAKER = #{record.realitySpeaker,jdbcType=VARCHAR},
+      ACTIVITY_STATUS = #{record.activityStatus,jdbcType=VARCHAR},
+      SUBMIT_ROLE = #{record.submitRole,jdbcType=VARCHAR},
+      AUDIT_ROLE = #{record.auditRole,jdbcType=VARCHAR},
+      OPINION = #{record.opinion,jdbcType=VARCHAR},
+      MANUAL_END_STATUS = #{record.manualEndStatus,jdbcType=VARCHAR},
+      MANUAL_END_TIEM = #{record.manualEndTiem,jdbcType=VARCHAR},
+      JOIN_NUM = #{record.joinNum,jdbcType=DECIMAL},
+      ADD_ROLE_FLOW = #{record.addRoleFlow,jdbcType=VARCHAR},
+      AUDIT_ROLE_FLOW = #{record.auditRoleFlow,jdbcType=VARCHAR},
+      LIMIT_NUM = #{record.limitNum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.TeachingActivityInfo" >
+      update TEACHING_ACTIVITY_INFO
+    <set >
+      <if test="activityName != null" >
+        ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptFlow != null" >
+        DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFlow != null" >
+        ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerFlow != null" >
+        SPEAKER_FLOW = #{speakerFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="speakerPhone != null" >
+        SPEAKER_PHONE = #{speakerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTypeId != null" >
+        ACTIVITY_TYPE_ID = #{activityTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTypeName != null" >
+        ACTIVITY_TYPE_NAME = #{activityTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="activityAddress != null" >
+        ACTIVITY_ADDRESS = #{activityAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="activityRemark != null" >
+        ACTIVITY_REMARK = #{activityRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileFlow != null" >
+        FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="isEffective != null" >
+        IS_EFFECTIVE = #{isEffective,jdbcType=VARCHAR},
+      </if>
+      <if test="realitySpeaker != null" >
+        REALITY_SPEAKER = #{realitySpeaker,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null" >
+        ACTIVITY_STATUS = #{activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="submitRole != null" >
+        SUBMIT_ROLE = #{submitRole,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRole != null" >
+        AUDIT_ROLE = #{auditRole,jdbcType=VARCHAR},
+      </if>
+      <if test="opinion != null" >
+        OPINION = #{opinion,jdbcType=VARCHAR},
+      </if>
+      <if test="manualEndStatus != null" >
+        MANUAL_END_STATUS = #{manualEndStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="manualEndTiem != null" >
+        MANUAL_END_TIEM = #{manualEndTiem,jdbcType=VARCHAR},
+      </if>
+      <if test="joinNum != null" >
+        JOIN_NUM = #{joinNum,jdbcType=DECIMAL},
+      </if>
+      <if test="addRoleFlow != null" >
+        ADD_ROLE_FLOW = #{addRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRoleFlow != null" >
+        AUDIT_ROLE_FLOW = #{auditRoleFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="limitNum != null" >
+        LIMIT_NUM = #{limitNum,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        IMAGE_URL = #{imageUrl,jdbcType=CLOB},
+      </if>
+    </set>
+    where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pinde.core.model.TeachingActivityInfo" >
+      update TEACHING_ACTIVITY_INFO
+    set ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      SPEAKER_FLOW = #{speakerFlow,jdbcType=VARCHAR},
+      SPEAKER_PHONE = #{speakerPhone,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_ID = #{activityTypeId,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_NAME = #{activityTypeName,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      ACTIVITY_ADDRESS = #{activityAddress,jdbcType=VARCHAR},
+      ACTIVITY_REMARK = #{activityRemark,jdbcType=VARCHAR},
+      FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      IS_EFFECTIVE = #{isEffective,jdbcType=VARCHAR},
+      REALITY_SPEAKER = #{realitySpeaker,jdbcType=VARCHAR},
+      ACTIVITY_STATUS = #{activityStatus,jdbcType=VARCHAR},
+      SUBMIT_ROLE = #{submitRole,jdbcType=VARCHAR},
+      AUDIT_ROLE = #{auditRole,jdbcType=VARCHAR},
+      OPINION = #{opinion,jdbcType=VARCHAR},
+      MANUAL_END_STATUS = #{manualEndStatus,jdbcType=VARCHAR},
+      MANUAL_END_TIEM = #{manualEndTiem,jdbcType=VARCHAR},
+      JOIN_NUM = #{joinNum,jdbcType=DECIMAL},
+      ADD_ROLE_FLOW = #{addRoleFlow,jdbcType=VARCHAR},
+      AUDIT_ROLE_FLOW = #{auditRoleFlow,jdbcType=VARCHAR},
+      LIMIT_NUM = #{limitNum,jdbcType=VARCHAR},
+      IMAGE_URL = #{imageUrl,jdbcType=CLOB}
+    where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.TeachingActivityInfo" >
+      update TEACHING_ACTIVITY_INFO
+    set ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR},
+      ORG_FLOW = #{orgFlow,jdbcType=VARCHAR},
+      SPEAKER_FLOW = #{speakerFlow,jdbcType=VARCHAR},
+      SPEAKER_PHONE = #{speakerPhone,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_ID = #{activityTypeId,jdbcType=VARCHAR},
+      ACTIVITY_TYPE_NAME = #{activityTypeName,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      ACTIVITY_ADDRESS = #{activityAddress,jdbcType=VARCHAR},
+      ACTIVITY_REMARK = #{activityRemark,jdbcType=VARCHAR},
+      FILE_FLOW = #{fileFlow,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      IS_EFFECTIVE = #{isEffective,jdbcType=VARCHAR},
+      REALITY_SPEAKER = #{realitySpeaker,jdbcType=VARCHAR},
+      ACTIVITY_STATUS = #{activityStatus,jdbcType=VARCHAR},
+      SUBMIT_ROLE = #{submitRole,jdbcType=VARCHAR},
+      AUDIT_ROLE = #{auditRole,jdbcType=VARCHAR},
+      OPINION = #{opinion,jdbcType=VARCHAR},
+      MANUAL_END_STATUS = #{manualEndStatus,jdbcType=VARCHAR},
+      MANUAL_END_TIEM = #{manualEndTiem,jdbcType=VARCHAR},
+      JOIN_NUM = #{joinNum,jdbcType=DECIMAL},
+      ADD_ROLE_FLOW = #{addRoleFlow,jdbcType=VARCHAR},
+      AUDIT_ROLE_FLOW = #{auditRoleFlow,jdbcType=VARCHAR},
+      LIMIT_NUM = #{limitNum,jdbcType=VARCHAR}
+    where ACTIVITY_FLOW = #{activityFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

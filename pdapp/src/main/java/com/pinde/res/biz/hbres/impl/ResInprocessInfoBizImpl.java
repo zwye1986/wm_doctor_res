@@ -6,8 +6,8 @@ import com.pinde.core.model.ResInprocessInfoMember;
 import com.pinde.core.model.ResInprocessInfoMemberExample;
 import com.pinde.res.biz.hbres.IResInprocessInfoBiz;
 import com.pinde.res.dao.hbres.ext.ResInprocessInfoMemberExtMapper;
-import com.pinde.sci.dao.base.ResInprocessInfoMapper;
-import com.pinde.sci.dao.base.ResInprocessInfoMemberMapper;
+import com.pinde.core.common.sci.dao.ResInprocessInfoMapper;
+import com.pinde.core.common.sci.dao.ResInprocessInfoMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

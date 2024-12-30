@@ -73,7 +73,7 @@
 		GROUP BY ROTATION_FLOW
 	</select>
 	
-	<select id="searchRotationDeptByStanard" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+	<select id="searchRotationDeptByStanard" resultMap="com.pinde.core.common.sci.dao.SchRotationDeptMapper.BaseResultMap">
 		SELECT SRD.*
         FROM SCH_ROTATION_GROUP SRG, SCH_ROTATION_DEPT SRD, SCH_ROTATION_DEPT SRDS
 		WHERE SRG.RECORD_STATUS = 'Y'
@@ -85,7 +85,7 @@
 		AND SRD.ORG_FLOW = #{orgFlow}
 		AND SRDS.RECORD_FLOW = #{standardDeptRecFlow}
 	</select>
-	<select id="doctorGetNotSchDept" resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+	<select id="doctorGetNotSchDept" resultMap="com.pinde.core.common.sci.dao.SchRotationDeptMapper.BaseResultMap">
 		SELECT SRD.*
         FROM SCH_ROTATION_GROUP SRG,
         SCH_ROTATION_DEPT SRD
@@ -135,7 +135,7 @@
 	</select>
 
     <select id="selectByExampleTwo" parameterType="com.pinde.core.model.SchRotationDeptExample"
-			resultMap="com.pinde.sci.dao.base.SchRotationDeptMapper.BaseResultMap">
+			resultMap="com.pinde.core.common.sci.dao.SchRotationDeptMapper.BaseResultMap">
 		select
 		RECORD_FLOW
         from SCH_ROTATION_DEPT

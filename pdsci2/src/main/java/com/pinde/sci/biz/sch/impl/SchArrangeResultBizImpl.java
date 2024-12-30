@@ -16,6 +16,7 @@ import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
 import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
 import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.excel.enums.NumberEngEnum;

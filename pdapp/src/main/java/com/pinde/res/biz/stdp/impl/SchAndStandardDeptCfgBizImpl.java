@@ -4,7 +4,7 @@ import com.pinde.core.model.SchAndStandardDeptCfg;
 import com.pinde.core.model.SchAndStandardDeptCfgExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.ISchAndStandardDeptCfgBiz;
-import com.pinde.sci.dao.base.SchAndStandardDeptCfgMapper;
+import com.pinde.core.common.sci.dao.SchAndStandardDeptCfgMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,9 @@
 package com.pinde.sci.biz.lcjn.impl;
 
 import com.pinde.core.common.enums.LcjnFixedAssetsStatusEnum;
+import com.pinde.core.common.sci.dao.LcjnFixedAssetsMapper;
+import com.pinde.core.common.sci.dao.LcjnSuppliesBatchMapper;
+import com.pinde.core.common.sci.dao.LcjnSuppliesMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -8,9 +11,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.lcjn.ILcjnSuppliesAndAssetsBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.LcjnFixedAssetsMapper;
-import com.pinde.sci.dao.base.LcjnSuppliesBatchMapper;
-import com.pinde.sci.dao.base.LcjnSuppliesMapper;
 import com.pinde.sci.dao.lcjn.LcjnSuppliesAndAssetsExtMapper;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

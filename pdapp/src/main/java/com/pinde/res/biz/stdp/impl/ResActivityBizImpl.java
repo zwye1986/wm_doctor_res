@@ -1,7 +1,7 @@
 package com.pinde.res.biz.stdp.impl;
 
 import com.pinde.app.common.GlobalUtil;
-import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -14,7 +14,6 @@ import com.pinde.res.biz.stdp.IResActivityBiz;
 import com.pinde.res.biz.stdp.IResActivityTargetBiz;
 import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
-import com.pinde.sci.dao.base.*;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

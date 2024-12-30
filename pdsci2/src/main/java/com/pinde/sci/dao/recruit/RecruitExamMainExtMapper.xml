@@ -60,7 +60,7 @@
         )
         )
     </select>
-    <select id="readPassedRecruitInfos" resultMap="com.pinde.sci.dao.base.RecruitInfoMapper.BaseResultMap">
+    <select id="readPassedRecruitInfos" resultMap="com.pinde.core.common.sci.dao.RecruitInfoMapper.BaseResultMap">
         select * from Recruit_Info where record_status='Y' and org_flow=#{orgFlow} and RECRUIT_YEAR =#{recruitYear}
         and audit_status_id='Passed'
         order by audit_time

@@ -1,0 +1,31 @@
+package com.pinde.core.common.sci.dao;
+
+import com.pinde.core.model.SchAndStandardDeptCfg;
+import com.pinde.core.model.SchAndStandardDeptCfgExample;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface SchAndStandardDeptCfgMapper {
+    int countByExample(SchAndStandardDeptCfgExample example);
+
+    int deleteByExample(SchAndStandardDeptCfgExample example);
+
+    int deleteByPrimaryKey(String recordFlow);
+
+    int insert(SchAndStandardDeptCfg record);
+
+    int insertSelective(SchAndStandardDeptCfg record);
+
+    List<SchAndStandardDeptCfg> selectByExample(SchAndStandardDeptCfgExample example);
+
+    SchAndStandardDeptCfg selectByPrimaryKey(String recordFlow);
+
+    int updateByExampleSelective(@Param("record") SchAndStandardDeptCfg record, @Param("example") SchAndStandardDeptCfgExample example);
+
+    int updateByExample(@Param("record") SchAndStandardDeptCfg record, @Param("example") SchAndStandardDeptCfgExample example);
+
+    int updateByPrimaryKeySelective(SchAndStandardDeptCfg record);
+
+    int updateByPrimaryKey(SchAndStandardDeptCfg record);
+}

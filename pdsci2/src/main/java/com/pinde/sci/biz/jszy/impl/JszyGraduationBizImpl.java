@@ -10,7 +10,7 @@ import com.pinde.sci.biz.jszy.IJszyGraduationBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.GraduationExamResultsMapper;
+import com.pinde.core.common.sci.dao.GraduationExamResultsMapper;
 import com.pinde.sci.dao.base.ResDoctorGraduationInfoMapper;
 import com.pinde.sci.dao.res.ResDoctorGraduationInfoExtMapper;
 import com.pinde.sci.model.res.ResDoctorExt;

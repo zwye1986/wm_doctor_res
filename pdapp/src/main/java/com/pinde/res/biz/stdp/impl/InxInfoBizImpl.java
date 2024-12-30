@@ -8,7 +8,7 @@ import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.stdp.IInxInfoBiz;
-import com.pinde.sci.dao.base.ResReadInfoMapper;
+import com.pinde.core.common.sci.dao.ResReadInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

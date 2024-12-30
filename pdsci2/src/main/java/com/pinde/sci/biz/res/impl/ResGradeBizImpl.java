@@ -2,6 +2,7 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.GlobalRecTypeEnum;
 import com.pinde.core.common.enums.JszyTCMPracticEnum;
+import com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -19,7 +20,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.IrbSingleForm;
 import com.pinde.sci.common.util.JspFormUtil;
-import com.pinde.sci.dao.base.DeptTeacherGradeInfoMapper;
 import com.pinde.sci.dao.res.DeptTeacherGradeInfoExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
 import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
