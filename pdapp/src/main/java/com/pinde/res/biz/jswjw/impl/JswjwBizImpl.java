@@ -7573,7 +7573,7 @@ public class JswjwBizImpl implements IJswjwBiz {
             List<String> collect = sysUsers.stream().map(sysUser -> sysUser.getVerifyCodeTime()).collect(Collectors.toList());
             String max = Collections.max(collect);
             for (SysUser sysUser : sysUsers) {
-                if (max.equals(sysUser.getVerifyCodeTime())) {
+                if (StringUtil.isNotBlank(max) && max.equals(sysUser.getVerifyCodeTime())) {
                     return sysUser;
                 }
             }
