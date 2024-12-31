@@ -19,6 +19,14 @@ public interface ResDoctorSchProcessMapper {
 
     List<ResDoctorSchProcess> selectByExample(ResDoctorSchProcessExample example);
 
+    /**
+     * oracle in有一千条限制，要分批一下
+     *
+     * @param resultFlowListList
+     * @return
+     */
+    List<ResDoctorSchProcess> searchByResultFlowPartitionList(@Param("resultFlowListList") List<List<String>> resultFlowListList);
+
     ResDoctorSchProcess selectByPrimaryKey(String processFlow);
 
     int updateByExampleSelective(@Param("record") ResDoctorSchProcess record, @Param("example") ResDoctorSchProcessExample example);

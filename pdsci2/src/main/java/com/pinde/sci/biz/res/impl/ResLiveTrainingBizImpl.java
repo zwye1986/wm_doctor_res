@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResTarinNoticeMapper;
+import com.pinde.core.common.sci.dao.ResTrainingOpinionMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLiveTrainingBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResTarinNoticeMapper;
-import com.pinde.sci.dao.base.ResTrainingOpinionMapper;
 import com.pinde.sci.dao.res.ResTrainNoticeExtMapper;
 import com.pinde.sci.dao.res.ResTrainingOpinionExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;

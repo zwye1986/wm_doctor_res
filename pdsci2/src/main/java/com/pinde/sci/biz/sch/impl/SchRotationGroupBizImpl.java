@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.sci.dao.SchRotationDeptMapper;
+import com.pinde.core.common.sci.dao.SchRotationGroupMapper;
 import com.pinde.core.model.SchRotationDept;
 import com.pinde.core.model.SchRotationDeptExample;
 import com.pinde.core.model.SchRotationGroup;
@@ -9,8 +11,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchRotationGroupBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.dao.base.SchRotationGroupMapper;
 import com.pinde.sci.dao.sch.SchRotationGroupExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

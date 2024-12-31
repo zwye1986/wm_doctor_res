@@ -5,7 +5,7 @@ import com.pinde.sci.biz.res.IResOrgAddressBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.form.res.ResOrgAddressForm;
+import com.pinde.core.model.ResOrgAddressForm;
 import com.pinde.core.model.ResOrgAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -134,7 +134,21 @@
       from SCH_ROTATION
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+
+    <select id="readSchRotationByPartitionList" resultType="com.pinde.core.model.SchRotation">
+        select
+        <include refid="Base_Column_List"/>
+        from SCH_ROTATION
+        where record_status = 'Y'
+        <foreach collection="rotationFlowListList" item="rotationFlowList" open="and (" close=")" separator=" or ">
+            ROTATION_FLOW in
+            <foreach collection="rotationFlowList" item="rotationFlow" open="(" close=")" separator=",">
+                #{rotationFlow,jdbcType=VARCHAR}
+            </foreach>
+        </foreach>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
       delete from SCH_ROTATION
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </delete>
@@ -588,4 +602,36 @@
       IS_DOUBLE = #{isDouble,jdbcType=VARCHAR}
     where ROTATION_FLOW = #{rotationFlow,jdbcType=VARCHAR}
   </update>
+
+    <update id="updateResDoctorSchProcessStatus" parameterType="java.lang.String">
+        update res_doctor_sch_process
+        set record_status    = 'N',
+            modify_user_flow = 'returnDel'
+        WHERE user_flow = #{doctorFlow}
+          AND record_status = 'Y'
+    </update>
+
+    <update id="updateSchArrangeResultStatus" parameterType="java.lang.String">
+        update sch_arrange_result
+        set record_status   = 'N',
+            modify_user_flow='returnDel'
+        WHERE doctor_flow = #{doctorFlow}
+          AND record_status = 'Y'
+    </update>
+
+    <update id="updateResrecStatus" parameterType="java.lang.String">
+        update res_rec
+        set record_status   = 'N',
+            modify_user_flow='returnDel'
+        WHERE oper_user_Flow = #{doctorFlow}
+          AND record_status = 'Y'
+    </update>
+
+    <update id="updateResSchProcessExpressStatus" parameterType="java.lang.String">
+        update res_sch_process_express
+        set record_status   = 'N',
+            modify_user_flow='returnDel'
+        WHERE oper_user_flow = #{doctorFlow}
+          AND record_status = 'Y'
+    </update>
 </mapper>

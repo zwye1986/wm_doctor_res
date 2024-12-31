@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResLectureInfoExtMapper" >
-	<resultMap id="includeDoctorType" type="java.util.HashMap" extends="com.pinde.sci.dao.base.ResLectureScanRegistMapper.BaseResultMap">
+    <resultMap id="includeDoctorType" type="java.util.HashMap"
+               extends="com.pinde.core.common.sci.dao.ResLectureScanRegistMapper.BaseResultMap">
 		<result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
 		<result column="DOCTOR_TYPE_Id" property="doctorTypeId" jdbcType="VARCHAR" />
 	</resultMap>
-	<select id="searchLecturesList" resultMap="com.pinde.sci.dao.base.ResLectureInfoMapper.BaseResultMap">
+    <select id="searchLecturesList" resultMap="com.pinde.core.common.sci.dao.ResLectureInfoMapper.BaseResultMap">
 		SELECT LECTURE_FLOW, LECTURE_TEACHER_FLOW, LECTURE_TEACHER_NAME, ORG_FLOW, ORG_NAME
 	, LECTURE_TRAIN_DATE, LECTURE_START_TIME, LECTURE_END_TIME, LECTURE_CONTENT, LECTURE_TRAIN_PLACE
 	, LECTURE_DESC, LECTURE_EVA_PERIOD, LECTURE_UNIT_ID, LECTURE_UNIT_NAME, RECORD_STATUS
@@ -154,7 +155,7 @@
 		AND T.LECTURE_FLOW=#{lectureFlow}
 		GROUP BY LIMIT_NUM
 	</select>
-	<select id="searchIsScan" resultMap="com.pinde.sci.dao.base.ResLectureScanRegistMapper.BaseResultMap">
+    <select id="searchIsScan" resultMap="com.pinde.core.common.sci.dao.ResLectureScanRegistMapper.BaseResultMap">
 		SELECT * FROM RES_LECTURE_SCAN_REGIST
 		WHERE RECORD_STATUS='Y'
 		AND IS_SCAN IS NOT NULL
@@ -193,7 +194,8 @@
 		</if>
 		ORDER BY RLSR.CREATE_TIME
 	</select>
-	<select id="searchRegistByLectureFlow" resultMap="com.pinde.sci.dao.base.ResLectureScanRegistMapper.BaseResultMap">
+    <select id="searchRegistByLectureFlow"
+            resultMap="com.pinde.core.common.sci.dao.ResLectureScanRegistMapper.BaseResultMap">
 		SELECT * FROM RES_LECTURE_SCAN_REGIST
 		WHERE RECORD_STATUS='Y'
 		AND IS_REGIST ='Y'
@@ -232,7 +234,7 @@
 		</if>
 		ORDER BY RLSR.CREATE_TIME
 	</select>
-	<select id="checkJoinList" resultMap="com.pinde.sci.dao.base.ResLectureInfoMapper.BaseResultMap">
+    <select id="checkJoinList" resultMap="com.pinde.core.common.sci.dao.ResLectureInfoMapper.BaseResultMap">
 		 SELECT *
           FROM RES_LECTURE_INFO INFO
          WHERE INFO.RECORD_STATUS='Y'
@@ -268,7 +270,7 @@
         )
 	</select>
 
-	<select id="searchIsRandomScan" resultMap="com.pinde.sci.dao.base.ResLectureRandomScanMapper.BaseResultMap">
+    <select id="searchIsRandomScan" resultMap="com.pinde.core.common.sci.dao.ResLectureRandomScanMapper.BaseResultMap">
 		SELECT * FROM RES_LECTURE_RANDOM_SCAN
 		WHERE RECORD_STATUS='Y'
 		AND IS_SCAN IS NOT NULL
@@ -295,7 +297,7 @@
 		</if>
 	</update>
 
-	<resultMap id="ParticipateResultMap" type="com.pinde.sci.model.jsres.ParticipateInfoExt" >
+    <resultMap id="ParticipateResultMap" type="com.pinde.core.model.ParticipateInfoExt">
 		<result column="lectureFlow"     property="lectureFlow" jdbcType="VARCHAR" />
 		<result column="scanCodeStudent" property="scanCodeStudent" jdbcType="VARCHAR" />
 		<result column="signUpStudent"   property="signUpStudent" jdbcType="VARCHAR" />
@@ -312,7 +314,8 @@
     GROUP BY LECTURE_FLOW
 
   </select>
-	<select id="queryParticipateList" resultMap="ParticipateResultMap" resultType="com.pinde.sci.model.jsres.ParticipateInfoExt" >
+    <select id="queryParticipateList" resultMap="ParticipateResultMap"
+            resultType="com.pinde.core.model.ParticipateInfoExt">
        select i.LECTURE_FLOW lectureFlow,T3.signUpStudent,T3.scanCodeStudent,T3.signUpTeacher,T3.scanCodeTeacher
 	from RES_LECTURE_INFO i left join
       (select max(case role_name when 'xy' then bb end) as signUpStudent,

@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.sci.dao.ResScheduleScoreMapper;
 import com.pinde.core.model.ResScheduleScore;
 import com.pinde.core.model.ResScheduleScoreExample;
 import com.pinde.core.model.SysUser;
@@ -8,7 +9,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResScheduleScoreBiz;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.ResScheduleScoreMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

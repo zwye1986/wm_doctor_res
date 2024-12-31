@@ -6,7 +6,7 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResCostCfgMainBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResCostCfgMainMapper;
+import com.pinde.core.common.sci.dao.ResCostCfgMainMapper;
 import com.pinde.sci.dao.res.ResCostCfgExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

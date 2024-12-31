@@ -11228,7 +11228,7 @@ public class JswjwWxController extends GeneralController {
             SysUser user = jswjwBiz.readSysUser(userFlow);
             param.put("orgFlow",user.getOrgFlow());
         }
-        List<TeachingActivityInfo> list = activityBiz.getActivityListByRole(param);
+        List<Map<String, Object>> list = activityBiz.getActivityListByRole(param);
         resultMap.put("resultId", "200");
         resultMap.put("resultType", list);
         return resultMap;
@@ -11267,12 +11267,12 @@ public class JswjwWxController extends GeneralController {
             SysUser user = jswjwBiz.readSysUser(userFlow);
             param.put("orgFlow",user.getOrgFlow());
         }
-        List<TeachingActivityInfo> list = activityBiz.getActivityListByRole(param);
-        if (null!=list && list.size()>0){
-            for (TeachingActivityInfo info : list) {
-                info.setRecordStatus(jswjwBiz.readSysUser(info.getSpeakerFlow()).getUserName());
-            }
-        }
+        List<Map<String, Object>> list = activityBiz.getActivityListByRole(param);
+//        if (null!=list && list.size()>0){
+//            for (TeachingActivityInfo info : list) {
+//                info.setRecordStatus(jswjwBiz.readSysUser(info.getSpeakerFlow()).getUserName());
+//            }
+//        }
         resultMap.put("resultId", "200");
         resultMap.put("resultType", list);
         return resultMap;

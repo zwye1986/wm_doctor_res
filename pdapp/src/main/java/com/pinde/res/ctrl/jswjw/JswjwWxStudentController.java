@@ -14,8 +14,6 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.stdp.IResGradeBiz;
-import com.pinde.res.model.jswjw.mo.ResAssessCfgItemForm;
-import com.pinde.res.model.jswjw.mo.ResAssessCfgTitleForm;
 import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
 import com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper;
 import com.pinde.core.common.sci.dao.ResDoctorMapper;

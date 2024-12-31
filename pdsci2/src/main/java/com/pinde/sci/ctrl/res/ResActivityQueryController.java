@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.res;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.sci.dao.TeachingActivityResultMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -11,17 +12,12 @@ import com.pinde.sci.biz.jsres.IJsResActivityBiz;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
-import com.pinde.sci.biz.res.IResJointOrgBiz;
-import com.pinde.sci.biz.res.IResTrainingSpeDeptBiz;
 import com.pinde.sci.biz.sys.IDeptBiz;
 import com.pinde.sci.biz.sys.IDictBiz;
-import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.TeachingActivityResultMapper;
-import com.pinde.core.model.ResDoctor;
 import org.dom4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,13 +54,7 @@ public class ResActivityQueryController extends GeneralController {
 	@Autowired
 	private IResDoctorBiz doctorBiz;
 	@Autowired
-	private IOrgBiz orgBiz;
-	@Autowired
-	private IResJointOrgBiz jointOrgBiz;
-	@Autowired
 	private IFileBiz fileBiz;
-	@Autowired
-	private IResTrainingSpeDeptBiz resTrainingSpeDeptBiz;
 	@Autowired
 	private TeachingActivityResultMapper resultMapper;
 	@Autowired

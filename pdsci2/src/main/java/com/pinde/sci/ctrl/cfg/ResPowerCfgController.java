@@ -1,6 +1,8 @@
 package com.pinde.sci.ctrl.cfg;
 
 
+import com.pinde.core.common.sci.dao.ResPowerCfgMapper;
+import com.pinde.core.common.sci.dao.SysUserRoleMapper;
 import com.pinde.core.model.ResPowerCfg;
 import com.pinde.core.model.SysUserRole;
 import com.pinde.core.model.SysUserRoleExample;
@@ -10,8 +12,6 @@ import com.pinde.sci.biz.res.IResPowerCfgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResPowerCfgMapper;
-import com.pinde.sci.dao.base.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

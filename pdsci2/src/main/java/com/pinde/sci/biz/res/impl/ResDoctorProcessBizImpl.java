@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResDoctorSchProcessEvalMapper;
+import com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.ResDoctorSchProcessExample.Criteria;
 import com.pinde.core.util.DateUtil;
@@ -9,8 +11,6 @@ import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.NumTrans;
-import com.pinde.sci.dao.base.ResDoctorSchProcessEvalMapper;
-import com.pinde.sci.dao.base.ResDoctorSchProcessMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
 import com.pinde.sci.model.res.SchProcessExt;
@@ -34,7 +34,7 @@ import java.util.*;
 public class ResDoctorProcessBizImpl implements IResDoctorProcessBiz {
 
 	@Autowired
-	private ResDoctorSchProcessMapper  resDoctorProcessMapper;
+    private ResDoctorSchProcessMapper resDoctorProcessMapper;
 	@Autowired
 	private ResDoctorSchProcessEvalMapper evalMapper;
 	@Autowired

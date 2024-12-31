@@ -28,4 +28,8 @@ public interface ResOrgSpeMapper {
     int updateByPrimaryKeySelective(ResOrgSpe record);
 
     int updateByPrimaryKey(ResOrgSpe record);
+
+    int batchInsert(@Param("resOrgSpeList") List<ResOrgSpe> resOrgSpeList);
+
+    int batchUpdateSelective(@Param("resOrgSpeList") List<ResOrgSpe> resOrgSpeList);
 }

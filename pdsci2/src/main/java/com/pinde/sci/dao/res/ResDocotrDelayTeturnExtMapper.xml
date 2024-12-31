@@ -108,7 +108,7 @@
         group by a.org_flow, a.org_name
     </select>
 <!--/*************************************************高校角色******************************************************/-->
-    <select id="searchInfoForUni" resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap">
+    <select id="searchInfoForUni" resultMap="com.pinde.core.common.sci.dao.ResDocotrDelayTeturnMapper.BaseResultMap">
 
         select
         a.*
@@ -308,7 +308,7 @@
         )
         WHERE mm = 1
     </select>
-    <select id="backTrainCheck"  resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap">
+    <select id="backTrainCheck" resultMap="com.pinde.core.common.sci.dao.ResDocotrDelayTeturnMapper.BaseResultMap">
         select rddt.* from res_docotr_delay_teturn rddt
           left join res_doctor rd on rddt.doctor_flow=rd.doctor_flow
         where rddt.record_status='Y'
@@ -375,7 +375,7 @@
         </if>
         order by rddt.create_time desc
     </select>
-    <select id="searchInfo"  resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap">
+    <select id="searchInfo" resultMap="com.pinde.core.common.sci.dao.ResDocotrDelayTeturnMapper.BaseResultMap">
         select rddt.* from res_docotr_delay_teturn rddt
           left join res_doctor rd on rddt.doctor_flow = rd.doctor_flow
         where rddt.record_status='Y'
@@ -471,7 +471,7 @@
             </foreach>
         </where>
     </sql>
-    <select id="searchInfoNew" resultMap="com.pinde.sci.dao.base.ResDocotrDelayTeturnMapper.BaseResultMap"
+    <select id="searchInfoNew" resultMap="com.pinde.core.common.sci.dao.ResDocotrDelayTeturnMapper.BaseResultMap"
             parameterType="com.pinde.core.model.ResDocotrDelayTeturnExample">
         select
         <if test="distinct">

@@ -20,6 +20,9 @@
     <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+      <result column="JOINT_LOCAL_AUDIT" property="jointLocalAudit" jdbcType="VARCHAR"/>
+      <result column="JOINT_LOCAL_AUDIT_START_TIME" property="jointLocalAuditStartTime" jdbcType="VARCHAR"/>
+      <result column="JOINT_LOCAL_AUDIT_END_TIME" property="jointLocalAuditEndTime" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -83,7 +86,7 @@
     TEST_FLOW, TEST_ID, TEST_NAME, APPLY_START_TIME, APPLY_END_TIME, CITYS_ID, LOCAL_AUDIT, 
     LOCAL_AUDIT_START_TIME, LOCAL_AUDIT_END_TIME, CHARGE_AUDIT, CHARGE_AUDIT_START_TIME, 
     CHARGE_AUDIT_END_TIME, TEST_END_TIME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
-    MODIFY_TIME, MODIFY_USER_FLOW
+    MODIFY_TIME, MODIFY_USER_FLOW, JOINT_LOCAL_AUDIT, JOINT_LOCAL_AUDIT_START_TIME, JOINT_LOCAL_AUDIT_END_TIME
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResTestConfigExample" >
     select
@@ -110,16 +113,18 @@
       APPLY_START_TIME, APPLY_END_TIME, CITYS_ID, 
       LOCAL_AUDIT, LOCAL_AUDIT_START_TIME, LOCAL_AUDIT_END_TIME, 
       CHARGE_AUDIT, CHARGE_AUDIT_START_TIME, CHARGE_AUDIT_END_TIME, 
-      TEST_END_TIME, RECORD_STATUS, CREATE_TIME, 
-      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
-      )
+      TEST_END_TIME, RECORD_STATUS, CREATE_TIME,
+                                   CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW,
+                                   JOINT_LOCAL_AUDIT, JOINT_LOCAL_AUDIT_START_TIME,
+                                   JOINT_LOCAL_AUDIT_END_TIME)
     values (#{testFlow,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, #{testName,jdbcType=VARCHAR}, 
       #{applyStartTime,jdbcType=VARCHAR}, #{applyEndTime,jdbcType=VARCHAR}, #{citysId,jdbcType=VARCHAR}, 
       #{localAudit,jdbcType=VARCHAR}, #{localAuditStartTime,jdbcType=VARCHAR}, #{localAuditEndTime,jdbcType=VARCHAR}, 
       #{chargeAudit,jdbcType=VARCHAR}, #{chargeAuditStartTime,jdbcType=VARCHAR}, #{chargeAuditEndTime,jdbcType=VARCHAR}, 
-      #{testEndTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
-      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
-      )
+      #{testEndTime,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+            #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR},
+            #{jointLocalAudit,jdbcType=VARCHAR}, #{jointLocalAuditStartTime,jdbcType=VARCHAR},
+            #{jointLocalAuditEndTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResTestConfig" >
       insert into RES_TEST_CONFIG
@@ -178,6 +183,15 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
       </if>
+        <if test="jointLocalAudit != null">
+            JOINT_LOCAL_AUDIT,
+        </if>
+        <if test="jointLocalAuditStartTime != null">
+            JOINT_LOCAL_AUDIT_START_TIME,
+        </if>
+        <if test="jointLocalAuditEndTime != null">
+            JOINT_LOCAL_AUDIT_END_TIME,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="testFlow != null" >
@@ -234,9 +248,19 @@
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="jointLocalAudit != null">
+            #{jointLocalAudit,jdbcType=VARCHAR},
+        </if>
+        <if test="jointLocalAuditStartTime != null">
+            #{jointLocalAuditStartTime,jdbcType=VARCHAR},
+        </if>
+        <if test="jointLocalAuditEndTime != null">
+            #{jointLocalAuditEndTime,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.ResTestConfigExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResTestConfigExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_TEST_CONFIG
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -299,6 +323,15 @@
       <if test="record.modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="record.jointLocalAudit != null">
+            JOINT_LOCAL_AUDIT = #{record.jointLocalAudit,jdbcType=VARCHAR},
+        </if>
+        <if test="record.jointLocalAuditStartTime != null">
+            JOINT_LOCAL_AUDIT_START_TIME = #{record.jointLocalAuditStartTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.jointLocalAuditEndTime != null">
+            JOINT_LOCAL_AUDIT_END_TIME = #{record.jointLocalAuditEndTime,jdbcType=VARCHAR},
+        </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -323,7 +356,10 @@
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT = #{record.jointLocalAudit,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT_START_TIME = #{record.jointLocalAuditStartTime,jdbcType=VARCHAR},
+      JOINT_LOCAL_AUDIT_END_TIME = #{record.jointLocalAuditEndTime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -1,25 +1,18 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.*;
-import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.pub.IMsgBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.IDictBiz;
+import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
+import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.core.model.ResJointOrg;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,55 +36,11 @@ import java.util.Map;
 @RequestMapping("/jsres/appUseInfo")
 public class JsResAppUseInfoController extends GeneralController {
 	@Autowired
-	private IJsResDoctorBiz jsResDoctorBiz;
-	@Autowired
-	private IUserBiz userBiz;
-	@Autowired
-	private IResJointOrgBiz resJointOrgBiz;
-	@Autowired
-	private IResDoctorBiz resDoctorBiz;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
 	private IOrgBiz orgBiz;
-	@Autowired
-	private IResOrgSpeBiz resBaseSpeBiz;
 	@Autowired
 	private IJsResDoctorRecruitBiz jsResDoctorRecruitBiz;
 	@Autowired
-	private IMsgBiz msgBiz;
-	@Autowired
-	private ISchRotationBiz rotationBiz;
-	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
-	private IResDoctorProcessBiz processBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
-	@Autowired
-	private ISchArrangeResultBiz resultBiz;
-	@Autowired
-	private ISchRotationGroupBiz groupBiz;
-	@Autowired
-	private SchRotationDeptMapper rotationDeptMapper;
-	@Autowired
-	private IJsResDoctorOrgHistoryBiz resDoctorOrgHistoryBiz;
-	@Autowired
 	private IResJointOrgBiz jointOrgBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationDeptBiz;
-	@Autowired
-	private IJsResRecBiz jsResRecBiz;
-	@Autowired
-	private ISchDoctorDeptBiz doctorDeptBiz;
-	@Autowired
-	private IDictBiz dictBiz;
-	@Autowired
-	private IResScoreBiz resScoreBiz;
-	@Autowired
-	private IFileBiz fileBiz;
-	@Autowired
-	private IResDoctorRecruitBiz doctorRecruitBiz;
 
 	/**
 	 * 显示Main.jsp  住院医师

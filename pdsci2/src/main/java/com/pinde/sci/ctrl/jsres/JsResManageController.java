@@ -11,9 +11,7 @@ import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.common.enums.sys.ReqTypeEnum;
-import com.pinde.core.common.sci.dao.PubFileMapper;
-import com.pinde.core.common.sci.dao.SysUserDeptMapper;
-import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.Page;
 import com.pinde.core.page.PageHelper;
@@ -39,13 +37,10 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.sci.ctrl.res.ResMonthlyReportGlobalControllerClass;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.form.res.ResAssessCfgItemForm;
-import com.pinde.sci.form.res.ResAssessCfgTitleForm;
 import com.pinde.sci.model.jsres.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
@@ -213,8 +208,6 @@ public class JsResManageController extends GeneralController {
 	private ResTeacherTrainingMapper resTeacherTrainingMapper;
 	@Autowired
 	private ISchRotationBiz schRotationtBiz;
-	@Autowired
-	private IResStatisticBiz iresStatisticBiz;
 	@Autowired
 	private SysUserDeptMapper userDeptMapper;
 	@Autowired

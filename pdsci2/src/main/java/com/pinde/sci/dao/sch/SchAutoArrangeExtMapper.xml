@@ -77,7 +77,7 @@
                      AND ORG_FLOW = #{orgFlow})) OR IS_ORG_VIEW != 'Y')
           order by ROTATION_FLOW
     </select>
-    <select id="getDoctorList" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="getDoctorList" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
          SELECT *
           FROM RES_DOCTOR
          WHERE RECORD_STATUS = 'Y'

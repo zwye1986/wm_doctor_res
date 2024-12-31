@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorRecruitExtMapper" >
-	<resultMap id="resDoctorRecruitExtMap" type="com.pinde.sci.model.res.ResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
+    <resultMap id="resDoctorRecruitExtMap" type="com.pinde.sci.model.res.ResDoctorRecruitExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
         <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor"
-                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 
 	<resultMap id="speCountForm" type="com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm">
@@ -308,7 +309,7 @@
 		ORDER BY dr.TOTLE_RESULT DESC nulls last
 	</select>
     <resultMap id="docRecruitClobMap" type="com.pinde.core.model.ResDoctorRecruitWithBLOBs"
-               extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.ResultMapWithBLOBs">
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.ResultMapWithBLOBs">
 	</resultMap>
 	<select id="docRecruitClobSearch" parameterType="java.util.Map" resultMap="docRecruitClobMap">
 		SELECT * FROM RES_DOCTOR_RECRUIT rdr
@@ -429,7 +430,8 @@
 			AND ed.org_flow != '00000000000000000000000000000000'
 		group by ed.graduation_year
 	</select>
-	<select id="searchDoctorByJd"   parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchDoctorByJd" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		SELECT ed.org_flow as ORG_FLOW,
 		ed.org_name as ORG_NAME,
 		ed.doctor_type_id as DOCTOR_TYPE_ID,
@@ -467,7 +469,8 @@
 		 order by ed.org_Flow,ed.doctor_type_id
 	</select>
 
-	<select id="searchDoctorBySpe"   parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchDoctorBySpe" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		SELECT ed.training_spe_id as TRAINING_SPE_ID,
 		ed.training_spe_name as TRAINING_SPE_NAME,
 		ed.doctor_type_id as DOCTOR_TYPE_ID,
@@ -564,7 +567,8 @@
 		   and record_status = 'Y'
 		 order by ordinal
 	</select>
-	<select id="searchDoctorRecruitWithLine" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap">
+    <select id="searchDoctorRecruitWithLine" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
 		select rdr.*
 		FROM res_doctor_recruit rdr
 		left join res_doctor rd on rdr.doctor_flow = rd.doctor_flow

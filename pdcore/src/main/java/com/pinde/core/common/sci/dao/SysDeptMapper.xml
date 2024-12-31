@@ -335,4 +335,10 @@
       DEPT_PID = #{deptPid,jdbcType=VARCHAR}
     where DEPT_FLOW = #{deptFlow,jdbcType=VARCHAR}
   </update>
+
+    <delete id="deleteDeptByKey">
+        delete
+        from SYS_DEPT
+        where dept_flow = #{deptFlow,jdbcType=VARCHAR}
+    </delete>
 </mapper>

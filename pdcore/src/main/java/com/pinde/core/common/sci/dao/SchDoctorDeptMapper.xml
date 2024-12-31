@@ -104,7 +104,26 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+
+    <select id="selectListByRotationFLowListList" resultType="com.pinde.core.model.SchDoctorDept">
+        select
+        <include refid="Base_Column_List"/>
+        from SCH_DOCTOR_DEPT
+        where record_status = 'Y'
+        <foreach collection="doctorFlowList" open="and (" separator=" or " close=")" index="i">
+            (
+            DOCTOR_FLOW = #{doctorFlowList[${i}], jdbcType=VARCHAR}
+            <if test="rotationFlowListList.get(i).size() > 0">
+                and ROTATION_FLOW in
+                <foreach collection="rotationFlowListList.get(i)" item="rotationFlow" open="(" close=")" separator=",">
+                    #{rotationFlow,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            )
+        </foreach>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
       from SCH_DOCTOR_DEPT

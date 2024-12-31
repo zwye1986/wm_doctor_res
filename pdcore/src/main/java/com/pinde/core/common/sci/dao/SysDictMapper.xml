@@ -18,6 +18,11 @@
     <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
     <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
     <result column="DICT_NAME_EN" property="dictNameEn" jdbcType="VARCHAR" />
+      <result column="IS_SUBMIT_ID" property="isSubmitId" jdbcType="VARCHAR"/>
+      <result column="IS_SUBMIT_NAME" property="isSubmitName" jdbcType="VARCHAR"/>
+      <result column="CHECK_STATUS_ID" property="checkStatusId" jdbcType="VARCHAR"/>
+      <result column="CHECK_STATUS_NAME" property="checkStatusName" jdbcType="VARCHAR"/>
+      <result column="CHECK_REASON" property="checkReason" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,7 +85,8 @@
   <sql id="Base_Column_List" >
     DICT_FLOW, DICT_TYPE_ID, DICT_TYPE_NAME, DICT_ID, DICT_NAME, DICT_DESC, ORDINAL, 
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, DICT_ISSYS, 
-    ORG_NAME, ORG_FLOW, DICT_NAME_EN
+    ORG_NAME, ORG_FLOW, DICT_NAME_EN, IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID,
+    CHECK_STATUS_NAME, CHECK_REASON
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysDictExample" >
     select

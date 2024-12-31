@@ -1,12 +1,12 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.sci.dao.SchDeptExternalRelMapper;
 import com.pinde.core.model.SchDeptExternalRel;
 import com.pinde.core.model.SchDeptExternalRelExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.sch.ISchDeptExternalRelBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.SchDeptExternalRelMapper;
 import com.pinde.sci.dao.sch.SchDeptExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

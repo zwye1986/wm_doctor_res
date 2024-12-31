@@ -21,6 +21,22 @@ public interface SchRotationDeptMapper {
 
     List<SchRotationDept> selectByExample(SchRotationDeptExample example);
 
+    /**
+     * 定制sql，条件是定制的，不通用
+     */
+    List<SchRotationDept> selectListWithBLOBs(@Param("rotationFlowList") List<String> rotationFlowList, @Param("standardDeptIdList") List<String> standardDeptIdList, @Param("groupFlowList") List<String> groupFlowList);
+
+    /**
+     * 定制sql，条件是定制的，不通用
+     *
+     * @param deptFlowList
+     * @param groupFlowList
+     * @return
+     */
+    List<SchRotationDept> selectListByGroupAndDept(@Param("deptFlowList") List<String> deptFlowList, @Param("groupFlowList") List<String> groupFlowList);
+
+    List<SchRotationDept> searchSchRotationDeptByPartitionList(@Param("rotationFlowListList") List<List<String>> rotationFlowListList);
+
     SchRotationDept selectByPrimaryKey(String recordFlow);
 
     int updateByExampleSelective(@Param("record") SchRotationDept record, @Param("example") SchRotationDeptExample example);

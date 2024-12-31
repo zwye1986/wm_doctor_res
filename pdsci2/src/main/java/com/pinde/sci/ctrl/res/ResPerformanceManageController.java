@@ -14,7 +14,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.form.res.FormulaForm;
+import com.pinde.core.model.FormulaForm;
 import com.pinde.sci.model.res.ResAllowancePayment;
 import com.pinde.sci.model.res.ResAllowanceUserExt;
 import org.apache.poi.hssf.usermodel.*;

@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.sci.dao.TeachingActivityFormValueMapper;
+import com.pinde.core.common.sci.dao.TeachingActivityInfoTargetMapper;
+import com.pinde.core.common.sci.dao.TeachingActivityTargetMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResActivityTargetBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.TeachingActivityFormValueMapper;
-import com.pinde.sci.dao.base.TeachingActivityInfoTargetMapper;
-import com.pinde.sci.dao.base.TeachingActivityTargetMapper;
 import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.jsres.TeachingActivityTargetExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;

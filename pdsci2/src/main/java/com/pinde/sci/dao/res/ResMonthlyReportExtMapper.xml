@@ -358,7 +358,8 @@
         )
     </select>
 
-    <select id="getDoctorList" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" parameterType="map">
+    <select id="getDoctorList" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"
+            parameterType="map">
         SELECT rd.* from
         res_doctor rd
         where rd.record_status = 'Y'
@@ -375,7 +376,8 @@
         )
     </select>
 
-    <select id="getRecruitList" resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" parameterType="map">
+    <select id="getRecruitList" resultMap="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap"
+            parameterType="map">
         SELECT rdr.* from
         res_doctor_recruit rdr
         where rdr.record_status = 'Y'

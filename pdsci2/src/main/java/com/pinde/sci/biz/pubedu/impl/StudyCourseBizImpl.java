@@ -7,9 +7,9 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pubedu.IStudyCourseBiz;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.StudyCourseDetailInfoMapper;
-import com.pinde.sci.dao.base.StudyCourseDetailMapper;
-import com.pinde.sci.dao.base.StudyCourseMapper;
+import com.pinde.core.common.sci.dao.StudyCourseDetailInfoMapper;
+import com.pinde.core.common.sci.dao.StudyCourseDetailMapper;
+import com.pinde.core.common.sci.dao.StudyCourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

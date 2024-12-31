@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.sci.dao.ResPaperMapper;
 import com.pinde.core.common.sci.dao.TestPaperMapper;
 import com.pinde.core.model.ResPaper;
 import com.pinde.core.model.ResPaperExample;
 import com.pinde.core.model.TestPaper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.ResPaperBiz;
-import com.pinde.sci.dao.base.ResPaperMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

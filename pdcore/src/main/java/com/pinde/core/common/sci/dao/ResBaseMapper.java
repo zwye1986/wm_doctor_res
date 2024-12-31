@@ -34,4 +34,6 @@ public interface ResBaseMapper {
     int updateByPrimaryKeyWithBLOBs(ResBase record);
 
     int updateByPrimaryKey(ResBase record);
+
+    ResBase selectByPrimaryKeyAndSessionNumber(@Param("orgFlow") String orgFlow, @Param("sessionNumber") String sessionNumber);
 }

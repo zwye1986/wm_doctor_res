@@ -234,7 +234,22 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+
+    <select id="readDoctorCountBySpe" resultType="map">
+        select org_flow, training_spe_id, count(1) training_Count
+        from res_doctor
+        where session_number = #{sessionNumber}
+        and doctor_status_id = #{doctorStatusId}
+        and training_spe_id in
+        <foreach collection="trainingSpeIdList" item="trainingSpeId" open="(" close=")" separator=",">
+            #{trainingSpeId}
+        </foreach>
+        and org_flow = #{orgFlow}
+        and record_status = 'Y'
+        group by org_flow, training_spe_id
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
       from RES_DOCTOR
@@ -264,83 +279,96 @@
       TERMINAT_REASON, TERMINAT_DATE, SEL_DEPT_FLAG, 
       SCH_FLAG, QUALIFIED_NO, QUALIFIED_DATE, 
       QUALIFIED_FILE, REG_NO, REG_ADDRESS, 
-      COMPUTER_SKILLS, FOREIGN_SKILLS, EMERGENCY_NAME, 
-      EMERGENCY_PHONE, EMERGENCY_RELATION, DISACTIVE_REASON,
-      REEDIT_FLAG, RECORD_STATUS, CREATE_TIME,
-      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW,
-      DOCTOR_CATEGORY_ID, DOCTOR_CATEGORY_NAME, DOCTOR_NAME,
-      SCH_STATUS_ID, SCH_STATUS_NAME, REG_DATE,
-      GROUP_ID, GROUP_NAME, GROUP_ROLE_ID,
-      GROUP_ROLE_NAME, DOCTOR_LICENSE_FLAG, TUTOR_NAME,
-      RESEARCH_DIRECTION, SPECIALIZED_ID, DOCTOR_LICENSE_NO,
-      TUTOR_FLOW, DEGREE_CATEGORY_ID, DEGREE_CATEGORY_NAME,
-      WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, IS_YEAR_GRADUATE,
-      WORK_ORG_ID, ORG_NATURE_ID, ORG_NATURE_NAME,
-      GRADUATION_STATUS_ID, GRADUATION_STATUS_NAME,
-      DISAGREE_REASON, COMPLETE_START_DATE, COMPLETE_END_DATE,
-      DISCIPLE_TEACHER_FLOW, DISCIPLE_TEACHER_NAME,
-      GRADUATION_YEAR, SECOND_SPE_ID, SECOND_SPE_NAME,
-      COMPANY_TYPE, IS_PARTNER, SOURCE_PROVINCES_ID,
-      SOURCE_PROVINCES_NAME, SECOND_ROTATION_FLOW,
-      SECOND_ROTATION_NAME, STANDARD_DEPT_NAME, STANDARD_DEPT_ID,
-      PRACT_PHYSICIAN_FLAG, PRACT_PHYSICIAN_CERTIFICATE_NO,
-      IS_UNDER_LINE, DEPART_MENT_FLOW, DEPART_MENT_NAME,
-      OSCA_STUDENT_SUBMIT, SCZY_RECRIUT_BANCH, SEL_ONE_FLAG,
-      SEL_TWO_FLAG, SEL_THREE_FLAG, SCH_ONE_FLAG,
-      SCH_TWO_FLAG, SCH_THREE_FLAG, SEL_ALL_FLAG,
-      SCH_ALL_FLAG, IS_SCH_FLAG, SEND_CITY_ID,
-      SEND_CITY_NAME, SEND_PROV_ID, SEND_PROV_NAME,
-      SECOND_ORG_FLOW, SECOND_ORG_NAME, LOCK_STATUS,
-      IS_SEND, ENGLISH_CERTIFICATE_NUMBER, ENGLISH_CERTIFICATE_DATE,
-      ENGLISH_GRADE_EXAM_TYPE, ENGLISH_ABILITY, IS_READING,
-      IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID,
-      CHECK_STATUS_NAME, CHECK_REASON, IS_RECRUIT_SEND,
-      IS_ADJUST, SCHOOL)
-    values (#{doctorFlow,jdbcType=VARCHAR}, #{doctorCode,jdbcType=VARCHAR}, #{doctorHeadImg,jdbcType=VARCHAR},
-      #{doctorTypeId,jdbcType=VARCHAR}, #{doctorTypeName,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR},
-      #{orgName,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR},
-      #{workOrgName,jdbcType=VARCHAR}, #{dispatchFile,jdbcType=VARCHAR}, #{graduatedId,jdbcType=VARCHAR},
-      #{graduatedName,jdbcType=VARCHAR}, #{specialized,jdbcType=VARCHAR}, #{graduationTime,jdbcType=VARCHAR},
-      #{sessionNumber,jdbcType=VARCHAR}, #{certificateNo,jdbcType=VARCHAR}, #{degreeNo,jdbcType=VARCHAR},
-      #{inHosDate,jdbcType=VARCHAR}, #{trainingYears,jdbcType=VARCHAR}, #{trainingTypeId,jdbcType=VARCHAR},
-      #{trainingTypeName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, #{trainingSpeName,jdbcType=VARCHAR},
-      #{rotationFlow,jdbcType=VARCHAR}, #{rotationName,jdbcType=VARCHAR}, #{doctorStatusId,jdbcType=VARCHAR},
-      #{doctorStatusName,jdbcType=VARCHAR}, #{completeDate,jdbcType=VARCHAR}, #{completeNo,jdbcType=VARCHAR},
-      #{terminatReason,jdbcType=VARCHAR}, #{terminatDate,jdbcType=VARCHAR}, #{selDeptFlag,jdbcType=VARCHAR},
-      #{schFlag,jdbcType=VARCHAR}, #{qualifiedNo,jdbcType=VARCHAR}, #{qualifiedDate,jdbcType=VARCHAR},
-      #{qualifiedFile,jdbcType=VARCHAR}, #{regNo,jdbcType=VARCHAR}, #{regAddress,jdbcType=VARCHAR},
-      #{computerSkills,jdbcType=VARCHAR}, #{foreignSkills,jdbcType=VARCHAR}, #{emergencyName,jdbcType=VARCHAR},
-      #{emergencyPhone,jdbcType=VARCHAR}, #{emergencyRelation,jdbcType=VARCHAR}, #{disactiveReason,jdbcType=VARCHAR},
-      #{reeditFlag,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
-      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR},
-      #{doctorCategoryId,jdbcType=VARCHAR}, #{doctorCategoryName,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR},
-      #{schStatusId,jdbcType=VARCHAR}, #{schStatusName,jdbcType=VARCHAR}, #{regDate,jdbcType=VARCHAR},
-      #{groupId,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{groupRoleId,jdbcType=VARCHAR},
-      #{groupRoleName,jdbcType=VARCHAR}, #{doctorLicenseFlag,jdbcType=VARCHAR}, #{tutorName,jdbcType=VARCHAR},
-      #{researchDirection,jdbcType=VARCHAR}, #{specializedId,jdbcType=VARCHAR}, #{doctorLicenseNo,jdbcType=VARCHAR},
-      #{tutorFlow,jdbcType=VARCHAR}, #{degreeCategoryId,jdbcType=VARCHAR}, #{degreeCategoryName,jdbcType=VARCHAR},
-      #{workOrgLevelId,jdbcType=VARCHAR}, #{workOrgLevelName,jdbcType=VARCHAR}, #{isYearGraduate,jdbcType=VARCHAR},
-      #{workOrgId,jdbcType=VARCHAR}, #{orgNatureId,jdbcType=VARCHAR}, #{orgNatureName,jdbcType=VARCHAR},
-      #{graduationStatusId,jdbcType=VARCHAR}, #{graduationStatusName,jdbcType=VARCHAR},
-      #{disagreeReason,jdbcType=VARCHAR}, #{completeStartDate,jdbcType=VARCHAR}, #{completeEndDate,jdbcType=VARCHAR},
-      #{discipleTeacherFlow,jdbcType=VARCHAR}, #{discipleTeacherName,jdbcType=VARCHAR},
-      #{graduationYear,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR},
-      #{companyType,jdbcType=VARCHAR}, #{isPartner,jdbcType=VARCHAR}, #{sourceProvincesId,jdbcType=VARCHAR},
-      #{sourceProvincesName,jdbcType=VARCHAR}, #{secondRotationFlow,jdbcType=VARCHAR},
-      #{secondRotationName,jdbcType=VARCHAR}, #{standardDeptName,jdbcType=VARCHAR}, #{standardDeptId,jdbcType=VARCHAR},
-      #{practPhysicianFlag,jdbcType=CHAR}, #{practPhysicianCertificateNo,jdbcType=VARCHAR},
-      #{isUnderLine,jdbcType=VARCHAR}, #{departMentFlow,jdbcType=VARCHAR}, #{departMentName,jdbcType=VARCHAR},
-      #{oscaStudentSubmit,jdbcType=VARCHAR}, #{sczyRecriutBanch,jdbcType=VARCHAR}, #{selOneFlag,jdbcType=VARCHAR},
-      #{selTwoFlag,jdbcType=VARCHAR}, #{selThreeFlag,jdbcType=VARCHAR}, #{schOneFlag,jdbcType=VARCHAR},
-      #{schTwoFlag,jdbcType=VARCHAR}, #{schThreeFlag,jdbcType=VARCHAR}, #{selAllFlag,jdbcType=VARCHAR},
-      #{schAllFlag,jdbcType=VARCHAR}, #{isSchFlag,jdbcType=VARCHAR}, #{sendCityId,jdbcType=VARCHAR},
-      #{sendCityName,jdbcType=VARCHAR}, #{sendProvId,jdbcType=VARCHAR}, #{sendProvName,jdbcType=VARCHAR},
-      #{secondOrgFlow,jdbcType=VARCHAR}, #{secondOrgName,jdbcType=VARCHAR}, #{lockStatus,jdbcType=VARCHAR},
-      #{isSend,jdbcType=VARCHAR}, #{englishCertificateNumber,jdbcType=VARCHAR}, #{englishCertificateDate,jdbcType=VARCHAR},
-      #{englishGradeExamType,jdbcType=VARCHAR}, #{englishAbility,jdbcType=VARCHAR}, #{isReading,jdbcType=VARCHAR},
-      #{isSubmitId,jdbcType=VARCHAR}, #{isSubmitName,jdbcType=VARCHAR}, #{checkStatusId,jdbcType=VARCHAR},
-      #{checkStatusName,jdbcType=VARCHAR}, #{checkReason,jdbcType=VARCHAR}, #{isRecruitSend,jdbcType=VARCHAR},
-      #{isAdjust,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR})
+      COMPUTER_SKILLS, FOREIGN_SKILLS, EMERGENCY_NAME,
+                              EMERGENCY_PHONE, EMERGENCY_RELATION, DISACTIVE_REASON,
+                              REEDIT_FLAG, RECORD_STATUS, CREATE_TIME,
+                              CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW,
+                              DOCTOR_CATEGORY_ID, DOCTOR_CATEGORY_NAME, DOCTOR_NAME,
+                              SCH_STATUS_ID, SCH_STATUS_NAME, REG_DATE,
+                              GROUP_ID, GROUP_NAME, GROUP_ROLE_ID,
+                              GROUP_ROLE_NAME, DOCTOR_LICENSE_FLAG, TUTOR_NAME,
+                              RESEARCH_DIRECTION, SPECIALIZED_ID, DOCTOR_LICENSE_NO,
+                              TUTOR_FLOW, DEGREE_CATEGORY_ID, DEGREE_CATEGORY_NAME,
+                              WORK_ORG_LEVEL_ID, WORK_ORG_LEVEL_NAME, IS_YEAR_GRADUATE,
+                              WORK_ORG_ID, ORG_NATURE_ID, ORG_NATURE_NAME,
+                              GRADUATION_STATUS_ID, GRADUATION_STATUS_NAME,
+                              DISAGREE_REASON, COMPLETE_START_DATE, COMPLETE_END_DATE,
+                              DISCIPLE_TEACHER_FLOW, DISCIPLE_TEACHER_NAME,
+                              GRADUATION_YEAR, SECOND_SPE_ID, SECOND_SPE_NAME,
+                              COMPANY_TYPE, IS_PARTNER, SOURCE_PROVINCES_ID,
+                              SOURCE_PROVINCES_NAME, SECOND_ROTATION_FLOW,
+                              SECOND_ROTATION_NAME, STANDARD_DEPT_NAME, STANDARD_DEPT_ID,
+                              PRACT_PHYSICIAN_FLAG, PRACT_PHYSICIAN_CERTIFICATE_NO,
+                              IS_UNDER_LINE, DEPART_MENT_FLOW, DEPART_MENT_NAME,
+                              OSCA_STUDENT_SUBMIT, SCZY_RECRIUT_BANCH, SEL_ONE_FLAG,
+                              SEL_TWO_FLAG, SEL_THREE_FLAG, SCH_ONE_FLAG,
+                              SCH_TWO_FLAG, SCH_THREE_FLAG, SEL_ALL_FLAG,
+                              SCH_ALL_FLAG, IS_SCH_FLAG, SEND_CITY_ID,
+                              SEND_CITY_NAME, SEND_PROV_ID, SEND_PROV_NAME,
+                              SECOND_ORG_FLOW, SECOND_ORG_NAME, LOCK_STATUS,
+                              IS_SEND, ENGLISH_CERTIFICATE_NUMBER, ENGLISH_CERTIFICATE_DATE,
+                              ENGLISH_GRADE_EXAM_TYPE, ENGLISH_ABILITY, IS_READING,
+                              IS_SUBMIT_ID, IS_SUBMIT_NAME, CHECK_STATUS_ID,
+                              CHECK_STATUS_NAME, CHECK_REASON, IS_RECRUIT_SEND,
+                              IS_ADJUST, SCHOOL, SUBMIT_TIME,
+                              CHECK_TIME)
+      values (#{doctorFlow,jdbcType=VARCHAR}, #{doctorCode,jdbcType=VARCHAR}, #{doctorHeadImg,jdbcType=VARCHAR},
+              #{doctorTypeId,jdbcType=VARCHAR}, #{doctorTypeName,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR},
+              #{orgName,jdbcType=VARCHAR}, #{deptFlow,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR},
+              #{workOrgName,jdbcType=VARCHAR}, #{dispatchFile,jdbcType=VARCHAR}, #{graduatedId,jdbcType=VARCHAR},
+              #{graduatedName,jdbcType=VARCHAR}, #{specialized,jdbcType=VARCHAR}, #{graduationTime,jdbcType=VARCHAR},
+              #{sessionNumber,jdbcType=VARCHAR}, #{certificateNo,jdbcType=VARCHAR}, #{degreeNo,jdbcType=VARCHAR},
+              #{inHosDate,jdbcType=VARCHAR}, #{trainingYears,jdbcType=VARCHAR}, #{trainingTypeId,jdbcType=VARCHAR},
+              #{trainingTypeName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR},
+              #{trainingSpeName,jdbcType=VARCHAR},
+              #{rotationFlow,jdbcType=VARCHAR}, #{rotationName,jdbcType=VARCHAR}, #{doctorStatusId,jdbcType=VARCHAR},
+              #{doctorStatusName,jdbcType=VARCHAR}, #{completeDate,jdbcType=VARCHAR}, #{completeNo,jdbcType=VARCHAR},
+              #{terminatReason,jdbcType=VARCHAR}, #{terminatDate,jdbcType=VARCHAR}, #{selDeptFlag,jdbcType=VARCHAR},
+              #{schFlag,jdbcType=VARCHAR}, #{qualifiedNo,jdbcType=VARCHAR}, #{qualifiedDate,jdbcType=VARCHAR},
+              #{qualifiedFile,jdbcType=VARCHAR}, #{regNo,jdbcType=VARCHAR}, #{regAddress,jdbcType=VARCHAR},
+              #{computerSkills,jdbcType=VARCHAR}, #{foreignSkills,jdbcType=VARCHAR}, #{emergencyName,jdbcType=VARCHAR},
+              #{emergencyPhone,jdbcType=VARCHAR}, #{emergencyRelation,jdbcType=VARCHAR},
+              #{disactiveReason,jdbcType=VARCHAR},
+              #{reeditFlag,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+              #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR},
+              #{doctorCategoryId,jdbcType=VARCHAR}, #{doctorCategoryName,jdbcType=VARCHAR},
+              #{doctorName,jdbcType=VARCHAR},
+              #{schStatusId,jdbcType=VARCHAR}, #{schStatusName,jdbcType=VARCHAR}, #{regDate,jdbcType=VARCHAR},
+              #{groupId,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}, #{groupRoleId,jdbcType=VARCHAR},
+              #{groupRoleName,jdbcType=VARCHAR}, #{doctorLicenseFlag,jdbcType=VARCHAR}, #{tutorName,jdbcType=VARCHAR},
+              #{researchDirection,jdbcType=VARCHAR}, #{specializedId,jdbcType=VARCHAR},
+              #{doctorLicenseNo,jdbcType=VARCHAR},
+              #{tutorFlow,jdbcType=VARCHAR}, #{degreeCategoryId,jdbcType=VARCHAR},
+              #{degreeCategoryName,jdbcType=VARCHAR},
+              #{workOrgLevelId,jdbcType=VARCHAR}, #{workOrgLevelName,jdbcType=VARCHAR},
+              #{isYearGraduate,jdbcType=VARCHAR},
+              #{workOrgId,jdbcType=VARCHAR}, #{orgNatureId,jdbcType=VARCHAR}, #{orgNatureName,jdbcType=VARCHAR},
+              #{graduationStatusId,jdbcType=VARCHAR}, #{graduationStatusName,jdbcType=VARCHAR},
+              #{disagreeReason,jdbcType=VARCHAR}, #{completeStartDate,jdbcType=VARCHAR},
+              #{completeEndDate,jdbcType=VARCHAR},
+              #{discipleTeacherFlow,jdbcType=VARCHAR}, #{discipleTeacherName,jdbcType=VARCHAR},
+              #{graduationYear,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR},
+              #{companyType,jdbcType=VARCHAR}, #{isPartner,jdbcType=VARCHAR}, #{sourceProvincesId,jdbcType=VARCHAR},
+              #{sourceProvincesName,jdbcType=VARCHAR}, #{secondRotationFlow,jdbcType=VARCHAR},
+              #{secondRotationName,jdbcType=VARCHAR}, #{standardDeptName,jdbcType=VARCHAR},
+              #{standardDeptId,jdbcType=VARCHAR},
+              #{practPhysicianFlag,jdbcType=CHAR}, #{practPhysicianCertificateNo,jdbcType=VARCHAR},
+              #{isUnderLine,jdbcType=VARCHAR}, #{departMentFlow,jdbcType=VARCHAR}, #{departMentName,jdbcType=VARCHAR},
+              #{oscaStudentSubmit,jdbcType=VARCHAR}, #{sczyRecriutBanch,jdbcType=VARCHAR},
+              #{selOneFlag,jdbcType=VARCHAR},
+              #{selTwoFlag,jdbcType=VARCHAR}, #{selThreeFlag,jdbcType=VARCHAR}, #{schOneFlag,jdbcType=VARCHAR},
+              #{schTwoFlag,jdbcType=VARCHAR}, #{schThreeFlag,jdbcType=VARCHAR}, #{selAllFlag,jdbcType=VARCHAR},
+              #{schAllFlag,jdbcType=VARCHAR}, #{isSchFlag,jdbcType=VARCHAR}, #{sendCityId,jdbcType=VARCHAR},
+              #{sendCityName,jdbcType=VARCHAR}, #{sendProvId,jdbcType=VARCHAR}, #{sendProvName,jdbcType=VARCHAR},
+              #{secondOrgFlow,jdbcType=VARCHAR}, #{secondOrgName,jdbcType=VARCHAR}, #{lockStatus,jdbcType=VARCHAR},
+              #{isSend,jdbcType=VARCHAR}, #{englishCertificateNumber,jdbcType=VARCHAR},
+              #{englishCertificateDate,jdbcType=VARCHAR},
+              #{englishGradeExamType,jdbcType=VARCHAR}, #{englishAbility,jdbcType=VARCHAR},
+              #{isReading,jdbcType=VARCHAR},
+              #{isSubmitId,jdbcType=VARCHAR}, #{isSubmitName,jdbcType=VARCHAR}, #{checkStatusId,jdbcType=VARCHAR},
+              #{checkStatusName,jdbcType=VARCHAR}, #{checkReason,jdbcType=VARCHAR}, #{isRecruitSend,jdbcType=VARCHAR},
+              #{isAdjust,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{submitTime,jdbcType=VARCHAR},
+              #{checkTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctor" >
       insert into RES_DOCTOR
@@ -477,6 +505,12 @@
       <if test="emergencyRelation != null" >
         EMERGENCY_RELATION,
       </if>
+        <if test="disactiveReason != null">
+            DISACTIVE_REASON,
+        </if>
+        <if test="reeditFlag != null">
+            REEDIT_FLAG,
+        </if>
       <if test="recordStatus != null" >
         RECORD_STATUS,
       </if>
@@ -491,12 +525,6 @@
       </if>
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
-      </if>
-      <if test="disactiveReason != null" >
-        DISACTIVE_REASON,
-      </if>
-      <if test="reeditFlag != null" >
-        REEDIT_FLAG,
       </if>
       <if test="doctorCategoryId != null" >
         DOCTOR_CATEGORY_ID,
@@ -564,6 +592,12 @@
       <if test="workOrgId != null" >
         WORK_ORG_ID,
       </if>
+        <if test="orgNatureId != null">
+            ORG_NATURE_ID,
+        </if>
+        <if test="orgNatureName != null">
+            ORG_NATURE_NAME,
+        </if>
       <if test="graduationStatusId != null" >
         GRADUATION_STATUS_ID,
       </if>
@@ -618,11 +652,11 @@
       <if test="standardDeptId != null" >
         STANDARD_DEPT_ID,
       </if>
+        <if test="practPhysicianFlag != null">
+            PRACT_PHYSICIAN_FLAG,
+        </if>
       <if test="practPhysicianCertificateNo != null" >
         PRACT_PHYSICIAN_CERTIFICATE_NO,
-      </if>
-      <if test="practPhysicianFlag != null" >
-        PRACT_PHYSICIAN_FLAG,
       </if>
       <if test="isUnderLine != null" >
         IS_UNDER_LINE,
@@ -684,17 +718,56 @@
       <if test="secondOrgName != null" >
         SECOND_ORG_NAME,
       </if>
-      <if test="orgNatureId != null" >
-        ORG_NATURE_ID,
-      </if>
-      <if test="orgNatureName != null" >
-        ORG_NATURE_NAME,
+        <if test="lockStatus != null">
+            LOCK_STATUS,
       </if>
       <if test="isSend != null" >
         IS_SEND,
       </if>
-      <if test="lockStatus != null" >
-        LOCK_STATUS,
+        <if test="englishCertificateNumber != null">
+            ENGLISH_CERTIFICATE_NUMBER,
+        </if>
+        <if test="englishCertificateDate != null">
+            ENGLISH_CERTIFICATE_DATE,
+        </if>
+        <if test="englishGradeExamType != null">
+            ENGLISH_GRADE_EXAM_TYPE,
+        </if>
+        <if test="englishAbility != null">
+            ENGLISH_ABILITY,
+        </if>
+        <if test="isReading != null">
+            IS_READING,
+        </if>
+        <if test="isSubmitId != null">
+            IS_SUBMIT_ID,
+        </if>
+        <if test="isSubmitName != null">
+            IS_SUBMIT_NAME,
+        </if>
+        <if test="checkStatusId != null">
+            CHECK_STATUS_ID,
+        </if>
+        <if test="checkStatusName != null">
+            CHECK_STATUS_NAME,
+        </if>
+        <if test="checkReason != null">
+            CHECK_REASON,
+        </if>
+        <if test="isRecruitSend != null">
+            IS_RECRUIT_SEND,
+        </if>
+        <if test="isAdjust != null">
+            IS_ADJUST,
+        </if>
+        <if test="school != null">
+            SCHOOL,
+        </if>
+        <if test="submitTime != null">
+            SUBMIT_TIME,
+        </if>
+        <if test="checkTime != null">
+            CHECK_TIME,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -830,6 +903,12 @@
       <if test="emergencyRelation != null" >
         #{emergencyRelation,jdbcType=VARCHAR},
       </if>
+        <if test="disactiveReason != null">
+            #{disactiveReason,jdbcType=VARCHAR},
+        </if>
+        <if test="reeditFlag != null">
+            #{reeditFlag,jdbcType=VARCHAR},
+      </if>
       <if test="recordStatus != null" >
         #{recordStatus,jdbcType=VARCHAR},
       </if>
@@ -844,12 +923,6 @@
       </if>
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
-      </if>
-      <if test="disactiveReason != null" >
-        #{disactiveReason,jdbcType=VARCHAR},
-      </if>
-      <if test="reeditFlag != null" >
-        #{reeditFlag,jdbcType=VARCHAR},
       </if>
       <if test="doctorCategoryId != null" >
         #{doctorCategoryId,jdbcType=VARCHAR},
@@ -917,6 +990,12 @@
       <if test="workOrgId != null" >
         #{workOrgId,jdbcType=VARCHAR},
       </if>
+        <if test="orgNatureId != null">
+            #{orgNatureId,jdbcType=VARCHAR},
+        </if>
+        <if test="orgNatureName != null">
+            #{orgNatureName,jdbcType=VARCHAR},
+        </if>
       <if test="graduationStatusId != null" >
         #{graduationStatusId,jdbcType=VARCHAR},
       </if>
@@ -971,11 +1050,11 @@
       <if test="standardDeptId != null" >
         #{standardDeptId,jdbcType=VARCHAR},
       </if>
+        <if test="practPhysicianFlag != null">
+            #{practPhysicianFlag,jdbcType=CHAR},
+      </if>
       <if test="practPhysicianCertificateNo != null" >
         #{practPhysicianCertificateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="practPhysicianFlag != null" >
-        #{practPhysicianFlag,jdbcType=CHAR},
       </if>
       <if test="isUnderLine != null" >
         #{isUnderLine,jdbcType=VARCHAR},
@@ -1037,17 +1116,56 @@
       <if test="secondOrgName != null" >
         #{secondOrgName,jdbcType=VARCHAR},
       </if>
-      <if test="orgNatureId != null" >
-        #{orgNatureId,jdbcType=VARCHAR},
-      </if>
-      <if test="orgNatureName != null" >
-        #{orgNatureName,jdbcType=VARCHAR},
+        <if test="lockStatus != null">
+            #{lockStatus,jdbcType=VARCHAR},
       </if>
       <if test="isSend != null" >
         #{isSend,jdbcType=VARCHAR},
       </if>
-      <if test="lockStatus != null" >
-        #{lockStatus,jdbcType=VARCHAR},
+        <if test="englishCertificateNumber != null">
+            #{englishCertificateNumber,jdbcType=VARCHAR},
+        </if>
+        <if test="englishCertificateDate != null">
+            #{englishCertificateDate,jdbcType=VARCHAR},
+        </if>
+        <if test="englishGradeExamType != null">
+            #{englishGradeExamType,jdbcType=VARCHAR},
+        </if>
+        <if test="englishAbility != null">
+            #{englishAbility,jdbcType=VARCHAR},
+        </if>
+        <if test="isReading != null">
+            #{isReading,jdbcType=VARCHAR},
+        </if>
+        <if test="isSubmitId != null">
+            #{isSubmitId,jdbcType=VARCHAR},
+        </if>
+        <if test="isSubmitName != null">
+            #{isSubmitName,jdbcType=VARCHAR},
+        </if>
+        <if test="checkStatusId != null">
+            #{checkStatusId,jdbcType=VARCHAR},
+        </if>
+        <if test="checkStatusName != null">
+            #{checkStatusName,jdbcType=VARCHAR},
+        </if>
+        <if test="checkReason != null">
+            #{checkReason,jdbcType=VARCHAR},
+        </if>
+        <if test="isRecruitSend != null">
+            #{isRecruitSend,jdbcType=VARCHAR},
+        </if>
+        <if test="isAdjust != null">
+            #{isAdjust,jdbcType=VARCHAR},
+        </if>
+        <if test="school != null">
+            #{school,jdbcType=VARCHAR},
+        </if>
+        <if test="submitTime != null">
+            #{submitTime,jdbcType=VARCHAR},
+        </if>
+        <if test="checkTime != null">
+            #{checkTime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -1192,6 +1310,12 @@
       <if test="record.emergencyRelation != null" >
         EMERGENCY_RELATION = #{record.emergencyRelation,jdbcType=VARCHAR},
       </if>
+        <if test="record.disactiveReason != null">
+            DISACTIVE_REASON = #{record.disactiveReason,jdbcType=VARCHAR},
+        </if>
+        <if test="record.reeditFlag != null">
+            REEDIT_FLAG = #{record.reeditFlag,jdbcType=VARCHAR},
+        </if>
       <if test="record.recordStatus != null" >
         RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
       </if>
@@ -1206,12 +1330,6 @@
       </if>
       <if test="record.modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
-      </if>
-      <if test="record.disactiveReason != null" >
-        DISACTIVE_REASON = #{record.disactiveReason,jdbcType=VARCHAR},
-      </if>
-      <if test="record.reeditFlag != null" >
-        REEDIT_FLAG = #{record.reeditFlag,jdbcType=VARCHAR},
       </if>
       <if test="record.doctorCategoryId != null" >
         DOCTOR_CATEGORY_ID = #{record.doctorCategoryId,jdbcType=VARCHAR},
@@ -1279,6 +1397,12 @@
       <if test="record.workOrgId != null" >
         WORK_ORG_ID = #{record.workOrgId,jdbcType=VARCHAR},
       </if>
+        <if test="record.orgNatureId != null">
+            ORG_NATURE_ID = #{record.orgNatureId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.orgNatureName != null">
+            ORG_NATURE_NAME = #{record.orgNatureName,jdbcType=VARCHAR},
+        </if>
       <if test="record.graduationStatusId != null" >
         GRADUATION_STATUS_ID = #{record.graduationStatusId,jdbcType=VARCHAR},
       </if>
@@ -1333,11 +1457,11 @@
       <if test="record.standardDeptId != null" >
         STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
       </if>
+        <if test="record.practPhysicianFlag != null">
+            PRACT_PHYSICIAN_FLAG = #{record.practPhysicianFlag,jdbcType=CHAR},
+        </if>
       <if test="record.practPhysicianCertificateNo != null" >
         PRACT_PHYSICIAN_CERTIFICATE_NO = #{record.practPhysicianCertificateNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.practPhysicianFlag != null" >
-        PRACT_PHYSICIAN_FLAG = #{record.practPhysicianFlag,jdbcType=CHAR},
       </if>
       <if test="record.isUnderLine != null" >
         IS_UNDER_LINE = #{record.isUnderLine,jdbcType=VARCHAR},
@@ -1399,17 +1523,56 @@
       <if test="record.secondOrgName != null" >
         SECOND_ORG_NAME = #{record.secondOrgName,jdbcType=VARCHAR},
       </if>
-      <if test="record.orgNatureId != null" >
-        ORG_NATURE_ID = #{record.orgNatureId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.orgNatureName != null" >
-        ORG_NATURE_NAME = #{record.orgNatureName,jdbcType=VARCHAR},
+        <if test="record.lockStatus != null">
+            LOCK_STATUS = #{record.lockStatus,jdbcType=VARCHAR},
       </if>
       <if test="record.isSend != null" >
         IS_SEND = #{record.isSend,jdbcType=VARCHAR},
       </if>
-      <if test="record.lockStatus != null" >
-        LOCK_STATUS = #{record.lockStatus,jdbcType=VARCHAR},
+        <if test="record.englishCertificateNumber != null">
+            ENGLISH_CERTIFICATE_NUMBER = #{record.englishCertificateNumber,jdbcType=VARCHAR},
+        </if>
+        <if test="record.englishCertificateDate != null">
+            ENGLISH_CERTIFICATE_DATE = #{record.englishCertificateDate,jdbcType=VARCHAR},
+        </if>
+        <if test="record.englishGradeExamType != null">
+            ENGLISH_GRADE_EXAM_TYPE = #{record.englishGradeExamType,jdbcType=VARCHAR},
+        </if>
+        <if test="record.englishAbility != null">
+            ENGLISH_ABILITY = #{record.englishAbility,jdbcType=VARCHAR},
+        </if>
+        <if test="record.isReading != null">
+            IS_READING = #{record.isReading,jdbcType=VARCHAR},
+        </if>
+        <if test="record.isSubmitId != null">
+            IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.isSubmitName != null">
+            IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.checkStatusId != null">
+            CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+        </if>
+        <if test="record.checkStatusName != null">
+            CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.checkReason != null">
+            CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+        </if>
+        <if test="record.isRecruitSend != null">
+            IS_RECRUIT_SEND = #{record.isRecruitSend,jdbcType=VARCHAR},
+        </if>
+        <if test="record.isAdjust != null">
+            IS_ADJUST = #{record.isAdjust,jdbcType=VARCHAR},
+        </if>
+        <if test="record.school != null">
+            SCHOOL = #{record.school,jdbcType=VARCHAR},
+        </if>
+        <if test="record.submitTime != null">
+            SUBMIT_TIME = #{record.submitTime,jdbcType=VARCHAR},
+        </if>
+        <if test="record.checkTime != null">
+            CHECK_TIME = #{record.checkTime,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -1462,13 +1625,13 @@
       EMERGENCY_NAME = #{record.emergencyName,jdbcType=VARCHAR},
       EMERGENCY_PHONE = #{record.emergencyPhone,jdbcType=VARCHAR},
       EMERGENCY_RELATION = #{record.emergencyRelation,jdbcType=VARCHAR},
+      DISACTIVE_REASON = #{record.disactiveReason,jdbcType=VARCHAR},
+      REEDIT_FLAG = #{record.reeditFlag,jdbcType=VARCHAR},
       RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
       MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
-      DISACTIVE_REASON = #{record.disactiveReason,jdbcType=VARCHAR},
-      REEDIT_FLAG = #{record.reeditFlag,jdbcType=VARCHAR},
       DOCTOR_CATEGORY_ID = #{record.doctorCategoryId,jdbcType=VARCHAR},
       DOCTOR_CATEGORY_NAME = #{record.doctorCategoryName,jdbcType=VARCHAR},
       DOCTOR_NAME = #{record.doctorName,jdbcType=VARCHAR},
@@ -1491,6 +1654,8 @@
       WORK_ORG_LEVEL_NAME = #{record.workOrgLevelName,jdbcType=VARCHAR},
       IS_YEAR_GRADUATE = #{record.isYearGraduate,jdbcType=VARCHAR},
       WORK_ORG_ID = #{record.workOrgId,jdbcType=VARCHAR},
+      ORG_NATURE_ID = #{record.orgNatureId,jdbcType=VARCHAR},
+      ORG_NATURE_NAME = #{record.orgNatureName,jdbcType=VARCHAR},
       GRADUATION_STATUS_ID = #{record.graduationStatusId,jdbcType=VARCHAR},
       GRADUATION_STATUS_NAME = #{record.graduationStatusName,jdbcType=VARCHAR},
       DISAGREE_REASON = #{record.disagreeReason,jdbcType=VARCHAR},
@@ -1509,8 +1674,8 @@
       SECOND_ROTATION_NAME = #{record.secondRotationName,jdbcType=VARCHAR},
       STANDARD_DEPT_NAME = #{record.standardDeptName,jdbcType=VARCHAR},
       STANDARD_DEPT_ID = #{record.standardDeptId,jdbcType=VARCHAR},
-      PRACT_PHYSICIAN_CERTIFICATE_NO = #{record.practPhysicianCertificateNo,jdbcType=VARCHAR},
       PRACT_PHYSICIAN_FLAG = #{record.practPhysicianFlag,jdbcType=CHAR},
+      PRACT_PHYSICIAN_CERTIFICATE_NO = #{record.practPhysicianCertificateNo,jdbcType=VARCHAR},
       IS_UNDER_LINE = #{record.isUnderLine,jdbcType=VARCHAR},
       DEPART_MENT_FLOW = #{record.departMentFlow,jdbcType=VARCHAR},
       DEPART_MENT_NAME = #{record.departMentName,jdbcType=VARCHAR},
@@ -1531,10 +1696,23 @@
       SEND_PROV_NAME = #{record.sendProvName,jdbcType=VARCHAR},
       SECOND_ORG_FLOW = #{record.secondOrgFlow,jdbcType=VARCHAR},
       SECOND_ORG_NAME = #{record.secondOrgName,jdbcType=VARCHAR},
-      ORG_NATURE_ID = #{record.orgNatureId,jdbcType=VARCHAR},
-      ORG_NATURE_NAME = #{record.orgNatureName,jdbcType=VARCHAR},
+      LOCK_STATUS = #{record.lockStatus,jdbcType=VARCHAR},
       IS_SEND = #{record.isSend,jdbcType=VARCHAR},
-      LOCK_STATUS = #{record.lockStatus,jdbcType=VARCHAR}
+      ENGLISH_CERTIFICATE_NUMBER = #{record.englishCertificateNumber,jdbcType=VARCHAR},
+      ENGLISH_CERTIFICATE_DATE = #{record.englishCertificateDate,jdbcType=VARCHAR},
+      ENGLISH_GRADE_EXAM_TYPE = #{record.englishGradeExamType,jdbcType=VARCHAR},
+      ENGLISH_ABILITY = #{record.englishAbility,jdbcType=VARCHAR},
+      IS_READING = #{record.isReading,jdbcType=VARCHAR},
+      IS_SUBMIT_ID = #{record.isSubmitId,jdbcType=VARCHAR},
+      IS_SUBMIT_NAME = #{record.isSubmitName,jdbcType=VARCHAR},
+      CHECK_STATUS_ID = #{record.checkStatusId,jdbcType=VARCHAR},
+      CHECK_STATUS_NAME = #{record.checkStatusName,jdbcType=VARCHAR},
+      CHECK_REASON = #{record.checkReason,jdbcType=VARCHAR},
+      IS_RECRUIT_SEND = #{record.isRecruitSend,jdbcType=VARCHAR},
+      IS_ADJUST = #{record.isAdjust,jdbcType=VARCHAR},
+      SCHOOL = #{record.school,jdbcType=VARCHAR},
+      SUBMIT_TIME = #{record.submitTime,jdbcType=VARCHAR},
+      CHECK_TIME = #{record.checkTime,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -1929,6 +2107,12 @@
       <if test="school != null" >
         SCHOOL = #{school,jdbcType=VARCHAR},
       </if>
+        <if test="submitTime != null">
+            SUBMIT_TIME = #{submitTime,jdbcType=VARCHAR},
+        </if>
+        <if test="checkTime != null">
+            CHECK_TIME = #{checkTime,jdbcType=VARCHAR},
+        </if>
     </set>
     where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
   </update>
@@ -1977,13 +2161,13 @@
       EMERGENCY_NAME = #{emergencyName,jdbcType=VARCHAR},
       EMERGENCY_PHONE = #{emergencyPhone,jdbcType=VARCHAR},
       EMERGENCY_RELATION = #{emergencyRelation,jdbcType=VARCHAR},
+        DISACTIVE_REASON               = #{disactiveReason,jdbcType=VARCHAR},
+        REEDIT_FLAG                    = #{reeditFlag,jdbcType=VARCHAR},
       RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
-      DISACTIVE_REASON = #{disactiveReason,jdbcType=VARCHAR},
-      REEDIT_FLAG = #{reeditFlag,jdbcType=VARCHAR},
       DOCTOR_CATEGORY_ID = #{doctorCategoryId,jdbcType=VARCHAR},
       DOCTOR_CATEGORY_NAME = #{doctorCategoryName,jdbcType=VARCHAR},
       DOCTOR_NAME = #{doctorName,jdbcType=VARCHAR},
@@ -2006,6 +2190,8 @@
       WORK_ORG_LEVEL_NAME = #{workOrgLevelName,jdbcType=VARCHAR},
       IS_YEAR_GRADUATE = #{isYearGraduate,jdbcType=VARCHAR},
       WORK_ORG_ID = #{workOrgId,jdbcType=VARCHAR},
+        ORG_NATURE_ID                  = #{orgNatureId,jdbcType=VARCHAR},
+        ORG_NATURE_NAME                = #{orgNatureName,jdbcType=VARCHAR},
       GRADUATION_STATUS_ID = #{graduationStatusId,jdbcType=VARCHAR},
       GRADUATION_STATUS_NAME = #{graduationStatusName,jdbcType=VARCHAR},
       DISAGREE_REASON = #{disagreeReason,jdbcType=VARCHAR},
@@ -2024,8 +2210,8 @@
       SECOND_ROTATION_NAME = #{secondRotationName,jdbcType=VARCHAR},
       STANDARD_DEPT_NAME = #{standardDeptName,jdbcType=VARCHAR},
       STANDARD_DEPT_ID = #{standardDeptId,jdbcType=VARCHAR},
-      PRACT_PHYSICIAN_CERTIFICATE_NO = #{practPhysicianCertificateNo,jdbcType=VARCHAR},
       PRACT_PHYSICIAN_FLAG = #{practPhysicianFlag,jdbcType=CHAR},
+        PRACT_PHYSICIAN_CERTIFICATE_NO = #{practPhysicianCertificateNo,jdbcType=VARCHAR},
       IS_UNDER_LINE = #{isUnderLine,jdbcType=VARCHAR},
       DEPART_MENT_FLOW = #{departMentFlow,jdbcType=VARCHAR},
       DEPART_MENT_NAME = #{departMentName,jdbcType=VARCHAR},
@@ -2046,10 +2232,23 @@
       SEND_PROV_NAME = #{sendProvName,jdbcType=VARCHAR},
       SECOND_ORG_FLOW = #{secondOrgFlow,jdbcType=VARCHAR},
       SECOND_ORG_NAME = #{secondOrgName,jdbcType=VARCHAR},
-      ORG_NATURE_ID = #{orgNatureId,jdbcType=VARCHAR},
-      ORG_NATURE_NAME = #{orgNatureName,jdbcType=VARCHAR},
+        LOCK_STATUS                    = #{lockStatus,jdbcType=VARCHAR},
       IS_SEND = #{isSend,jdbcType=VARCHAR},
-      LOCK_STATUS = #{lockStatus,jdbcType=VARCHAR}
+        ENGLISH_CERTIFICATE_NUMBER     = #{englishCertificateNumber,jdbcType=VARCHAR},
+        ENGLISH_CERTIFICATE_DATE       = #{englishCertificateDate,jdbcType=VARCHAR},
+        ENGLISH_GRADE_EXAM_TYPE        = #{englishGradeExamType,jdbcType=VARCHAR},
+        ENGLISH_ABILITY                = #{englishAbility,jdbcType=VARCHAR},
+        IS_READING                     = #{isReading,jdbcType=VARCHAR},
+        IS_SUBMIT_ID                   = #{isSubmitId,jdbcType=VARCHAR},
+        IS_SUBMIT_NAME                 = #{isSubmitName,jdbcType=VARCHAR},
+        CHECK_STATUS_ID                = #{checkStatusId,jdbcType=VARCHAR},
+        CHECK_STATUS_NAME              = #{checkStatusName,jdbcType=VARCHAR},
+        CHECK_REASON                   = #{checkReason,jdbcType=VARCHAR},
+        IS_RECRUIT_SEND                = #{isRecruitSend,jdbcType=VARCHAR},
+        IS_ADJUST                      = #{isAdjust,jdbcType=VARCHAR},
+        SCHOOL                         = #{school,jdbcType=VARCHAR},
+        SUBMIT_TIME                    = #{submitTime,jdbcType=VARCHAR},
+        CHECK_TIME                     = #{checkTime,jdbcType=VARCHAR}
     where DOCTOR_FLOW = #{doctorFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

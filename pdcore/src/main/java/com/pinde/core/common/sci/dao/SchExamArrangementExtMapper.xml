@@ -16,6 +16,35 @@
         and exam_score is not NULL
         and arrange_flow =#{arrangeFlow}
     </select>
+    <select id="checkExists" resultType="int">
+        select count(1)
+        from SCH_EXAM_ARRANGEMENT
+        where record_status='Y'
+        <if test="ment.arrangeFlow !=null and ment.arrangeFlow!=''">
+            and arrange_flow !=#{ment.arrangeFlow}
+        </if>
+        AND ORG_FLOW = #{ment.orgFlow}
+        AND TRAINING_SPE_ID = #{ment.trainingSpeId}
+        AND TRAINING_TYPE_ID =#{ment.trainingTypeId}
+        AND SESSION_NUMBER = #{ment.sessionNumber}
+        AND ASSESSMENT_YEAR = #{ment.assessmentYear}
+    </select>
+    <select id="checkExistsByIds" resultType="int">
+        select count(1)
+        from SCH_EXAM_ARRANGEMENT
+        where record_status='Y'
+        AND ORG_FLOW = #{ment.orgFlow}
+        AND TRAINING_SPE_ID in
+        <foreach collection="speIds" close=")" item="speId" open="(" separator=",">
+            #{speId}
+        </foreach>
+        AND TRAINING_TYPE_ID =#{ment.trainingTypeId}
+        AND SESSION_NUMBER in
+        <foreach collection="sessinNumbers" close=")" item="sessinNumber" open="(" separator=",">
+            #{sessinNumber}
+        </foreach>
+        AND ASSESSMENT_YEAR = #{ment.assessmentYear}
+    </select>
     <update id="deleteSchExamStandardDeptByDeptId">
         update sch_exam_standard_dept set record_status='N'
         where STANDARD_DEPT_ID=#{deptFlow}
@@ -35,6 +64,58 @@
             and t.arrange_flow=#{ment.arrangeFlow}
         ) b
         group by arrange_flow
+    </select>
+    <select id="getSuiJiConfigs" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT r.sch_start_date, r.sch_end_date, c.standard_dept_Id, c.standard_dept_name
+        FROM SCH_ARRANGE_RESULT R
+                 left join SCH_AND_STANDARD_DEPT_CFG C
+                           on C.SCH_DEPT_FLOW = R.SCH_DEPT_FLOW
+        WHERE R.RECORD_STATUS = 'Y'
+          and c.record_status = 'Y'
+          AND R.DOCTOR_FLOW = #{userFlow}
+          AND R.ORG_FLOW = #{ment.orgFlow}
+          and (
+            (
+                R.SCH_START_DATE <![CDATA[<=]]> #{ment.assessmentStartTime}
+                    and R.SCH_END_DATE >= #{ment.assessmentStartTime}
+                )
+                or
+            (
+                R.SCH_START_DATE <![CDATA[<=]]> #{ment.assessmentEndTime}
+                    and R.SCH_END_DATE >= #{ment.assessmentEndTime}
+                )
+                or
+            (
+                R.SCH_START_DATE <![CDATA[>=]]> #{ment.assessmentStartTime}
+                    and R.SCH_END_DATE <![CDATA[<=]]> #{ment.assessmentEndTime}
+                )
+            )
+    </select>
+    <select id="getGuDingConfigs" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT r.sch_start_date, r.sch_end_date, c.standard_dept_Id, c.standard_dept_name
+        FROM SCH_ARRANGE_RESULT R
+                 left join SCH_AND_STANDARD_DEPT_CFG C
+                           on C.SCH_DEPT_FLOW = R.SCH_DEPT_FLOW
+        WHERE R.RECORD_STATUS = 'Y'
+          and c.record_status = 'Y'
+          AND R.DOCTOR_FLOW = #{userFlow}
+          AND R.ORG_FLOW = #{ment.orgFlow}
+          and (
+            (
+                R.SCH_START_DATE <![CDATA[<=]]> #{ment.assessmentStartTime}
+                    and R.SCH_END_DATE >= #{ment.assessmentStartTime}
+                )
+                or
+            (
+                R.SCH_START_DATE <![CDATA[<=]]> #{ment.assessmentEndTime}
+                    and R.SCH_END_DATE >= #{ment.assessmentEndTime}
+                )
+                or
+            (
+                R.SCH_START_DATE <![CDATA[>=]]> #{ment.assessmentStartTime}
+                    and R.SCH_END_DATE <![CDATA[<=]]> #{ment.assessmentEndTime}
+                )
+            )
     </select>
     <select id="getSuiJiConfig" resultMap="configMap">
         SELECT

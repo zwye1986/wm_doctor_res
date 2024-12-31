@@ -1,9 +1,9 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.ResAssessCfg;
-import com.pinde.sci.form.res.ResAssessCfgForm;
-import com.pinde.sci.form.res.ResAssessCfgItemForm;
-import com.pinde.sci.form.res.ResAssessCfgTitleForm;
+import com.pinde.core.model.ResAssessCfgForm;
+import com.pinde.core.model.ResAssessCfgItemForm;
+import com.pinde.core.model.ResAssessCfgTitleForm;
 
 import java.util.List;
 import java.util.Map;

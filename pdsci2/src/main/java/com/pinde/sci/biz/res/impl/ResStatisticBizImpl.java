@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.sci.dao.ResTeacherTrainingMapper;
 import com.pinde.core.common.sci.dao.SysOrgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
@@ -9,7 +10,6 @@ import com.pinde.sci.biz.res.IResStatisticBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.dao.base.ResTeacherTrainingMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.res.ResChartExtMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;

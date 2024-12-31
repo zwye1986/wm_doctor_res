@@ -120,7 +120,21 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+
+    <select id="selectListByPartitionList" resultType="com.pinde.core.model.SchRotationDeptReq">
+        select
+        <include refid="Base_Column_List"/>
+        from SCH_ROTATION_DEPT_REQ
+        where record_status = 'Y'
+        <foreach collection="relRecordListList" item="relRecordList" open="and (" close=")" separator=" or ">
+            REL_RECORD_FLOW in
+            <foreach collection="relRecordList" item="relRecord" open="(" close=")" separator=",">
+                #{relRecord,jdbcType=VARCHAR}
+            </foreach>
+        </foreach>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     ,

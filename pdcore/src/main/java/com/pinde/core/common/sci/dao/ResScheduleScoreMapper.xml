@@ -23,6 +23,8 @@
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_FLOW" property="subjectFlow" jdbcType="VARCHAR" />
     <result column="SUBJECT_NAME" property="subjectName" jdbcType="VARCHAR" />
+      <result column="DEDUCT_POINTS" property="deductPoints" jdbcType="VARCHAR"/>
+      <result column="SUBSTANDARD" property="substandard" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -85,7 +87,8 @@
   <sql id="Base_Column_List" >
     SCHEDULE_FLOW, ORG_FLOW, ORG_NAME, SPE_ID, SPE_NAME, ITEM_ID, ITEM_NAME, EVALUATION_YEAR, 
     SCORE, ITEM_DETAILED, GRADE, SCORE_TYPE, FILE_ROUTE, USER_FLOW, RECORD_STATUS, CREATE_TIME, 
-    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME, DEDUCT_POINTS, 
+    SUBSTANDARD
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResScheduleScoreExample" >
     select
@@ -123,17 +126,17 @@
       ITEM_NAME, EVALUATION_YEAR, SCORE, 
       ITEM_DETAILED, GRADE, SCORE_TYPE, 
       FILE_ROUTE, USER_FLOW, RECORD_STATUS, 
-      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
-      MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME
-      )
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+                                      MODIFY_USER_FLOW, SUBJECT_FLOW, SUBJECT_NAME,
+                                      DEDUCT_POINTS, SUBSTANDARD)
     values (#{scheduleFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
       #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR}, #{itemId,jdbcType=VARCHAR}, 
       #{itemName,jdbcType=VARCHAR}, #{evaluationYear,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, 
       #{itemDetailed,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{scoreType,jdbcType=VARCHAR}, 
       #{fileRoute,jdbcType=VARCHAR}, #{userFlow,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
-      #{modifyUserFlow,jdbcType=VARCHAR}, #{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}
-      )
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR},
+            #{modifyUserFlow,jdbcType=VARCHAR}, #{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR},
+            #{deductPoints,jdbcType=VARCHAR}, #{substandard,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResScheduleScore" >
       insert into RES_SCHEDULE_SCORE
@@ -201,6 +204,12 @@
       <if test="subjectName != null" >
         SUBJECT_NAME,
       </if>
+        <if test="deductPoints != null">
+            DEDUCT_POINTS,
+        </if>
+        <if test="substandard != null">
+            SUBSTANDARD,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="scheduleFlow != null" >
@@ -266,6 +275,12 @@
       <if test="subjectName != null" >
         #{subjectName,jdbcType=VARCHAR},
       </if>
+        <if test="deductPoints != null">
+            #{deductPoints,jdbcType=VARCHAR},
+        </if>
+        <if test="substandard != null">
+            #{substandard,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResScheduleScoreExample" resultType="java.lang.Integer" >
@@ -340,6 +355,12 @@
       <if test="record.subjectName != null" >
         SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
       </if>
+        <if test="record.deductPoints != null">
+            DEDUCT_POINTS = #{record.deductPoints,jdbcType=VARCHAR},
+        </if>
+        <if test="record.substandard != null">
+            SUBSTANDARD = #{record.substandard,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -367,7 +388,9 @@
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
       MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       SUBJECT_FLOW = #{record.subjectFlow,jdbcType=VARCHAR},
-      SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR}
+      SUBJECT_NAME = #{record.subjectName,jdbcType=VARCHAR},
+      DEDUCT_POINTS = #{record.deductPoints,jdbcType=VARCHAR},
+      SUBSTANDARD = #{record.substandard,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -435,6 +458,12 @@
       <if test="subjectName != null" >
         SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR},
       </if>
+        <if test="deductPoints != null">
+            DEDUCT_POINTS = #{deductPoints,jdbcType=VARCHAR},
+        </if>
+        <if test="substandard != null">
+            SUBSTANDARD = #{substandard,jdbcType=VARCHAR},
+        </if>
     </set>
     where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
   </update>
@@ -459,7 +488,9 @@
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR},
-      SUBJECT_NAME = #{subjectName,jdbcType=VARCHAR}
+        SUBJECT_NAME  = #{subjectName,jdbcType=VARCHAR},
+        DEDUCT_POINTS = #{deductPoints,jdbcType=VARCHAR},
+        SUBSTANDARD   = #{substandard,jdbcType=VARCHAR}
     where SCHEDULE_FLOW = #{scheduleFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

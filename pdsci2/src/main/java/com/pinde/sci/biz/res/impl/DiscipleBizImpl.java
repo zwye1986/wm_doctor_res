@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResDiscipleNoteInfoMapper;
+import com.pinde.core.common.sci.dao.ResStudentDiscipleTeacherMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IDiscipleBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResDiscipleNoteInfoMapper;
-import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.model.res.ResDoctorDiscioleExt;
 import org.springframework.beans.factory.annotation.Autowired;

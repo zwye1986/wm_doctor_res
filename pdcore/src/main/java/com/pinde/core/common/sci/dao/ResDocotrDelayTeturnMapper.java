@@ -28,4 +28,6 @@ public interface ResDocotrDelayTeturnMapper {
     int updateByPrimaryKeySelective(ResDocotrDelayTeturn record);
 
     int updateByPrimaryKey(ResDocotrDelayTeturn record);
+
+    int saveSynDoctorStatus(ResDocotrDelayTeturn record);
 }

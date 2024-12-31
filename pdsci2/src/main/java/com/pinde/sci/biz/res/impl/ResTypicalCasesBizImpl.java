@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.common.sci.dao.ResTypicalCasesMapper;
 import com.pinde.core.model.ResTypicalCases;
 import com.pinde.core.model.ResTypicalCasesExample;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResTypicalCasesBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResTypicalCasesMapper;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
 import com.pinde.sci.model.res.ResDoctorExt;

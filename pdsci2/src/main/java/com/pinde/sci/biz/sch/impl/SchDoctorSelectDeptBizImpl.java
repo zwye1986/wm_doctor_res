@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -13,7 +14,6 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchOrgArrangeResultExtMapper;
 import com.pinde.sci.dao.sch.SchRotationCfgExtMapper;
 import com.pinde.sci.form.sch.SchArrangeForm;
@@ -41,8 +41,6 @@ public class SchDoctorSelectDeptBizImpl implements ISchDoctorSelectDeptBiz {
 
     @Autowired
     private SchRotationOrgDeptMapper orgDeptMapper;
-    @Autowired
-    private SchRotationOrgGroupMapper orgGroupMapper;
     @Autowired
     private SchDoctorSelectDeptMapper doctorDeptMapper;
     @Autowired

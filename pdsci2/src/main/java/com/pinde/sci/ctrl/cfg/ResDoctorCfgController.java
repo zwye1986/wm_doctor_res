@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.cfg;
 
+import com.pinde.core.common.sci.dao.ResPowerCfgMapper;
 import com.pinde.core.model.ResPowerCfg;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.SpringUtil;
@@ -9,7 +10,6 @@ import com.pinde.sci.biz.sch.ISchManualBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.dao.base.ResPowerCfgMapper;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

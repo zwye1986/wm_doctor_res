@@ -21,6 +21,8 @@ public interface SchRotationDeptReqMapper {
 
     List<SchRotationDeptReq> selectByExample(SchRotationDeptReqExample example);
 
+    List<SchRotationDeptReq> selectListByPartitionList(@Param("relRecordListList") List<List<String>> recordListList);
+
     SchRotationDeptReq selectByPrimaryKey(String reqFlow);
 
     int updateByExampleSelective(@Param("record") SchRotationDeptReq record, @Param("example") SchRotationDeptReqExample example);

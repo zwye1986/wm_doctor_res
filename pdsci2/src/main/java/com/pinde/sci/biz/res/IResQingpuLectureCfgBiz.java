@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.QingpuLectureEvalCfg;
-import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
+import com.pinde.core.model.QingpuLectureCfgItemExt;
 
 import java.util.List;
 

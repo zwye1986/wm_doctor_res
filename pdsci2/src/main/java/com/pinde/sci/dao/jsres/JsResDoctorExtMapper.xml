@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.JsResDoctorExtMapper">
 
-	<select id="searchReductionDoc" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchReductionDoc" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		select *
 		from res_doctor
 		where record_status = 'Y'
@@ -514,7 +514,7 @@
 		GROUP BY ORG_CODE
 	</select>
 
-	<select id="searchResDoctorByMap"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchResDoctorByMap" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		select ed.* from res_doctor ed
         LEFT JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
 		where ed.record_status='Y'
@@ -572,7 +572,7 @@
 		where record_status = 'Y'
 		and user_flow = #{userFlow}
 	</select>
-	<select id="searchResDoctorByMapForUni"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchResDoctorByMapForUni" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		select ed.* from res_doctor ed
         LEFT JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
 		where ed.record_status='Y'

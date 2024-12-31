@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResDoctorOrgHistoryMapper;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorOrgHistory;
 import com.pinde.core.model.ResDoctorOrgHistoryExample;
@@ -9,7 +10,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorOrgHistoryBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.res.ResDoctorExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,30 +1,19 @@
 package com.pinde.sci.ctrl.jsres;
 
 
-import com.pinde.core.model.JsresPowerCfg;
-import com.pinde.core.model.SysDict;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.common.sci.dao.SysLogMapper;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.*;
-import com.pinde.sci.biz.jszy.IJszyDoctorAuthBiz;
-import com.pinde.sci.biz.login.ILoginBiz;
-import com.pinde.sci.biz.osca.IOscaBaseBiz;
-import com.pinde.sci.biz.pub.IFileBiz;
-import com.pinde.sci.biz.pub.IMsgBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sys.*;
+import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
+import com.pinde.sci.biz.res.IResDoctorBiz;
+import com.pinde.sci.biz.sch.ISchManualBiz;
+import com.pinde.sci.biz.sys.IDictBiz;
+import com.pinde.sci.biz.sys.IOrgBiz;
+import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.core.model.SysLog;
-import com.pinde.core.model.SysLogExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,81 +34,15 @@ import java.util.*;
 @RequestMapping("/jsres/business")
 public class JsResBusinessController extends GeneralController {
 	@Autowired
-	private IJsResDoctorBiz jsResDoctorBiz;
-	@Autowired
 	private IUserBiz userBiz;
-	@Autowired
-	private IJszyDoctorAuthBiz doctorAuthBiz;
 	@Autowired
 	private IResDoctorBiz resDoctorBiz;
 	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
-	@Autowired
 	private IOrgBiz orgBiz;
-	@Autowired
-	private IResOrgSpeBiz resBaseSpeBiz;
-	@Autowired
-	private IJsResDoctorRecruitBiz jsResDoctorRecruitBiz;
-	@Autowired
-	private IMsgBiz msgBiz;
-	@Autowired
-	private ISchRotationBiz rotationBiz;
-	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
-	private IResDoctorProcessBiz processBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
-	@Autowired
-	private IResSchProcessExpressBiz expressBiz;
-	@Autowired
-	private ISchArrangeResultBiz resultBiz;
-	@Autowired
-	private ISchRotationGroupBiz groupBiz;
-	@Autowired
-	private SchRotationDeptMapper rotationDeptMapper;
-	@Autowired
-	private IJsResDoctorOrgHistoryBiz resDoctorOrgHistoryBiz;
-	@Autowired
-	private IResJointOrgBiz jointOrgBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationDeptBiz;
-	@Autowired
-	private IJsResRecBiz jsResRecBiz;
-	@Autowired
-	private ISchDoctorDeptBiz doctorDeptBiz;
 	@Autowired
 	private IDictBiz dictBiz;
 	@Autowired
-	private IResScoreBiz resScoreBiz;
-	@Autowired
-	private IFileBiz fileBiz;
-	@Autowired
-	private IResDoctorRecruitBiz doctorRecruitBiz;
-	@Autowired
-	private IJsResGraduationApplyBiz jsresGraduationApplyBiz;
-	@Autowired
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
-	@Autowired
-	private IResDoctorDelayTeturnBiz resDoctorDelayTeturnBiz;
-	@Autowired
-	private IOscaBaseBiz oscaBaseBiz;
-	@Autowired
-	private IUserRoleBiz userRoleBiz;
-	@Autowired
-	private IRoleBiz roleBiz;
-	@Autowired
-	private ILoginBiz loginBiz;
-	@Autowired
-	private IResGradeBiz resGradeBiz;
-	@Autowired
-	private ISchRotationDeptAfterBiz afterBiz;
-	@Autowired
-	private TempMapper tempMapper;
-	@Autowired
-	private IJsResRecruitDoctorInfoBiz recruitDoctorInfoBiz;
-	@Autowired
-	private IResTestConfigBiz resTestConfigBiz;
 	@Autowired
 	private IOrgBiz sysOrgBiz;
 	@Autowired

@@ -13,7 +13,7 @@
            </foreach>
        </if>
    </update>
-    <select id="readInfoList" resultMap="com.pinde.sci.dao.base.ResInprocessInfoMapper.ResultMapWithBLOBs">
+    <select id="readInfoList" resultMap="com.pinde.core.common.sci.dao.ResInprocessInfoMapper.ResultMapWithBLOBs">
         SELECT RII.* FROM SYS_DEPT D
         JOIN RES_INPROCESS_INFO RII
         ON D.DEPT_FLOW=RII.DEPT_FLOW
@@ -22,7 +22,8 @@
         AND RII.RECORD_STATUS='Y'
         AND D.ORG_FLOW= #{orgFlow}
     </select>
-    <select id="readInfoList4Global" resultMap="com.pinde.sci.dao.base.ResInprocessInfoMapper.ResultMapWithBLOBs">
+    <select id="readInfoList4Global"
+            resultMap="com.pinde.core.common.sci.dao.ResInprocessInfoMapper.ResultMapWithBLOBs">
         SELECT RII.* FROM SYS_DEPT D
         JOIN RES_INPROCESS_INFO RII
         ON D.DEPT_FLOW=RII.DEPT_FLOW

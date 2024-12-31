@@ -1133,20 +1133,71 @@
         )
     </select>
 
-    <select id="getActivityListByRole" resultMap="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
-        SELECT * FROM TEACHING_ACTIVITY_INFO
-        WHERE RECORD_STATUS = 'Y'
+    <!-- 教学活动信息 -->
+    <resultMap id="activityInfoMap" type="map" extends="com.pinde.core.common.sci.dao.TeachingActivityInfoMapper.ResultMapWithBLOBs">
+        <result column="SPEAKER_NAME" property="speakerName" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getActivityListByRole" resultMap="activityInfoMap">
+        SELECT
+            I.ACTIVITY_FLOW,
+            I.ACTIVITY_NAME,
+            I.DEPT_FLOW,
+            D.DEPT_NAME,
+            I.ORG_FLOW,
+            I.SPEAKER_FLOW,
+            U.USER_NAME AS SPEAKER_NAME,
+            I.SPEAKER_PHONE,
+            I.ACTIVITY_TYPE_ID,
+            I.ACTIVITY_TYPE_NAME,
+            I.START_TIME,
+            I.END_TIME,
+            I.ACTIVITY_ADDRESS,
+            I.ACTIVITY_REMARK,
+            I.FILE_FLOW,
+            I.RECORD_STATUS,
+            I.CREATE_TIME,
+            I.CREATE_USER_FLOW,
+            I.MODIFY_TIME,
+            I.MODIFY_USER_FLOW,
+            I.IMAGE_URL,
+            I.IS_EFFECTIVE,
+            I.REALITY_SPEAKER,
+            I.ACTIVITY_STATUS,
+            I.SUBMIT_ROLE,
+            I.AUDIT_ROLE,
+            I.OPINION,
+            I.MANUAL_END_STATUS,
+            I.MANUAL_END_TIEM,
+            I.JOIN_NUM,
+            I.ADD_ROLE_FLOW,
+            I.AUDIT_ROLE_FLOW,
+            I.ROLE_ID,
+            I.LIMIT_NUM,
+            I.ACTIVITY_TYPE_ID_OLD,
+            I.ACTIVITY_TYPE_NAME_OLD,
+            I.REASON_FOR_DISAGREEMENT,
+            I.IS_LOOK
+        FROM
+            TEACHING_ACTIVITY_INFO I
+        LEFT JOIN SYS_USER U ON U.USER_FLOW = I.SPEAKER_FLOW
+        AND U.RECORD_STATUS = 'Y'
+        LEFT JOIN SYS_DEPT D ON D.DEPT_FLOW = I.DEPT_FLOW
+        AND D.RECORD_STATUS = 'Y'
+        WHERE
+            I.RECORD_STATUS = 'Y'
         <if test='Month != null and Month != ""'>
-            AND SUBSTR(START_TIME,0,7)= #{Month}
+            AND SUBSTR(I.START_TIME,0,7)= #{Month}
         </if>
         <if test='date != null and date != ""'>
-            AND SUBSTR(START_TIME,0,10)= #{date}
+            AND SUBSTR(I.START_TIME,0,10)= #{date}
         </if>
         <if test='roleFlag != null and roleFlag != "" and roleFlag=="local"'>
-            AND ORG_FLOW = #{orgFlow}
+            AND I.ORG_FLOW = #{orgFlow}
         </if>
-        <if test='roleFlag != null and roleFlag != "" and roleFlag=="kzr"'>
-            AND DEPT_FLOW IN (
+        <if test='roleFlag != null and roleFlag != "" and (roleFlag=="kzr" or roleFlag == "Teacher")'>
+            AND I.DEPT_FLOW IN (
             SELECT SUD.DEPT_FLOW
             FROM SYS_USER_DEPT SUD
             WHERE SUD.RECORD_STATUS = 'Y'
@@ -1155,9 +1206,6 @@
             SELECT DEPT_FLOW
             FROM SYS_USER
             WHERE USER_FLOW = #{userFlow})
-        </if>
-        <if test='roleFlag != null and roleFlag != "" and roleFlag=="Teacher"'>
-            AND SPEAKER_FLOW = #{userFlow}
         </if>
     </select>
 

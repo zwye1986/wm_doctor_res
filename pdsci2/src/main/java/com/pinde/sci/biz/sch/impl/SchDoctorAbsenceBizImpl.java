@@ -2,19 +2,17 @@ package com.pinde.sci.biz.sch.impl;
 
 import com.pinde.core.common.enums.AbsenceTypeEnum;
 import com.pinde.core.common.sci.dao.PubFileMapper;
+import com.pinde.core.common.sci.dao.SchDoctorAbsenceMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
-import com.pinde.sci.biz.res.IResDoctorProcessBiz;
-import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.sch.ISchDeptBiz;
 import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.SchDoctorAbsenceMapper;
 import com.pinde.sci.dao.sch.SchDoctorAbsenceExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +30,6 @@ import java.util.Map;
 public class SchDoctorAbsenceBizImpl implements ISchDoctorAbsenceBiz {
 	@Autowired
 	private SchDoctorAbsenceMapper doctorAbsenceMapper;
-	@Autowired
-	private IResDoctorProcessBiz resDoctorProcessBiz;
 	@Autowired
 	private IResDoctorBiz resDoctorBiz;
 	@Autowired

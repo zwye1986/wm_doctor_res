@@ -1,5 +1,7 @@
 package com.pinde.sci.biz.sys.impl;
 
+import com.pinde.core.common.sci.dao.SysCfgLogMapper;
+import com.pinde.core.common.sci.dao.SysCfgMapper;
 import com.pinde.core.model.SysCfg;
 import com.pinde.core.model.SysCfgExample;
 import com.pinde.core.model.SysCfgExample.Criteria;
@@ -10,8 +12,6 @@ import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SysCfgLogMapper;
-import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.dao.sys.SysCfgExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

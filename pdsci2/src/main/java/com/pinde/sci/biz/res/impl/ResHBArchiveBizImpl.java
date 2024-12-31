@@ -1,12 +1,11 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResArchiveSequenceMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResHBArchiveBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResHBArchiveExtMapper;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.dom4j.DocumentException;
@@ -27,16 +26,6 @@ public class ResHBArchiveBizImpl implements IResHBArchiveBiz {
     private ResArchiveSequenceMapper archiveSequenceMapper;
     @Autowired
     private ResHBArchiveExtMapper archiveExtMapper;
-    @Autowired
-    private IPubUserResumeBiz userResumeBiz;
-    @Autowired
-    private ResUserResumeLogMapper resumeLogMapper;
-    @Autowired
-    private ResDoctorRecruitLogMapper recruitLogMapper;
-    @Autowired
-    private ResDoctorLogMapper doctorLogMapper;
-    @Autowired
-    private SysUserLogMapper userLogMapper;
     @Override
     public int checkArchive(String archiveTime,String sessionNumber) {
         int count = 0;

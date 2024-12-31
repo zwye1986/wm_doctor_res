@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.form.res.TimeSetFrom;
+import com.pinde.core.model.TimeSetFrom;
 
 import java.util.List;
 import java.util.Map;

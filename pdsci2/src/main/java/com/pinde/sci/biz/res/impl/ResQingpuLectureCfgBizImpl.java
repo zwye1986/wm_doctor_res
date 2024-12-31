@@ -7,7 +7,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResQingpuLectureCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.core.common.sci.dao.QingpuLectureEvalCfgMapper;
-import com.pinde.sci.form.res.QingpuLectureCfgItemExt;
+import com.pinde.core.model.QingpuLectureCfgItemExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

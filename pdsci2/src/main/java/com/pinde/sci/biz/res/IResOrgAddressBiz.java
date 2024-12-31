@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res;
 
 
 import com.pinde.core.model.ResOrgAddress;
-import com.pinde.sci.form.res.ResOrgAddressForm;
+import com.pinde.core.model.ResOrgAddressForm;
 
 import java.util.List;
 

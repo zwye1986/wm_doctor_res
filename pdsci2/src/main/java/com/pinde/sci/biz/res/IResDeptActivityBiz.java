@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.form.res.ResDeptPlanForm;
+import com.pinde.core.model.ResDeptPlanForm;
 
 import java.util.List;
 import java.util.Map;

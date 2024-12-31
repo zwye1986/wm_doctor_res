@@ -5,16 +5,14 @@ import com.pinde.core.common.enums.DeptActivityItemTypeEnum;
 import com.pinde.core.common.enums.DeptActivityStatusEnum;
 import com.pinde.core.common.enums.DeptActivityTypeEnum;
 import com.pinde.core.common.enums.DeptActivityUserTypeEnum;
-import com.pinde.core.common.sci.dao.ExamResultsMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResDeptActivityBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDeptActivityExtMapper;
-import com.pinde.sci.form.res.ResDeptPlanForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

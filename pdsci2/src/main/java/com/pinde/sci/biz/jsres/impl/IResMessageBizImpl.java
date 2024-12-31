@@ -7,7 +7,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IResMessageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.ResMessageMapper;
+import com.pinde.core.common.sci.dao.ResMessageMapper;
 import com.pinde.sci.dao.res.ResMessageExtMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
