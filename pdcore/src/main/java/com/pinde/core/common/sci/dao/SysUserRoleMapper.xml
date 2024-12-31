@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    RECORD_FLOW, USER_FLOW, ORG_FLOW, WS_ID, ROLE_FLOW, ROLE_NAME, AUTH_TIME, AUTH_USER_FLOW, RECORD_STATUS,
+    RECORD_FLOW, USER_FLOW, ORG_FLOW, WS_ID, ROLE_FLOW, AUTH_TIME, AUTH_USER_FLOW, RECORD_STATUS,
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysUserRoleExample" >
