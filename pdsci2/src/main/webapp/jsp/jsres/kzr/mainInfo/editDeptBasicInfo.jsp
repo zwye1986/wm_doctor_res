@@ -27,7 +27,65 @@
     $(document).ready(function () {
         toRead('drxw','drxwEdit');
         toRead('masterxw','masterEdit');
+
+        // 有必填项没填，增加暂存按钮
+        if(!$("input[name='deptBasicInfoForm.deptName']").val()) {
+            $("#bth-temp-save").show();
+            showBaseInfoTemp();
+        }
     });
+
+    function showBaseInfoTemp() {
+        var formJson = localStorage.getItem('${sessionScope.currUser.userFlow}${sessionNumber}${speFlow}' + "deptBasicInfo");
+        if(formJson) {
+            var formData = JSON.parse(formJson);
+            if(formData.expire && formData.expire < new Date().getTime()) {
+                localStorage.removeItem('${sessionScope.currUser.userFlow}${sessionNumber}${speFlow}' + "deptBasicInfo");
+                return;
+            }
+
+            for (var key in formData) {
+                var val = formData[key];
+                var ele = $("input[name='" + key + "']");
+                if(ele.attr("type") == 'hidden') {
+                    continue;
+                }
+                if(ele.attr("type") == 'radio' && val) {
+                    for(var i = 0; i < ele.length; i++) {
+                        if(ele[i].value == val) {
+                            ele[i].checked = true;
+                        }
+                    }
+                    continue;
+                }
+
+                // 剩下的text
+                if(val) {
+                    ele.val(val);
+                    continue;
+                }
+            }
+        }
+    }
+
+    function saveBaseInfoTemp() {
+        var formJson = formToJSON($("#BaseInfoForm")[0]);
+        // localStorage存一天
+        formJson.expire = new Date().getTime() + 1000 * 60 * 60 *24;
+        console.log("formJson", formJson);
+        localStorage.setItem('${sessionScope.currUser.userFlow}${sessionNumber}${speFlow}' + "deptBasicInfo", JSON.stringify(formJson));
+        jboxTip("暂存成功！");
+    }
+
+
+    function formToJSON(form) {
+        const formData = new FormData(form);
+        const json = {};
+        for (const [key, value] of formData.entries()) {
+            json[key] = value;
+        }
+        return json;
+    }
 
     function toZero(obj) {
         $("#"+obj).val("0");
@@ -543,6 +601,7 @@
             </table>
         </div>--%>
         <div class="btn_info">
+            <input class="btn_green" id="bth-temp-save" style="display: none" onclick="saveBaseInfoTemp()" type="button" value="暂&#12288;存"/>
             <input class="btn_green" onclick="saveBaseInfo()" type="button" value="保&#12288;存"/>
         </div>
     </div>

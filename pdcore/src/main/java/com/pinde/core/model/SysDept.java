@@ -27,6 +27,16 @@ public class SysDept implements java.io.Serializable {
 
     private String deptPid;
 
+    private String rotationRequire;
+
+    public String getRotationRequire() {
+        return rotationRequire;
+    }
+
+    public void setRotationRequire(String rotationRequire) {
+        this.rotationRequire = rotationRequire;
+    }
+
     public String getDeptFlow() {
         return deptFlow;
     }
