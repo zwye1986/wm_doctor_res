@@ -6556,6 +6556,9 @@ public class JswjwWxController extends GeneralController {
             }
             //如果有两个角色 带教与主任、教秘 则只要判断主任角色权限
             if (isHead) {
+                isNurse = false;
+                isCharge = false;
+                isAdmin = false;
                 isTeacher = false;
                 isSeretary = false;
                 isTeachingSeretary = false;
@@ -6564,6 +6567,9 @@ public class JswjwWxController extends GeneralController {
                 resultMap.put("roleName", "科主任");
             }
             if (isSeretary) {
+                isNurse = false;
+                isCharge = false;
+                isAdmin = false;
                 isTeacher = false;
                 isHead = false;
                 isTeachingSeretary = false;
@@ -6572,28 +6578,68 @@ public class JswjwWxController extends GeneralController {
                 resultMap.put("roleName", "科秘");
             }
             if (isAdmin) {
+                isNurse = false;
+                isCharge = false;
                 isTeacher = false;
+                isSeretary = false;
                 isHead = false;
+                isTeachingSeretary = false;
+                isTeachingHead = false;
                 resultMap.put("roleId", "Admin");
                 resultMap.put("roleName", "医院管理员");
             }
             if (isTeacher) {
+                isNurse = false;
+                isCharge = false;
+                isAdmin = false;
+                isSeretary = false;
+                isHead = false;
+                isTeachingSeretary = false;
+                isTeachingHead = false;
                 resultMap.put("roleId", "Teacher");
                 resultMap.put("roleName", "带教老师");
             }
             if (isTeachingSeretary) {
+                isNurse = false;
+                isCharge = false;
+                isAdmin = false;
+                isSeretary = false;
+                isHead = false;
+                isTeacher = false;
+                isTeachingHead = false;
                 resultMap.put("roleId", "TeachingSeretary");
                 resultMap.put("roleName", "教学秘书");
             }
             if (isTeachingHead) {
+                isNurse = false;
+                isCharge = false;
+                isAdmin = false;
+                isSeretary = false;
+                isHead = false;
+                isTeacher = false;
+                isTeachingSeretary = false;
                 resultMap.put("roleId", "TeachingHead");
                 resultMap.put("roleName", "教学主任");
             }
             if (isCharge) {
+                isAdmin = false;
+                isNurse = false;
+                isTeacher = false;
+                isSeretary = false;
+                isHead = false;
+                isTeachingSeretary = false;
+                isTeachingHead = false;
                 resultMap.put("roleId", "Charge");
                 resultMap.put("roleName", "市局");
             }
             if (isNurse) {
+                isAdmin = false;
+                isCharge = false;
+                isTeacher = false;
+                isSeretary = false;
+                isHead = false;
+                isTeachingSeretary = false;
+                isTeachingHead = false;
                 resultMap.put("roleId", "Nurse");
                 resultMap.put("roleName", "护士");
             }
