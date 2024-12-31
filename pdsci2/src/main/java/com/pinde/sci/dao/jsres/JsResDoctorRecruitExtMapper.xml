@@ -6349,10 +6349,10 @@
     		</if>
 		group by re.org_flow
     </select> 
-    <resultMap id="info" type="com.pinde.sci.model.jsres.JsDoctorInfoExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+    <resultMap id="info" type="com.pinde.sci.model.jsres.JsDoctorInfoExt" extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap" >
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" />
+		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap" />
 	</resultMap>
 	<select id="statisticNoAppUser"  parameterType="java.util.Map" resultMap="info">
 
