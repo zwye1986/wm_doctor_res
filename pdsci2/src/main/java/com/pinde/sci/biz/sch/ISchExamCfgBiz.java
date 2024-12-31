@@ -60,7 +60,7 @@ public interface ISchExamCfgBiz {
 
 	int checkExists(SchExamArrangement schExamArrangement, List<String> speIds, List<String> sessinNumbers);
 
-	int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers, Map<String, String> speSessionToPaperFlowMap);
+	int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers, String paperFlow);
 
 	SchExamDoctorArrangement readExamResult(String processFlow);
 

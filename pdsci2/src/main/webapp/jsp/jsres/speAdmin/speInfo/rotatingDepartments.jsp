@@ -12,8 +12,9 @@
 		jboxOpen(url, '科室信息（' + schDeptName + '）', 1200, 700);
 	}
 
-	function showStandardDept(standardDeptFlow, standardDeptName, isJoin, speFlow) {
-		var url = "<s:url value ='/jsres/base/showStandardDeptInfo'/>?onlyRead=${ishos}&standardDeptFlow=" + standardDeptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y";
+	function showStandardDept(standardDeptFlow, standardDeptName, isJoin, speFlow, rotationRequire) {
+		var url = "<s:url value ='/jsres/base/showStandardDeptInfo'/>?onlyRead=${ishos}&standardDeptFlow=" + standardDeptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y"
+				+ "&rotationRequire=" + rotationRequire;
 		jboxOpen(url, '科室信息（' + standardDeptName + '）', 1200, 800);
 	}
 </script>
@@ -59,11 +60,11 @@
 <%--							<td style="text-align: center">${r.schDeptName}</td>--%>
 							<td style="text-align: center">
 								<c:if test="${ishos eq 'Y'}">
-									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">查看</a>
+									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}', '1');" style="color:#59d5ff;">查看</a>
 <%--									<a href="javascript:void(0)" onclick="showDept('${r.schDeptFlow}','${r.schDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">查看</a>--%>
 								</c:if>
 								<c:if test="${ishos ne 'Y'}">
-									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">编辑</a>
+									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}', '1');" style="color:#59d5ff;">编辑</a>
 <%--									<a href="javascript:void(0)" onclick="showDept('${r.schDeptFlow}','${r.schDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">编辑</a>--%>
 								</c:if>
 							</td>
@@ -90,11 +91,11 @@
 <%--							<td style="text-align: center">${r.schDeptName}</td>--%>
 							<td style="text-align: center">
 								<c:if test="${ishos eq 'Y'}">
-									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">查看</a>
+									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}', '2');" style="color:#59d5ff;">查看</a>
 <%--									<a href="javascript:void(0)" onclick="showDept('${r.schDeptFlow}','${r.schDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">查看</a>--%>
 								</c:if>
 								<c:if test="${ishos ne 'Y'}">
-									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">编辑</a>
+									<a href="javascript:void(0)" onclick="showStandardDept('${r.standardDeptFlow}','${r.standardDeptName}','${isJoin}','${speFlow}', '2');" style="color:#59d5ff;">编辑</a>
 <%--									<a href="javascript:void(0)" onclick="showDept('${r.schDeptFlow}','${r.schDeptName}','${isJoin}','${speFlow}');" style="color:#59d5ff;">编辑</a>--%>
 								</c:if>
 							</td>

@@ -164,7 +164,7 @@
         left join RES_DEPT_REL_STD_DEPT rd on sd.org_flow = rd.org_flow and sd.dept_code = rd.dept_code and
         rd.record_status = 'Y'
         left join RES_SPE_BASE_STD_DEPT bst on bst.standard_dept_flow = rd.standard_dept_flow and bst.record_status =
-        'Y'
+        'Y' and bst.rotation_require_status = #{dept.rotationRequire}
 		where sd.record_status = 'Y'
 		<if test='dept.deptFlow!=null and dept.deptFlow!=""'>
 			and sd.dept_flow = #{dept.deptFlow}

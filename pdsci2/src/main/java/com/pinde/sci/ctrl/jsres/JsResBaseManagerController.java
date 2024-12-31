@@ -827,11 +827,13 @@ public class JsResBaseManagerController extends GeneralController {
 	}
 
 	@RequestMapping("/showDeptInfo")
-	public String showDeptInfo(String deptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String viewFlag) {
+	public String showDeptInfo(String deptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal
+			, String viewFlag, String rotationRequire) {
 		model.addAttribute("speFlow", speFlow);
 		SysDept deptQuery = new SysDept();
 		deptQuery.setDeptFlow(deptFlow);
 		deptQuery.setOrgFlow(orgFlow);
+		deptQuery.setRotationRequire(rotationRequire);
 		List<Map<String, String>> speList = sysDeptExtMapper.searchDeptByUnionSpe(deptQuery, null);
 		speList = speList.stream().filter(map -> StringUtils.isNotEmpty(map.get("speFlow"))).collect(Collectors.toList());
 		if(CollectionUtils.isEmpty(speList) && StringUtils.isNotEmpty(speFlow)) {
@@ -861,13 +863,14 @@ public class JsResBaseManagerController extends GeneralController {
 
 	// 查询标准科室下各轮转科室的信息
 	@RequestMapping("/showStandardDeptInfo")
-	public String showStandardDeptInfo(String standardDeptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal) {
+	public String showStandardDeptInfo(String standardDeptFlow, String speFlow, Model model, String orgFlow, String isJoin, String onlyRead, String isglobal, String rotationRequire) {
 		model.addAttribute("speFlow", speFlow);
 		model.addAttribute("orgFlow", orgFlow);
         model.addAttribute("viewFlag", com.pinde.core.common.GlobalConstant.FLAG_N);
 		model.addAttribute("isJoin", isJoin);
 		model.addAttribute("onlyRead", onlyRead);
 		model.addAttribute("isglobal", isglobal);
+		model.addAttribute("rotationRequire", rotationRequire);
 
 		// 查未被禁用的基地科室
 		SysDeptVO sysDeptVO = new SysDeptVO();

@@ -28,6 +28,8 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -140,7 +142,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		String resultContent = httpResult.getStringContent();
 		JSONObject resultJson = JSONObject.parseObject(resultContent);
 		if(!HTTP_STATUS_OK.equals(resultJson.get(HTTP_RESP_CODE))) {
-			throw new RuntimeException("生成/修改年度试卷失败，失败信息：" + resultJson.get(HTTP_RESP_MSG));
+			throw new RuntimeException("生成/修改年度试卷失败，失败信息：" + resultJson.get(HTTP_RESP_MSG) + ", spe id: " + trainingSpeId + ", session number: " + sessionNumber);
 		}
 
 		String paperFlow = resultJson.getJSONObject("data").getString("paperFlow");
@@ -155,111 +157,111 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		String switchOnContent = httpResult.getStringContent();
 		JSONObject switchOnJson = JSONObject.parseObject(switchOnContent);
 		if(!HTTP_STATUS_OK.equals(switchOnJson.get(HTTP_RESP_CODE))) {
-			throw new RuntimeException("开启年度试卷失败，失败信息：" + switchOnJson.get(HTTP_RESP_MSG));
+			// 开启失败，删除试卷
+			deleteExam(paperFlow, accessToken);
+			throw new RuntimeException("开启年度试卷失败，失败信息：" + switchOnJson.get(HTTP_RESP_MSG) + ", spe id: " + trainingSpeId + ", session number: " + sessionNumber);
 		}
 
 		return paperFlow;
 	}
 
+	/**
+	 * 只要失败，就删试卷，保持两边状态的一致（不要发生住培端试卷没生成成功，考试端试卷已生成的情况）
+	 * @param schExamArrangement
+	 * @param paperFlow
+	 * @param trainingSpeId
+	 * @param sessionNumber
+	 * @param accessToken
+	 */
 	@Override
 	public void generateDoctorExam(SchExamArrangement schExamArrangement, String paperFlow, String trainingSpeId, String sessionNumber, String accessToken) {
-		// 先查出数据
-		SchExamArrangementVO queryVO = new SchExamArrangementVO();
-		queryVO.setTrainingSpeId(trainingSpeId);
-		queryVO.setSessionNumber(sessionNumber);
-		queryVO.setSchStartDate(schExamArrangement.getAssessmentStartTime());
-		queryVO.setSchEndDate(schExamArrangement.getAssessmentEndTime());
-		queryVO.setOrgFlow(schExamArrangement.getOrgFlow());
-		List<SchExamArrangementVO> userDataList = schExamArrangementMapper.selectExamUserList(queryVO);
+		File file = null;
+		FileOutputStream fos = null;
+		try {
+			// 先查出数据
+			SchExamArrangementVO queryVO = new SchExamArrangementVO();
+			queryVO.setTrainingSpeId(trainingSpeId);
+			queryVO.setSessionNumber(sessionNumber);
+			queryVO.setSchStartDate(schExamArrangement.getAssessmentStartTime());
+			queryVO.setSchEndDate(schExamArrangement.getAssessmentEndTime());
+			queryVO.setOrgFlow(schExamArrangement.getOrgFlow());
+			List<SchExamArrangementVO> userDataList = schExamArrangementMapper.selectExamUserList(queryVO);
+			if(CollectionUtils.isEmpty(userDataList)) {
+				log.info("generateDoctorExam warn, empty user list, org: {}, speId: {}, sessionNumber: {}", schExamArrangement.getOrgName(), trainingSpeId, sessionNumber);
+				throw new RuntimeException("导入排班失败，没有学员数据，spe id: " + trainingSpeId + ", session number: " + sessionNumber);
+			}
 
-		if(CollectionUtils.isEmpty(userDataList)) {
-			log.info("generateDoctorExam warn, empty user list, org: {}, speId: {}, sessionNumber: {}", schExamArrangement.getOrgName(), trainingSpeId, sessionNumber);
-			return;
-		}
-
-		// 处理一下数据 userDataList
-		for (SchExamArrangementVO schExamArrangementVO : userDataList) {
-			String standardDeptName = schExamArrangementVO.getDeptName();
-			String[] stdDeptArr = standardDeptName.split(",");
-			List<String> stdDeptList = Arrays.stream(stdDeptArr).distinct().collect(Collectors.toList());
-			for(int i = 0; i < stdDeptList.size(); i++) {
-				switch (i) {
-					case 0: schExamArrangementVO.setSchMonth01StdDept(stdDeptList.get(i));break;
-					case 1: schExamArrangementVO.setSchMonth02StdDept(stdDeptList.get(i));break;
-					case 2: schExamArrangementVO.setSchMonth03StdDept(stdDeptList.get(i));break;
-					case 3: schExamArrangementVO.setSchMonth04StdDept(stdDeptList.get(i));break;
-					case 4: schExamArrangementVO.setSchMonth05StdDept(stdDeptList.get(i));break;
-					case 5: schExamArrangementVO.setSchMonth06StdDept(stdDeptList.get(i));break;
-					case 6: schExamArrangementVO.setSchMonth07StdDept(stdDeptList.get(i));break;
-					case 7: schExamArrangementVO.setSchMonth08StdDept(stdDeptList.get(i));break;
-					case 8: schExamArrangementVO.setSchMonth09StdDept(stdDeptList.get(i));break;
-					case 9: schExamArrangementVO.setSchMonth10StdDept(stdDeptList.get(i));break;
-					case 10: schExamArrangementVO.setSchMonth11StdDept(stdDeptList.get(i));break;
-					case 11: schExamArrangementVO.setSchMonth12StdDept(stdDeptList.get(i));break;
-					default:
+			// 处理一下数据 userDataList
+			for (SchExamArrangementVO schExamArrangementVO : userDataList) {
+				String standardDeptName = schExamArrangementVO.getDeptName();
+				String[] stdDeptArr = standardDeptName.split(",");
+				List<String> stdDeptList = Arrays.stream(stdDeptArr).distinct().collect(Collectors.toList());
+				for(int i = 0; i < stdDeptList.size(); i++) {
+					switch (i) {
+						case 0: schExamArrangementVO.setSchMonth01StdDept(stdDeptList.get(i));break;
+						case 1: schExamArrangementVO.setSchMonth02StdDept(stdDeptList.get(i));break;
+						case 2: schExamArrangementVO.setSchMonth03StdDept(stdDeptList.get(i));break;
+						case 3: schExamArrangementVO.setSchMonth04StdDept(stdDeptList.get(i));break;
+						case 4: schExamArrangementVO.setSchMonth05StdDept(stdDeptList.get(i));break;
+						case 5: schExamArrangementVO.setSchMonth06StdDept(stdDeptList.get(i));break;
+						case 6: schExamArrangementVO.setSchMonth07StdDept(stdDeptList.get(i));break;
+						case 7: schExamArrangementVO.setSchMonth08StdDept(stdDeptList.get(i));break;
+						case 8: schExamArrangementVO.setSchMonth09StdDept(stdDeptList.get(i));break;
+						case 9: schExamArrangementVO.setSchMonth10StdDept(stdDeptList.get(i));break;
+						case 10: schExamArrangementVO.setSchMonth11StdDept(stdDeptList.get(i));break;
+						case 11: schExamArrangementVO.setSchMonth12StdDept(stdDeptList.get(i));break;
+						default:
+					}
 				}
 			}
-		}
 
-		String[] titles = new String[] {
-				"userName:姓名",
-				"trainingSpeId:专业",
-				"userCode:用户名",
-				"userPhone:手机号",
-				"idNo:身份证号",
-				"schMonth01StdDept:2024-01",
-				"schMonth02StdDept:2024-02",
-				"schMonth03StdDept:2024-03",
-				"schMonth04StdDept:2024-04",
-				"schMonth05StdDept:2024-05",
-				"schMonth06StdDept:2024-06",
-				"schMonth07StdDept:2024-07",
-				"schMonth08StdDept:2024-08",
-				"schMonth09StdDept:2024-09",
-				"schMonth10StdDept:2024-10",
-				"schMonth11StdDept:2024-11",
-				"schMonth12StdDept:2024-12",
+			String[] titles = new String[] {
+					"userName:姓名",
+					"trainingSpeName:专业",
+					"userCode:用户名",
+					"userPhone:手机号",
+					"idNo:身份证号",
+					"schMonth01StdDept:2024-01",
+					"schMonth02StdDept:2024-02",
+					"schMonth03StdDept:2024-03",
+					"schMonth04StdDept:2024-04",
+					"schMonth05StdDept:2024-05",
+					"schMonth06StdDept:2024-06",
+					"schMonth07StdDept:2024-07",
+					"schMonth08StdDept:2024-08",
+					"schMonth09StdDept:2024-09",
+					"schMonth10StdDept:2024-10",
+					"schMonth11StdDept:2024-11",
+					"schMonth12StdDept:2024-12",
 
-		};
-		byte[] stream = null;
-        try {
+			};
+			byte[] stream = null;
 			stream = com.pinde.core.util.ExcleUtile.exportExcelFileByObjs(titles, userDataList);
-        } catch (Exception e) {
-            log.info("generateDoctorExam warn, generate excel error, org: {}, speId: {}, sessionNumber: {}", schExamArrangement.getOrgName(), trainingSpeId, sessionNumber);
-			return;
-        }
 
-		// 将生成的excel文件传给考试
-		String yearlyTestImportPlanUrl = InitConfig.getSysCfg("jsres_yearly_test_import_plan_url");
-		HttpClient httpClient = HttpClientUtil.getClient();
-		HttpPost httpPost = new HttpPost(yearlyTestImportPlanUrl);
+			// 将生成的excel文件传给考试
+			String yearlyTestImportPlanUrl = InitConfig.getSysCfg("jsres_yearly_test_import_plan_url");
+			HttpClient httpClient = HttpClientUtil.getClient();
+			HttpPost httpPost = new HttpPost(yearlyTestImportPlanUrl);
 
-		// 添加表单字段
-		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-		builder.addTextBody("paperFlow", paperFlow);
+			// 添加表单字段
+			MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+			builder.addTextBody("paperFlow", paperFlow);
 
-		// 添加文件
-		String tempDir = System.getProperty("java.io.tmpdir");
-		String uid = PkUtil.getUUID();
-		File file = new File(tempDir + File.separator + uid + "_导入排班.xls"); // 创建File对象指定文件路径
-
-		try (FileOutputStream fos = new FileOutputStream(file)) {
+			// 添加文件
+			String tempDir = System.getProperty("java.io.tmpdir");
+			String uid = PkUtil.getUUID();
+			file = new File(tempDir + File.separator + schExamArrangement.getAssessmentYear() + schExamArrangement.getOrgName() + sessionNumber + trainingSpeId + uid + "_导入排班.xls"); // 创建File对象指定文件路径
+			fos = new FileOutputStream(file);
 			fos.write(stream); // 将byte数组写入文件
-			builder.addBinaryBody("file", file, ContentType.DEFAULT_BINARY, file.getName());
-		} catch (IOException e) {
-			log.info("generateDoctorExam warn, generate file error, org: {}, speId: {}, sessionNumber: {}", schExamArrangement.getOrgName(), trainingSpeId, sessionNumber);
-			return;
-		}
 
-		// 构建实体
-		HttpEntity multipart = builder.build();
-		httpPost.setEntity(multipart);
-		httpPost.addHeader(new BasicHeader("authorization", accessToken));
-		httpPost.addHeader(new BasicHeader("applicationname", InitConfig.getSysCfg("jsres_yearly_test_applicationname")));
-		httpPost.addHeader(new BasicHeader("projectname", InitConfig.getSysCfg("jsres_yearly_test_projectname")));
-		HttpResponse response = null;
-		String failReason = "";
-        try {
+			// 构建实体
+			HttpEntity multipart = builder.build();
+			httpPost.setEntity(multipart);
+			httpPost.addHeader(new BasicHeader("authorization", accessToken));
+			httpPost.addHeader(new BasicHeader("applicationname", InitConfig.getSysCfg("jsres_yearly_test_applicationname")));
+			httpPost.addHeader(new BasicHeader("projectname", InitConfig.getSysCfg("jsres_yearly_test_projectname")));
+			HttpResponse response = null;
+
 			response = httpClient.execute(httpPost);
 			StatusLine statusLine = response.getStatusLine();
 			HttpEntity httpEntity = response.getEntity();
@@ -272,15 +274,24 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 				String resp = EntityUtils.toString(httpEntity);
 				JSONObject respJson = JSONObject.parseObject(resp);
 				if(!HTTP_STATUS_OK.equals(respJson.get(HTTP_RESP_CODE))) {
-					throw new RuntimeException("生成学员年度试卷失败，信息：" + respJson.get(HTTP_RESP_MSG));
+					throw new RuntimeException("生成学员年度试卷失败，信息：" + respJson.get(HTTP_RESP_MSG) + "spe id: " + trainingSpeId + ", session number: " + sessionNumber);
 				}
 			}
         } catch (Exception e) {
 			log.error("generateDoctorExam warn, send post error", e);
 			throw new RuntimeException(e);
 		}finally {
-			if(file != null && file.exists()) {
-				file.delete();
+			try {
+				// 导入排班失败，删除试卷
+				deleteExam(paperFlow, accessToken);
+				if(file != null && file.exists()) { // 不删，保留可以好查导入失败的原因
+	//				file.delete();
+				}
+				if(fos != null) {
+					fos.close();
+				}
+			} catch (Exception e) {
+				throw new RuntimeException(e);
 			}
 		}
     }
@@ -538,8 +549,18 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		return schExamArrangementExtMapper.checkExistsByIds(ment,speIds,sessinNumbers);
 	}
 
+	/**
+	 * 每次开启新事物提交
+	 * @param schExamArrangement
+	 * @param standardDeptId
+	 * @param speIds
+	 * @param sessinNumbers
+	 * @param paperFlow
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers, Map<String, String> speSessionToPaperFlowMap) {
+	public int updateArrangements(SchExamArrangement schExamArrangement, String[] standardDeptId, List<String> speIds, List<String> sessinNumbers, String paperFlow) {
 		int c=0;
         com.pinde.core.common.enums.DictTypeEnum e = null;
         if (com.pinde.core.common.enums.TrainCategoryEnum.AssiGeneral.getId().equals(schExamArrangement.getTrainingTypeId()))
@@ -570,7 +591,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 				schExamArrangement.setArrangeFlow("");
 				schExamArrangement.setSessionNumber(sessionNumber);
 				schExamArrangement.setTrainingSpeId(speId);
-				schExamArrangement.setPaperFlow(speSessionToPaperFlowMap.get(speId + sessionNumber));
+				schExamArrangement.setPaperFlow(paperFlow);
                 schExamArrangement.setTrainingSpeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(e, speId));
                 c += updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_N);
 			}

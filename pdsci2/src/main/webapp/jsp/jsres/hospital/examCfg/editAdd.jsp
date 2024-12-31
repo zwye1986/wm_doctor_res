@@ -139,6 +139,11 @@
 				jboxEndLoading();
 				return;
 			}
+			if(resp != "操作成功！") {
+				jboxTip(resp);
+				jboxEndLoading();
+				return;
+			}
 			jboxTip("操作成功！");
 			window.parent.toPage(1);
 			jboxClose();
