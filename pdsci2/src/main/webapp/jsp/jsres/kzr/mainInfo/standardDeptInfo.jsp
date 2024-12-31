@@ -7,7 +7,8 @@
 <link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
 <script type="text/javascript">
     function showDept(deptFlow, isJoin, speFlow) {
-        var url = "<s:url value ='/jsres/base/showDeptInfo'/>?onlyRead=${ishos}&deptFlow=" + deptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y";
+        var url = "<s:url value ='/jsres/base/showDeptInfo'/>?onlyRead=${ishos}&deptFlow=" + deptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y"
+            + "&rotationRequire=${rotationRequire}";
         jboxLoad("schDeptContent", url, false);
     }
 

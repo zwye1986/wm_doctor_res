@@ -104,10 +104,14 @@ public class JsResExamCfgController extends GeneralController {
             return "cannotInsert";
         }
         String accessToken = loginAndToken();
-        // 增加考试操作：新增试卷，导入排班关联学员考试
-        String paperFlow = examCfgBiz.generateExam(schExamArrangement, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
-        // 生成试卷后再导入排班
-        examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+        try {
+            // 增加考试操作：新增试卷，导入排班关联学员考试
+            String paperFlow = examCfgBiz.generateExam(schExamArrangement, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+            // 生成试卷后再导入排班
+            examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
 
         int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_N);
         if(result==0)
@@ -132,28 +136,25 @@ public class JsResExamCfgController extends GeneralController {
         {
             return "cannotInsert";
         }
-
-        Map<String, String> speSessionToPaperFlowMap = new HashMap<>();
         String accessToken = loginAndToken();
         // 增加考试操作：新增试卷，导入排班关联学员考试
-        for(String trainingSpeId: Arrays.asList(itemId)) {
-            for(String sessionNumber: sessionNumbers.split(",")) {
-                String paperFlow = examCfgBiz.generateExam(schExamArrangement, trainingSpeId, sessionNumber, accessToken);
+        try {
+            for(String trainingSpeId: Arrays.asList(itemId)) {
+                for(String sessionNumber: sessionNumbers.split(",")) {
+                    String paperFlow = examCfgBiz.generateExam(schExamArrangement, trainingSpeId, sessionNumber, accessToken);
 
-                if(StringUtils.isEmpty(paperFlow)) {
-                    return "生成试卷失败！";
+                    if(StringUtils.isEmpty(paperFlow)) {
+                        return "生成试卷失败！";
+                    }
+
+                    // 生成试卷后再导入排班
+                    examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, trainingSpeId, sessionNumber, accessToken);
+                    // 下面开新事物，保证可以部分成功，两边状态一致（前面for中成功了，后面for失败了不影响前面成功的）
+                    examCfgBiz.updateArrangements(schExamArrangement,standardDeptId,Arrays.asList(trainingSpeId),Arrays.asList(sessionNumber), paperFlow);
                 }
-
-                speSessionToPaperFlowMap.put(trainingSpeId + sessionNumber, paperFlow);
-                // 生成试卷后再导入排班
-                examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, trainingSpeId, sessionNumber, accessToken);
             }
-        }
-
-        int result=examCfgBiz.updateArrangements(schExamArrangement,standardDeptId,Arrays.asList(itemId),Arrays.asList(sessionNumbers.split(",")), speSessionToPaperFlowMap);
-        if(result==0)
-        {
-            return "操作失败！";
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
 
         return "操作成功！";
