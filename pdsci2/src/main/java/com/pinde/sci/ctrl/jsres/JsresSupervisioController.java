@@ -5,8 +5,7 @@ import com.lowagie.text.DocumentException;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
-import com.pinde.core.common.sci.dao.HospSelfAssessmentCfgMapper;
-import com.pinde.core.common.sci.dao.HospSelfAssessmentMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
@@ -19,17 +18,9 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
+import com.pinde.core.common.sci.dao.ResSupervisioReportMapper;
+import com.pinde.core.common.sci.dao.ResSupervisioSubjectRecordsMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.core.model.ResEvaluationScore;
-import com.pinde.core.model.ResHospScoreTable;
-import com.pinde.core.model.ResHospSupervSubject;
-import com.pinde.core.model.ResOrgSpeAssign;
-import com.pinde.core.model.ResScheduleScore;
-import com.pinde.core.model.ResSupervisioSubject;
-import com.pinde.core.model.ResSupervisioSubjectUser;
-import com.pinde.core.model.SysSupervisioUser;
-import com.pinde.core.model.SysUserRole;
 import com.pinde.sci.model.sys.SysOrgExt;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
@@ -94,15 +85,11 @@ public class JsresSupervisioController extends GeneralController {
     @Autowired
     private IJsResActivityBiz activityBiz;
     @Autowired
-    private ResHospSupervSubjectMapper hospSupervSubjectMapper;
-    @Autowired
     private IDictBiz dictBiz;
     @Autowired
     private TeachingActivityInfoMapper activityInfoMapper;
     @Autowired
     private SysDeptMapper deptMapper;
-    @Autowired
-    private HospSelfAssessmentMapper assessmentMapper;
     @Autowired
     private HospSelfAssessmentCfgMapper assessmentCfgMapper;
 

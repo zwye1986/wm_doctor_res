@@ -222,6 +222,9 @@
       <if test="isOpenResult != null" >
         IS_OPEN_RESULT,
       </if>
+        <if test="paperFlow != null">
+            paper_flow,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="arrangeFlow != null" >
@@ -299,9 +302,13 @@
       <if test="isOpenResult != null" >
         #{isOpenResult,jdbcType=VARCHAR},
       </if>
+        <if test="paperFlow != null">
+            #{paperFlow,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.SchExamArrangementExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.SchExamArrangementExample"
+            resultType="java.lang.Integer">
       select count(*) from SCH_EXAM_ARRANGEMENT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -496,6 +503,10 @@
       <if test="isOpenResult != null" >
         IS_OPEN_RESULT = #{isOpenResult,jdbcType=VARCHAR},
       </if>
+
+        <if test="paperFlow != null">
+            paper_flow = #{paperFlow,jdbcType=VARCHAR},
+        </if>
     </set>
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
@@ -527,4 +538,40 @@
       IS_OPEN_RESULT = #{isOpenResult,jdbcType=VARCHAR}
     where ARRANGE_FLOW = #{arrangeFlow,jdbcType=VARCHAR}
   </update>
+
+    <select id="selectExamUserList" resultType="com.pinde.core.vo.sch.SchExamArrangementVO"
+            parameterType="com.pinde.core.vo.sch.SchExamArrangementVO">
+        SELECT su.USER_NAME,
+               rd.TRAINING_SPE_NAME,
+               su.USER_CODE,
+               su.USER_PHONE,
+               su.ID_NO,
+               LISTAGG(sasdc.STANDARD_DEPT_NAME, ',') WITHIN GROUP (ORDER BY 1) AS DEPT_NAME
+        FROM RES_DOCTOR_SCH_PROCESS rdsp,
+             SCH_AND_STANDARD_DEPT_CFG sasdc,
+             SYS_USER su,
+             RES_DOCTOR rd
+        WHERE RDSP.USER_FLOW = su.USER_FLOW
+          AND rd.DOCTOR_FLOW = su.USER_FLOW
+          AND su.RECORD_STATUS = 'Y'
+          AND rd.RECORD_STATUS = 'Y'
+          AND RDSP.SCH_START_DATE >= #{schStartDate}
+          AND RDSP.SCH_END_DATE &lt;= #{schEndDate}
+          AND RDSP.RECORD_STATUS = 'Y'
+          AND sasdc.RECORD_STATUS = 'Y'
+          AND sasdc.sch_dept_flow = rdsp.sch_dept_flow
+          AND rdsp.org_flow = sasdc.org_flow
+          and rd.TRAINING_SPE_ID = #{trainingSpeId}
+          and rd.SESSION_NUMBER = #{sessionNumber}
+          and rd.org_flow = #{orgFlow}
+          and rd.TRAINING_SPE_NAME is not null
+          and su.USER_CODE is not null
+          and su.USER_PHONE is not null
+          and su.ID_NO is not null
+        GROUP BY su.USER_NAME,
+                 rd.TRAINING_SPE_NAME,
+                 su.USER_CODE,
+                 su.USER_PHONE,
+                 su.ID_NO
+    </select>
 </mapper>

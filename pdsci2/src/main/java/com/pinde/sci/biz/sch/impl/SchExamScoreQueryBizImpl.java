@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.sch.impl;
 
+import com.pinde.core.common.sci.dao.JsResSchExamScoreQueryMapper;
+import com.pinde.core.common.sci.dao.ResScoreMapper;
+import com.pinde.core.common.sci.dao.SchExamDoctorArrangementMapper;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResScoreExample;
 import com.pinde.core.model.SchExamDoctorArrangement;
 import com.pinde.sci.biz.sch.ISchExamScoreQueryBiz;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.sci.dao.base.SchExamDoctorArrangementMapper;
-import com.pinde.sci.dao.jsres.JsResSchExamScoreQueryMapper;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;

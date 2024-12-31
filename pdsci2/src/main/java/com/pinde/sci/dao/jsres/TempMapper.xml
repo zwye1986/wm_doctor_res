@@ -1148,14 +1148,14 @@ COMPLETE_BI_PER=(CASE
         AVG_IN_COMPLETE_BI_PER=( select nvl(AVG_IN_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow})
         WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_FLOW=#{applyFlow}
     </update>
-    <select id="queryProcess"  resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="queryProcess" resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
 
     select * from res_doctor_sch_process where user_flow in (
       select user_flow from sys_user where user_code=#{userCode} and record_status='Y'
     )
     and record_status='Y' order by sch_start_date
     </select>
-    <select id="queryDelProcess"  resultMap="com.pinde.sci.dao.base.ResDoctorSchProcessMapper.BaseResultMap">
+    <select id="queryDelProcess" resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
         select * from res_doctor_sch_process p where user_flow in (
           select user_flow from sys_user where user_code=#{userCode} and record_status='Y'
         )

@@ -134,7 +134,49 @@
       from SCH_ROTATION_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+
+    <select id="selectListWithBLOBs" resultType="com.pinde.core.model.SchRotationDept">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from SCH_ROTATION_DEPT
+        where record_status = 'Y'
+        <foreach collection="rotationFlowList" open="and (" close=")" index="i" separator=" or ">
+            (ROTATION_FLOW = #{rotationFlowList[${i}], jdbcType=VARCHAR} and STANDARD_DEPT_ID =
+            #{standardDeptIdList[${i}], jdbcType=VARCHAR} and GROUP_FLOW = #{groupFlowList[${i}], jdbcType=VARCHAR})
+        </foreach>
+        and org_flow is null
+    </select>
+
+    <select id="selectListByGroupAndDept" resultType="com.pinde.core.model.SchRotationDept">
+        select
+        <include refid="Base_Column_List"/>
+        from SCH_ROTATION_DEPT
+        where record_status = 'Y'
+        <foreach collection="groupFlowList" open="and (" close=")" index="i" separator=" or ">
+            (STANDARD_DEPT_ID = #{deptFlowList[${i}], jdbcType=VARCHAR} and GROUP_FLOW = #{groupFlowList[${i}],
+            jdbcType=VARCHAR})
+        </foreach>
+        and org_flow is null
+    </select>
+
+    <select id="searchSchRotationDeptByPartitionList" resultType="com.pinde.core.model.SchRotationDept">
+        select
+        <include refid="Base_Column_List"/>
+        from SCH_ROTATION_DEPT
+        where record_status = 'Y'
+        <foreach collection="rotationFlowListList" item="rotationFlowList" open="and (" close=")" separator=" or ">
+            ROTATION_FLOW in
+            <foreach collection="rotationFlowList" item="rotationFlow" open="(" close=")" separator=",">
+                #{rotationFlow,jdbcType=VARCHAR}
+            </foreach>
+        </foreach>
+        and org_flow is null
+        order by ORDINAL
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
       delete from SCH_ROTATION_DEPT
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </delete>

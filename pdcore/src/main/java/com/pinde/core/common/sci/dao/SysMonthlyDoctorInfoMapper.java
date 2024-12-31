@@ -19,6 +19,8 @@ public interface SysMonthlyDoctorInfoMapper {
 
     List<SysMonthlyDoctorInfo> selectByExample(SysMonthlyDoctorInfoExample example);
 
+    List<SysMonthlyDoctorInfo> getMonthlyDoctorInfo2(SysMonthlyDoctorInfo sysMonthlyDoctorInfo);
+
     SysMonthlyDoctorInfo selectByPrimaryKey(String smdiFlow);
 
     int updateByExampleSelective(@Param("record") SysMonthlyDoctorInfo record, @Param("example") SysMonthlyDoctorInfoExample example);

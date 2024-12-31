@@ -2323,7 +2323,8 @@
         order by SPE_ID,SESSION_NUMBER,NLSSORT(DOCTOR_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
     </select>
 
-    <resultMap id="chargeQueryExportMap" type="java.util.HashMap" extends="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs">
+    <resultMap id="chargeQueryExportMap" type="java.util.HashMap"
+               extends="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs">
         <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
         <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
@@ -4078,7 +4079,8 @@
        NLSSORT(su.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
    </select>
 
-   <resultMap id="chargeQueryExportMap2" type="java.util.HashMap" extends="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs">
+    <resultMap id="chargeQueryExportMap2" type="java.util.HashMap"
+               extends="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs">
        <result column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
        <result column="RECRUIT_FLOW" property="recruitFlow" jdbcType="VARCHAR" />
        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />

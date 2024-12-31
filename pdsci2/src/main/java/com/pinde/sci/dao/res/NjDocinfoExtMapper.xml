@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.NjDocinfoExtMapper" >
-    <resultMap id="NjDocinfoExtMap" type="com.pinde.sci.model.res.NjDocinfoExt" extends="com.pinde.sci.dao.base.TjDocinfoMapper.BaseResultMap">
+    <resultMap id="NjDocinfoExtMap" type="com.pinde.sci.model.res.NjDocinfoExt"
+               extends="com.pinde.core.common.sci.dao.TjDocinfoMapper.BaseResultMap">
     </resultMap>
     <select id="searchNjDocinfo" parameterType="com.pinde.core.model.TjDocinfo" resultMap="NjDocinfoExtMap">
         select

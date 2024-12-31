@@ -2,6 +2,8 @@ package com.pinde.sci.biz.login.impl;
 
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
+import com.pinde.core.common.sci.dao.SysLogMapper;
+import com.pinde.core.common.sci.dao.SysLoginAbilityMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -15,8 +17,6 @@ import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SysLogMapper;
-import com.pinde.sci.dao.base.SysLoginAbilityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

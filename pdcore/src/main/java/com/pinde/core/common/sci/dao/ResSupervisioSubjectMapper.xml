@@ -30,6 +30,14 @@
     <result column="REQEDIT" property="reqedit" jdbcType="VARCHAR" />
     <result column="SUP_FEEDBACK" property="supFeedback" jdbcType="VARCHAR" />
     <result column="SPE_FEEDBACK" property="speFeedback" jdbcType="VARCHAR" />
+      <result column="SUPERVISIO_AUTHORITY" property="supervisioAuthority" jdbcType="VARCHAR"/>
+      <result column="MAJOR_FEED_BACK" property="majorFeedBack" jdbcType="VARCHAR"/>
+      <result column="MANAGE_ALL_SUB" property="manageAllSub" jdbcType="VARCHAR"/>
+      <result column="EXPERT_REPORT_SUB" property="expertReportSub" jdbcType="VARCHAR"/>
+      <result column="MAJOR_REPORT_SUB" property="majorReportSub" jdbcType="VARCHAR"/>
+      <result column="SUPERVISIO_REPORT_SUB" property="supervisioReportSub" jdbcType="VARCHAR"/>
+      <result column="BASE_MANAGE_SCORE" property="baseManageScore" jdbcType="VARCHAR"/>
+      <result column="BASE_MANAGE_SUBMIT" property="baseManageSubmit" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -94,9 +102,11 @@
     RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, SUBJECT_YEAR, 
     EVALUATION_NUM, AVG_SCORE, DEV_TIME, CLOSED_TIME, SUBJECT_EDIT, DEV_TIME_CLOSE, BASE_CODE, 
     SUBJECT_ACTIVITI_FLOWS, SUPERVISIO_RESULTS, MANAGEMENT_USER_FLOW, MANAGEMENT_USER_NAME, 
-    REQEDIT, SUP_FEEDBACK, SPE_FEEDBACK
+    REQEDIT, SUP_FEEDBACK, SPE_FEEDBACK, SUPERVISIO_AUTHORITY, MAJOR_FEED_BACK, MANAGE_ALL_SUB, 
+    EXPERT_REPORT_SUB, MAJOR_REPORT_SUB, SUPERVISIO_REPORT_SUB, BASE_MANAGE_SCORE, BASE_MANAGE_SUBMIT
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResSupervisioSubjectExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ResSupervisioSubjectExample">
     select
     <if test="distinct" >
       distinct
@@ -135,9 +145,11 @@
       AVG_SCORE, DEV_TIME, CLOSED_TIME, 
       SUBJECT_EDIT, DEV_TIME_CLOSE, BASE_CODE, 
       SUBJECT_ACTIVITI_FLOWS, SUPERVISIO_RESULTS, 
-      MANAGEMENT_USER_FLOW, MANAGEMENT_USER_NAME, 
-      REQEDIT, SUP_FEEDBACK, SPE_FEEDBACK
-      )
+      MANAGEMENT_USER_FLOW, MANAGEMENT_USER_NAME,
+                                          REQEDIT, SUP_FEEDBACK, SPE_FEEDBACK,
+                                          SUPERVISIO_AUTHORITY, MAJOR_FEED_BACK, MANAGE_ALL_SUB,
+                                          EXPERT_REPORT_SUB, MAJOR_REPORT_SUB, SUPERVISIO_REPORT_SUB,
+                                          BASE_MANAGE_SCORE, BASE_MANAGE_SUBMIT)
     values (#{subjectFlow,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, #{openTime,jdbcType=VARCHAR}, 
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, 
       #{speName,jdbcType=VARCHAR}, #{supervisioSummary,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
@@ -146,9 +158,13 @@
       #{avgScore,jdbcType=VARCHAR}, #{devTime,jdbcType=VARCHAR}, #{closedTime,jdbcType=VARCHAR}, 
       #{subjectEdit,jdbcType=VARCHAR}, #{devTimeClose,jdbcType=VARCHAR}, #{baseCode,jdbcType=VARCHAR}, 
       #{subjectActivitiFlows,jdbcType=VARCHAR}, #{supervisioResults,jdbcType=VARCHAR}, 
-      #{managementUserFlow,jdbcType=VARCHAR}, #{managementUserName,jdbcType=VARCHAR}, 
-      #{reqedit,jdbcType=VARCHAR}, #{supFeedback,jdbcType=VARCHAR}, #{speFeedback,jdbcType=VARCHAR}
-      )
+      #{managementUserFlow,jdbcType=VARCHAR}, #{managementUserName,jdbcType=VARCHAR},
+            #{reqedit,jdbcType=VARCHAR}, #{supFeedback,jdbcType=VARCHAR}, #{speFeedback,jdbcType=VARCHAR},
+            #{supervisioAuthority,jdbcType=VARCHAR}, #{majorFeedBack,jdbcType=VARCHAR},
+            #{manageAllSub,jdbcType=VARCHAR},
+            #{expertReportSub,jdbcType=VARCHAR}, #{majorReportSub,jdbcType=VARCHAR},
+            #{supervisioReportSub,jdbcType=VARCHAR},
+            #{baseManageScore,jdbcType=VARCHAR}, #{baseManageSubmit,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResSupervisioSubject" >
       insert into RES_SUPERVISIO_SUBJECT
@@ -237,6 +253,30 @@
       <if test="speFeedback != null" >
         SPE_FEEDBACK,
       </if>
+        <if test="supervisioAuthority != null">
+            SUPERVISIO_AUTHORITY,
+        </if>
+        <if test="majorFeedBack != null">
+            MAJOR_FEED_BACK,
+        </if>
+        <if test="manageAllSub != null">
+            MANAGE_ALL_SUB,
+        </if>
+        <if test="expertReportSub != null">
+            EXPERT_REPORT_SUB,
+        </if>
+        <if test="majorReportSub != null">
+            MAJOR_REPORT_SUB,
+        </if>
+        <if test="supervisioReportSub != null">
+            SUPERVISIO_REPORT_SUB,
+        </if>
+        <if test="baseManageScore != null">
+            BASE_MANAGE_SCORE,
+        </if>
+        <if test="baseManageSubmit != null">
+            BASE_MANAGE_SUBMIT,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="subjectFlow != null" >
@@ -323,6 +363,30 @@
       <if test="speFeedback != null" >
         #{speFeedback,jdbcType=VARCHAR},
       </if>
+        <if test="supervisioAuthority != null">
+            #{supervisioAuthority,jdbcType=VARCHAR},
+        </if>
+        <if test="majorFeedBack != null">
+            #{majorFeedBack,jdbcType=VARCHAR},
+        </if>
+        <if test="manageAllSub != null">
+            #{manageAllSub,jdbcType=VARCHAR},
+        </if>
+        <if test="expertReportSub != null">
+            #{expertReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="majorReportSub != null">
+            #{majorReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="supervisioReportSub != null">
+            #{supervisioReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="baseManageScore != null">
+            #{baseManageScore,jdbcType=VARCHAR},
+        </if>
+        <if test="baseManageSubmit != null">
+            #{baseManageSubmit,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ResSupervisioSubjectExample" resultType="java.lang.Integer" >
@@ -418,6 +482,30 @@
       <if test="record.speFeedback != null" >
         SPE_FEEDBACK = #{record.speFeedback,jdbcType=VARCHAR},
       </if>
+        <if test="record.supervisioAuthority != null">
+            SUPERVISIO_AUTHORITY = #{record.supervisioAuthority,jdbcType=VARCHAR},
+        </if>
+        <if test="record.majorFeedBack != null">
+            MAJOR_FEED_BACK = #{record.majorFeedBack,jdbcType=VARCHAR},
+        </if>
+        <if test="record.manageAllSub != null">
+            MANAGE_ALL_SUB = #{record.manageAllSub,jdbcType=VARCHAR},
+        </if>
+        <if test="record.expertReportSub != null">
+            EXPERT_REPORT_SUB = #{record.expertReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="record.majorReportSub != null">
+            MAJOR_REPORT_SUB = #{record.majorReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="record.supervisioReportSub != null">
+            SUPERVISIO_REPORT_SUB = #{record.supervisioReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="record.baseManageScore != null">
+            BASE_MANAGE_SCORE = #{record.baseManageScore,jdbcType=VARCHAR},
+        </if>
+        <if test="record.baseManageSubmit != null">
+            BASE_MANAGE_SUBMIT = #{record.baseManageSubmit,jdbcType=VARCHAR},
+        </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -452,7 +540,15 @@
       MANAGEMENT_USER_NAME = #{record.managementUserName,jdbcType=VARCHAR},
       REQEDIT = #{record.reqedit,jdbcType=VARCHAR},
       SUP_FEEDBACK = #{record.supFeedback,jdbcType=VARCHAR},
-      SPE_FEEDBACK = #{record.speFeedback,jdbcType=VARCHAR}
+      SPE_FEEDBACK = #{record.speFeedback,jdbcType=VARCHAR},
+      SUPERVISIO_AUTHORITY = #{record.supervisioAuthority,jdbcType=VARCHAR},
+      MAJOR_FEED_BACK = #{record.majorFeedBack,jdbcType=VARCHAR},
+      MANAGE_ALL_SUB = #{record.manageAllSub,jdbcType=VARCHAR},
+      EXPERT_REPORT_SUB = #{record.expertReportSub,jdbcType=VARCHAR},
+      MAJOR_REPORT_SUB = #{record.majorReportSub,jdbcType=VARCHAR},
+      SUPERVISIO_REPORT_SUB = #{record.supervisioReportSub,jdbcType=VARCHAR},
+      BASE_MANAGE_SCORE = #{record.baseManageScore,jdbcType=VARCHAR},
+      BASE_MANAGE_SUBMIT = #{record.baseManageSubmit,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -541,6 +637,30 @@
       <if test="speFeedback != null" >
         SPE_FEEDBACK = #{speFeedback,jdbcType=VARCHAR},
       </if>
+        <if test="supervisioAuthority != null">
+            SUPERVISIO_AUTHORITY = #{supervisioAuthority,jdbcType=VARCHAR},
+        </if>
+        <if test="majorFeedBack != null">
+            MAJOR_FEED_BACK = #{majorFeedBack,jdbcType=VARCHAR},
+        </if>
+        <if test="manageAllSub != null">
+            MANAGE_ALL_SUB = #{manageAllSub,jdbcType=VARCHAR},
+        </if>
+        <if test="expertReportSub != null">
+            EXPERT_REPORT_SUB = #{expertReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="majorReportSub != null">
+            MAJOR_REPORT_SUB = #{majorReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="supervisioReportSub != null">
+            SUPERVISIO_REPORT_SUB = #{supervisioReportSub,jdbcType=VARCHAR},
+        </if>
+        <if test="baseManageScore != null">
+            BASE_MANAGE_SCORE = #{baseManageScore,jdbcType=VARCHAR},
+        </if>
+        <if test="baseManageSubmit != null">
+            BASE_MANAGE_SUBMIT = #{baseManageSubmit,jdbcType=VARCHAR},
+        </if>
     </set>
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </update>
@@ -572,7 +692,15 @@
       MANAGEMENT_USER_NAME = #{managementUserName,jdbcType=VARCHAR},
       REQEDIT = #{reqedit,jdbcType=VARCHAR},
       SUP_FEEDBACK = #{supFeedback,jdbcType=VARCHAR},
-      SPE_FEEDBACK = #{speFeedback,jdbcType=VARCHAR}
+        SPE_FEEDBACK          = #{speFeedback,jdbcType=VARCHAR},
+        SUPERVISIO_AUTHORITY  = #{supervisioAuthority,jdbcType=VARCHAR},
+        MAJOR_FEED_BACK       = #{majorFeedBack,jdbcType=VARCHAR},
+        MANAGE_ALL_SUB        = #{manageAllSub,jdbcType=VARCHAR},
+        EXPERT_REPORT_SUB     = #{expertReportSub,jdbcType=VARCHAR},
+        MAJOR_REPORT_SUB      = #{majorReportSub,jdbcType=VARCHAR},
+        SUPERVISIO_REPORT_SUB = #{supervisioReportSub,jdbcType=VARCHAR},
+        BASE_MANAGE_SCORE     = #{baseManageScore,jdbcType=VARCHAR},
+        BASE_MANAGE_SUBMIT    = #{baseManageSubmit,jdbcType=VARCHAR}
     where SUBJECT_FLOW = #{subjectFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

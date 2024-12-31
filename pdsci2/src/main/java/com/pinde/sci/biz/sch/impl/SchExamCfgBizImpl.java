@@ -3,6 +3,7 @@ package com.pinde.sci.biz.sch.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.HttpClientUtil;
 import com.pinde.core.util.PkUtil;
@@ -11,8 +12,6 @@ import com.pinde.core.vo.sch.SchExamArrangementVO;
 import com.pinde.sci.biz.sch.ISchExamCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
-import com.pinde.sci.dao.sch.SchExamArrangementExtMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,9 +20,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -49,19 +46,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 	@Autowired
-	private  SchExamArrangementMapper schExamArrangementMapper;
+	private SchExamArrangementMapper schExamArrangementMapper;
 	@Autowired
 	private  SchExamDoctorArrangementMapper doctorArrangementMapper;
 	@Autowired
-	private  ResDoctorGraduationExamMapper graduationExamMapper;
+	private ResDoctorGraduationExamMapper graduationExamMapper;
 	@Autowired
 	private SchExamArrangementExtMapper schExamArrangementExtMapper;
 	@Autowired
-	private  SchExamStandardDeptMapper deptMapper;
+	private SchExamStandardDeptMapper deptMapper;
 	@Autowired
-	private  SysDeptMapper sysDeptMapper;
+	private SysDeptMapper sysDeptMapper;
 	@Autowired
-	private  SchDeptMapper schDeptMapper;
+	private SchDeptMapper schDeptMapper;
 
 	private static final String HTTP_STATUS_OK = "200";
 

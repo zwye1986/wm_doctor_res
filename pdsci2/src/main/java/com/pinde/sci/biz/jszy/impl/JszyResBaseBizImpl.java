@@ -3,6 +3,8 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.sci.dao.AttachedUnitInfoMapper;
 import com.pinde.core.common.sci.dao.CountryOrgInfoMapper;
+import com.pinde.core.common.sci.dao.ResBaseMapper;
+import com.pinde.core.common.sci.dao.ResPassScoreCfgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jszy.IJszyResBaseBiz;
@@ -11,16 +13,11 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResBaseMapper;
-import com.pinde.sci.dao.base.ResOrgSpeMapper;
-import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
 import com.pinde.sci.dao.jszy.JszyResBaseExtMapper;
 import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
 import com.pinde.sci.model.jszy.JszyResBaseExt;
-import com.pinde.core.model.ResPassScoreCfg;
-import com.pinde.core.model.ResPassScoreCfgExample;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -49,8 +46,6 @@ public class JszyResBaseBizImpl implements IJszyResBaseBiz {
 	private IOrgBiz orgBiz;
 	@Autowired
 	private ResBaseMapper resBaseMapper;
-	@Autowired
-	private ResOrgSpeMapper resOrgSpeMapper;
 	@Autowired
 	private JszyResBaseExtMapper resBaseExtMapper;
 	@Autowired

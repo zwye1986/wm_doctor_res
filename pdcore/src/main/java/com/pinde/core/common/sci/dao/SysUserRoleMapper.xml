@@ -82,7 +82,7 @@
     <if test="distinct" >
       distinct
     </if>
-    *
+      <include refid="Base_Column_List"/>
       from SYS_USER_ROLE
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -320,4 +320,62 @@
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
+
+    <insert id="batchInsert" parameterType="com.pinde.core.model.SysUserRole">
+        INSERT ALL
+        <foreach collection="userRoleList" item="userRole" separator=" ">
+            into SYS_USER_ROLE (RECORD_FLOW, USER_FLOW, ORG_FLOW,
+            WS_ID, ROLE_FLOW, AUTH_TIME,
+            AUTH_USER_FLOW, RECORD_STATUS, CREATE_TIME,
+            CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+            )
+            values (#{userRole.recordFlow,jdbcType=VARCHAR}, #{userRole.userFlow,jdbcType=VARCHAR},
+            #{userRole.orgFlow,jdbcType=VARCHAR},
+            #{userRole.wsId,jdbcType=VARCHAR}, #{userRole.roleFlow,jdbcType=VARCHAR},
+            #{userRole.authTime,jdbcType=VARCHAR},
+            #{userRole.authUserFlow,jdbcType=VARCHAR}, #{userRole.recordStatus,jdbcType=VARCHAR},
+            #{userRole.createTime,jdbcType=VARCHAR},
+            #{userRole.createUserFlow,jdbcType=VARCHAR}, #{userRole.modifyTime,jdbcType=VARCHAR},
+            #{userRole.modifyUserFlow,jdbcType=VARCHAR}
+            )
+        </foreach>
+        select 1 from dual
+    </insert>
+
+    <update id="batchUpdateSelective" parameterType="com.pinde.core.model.SysUserRole">
+        <foreach collection="userRoleList" separator=";" open="begin" close=";end;" item="userRole">
+            update SYS_USER_ROLE
+            <set>
+                <if test="userRole.userFlow != null">
+                    USER_FLOW = #{userRole.userFlow,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.orgFlow != null">
+                    ORG_FLOW = #{userRole.orgFlow,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.recordStatus != null">
+                    RECORD_STATUS = #{userRole.recordStatus,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.wsId != null">
+                    WS_ID = #{userRole.wsId,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.roleFlow != null">
+                    ROLE_FLOW = #{userRole.roleFlow,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.authTime != null">
+                    AUTH_TIME = #{userRole.authTime,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.authUserFlow != null">
+                    AUTH_USER_FLOW = #{userRole.authUserFlow,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.modifyTime != null">
+                    MODIFY_TIME = #{userRole.modifyTime,jdbcType=VARCHAR},
+                </if>
+                <if test="userRole.modifyUserFlow != null">
+                    MODIFY_USER_FLOW = #{userRole.modifyUserFlow,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where record_status = 'Y'
+            and RECORD_FLOW = #{userRole.recordFlow,jdbcType=VARCHAR}
+        </foreach>
+    </update>
 </mapper>

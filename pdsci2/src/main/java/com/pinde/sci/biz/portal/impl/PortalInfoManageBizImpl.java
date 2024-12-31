@@ -11,7 +11,6 @@ import com.pinde.sci.biz.portal.IPortalColumnManageBiz;
 import com.pinde.sci.biz.portal.IPortalInfoManageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.portal.PortalInfoExtMapper;
 import com.pinde.sci.form.portal.PortalInfoForm;
 import com.pinde.sci.model.portal.PortalInfoExt;

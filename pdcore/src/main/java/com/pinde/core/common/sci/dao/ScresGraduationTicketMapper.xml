@@ -27,6 +27,8 @@
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
     <result column="USER_IMG" property="userImg" jdbcType="VARCHAR" />
+      <result column="THEORY_ORG_NAME" property="theoryOrgName" jdbcType="VARCHAR"/>
+      <result column="THEORY_ORG_ADDRESS" property="theoryOrgAddress" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -91,9 +93,10 @@
     ID_NO, THEORY_EXAM_DATE, THEORY_EXAM_TIME1, THEORY_EXAM_TIME1_BARCH, THEORY_EXAM_TIME2, 
     THEORY_EXAM_TIME2_BARCH, SKILL_EXAM_DATE, SKILL_EXAM_TIME1, SKILL_EXAM_TIME1_BARCH, 
     SKILL_EXAM_TIME2, SKILL_EXAM_TIME2_BARCH, ORG_NAME, ORG_ADDRESS, RECORD_STATUS, CREATE_TIME, 
-    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, USER_IMG
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, USER_IMG, THEORY_ORG_NAME, THEORY_ORG_ADDRESS
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ScresGraduationTicketExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ScresGraduationTicketExample">
     select
     <if test="distinct" >
       distinct
@@ -131,8 +134,9 @@
       THEORY_EXAM_TIME2_BARCH, SKILL_EXAM_DATE, SKILL_EXAM_TIME1, 
       SKILL_EXAM_TIME1_BARCH, SKILL_EXAM_TIME2, SKILL_EXAM_TIME2_BARCH, 
       ORG_NAME, ORG_ADDRESS, RECORD_STATUS, 
-      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
-      MODIFY_USER_FLOW, USER_IMG)
+      CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+                                           MODIFY_USER_FLOW, USER_IMG, THEORY_ORG_NAME,
+                                           THEORY_ORG_ADDRESS)
     values (#{recordFlow,jdbcType=VARCHAR}, #{applyFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
       #{doctorFlow,jdbcType=VARCHAR}, #{graduationYear,jdbcType=VARCHAR}, #{ticketNumber,jdbcType=VARCHAR}, 
       #{idNo,jdbcType=VARCHAR}, #{theoryExamDate,jdbcType=VARCHAR}, #{theoryExamTime1,jdbcType=VARCHAR}, 
@@ -140,8 +144,9 @@
       #{theoryExamTime2Barch,jdbcType=VARCHAR}, #{skillExamDate,jdbcType=VARCHAR}, #{skillExamTime1,jdbcType=VARCHAR}, 
       #{skillExamTime1Barch,jdbcType=VARCHAR}, #{skillExamTime2,jdbcType=VARCHAR}, #{skillExamTime2Barch,jdbcType=VARCHAR}, 
       #{orgName,jdbcType=VARCHAR}, #{orgAddress,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, 
-      #{modifyUserFlow,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR})
+      #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR},
+            #{modifyUserFlow,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR}, #{theoryOrgName,jdbcType=VARCHAR},
+            #{theoryOrgAddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ScresGraduationTicket" >
       insert into SCRES_GRADUATION_TICKET
@@ -221,6 +226,12 @@
       <if test="userImg != null" >
         USER_IMG,
       </if>
+        <if test="theoryOrgName != null">
+            THEORY_ORG_NAME,
+        </if>
+        <if test="theoryOrgAddress != null">
+            THEORY_ORG_ADDRESS,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -298,6 +309,12 @@
       <if test="userImg != null" >
         #{userImg,jdbcType=VARCHAR},
       </if>
+        <if test="theoryOrgName != null">
+            #{theoryOrgName,jdbcType=VARCHAR},
+        </if>
+        <if test="theoryOrgAddress != null">
+            #{theoryOrgAddress,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ScresGraduationTicketExample" resultType="java.lang.Integer" >
@@ -384,6 +401,12 @@
       <if test="record.userImg != null" >
         USER_IMG = #{record.userImg,jdbcType=VARCHAR},
       </if>
+        <if test="record.theoryOrgName != null">
+            THEORY_ORG_NAME = #{record.theoryOrgName,jdbcType=VARCHAR},
+        </if>
+        <if test="record.theoryOrgAddress != null">
+            THEORY_ORG_ADDRESS = #{record.theoryOrgAddress,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -415,7 +438,9 @@
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
       MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
-      USER_IMG = #{record.userImg,jdbcType=VARCHAR}
+      USER_IMG = #{record.userImg,jdbcType=VARCHAR},
+      THEORY_ORG_NAME = #{record.theoryOrgName,jdbcType=VARCHAR},
+      THEORY_ORG_ADDRESS = #{record.theoryOrgAddress,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -495,6 +520,12 @@
       <if test="userImg != null" >
         USER_IMG = #{userImg,jdbcType=VARCHAR},
       </if>
+        <if test="theoryOrgName != null">
+            THEORY_ORG_NAME = #{theoryOrgName,jdbcType=VARCHAR},
+        </if>
+        <if test="theoryOrgAddress != null">
+            THEORY_ORG_ADDRESS = #{theoryOrgAddress,jdbcType=VARCHAR},
+        </if>
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
@@ -523,7 +554,9 @@
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
       MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
-      USER_IMG = #{userImg,jdbcType=VARCHAR}
+        USER_IMG           = #{userImg,jdbcType=VARCHAR},
+        THEORY_ORG_NAME    = #{theoryOrgName,jdbcType=VARCHAR},
+        THEORY_ORG_ADDRESS = #{theoryOrgAddress,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

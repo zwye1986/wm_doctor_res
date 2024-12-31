@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.jsres;
 
 import com.pinde.core.model.TeachingActivityTarget;
-import com.pinde.sci.form.res.ActivityTargetForm;
+import com.pinde.core.model.ActivityTargetForm;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

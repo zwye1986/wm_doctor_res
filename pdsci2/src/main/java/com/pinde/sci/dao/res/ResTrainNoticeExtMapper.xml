@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResTrainNoticeExtMapper" >
 
-	<select id="searchByTitleOrgFlowAndSchool" resultMap="com.pinde.sci.dao.base.ResTarinNoticeMapper.BaseResultMap">
+    <select id="searchByTitleOrgFlowAndSchool"
+            resultMap="com.pinde.core.common.sci.dao.ResTarinNoticeMapper.BaseResultMap">
 		SELECT * FROM (
 		SELECT *
         FROM RES_TARIN_NOTICE
@@ -46,7 +47,7 @@
 		ORDER BY CREATE_TIME DESC
 	</select>
 
-	<select id="searchNotices4University" resultMap="com.pinde.sci.dao.base.ResTarinNoticeMapper.BaseResultMap">
+    <select id="searchNotices4University" resultMap="com.pinde.core.common.sci.dao.ResTarinNoticeMapper.BaseResultMap">
 		SELECT rtn.*
 		FROM RES_TARIN_NOTICE rtn
 		WHERE rtn.RECORD_STATUS = 'Y'

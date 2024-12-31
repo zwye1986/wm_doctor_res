@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.sci.dao.SysRoleMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.JaxbUtil;
@@ -16,10 +16,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResBaseMapper;
-import com.pinde.sci.dao.base.ResOrgSpeMapper;
-import com.pinde.sci.dao.base.ResPassScoreCfgMapper;
-import com.pinde.sci.dao.base.SysUserRoleMapper;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.form.jsres.*;
 import com.pinde.sci.model.jsres.ResBaseExt;
@@ -51,8 +47,6 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 	private IOrgBiz orgBiz;
 	@Autowired
 	private ResBaseMapper resBaseMapper;
-	@Autowired
-	private ResOrgSpeMapper resOrgSpeMapper;
 	@Autowired
 	private ResBaseExtMapper resBaseExtMapper;
 	@Autowired

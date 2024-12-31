@@ -1,18 +1,14 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResEvaluationCfgMapper;
+import com.pinde.core.common.sci.dao.ResEvaluationDeptExtMapper;
+import com.pinde.core.common.sci.dao.ResEvaluationDeptMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResEvaluationCfgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.ResEvaluationCfgMapper;
-import com.pinde.sci.dao.base.ResEvaluationDeptExtMapper;
-import com.pinde.sci.dao.base.ResEvaluationDeptMapper;
-import com.pinde.sci.form.res.ResEvaluationCfgForm;
-import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
-import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
-import com.pinde.sci.form.res.ResEvaluationDeptExt;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

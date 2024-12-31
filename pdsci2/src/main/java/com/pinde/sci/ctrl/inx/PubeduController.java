@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.inx;
 
 import com.pinde.core.common.enums.sys.OperTypeEnum;
+import com.pinde.core.common.sci.dao.SysLogMapper;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.SysLog;
 import com.pinde.core.model.SysUser;
@@ -16,7 +17,6 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.SessionData;
-import com.pinde.sci.dao.base.SysLogMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

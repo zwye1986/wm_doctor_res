@@ -1,13 +1,13 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResOrgAddressMapper;
 import com.pinde.core.model.ResOrgAddress;
 import com.pinde.core.model.ResOrgAddressExample;
+import com.pinde.core.model.ResOrgAddressForm;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResOrgAddressBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResOrgAddressMapper;
-import com.pinde.sci.form.res.ResOrgAddressForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

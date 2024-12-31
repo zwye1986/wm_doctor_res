@@ -393,7 +393,25 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+
+
+    <select id="getMonthlyDoctorInfo2" resultMap="BaseResultMap">
+        SELECT SMDI_FLOW, SESSION_NUMBER,TRAINING_SPE_ID, TRAINING_SPE_NAME
+        , CHANGE_TYPE_ID, CHANGE_TYPE_NAME
+        FROM SYS_MONTHLY_DOCTOR_INFO
+        <if test="dateMonth!=null and dateMonth!=''">
+            WHERE DATE_MONTH = #{dateMonth}
+        </if>
+        <if test="changeTypeId!=null and changeTypeId!=''">
+            AND CHANGE_TYPE_ID = #{changeTypeId}
+        </if>
+        <if test="doctorStatusId!=null and doctorStatusId!=''">
+            AND DOCTOR_STATUS_ID = #{doctorStatusId}
+        </if>
+        AND RECORD_STATUS = 'Y'
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
       update SYS_MONTHLY_DOCTOR_INFO
     <set >
       <if test="record.smdiFlow != null" >

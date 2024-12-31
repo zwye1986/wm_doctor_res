@@ -5,18 +5,19 @@ import cn.hutool.core.util.ObjectUtil;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchSelTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
+import com.pinde.core.common.sci.dao.ResOrgRotationCfgMapper;
+import com.pinde.core.common.sci.dao.SchRotationGroupMapper;
+import com.pinde.core.common.sci.dao.SchRotationMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.SchRotationExample.Criteria;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResRotationOrgBiz;
 import com.pinde.sci.biz.sch.*;
 import com.pinde.sci.biz.sys.ICfgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.sch.SchRotationExtMapper;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,19 +52,9 @@ public class SchRotationBizImpl implements ISchRotationBiz {
 	@Autowired
 	private IOrgBiz orgBiz;
 	@Autowired
-	private SchRotationDeptMapper schRotationDeptMapper;
-	@Autowired
-	private SchRotationDeptReqMapper schRotationDeptReqMapper;
-	@Autowired
-	private SysDictMapper sysDictMapper;
-	@Autowired
-	private IResDoctorBiz doctorBiz;
-	@Autowired
 	private IUserBiz userBiz;
 	@Autowired
 	private ResOrgRotationCfgMapper rotationCfgMapper;
-
-
 	@Override
 	public List<SchRotation> searchSchRotation() {
 		SchRotationExample example = new SchRotationExample();

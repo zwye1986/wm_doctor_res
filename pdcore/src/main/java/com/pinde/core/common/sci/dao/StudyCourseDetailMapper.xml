@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.core.common.sci.dao.StudyCourseDetailMapper">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.StudyCourseDetail">
+    <id column="DETAIL_FLOW" jdbcType="VARCHAR" property="detailFlow" />
+    <result column="COURSE_FLOW" jdbcType="VARCHAR" property="courseFlow" />
+    <result column="DETAIL_TYPE_ID" jdbcType="VARCHAR" property="detailTypeId" />
+    <result column="DETAIL_TYPE_NAME" jdbcType="VARCHAR" property="detailTypeName" />
+    <result column="DETAIL_NAME" jdbcType="VARCHAR" property="detailName" />
+    <result column="DETAIL_URL" jdbcType="VARCHAR" property="detailUrl" />
+    <result column="PAGER_NUMBER" jdbcType="DECIMAL" property="pagerNumber" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_USER_FLOW" jdbcType="VARCHAR" property="createUserFlow" />
+    <result column="MODIFY_TIME" jdbcType="VARCHAR" property="modifyTime" />
+    <result column="MODIFY_USER_FLOW" jdbcType="VARCHAR" property="modifyUserFlow" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    DETAIL_FLOW, COURSE_FLOW, DETAIL_TYPE_ID, DETAIL_TYPE_NAME, DETAIL_NAME, DETAIL_URL, 
+    PAGER_NUMBER, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+    <select id="selectByExample" parameterType="com.pinde.core.model.StudyCourseDetailExample"
+            resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from STUDY_COURSE_DETAIL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+      from STUDY_COURSE_DETAIL
+    where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete from STUDY_COURSE_DETAIL
+    where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.StudyCourseDetailExample">
+      delete from STUDY_COURSE_DETAIL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+    <insert id="insert" parameterType="com.pinde.core.model.StudyCourseDetail">
+      insert into STUDY_COURSE_DETAIL (DETAIL_FLOW, COURSE_FLOW, DETAIL_TYPE_ID,
+      DETAIL_TYPE_NAME, DETAIL_NAME, DETAIL_URL, 
+      PAGER_NUMBER, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{detailFlow,jdbcType=VARCHAR}, #{courseFlow,jdbcType=VARCHAR}, #{detailTypeId,jdbcType=VARCHAR}, 
+      #{detailTypeName,jdbcType=VARCHAR}, #{detailName,jdbcType=VARCHAR}, #{detailUrl,jdbcType=VARCHAR}, 
+      #{pagerNumber,jdbcType=DECIMAL}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pinde.core.model.StudyCourseDetail">
+      insert into STUDY_COURSE_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailFlow != null">
+        DETAIL_FLOW,
+      </if>
+      <if test="courseFlow != null">
+        COURSE_FLOW,
+      </if>
+      <if test="detailTypeId != null">
+        DETAIL_TYPE_ID,
+      </if>
+      <if test="detailTypeName != null">
+        DETAIL_TYPE_NAME,
+      </if>
+      <if test="detailName != null">
+        DETAIL_NAME,
+      </if>
+      <if test="detailUrl != null">
+        DETAIL_URL,
+      </if>
+      <if test="pagerNumber != null">
+        PAGER_NUMBER,
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="detailFlow != null">
+        #{detailFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="courseFlow != null">
+        #{courseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="detailTypeId != null">
+        #{detailTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="detailTypeName != null">
+        #{detailTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailName != null">
+        #{detailName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrl != null">
+        #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pagerNumber != null">
+        #{pagerNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.pinde.core.model.StudyCourseDetailExample"
+            resultType="java.lang.Integer">
+      select count(*) from STUDY_COURSE_DETAIL
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+      update STUDY_COURSE_DETAIL
+    <set>
+      <if test="record.detailFlow != null">
+        DETAIL_FLOW = #{record.detailFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseFlow != null">
+        COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailTypeId != null">
+        DETAIL_TYPE_ID = #{record.detailTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailTypeName != null">
+        DETAIL_TYPE_NAME = #{record.detailTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailName != null">
+        DETAIL_NAME = #{record.detailName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.detailUrl != null">
+        DETAIL_URL = #{record.detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pagerNumber != null">
+        PAGER_NUMBER = #{record.pagerNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recordStatus != null">
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null">
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+      update STUDY_COURSE_DETAIL
+    set DETAIL_FLOW = #{record.detailFlow,jdbcType=VARCHAR},
+      COURSE_FLOW = #{record.courseFlow,jdbcType=VARCHAR},
+      DETAIL_TYPE_ID = #{record.detailTypeId,jdbcType=VARCHAR},
+      DETAIL_TYPE_NAME = #{record.detailTypeName,jdbcType=VARCHAR},
+      DETAIL_NAME = #{record.detailName,jdbcType=VARCHAR},
+      DETAIL_URL = #{record.detailUrl,jdbcType=VARCHAR},
+      PAGER_NUMBER = #{record.pagerNumber,jdbcType=DECIMAL},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.StudyCourseDetail">
+      update STUDY_COURSE_DETAIL
+    <set>
+      <if test="courseFlow != null">
+        COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="detailTypeId != null">
+        DETAIL_TYPE_ID = #{detailTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="detailTypeName != null">
+        DETAIL_TYPE_NAME = #{detailTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailName != null">
+        DETAIL_NAME = #{detailName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailUrl != null">
+        DETAIL_URL = #{detailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pagerNumber != null">
+        PAGER_NUMBER = #{pagerNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="recordStatus != null">
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null">
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null">
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.StudyCourseDetail">
+      update STUDY_COURSE_DETAIL
+    set COURSE_FLOW = #{courseFlow,jdbcType=VARCHAR},
+      DETAIL_TYPE_ID = #{detailTypeId,jdbcType=VARCHAR},
+      DETAIL_TYPE_NAME = #{detailTypeName,jdbcType=VARCHAR},
+      DETAIL_NAME = #{detailName,jdbcType=VARCHAR},
+      DETAIL_URL = #{detailUrl,jdbcType=VARCHAR},
+      PAGER_NUMBER = #{pagerNumber,jdbcType=DECIMAL},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where DETAIL_FLOW = #{detailFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

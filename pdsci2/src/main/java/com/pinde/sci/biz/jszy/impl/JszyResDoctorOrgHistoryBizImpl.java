@@ -3,6 +3,7 @@ package com.pinde.sci.biz.jszy.impl;
 
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
+import com.pinde.core.common.sci.dao.ResDoctorOrgHistoryMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.ResDoctorOrgHistoryExample.Criteria;
 import com.pinde.core.util.DateUtil;
@@ -19,7 +20,6 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.jszy.JszyResDoctorOrgHistoryExtMapper;
 import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
 import org.springframework.beans.factory.annotation.Autowired;

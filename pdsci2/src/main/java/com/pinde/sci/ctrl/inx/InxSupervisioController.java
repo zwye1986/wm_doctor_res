@@ -5,6 +5,7 @@ import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.common.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.sci.dao.SysLogMapper;
 import com.pinde.core.model.InxInfo;
 import com.pinde.core.model.SysLog;
 import com.pinde.core.model.SysSupervisioUser;
@@ -13,15 +14,11 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.inx.INoticeBiz;
 import com.pinde.sci.biz.jsres.ISysSupervisioUserBiz;
-import com.pinde.sci.biz.sys.IRoleBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
-import com.pinde.sci.biz.sys.IUserRoleBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.RSAUtils;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.dao.base.SysLogMapper;
 import org.bouncycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,12 +39,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/inx/supervisio")
 public class InxSupervisioController extends GeneralController {
-    @Autowired
-    private IUserBiz userBiz;
-    @Autowired
-    private IUserRoleBiz userRoleBiz;
-    @Autowired
-    private IRoleBiz roleBiz;
     @Autowired
     private SysLogMapper logMapper;
     @Autowired

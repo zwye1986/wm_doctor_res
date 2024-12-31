@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.common.sci.dao.ResAnnualAssessmentMapper;
 import com.pinde.core.model.ResAnnualAssessment;
 import com.pinde.core.model.ResAnnualAssessmentExample;
 import com.pinde.core.model.ResAnnualAssessmentWithBLOBs;
@@ -11,7 +12,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IAnnualAssessmentBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.ResAnnualAssessmentMapper;
 import com.pinde.sci.dao.res.AnnualAssessmentExtMapper;
 import com.pinde.sci.model.res.AnnualAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;

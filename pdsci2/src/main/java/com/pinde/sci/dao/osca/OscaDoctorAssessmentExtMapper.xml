@@ -123,7 +123,7 @@
 		<result column="STATION_SCORE" property="stationScore" javaType="java.lang.String"/>
 		<result column="DOC_ROOM_FLOW" property="docRoomFlow" javaType="java.lang.String"/>
 	</resultMap>
-	<select id="findStationFiles"  resultMap="com.pinde.sci.dao.base.PubFileMapper.BaseResultMap">
+    <select id="findStationFiles" resultMap="com.pinde.core.common.sci.dao.PubFileMapper.BaseResultMap">
 		SELECT *
 	  FROM PUB_FILE F
 	 WHERE RECORD_STATUS = 'Y'
@@ -135,7 +135,7 @@
 			   AND OSSF.ORG_FLOW = #{orgFlow})
 		order by F.CREATE_TIME ASC
 	</select>
-	<select id="findClinicalStationFiles"  resultMap="com.pinde.sci.dao.base.PubFileMapper.BaseResultMap">
+    <select id="findClinicalStationFiles" resultMap="com.pinde.core.common.sci.dao.PubFileMapper.BaseResultMap">
 		SELECT *
 	  FROM PUB_FILE F
 	 WHERE RECORD_STATUS = 'Y'

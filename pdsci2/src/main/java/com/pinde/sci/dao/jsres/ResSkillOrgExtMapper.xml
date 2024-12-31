@@ -35,8 +35,9 @@
         </foreach>
         SELECT 1 FROM DUAL
     </insert>
-    
-    <select id="searchSkillConfig" parameterType="string" resultMap="com.pinde.sci.dao.base.ResSkillConfigMapper.BaseResultMap">
+
+    <select id="searchSkillConfig" parameterType="string"
+            resultMap="com.pinde.core.common.sci.dao.ResSkillConfigMapper.BaseResultMap">
         select * from res_skill_config
         where record_status = 'Y'
         <if test="skillFlow!=null and skillFlow!=''">

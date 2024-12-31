@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.DiscipleStatusEnum;
+import com.pinde.core.common.sci.dao.ResDiscipleRecordInfoMapper;
+import com.pinde.core.common.sci.dao.ResStudentDiscipleTeacherMapper;
 import com.pinde.core.model.ResDiscipleRecordInfo;
 import com.pinde.core.model.ResDiscipleRecordInfoExample;
 import com.pinde.core.model.ResStudentDiscipleTeacher;
@@ -9,8 +11,6 @@ import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResFolowTeacherRecordBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResDiscipleRecordInfoMapper;
-import com.pinde.sci.dao.base.ResStudentDiscipleTeacherMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;

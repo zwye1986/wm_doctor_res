@@ -1,17 +1,16 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResLectureEvaDetailExtMapper;
+import com.pinde.core.common.sci.dao.ResLectureInfoMapper;
+import com.pinde.core.common.sci.dao.ResLectureInfoRoleMapper;
+import com.pinde.core.common.sci.dao.ResLectureScanRegistMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResLectureInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResLectureInfoMapper;
-import com.pinde.sci.dao.base.ResLectureInfoRoleMapper;
-import com.pinde.sci.dao.base.ResLectureScanRegistMapper;
 import com.pinde.sci.dao.res.LectureInfoTargetExtMapper;
-import com.pinde.sci.dao.res.ResLectureEvaDetailExtMapper;
 import com.pinde.sci.dao.res.ResLectureInfoExtMapper;
-import com.pinde.sci.model.jsres.ParticipateInfoExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

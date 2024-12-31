@@ -33,6 +33,7 @@
     <result column="XT_ORG_REMARK" property="xtOrgRemark" jdbcType="VARCHAR" />
     <result column="ORG_REMARK" property="orgRemark" jdbcType="VARCHAR" />
     <result column="CHARGE_REMARK" property="chargeRemark" jdbcType="VARCHAR" />
+      <result column="ORG_AUDITOR_NAME" property="orgAuditorName" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -98,9 +99,10 @@
     DOCTOR_LICENSE_NO, REMARK, GRADUATION_YEAR, XT_ORG_STATUS_ID, XT_ORG_STATUS_NAME, 
     ORG_STATUS_ID, ORG_STATUS_NAME, CHARGE_STATUS_ID, CHARGE_STATUS_NAME, RECORD_STATUS, 
     CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME, 
-    XT_ORG_REMARK, ORG_REMARK, CHARGE_REMARK
+    XT_ORG_REMARK, ORG_REMARK, CHARGE_REMARK, ORG_AUDITOR_NAME
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ScresGraduationApplyExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.ScresGraduationApplyExample">
     select
     <if test="distinct" >
       distinct
@@ -140,8 +142,8 @@
       ORG_STATUS_NAME, CHARGE_STATUS_ID, CHARGE_STATUS_NAME, 
       RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
       MODIFY_TIME, MODIFY_USER_FLOW, DOCTOR_STATUS_ID, 
-      DOCTOR_STATUS_NAME, XT_ORG_REMARK, ORG_REMARK, 
-      CHARGE_REMARK)
+      DOCTOR_STATUS_NAME, XT_ORG_REMARK, ORG_REMARK,
+                                          CHARGE_REMARK, ORG_AUDITOR_NAME)
     values (#{recordFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, 
       #{idNo,jdbcType=VARCHAR}, #{educationId,jdbcType=VARCHAR}, #{educationName,jdbcType=VARCHAR}, 
       #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, 
@@ -151,8 +153,8 @@
       #{orgStatusName,jdbcType=VARCHAR}, #{chargeStatusId,jdbcType=VARCHAR}, #{chargeStatusName,jdbcType=VARCHAR}, 
       #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{doctorStatusId,jdbcType=VARCHAR}, 
-      #{doctorStatusName,jdbcType=VARCHAR}, #{xtOrgRemark,jdbcType=VARCHAR}, #{orgRemark,jdbcType=VARCHAR}, 
-      #{chargeRemark,jdbcType=VARCHAR})
+      #{doctorStatusName,jdbcType=VARCHAR}, #{xtOrgRemark,jdbcType=VARCHAR}, #{orgRemark,jdbcType=VARCHAR},
+            #{chargeRemark,jdbcType=VARCHAR}, #{orgAuditorName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ScresGraduationApply" >
       insert into SCRES_GRADUATION_APPLY
@@ -250,6 +252,9 @@
       <if test="chargeRemark != null" >
         CHARGE_REMARK,
       </if>
+        <if test="orgAuditorName != null">
+            ORG_AUDITOR_NAME,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -345,6 +350,9 @@
       <if test="chargeRemark != null" >
         #{chargeRemark,jdbcType=VARCHAR},
       </if>
+        <if test="orgAuditorName != null">
+            #{orgAuditorName,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.ScresGraduationApplyExample" resultType="java.lang.Integer" >
@@ -449,6 +457,9 @@
       <if test="record.chargeRemark != null" >
         CHARGE_REMARK = #{record.chargeRemark,jdbcType=VARCHAR},
       </if>
+        <if test="record.orgAuditorName != null">
+            ORG_AUDITOR_NAME = #{record.orgAuditorName,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -486,7 +497,8 @@
       DOCTOR_STATUS_NAME = #{record.doctorStatusName,jdbcType=VARCHAR},
       XT_ORG_REMARK = #{record.xtOrgRemark,jdbcType=VARCHAR},
       ORG_REMARK = #{record.orgRemark,jdbcType=VARCHAR},
-      CHARGE_REMARK = #{record.chargeRemark,jdbcType=VARCHAR}
+      CHARGE_REMARK = #{record.chargeRemark,jdbcType=VARCHAR},
+      ORG_AUDITOR_NAME = #{record.orgAuditorName,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -584,6 +596,9 @@
       <if test="chargeRemark != null" >
         CHARGE_REMARK = #{chargeRemark,jdbcType=VARCHAR},
       </if>
+        <if test="orgAuditorName != null">
+            ORG_AUDITOR_NAME = #{orgAuditorName,jdbcType=VARCHAR},
+        </if>
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
@@ -618,7 +633,8 @@
       DOCTOR_STATUS_NAME = #{doctorStatusName,jdbcType=VARCHAR},
       XT_ORG_REMARK = #{xtOrgRemark,jdbcType=VARCHAR},
       ORG_REMARK = #{orgRemark,jdbcType=VARCHAR},
-      CHARGE_REMARK = #{chargeRemark,jdbcType=VARCHAR}
+        CHARGE_REMARK    = #{chargeRemark,jdbcType=VARCHAR},
+        ORG_AUDITOR_NAME = #{orgAuditorName,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.ResSkillConfigMapper">
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResSkillConfig">
+    <id column="SKILL_FLOW" property="skillFlow" jdbcType="VARCHAR" />
+    <result column="SKILL_TIME_FLOW" property="skillTimeFlow" jdbcType="VARCHAR" />
+    <result column="TEST_ID" property="testId" jdbcType="VARCHAR" />
+    <result column="TEST_NAME" property="testName" jdbcType="VARCHAR" />
+    <result column="SKILL_START_TIME" property="skillStartTime" jdbcType="VARCHAR" />
+    <result column="SKILL_END_TIME" property="skillEndTime" jdbcType="VARCHAR" />
+    <result column="APPOINT_START_TIME" property="appointStartTime" jdbcType="VARCHAR" />
+    <result column="APPOINT_END_TIME" property="appointEndTime" jdbcType="VARCHAR" />
+    <result column="SKILL_WAY" property="skillWay" jdbcType="VARCHAR" />
+    <result column="CITY_ID" property="cityId" jdbcType="VARCHAR" />
+    <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SKILL_FLOW, SKILL_TIME_FLOW, TEST_ID, TEST_NAME, SKILL_START_TIME, SKILL_END_TIME, 
+    APPOINT_START_TIME, APPOINT_END_TIME, SKILL_WAY, CITY_ID, RECORD_STATUS, CREATE_TIME, 
+    CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResSkillConfigExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+      from RES_SKILL_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+      from RES_SKILL_CONFIG
+    where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+      delete from RES_SKILL_CONFIG
+    where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.pinde.core.model.ResSkillConfigExample">
+      delete from RES_SKILL_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+    <insert id="insert" parameterType="com.pinde.core.model.ResSkillConfig">
+      insert into RES_SKILL_CONFIG (SKILL_FLOW, SKILL_TIME_FLOW, TEST_ID,
+      TEST_NAME, SKILL_START_TIME, SKILL_END_TIME, 
+      APPOINT_START_TIME, APPOINT_END_TIME, SKILL_WAY, 
+      CITY_ID, RECORD_STATUS, CREATE_TIME, 
+      CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+      )
+    values (#{skillFlow,jdbcType=VARCHAR}, #{skillTimeFlow,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR}, 
+      #{testName,jdbcType=VARCHAR}, #{skillStartTime,jdbcType=VARCHAR}, #{skillEndTime,jdbcType=VARCHAR}, 
+      #{appointStartTime,jdbcType=VARCHAR}, #{appointEndTime,jdbcType=VARCHAR}, #{skillWay,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.pinde.core.model.ResSkillConfig">
+      insert into RES_SKILL_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="skillFlow != null" >
+        SKILL_FLOW,
+      </if>
+      <if test="skillTimeFlow != null" >
+        SKILL_TIME_FLOW,
+      </if>
+      <if test="testId != null" >
+        TEST_ID,
+      </if>
+      <if test="testName != null" >
+        TEST_NAME,
+      </if>
+      <if test="skillStartTime != null" >
+        SKILL_START_TIME,
+      </if>
+      <if test="skillEndTime != null" >
+        SKILL_END_TIME,
+      </if>
+      <if test="appointStartTime != null" >
+        APPOINT_START_TIME,
+      </if>
+      <if test="appointEndTime != null" >
+        APPOINT_END_TIME,
+      </if>
+      <if test="skillWay != null" >
+        SKILL_WAY,
+      </if>
+      <if test="cityId != null" >
+        CITY_ID,
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="skillFlow != null" >
+        #{skillFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="skillTimeFlow != null" >
+        #{skillTimeFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="testName != null" >
+        #{testName,jdbcType=VARCHAR},
+      </if>
+      <if test="skillStartTime != null" >
+        #{skillStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="skillEndTime != null" >
+        #{skillEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appointStartTime != null" >
+        #{appointStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appointEndTime != null" >
+        #{appointEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="skillWay != null" >
+        #{skillWay,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="countByExample" parameterType="com.pinde.core.model.ResSkillConfigExample"
+            resultType="java.lang.Integer">
+      select count(*) from RES_SKILL_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+      update RES_SKILL_CONFIG
+    <set >
+      <if test="record.skillFlow != null" >
+        SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillTimeFlow != null" >
+        SKILL_TIME_FLOW = #{record.skillTimeFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testId != null" >
+        TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testName != null" >
+        TEST_NAME = #{record.testName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillStartTime != null" >
+        SKILL_START_TIME = #{record.skillStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillEndTime != null" >
+        SKILL_END_TIME = #{record.skillEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appointStartTime != null" >
+        APPOINT_START_TIME = #{record.appointStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appointEndTime != null" >
+        APPOINT_END_TIME = #{record.appointEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skillWay != null" >
+        SKILL_WAY = #{record.skillWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null" >
+        CITY_ID = #{record.cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recordStatus != null" >
+        RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserFlow != null" >
+        CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+      update RES_SKILL_CONFIG
+    set SKILL_FLOW = #{record.skillFlow,jdbcType=VARCHAR},
+      SKILL_TIME_FLOW = #{record.skillTimeFlow,jdbcType=VARCHAR},
+      TEST_ID = #{record.testId,jdbcType=VARCHAR},
+      TEST_NAME = #{record.testName,jdbcType=VARCHAR},
+      SKILL_START_TIME = #{record.skillStartTime,jdbcType=VARCHAR},
+      SKILL_END_TIME = #{record.skillEndTime,jdbcType=VARCHAR},
+      APPOINT_START_TIME = #{record.appointStartTime,jdbcType=VARCHAR},
+      APPOINT_END_TIME = #{record.appointEndTime,jdbcType=VARCHAR},
+      SKILL_WAY = #{record.skillWay,jdbcType=VARCHAR},
+      CITY_ID = #{record.cityId,jdbcType=VARCHAR},
+      RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.pinde.core.model.ResSkillConfig">
+      update RES_SKILL_CONFIG
+    <set >
+      <if test="skillTimeFlow != null" >
+        SKILL_TIME_FLOW = #{skillTimeFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null" >
+        TEST_ID = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="testName != null" >
+        TEST_NAME = #{testName,jdbcType=VARCHAR},
+      </if>
+      <if test="skillStartTime != null" >
+        SKILL_START_TIME = #{skillStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="skillEndTime != null" >
+        SKILL_END_TIME = #{skillEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appointStartTime != null" >
+        APPOINT_START_TIME = #{appointStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="appointEndTime != null" >
+        APPOINT_END_TIME = #{appointEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="skillWay != null" >
+        SKILL_WAY = #{skillWay,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        CITY_ID = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserFlow != null" >
+        CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyUserFlow != null" >
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResSkillConfig">
+      update RES_SKILL_CONFIG
+    set SKILL_TIME_FLOW = #{skillTimeFlow,jdbcType=VARCHAR},
+      TEST_ID = #{testId,jdbcType=VARCHAR},
+      TEST_NAME = #{testName,jdbcType=VARCHAR},
+      SKILL_START_TIME = #{skillStartTime,jdbcType=VARCHAR},
+      SKILL_END_TIME = #{skillEndTime,jdbcType=VARCHAR},
+      APPOINT_START_TIME = #{appointStartTime,jdbcType=VARCHAR},
+      APPOINT_END_TIME = #{appointEndTime,jdbcType=VARCHAR},
+      SKILL_WAY = #{skillWay,jdbcType=VARCHAR},
+      CITY_ID = #{cityId,jdbcType=VARCHAR},
+      RECORD_STATUS = #{recordStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
+      MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
+      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+    where SKILL_FLOW = #{skillFlow,jdbcType=VARCHAR}
+  </update>
+</mapper>

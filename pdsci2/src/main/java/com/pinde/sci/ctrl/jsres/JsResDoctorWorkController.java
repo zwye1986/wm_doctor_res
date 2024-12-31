@@ -3,26 +3,19 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
-import com.pinde.core.model.ResSchProcessExpress;
-import com.pinde.core.model.SysOrg;
-import com.pinde.core.model.SysUser;
+import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.StringUtil;
-import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
-import com.pinde.sci.biz.pub.IPubUserResumeBiz;
-import com.pinde.sci.biz.res.*;
-import com.pinde.sci.biz.sch.*;
-import com.pinde.sci.biz.sch.impl.SchRotationGroupBizImpl;
-import com.pinde.sci.biz.sys.IDictBiz;
-import com.pinde.sci.biz.sys.IUserBiz;
+import com.pinde.sci.biz.res.IResDoctorBiz;
+import com.pinde.sci.biz.res.IResDoctorProcessBiz;
+import com.pinde.sci.biz.res.IResJointOrgBiz;
+import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
+import com.pinde.sci.biz.sch.ISchDoctorDeptBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.SchRotationDeptMapper;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResJointOrg;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -39,49 +32,19 @@ import java.util.*;
 @RequestMapping("/jsres/docWork")
 public class JsResDoctorWorkController extends GeneralController {
 	@Autowired
-	private IJsResDoctorBiz jsResDoctorBiz;
-	@Autowired
 	private IJsResDoctorRecruitBiz jsResDoctorRecruitBiz;
 	@Autowired
-	private SchRotationDeptMapper rotationDeptMapper;
-	@Autowired
-	private SchRotationGroupBizImpl rotationGroupBiz;
-	@Autowired
-	private IUserBiz userBiz;
-	@Autowired
 	private IResDoctorBiz resDoctorBiz;
-	@Autowired
-	private IPubUserResumeBiz userResumeBiz;
 	@Autowired
 	private OrgBizImpl orgBiz;
 	@Autowired
 	private IResJointOrgBiz jointOrgBiz;
 	@Autowired
-	private IDictBiz dictBiz;
-	@Autowired
-	private ISchArrangeResultBiz schArrangeResultBiz;
-	@Autowired
 	private IResDoctorProcessBiz processBiz;
-	@Autowired
-	private IResRecBiz resRecBiz;
 	@Autowired
 	private IResSchProcessExpressBiz expressBiz;
 	@Autowired
-	private IResDoctorOrgHistoryBiz resDoctorOrgHistoryBiz;
-	@Autowired
-	private IResAssessCfgBiz assessCfgBiz;
-	@Autowired
-	private ISchRotationBiz rotationBiz;
-	@Autowired
-	private ISchRotationDeptBiz schRotationDeptBiz;
-	@Autowired
-	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
 	private ISchDoctorDeptBiz doctorDeptBiz;
-	@Autowired
-	private ISchRotationGroupBiz groupBiz;
-	@Autowired
-	private IResScoreBiz resScoreBiz;
 
 	/**
 	 * 省厅角色和市局角色共用  住院医师

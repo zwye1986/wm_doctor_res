@@ -1,6 +1,7 @@
 package com.pinde.core.common.sci.dao;
 
 
+import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SchExamArrangement;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,12 @@ public interface SchExamArrangementExtMapper {
 	int deleteSchExamStandardDeptByDeptId(@Param("deptFlow") String deptFlow);
 
 	int checkHaveExam(@Param("arrangeFlow") String arrangeFlow);
+
+	List<SchArrangeResult> getSuiJiConfigs(@Param("ment") SchExamArrangement ment, @Param("userFlow") String userFlow);
+
+	List<SchArrangeResult> getGuDingConfigs(@Param("ment") SchExamArrangement ment, @Param("userFlow") String userFlow);
+
+	int checkExists(@Param("ment") SchExamArrangement ment);
+
+	int checkExistsByIds(@Param("ment") SchExamArrangement ment, @Param("speIds") List<String> speIds, @Param("sessinNumbers") List<String> sessinNumbers);
 }

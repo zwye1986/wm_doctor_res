@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.core.common.sci.dao.ResEvaluationDeptExtMapper" >
-    <resultMap id="DeptResultMap" type="com.pinde.core.model.SysDept" >
+    <resultMap id="BaseResultMap" type="com.pinde.core.model.ResEvaluationDeptExt">
+        <result column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR"/>
+        <result column="CFG_FLOW" property="cfgFlow" jdbcType="VARCHAR"/>
+        <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR"/>
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR"/>
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR"/>
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR"/>
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="DeptResultMap" type="com.pinde.core.model.SysDept">
         <id column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
         <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
         <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
@@ -52,6 +63,26 @@
         DEPT_FLOW, ORG_FLOW, DEPT_CODE, DEPT_NAME, ORDINAL, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
         MODIFY_TIME, MODIFY_USER_FLOW, DEPT_PINYIN, DEPT_ID, DEPT_PID
     </sql>
+    <select id="selectByRecord" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResEvaluationDept">
+        select
+        <include refid="Base_Column_List"/>
+        from RES_EVALUATION_DEPT ED
+        LEFT JOIN SYS_DEPT SD ON ED.DEPT_FLOW = SD.DEPT_FLOW
+        where 1=1
+        <if test="record.recordFlow != null">
+            and ED. RECORD_FLOW = #{record.recordFlow,jdbcType=VARCHAR}
+        </if>
+        <if test="record.cfgFlow != null">
+            and ED. CFG_FLOW = #{record.cfgFlow,jdbcType=VARCHAR}
+        </if>
+        <if test="record.deptFlow != null">
+            and ED. DEPT_FLOW = #{record.deptFlow,jdbcType=VARCHAR}
+        </if>
+        <if test="record.recordStatus != null">
+            and ED. RECORD_STATUS = #{record.recordStatus,jdbcType=VARCHAR}
+        </if>
+
+    </select>
     <select id="getDeptExt" resultMap="DeptResultMap" >
         select
         <include refid="Dept_Column_List" />

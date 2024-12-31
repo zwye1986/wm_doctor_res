@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.sci.dao.ResDoctorOrgHistoryMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.ResDoctorOrgHistoryExample.Criteria;
 import com.pinde.core.util.DateUtil;
@@ -15,7 +16,6 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorOrgHistoryExtMapper;
 import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -46,6 +46,7 @@
     <result column="SECOND_SPE_ID" property="secondSpeId" jdbcType="VARCHAR" />
     <result column="SECOND_SPE_NAME" property="secondSpeName" jdbcType="VARCHAR" />
     <result column="GLOBAL_CHECK_FILE" property="globalCheckFile" jdbcType="VARCHAR" />
+      <result column="CITY_AUDIT_OPINION" property="cityAuditOpinion" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -113,7 +114,7 @@
     POLICY_USER_FLOW, POLICY_USER_NAME, AUDIT_TIME, AUDIT_STATUS_ID, AUDIT_STATUS_NAME, 
     AUDIT_USER_FLOW, AUDIT_USER_NAME, RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, 
     MODIFY_USER_FLOW, AUDIT_OPINION, DELAY_FILE_PATH, SECOND_SPE_ID, SECOND_SPE_NAME, 
-    GLOBAL_CHECK_FILE
+    GLOBAL_CHECK_FILE, CITY_AUDIT_OPINION
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResDocotrDelayTeturnExample" >
     select
@@ -159,8 +160,8 @@
       AUDIT_STATUS_ID, AUDIT_STATUS_NAME, AUDIT_USER_FLOW, 
       AUDIT_USER_NAME, RECORD_STATUS, CREATE_TIME, 
       CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, 
-      AUDIT_OPINION, DELAY_FILE_PATH, SECOND_SPE_ID, 
-      SECOND_SPE_NAME, GLOBAL_CHECK_FILE)
+      AUDIT_OPINION, DELAY_FILE_PATH, SECOND_SPE_ID,
+                                           SECOND_SPE_NAME, GLOBAL_CHECK_FILE, CITY_AUDIT_OPINION)
     values (#{recordFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
       #{sessionNumber,jdbcType=VARCHAR}, #{trainingYears,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
       #{doctorName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, #{trainingSpeName,jdbcType=VARCHAR}, 
@@ -174,8 +175,9 @@
       #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{auditUserFlow,jdbcType=VARCHAR}, 
       #{auditUserName,jdbcType=VARCHAR}, #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
       #{createUserFlow,jdbcType=VARCHAR}, #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, 
-      #{auditOpinion,jdbcType=VARCHAR}, #{delayFilePath,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR}, 
-      #{secondSpeName,jdbcType=VARCHAR}, #{globalCheckFile,jdbcType=VARCHAR})
+      #{auditOpinion,jdbcType=VARCHAR}, #{delayFilePath,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR},
+            #{secondSpeName,jdbcType=VARCHAR}, #{globalCheckFile,jdbcType=VARCHAR},
+            #{cityAuditOpinion,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDocotrDelayTeturn" >
       insert into RES_DOCOTR_DELAY_TETURN
@@ -312,6 +314,9 @@
       <if test="globalCheckFile != null" >
         GLOBAL_CHECK_FILE,
       </if>
+        <if test="cityAuditOpinion != null">
+            CITY_AUDIT_OPINION,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -445,6 +450,9 @@
       </if>
       <if test="globalCheckFile != null" >
         #{globalCheckFile,jdbcType=VARCHAR},
+      </if>
+        <if test="cityAuditOpinion != null">
+            #{cityAuditOpinion,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -589,6 +597,9 @@
       <if test="record.globalCheckFile != null" >
         GLOBAL_CHECK_FILE = #{record.globalCheckFile,jdbcType=VARCHAR},
       </if>
+        <if test="record.cityAuditOpinion != null">
+            CITY_AUDIT_OPINION = #{record.cityAuditOpinion,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -639,7 +650,8 @@
       DELAY_FILE_PATH = #{record.delayFilePath,jdbcType=VARCHAR},
       SECOND_SPE_ID = #{record.secondSpeId,jdbcType=VARCHAR},
       SECOND_SPE_NAME = #{record.secondSpeName,jdbcType=VARCHAR},
-      GLOBAL_CHECK_FILE = #{record.globalCheckFile,jdbcType=VARCHAR}
+      GLOBAL_CHECK_FILE = #{record.globalCheckFile,jdbcType=VARCHAR},
+      CITY_AUDIT_OPINION = #{record.cityAuditOpinion,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -776,6 +788,9 @@
       <if test="globalCheckFile != null" >
         GLOBAL_CHECK_FILE = #{globalCheckFile,jdbcType=VARCHAR},
       </if>
+        <if test="cityAuditOpinion != null">
+            CITY_AUDIT_OPINION = #{cityAuditOpinion,jdbcType=VARCHAR},
+        </if>
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
@@ -823,7 +838,98 @@
       DELAY_FILE_PATH = #{delayFilePath,jdbcType=VARCHAR},
       SECOND_SPE_ID = #{secondSpeId,jdbcType=VARCHAR},
       SECOND_SPE_NAME = #{secondSpeName,jdbcType=VARCHAR},
-      GLOBAL_CHECK_FILE = #{globalCheckFile,jdbcType=VARCHAR}
+        GLOBAL_CHECK_FILE  = #{globalCheckFile,jdbcType=VARCHAR},
+        CITY_AUDIT_OPINION = #{cityAuditOpinion,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
+
+    <insert id="saveSynDoctorStatus" parameterType="com.pinde.core.model.ResDocotrDelayTeturn">
+        insert into syn_doctor_Status
+        (record_FLOW,
+         USER_name,
+         SEX_ID,
+         CRET_TYPE_ID,
+         ID_NO,
+         train_status_id,
+         train_status_Name,
+         other_reason,
+         change_time,
+         PROVINCECODE,
+         create_time,
+         create_user_flow,
+         modify_time,
+         modify_user_flow,
+         is_send,
+         send_msg)
+        SELECT distinct doctor_FLOW                                                             record_flow,
+                        doctor_NAME,
+                        SEX_ID,
+                        CRET_TYPE_ID,
+                        ID_NO,
+                        '3',
+                        '9',
+                        policy_name,
+                        TO_CHAR(to_date(SUBSTR(MODIFY_TIME, 1, 8), 'yyyy-mm-dd'), 'yyyy-mm-dd') change_time,
+                        '32'                                                                    provincecode,
+                        to_char(sysdate, 'yyyymmdd')                                            create_time,
+                        '0000000000000000000000'                                                create_user_flow,
+                        to_char(sysdate, 'yyyymmdd')                                            modify_time,
+                        '0000000000000000000000'                                                modify_user_flow,
+                        ''                                                                      is_send,
+                        ''                                                                      send_msg
+        FROM (SELECT SO.ORG_NAME
+                   , dr.GLOBAL_CHECK_FILE
+                   , dr.SECOND_SPE_ID
+                   , dr.SECOND_SPE_NAME
+                   , dr.RECORD_FLOW
+                   , dr.ORG_FLOW
+                   , dr.SESSION_NUMBER
+                   , dr.TRAINING_YEARS
+                   , dr.DOCTOR_FLOW
+                   , dr.DOCTOR_NAME
+                   , dr.TRAINING_SPE_ID
+                   , dr.TRAINING_SPE_NAME
+                   , dr.TRAINING_TYPE_ID
+                   , dr.TRAINING_TYPE_NAME
+                   , dr.DOCTOR_TYPE_ID
+                   , dr.DOCTOR_TYPE_NAME
+                   , dr.GRADUATION_YEAR
+                   , dr.TYPE_ID
+                   , dr.TYPE_NAME
+                   , dr.RECRUIT_FLOW
+                   , dr.POLICY_ID
+                   , dr.POLICY_NAME
+                   , dr.POLICY
+                   , dr.REASON_ID
+                   , dr.REASON_NAME
+                   , dr.REASON
+                   , dr.DISPOSITON
+                   , dr.REMARK
+                   , dr.DELAYREASON
+                   , dr.POLICY_TIME
+                   , dr.POLICY_USER_FLOW
+                   , dr.POLICY_USER_NAME
+                   , dr.AUDIT_TIME
+                   , dr.AUDIT_STATUS_ID
+                   , dr.AUDIT_STATUS_NAME
+                   , dr.AUDIT_USER_FLOW
+                   , dr.AUDIT_USER_NAME
+                   , dr.RECORD_STATUS
+                   , dr.CREATE_TIME
+                   , dr.CREATE_USER_FLOW
+                   , dr.MODIFY_TIME
+                   , dr.MODIFY_USER_FLOW
+                   , dr.AUDIT_OPINION
+                   , dr.DELAY_FILE_PATH
+                   , u.id_no
+                   , U.SEX_ID
+                   , U.CRET_TYPE_ID
+              FROM RES_DOCOTR_DELAY_TETURN dr
+                       LEFT JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+                       LEFT JOIN SYS_ORG SO ON DR.ORG_FLOW = SO.ORG_FLOW
+              WHERE 1 = 1)
+        WHERE RECORD_STATUS = 'Y'
+          AND RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
+
+    </insert>
 </mapper>

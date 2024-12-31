@@ -1,10 +1,7 @@
 package com.pinde.sci.biz.res.impl;
 
 import com.pinde.core.common.enums.BaseStatusEnum;
-import com.pinde.core.common.sci.dao.JsresDoctorSpeMapper;
-import com.pinde.core.common.sci.dao.JsresSignMapper;
-import com.pinde.core.common.sci.dao.SysOrgMapper;
-import com.pinde.core.common.sci.dao.SysUserMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
@@ -13,7 +10,6 @@ import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.sci.model.jsres.OrgSpeListVo;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;

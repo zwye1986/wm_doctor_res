@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorExtMapper" >
-    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
         <association property="userResume" column="USER_FLOW" javaType="com.pinde.core.model.StuUserResume"
-                     resultMap="com.pinde.sci.dao.base.StuUserResumeMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.StuUserResumeMapper.BaseResultMap"/>
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
-					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap"/>
         <association property="pubUserResume" column="USER_FLOW" javaType="com.pinde.core.model.PubUserResume"
                      resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
-	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap" >
+    <resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="user_flow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
-		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" >
+        <association property="resDoctor" column="doctorFlow"
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 			<id column="DOCTOR_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 			<result column="edOrgFlow" jdbcType="VARCHAR" property="orgFlow"/>
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
@@ -22,7 +25,8 @@
 			<result column="DOCTOR_TYPE_NAME" jdbcType="VARCHAR" property="doctorTypeName"/>
 		</association>
 	</resultMap>
-    <resultMap id="AnnaulCheckMap" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <resultMap id="AnnaulCheckMap" type="com.pinde.sci.model.res.ResDoctorExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <result column="USER_FLOW" property="sysUser.userFlow" jdbcType="VARCHAR"/>
         <result column="USER_NAME" property="sysUser.userName" jdbcType="VARCHAR"/>
         <result column="ID_NO" property="sysUser.idNo" jdbcType="VARCHAR"/>
@@ -44,7 +48,8 @@
     </resultMap>
 
 
-	<resultMap id="ResDoctorScoreExt" type="com.pinde.sci.model.res.ResDoctorScoreExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <resultMap id="ResDoctorScoreExt" type="com.pinde.sci.model.res.ResDoctorScoreExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		<id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
 		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
 		<result column="AVG_SCORE" property="avgScore" jdbcType="DECIMAL" />
@@ -98,11 +103,12 @@
 		<result property="name" column="ROTATION_NAME" javaType="string"/>
 		<result property="flow" column="ROTATION_FLOW" javaType="string"/>
 	</resultMap>
-    <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.sci.model.res.ResDoctorExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="doctorRecruit" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctorRecruit"
-					 resultMap="com.pinde.sci.dao.base.ResDoctorRecruitMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap"/>
     </resultMap>
 	<insert id="insertRecruitInfo">
 		insert into jsres_recruit_info( record_flow, doctor_flow, doctor_type_id, doctor_type_name, org_flow, org_name, spe_id, spe_name, cat_spe_id, cat_spe_name, train_years, session_number, graduation_year, doctor_status_id, doctor_status_name, record_status, create_time, create_user_flow, modify_time, modify_user_flow )
@@ -144,7 +150,8 @@
 		 on rd.doctor_flow=dr.doctor_flow
 		 where dr.record_status='Y' and audit_status_Id='Passed'and recruit_flow=#{recruitFlow}
 	</select>
-	<select id="searchDocByteacherJx" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchDocByteacherJx" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		select * from res_doctor where RECORD_STATUS = 'Y'
 		<if test='doctor != null'>
 			<if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
@@ -394,7 +401,7 @@
 	</select>
 
 
-    <select id="searchResDoctorByAssessment"  resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchResDoctorByAssessment" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         select ed.* from res_doctor ed
         LEFT JOIN SYS_USER u ON ED.DOCTOR_FLOW = u.USER_FLOW
         where ed.record_status='Y'
@@ -871,7 +878,7 @@
     <resultMap id="SysUserResDoctorExt" type="com.pinde.sci.model.sys.SysUserResDoctorExt"
                extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         <association property="doctor" column="doctor_FLOW" javaType="com.pinde.core.model.ResDoctor"
-                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
         <collection property="resDoctorSchProcessList" ofType="com.pinde.core.model.ResDoctorSchProcess"
                     column="USER_FLOW">
 			 	<id column="PROCESS_FLOW" jdbcType="VARCHAR" property="processFlow" />
@@ -1250,8 +1257,9 @@
             where
             NOT  EXISTS(select 1 from res_exam_doctor red where tmp.USER_FLOW=red.DOCTOR_FLOW and red.EXAM_FLOW=#{examFlow})
 	</select>
-	
-	<select id="searchNotAllotTicketNumUserInExamAndSite" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
+
+    <select id="searchNotAllotTicketNumUserInExamAndSite" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResExamDoctorMapper.BaseResultMap">
 	    SELECT TMP.RECORD_FLOW , TMP.DOCTOR_FLOW FROM 
             (
                 SELECT RED.RECORD_FLOW , RED.DOCTOR_FLOW  FROM  
@@ -1265,8 +1273,9 @@
             ON TMP.DOCTOR_FLOW = RD.DOCTOR_FLOW 
             ORDER BY RD.SPECIALIZED , RD.CREATE_TIME
 	</select>
-	
-	<select id="searchExamDoctor" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
+
+    <select id="searchExamDoctor" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResExamDoctorMapper.BaseResultMap">
         select * from res_exam_doctor where RECORD_STATUS='Y' AND DOCTOR_FLOW=#{doctorFlow}
         and exists (select null from res_exam exam where res_exam_doctor.EXAM_FLOW=exam.EXAM_FLOW
 	    		and exam.RECORD_STATUS='Y'
@@ -1274,10 +1283,11 @@
 	    		and exam.EXAM_YEAR=#{examYear}
 	    	)
 	</select>
-	
-	<resultMap id="ResExamDoctorExtMap" type="com.pinde.sci.model.res.ResExamDoctorExt" extends="com.pinde.sci.dao.base.ResExamDoctorMapper.BaseResultMap">
+
+    <resultMap id="ResExamDoctorExtMap" type="com.pinde.sci.model.res.ResExamDoctorExt"
+               extends="com.pinde.core.common.sci.dao.ResExamDoctorMapper.BaseResultMap">
         <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor"
-                     resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap"/>
+                     resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
         <association property="user" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>
@@ -1376,8 +1386,8 @@
 	  	  <result column="trainingSpeId" jdbcType="VARCHAR" property="speId" />
 	  	  <result column="doctorCount" jdbcType="VARCHAR"  property="doctorCount"/>
     </resultMap>
-    
-	<select id="searchMonthRotationDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+
+    <select id="searchMonthRotationDoctor" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		SELECT RD.*
         FROM SCH_ARRANGE_RESULT SAR, RES_DOCTOR RD
 		WHERE SAR.RECORD_STATUS = 'Y'
@@ -1424,8 +1434,8 @@
                  AND RED.EXAM_FLOW=#{examFlow}
                  AND RD.SPECIALIZED=#{speId})
 	</select>
-	
-	<select id="searchSelDeptDoctor" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+
+    <select id="searchSelDeptDoctor" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		SELECT RD.*
         FROM RES_DOCTOR RD
 		WHERE RD.DOCTOR_FLOW IN (
@@ -1478,8 +1488,8 @@
 			</if>
 		)
 	</select>
-	
-	<select id="searchDoctorForChange" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+
+    <select id="searchDoctorForChange" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		SELECT RD.*
         FROM RES_DOCTOR RD
 		WHERE RECORD_STATUS = 'Y'
@@ -1800,7 +1810,8 @@
     		</foreach>
     	</if>
     </select>
-    <select id="searchOrgFlowByhistoryOrgFlow" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorOrgHistoryMapper.BaseResultMap">
+    <select id="searchOrgFlowByhistoryOrgFlow" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorOrgHistoryMapper.BaseResultMap">
    		SELECT *
         FROM RES_DOCTOR_ORG_HISTORY
 		WHERE RECORD_STATUS = 'Y'
@@ -2104,7 +2115,8 @@
 									and b.record_status='Y'
 				  					and b.id_no=#{idNo})
 	</select>
-	<select id="searchDoctor4Kq" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap" parameterType="java.util.Map">
+    <select id="searchDoctor4Kq" resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"
+            parameterType="java.util.Map">
 		select DISTINCT rd.* from res_doctor rd
 		left join RES_DOCTOR_SCH_PROCESS rdsp on rdsp.USER_FLOW = rd.doctor_flow
 		where rd.record_status='Y' and rdsp.record_status='Y'
@@ -2315,7 +2327,8 @@
 		ORDER BY session_number, DOCTOR_TYPE_ID
 	</select>
 
-	<select id="searchDocByteacher2" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <select id="searchDocByteacher2" parameterType="java.util.Map"
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		select * from res_doctor where RECORD_STATUS = 'Y'
 		<if test='doctor != null'>
 			<if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
@@ -2344,7 +2357,7 @@
 		ORDER BY res_doctor.DOCTOR_CODE
 	</select>
 	<select id="searchResDoctor2" parameterType="java.util.Map"
-			resultMap="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+            resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		select * from res_doctor rd where RECORD_STATUS = 'Y'
 
 		<if test='orgFlow!=null and orgFlow!=""'>

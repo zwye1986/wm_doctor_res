@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.res.impl;
 
+import com.pinde.core.common.sci.dao.ResUserSpeMapper;
 import com.pinde.core.model.ResUserSpe;
 import com.pinde.core.model.ResUserSpeExample;
 import com.pinde.core.model.ResUserSpeExample.Criteria;
@@ -9,7 +10,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResUserSpeBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralMethod;
-import com.pinde.sci.dao.base.ResUserSpeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

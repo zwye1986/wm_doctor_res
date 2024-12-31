@@ -1,6 +1,8 @@
 package com.pinde.sci.biz.res.impl;
 
 
+import com.pinde.core.common.sci.dao.ResIdctrlDetailMapper;
+import com.pinde.core.common.sci.dao.ResIdctrlMainMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
@@ -10,8 +12,6 @@ import com.pinde.sci.biz.res.IResPowerCfgBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.ResIdctrlDetailMapper;
-import com.pinde.sci.dao.base.ResIdctrlMainMapper;
 import com.pinde.sci.dao.res.ResIdCtrlExtMapper;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import org.springframework.beans.factory.annotation.Autowired;

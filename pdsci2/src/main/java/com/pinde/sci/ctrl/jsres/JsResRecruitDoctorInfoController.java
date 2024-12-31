@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.pinde.core.common.sci.dao.SysCfgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -18,14 +19,9 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.biz.sys.impl.OrgBizImpl;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.dao.base.SysCfgMapper;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
 import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.core.model.PubUserResume;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.ResJointOrg;
-import com.pinde.core.model.SysCfg;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;

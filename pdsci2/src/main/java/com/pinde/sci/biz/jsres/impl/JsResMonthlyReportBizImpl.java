@@ -1,10 +1,10 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResMonthlyReportBiz;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

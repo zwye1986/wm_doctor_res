@@ -98,11 +98,14 @@
     <result column="PROVINCE_CERTIFICATE_STATUS" property="provinceCertificateStatus" jdbcType="VARCHAR" />
     <result column="PROVINCE_CERTIFICATE_DATE" property="provinceCertificateDate" jdbcType="VARCHAR" />
     <result column="SIGNUP_WAY" property="signupWay" jdbcType="VARCHAR" />
+      <result column="RECRUIT_FLAG_REASON" property="recruitFlagReason" jdbcType="VARCHAR"/>
+      <result column="REVIEW_FLAG" property="reviewFlag" jdbcType="VARCHAR"/>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResDoctorRecruitWithBLOBs" extends="BaseResultMap" >
     <result column="RETEST_NOTICE" property="retestNotice" jdbcType="CLOB" />
     <result column="ADMIT_NOTICE" property="admitNotice" jdbcType="CLOB" />
     <result column="PROV_REMARK" property="provRemark" jdbcType="CLOB" />
+      <result column="GLOBAL_NOTICE" property="globalNotice" jdbcType="CLOB"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -180,12 +183,14 @@
     WORK_UNIT_CODE, WORK_UNIT, JOINT_ORG_FLOW, IN_JOINT_ORG_TRAIN, OPER_STATUS_NAME, 
     OPER_STATUS_ID, AUDITION_STATUS_NAME, AUDITION_STATUS_ID, IS_RETRAIN, JOINT_ORG_AUDIT, 
     CERTIFICATE_FLOW, ORG_AUDIT, PROVINCE_CERTIFICATE_NO, PROVINCE_CERTIFICATE_FLOW, 
-    PROVINCE_CERTIFICATE_STATUS, PROVINCE_CERTIFICATE_DATE, SIGNUP_WAY
+    PROVINCE_CERTIFICATE_STATUS, PROVINCE_CERTIFICATE_DATE, SIGNUP_WAY, RECRUIT_FLAG_REASON, 
+    REVIEW_FLAG
   </sql>
   <sql id="Blob_Column_List" >
-    RETEST_NOTICE, ADMIT_NOTICE, PROV_REMARK
+      RETEST_NOTICE, ADMIT_NOTICE, PROV_REMARK, GLOBAL_NOTICE
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResDoctorRecruitExample" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ResDoctorRecruitExample">
     select
     <if test="distinct" >
       distinct
@@ -215,13 +220,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByDoctorFlow" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
-    from RES_DOCTOR_RECRUIT where doctor_flow in
-    <foreach collection="docotrFlows"  item="item" open="(" separator="," close=")">
-      #{item}
-    </foreach>
-  </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -240,79 +238,87 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs" >
-      insert into RES_DOCTOR_RECRUIT (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW,
-      ORG_NAME, SPE_ID, SPE_NAME,
-      SWAP_FLAG, RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME,
-      RECRUIT_YEAR, RECRUIT_DATE, RETEST_FLAG,
-      EXAM_RESULT, AUDITION_RESULT, OPER_RESULT,
-      TOTLE_RESULT, ADMIT_FLAG, RECRUIT_FLAG,
-      CONFIRM_FLAG, SWAP_SPE_ID, SWAP_SPE_NAME,
-      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
-      MODIFY_TIME, MODIFY_USER_FLOW, CAT_SPE_ID,
-      CAT_SPE_NAME, SESSION_NUMBER, TRAIN_YEAR,
-      YET_TRAIN_YEAR, DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME,
-      DOCTOR_STRIKE_ID, DOCTOR_STRIKE_NAME, TRAIN_NO,
-      AUDIT_STATUS_ID, AUDIT_STATUS_NAME, PLACE_ID,
-      PLACE_NAME, PROVE_FILE_URL, COMPLETE_CERT_NO,
-      COMPLETE_FILE_URL, CURR_DEGREE_CATEGORY_ID,
-      CURR_DEGREE_CATEGORY_NAME, GRADUATION_YEAR,
-      ADMIN_SWAP_FLAG, AVG_COMPLETE, AVG_AUDIT,
-      MATERIAL_ID, PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME,
-      CERTIFICATE_URI, QUALIFICATION_MATERIAL_URI,
-      SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE,
-      TYPE_ID, REGISTE_MANUA, ROTATION_FLOW,
-      ROTATION_NAME, SPECIAL_CERT_NO, SPECIAL_FILE_URL,
-      SECOND_SPE_ID, SECOND_SPE_NAME, GRADUATION_CERTIFICATE_NO,
-      CERTIFICATE_DATE, GRADUATION_CERTIFICATE_TYPE,
-      CHANGE_SPE_ID, CHANGE_SPE_NAME, RETURN_BACK_FLAG,
-      RETURN_BACK_REMARK, IS_SEND, IS_CERT_SEND,
-      QUALIFIED_ID, CERTIFICATE_ISSUING_STATUS,
-      JOINT_ORG_NAME, EXAM_STATUS_NAME, EXAM_STATUS_ID,
-      ARMY_HOSPITAL, WORK_UNIT_CODE, WORK_UNIT,
-      JOINT_ORG_FLOW, IN_JOINT_ORG_TRAIN, OPER_STATUS_NAME,
-      OPER_STATUS_ID, AUDITION_STATUS_NAME, AUDITION_STATUS_ID,
-      IS_RETRAIN, JOINT_ORG_AUDIT, CERTIFICATE_FLOW,
-      ORG_AUDIT, PROVINCE_CERTIFICATE_NO, PROVINCE_CERTIFICATE_FLOW,
-      PROVINCE_CERTIFICATE_STATUS, PROVINCE_CERTIFICATE_DATE,
-      SIGNUP_WAY, RETEST_NOTICE, ADMIT_NOTICE,
-      PROV_REMARK, GLOBAL_NOTICE)
-    values (#{recruitFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR},
-      #{orgName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR},
-      #{swapFlag,jdbcType=VARCHAR}, #{recruitTypeId,jdbcType=VARCHAR}, #{recruitTypeName,jdbcType=VARCHAR},
-      #{recruitYear,jdbcType=VARCHAR}, #{recruitDate,jdbcType=VARCHAR}, #{retestFlag,jdbcType=VARCHAR},
-      #{examResult,jdbcType=DECIMAL}, #{auditionResult,jdbcType=DECIMAL}, #{operResult,jdbcType=DECIMAL},
-      #{totleResult,jdbcType=DECIMAL}, #{admitFlag,jdbcType=VARCHAR}, #{recruitFlag,jdbcType=VARCHAR},
-      #{confirmFlag,jdbcType=VARCHAR}, #{swapSpeId,jdbcType=VARCHAR}, #{swapSpeName,jdbcType=VARCHAR},
-      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR},
-      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{catSpeId,jdbcType=VARCHAR},
-      #{catSpeName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, #{trainYear,jdbcType=VARCHAR},
-      #{yetTrainYear,jdbcType=VARCHAR}, #{doctorStatusId,jdbcType=VARCHAR}, #{doctorStatusName,jdbcType=VARCHAR},
-      #{doctorStrikeId,jdbcType=VARCHAR}, #{doctorStrikeName,jdbcType=VARCHAR}, #{trainNo,jdbcType=VARCHAR},
-      #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{placeId,jdbcType=VARCHAR},
-      #{placeName,jdbcType=VARCHAR}, #{proveFileUrl,jdbcType=VARCHAR}, #{completeCertNo,jdbcType=VARCHAR},
-      #{completeFileUrl,jdbcType=VARCHAR}, #{currDegreeCategoryId,jdbcType=VARCHAR},
-      #{currDegreeCategoryName,jdbcType=VARCHAR}, #{graduationYear,jdbcType=VARCHAR},
-      #{adminSwapFlag,jdbcType=VARCHAR}, #{avgComplete,jdbcType=VARCHAR}, #{avgAudit,jdbcType=VARCHAR},
-      #{materialId,jdbcType=VARCHAR}, #{practicingScopeId,jdbcType=VARCHAR}, #{practicingScopeName,jdbcType=VARCHAR},
-      #{certificateUri,jdbcType=VARCHAR}, #{qualificationMaterialUri,jdbcType=VARCHAR},
-      #{specialCertificationUri,jdbcType=VARCHAR}, #{qualificationMaterialCode,jdbcType=VARCHAR},
-      #{typeId,jdbcType=VARCHAR}, #{registeManua,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR},
-      #{rotationName,jdbcType=VARCHAR}, #{specialCertNo,jdbcType=VARCHAR}, #{specialFileUrl,jdbcType=VARCHAR},
-      #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR}, #{graduationCertificateNo,jdbcType=VARCHAR},
-      #{certificateDate,jdbcType=VARCHAR}, #{graduationCertificateType,jdbcType=VARCHAR},
-      #{changeSpeId,jdbcType=VARCHAR}, #{changeSpeName,jdbcType=VARCHAR}, #{returnBackFlag,jdbcType=VARCHAR},
-      #{returnBackRemark,jdbcType=VARCHAR}, #{isSend,jdbcType=VARCHAR}, #{isCertSend,jdbcType=VARCHAR},
-      #{qualifiedId,jdbcType=VARCHAR}, #{certificateIssuingStatus,jdbcType=VARCHAR},
-      #{jointOrgName,jdbcType=VARCHAR}, #{examStatusName,jdbcType=VARCHAR}, #{examStatusId,jdbcType=VARCHAR},
-      #{armyHospital,jdbcType=VARCHAR}, #{workUnitCode,jdbcType=VARCHAR}, #{workUnit,jdbcType=VARCHAR},
-      #{jointOrgFlow,jdbcType=VARCHAR}, #{inJointOrgTrain,jdbcType=VARCHAR}, #{operStatusName,jdbcType=VARCHAR},
-      #{operStatusId,jdbcType=VARCHAR}, #{auditionStatusName,jdbcType=VARCHAR}, #{auditionStatusId,jdbcType=VARCHAR},
-      #{isRetrain,jdbcType=VARCHAR}, #{jointOrgAudit,jdbcType=VARCHAR}, #{certificateFlow,jdbcType=VARCHAR},
-      #{orgAudit,jdbcType=VARCHAR}, #{provinceCertificateNo,jdbcType=VARCHAR}, #{provinceCertificateFlow,jdbcType=VARCHAR},
-      #{provinceCertificateStatus,jdbcType=VARCHAR}, #{provinceCertificateDate,jdbcType=VARCHAR},
-      #{signupWay,jdbcType=VARCHAR}, #{retestNotice,jdbcType=CLOB}, #{admitNotice,jdbcType=CLOB},
-      #{provRemark,jdbcType=CLOB}, #{globalNotice,jdbcType=CLOB})
+    <insert id="insert" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs">
+        insert into RES_DOCTOR_RECRUIT (RECRUIT_FLOW, DOCTOR_FLOW, ORG_FLOW,
+                                        ORG_NAME, SPE_ID, SPE_NAME,
+                                        SWAP_FLAG, RECRUIT_TYPE_ID, RECRUIT_TYPE_NAME,
+                                        RECRUIT_YEAR, RECRUIT_DATE, RETEST_FLAG,
+                                        EXAM_RESULT, AUDITION_RESULT, OPER_RESULT,
+                                        TOTLE_RESULT, ADMIT_FLAG, RECRUIT_FLAG,
+                                        CONFIRM_FLAG, SWAP_SPE_ID, SWAP_SPE_NAME,
+                                        RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
+                                        MODIFY_TIME, MODIFY_USER_FLOW, CAT_SPE_ID,
+                                        CAT_SPE_NAME, SESSION_NUMBER, TRAIN_YEAR,
+                                        YET_TRAIN_YEAR, DOCTOR_STATUS_ID, DOCTOR_STATUS_NAME,
+                                        DOCTOR_STRIKE_ID, DOCTOR_STRIKE_NAME, TRAIN_NO,
+                                        AUDIT_STATUS_ID, AUDIT_STATUS_NAME, PLACE_ID,
+                                        PLACE_NAME, PROVE_FILE_URL, COMPLETE_CERT_NO,
+                                        COMPLETE_FILE_URL, CURR_DEGREE_CATEGORY_ID,
+                                        CURR_DEGREE_CATEGORY_NAME, GRADUATION_YEAR,
+                                        ADMIN_SWAP_FLAG, AVG_COMPLETE, AVG_AUDIT,
+                                        MATERIAL_ID, PRACTICING_SCOPE_ID, PRACTICING_SCOPE_NAME,
+                                        CERTIFICATE_URI, QUALIFICATION_MATERIAL_URI,
+                                        SPECIAL_CERTIFICATION_URI, QUALIFICATION_MATERIAL_CODE,
+                                        TYPE_ID, REGISTE_MANUA, ROTATION_FLOW,
+                                        ROTATION_NAME, SPECIAL_CERT_NO, SPECIAL_FILE_URL,
+                                        SECOND_SPE_ID, SECOND_SPE_NAME, GRADUATION_CERTIFICATE_NO,
+                                        CERTIFICATE_DATE, GRADUATION_CERTIFICATE_TYPE,
+                                        CHANGE_SPE_ID, CHANGE_SPE_NAME, RETURN_BACK_FLAG,
+                                        RETURN_BACK_REMARK, IS_SEND, IS_CERT_SEND,
+                                        QUALIFIED_ID, CERTIFICATE_ISSUING_STATUS,
+                                        JOINT_ORG_NAME, EXAM_STATUS_NAME, EXAM_STATUS_ID,
+                                        ARMY_HOSPITAL, WORK_UNIT_CODE, WORK_UNIT,
+                                        JOINT_ORG_FLOW, IN_JOINT_ORG_TRAIN, OPER_STATUS_NAME,
+                                        OPER_STATUS_ID, AUDITION_STATUS_NAME, AUDITION_STATUS_ID,
+                                        IS_RETRAIN, JOINT_ORG_AUDIT, CERTIFICATE_FLOW,
+                                        ORG_AUDIT, PROVINCE_CERTIFICATE_NO, PROVINCE_CERTIFICATE_FLOW,
+                                        PROVINCE_CERTIFICATE_STATUS, PROVINCE_CERTIFICATE_DATE,
+                                        SIGNUP_WAY, RECRUIT_FLAG_REASON, REVIEW_FLAG,
+                                        RETEST_NOTICE, ADMIT_NOTICE, PROV_REMARK,
+                                        GLOBAL_NOTICE)
+        values (#{recruitFlow,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR},
+                #{orgName,jdbcType=VARCHAR}, #{speId,jdbcType=VARCHAR}, #{speName,jdbcType=VARCHAR},
+                #{swapFlag,jdbcType=VARCHAR}, #{recruitTypeId,jdbcType=VARCHAR}, #{recruitTypeName,jdbcType=VARCHAR},
+                #{recruitYear,jdbcType=VARCHAR}, #{recruitDate,jdbcType=VARCHAR}, #{retestFlag,jdbcType=VARCHAR},
+                #{examResult,jdbcType=DECIMAL}, #{auditionResult,jdbcType=DECIMAL}, #{operResult,jdbcType=DECIMAL},
+                #{totleResult,jdbcType=DECIMAL}, #{admitFlag,jdbcType=VARCHAR}, #{recruitFlag,jdbcType=VARCHAR},
+                #{confirmFlag,jdbcType=VARCHAR}, #{swapSpeId,jdbcType=VARCHAR}, #{swapSpeName,jdbcType=VARCHAR},
+                #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR},
+                #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{catSpeId,jdbcType=VARCHAR},
+                #{catSpeName,jdbcType=VARCHAR}, #{sessionNumber,jdbcType=VARCHAR}, #{trainYear,jdbcType=VARCHAR},
+                #{yetTrainYear,jdbcType=VARCHAR}, #{doctorStatusId,jdbcType=VARCHAR},
+                #{doctorStatusName,jdbcType=VARCHAR},
+                #{doctorStrikeId,jdbcType=VARCHAR}, #{doctorStrikeName,jdbcType=VARCHAR}, #{trainNo,jdbcType=VARCHAR},
+                #{auditStatusId,jdbcType=VARCHAR}, #{auditStatusName,jdbcType=VARCHAR}, #{placeId,jdbcType=VARCHAR},
+                #{placeName,jdbcType=VARCHAR}, #{proveFileUrl,jdbcType=VARCHAR}, #{completeCertNo,jdbcType=VARCHAR},
+                #{completeFileUrl,jdbcType=VARCHAR}, #{currDegreeCategoryId,jdbcType=VARCHAR},
+                #{currDegreeCategoryName,jdbcType=VARCHAR}, #{graduationYear,jdbcType=VARCHAR},
+                #{adminSwapFlag,jdbcType=VARCHAR}, #{avgComplete,jdbcType=VARCHAR}, #{avgAudit,jdbcType=VARCHAR},
+                #{materialId,jdbcType=VARCHAR}, #{practicingScopeId,jdbcType=VARCHAR},
+                #{practicingScopeName,jdbcType=VARCHAR},
+                #{certificateUri,jdbcType=VARCHAR}, #{qualificationMaterialUri,jdbcType=VARCHAR},
+                #{specialCertificationUri,jdbcType=VARCHAR}, #{qualificationMaterialCode,jdbcType=VARCHAR},
+                #{typeId,jdbcType=VARCHAR}, #{registeManua,jdbcType=VARCHAR}, #{rotationFlow,jdbcType=VARCHAR},
+                #{rotationName,jdbcType=VARCHAR}, #{specialCertNo,jdbcType=VARCHAR}, #{specialFileUrl,jdbcType=VARCHAR},
+                #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR},
+                #{graduationCertificateNo,jdbcType=VARCHAR},
+                #{certificateDate,jdbcType=VARCHAR}, #{graduationCertificateType,jdbcType=VARCHAR},
+                #{changeSpeId,jdbcType=VARCHAR}, #{changeSpeName,jdbcType=VARCHAR}, #{returnBackFlag,jdbcType=VARCHAR},
+                #{returnBackRemark,jdbcType=VARCHAR}, #{isSend,jdbcType=VARCHAR}, #{isCertSend,jdbcType=VARCHAR},
+                #{qualifiedId,jdbcType=VARCHAR}, #{certificateIssuingStatus,jdbcType=VARCHAR},
+                #{jointOrgName,jdbcType=VARCHAR}, #{examStatusName,jdbcType=VARCHAR}, #{examStatusId,jdbcType=VARCHAR},
+                #{armyHospital,jdbcType=VARCHAR}, #{workUnitCode,jdbcType=VARCHAR}, #{workUnit,jdbcType=VARCHAR},
+                #{jointOrgFlow,jdbcType=VARCHAR}, #{inJointOrgTrain,jdbcType=VARCHAR},
+                #{operStatusName,jdbcType=VARCHAR},
+                #{operStatusId,jdbcType=VARCHAR}, #{auditionStatusName,jdbcType=VARCHAR},
+                #{auditionStatusId,jdbcType=VARCHAR},
+                #{isRetrain,jdbcType=VARCHAR}, #{jointOrgAudit,jdbcType=VARCHAR}, #{certificateFlow,jdbcType=VARCHAR},
+                #{orgAudit,jdbcType=VARCHAR}, #{provinceCertificateNo,jdbcType=VARCHAR},
+                #{provinceCertificateFlow,jdbcType=VARCHAR},
+                #{provinceCertificateStatus,jdbcType=VARCHAR}, #{provinceCertificateDate,jdbcType=VARCHAR},
+                #{signupWay,jdbcType=VARCHAR}, #{recruitFlagReason,jdbcType=VARCHAR}, #{reviewFlag,jdbcType=VARCHAR},
+                #{retestNotice,jdbcType=CLOB}, #{admitNotice,jdbcType=CLOB}, #{provRemark,jdbcType=CLOB},
+                #{globalNotice,jdbcType=CLOB})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResDoctorRecruitWithBLOBs" >
       insert into RES_DOCTOR_RECRUIT
@@ -602,6 +608,15 @@
       <if test="provinceCertificateDate != null" >
         PROVINCE_CERTIFICATE_DATE,
       </if>
+        <if test="signupWay != null">
+            SIGNUP_WAY,
+        </if>
+        <if test="recruitFlagReason != null">
+            RECRUIT_FLAG_REASON,
+        </if>
+        <if test="reviewFlag != null">
+            REVIEW_FLAG,
+        </if>
       <if test="retestNotice != null" >
         RETEST_NOTICE,
       </if>
@@ -610,6 +625,9 @@
       </if>
       <if test="provRemark != null" >
         PROV_REMARK,
+      </if>
+        <if test="globalNotice != null">
+            GLOBAL_NOTICE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -898,6 +916,15 @@
       <if test="provinceCertificateDate != null" >
         #{provinceCertificateDate,jdbcType=VARCHAR},
       </if>
+        <if test="signupWay != null">
+            #{signupWay,jdbcType=VARCHAR},
+        </if>
+        <if test="recruitFlagReason != null">
+            #{recruitFlagReason,jdbcType=VARCHAR},
+        </if>
+        <if test="reviewFlag != null">
+            #{reviewFlag,jdbcType=VARCHAR},
+      </if>
       <if test="retestNotice != null" >
         #{retestNotice,jdbcType=CLOB},
       </if>
@@ -907,9 +934,13 @@
       <if test="provRemark != null" >
         #{provRemark,jdbcType=CLOB},
       </if>
+        <if test="globalNotice != null">
+            #{globalNotice,jdbcType=CLOB},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorRecruitExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResDoctorRecruitExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_DOCTOR_RECRUIT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -1203,6 +1234,15 @@
       <if test="record.provinceCertificateDate != null" >
         PROVINCE_CERTIFICATE_DATE = #{record.provinceCertificateDate,jdbcType=VARCHAR},
       </if>
+        <if test="record.signupWay != null">
+            SIGNUP_WAY = #{record.signupWay,jdbcType=VARCHAR},
+        </if>
+        <if test="record.recruitFlagReason != null">
+            RECRUIT_FLAG_REASON = #{record.recruitFlagReason,jdbcType=VARCHAR},
+        </if>
+        <if test="record.reviewFlag != null">
+            REVIEW_FLAG = #{record.reviewFlag,jdbcType=VARCHAR},
+      </if>
       <if test="record.retestNotice != null" >
         RETEST_NOTICE = #{record.retestNotice,jdbcType=CLOB},
       </if>
@@ -1212,6 +1252,9 @@
       <if test="record.provRemark != null" >
         PROV_REMARK = #{record.provRemark,jdbcType=CLOB},
       </if>
+        <if test="record.globalNotice != null">
+            GLOBAL_NOTICE = #{record.globalNotice,jdbcType=CLOB},
+        </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -1314,9 +1357,13 @@
       PROVINCE_CERTIFICATE_FLOW = #{record.provinceCertificateFlow,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_STATUS = #{record.provinceCertificateStatus,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_DATE = #{record.provinceCertificateDate,jdbcType=VARCHAR},
+      SIGNUP_WAY = #{record.signupWay,jdbcType=VARCHAR},
+      RECRUIT_FLAG_REASON = #{record.recruitFlagReason,jdbcType=VARCHAR},
+      REVIEW_FLAG = #{record.reviewFlag,jdbcType=VARCHAR},
       RETEST_NOTICE = #{record.retestNotice,jdbcType=CLOB},
       ADMIT_NOTICE = #{record.admitNotice,jdbcType=CLOB},
-      PROV_REMARK = #{record.provRemark,jdbcType=CLOB}
+      PROV_REMARK = #{record.provRemark,jdbcType=CLOB},
+      GLOBAL_NOTICE = #{record.globalNotice,jdbcType=CLOB}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -1417,7 +1464,10 @@
       PROVINCE_CERTIFICATE_NO = #{record.provinceCertificateNo,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_FLOW = #{record.provinceCertificateFlow,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_STATUS = #{record.provinceCertificateStatus,jdbcType=VARCHAR},
-      PROVINCE_CERTIFICATE_DATE = #{record.provinceCertificateDate,jdbcType=VARCHAR}
+      PROVINCE_CERTIFICATE_DATE = #{record.provinceCertificateDate,jdbcType=VARCHAR},
+      SIGNUP_WAY = #{record.signupWay,jdbcType=VARCHAR},
+      RECRUIT_FLAG_REASON = #{record.recruitFlagReason,jdbcType=VARCHAR},
+      REVIEW_FLAG = #{record.reviewFlag,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -1707,6 +1757,15 @@
       <if test="provinceCertificateDate != null" >
         PROVINCE_CERTIFICATE_DATE = #{provinceCertificateDate,jdbcType=VARCHAR},
       </if>
+        <if test="signupWay != null">
+            SIGNUP_WAY = #{signupWay,jdbcType=VARCHAR},
+        </if>
+        <if test="recruitFlagReason != null">
+            RECRUIT_FLAG_REASON = #{recruitFlagReason,jdbcType=VARCHAR},
+        </if>
+        <if test="reviewFlag != null">
+            REVIEW_FLAG = #{reviewFlag,jdbcType=VARCHAR},
+        </if>
       <if test="retestNotice != null" >
         RETEST_NOTICE = #{retestNotice,jdbcType=CLOB},
       </if>
@@ -1715,6 +1774,9 @@
       </if>
       <if test="provRemark != null" >
         PROV_REMARK = #{provRemark,jdbcType=CLOB},
+      </if>
+        <if test="globalNotice != null">
+            GLOBAL_NOTICE = #{globalNotice,jdbcType=CLOB},
       </if>
     </set>
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
@@ -1815,9 +1877,13 @@
       PROVINCE_CERTIFICATE_FLOW = #{provinceCertificateFlow,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_STATUS = #{provinceCertificateStatus,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_DATE = #{provinceCertificateDate,jdbcType=VARCHAR},
+        SIGNUP_WAY          = #{signupWay,jdbcType=VARCHAR},
+        RECRUIT_FLAG_REASON = #{recruitFlagReason,jdbcType=VARCHAR},
+        REVIEW_FLAG         = #{reviewFlag,jdbcType=VARCHAR},
       RETEST_NOTICE = #{retestNotice,jdbcType=CLOB},
       ADMIT_NOTICE = #{admitNotice,jdbcType=CLOB},
-      PROV_REMARK = #{provRemark,jdbcType=CLOB}
+        PROV_REMARK         = #{provRemark,jdbcType=CLOB},
+        GLOBAL_NOTICE       = #{globalNotice,jdbcType=CLOB}
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pinde.core.model.ResDoctorRecruit" >
@@ -1915,10 +1981,23 @@
       PROVINCE_CERTIFICATE_NO = #{provinceCertificateNo,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_FLOW = #{provinceCertificateFlow,jdbcType=VARCHAR},
       PROVINCE_CERTIFICATE_STATUS = #{provinceCertificateStatus,jdbcType=VARCHAR},
-      PROVINCE_CERTIFICATE_DATE = #{provinceCertificateDate,jdbcType=VARCHAR}
+        PROVINCE_CERTIFICATE_DATE = #{provinceCertificateDate,jdbcType=VARCHAR},
+        SIGNUP_WAY                = #{signupWay,jdbcType=VARCHAR},
+        RECRUIT_FLAG_REASON       = #{recruitFlagReason,jdbcType=VARCHAR},
+        REVIEW_FLAG               = #{reviewFlag,jdbcType=VARCHAR}
     where RECRUIT_FLOW = #{recruitFlow,jdbcType=VARCHAR}
   </update>
-  <update id="updateCertificateNo" parameterType="list">
+
+    <select id="selectByDoctorFlow" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from RES_DOCTOR_RECRUIT where doctor_flow in
+        <foreach collection="docotrFlows" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="updateCertificateNo" parameterType="list">
     update RES_DOCTOR_RECRUIT set graduation_Certificate_No = #{no},
     CERTIFICATE_ISSUING_STATUS = #{CERTIFICATE_ISSUING_STATUS}
     where recruit_Flow = #{recordFlow}

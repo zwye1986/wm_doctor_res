@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResTrainingOpinionExtMapper" >
 
-	<select id="searchOpinionByUni" resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
+    <select id="searchOpinionByUni" resultMap="com.pinde.core.common.sci.dao.ResTrainingOpinionMapper.BaseResultMap">
 		SELECT
 				*
         FROM RES_TRAINING_OPINION
@@ -54,7 +54,8 @@
 		ORDER BY CREATE_TIME DESC
 	</select>
 
-	<select id="searchOpinionByUni4hb" parameterType="java.util.HashMap" resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
+    <select id="searchOpinionByUni4hb" parameterType="java.util.HashMap"
+            resultMap="com.pinde.core.common.sci.dao.ResTrainingOpinionMapper.BaseResultMap">
 		SELECT
 		*
 		FROM RES_TRAINING_OPINION rto
@@ -77,7 +78,8 @@
 		</if>
 		ORDER BY rto.EVA_TIME DESC
 	</select>
-	<select id="searchByOpinionUserContentAndReplayStatusNew"  resultMap="com.pinde.sci.dao.base.ResTrainingOpinionMapper.BaseResultMap">
+    <select id="searchByOpinionUserContentAndReplayStatusNew"
+            resultMap="com.pinde.core.common.sci.dao.ResTrainingOpinionMapper.BaseResultMap">
 		SELECT RTO.*
         FROM RES_TRAINING_OPINION RTO
 		LEFT join RES_DOCTOR RD ON RD.DOCTOR_FLOW = RTO.OPINION_USER_FLOW

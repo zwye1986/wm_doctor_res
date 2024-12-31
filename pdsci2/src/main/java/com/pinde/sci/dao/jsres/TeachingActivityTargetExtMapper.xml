@@ -18,7 +18,7 @@
     </resultMap>
 
     <!-- 查询教学活动评价指标信息 -->
-    <select id="searchTargetList" parameterType="com.pinde.sci.form.res.ActivityTargetForm" resultMap="targetMap">
+    <select id="searchTargetList" parameterType="com.pinde.core.model.ActivityTargetForm" resultMap="targetMap">
         SELECT
             TARGET_FLOW,
             TARGET_NAME,

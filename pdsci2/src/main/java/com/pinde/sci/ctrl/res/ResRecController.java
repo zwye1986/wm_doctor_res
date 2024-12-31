@@ -1,6 +1,7 @@
 package com.pinde.sci.ctrl.res;
 
 import com.pinde.core.common.enums.*;
+import com.pinde.core.common.sci.dao.ResScoreMapper;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
@@ -15,11 +16,6 @@ import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.biz.sch.ISchRotationDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
-import com.pinde.sci.dao.base.ResScoreMapper;
-import com.pinde.sci.form.res.ResAssessCfgItemForm;
-import com.pinde.sci.form.res.ResAssessCfgTitleForm;
-import com.pinde.sci.form.res.ResEvaluationCfgItemForm;
-import com.pinde.sci.form.res.ResEvaluationCfgTitleForm;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.dom4j.*;

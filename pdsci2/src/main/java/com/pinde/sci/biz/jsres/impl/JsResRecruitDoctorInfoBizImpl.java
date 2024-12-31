@@ -3,11 +3,11 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper;
 import com.pinde.core.common.sci.dao.JsresRecruitInfoMapper;
+import com.pinde.core.common.sci.dao.ResDoctorRecruitMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResRecruitDoctorInfoBiz;
-import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
-import com.pinde.sci.dao.base.ResRecruitHistoryMapper;
+import com.pinde.core.common.sci.dao.ResRecruitHistoryMapper;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.dao.jsres.JsResRecruitDoctorInfoExtMapper;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;

@@ -934,7 +934,8 @@ select * from (
     </select>
 
 
-    <select id="selectHospSuperList" parameterType="String" resultMap="com.pinde.sci.dao.base.ResHospSupervSubjectMapper.BaseResultMap">
+    <select id="selectHospSuperList" parameterType="String"
+            resultMap="com.pinde.core.common.sci.dao.ResHospSupervSubjectMapper.BaseResultMap">
         SELECT
         *
         FROM
@@ -973,7 +974,8 @@ select * from (
     </select>
 
 
-    <select id="hospitalLeaderScoreList" parameterType="String" resultMap="com.pinde.sci.dao.base.ResHospSupervSubjectMapper.BaseResultMap">
+    <select id="hospitalLeaderScoreList" parameterType="String"
+            resultMap="com.pinde.core.common.sci.dao.ResHospSupervSubjectMapper.BaseResultMap">
     SELECT  * FROM  RES_HOSP_SUPERV_SUBJECT
     WHERE
         ( LEADER_ONE_FLOW = #{userFlow} OR LEADER_TWO_FLOW = #{userFlow} OR LEADER_THREE_FLOW = #{userFlow} OR LEADER_FOUR_FLOW = #{userFlow} )
@@ -1000,7 +1002,8 @@ select * from (
 		ORDER BY RECORD_STATUS DESC, ORDINAL
     </select>
 
-    <select id="chooseTable" parameterType="String" resultMap="com.pinde.sci.dao.base.ResHospScoreTableMapper.BaseResultMap">
+    <select id="chooseTable" parameterType="String"
+            resultMap="com.pinde.core.common.sci.dao.ResHospScoreTableMapper.BaseResultMap">
 	    SELECT TABLE_FLOW, TABLE_NAME, TABLE_PATH_NAME, TABLE_TYPE_ID, TABLE_TYPE_NAME, SPE_ID, SPE_NAME,
 	        RECORD_STATUS, ORDER_NUM, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
         FROM RES_HOSP_SCORE_TABLE

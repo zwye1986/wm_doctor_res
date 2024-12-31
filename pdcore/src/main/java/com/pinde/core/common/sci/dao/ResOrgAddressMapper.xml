@@ -13,6 +13,7 @@
     <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+      <result column="ADDRESS_TYPE" property="addressType" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     RECORD_FLOW, ORG_FLOW, LONGITUDE, LATITUDE, ORG_ADDRESS, SCOPE_LENGTH, RECORD_STATUS, 
-    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+    CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, ADDRESS_TYPE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResOrgAddressExample" >
     select
@@ -106,15 +107,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.pinde.core.model.ResOrgAddress" >
+    <insert id="insert" parameterType="com.pinde.core.model.ResOrgAddress">
       insert into RES_ORG_ADDRESS (RECORD_FLOW, ORG_FLOW, LONGITUDE,
       LATITUDE, ORG_ADDRESS, SCOPE_LENGTH, 
-      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
-      MODIFY_TIME, MODIFY_USER_FLOW)
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
+                                   MODIFY_TIME, MODIFY_USER_FLOW, ADDRESS_TYPE)
     values (#{recordFlow,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{latitude,jdbcType=VARCHAR}, #{orgAddress,jdbcType=VARCHAR}, #{scopeLength,jdbcType=VARCHAR}, 
-      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR},
+            #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{addressType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.ResOrgAddress" >
       insert into RES_ORG_ADDRESS
@@ -152,6 +153,9 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
       </if>
+        <if test="addressType != null">
+            ADDRESS_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="recordFlow != null" >
@@ -187,9 +191,13 @@
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="addressType != null">
+            #{addressType,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.pinde.core.model.ResOrgAddressExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pinde.core.model.ResOrgAddressExample"
+            resultType="java.lang.Integer">
       select count(*) from RES_ORG_ADDRESS
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -231,6 +239,9 @@
       <if test="record.modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="record.addressType != null">
+            ADDRESS_TYPE = #{record.addressType,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -248,7 +259,8 @@
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      ADDRESS_TYPE = #{record.addressType,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,6 +298,9 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="addressType != null">
+            ADDRESS_TYPE = #{addressType,jdbcType=VARCHAR},
+        </if>
     </set>
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
@@ -300,7 +315,8 @@
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+        ADDRESS_TYPE     = #{addressType,jdbcType=VARCHAR}
     where RECORD_FLOW = #{recordFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -16,9 +16,7 @@ import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
 import com.pinde.core.common.enums.sch.SchArrangeTypeEnum;
 import com.pinde.core.common.enums.sch.SchStageEnum;
-import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
-import com.pinde.core.common.sci.dao.ResSchProcessExpressMapper;
-import com.pinde.core.common.sci.dao.SysOrgMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.excel.enums.NumberEngEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.model.SchArrangeResultExample.Criteria;
@@ -38,11 +36,9 @@ import com.pinde.sci.biz.sys.impl.CfgBizImpl;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.dao.base.*;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
-import com.pinde.sci.dao.sys.SysUserExtMapper;
 import com.pinde.sci.excelListens.SchedulingAuditCheck;
 import com.pinde.sci.excelListens.SchedulingAuditRead;
 import com.pinde.sci.excelListens.model.PbInfoItem;
@@ -148,8 +144,6 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	private SchArrangeResultMapper schArrangeResultMapper;
 	@Autowired
 	private IDeptBiz deptBiz;
-	@Autowired
-	private SysUserExtMapper sysUserExtMapper;
 	@Autowired
 	private ResDoctorRecruitMapper resDoctorRecruitMapper;
 	@Autowired

@@ -48,9 +48,10 @@
     <result column="REC_FORM" property="recForm" jdbcType="VARCHAR" />
     <result column="SCH_ROTATION_DEPT_FLOW" property="schRotationDeptFlow" jdbcType="VARCHAR" />
     <result column="MEDICINE_TYPE" property="medicineType" jdbcType="VARCHAR" />
+      <result column="QUERY_TYPE" property="queryType" jdbcType="VARCHAR"/>
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResRec" extends="BaseResultMap" >
-    <result column="REC_CONTENT" property="recContent" jdbcType="CLOB" />
+    <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResRec" extends="BaseResultMap">
+        <result column="REC_CONTENT" property="recContent" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -124,7 +125,9 @@
   <sql id="Blob_Column_List" >
     REC_CONTENT
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.pinde.core.model.ResRecExample" >
+    <!--selectByExampleWithBLOBs-->
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ResRecExample">
     select
     <if test="distinct" >
       distinct
@@ -140,7 +143,122 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResRecExample" >
+
+    <select id="searchRecAndActivityByProcess" resultMap="ResultMapWithBLOBs"
+            parameterType="com.pinde.core.model.ResRecExample">
+        select * from (
+        SELECT
+        distinct '1' QUERY_TYPE, INFO.ACTIVITY_FLOW REC_FLOW,INFO.ACTIVITY_NAME SCH_DEPT_NAME,SU.USER_NAME
+        AUDIT_USER_NAME,
+        INFO.ACTIVITY_TYPE_NAME REC_TYPE_NAME,INFO.ACTIVITY_REMARK REC_FORM ,SUBSTR (info.start_time, 0, 10) AS
+        CREATE_TIME,
+        '' ORG_FLOW, '' ORG_NAME, '' DEPT_FLOW, '' DEPT_NAME, '' SCH_DEPT_FLOW,
+        '' REC_TYPE_ID, '' ITEM_NAME, '' REC_VERSION, '' OPER_USER_FLOW, '' OPER_USER_NAME, ''
+        STATUS_ID, '' STATUS_NAME, '' AUDIT_TIME, '' AUDIT_USER_FLOW, '' AUDIT_STATUS_ID, ''
+        AUDIT_STATUS_NAME, '' HEAD_AUDIT_TIME, '' HEAD_AUDIT_USER_FLOW, '' HEAD_AUDIT_USER_NAME, ''
+        HEAD_AUDIT_STATUS_ID, ''
+        HEAD_AUDIT_STATUS_NAME, '' RECORD_STATUS, '' OPER_TIME, '' CREATE_USER_FLOW, '' MODIFY_TIME, ''
+        MODIFY_USER_FLOW, '' MANAGER_AUDIT_TIME, '' MANAGER_AUDIT_USER_FLOW, '' MANAGER_AUDIT_USER_NAME, ''
+        MANAGER_AUDIT_STATUS_ID, '' MANAGER_AUDIT_STATUS_NAME, '' ADMIN_AUDIT_TIME, '' ADMIN_AUDIT_USER_FLOW, ''
+        ADMIN_AUDIT_USER_NAME, '' ADMIN_AUDIT_STATUS_ID, '' ADMIN_AUDIT_STATUS_NAME, '' ITEM_ID, '' PROCESS_FLOW,
+        '' SCH_ROTATION_DEPT_FLOW, '' MEDICINE_TYPE,'' REC_CONTENT
+        FROM
+        TEACHING_ACTIVITY_RESULT R
+        LEFT JOIN TEACHING_ACTIVITY_INFO INFO ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        LEFT JOIN SCH_ARRANGE_RESULT SAR ON R.USER_FLOW = SAR.DOCTOR_FLOW
+        LEFT JOIN SCH_ROTATION_DEPT SRD ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+        AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+        LEFT JOIN SYS_USER SU ON SU.USER_FLOW = INFO.SPEAKER_FLOW
+        WHERE
+        R.RECORD_STATUS = 'Y'
+        AND SRD.RECORD_STATUS = 'Y'
+        AND INFO.RECORD_STATUS = 'Y'
+        AND SAR.RECORD_STATUS = 'Y'
+        AND INFO.IS_EFFECTIVE = 'Y'
+        AND R.IS_EFFECTIVE = 'Y'
+        AND R.USER_FLOW = #{doctorFlow}
+        <if test="schRotationDeptFlow !=null and schRotationDeptFlow!=''">
+            AND RECORD_FLOW = #{schRotationDeptFlow}
+        </if>
+        <if test="processFlow !=null and processFlow!=''">
+            and SAR.result_flow in ( select sch_result_flow from res_doctor_sch_process rsp where
+            process_flow=#{processFlow} )
+        </if>
+        AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+        SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+        (SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+        SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+        (SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+        SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+        union all
+        select
+        '2' QUERY_TYPE,REC_FLOW, SCH_DEPT_NAME,to_nchar(AUDIT_USER_NAME) AS
+        AUDIT_USER_NAME,REC_TYPE_NAME,REC_FORM,CREATE_TIME,
+        ORG_FLOW, ORG_NAME, DEPT_FLOW, DEPT_NAME, SCH_DEPT_FLOW,
+        REC_TYPE_ID, ITEM_NAME, REC_VERSION, OPER_USER_FLOW, OPER_USER_NAME,
+        STATUS_ID, STATUS_NAME, AUDIT_TIME, AUDIT_USER_FLOW, AUDIT_STATUS_ID,
+        AUDIT_STATUS_NAME, HEAD_AUDIT_TIME, HEAD_AUDIT_USER_FLOW, HEAD_AUDIT_USER_NAME, HEAD_AUDIT_STATUS_ID,
+        HEAD_AUDIT_STATUS_NAME, RECORD_STATUS, OPER_TIME, CREATE_USER_FLOW, MODIFY_TIME,
+        MODIFY_USER_FLOW, MANAGER_AUDIT_TIME, MANAGER_AUDIT_USER_FLOW, MANAGER_AUDIT_USER_NAME,
+        MANAGER_AUDIT_STATUS_ID, MANAGER_AUDIT_STATUS_NAME, ADMIN_AUDIT_TIME, ADMIN_AUDIT_USER_FLOW,
+        ADMIN_AUDIT_USER_NAME, ADMIN_AUDIT_STATUS_ID, ADMIN_AUDIT_STATUS_NAME, ITEM_ID, PROCESS_FLOW,
+        SCH_ROTATION_DEPT_FLOW, MEDICINE_TYPE,to_char(REC_CONTENT) REC_CONTENT
+        from RES_REC
+        WHERE RECORD_STATUS = 'Y'
+        AND REC_TYPE_ID = #{recTypeId}
+        <if test="schRotationDeptFlow !=null and schRotationDeptFlow!=''">
+            AND SCH_ROTATION_DEPT_FLOW = #{schRotationDeptFlow}
+        </if>
+        <if test="processFlow !=null and processFlow!=''">
+            AND PROCESS_FLOW = #{processFlow}
+        </if>
+
+        AND OPER_USER_FLOW = #{doctorFlow}
+        ) ORDER BY QUERY_TYPE,CREATE_TIME,REC_FLOW
+    </select>
+
+    <!-- 查询活动-->
+    <select id="searchRecActivity" resultType="java.util.Map" parameterType="Map">
+        SELECT substr(info.start_time, 0, 10) AS activity_date,INFO.ACTIVITY_TYPE_NAME activity_way,
+        SU.USER_NAME AS activity_speaker,'1' activity_period,
+        INFO.ACTIVITY_FLOW REC_FLOW,
+        INFO.ACTIVITY_NAME,
+        INFO.SPEAKER_FLOW,
+        INFO.ACTIVITY_TYPE_ID,
+        substr(info.start_time, 0, 10) START_TIME,
+        INFO.END_TIME,
+        INFO.ACTIVITY_ADDRESS,
+        INFO.ACTIVITY_REMARK,
+        NULL REC_CONTENT,
+        '' REC_TYPE_ID,
+        '1' ORNIAL,
+        INFO.CREATE_TIME
+        FROM TEACHING_ACTIVITY_RESULT R
+        LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+        ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+        LEFT JOIN SCH_ARRANGE_RESULT SAR
+        ON R.USER_FLOW = SAR.DOCTOR_FLOW
+        LEFT JOIN SCH_ROTATION_DEPT SRD
+        ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
+        AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+        LEFT JOIN SYS_USER SU ON SU.USER_FLOW =INFO.SPEAKER_FLOW
+        WHERE R.RECORD_STATUS = 'Y'
+        AND SRD.RECORD_STATUS = 'Y'
+        AND INFO.RECORD_STATUS = 'Y'
+        AND SAR.RECORD_STATUS = 'Y'
+        AND INFO.IS_EFFECTIVE = 'Y'
+        <!-- AND R.IS_EFFECTIVE = 'Y'
+        AND SRD.RECORD_FLOW = #{doctorFlow}
+        AND R.USER_FLOW = #{schRotationDeptFlow}-->
+        AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+        SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
+        (SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
+        SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
+        (SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
+        SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+        ORDER BY ORNIAL,CREATE_TIME,REC_FLOW
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.ResRecExample">
     select
     <if test="distinct" >
       distinct
@@ -154,7 +272,24 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+
+    <select id="selectByUserAndRecTypeList" resultType="com.pinde.core.model.ResRec">
+        select
+        <include refid="Base_Column_List"/>
+        from RES_REC
+        where record_status = 'Y'
+        <foreach collection="userFlowList" item="userFlow" open=" and OPER_USER_FLOW in (" close=")" separator=","
+                 index="">
+            #{userFlow, jdbcType=VARCHAR}
+        </foreach>
+        <if test="recTypeIdList != null and recTypeIdList.size() > 0">
+            <foreach collection="recTypeIdList" item="recTypeId" open=" and REC_TYPE_ID in (" close=")" separator=",">
+                #{recTypeId, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     ,

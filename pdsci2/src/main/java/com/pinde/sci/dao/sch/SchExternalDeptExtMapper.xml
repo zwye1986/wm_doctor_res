@@ -60,7 +60,8 @@
         AND EXTERNAL='Y'
     </select>
 
-    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt" extends="com.pinde.sci.dao.base.ResDoctorMapper.BaseResultMap">
+    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt"
+               extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>

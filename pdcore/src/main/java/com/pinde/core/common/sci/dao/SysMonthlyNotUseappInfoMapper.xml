@@ -25,6 +25,7 @@
     <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
     <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+      <result column="TRAINING_YEARS" property="trainingYears" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -88,9 +89,10 @@
     SMRDI_FLOW, DATE_MONTH, DOCTOR_FLOW, DOCTOR_NAME, ID_NO, USER_EMAIL, USER_PHONE, 
     DOCTOR_TYPE_ID, DOCTOR_TYPE_NAME, TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, 
     TRAINING_SPE_NAME, SECOND_SPE_ID, SECOND_SPE_NAME, SESSION_NUMBER, ORG_FLOW, ORG_NAME, 
-    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW
+    RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, MODIFY_TIME, MODIFY_USER_FLOW, TRAINING_YEARS
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfoExample" >
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.pinde.core.model.SysMonthlyNotUseappInfoExample">
     select
     <if test="distinct" >
       distinct
@@ -127,16 +129,16 @@
       TRAINING_TYPE_ID, TRAINING_TYPE_NAME, TRAINING_SPE_ID, 
       TRAINING_SPE_NAME, SECOND_SPE_ID, SECOND_SPE_NAME, 
       SESSION_NUMBER, ORG_FLOW, ORG_NAME, 
-      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW, 
-      MODIFY_TIME, MODIFY_USER_FLOW)
+      RECORD_STATUS, CREATE_TIME, CREATE_USER_FLOW,
+                                               MODIFY_TIME, MODIFY_USER_FLOW, TRAINING_YEARS)
     values (#{smrdiFlow,jdbcType=VARCHAR}, #{dateMonth,jdbcType=VARCHAR}, #{doctorFlow,jdbcType=VARCHAR}, 
       #{doctorName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, 
       #{userPhone,jdbcType=VARCHAR}, #{doctorTypeId,jdbcType=VARCHAR}, #{doctorTypeName,jdbcType=VARCHAR}, 
       #{trainingTypeId,jdbcType=VARCHAR}, #{trainingTypeName,jdbcType=VARCHAR}, #{trainingSpeId,jdbcType=VARCHAR}, 
       #{trainingSpeName,jdbcType=VARCHAR}, #{secondSpeId,jdbcType=VARCHAR}, #{secondSpeName,jdbcType=VARCHAR}, 
       #{sessionNumber,jdbcType=VARCHAR}, #{orgFlow,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
-      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR})
+      #{recordStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createUserFlow,jdbcType=VARCHAR},
+            #{modifyTime,jdbcType=VARCHAR}, #{modifyUserFlow,jdbcType=VARCHAR}, #{trainingYears,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfo" >
       insert into SYS_MONTHLY_NOT_USEAPP_INFO
@@ -210,6 +212,9 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW,
       </if>
+        <if test="trainingYears != null">
+            TRAINING_YEARS,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="smrdiFlow != null" >
@@ -281,6 +286,9 @@
       <if test="modifyUserFlow != null" >
         #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="trainingYears != null">
+            #{trainingYears,jdbcType=VARCHAR},
+        </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pinde.core.model.SysMonthlyNotUseappInfoExample" resultType="java.lang.Integer" >
@@ -361,6 +369,9 @@
       <if test="record.modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="record.trainingYears != null">
+            TRAINING_YEARS = #{record.trainingYears,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -390,7 +401,8 @@
       CREATE_TIME = #{record.createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{record.createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{record.modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR}
+      MODIFY_USER_FLOW = #{record.modifyUserFlow,jdbcType=VARCHAR},
+      TRAINING_YEARS = #{record.trainingYears,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -464,6 +476,9 @@
       <if test="modifyUserFlow != null" >
         MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
       </if>
+        <if test="trainingYears != null">
+            TRAINING_YEARS = #{trainingYears,jdbcType=VARCHAR},
+        </if>
     </set>
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
@@ -490,7 +505,8 @@
       CREATE_TIME = #{createTime,jdbcType=VARCHAR},
       CREATE_USER_FLOW = #{createUserFlow,jdbcType=VARCHAR},
       MODIFY_TIME = #{modifyTime,jdbcType=VARCHAR},
-      MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR}
+        MODIFY_USER_FLOW = #{modifyUserFlow,jdbcType=VARCHAR},
+        TRAINING_YEARS   = #{trainingYears,jdbcType=VARCHAR}
     where SMRDI_FLOW = #{smrdiFlow,jdbcType=VARCHAR}
   </update>
 </mapper>

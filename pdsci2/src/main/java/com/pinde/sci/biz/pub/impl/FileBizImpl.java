@@ -2,6 +2,7 @@ package com.pinde.sci.biz.pub.impl;
 
 
 import com.pinde.core.common.sci.dao.PubFileMapper;
+import com.pinde.core.common.sci.dao.ResDoctorRecruitMapper;
 import com.pinde.core.model.PubFile;
 import com.pinde.core.model.PubFileExample;
 import com.pinde.core.model.PubFileExample.Criteria;
@@ -15,7 +16,6 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
-import com.pinde.sci.dao.base.ResDoctorRecruitMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
