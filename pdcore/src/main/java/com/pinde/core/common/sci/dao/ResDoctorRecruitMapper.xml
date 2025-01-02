@@ -2002,9 +2002,9 @@
     CERTIFICATE_ISSUING_STATUS = #{CERTIFICATE_ISSUING_STATUS}
     where recruit_Flow = #{recordFlow}
   </update>
-  <update id="updateNotCertificateNo" parameterType="list">
+  <update id="updateNotCertificateNo" parameterType="String">
     update RES_DOCTOR_RECRUIT set graduation_Certificate_No = null,
                                   CERTIFICATE_ISSUING_STATUS = null
-    where recruit_Flow = #{recordFlow}
+    where recruit_Flow = #{recruitFlow}
   </update>
 </mapper>
