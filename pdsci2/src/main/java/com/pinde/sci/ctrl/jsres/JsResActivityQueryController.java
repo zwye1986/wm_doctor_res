@@ -2,6 +2,7 @@ package com.pinde.sci.ctrl.jsres;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.sci.dao.TeachingActivitySpeakerMapper;
 import com.pinde.core.model.*;
@@ -213,7 +214,8 @@ public class JsResActivityQueryController extends GeneralController {
 					resultMap.put((String) info.get("activityFlow"),results);
 					//查询附件
 					List<PubFile> fileList = fileBiz.findFileByTypeFlow("activity", (String) info.get("activityFlow"));
-					if (CollectionUtils.isNotEmpty(fileList)) info.put("fileFlow", fileList.size());
+					info.put("fileFlag", (fileList != null && fileList.size() > 0 ? GlobalConstant.FLAG_Y : GlobalConstant.FLAG_N));
+//					if (CollectionUtils.isNotEmpty(fileList)) info.put("fileFlow", fileList.size());
 				}
 
 			}

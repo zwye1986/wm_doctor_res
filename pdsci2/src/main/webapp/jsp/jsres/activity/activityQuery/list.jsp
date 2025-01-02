@@ -445,22 +445,22 @@ function lookSearchFile(activityFlow,role) {
 	                <td>
 						<c:if test="${(param.roleFlag eq 'teach' or param.roleFlag eq 'head') and sessionScope.currUser.userFlow eq b.speakerFlow
 										or param.roleFlag eq 'secretary'}">
-							<c:if test="${not empty b.fileFlow}">
+							<c:if test="${b.fileFlag eq 'Y'}">
 <%--								<a href="<s:url value='/jsres/activityQuery/downFile'/>?fileFlow=${b.fileFlow}"><img style="cursor:pointer" title="${b.fileName}" src="<s:url value='/jsp/jsres/images/manual.png'/>"></a>--%>
 <%--								<a  href="javascript:void(0);" onclick="uploadFile('${b.activityFlow}','${b.fileFlow}',this);">重传</a>--%>
 								<a  href="javascript:void(0);" onclick="searchFile('${b.activityFlow}','${param.roleFlag}');">查看</a>
 							</c:if>
-							<c:if test="${empty b.fileFlow}">
+							<c:if test="${b.fileFlag eq 'N'}">
 <%--								<a  href="javascript:void(0);" onclick="uploadFile('${b.activityFlow}','${b.fileFlow}',this);">上传</a>--%>
 								<a  href="javascript:void(0);" onclick="searchFile('${b.activityFlow}','${param.roleFlag}');">上传</a>
 							</c:if>
 						</c:if>
 						<c:if test="${!(((param.roleFlag eq 'teach'or param.roleFlag eq 'head') and sessionScope.currUser.userFlow eq b.speakerFlow)
 											or param.roleFlag eq 'secretary')}">
-							<c:if test="${empty b.fileFlow}">
+							<c:if test="${b.fileFlag eq 'N'}">
 								无
 							</c:if>
-							<c:if test="${not empty b.fileFlow}">
+							<c:if test="${b.fileFlag eq 'Y'}">
 <%--								<a href="<s:url value='/jsres/activityQuery/downFile'/>?fileFlow=${b.fileFlow}">--%>
 <%--									<img style="cursor:pointer" title="${b.fileName}" src="<s:url value='/jsp/jsres/images/manual.png'/>"></a>--%>
 								<a  href="javascript:void(0);" onclick="lookSearchFile('${b.activityFlow}','${param.roleFlag}');">查看</a>
