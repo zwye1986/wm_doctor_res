@@ -6897,11 +6897,24 @@ public class JsResManageController extends GeneralController {
 				//验证惟一用户登录名
 				if(StringUtil.isNotBlank(sysUser.getUserCode())){
 					SysUserExample example=new SysUserExample();
-                    example.createCriteria().andOrgFlowEqualTo(user.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode()).andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                    example.createCriteria().andOrgFlowEqualTo(user.getOrgFlow()).andUserCodeEqualTo(sysUser.getUserCode())/*.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)*/;
 					List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
 					if(sysUserList != null && !sysUserList.isEmpty()){
 						errorMsg.add("导入失败！第"+(row+2) +"行，当前系统已存在登录名为"+sysUser.getUserCode()+"的用户");
 						continue;
+					}
+				}
+
+				if(StringUtils.isNotBlank(sysUser.getUserPhone())){
+					SysUserExample example=new SysUserExample();
+					example.createCriteria().andUserPhoneEqualTo(sysUser.getUserPhone())/*.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)*/;
+					List<SysUser> sysUserList = sysUserMapper.selectByExample(example);
+					if(CollectionUtils.isNotEmpty(sysUserList)){
+						for(SysUser su : sysUserList){
+							su.setUserPhone(null);
+							sysUserMapper.updateByPrimaryKey(su);
+							logger.info("phone number already exsits  ,user = {},set null",JSON.toJSONString(su));
+						}
 					}
 				}
 
