@@ -1226,10 +1226,15 @@
         order by nlssort(rd.DOCTOR_NAME,'NLS_SORT=SCHINESE_PINYIN_M')
     </select>
     <select id="getUserByRecAndAvgScore" resultMap="teacherRecMap">
-        SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_name, su.user_Flow, su.user_code, su.dept_flow, su.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
+        SELECT ROUND(avg(dtgi.all_score),1) avg,substr(dtgi.CREATE_TIME,1,4) CREATE_YEAR,su.user_flow,su.user_name, WM_CONCAT(distinct sud.DEPT_NAME) DEPT_NAME,su.user_code,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
         FROM res_doctor_sch_process rdsp
         JOIN DEPT_TEACHER_GRADE_INFO dtgi ON rdsp.process_flow = dtgi.process_flow
         JOIN sys_User su ON rdsp.teacher_user_flow = su.user_Flow
+
+        join sys_dept sd on sd.org_flow = #{orgFlow} and sd.record_status = 'Y'
+        join sys_user_dept sud on rdsp.teacher_user_flow = sud.user_flow and sud.org_flow = #{orgFlow}
+        and sud.record_status = 'Y' and sd.dept_flow = sud.dept_flow
+
         inner join RES_ASSESS_CFG cfg on dtgi.CFG_FLOW = cfg.CFG_FLOW and cfg.record_status = 'Y' and cfg.FORM_STATUS_ID = 'Y'
         WHERE rdsp.record_status = 'Y'
         AND dtgi.record_status = 'Y'
@@ -1260,10 +1265,10 @@
             and rdsp.teacher_user_flow = #{userFlow}
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
-            and su.dept_flow = #{deptFlow}
+            and sd.dept_flow = #{deptFlow}
         </if>
         <if test='deptName!=null and deptName!=""'>
-            and su.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
+            and sd.dept_Name like CONCAT(CONCAT('%', #{deptName}),'%')
         </if>
         <if test='deptFlows!=null and deptFlows.size()>0'>
             and rdsp.dept_flow in
@@ -1277,7 +1282,7 @@
                 #{item}
             </foreach>
         </if>
-        group by substr(dtgi.CREATE_TIME,1,4),su.user_name, su.user_Flow, su.user_code,su.dept_flow, su.dept_name,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
+        group by substr(dtgi.CREATE_TIME,1,4),su.user_name, su.user_Flow, su.user_code,dtgi.CFG_FLOW,cfg.CFG_CODE_NAME,cfg.TOTAL_SCORE
         <if test='startScore!=null and startScore!=""and endScore!= null and endScore!=""'>
             having avg(dtgi.all_score) <![CDATA[<=]]> #{endScore} and avg(dtgi.all_score) <![CDATA[>=]]> #{startScore}
         </if>
