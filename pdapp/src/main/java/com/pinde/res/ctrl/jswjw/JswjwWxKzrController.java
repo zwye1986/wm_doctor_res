@@ -394,6 +394,7 @@ public class JswjwWxKzrController extends GeneralController {
 				map.put("sessionNumber",m.get("sessionNumber"));
 				map.put("speName",m.get("speName"));
 				map.put("teacherUserName",m.get("teacherUserName"));
+				map.put("headUserName",m.get("headUserName"));
 				map.put("processFlow",m.get("processFlow"));
 				map.put("orgFlow",m.get("orgFlow"));
 				map.put("orgName",m.get("orgName"));
