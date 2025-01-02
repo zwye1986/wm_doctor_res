@@ -2,7 +2,7 @@
 <%@ page import="com.pinde.core.model.ResTarinNotice" %>
 <%@ page import="com.pinde.res.biz.jswjw.IResLiveTrainingBiz" %>
 <%@ page import="com.pinde.res.biz.jswjw.impl.ResLiveTrainingBizImpl" %>
-<%@ page import="com.pinde.sci.dao.base.ResTarinNoticeMapper" %>
+<%@ page import="com.pinde.core.common.sci.dao.ResTarinNoticeMapper" %>
 <%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	 pageEncoding="UTF-8"%>
 <%@include file="/jsp/common/doctype.jsp" %>
