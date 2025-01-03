@@ -253,7 +253,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			file = new File(tempDir + File.separator + schExamArrangement.getAssessmentYear() + schExamArrangement.getOrgName() + sessionNumber + trainingSpeId + uid + "_导入排班.xls"); // 创建File对象指定文件路径
 			fos = new FileOutputStream(file);
 			fos.write(stream); // 将byte数组写入文件
-
+			builder.addBinaryBody("file", file, ContentType.DEFAULT_BINARY, file.getName());
 			// 构建实体
 			HttpEntity multipart = builder.build();
 			httpPost.setEntity(multipart);
