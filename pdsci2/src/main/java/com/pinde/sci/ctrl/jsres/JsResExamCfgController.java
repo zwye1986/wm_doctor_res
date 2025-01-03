@@ -108,7 +108,7 @@ public class JsResExamCfgController extends GeneralController {
             // 增加考试操作：新增试卷，导入排班关联学员考试
             String paperFlow = examCfgBiz.generateExam(schExamArrangement, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
             // 生成试卷后再导入排班
-            examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+            examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken, false);
         } catch (RuntimeException e) {
             return e.getMessage();
         }
@@ -148,7 +148,7 @@ public class JsResExamCfgController extends GeneralController {
                     }
 
                     // 生成试卷后再导入排班
-                    examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, trainingSpeId, sessionNumber, accessToken);
+                    examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, trainingSpeId, sessionNumber, accessToken, true);
                     // 下面开新事物，保证可以部分成功，两边状态一致（前面for中成功了，后面for失败了不影响前面成功的）
                     examCfgBiz.updateArrangements(schExamArrangement,standardDeptId,Arrays.asList(trainingSpeId),Arrays.asList(sessionNumber), paperFlow);
                 }
