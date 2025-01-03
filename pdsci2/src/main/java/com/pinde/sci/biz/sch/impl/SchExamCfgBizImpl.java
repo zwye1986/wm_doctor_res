@@ -284,13 +284,13 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			}
         } catch (Exception e) {
 			log.error("generateDoctorExam warn, send post error", e);
+			if(newPaper) { // 新增时
+				// 导入排班失败，删除试卷
+				deleteExam(paperFlow, accessToken);
+			}
 			throw new RuntimeException(e);
 		}finally {
 			try {
-				if(newPaper) { // 新增时
-					// 导入排班失败，删除试卷
-					deleteExam(paperFlow, accessToken);
-				}
 				if(file != null && file.exists()) { // 不删，保留可以好查导入失败的原因
 	//				file.delete();
 				}
