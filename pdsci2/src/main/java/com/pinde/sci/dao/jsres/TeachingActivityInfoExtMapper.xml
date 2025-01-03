@@ -691,7 +691,7 @@
 
 
     <select id="findActivityList3" resultMap="activityMap">
-        SELECT distinct INFO.ACTIVITY_FLOW,
+        SELECT INFO.ACTIVITY_FLOW,
         INFO.ACTIVITY_NAME,
         INFO.DEPT_FLOW,
         INFO.ORG_FLOW,
@@ -726,6 +726,7 @@
         INFO.ACTIVITY_TYPE_NAME_OLD,
         INFO.REASON_FOR_DISAGREEMENT,
         INFO.IS_LOOK,
+        INFO.IMAGE_URL,
         SU.USER_CODE AS USER_CODE,
         CASE
         WHEN SU.USER_NAME = INFO.REALITY_SPEAKER THEN
@@ -747,6 +748,7 @@
         SELECT USER_NAME, USER_CODE, RECORD_STATUS,ROW_NUMBER() OVER (PARTITION BY USER_NAME ORDER BY USER_CODE) AS RN
         FROM SYS_USER
         ) SU2 ON INFO.REALITY_SPEAKER = SU2.USER_NAME AND SU2.RN = 1
+        AND COALESCE( SU2.RECORD_STATUS, 'Y' ) = 'Y'
         LEFT JOIN SYS_DEPT D
         ON D.DEPT_FLOW = INFO.DEPT_FLOW
         LEFT JOIN (SELECT ACTIVITY_FLOW, To_char(ROUND(SUM(EVAL_SCORE) / COUNT(EVAL_SCORE))) EVAL_SCORE,count(1) SCAN_NUM
@@ -777,7 +779,6 @@
         <!--            and ED.SCHOOL = #{school}-->
         <!--        </if>-->
         AND SU.RECORD_STATUS = 'Y'
-        AND COALESCE( SU2.RECORD_STATUS, 'Y' ) = 'Y'
         AND D.RECORD_STATUS = 'Y'
         <if test='roleFlag!=null and roleFlag!=""'>
             <if test="roleFlag=='teach'.toString()">
@@ -855,12 +856,6 @@
         </if>
         <if test='activityName!=null and activityName!=""'>
             AND INFO.ACTIVITY_NAME LIKE CONCAT(CONCAT('%', #{activityName}),'%')
-        </if>
-        <if test='activityTypeId!=null and activityTypeId!=""'>
-            AND INFO.ACTIVITY_TYPE_ID in
-            <foreach collection='activityTypeId.split(",")' item="typeId" open="(" close=")" separator=",">
-                #{typeId}
-            </foreach>
         </if>
         <if test='activityTypeId!=null and activityTypeId!=""'>
             AND INFO.ACTIVITY_TYPE_ID in

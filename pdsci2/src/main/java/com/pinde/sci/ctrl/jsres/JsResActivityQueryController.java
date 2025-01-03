@@ -226,9 +226,9 @@ public class JsResActivityQueryController extends GeneralController {
 		return "jsres/activity/activityQuery/list";
 	}
 	@RequestMapping(value="/exportList")
-	public void exportList(Model model,Integer currentPage,String activityName,String  roleFlag,String isEffective,
+	public void exportList(Model model, String activityName,String  roleFlag,String isEffective,
 					   String userName,String[] activityTypeId,String deptFlow,String[] deptName,String isNew,String isEval,
-					   String startTime,String endTime, HttpServletRequest request, HttpServletResponse response) throws Exception {
+					   String startTime,String endTime, String isUploadImg, HttpServletResponse response) throws Exception {
 		SysUser curUser=GlobalContext.getCurrentUser();
 		Map<String,String> param=new HashMap<>();
 		param.put("activityName",activityName);
@@ -247,6 +247,7 @@ public class JsResActivityQueryController extends GeneralController {
 		param.put("roleFlag",roleFlag);
 		param.put("userFlow",curUser.getUserFlow());
 		param.put("isEffective",isEffective);
+		param.put("isUploadImg",isUploadImg);
 		model.addAttribute("nowDate", DateUtil.getCurrDateTime("yyyy-MM-dd HH:mm"));
 		if("doctor".equals(roleFlag))
 		{
