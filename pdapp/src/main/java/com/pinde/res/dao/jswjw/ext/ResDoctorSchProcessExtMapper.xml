@@ -452,10 +452,10 @@
         on su.user_flow = rdsp.user_flow
         left join sys_user tu
         on tu.user_flow = rdsp.teacher_user_flow
+        and tu.record_status = 'Y'
         where rdsp.record_status = 'Y'
         and rd.record_status = 'Y'
         and su.record_status = 'Y'
-        and tu.record_status = 'Y'
         and sar.record_status = 'Y'
         and nvl((select CFG_VALUE
         from jsres_power_cfg cfg
