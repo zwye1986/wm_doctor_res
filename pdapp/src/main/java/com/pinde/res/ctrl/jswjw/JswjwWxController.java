@@ -5442,8 +5442,8 @@ public class JswjwWxController extends GeneralController {
         if (StringUtil.isEmpty(typeId)) {
             return ResultDataThrow("类型标识符为空");
         }
-        if (!"isNew".equals(typeId) && !"isEval".equals(typeId)) {
-            return ResultDataThrow("类型标识符不正确,isNew，isEval");
+        if (!"isNew".equals(typeId) && !"isEval".equals(typeId) && !"isCurrent".equals(typeId)) {
+            return ResultDataThrow("类型标识符不正确,isNew，isEval， isCurrent");
         }
         if (pageIndex == null) {
             return ResultDataThrow("当前页码为空");
@@ -5461,6 +5461,9 @@ public class JswjwWxController extends GeneralController {
         }
         if ("isEval".equals(typeId)) {
             param.put("isEval", com.pinde.core.common.GlobalConstant.FLAG_Y);//活动评价
+        }
+        if ("isCurrent".equals(typeId)) {
+            param.put("now", com.pinde.core.common.GlobalConstant.FLAG_Y);//当前活动
         }
         param.put("roleFlag", "doctor");
         param.put("userFlow", userFlow);
