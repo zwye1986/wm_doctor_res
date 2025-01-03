@@ -10,7 +10,7 @@ public interface ISchExamCfgBiz {
 
 	String generateExam(SchExamArrangement schExamArrangement, String trainingSpeId, String sessionNumber, String accessToken);
 
-	void generateDoctorExam(SchExamArrangement schExamArrangement, String paperFlow, String trainingSpeId, String sessionNumber, String accessToken);
+	void generateDoctorExam(SchExamArrangement schExamArrangement, String paperFlow, String trainingSpeId, String sessionNumber, String accessToken, boolean newPaper);
 
 	boolean deleteExam(String paperFlow, String accessToken);
 
