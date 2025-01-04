@@ -388,7 +388,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		{
 			criteria.andAssessmentYearEqualTo(seam.getAssessmentYear());
 		}
-		example.setOrderByClause("ASSESSMENT_YEAR,TRAINING_TYPE_ID");
+		example.setOrderByClause("ASSESSMENT_YEAR DESC,TRAINING_TYPE_ID");
 		return schExamArrangementMapper.selectByExample(example);
 	}
 
