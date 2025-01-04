@@ -141,6 +141,7 @@ public class JsResExamCfgController extends GeneralController {
         try {
             for(String trainingSpeId: Arrays.asList(itemId)) {
                 for(String sessionNumber: sessionNumbers.split(",")) {
+                    schExamArrangement.setPaperFlow(null); // schExamArrangement在更新时会set一下paperFlow，这里给还原，保证是更新而不是插入
                     String paperFlow = examCfgBiz.generateExam(schExamArrangement, trainingSpeId, sessionNumber, accessToken);
 
                     if(StringUtils.isEmpty(paperFlow)) {
