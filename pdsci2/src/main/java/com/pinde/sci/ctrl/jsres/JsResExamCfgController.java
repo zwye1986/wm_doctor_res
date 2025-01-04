@@ -103,16 +103,19 @@ public class JsResExamCfgController extends GeneralController {
         {
             return "cannotInsert";
         }
-        String accessToken = loginAndToken();
-        try {
-            // 增加考试操作：新增试卷，导入排班关联学员考试
-            String paperFlow = examCfgBiz.generateExam(schExamArrangement, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
-            // 生成试卷后再导入排班
-            examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken, false);
-        } catch (RuntimeException e) {
-            return e.getMessage();
-        }
 
+        // 当paperFlow不为空时，说明是对接的java版的新考试系统，而不是老的.net的，按新逻辑，住培和考试两边一起更新
+        if(org.apache.commons.lang3.StringUtils.isNotEmpty(schExamArrangement.getPaperFlow())) {
+            String accessToken = loginAndToken();
+            try {
+                // 增加考试操作：新增试卷，导入排班关联学员考试
+                String paperFlow = examCfgBiz.generateExam(schExamArrangement, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken);
+                // 生成试卷后再导入排班
+                examCfgBiz.generateDoctorExam(schExamArrangement, paperFlow, schExamArrangement.getTrainingSpeId(), schExamArrangement.getSessionNumber(), accessToken, false);
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
+        }
         int result = examCfgBiz.updateArrangement(schExamArrangement, standardDeptId, com.pinde.core.common.GlobalConstant.FLAG_N);
         if(result==0)
         {
@@ -142,6 +145,7 @@ public class JsResExamCfgController extends GeneralController {
             for(String trainingSpeId: Arrays.asList(itemId)) {
                 for(String sessionNumber: sessionNumbers.split(",")) {
                     schExamArrangement.setPaperFlow(null); // schExamArrangement在更新时会set一下paperFlow，这里给还原，保证是更新而不是插入
+                    schExamArrangement.setArrangeFlow(null); // 这里也给设成null,防止新增变成更新
                     String paperFlow = examCfgBiz.generateExam(schExamArrangement, trainingSpeId, sessionNumber, accessToken);
 
                     if(StringUtils.isEmpty(paperFlow)) {
@@ -197,9 +201,11 @@ public class JsResExamCfgController extends GeneralController {
             if(checkCount>0) {
                 return "已有学员参加过考试，无法删除！";
             }
-
-            // 同步对考试系统删除试卷
-            examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+            // 与编辑时类似，如果有paperFlow，说明对接的是新的java版的考试系统，要把考试系统的数据同时删除
+            if(org.apache.commons.lang3.StringUtils.isNotEmpty(schExamArrangement.getPaperFlow())) {
+                // 同步对考试系统删除试卷
+                examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+            }
         }
 
         int result=examCfgBiz.updateCfg(schExamArrangement);

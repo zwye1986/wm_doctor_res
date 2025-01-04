@@ -252,9 +252,9 @@
 						</td>
 						<th><font id="yearScope" color="red">*</font>年度区间：</th>
 						<td colspan="5">
-							<input style="width: 100px;" type="text" id="assessmentStartTime" name="assessmentStartTime" value="${ment.assessmentStartTime }" class="input" readonly="readonly" />
+							<input style="width: 100px;" type="text" id="assessmentStartTime" name="assessmentStartTime" value="${ment.assessmentStartTime }" class="validate[required] input" readonly="readonly" />
 							~
-							<input style="width: 100px;" type="text" id="assessmentEndTime" name="assessmentEndTime" value="${ment.assessmentEndTime }" class="input" readonly="readonly"/>
+							<input style="width: 100px;" type="text" id="assessmentEndTime" name="assessmentEndTime" value="${ment.assessmentEndTime }" class="validate[required] input" readonly="readonly"/>
 						</td>
 					</tr>
 					<tr>
@@ -291,15 +291,15 @@
                             考核时长：
                         </th>
                         <td >
-                            <input style="width: 30px;" type="text" name="examDuration" value="${ment.examDuration}" class="validate[custom[positiveNum]] input"/>分钟
+                            <input style="width: 30px;" type="text" name="examDuration" value="${ment.examDuration}" class="validate[required,custom[positiveNum]] input"/>分钟
                         </td>
                         <th>
                             考核时间：
                         </th>
                         <td colspan="4">
-                            <input style="width: 150px;" type="text" name="examStartTime" id="examStartTime" value="${ment.examStartTime}" class="input" onchange="checkExamTime(this)"/>
+                            <input style="width: 150px;" type="text" name="examStartTime" id="examStartTime" value="${ment.examStartTime}" class="validate[required] input" onchange="checkExamTime(this)"/>
                         ~
-                            <input style="width: 150px;" type="text" name="examEndTime"  id="examEndTime" value="${ment.examEndTime}" class="input" onchange="checkExamTime(this)"/>
+                            <input style="width: 150px;" type="text" name="examEndTime"  id="examEndTime" value="${ment.examEndTime}" class="validate[required] input" onchange="checkExamTime(this)"/>
                         </td>
 					</tr>
 					<tr>
