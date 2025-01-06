@@ -1025,29 +1025,46 @@
 				   AND T.RECORD_FLOW = RES_REC.SCH_ROTATION_DEPT_FLOW)
 	</update>
 	<select id="getJoinActivityNumByDeptFlow" resultType="integer">
-		SELECT COUNT(1)
-		  FROM TEACHING_ACTIVITY_RESULT R
-		  LEFT JOIN TEACHING_ACTIVITY_INFO INFO
+		SELECT
+			NVL (SUM(ACTIVITY_NUM), 0)
+		FROM
+			(
+			SELECT
+				COUNT(1) AS ACTIVITY_NUM
+			FROM TEACHING_ACTIVITY_RESULT R
+			LEFT JOIN TEACHING_ACTIVITY_INFO INFO
 			ON R.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
-		  LEFT JOIN SCH_ARRANGE_RESULT SAR
+			LEFT JOIN SCH_ARRANGE_RESULT SAR
 			ON R.USER_FLOW = SAR.DOCTOR_FLOW
-		  LEFT JOIN SCH_ROTATION_DEPT SRD
+			LEFT JOIN SCH_ROTATION_DEPT SRD
 			ON SAR.STANDARD_GROUP_FLOW = SRD.GROUP_FLOW
-		   AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
-		 WHERE R.RECORD_STATUS = 'Y'
-		   AND SRD.RECORD_STATUS = 'Y'
-		   AND INFO.RECORD_STATUS = 'Y'
-		   AND SAR.RECORD_STATUS = 'Y'
-		   AND INFO.IS_EFFECTIVE = 'Y'
-		   AND R.IS_EFFECTIVE = 'Y'
-		   AND SRD.RECORD_FLOW = #{deptFlow}
-		   AND R.USER_FLOW = #{userFlow}
-		   AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
+			AND SAR.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+			WHERE
+				R.RECORD_STATUS = 'Y'
+			AND SRD.RECORD_STATUS = 'Y'
+			AND INFO.RECORD_STATUS = 'Y'
+			AND SAR.RECORD_STATUS = 'Y'
+			AND INFO.IS_EFFECTIVE = 'Y'
+			AND R.IS_EFFECTIVE = 'Y'
+			AND SRD.RECORD_FLOW = #{deptFlow}
+			AND R.USER_FLOW = #{userFlow}
+			AND ((SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.start_time, 0, 10) AND
 			   SAR.SCH_END_DATE >= substr(info.end_time, 0, 10)) or
 			   (SAR.SCH_START_DATE >= substr(info.start_time, 0, 10) AND
 			   SAR.SCH_START_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)) or
 			   (SAR.SCH_END_DATE >= substr(info.start_time, 0, 10) AND
 			   SAR.SCH_END_DATE <![CDATA[ <= ]]> substr(info.end_time, 0, 10)))
+			UNION ALL
+			SELECT
+				COUNT (1) AS ACTIVITY_NUM
+			FROM
+				RES_REC
+			WHERE
+				RECORD_STATUS = 'Y'
+			  AND REC_TYPE_ID = 'CampaignRegistry'
+			  AND OPER_USER_FLOW = #{userFlow}
+			  AND SCH_ROTATION_DEPT_FLOW = #{deptFlow}
+		) T
 	</select>
 	<select id="searchByRecWithBLOBsByMap4Hb" resultMap="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs" parameterType="map">
 		select * from res_rec
