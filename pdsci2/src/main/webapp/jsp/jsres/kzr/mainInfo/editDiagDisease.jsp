@@ -25,6 +25,36 @@
     }
 </style>
 <script type="text/javascript">
+    var isNextPressed = false;
+    $(function(){
+        // 诊疗疾病和设备仪器页面，按enter键或tab键到下一个填写位置
+        $('#BaseInfoForm').off('keydown').on('keydown', function(event) {
+            // enter :13    tab: 9
+            var keyNum = event.keyCode || event.which || event.charCode;
+            if (keyNum == 13 || keyNum == 9) {
+                if (!isNextPressed) {
+                    // isNextPressed = true;
+                    // 执行相关操作
+                    var textInput = $("#BaseInfoForm input[type='text']");
+                    var focusNext = 0;
+                    for(var i = 0; i < textInput.length; i++) {
+                        if(document.activeElement.id == textInput[i].id) {
+                            focusNext = (i + 1) % textInput.length;
+                            break;
+                        }
+                    }
+                    $(textInput[focusNext]).focus();
+
+                    // tips: 【暂不设置延时】，设置一个延时，以便在下一次键盘事件处理前重置标志变量
+                    // setTimeout(function() {
+                    //     isNextPressed = false;
+                    // }, 100);
+                }
+                event.preventDefault();
+            }
+        });
+    });
+
     function saveBaseInfo() {
         jboxTip("保存成功！");
         loadInfo('${GlobalConstant.DIAG_DISEASE}','${deptFlow}');
