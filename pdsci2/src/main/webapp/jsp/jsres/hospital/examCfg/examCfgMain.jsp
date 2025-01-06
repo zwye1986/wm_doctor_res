@@ -83,8 +83,11 @@
 		jboxConfirm("确认删除该年度考核吗？",function () {
 			var url = "<s:url value='/jsres/examCfg/updateCfg?arrangeFlow='/>" + arrangeFlow+ "&recordStatus=N" + "&paperFlow=" + paperFlow;
 			jboxGet(url,null,function(resp){
-				if(resp=="操作成功！")
+				if(resp=="操作成功！") {
 					toPage(1);
+				}else {
+					jboxTip(resp);
+				}
 			},null,true);
 		});
 	}

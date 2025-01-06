@@ -203,8 +203,12 @@ public class JsResExamCfgController extends GeneralController {
             }
             // 与编辑时类似，如果有paperFlow，说明对接的是新的java版的考试系统，要把考试系统的数据同时删除
             if(org.apache.commons.lang3.StringUtils.isNotEmpty(schExamArrangement.getPaperFlow())) {
-                // 同步对考试系统删除试卷
-                examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+                try {
+                    // 同步对考试系统删除试卷
+                    examCfgBiz.deleteExam(schExamArrangement.getPaperFlow(), loginAndToken());
+                } catch(Exception e) {
+                    return e.getMessage();
+                }
             }
         }
 

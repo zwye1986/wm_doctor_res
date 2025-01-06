@@ -288,13 +288,13 @@
 							<input style="width: 100px;" type="text" name="examNumber" value="${ment.examNumber }" class="validate[required ,custom[positiveNum]] input"/>
 						</td>
                         <th>
-                            考核时长：
+                            <font color="red">*</font>考核时长：
                         </th>
                         <td >
                             <input style="width: 30px;" type="text" name="examDuration" value="${ment.examDuration}" class="validate[required,custom[positiveNum]] input"/>分钟
                         </td>
                         <th>
-                            考核时间：
+                            <font color="red">*</font>考核时间：
                         </th>
                         <td colspan="4">
                             <input style="width: 150px;" type="text" name="examStartTime" id="examStartTime" value="${ment.examStartTime}" class="validate[required] input" onchange="checkExamTime(this)"/>
