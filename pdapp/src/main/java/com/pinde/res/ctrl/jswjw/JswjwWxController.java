@@ -5534,6 +5534,12 @@ public class JswjwWxController extends GeneralController {
                     map.put("operId", "CannelRegiest");
                     map.put("operName", "取消报名");
                 }
+                if ("isCurrent".equals(typeId) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRegiest) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan)) {
+                    map.put("operName", "已报名");
+                }
+                if ("isCurrent".equals(typeId) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan)) {
+                    map.put("operName", "已签到");
+                }
                 resultMapList.add(map);
             }
         }
