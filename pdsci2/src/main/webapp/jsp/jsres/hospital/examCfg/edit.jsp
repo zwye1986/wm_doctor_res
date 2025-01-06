@@ -99,6 +99,7 @@
 			var trainingTypeName = $(t).find("option:selected").text();
 			$("#trainingTypeName").val(trainingTypeName);
 		}
+        $("#trainingSpeId").attr("disabled", true);
 		return false;
 	}
 	function changeSpeName(resp){
@@ -125,7 +126,9 @@
 		$("input[id='isApp']").val(isApp);
 		$("input[id='isWeb']").val(isWeb);
 		var url = "<s:url value='/jsres/examCfg/updateArrangement'/>";
+        $("#trainingSpeId").removeAttr("disabled")
 		var data = $('#editForm').serialize();
+        $("#trainingSpeId").attr("disabled", true);
 		jboxStartLoading();
 		jboxPost(url, data, function(resp) {
 			if(resp == 'cannotInsert'){
@@ -133,7 +136,7 @@
 				jboxEndLoading();
 				return;
 			}
-			if(resp == "操作成功！"){
+			if(resp != "操作成功！"){
 				jboxTip(resp);
 				jboxEndLoading();
 				return;
@@ -285,13 +288,13 @@
 							<input style="width: 100px;" type="text" name="examNumber" value="${ment.examNumber }" class="validate[required ,custom[positiveNum]] input"/>
 						</td>
                         <th>
-                            考核时长：
+                            <font color="red">*</font>考核时长：
                         </th>
                         <td >
                             <input style="width: 30px;" type="text" name="examDuration" value="${ment.examDuration}" class="validate[required,custom[positiveNum]] input"/>分钟
                         </td>
                         <th>
-                            考核时间：
+                            <font color="red">*</font>考核时间：
                         </th>
                         <td colspan="4">
                             <input style="width: 150px;" type="text" name="examStartTime" id="examStartTime" value="${ment.examStartTime}" class="validate[required] input" onchange="checkExamTime(this)"/>
