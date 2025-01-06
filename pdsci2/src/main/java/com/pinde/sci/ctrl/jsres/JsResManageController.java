@@ -7187,6 +7187,42 @@ public class JsResManageController extends GeneralController {
         sysDept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
 		List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
 		model.addAttribute("sysDeptList", sysDeptList);
+
+		Map<String, Integer> globalCountMap = new HashMap<>();
+		List<String> roleList = new ArrayList<>();
+		String isSelect = com.pinde.core.common.GlobalConstant.FLAG_N;
+		roleList.add(InitConfig.getSysCfg("res_teacher_role_flow"));
+		roleList.add(InitConfig.getSysCfg("res_head_role_flow"));
+		roleList.add(InitConfig.getSysCfg("res_secretary_role_flow"));
+		roleList.add(InitConfig.getSysCfg("res_teaching_head_role_flow"));
+		roleList.add(InitConfig.getSysCfg("res_teaching_secretary_role_flow"));
+		roleList.add(InitConfig.getSysCfg("res_hospitalLeader_role_flow"));
+		String examTeaRole = InitConfig.getSysCfg("osca_examtea_role_flow");
+		user.setOrgFlow(GlobalContext.getCurrentUser().getOrgFlow());
+		List<SysUser> sysUserList = userBiz.searchResManageUserNotSelf2(user, roleList, GlobalContext.getCurrentUser().getUserFlow(), isSelect, examTeaRole);
+		globalCountMap.put("all", sysUserList.size());
+		long general = sysUserList.stream().filter(e -> "一般师资".equals(e.getTeacherLevel())).count();
+		globalCountMap.put("general", (int) general);
+		long backbone = sysUserList.stream().filter(e -> "骨干师资".equals(e.getTeacherLevel())).count();
+		globalCountMap.put("backbone", (int) backbone);
+		if(CollectionUtils.isNotEmpty(sysUserList)){
+			List<String> userFlows = sysUserList.stream().map(SysUser::getUserFlow).collect(Collectors.toList());
+
+			String wsId = com.pinde.core.common.GlobalConstant.RES_WS_ID;
+			List<SysUserRole> sysUserRoleList = userRoleBiz.getByUserFlow(userFlows, wsId);
+			long teacher = sysUserRoleList.stream().filter(e -> e.getRoleFlow().equals(InitConfig.getSysCfg("res_teacher_role_flow"))).count();
+			globalCountMap.put("teacher", (int) teacher);
+			long head = sysUserRoleList.stream().filter(e -> e.getRoleFlow().equals(InitConfig.getSysCfg("res_head_role_flow"))).count();
+			globalCountMap.put("head", (int) head);
+			long secretary = sysUserRoleList.stream().filter(e -> e.getRoleFlow().equals(InitConfig.getSysCfg("res_secretary_role_flow"))).count();
+			globalCountMap.put("secretary", (int) secretary);
+			long teachingHead = sysUserRoleList.stream().filter(e -> e.getRoleFlow().equals(InitConfig.getSysCfg("res_teaching_head_role_flow"))).count();
+			globalCountMap.put("teachingHead", (int) teachingHead);
+			long teachingSecretary = sysUserRoleList.stream().filter(e -> e.getRoleFlow().equals(InitConfig.getSysCfg("res_teaching_secretary_role_flow"))).count();
+			globalCountMap.put("teachingSecretary", (int) teachingSecretary);
+		}
+		model.addAttribute("globalCountMap", globalCountMap);
+
 		return "jsres/hospital/userSearch";
 	}
 

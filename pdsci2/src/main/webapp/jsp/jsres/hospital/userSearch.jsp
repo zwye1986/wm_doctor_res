@@ -72,6 +72,49 @@
         height: 30px;
     }
 
+    .statistics-row {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        height: 60px;
+        position: relative;
+        mask-image: linear-gradient(
+                to right,
+                #000 60%,
+                rgba(0, 0, 0, 0.4) 100%
+        );
+        border-radius: 10px;
+    }
+
+    .row-doctor {
+        background-color: #e5efff;
+        border: 1px #d9e8ff solid;
+    }
+
+    .statistics-row-item {
+        height: 40px;
+        flex: 1;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        border-right: 1px #d9d9d9 solid;
+        overflow: visible;
+    }
+
+    .statistics-row-item > div:first-child {
+        margin-bottom: 8px;
+    }
+
+    .statistics-row-num {
+        font-weight: 700;
+    }
+
+    .zl-blue {
+        color: #1da4fe;
+    }
+
 
 </style>
 <script type="text/javascript">
@@ -236,6 +279,43 @@
 <h2 class="underline">师资维护</h2>
 </div> -->
 <div class="main_bd" id="div_table_0">
+
+    <div class="statistics-row row-doctor">
+
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['all'] ? 0 : globalCountMap['all']}</span>人</div>
+            <div>用户总计</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['teacher'] ? 0 : globalCountMap['teacher']}</span>人</div>
+            <div>带教老师</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['head'] ? 0 : globalCountMap['head']}</span>人</div>
+            <div>科主任</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['secretary'] ? 0 : globalCountMap['secretary']}</span>人</div>
+            <div>科秘</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['teachingHead'] ? 0 : globalCountMap['teachingHead']}</span>人</div>
+            <div>教学主任</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['teachingSecretary'] ? 0 : globalCountMap['teachingSecretary']}</span>人</div>
+            <div>教学秘书</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['general'] ? 0 : globalCountMap['general']}</span>人</div>
+            <div>一般师资</div>
+        </div>
+        <div class="statistics-row-item">
+            <div><span class="statistics-row-num zl-blue">${empty globalCountMap['backbone'] ? 0 : globalCountMap['backbone']}</span>人</div>
+            <div>骨干师资</div>
+        </div>
+    </div>
+
     <div class="div_search">
         <form id="searchForm" action="<s:url value="/jsres/manage/teacherList" />" method="post">
             <input type="hidden" name="currentPage" id="currentPage" value="${param.currentPage}">
