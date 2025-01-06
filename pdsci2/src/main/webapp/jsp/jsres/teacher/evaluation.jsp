@@ -1042,7 +1042,8 @@ function save(){
 					</tr>
 				</table>
 				<p align="center" style="margin-top: 10px;">
-                    <c:if test="${statusId ne 'Passed'}">
+                    <c:if test="${statusId ne 'Passed' and (roleFlag eq GlobalConstant.RES_ROLE_SCOPE_TEACHER
+                    	or roleFlag eq GlobalConstant.RES_ROLE_SCOPE_HEAD or roleFlag eq GlobalConstant.RES_ROLE_SCOPE_SECRETARY)}">
                         <input class="btn_green" type="button" value="无操作权限，请联系基地管理员"  />
                     </c:if>
                     <c:if test="${statusId eq 'Passed'}">
