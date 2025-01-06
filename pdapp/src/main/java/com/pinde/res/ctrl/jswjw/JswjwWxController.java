@@ -5891,7 +5891,7 @@ public class JswjwWxController extends GeneralController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("arrangeFlow", sea.getArrangeFlow());
                 map.put("assessmentYear", sea.getAssessmentYear());
-                Map<String, String> examLogMap = examLogMaps.get(sea.getArrangeFlow());
+                Map<String, String> examLogMap = examLogMaps.getOrDefault(sea.getArrangeFlow(), new HashMap<>());
                 if (StringUtil.isBlank(examLogMap.get("maxScore"))) {
                     map.put("examScore", "-");
                 } else {
