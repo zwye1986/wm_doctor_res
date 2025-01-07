@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.ResAnnualAssessment;
 import com.pinde.core.model.ResAnnualAssessmentWithBLOBs;
-import com.pinde.sci.model.res.AnnualAssessmentExt;
+import com.pinde.core.model.AnnualAssessmentExt;
 
 import java.util.List;
 import java.util.Map;

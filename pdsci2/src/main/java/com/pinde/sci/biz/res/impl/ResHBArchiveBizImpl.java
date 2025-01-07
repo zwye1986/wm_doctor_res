@@ -7,7 +7,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResHBArchiveBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.res.ResHBArchiveExtMapper;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

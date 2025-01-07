@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jszy;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
-import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
+import com.pinde.core.model.JszyDoctorInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

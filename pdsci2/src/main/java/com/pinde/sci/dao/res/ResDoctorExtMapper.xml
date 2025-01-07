@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorExtMapper" >
-    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt"
+    <resultMap id="ResDoctorExt" type="com.pinde.core.model.ResDoctorExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -25,7 +25,7 @@
 			<result column="DOCTOR_TYPE_NAME" jdbcType="VARCHAR" property="doctorTypeName"/>
 		</association>
 	</resultMap>
-    <resultMap id="AnnaulCheckMap" type="com.pinde.sci.model.res.ResDoctorExt"
+    <resultMap id="AnnaulCheckMap" type="com.pinde.core.model.ResDoctorExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <result column="USER_FLOW" property="sysUser.userFlow" jdbcType="VARCHAR"/>
         <result column="USER_NAME" property="sysUser.userName" jdbcType="VARCHAR"/>
@@ -48,7 +48,7 @@
     </resultMap>
 
 
-    <resultMap id="ResDoctorScoreExt" type="com.pinde.sci.model.res.ResDoctorScoreExt"
+    <resultMap id="ResDoctorScoreExt" type="com.pinde.core.model.ResDoctorScoreExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
 		<id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
 		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
@@ -103,7 +103,7 @@
 		<result property="name" column="ROTATION_NAME" javaType="string"/>
 		<result property="flow" column="ROTATION_FLOW" javaType="string"/>
 	</resultMap>
-    <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.sci.model.res.ResDoctorExt"
+    <resultMap id="ResUserDoctorRecruitExt" type="com.pinde.core.model.ResDoctorExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -179,7 +179,7 @@
 		</if>
 		ORDER BY res_doctor.DOCTOR_CODE
 	</select>
-	<select id="searchResDoctorGrades" parameterType="com.pinde.sci.model.res.ResDoctorScoreExt" resultMap="ResDoctorScoreExt">
+	<select id="searchResDoctorGrades" parameterType="com.pinde.core.model.ResDoctorScoreExt" resultMap="ResDoctorScoreExt">
 		select
 		u.USER_FLOW USER_FLOW,
 		u.USER_CODE USER_CODE,
@@ -271,7 +271,7 @@
         and org_type_id = 'Hospital'
         ) a
     </select>
-	<select id="searchResDoctorUser" parameterType="com.pinde.sci.model.res.ResDoctorExt" resultMap="ResDoctorExt">
+	<select id="searchResDoctorUser" parameterType="com.pinde.core.model.ResDoctorExt" resultMap="ResDoctorExt">
 		select * from res_doctor rd
         INNER JOIN  sys_user  su on  rd.DOCTOR_FLOW = su.USER_FLOW
 		<if test='linkXjFlag!=null and linkXjFlag!=""'>
@@ -425,7 +425,7 @@
         )
 
     </select>
-	<select id="searchResDoctorUserNew"  parameterType="com.pinde.sci.model.res.ResDoctorExt" resultMap="DoctorRecruit">
+	<select id="searchResDoctorUserNew"  parameterType="com.pinde.core.model.ResDoctorExt" resultMap="DoctorRecruit">
 		select dr.AUDITION_STATUS_ID,
 		dr.AUDITION_STATUS_NAME,
 		dr.OPER_STATUS_ID,
@@ -630,7 +630,7 @@
 
 		ORDER BY rd.ORG_NAME,nlssort(su.user_name,'NLS_SORT=SCHINESE_PINYIN_M'),rd.session_number desc, su.user_code,rd.CREATE_TIME
 	</select>
-    <select id="searchDocUserForAnnualCheck" parameterType="com.pinde.sci.model.res.ResDoctorExt" resultMap="AnnaulCheckMap">
+    <select id="searchDocUserForAnnualCheck" parameterType="com.pinde.core.model.ResDoctorExt" resultMap="AnnaulCheckMap">
         select su.USER_FLOW,su.USER_NAME USER_NAME,su.ID_NO ID_NO,rd.SESSION_NUMBER SESSION_NUMBER,rd.GRADUATION_YEAR GRADUATION_YEAR,
         rd.TRAINING_SPE_NAME,
         raar.ASSESSMENT_YEAR,
@@ -716,7 +716,7 @@
 
 
 
-    <select id="searchResDoctorUserByJx" parameterType="com.pinde.sci.model.res.ResDoctorExt" resultMap="ResDoctorExt">
+    <select id="searchResDoctorUserByJx" parameterType="com.pinde.core.model.ResDoctorExt" resultMap="ResDoctorExt">
         SELECT * FROM stu_user_resume sur
         INNER JOIN sys_user su ON sur.user_flow = su.USER_FLOW
         INNER join res_doctor rd on sur.user_flow = rd.doctor_flow
@@ -875,7 +875,7 @@
 		</if>
 		order by session_number,sch_start_date,SCH_END_DATE
 	</select>
-    <resultMap id="SysUserResDoctorExt" type="com.pinde.sci.model.sys.SysUserResDoctorExt"
+    <resultMap id="SysUserResDoctorExt" type="com.pinde.core.model.SysUserResDoctorExt"
                extends="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
         <association property="doctor" column="doctor_FLOW" javaType="com.pinde.core.model.ResDoctor"
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
@@ -1284,14 +1284,14 @@
 	    	)
 	</select>
 
-    <resultMap id="ResExamDoctorExtMap" type="com.pinde.sci.model.res.ResExamDoctorExt"
+    <resultMap id="ResExamDoctorExtMap" type="com.pinde.core.model.ResExamDoctorExt"
                extends="com.pinde.core.common.sci.dao.ResExamDoctorMapper.BaseResultMap">
         <association property="doctor" column="DOCTOR_FLOW" javaType="com.pinde.core.model.ResDoctor"
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
         <association property="user" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
     </resultMap>
-	<select id="searchExamDoctorExt" parameterType="com.pinde.sci.model.res.ResExamDoctorExt" resultMap="ResExamDoctorExtMap">
+	<select id="searchExamDoctorExt" parameterType="com.pinde.core.model.ResExamDoctorExt" resultMap="ResExamDoctorExtMap">
 	      SELECT * FROM 
 	      (
 	          SELECT * FROM RES_EXAM_DOCTOR RED 
@@ -2540,7 +2540,7 @@
 	</select>
 
 	<!-- 查询学员出科成绩和技能成绩 -->
-	<select id="searchDoctorRecruitResultList" parameterType="com.pinde.sci.model.res.ResDoctorExt" resultType="map">
+	<select id="searchDoctorRecruitResultList" parameterType="com.pinde.core.model.ResDoctorExt" resultType="map">
 		SELECT
 			D.DOCTOR_FLOW,
 			D.DOCTOR_NAME,

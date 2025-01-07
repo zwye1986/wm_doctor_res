@@ -14,7 +14,7 @@
 		<result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
 		<result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
 	</resultMap>
-    <resultMap id="ResDoctorExt" type="com.pinde.sci.model.res.ResDoctorExt"
+    <resultMap id="ResDoctorExt" type="com.pinde.core.model.ResDoctorExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>

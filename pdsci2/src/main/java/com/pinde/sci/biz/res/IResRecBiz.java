@@ -2,8 +2,8 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.res.ResDoctorSchProcessExt;
-import com.pinde.sci.model.res.ResRecExt;
+import com.pinde.core.model.ResDoctorSchProcessExt;
+import com.pinde.core.model.ResRecExt;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.springframework.web.multipart.MultipartFile;

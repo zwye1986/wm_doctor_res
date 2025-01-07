@@ -11,7 +11,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.evaAudit.ResNurseController;
 import com.pinde.sci.dao.jsres.SysUserJsresMapper;
-import com.pinde.sci.model.res.NjDocinfoExt;
+import com.pinde.core.model.NjDocinfoExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

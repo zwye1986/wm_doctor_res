@@ -2,7 +2,7 @@ package com.pinde.sci.biz.portal;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.portal.PortalInfoExt;
+import com.pinde.core.model.PortalInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

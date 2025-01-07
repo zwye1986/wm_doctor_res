@@ -41,7 +41,7 @@
             <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
         </association>
     </resultMap>
-    <resultMap id="jszyAttendanceMap" type="com.pinde.sci.model.jszy.JszyResAttendanceExt">
+    <resultMap id="jszyAttendanceMap" type="com.pinde.core.model.JszyResAttendanceExt">
         <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <association property="jsresAttendance" column="ATTENDANCE_FLOW"
@@ -74,7 +74,7 @@
             <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
         </association>
     </resultMap>
-    <resultMap id="resAttendanceMap" type="com.pinde.sci.model.res.ResAttendanceExt">
+    <resultMap id="resAttendanceMap" type="com.pinde.core.model.ResAttendanceExt">
         <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <association property="jsresAttendance" column="ATTENDANCE_FLOW"

@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.jszy;
 
-import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
-import com.pinde.sci.model.jszy.JszyResDoctorRecruitExt;
+import com.pinde.core.model.JszyDoctorInfoExt;
+import com.pinde.core.model.JszyResDoctorRecruitExt;
 
 import java.util.List;
 import java.util.Map;

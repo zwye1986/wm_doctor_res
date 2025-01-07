@@ -1282,7 +1282,7 @@
         ORDER BY a.SCH_START_DATE
     </select>
     <!-- 按科室统计入科异常学员 -->
-    <select id="preWarningBefore" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
+    <select id="preWarningBefore" resultType="com.pinde.core.model.GeneralIdNameModel">
         SELECT DEPT_FLOW AS ID, DEPT_NAME AS NAME, COUNT(1) AS QTY
         FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
@@ -1325,7 +1325,7 @@
     </select>
 
     <!-- 按科室统计出科异常学员 -->
-    <select id="preWarningIng" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
+    <select id="preWarningIng" resultType="com.pinde.core.model.GeneralIdNameModel">
         SELECT DEPT_FLOW ID,DEPT_NAME NAME,COUNT(1) QTY
         FROM RES_DOCTOR_SCH_PROCESS P
         WHERE RECORD_STATUS = 'Y'
@@ -1361,7 +1361,7 @@
     </select>
 
     <!-- 按科室统计出科考核异常学员 -->
-    <select id="preWarningAfter" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
+    <select id="preWarningAfter" resultType="com.pinde.core.model.GeneralIdNameModel">
         SELECT DEPT_FLOW ID,DEPT_NAME NAME,COUNT(1) QTY
         FROM RES_DOCTOR_SCH_PROCESS P
         WHERE RECORD_STATUS = 'Y'

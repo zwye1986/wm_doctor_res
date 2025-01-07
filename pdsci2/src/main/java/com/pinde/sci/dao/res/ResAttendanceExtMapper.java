@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.JsResAttendanceExt;
-import com.pinde.sci.model.jszy.JszyResAttendanceExt;
-import com.pinde.sci.model.res.ResAttendanceExt;
+import com.pinde.core.model.JszyResAttendanceExt;
+import com.pinde.core.model.ResAttendanceExt;
 
 import java.util.List;
 import java.util.Map;

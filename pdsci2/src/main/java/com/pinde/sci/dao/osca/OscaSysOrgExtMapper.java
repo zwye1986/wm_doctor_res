@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.osca;
 
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.osca.OscaOrgMenuExt;
-import com.pinde.sci.model.osca.OscaOrgSpeExt;
+import com.pinde.core.model.OscaOrgMenuExt;
+import com.pinde.core.model.OscaOrgSpeExt;
 
 import java.util.List;
 import java.util.Map;

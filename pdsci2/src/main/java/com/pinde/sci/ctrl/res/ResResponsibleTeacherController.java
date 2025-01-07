@@ -24,7 +24,7 @@ import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SchDoctorDept;
 import com.pinde.core.model.SchExamDoctorArrangement;
 import com.pinde.core.model.SchRotation;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

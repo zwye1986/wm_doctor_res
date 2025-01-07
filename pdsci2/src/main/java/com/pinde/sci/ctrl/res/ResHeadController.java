@@ -19,7 +19,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.core.model.ResAssessCfgItemForm;
 import com.pinde.core.model.ResAssessCfgTitleForm;
-import com.pinde.sci.model.res.SchProcessExt;
+import com.pinde.core.model.SchProcessExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

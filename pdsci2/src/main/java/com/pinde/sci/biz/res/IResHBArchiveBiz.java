@@ -4,7 +4,7 @@ import com.pinde.core.model.PubUserResume;
 import com.pinde.core.model.ResArchiveSequence;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.DocumentException;
 
 import java.util.List;

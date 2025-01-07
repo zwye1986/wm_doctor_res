@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.StuUserResume;
-import com.pinde.sci.model.res.StuUserExt;
+import com.pinde.core.model.StuUserExt;
 
 import java.util.List;
 import java.util.Map;

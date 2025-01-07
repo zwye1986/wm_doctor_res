@@ -35,7 +35,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.core.model.ArrangTdVo;
 import com.pinde.core.model.JsResDoctorRecruitExt;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;

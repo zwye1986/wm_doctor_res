@@ -13,7 +13,7 @@ import com.pinde.sci.biz.res.IAnnualAssessmentBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.res.AnnualAssessmentExtMapper;
-import com.pinde.sci.model.res.AnnualAssessmentExt;
+import com.pinde.core.model.AnnualAssessmentExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

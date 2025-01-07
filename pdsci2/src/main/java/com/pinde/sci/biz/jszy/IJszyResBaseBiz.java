@@ -3,7 +3,7 @@ package com.pinde.sci.biz.jszy;
 import com.pinde.core.model.*;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
-import com.pinde.sci.model.jszy.JszyResBaseExt;
+import com.pinde.core.model.JszyResBaseExt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

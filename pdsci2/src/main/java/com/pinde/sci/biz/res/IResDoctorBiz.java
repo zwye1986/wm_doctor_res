@@ -7,9 +7,9 @@ import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.core.model.JsResDoctorRecruitExt;
-import com.pinde.sci.model.res.ResDoctorExt;
-import com.pinde.sci.model.res.ResDoctorScoreExt;
-import com.pinde.sci.model.sys.SysUserResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
+import com.pinde.core.model.ResDoctorScoreExt;
+import com.pinde.core.model.SysUserResDoctorExt;
 import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 

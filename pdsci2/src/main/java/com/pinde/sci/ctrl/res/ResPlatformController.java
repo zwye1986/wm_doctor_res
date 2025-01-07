@@ -24,7 +24,7 @@ import com.pinde.core.model.ResSignin;
 import com.pinde.core.model.SchDoctorAbsence;
 import com.pinde.core.model.SchRotation;
 import com.pinde.core.model.SysCfg;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

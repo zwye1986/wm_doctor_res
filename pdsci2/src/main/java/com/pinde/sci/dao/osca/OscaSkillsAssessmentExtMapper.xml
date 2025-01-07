@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper" >
-    <resultMap id="OSAExtList" type="com.pinde.sci.model.osca.OscaSkillsAssessmentExt" extends="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
+    <resultMap id="OSAExtList" type="com.pinde.core.model.OscaSkillsAssessmentExt" extends="com.pinde.core.common.sci.dao.OscaSkillsAssessmentMapper.BaseResultMap">
         <id column="CLINICAL_FLOW" property="clinicalFlow" />
         <result column="CLINICAL_NAME" property="clinicalName" />
         <result column="CLINICAL_YEAR" property="clinicalYear" />
@@ -20,7 +20,7 @@
         <result column="AUDIT_STATUS_ID" property="oscaDoctorAssessment.auditStatusId" />
     </resultMap>
 
-    <resultMap id="OscaDoctorInfo" type="com.pinde.sci.model.osca.OscaSkillsAssessmentExt">
+    <resultMap id="OscaDoctorInfo" type="com.pinde.core.model.OscaSkillsAssessmentExt">
         <id column="CLINICAL_FLOW" property="clinicalFlow" />
         <result column="CLINICAL_NAME" property="clinicalName" />
         <result column="CLINICAL_YEAR" property="clinicalYear" />
@@ -57,7 +57,7 @@
         <result column="IS_PASS" property="oscaDoctorAssessment.isPass" />
     </resultMap>
 
-    <resultMap id="TicketInfo" type="com.pinde.sci.model.osca.OscaSkillsAssessmentExt">
+    <resultMap id="TicketInfo" type="com.pinde.core.model.OscaSkillsAssessmentExt">
         <id column="CLINICAL_FLOW" property="clinicalFlow" />
         <result column="CLINICAL_NAME" property="clinicalName" />
         <result column="CLINICAL_YEAR" property="clinicalYear" />
