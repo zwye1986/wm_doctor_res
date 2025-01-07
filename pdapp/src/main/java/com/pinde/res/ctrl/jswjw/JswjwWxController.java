@@ -251,7 +251,7 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
         //根据手机号查询账户
-        SysUser oldUser = jswjwBiz.selectByUserPhone(userPhone);
+        SysUser oldUser = jswjwBiz.getUserByUserPhone(userPhone);
         if(null == oldUser){
             //根据openId查询用户
             SysUser user = jswjwBiz.readSysUserByOpenId(openId);
@@ -276,7 +276,7 @@ public class JswjwWxController extends GeneralController {
             }else {
 
                 resultMap.put("resultId", "1004");
-                resultMap.put("resultType", "未知错误，请联系管理员");
+                resultMap.put("resultType", "用户未绑定该公众号，请联系管理员");
 
                 return resultMap;
 
@@ -305,39 +305,25 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
         //根据手机号查询账户
-        SysUser oldUser = jswjwBiz.selectByUserPhone(userPhone);
-        if(null == oldUser){
-            //根据openId查询用户
-            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
-            //设置用户手机号
-            user.setUserPhone(userPhone);
-
-            jswjwBiz.updateUser(user);
-
-            resultMap.put("openId", openId);
-            resultMap.put("userFlow", user.getUserFlow());
-
-            return getUserInfo(user, resultMap, null, null, openId,request);
-
-        }else {
-
+        SysUser oldUser = jswjwBiz.getUserByUserPhone(userPhone);
+        if(oldUser != null){
             oldUser.setUserPhone("");
             jswjwBiz.updateUser(oldUser);
-
-            //根据openId查询用户
-            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
-            //设置用户手机号
-            user.setUserPhone(userPhone);
-
-            jswjwBiz.updateUser(user);
-
-            resultMap.put("openId", openId);
-            resultMap.put("userFlow", user.getUserFlow());
-
-            return getUserInfo(user, resultMap, null, null, openId,request);
-
         }
+        //根据openId查询用户
+        SysUser user = jswjwBiz.readSysUserByOpenId(openId);
+        if(user == null){
+            resultMap.put("resultId", "1004");
+            resultMap.put("resultType", "用户未绑定该公众号，请联系管理员");
+            return resultMap;
+        }
+        //设置用户手机号
+        user.setUserPhone(userPhone);
+        jswjwBiz.updateUser(user);
 
+        resultMap.put("openId", openId);
+        resultMap.put("userFlow", user.getUserFlow());
+        return getUserInfo(user, resultMap, null, null, openId,request);
     }
 
 //

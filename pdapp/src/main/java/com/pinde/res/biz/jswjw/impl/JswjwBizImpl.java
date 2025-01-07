@@ -10489,4 +10489,22 @@ public class JswjwBizImpl implements IJswjwBiz {
                 .andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andAuditStatusIdIsNull();
         return recMapper.countByExample(example);
     }
+
+    /**
+     * @param userPhone
+     * @Department：研发部
+     * @Description 根据手机号查询用户信息
+     * @Author fengxf
+     * @Date 2025/1/6
+     */
+    @Override
+    public SysUser getUserByUserPhone(String userPhone) {
+        SysUserExample sysUserExample = new SysUserExample();
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
+        if (sysUsers != null && sysUsers.size() > 0) {
+            return sysUsers.get(0);
+        }
+        return null;
+    }
 }
