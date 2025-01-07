@@ -10798,14 +10798,18 @@ public class JswjwWxController extends GeneralController {
     @RequestMapping(value = "/evaluation", method = {RequestMethod.POST})
     @ResponseBody
     public Object evaluation(String userFlow, String roleFlag, ResDoctor doctor, String assessStatusId,
-                             String recTypeId, Integer pageIndex, Integer pageSize, String[] datas, HttpServletRequest
-                                     request, HttpServletResponse response) {
+                             String recTypeId, Integer pageIndex, Integer pageSize, String[] datas) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "校验成功！");
         if (StringUtil.isEmpty(userFlow)) {
             resultMap.put("resultId", "31601");
             resultMap.put("resultType", "userFlow为空");
+            return resultMap;
+        }
+        if (StringUtil.isEmpty(roleFlag)) {
+            resultMap.put("resultId", "31601");
+            resultMap.put("resultType", "roleFlag为空");
             return resultMap;
         }
         String dataStr = "";
@@ -10847,7 +10851,7 @@ public class JswjwWxController extends GeneralController {
         param.put("userFlow", userFlow);
         PageHelper.startPage(pageIndex, pageSize);
         processList = jswjwBiz.selectProcessByDoctorNew(param);
-        resultMap.put("dataCount", processList.size());
+        resultMap.put("dataCount", PageHelper.total);
         List<Map<String, Object>> resultMapList = new ArrayList<>();
         if (processList != null && processList.size() > 0) {
             Map<String, SchArrangeResult> resultMapMap = new HashMap<String, SchArrangeResult>();
