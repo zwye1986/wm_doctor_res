@@ -814,4 +814,12 @@ public interface IJswjwBiz {
 	 * @Date 2024/12/25
 	 */
 	int countNotAuditResRec(String processFlow, String doctorFlow);
+
+	/**
+	 * @Department：研发部
+	 * @Description 根据手机号查询用户信息
+	 * @Author fengxf
+	 * @Date 2025/1/6
+	 */
+	SysUser getUserByUserPhone(String userPhone);
 }
