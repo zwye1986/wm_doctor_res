@@ -917,10 +917,10 @@ public class JsResActivityQueryController extends GeneralController {
 				"evalScore:评分"
 		};
 		TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-		ExcleUtile.exportSimpleExcleByObjsWithWitdh(titles, results, response.getOutputStream());
 		String fileName = new String((info.getActivityName()+"-签到学员表.xls").getBytes(), "ISO-8859-1");
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		response.setContentType("application/octet-stream;charset=UTF-8");
+		ExcleUtile.exportSimpleExcleByObjsWithWitdh(titles, results, response.getOutputStream());
 	}
 
 	@RequestMapping(value="/exportRegiestList")
@@ -935,10 +935,10 @@ public class JsResActivityQueryController extends GeneralController {
 				"regiestTime1:报名时间"
 		};
 		TeachingActivityInfo info=activityBiz.readActivityInfo(activityFlow);
-		ExcleUtile.exportSimpleExcleByObjsWithWitdh(titles, results, response.getOutputStream());
 		String fileName = new String((info.getActivityName()+"-报名学员表.xls").getBytes(), "ISO-8859-1");
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		response.setContentType("application/octet-stream;charset=UTF-8");
+		ExcleUtile.exportSimpleExcleByObjsWithWitdh(titles, results, response.getOutputStream());
 	}
 
 	@RequestMapping(value="/showDocEval")
