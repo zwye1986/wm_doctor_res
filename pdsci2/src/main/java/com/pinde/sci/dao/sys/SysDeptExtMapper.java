@@ -2,7 +2,7 @@ package com.pinde.sci.dao.sys;
 
 import com.pinde.core.model.SchAndStandardDeptCfg;
 import com.pinde.core.model.SysDept;
-import com.pinde.sci.model.jsres.LzDeptItem;
+import com.pinde.core.model.LzDeptItem;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

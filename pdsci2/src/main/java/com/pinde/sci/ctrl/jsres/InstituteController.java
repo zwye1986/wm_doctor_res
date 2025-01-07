@@ -26,7 +26,7 @@ import com.pinde.sci.form.jsres.UserInfoExtForm;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.model.ResAssessCfgItemForm;
 import com.pinde.core.model.ResAssessCfgTitleForm;
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
+import com.pinde.core.model.JsDoctorInfoExt;
 import com.pinde.core.model.JsResDoctorOrgHistoryExt;
 import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.core.model.PubUserResume;

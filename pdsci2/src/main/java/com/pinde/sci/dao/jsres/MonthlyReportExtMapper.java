@@ -1,7 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.jsres.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

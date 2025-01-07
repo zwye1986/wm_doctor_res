@@ -4,7 +4,7 @@ import com.pinde.core.model.JsresRecruitDocInfo;
 import com.pinde.core.model.JsresRecruitInfo;
 import com.pinde.core.model.ResRecruitHistory;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
-import com.pinde.sci.model.jsres.JsRecruitDocInfoExt;
+import com.pinde.core.model.JsRecruitDocInfoExt;
 import com.pinde.core.model.JsResDoctorRecruitExt;
 
 import java.util.List;

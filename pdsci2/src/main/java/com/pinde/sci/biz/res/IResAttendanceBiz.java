@@ -3,7 +3,7 @@ package com.pinde.sci.biz.res;
 import com.pinde.core.model.JsresAttendance;
 import com.pinde.core.model.JsresAttendanceDetail;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.jsres.JsResAttendanceExt;
+import com.pinde.core.model.JsResAttendanceExt;
 import com.pinde.sci.model.jszy.JszyResAttendanceExt;
 import com.pinde.sci.model.res.ResAttendanceExt;
 

@@ -1,7 +1,7 @@
 package com.pinde.sci.util.jsres;
 
 
-import com.pinde.sci.model.jsres.ResultVo;
+import com.pinde.core.model.ResultVo;
 
 /**
  * @Author zsq

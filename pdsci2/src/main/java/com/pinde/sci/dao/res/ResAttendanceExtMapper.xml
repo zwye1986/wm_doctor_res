@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResAttendanceExtMapper">
 
-    <resultMap id="attendanceMap" type="com.pinde.sci.model.jsres.JsResAttendanceExt">
+    <resultMap id="attendanceMap" type="com.pinde.core.model.JsResAttendanceExt">
         <id column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
         <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
         <result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />

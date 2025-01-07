@@ -17,7 +17,7 @@ import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
+import com.pinde.core.model.DoctorExamStatisticsExt;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResPaper;
 import com.pinde.core.model.ResScore;

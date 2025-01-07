@@ -337,7 +337,7 @@
 		where record_status = 'Y'
 		and rel_org_flow = #{myOrgFlow}
 	</select>
-    <select id="deptSelectData" resultType="com.pinde.sci.model.jsres.LzDeptItem">
+    <select id="deptSelectData" resultType="com.pinde.core.model.LzDeptItem">
 		select dept_flow,dept_name,org_flow org_flow,org_name org_name,1 sort_no
 		from SCH_DEPT_EXTERNAL_REL
 		where record_status = 'Y'

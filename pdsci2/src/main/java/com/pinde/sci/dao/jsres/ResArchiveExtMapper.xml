@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.ResArchiveExtMapper">
-    <resultMap id="DoctorRecruitLog" type="com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt"
+    <resultMap id="DoctorRecruitLog" type="com.pinde.core.model.JsResArchDoctorRecruitExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitLogMapper.BaseResultMap">
         <association property="sysUser" column="user_flow"  resultMap="com.pinde.core.common.sci.dao.SysUserLogMapper.BaseResultMap" />
         <association property="resDoctor" column="doctorFlow"
@@ -11,7 +11,7 @@
             <result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
         </association>
     </resultMap>
-    <resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoLogExt"
+    <resultMap id="doctorInfo" type="com.pinde.core.model.JsDoctorInfoLogExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitLogMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"  resultMap="com.pinde.core.common.sci.dao.SysUserLogMapper.BaseResultMap" />
         <association property="resDoctor" column="doctorFlow"

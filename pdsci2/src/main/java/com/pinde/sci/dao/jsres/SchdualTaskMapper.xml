@@ -54,7 +54,7 @@
 	<delete id="deleteAllPreviousMonthData" >
 		delete from LOCAL_APP_USERINFO where  MONTH_DATE=#{monthDate}
 	</delete>
-    <select id="selectAppUserinfo" resultType="com.pinde.sci.model.jsres.AppUseInfoPojoParam">
+    <select id="selectAppUserinfo" resultType="com.pinde.core.model.AppUseInfoPojoParam">
 		  select
 		  RECORD_FLOW as recordFlow,
 		K_ID as "id",
@@ -133,7 +133,7 @@
 		delete from LOCAL_DOCTOR_LUNZHUAN_DATA where  MONTH_DATE=#{monthDate}
 	</delete>
 
-	<select id="selectDoctorLunZhuanData" resultType="com.pinde.sci.model.jsres.DoctorLunZhuanDataMonthReport">
+	<select id="selectDoctorLunZhuanData" resultType="com.pinde.core.model.DoctorLunZhuanDataMonthReport">
 	  SELECT
 	   RECORD_FLOW as recordFlow,
 	   K_ID as "id",
@@ -2434,7 +2434,7 @@
 		and sar.org_flow = #{orgFlow}
 	</select>
 
-	<resultMap type="com.pinde.sci.model.jsres.DoctorExamStatisticsExt" id="docExamMap">
+	<resultMap type="com.pinde.core.model.DoctorExamStatisticsExt" id="docExamMap">
 		<result property="id" column="ID" javaType="string"/>
 		<result property="pid" column="PID" javaType="string"/>
 		<result property="orgFlow" column="ORG_FLOW" javaType="string"/>

@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.jsres.DoctorSignup;
+import com.pinde.core.model.DoctorSignup;
 
 public interface JsResDoctorSignupMapper {
 
