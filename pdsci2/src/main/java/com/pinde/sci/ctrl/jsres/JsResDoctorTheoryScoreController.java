@@ -20,7 +20,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.model.ResScore;

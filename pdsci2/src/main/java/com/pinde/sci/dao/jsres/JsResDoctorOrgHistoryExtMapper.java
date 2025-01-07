@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.jsres.JsResDoctorOrgHistoryExt;
+import com.pinde.core.model.JsResDoctorOrgHistoryExt;
 
 import java.util.List;
 import java.util.Map;

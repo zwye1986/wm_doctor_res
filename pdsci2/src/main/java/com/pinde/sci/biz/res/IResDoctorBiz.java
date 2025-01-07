@@ -6,7 +6,7 @@ import com.pinde.sci.form.hbres.ExtInfoForm;
 import com.pinde.sci.form.hbres.ReplenishInfoForm;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.sys.SysUserResDoctorExt;

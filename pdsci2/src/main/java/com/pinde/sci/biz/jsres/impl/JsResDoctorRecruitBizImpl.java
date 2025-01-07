@@ -32,7 +32,6 @@ import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsGraduateExt;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
