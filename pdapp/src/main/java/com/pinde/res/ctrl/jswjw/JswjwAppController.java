@@ -2,7 +2,7 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;

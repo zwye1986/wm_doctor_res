@@ -1,6 +1,6 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.model.*;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;

@@ -29,7 +29,7 @@ import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.common.util.IExcelUtil;
 import com.pinde.sci.dao.jsres.JsResDoctorRecruitExtMapper;
 import com.pinde.sci.form.jsres.JykhInfoForm;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.JsGraduateExt;
 import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;

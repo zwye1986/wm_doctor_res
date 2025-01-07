@@ -4,7 +4,7 @@ package com.pinde.res.biz.jswjw.impl;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;

@@ -1,6 +1,6 @@
 package com.pinde.res.model.jswjw.mo;
 
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 

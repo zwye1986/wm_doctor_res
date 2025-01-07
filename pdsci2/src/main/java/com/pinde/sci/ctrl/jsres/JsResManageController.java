@@ -40,7 +40,7 @@ import com.pinde.sci.ctrl.res.ResMonthlyReportGlobalControllerClass;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;

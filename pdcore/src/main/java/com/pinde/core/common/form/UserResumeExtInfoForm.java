@@ -1,4 +1,4 @@
-package com.pinde.app.common;
+package com.pinde.core.common.form;
 
 import com.pinde.core.model.PubUserResume;
 

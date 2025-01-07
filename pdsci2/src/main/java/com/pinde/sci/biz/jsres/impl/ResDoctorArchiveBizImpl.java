@@ -10,7 +10,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
 import com.pinde.sci.dao.jsres.ResArchiveExtMapper;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.JsDoctorInfoLogExt;
 import com.pinde.sci.model.jsres.JsResArchDoctorRecruitExt;
 import org.dom4j.DocumentException;

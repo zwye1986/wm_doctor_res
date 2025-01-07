@@ -1,5 +1,6 @@
 package com.pinde.sci.form.jsres;
 
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SysUser;
 
