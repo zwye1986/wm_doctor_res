@@ -1,7 +1,5 @@
-package com.pinde.sci.util.jsres;
+package com.pinde.core.util;
 
-import com.pinde.core.util.SpringUtil;
-import com.pinde.sci.biz.recruit.impl.RecruitAdmitInfoBizImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.pinde.sci.util.jsres;
+package com.pinde.sci.util;
 
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.InitConfig;

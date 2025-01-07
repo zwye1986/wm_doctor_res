@@ -23,7 +23,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitResConfig;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
-import com.pinde.sci.util.jsres.ResultUtil;
+import com.pinde.core.util.ResultUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;

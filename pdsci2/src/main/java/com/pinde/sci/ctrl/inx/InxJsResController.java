@@ -29,7 +29,7 @@ import com.pinde.sci.common.util.SMSUtil;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
 import com.pinde.core.model.LoginVo;
 import com.pinde.core.model.ResultVo;
-import com.pinde.sci.util.jsres.ResultUtil;
+import com.pinde.core.util.ResultUtil;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

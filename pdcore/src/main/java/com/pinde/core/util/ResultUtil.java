@@ -1,4 +1,4 @@
-package com.pinde.sci.util.jsres;
+package com.pinde.core.util;
 
 
 import com.pinde.core.model.ResultVo;

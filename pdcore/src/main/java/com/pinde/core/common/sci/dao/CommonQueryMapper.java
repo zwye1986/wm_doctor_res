@@ -1,4 +1,4 @@
-package com.pinde.sci.dao.common;
+package com.pinde.core.common.sci.dao;
 
 import org.apache.ibatis.annotations.Param;
 

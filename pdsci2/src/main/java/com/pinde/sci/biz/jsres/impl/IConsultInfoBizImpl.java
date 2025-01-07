@@ -8,7 +8,7 @@ import com.pinde.sci.biz.jsres.IConsultInfoBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.core.common.sci.dao.ConsultInfoMapper;
 import com.pinde.sci.dao.jsres.ConsultInfoExtMapper;
-import com.pinde.sci.util.jsres.SensitiveFilterUtil;
+import com.pinde.core.util.SensitiveFilterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

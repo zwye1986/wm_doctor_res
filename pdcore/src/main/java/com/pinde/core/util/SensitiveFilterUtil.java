@@ -1,4 +1,4 @@
-package com.pinde.sci.util.jsres;
+package com.pinde.core.util;
 
 import java.util.HashSet;
 import java.util.Iterator;
