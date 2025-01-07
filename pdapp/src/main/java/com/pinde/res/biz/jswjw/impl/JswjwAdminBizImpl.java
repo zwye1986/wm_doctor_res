@@ -10,7 +10,7 @@ import com.pinde.res.biz.jswjw.IJswjwAdminBiz;
 import com.pinde.res.biz.stdp.IResErrorSchNoticeBiz;
 import com.pinde.res.dao.jswjw.ext.ResDoctorSchProcessExtMapper;
 import com.pinde.res.dao.jswjw.ext.SysDeptExtMapper;
-import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
+import com.pinde.core.model.JsResDoctorOrgHistoryExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

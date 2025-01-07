@@ -1,4 +1,4 @@
-package com.pinde.res.model.jswjw.mo;
+package com.pinde.core.model;
 
 /**
  * Created by Administrator on 2017/1/9.

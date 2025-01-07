@@ -1,6 +1,4 @@
-package com.pinde.res.model.jswjw.mo;
-
-import com.pinde.core.model.ResDoctorKq;
+package com.pinde.core.model;
 
 public class ResDoctorKqExt extends ResDoctorKq {
 

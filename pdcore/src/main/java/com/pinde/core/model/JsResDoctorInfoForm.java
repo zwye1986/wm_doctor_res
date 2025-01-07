@@ -1,8 +1,6 @@
-package com.pinde.res.model.jswjw.mo;
+package com.pinde.core.model;
 
 import com.pinde.core.common.form.UserResumeExtInfoForm;
-import com.pinde.core.model.ResDoctor;
-import com.pinde.core.model.SysUser;
 
 public class JsResDoctorInfoForm implements java.io.Serializable {
 

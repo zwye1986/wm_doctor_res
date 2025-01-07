@@ -1,4 +1,4 @@
-package com.pinde.res.model.jswjw.mo;
+package com.pinde.core.model;
 
 import java.util.List;
 

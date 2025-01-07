@@ -1,6 +1,6 @@
 package com.pinde.res.dao.jswjw.ext;
 
-import com.pinde.res.model.jswjw.mo.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper" >
-    <resultMap id="ExtBaseResultMap" type="com.pinde.res.model.jswjw.mo.OscaSkillRoomExt" >
+    <resultMap id="ExtBaseResultMap" type="com.pinde.core.model.OscaSkillRoomExt" >
         <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
         <result column="ROOM_FLOW" property="roomFlow" jdbcType="VARCHAR" />
         <result column="ROOM_NAME" property="roomName" jdbcType="VARCHAR" />

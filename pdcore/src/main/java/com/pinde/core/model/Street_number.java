@@ -1,4 +1,4 @@
-package com.pinde.res.model.jswjw.mo;
+package com.pinde.core.model;
 
 
 /**
@@ -7,7 +7,7 @@ package com.pinde.res.model.jswjw.mo;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Town {
+public class Street_number {
 
     private int _distance;
     private String _dir_desc;

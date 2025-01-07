@@ -12,7 +12,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IJswjwAdminBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.jswjw.IResLiveTrainingBiz;
-import com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt;
+import com.pinde.core.model.JsResDoctorOrgHistoryExt;
 import com.pinde.core.common.sci.dao.SysDeptMapper;
 import com.pinde.core.common.sci.dao.TeachingActivitySpeakerMapper;
 import org.apache.commons.collections4.CollectionUtils;

@@ -9,7 +9,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.dao.jswjw.ext.StudentExtMapper;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
-import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
+import com.pinde.core.model.ResDoctorKqExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

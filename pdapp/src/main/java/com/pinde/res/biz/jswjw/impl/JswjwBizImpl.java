@@ -21,7 +21,6 @@ import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;

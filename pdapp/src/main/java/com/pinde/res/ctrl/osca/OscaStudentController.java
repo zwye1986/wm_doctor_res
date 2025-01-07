@@ -1,7 +1,6 @@
 package com.pinde.res.ctrl.osca;
 
 import com.alibaba.fastjson.JSON;
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.CertificateTypeEnum;
 import com.pinde.core.common.enums.UserSexEnum;
@@ -14,7 +13,7 @@ import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IJsResBaseBiz;
 import com.pinde.res.biz.osca.*;
 import com.pinde.core.common.enums.osca.*;
-import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
+import com.pinde.core.model.OscaSkillRoomExt;
 import com.pinde.res.model.osca.mo.OscaSkillsAssessmentExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

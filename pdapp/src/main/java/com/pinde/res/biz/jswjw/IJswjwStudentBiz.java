@@ -1,7 +1,7 @@
 package com.pinde.res.biz.jswjw;
 
 import com.pinde.core.model.*;
-import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
+import com.pinde.core.model.OscaSkillRoomExt;
 
 import java.util.List;
 import java.util.Map;

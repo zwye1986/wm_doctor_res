@@ -25,7 +25,6 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.core.common.sci.dao.ResOrgCkxzMapper;
 import com.pinde.core.common.sci.dao.SysCfgMapper;
 import com.pinde.core.common.sci.dao.SysDictMapper;

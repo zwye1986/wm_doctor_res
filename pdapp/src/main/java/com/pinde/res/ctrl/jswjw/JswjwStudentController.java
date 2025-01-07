@@ -11,7 +11,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.hbres.IFileBiz;
 import com.pinde.res.biz.jswjw.IIeaveAppBiz;
 import com.pinde.res.biz.jswjw.IJswjwBiz;
-import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
+import com.pinde.core.model.ResDoctorKqExt;
 import com.pinde.core.common.sci.dao.ResDoctorMapper;
 import com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper;
 import org.dom4j.DocumentException;

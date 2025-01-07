@@ -1,4 +1,4 @@
-package com.pinde.res.model.jswjw.mo;
+package com.pinde.core.model;
 
 
 /**
@@ -7,17 +7,17 @@ package com.pinde.res.model.jswjw.mo;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
-public class Crossroad {
+public class Street {
 
-    private int _distance;
+    private double _distance;
     private String _dir_desc;
     private Location location;
     private String id;
     private String title;
-    public void set_distance(int _distance) {
+    public void set_distance(double _distance) {
         this._distance = _distance;
     }
-    public int get_distance() {
+    public double get_distance() {
         return _distance;
     }
 
@@ -48,4 +48,5 @@ public class Crossroad {
     public String getTitle() {
         return title;
     }
+
 }
