@@ -1,4 +1,4 @@
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
+<%@ page import="com.pinde.sci.util.JsresUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <title><%=JsresUtil.getTitle(request,response,application)%></title>
