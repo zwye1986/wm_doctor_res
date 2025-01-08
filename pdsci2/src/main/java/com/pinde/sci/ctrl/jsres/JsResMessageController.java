@@ -22,7 +22,7 @@ import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitResConfig;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import com.pinde.sci.util.jsres.ResultUtil;
 import org.apache.commons.collections4.CollectionUtils;

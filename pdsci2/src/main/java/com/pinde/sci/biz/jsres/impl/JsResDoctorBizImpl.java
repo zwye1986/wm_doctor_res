@@ -23,7 +23,7 @@ import com.pinde.sci.dao.jsres.JsResDoctorExtMapper;
 import com.pinde.sci.dao.jsres.JsResUserBalckListExtMapper;
 import com.pinde.sci.form.jsres.BackTrainForm;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.sci.model.jsres.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;

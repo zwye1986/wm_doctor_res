@@ -3,7 +3,7 @@ package com.pinde.sci.dao.res;
 import com.pinde.core.model.*;
 import com.pinde.sci.excelListens.model.ResRecItem;
 import com.pinde.sci.form.hbres.ResDoctorClobForm;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.sci.model.res.ResDoctorExt;
 import com.pinde.sci.model.res.ResDoctorScoreExt;
 import com.pinde.sci.model.res.ResExamDoctorExt;

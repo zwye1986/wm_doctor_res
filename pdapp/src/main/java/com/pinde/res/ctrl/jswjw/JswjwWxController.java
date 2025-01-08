@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
@@ -25,7 +25,6 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.core.common.sci.dao.ResOrgCkxzMapper;
 import com.pinde.core.common.sci.dao.SysCfgMapper;
 import com.pinde.core.common.sci.dao.SysDictMapper;
@@ -251,7 +250,7 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
         //根据手机号查询账户
-        SysUser oldUser = jswjwBiz.selectByUserPhone(userPhone);
+        SysUser oldUser = jswjwBiz.getUserByUserPhone(userPhone);
         if(null == oldUser){
             //根据openId查询用户
             SysUser user = jswjwBiz.readSysUserByOpenId(openId);
@@ -276,7 +275,7 @@ public class JswjwWxController extends GeneralController {
             }else {
 
                 resultMap.put("resultId", "1004");
-                resultMap.put("resultType", "未知错误，请联系管理员");
+                resultMap.put("resultType", "用户未绑定该公众号，请联系管理员");
 
                 return resultMap;
 
@@ -305,39 +304,25 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "绑定成功");
         //根据手机号查询账户
-        SysUser oldUser = jswjwBiz.selectByUserPhone(userPhone);
-        if(null == oldUser){
-            //根据openId查询用户
-            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
-            //设置用户手机号
-            user.setUserPhone(userPhone);
-
-            jswjwBiz.updateUser(user);
-
-            resultMap.put("openId", openId);
-            resultMap.put("userFlow", user.getUserFlow());
-
-            return getUserInfo(user, resultMap, null, null, openId,request);
-
-        }else {
-
+        SysUser oldUser = jswjwBiz.getUserByUserPhone(userPhone);
+        if(oldUser != null){
             oldUser.setUserPhone("");
             jswjwBiz.updateUser(oldUser);
-
-            //根据openId查询用户
-            SysUser user = jswjwBiz.readSysUserByOpenId(openId);
-            //设置用户手机号
-            user.setUserPhone(userPhone);
-
-            jswjwBiz.updateUser(user);
-
-            resultMap.put("openId", openId);
-            resultMap.put("userFlow", user.getUserFlow());
-
-            return getUserInfo(user, resultMap, null, null, openId,request);
-
         }
+        //根据openId查询用户
+        SysUser user = jswjwBiz.readSysUserByOpenId(openId);
+        if(user == null){
+            resultMap.put("resultId", "1004");
+            resultMap.put("resultType", "用户未绑定该公众号，请联系管理员");
+            return resultMap;
+        }
+        //设置用户手机号
+        user.setUserPhone(userPhone);
+        jswjwBiz.updateUser(user);
 
+        resultMap.put("openId", openId);
+        resultMap.put("userFlow", user.getUserFlow());
+        return getUserInfo(user, resultMap, null, null, openId,request);
     }
 
 //
@@ -5891,7 +5876,7 @@ public class JswjwWxController extends GeneralController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("arrangeFlow", sea.getArrangeFlow());
                 map.put("assessmentYear", sea.getAssessmentYear());
-                Map<String, String> examLogMap = examLogMaps.get(sea.getArrangeFlow());
+                Map<String, String> examLogMap = examLogMaps.getOrDefault(sea.getArrangeFlow(), new HashMap<>());
                 if (StringUtil.isBlank(examLogMap.get("maxScore"))) {
                     map.put("examScore", "-");
                 } else {
@@ -10813,14 +10798,18 @@ public class JswjwWxController extends GeneralController {
     @RequestMapping(value = "/evaluation", method = {RequestMethod.POST})
     @ResponseBody
     public Object evaluation(String userFlow, String roleFlag, ResDoctor doctor, String assessStatusId,
-                             String recTypeId, Integer pageIndex, Integer pageSize, String[] datas, HttpServletRequest
-                                     request, HttpServletResponse response) {
+                             String recTypeId, Integer pageIndex, Integer pageSize, String[] datas) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("resultId", "200");
         resultMap.put("resultType", "校验成功！");
         if (StringUtil.isEmpty(userFlow)) {
             resultMap.put("resultId", "31601");
             resultMap.put("resultType", "userFlow为空");
+            return resultMap;
+        }
+        if (StringUtil.isEmpty(roleFlag)) {
+            resultMap.put("resultId", "31601");
+            resultMap.put("resultType", "roleFlag为空");
             return resultMap;
         }
         String dataStr = "";
@@ -10862,7 +10851,7 @@ public class JswjwWxController extends GeneralController {
         param.put("userFlow", userFlow);
         PageHelper.startPage(pageIndex, pageSize);
         processList = jswjwBiz.selectProcessByDoctorNew(param);
-        resultMap.put("dataCount", processList.size());
+        resultMap.put("dataCount", PageHelper.total);
         List<Map<String, Object>> resultMapList = new ArrayList<>();
         if (processList != null && processList.size() > 0) {
             Map<String, SchArrangeResult> resultMapMap = new HashMap<String, SchArrangeResult>();

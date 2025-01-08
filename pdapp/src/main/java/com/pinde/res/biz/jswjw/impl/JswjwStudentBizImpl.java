@@ -11,7 +11,7 @@ import com.pinde.res.dao.jswjw.ext.OscaDoctorAssessmentExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSkillRoomDocExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSkillRoomExtMapper;
 import com.pinde.res.dao.jswjw.ext.OscaSubjectMainExtMapper;
-import com.pinde.res.model.jswjw.mo.OscaSkillRoomExt;
+import com.pinde.core.model.OscaSkillRoomExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

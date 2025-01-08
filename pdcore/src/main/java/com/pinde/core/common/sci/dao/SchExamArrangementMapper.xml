@@ -560,11 +560,11 @@
           AND RDSP.RECORD_STATUS = 'Y'
           AND sasdc.RECORD_STATUS = 'Y'
           AND sasdc.sch_dept_flow = rdsp.sch_dept_flow
-          AND rdsp.org_flow = sasdc.org_flow
-          and rd.TRAINING_SPE_ID = #{trainingSpeId}
-          and rd.SESSION_NUMBER = #{sessionNumber}
-          and rd.org_flow = #{orgFlow}
-         <!-- and rd.TRAINING_SPE_NAME is not null -->
+        <!--AND rdsp.org_flow = sasdc.org_flow-->
+        and rd.TRAINING_SPE_ID = #{trainingSpeId}
+        and rd.SESSION_NUMBER = #{sessionNumber}
+        and rd.org_flow = #{orgFlow}
+       <!-- and rd.TRAINING_SPE_NAME is not null -->
           and su.USER_CODE is not null
           and su.USER_PHONE is not null
           and su.ID_NO is not null

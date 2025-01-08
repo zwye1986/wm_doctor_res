@@ -14,7 +14,7 @@ import com.pinde.sci.biz.res.IResOrgSpeAssignBiz;
 import com.pinde.sci.biz.sys.IOrgBiz;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;

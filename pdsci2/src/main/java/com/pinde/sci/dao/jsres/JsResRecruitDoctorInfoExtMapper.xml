@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jsres.JsResRecruitDoctorInfoExtMapper">
 
-	<resultMap id="DoctorRecruit" type="com.pinde.sci.model.jsres.JsResDoctorRecruitExt" extends="com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper.BaseResultMap" >
+	<resultMap id="DoctorRecruit" type="com.pinde.core.model.JsResDoctorRecruitExt" extends="com.pinde.core.common.sci.dao.JsresRecruitDocInfoMapper.BaseResultMap" >
         <association property="sysUser" column="user_flow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
         <association property="resDoctor" column="doctorFlow"

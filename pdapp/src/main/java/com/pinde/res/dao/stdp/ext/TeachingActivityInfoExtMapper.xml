@@ -1208,7 +1208,8 @@
         <if test='roleFlag != null and roleFlag != "" and roleFlag=="local"'>
             AND I.ORG_FLOW = #{orgFlow}
         </if>
-        <if test='roleFlag != null and roleFlag != "" and (roleFlag=="kzr" or roleFlag == "Teacher")'>
+        <if test='roleFlag != null and roleFlag != "" and (roleFlag == "Head" or roleFlag == "Seretary"
+            or roleFlag == "TeachingHead" or roleFlag == "Teacher" or roleFlag == "TeachingSeretary")'>
             AND I.DEPT_FLOW IN (
             SELECT SUD.DEPT_FLOW
             FROM SYS_USER_DEPT SUD

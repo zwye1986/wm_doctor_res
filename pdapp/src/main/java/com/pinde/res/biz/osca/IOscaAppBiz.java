@@ -1,7 +1,7 @@
 package com.pinde.res.biz.osca;
 
 import com.pinde.core.model.*;
-import com.pinde.res.model.jswjw.mo.FromTitle;
+import com.pinde.core.model.FromTitle;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

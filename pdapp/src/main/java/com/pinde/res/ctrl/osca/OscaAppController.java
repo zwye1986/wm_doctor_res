@@ -11,7 +11,7 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
 import com.pinde.core.common.enums.osca.ScoreStatusEnum;
 import com.pinde.core.common.enums.osca.SignStatusEnum;
-import com.pinde.res.model.jswjw.mo.FromTitle;
+import com.pinde.core.model.FromTitle;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

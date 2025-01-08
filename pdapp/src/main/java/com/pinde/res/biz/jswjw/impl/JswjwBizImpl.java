@@ -4,7 +4,7 @@ package com.pinde.res.biz.jswjw.impl;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
@@ -21,7 +21,6 @@ import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -1914,57 +1913,59 @@ public class JswjwBizImpl implements IJswjwBiz {
         if (StringUtil.isNotBlank(dataExt.getActivity_way())) {
             Element aWayElement = DocumentHelper.createElement("activity_way");
             aWayElement.addAttribute("id", dataExt.getActivity_way());
-            if ("1".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("教学查房");
-            }
+            String activityWayName = ActivityTypeEnum.getNameById(dataExt.getActivity_way());
+            aWayElement.setText(activityWayName);
+//            if ("1".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("教学查房");
+//            }
 //			else if("2".equals(dataExt.getActivity_way())){
 //				aWayElement.setText("疑难病例讨论");
 //			}else if("3".equals(dataExt.getActivity_way())){
 //				aWayElement.setText("危重病例讨论");
 //			}
-            else if ("4".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("临床小讲课");
-            }
+//            else if ("4".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("临床小讲课");
+//            }
 //			else if("5".equals(dataExt.getActivity_way())){
 //				aWayElement.setText("死亡病例讨论");
 //			}
-            else if ("6".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("入轮转科室教育");
-            } else if ("7".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("出科考核");
-            } else if ("8".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("技能培训");
-            } else if ("9".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("教学阅片");
-            } else if ("10".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("门诊教学");
-            } else if ("11".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("教学病例讨论");
-            } else if ("2".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("疑难病例讨论");
-            } else if ("3".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("危重病例讨论");
-            } else if ("5".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("死亡病例讨论");
-            } else if ("12".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("临床操作技能床旁教学");
-            } else if ("13".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("住院病历书写指导教学");
-            } else if ("14".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("手术操作指导教学");
-            } else if ("15".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("影像诊断报告书写指导教学");
-            } else if ("16".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("临床文献研读会");
-            } else if ("17".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("入院教育");
-            } else if ("18".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("入专业基地教育");
-            } else if ("19".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("晨间报告");
-            } else if ("20".equals(dataExt.getActivity_way())) {
-                aWayElement.setText("报告单分析");
-            }
+//            else if ("6".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("入轮转科室教育");
+//            } else if ("7".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("出科考核");
+//            } else if ("8".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("技能培训");
+//            } else if ("9".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("教学阅片");
+//            } else if ("10".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("门诊教学");
+//            } else if ("11".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("教学病例讨论");
+//            } else if ("2".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("疑难病例讨论");
+//            } else if ("3".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("危重病例讨论");
+//            } else if ("5".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("死亡病例讨论");
+//            } else if ("12".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("临床操作技能床旁教学");
+//            } else if ("13".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("住院病历书写指导教学");
+//            } else if ("14".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("手术操作指导教学");
+//            } else if ("15".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("影像诊断报告书写指导教学");
+//            } else if ("16".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("临床文献研读会");
+//            } else if ("17".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("入院教育");
+//            } else if ("18".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("入专业基地教育");
+//            } else if ("19".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("晨间报告");
+//            } else if ("20".equals(dataExt.getActivity_way())) {
+//                aWayElement.setText("报告单分析");
+//            }
             rootEle.add(aWayElement);
         }
 
@@ -2274,55 +2275,57 @@ public class JswjwBizImpl implements IJswjwBiz {
                         }
                     } else if ("activity_way".equals(entry.getKey())) {
                         element.addAttribute("id", value);
-                        if ("1".equals(value)) {
-                            element.setText("教学查房");
-                        }
+                        String activityWayName = ActivityTypeEnum.getNameById(value);
+                        element.setText(activityWayName);
+//                        if ("1".equals(value)) {
+//                            element.setText("教学查房");
+//                        }
 //				else if("2".equals(value)){
 //					element.setText("疑难病例讨论");
 //				}else if("3".equals(value)){
 //					element.setText("危重病例讨论");
 //				}
-                        else if ("4".equals(value)) {
-                            element.setText("临床小讲课");
-                        }
+//                        else if ("4".equals(value)) {
+//                            element.setText("临床小讲课");
+//                        }
 //				else if("5".equals(value)){
 //					element.setText("死亡病例讨论");
 //				}
-                        else if ("6".equals(value)) {
-                            element.setText("入轮转科室教育");
-                        } else if ("7".equals(value)) {
-                            element.setText("出科考核");
-                        } else if ("8".equals(value)) {
-                            element.setText("技能培训");
-                        } else if ("9".equals(value)) {
-                            element.setText("教学阅片");
-                        } else if ("10".equals(value)) {
-                            element.setText("门诊教学");
-                        } else if ("11".equals(value)) {
-                            element.setText("教学病例讨论");
-                        } else if ("2".equals(value)) {
-                            element.setText("疑难病例讨论");
-                        } else if ("3".equals(value)) {
-                            element.setText("危重病例讨论");
-                        } else if ("5".equals(value)) {
-                            element.setText("死亡病例讨论");
-                        } else if ("12".equals(value)) {
-                            element.setText("临床操作技能床旁教学");
-                        } else if ("13".equals(value)) {
-                            element.setText("住院病历书写指导教学");
-                        } else if ("14".equals(value)) {
-                            element.setText("手术操作指导教学");
-                        } else if ("15".equals(value)) {
-                            element.setText("影像诊断报告书写指导教学");
-                        } else if ("16".equals(value)) {
-                            element.setText("临床文献研读会");
-                        } else if ("17".equals(value)) {
-                            element.setText("入院教育");
-                        } else if ("18".equals(value)) {
-                            element.setText("入专业基地教育");
-                        } else if ("19".equals(value)) {
-                            element.setText("晨间报告");
-                        }
+//                        else if ("6".equals(value)) {
+//                            element.setText("入轮转科室教育");
+//                        } else if ("7".equals(value)) {
+//                            element.setText("出科考核");
+//                        } else if ("8".equals(value)) {
+//                            element.setText("技能培训");
+//                        } else if ("9".equals(value)) {
+//                            element.setText("教学阅片");
+//                        } else if ("10".equals(value)) {
+//                            element.setText("门诊教学");
+//                        } else if ("11".equals(value)) {
+//                            element.setText("教学病例讨论");
+//                        } else if ("2".equals(value)) {
+//                            element.setText("疑难病例讨论");
+//                        } else if ("3".equals(value)) {
+//                            element.setText("危重病例讨论");
+//                        } else if ("5".equals(value)) {
+//                            element.setText("死亡病例讨论");
+//                        } else if ("12".equals(value)) {
+//                            element.setText("临床操作技能床旁教学");
+//                        } else if ("13".equals(value)) {
+//                            element.setText("住院病历书写指导教学");
+//                        } else if ("14".equals(value)) {
+//                            element.setText("手术操作指导教学");
+//                        } else if ("15".equals(value)) {
+//                            element.setText("影像诊断报告书写指导教学");
+//                        } else if ("16".equals(value)) {
+//                            element.setText("临床文献研读会");
+//                        } else if ("17".equals(value)) {
+//                            element.setText("入院教育");
+//                        } else if ("18".equals(value)) {
+//                            element.setText("入专业基地教育");
+//                        } else if ("19".equals(value)) {
+//                            element.setText("晨间报告");
+//                        }
                     } else if ("activity_period".equals(entry.getKey())) {
                         element.addAttribute("id", value);
                         if ("1".equals(value)) {
@@ -2955,95 +2958,99 @@ public class JswjwBizImpl implements IJswjwBiz {
                 Element aWayElement = rootEle.element("activity_way");
                 if (null != aWayElement) {
                     aWayElement.addAttribute("id", dataExt.getActivity_way());
-                    if ("1".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("教学查房");
-                    } else if ("2".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("疑难病例讨论");
-                    } else if ("3".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("危重病例讨论");
-                    } else if ("4".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("临床小讲课");
-                    } else if ("5".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("死亡病例讨论");
-                    } else if ("6".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("入轮转科室教育");
-                    } else if ("7".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("出科考核");
-                    } else if ("8".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("技能培训");
-                    } else if ("9".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("教学阅片");
-                    } else if ("10".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("门诊教学");
-                    } else if ("11".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("教学病例讨论");
-                    } else if ("12".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("临床操作技能床旁教学");
-                    } else if ("13".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("住院病历书写指导教学");
-                    } else if ("14".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("手术操作指导教学");
-                    } else if ("15".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("影像诊断报告书写指导教学");
-                    } else if ("16".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("临床文献研读会");
-                    } else if ("17".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("入院教育");
-                    } else if ("18".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("入专业基地教育");
-                    } else if ("19".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("晨间报告");
-                    } else if ("20".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("报告单分析");
-                    }
+                    String activityWayName = ActivityTypeEnum.getNameById(dataExt.getActivity_way());
+                    aWayElement.setText(activityWayName);
+//                    if ("1".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("教学查房");
+//                    } else if ("2".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("疑难病例讨论");
+//                    } else if ("3".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("危重病例讨论");
+//                    } else if ("4".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("临床小讲课");
+//                    } else if ("5".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("死亡病例讨论");
+//                    } else if ("6".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("入轮转科室教育");
+//                    } else if ("7".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("出科考核");
+//                    } else if ("8".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("技能培训");
+//                    } else if ("9".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("教学阅片");
+//                    } else if ("10".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("门诊教学");
+//                    } else if ("11".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("教学病例讨论");
+//                    } else if ("12".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("临床操作技能床旁教学");
+//                    } else if ("13".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("住院病历书写指导教学");
+//                    } else if ("14".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("手术操作指导教学");
+//                    } else if ("15".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("影像诊断报告书写指导教学");
+//                    } else if ("16".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("临床文献研读会");
+//                    } else if ("17".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("入院教育");
+//                    } else if ("18".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("入专业基地教育");
+//                    } else if ("19".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("晨间报告");
+//                    } else if ("20".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("报告单分析");
+//                    }
                 } else {
                     aWayElement = DocumentHelper.createElement("activity_way");
                     aWayElement.addAttribute("id", dataExt.getActivity_way());
-                    if ("1".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("教学查房");
-                    }
+                    String activityWayName = ActivityTypeEnum.getNameById(dataExt.getActivity_way());
+                    aWayElement.setText(activityWayName);
+//                    if ("1".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("教学查房");
+//                    }
 //					else if("2".equals(dataExt.getActivity_way())){
 //						aWayElement.setText("疑难病例讨论");
 //					}else if("3".equals(dataExt.getActivity_way())){
 //						aWayElement.setText("危重病例讨论");
 //					}
-                    else if ("4".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("临床小讲课");
-                    }
+//                    else if ("4".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("临床小讲课");
+//                    }
 //					else if("5".equals(dataExt.getActivity_way())){
 //						aWayElement.setText("死亡病例讨论");
 //					}
-                    else if ("6".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("入轮转科室教育");
-                    } else if ("7".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("出科考核");
-                    } else if ("8".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("技能培训");
-                    } else if ("9".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("教学阅片");
-                    } else if ("10".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("门诊教学");
-                    } else if ("11".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("教学病例讨论");
-                    } else if ("12".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("临床操作技能床旁教学");
-                    } else if ("13".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("住院病历书写指导教学");
-                    } else if ("14".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("手术操作指导教学");
-                    } else if ("15".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("影像诊断报告书写指导教学");
-                    } else if ("16".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("临床文献研读会");
-                    } else if ("17".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("入院教育");
-                    } else if ("18".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("入专业基地教育");
-                    } else if ("19".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("晨间报告");
-                    } else if ("20".equals(dataExt.getActivity_way())) {
-                        aWayElement.setText("报告单分析");
-                    }
+//                    else if ("6".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("入轮转科室教育");
+//                    } else if ("7".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("出科考核");
+//                    } else if ("8".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("技能培训");
+//                    } else if ("9".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("教学阅片");
+//                    } else if ("10".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("门诊教学");
+//                    } else if ("11".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("教学病例讨论");
+//                    } else if ("12".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("临床操作技能床旁教学");
+//                    } else if ("13".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("住院病历书写指导教学");
+//                    } else if ("14".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("手术操作指导教学");
+//                    } else if ("15".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("影像诊断报告书写指导教学");
+//                    } else if ("16".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("临床文献研读会");
+//                    } else if ("17".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("入院教育");
+//                    } else if ("18".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("入专业基地教育");
+//                    } else if ("19".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("晨间报告");
+//                    } else if ("20".equals(dataExt.getActivity_way())) {
+//                        aWayElement.setText("报告单分析");
+//                    }
                     rootEle.add(aWayElement);
                 }
             }
@@ -10488,5 +10495,23 @@ public class JswjwBizImpl implements IJswjwBiz {
         example.createCriteria().andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y)
                 .andProcessFlowEqualTo(processFlow).andOperUserFlowEqualTo(doctorFlow).andAuditStatusIdIsNull();
         return recMapper.countByExample(example);
+    }
+
+    /**
+     * @param userPhone
+     * @Department：研发部
+     * @Description 根据手机号查询用户信息
+     * @Author fengxf
+     * @Date 2025/1/6
+     */
+    @Override
+    public SysUser getUserByUserPhone(String userPhone) {
+        SysUserExample sysUserExample = new SysUserExample();
+        sysUserExample.createCriteria().andUserPhoneEqualTo(userPhone).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+        List<SysUser> sysUsers = sysUserMapper.selectByExample(sysUserExample);
+        if (sysUsers != null && sysUsers.size() > 0) {
+            return sysUsers.get(0);
+        }
+        return null;
     }
 }

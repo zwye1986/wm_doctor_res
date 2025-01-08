@@ -16,7 +16,7 @@ import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.sci.dao.jsres.TempMapper;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
@@ -28,7 +28,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

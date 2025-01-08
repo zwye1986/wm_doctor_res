@@ -1,7 +1,7 @@
 package com.pinde.res.biz.jswjw;
 
 import com.pinde.core.model.*;
-import com.pinde.res.model.jswjw.mo.ResDoctorKqExt;
+import com.pinde.core.model.ResDoctorKqExt;
 
 import java.util.List;
 import java.util.Map;

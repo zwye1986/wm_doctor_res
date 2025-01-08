@@ -34,7 +34,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.excelListens.model.SchedulingDataModel;
 import com.pinde.sci.model.jsres.ArrangTdVo;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.sci.model.res.ResDoctorExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

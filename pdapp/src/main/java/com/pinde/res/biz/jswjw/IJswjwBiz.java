@@ -1,12 +1,12 @@
 package com.pinde.res.biz.jswjw;
 
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.model.*;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;
-import com.pinde.res.model.jswjw.mo.FromTitle;
-import com.pinde.res.model.jswjw.mo.JsResDataExt;
-import com.pinde.res.model.jswjw.mo.JsResDoctorRecruitExt;
+import com.pinde.core.model.FromTitle;
+import com.pinde.core.model.JsResDataExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import org.dom4j.DocumentException;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -814,4 +814,12 @@ public interface IJswjwBiz {
 	 * @Date 2024/12/25
 	 */
 	int countNotAuditResRec(String processFlow, String doctorFlow);
+
+	/**
+	 * @Department：研发部
+	 * @Description 根据手机号查询用户信息
+	 * @Author fengxf
+	 * @Date 2025/1/6
+	 */
+	SysUser getUserByUserPhone(String userPhone);
 }
