@@ -2,14 +2,14 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.excelListens.model.ResRecItem;
-import com.pinde.sci.form.hbres.ExtInfoForm;
-import com.pinde.sci.form.hbres.ReplenishInfoForm;
-import com.pinde.sci.form.hbres.ResDoctorClobForm;
+import com.pinde.core.common.form.ExtInfoForm;
+import com.pinde.core.common.form.ReplenishInfoForm;
+import com.pinde.core.common.form.ResDoctorClobForm;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.core.model.JsResDoctorRecruitExt;
-import com.pinde.sci.model.res.ResDoctorExt;
-import com.pinde.sci.model.res.ResDoctorScoreExt;
-import com.pinde.sci.model.sys.SysUserResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
+import com.pinde.core.model.ResDoctorScoreExt;
+import com.pinde.core.model.SysUserResDoctorExt;
 import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 

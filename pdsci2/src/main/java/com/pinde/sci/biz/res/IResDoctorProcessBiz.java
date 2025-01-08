@@ -2,7 +2,7 @@ package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.sci.model.res.SchProcessExt;
+import com.pinde.core.model.SchProcessExt;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

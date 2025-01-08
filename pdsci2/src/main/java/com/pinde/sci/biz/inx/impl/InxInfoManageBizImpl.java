@@ -15,7 +15,7 @@ import com.pinde.sci.biz.inx.IinxInfoManageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.inx.InxInfoExtMapper;
-import com.pinde.sci.form.inx.InxInfoForm;
+import com.pinde.core.common.form.InxInfoForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

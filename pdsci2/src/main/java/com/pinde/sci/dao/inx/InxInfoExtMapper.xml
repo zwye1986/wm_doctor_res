@@ -35,7 +35,7 @@
   	select t1.*,COLUMN_FLOW, t2.COLUMN_ID as t2_column_id, t2.COLUMN_NAME, t2.PARENT_COLUMN_ID, t2.ORDINAL as t2_ORDINAL, t2.RECORD_STATUS as t2_RECORD_STATUS, t2.CREATE_TIME as t2_CREATE_TIME, t2.CREATE_USER_FLOW as t2_CREATE_USER_FLOW, t2.MODIFY_TIME as t2_MODIFY_TIME, t2.MODIFY_USER_FLOW as t2_MODIFY_USER_FLOW
       from INX_INFO t1 left join INX_COLUMN t2 on t1.column_id = t2.column_id where info_flow=#{infoFlow}
   </select>
-  <update id="updateInfoState" parameterType="com.pinde.sci.form.inx.InxInfoForm">
+  <update id="updateInfoState" parameterType="com.pinde.core.common.form.InxInfoForm">
       update INX_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID
       <![CDATA[<>]]> 'Failure' and info_flow in
 	       <foreach collection="infoFlows" open="(" separator="," close=")" item="item">#{item}</foreach>

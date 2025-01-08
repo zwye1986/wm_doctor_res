@@ -1,9 +1,9 @@
 package com.pinde.sci.dao.jsres;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.jsres.AppUseInfoPojoParam;
-import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
-import com.pinde.sci.model.jsres.DoctorLunZhuanDataMonthReport;
+import com.pinde.core.model.AppUseInfoPojoParam;
+import com.pinde.core.model.DoctorExamStatisticsExt;
+import com.pinde.core.model.DoctorLunZhuanDataMonthReport;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

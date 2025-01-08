@@ -22,7 +22,7 @@ import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SchDoctorDept;
 import com.pinde.core.model.SchRotation;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -3,7 +3,7 @@ package com.pinde.sci.biz.jsres;
 import com.pinde.core.model.ResQualifiedPlanMsg;
 import com.pinde.core.model.ResTeachPlanDoctor;
 import com.pinde.core.model.SysUser;
-import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
+import com.pinde.core.model.ResTeachQualifiedPlanExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;

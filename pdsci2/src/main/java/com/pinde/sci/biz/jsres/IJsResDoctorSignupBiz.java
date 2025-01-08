@@ -1,6 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.sci.model.jsres.DoctorSignup;
+import com.pinde.core.model.DoctorSignup;
 
 public interface IJsResDoctorSignupBiz {
 

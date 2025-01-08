@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.osca;
 
-import com.pinde.sci.model.osca.OscaCheckInfoExt;
+import com.pinde.core.model.OscaCheckInfoExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

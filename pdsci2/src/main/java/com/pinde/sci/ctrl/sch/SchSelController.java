@@ -16,7 +16,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.common.enums.sch.SchCycleTypeEnum;
 import com.pinde.core.common.enums.sch.SchSelYearEnum;
 import com.pinde.sci.form.sch.SchSelectDeptForm;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

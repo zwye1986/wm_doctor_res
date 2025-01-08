@@ -2,7 +2,7 @@ package com.pinde.sci.dao.portal;
 
 import com.pinde.core.model.PortalInfo;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.portal.PortalInfoExt;
+import com.pinde.core.model.PortalInfoExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

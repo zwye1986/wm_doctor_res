@@ -18,7 +18,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.core.common.sci.dao.ResQualifiedPlanMsgMapper;
 import com.pinde.core.common.sci.dao.ResTeachPlanDoctorMapper;
 import com.pinde.core.common.sci.dao.ResTeachQualifiedPlanMapper;
-import com.pinde.sci.model.jsres.ResTeachQualifiedPlanExt;
+import com.pinde.core.model.ResTeachQualifiedPlanExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;

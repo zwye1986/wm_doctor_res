@@ -8,7 +8,7 @@ import com.pinde.core.model.ResScoreExample;
 import com.pinde.core.model.SchExamDoctorArrangement;
 import com.pinde.sci.biz.sch.ISchExamScoreQueryBiz;
 import com.pinde.sci.common.InitConfig;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

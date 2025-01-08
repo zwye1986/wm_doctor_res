@@ -1,7 +1,7 @@
 package com.pinde.res.dao.lcjn.ext;
 
 import com.pinde.core.model.InxInfo;
-import com.pinde.res.model.stdp.mo.InxInfoForm;
+import com.pinde.core.common.form.InxInfoForm;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

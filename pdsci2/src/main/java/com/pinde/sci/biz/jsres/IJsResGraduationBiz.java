@@ -2,7 +2,7 @@ package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.GraduationExamResults;
 import com.pinde.core.model.SchExamDoctorArrangement;
-import com.pinde.sci.model.jsres.DoctorExamStatisticsExt;
+import com.pinde.core.model.DoctorExamStatisticsExt;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

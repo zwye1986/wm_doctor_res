@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.res.ResDoctorSchProcessExt;
-import com.pinde.sci.model.res.ResRecExt;
+import com.pinde.core.model.ResDoctorSchProcessExt;
+import com.pinde.core.model.ResRecExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

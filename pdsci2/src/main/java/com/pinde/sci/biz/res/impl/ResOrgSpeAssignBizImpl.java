@@ -11,7 +11,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.sci.model.jsres.OrgSpeListVo;
+import com.pinde.core.model.OrgSpeListVo;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

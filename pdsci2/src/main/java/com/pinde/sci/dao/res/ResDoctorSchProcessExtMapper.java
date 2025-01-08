@@ -2,7 +2,7 @@ package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.sci.model.res.SchProcessExt;
+import com.pinde.core.model.SchProcessExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -18,7 +18,7 @@
         <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
         <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
     </resultMap>
-    <resultMap type="com.pinde.sci.model.res.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <resultMap type="com.pinde.core.model.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
                      javaType="com.pinde.core.model.ResDoctorSchProcess"
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"/>

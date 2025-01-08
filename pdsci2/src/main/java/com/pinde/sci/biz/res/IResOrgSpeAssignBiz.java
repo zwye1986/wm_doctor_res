@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.jsres.OrgSpeListVo;
+import com.pinde.core.model.OrgSpeListVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

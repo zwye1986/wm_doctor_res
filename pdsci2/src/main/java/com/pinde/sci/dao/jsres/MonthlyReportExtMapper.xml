@@ -1817,7 +1817,7 @@ ORDER BY
     A .user_flow-->
     </select>
     <!--查找满足条件的学员-->
-    <select id="findManzuTiaojianDoctor" parameterType="java.util.Map" resultType="com.pinde.sci.model.jsres.DoctorInfoParam">
+    <select id="findManzuTiaojianDoctor" parameterType="java.util.Map" resultType="com.pinde.core.model.DoctorInfoParam">
         select a.doctor_flow as userFlow,
                a.spe_id as speId,
                a.spe_Name as speName,
@@ -1952,7 +1952,7 @@ ORDER BY
 
     </select>
 
-    <resultMap id="myactivityMap" type="com.pinde.sci.model.jsres.JiaoxueActiveAndResultParam">
+    <resultMap id="myactivityMap" type="com.pinde.core.model.JiaoxueActiveAndResultParam">
         <id column="ACTIVITY_FLOW" property="activityFlow" jdbcType="VARCHAR" />
         <result column="ACTIVITY_NAME" property="activityName" jdbcType="VARCHAR" />
         <result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
@@ -2132,7 +2132,7 @@ ORDER BY
         AND  doctor_flow=#{doctorFlow}
     </select>
     <!--学员轮转数据月报-->
-    <select id="findDoctorLunZhuanDataMonthReport" parameterType="java.util.Map" resultType="com.pinde.sci.model.jsres.DoctorLunZhuanDataMonthReport">
+    <select id="findDoctorLunZhuanDataMonthReport" parameterType="java.util.Map" resultType="com.pinde.core.model.DoctorLunZhuanDataMonthReport">
         select
           count(1) writeSum
         , count(case when a.audit_status_id='Edit' or a.audit_status_id='Submit' then  null  else a.audit_status_id end) dataAuditSum

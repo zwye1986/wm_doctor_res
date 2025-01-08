@@ -3,7 +3,7 @@ package com.pinde.sci.dao.sch;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.form.sch.SchGradeFrom;
-import com.pinde.sci.model.res.GeneralIdNameModel;
+import com.pinde.core.model.GeneralIdNameModel;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

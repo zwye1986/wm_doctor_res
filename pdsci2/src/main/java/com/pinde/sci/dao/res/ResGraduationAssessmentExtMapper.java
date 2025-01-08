@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.res.ResGraduationAssessmentExt;
+import com.pinde.core.model.ResGraduationAssessmentExt;
 
 /**
  * Created by Administrator on 2016/10/11.

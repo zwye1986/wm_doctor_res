@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
-import com.pinde.sci.model.res.ResAllowancePayment;
-import com.pinde.sci.model.res.ResAllowanceUserExt;
+import com.pinde.core.model.ResAllowancePayment;
+import com.pinde.core.model.ResAllowanceUserExt;
 
 import java.util.List;
 import java.util.Map;

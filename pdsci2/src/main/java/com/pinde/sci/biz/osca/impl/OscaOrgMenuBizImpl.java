@@ -6,8 +6,7 @@ import com.pinde.core.model.OscaOrgMenuExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.osca.IOscaOrgMenuBiz;
 import com.pinde.sci.dao.osca.OscaOrgMenuExtMapper;
-import com.pinde.sci.dao.osca.OscaSysOrgExtMapper;
-import com.pinde.sci.model.osca.OscaOrgMenuExt;
+import com.pinde.core.model.OscaOrgMenuExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

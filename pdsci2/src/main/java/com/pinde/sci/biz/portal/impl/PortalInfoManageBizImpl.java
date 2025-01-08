@@ -13,7 +13,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.portal.PortalInfoExtMapper;
 import com.pinde.sci.form.portal.PortalInfoForm;
-import com.pinde.sci.model.portal.PortalInfoExt;
+import com.pinde.core.model.PortalInfoExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

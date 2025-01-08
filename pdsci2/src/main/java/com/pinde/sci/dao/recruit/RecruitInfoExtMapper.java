@@ -1,7 +1,7 @@
 package com.pinde.sci.dao.recruit;
 
 import com.pinde.core.model.RecruitInfo;
-import com.pinde.sci.model.recruit.RecruitInfoExt;
+import com.pinde.core.model.RecruitInfoExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
