@@ -1382,7 +1382,7 @@
 	
 	
 	
-	<resultMap id="speCountForm" type="com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm">
+	<resultMap id="speCountForm" type="com.pinde.core.common.form.ResDoctorTrainingSpeForm">
 	  	  <result column="trainingSpeId" jdbcType="VARCHAR" property="speId" />
 	  	  <result column="doctorCount" jdbcType="VARCHAR"  property="doctorCount"/>
     </resultMap>
@@ -2093,7 +2093,7 @@
 		</foreach>
 		ORDER BY res_doctor.session_number desc, sys_user.user_code,res_doctor.CREATE_TIME
 	</select>
-	<resultMap id="resDoctorClob" type="com.pinde.sci.form.hbres.ResDoctorClobForm">
+	<resultMap id="resDoctorClob" type="com.pinde.core.common.form.ResDoctorClobForm">
 		<id column="DOCTOR_FLOW" property="doctorFlow" jdbcType="VARCHAR" />
 		<result column="DOCTOR_NAME" property="doctorName" jdbcType="VARCHAR" />
 		<result column="USER_RESUME" property="userResume" jdbcType="CLOB" />

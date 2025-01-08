@@ -33,7 +33,7 @@
 		AND COLUMN_ID='lcjn'
 		 ORDER BY B.READ_FLAG DESC,INFO.CREATE_TIME DESC
 	</select>
-	<update id="updateInfoState" parameterType="com.pinde.res.model.stdp.mo.InxInfoForm">
+	<update id="updateInfoState" parameterType="com.pinde.core.common.form.InxInfoForm">
         update INX_INFO set INFO_STATUS_ID = #{infoStatusId},INFO_STATUS_NAME = #{infoStatusName} where INFO_STATUS_ID
         <![CDATA[<>]]> 'Failure' and info_flow in
 		<foreach collection="infoFlows" open="(" separator="," close=")" item="item">#{item}</foreach>

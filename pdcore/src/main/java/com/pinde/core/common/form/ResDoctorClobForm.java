@@ -1,6 +1,4 @@
-package com.pinde.sci.form.hbres;
-
-import java.io.Serializable;
+package com.pinde.core.common.form;
 
 /**
  * //注册医师信息bean

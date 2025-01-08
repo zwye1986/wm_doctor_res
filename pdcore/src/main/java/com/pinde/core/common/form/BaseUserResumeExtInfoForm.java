@@ -1,4 +1,4 @@
-package com.pinde.sci.form.hbzy;
+package com.pinde.core.common.form;
 
 import com.pinde.core.model.PubUserResume;
 

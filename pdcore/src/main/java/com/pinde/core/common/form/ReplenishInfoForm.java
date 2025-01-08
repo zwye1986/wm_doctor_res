@@ -1,4 +1,4 @@
-package com.pinde.sci.form.hbres;
+package com.pinde.core.common.form;
 
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorRecruit;

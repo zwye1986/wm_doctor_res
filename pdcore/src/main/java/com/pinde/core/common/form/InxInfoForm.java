@@ -1,4 +1,4 @@
-package com.pinde.res.model.stdp.mo;
+package com.pinde.core.common.form;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class InxInfoForm {
 
 
 	public InxInfoForm(String columnId, String infoTitle, String startIndex,
-					   String endIndex, String startDate, String endDate) {
+			String endIndex, String startDate, String endDate) {
 		this.columnId = columnId;
 		this.infoTitle = infoTitle;
 		this.startIndex = startIndex;

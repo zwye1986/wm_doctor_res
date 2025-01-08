@@ -9,7 +9,6 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.IinxColumnManageBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.inx.InxColumnExtMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -119,25 +118,6 @@ public class InxColumnManageBizImpl implements IinxColumnManageBiz {
 		}
 		return this.inxColumnMapper.updateByPrimaryKeySelective(column);
 	}
-
-//	@Override
-//	public InxColumn getByFlow(String flow) {
-//		return this.inxColumnMapper.selectByPrimaryKey(flow);
-//	}
-
-//	@Override
-//	public InxColumnExt getExtByFlow(String flow) {
-//		InxColumnForm form = new InxColumnForm();
-//		form.setColumnFlow(flow);
-//		return this.inxColumnExtMapper.selectOneByForm(form);
-//	}
-
-//	@Override
-//	public List<InxColumn> queryChildColumn(String columnId) {
-//		InxColumnExample example = new InxColumnExample();
-//		example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andParentColumnIdEqualTo(columnId);
-//		return inxColumnMapper.selectByExample(example);
-//	}
 
 	@Override
 	public int updateRecordStatus(List<String> ids, String recordStatus) {

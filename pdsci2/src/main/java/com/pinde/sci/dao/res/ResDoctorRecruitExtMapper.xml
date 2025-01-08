@@ -9,7 +9,7 @@
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 
-	<resultMap id="speCountForm" type="com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm">
+	<resultMap id="speCountForm" type="com.pinde.core.common.form.ResDoctorTrainingSpeForm">
 	  	  <result column="speId" jdbcType="VARCHAR" property="speId" />
 	  	  <result column="doctorCount" jdbcType="VARCHAR"  property="doctorCount"/>
     </resultMap>
