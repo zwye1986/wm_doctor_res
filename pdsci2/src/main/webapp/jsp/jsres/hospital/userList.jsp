@@ -4,12 +4,11 @@
         <tr>
             <th width="10%">用户名</th>
             <th width="7%">姓名</th>
-            <th width="6%">状态</th>
             <th width="5%">性别</th>
-            <th width="12%">科室名称</th>
-            <%--<th width="8%">证书编号</th>--%>
-            <th width="8%">师资级别</th>
             <th width="9%">手机号码</th>
+            <th width="18%">科室</th>
+            <th width="12%">师资级别</th>
+            <th width="9%">用户状态</th>
             <th width="10%">角色</th>
             <th width="20%">操作</th>
         </tr>
@@ -17,18 +16,18 @@
             <tr style="height:20px ">
                 <td title="${sysUser.userCode }">${pdfn:cutString(sysUser.userCode,4,true,3)}</td>
                 <td title="${sysUser.userName}">${sysUser.userName}</td>
+                <td>${sysUser.sexName}</td>
+                <td>${sysUser.userPhone}</td>
+<%--                <td>${sysUser.deptName}</td>--%>
+                <td title="${sysUserDeptNameMap[sysUser.userFlow]}">${pdfn:cutString(sysUserDeptNameMap[sysUser.userFlow],10,true,3)}</td>
+                <td>${sysUser.teacherLevel}</td>
+                <%--<td title="${sysUser.certificateId}">${pdfn:cutString(sysUser.certificateId,4,true,3)}</td>--%>
                 <c:if test="${sysUser.statusDesc == '锁定'}">
                     <td title="${sysUser.lockReason}">${sysUser.statusDesc}</td>
                 </c:if>
                 <c:if test="${sysUser.statusDesc != '锁定'}">
                     <td>${sysUser.statusDesc}</td>
                 </c:if>
-                <td>${sysUser.sexName}</td>
-<%--                <td>${sysUser.deptName}</td>--%>
-                <td title="${sysUserDeptNameMap[sysUser.userFlow]}">${pdfn:cutString(sysUserDeptNameMap[sysUser.userFlow],4,true,3)}</td>
-                <td>${sysUser.teacherLevel}</td>
-                <%--<td title="${sysUser.certificateId}">${pdfn:cutString(sysUser.certificateId,4,true,3)}</td>--%>
-                <td>${sysUser.userPhone}</td>
                 <td style="text-align: center;">
                     <c:set var="roleName" value=""></c:set>
                     <c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow'] && pdfn:contain(applicationScope.sysCfgMap['res_teacher_role_flow'],sysUserRoleMap[sysUser.userFlow])}">

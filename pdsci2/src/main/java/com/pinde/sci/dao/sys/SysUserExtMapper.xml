@@ -339,6 +339,12 @@
        	<if test='userFlow!=null and userFlow!=""'>
 			and su.user_flow != #{userFlow}
 		</if>
+       	<if test='teacherLevel!=null and teacherLevel!="" and teacherLevel!="blank"'>
+			and su.teacher_level = #{teacherLevel}
+		</if>
+       	<if test='teacherLevel!=null and teacherLevel!="" and teacherLevel=="blank"'>
+			and su.teacher_level is null
+		</if>
        	<if test='orgFlow!=null and orgFlow!=""'>
 			and su.org_flow = #{orgFlow}
 		</if>

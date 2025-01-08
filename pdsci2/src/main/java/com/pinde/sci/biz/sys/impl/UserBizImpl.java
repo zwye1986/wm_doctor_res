@@ -841,6 +841,7 @@ public class UserBizImpl implements IUserBiz {
 		map.put("orgFlow", user.getOrgFlow());
 		map.put("isSelect",isSelect);
 		map.put("examTeaRole",examTeaRole);
+		map.put("teacherLevel",user.getTeacherLevel());
 		map.put("moreDept",user.getIsForeign());//用作暂存多科室查询字段
 		if(roleList!=null && roleList.size()>0){
 			map.put("roleList", roleList);

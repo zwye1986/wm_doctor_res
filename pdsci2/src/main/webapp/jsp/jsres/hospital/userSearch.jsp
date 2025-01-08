@@ -323,7 +323,7 @@
 
              <div class="form_search">
                  <div class="form_item">
-                    <div class="form_label">科室名称：</div>
+                    <div class="form_label">科室：</div>
                     <div class="form_content">
                         <input type="text" id="ksmc" name="deptName" value="${param.deptName}" class=" input" autocomplete="off"/>
                         <input id="ksmcFlow" name="deptFlow" value="${param.deptFlow}" hidden="hidden"/>
@@ -338,16 +338,16 @@
                         </div>
                     </div>
                 </div>
+                 <div class="form_item">
+                     <div class="form_label">用户名：</div>
+                     <div class="form_content">
+                         <input type="text" name="userCode" value="${param.userCode}" class="input"  />
+                     </div>
+                 </div>
                 <div class="form_item">
                     <div class="form_label">姓名：</div>
                     <div class="form_content">
                         <input type="text" name="userName" value="${param.userName}" class="input" />
-                    </div>
-                </div>
-                <div class="form_item">
-                    <div class="form_label">用户名：</div>
-                    <div class="form_content">
-                        <input type="text" name="userCode" value="${param.userCode}" class="input"  />
                     </div>
                 </div>
                 <div class="form_item">
@@ -356,6 +356,20 @@
                         <input type="text" name="userPhone" value="${param.userPhone}"  class="input"  />
                     </div>
                 </div>
+                <div class="form_item">
+                    <div class="form_label">师资级别：</div>
+                    <div class="form_content">
+                        <select name="teacherLevel"  id="teacherLevel" class="select">
+                            <option value="" >全部</option>
+                            <option value="blank" >无</option>
+                            <option value="一般师资" <c:if test='${param.teacherLevel=="一般师资"}'>selected</c:if>>一般师资</option>
+                            <option value="骨干师资" <c:if test='${param.teacherLevel=="骨干师资"}'>selected</c:if>>骨干师资</option>
+                        </select>
+                    </div>
+                </div>
+             </div>
+
+            <div class="form_search">
                 <div class="form_item">
                     <div class="form_label">用户状态：</div>
                     <div class="form_content">
@@ -367,7 +381,32 @@
                         </select>
                     </div>
                 </div>
-             </div>
+                <div class="form_item">
+                    <div class="form_label">角色：</div>
+                    <div class="form_content">
+                        <select multiple class="selectpicker" name="userRoleList" id="userRoleList" title="请选择角色">
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_teacher_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_teacher_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teacher_role_flow']]?sysRoleMap[sysCfgMap['res_teacher_role_flow']].roleName:'带教老师'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_head_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_head_role_flow']]?sysRoleMap[sysCfgMap['res_head_role_flow']].roleName:'科主任'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_secretary_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_secretary_role_flow']].roleName:'科秘'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_head_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_teaching_head_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_head_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_head_role_flow']].roleName:'教学主任'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_teaching_secretary_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_teaching_secretary_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']]?sysRoleMap[sysCfgMap['res_teaching_secretary_role_flow']].roleName:'教学秘书'}</option>
+                            </c:if>
+                            <c:if test="${!empty applicationScope.sysCfgMap['res_hospitalLeader_role_flow']}">
+                                <option value="${applicationScope.sysCfgMap['res_hospitalLeader_role_flow'] }">${!empty sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']]?sysRoleMap[sysCfgMap['res_hospitalLeader_role_flow']].roleName:'评分专家'}</option>
+                            </c:if>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
 
             <div style="margin-top: 15px;margin-bottom: 15px">

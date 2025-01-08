@@ -1,0 +1,90 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="xyh-education_info-table-250107" author="xyh">
+        <sql>
+            CREATE TABLE "PDSCI"."RES_EDUCATION_INFO" (
+            "EDUCATION_FLOW" VARCHAR2(50 BYTE) PRIMARY KEY NOT NULL ENABLE,
+            "USER_FLOW" VARCHAR2(50 BYTE) NOT NULL,
+            "GRADUATION_SCHOOL" VARCHAR2(50 BYTE) NOT NULL,
+            "GRADUATION_TIME" VARCHAR2(20 BYTE),
+            "GRADUATION_SPE" VARCHAR2(50 BYTE),
+            "ACADEMIC_BACKGROUND_ID" VARCHAR2(20 BYTE),
+            "ACADEMIC_BACKGROUND_NAME" VARCHAR2(20 BYTE),
+            "ACADEMIC_BACKGROUND_FILE" VARCHAR2(200 BYTE),
+            "ACADEMIC_DEGREE_ID" VARCHAR2(20 BYTE),
+            "ACADEMIC_DEGREE_NAME" VARCHAR2(20 BYTE),
+            "ACADEMIC_DEGREE_FILE" VARCHAR2(200 BYTE),
+            "RECORD_STATUS" VARCHAR2(2 BYTE),
+            "CREATE_TIME" VARCHAR2(20 BYTE),
+            "CREATE_USER_FLOW" VARCHAR2(50 BYTE),
+            "MODIFY_TIME" VARCHAR2(20 BYTE),
+            "MODIFY_USER_FLOW" VARCHAR2(50 BYTE));
+        </sql>
+    </changeSet>
+
+    <changeSet id="xyh-professional_info-table-250108" author="xyh">
+        <sql>
+            CREATE TABLE "PDSCI"."RES_PROFESSIONAL_INFO" (
+            "PROFESSIONAL_FLOW" VARCHAR2(50 BYTE) PRIMARY KEY NOT NULL ENABLE,
+            "USER_FLOW" VARCHAR2(50 BYTE) NOT NULL,
+            "PROFESSIONAL_TITLE_ID" VARCHAR2(20 BYTE) NOT NULL,
+            "PROFESSIONAL_TITLE_NAME" VARCHAR2(20 BYTE),
+            "TECHNICAL_POSITION_ID" VARCHAR2(20 BYTE),
+            "TECHNICAL_POSITION_NAME" VARCHAR2(20 BYTE),
+            "TECHNICAL_POSITION_TIME" VARCHAR2(20 BYTE),
+            "CLINICAL_TEACHING_TIME" VARCHAR2(20 BYTE),
+            "RECORD_STATUS" VARCHAR2(2 BYTE),
+            "CREATE_TIME" VARCHAR2(20 BYTE),
+            "CREATE_USER_FLOW" VARCHAR2(50 BYTE),
+            "MODIFY_TIME" VARCHAR2(20 BYTE),
+            "MODIFY_USER_FLOW" VARCHAR2(50 BYTE));
+        </sql>
+    </changeSet>
+
+    <changeSet id="xyh-teacher_training_info-table-250108" author="xyh">
+        <sql>
+            CREATE TABLE "PDSCI"."RES_TEACHER_TRAINING_INFO" (
+            "TRAINING_FLOW" VARCHAR2(50 BYTE) PRIMARY KEY NOT NULL ENABLE,
+            "USER_FLOW" VARCHAR2(50 BYTE) NOT NULL,
+            "TRAINING_YEAR" VARCHAR2(20 BYTE) NOT NULL,
+            "TRAINING_UNIT" VARCHAR2(100 BYTE),
+            "TRAINING_SPE_ID" VARCHAR2(20 BYTE),
+            "TRAINING_SPE_NAME" VARCHAR2(20 BYTE),
+            "CERTIFICATE_LEVEL_ID" VARCHAR2(20 BYTE),
+            "CERTIFICATE_LEVEL_NAME" VARCHAR2(20 BYTE),
+            "CERTIFICATE_NO" VARCHAR2(50 BYTE),
+            "CERTIFICATE_TIME" VARCHAR2(20 BYTE),
+            "CERTIFICATE_FILE" VARCHAR2(200 BYTE),
+            "RECORD_STATUS" VARCHAR2(2 BYTE),
+            "CREATE_TIME" VARCHAR2(20 BYTE),
+            "CREATE_USER_FLOW" VARCHAR2(50 BYTE),
+            "MODIFY_TIME" VARCHAR2(20 BYTE),
+            "MODIFY_USER_FLOW" VARCHAR2(50 BYTE));
+        </sql>
+    </changeSet>
+
+    <changeSet id="xyh-teacher_letter_info-table-250108" author="xyh">
+        <sql>
+            CREATE TABLE "PDSCI"."RES_TEACHER_LETTER_INFO" (
+            "LETTER_FLOW" VARCHAR2(50 BYTE) PRIMARY KEY NOT NULL ENABLE,
+            "USER_FLOW" VARCHAR2(50 BYTE) NOT NULL,
+            "LETTER_PERIOD" VARCHAR2(20 BYTE) NOT NULL,
+            "LETTER_START_TIME" VARCHAR2(20 BYTE),
+            "LETTER_END_TIME" VARCHAR2(20 BYTE),
+            "LETTER_TIME" VARCHAR2(20 BYTE),
+            "LETTER_FILE" VARCHAR2(200 BYTE),
+            "RECORD_STATUS" VARCHAR2(2 BYTE),
+            "CREATE_TIME" VARCHAR2(20 BYTE),
+            "CREATE_USER_FLOW" VARCHAR2(50 BYTE),
+            "MODIFY_TIME" VARCHAR2(20 BYTE),
+            "MODIFY_USER_FLOW" VARCHAR2(50 BYTE));
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+
