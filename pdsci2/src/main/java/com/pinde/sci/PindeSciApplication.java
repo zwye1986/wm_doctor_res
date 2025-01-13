@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = {"com.pinde.sci", "com.pinde.core"})
 @PropertySource(value = {"classpath:jdbc.properties", "classpath:pdsci.properties"/*, "classpath:log4j.properties", "classpath:sso.properties"*/}, ignoreResourceNotFound = true)
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
-@MapperScan({"com.pinde.sci.dao.**", "com.pinde.core.common.sci.dao.**"})
+@MapperScan({"com.pinde.**.dao.**"})
 @Configuration
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "jsres-pdsci")
 public class PindeSciApplication extends SpringBootServletInitializer {
