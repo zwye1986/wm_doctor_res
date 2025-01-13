@@ -130,7 +130,7 @@
 		var isWeb = $("input[id='isWebCheck']:checked").val()||"N";
 		$("input[id='isApp']").val(isApp);
 		$("input[id='isWeb']").val(isWeb);
-		var url = "<s:url value='/jsres/examCfg/updateArrangementAdd'/>";
+		var url = "<s:url value='/jsres/examCfg/updateArrangementAdd?type=${type}'/>";
 		var data = $('#editForm').serialize();
 		jboxStartLoading();
 		jboxPost(url, data, function(resp) {
@@ -230,7 +230,14 @@
 						<th style="width:10%;"><font color="red">*</font>培训类别：</th>
 						<td style="width:15%;">
 							<select style="width: 106px;margin-left: 4px;    margin-bottom: 0;" name="trainingTypeId" id="trainingTypeId" class="validate[required] select" onchange="changeTrainSpes(this)">
-								<option value="DoctorTrainingSpe">住院医师</option>
+								<c:choose>
+									<c:when test="${type eq 'acc'}">
+										<option value="AssiGeneral">助理全科</option>
+									</c:when>
+									<c:otherwise>
+										<option value="DoctorTrainingSpe">住院医师</option>
+									</c:otherwise>
+								</c:choose>
 								<%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
 									<option value="${trainCategory.id}" <c:if test="${ment.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
 								</c:forEach>--%>

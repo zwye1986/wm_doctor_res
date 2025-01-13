@@ -61,7 +61,7 @@
 		jboxPostLoad("doctorListZi","<s:url value='/jsres/examCfg/list'/>",$("#searchForm").serialize(),false);
 	}
 	function edit(arrangeFlow) {
-		var url = "<s:url value='/jsres/examCfg/edit'/>?arrangeFlow="+arrangeFlow;
+		var url = "<s:url value='/jsres/examCfg/edit'/>?type=acc&arrangeFlow="+arrangeFlow;
 		jboxOpen(url, "考核设置",1000,550);
 	}
 	function openInfo(arrangeFlow,isOpen) {

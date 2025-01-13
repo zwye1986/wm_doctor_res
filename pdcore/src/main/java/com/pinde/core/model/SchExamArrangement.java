@@ -53,6 +53,16 @@ public class SchExamArrangement implements java.io.Serializable {
 
     private String paperFlow;
 
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getPaperFlow() {
         return paperFlow;
     }
