@@ -56,7 +56,7 @@ public class JsResExamCfgController extends GeneralController {
     }
 
     @RequestMapping(value="/edit")
-    public String edit(Model model,String arrangeFlow) {
+    public String edit(Model model,String arrangeFlow, String type) {
         SchExamArrangement ment=examCfgBiz.readByFlow(arrangeFlow);
         model.addAttribute("ment",ment);
         SysUser currentUser = GlobalContext.getCurrentUser();
@@ -73,6 +73,7 @@ public class JsResExamCfgController extends GeneralController {
             model.addAttribute("standardList",standardList);
         }
         model.addAttribute("depts",depts);
+        model.addAttribute("type", type);
         SysDept dept=new SysDept();
         dept.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         dept.setOrgFlow(currentUser.getOrgFlow());
