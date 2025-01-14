@@ -1,4 +1,4 @@
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
+<%@ page import="com.pinde.sci.util.JsresUtil" %>
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>
@@ -682,13 +682,6 @@ function searchBlackInfo(){
 <!--           <dd class="menu_item"><a href="javascript:generalDoctorStatistics();">全科在培医师统计</a></dd> -->
 <!--           <dd class="menu_item"><a href="javascript:specialDoctorStatistics();">专科在培医师统计</a></dd> -->
         </dl>
-		 <dl class="menu">
-			 <dt class="menu_title">
-				 <i class="icon_menu menu_statistics"></i>月度报表
-			 </dt>
-			 <dd class="menu_item"><a href="javascript:reportDept();">科室报表</a></dd>
-			 <dd class="menu_item"><a href="javascript:reportDoc();">人员报表</a></dd>
-		 </dl>
         <dl class="menu">
           <dt class="menu_title">
             <i class="icon_menu menu_setup"></i>设置

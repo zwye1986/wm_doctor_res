@@ -2,9 +2,9 @@ package com.pinde.sci.biz.osca;
 
 import com.pinde.core.model.OscaFrom;
 import com.pinde.core.model.OscaSubjectStationFrom;
-import com.pinde.sci.model.osca.OscaFromCfgExt;
-import com.pinde.sci.model.osca.OscaFromCfgItemExt;
-import com.pinde.sci.model.osca.OscaFromCfgTitleExt;
+import com.pinde.core.model.OscaFromCfgExt;
+import com.pinde.core.model.OscaFromCfgItemExt;
+import com.pinde.core.model.OscaFromCfgTitleExt;
 
 import java.util.List;
 

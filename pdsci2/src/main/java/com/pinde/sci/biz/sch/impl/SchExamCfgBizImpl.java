@@ -97,8 +97,12 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			yearlyTestUrl = InitConfig.getSysCfg("jsres_yearly_test_update_url");
 			map.put("paperFlow", schExamArrangement.getPaperFlow());
 		}
-		String paperName = schExamArrangement.getOrgName() + schExamArrangement.getAssessmentYear() + "年度" + sessionNumber + "级"
-				+ DictTypeEnum.DoctorTrainingSpe.getDictNameById(trainingSpeId) + "住院医师年度考核";
+		String paperName = schExamArrangement.getOrgName() + schExamArrangement.getAssessmentYear() + "年度" + sessionNumber + "级";
+		if("acc".equals(schExamArrangement.getType())) {
+			paperName += DictTypeEnum.AssiGeneral.getDictNameById(trainingSpeId) + "助理全科年度考核";
+		}else {
+			paperName += DictTypeEnum.DoctorTrainingSpe.getDictNameById(trainingSpeId) + "住院医师年度考核";
+		}
 		map.put("paperName", paperName);
 		map.put("paperTime", schExamArrangement.getExamDuration());
 		map.put("paperPassScore", "60");
@@ -141,6 +145,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 
 		String resultContent = httpResult.getStringContent();
 		JSONObject resultJson = JSONObject.parseObject(resultContent);
+		log.info("generateExam resultJson: {}", resultJson.toJSONString());
 		if(!HTTP_STATUS_OK.equals(resultJson.get(HTTP_RESP_CODE))) {
 			throw new RuntimeException("生成/修改年度试卷失败，失败信息：" + resultJson.get(HTTP_RESP_MSG) + ", spe id: " + trainingSpeId + ", session number: " + sessionNumber);
 		}
@@ -156,9 +161,12 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		httpResult = HttpClientUtil.sendPostForm(switchOnTestUrl, switchOnParams, headers, null, "UTF-8");
 		String switchOnContent = httpResult.getStringContent();
 		JSONObject switchOnJson = JSONObject.parseObject(switchOnContent);
+		log.info("generateExam switchOnJson: {}", switchOnJson.toJSONString());
 		if(!HTTP_STATUS_OK.equals(switchOnJson.get(HTTP_RESP_CODE))) {
-			// 开启失败，删除试卷
-			deleteExam(paperFlow, accessToken);
+			if(StringUtils.isEmpty(schExamArrangement.getPaperFlow())) { // 新增时
+				// 开启失败，删除试卷
+				deleteExam(paperFlow, accessToken);
+			}
 			throw new RuntimeException("开启年度试卷失败，失败信息：" + switchOnJson.get(HTTP_RESP_MSG) + ", spe id: " + trainingSpeId + ", session number: " + sessionNumber);
 		}
 
@@ -174,7 +182,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 	 * @param accessToken
 	 */
 	@Override
-	public void generateDoctorExam(SchExamArrangement schExamArrangement, String paperFlow, String trainingSpeId, String sessionNumber, String accessToken) {
+	public void generateDoctorExam(SchExamArrangement schExamArrangement, String paperFlow, String trainingSpeId, String sessionNumber, String accessToken, boolean newPaper) {
 		File file = null;
 		FileOutputStream fos = null;
 		try {
@@ -253,7 +261,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			file = new File(tempDir + File.separator + schExamArrangement.getAssessmentYear() + schExamArrangement.getOrgName() + sessionNumber + trainingSpeId + uid + "_导入排班.xls"); // 创建File对象指定文件路径
 			fos = new FileOutputStream(file);
 			fos.write(stream); // 将byte数组写入文件
-
+			builder.addBinaryBody("file", file, ContentType.DEFAULT_BINARY, file.getName());
 			// 构建实体
 			HttpEntity multipart = builder.build();
 			httpPost.setEntity(multipart);
@@ -273,17 +281,20 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			if (statusLine.getStatusCode() == 200) {
 				String resp = EntityUtils.toString(httpEntity);
 				JSONObject respJson = JSONObject.parseObject(resp);
+				log.info("generateDoctorExam respJson: {}", respJson.toJSONString());
 				if(!HTTP_STATUS_OK.equals(respJson.get(HTTP_RESP_CODE))) {
 					throw new RuntimeException("生成学员年度试卷失败，信息：" + respJson.get(HTTP_RESP_MSG) + "spe id: " + trainingSpeId + ", session number: " + sessionNumber);
 				}
 			}
         } catch (Exception e) {
 			log.error("generateDoctorExam warn, send post error", e);
+			if(newPaper) { // 新增时
+				// 导入排班失败，删除试卷
+				deleteExam(paperFlow, accessToken);
+			}
 			throw new RuntimeException(e);
 		}finally {
 			try {
-				// 导入排班失败，删除试卷
-				deleteExam(paperFlow, accessToken);
 				if(file != null && file.exists()) { // 不删，保留可以好查导入失败的原因
 	//				file.delete();
 				}
@@ -316,6 +327,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		HttpClientUtil.HttpResult httpResult = HttpClientUtil.sendPostForm(statusChangeUrl, map, headers, null, "UTF-8");
 
 		JSONObject respJson = JSONObject.parseObject(httpResult.getStringContent());
+		log.info("deleteExam respJson: {}", respJson.toJSONString());
 		if(!HTTP_STATUS_OK.equals(respJson.get(HTTP_RESP_CODE))) {
 			throw new RuntimeException("删除年度试卷失败，信息：" + respJson.get(HTTP_RESP_MSG));
 		}
@@ -380,7 +392,7 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 		{
 			criteria.andAssessmentYearEqualTo(seam.getAssessmentYear());
 		}
-		example.setOrderByClause("ASSESSMENT_YEAR,TRAINING_TYPE_ID");
+		example.setOrderByClause("ASSESSMENT_YEAR DESC,TRAINING_TYPE_ID");
 		return schExamArrangementMapper.selectByExample(example);
 	}
 

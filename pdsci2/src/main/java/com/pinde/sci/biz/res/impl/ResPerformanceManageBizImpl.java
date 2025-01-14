@@ -2,8 +2,8 @@ package com.pinde.sci.biz.res.impl;
 
 import com.pinde.sci.biz.res.IResPerformanceManageBiz;
 import com.pinde.sci.dao.res.ResAllowanceUserExtMapper;
-import com.pinde.sci.model.res.ResAllowancePayment;
-import com.pinde.sci.model.res.ResAllowanceUserExt;
+import com.pinde.core.model.ResAllowancePayment;
+import com.pinde.core.model.ResAllowanceUserExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

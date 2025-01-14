@@ -21,7 +21,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.form.jsres.*;
-import com.pinde.sci.model.jsres.ResBaseExt;
+import com.pinde.core.model.ResBaseExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;

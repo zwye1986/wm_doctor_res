@@ -2,8 +2,7 @@ package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.form.jsres.JsresDoctorInfoExt;
-import com.pinde.sci.form.jsres.UserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.*;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import org.dom4j.DocumentException;
 import org.springframework.web.multipart.MultipartFile;
 

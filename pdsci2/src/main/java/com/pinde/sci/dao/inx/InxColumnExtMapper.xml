@@ -12,60 +12,6 @@
 		    <result column="PAR_RECORD_STATUS" property="recordStatus" jdbcType="CHAR" />
 		</association>
 	</resultMap>
-	<!--<select id="selectByForm" parameterType="com.pinde.sci.form.inx.InxColumnForm" resultMap="extResultMap">-->
-	<!--select t1.*,t2.COLUMN_ID as PAR_COLUMN_ID,t2.COLUMN_NAME as PAR_COLUMN_NAME,t2.PARENT_COLUMN_ID as PAR_PARENT_COLUMN_ID,t2.ORDINAL as PAR_ORDINAL,t2.RECORD_STATUS as PAR_RECORD_STATUS from (select tt.* from -->
-    <!--(select t.*,rownum as myrownum from (select <include refid="com.pinde.core.common.sci.dao.InxColumnMapper.Base_Column_List" /> from  INX_COLUMN-->
-	<!--<where>-->
-	<!--<if test='parentColumnId != null and parentColumnId != ""'>-->
-	<!--<if test='parentColumnId!="0"'>-->
-	<!--PARENT_COLUMN_ID = #{parentColumnId}-->
-	<!--</if>-->
-	<!--<if test='parentColumnId=="0"'>-->
-	<!--PARENT_COLUMN_ID is null-->
-	<!--</if>-->
-	<!--</if>-->
-	<!--<if test='columnName != null and columnName != ""'>-->
-	<!--and column_name like CONCAT(CONCAT('%', #{columnName}),'%')-->
-	<!--</if>-->
-	<!--</where>-->
-	<!--order by ordinal asc, create_time desc) t-->
-	<!--<where>-->
-	<!--<if test='endIndex != null and endIndex != ""'>-->
-	<!--rownum <![CDATA[<=]]> #{endIndex}-->
-	<!--</if>-->
-	<!--</where>)tt-->
-	<!--<where>-->
-	<!--<if test='startIndex != null and startIndex != ""'>-->
-	<!--tt.myrownum <![CDATA[>]]> #{startIndex}-->
-	<!--</if>-->
-    <!--</where>)t1 left join  INX_COLUMN t2 on t1.PARENT_COLUMN_ID=t2.COLUMN_ID order by t1.ordinal asc, t1.create_time desc-->
-	<!--</select>-->
-
-	<!--<select id="selectCountByForm" parameterType="com.pinde.sci.form.inx.InxColumnForm" resultType="_long">-->
-    <!--select count(*) from  INX_COLUMN-->
-	<!--<where>-->
-	<!--<if test='parentColumnId != null and parentColumnId != ""'>-->
-	<!--<if test='parentColumnId!="0"'>-->
-	<!--PARENT_COLUMN_ID = #{parentColumnId}-->
-	<!--</if>-->
-	<!--<if test='parentColumnId=="0"'>-->
-	<!--PARENT_COLUMN_ID is null-->
-	<!--</if>-->
-	<!--</if>-->
-	<!--<if test='columnName != null and columnName != ""'>-->
-	<!--and column_name like CONCAT(CONCAT('%', #{columnName}),'%')-->
-	<!--</if>-->
-	<!--</where>-->
-	<!--</select>-->
-	<!--<select id="selectOneByForm" parameterType="com.pinde.sci.form.inx.InxColumnForm" resultMap="extResultMap">-->
-    <!--select t1.*, t2.COLUMN_NAME as PAR_COLUMN_NAME,t2.PARENT_COLUMN_ID as PAR_PARENT_COLUMN_ID,t2.ORDINAL as PAR_ORDINAL,t2.RECORD_STATUS as PAR_RECORD_STATUS from  INX_COLUMN t1 left join  INX_COLUMN t2-->
-	<!--on t1.PARENT_COLUMN_ID = t2.COLUMN_ID-->
-	<!--<where>-->
-	<!--<if test='columnFlow != null and columnFlow != ""'>-->
-	<!--t1.COLUMN_FLOW = #{columnFlow}-->
-	<!--</if>-->
-	<!--</where>-->
-	<!--</select>-->
   
   <select id="searchInxColumnList" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.InxColumnMapper.BaseResultMap">
       select * from INX_COLUMN

@@ -22,7 +22,7 @@ import com.pinde.core.model.SchDept;
 import com.pinde.core.model.SchExamArrangement;
 import com.pinde.core.model.SchExamDoctorArrangement;
 import com.pinde.core.model.SchExamStandardDept;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

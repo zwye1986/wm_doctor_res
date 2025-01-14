@@ -1098,7 +1098,7 @@
 		ORDER by rdsp.sch_start_date desc nulls last ,RD.session_Number DESC,RD.TRAINING_SPE_ID desc,rd.doctor_flow
 	</select>
 
-	<resultMap id="resultMap" type="com.pinde.sci.model.res.SchProcessExt"
+	<resultMap id="resultMap" type="com.pinde.core.model.SchProcessExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
 		<association property="schArrangeResult" column="sch_Month"  resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap" />
 
@@ -3050,7 +3050,7 @@
 		order by NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
 	</select>
 
-	<resultMap id="searchPlanAccessDocResultMap" type="com.pinde.sci.model.res.SchProcessExt" >
+	<resultMap id="searchPlanAccessDocResultMap" type="com.pinde.core.model.SchProcessExt" >
 		<result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
 		<result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
 		<result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
@@ -3132,7 +3132,7 @@
 		 order by pro.SCH_DEPT_NAME,pro.sch_start_date
 	</select>
 
-	<resultMap id="searchInAndOutDocResultMap" type="com.pinde.sci.model.res.SchProcessExt" >
+	<resultMap id="searchInAndOutDocResultMap" type="com.pinde.core.model.SchProcessExt" >
 		<result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
 		<result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
 		<result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />

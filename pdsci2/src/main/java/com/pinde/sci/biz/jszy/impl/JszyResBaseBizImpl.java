@@ -17,7 +17,7 @@ import com.pinde.sci.dao.jszy.JszyResBaseExtMapper;
 import com.pinde.sci.form.jszy.JszyBaseExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBaseInfoForm;
 import com.pinde.sci.form.jszy.JszyCountryOrgExtInfoForm;
-import com.pinde.sci.model.jszy.JszyResBaseExt;
+import com.pinde.core.model.JszyResBaseExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;

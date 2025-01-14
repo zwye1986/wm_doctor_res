@@ -1,8 +1,8 @@
 package com.pinde.sci.ctrl.util;
 
+import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
-import com.pinde.core.common.PasswordHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import com.pinde.core.common.GlobalConstant;
 
 @Controller
 public class InitPasswordUtil extends GeneralController {
@@ -68,6 +66,6 @@ public class InitPasswordUtil extends GeneralController {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("根据输入的规则"+password+"加密后的密文是:"+PasswordHelper.encryptPassword("db768debaaf94d77b078ec24ac4bbca7","Cnnj@123"));
+		System.out.println("根据输入的规则"+password+"加密后的密文是:"+PasswordHelper.encryptPassword("db768debaaf94d77b078ec24ac4bbca7","Tswcbyyqjsjhfl#8848"));
 	}
 }

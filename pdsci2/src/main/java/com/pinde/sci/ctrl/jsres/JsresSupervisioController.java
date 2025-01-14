@@ -21,7 +21,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.core.common.sci.dao.ResSupervisioReportMapper;
 import com.pinde.core.common.sci.dao.ResSupervisioSubjectRecordsMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
-import com.pinde.sci.model.sys.SysOrgExt;
+import com.pinde.core.model.SysOrgExt;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellType;

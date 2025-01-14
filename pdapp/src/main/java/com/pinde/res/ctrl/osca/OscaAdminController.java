@@ -1,13 +1,12 @@
 package com.pinde.res.ctrl.osca;
 
-import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.res.biz.osca.IOscaAdminAppBiz;
 import com.pinde.res.biz.osca.IOscaAppBiz;
-import com.pinde.res.model.jswjw.mo.FromTitle;
+import com.pinde.core.model.FromTitle;
 import com.pinde.res.model.osca.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

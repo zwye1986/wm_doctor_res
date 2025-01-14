@@ -326,12 +326,12 @@
                 <div class="left" style="width: 880px;cursor: auto">
                             <input id="assessOrder_${title.id}" class="bigOrder_${s.index}" type="hidden" value="${title.orderNum}"/>
                     评分项目：
-						<span class="name" style="width: 150px;">
+						<span class="name" style="width: 350px;">
 						<font>${title.name}</font>
 						<input id="assessType_${title.id}" type="text" class="validate[required]" style="display: none;" onblur="saveFromTitle('${title.id}','${s.index-1}');" value="${title.name}"/>
 						</span>
                     评分子项目：
-						<span class="name" style="width: 400px;">
+						<span class="name" style="width: 300px;">
 						<font>${title.typeName}</font>
 						<input id="assessTitle_${title.id}" type="text" class="validate[required]" style="display: none;" onblur="saveFromTitle('${title.id}','${s.index}');" value="${title.typeName}"/>
 						</span>

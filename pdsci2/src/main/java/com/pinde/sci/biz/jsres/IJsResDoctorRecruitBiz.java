@@ -3,8 +3,7 @@ package com.pinde.sci.biz.jsres;
 import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.form.jsres.JykhInfoForm;
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsDoctorInfoExt;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 

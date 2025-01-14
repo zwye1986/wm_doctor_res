@@ -1,5 +1,5 @@
 <%@include file="/jsp/common/doctype.jsp" %>
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
+<%@ page import="com.pinde.sci.util.JsresUtil" %>
 <html>
 <head>
     <title>江苏省住院医师规范化培训</title>

@@ -23,7 +23,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.osca.OscaCheckInfoExtMapper;
 import com.pinde.sci.dao.osca.OscaSkillsAssessmentExtMapper;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
-import com.pinde.sci.model.osca.OscaCheckInfoExt;
+import com.pinde.core.model.OscaCheckInfoExt;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;

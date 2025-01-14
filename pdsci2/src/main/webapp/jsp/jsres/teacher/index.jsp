@@ -1,4 +1,4 @@
-<%@ page import="com.pinde.sci.util.jsres.JsresUtil" %>
+<%@ page import="com.pinde.sci.util.JsresUtil" %>
 <%@include file="/jsp/common/doctype.jsp" %>
 <html>
 <head>
@@ -309,14 +309,6 @@
                             </dt>
                             <dd class="menu_item"><a href="javascript:accounts();">安全中心</a></dd>
                             <dd class="menu_item"><a id="userCenter" href="javascript:userCenter();">个人信息</a></dd>
-                        </dl>
-                        <%--月度报表--%>
-                        <dl class="menu">
-                            <dt class="menu_title">
-                                <i class="icon_menu menu_setup"></i>月度报表
-                            </dt>
-                            <dd class="menu_item"><a href="javascript:reportDept();">科室报表</a></dd>
-                            <dd class="menu_item"><a href="javascript:reportDoc();">人员报表</a></dd>
                         </dl>
                     </div>
                     <div class="col_main" id="content" style="height: 50%;">

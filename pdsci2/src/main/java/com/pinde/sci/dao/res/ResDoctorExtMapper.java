@@ -2,12 +2,12 @@ package com.pinde.sci.dao.res;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.excelListens.model.ResRecItem;
-import com.pinde.sci.form.hbres.ResDoctorClobForm;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
-import com.pinde.sci.model.res.ResDoctorExt;
-import com.pinde.sci.model.res.ResDoctorScoreExt;
-import com.pinde.sci.model.res.ResExamDoctorExt;
-import com.pinde.sci.model.sys.SysUserResDoctorExt;
+import com.pinde.core.common.form.ResDoctorClobForm;
+import com.pinde.core.model.JsResDoctorRecruitExt;
+import com.pinde.core.model.ResDoctorExt;
+import com.pinde.core.model.ResDoctorScoreExt;
+import com.pinde.core.model.ResExamDoctorExt;
+import com.pinde.core.model.SysUserResDoctorExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

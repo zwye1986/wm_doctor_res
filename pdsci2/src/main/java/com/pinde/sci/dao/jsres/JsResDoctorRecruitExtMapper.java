@@ -1,8 +1,8 @@
 package com.pinde.sci.dao.jsres;
 
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
-import com.pinde.sci.model.jsres.JsGraduateExt;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsDoctorInfoExt;
+import com.pinde.core.model.JsGraduateExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

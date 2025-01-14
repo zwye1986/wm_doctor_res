@@ -24,7 +24,7 @@ import com.pinde.sci.dao.jszy.JszyResDoctorExtMapper;
 import com.pinde.sci.dao.jszy.JszyResUserBalckListExtMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.sci.form.jszy.JszyBackTrainForm;
-import com.pinde.sci.model.jszy.JszyDoctorInfoExt;
+import com.pinde.core.model.JszyDoctorInfoExt;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;

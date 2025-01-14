@@ -13,7 +13,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.NumTrans;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.form.jsres.TeacherWorkForm;
-import com.pinde.sci.model.res.SchProcessExt;
+import com.pinde.core.model.SchProcessExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;

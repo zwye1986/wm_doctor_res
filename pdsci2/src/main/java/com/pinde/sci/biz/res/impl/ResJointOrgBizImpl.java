@@ -16,7 +16,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.jszy.JszyResJointOrgExtMapper;
-import com.pinde.sci.model.jszy.JszyResJointOrgExt;
+import com.pinde.core.model.JszyResJointOrgExt;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

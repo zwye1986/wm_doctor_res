@@ -120,6 +120,18 @@
                       AND Teaching_activity_result.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
                     )
                 </if>
+                <if test="now!=null and now!=''">
+                    AND START_TIME  <![CDATA[<=]]> to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                    AND end_TIME >= to_char(SYSDATE, 'yyyy-MM-dd HH24:MI')
+                    AND (
+                            (IS_REGIEST ='Y' OR IS_SCAN='Y')
+                            AND EXISTS (
+                            SELECT 1 FROM Teaching_activity_result
+                            WHERE RECORD_STATUS='Y' AND  USER_FLOW=#{userFlow}
+                            AND Teaching_activity_result.ACTIVITY_FLOW = INFO.ACTIVITY_FLOW
+                            )
+                        )
+                </if>
                and info.dept_flow in ( select sd.dept_flow
                 from sys_dept sd
                 where sd.record_status = 'Y'

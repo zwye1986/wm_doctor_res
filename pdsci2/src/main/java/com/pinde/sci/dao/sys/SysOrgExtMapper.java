@@ -3,7 +3,7 @@ package com.pinde.sci.dao.sys;
 import com.pinde.core.model.PersonStaticExample;
 import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.sys.SysOrgExt;
+import com.pinde.core.model.SysOrgExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

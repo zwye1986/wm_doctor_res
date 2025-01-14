@@ -4,7 +4,7 @@ package com.pinde.res.biz.jswjw.impl;
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.GlobalUtil;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
@@ -21,7 +21,6 @@ import com.pinde.res.dao.jswjw.ext.*;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
 import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.util.PicZoom;
 import com.pinde.sci.util.WeixinQiYeUtil;
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -693,12 +692,12 @@ public class JswjwBizImpl implements IJswjwBiz {
             String perKey = deptFlow + RegistryTypeEnum.CampaignRegistry.getId() + "Finished";
             //参加的教学活动
             int activityNum = getJoinActivityNumByDeptFlow(deptFlow, userFlow);
-            activityNum += (recPer.get(perKey) == null ? 0 : Integer.valueOf(recPer.get(perKey)));
+//            activityNum += (recPer.get(perKey) == null ? 0 : Integer.valueOf(recPer.get(perKey))); // 这句删掉，上面的查询已经包含res_rec表的数据
             activityData = new HashMap<String, Object>();
             activityData.put("title", "活动");
             activityData.put("order", count + 1);
             activityData.put("dataType", "activity");
-            activityData.put("progress", recPer.get(perKey));
+//            activityData.put("progress", recPer.get(perKey)); // 活动已经不从recPer中取了，这句也删掉
             activityData.put("label", "已登记" + activityNum + "条");
             globalDataList.add(count, activityData);
         }

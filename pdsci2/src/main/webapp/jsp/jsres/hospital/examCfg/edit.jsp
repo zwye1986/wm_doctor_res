@@ -99,6 +99,7 @@
 			var trainingTypeName = $(t).find("option:selected").text();
 			$("#trainingTypeName").val(trainingTypeName);
 		}
+        $("#trainingSpeId").attr("disabled", true);
 		return false;
 	}
 	function changeSpeName(resp){
@@ -124,8 +125,10 @@
 		var isWeb = $("input[id='isWebCheck']:checked").val()||"N";
 		$("input[id='isApp']").val(isApp);
 		$("input[id='isWeb']").val(isWeb);
-		var url = "<s:url value='/jsres/examCfg/updateArrangement'/>";
+		var url = "<s:url value='/jsres/examCfg/updateArrangement?type=${type}'/>";
+        $("#trainingSpeId").removeAttr("disabled")
 		var data = $('#editForm').serialize();
+        $("#trainingSpeId").attr("disabled", true);
 		jboxStartLoading();
 		jboxPost(url, data, function(resp) {
 			if(resp == 'cannotInsert'){
@@ -133,7 +136,7 @@
 				jboxEndLoading();
 				return;
 			}
-			if(resp == "操作成功！"){
+			if(resp != "操作成功！"){
 				jboxTip(resp);
 				jboxEndLoading();
 				return;
@@ -225,7 +228,14 @@
 						<th style="width:10%;"><font color="red">*</font>培训类别：</th>
 						<td style="width:15%;">
 							<select style="width: 106px;margin-left: 4px;    margin-bottom: 0;" name="trainingTypeId" id="trainingTypeId" class="validate[required] select" onchange="changeTrainSpes(this)">
-								<option value="DoctorTrainingSpe">住院医师</option>
+								<c:choose>
+									<c:when test="${type eq 'acc'}">
+										<option value="AssiGeneral">助理全科</option>
+									</c:when>
+									<c:otherwise>
+										<option value="DoctorTrainingSpe">住院医师</option>
+									</c:otherwise>
+								</c:choose>
 								<%--<c:forEach items="${trainCategoryEnumList}" var="trainCategory">
 									<option value="${trainCategory.id}" <c:if test="${ment.trainingTypeId==trainCategory.id}">selected="selected"</c:if>>${trainCategory.name}</option>
 								</c:forEach>--%>
@@ -249,9 +259,9 @@
 						</td>
 						<th><font id="yearScope" color="red">*</font>年度区间：</th>
 						<td colspan="5">
-							<input style="width: 100px;" type="text" id="assessmentStartTime" name="assessmentStartTime" value="${ment.assessmentStartTime }" class="input" readonly="readonly" />
+							<input style="width: 100px;" type="text" id="assessmentStartTime" name="assessmentStartTime" value="${ment.assessmentStartTime }" class="validate[required] input" readonly="readonly" />
 							~
-							<input style="width: 100px;" type="text" id="assessmentEndTime" name="assessmentEndTime" value="${ment.assessmentEndTime }" class="input" readonly="readonly"/>
+							<input style="width: 100px;" type="text" id="assessmentEndTime" name="assessmentEndTime" value="${ment.assessmentEndTime }" class="validate[required] input" readonly="readonly"/>
 						</td>
 					</tr>
 					<tr>
@@ -285,18 +295,18 @@
 							<input style="width: 100px;" type="text" name="examNumber" value="${ment.examNumber }" class="validate[required ,custom[positiveNum]] input"/>
 						</td>
                         <th>
-                            考核时长：
+                            <font color="red">*</font>考核时长：
                         </th>
                         <td >
-                            <input style="width: 30px;" type="text" name="examDuration" value="${ment.examDuration}" class="validate[custom[positiveNum]] input"/>分钟
+                            <input style="width: 30px;" type="text" name="examDuration" value="${ment.examDuration}" class="validate[required,custom[positiveNum]] input"/>分钟
                         </td>
                         <th>
-                            考核时间：
+                            <font color="red">*</font>考核时间：
                         </th>
                         <td colspan="4">
-                            <input style="width: 150px;" type="text" name="examStartTime" id="examStartTime" value="${ment.examStartTime}" class="input" onchange="checkExamTime(this)"/>
+                            <input style="width: 150px;" type="text" name="examStartTime" id="examStartTime" value="${ment.examStartTime}" class="validate[required] input" onchange="checkExamTime(this)"/>
                         ~
-                            <input style="width: 150px;" type="text" name="examEndTime"  id="examEndTime" value="${ment.examEndTime}" class="input" onchange="checkExamTime(this)"/>
+                            <input style="width: 150px;" type="text" name="examEndTime"  id="examEndTime" value="${ment.examEndTime}" class="validate[required] input" onchange="checkExamTime(this)"/>
                         </td>
 					</tr>
 					<tr>

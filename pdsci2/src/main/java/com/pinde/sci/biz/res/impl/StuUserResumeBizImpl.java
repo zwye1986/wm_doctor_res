@@ -7,7 +7,7 @@ import com.pinde.sci.biz.res.IStuUserResumeBiz;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.core.common.sci.dao.StuUserResumeMapper;
 import com.pinde.sci.dao.res.StuUserExtMapper;
-import com.pinde.sci.model.res.StuUserExt;
+import com.pinde.core.model.StuUserExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

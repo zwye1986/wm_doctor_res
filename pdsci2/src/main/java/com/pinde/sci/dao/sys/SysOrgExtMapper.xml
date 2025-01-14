@@ -293,7 +293,7 @@
 	</update>
 
 	<!-- 基地map -->
-	<resultMap id="orgMap" type="com.pinde.sci.model.sys.SysOrgExt"
+	<resultMap id="orgMap" type="com.pinde.core.model.SysOrgExt"
 			   extends="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		<result column="ORG_BASE_GRADE_NAME" property="orgBaseGradeName" jdbcType="VARCHAR" />
 		<result column="JOINT_ORG_FLOW" property="jointOrgFlow" jdbcType="VARCHAR" />
@@ -304,7 +304,7 @@
 	</resultMap>
 
 	<!-- 查询基地列表信息 -->
-	<select id="searchOrgListByParam" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultMap="orgMap">
+	<select id="searchOrgListByParam" parameterType="com.pinde.core.model.SysOrgExt" resultMap="orgMap">
 		SELECT
 			T1.ORG_CITY_NAME,
 			T1.ORG_CODE,
@@ -353,7 +353,7 @@
 	</select>
 
 	<!-- 查询基地下协同基地的数量 -->
-	<select id="getJointOrgCountByParam" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultType="map">
+	<select id="getJointOrgCountByParam" parameterType="com.pinde.core.model.SysOrgExt" resultType="map">
 		SELECT
 			O.ORG_FLOW,
 			COUNT(J.JOINT_ORG_FLOW) AS JOINT_COUNT
@@ -614,7 +614,7 @@
 			ORDER BY ORDINAL, ORG_CODE, ORG_FLOW DESC
 	</select>
 
-	<select id="searchOrgByJoin" parameterType="com.pinde.sci.model.sys.SysOrgExt"
+	<select id="searchOrgByJoin" parameterType="com.pinde.core.model.SysOrgExt"
 			resultMap="com.pinde.core.common.sci.dao.SysOrgMapper.BaseResultMap">
 		SELECT O.*
 		FROM SYS_ORG O
@@ -653,7 +653,7 @@
 		  GROUP BY R.ORG_FLOW, R.ORG_NAME, R.SPE_ID, R.SPE_NAME
 		ORDER BY SPE_ID
 	</select>
-	<select id="searchOrgListByParamNew" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultMap="orgMap">
+	<select id="searchOrgListByParamNew" parameterType="com.pinde.core.model.SysOrgExt" resultMap="orgMap">
 		SELECT
 			T1.ORG_CITY_NAME,
 			T1.ORG_CODE,
@@ -701,7 +701,7 @@
 			T1.ordinal,
 			T1.JOINT_ORG_FLOW
 	</select>
-	<select id="getJointOrgCountByParamNew" parameterType="com.pinde.sci.model.sys.SysOrgExt" resultType="map">
+	<select id="getJointOrgCountByParamNew" parameterType="com.pinde.core.model.SysOrgExt" resultType="map">
 		SELECT
 			O.ORG_FLOW,
 			COUNT(J.JOINT_ORG_FLOW) AS JOINT_COUNT

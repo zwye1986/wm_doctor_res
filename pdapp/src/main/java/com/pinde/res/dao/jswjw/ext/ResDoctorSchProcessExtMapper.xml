@@ -3820,7 +3820,7 @@
         ORDER BY RDSP.DEPT_FLOW DESC
     </select>
 
-    <resultMap id="docOrgHistoryExtMap" type="com.pinde.res.model.jswjw.mo.JsResDoctorOrgHistoryExt"
+    <resultMap id="docOrgHistoryExtMap" type="com.pinde.core.model.JsResDoctorOrgHistoryExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorOrgHistoryMapper.BaseResultMap">
         <association property="resDoctor" javaType="com.pinde.core.model.ResDoctor">
             <id column="doctorFlow" jdbcType="VARCHAR" property="doctorFlow"/>

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.jszy.JszyResDoctorRecruitExtMapper">
 
-    <resultMap id="DoctorRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt"
+    <resultMap id="DoctorRecruit" type="com.pinde.core.model.JszyResDoctorRecruitExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="user_flow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -13,7 +13,7 @@
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
 		</association>
 	</resultMap>
-    <resultMap id="DoctorScoreRecruit" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt"
+    <resultMap id="DoctorScoreRecruit" type="com.pinde.core.model.JszyResDoctorRecruitExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="user_flow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -26,7 +26,7 @@
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
 		</association>
 	</resultMap>
-    <resultMap id="doctorInfo" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt"
+    <resultMap id="doctorInfo" type="com.pinde.core.model.JszyDoctorInfoExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -36,7 +36,7 @@
                      resultMap="com.pinde.core.common.sci.dao.PubUserResumeMapper.ResultMapWithBLOBs"/>
 	</resultMap>
 
-    <resultMap id="doctorInfoSun" type="com.pinde.sci.model.jszy.JszyResDoctorRecruitExt"
+    <resultMap id="doctorInfoSun" type="com.pinde.core.model.JszyResDoctorRecruitExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -1392,7 +1392,7 @@
     		</if>
 		group by rec.org_flow
     </select>
-    <resultMap id="info" type="com.pinde.sci.model.jszy.JszyDoctorInfoExt"
+    <resultMap id="info" type="com.pinde.core.model.JszyDoctorInfoExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>

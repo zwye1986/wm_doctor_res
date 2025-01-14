@@ -2,7 +2,7 @@ package com.pinde.res.ctrl.jswjw;
 
 import com.alibaba.fastjson.JSON;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
@@ -22,7 +22,6 @@ import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResPowerCfgExtMapper;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.sci.util.DateTimeUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;

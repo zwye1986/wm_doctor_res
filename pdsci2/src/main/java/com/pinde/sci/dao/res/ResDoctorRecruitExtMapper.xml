@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.ResDoctorRecruitExtMapper" >
-    <resultMap id="resDoctorRecruitExtMap" type="com.pinde.sci.model.res.ResDoctorRecruitExt"
+    <resultMap id="resDoctorRecruitExtMap" type="com.pinde.core.model.ResDoctorRecruitExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
@@ -9,12 +9,12 @@
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap"/>
 	</resultMap>
 
-	<resultMap id="speCountForm" type="com.pinde.sci.form.hbres.ResDoctorTrainingSpeForm">
+	<resultMap id="speCountForm" type="com.pinde.core.common.form.ResDoctorTrainingSpeForm">
 	  	  <result column="speId" jdbcType="VARCHAR" property="speId" />
 	  	  <result column="doctorCount" jdbcType="VARCHAR"  property="doctorCount"/>
     </resultMap>
 
-	<resultMap id="BaseResultMap" type="com.pinde.sci.model.jsres.OrgSpeListVo" >
+	<resultMap id="BaseResultMap" type="com.pinde.core.model.OrgSpeListVo" >
 		<id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
 		<result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
 		<result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />

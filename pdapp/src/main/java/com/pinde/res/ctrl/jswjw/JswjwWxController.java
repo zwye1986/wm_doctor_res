@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
-import com.pinde.app.common.UserResumeExtInfoForm;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.osca.AuditStatusEnum;
@@ -25,7 +25,6 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.res.model.jswjw.mo.*;
 import com.pinde.core.common.sci.dao.ResOrgCkxzMapper;
 import com.pinde.core.common.sci.dao.SysCfgMapper;
 import com.pinde.core.common.sci.dao.SysDictMapper;
@@ -5428,8 +5427,8 @@ public class JswjwWxController extends GeneralController {
         if (StringUtil.isEmpty(typeId)) {
             return ResultDataThrow("类型标识符为空");
         }
-        if (!"isNew".equals(typeId) && !"isEval".equals(typeId)) {
-            return ResultDataThrow("类型标识符不正确,isNew，isEval");
+        if (!"isNew".equals(typeId) && !"isEval".equals(typeId) && !"isCurrent".equals(typeId)) {
+            return ResultDataThrow("类型标识符不正确,isNew，isEval， isCurrent");
         }
         if (pageIndex == null) {
             return ResultDataThrow("当前页码为空");
@@ -5447,6 +5446,9 @@ public class JswjwWxController extends GeneralController {
         }
         if ("isEval".equals(typeId)) {
             param.put("isEval", com.pinde.core.common.GlobalConstant.FLAG_Y);//活动评价
+        }
+        if ("isCurrent".equals(typeId)) {
+            param.put("now", com.pinde.core.common.GlobalConstant.FLAG_Y);//当前活动
         }
         param.put("roleFlag", "doctor");
         param.put("userFlow", userFlow);
@@ -5516,6 +5518,12 @@ public class JswjwWxController extends GeneralController {
                 if (StringUtil.isNotBlank(resultFlow) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRegiest) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan)) {
                     map.put("operId", "CannelRegiest");
                     map.put("operName", "取消报名");
+                }
+                if ("isCurrent".equals(typeId) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isRegiest) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan)) {
+                    map.put("operName", "已报名");
+                }
+                if ("isCurrent".equals(typeId) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isScan)) {
+                    map.put("operName", "已签到");
                 }
                 resultMapList.add(map);
             }
@@ -5868,7 +5876,7 @@ public class JswjwWxController extends GeneralController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("arrangeFlow", sea.getArrangeFlow());
                 map.put("assessmentYear", sea.getAssessmentYear());
-                Map<String, String> examLogMap = examLogMaps.get(sea.getArrangeFlow());
+                Map<String, String> examLogMap = examLogMaps.getOrDefault(sea.getArrangeFlow(), new HashMap<>());
                 if (StringUtil.isBlank(examLogMap.get("maxScore"))) {
                     map.put("examScore", "-");
                 } else {

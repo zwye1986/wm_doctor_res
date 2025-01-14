@@ -9,7 +9,7 @@ import com.pinde.core.model.SchRotationDeptExample;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.sys.SysDeptExtMapper;
-import com.pinde.sci.model.jsres.LzDeptItem;
+import com.pinde.core.model.LzDeptItem;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

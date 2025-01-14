@@ -21,7 +21,7 @@ import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.SchArrangeResult;

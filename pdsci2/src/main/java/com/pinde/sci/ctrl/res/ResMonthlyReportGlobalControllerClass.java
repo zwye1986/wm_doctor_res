@@ -15,7 +15,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.ctrl.jsres.JsResManageController;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.res.ResMonthlyReportExtMapper;
-import com.pinde.sci.model.jsres.JsResDoctorRecruitExt;
+import com.pinde.core.model.JsResDoctorRecruitExt;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.SchArrangeResult;
 import org.slf4j.Logger;
