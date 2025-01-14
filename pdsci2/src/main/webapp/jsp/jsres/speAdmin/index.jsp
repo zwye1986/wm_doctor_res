@@ -318,13 +318,6 @@
                             <dd class="menu_item"><a href="javascript:EvaStudent();">评价学员</a></dd>
                             <dd class="menu_item"><a href="javascript:pjjgcx('speAdmin');">评价结果查询</a></dd>
                         </dl>
-                        <dl class="menu">
-                            <dt class="menu_title">
-                                <i class="icon_menu menu_statistics"></i>月度报表
-                            </dt>
-                            <dd class="menu_item"><a href="javascript:reportDept();">科室报表</a></dd>
-                            <dd class="menu_item"><a href="javascript:reportDoc();">人员报表</a></dd>
-                        </dl>
                     </div>
                     <div class="col_main" id="content">
 
