@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.pub.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.sci.dao.PubFileMapper;
 import com.pinde.core.common.sci.dao.ResDoctorRecruitMapper;
 import com.pinde.core.model.PubFile;
@@ -16,6 +17,7 @@ import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.FileUtil;
+import org.docx4j.wml.P;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -202,6 +205,20 @@ public class FileBizImpl implements IFileBiz {
 			outputStream.flush();
 			outputStream.close();
 		}
+	}
+
+	// 删除附件信息
+	@Override
+	public void deleteFileByParam(String productType, String productFlow, String[] fileFlowArrs) {
+		List<String> fileFlowList = Arrays.asList(fileFlowArrs);
+		PubFileExample docExample  = new PubFileExample();
+		Criteria crieria = docExample.createCriteria();
+		crieria.andProductTypeEqualTo(productType).andProductFlowEqualTo(productFlow);
+		crieria.andFileFlowNotIn(fileFlowList).andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y);
+		PubFile pubFile = new PubFile();
+		pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
+		GeneralMethod.setRecordInfo(pubFile, false);
+		pubFileMapper.updateByExampleSelective(pubFile,docExample);
 	}
 
 
@@ -449,10 +466,10 @@ public class FileBizImpl implements IFileBiz {
     public void deleteFileByTypeFlow(String productType, String productFlow) {
         PubFileExample example = new PubFileExample();
         PubFile file = new PubFile();
-        file.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+        file.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
         if (productFlow != null) {
             Criteria crieria = example.createCriteria();
-            crieria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
+            crieria.andRecordStatusEqualTo(GlobalConstant.RECORD_STATUS_Y).andProductFlowEqualTo(productFlow);
             if (productType != null) {
                 crieria.andProductTypeEqualTo(productType);
             }
@@ -669,7 +686,7 @@ public class FileBizImpl implements IFileBiz {
 	}
 
 	private void delFile(List<PubFile> pubFileList) {
-        String basePath = InitConfig.getSysCfg("srm_apply_file");
+        String basePath = InitConfig.getSysCfg("upload_base_dir");
         if (!pubFileList.isEmpty()) {
             for (PubFile pubFile : pubFileList) {
                 if ("1".equals(pubFile.getFileUpType()) && StringUtil.isNotBlank(pubFile.getFilePath())) {

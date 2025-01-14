@@ -37,16 +37,16 @@
             coopBaseInfo();
         </c:if>
 
-        $('#sessionNumber').datepicker({
-            startView: 2,
-            maxViewMode: 2,
-            minViewMode: 2,
-            format: 'yyyy'
-        });
-        $('#sessionNumber').datepicker().on("changeDate.datepicker.amui", function (event) {
-            var curYear = $("#sessionNumber").val();
-            coopBaseInfo(curYear);
-        });
+        // $('#sessionNumber').datepicker({
+        //     startView: 2,
+        //     maxViewMode: 2,
+        //     minViewMode: 2,
+        //     format: 'yyyy'
+        // });
+        // $('#sessionNumber').datepicker().on("changeDate.datepicker.amui", function (event) {
+        //     var curYear = $("#sessionNumber").val();
+        //     coopBaseInfo(curYear);
+        // });
     });
 
     function submitInfo() {
@@ -71,45 +71,40 @@
         }
     }
 
-    function editInfo(baseInfoName,orgFlow,sessionNumber){
+    function editInfo(baseInfoName,orgFlow){
         var url="";
         if(baseInfoName=='${trainCategoryTypeEnumAfter2014.id}'||baseInfoName=='${trainCategoryTypeEnumBefore2014.id}'){
             url="<s:url value='/jsres/base/findTrainSpe'/>?editFlag=${GlobalConstant.FLAG_Y}&trainCategoryType="+baseInfoName+"&orgFlow="+orgFlow;
             jboxLoad("trainSpeContent",url,false);
         }else{
-            url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&editFlag=${GlobalConstant.FLAG_Y}&baseInfoName="+baseInfoName+"&baseFlow="+orgFlow+"&sessionNumber="+sessionNumber;
+            url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&editFlag=${GlobalConstant.FLAG_Y}&baseInfoName="+baseInfoName+"&baseFlow="+orgFlow;
             jboxLoad("hosContent", url, false);
         }
     }
 
-    function loadInfo(baseInfoName,baseFlow, sessionNumber){
+    function loadInfo(baseInfoName,baseFlow){
         var r = $("#resBase").val();
-        if(baseInfoName!="${GlobalConstant.BASIC_INFO}"&& (r=="" || r==null || r == "undefineded")){
+        if(baseInfoName != "${GlobalConstant.BASIC_INFO}" && !r){
             $(".tab_select").toggleClass("tab_select tab");
             $("#toptab li:first").toggleClass("tab_select tab");
             jboxTip("请先完善基本信息");
             return false;
         }
-        if(sessionNumber) {
-            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber="+sessionNumber+"&ishos=${ishos}";
-        }else if(${not empty ishos}) {
-            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber=${sessionNumber}"+"&ishos=${ishos}";
+        if(${not empty ishos}) {
+            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&ishos=${ishos}";
         } else {
-            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber=${pdfn:getCurrYear()}";
+            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow;
         }
         jboxLoad("hosContent", url, false);
     }
 
     function trainSpeInfo(){
-        var url="<s:url value='/jsres/base/trainSpeMain'/>?orgFlow=${baseFlow}&isJoin=${isJoin}"+"&ishos=${ishos}&sessionNumber=${sessionNumber}";
+        var url="<s:url value='/jsres/base/trainSpeMain'/>?orgFlow=${baseFlow}&isJoin=${isJoin}"+"&ishos=${ishos}";
         jboxLoad("hosContent", url, false);
     }
 
-    function coopBaseInfo(sessionNumber){
-        if(!sessionNumber) {
-            sessionNumber = new Date().getFullYear();
-        }
-        var url="<s:url value='/jsres/base/findCoopBase?sessionNumber=" + sessionNumber + "'/>";
+    function coopBaseInfo(){
+        var url="<s:url value='/jsres/base/findCoopBase'/>";
         jboxLoad("hosContent", url, false);
     }
 
@@ -117,10 +112,24 @@
         jboxLoad("hosContent","<s:url value='/jsp/jsres/hospital/hos/commuHospital.jsp'/>",false);
     }
 
-    function editCoopBase() {
+    function editCoopBase(jointOrgCount, jointFlow) {
+        if(!jointFlow && jointOrgCount >= 3) {
+            jboxTip("最多只能有三个协同单位！");
+            return;
+        }
         var orgFlow = $("#baseFlow").val();
-        var sessionNumber = $("#sessionNumber").val();
-        jboxOpen("<s:url value='/jsres/base/editCoopBase?orgFlow=" + orgFlow + "&sessionNumber=" + sessionNumber + "'/>", "编辑协同单位", 800, 670);
+        jboxOpen("<s:url value='/jsres/base/editCoopBase'/>?orgFlow=" + orgFlow + "&jointFlow=" + jointFlow, "编辑协同单位", 600, 300);
+    }
+
+    // 删除协同关系
+    function deleteCoopBase(jointFlow){
+        jboxConfirm("确认删除？", function () {
+            jboxPost("<s:url value='/jsres/base/deleteCoopBase'/>", {jointFlow: jointFlow}, function (resp) {
+                if ("${GlobalConstant.DELETE_SUCCESSED}" == resp) {
+                    coopBaseInfo();
+                }
+            }, null, true);
+        });
     }
 </script>
 <div class="main_hd" id="assistOrgManage" style="display: none">
@@ -134,46 +143,20 @@
             协同单位管理
             <!-- 			<input id="submitBtn" class="btn_green" type="button" onclick="submitInfo();" value="提交"  style="display: none; float: right; margin-top: 30px; margin-right: 10px;" /> -->
         </h2>
-        <div class="div_table">
-            <div style="margin: -20px 10px 20px 0px; text-align: right;">
-                <form id="searchForm">
-                    <input type="hidden" name="orgFlow" value="${orgFlow}">
-                    <input type="hidden" name="ishos" value="${ishos}">
-                    <input type="button" class="btn_green"  value="编&#12288;辑" onclick="editCoopBase()" />
-                    &nbsp;&nbsp;
-                    <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>
-                    <input class="input" name="sessionNumber" id="sessionNumber" style="width: 161px;height: 30px;padding: 0px; padding-left: 4px"
-                           value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}"/>
-                </form>
-            </div>
-        </div>
+<%--        <div class="div_table">--%>
+<%--            <div style="margin: -20px 10px 20px 0px; text-align: right;">--%>
+<%--                <form id="searchForm">--%>
+<%--                    <input type="hidden" name="orgFlow" value="${orgFlow}">--%>
+<%--                    <input type="hidden" name="ishos" value="${ishos}">--%>
+<%--                    <input type="button" class="btn_green"  value="编&#12288;辑" onclick="editCoopBase()" />--%>
+<%--                    &nbsp;&nbsp;--%>
+<%--                    <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>--%>
+<%--                    <input class="input" name="sessionNumber" id="sessionNumber" style="width: 161px;height: 30px;padding: 0px; padding-left: 4px"--%>
+<%--                           value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}"/>--%>
+<%--                </form>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </c:if>
-    <%--<div class="title_tab" id="toptab" style="margin-top: 5px;">
-        <ul>
-            <li id="tab"class="tab_select" cusTrigger="loadInfo('${GlobalConstant.BASIC_INFO}','${param.baseFlow}');" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">基地信息</a>
-            </li>
-            &lt;%&ndash;  <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y and !empty resBase.orgFlow }">
-                   <li class="tab" cusTrigger="loadInfo('${GlobalConstant.TEACH_CONDITION}','${param.baseFlow}');" style="cursor: pointer;"><a>教学条件</a></li>
-                   <li class="tab" cusTrigger="loadInfo('${GlobalConstant.ORG_MANAGE}','${param.baseFlow}');" style="cursor: pointer;"><a>组织管理</a></li>
-                   <li class="tab" cusTrigger="loadInfo('${GlobalConstant.SUPPORT_CONDITION}','${param.baseFlow}');" style="cursor: pointer;"><a>支撑条件</a></li>
-               </c:if>
-                <c:if test="${param.viewFlag != GlobalConstant.FLAG_Y}">
-                   <li class="tab" cusTrigger="loadInfo('${GlobalConstant.TEACH_CONDITION}','${param.baseFlow}');" style="cursor: pointer;"><a>教学条件</a></li>
-                   <li class="tab" cusTrigger="loadInfo('${GlobalConstant.ORG_MANAGE}','${param.baseFlow}');" style="cursor: pointer;"><a>组织管理</a></li>
-                   <li class="tab" cusTrigger="loadInfo('${GlobalConstant.SUPPORT_CONDITION}','${param.baseFlow}');" style="cursor: pointer;"><a>支撑条件</a></li>
-               </c:if>&ndash;%&gt;
-            <li class="tab" cusTrigger="trainSpeInfo();" style="cursor: pointer;">
-                <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">专业基地</a>
-            </li>
-            <c:if test="${! empty jointOrgs and param.viewFlag != GlobalConstant.FLAG_Y  }">
-                <li class="tab" cusTrigger="coopBaseInfo();" style="cursor: pointer;">
-                    <a style="color: #000000;font: 15px 'Microsoft Yahei';font-weight: 400;">协同单位</a>
-                </li>
-            </c:if>
-            <!--             <li class="tab" cusTrigger="commuHospital();" style="cursor: pointer;"><a href="javascript:void(0);" >社区培训基地</a></li> -->
-        </ul>
-    </div>--%>
 </div>
 <div class="main_bd" id="div_table_0" >
     <div id="hosContent" <c:if test="${param.viewFlag eq GlobalConstant.FLAG_Y }">style="height: 700px;overflow: auto;"</c:if>>

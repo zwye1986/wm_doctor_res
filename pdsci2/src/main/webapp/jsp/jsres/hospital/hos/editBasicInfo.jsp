@@ -17,6 +17,7 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
+<script type="text/javascript" src="<s:url value='/js/jquery-select/js/jquery.select.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript" src="<s:url value='/js/ajaxfileupload.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <style>
 	.div_table h4 {
@@ -92,30 +93,41 @@
 
 	function checkSetJointOrg() {
 		if($('input[name="basicInfo.jointOrgFlag"]:checked').val() != 'Y') {
+			// 移除已新增协同基地信息
+			$("#jointContractBody").remove();
+			// 插入空的协同基地输入框 无协同时删除用
+			$("#BaseInfoForm").append("<input type='hidden' name='jointOrgFlows' />");
 			return true; // 不填就不用校验
 		}
-
+		// 记录重复协同单位专业基地
+		var orgSpeArr = new Array();
 		var joints = $("#jointContractBody tr");
 		// 校验必填项是不是都填了
 		for(var i = 0; i < joints.length; i++) {
 			var joint = joints[i];
 			var jointOrg = $(joint).find('select[name="jointOrgFlows"]');
-			if(!$(jointOrg).val()) {
+			if (!$(jointOrg).val()) {
 				jboxTip("请选择协同单位！");
 				return false;
 			}
 
 			var speId = $(joint).find('select[name="speIds"]');
-			if(!$(speId).val()) {
+			if (!$(speId).val()) {
 				jboxTip("请选择专业基地！");
 				return false;
 			}
-
+			var currOrgSpe = $(jointOrg).val() + "," + $(speId).val();
+			if ($.inArray(currOrgSpe, orgSpeArr) !== -1) {
+				jboxTip("第"+ (i+1) +"行协同单位专业基地已存在！");
+				return;
+			}else{
+				orgSpeArr.push(currOrgSpe);
+			}
 			var uploadFiles = $(joint).find("input[name='files']");
 			var uploadNum = 0;
-			for(var j = 0; j < uploadFiles.length; j++) {
+			for (var j = 0; j < uploadFiles.length; j++) {
 				var uploadFile = uploadFiles[j];
-				if($(uploadFile).val()) {
+				if ($(uploadFile).val()) {
 					uploadNum++;
 				}
 			}
@@ -126,12 +138,12 @@
 
 			var fileFlows = $(joint).find("input[name='jointContractFileFlows']");
 
-			if(!fileFlows.length) {
+			if (!fileFlows.length) {
 				jboxTip("请上传协同关系协议！");
 				return false;
 			}
 
-			fileFlows = Array.from(fileFlows).filter(function(item) {
+			fileFlows = Array.from(fileFlows).filter(function (item) {
 				return $(item).val();
 			});
 			// 记录下原来的文件还剩几个
@@ -142,16 +154,16 @@
 		return true;
 	}
 
-	String.prototype.htmlFormartById = function(data){
+	String.prototype.htmlFormartById = function (data) {
 		var html = this;
-		for(var key in data){
-			var reg = new RegExp('\\{'+key+'\\}','g');
-			html = html.replace(reg,data[key]);
+		for (var key in data) {
+			var reg = new RegExp('\\{' + key + '\\}', 'g');
+			html = html.replace(reg, data[key]);
 		}
 		return html;
 	};
 
-	String.prototype.htmlFormatByIndex = function(data, pre){
+	String.prototype.htmlFormatByIndex = function (data, pre) {
 		var html = this;
 		var reg = new RegExp(pre + "\\[\\d+\\]", "g");
 		html = html.replace(reg, pre + "[" + data + "]");
@@ -159,7 +171,7 @@
 
 	};
 
-	$(document).ready(function(){
+	$(document).ready(function () {
 		/*if ($("#ywfgfzrTb tr").length <= 0) {
 			add('ywfgfzr');
 		}
@@ -224,7 +236,11 @@
 
 	function addFile(obj) {
 		var td = obj.parentNode;
-
+		// 校验文件数量
+		var fileLength = $(td).find("input[name='jointContractFileFlows']").length;
+		if(fileLength >= 3){
+			return jboxTip("最多只能上传3个文件！");
+		}
 		$(td).append($("#jointContractFileTemplate div").clone());
 	}
 
@@ -273,7 +289,7 @@
 	<input type="hidden" name="sysOrg.orgFlow" value="${sessionScope.currUser.orgFlow}"/>
 	<input type="hidden" name="baseFlow" value="${sessionScope.currUser.orgFlow}"/>
 	<input type="hidden" name="flag" value="${GlobalConstant.BASIC_INFO}"/>
-	<input type="hidden" name="resBase.sessionNumber" value="${sessionNumber}"/>
+<%--	<input type="hidden" name="resBase.sessionNumber" value="${sessionNumber}"/>--%>
 	<div class="main_bd">
 		<div class="div_table">
 			<h4><span class="red">*</span>基本信息</h4>
@@ -295,9 +311,9 @@
 						<th>所属地区：</th>
 						<td colspan="2">
 							<div id="provCityAreaId">
-								<select id="orgProvId" name="sysOrg.orgProvId" class="province select" data-value="${sysOrg.orgProvId}" style="width: 127px;" data-first-title="选择省"></select>
-								<select id="orgCityId" name="sysOrg.orgCityId" class="city select" data-value="${sysOrg.orgCityId}" style="width: 127px;" data-first-title="选择市"></select>
-								<select id="orgAreaId" name="sysOrg.orgAreaId" class="area select" data-value="${sysOrg.orgAreaId}" style="width: 127px;" data-first-title="选择地区"></select>
+								<select id="orgProvId" name="sysOrg.orgProvId" class="province select" data-value="${sysOrg.orgProvId}" style="width: 100px;" data-first-title="选择省"></select>
+								<select id="orgCityId" name="sysOrg.orgCityId" class="city select" data-value="${sysOrg.orgCityId}" style="width: 100px;" data-first-title="选择市"></select>
+								<select id="orgAreaId" name="sysOrg.orgAreaId" class="area select" data-value="${sysOrg.orgAreaId}" style="width: 100px;" data-first-title="选择地区"></select>
 							</div>
 							<input id="orgProvName" name="sysOrg.orgProvName" type="hidden" value="${sysOrg.orgProvName}">
 							<input id="orgCityName" name="sysOrg.orgCityName" type="hidden" value="${sysOrg.orgCityName}">
@@ -319,7 +335,7 @@
 						<th><span class="red">*</span>培训基地地址：</th>
 						<td colspan="2"><input type="text" style="width: 90%"  name="sysOrg.orgAddress"  class='input validate[required]' value="${sysOrg.orgAddress}"/></td>
 						<th><span class="red">*</span>邮政编码：</th>
-						<td colspan="2"><input type="text"  style="width: 115px" name="sysOrg.orgZip" class="input validate[required,custom[chinaZip]]"  value="${sysOrg.orgZip}"/></td>
+						<td colspan="2"><input type="text"  style="width: 90px" name="sysOrg.orgZip" class="input validate[required,custom[chinaZip]]"  value="${sysOrg.orgZip}"/></td>
 					</tr>
 					<%--<tr>
 						<th><span class="red">*</span>培训基地负责人：</th>
@@ -376,7 +392,7 @@
 					<th style="width: 15%"><span class="red">*</span>手机号码</th>
 					<th style="width: 15%"><span class="red">*</span>固定电话</th>
 					<th style="width: 15%"><span class="red">*</span>邮箱地址</th>
-					<th style="width: 15%">职称</th>
+<%--					<th style="width: 15%">职称</th>--%>
 					<th style="width: 15%"><span class="red">*</span>职务</th>
 					<th style="width: 10%"></th>
 					<%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
@@ -402,15 +418,15 @@
 							   name="basicInfo.jdfzrMailAddress" oninput="valueUpdate(this);"
 							   value="${basicInfo.jdfzrMailAddress }"/>
 					</td>
-					<td>
-						<select name="basicInfo.jdfzrTitleId" class="select">
-							<option value="">请选择</option>
-							<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-								<option value="${title.dictId}"
-										<c:if test='${basicInfo.jdfzrTitleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
-							</c:forEach>
-						</select>
-					</td>
+<%--					<td>--%>
+<%--						<select name="basicInfo.jdfzrTitleId" class="select">--%>
+<%--							<option value="">请选择</option>--%>
+<%--							<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--								<option value="${title.dictId}"--%>
+<%--										<c:if test='${basicInfo.jdfzrTitleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>--%>
+<%--							</c:forEach>--%>
+<%--						</select>--%>
+<%--					</td>--%>
 					<td>
 						<select name="basicInfo.jdfzrPostId" class="select validate[required]">
 							<option value="">请选择</option>
@@ -431,7 +447,7 @@
 					<th style="width: 15%"><span class="red">*</span>手机号码</th>
 					<th style="width: 15%"><span class="red">*</span>固定电话</th>
 					<th style="width: 15%"><span class="red">*</span>邮箱地址</th>
-					<th style="width: 15%">职称</th>
+<%--					<th style="width: 15%">职称</th>--%>
 					<th style="width: 15%"><span class="red">*</span>职务</th>
 					<th style="width: 10%"></th>
 					<%--<th>操作&nbsp;<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
@@ -459,15 +475,15 @@
 								   name="basicInfo.zpglbmfzrList[0].mailAddress" oninput="valueUpdate(this);"
 								   value="${basicInfo.zpglbmfzrList[0].mailAddress }"/>
 						</td>
-						<td>
-							<select name="basicInfo.zpglbmfzrList[0].titleId" class="select" onchange="valueUpdate(this);">
-								<option value="">请选择</option>
-								<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-									<option value="${title.dictId}"
-											<c:if test='${basicInfo.zpglbmfzrList[0].titleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
-								</c:forEach>
-							</select>
-						</td>
+<%--						<td>--%>
+<%--							<select name="basicInfo.zpglbmfzrList[0].titleId" class="select" onchange="valueUpdate(this);">--%>
+<%--								<option value="">请选择</option>--%>
+<%--								<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--									<option value="${title.dictId}"--%>
+<%--											<c:if test='${basicInfo.zpglbmfzrList[0].titleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>--%>
+<%--								</c:forEach>--%>
+<%--							</select>--%>
+<%--						</td>--%>
 						<td>
 							<select name="basicInfo.zpglbmfzrList[0].postId" class="select validate[required]" onchange="valueUpdate(this);">
 								<option value="">请选择</option>
@@ -488,7 +504,7 @@
 					<th style="width: 15%"><span class="red">*</span>手机号码</th>
 					<th style="width: 15%"><span class="red">*</span>固定电话</th>
 					<th style="width: 15%"><span class="red">*</span>邮箱地址</th>
-					<th style="width: 15%">职称</th>
+<%--					<th style="width: 15%">职称</th>--%>
 					<th style="width: 15%"><span class="red">*</span>职务</th>
 					<th style="width: 10%"><img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />"
 									   style="cursor: pointer;" onclick="javascript:add('contactMan')" /></th>
@@ -516,15 +532,15 @@
 								   name="basicInfo.contactManList[${status.index}].mailAddress" oninput="valueUpdate(this);"
 								   value="${contactMan.mailAddress }"/>
 						</td>
-						<td>
-							<select name="basicInfo.contactManList[${status.index}].titleId" class="select" onchange="valueUpdate(this);">
-								<option value="">请选择</option>
-								<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-									<option value="${title.dictId}"
-											<c:if test='${contactMan.titleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>
-								</c:forEach>
-							</select>
-						</td>
+<%--						<td>--%>
+<%--							<select name="basicInfo.contactManList[${status.index}].titleId" class="select" onchange="valueUpdate(this);">--%>
+<%--								<option value="">请选择</option>--%>
+<%--								<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--									<option value="${title.dictId}"--%>
+<%--											<c:if test='${contactMan.titleId == title.dictId}'>selected="selected"</c:if>>${title.dictName}</option>--%>
+<%--								</c:forEach>--%>
+<%--							</select>--%>
+<%--						</td>--%>
 						<td>
 							<select name="basicInfo.contactManList[${status.index}].postId" class="select validate[required]" onchange="valueUpdate(this);">
 								<option value="">请选择</option>
@@ -687,8 +703,8 @@
 				<thead>
 				<colgroup>
 					<col width="30%"/>
-					<col width="30%"/>
-					<col width="30%"/>
+					<col width="20%"/>
+					<col width="40%"/>
 					<col width="10%"/>
 				</colgroup>
 				<tr>
@@ -707,12 +723,15 @@
 				<c:forEach var="jointContract" items="${jointContractList}" varStatus="status">
 					<tr>
 						<td style="text-align: center">
-							<select name="jointOrgFlows" class="select" οnclick="return false;" οnmοusedοwn="return false;">
+							<input type="hidden" name="jointFlow" value="${jointContract.jointFlow}"/>
+							<input type="hidden" name="jointOrgFlows" value="${jointContract.orgFlow}"/>
+							<select name="jointOrgFlows" class="select" disabled>
 								<option value="${jointContract.orgFlow}">${jointContract.orgName}</option>
 							</select>
 						</td>
 						<td style="text-align: center">
-							<select name="speIds" class="select">
+							<input type="hidden" name="speIds" value="${jointContract.speId}"/>
+							<select name="speIds" class="select" disabled>
 								<option value="">请选择</option>
 								<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
 									<option value="${dict.dictId}" <c:if test="${jointContract.speId eq dict.dictId}">selected</c:if> >${dict.dictName}</option>
@@ -720,13 +739,13 @@
 							</select>
 						</td>
 						<td style="text-align: center">
-							（请选择pdf格式的文件）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addFile(this);" />
+							（请上传pdf格式的扫描件，最多3个）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addFile(this);" />
 							<c:if test="${not empty jointContract.fileList}">
 								<c:forEach items="${jointContract.fileList}" var="contractFile">
-									<div style="text-align: center;padding: 2px;margin: 2px" class="jointContractFile">
+									<div style="text-align: center;padding: 2px;margin: 3px;display: flex;" class="jointContractFile">
 										<a href="${sysCfgMap['upload_base_url']}/${contractFile.filePath}"
-										   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;width: 60%;background-color: white;color: #409eff">${contractFile.fileName}</a>
-										<span onclick="javascript:void(0)" style="background-color: white;color: #409eff">
+										   target="_blank" style="font: 14px 'Microsoft Yahei';font-weight: 400;border-radius: 2px;width: 74%;background-color: white;color: #409eff">${contractFile.fileName}</a>
+										<span>
 											<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 												 style="cursor: pointer;" onclick="delJointFile(this);" />
 										</span>
@@ -756,10 +775,10 @@
 </form>
 <div style="display: none">
 	<div id="jointContractFileTemplate">
-		<div style="text-align: center" class="jointContractFile">
-			<input type='file' name='files' class='' onchange="uploadFileCheck(this);"
-				   accept=".pdf" style="width: 60%;padding: 2px;margin: 2px"/>
-			<span onclick="javascript:void(0)" style="background-color: white;color: #409eff">
+		<div style="text-align: center;padding: 2px;margin: 3px;" class="jointContractFile">
+			<input type='file' name='files' class='validate[required]' onchange="uploadFileCheck(this);"
+				   accept=".pdf" style="width: 60%;"/>
+			<span>
 				<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 					 style="cursor: pointer;" onclick="delJointFile(this);" />
 			</span>
@@ -770,18 +789,15 @@
 	<table id="jointContractTemplate">
 		<tr>
 			<td style="text-align: center">
-				<select name="jointOrgFlows" class="select">
+				<select name="jointOrgFlows" class="select validate[required]">
 					<option value="">请选择</option>
 					<c:forEach items="${unjointOrgList}" var="jointOrg">
-						<option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
-					</c:forEach>
-					<c:forEach items="${jointContractList}" var="jointOrg">
 						<option value="${jointOrg.orgFlow}">${jointOrg.orgName}</option>
 					</c:forEach>
 				</select>
 			</td>
 			<td style="text-align: center">
-				<select name="speIds" class="select">
+				<select name="speIds" class="select validate[required]">
 					<option value="">请选择</option>
 					<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
 						<option value="${dict.dictId}">${dict.dictName}</option>
@@ -789,7 +805,16 @@
 				</select>
 			</td>
 			<td style="text-align: center">
-				（请选择pdf格式的文件）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addFile(this);" />
+				（请上传pdf格式的扫描件，最多3个）<img class="opBtn" title="新增" src="<s:url value="/css/skin/${skinPath}/images/add3.png" />" style="cursor: pointer;" onclick="addFile(this);" />
+				<div style="text-align: center" class="jointContractFile">
+					<input type='file' name='files' class='validate[required]' onchange="uploadFileCheck(this);"
+						   accept=".pdf" style="width: 60%;padding: 2px;margin: 2px"/>
+					<span>
+						<img class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
+							 style="cursor: pointer;" onclick="delJointFile(this);" />
+					</span>
+					<input type="hidden" name="jointContractFileFlows" value="${contractFile.fileFlow}" />
+				</div>
 				<input type="hidden" name="fileUploadNum" value="0" />
 				<input type="hidden" name="fileRemainNum" value="0" />
 			</td>
@@ -816,14 +841,14 @@
 				<input type="text" class='input validate[custom[email]]' style="width: 115px"
 					   name="basicInfo.ywfgfzrList[{index}].mailAddress"  oninput="valueUpdate(this);"/>
 			</td>
-			<td>
-				<select name="basicInfo.ywfgfzrList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-					<option value="">请选择</option>
-					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-						<option value="${title.dictId}">${title.dictName}</option>
-					</c:forEach>
-				</select>
-			</td>
+<%--			<td>--%>
+<%--				<select name="basicInfo.ywfgfzrList[{index}].titleId" class="select" onchange="valueUpdate(this);">--%>
+<%--					<option value="">请选择</option>--%>
+<%--					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--						<option value="${title.dictId}">${title.dictName}</option>--%>
+<%--					</c:forEach>--%>
+<%--				</select>--%>
+<%--			</td>--%>
 			<td>
 				<select name="basicInfo.ywfgfzrList[{index}].postId" class="select" onchange="valueUpdate(this);">
 					<option value="">请选择</option>
@@ -854,14 +879,14 @@
 				<input type="text" class='input validate[custom[email]]' style="width: 115px"
 					   name="basicInfo.zpywkslxrList[{index}].mailAddress" oninput="valueUpdate(this);" />
 			</td>
-			<td>
-				<select name="basicInfo.zpywkslxrList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-					<option value="">请选择</option>
-					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-						<option value="${title.dictId}">${title.dictName}</option>
-					</c:forEach>
-				</select>
-			</td>
+<%--			<td>--%>
+<%--				<select name="basicInfo.zpywkslxrList[{index}].titleId" class="select" onchange="valueUpdate(this);">--%>
+<%--					<option value="">请选择</option>--%>
+<%--					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--						<option value="${title.dictId}">${title.dictName}</option>--%>
+<%--					</c:forEach>--%>
+<%--				</select>--%>
+<%--			</td>--%>
 			<td>
 				<select name="basicInfo.zpywkslxrList[{index}].postId" class="select" onchange="valueUpdate(this);">
 					<option value="">请选择</option>
@@ -896,14 +921,14 @@
 				<input type="text" class='input validate[custom[email]]' style="width: 115px"
 					   name="basicInfo.zpglbmfzrList[{index}].mailAddress" oninput="valueUpdate(this);" />
 			</td>
-			<td>
-				<select name="basicInfo.zpglbmfzrList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-					<option value="">请选择</option>
-					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-						<option value="${title.dictId}">${title.dictName}</option>
-					</c:forEach>
-				</select>
-			</td>
+<%--			<td>--%>
+<%--				<select name="basicInfo.zpglbmfzrList[{index}].titleId" class="select" onchange="valueUpdate(this);">--%>
+<%--					<option value="">请选择</option>--%>
+<%--					<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--						<option value="${title.dictId}">${title.dictName}</option>--%>
+<%--					</c:forEach>--%>
+<%--				</select>--%>
+<%--			</td>--%>
 			<td>
 				<select name="basicInfo.zpglbmfzrList[{index}].postId" class="select" onchange="valueUpdate(this);">
 					<option value="">请选择</option>
@@ -941,14 +966,14 @@
 				   name="basicInfo.contactManList[{index}].mailAddress" oninput="valueUpdate(this);"
 				   value="${contactMan.mailAddress }"/>
 		</td>
-		<td>
-			<select name="basicInfo.contactManList[{index}].titleId" class="select" onchange="valueUpdate(this);">
-				<option value="">请选择</option>
-				<c:forEach items="${dictTypeEnumUserTitleList}" var="title">
-					<option value="${title.dictId}">${title.dictName}</option>
-				</c:forEach>
-			</select>
-		</td>
+<%--		<td>--%>
+<%--			<select name="basicInfo.contactManList[{index}].titleId" class="select" onchange="valueUpdate(this);">--%>
+<%--				<option value="">请选择</option>--%>
+<%--				<c:forEach items="${dictTypeEnumUserTitleList}" var="title">--%>
+<%--					<option value="${title.dictId}">${title.dictName}</option>--%>
+<%--				</c:forEach>--%>
+<%--			</select>--%>
+<%--		</td>--%>
 		<td>
 			<select name="basicInfo.contactManList[{index}].postId" class="select validate[required]" onchange="valueUpdate(this);">
 				<option value="">请选择</option>

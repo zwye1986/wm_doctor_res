@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ResAssessTypeEnum;
 import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;
@@ -1347,7 +1348,7 @@ public class JsResHeadDeptController extends GeneralController{
 	 * @return
 	 */
 		@RequestMapping("/findAllBaseInfo")
-	public ModelAndView findAllBaseInfo(String deptFlow, String baseInfoName, String editFlag, String viewFlag,String sessionNumber,
+	public ModelAndView findAllBaseInfo(String deptFlow, String baseInfoName, String editFlag, String viewFlag,
 										String orgFlow,String isJoin,String speFlow,String onlyRead,String isglobal){
 
 		ModelAndView mav = new ModelAndView();
@@ -1365,8 +1366,8 @@ public class JsResHeadDeptController extends GeneralController{
 				if (StringUtil.isNotBlank(userRole.getRoleFlow()) &&(
 						userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_global_role_flow")) ||
 								userRole.getRoleFlow().equals(InitConfig.getSysCfg("res_maintenance_role_flow")))){
-                    isglobal = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                    viewFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+                    isglobal = GlobalConstant.FLAG_Y;
+                    viewFlag = GlobalConstant.FLAG_Y;
 				}
 			}
 		}
@@ -1378,7 +1379,7 @@ public class JsResHeadDeptController extends GeneralController{
 		mav.addObject("speFlow", speFlow);
 
 		//指导医师情况
-            if (com.pinde.core.common.GlobalConstant.GUIDING_PHYSICIAN.equals(baseInfoName)) {
+		if (GlobalConstant.GUIDING_PHYSICIAN.equals(baseInfoName)) {
 			List<ResTeacherTraining> list = deptBasicInfoBiz.searchByOrgAndDept(orgFlow, deptFlow);
 			for (ResTeacherTraining teacherTraining : list) {
 				int year = Integer.parseInt(DateUtil.getYear());
@@ -1405,39 +1406,36 @@ public class JsResHeadDeptController extends GeneralController{
 			return mav;
 		}
 
-		if (StringUtil.isEmpty(sessionNumber)){
-            sessionNumber = com.pinde.core.util.DateUtil.getYear();
-		}
-		Integer year=Integer.parseInt(sessionNumber)-1;
-		mav.addObject("sessionNumber", sessionNumber);
+//		if (StringUtil.isEmpty(sessionNumber)){
+//            sessionNumber = com.pinde.core.util.DateUtil.getYear();
+//		}
+//		Integer year=Integer.parseInt(sessionNumber)-1;
+//		mav.addObject("sessionNumber", sessionNumber);
 		boolean isPay=false;	//基地是否付费
-			String hospitalAdmin = InitConfig.getSysCfg("res_admin_role_flow");
-			List<String> currRoleList = (List<String>) getSessionAttribute("currRoleList");
-			if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
-				JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
-				//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
-                if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
-					isPay = true;    //是付费用户
-                    viewFlag = com.pinde.core.common.GlobalConstant.FLAG_N;
-				} else {
-                    viewFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
-				}
-			}else {
-				isPay = true;
+		String hospitalAdmin = InitConfig.getSysCfg("res_admin_role_flow");
+		List<String> currRoleList = (List<String>) getSessionAttribute("currRoleList");
+		if(currRoleList == null || !currRoleList.contains(hospitalAdmin)) {
+			JsresPowerCfg cfg = jsResPowerCfgBiz.read("jsres_baseInfo_maintenance_" + orgFlow);
+			//基地是付费用户，科主任可以填写信息，如果不是就不可以填写，只能由基地填写
+			if (null != cfg && StringUtil.isNotBlank(cfg.getCfgValue()) && cfg.getCfgValue().equals(GlobalConstant.FLAG_Y)) {
+				isPay = true;    //是付费用户
+				viewFlag = GlobalConstant.FLAG_N;
+			} else {
+				viewFlag = GlobalConstant.FLAG_Y;
 			}
-
-
-
+		}else {
+			isPay = true;
+		}
 
 		//诊疗疾病范围、医疗设备仪器
-            if (com.pinde.core.common.GlobalConstant.DIAG_DISEASE.equals(baseInfoName) || com.pinde.core.common.GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
+		if (GlobalConstant.DIAG_DISEASE.equals(baseInfoName) || GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
 			if(StringUtils.isNotEmpty(speFlow)) {
 				Map<String, String> paramMap=new HashMap<>();
 				paramMap.put("orgFlow",orgFlow);
 				paramMap.put("speFlow",speFlow);
 				paramMap.put("stype",baseInfoName);
 
-                if (com.pinde.core.common.GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
+                if (GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
 					paramMap.put("standardDeptId",speFlow);
 				}else {
 					SchAndStandardDeptCfg schAndStandardDeptCfg = schAndStandardDeptCfgBiz.readBySchDeptFlowAndOrgFlow(deptFlow, orgFlow);
@@ -1447,24 +1445,23 @@ public class JsResHeadDeptController extends GeneralController{
 				}
 				paramMap.put("dtype","dept");
 				paramMap.put("deptFlow",deptFlow);
-				paramMap.put("sessionNumber",sessionNumber);
 				List<Map<String, String>> infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
 				//如果没有数据，就将前一年的数据显示出来，方便用户填写
 				paramMap.put("infoType",baseInfoName);
-				int size = deptBasicInfoBiz.countResBaseSpeDeptInfoData(paramMap);
-				if (isPay && size==0){
-					paramMap.put("sessionNumber",year.toString());
-					infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
-                    editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
-
-				}
+//				int size = deptBasicInfoBiz.countResBaseSpeDeptInfoData(paramMap);
+//				if (isPay && size==0){
+//					paramMap.put("sessionNumber",year.toString());
+//					infoList = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
+//                    editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//
+//				}
 				if (null!=infoList && infoList.size()>0){
 					mav.addObject("tableAllArrNum", infoList.get(0).get("arrNum"));
 				}
 
 				mav.addObject("infoList", infoList);
-                if ("3500".equals(speFlow) && com.pinde.core.common.GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
-					paramMap.put("standardDeptId","350001");
+                if ("3700".equals(speFlow) && GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {
+					paramMap.put("standardDeptId","370001");
 					List<Map<String, String>> infoList2 = deptBasicInfoBiz.searchResBaseSpeDeptInfoData(paramMap);
 					if (null!=infoList2 && infoList2.size()>0){
 						mav.addObject("infoList2", infoList2);
@@ -1475,62 +1472,62 @@ public class JsResHeadDeptController extends GeneralController{
 		}
 
 
-		ResBaseSpeDept baseSpeDept = deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow,sessionNumber);
-		boolean dataIsNull=false;
-		if (isPay && null==baseSpeDept){
-			//如果没有数据，就将前一年的数据显示出来，方便用户填写
-			baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow,year.toString());
-			dataIsNull=true;
-		}
+		ResBaseSpeDept baseSpeDept = deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow);
+//		boolean dataIsNull = false;
+//		if (isPay && null==baseSpeDept){
+//			//如果没有数据，就将前一年的数据显示出来，方便用户填写
+//			baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow);
+//			dataIsNull=true;
+//		}
 		mav.addObject("baseSpeDept", baseSpeDept);
 		if (baseSpeDept != null) {
 			String Xml=baseSpeDept.getBaseInfo();
 			if (StringUtil.isNotBlank(Xml)) {
 				BaseSpeDeptExtForm speDeptExtForm= JaxbUtil.converyToJavaBean(Xml, BaseSpeDeptExtForm.class);
-                if (com.pinde.core.common.GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName)) {    //科室基本信息
+                if (GlobalConstant.DEPT_BASIC_INFO.equals(baseInfoName)) {    //科室基本信息
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
-					if (null==speDeptExtForm.getDeptBasicInfoForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
-						baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow,year.toString());
-						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
-							mav.addObject("deptBasicInfoForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDeptBasicInfoForm());
-						}
-                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
-					}else {
+//					if (null==speDeptExtForm.getDeptBasicInfoForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
+//						baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow);
+//						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
+//							mav.addObject("deptBasicInfoForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDeptBasicInfoForm());
+//						}
+//                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//					}else {
 						mav.addObject("deptBasicInfoForm", speDeptExtForm.getDeptBasicInfoForm());
-					}
-                } else if (com.pinde.core.common.GlobalConstant.TRAINING.equals(baseInfoName)) {    //培训情况
+//					}
+                } else if (GlobalConstant.TRAINING.equals(baseInfoName)) {    //培训情况
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
-					if (null==speDeptExtForm.getTrainingForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
-						baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow,year.toString());
-						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
-							mav.addObject("trainingForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getTrainingForm());
-						}
-                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
-					}else {
+//					if (null==speDeptExtForm.getTrainingForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
+//						baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow);
+//						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
+//							mav.addObject("trainingForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getTrainingForm());
+//						}
+//                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//					}else {
 						mav.addObject("trainingForm", speDeptExtForm.getTrainingForm());
-					}
+//					}
 
-                } else if (com.pinde.core.common.GlobalConstant.DEPARTMENT_HEAD.equals(baseInfoName)) {    //科室负责人信息
+                } else if (GlobalConstant.DEPARTMENT_HEAD.equals(baseInfoName)) {    //科室负责人信息
 					//如果查询年份的数据为空，就显示去年的数据（方便用户填写）
-					if (null==speDeptExtForm.getDepartmentHeadForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
-						baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow,year.toString());
-						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
-							mav.addObject("departmentHeadForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDepartmentHeadForm());
-						}
-                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
-					}else {
+//					if (null==speDeptExtForm.getDepartmentHeadForm() && dataIsNull==false && isPay){		//如果查询年份的数据为空，就显示前一年的数据
+//						baseSpeDept=deptBasicInfoBiz.readByOrgAndDept(orgFlow, deptFlow);
+//						if (null!=baseSpeDept && StringUtil.isNotBlank(baseSpeDept.getBaseInfo())){
+//							mav.addObject("departmentHeadForm",JaxbUtil.converyToJavaBean(baseSpeDept.getBaseInfo(), BaseSpeDeptExtForm.class).getDepartmentHeadForm());
+//						}
+//                        editFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//					}else {
 						mav.addObject("departmentHeadForm", speDeptExtForm.getDepartmentHeadForm());
-					}
+//					}
 				}
 			}
 			//查询附件
 			if(StringUtil.isNotBlank(deptFlow)&&StringUtil.isNotBlank(baseInfoName)) {
 				List<PubFile> files=new ArrayList<>();
-                if (com.pinde.core.common.GlobalConstant.TRAINING.equals(baseInfoName)) {//查询附件
-                    files = pubFileBiz.findFileByTypeFlow(com.pinde.core.common.GlobalConstant.TRAINING, orgFlow + deptFlow);
+                if (GlobalConstant.TRAINING.equals(baseInfoName)) {//查询附件
+                    files = pubFileBiz.findFileByTypeFlow(GlobalConstant.TRAINING, orgFlow + deptFlow);
 				}
-                if (com.pinde.core.common.GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {//查询附件
-                    files = pubFileBiz.findFileByTypeFlow(com.pinde.core.common.GlobalConstant.EQUIPMENT_INSTRUMENTS, orgFlow + deptFlow);
+                if (GlobalConstant.EQUIPMENT_INSTRUMENTS.equals(baseInfoName)) {//查询附件
+                    files = pubFileBiz.findFileByTypeFlow(GlobalConstant.EQUIPMENT_INSTRUMENTS, orgFlow + deptFlow);
 				}
 				Map<String,PubFile> fileMap=new HashMap<>();
 				if(files!=null&&files.size()>0)
@@ -1543,20 +1540,20 @@ public class JsResHeadDeptController extends GeneralController{
 				mav.addObject("fileMap", fileMap);
 				mav.addObject("files", files);
 			}
-            if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {        //基地查看
-                viewFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+            if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals(GlobalConstant.FLAG_Y)) {        //基地查看
+                viewFlag = GlobalConstant.FLAG_Y;
 			}
-            if ((com.pinde.core.common.GlobalConstant.FLAG_Y.equals(editFlag)) && !com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {
+            if ((GlobalConstant.FLAG_Y.equals(editFlag)) && !GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jsres/kzr/mainInfo/edit"+baseInfoName);
 			}else{
 				mav.addObject("baseInfoName", baseInfoName);
 				mav.setViewName("jsres/kzr/mainInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}
 		}else{//无记录
-            if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {        //基地查看
-                viewFlag = com.pinde.core.common.GlobalConstant.FLAG_Y;
+            if (StringUtil.isNotBlank(onlyRead) && onlyRead.equals(GlobalConstant.FLAG_Y)) {        //基地查看
+                viewFlag = GlobalConstant.FLAG_Y;
 			}
-            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(viewFlag)) {
+            if (GlobalConstant.FLAG_Y.equals(viewFlag)) {
 				mav.setViewName("jsres/kzr/mainInfo/"+baseInfoName.substring(0,1).toLowerCase()+baseInfoName.substring(1, baseInfoName.length()));
 			}else{
 				mav.setViewName("jsres/kzr/mainInfo/edit"+baseInfoName);

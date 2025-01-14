@@ -24,11 +24,11 @@ public interface IDeptBasicInfoBiz {
 
     ResBaseSpeDept readByRecordFlow(String recordFlow);
 
-    ResBaseSpeDept readByOrgAndDept(String orgFlow,String deptFlow,String sessionNumber);
+    ResBaseSpeDept readByOrgAndDept(String orgFlow,String deptFlow);
 
-    ResBaseSpeDept readByOrgAndSpe(String orgFlow,String speFlow,String sessionNumber);
+    ResBaseSpeDept readByOrgAndSpe(String orgFlow,String speFlow);
 
-    List<ResBaseSpeDept> readByOrgFlowAndYear(String orgFlow,String sessionNumber);
+    List<ResBaseSpeDept> readByOrgFlow(String orgFlow);
 
     List<ResTeacherTraining> searchByOrgAndDept(String orgFlow,String deptFlow);
 
@@ -36,7 +36,7 @@ public interface IDeptBasicInfoBiz {
 
     List<ResBaseSpeDeptInfo> searchInfo(ResBaseSpeDeptInfo baseSpeDeptInfo);
 
-    ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow,String orgFlow,String speFlow,String deptFlow,String type,String sessionNumber,String infoType);
+    ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow,String orgFlow,String speFlow,String deptFlow,String type,String infoType);
 
     int saveResBaseSpeDeptInfoData(ResBaseSpeDeptData speDeptData);
 

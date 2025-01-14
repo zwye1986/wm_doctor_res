@@ -5,25 +5,25 @@
 
 <script type="text/javascript">
     $(document).ready(function (){
-        if(!'${param.ishos}' || '${param.ishos}' == 'N') {
-            $('#sessionNumber').datepicker({
-                startView: 2,
-                maxViewMode: 2,
-                minViewMode: 2,
-                format: 'yyyy'
-            });
-            $('#sessionNumber').datepicker().on("changeDate.datepicker.amui", function (event) {
-                if('${param.viewFlag}' != 'Y') {
-                    var curYear = $('#sessionNumber').val();
-                    if (curYear == new Date().getFullYear()) {
-                        $("#sessionDiv").css("display", "inline");
-                    } else {
-                        $("#sessionDiv").css("display", "none");
-                    }
-                }
-                getInfo();
-            });
-        }
+        <%--if(!'${param.ishos}' || '${param.ishos}' == 'N') {--%>
+        <%--    $('#sessionNumber').datepicker({--%>
+        <%--        startView: 2,--%>
+        <%--        maxViewMode: 2,--%>
+        <%--        minViewMode: 2,--%>
+        <%--        format: 'yyyy'--%>
+        <%--    });--%>
+        <%--    $('#sessionNumber').datepicker().on("changeDate.datepicker.amui", function (event) {--%>
+        <%--        if('${param.viewFlag}' != 'Y') {--%>
+        <%--            var curYear = $('#sessionNumber').val();--%>
+        <%--            if (curYear == new Date().getFullYear()) {--%>
+        <%--                $("#sessionDiv").css("display", "inline");--%>
+        <%--            } else {--%>
+        <%--                $("#sessionDiv").css("display", "none");--%>
+        <%--            }--%>
+        <%--        }--%>
+        <%--        getInfo();--%>
+        <%--    });--%>
+        <%--}--%>
         $("#baseInfoManage").css("display", "");
         getInfo();
     })
@@ -77,24 +77,24 @@
         <form id="searchForm">
             <input type="hidden" name="orgFlow" value="${orgFlow}">
             <input type="hidden" name="ishos" value="${ishos}">
-            <c:set var="sessionShow" value="none"></c:set>
-            <c:if test="${param.viewFlag != GlobalConstant.FLAG_Y and pdfn:getCurrYear() eq sessionNumber}">
-                <c:set var="sessionShow" value="inline"></c:set>
-            </c:if>
-            <div id="sessionDiv" style="display: ${sessionShow}">
-                <input type="button" class="btn_green"  value="复制上一年信息" onclick="duplicateBeforeYear()" />
-            </div>
-            &nbsp;&nbsp;
-            <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>
-            <c:if test="${not empty ishos}">
-                <label>${sessionNumber}</label>
-                <input class="input" name="sessionNumber" id="sessionNumber" type="hidden"
-                       value="${sessionNumber}"/>
-            </c:if>
-            <c:if test="${empty ishos}">
-                <input class="input" name="sessionNumber" id="sessionNumber" style="width: 161px;height: 30px;padding: 0px;padding-left: 4px;"
-                       value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}"/>
-            </c:if>
+<%--            <c:set var="sessionShow" value="none"></c:set>--%>
+<%--            <c:if test="${param.viewFlag != GlobalConstant.FLAG_Y and pdfn:getCurrYear() eq sessionNumber}">--%>
+<%--                <c:set var="sessionShow" value="inline"></c:set>--%>
+<%--            </c:if>--%>
+<%--            <div id="sessionDiv" style="display: ${sessionShow}">--%>
+<%--                <input type="button" class="btn_green"  value="复制上一年信息" onclick="duplicateBeforeYear()" />--%>
+<%--            </div>--%>
+<%--            &nbsp;&nbsp;--%>
+<%--            <label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>--%>
+<%--            <c:if test="${not empty ishos}">--%>
+<%--                <label>${sessionNumber}</label>--%>
+<%--                <input class="input" name="sessionNumber" id="sessionNumber" type="hidden"--%>
+<%--                       value="${sessionNumber}"/>--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${empty ishos}">--%>
+<%--                <input class="input" name="sessionNumber" id="sessionNumber" style="width: 161px;height: 30px;padding: 0px;padding-left: 4px;"--%>
+<%--                       value="${empty param.sessionNumber?pdfn:getCurrYear():param.sessionNumber}"/>--%>
+<%--            </c:if>--%>
         </form>
     </div>
     <div id="basicInfoMain" style="width: 100%;"></div>

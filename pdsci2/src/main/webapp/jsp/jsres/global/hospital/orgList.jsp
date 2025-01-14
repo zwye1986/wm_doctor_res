@@ -230,8 +230,8 @@ function hideTable(obj) {
 		}
 
 		// 查看基地信息
-		function showOrg(orgFlow, sessionNumber){
-			var url ="<s:url value='/jsres/base/main'/>?viewFlag=Y&ishos=Y&baseFlow="+orgFlow+"&sessionNumber="+sessionNumber;
+		function showOrg(orgFlow){
+			var url ="<s:url value='/jsres/base/main'/>?viewFlag=Y&ishos=Y&baseFlow="+orgFlow;
 			var iframe ="<iframe name='jbox-message-iframe' id='jbox-message-iframe' width='100%' height='100%' marginheight='0' marginwidth='0' frameborder='0' scrolling='no' src='"+url+"'></iframe>";
 			jboxMessager(iframe,'查看基地信息',1250,800);
 
@@ -239,16 +239,8 @@ function hideTable(obj) {
 		}
 
 		function resetTrainBase() {
-			var date = new Date();
-			var year = date.getFullYear();
-			var month = date.getMonth();
-			if(month <= 8) {
-				year = year - 1;
-			}
-
 			$("input[name='jointOrgName']").val("");
 			$("input[name='orgName']").val("");
-			$("input[name='sessionYear']").val(year + "");
 		}
 	</script>
 	<style>
@@ -273,10 +265,10 @@ function hideTable(obj) {
 			<input type="hidden" name="currentPage" id="currentPage" value=""/>
 			<table style="border-collapse:separate; border-spacing:0px 20px;">
 				<tr>
-					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">年份：</td>
-					<td class="td_left">
-						<input class="input" type="text" name="sessionYear" value="${sessionYear}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly">
-					</td>
+<%--					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">年份：</td>--%>
+<%--					<td class="td_left">--%>
+<%--						<input class="input" type="text" name="sessionYear" value="${sessionYear}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly">--%>
+<%--					</td>--%>
 					<td class="td_right" style="color: #000000;font: 14px Microsoft YaHei;font-weight: 400;">&#12288;基地名称：</td>
 					<td class="td_left">
 						<input class="input" type="text" name="orgName" value="${param.orgName}">
@@ -334,17 +326,17 @@ function hideTable(obj) {
 											<td rowspan="${joint.JOINT_COUNT}">${j.index + 1}</td>
 											<td rowspan="${joint.JOINT_COUNT}">${org.orgCityName}</td>
 											<td rowspan="${joint.JOINT_COUNT}">${org.orgCode}</td>
-											<td rowspan="${joint.JOINT_COUNT}"><a onclick="showOrg('${org.orgFlow}', '${sessionYear}');">${org.orgName}</a></td>
+											<td rowspan="${joint.JOINT_COUNT}"><a onclick="showOrg('${org.orgFlow}');">${org.orgName}</a></td>
 											<td rowspan="${joint.JOINT_COUNT}">${org.orgBaseGradeName}</td>
 <%--											<td>${org.orgCode}-${count + 1}</td>--%>
-											<td><a onclick="showOrg('${org.jointOrgFlow}', '${sessionYear}');">${org.jointOrgName}</a></td>
+											<td><a onclick="showOrg('${org.jointOrgFlow}');">${org.jointOrgName}</a></td>
 <%--											<td>${org.jointBaseGradeName}</td>--%>
 										</tr>
 									</c:when>
 									<c:otherwise>
 										<tr>
 <%--											<td>${org.orgCode}-${count + 1}</td>--%>
-											<td><a onclick="showOrg('${org.jointOrgFlow}', '${sessionYear}');">${org.jointOrgName}</a></td>
+											<td><a onclick="showOrg('${org.jointOrgFlow}');">${org.jointOrgName}</a></td>
 <%--											<td>${org.jointBaseGradeName}</td>--%>
 										</tr>
 									</c:otherwise>
@@ -356,7 +348,7 @@ function hideTable(obj) {
 									<td>${j.index + 1}</td>
 									<td>${org.orgCityName}</td>
 									<td>${org.orgCode}</td>
-									<td class="left-content"><a onclick="showOrg('${org.orgFlow}', '${sessionYear}');">${org.orgName}</a></td>
+									<td class="left-content"><a onclick="showOrg('${org.orgFlow}');">${org.orgName}</a></td>
 									<td>${org.orgBaseGradeName}</td>
 									<td>————</td>
 <%--									<td></td>--%>

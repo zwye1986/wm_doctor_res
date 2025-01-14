@@ -27,7 +27,7 @@
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.pinde.core.model.ResBase" extends="BaseResultMap" >
     <result column="BASE_INFO" property="baseInfo" jdbcType="CLOB" />
-      <result column="BASE_EXT_INFO" property="baseExtInfo" jdbcType="CLOB"/>
+    <result column="BASE_EXT_INFO" property="baseExtInfo" jdbcType="CLOB"/>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -151,9 +151,12 @@
            , b.MODIFY_TIME
            , b.MODIFY_USER_FLOW
            , b.BASE_INFO
+           ,b.BASE_EXT_INFO
       FROM RES_BASE b
-               LEFT JOIN SYS_ORG o on o.org_flow = b.org_flow
+      LEFT JOIN SYS_ORG o on o.org_flow = b.org_flow
+      AND O.RECORD_STATUS = 'Y'
       where b.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+      AND B.RECORD_STATUS = 'Y'
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
       delete from RES_BASE
