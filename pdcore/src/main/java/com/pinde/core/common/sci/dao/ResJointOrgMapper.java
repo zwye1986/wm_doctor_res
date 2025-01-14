@@ -39,7 +39,7 @@ public interface ResJointOrgMapper {
      */
     ResJointOrg selectByJointOrgFlow(String orgFlow);
 
-    int deleteByOrgFlow(@Param("orgFlow") String orgFlow, @Param("sessionNumber") String sessionNumber);
+    int deleteByOrgFlow(@Param("orgFlow") String orgFlow);
 
     int deleteJointOrg(ResJointOrg jointOrg);
 }

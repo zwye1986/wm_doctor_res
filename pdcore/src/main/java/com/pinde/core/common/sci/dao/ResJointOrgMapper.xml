@@ -355,7 +355,6 @@
         update RES_JOINT_ORG
         set record_status = 'N'
         where org_flow = #{orgFlow}
-          and session_number = #{sessionNumber}
           and record_status = 'Y'
     </delete>
     <!-- 通过flow来更新，用choose，防止无条件更新全表 -->

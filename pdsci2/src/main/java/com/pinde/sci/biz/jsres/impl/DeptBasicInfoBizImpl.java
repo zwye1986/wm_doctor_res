@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.sci.dao.ResBaseSpeDeptDataMapper;
 import com.pinde.core.common.sci.dao.ResBaseSpeDeptInfoMapper;
 import com.pinde.core.common.sci.dao.ResBaseSpeDeptMapper;
@@ -69,9 +70,9 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         ResBaseSpeDept fromBase = baseSpeDeptForm.getResBaseSpeDept();  //界面获取的数据
         ResBaseSpeDept resBaseSpeDept = null;
         if (infoType.equals("dept")) {
-            resBaseSpeDept = readByOrgAndDept(fromBase.getOrgFlow(), fromBase.getDeptFlow(),fromBase.getSessionNumber());    //查询数据库中的数据
+            resBaseSpeDept = readByOrgAndDept(fromBase.getOrgFlow(), fromBase.getDeptFlow());    //查询数据库中的数据
         } else if (infoType.equals("spe")) {
-            resBaseSpeDept = readByOrgAndSpe(fromBase.getOrgFlow(), fromBase.getSpeFlow(),fromBase.getSessionNumber());    //查询数据库中的数据
+            resBaseSpeDept = readByOrgAndSpe(fromBase.getOrgFlow(), fromBase.getSpeFlow());    //查询数据库中的数据
         }
 
         if (null != resBaseSpeDept) {
@@ -82,7 +83,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
             resBaseSpeDept = new ResBaseSpeDept();
             resBaseSpeDept.setOrgFlow(fromBase.getOrgFlow());
             resBaseSpeDept.setOrgName(orgBiz.readSysOrg(fromBase.getOrgFlow()).getOrgName());
-            resBaseSpeDept.setSessionNumber(fromBase.getSessionNumber());
+//            resBaseSpeDept.setSessionNumber(fromBase.getSessionNumber());
             if (infoType.equals("dept")) {
                 resBaseSpeDept.setDeptFlow(fromBase.getDeptFlow());
                 SysDept sysDept = deptBiz.readSysDept(fromBase.getDeptFlow());
@@ -99,11 +100,11 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
             resBaseSpeDept.setType(infoType);
         }
         if (null != extForm) { //将数据库中的数据替换成页面上的数据
-            if (com.pinde.core.common.GlobalConstant.DEPT_BASIC_INFO.equals(flag)) {
+            if (GlobalConstant.DEPT_BASIC_INFO.equals(flag)) {
                 extForm.setDeptBasicInfoForm(baseSpeDeptForm.getDeptBasicInfoForm());
-            } else if (com.pinde.core.common.GlobalConstant.TRAINING.equals(flag)) {
+            } else if (GlobalConstant.TRAINING.equals(flag)) {
                 extForm.setTrainingForm(baseSpeDeptForm.getTrainingForm());
-            } else if (com.pinde.core.common.GlobalConstant.DEPARTMENT_HEAD.equals(flag)) {
+            } else if (GlobalConstant.DEPARTMENT_HEAD.equals(flag)) {
                 extForm.setDepartmentHeadForm(baseSpeDeptForm.getDepartmentHeadForm());
             }
         }
@@ -138,7 +139,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (files != null && files.size() > 0) {
             String basePath = InitConfig.getSysCfg("upload_base_dir");
             for (PubFile pubFile : files) {
-                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
                 pubFileBiz.editFile(pubFile);
             }
         }
@@ -190,7 +191,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
                                 throw new RuntimeException("保存文件失败！");
                             }
                             String filePath = File.separator + "resBaseInfo" + File.separator + noteTypeId + File.separator + dateString + File.separator + recordFlow + File.separator + originalFilename;
-                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
                             pubFile.setFilePath(filePath);
                             pubFile.setFileName(oldFileName);
                             pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
@@ -226,7 +227,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     }
 
     @Override
-    public ResBaseSpeDept readByOrgAndDept(String orgFlow, String deptFlow,String sessionNumber) {
+    public ResBaseSpeDept readByOrgAndDept(String orgFlow, String deptFlow) {
         ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
         ResBaseSpeDeptExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(orgFlow)) {
@@ -235,10 +236,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(deptFlow)) {
             criteria.andDeptFlowEqualTo(deptFlow);
         }
-        if (StringUtil.isNotBlank(sessionNumber)){
-            criteria.andSessionNumberEqualTo(sessionNumber);
-        }
-        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andTypeEqualTo("dept");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTypeEqualTo("dept");
         List<ResBaseSpeDept> list = baseSpeDeptMapper.selectByExampleWithBLOBs(example);
         if (null != list && list.size() > 0) {
             return list.get(0);
@@ -247,7 +245,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     }
 
     @Override
-    public ResBaseSpeDept readByOrgAndSpe(String orgFlow, String speFlow,String sessionNumber) {
+    public ResBaseSpeDept readByOrgAndSpe(String orgFlow, String speFlow) {
         ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
         ResBaseSpeDeptExample.Criteria criteria = example.createCriteria();
         if (StringUtil.isNotBlank(orgFlow)) {
@@ -256,10 +254,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(speFlow)) {
             criteria.andSpeFlowEqualTo(speFlow);
         }
-        if (StringUtil.isNotBlank(sessionNumber)){
-            criteria.andSessionNumberEqualTo(sessionNumber);
-        }
-        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andTypeEqualTo("spe");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTypeEqualTo("spe");
         List<ResBaseSpeDept> list = baseSpeDeptMapper.selectByExampleWithBLOBs(example);
         if (null != list && list.size() > 0) {
             return list.get(0);
@@ -268,15 +263,12 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     }
 
     @Override
-    public List<ResBaseSpeDept> readByOrgFlowAndYear(String orgFlow, String sessionNumber) {
+    public List<ResBaseSpeDept> readByOrgFlow(String orgFlow) {
         ResBaseSpeDeptExample example = new ResBaseSpeDeptExample();
         ResBaseSpeDeptExample.Criteria criteria = example.createCriteria();
-        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andTypeEqualTo("spe");
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andTypeEqualTo("spe");
         if (StringUtil.isNotBlank(orgFlow)) {
             criteria.andOrgFlowEqualTo(orgFlow);
-        }
-        if (StringUtil.isNotBlank(sessionNumber)){
-            criteria.andSessionNumberEqualTo(sessionNumber);
         }
         return baseSpeDeptMapper.selectByExampleWithBLOBs(example);
     }
@@ -291,7 +283,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(deptFlow)) {
             criteria.andDeptFlowEqualTo(deptFlow);
         }
-        criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
+        criteria.andRecordStatusEqualTo(GlobalConstant.FLAG_Y);
         return teacherTrainingMapper.selectByExample(example);
     }
 
@@ -333,7 +325,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
     }
 
     @Override
-    public ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow, String orgFlow, String speFlow, String deptFlow, String type, String sessionNumber, String infoType) {
+    public ResBaseSpeDeptData searchResBaseSpeDeptDataOne(String infoFlow, String orgFlow, String speFlow, String deptFlow, String type, String infoType) {
         ResBaseSpeDeptDataExample example = new ResBaseSpeDeptDataExample();
         ResBaseSpeDeptDataExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
@@ -352,9 +344,6 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (StringUtil.isNotBlank(deptFlow)) {
             criteria.andDeptFlowEqualTo(deptFlow);
         }
-        if (StringUtil.isNotBlank(sessionNumber)){
-            criteria.andSessionNumberEqualTo(sessionNumber);
-        }
         if (StringUtil.isNotBlank(infoType)){
             criteria.andInfoTypeEqualTo(infoType);
         }
@@ -370,7 +359,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         if (null != speDeptData) {
 
             ResBaseSpeDeptData deptData = searchResBaseSpeDeptDataOne(speDeptData.getInfoFlow(), speDeptData.getOrgFlow()
-                    , speDeptData.getSpeFlow(), speDeptData.getDeptFlow(), speDeptData.getType(),speDeptData.getSessionNumber(),speDeptData.getInfoType());
+                    , speDeptData.getSpeFlow(), speDeptData.getDeptFlow(), speDeptData.getType(),speDeptData.getInfoType());
             if (null == deptData) {
                 speDeptData.setRecordFlow(PkUtil.getUUID());
                 GeneralMethod.setRecordInfo(speDeptData, true);
@@ -404,7 +393,7 @@ public class DeptBasicInfoBizImpl implements IDeptBasicInfoBiz {
         ResBaseSpeDeptDataExample example = new ResBaseSpeDeptDataExample();
         ResBaseSpeDeptDataExample.Criteria criteria = example.createCriteria();
         criteria.andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y);
-        if (null!=paramMap){
+        if (null != paramMap){
             if (StringUtil.isNotBlank(paramMap.get("sessionNumber"))){
                 criteria.andSessionNumberEqualTo(paramMap.get("sessionNumber"));
             }

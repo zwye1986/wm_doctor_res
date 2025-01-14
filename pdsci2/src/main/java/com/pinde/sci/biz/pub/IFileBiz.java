@@ -72,5 +72,8 @@ public interface IFileBiz {
 	List<PubFile> findFileByType(String productType,String productFlow,String testId);
 
 	void downPubFile2(PubFile pubFile, HttpServletResponse response) throws Exception;
+
+	// 删除附件信息
+	void deleteFileByParam(String productType, String productFlow, String[] fileFlowArrs);
 }
  

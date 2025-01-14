@@ -52,7 +52,6 @@
 		LEFT JOIN (
 		  	SELECT INFO_FLOW,INFO,INFO_TWO FROM RES_BASE_SPE_DEPT_DATA
 		  	WHERE RECORD_STATUS = 'Y'
-		  	AND SESSION_NUMBER= #{sessionNumber}
 		  	<if test="orgFlow!=null and orgFlow!=''">
 				AND ORG_FLOW= #{orgFlow}
 		  	</if>

@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.TrainCategoryTypeEnum;
 import com.pinde.core.common.sci.dao.ResOrgSpeMapper;
 import com.pinde.core.common.sci.dao.SysCfgMapper;
@@ -112,13 +113,11 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 	public int saveOrgSpeManageAll(ResOrgSpe orgSpe, List<SysOrg> orgList) throws Exception{
 		String speTypeId = orgSpe.getSpeTypeId();
 		String speId = orgSpe.getSpeId();
-		if(StringUtil.isNotBlank(speTypeId) && StringUtil.isNotBlank(speId) && StringUtil.isNotBlank(orgSpe.getSessionYear())
-			&& CollectionUtils.isNotEmpty(orgList)){
-			ResOrgSpeExample example=new ResOrgSpeExample();
-            example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
+		if(StringUtil.isNotBlank(speTypeId) && StringUtil.isNotBlank(speId) && CollectionUtils.isNotEmpty(orgList)){
+			ResOrgSpeExample example = new ResOrgSpeExample();
+            example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y)
 							.andSpeTypeIdEqualTo(speTypeId).andSpeIdEqualTo(speId)
-							.andOrgFlowIn(orgList.stream().map(SysOrg::getOrgFlow).collect(Collectors.toList()))
-					.andSessionYearEqualTo(orgSpe.getSessionYear());
+							.andOrgFlowIn(orgList.stream().map(SysOrg::getOrgFlow).collect(Collectors.toList()));
 			// 医院存在该专业基地记录的
 			List<ResOrgSpe> resOrgSpeList = resOrgSpeMapper.selectByExample(example);
 			Map<String, ResOrgSpe> orgFlowToOrgSpeMap = resOrgSpeList.stream().collect(Collectors.toMap(vo -> vo.getOrgFlow(), vo -> vo, (vo1, vo2) -> vo1));
@@ -162,19 +161,19 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 
 			return res;
 		}
-        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
+        return GlobalConstant.ZERO_LINE;
 	}
 
 	private void saveUpdateAllCfg(ResOrgSpe orgSpe, String speTypeId, String speId, SysOrg sysOrg) {
-        String configCode = com.pinde.core.common.GlobalConstant.ORG_SPE_BASE_ALL_SETTING_PREFIX + orgSpe.getSessionYear() + sysOrg.getOrgProvId();
-        String desc = com.pinde.core.common.GlobalConstant.ORG_SPE_ALL_WS_ID + "_" + orgSpe.getSessionYear() + "_" + sysOrg.getOrgProvId();
-        if (GlobalContext.getSession().getAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
+        String configCode = GlobalConstant.ORG_SPE_BASE_ALL_SETTING_PREFIX + sysOrg.getOrgProvId();
+        String desc = GlobalConstant.ORG_SPE_ALL_WS_ID + "_" + sysOrg.getOrgProvId();
+        if (GlobalConstant.USER_LIST_CHARGE.equals(GlobalContext.getSession().getAttribute(GlobalConstant.USER_LIST_SCOPE))) {
 			desc += "_" + sysOrg.getOrgCityId();
 			configCode += sysOrg.getOrgCityId();
 		}
 		configCode += "_" + speTypeId + speId;
 		SysCfgExample example = new SysCfgExample();
-        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andCfgCodeEqualTo(configCode)
+        example.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andCfgCodeEqualTo(configCode)
 				.andCfgDescEqualTo(desc);
 		List<SysCfg> sysCfgList = sysCfgMapper.selectByExample(example);
 		if(CollectionUtils.isEmpty(sysCfgList)) {
@@ -251,8 +250,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 			exitOrgSpe.setOrgFlow(orgFlow);
 			exitOrgSpe.setSpeTypeId(speTypeId);
 			exitOrgSpe.setSpeId(speId);
-			exitOrgSpe.setSessionYear(orgSpe.getSessionYear());
-            exitOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+            exitOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 			List<ResOrgSpe> orgSpeList = searchResOrgSpeList(exitOrgSpe);
 			if(orgSpeList != null && !orgSpeList.isEmpty()){//修改已存在的记录
 				exitOrgSpe = orgSpeList.get(0);
@@ -267,7 +265,7 @@ public class ResOrgSpeBizImpl implements IResOrgSpeBiz{
 				return saveResOrgSpe(orgSpe);
 			}
 		}
-        return com.pinde.core.common.GlobalConstant.ZERO_LINE;
+        return GlobalConstant.ZERO_LINE;
 	}
 
 	@Override

@@ -104,7 +104,7 @@ function removeName(orgName){
 			</div>
 		</div>
 		<input type="hidden" id="orgFlow" name="orgFlow" oldValue="${param.orgFlow}" onchange="search();"/>
-		&#12288;年度：<input class="input" type="text" name="sessionYear" value="${sessionYear}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly">
+<%--		&#12288;年度：<input class="input" type="text" name="sessionYear" value="${sessionYear}" onclick="WdatePicker({dateFmt:'yyyy'})" readonly="readonly">--%>
 		&#12288;<input class="btn_green" type="button" onclick="search()" value="查&#12288;询"/>
 	</form>
 	</div>
