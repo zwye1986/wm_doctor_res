@@ -2832,7 +2832,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(graduationYear)) {
             recruit.setGraduationYear(graduationYear);
         }
-        jointOrgFlowList.add(currenOrg.getOrgFlow());
+//        jointOrgFlowList.add(currenOrg.getOrgFlow());
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
             if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(currenOrg.getOrgLevelId()) && StringUtil.isBlank(doctor.getOrgFlow())) {
                 jointOrgFlowList.add(exSysUser.getOrgFlow());
@@ -3031,8 +3031,8 @@ public class JsResDoctorController extends GeneralController {
         String fileName = "住院医师规范化培训" + titleYear + "级招收对象花名册.xls";
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        ExcleUtile.exportSimpleExcleWithHeadlin(headLines, titles, userExtForms, response.getOutputStream());
         response.setContentType("application/octet-stream;charset=UTF-8");
+        ExcleUtile.exportSimpleExcleWithHeadlin(headLines, titles, userExtForms, response.getOutputStream());
     }
 
     public List<String> searchJointOrgList(String flag, String Flow) {
