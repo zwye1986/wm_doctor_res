@@ -195,6 +195,16 @@ function setPwd(orgFlow){
     var url = "<s:url value='/sys/user/setHospitalPwd?orgFlow='/>" + orgFlow;
     jboxOpen(url, "超级密码设置", 360, 160);
 }
+
+// 解除微信绑定
+function unLockWeChat(userFlow){
+	jboxConfirm("确认解除该用户微信公众号绑定信息吗？",function () {
+		var url = "<s:url value='/sys/user/unLockWeChat?userFlow='/>"+userFlow;
+		jboxPost(url,null,function(){
+			searchUser();
+		});
+	});
+}
 </script>
 </head>
 <body>
@@ -366,30 +376,10 @@ function setPwd(orgFlow){
 							</c:if>
 							</c:if>
 							<c:if test="${sysUser.statusId==userStatusEnumActivated.id}">
-							[<a href="javascript:edit('${sysUser.userFlow}');" >编辑</a>] |
-							[<a href="javascript:allotRole('${sysUser.userFlow}');" >分配角色</a>] |
-							[<a href="javascript:resetPasswd('${sysUser.userFlow}');" >重置密码</a>] |
-<%--							[<a href="javascript:stop('${sysUser.userFlow}');" >停用</a>] |--%>
-							<c:if test="${sessionScope.currWsId eq GlobalConstant.RES_WS_ID && isDoctor}">
-		<%-- 						| [<a href="javascript:editDoc('${resDoctorMap[sysUser.userFlow].doctorFlow}','${sysUser.userFlow}');" >学员信息</a>] --%>
+								[<a href="javascript:edit('${sysUser.userFlow}');" >编辑</a>] |
+								[<a href="javascript:allotRole('${sysUser.userFlow}');" >分配角色</a>] |
+								[<a href="javascript:resetPasswd('${sysUser.userFlow}');" >重置密码</a>] |
 							</c:if>
-							<c:if test="${sessionScope.currWsId=='erp'}">
-								<c:set var="regionTitle"></c:set>
-								<c:forEach items="${erpUserRegionPopedomMap[sysUser.userFlow]}" var="erpUserRegionPopedom" varStatus="status">
-									<c:set var="regionTitle" value="${regionTitle}&nbsp;${status.index+1}&nbsp;${erpUserRegionPopedom.provName }-${erpUserRegionPopedom.cityName }-${erpUserRegionPopedom.areaName }"></c:set>
-									<c:if test="${not status.last }"><c:set var="regionTitle" value="${regionTitle}<br>"></c:set></c:if>
-								</c:forEach>
-								[<a href="javascript:listRegion('${sysUser.userFlow}');" title="${regionTitle}">分配地区权限</a>]
-							</c:if>
-							</c:if>
-							<c:if test="${sessionScope.currWsId==GlobalConstant.IRB_WS_ID}">
-								[<a href="<s:url value='/sys/user/view'/>?userFlow=${sysUser.userFlow}&editFlag=${GlobalConstant.FLAG_Y}" >履历维护</a>]
-							</c:if>
-
-<%--							<c:if test="${sysUser.statusId==userStatusEnumLocked.id}">--%>
-<%--							[<a href="javascript:activate('${sysUser.userFlow}');" >启用</a>]--%>
-<%--							</c:if>--%>
-
 							<c:choose>
 								<c:when test="${userStatusEnumLocked.id eq  sysUser.statusId}">
 									[<a style="color: blue;cursor: pointer; " onclick="activate('${sysUser.userFlow}');">启用</a>]
@@ -402,8 +392,6 @@ function setPwd(orgFlow){
 							<c:choose>
 								<c:when test="${userStatusEnumSysLocked.id eq  sysUser.statusId}">
 									[<a style="color: blue;cursor: pointer; " onclick="unLock('${sysUser.userFlow}');">解锁</a>]
-								</c:when>
-								<c:when test="${userStatusEnumLocked.id eq  sysUser.statusId}">
 								</c:when>
 								<c:otherwise>
 										<font style="color: #8a8a8a">[解锁]</font>
@@ -420,6 +408,9 @@ function setPwd(orgFlow){
 								| [<a href="javascript:setPwd('${sysUser.orgFlow}');" >超级密码</a>]
 							</c:if>
 							<%-- [<a href="javascript:markExpert('${sysUser.userFlow}');" >标记为专家</a>] --%>
+							<c:if test="${not empty sysUser.openId}">
+								| [<a href="javascript:unLockWeChat('${sysUser.userFlow}');" >解除公众号绑定</a>]
+							</c:if>
 						</td>
 					</tr>
 					</c:if>
