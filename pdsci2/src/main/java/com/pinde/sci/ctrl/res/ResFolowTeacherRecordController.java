@@ -11,7 +11,7 @@ import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResStudentDiscipleTeacher;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

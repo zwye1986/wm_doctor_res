@@ -4,7 +4,7 @@ import com.pinde.core.model.PersonStaticExample;
 import com.pinde.core.model.ResOrgSpe;
 import com.pinde.core.model.SysOrg;
 import com.pinde.core.model.SysOrgExample;
-import com.pinde.sci.model.sys.SysOrgExt;
+import com.pinde.core.model.SysOrgExt;
 
 import java.util.List;
 import java.util.Map;

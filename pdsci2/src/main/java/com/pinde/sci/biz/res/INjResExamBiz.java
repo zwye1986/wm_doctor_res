@@ -3,7 +3,7 @@ package com.pinde.sci.biz.res;
 import com.pinde.core.model.TjDocinfo;
 import com.pinde.core.model.TjExamInfo;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.res.NjDocinfoExt;
+import com.pinde.core.model.NjDocinfoExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

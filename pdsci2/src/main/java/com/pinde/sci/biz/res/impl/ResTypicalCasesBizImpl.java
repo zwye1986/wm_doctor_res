@@ -10,7 +10,7 @@ import com.pinde.sci.biz.res.IResTypicalCasesBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.res.DiscipleDoctorExtMapper;
 import com.pinde.sci.dao.res.ResFollowTeacherRecordExtMapper;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1098,7 +1098,7 @@
 		ORDER by rdsp.sch_start_date desc nulls last ,RD.session_Number DESC,RD.TRAINING_SPE_ID desc,rd.doctor_flow
 	</select>
 
-	<resultMap id="resultMap" type="com.pinde.sci.model.res.SchProcessExt"
+	<resultMap id="resultMap" type="com.pinde.core.model.SchProcessExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
 		<association property="schArrangeResult" column="sch_Month"  resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap" />
 
@@ -1951,6 +1951,8 @@
 		A.ORG_NAME,
 		A.ORG_FLOW,
 		A.USER_NAME,
+		A.ID_NO,
+		A.CRET_TYPE_NAME,
 		A.TRAINING_SPE_ID,
 		A.TRAINING_SPE_NAME,
 		A.SESSION_NUMBER,
@@ -1968,6 +1970,8 @@
 		DR.ORG_NAME,
 		DR.ORG_FLOW,
 		SU.USER_NAME,
+		SU.ID_NO,
+		SU.CRET_TYPE_NAME,
 		DR.SPE_ID TRAINING_SPE_ID,
 		DR.SPE_NAME TRAINING_SPE_NAME,
 		DR.SESSION_NUMBER,
@@ -3050,7 +3054,7 @@
 		order by NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M')
 	</select>
 
-	<resultMap id="searchPlanAccessDocResultMap" type="com.pinde.sci.model.res.SchProcessExt" >
+	<resultMap id="searchPlanAccessDocResultMap" type="com.pinde.core.model.SchProcessExt" >
 		<result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
 		<result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
 		<result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
@@ -3132,7 +3136,7 @@
 		 order by pro.SCH_DEPT_NAME,pro.sch_start_date
 	</select>
 
-	<resultMap id="searchInAndOutDocResultMap" type="com.pinde.sci.model.res.SchProcessExt" >
+	<resultMap id="searchInAndOutDocResultMap" type="com.pinde.core.model.SchProcessExt" >
 		<result column="SCH_DEPT_FLOW" property="schDeptFlow" jdbcType="VARCHAR" />
 		<result column="SCH_DEPT_NAME" property="schDeptName" jdbcType="VARCHAR" />
 		<result column="DEPT_FLOW" property="deptFlow" jdbcType="VARCHAR" />
@@ -4127,6 +4131,8 @@
 		<result  property="ylz" column="YLZ_NUM" javaType="string"/>
 		<result  property="cbl" column="COMPLETE_BI" javaType="string"/>
 		<result  property="abl" column="AUDIT_BI" javaType="string"/>
+		<result property="cretTypeName" column="CRET_TYPE_NAME" javaType="string" />
+		<result property="idNo" column="ID_NO" javaType="string" />
 	</resultMap>
 	<select id="workList"  resultMap="workListMap">
 		    SELECT A.DOCTOR_FLOW,

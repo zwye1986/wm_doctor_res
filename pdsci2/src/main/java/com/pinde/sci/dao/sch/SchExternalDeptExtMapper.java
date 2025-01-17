@@ -3,7 +3,7 @@ package com.pinde.sci.dao.sch;
 
 import com.pinde.core.model.SchDept;
 import com.pinde.core.model.SchExternalDept;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

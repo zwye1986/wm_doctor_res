@@ -35,9 +35,8 @@ import com.pinde.sci.form.jsres.JsResDoctorInfoForm;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserInfoExtForm;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.*;
-import com.pinde.sci.model.res.ResDoctorExt;
-import com.pinde.sci.util.jsres.ResultUtil;
+import com.pinde.core.model.ResDoctorExt;
+import com.pinde.core.util.ResultUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
@@ -2833,7 +2832,7 @@ public class JsResDoctorController extends GeneralController {
         if (StringUtil.isNotBlank(graduationYear)) {
             recruit.setGraduationYear(graduationYear);
         }
-        jointOrgFlowList.add(currenOrg.getOrgFlow());
+//        jointOrgFlowList.add(currenOrg.getOrgFlow());
         if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL)) {
             if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(currenOrg.getOrgLevelId()) && StringUtil.isBlank(doctor.getOrgFlow())) {
                 jointOrgFlowList.add(exSysUser.getOrgFlow());
@@ -3032,8 +3031,8 @@ public class JsResDoctorController extends GeneralController {
         String fileName = "住院医师规范化培训" + titleYear + "级招收对象花名册.xls";
         fileName = URLEncoder.encode(fileName, "UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        ExcleUtile.exportSimpleExcleWithHeadlin(headLines, titles, userExtForms, response.getOutputStream());
         response.setContentType("application/octet-stream;charset=UTF-8");
+        ExcleUtile.exportSimpleExcleWithHeadlin(headLines, titles, userExtForms, response.getOutputStream());
     }
 
     public List<String> searchJointOrgList(String flag, String Flow) {

@@ -40,7 +40,6 @@ import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
-import com.pinde.sci.model.jsres.*;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -9395,6 +9394,8 @@ public class JsResManageController extends GeneralController {
 			paramMap.put("workOrgId", "");
 			paramMap.put("roleFlow", cfgTeacher);
 			paramMap.put("orgFlow", orgFlow);
+			paramMap.put("schStartDate", startDate);
+			paramMap.put("schEndDate", endDate);
 //			List<Map<String, String>> notAuditedMaps = resRecBiz.notAuditedMaps(paramMap);
 //			List<Map<String, String>> isNotAuditedMaps = resRecBiz.isNotAuditedMaps(paramMap);
 			List<Map<String, String>> auditedMapList = resRecBiz.searchAuditedDataList(paramMap);

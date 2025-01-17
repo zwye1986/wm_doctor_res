@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.jszy;
 
-import com.pinde.sci.model.jszy.JszyResBaseExt;
+import com.pinde.core.model.JszyResBaseExt;
 
 import java.util.List;
 import java.util.Map;

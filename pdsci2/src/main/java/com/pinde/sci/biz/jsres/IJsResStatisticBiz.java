@@ -2,9 +2,9 @@ package com.pinde.sci.biz.jsres;
 
 import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
-import com.pinde.sci.model.jsres.JsDoctorInfoExt;
 import com.pinde.sci.model.jsres.TeacherReportCountDto;
 import com.pinde.sci.model.jsres.TeacherTrainingInfoVo;
+import com.pinde.core.model.JsDoctorInfoExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

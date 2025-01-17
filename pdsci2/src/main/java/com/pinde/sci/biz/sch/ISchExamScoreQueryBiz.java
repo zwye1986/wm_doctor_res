@@ -2,7 +2,7 @@ package com.pinde.sci.biz.sch;
 
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.SchExamDoctorArrangement;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

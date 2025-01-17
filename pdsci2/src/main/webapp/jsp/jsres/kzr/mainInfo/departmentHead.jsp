@@ -72,9 +72,9 @@
 				<tr>
 					<th>导师情况：</th>
 					<td colspan="7">
-						<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_Y }">&#12288;硕导&#12288;</c:if>
-						<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_N }">&#12288;博导&#12288;</c:if>
-						<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_F }">&#12288;其他&#12288;</c:if>
+						<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_Y }">硕导&#12288;</c:if>
+						<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_N }">博导&#12288;</c:if>
+						<c:if test="${departmentHeadForm.dsqk ==GlobalConstant.FLAG_F }">其他&#12288;</c:if>
 						${departmentHeadForm.dsqkContext}
 					</td>
 				</tr>
@@ -98,22 +98,22 @@
 					<th>工作简历：</th>
 					<td colspan="7"><textarea readonly>${departmentHeadForm.gzjl}</textarea></td>
 				</tr>
-				<th colspan="8" style="text-align: left;padding-left: 5px;">获得的省、部级以上教学成果奖名称、级别及获奖年度（近三年）</th>
-				<tr>
-					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.jx}</textarea></td>
-				</tr>
-				<th colspan="8" style="text-align: left;padding-left: 5px;">获得的省、部级以上科研成果奖名称、级别及获奖年度（近三年）</th>
-				<tr>
-					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.ky}</textarea></td>
-				</tr>
-				<th colspan="8" style="text-align: left;padding-left: 5px;">承担的省、部级以上本专业的临床教学、科研项目（近三年）</th>
-				<tr>
-					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.lc}</textarea></td>
-				</tr>
-				<th colspan="8" style="text-align: left;padding-left: 5px;">参加住院医师规范化培训相关工作情况（包括标准制定、基地评估与考核等）</th>
-				<tr>
-					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.px}</textarea></td>
-				</tr>
+<%--				<th colspan="8" style="text-align: left;padding-left: 5px;">获得的省、部级以上教学成果奖名称、级别及获奖年度（近三年）</th>--%>
+<%--				<tr>--%>
+<%--					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.jx}</textarea></td>--%>
+<%--				</tr>--%>
+<%--				<th colspan="8" style="text-align: left;padding-left: 5px;">获得的省、部级以上科研成果奖名称、级别及获奖年度（近三年）</th>--%>
+<%--				<tr>--%>
+<%--					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.ky}</textarea></td>--%>
+<%--				</tr>--%>
+<%--				<th colspan="8" style="text-align: left;padding-left: 5px;">承担的省、部级以上本专业的临床教学、科研项目（近三年）</th>--%>
+<%--				<tr>--%>
+<%--					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.lc}</textarea></td>--%>
+<%--				</tr>--%>
+<%--				<th colspan="8" style="text-align: left;padding-left: 5px;">参加住院医师规范化培训相关工作情况（包括标准制定、基地评估与考核等）</th>--%>
+<%--				<tr>--%>
+<%--					<td colspan="8" style="padding-left: 0px;"><textarea readonly>${departmentHeadForm.px}</textarea></td>--%>
+<%--				</tr>--%>
 				</tbody>
 			</table>
 		</div>

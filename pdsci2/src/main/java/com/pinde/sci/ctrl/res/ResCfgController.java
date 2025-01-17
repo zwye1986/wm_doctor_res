@@ -17,7 +17,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.model.ResAssessCfgForm;
 import com.pinde.core.model.ResAssessCfgItemForm;
 import com.pinde.core.model.ResAssessCfgTitleForm;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;

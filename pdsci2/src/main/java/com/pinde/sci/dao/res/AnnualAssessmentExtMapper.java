@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.res;
 
-import com.pinde.sci.model.res.AnnualAssessmentExt;
+import com.pinde.core.model.AnnualAssessmentExt;
 
 import java.util.Map;
 

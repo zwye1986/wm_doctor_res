@@ -4,7 +4,7 @@ import com.pinde.core.model.SchDept;
 import com.pinde.core.model.SchExternalDept;
 import com.pinde.core.model.SchRotation;
 import com.pinde.core.model.SchRotationDept;
-import com.pinde.sci.model.res.ResDoctorExt;
+import com.pinde.core.model.ResDoctorExt;
 
 import java.util.List;
 import java.util.Map;

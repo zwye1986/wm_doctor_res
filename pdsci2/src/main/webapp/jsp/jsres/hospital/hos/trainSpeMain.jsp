@@ -55,45 +55,45 @@
 	}
 </style>
 <script type="text/javascript">
-	var curSessionNumber = '${sessionNumber}';
+	<%--var curSessionNumber = '${sessionNumber}';--%>
 	$(document).ready(function(){
-		$('#sessionNumber').datepicker({
-			startView: 2,
-			maxViewMode: 2,
-			minViewMode: 2,
-			format: 'yyyy'
-		});
+		// $('#sessionNumber').datepicker({
+		// 	startView: 2,
+		// 	maxViewMode: 2,
+		// 	minViewMode: 2,
+		// 	format: 'yyyy'
+		// });
 
 		$("#speOpt").selectpicker({});
 		$("#speBaseManage").css("display", "");
 
 		getInfo();
 
-		$('#sessionNumber').datepicker().on("changeDate.datepicker.amui", function(event) {
-			changeSpeOpt();
-		});
+		// $('#sessionNumber').datepicker().on("changeDate.datepicker.amui", function(event) {
+		// 	changeSpeOpt();
+		// });
 	});
 
 	function changeSpeOpt() {
-		var searchSessionNumber = $("#sessionNumber").val();
-		if(curSessionNumber != searchSessionNumber) { // 换年份的话，要重新查协同单位
-			curSessionNumber= searchSessionNumber;
-			jboxPost("<s:url value='/jsres/base/searchJointOrgList'/>", {orgFlow: '${orgFlow}', sessionNumber: $("#sessionNumber").val()},
-					function (resp) {
-						$("#speOpt").empty();
-						if(resp && resp.length) { // 有协同单位
-							$("#speOpt").append("<option value='" + resp[0].orgFlow + "' selected>" + resp[0].orgName + "</option>");
-							resp.forEach(function (item) {
-								$("#speOpt").append("<option value='" + item.jointOrgFlow + "'>" + item.jointOrgName + "</option>");
-							});
-							$("#speOpt").selectpicker("refresh");
-							$("#speOptDiv").css("display", "inline-block");
-						}else {
-							$("#speOptDiv").css("display", "none");
-						}
-					}, function (msg) {
-					}, false);
-		}
+		// var searchSessionNumber = $("#sessionNumber").val();
+		// if(curSessionNumber != searchSessionNumber) { // 换年份的话，要重新查协同单位
+		// 	curSessionNumber= searchSessionNumber;
+			jboxPost("<s:url value='/jsres/base/searchJointOrgList'/>", {orgFlow: '${orgFlow}'},
+				function (resp) {
+					$("#speOpt").empty();
+					if(resp && resp.length) { // 有协同单位
+						$("#speOpt").append("<option value='" + resp[0].orgFlow + "' selected>" + resp[0].orgName + "</option>");
+						resp.forEach(function (item) {
+							$("#speOpt").append("<option value='" + item.jointOrgFlow + "'>" + item.jointOrgName + "</option>");
+						});
+						$("#speOpt").selectpicker("refresh");
+						$("#speOptDiv").css("display", "inline-block");
+					}else {
+						$("#speOptDiv").css("display", "none");
+					}
+				},
+			null, false);
+		// }
 	}
 
 	// 点查询按钮，根据主协基地选择（如果有），年份，专业查询专业基地信息
@@ -101,10 +101,6 @@
 		var selectedSpe = $("#speOpt option:selected");
 		if($("#speOpt").is(":visible") && !selectedSpe.length) {
 			jboxTip("请至少选择一家主协基地！");
-			return;
-		}
-		if(!$("#sessionNumber").val()) {
-			jboxTip("请选择年份！");
 			return;
 		}
 		jboxStartLoading();
@@ -121,20 +117,20 @@
 		<form id="searchForm">
 			<input type="hidden" name="orgFlow" value="${orgFlow}">
 			<input type="hidden" name="ishos" value="${ishos}">
-			<div id="speOptDiv" style="display:${empty resJointOrgList ? 'none' : 'inline-block'};margin-right: 15px">
-				<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">主协基地选择：</label>
-				<select name="speOpt" id="speOpt" class="show-menu-arrow" multiple title="请至少选择一项">
-					<c:if test='${not empty resJointOrgList}'>
-						<option value="${resJointOrgList[0].orgFlow}" selected>${resJointOrgList[0].orgName}</option>
-						<c:forEach items="${resJointOrgList}" var="resJointOrg">
-							<option value="${resJointOrg.jointOrgFlow}">${resJointOrg.jointOrgName}</option>
-						</c:forEach>
-					</c:if>
-				</select>
-			</div>
-			<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>
-			<input class="input" name="sessionNumber" id="sessionNumber" style="width: 150px;margin-right: 15px"<%-- onchange="getInfo()"--%>
-				   value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>
+<%--			<div id="speOptDiv" style="display:${empty resJointOrgList ? 'none' : 'inline-block'};margin-right: 15px">--%>
+<%--				<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">主协基地选择：</label>--%>
+<%--				<select name="speOpt" id="speOpt" class="show-menu-arrow" multiple title="请至少选择一项">--%>
+<%--					<c:if test='${not empty resJointOrgList}'>--%>
+<%--						<option value="${resJointOrgList[0].orgFlow}" selected>${resJointOrgList[0].orgName}</option>--%>
+<%--						<c:forEach items="${resJointOrgList}" var="resJointOrg">--%>
+<%--							<option value="${resJointOrg.jointOrgFlow}">${resJointOrg.jointOrgName}</option>--%>
+<%--						</c:forEach>--%>
+<%--					</c:if>--%>
+<%--				</select>--%>
+<%--			</div>--%>
+<%--			<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">年份：</label>--%>
+<%--			<input class="input" name="sessionNumber" id="sessionNumber" style="width: 150px;margin-right: 15px"&lt;%&ndash; onchange="getInfo()"&ndash;%&gt;--%>
+<%--				   value="${param.sessionNumber==null?pdfn:getCurrYear():param.sessionNumber}"/>--%>
 			<label style="color: #000000; font: 14px 'Microsoft Yahei'; font-weight: 400;">专业：</label>
 			<select name="speId" id="speId" class="select" style="width: 161px;">
 				<option value="">全部</option>

@@ -159,7 +159,7 @@
                 <col width="16.67%"/>
                 <col width="16.67%"/>
                 <col width="16.67%"/>
-                <col width="16.67%"/>
+<%--                <col width="16.67%"/>--%>
                 <col width="16.67%"/>
             </colgroup>
             <tr>
@@ -167,7 +167,7 @@
                 <th style="text-align: center"><span class="red">*</span>手机号码</th>
                 <th style="text-align: center"><span class="red">*</span>固定电话</th>
                 <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
-                <th style="text-align: center">职称</th>
+<%--                <th style="text-align: center">职称</th>--%>
                 <th style="text-align: center"><span class="red">*</span>职务</th>
             </tr>
             <c:choose>
@@ -177,7 +177,7 @@
                         <td style="text-align: center">${basicInfo.jdfzrMobilephone}</td>
                         <td style="text-align: center">${basicInfo.jdfzrFixedPhone}</td>
                         <td style="text-align: center">${basicInfo.jdfzrMailAddress}</td>
-                        <td style="text-align: center">${basicInfo.jdfzrTitleName}</td>
+<%--                        <td style="text-align: center">${basicInfo.jdfzrTitleName}</td>--%>
                         <td style="text-align: center">${basicInfo.jdfzrPostName}</td>
                     </tr>
                 </c:when>
@@ -315,7 +315,7 @@
                     <col width="16.67%"/>
                     <col width="16.67%"/>
                     <col width="16.67%"/>
-                    <col width="16.67%"/>
+<%--                    <col width="16.67%"/>--%>
                     <col width="16.67%"/>
                 </colgroup>
                 <tr>
@@ -323,7 +323,7 @@
                     <th style="text-align: center"><span class="red">*</span>手机号码</th>
                     <th style="text-align: center"><span class="red">*</span>固定电话</th>
                     <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
-                    <th style="text-align: center">职称</th>
+<%--                    <th style="text-align: center">职称</th>--%>
                     <th style="text-align: center"><span class="red">*</span>职务</th>
                 </tr>
                 <c:forEach var="zpglbm" items="${basicInfo.zpglbmfzrList}" varStatus="status">
@@ -332,7 +332,7 @@
                     <td style="text-align: center">${zpglbm.mobilephone}</td>
                     <td style="text-align: center">${zpglbm.fixedPhone}</td>
                     <td style="text-align: center">${zpglbm.mailAddress}</td>
-                    <td style="text-align: center">${zpglbm.titleName}</td>
+<%--                    <td style="text-align: center">${zpglbm.titleName}</td>--%>
                     <td style="text-align: center">${zpglbm.postName}</td>
                     </tr>
                     <%--<tr>
@@ -357,7 +357,7 @@
                     <col width="16.67%"/>
                     <col width="16.67%"/>
                     <col width="16.67%"/>
-                    <col width="16.67%"/>
+<%--                    <col width="16.67%"/>--%>
                     <col width="16.67%"/>
                 </colgroup>
                 <tr>
@@ -365,7 +365,7 @@
                     <th style="text-align: center"><span class="red">*</span>手机号码</th>
                     <th style="text-align: center"><span class="red">*</span>固定电话</th>
                     <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
-                    <th style="text-align: center">职称</th>
+<%--                    <th style="text-align: center">职称</th>--%>
                     <th style="text-align: center"><span class="red">*</span>职务</th>
                 </tr>
                 <tr>
@@ -383,7 +383,7 @@
                         <col width="16.67%"/>
                         <col width="16.67%"/>
                         <col width="16.67%"/>
-                        <col width="16.67%"/>
+<%--                        <col width="16.67%"/>--%>
                         <col width="16.67%"/>
                     </colgroup>
                     <tr>
@@ -391,7 +391,7 @@
                         <th style="text-align: center"><span class="red">*</span>手机号码</th>
                         <th style="text-align: center"><span class="red">*</span>固定电话</th>
                         <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
-                        <th style="text-align: center">职称</th>
+<%--                        <th style="text-align: center">职称</th>--%>
                         <th style="text-align: center"><span class="red">*</span>职务</th>
                     </tr>
                     <c:forEach var="contactMan" items="${basicInfo.contactManList}" varStatus="status">
@@ -400,7 +400,7 @@
                             <td style="text-align: center">${contactMan.mobilephone}</td>
                             <td style="text-align: center">${contactMan.fixedPhone}</td>
                             <td style="text-align: center">${contactMan.mailAddress}</td>
-                            <td style="text-align: center">${contactMan.titleName}</td>
+<%--                            <td style="text-align: center">${contactMan.titleName}</td>--%>
                             <td style="text-align: center">${contactMan.postName}</td>
                         </tr>
                         <%--<tr>
@@ -425,7 +425,7 @@
                         <col width="16.67%"/>
                         <col width="16.67%"/>
                         <col width="16.67%"/>
-                        <col width="16.67%"/>
+<%--                        <col width="16.67%"/>--%>
                         <col width="16.67%"/>
                     </colgroup>
                     <tr>
@@ -433,7 +433,7 @@
                         <th style="text-align: center"><span class="red">*</span>手机号码</th>
                         <th style="text-align: center"><span class="red">*</span>固定电话</th>
                         <th style="text-align: center"><span class="red">*</span>邮箱地址</th>
-                        <th style="text-align: center">职称</th>
+<%--                        <th style="text-align: center">职称</th>--%>
                         <th style="text-align: center"><span class="red">*</span>职务</th>
                     </tr>
                     <tr>
@@ -601,10 +601,10 @@
     <div id="tj" style="display: none">
         <table border="0" cellspacing="0" cellpadding="0" class="base_info">
             <colgroup>
-                <col width="23%"/>
-                <col width="27%"/>
-                <col width="23%"/>
-                <col width="27%"/>
+                <col width="24%"/>
+                <col width="26%"/>
+                <col width="24%"/>
+                <col width="26%"/>
             </colgroup>
             <tbody>
             <tr>

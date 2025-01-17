@@ -70,7 +70,7 @@
 			<result column="edOrgName" jdbcType="VARCHAR" property="orgName"/>
 		</association>
 	</resultMap>
-    <resultMap id="doctorInfo" type="com.pinde.sci.model.jsres.JsDoctorInfoExt"
+    <resultMap id="doctorInfo" type="com.pinde.core.model.JsDoctorInfoExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap">
 		<result column="ARMY_TYPE" jdbcType="VARCHAR" property="armyType"/>
         <association property="sysUser" column="userFlow"
@@ -6349,7 +6349,7 @@
     		</if>
 		group by re.org_flow
     </select> 
-    <resultMap id="info" type="com.pinde.sci.model.jsres.JsDoctorInfoExt" extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap" >
+    <resultMap id="info" type="com.pinde.core.model.JsDoctorInfoExt" extends="com.pinde.core.common.sci.dao.ResDoctorRecruitMapper.BaseResultMap" >
         <association property="sysUser" column="userFlow"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>
 		<association property="resDoctor" column="doctorFlow"  resultMap="com.pinde.core.common.sci.dao.ResDoctorMapper.BaseResultMap" />
@@ -6849,7 +6849,7 @@
 		and doctor_flow = #{doctorFlow}
 		and rotation_flow = #{rotationFlow}
 	</select>
-	<resultMap id="graduateMap" type="com.pinde.sci.model.jsres.JsGraduateExt">
+	<resultMap id="graduateMap" type="com.pinde.core.model.JsGraduateExt">
 		<result column="SESSION_NUMBER" jdbcType="VARCHAR" property="sessionNumber"/>
 		<result column="ORG_NAME" jdbcType="VARCHAR" property="orgName"/>
 		<result column="SPE_NAME" jdbcType="VARCHAR" property="speName"/>

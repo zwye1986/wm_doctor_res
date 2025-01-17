@@ -6,8 +6,7 @@
 <link rel="stylesheet" type="text/css" href="<s:url value='/jsp/jsres/css/exam.css'/>?v=${applicationScope.sysCfgMap['sys_version']}"></link>
 <script type="text/javascript">
 $(document).ready(function(){
-	var sessionNumber = "${empty sessionNumber ? '' : sessionNumber}";
-	loadInfo('${GlobalConstant.BASIC_INFO}','${param.baseFlow}', sessionNumber);
+	loadInfo('${GlobalConstant.BASIC_INFO}','${param.baseFlow}');
 });
 function submitInfo(){
 	jboxConfirm("提交后不可修改！请确认修改的信息是否已保存，否则提交的仍是保存前的信息，确认提交?",function(){
@@ -42,26 +41,24 @@ function editInfo(baseInfoName,orgFlow,sessionNumber){
     }
 }
 
-function loadInfo(baseInfoName,baseFlow, sessionNumber){
+function loadInfo(baseInfoName,baseFlow){
 	var r = $("#resBase").val();
-	if(baseInfoName!="${GlobalConstant.BASIC_INFO}"&& (r=="" || r==null || r == "undefineded")){
+	if(baseInfoName != "${GlobalConstant.BASIC_INFO}" && !r){
 		$(".tab_select").toggleClass("tab_select tab");
 		$("#toptab li:first").toggleClass("tab_select tab");
 		jboxTip("请先完善基本信息");
 		return false;
 	}
-    if(sessionNumber) {
-        var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber="+sessionNumber+"&ishos=${ishos}";
-    }else if(${not empty ishos}) {
-        var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber=${sessionNumber}"+"&ishos=${ishos}";
+    if(${not empty ishos}) {
+        var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&ishos=${ishos}";
     } else {
-        var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber=${pdfn:getCurrYear()}";
+        var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow;
     }
 	jboxLoad("hosContent", url, false);
 }
 
 function trainSpeInfo(){
-	var url="<s:url value='/jsres/base/trainSpeMain'/>?orgFlow=${baseFlow}&isJoin=${isJoin}"+"&ishos=${ishos}&sessionNumber=${sessionNumber}";
+	var url="<s:url value='/jsres/base/trainSpeMain'/>?orgFlow=${baseFlow}&isJoin=${isJoin}"+"&ishos=${ishos}";
 	jboxLoad("hosContent", url, false);
 }
 

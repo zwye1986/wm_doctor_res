@@ -10,7 +10,7 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
-import com.pinde.sci.model.res.GeneralIdNameModel;
+import com.pinde.core.model.GeneralIdNameModel;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

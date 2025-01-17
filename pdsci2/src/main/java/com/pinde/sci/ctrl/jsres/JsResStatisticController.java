@@ -25,7 +25,7 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
-import com.pinde.sci.model.jsres.*;
+import com.pinde.core.model.JsDoctorInfoExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
@@ -3860,11 +3860,11 @@ public class JsResStatisticController extends GeneralController {
 	public String globalTeacherReportByOrg(Model model, String orgFlow, String countType) {
 		SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
 		model.addAttribute("sysOrg", sysOrg);
-		List<TeacherReportCountDto> teacherReportCountDtoList =  resStatisticBiz.countTeacherLevelByOrgFlow(orgFlow);
+		List<com.pinde.sci.model.jsres.TeacherReportCountDto> teacherReportCountDtoList =  resStatisticBiz.countTeacherLevelByOrgFlow(orgFlow);
 		Map<String, Object> teacherReportCountDtoMap = new HashMap<>();
 		teacherReportCountDtoMap.put("generalCount", 0);
 		teacherReportCountDtoMap.put("keyCount", 0);
-		for (TeacherReportCountDto teacherReportCountDto : teacherReportCountDtoList) {
+		for (com.pinde.sci.model.jsres.TeacherReportCountDto teacherReportCountDto : teacherReportCountDtoList) {
 			if (teacherReportCountDto.getTeacherLevel().equals("一般师资")) {
 				teacherReportCountDtoMap.put("generalCount", teacherReportCountDto.getNum());
 			} else {
@@ -3950,10 +3950,10 @@ public class JsResStatisticController extends GeneralController {
 				}
 			}
 		}
-		List<TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
 		Set<String> speKeys = speCount.keySet();
 		for (String speKey : speKeys) {
-			TeacherSpeCountDto teacherSpeCountDto = new TeacherSpeCountDto();
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
 			teacherSpeCountDto.setSpeName(speKey);
 			teacherSpeCountDto.setGeneralNumber(speCount.get(speKey).get("generalNumber"));
 			teacherSpeCountDto.setKeyNumber(speCount.get(speKey).get("keyNumber"));
@@ -4044,9 +4044,9 @@ public class JsResStatisticController extends GeneralController {
 		teacherCertificateCountDtoMap.put("hospital", hospital);
 		model.addAttribute("teacherCertificateCountDtoMap", teacherCertificateCountDtoMap);
 
-		List<TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
 		for (String speKey : orgNames) {
-			TeacherSpeCountDto teacherSpeCountDto = new TeacherSpeCountDto();
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
 			teacherSpeCountDto.setSpeName(speKey);
 			if (orgCount.containsKey(speKey)) {
 				teacherSpeCountDto.setGeneralNumber(orgCount.get(speKey).get("generalNumber"));
@@ -4181,10 +4181,10 @@ public class JsResStatisticController extends GeneralController {
 		teacherCertificateCountDtoMap.put("hospital", hospital);
 		model.addAttribute("teacherCertificateCountDtoMap", teacherCertificateCountDtoMap);
 
-		List<TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoList = new ArrayList<>();
 		Set<String> speKeys = speCount.keySet();
 		for (String speKey : speKeys) {
-			TeacherSpeCountDto teacherSpeCountDto = new TeacherSpeCountDto();
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
 			teacherSpeCountDto.setSpeName(speKey);
 			teacherSpeCountDto.setGeneralNumber(speCount.get(speKey).get("generalNumber"));
 			teacherSpeCountDto.setKeyNumber(speCount.get(speKey).get("keyNumber"));
@@ -4192,9 +4192,9 @@ public class JsResStatisticController extends GeneralController {
 		}
 		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
 
-		List<TeacherSpeCountDto> teacherSpeCountDtoListForOrg = new ArrayList<>();
+		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoListForOrg = new ArrayList<>();
 		for (String speKey : orgNames) {
-			TeacherSpeCountDto teacherSpeCountDto = new TeacherSpeCountDto();
+			com.pinde.sci.model.jsres.TeacherSpeCountDto teacherSpeCountDto = new com.pinde.sci.model.jsres.TeacherSpeCountDto();
 			teacherSpeCountDto.setSpeName(speKey);
 			if (orgCount.containsKey(speKey)) {
 				teacherSpeCountDto.setGeneralNumber(orgCount.get(speKey).get("generalNumber"));

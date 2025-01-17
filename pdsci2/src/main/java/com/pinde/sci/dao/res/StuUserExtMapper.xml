@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinde.sci.dao.res.StuUserExtMapper" >
-    <resultMap id="StuUserExtMap" type="com.pinde.sci.model.res.StuUserExt"
+    <resultMap id="StuUserExtMap" type="com.pinde.core.model.StuUserExt"
                extends="com.pinde.core.common.sci.dao.StuUserResumeMapper.ResultMapWithBLOBs">
         <association property="sysUser" column="USER_FLOW" javaType="com.pinde.core.model.SysUser"
                      resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap"/>

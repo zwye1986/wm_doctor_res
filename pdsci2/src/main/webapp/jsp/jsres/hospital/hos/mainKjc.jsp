@@ -65,20 +65,18 @@
         }
     }
 
-    function loadInfo(baseInfoName,baseFlow, sessionNumber){
+    function loadInfo(baseInfoName,baseFlow){
         var r = $("#resBase").val();
-        if(baseInfoName!="${GlobalConstant.BASIC_INFO}"&& (r=="" || r==null || r == "undefineded")){
+        if(baseInfoName != "${GlobalConstant.BASIC_INFO}" && !r){
             $(".tab_select").toggleClass("tab_select tab");
             $("#toptab li:first").toggleClass("tab_select tab");
             jboxTip("请先完善基本信息");
             return false;
         }
-        if(sessionNumber) {
-            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber="+sessionNumber+"&ishos=${ishos}";
-        }else if(${not empty ishos}) {
-            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber=${sessionNumber}"+"&ishos=${ishos}";
+        if(${not empty ishos}) {
+            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&ishos=${ishos}";
         } else {
-            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow+"&sessionNumber=${pdfn:getCurrYear()}";
+            var url="<s:url value='/jsres/base/findAllBaseInfo'/>?viewFlag=${param.viewFlag}&baseInfoName="+baseInfoName+"&baseFlow="+baseFlow;
         }
         jboxLoad("hosContent", url, false);
     }

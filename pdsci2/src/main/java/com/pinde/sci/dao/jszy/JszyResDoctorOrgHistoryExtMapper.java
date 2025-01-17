@@ -1,6 +1,6 @@
 package com.pinde.sci.dao.jszy;
 
-import com.pinde.sci.model.jszy.JszyResDoctorOrgHistoryExt;
+import com.pinde.core.model.JszyResDoctorOrgHistoryExt;
 
 import java.util.List;
 import java.util.Map;

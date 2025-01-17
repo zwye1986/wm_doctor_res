@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
     function showTraining(standardDeptFlow, standardDeptName, isJoin, speFlow) {
-        var url = "<s:url value ='/jsres/base/showTrainingInfo'/>?onlyRead=${ishos}&standardDeptFlow=" + standardDeptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y&sessionNumber=${sessionNumber}";
+        var url = "<s:url value ='/jsres/base/showTrainingInfo'/>?onlyRead=${ishos}&standardDeptFlow=" + standardDeptFlow + "&orgFlow=${orgFlow}&isJoin=Y&speFlow=" + speFlow+"&isglobal=Y";
         jboxOpen(url, '科室信息（' + standardDeptName + '）', 1200, 800);
     }
 </script>

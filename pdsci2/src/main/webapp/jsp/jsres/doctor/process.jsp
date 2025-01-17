@@ -692,6 +692,12 @@ function doctorback(){
 	                	<%--</c:if>--%>
 	                	<%--<c:if test="${empty resultMap[key] }">--%>
 			                <c:if test="${ empty hideApprove}">
+								<c:if test="${param.roleFlag eq GlobalConstant.RES_ROLE_SCOPE_DOCTOR}">
+									<c:set value="jsres_${doctor.orgFlow }_guocheng" var="orgFlow"/>
+									<c:if test="${pdfn:jsresPowerCfgMap(orgFlow) eq GlobalConstant.RECORD_STATUS_Y}">
+										<a class="btn" onclick="catalogue('${dept.recordFlow}','${param.doctorFlow}');">登记详情</a>&#12288;
+									</c:if>
+								</c:if>
 								<%--出科考核--%>
 							 	<c:if test="${ckk}">
 							 		<span class="showCkk btn" style=" color: #459ae9;">出科考核
@@ -734,7 +740,7 @@ function doctorback(){
 			                	<span class="show"><a class="btn" onclick="">下载
 			                	<c:if test="${! empty resultMap[resultKey]}">
 								<div style="width: 0px;height: 0px;position: relative;z-index:10000;float: right; ">
-									<div style="display: none;width: 74px;" class="info">
+									<div style="display: none;width: 100px;" class="info">
 										<table class="grid" style="background: white;margin-left:45px;margin-top:-11px;">
 				              			 	<tr><td><a onclick="xiaZai('${dept.recordFlow}');" style="margin-left: 12px;">通用</a>&#12288;</td></tr>
 				                			<c:forEach items="${resultMap[resultKey]}" var="result">
@@ -748,7 +754,7 @@ function doctorback(){
 								</c:if>
 								<c:if test="${empty resultMap[resultKey]}">
 								<div style="width: 0px;height: 0px;position: relative;z-index:10000;float: right; ">
-									<div style="display: none;width: 74px;" class="info">
+									<div style="display: none;width: 100px;" class="info">
 										<table class="grid" style="background: white;margin-left:45px;margin-top:-11px;">
 				              			 	<tr><td><a onclick="xiaZai('${dept.recordFlow}');" style="margin-left: 12px;">通用</a>&#12288;</td></tr>
 			                			</table>
@@ -761,7 +767,7 @@ function doctorback(){
 			                	<c:if test="${f != GlobalConstant.RECORD_STATUS_Y}">
 			                		<span class="show"><a class="btn" onclick="xiaZai('${dept.recordFlow}');">下载</a></span>
 			                	</c:if>
-			                			<a class="btn" onclick="upload('${dept.recordFlow}','${sysUser.userFlow}');">上传</a>&#12288;
+								<a class="btn" style="width: 86px;" onclick="upload('${dept.recordFlow}','${sysUser.userFlow}');">上传</a>&#12288;
 			                	</c:if>
 			                	<%--</c:if>--%>
 		                	<c:if test="${not empty hideApprove}">

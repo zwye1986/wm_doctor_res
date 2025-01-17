@@ -3,7 +3,7 @@ package com.pinde.sci.dao.osca;
 import com.pinde.core.model.OscaSkillDocStation;
 import com.pinde.core.model.OscaSkillsAssessment;
 import com.pinde.core.model.OscaSubjectStation;
-import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
+import com.pinde.core.model.OscaSkillsAssessmentExt;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

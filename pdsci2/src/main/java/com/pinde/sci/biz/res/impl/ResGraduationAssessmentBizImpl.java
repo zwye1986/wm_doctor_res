@@ -12,7 +12,7 @@ import com.pinde.sci.biz.res.IResGraduationAssessmentBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.res.ResGraduationAssessmentExtMapper;
-import com.pinde.sci.model.res.ResGraduationAssessmentExt;
+import com.pinde.core.model.ResGraduationAssessmentExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,8 +4,8 @@ package com.pinde.sci.biz.osca;
 import com.pinde.core.model.OscaTeaInfo;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserRole;
-import com.pinde.sci.model.osca.OscaExaminerExt;
-import com.pinde.sci.model.osca.OscaTypeSpeExt;
+import com.pinde.core.model.OscaExaminerExt;
+import com.pinde.core.model.OscaTypeSpeExt;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

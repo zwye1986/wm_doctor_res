@@ -18,7 +18,7 @@
         <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
         <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
     </resultMap>
-    <resultMap type="com.pinde.sci.model.res.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
+    <resultMap type="com.pinde.core.model.DeptTeacherGradeInfoExt" id="extBLOBMap" extends="com.pinde.core.common.sci.dao.DeptTeacherGradeInfoMapper.ResultMapWithBLOBs">
         <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
                      javaType="com.pinde.core.model.ResDoctorSchProcess"
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"/>
@@ -180,6 +180,11 @@
         and tu.record_status = 'Y'
         <if test="workOrgId != null and workOrgId != ''">
             AND RD.WORK_ORG_ID = #{workOrgId}
+        </if>
+        <if test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+            AND((P.SCH_START_DATE <![CDATA[ <= ]]> #{schStartDate} AND P.SCH_END_DATE >= #{schEndDate})
+            OR (P.SCH_START_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_START_DATE <![CDATA[ <= ]]> #{schEndDate})
+            OR (P.SCH_END_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_END_DATE <![CDATA[ <= ]]> #{schEndDate}))
         </if>
         ) A on dtgi.PROCESS_FLOW = a.PROCESS_FLOW AND dtgi.OPER_USER_FLOW = a.USER_FLOW
         where dtgi.RECORD_STATUS='Y'

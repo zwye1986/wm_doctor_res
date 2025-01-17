@@ -17,7 +17,7 @@
 		<result property="auditCount" column="AUDIT_COUNT" javaType="java.math.BigDecimal"/>
 	</resultMap>
 
-    <resultMap type="com.pinde.sci.model.res.ResRecExt" id="extMap"
+    <resultMap type="com.pinde.core.model.ResRecExt" id="extMap"
                extends="com.pinde.core.common.sci.dao.ResRecMapper.BaseResultMap">
         <association property="doctorExt" column="OPER_USER_FLOW" javaType="com.pinde.core.model.ResDoctor"
                      resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
@@ -26,7 +26,7 @@
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"/>
 	</resultMap>
 
-    <resultMap type="com.pinde.sci.model.res.ResRecExt" id="extBLOBMap"
+    <resultMap type="com.pinde.core.model.ResRecExt" id="extBLOBMap"
                extends="com.pinde.core.common.sci.dao.ResRecMapper.ResultMapWithBLOBs">
         <association property="doctorExt" column="OPER_USER_FLOW" javaType="com.pinde.core.model.ResDoctor"
                      resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
@@ -35,16 +35,16 @@
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"/>
 	</resultMap>
 
-    <resultMap type="com.pinde.sci.model.res.ResRecExt" id="recExtMap"
+    <resultMap type="com.pinde.core.model.ResRecExt" id="recExtMap"
                extends="com.pinde.core.common.sci.dao.ResRecMapper.BaseResultMap">
         <association property="process" column="OPER_USER_FLOW,SCH_DEPT_FLOW"
                      javaType="com.pinde.core.model.ResDoctorSchProcess"
                      resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"/>
 	</resultMap>
 
-    <resultMap type="com.pinde.sci.model.res.ResDoctorSchProcessExt" id="processExt"
+    <resultMap type="com.pinde.core.model.ResDoctorSchProcessExt" id="processExt"
                extends="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap">
-		<association property="doctorExt" javaType="com.pinde.sci.model.res.ResDoctorExt" resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>	
+		<association property="doctorExt" javaType="com.pinde.core.model.ResDoctorExt" resultMap="com.pinde.sci.dao.res.ResDoctorExtMapper.ResDoctorExt"/>
 	</resultMap>
 	
 	<select id="searchAuditCount" resultMap="auditCountMap">
@@ -2017,6 +2017,11 @@
 		<if test="workOrgId != null and workOrgId != ''">
 			and rd.work_org_id = #{workOrgId}
 		</if>
+		<if test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+			AND((P.SCH_START_DATE <![CDATA[ <= ]]> #{schStartDate} AND P.SCH_END_DATE >= #{schEndDate})
+			OR (P.SCH_START_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_START_DATE <![CDATA[ <= ]]> #{schEndDate})
+			OR (P.SCH_END_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_END_DATE <![CDATA[ <= ]]> #{schEndDate}))
+		</if>
 		<if test="teacherUserFlows != null and teacherUserFlows.size() > 0">
 			<!--<choose>
 				<when test="teacherUserFlows.size() >= 1000">
@@ -2142,6 +2147,11 @@
 		</if>
 		<if test="workOrgId != null and workOrgId != ''">
 			and rd.work_org_id = #{workOrgId}
+		</if>
+		<if test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+			AND((P.SCH_START_DATE <![CDATA[ <= ]]> #{schStartDate} AND P.SCH_END_DATE >= #{schEndDate})
+			OR (P.SCH_START_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_START_DATE <![CDATA[ <= ]]> #{schEndDate})
+			OR (P.SCH_END_DATE <![CDATA[ >= ]]> #{schStartDate} AND P.SCH_END_DATE <![CDATA[ <= ]]> #{schEndDate}))
 		</if>
 		AND (p.SCH_START_DATE <![CDATA[ <= ]]> nvl((select cfg2.power_start_time from jsres_power_cfg cfg2 where cfg2.record_status = 'Y'
 		AND cfg2.cfg_code = ('jsres_doctor_data_time_' || rd.doctor_flow)

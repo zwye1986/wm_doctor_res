@@ -2,6 +2,9 @@ package com.pinde.sci.biz.jsres.impl;
 
 
 import com.alibaba.fastjson.JSON;
+import com.pinde.core.common.GlobalConstant;
+import com.pinde.core.common.enums.DictTypeEnum;
+import com.pinde.core.common.enums.ResDoctorAuditStatusEnum;
 import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.util.DateUtil;
@@ -18,7 +21,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.dao.jsres.ResBaseExtMapper;
 import com.pinde.sci.form.jsres.*;
-import com.pinde.sci.model.jsres.ResBaseExt;
+import com.pinde.core.model.ResBaseExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -73,12 +76,10 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 							String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum,
 							BaseExtInfo baseExtInfoJson) throws Exception {
 		SysOrg sysOrg = baseInfoForm.getSysOrg();
-		if(sysOrg!=null && DateUtil.getYear().equals(baseInfoForm.getResBase().getSessionNumber())){
+		if(sysOrg != null){
 			orgBiz.update(sysOrg);
 		}
-		ResBase resBase=readBaseBySessionNumber(sysOrg.getOrgFlow(), baseInfoForm.getResBase().getSessionNumber());
-//		ResBase resBase=readBase(sysOrg.getOrgFlow());
-//		baseInfoForm.getResBase();
+		ResBase resBase = resBaseMapper.selectByPrimaryKey(sysOrg.getOrgFlow());
 		String xml= null;
 		String json = null;
 		BaseExtInfoForm baseExtInfo = null ;
@@ -96,29 +97,29 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 			baseExtInfo=new BaseExtInfoForm();
 		}
 
-        if (com.pinde.core.common.GlobalConstant.BASIC_INFO.equals(flag) || com.pinde.core.common.GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
-			handleJointOrg(request, jointOrgFlows, speIds, fileUploadNum, jointContractFileFlows, fileRemainNum, sysOrg.getOrgFlow(), baseInfoForm.getResBase().getSessionNumber());
+        if (GlobalConstant.BASIC_INFO.equals(flag) || GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+			handleJointOrg(request, jointOrgFlows, speIds, fileUploadNum, jointContractFileFlows, fileRemainNum, sysOrg.getOrgFlow());
 		}
 
 		if(baseExtInfoAllJson == null) {
 			baseExtInfoAllJson = new BaseExtInfoJson();
 		}
 
-        if (com.pinde.core.common.GlobalConstant.TEACH_CONDITION.equals(flag) || com.pinde.core.common.GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+        if (GlobalConstant.TEACH_CONDITION.equals(flag) || GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
 			baseExtInfoAllJson.setBaseExtInfoEducationInfo(baseExtInfoJson.getBaseExtInfoEducationInfo());
 		}
 
 		if(baseInfoForm!=null){
-            if (com.pinde.core.common.GlobalConstant.TEACH_CONDITION.equals(flag)) {
+            if (GlobalConstant.TEACH_CONDITION.equals(flag)) {
 				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
-            } else if (com.pinde.core.common.GlobalConstant.ORG_MANAGE.equals(flag)) {
+            } else if (GlobalConstant.ORG_MANAGE.equals(flag)) {
 				baseExtInfo.setOrganizationManage(baseInfoForm.getOrganizationManage());
-            } else if (com.pinde.core.common.GlobalConstant.SUPPORT_CONDITION.equals(flag)) {
+            } else if (GlobalConstant.SUPPORT_CONDITION.equals(flag)) {
 				baseExtInfo.setSupportCondition(baseInfoForm.getSupportCondition());
-            } else if (com.pinde.core.common.GlobalConstant.BASIC_INFO.equals(flag)) {
+            } else if (GlobalConstant.BASIC_INFO.equals(flag)) {
 				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
 				baseExtInfo.setSysOrg(baseInfoForm.getSysOrg());
-            } else if (com.pinde.core.common.GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
+            } else if (GlobalConstant.BASIC_MAIN_ALL.equals(flag)) {
 				baseExtInfo.setBasicInfo(baseInfoForm.getBasicInfo());
 				baseExtInfo.setSysOrg(baseInfoForm.getSysOrg());
 				baseExtInfo.setEducationInfo(baseInfoForm.getEducationInfo());
@@ -134,95 +135,91 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 				String gpsApprovalNumberId = updateResBase.getGpsApprovalNumberId();
 				if(StringUtil.isNotBlank(gpsApprovalNumberId)){
 					resBase.setGpsApprovalNumberId(gpsApprovalNumberId);
-                    String dictGpsApproval = com.pinde.core.common.enums.DictTypeEnum.GeneralBaseApproNum.getDictNameById(gpsApprovalNumberId);
+                    String dictGpsApproval = DictTypeEnum.GeneralBaseApproNum.getDictNameById(gpsApprovalNumberId);
 					resBase.setGpsApprovalNumberName(dictGpsApproval);
 				}
 				// 住院医师基地获批文号 resApprovalNumberName
 				String resApprovalNumberId = updateResBase.getResApprovalNumberId();
 				if(StringUtil.isNotBlank(resApprovalNumberId)){
 					resBase.setResApprovalNumberId(resApprovalNumberId);
-                    String dictResApproval = com.pinde.core.common.enums.DictTypeEnum.ResidentBaseApproveNum.getDictNameById(resApprovalNumberId);
+                    String dictResApproval = DictTypeEnum.ResidentBaseApproveNum.getDictNameById(resApprovalNumberId);
 					resBase.setResApprovalNumberName(dictResApproval);
 				}
 				String baseGradeId = updateResBase.getBaseGradeId();
 				if(StringUtil.isNotBlank(baseGradeId)){
 					resBase.setBaseGradeId(baseGradeId);
-                    resBase.setBaseGradeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseLevel, baseGradeId));
+                    resBase.setBaseGradeName(DictTypeEnum.getDictName(DictTypeEnum.BaseLevel, baseGradeId));
 				}
 				String baseTypeId = updateResBase.getBaseTypeId();
 				if(StringUtil.isNotBlank(baseTypeId)){
 					resBase.setBaseTypeId(baseTypeId);
-                    resBase.setBaseTypeName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BaseType, baseTypeId));
+                    resBase.setBaseTypeName(DictTypeEnum.getDictName(DictTypeEnum.BaseType, baseTypeId));
 				}
 				String basePropertyId = updateResBase.getBasePropertyId();
 				if(StringUtil.isNotBlank(basePropertyId)){
 					resBase.setBasePropertyId(basePropertyId);
-                    resBase.setBasePropertyName(com.pinde.core.common.enums.DictTypeEnum.getDictName(com.pinde.core.common.enums.DictTypeEnum.BasProperty, basePropertyId));
+                    resBase.setBasePropertyName(DictTypeEnum.getDictName(DictTypeEnum.BasProperty, basePropertyId));
 				}
 			}
 		}
 		BasicInfoForm basicInfo = baseExtInfo.getBasicInfo();
 		if(basicInfo != null) {
 			if (StringUtil.isNotBlank(basicInfo.getJdfzrTitleId())) {
-                basicInfo.setJdfzrTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(basicInfo.getJdfzrTitleId()));
+                basicInfo.setJdfzrTitleName(DictTypeEnum.UserTitle.getDictNameById(basicInfo.getJdfzrTitleId()));
 			}
 			if (StringUtil.isNotBlank(basicInfo.getJdfzrPostId())) {
-                basicInfo.setJdfzrPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(basicInfo.getJdfzrPostId()));
+                basicInfo.setJdfzrPostName(DictTypeEnum.UserPost.getDictNameById(basicInfo.getJdfzrPostId()));
 			}
 			String levelRank = basicInfo.getLevelRank();
 			if(StringUtil.isNotBlank(levelRank)){
-                String levelRankName = com.pinde.core.common.enums.DictTypeEnum.OrgLevelRank.getDictNameById(levelRank);
+                String levelRankName = DictTypeEnum.OrgLevelRank.getDictNameById(levelRank);
 				basicInfo.setLevelRankName(levelRankName);
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getYwfgfzrList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getYwfgfzrList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getZpywkslxrList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getZpywkslxrList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getZpglbmfzrList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getZpglbmfzrList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 			if (CollectionUtils.isNotEmpty(basicInfo.getContactManList())) {
 				for (ContactorInfoForm contactorInfoForm : basicInfo.getContactManList()) {
 					if (StringUtil.isNotBlank(contactorInfoForm.getTitleId())) {
-                        contactorInfoForm.setTitleName(com.pinde.core.common.enums.DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
+                        contactorInfoForm.setTitleName(DictTypeEnum.UserTitle.getDictNameById(contactorInfoForm.getTitleId()));
 					}
 					if (StringUtil.isNotBlank(contactorInfoForm.getPostId())) {
-                        contactorInfoForm.setPostName(com.pinde.core.common.enums.DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
+                        contactorInfoForm.setPostName(DictTypeEnum.UserPost.getDictNameById(contactorInfoForm.getPostId()));
 					}
 				}
 			}
 		}
 		xml=JaxbUtil.convertToXml(baseExtInfo);
 		resBase.setBaseInfo(xml);
-        resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
-        resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
-		if(resBase.getSessionNumber() == null) {
-			resBase.setSessionNumber(baseInfoForm.getResBase().getSessionNumber());
-		}
-
+        resBase.setBaseStatusId(ResDoctorAuditStatusEnum.NotSubmit.getId());
+        resBase.setBaseStatusName(ResDoctorAuditStatusEnum.NotSubmit.getName());
 		String saveExtInfo = JSON.toJSONString(baseExtInfoAllJson);
 		resBase.setBaseExtInfo(saveExtInfo);
 
@@ -234,9 +231,9 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 				fileFlowList =Arrays.asList(fileFlows);
 			}
 			//处理不在本次保存中的文件
-			upadteFileInfo(resBase.getOrgFlow() + resBase.getSessionNumber(), fileFlowList,type);
+			upadteFileInfo(resBase.getOrgFlow(), fileFlowList,type);
 			//处理上传文件
-			addUploadFile(resBase.getOrgFlow() + resBase.getSessionNumber(), request, type);
+			addUploadFile(resBase.getOrgFlow(), request, type);
 		}
 		//
 		if(add) { // 下面的方法里，会根据orgFlow判断是否更新还是新增，这里给下面的saveResBase用
@@ -252,14 +249,13 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 	 * @param speIds
 	 * @param fileUploadNum
 	 */
-	private void handleJointOrg(HttpServletRequest request, String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum, String orgFlow, String sessionNumber) {
+	private void handleJointOrg(HttpServletRequest request, String[] jointOrgFlows, String[] speIds, String[] fileUploadNum, String[] jointContractFileFlows, String[] fileRemainNum, String orgFlow) {
 		ResJointOrg deleteOrg = new ResJointOrg();
-		deleteOrg.setSessionNumber(sessionNumber);
 		deleteOrg.setOrgFlow(orgFlow);
 		List<ResJointOrg> allJointOrgList = jointOrgBiz.searchResJoint(deleteOrg);
 		if(ArrayUtils.isEmpty(jointOrgFlows)) {
 			if(CollectionUtils.isNotEmpty(allJointOrgList)) {
-				jointOrgBiz.deleteByOrgFlow(orgFlow, sessionNumber);
+				jointOrgBiz.deleteByOrgFlow(orgFlow);
 			}
 
 			for (ResJointOrg resJointOrg : allJointOrgList) {
@@ -270,7 +266,12 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		if(ArrayUtils.isNotEmpty(jointContractFileFlows)) {
 			jointContractFileFlows = Arrays.stream(jointContractFileFlows).filter(vo -> StringUtils.isNotEmpty(vo)).toArray(len -> new String[len]);
 		}
-		List<String> jointOrgFlowList = Arrays.stream(jointOrgFlows).collect(Collectors.toList());
+		List<String> jointOrgFlowList = new ArrayList<>();
+		for(int i = 0; i < jointOrgFlows.length; i++){
+			String jointOrgFlow = jointOrgFlows[i];
+			String speId = speIds[i];
+			jointOrgFlowList.add(jointOrgFlow + "," + speId);
+		}
 
 		 // 上传的协同关系协议
 		 List<MultipartFile> files = new ArrayList<>();
@@ -285,42 +286,43 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		 }
 
 		Map<String, String> orgToSpeMap = new HashMap<>();
-		 List<String> deletingFileFlowList = new ArrayList<>();
-		 // 对协议，已有的flow不变，此次少的删的，此次上传的插入
-		 // 协同单位此次上传的协同关系协议
-		 Map<String, List<MultipartFile>> jointFlowToFileListMap = new HashMap<>();
-		 for(int i = 0; i < jointOrgFlows.length; i++) {
-			 String jointOrgFlow = jointOrgFlows[i];
-			 orgToSpeMap.put(jointOrgFlow, speIds[i]);
-			 int fileNum = Integer.parseInt(fileUploadNum[i]);
-			 List<MultipartFile> curFileList = new ArrayList<>();
-			 for(int j = 0; j < fileNum; j++) {
-				 curFileList.add(files.get(curNum++));
-			 }
-			 jointFlowToFileListMap.put(jointOrgFlow, curFileList);
-			 // 协同单位之前的协同关系协议的flow
-			 List<String> fileRemainList = new ArrayList<>();
-			 int remainFileNum = Integer.parseInt(fileRemainNum[i]);
-			 for(int j = 0; j < remainFileNum; j++) {
-				 fileRemainList.add(jointContractFileFlows[remainNum++]);
-			 }
-
-			 ResJointOrg jointOrgFind = allJointOrgList.stream().filter(vo -> vo.getJointOrgFlow().equals(jointOrgFlow)).findFirst().orElse(null);
-			 if(jointOrgFind != null) {
-				 List<PubFile> oldFileList = pubFileBiz.findFileByTypeFlow("jointContract", jointOrgFind.getJointFlow());
-				 for (PubFile pubFile : oldFileList) {
-					 if (!fileRemainList.contains(pubFile.getFileFlow())) {
-						 deletingFileFlowList.add(pubFile.getFileFlow());
-					 }
-				 }
-			 }
-		 }
-		 if(CollectionUtils.isNotEmpty(deletingFileFlowList)) {
-			 pubFileBiz.deleteFile(deletingFileFlowList);
-		 }
+		List<String> deletingFileFlowList = new ArrayList<>();
+		// 对协议，已有的flow不变，此次少的删的，此次上传的插入
+		// 协同单位此次上传的协同关系协议
+		Map<String, List<MultipartFile>> jointFlowToFileListMap = new HashMap<>();
+		for(int i = 0; i < jointOrgFlows.length; i++) {
+			String jointOrgFlow = jointOrgFlows[i];
+			String speId = speIds[i];
+			orgToSpeMap.put(jointOrgFlow + "," + speId, speId);
+			int fileNum = Integer.parseInt(fileUploadNum[i]);
+			List<MultipartFile> curFileList = new ArrayList<>();
+			for(int j = 0; j < fileNum; j++) {
+				curFileList.add(files.get(curNum++));
+			}
+			jointFlowToFileListMap.put(jointOrgFlow + "," + speId, curFileList);
+			// 协同单位之前的协同关系协议的flow
+			List<String> fileRemainList = new ArrayList<>();
+			int remainFileNum = Integer.parseInt(fileRemainNum[i]);
+			for(int j = 0; j < remainFileNum; j++) {
+				fileRemainList.add(jointContractFileFlows[remainNum++]);
+			}
+			// 协同单位相同且专业相同
+		 	ResJointOrg jointOrgFind = allJointOrgList.stream().filter(vo -> vo.getJointOrgFlow().equals(jointOrgFlow) && vo.getSpeId().equals(speId)).findFirst().orElse(null);
+		 	if(jointOrgFind != null) {
+			 	List<PubFile> oldFileList = pubFileBiz.findFileByTypeFlow("jointContract", jointOrgFind.getJointFlow());
+			 	for (PubFile pubFile : oldFileList) {
+				 	if (!fileRemainList.contains(pubFile.getFileFlow())) {
+					 	deletingFileFlowList.add(pubFile.getFileFlow());
+				 	}
+			 	}
+		 	}
+		}
+		if(CollectionUtils.isNotEmpty(deletingFileFlowList)) {
+			pubFileBiz.deleteFile(deletingFileFlowList);
+		}
 
 		 // 查出原先的协同单位：两边都有的更新，原先有的删除，这次有的新增
-		List<String> alreadyJointOrgFlowList = allJointOrgList.stream().map(vo -> vo.getJointOrgFlow()).collect(Collectors.toList());
+		List<String> alreadyJointOrgFlowList = allJointOrgList.stream().map(vo -> vo.getJointOrgFlow() + "," + vo.getSpeId()).collect(Collectors.toList());
 		// 交集:更新
 		List<String> updateList = new ArrayList(CollectionUtils.intersection(jointOrgFlowList, alreadyJointOrgFlowList));
 		// 差集：删除
@@ -333,11 +335,10 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 			List<PubFile> insertFileList = new ArrayList<>();
 			//
 			for (String updateOrgFlow : updateList) {
-
 				for (ResJointOrg jointOrg : allJointOrgList) {
-					if(updateOrgFlow.equals(jointOrg.getJointOrgFlow())) {
+					if(updateOrgFlow.equals(jointOrg.getJointOrgFlow() + "," + jointOrg.getSpeId())) {
 						jointOrg.setSpeId(orgToSpeMap.get(updateOrgFlow));
-                        jointOrg.setSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(updateOrgFlow)));
+                        jointOrg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(updateOrgFlow)));
 						List<MultipartFile> fileList =  jointFlowToFileListMap.get(updateOrgFlow);
 						for (MultipartFile file : fileList) {
 							//保存附件
@@ -362,7 +363,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
-                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setProductType("jointContract");
@@ -389,7 +390,11 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		}
 
 		if(CollectionUtils.isNotEmpty(insertList)) {
-			List<String> orgFlowList = new ArrayList(insertList);
+			List<String> orgFlowList = new ArrayList();
+			for(String orgFlowSpe : insertList){
+				String[] orgSpe = orgFlowSpe.split(",");
+				orgFlowList.add(orgSpe[0]);
+			}
 			orgFlowList.add(orgFlow);
 			List<SysOrg> orgList = orgBiz.searchOrgFlowIn(orgFlowList);
 			Map<String, String> orgFlowToNameMap = orgList.stream().collect(Collectors.toMap(vo -> vo.getOrgFlow(), vo -> vo.getOrgName(), (vo1, vo2) -> vo1));
@@ -399,17 +404,17 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 				ResJointOrg resJointOrg = new ResJointOrg();
 				resJointOrg.setJointFlow(PkUtil.getUUID());
 				resJointOrg.setSpeId(orgToSpeMap.get(insertJointFlow));
-                resJointOrg.setSpeName(com.pinde.core.common.enums.DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(insertJointFlow)));
-				resJointOrg.setJointOrgFlow(insertJointFlow);
-				resJointOrg.setJointOrgName(orgFlowToNameMap.get(insertJointFlow));
+                resJointOrg.setSpeName(DictTypeEnum.DoctorTrainingSpe.getDictNameById(orgToSpeMap.get(insertJointFlow)));
+				String[] orgSpe = insertJointFlow.split(",");
+				resJointOrg.setJointOrgFlow(orgSpe[0]);
+				resJointOrg.setJointOrgName(orgFlowToNameMap.get(orgSpe[0]));
 				resJointOrg.setOrgFlow(orgFlow);
 				resJointOrg.setOrgName(orgFlowToNameMap.get(orgFlow));
-				resJointOrg.setSessionNumber(sessionNumber);
 
 				GeneralMethod.setRecordInfo(resJointOrg, true);
 				insertJointList.add(resJointOrg);
 
-				List<MultipartFile> fileList =  jointFlowToFileListMap.get(insertJointFlow);
+				List<MultipartFile> fileList = jointFlowToFileListMap.get(insertJointFlow);
 				for (MultipartFile file : fileList) {
 					//保存附件
 					PubFile pubFile = new PubFile();
@@ -433,7 +438,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 						throw new RuntimeException("保存文件失败！");
 					}
 					String filePath = File.separator + "jointContract" + File.separator + dateString + File.separator + originalFilename;
-                    pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                    pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 					pubFile.setFilePath(filePath);
 					pubFile.setFileName(oldFileName);
 					pubFile.setProductType("jointContract");
@@ -464,7 +469,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 //                    String filePath = basePath + pubFile.getFilePath();
 //                    FileUtil.deletefile(filePath);
 //                }
-                pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+                pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
 				pubFileBiz.editFile(pubFile);
 			}
 		}
@@ -513,11 +518,11 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 								throw new RuntimeException("保存文件失败！");
 							}
 							String filePath = File.separator + "resBaseInfo" +  File.separator + noteTypeId + File.separator + dateString + File.separator+recordFlow+ File.separator + originalFilename;
-                            pubFile.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                            pubFile.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 							pubFile.setFilePath(filePath);
 							pubFile.setFileName(oldFileName);
 							pubFile.setFileSuffix(oldFileName.substring(oldFileName.lastIndexOf(".")));
-                            if (com.pinde.core.common.GlobalConstant.SUPPORT_CONDITION.equals(noteTypeId) || com.pinde.core.common.GlobalConstant.ORG_MANAGE.equals(noteTypeId)) {
+                            if (GlobalConstant.SUPPORT_CONDITION.equals(noteTypeId) || GlobalConstant.ORG_MANAGE.equals(noteTypeId)) {
 								pubFile.setProductType(noteTypeId);
 								pubFile.setFileUpType(key);
 							}else{
@@ -592,7 +597,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 						for(ResOrgSpe N :oldStatusNList){
 							if(s.getSpeTypeId().equals(N.getSpeTypeId()) &&  s.getSpeId().equals(N.getSpeId()) && orgFlow.equals(N.getOrgFlow()) ){
 								addFlag = false;
-                                N.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+                                N.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
 								resOrgSpeBiz.saveResOrgSpe(N);
 								break;
 							}
@@ -610,17 +615,17 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 		if(deleteMap.size()>0){
 			for(Entry<String, ResOrgSpe> entry : deleteMap.entrySet()){
 				ResOrgSpe delOrgSpe = entry.getValue();
-                delOrgSpe.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_N);
+                delOrgSpe.setRecordStatus(GlobalConstant.RECORD_STATUS_N);
 				resOrgSpeBiz.saveResOrgSpe(delOrgSpe);
 			}
 		}
 		ResBase resBase=readBase(orgFlow);
 		if (resBase!=null) {
-            resBase.setBaseStatusId(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getId());
-            resBase.setBaseStatusName(com.pinde.core.common.enums.ResDoctorAuditStatusEnum.NotSubmit.getName());
+            resBase.setBaseStatusId(ResDoctorAuditStatusEnum.NotSubmit.getId());
+            resBase.setBaseStatusName(ResDoctorAuditStatusEnum.NotSubmit.getName());
 			saveResBase(resBase);
 		}
-        return com.pinde.core.common.GlobalConstant.ONE_LINE;
+        return GlobalConstant.ONE_LINE;
 	}
 	@Override
 	public List<ResBaseExt> searchResBaseExtList(Map<String, Object> paramMap) {
@@ -636,7 +641,7 @@ public class JsResBaseBizImpl implements IJsResBaseBiz{
 			SysUser sysUser =GlobalContext.getCurrentUser();
 			resBase.setOrgFlow(sysUser.getOrgFlow());
 			GeneralMethod.setRecordInfo(resBase, true);
-			return resBaseMapper.insert(resBase);
+			return resBaseMapper.insertSelective(resBase);
 		}
 	}
 	@Override

@@ -97,8 +97,12 @@ public class SchExamCfgBizImpl implements ISchExamCfgBiz {
 			yearlyTestUrl = InitConfig.getSysCfg("jsres_yearly_test_update_url");
 			map.put("paperFlow", schExamArrangement.getPaperFlow());
 		}
-		String paperName = schExamArrangement.getOrgName() + schExamArrangement.getAssessmentYear() + "年度" + sessionNumber + "级"
-				+ DictTypeEnum.DoctorTrainingSpe.getDictNameById(trainingSpeId) + "住院医师年度考核";
+		String paperName = schExamArrangement.getOrgName() + schExamArrangement.getAssessmentYear() + "年度" + sessionNumber + "级";
+		if("acc".equals(schExamArrangement.getType())) {
+			paperName += DictTypeEnum.AssiGeneral.getDictNameById(trainingSpeId) + "助理全科年度考核";
+		}else {
+			paperName += DictTypeEnum.DoctorTrainingSpe.getDictNameById(trainingSpeId) + "住院医师年度考核";
+		}
 		map.put("paperName", paperName);
 		map.put("paperTime", schExamArrangement.getExamDuration());
 		map.put("paperPassScore", "60");

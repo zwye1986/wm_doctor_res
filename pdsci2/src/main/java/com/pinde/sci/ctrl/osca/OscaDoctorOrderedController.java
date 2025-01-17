@@ -24,7 +24,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.model.ResScore;
-import com.pinde.sci.model.osca.OscaSkillsAssessmentExt;
+import com.pinde.core.model.OscaSkillsAssessmentExt;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

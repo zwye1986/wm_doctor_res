@@ -22,7 +22,7 @@ import com.pinde.sci.common.IrbSingleForm;
 import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.res.DeptTeacherGradeInfoExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
+import com.pinde.core.model.DeptTeacherGradeInfoExt;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;

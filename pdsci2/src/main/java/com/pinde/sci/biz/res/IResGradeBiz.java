@@ -1,7 +1,7 @@
 package com.pinde.sci.biz.res;
 
 import com.pinde.core.model.*;
-import com.pinde.sci.model.res.DeptTeacherGradeInfoExt;
+import com.pinde.core.model.DeptTeacherGradeInfoExt;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

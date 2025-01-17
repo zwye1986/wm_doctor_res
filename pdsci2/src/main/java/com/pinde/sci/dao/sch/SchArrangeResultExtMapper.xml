@@ -291,8 +291,9 @@
         <result property="orgName" column="org_name" javaType="string"/>
         <result property="orgNameAll" column="ORG_NAME_ALL" javaType="string"/>
         <result property="doctorTypeName" column="doctor_type_name" javaType="string"/>
-    <result property="jointOrgName" column="joint_org_name" javaType="string"/>
-    <result property="doctorTypeName" column="doctor_type_name" javaType="string"/>
+        <result property="jointOrgName" column="joint_org_name" javaType="string"/>
+        <result property="doctorTypeName" column="doctor_type_name" javaType="string"/>
+            <result property="cretTypeName" column="CRET_TYPE_NAME" javaType="string" />
     </resultMap>
 
     <select id="searchDocResultsList" parameterType="java.util.Map" resultMap="docResultsMap">
@@ -477,18 +478,22 @@
     <select id="searchDocResultsByMonth" parameterType="java.util.Map" resultMap="docResultsMap">
         SELECT ( case when b.ORG_NAME is not null then A.org_name ||'('||B.ORG_NAME||')' else A.org_name end )AS ORG_NAME_ALL
         , A.* FROM (
-        SELECT U.USER_NAME AS USER_NAME, DR.TRAINING_TYPE_NAME AS TRAINING_TYPE_NAME, DR.TRAINING_SPE_NAME AS TRAINING_SPE_NAME, DR.SESSION_NUMBER AS SESSION_NUMBER, DR.DOCTOR_FLOW AS DOCTOR_FLOW
-        , rdr.graduation_year AS graduation_year, dr.org_name AS org_name,DR.ORG_FLOW AS ORG_FLOW,dr.doctor_type_name
+        SELECT U.USER_NAME, U.ID_NO,U.CRET_TYPE_NAME,DR.TRAINING_TYPE_NAME, DR.TRAINING_SPE_NAME, DR.SESSION_NUMBER, DR.DOCTOR_FLOW
+        , RDR.GRADUATION_YEAR, DR.ORG_NAME,DR.ORG_FLOW,DR.DOCTOR_TYPE_NAME
         FROM RES_DOCTOR dr
         inner join SYS_USER u
         on dr.DOCTOR_FLOW = u.USER_FLOW
         left join (
-        select a.* , row_number() over(partition by doctor_flow order by create_time desc) as rn
+        select A.RECRUIT_FLOW,A.DOCTOR_FLOW,A.ORG_FLOW,A.GRADUATION_YEAR,row_number() over(partition by doctor_flow order by create_time desc) as rn
         from RES_DOCTOR_RECRUIT a
-        where AUDIT_STATUS_ID='Passed' and RECORD_STATUS= 'Y'
+        where RECORD_STATUS= 'Y' AND AUDIT_STATUS_ID='Passed'
+        <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+            and a.ORG_FLOW in
+            <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
         ) rdr on dr.DOCTOR_FLOW =  rdr.DOCTOR_FLOW
-        and rn=1
-        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rdr.record_status='Y'
+
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rn=1
         <if test='userName!=null and userName!=""'>
             and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
         </if>
@@ -509,7 +514,7 @@
             and rdr.graduation_year = #{graduationYear}
         </if>
         <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
-            and rdr.ORG_FLOW in
+            and dr.ORG_FLOW in
             <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test='deptFlow!=null and deptFlow!=""'>
@@ -1282,7 +1287,7 @@
         ORDER BY a.SCH_START_DATE
     </select>
     <!-- 按科室统计入科异常学员 -->
-    <select id="preWarningBefore" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
+    <select id="preWarningBefore" resultType="com.pinde.core.model.GeneralIdNameModel">
         SELECT DEPT_FLOW AS ID, DEPT_NAME AS NAME, COUNT(1) AS QTY
         FROM SCH_ARRANGE_RESULT
         WHERE RECORD_STATUS = 'Y'
@@ -1325,7 +1330,7 @@
     </select>
 
     <!-- 按科室统计出科异常学员 -->
-    <select id="preWarningIng" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
+    <select id="preWarningIng" resultType="com.pinde.core.model.GeneralIdNameModel">
         SELECT DEPT_FLOW ID,DEPT_NAME NAME,COUNT(1) QTY
         FROM RES_DOCTOR_SCH_PROCESS P
         WHERE RECORD_STATUS = 'Y'
@@ -1361,7 +1366,7 @@
     </select>
 
     <!-- 按科室统计出科考核异常学员 -->
-    <select id="preWarningAfter" resultType="com.pinde.sci.model.res.GeneralIdNameModel">
+    <select id="preWarningAfter" resultType="com.pinde.core.model.GeneralIdNameModel">
         SELECT DEPT_FLOW ID,DEPT_NAME NAME,COUNT(1) QTY
         FROM RES_DOCTOR_SCH_PROCESS P
         WHERE RECORD_STATUS = 'Y'

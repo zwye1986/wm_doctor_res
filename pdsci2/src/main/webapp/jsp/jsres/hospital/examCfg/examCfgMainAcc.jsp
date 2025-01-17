@@ -61,7 +61,7 @@
 		jboxPostLoad("doctorListZi","<s:url value='/jsres/examCfg/list'/>",$("#searchForm").serialize(),false);
 	}
 	function edit(arrangeFlow) {
-		var url = "<s:url value='/jsres/examCfg/edit'/>?arrangeFlow="+arrangeFlow;
+		var url = "<s:url value='/jsres/examCfg/edit'/>?type=acc&arrangeFlow="+arrangeFlow;
 		jboxOpen(url, "考核设置",1000,550);
 	}
 	function openInfo(arrangeFlow,isOpen) {
@@ -79,9 +79,9 @@
 			},null,true);
 		});
 	}
-	function del(arrangeFlow) {
+	function del(arrangeFlow, paperFlow) {
 		jboxConfirm("确认删除该年度考核吗？",function () {
-			var url = "<s:url value='/jsres/examCfg/updateCfg?arrangeFlow='/>" + arrangeFlow+ "&recordStatus=N";
+			var url = "<s:url value='/jsres/examCfg/updateCfg?arrangeFlow='/>" + arrangeFlow+ "&recordStatus=N" + "&paperFlow=" + paperFlow;
 			jboxGet(url,null,function(resp){
 				if(resp=="操作成功！")
 					toPage(1);

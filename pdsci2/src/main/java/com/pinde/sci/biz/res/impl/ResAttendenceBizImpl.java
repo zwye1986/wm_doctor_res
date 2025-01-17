@@ -9,9 +9,9 @@ import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.res.IResAttendanceBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.res.ResAttendanceExtMapper;
-import com.pinde.sci.model.jsres.JsResAttendanceExt;
-import com.pinde.sci.model.jszy.JszyResAttendanceExt;
-import com.pinde.sci.model.res.ResAttendanceExt;
+import com.pinde.core.model.JsResAttendanceExt;
+import com.pinde.core.model.JszyResAttendanceExt;
+import com.pinde.core.model.ResAttendanceExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package com.pinde.sci.biz.res;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.ResJointOrgExample;
 import com.pinde.core.model.SysOrg;
-import com.pinde.sci.model.jszy.JszyResJointOrgExt;
+import com.pinde.core.model.JszyResJointOrgExt;
 
 import java.util.List;
 
@@ -43,7 +43,23 @@ public interface IResJointOrgBiz {
 	//根据协同基地唯一标识获取协同关系表的所有记录
 	List<ResJointOrg> selectByJointOrgFlow(String jointOrgFlow);
 
-	int deleteByOrgFlow(String orgFlow, String sessionNumber);
+	int deleteByOrgFlow(String orgFlow);
 
 	int deleteJointOrg(ResJointOrg jointOrg);
+
+	/**
+	 * @Department：研发部
+	 * @Description 根据主键查询协同基地关联关系信息
+	 * @Author fengxf
+	 * @Date 2025/1/13
+	 */
+	ResJointOrg getResJointOrg(String jointFlow);
+
+	/**
+	 * @Department：研发部
+	 * @Description 删除协同关系
+	 * @Author fengxf
+	 * @Date 2025/1/14
+	 */
+	int deleteResJointOrg(ResJointOrg resJointOrg);
 }
