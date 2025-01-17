@@ -622,7 +622,8 @@
         }
 
         function teachTrainMain() {
-            var url = "<s:url value='/jsres/statistic/searchTeachTrainMain'/>?roleFlag=global";
+            var url = "<s:url value='/jsres/statistic/baseInfoTeacher'/>";
+            <%--var url = "<s:url value='/jsres/statistic/searchTeachTrainMain'/>?roleFlag=global";--%>
             currentJboxLoadNoData("content", url, true);
         }
 

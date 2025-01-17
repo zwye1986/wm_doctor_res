@@ -3,6 +3,8 @@ package com.pinde.sci.biz.jsres;
 import com.pinde.core.model.*;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.model.jsres.JsDoctorInfoExt;
+import com.pinde.sci.model.jsres.TeacherReportCountDto;
+import com.pinde.sci.model.jsres.TeacherTrainingInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -196,4 +198,10 @@ public interface IJsResStatisticBiz {
     List<Map<String, Object>> searchTeacherUserList(Map<String, Object> param);
 
     List<Map<String, Object>> searchTeacherAuditList(Map<String, Object> param);
+
+    List<ResTeacherTraining> searchTeacherInfoByUserFlow(String recordFlow);
+
+    List<TeacherTrainingInfoVo> searchTeacherInfoByCondition(String doctorName, String deptFlow, String technicalPositionId, String teacherLevelId, String applicationAuditStatus, String orgFlow);
+
+    List<TeacherReportCountDto> countTeacherLevelByOrgFlow(String orgFlow);
 }

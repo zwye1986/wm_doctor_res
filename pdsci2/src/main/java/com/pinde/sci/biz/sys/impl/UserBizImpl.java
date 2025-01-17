@@ -23,6 +23,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.WeixinQiYeUtil;
 import com.pinde.sci.dao.sys.SysUserExtMapper;
+import com.pinde.sci.model.jsres.TeacherTrainingInfoVo;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -1133,6 +1134,11 @@ public class UserBizImpl implements IUserBiz {
             return StringUtil.isNotBlank(sysUserRole.getRoleFlow()) && sysUserRole.getRoleFlow().equals(roleFlow);
 		}
 		return false;
+	}
+
+	@Override
+	public List<TeacherTrainingInfoVo> selectByCondition(String doctorName, String teacherLevelId, String deptFlow, String technicalPositionId, String trainingYear, String speId, String certificateLevelId, String orgFlow) {
+		return userExtMapper.selectByCondition(doctorName, teacherLevelId, deptFlow, technicalPositionId, trainingYear, speId, certificateLevelId, orgFlow);
 	}
 
 	/**

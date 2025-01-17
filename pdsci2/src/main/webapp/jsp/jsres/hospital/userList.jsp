@@ -108,7 +108,7 @@
         </c:forEach>
         <c:if test="${empty sysUserList}">
             <tr>
-                <td align="center" colspan="10">无记录</td>
+                <td align="center" colspan="9">无记录</td>
             </tr>
         </c:if>
     </table>

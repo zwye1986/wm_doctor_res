@@ -2,31 +2,30 @@
 <div class="search_table">
     <table class="grid">
         <tr>
+            <th width="6%">序号</th>
             <th width="10%">姓名</th>
             <th width="6%">性别</th>
-            <th width="16%">科室</th>
+            <th width="14%">培训基地</th>
+            <th width="10%">师资级别</th>
             <th width="10%">技术职务</th>
             <th width="10%">培训年份</th>
             <th width="14%">培训专业</th>
-            <th width="14%">培训证书等级</th>
-            <th width="8%">师资聘书</th>
-            <th width="12%">操作</th>
+            <th width="10%">培训证书等级</th>
+            <th width="10%">操作</th>
         </tr>
-        <c:forEach items="${sysUserList}" var="sysUser">
+        <c:forEach items="${sysUserList}" var="sysUser" varStatus="status">
             <tr style="height:20px ">
+                <td>${status.index + 1}</td>
                 <td title="${sysUser.userName}">${sysUser.userName}</td>
                 <td>${sysUser.sex}</td>
-                <td title="${sysUserDeptNameMap[sysUser.userFlow]}">${pdfn:cutString(sysUserDeptNameMap[sysUser.userFlow],10,true,3)}</td>
+                <td>${sysUser.orgName}</td>
+                <td>${sysUser.teacherLevel}</td>
                 <td>${sysUser.technicalPositionName}</td>
                 <td>${sysUser.trainingYears}</td>
                 <td>${sysUser.speNames}</td>
                 <td>${sysUser.certificateLevelNames}</td>
-                <td>${sysUser.isLetterGet}</td>
-                <td style="text-align: left;">
+                <td>
                     <a href="javascript:editCommonSzInfo('${sysUser.userFlow}', 'view');" class="btn" style="padding: 0px 5px;">查看</a>
-                    <a href="javascript:editCommonSzInfo('${sysUser.userFlow}', 'edit');" class="btn" style="padding: 0px 5px;">编辑</a>
-                    <a href="javascript:deleteCommonSz('${sysUser.userFlow}');" class="btn" style="padding: 0px 5px;">取消师资</a>
-
                 </td>
             </tr>
         </c:forEach>

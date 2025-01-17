@@ -4,6 +4,7 @@ import com.pinde.core.model.JsresUserBalcklist;
 import com.pinde.core.model.SysUser;
 import com.pinde.core.model.SysUserDept;
 import com.pinde.core.model.SysUserExample;
+import com.pinde.sci.model.jsres.TeacherTrainingInfoVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -335,4 +336,6 @@ public interface IUserBiz {
      * @return
      */
     boolean userISRole(String userFlow,String roleFlow);
+
+    List<TeacherTrainingInfoVo> selectByCondition(String doctorName, String teacherLevelId, String deptFlow, String technicalPositionId, String trainingYear, String speId, String certificateLevelId, String orgFlow);
 }

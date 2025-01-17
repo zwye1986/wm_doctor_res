@@ -2,6 +2,8 @@ package com.pinde.sci.dao.sys;
 
 import com.pinde.core.model.SysUser;
 import com.pinde.sci.form.sys.SysUserForm;
+import com.pinde.sci.model.jsres.TeacherReportCountDto;
+import com.pinde.sci.model.jsres.TeacherTrainingInfoVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -112,4 +114,12 @@ public interface SysUserExtMapper {
 	int updateTeaNotSubmit(List<String> userFlowList);
 
 	List<SysUser> searchUserList(Map<String,Object> paramMap);
+
+    List<TeacherTrainingInfoVo> selectByCondition(@Param("doctorName") String doctorName, @Param("teacherLevelId") String teacherLevelId, @Param("deptFlow") String deptFlow, @Param("technicalPositionId") String technicalPositionId,
+												  @Param("trainingYear") String trainingYear, @Param("speId") String speId, @Param("certificateLevelId") String certificateLevelId, @Param("orgFlow") String orgFlow);
+
+	List<TeacherTrainingInfoVo> searchTeacherInfoByCondition(@Param("doctorName") String doctorName, @Param("deptFlow") String deptFlow, @Param("technicalPositionId") String technicalPositionId,
+															 @Param("teacherLevelId") String teacherLevelId, @Param("applicationAuditStatus") String applicationAuditStatus, @Param("orgFlow") String orgFlow);
+
+    List<TeacherReportCountDto> countTeacherLevelByOrgFlow(String orgFlow);
 }

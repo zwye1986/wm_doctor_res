@@ -73,6 +73,8 @@
     }
 
     .statistics-row {
+        width: 96%;
+        margin-left: 20px;
         display: flex;
         align-items: center;
         margin-top: 20px;
@@ -247,6 +249,11 @@
 
     function importUsers() {
         var url = "<s:url value='/jsres/manage/importUsers'/>";
+        jboxOpen(url, "用户导入", 700, 250);
+    }
+
+    function importTeacher() {
+        var url = "<s:url value='/jsres/manage/importTeacher'/>";
         jboxOpen(url, "师资导入", 700, 250);
     }
 
@@ -412,8 +419,9 @@
             <div style="margin-top: 15px;margin-bottom: 15px">
                 <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
                 <input type="button" class="btn_green" onclick="editUser('')" value="新&#12288;增">
-                <input type="button" class="btn_green" onclick="importUsers()" value="导&#12288;入">
-                <input type="button" class="btn_green" onclick="exportUser()" value="导&#12288;出">
+                <input type="button" class="btn_green" onclick="importUsers()" value="用户导入">
+                <input type="button" class="btn_green" onclick="exportUser()" value="用户导出">
+                <input type="button" class="btn_green" onclick="importTeacher()" value="师资导入">
             </div>
 
 

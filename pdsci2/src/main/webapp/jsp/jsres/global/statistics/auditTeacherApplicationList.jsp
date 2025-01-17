@@ -21,14 +21,14 @@
         src="<s:url value='/js/viewer/viewer.min.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
 
-    function auditDetails(recordFlow, roleFlag) {
-        var url = "<s:url value='/jsres/statistic/auditDetails'/>?recordFlow=" + recordFlow + "&roleFlag=" + roleFlag;
-        jboxOpen(url, "审核", 800, 400);
+    function auditDetails(recordFlow, roleFlag, userFlow) {
+        var url = "<s:url value='/jsres/statistic/editCommonSzInfo'/>?recordFlow=" + recordFlow + "&roleFlag=" + roleFlag + "&flag=edit" + "&userFlow=" + userFlow;
+        jboxOpen(url, "审核师资申请", 1400, 800);
     }
 
-    function seeAuditDetails(recordFlow) {
-        var url = "<s:url value='/jsres/statistic/applicationStatus'/>?recordFlow=" + recordFlow;
-        jboxOpen(url, "申请进度", 800, 350);
+    function seeAuditDetails(recordFlow, roleFlag, userFlow) {
+        var url = "<s:url value='/jsres/statistic/editCommonSzInfo'/>?recordFlow=" + recordFlow + "&roleFlag=" + roleFlag + "&flag=view" + "&userFlow=" + userFlow;
+        jboxOpen(url, "查看师资申请", 1400, 800);
     }
 
     function checkSingle(obj){
@@ -59,13 +59,16 @@
             <tr>
                 <th width="5%"><input type="checkbox" id="checkAll" onclick="allCheck()"/></th>
                 <th width="5%">序号</th>
-                <th width="10%">姓名</th>
-                <th width="10%">性别</th>
-                <th width="10%">手机号码</th>
-                <th width="20%">科室</th>
-                <th width="10%">师资类型</th>
-                <th width="20%">审核状态</th>
-                <th width="10%">操作</th>
+                <th width="8%">姓名</th>
+                <th width="5%">性别</th>
+                <th width="15%">科室</th>
+                <th width="10%">申请师资级别</th>
+                <th width="8%">技术职务</th>
+                <th width="8%">培训年份</th>
+                <th width="10%">培训专业</th>
+                <th width="10%">培训证书等级</th>
+                <th width="8%">审核状态</th>
+                <th width="8%">操作</th>
             </tr>
             <c:forEach items="${teacherTrainingList }" var="teacher" varStatus="status">
                 <tr>
@@ -78,37 +81,40 @@
                         </c:if>
                     </td>
                     <td>${status.index + 1 }</td>
-                    <td>${teacher.doctorName }</td>
-                    <td>${teacher.sexName }</td>
-                    <td>${teacher.userPhone }</td>
-                    <td>${teacher.deptName}</td>
-                    <td>${teacher.teacherLevelName}</td>
+                    <td>${teacher.userName }</td>
+                    <td>${teacher.sex }</td>
+                    <td title="${sysUserDeptNameMap[teacher.userFlow]}">${pdfn:cutString(sysUserDeptNameMap[teacher.userFlow],10,true,3)}</td>
+                    <td>${teacher.applicationTeacherLevelId}</td>
+                    <td>${teacher.technicalPositionName}</td>
+                    <td>${teacher.trainingYears}</td>
+                    <td>${teacher.speNames}</td>
+                    <td>${teacher.certificateLevelNames}</td>
                     <td>${teacher.applicationAuditStatus == 'HeadAuditing' ? '待科主任审核' : teacher.applicationAuditStatus == 'HeadNotPassed' ? '科主任审核不通过' : teacher.applicationAuditStatus == 'HeadPassed' ? '待基地审核' : teacher.applicationAuditStatus == 'Passed' ? '基地审核通过' : '基地审核不通过'}</td>
                     <c:if test="${teacher.applicationAuditStatus == 'HeadAuditing' && roleFlag == 'head'}">
                         <td>
-                            <a class="btn" onclick="auditDetails('${teacher.recordFlow}','${roleFlag}');">审核</a>
+                            <a class="btn" onclick="auditDetails('${teacher.recordFlow}','${roleFlag}','${teacher.userFlow}');">审核</a>
                         </td>
                     </c:if>
                     <c:if test="${teacher.applicationAuditStatus == 'HeadPassed' && roleFlag == 'local'}">
                         <td>
-                            <a class="btn" onclick="auditDetails('${teacher.recordFlow}','${roleFlag}');">审核</a>
+                            <a class="btn" onclick="auditDetails('${teacher.recordFlow}','${roleFlag}','${teacher.userFlow}');">审核</a>
                         </td>
                     </c:if>
                     <c:if test="${teacher.applicationAuditStatus != 'HeadAuditing' && roleFlag == 'head'}">
                         <td>
-                            <a class="btn" onclick="seeAuditDetails('${teacher.recordFlow}');">查看</a>
+                            <a class="btn" onclick="seeAuditDetails('${teacher.recordFlow}','${roleFlag}','${teacher.userFlow}');">查看</a>
                         </td>
                     </c:if>
                     <c:if test="${teacher.applicationAuditStatus != 'HeadPassed' && roleFlag == 'local'}">
                         <td>
-                            <a class="btn" onclick="seeAuditDetails('${teacher.recordFlow}');">查看</a>
+                            <a class="btn" onclick="seeAuditDetails('${teacher.recordFlow}','${roleFlag}','${teacher.userFlow}');">查看</a>
                         </td>
                     </c:if>
                 </tr>
             </c:forEach>
             <c:if test="${empty teacherTrainingList}">
                 <tr>
-                    <td colspan="10">无记录</td>
+                    <td colspan="12">无记录</td>
                 </tr>
             </c:if>
         </table>

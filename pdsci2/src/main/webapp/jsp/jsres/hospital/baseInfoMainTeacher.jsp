@@ -29,6 +29,11 @@
 		jboxLoad("div_table_0", url, true);
 	}
 
+	function auditTeacherApplicationMain(){
+		var url = "<s:url value='/jsres/statistic/auditTeacherApplicationMain'/>?roleFlag=local";
+		jboxLoad("div_table_0", url, true);
+	}
+
 	function selTag(gradeRole){
 		if(gradeRole == 'sysuser'){
 			teacherManage();
@@ -38,6 +43,9 @@
 		}
 		if(gradeRole == 'ggsz'){
 			commonSzManage('KeyFaculty');
+		}
+		if(gradeRole == 'szsh'){
+			auditTeacherApplicationMain('KeyFaculty');
 		}
 		if(gradeRole == 'responsibleTutor'){
 			responsibleTutor();
@@ -51,7 +59,8 @@
 		<li class="tab_select" onclick="selTag('sysuser');"><a>用户信息</a></li>
 		<li class="tab" onclick="selTag('ybsz','');"><a>一般师资</a></li>
 		<li class="tab" onclick="selTag('ggsz','');"><a>骨干师资</a></li>
-		<li class="tab" onclick="selTag('responsibleTutor','');"><a>责任导师</a></li>
+		<li class="tab" onclick="selTag('szsh','');"><a>师资审核</a></li>
+<%--		<li class="tab" onclick="selTag('responsibleTutor','');"><a>责任导师</a></li>--%>
 	</ul>
 </div>
 

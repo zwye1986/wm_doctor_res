@@ -1227,4 +1227,123 @@
 		</if>
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
+
+    <select id="selectByCondition" resultType="com.pinde.sci.model.jsres.TeacherTrainingInfoVo">
+		select u.user_flow, u.user_name, u.sex_name as sex, rpi.technical_position_name, u.teacher_level, u.org_name
+		from sys_user u
+		left join res_professional_info rpi on u.user_flow = rpi.user_flow
+		where u.record_status = 'Y'
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and u.org_flow = #{orgFlow}
+		</if>
+		and u.org_flow in (
+		select org_flow from sys_org
+		where record_status = 'Y'
+		and org_prov_id = '320000'
+		and org_level_id = 'CountryOrg'
+		and org_type_id = 'Hospital'
+		)
+		<if test='doctorName!=null and doctorName!=""'>
+			<bind name="doctorName" value="'%'+doctorName+'%'"/>
+			and u.user_name like #{doctorName}
+		</if>
+		<if test='teacherLevelId!=null and teacherLevelId!="" and teacherLevelId == "GeneralFaculty".toString()'>
+			and u.teacher_level = '一般师资'
+		</if>
+		<if test='teacherLevelId!=null and teacherLevelId!="" and teacherLevelId == "KeyFaculty".toString()'>
+			and u.teacher_level = '骨干师资'
+		</if>
+		<if test='teacherLevelId==null or teacherLevelId==""'>
+			and u.teacher_level in ('一般师资', '骨干师资')
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and (
+			u.dept_flow = #{deptFlow}
+			or exists(select 1
+			from sys_user_dept sud
+			where sud.record_status = 'Y'
+			and u.user_flow = sud.user_flow
+			and sud.dept_flow = #{deptFlow}
+			)
+			)
+		</if>
+		<if test='technicalPositionId!=null and technicalPositionId!=""'>
+			and rpi.technical_position_id = #{technicalPositionId}
+		</if>
+		<if test='trainingYear!=null and trainingYear!=""'>
+			and exists(select 1
+			from res_teacher_training_info rtti
+			where rtti.record_status = 'Y'
+			and u.user_flow = rtti.user_flow
+			and rtti.training_year = #{trainingYear}
+			)
+		</if>
+		<if test='speId!=null and speId!=""'>
+			and exists(select 1
+			from res_teacher_training_info rtti
+			where rtti.record_status = 'Y'
+			and u.user_flow = rtti.user_flow
+			and rtti.training_spe_id = #{speId}
+			)
+		</if>
+		<if test='certificateLevelId!=null and certificateLevelId!=""'>
+			and exists(select 1
+			from res_teacher_training_info rtti
+			where rtti.record_status = 'Y'
+			and u.user_flow = rtti.user_flow
+			and rtti.certificate_level_id = #{certificateLevelId}
+			)
+		</if>
+	</select>
+	<select id="searchTeacherInfoByCondition" resultType="com.pinde.sci.model.jsres.TeacherTrainingInfoVo">
+		select rtt.record_flow, u.user_flow, u.user_name, u.sex_name as sex, rpi.technical_position_name, u.org_name, rtt.application_teacher_level_id, rtt.application_audit_status
+		from sys_user u
+		left join res_professional_info rpi on u.user_flow = rpi.user_flow
+		left join res_teacher_training rtt on u.user_flow = rtt.doctor_name
+		where u.record_status = 'Y'
+		and rtt.record_status = 'Y'
+		<if test='orgFlow!=null and orgFlow!=""'>
+			and u.org_flow = #{orgFlow}
+		</if>
+		and u.org_flow in (
+		select org_flow from sys_org
+		where record_status = 'Y'
+		and org_prov_id = '320000'
+		and org_level_id = 'CountryOrg'
+		and org_type_id = 'Hospital'
+		)
+		<if test='doctorName!=null and doctorName!=""'>
+			<bind name="doctorName" value="'%'+doctorName+'%'"/>
+			and u.user_name like #{doctorName}
+		</if>
+		<if test='teacherLevelId!=null and teacherLevelId!=""'>
+			and rtt.application_teacher_level_id = #{teacherLevelId}
+		</if>
+		<if test='deptFlow!=null and deptFlow!=""'>
+			and (
+			u.dept_flow = #{deptFlow}
+			or exists(select 1
+			from sys_user_dept sud
+			where sud.record_status = 'Y'
+			and u.user_flow = sud.user_flow
+			and sud.dept_flow = #{deptFlow}
+			)
+			)
+		</if>
+		<if test='technicalPositionId!=null and technicalPositionId!=""'>
+			and rpi.technical_position_id = #{technicalPositionId}
+		</if>
+		<if test='applicationAuditStatus!=null and applicationAuditStatus!=""'>
+			and rtt.application_audit_status = #{applicationAuditStatus}
+		</if>
+		order by rtt.create_time desc
+	</select>
+    <select id="countTeacherLevelByOrgFlow" resultType="com.pinde.sci.model.jsres.TeacherReportCountDto">
+		select teacher_level, count(teacher_level) as num
+		from sys_user
+		where teacher_level in ('一般师资', '骨干师资')
+		 and org_flow = #{orgFlow}
+		 and record_status = 'Y'
+		 group by teacher_level
+	</select>
 </mapper>
