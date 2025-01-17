@@ -1,9 +1,9 @@
 package com.pinde.sci.dao.sys;
 
 import com.pinde.core.model.SysUser;
+import com.pinde.core.model.TeacherReportCountDto;
+import com.pinde.core.model.TeacherTrainingInfoVo;
 import com.pinde.sci.form.sys.SysUserForm;
-import com.pinde.sci.model.jsres.TeacherReportCountDto;
-import com.pinde.sci.model.jsres.TeacherTrainingInfoVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

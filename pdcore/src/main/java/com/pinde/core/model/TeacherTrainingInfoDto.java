@@ -1,4 +1,4 @@
-package com.pinde.sci.model.jsres;
+package com.pinde.core.model;
 
 import com.pinde.core.model.*;
 import lombok.Data;

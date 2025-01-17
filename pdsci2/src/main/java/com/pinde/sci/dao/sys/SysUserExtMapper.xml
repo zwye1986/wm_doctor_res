@@ -1230,7 +1230,7 @@
 		order by nlssort(u.user_name,'NLS_SORT=SCHINESE_PINYIN_M')
 	</select>
 
-    <select id="selectByCondition" resultType="com.pinde.sci.model.jsres.TeacherTrainingInfoVo">
+    <select id="selectByCondition" resultType="com.pinde.core.model.TeacherTrainingInfoVo">
 		select u.user_flow, u.user_name, u.sex_name as sex, rpi.technical_position_name, u.teacher_level, u.org_name
 		from sys_user u
 		left join res_professional_info rpi on u.user_flow = rpi.user_flow
@@ -1297,7 +1297,7 @@
 			)
 		</if>
 	</select>
-	<select id="searchTeacherInfoByCondition" resultType="com.pinde.sci.model.jsres.TeacherTrainingInfoVo">
+	<select id="searchTeacherInfoByCondition" resultType="com.pinde.core.model.TeacherTrainingInfoVo">
 		select rtt.record_flow, u.user_flow, u.user_name, u.sex_name as sex, rpi.technical_position_name, u.org_name, rtt.application_teacher_level_id, rtt.application_audit_status
 		from sys_user u
 		left join res_professional_info rpi on u.user_flow = rpi.user_flow
@@ -1340,7 +1340,7 @@
 		</if>
 		order by rtt.create_time desc
 	</select>
-    <select id="countTeacherLevelByOrgFlow" resultType="com.pinde.sci.model.jsres.TeacherReportCountDto">
+    <select id="countTeacherLevelByOrgFlow" resultType="com.pinde.core.model.TeacherReportCountDto">
 		select teacher_level, count(teacher_level) as num
 		from sys_user
 		where teacher_level in ('一般师资', '骨干师资')

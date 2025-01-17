@@ -3860,11 +3860,11 @@ public class JsResStatisticController extends GeneralController {
 	public String globalTeacherReportByOrg(Model model, String orgFlow, String countType) {
 		SysOrg sysOrg = orgBiz.readSysOrg(orgFlow);
 		model.addAttribute("sysOrg", sysOrg);
-		List<com.pinde.sci.model.jsres.TeacherReportCountDto> teacherReportCountDtoList =  resStatisticBiz.countTeacherLevelByOrgFlow(orgFlow);
+		List<TeacherReportCountDto> teacherReportCountDtoList =  resStatisticBiz.countTeacherLevelByOrgFlow(orgFlow);
 		Map<String, Object> teacherReportCountDtoMap = new HashMap<>();
 		teacherReportCountDtoMap.put("generalCount", 0);
 		teacherReportCountDtoMap.put("keyCount", 0);
-		for (com.pinde.sci.model.jsres.TeacherReportCountDto teacherReportCountDto : teacherReportCountDtoList) {
+		for (TeacherReportCountDto teacherReportCountDto : teacherReportCountDtoList) {
 			if (teacherReportCountDto.getTeacherLevel().equals("一般师资")) {
 				teacherReportCountDtoMap.put("generalCount", teacherReportCountDto.getNum());
 			} else {
