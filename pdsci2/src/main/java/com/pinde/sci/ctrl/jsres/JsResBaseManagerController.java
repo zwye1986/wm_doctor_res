@@ -4501,15 +4501,17 @@ public class JsResBaseManagerController extends GeneralController {
 		parMp.put("userOrgFlow", userOrgFlow);
 		List<Map<String, Object>> rltLst = resultBiz.docWorkingSearch(parMp);
 
-		String[] titles = new String[8];
+		String[] titles = new String[10];
 		titles[0] = "doctorName:姓名";
-		titles[1] = "trainingSpeName:专业";
-		titles[2] = "sessionNumber:年级";
-		titles[3] = "reqNum,completeNum,auditNum:培训数据(要求数/完成数/审核数)";
-		titles[4] = "cbl.%:完成(比例)";
-		titles[5] = "abl.%:审核(比例)";
-		titles[6] = "rotationNum,ylz,schNum:轮转科室(要求数/已轮转/已出科)";
-		titles[7] = "rotationNum,afterNum:出科要求表(要求数/上传数)";
+		titles[1] = "cretTypeName:证件类型";
+		titles[2] = "idNo:证件号码";
+		titles[3] = "trainingSpeName:专业";
+		titles[4] = "sessionNumber:年级";
+		titles[5] = "reqNum,completeNum,auditNum:培训数据(要求数/完成数/审核数)";
+		titles[6] = "cbl.%:完成(比例)";
+		titles[7] = "abl.%:审核(比例)";
+		titles[8] = "rotationNum,ylz,schNum:轮转科室(要求数/已轮转/已出科)";
+		titles[9] = "rotationNum,afterNum:出科要求表(要求数/上传数)";
 		ExcleUtile.exportSimpleExcleByObjs(titles, rltLst, response.getOutputStream());
 
 	}

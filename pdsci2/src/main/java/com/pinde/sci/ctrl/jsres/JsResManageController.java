@@ -8874,6 +8874,8 @@ public class JsResManageController extends GeneralController {
 			paramMap.put("workOrgId", "");
 			paramMap.put("roleFlow", cfgTeacher);
 			paramMap.put("orgFlow", orgFlow);
+			paramMap.put("schStartDate", startDate);
+			paramMap.put("schEndDate", endDate);
 //			List<Map<String, String>> notAuditedMaps = resRecBiz.notAuditedMaps(paramMap);
 //			List<Map<String, String>> isNotAuditedMaps = resRecBiz.isNotAuditedMaps(paramMap);
 			List<Map<String, String>> auditedMapList = resRecBiz.searchAuditedDataList(paramMap);

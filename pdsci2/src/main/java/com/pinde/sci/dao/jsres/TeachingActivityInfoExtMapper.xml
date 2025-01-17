@@ -12,9 +12,9 @@
         <result column="IS_SCAN" property="isScan" jdbcType="VARCHAR" />
         <result column="IS_SCAN2" property="isScan2" jdbcType="VARCHAR" />
         <result column="RESULT_FLOW" property="resultFlow" jdbcType="VARCHAR" />
-        <result column="SCAN_NUM" property="scanNum" jdbcType="VARCHAR" />
-        <result column="REGIEST_NUM" property="regiestNum" jdbcType="VARCHAR" />
-        <result column="SIGNING_NUM" property="signingNum" jdbcType="VARCHAR" />
+        <result column="SCAN_NUM" property="scanNum" jdbcType="VARCHAR" javaType="String" />
+        <result column="REGIEST_NUM" property="regiestNum" jdbcType="VARCHAR" javaType="String" />
+        <result column="SIGNING_NUM" property="signingNum" jdbcType="VARCHAR" javaType="String" />
         <result column="IS_EFFECTIVE2" property="isEffective" jdbcType="VARCHAR" />
         <result column="ACTIVITY_STATUS" property="activityStatus" jdbcType="VARCHAR" />
         <result column="SUBMIT_ROLE" property="submitRole" jdbcType="VARCHAR" />

@@ -321,7 +321,7 @@ function selTag(tag,type,flag){
 				<tr>
 <%--					<c:choose>--%>
 <%--						<c:when test="${param.roleFlag eq 'teach'or param.roleFlag eq 'head'or param.roleFlag eq 'secretary'}">--%>
-							<td id="func" colspan="3">
+							<td id="func" colspan="6">
 								<input class="btn_green" style="margin-left: 0px;" type="button" value="查&#12288;询" onclick="toPage(1);"/>&nbsp;
 								<c:if test="${addFlag eq 'Y'}">
 									<input class="btn_green" style="margin-left: 0px;" type="button" value="新&#12288;增" onclick="editActivity('','${param.roleFlag}');"/>&nbsp;
