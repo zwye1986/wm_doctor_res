@@ -71,46 +71,6 @@ public class TimeUtil {
         if (time != null) {
             String startDate = time.get("startDate");
             String endDate = time.get("endDate");
-            String NextEndDate ="";
-            if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
-                while (true) {
-                    //开始时间加1个自然月
-                    Calendar c = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = sdf.parse(startDate);
-                    c.setTime(date);
-                    c.add(Calendar.MONTH, 1);
-                    NextEndDate = sdf.format(c.getTime());
-                    NextEndDate = DateUtil.addDate(NextEndDate, -1);
-                    if (NextEndDate.compareTo(endDate) >0 ) {
-//                        int days = c.getActualMaximum(Calendar.DATE);
-                        long betweenDays = DateUtil.signDaysBetweenTowDate(endDate,startDate)+1;
-                        Double dBetweenDays = Double.parseDouble(betweenDays + "");
-//                            Double ddays = Double.parseDouble(days + "");
-                        count += BigDecimal.valueOf(dBetweenDays / 30).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-                        break;
-                    }else{
-                        startDate = DateUtil.addDate(NextEndDate, 1);
-                        count++;
-                    }
-                }
-            }
-        }
-        BigDecimal bg = new BigDecimal(count).setScale(1, BigDecimal.ROUND_HALF_UP);
-        return bg.doubleValue();
-    }
-
-    /**
-     * 判断两个日期之间相差自然月的倍数（新方法）
-     * @param time
-     * @return
-     * @throws ParseException
-     */
-    public static Double getMonthsBetweenNew(Map<String, String> time) throws ParseException {
-        double count = 0;
-        if (time != null) {
-            String startDate = time.get("startDate");
-            String endDate = time.get("endDate");
             if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
                 //日期相差的整数月
                 SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd");
@@ -135,6 +95,46 @@ public class TimeUtil {
                 long betweenDaysStart = DateUtil.signDaysBetweenTowDate(lastDateOfStart,startDate)+1;//开始时间到当月最后一天天数
                 long betweenDaysEnd = DateUtil.signDaysBetweenTowDate(endDate,firstDateOfEnd)+1;//结束时间到当月第一天天数
                 count+= (float)betweenDaysStart/datesOfStart + (float)betweenDaysEnd/datesOfEnd;
+            }
+        }
+        BigDecimal bg = new BigDecimal(count).setScale(1, BigDecimal.ROUND_HALF_UP);
+        return bg.doubleValue();
+    }
+
+    /**
+     * 判断两个日期之间相差自然月的倍数（老方法）
+     * @param time
+     * @return
+     * @throws ParseException
+     */
+    public static Double getMonthsBetweenOld(Map<String, String> time) throws ParseException {
+        double count = 0;
+        if (time != null) {
+            String startDate = time.get("startDate");
+            String endDate = time.get("endDate");
+            String NextEndDate ="";
+            if (StringUtil.isNotBlank(startDate) && StringUtil.isNotBlank(endDate)) {
+                while (true) {
+                    //开始时间加1个自然月
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = sdf.parse(startDate);
+                    c.setTime(date);
+                    c.add(Calendar.MONTH, 1);
+                    NextEndDate = sdf.format(c.getTime());
+                    NextEndDate = DateUtil.addDate(NextEndDate, -1);
+                    if (NextEndDate.compareTo(endDate) >0 ) {
+//                        int days = c.getActualMaximum(Calendar.DATE);
+                        long betweenDays = DateUtil.signDaysBetweenTowDate(endDate,startDate)+1;
+                        Double dBetweenDays = Double.parseDouble(betweenDays + "");
+//                            Double ddays = Double.parseDouble(days + "");
+                        count += BigDecimal.valueOf(dBetweenDays / 30).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
+                        break;
+                    }else{
+                        startDate = DateUtil.addDate(NextEndDate, 1);
+                        count++;
+                    }
+                }
             }
         }
         BigDecimal bg = new BigDecimal(count).setScale(1, BigDecimal.ROUND_HALF_UP);
@@ -343,7 +343,7 @@ public class TimeUtil {
         map.put("endDate","2019-02-19");
         try{
             System.out.println("getMonthsBetween:"+JSON.toJSONString(getMonthsBetween(map)));
-            System.out.println("getMonthsBetweenNew:"+JSON.toJSONString(getMonthsBetweenNew(map)));
+            System.out.println("getMonthsBetweenNew:"+JSON.toJSONString(getMonthsBetweenOld(map)));
         }catch (Exception e){
             logger.error("", e);
         }
