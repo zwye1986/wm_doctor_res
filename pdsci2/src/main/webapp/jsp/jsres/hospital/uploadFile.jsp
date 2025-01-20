@@ -45,7 +45,7 @@ function checkUploadFile(){
 	if ($("#uploadFileForm").validationEngine("validate")) {
 		jboxStartLoading();
 		$(":file.auto:hidden").attr("disabled",true);
-		var url = "<s:url value='/jsres/manage/checkUploadFile'/>?fileType=${fileType}&fileSuffix=${fileSuffix}";
+		var url = "<s:url value='/jsres/manage/checkUploadFile'/>?fileType=${fileType}&fileSuffix=${fileSuffix}&roleFlag=${roleFlag}";
 		$("#uploadFileForm").submit();
 	}
 }
@@ -61,14 +61,25 @@ function returnUrl(){
 		top.document['jbox-message-iframe'].$("#${param.operType}Se").hide();
 		top.document['jbox-message-iframe'].$("#${param.operType}").removeClass("validate[required]");
 	}else{
-		top.document['jbox-message-iframe'].$('#${param.operType}').text("重新上传");
-		top.document['jbox-message-iframe'].$('#${param.operType}Value').val("${filePath}");
-		var filePath = "${sysCfgMap['upload_base_url']}/${filePath}";
-		top.document['jbox-message-iframe'].$('#${param.operType}Del').show();
-		top.document['jbox-message-iframe'].$('#${param.operType}Span').show();
-		top.document['jbox-message-iframe'].$('#${param.operType}Span').find("a").attr('href',filePath);
-		top.document['jbox-message-iframe'].$("#${param.operType}Se").hide();
-		top.document['jbox-message-iframe'].$("#${param.operType}").removeClass("validate[required]");
+		if ('${roleFlag}' == 'teacher') {
+			window.parent.$('#${param.operType}').text("重新上传");
+			window.parent.$('#${param.operType}Value').val("${filePath}");
+			var filePath = "${sysCfgMap['upload_base_url']}/${filePath}";
+			window.parent.$('#${param.operType}Del').show();
+			window.parent.$('#${param.operType}Span').show();
+			window.parent.$('#${param.operType}Span').find("a").attr('href',filePath);
+			window.parent.$("#${param.operType}Se").hide();
+			window.parent.$("#${param.operType}").removeClass("validate[required]");
+		} else {
+			top.document['jbox-message-iframe'].$('#${param.operType}').text("重新上传");
+			top.document['jbox-message-iframe'].$('#${param.operType}Value').val("${filePath}");
+			var filePath = "${sysCfgMap['upload_base_url']}/${filePath}";
+			top.document['jbox-message-iframe'].$('#${param.operType}Del').show();
+			top.document['jbox-message-iframe'].$('#${param.operType}Span').show();
+			top.document['jbox-message-iframe'].$('#${param.operType}Span').find("a").attr('href',filePath);
+			top.document['jbox-message-iframe'].$("#${param.operType}Se").hide();
+			top.document['jbox-message-iframe'].$("#${param.operType}").removeClass("validate[required]");
+		}
 	}
 	doClose();
 }
@@ -97,7 +108,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="infoAudit">
-	<form id="uploadFileForm" method="post" style="position:relative;" action="<s:url value='/jsres/manage/checkUploadFile'/>?fileType=${fileType}&fileSuffix=${fileSuffix}" enctype="multipart/form-data">
+	<form id="uploadFileForm" method="post" style="position:relative;" action="<s:url value='/jsres/manage/checkUploadFile'/>?fileType=${fileType}&fileSuffix=${fileSuffix}&roleFlag=${roleFlag}" enctype="multipart/form-data">
 		<input type="hidden" name="second" value="${param.second}"/>
 		<input type="hidden" name="operType" value="${param.operType}"/>
 		<input type="hidden" name="userFlow" value="${param.userFlow}"/>

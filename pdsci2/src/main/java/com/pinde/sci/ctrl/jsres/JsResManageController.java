@@ -4,6 +4,7 @@ package com.pinde.sci.ctrl.jsres;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.pub.UserSexEnum;
@@ -17415,7 +17416,7 @@ public class JsResManageController extends GeneralController {
 	 * @return
 	 */
 	@RequestMapping("/uploadFile")
-	public String uploadFile(String second, String fileType, String fileSuffix, Model model) {
+	public String uploadFile(String second, String fileType, String roleFlag, String fileSuffix, Model model) {
 		System.err.print("second=" + second);
 		if ("File".equals(fileType)) {
 			model.addAttribute("fileType", "File");
@@ -17423,6 +17424,7 @@ public class JsResManageController extends GeneralController {
 			model.addAttribute("fileType", "");
 		}
 		model.addAttribute("fileSuffix", fileSuffix);
+		model.addAttribute("roleFlag", roleFlag);
 		return "jsres/hospital/uploadFile";
 	}
 
@@ -17435,7 +17437,7 @@ public class JsResManageController extends GeneralController {
 	 * @return
 	 */
 	@RequestMapping(value = "/checkUploadFile", method = {RequestMethod.POST})
-	public String checkUploadFile(String operType, String fileType, String fileSuffix, MultipartFile uploadFile, Model model) {
+	public String checkUploadFile(String operType, String fileType, String roleFlag, String fileSuffix, MultipartFile uploadFile, Model model) {
 		if (uploadFile != null && !uploadFile.isEmpty()) {
 			String fileResult = "";
 			String folderName = "jsresImages";
@@ -17463,6 +17465,7 @@ public class JsResManageController extends GeneralController {
 			}
 			model.addAttribute("result", fileResult);
 		}
+		model.addAttribute("roleFlag", roleFlag);
 		return "jsres/hospital/uploadFile";
 	}
 
@@ -17554,11 +17557,20 @@ public class JsResManageController extends GeneralController {
 			return "骨干师资请上传【省级】或【国家级】的培训记录。";
 		}
 		SysUser sysUser = userBiz.readSysUser(userFlow);
-		if (!sysUser.getTeacherLevel().equals(teacherLevel)) {
+		if (StringUtil.isNotBlank(sysUser.getTeacherLevel()) && !sysUser.getTeacherLevel().equals(teacherLevel)) {
 			sysUser.setTeacherLevel(teacherLevel);
 			userBiz.updateUser(sysUser);
 		}
 		// 保存教育信息
+		ResEducationInfoExample resEducationInfoExample = new ResEducationInfoExample();
+		resEducationInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		List<ResEducationInfo> educationInfos = resEducationInfoMapper.selectByExample(resEducationInfoExample);
+		for (ResEducationInfo educationInfo : educationInfos) {
+			educationInfo.setRecordStatus(GlobalConstant.FLAG_N);
+			GeneralMethod.setRecordInfo(educationInfo, false);
+			resEducationInfoMapper.updateByPrimaryKeySelective(educationInfo);
+		}
+
 		List<ResEducationInfo> educationInfoList = JSONArray.parseArray(teacherTrainingInfoDto.getEducationData(), ResEducationInfo.class);
 		for (ResEducationInfo educationInfo : educationInfoList) {
 			educationInfo.setUserFlow(userFlow);
@@ -17567,6 +17579,7 @@ public class JsResManageController extends GeneralController {
 				GeneralMethod.setRecordInfo(educationInfo, true);
 				resEducationInfoMapper.insert(educationInfo);
 			} else {
+				educationInfo.setRecordStatus(GlobalConstant.FLAG_Y);
 				GeneralMethod.setRecordInfo(educationInfo, false);
 				resEducationInfoMapper.updateByPrimaryKeySelective(educationInfo);
 			}
@@ -17590,6 +17603,15 @@ public class JsResManageController extends GeneralController {
 			resProfessionalInfoMapper.updateByPrimaryKeySelective(professionalInfo);
 		}
 		// 保存师资培训信息
+		ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
+		resTeacherTrainingInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		List<ResTeacherTrainingInfo> trainingInfos = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
+		for (ResTeacherTrainingInfo trainingInfo : trainingInfos) {
+			trainingInfo.setRecordStatus(GlobalConstant.FLAG_N);
+			GeneralMethod.setRecordInfo(trainingInfo, false);
+			resTeacherTrainingInfoMapper.updateByPrimaryKeySelective(trainingInfo);
+		}
+
 		for (ResTeacherTrainingInfo trainingInfo : trainingInfoList) {
 			trainingInfo.setUserFlow(userFlow);
 			if (StringUtil.isBlank(trainingInfo.getTrainingFlow())) {
@@ -17597,11 +17619,21 @@ public class JsResManageController extends GeneralController {
 				GeneralMethod.setRecordInfo(trainingInfo, true);
 				resTeacherTrainingInfoMapper.insert(trainingInfo);
 			} else {
+				trainingInfo.setRecordStatus(GlobalConstant.FLAG_Y);
 				GeneralMethod.setRecordInfo(trainingInfo, false);
 				resTeacherTrainingInfoMapper.updateByPrimaryKeySelective(trainingInfo);
 			}
 		}
 		// 保存师资聘书信息
+		ResTeacherLetterInfoExample resTeacherLetterInfoExample = new ResTeacherLetterInfoExample();
+		resTeacherLetterInfoExample.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y).andUserFlowEqualTo(userFlow);
+		List<ResTeacherLetterInfo> letterInfos = resTeacherLetterInfoMapper.selectByExample(resTeacherLetterInfoExample);
+		for (ResTeacherLetterInfo letterInfo : letterInfos) {
+			letterInfo.setRecordStatus(GlobalConstant.FLAG_N);
+			GeneralMethod.setRecordInfo(letterInfo, false);
+			resTeacherLetterInfoMapper.updateByPrimaryKeySelective(letterInfo);
+		}
+
 		List<ResTeacherLetterInfo> letterInfoList = JSONArray.parseArray(teacherTrainingInfoDto.getLetterData(), ResTeacherLetterInfo.class);
 		for (ResTeacherLetterInfo letterInfo : letterInfoList) {
 			letterInfo.setUserFlow(userFlow);
@@ -17610,6 +17642,7 @@ public class JsResManageController extends GeneralController {
 				GeneralMethod.setRecordInfo(letterInfo, true);
 				resTeacherLetterInfoMapper.insert(letterInfo);
 			} else {
+				letterInfo.setRecordStatus(GlobalConstant.FLAG_Y);
 				GeneralMethod.setRecordInfo(letterInfo, false);
 				resTeacherLetterInfoMapper.updateByPrimaryKeySelective(letterInfo);
 			}

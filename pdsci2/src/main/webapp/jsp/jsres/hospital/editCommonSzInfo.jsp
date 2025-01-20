@@ -220,8 +220,10 @@
     });
 
 	function saveCommonSzInfo() {
-		if(false==$("#excelForm").validationEngine("validate")){
-			return false ;
+		if ('${roleFlag}' != 'teacher') {
+			if(false==$("#excelForm").validationEngine("validate")){
+				return false ;
+			}
 		}
 
 		var url = "<s:url value='/jsres/manage/saveCommonSzInfo'/>";
@@ -290,6 +292,7 @@
 
 		// 处理多条聘书信息
 		var letterTrs = $('.letterTab').children();
+		debugger;
 		var letterList = [];
 		$.each(letterTrs, function (i, n) {
 			var letterFlow = $(n).find("input[name='letterFlow']").val();
@@ -317,10 +320,16 @@
 		var data = $('#excelForm').serialize();
 		jboxPost(url, data, function(data) {
 			if('${GlobalConstant.SAVE_SUCCESSED}'==data){
-				window.parent.search();
-				setTimeout(function(){
-					doClose();
-				}, 1000);
+				jboxTip(data);
+				if ('${roleFlag}' != 'teacher') {
+					window.parent.search();
+					setTimeout(function(){
+						doClose();
+					}, 1000);
+				}
+				if ('${roleFlag}' == 'teacher') {
+					window.parent.editCommonSzInfo('${sessionScope.currUser.userFlow}');
+				}
 			} else {
 				jboxTip(data);
 			}
@@ -360,7 +369,7 @@
     }
 
 	function uploadFile(type,typeName,fileType) {
-		var url = "<s:url value='/jsres/manage/uploadFile'/>?operType="+type+"&fileType="+fileType;
+		var url = "<s:url value='/jsres/manage/uploadFile'/>?operType="+type+"&fileType="+fileType+"&roleFlag=${roleFlag}";
 		<%--var url = "<s:url value='/jsres/doctor/uploadFile'/>?operType="+type+"&fileType="+fileType;--%>
 		jboxOpen(url, "上传"+typeName, 500, 185);
 	}
@@ -384,6 +393,9 @@
 
 	function teacherApplication() {
 		var recordFlow = $("#userFlow").val();
+		if(false==$("#excelForm").validationEngine("validate")){
+			return false ;
+		}
 		saveCommonSzInfo();
 		var url = "<s:url value='/jsres/statistic/teacherApplication'/>?recordFlow=" + recordFlow;
 		jboxOpen(url, "师资申请", 800, 350);
@@ -568,6 +580,7 @@
 				<th style="background-color: #f4f5f9; text-align: center">从事临床教学工作时间</th>
 				<td style="text-align: center">
 					<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${professionalInfo.clinicalTeachingTime}" placeholder="请选择" name="clinicalTeachingTime" />
+				</td>
 			</tr>
 			</tbody>
 		</table>
@@ -667,19 +680,19 @@
 							${status.index + 1}
 					</td>
 					<td style="text-align: center">
-						<select name="letterPeriod" class="select" style="width: 90%;">
+						<select name="letterPeriod" class="select validate[required]" style="width: 90%;">
 							<option value="有限时长" <c:if test="${letterInfo.letterPeriod eq '有限时长'}">selected="selected"</c:if>>有限时长</option>
 							<option value="长期" <c:if test="${letterInfo.letterPeriod eq '长期'}">selected="selected"</c:if>>长期</option>
 						</select>
 					</td>
 					<td style="text-align: center">
-						<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterStartTime}" placeholder="请选择" name="letterStartTime" />
+						<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterStartTime}" placeholder="请选择" name="letterStartTime" />
 					</td>
 					<td style="text-align: center">
 						<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterEndTime}" placeholder="请选择" name="letterEndTime" />
 					</td>
 					<td style="text-align: center">
-						<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterTime}" placeholder="请选择" name="letterTime" />
+						<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterTime}" placeholder="请选择" name="letterTime" />
 					</td>
 					<td style="text-align: center">
 						<span id="letterFileSpan" style="display:${!empty letterInfo.letterFile?'':'none'} ">
@@ -823,19 +836,19 @@
 	<tr id="letterTab">
 		<td name="index" style="text-align: center"></td>
 		<td style="text-align: center">
-			<select name="letterPeriod" class="select" style="width: 90%;">
+			<select name="letterPeriod" class="select validate[required]" style="width: 90%;">
 				<option value="有限时长" <c:if test="${param.letterPeriod eq '有限时长'}">selected="selected"</c:if>>有限时长</option>
 				<option value="长期" <c:if test="${param.letterPeriod eq '长期'}">selected="selected"</c:if>>长期</option>
 			</select>
 		</td>
 		<td style="text-align: center">
-			<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterStartTime" />
+			<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterStartTime" />
 		</td>
 		<td style="text-align: center">
 			<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterEndTime" />
 		</td>
 		<td style="text-align: center">
-			<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterTime" />
+			<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterTime" />
 		</td>
 		<td style="text-align: center">
 						<span id="letterFileSpan" style="display:${!empty letterInfo.letterFile?'':'none'} ">
