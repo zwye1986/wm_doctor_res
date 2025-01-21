@@ -57,6 +57,11 @@
             justify-content: center;
             align-items: center;
         }
+        .empty-data {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -88,13 +93,13 @@
         <div class="chart-row">
             <div style="flex: 1">
                 <div class="chart-title">师资数量排行榜（按专业）</div>
-                <div id="barChart1" style="height: 550px"></div>
+                <c:if test="${not empty teacherSpeCountDtoList}">
+                    <div id="barChart1" style="height: 550px"></div>
+                </c:if>
+                <c:if test="${empty teacherSpeCountDtoList}">
+                    <div class="empty-data">暂无数据...</div>
+                </c:if>
             </div>
-
-<%--            <div style="flex: 1">--%>
-<%--                <div class="chart-title">师资数量排行榜（按基地）</div>--%>
-<%--                <div id="barChart2" style="height: 550px"></div>--%>
-<%--            </div>--%>
         </div>
     </div>
 </div>
@@ -102,7 +107,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        debugger;
+        var i = 0;
         // 需要渲染的series数据
         var seriesData = [
             {
@@ -187,7 +192,10 @@
             yData.push("${teacherSpeCountDto.speName}");
             xData1.push("${teacherSpeCountDto.generalNumber}");
             xData2.push("${teacherSpeCountDto.keyNumber}");
+            i = i + 1;
         </c:forEach>
+
+        $("#barChart1").attr("style", "height: " + (i * 60 + 100) + "px");
 
         var chart3 = echarts.init(
             document.getElementById("barChart1"),
@@ -219,11 +227,15 @@
                     stack: "total",
                     label: {
                         show: true,
+                        formatter: p=>{
+                            return p.value != 0 ? p.value : '';
+                        }
                     },
                     emphasis: {
                         focus: "series",
                     },
                     data: xData1,
+                    barWidth: '30px',
                 },
                 {
                     name: "骨干师资",
@@ -231,22 +243,20 @@
                     stack: "total",
                     label: {
                         show: true,
+                        formatter: p =>{
+                            return p.value != 0 ? p.value : '';
+                        }
                     },
                     emphasis: {
                         focus: "series",
                     },
                     data: xData2,
+                    barWidth: '30px',
                 },
             ],
         });
 
         chart3.setOption(barOption1);
-
-        // var chart4 = echarts.init(
-        //     document.getElementById("barChart2"),
-        //     "customed"
-        // );
-        // chart4.setOption(barOption1);
     });
     function search() {
         var countType = $("#countType").val();

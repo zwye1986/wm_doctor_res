@@ -26,6 +26,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
 import com.pinde.core.model.JsDoctorInfoExt;
+import com.pinde.sci.model.jsres.TeacherSpeCountDto;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
@@ -3959,6 +3960,7 @@ public class JsResStatisticController extends GeneralController {
 			teacherSpeCountDto.setKeyNumber(speCount.get(speKey).get("keyNumber"));
 			teacherSpeCountDtoList.add(teacherSpeCountDto);
 		}
+		teacherSpeCountDtoList.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
 		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
 		return "jsres/global/teacherReport/globalTeacherReportByOrg";
 	}
@@ -3985,13 +3987,13 @@ public class JsResStatisticController extends GeneralController {
 		// 查询基地/医院
 		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
 		orgList.sort((o1, o2) -> o2.getOrgCode().hashCode() - o1.getOrgCode().hashCode());
-		List<String> orgNames = orgList.stream().map(SysOrg::getOrgName).collect(Collectors.toList());
 
 		Map<String, Object> teacherCertificateCountDtoMap = new HashMap<>();
 		int country = 0;
 		int province = 0;
 		int city = 0;
 		int hospital = 0;
+		List<String> orgNames = sysUserList.stream().map(TeacherTrainingInfoVo::getOrgName).distinct().collect(Collectors.toList());
 		Map<String, Map<String, Integer>> orgCount = new HashMap<>();
 		for (TeacherTrainingInfoVo trainingInfoVo : sysUserList) {
 			ResTeacherTrainingInfoExample resTeacherTrainingInfoExample = new ResTeacherTrainingInfoExample();
@@ -4054,6 +4056,7 @@ public class JsResStatisticController extends GeneralController {
 			}
 			teacherSpeCountDtoList.add(teacherSpeCountDto);
 		}
+		teacherSpeCountDtoList.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
 		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
 		return "jsres/global/teacherReport/globalTeacherReportBySpe";
 	}
@@ -4079,7 +4082,7 @@ public class JsResStatisticController extends GeneralController {
 		// 查询基地/医院
 		List<SysOrg> orgList = orgBiz.searchSysOrgOrder(orgLevels);
 		orgList.sort((o1, o2) -> o2.getOrgCode().hashCode() - o1.getOrgCode().hashCode());
-		List<String> orgNames = orgList.stream().map(SysOrg::getOrgName).collect(Collectors.toList());
+		List<String> orgNames = sysUserList.stream().map(TeacherTrainingInfoVo::getOrgName).distinct().collect(Collectors.toList());
 
 		Map<String, Object> teacherCertificateCountDtoMap = new HashMap<>();
 		int country = 0;
@@ -4190,6 +4193,7 @@ public class JsResStatisticController extends GeneralController {
 			teacherSpeCountDto.setKeyNumber(speCount.get(speKey).get("keyNumber"));
 			teacherSpeCountDtoList.add(teacherSpeCountDto);
 		}
+		teacherSpeCountDtoList.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
 		model.addAttribute("teacherSpeCountDtoList", teacherSpeCountDtoList);
 
 		List<com.pinde.sci.model.jsres.TeacherSpeCountDto> teacherSpeCountDtoListForOrg = new ArrayList<>();
@@ -4202,6 +4206,7 @@ public class JsResStatisticController extends GeneralController {
 			}
 			teacherSpeCountDtoListForOrg.add(teacherSpeCountDto);
 		}
+		teacherSpeCountDtoListForOrg.sort((o1, o2) -> o1.getGeneralNumber() + o1.getKeyNumber() - o2.getGeneralNumber() - o2.getKeyNumber());
 		model.addAttribute("teacherSpeCountDtoListForOrg", teacherSpeCountDtoListForOrg);
 		return "jsres/global/teacherReport/globalTeacherReportAll";
 	}

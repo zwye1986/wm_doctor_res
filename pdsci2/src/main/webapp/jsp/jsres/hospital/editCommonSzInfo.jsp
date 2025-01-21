@@ -145,6 +145,7 @@
 		$('.' + templateId + ' tr').each(function (i, n) {
 			$(n).find("span[id='letterFileSpan']").attr("id", "letterFile" + i + "Span");
 			$(n).find("a[id='letterFile']").attr("id", "letterFile" + i).attr("href", "javascript:uploadFile('letterFile" + i + "','学历附件');");
+			$(n).find("font[id='letterFileF']").attr("id", "letterFile" + i + "F");
 			$(n).find("span[id='letterFileDel']").attr("id", "letterFile" + i + "Del");
 			$(n).find("img[id='img4']").attr("onclick", "delFile('letterFile" + i + "');");
 			$(n).find("input[id='letterFileValue']").attr("id", "letterFile" + i + "Value");
@@ -163,6 +164,7 @@
 		$('.' + templateId + ' tr').each(function (i, n) {
 			$(n).find("span[id='certificateFileSpan']").attr("id", "certificateFile" + i + "Span");
 			$(n).find("a[id='certificateFile']").attr("id", "certificateFile" + i).attr("href", "javascript:uploadFile('certificateFile" + i + "','学历附件');");
+			$(n).find("font[id='certificateFileF']").attr("id", "certificateFile" + i + "F");
 			$(n).find("span[id='certificateFileDel']").attr("id", "certificateFile" + i + "Del");
 			$(n).find("img[id='img3']").attr("onclick", "delFile('certificateFile" + i + "');");
 			$(n).find("input[id='certificateFileValue']").attr("id", "certificateFile" + i + "Value");
@@ -186,11 +188,13 @@
 		$('.' + templateId + ' tr').each(function (i, n) {
 			$(n).find("span[id='academicBackgroundFileSpan']").attr("id", "academicBackgroundFile" + i + "Span");
 			$(n).find("a[id='academicBackgroundFile']").attr("id", "academicBackgroundFile" + i).attr("href", "javascript:uploadFile('academicBackgroundFile" + i + "','学历附件');");
+			$(n).find("font[id='academicBackgroundFileF']").attr("id", "academicBackgroundFile" + i + "F");
 			$(n).find("span[id='academicBackgroundFileDel']").attr("id", "academicBackgroundFile" + i + "Del");
 			$(n).find("img[id='img1']").attr("onclick", "delFile('academicBackgroundFile" + i + "');");
 			$(n).find("input[id='academicBackgroundFileValue']").attr("id", "academicBackgroundFile" + i + "Value");
 			$(n).find("span[id='academicDegreeFileSpan']").attr("id", "academicDegreeFile" + i + "Span");
 			$(n).find("a[id='academicDegreeFile']").attr("id", "academicDegreeFile" + i).attr("href", "javascript:uploadFile('academicDegreeFile" + i + "','学历附件');");
+			$(n).find("font[id='academicDegreeFileF']").attr("id", "academicDegreeFile" + i + "F");
 			$(n).find("span[id='academicDegreeFileDel']").attr("id", "academicDegreeFile" + i + "Del");
 			$(n).find("img[id='img2']").attr("onclick", "delFile('academicDegreeFile" + i + "');");
 			$(n).find("input[id='academicDegreeFileValue']").attr("id", "academicDegreeFile" + i + "Value");
@@ -460,7 +464,7 @@
 				<th width="10%" style="text-align: center">学位</th>
 				<th width="12%" style="text-align: center">学位附件</th>
 				<th width="16%" style="text-align: center">
-					操作<font color="blue" style="cursor: pointer;" onclick="addEducation('educationTab')">【新增】</font>
+					操作<font color="#54B2E5" style="cursor: pointer;" onclick="addEducation('educationTab')">【新增】</font>
 				</th>
 			</tr>
 			<tbody class="educationTab">
@@ -489,9 +493,9 @@
 					</td>
 					<td style="text-align: center">
 						<span id="academicBackgroundFileSpan" style="display:${!empty educationInfo.academicBackgroundFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicBackgroundFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicBackgroundFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-						<a id="academicBackgroundFile" href="javascript:uploadFile('academicBackgroundFile','学历附件');" style="margin-left: 2px"><font color="#add8e6">${empty educationInfo.academicBackgroundFile?'':'重新'}上传</font></a>&nbsp;
+						<a id="academicBackgroundFile" href="javascript:uploadFile('academicBackgroundFile','学历附件');" style="margin-left: 2px"><font id="academicBackgroundFileF" color="#54B2E5">${empty educationInfo.academicBackgroundFile?'':'重新'}上传</font></a>&nbsp;
 						<span id="academicBackgroundFileDel" href="javascript:void(0)" style="${empty educationInfo.academicBackgroundFile?'display:none':''}">
 									<img id="img1" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('academicBackgroundFile');" />
@@ -508,9 +512,9 @@
 					</td>
 					<td style="text-align: center">
 						<span id="academicDegreeFileSpan" style="display:${!empty educationInfo.academicDegreeFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicDegreeFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicDegreeFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-						<a id="academicDegreeFile" href="javascript:uploadFile('academicDegreeFile','学位附件');" style="margin-left: 2px"><font color="#add8e6">${empty educationInfo.academicDegreeFile?'':'重新'}上传</font></a>&nbsp;
+						<a id="academicDegreeFile" href="javascript:uploadFile('academicDegreeFile','学位附件');" style="margin-left: 2px"><font id="academicDegreeFileF" color="#54B2E5">${empty educationInfo.academicDegreeFile?'':'重新'}上传</font></a>&nbsp;
 						<span id="academicDegreeFileDel" href="javascript:void(0)" style="${empty educationInfo.academicDegreeFile?'display:none':''}">
 									<img id="img2" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('academicDegreeFile');" />
@@ -599,7 +603,7 @@
 				<th width="10%" style="text-align: center">证书取得时间</th>
 				<th width="12%" style="text-align: center">证书附件</th>
 				<th width="16%" style="text-align: center">
-					操作<font color="blue" style="cursor: pointer;" onclick="addTraining('trainingTab')">【新增】</font>
+					操作<font color="#54B2E5" style="cursor: pointer;" onclick="addTraining('trainingTab')">【新增】</font>
 				</th>
 			</tr>
 			<tbody class="trainingTab">
@@ -640,9 +644,9 @@
 					</td>
 					<td style="text-align: center">
 						<span id="certificateFileSpan" style="display:${!empty trainingInfo.certificateFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${trainingInfo.certificateFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${trainingInfo.certificateFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-						<a id="certificateFile" href="javascript:uploadFile('certificateFile','证书附件');" style="margin-left: 2px"><font color="#add8e6">${empty trainingInfo.certificateFile?'':'重新'}上传</font></a>&nbsp;
+						<a id="certificateFile" href="javascript:uploadFile('certificateFile','证书附件');" style="margin-left: 2px"><font id="certificateFileF" color="#54B2E5">${empty trainingInfo.certificateFile?'':'重新'}上传</font></a>&nbsp;
 						<span id="certificateFileDel" href="javascript:void(0)" style="${empty trainingInfo.certificateFile?'display:none':''}">
 									<img id="img3" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('certificateFile');" />
@@ -669,7 +673,7 @@
 				<th width="16%" style="text-align: center">聘书取得时间</th>
 				<th width="16%" style="text-align: center">证书附件</th>
 				<th width="16%" style="text-align: center">
-					操作<font color="blue" style="cursor: pointer;" onclick="addLetter('letterTab')">【新增】</font>
+					操作<font color="#54B2E5" style="cursor: pointer;" onclick="addLetter('letterTab')">【新增】</font>
 				</th>
 			</tr>
 			<tbody class="letterTab">
@@ -696,9 +700,9 @@
 					</td>
 					<td style="text-align: center">
 						<span id="letterFileSpan" style="display:${!empty letterInfo.letterFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${letterInfo.letterFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${letterInfo.letterFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-						<a id="letterFile" href="javascript:uploadFile('letterFile','证书附件');" style="margin-left: 2px"><font color="#add8e6">${empty letterInfo.letterFile?'':'重新'}上传</font></a>&nbsp;
+						<a id="letterFile" href="javascript:uploadFile('letterFile','证书附件');" style="margin-left: 2px"><font id="letterFileF" color="#54B2E5">${empty letterInfo.letterFile?'':'重新'}上传</font></a>&nbsp;
 						<span id="letterFileDel" href="javascript:void(0)" style="${empty letterInfo.letterFile?'display:none':''}">
 									<img id="img4" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('letterFile');" />
@@ -749,9 +753,9 @@
 		</td>
 		<td style="text-align: center">
 						<span id="academicBackgroundFileSpan" style="display:${!empty educationInfo.academicBackgroundFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicBackgroundFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicBackgroundFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-			<a id="academicBackgroundFile" href="javascript:uploadFile('academicBackgroundFile','学历附件');" style="margin-left: 2px"><font color="#add8e6">${empty educationInfo.academicBackgroundFile?'':'重新'}上传</font></a>&nbsp;
+			<a id="academicBackgroundFile" href="javascript:uploadFile('academicBackgroundFile','学历附件');" style="margin-left: 2px"><font id="academicBackgroundFileF" color="#54B2E5">${empty educationInfo.academicBackgroundFile?'':'重新'}上传</font></a>&nbsp;
 			<span id="academicBackgroundFileDel" href="javascript:void(0)" style="${empty educationInfo.academicBackgroundFile?'display:none':''}">
 									<img id="img1" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('academicBackgroundFile');" />
@@ -768,9 +772,9 @@
 		</td>
 		<td style="text-align: center">
 						<span id="academicDegreeFileSpan" style="display:${!empty educationInfo.academicDegreeFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicDegreeFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${educationInfo.academicDegreeFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-			<a id="academicDegreeFile" href="javascript:uploadFile('academicDegreeFile','学位附件');" style="margin-left: 2px"><font color="#add8e6">${empty educationInfo.academicDegreeFile?'':'重新'}上传</font></a>&nbsp;
+			<a id="academicDegreeFile" href="javascript:uploadFile('academicDegreeFile','学位附件');" style="margin-left: 2px"><font id="academicDegreeFileF" color="#54B2E5">${empty educationInfo.academicDegreeFile?'':'重新'}上传</font></a>&nbsp;
 			<span id="academicDegreeFileDel" href="javascript:void(0)" style="${empty educationInfo.academicDegreeFile?'display:none':''}">
 									<img id="img2" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('academicDegreeFile');" />
@@ -803,10 +807,10 @@
 		<td style="text-align: center">
 			<select name="certificateLevelId" class="select validate[required]" style="width: 90%;">
 				<option value="" >请选择</option>
-				<option value="national" <c:if test="${param.certificateLevelId eq 'national'}">selected="selected"</c:if>>国家级</option>
-				<option value="provincial" <c:if test="${param.certificateLevelId eq 'provincial'}">selected="selected"</c:if>>省级</option>
-				<option value="city" <c:if test="${param.certificateLevelId eq 'city'}">selected="selected"</c:if>>市级</option>
-				<option value="hospital" <c:if test="${param.certificateLevelId eq 'hospital'}">selected="selected"</c:if>>院级</option>
+				<option value="1" <c:if test="${param.certificateLevelId eq '1'}">selected="selected"</c:if>>国家级</option>
+				<option value="2" <c:if test="${param.certificateLevelId eq '2'}">selected="selected"</c:if>>省级</option>
+				<option value="3" <c:if test="${param.certificateLevelId eq '3'}">selected="selected"</c:if>>市级</option>
+				<option value="4" <c:if test="${param.certificateLevelId eq '4'}">selected="selected"</c:if>>院级</option>
 			</select>
 		</td>
 		<td style="text-align: center">
@@ -817,9 +821,9 @@
 		</td>
 		<td style="text-align: center">
 						<span id="certificateFileSpan" style="display:${!empty trainingInfo.certificateFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${trainingInfo.certificateFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${trainingInfo.certificateFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-			<a id="certificateFile" href="javascript:uploadFile('certificateFile','证书附件');" style="margin-left: 2px"><font color="#add8e6">${empty trainingInfo.certificateFile?'':'重新'}上传</font></a>&nbsp;
+			<a id="certificateFile" href="javascript:uploadFile('certificateFile','证书附件');" style="margin-left: 2px"><font id="certificateFileF" color="#54B2E5">${empty trainingInfo.certificateFile?'':'重新'}上传</font></a>&nbsp;
 			<span id="certificateFileDel" href="javascript:void(0)" style="${empty trainingInfo.certificateFile?'display:none':''}">
 									<img id="img3" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('certificateFile');" />
@@ -852,9 +856,9 @@
 		</td>
 		<td style="text-align: center">
 						<span id="letterFileSpan" style="display:${!empty letterInfo.letterFile?'':'none'} ">
-							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${letterInfo.letterFile}" target="_blank"><font color="#add8e6">查看</font></a>&nbsp;
+							&nbsp; <a href="${sysCfgMap['upload_base_url']}/${letterInfo.letterFile}" target="_blank"><font color="#54B2E5">查看</font></a>&nbsp;
 							</span>
-			<a id="letterFile" href="javascript:uploadFile('letterFile','证书附件');" style="margin-left: 2px"><font color="#add8e6">${empty letterInfo.letterFile?'':'重新'}上传</font></a>&nbsp;
+			<a id="letterFile" href="javascript:uploadFile('letterFile','证书附件');" style="margin-left: 2px"><font id="letterFileF" color="#54B2E5">${empty letterInfo.letterFile?'':'重新'}上传</font></a>&nbsp;
 			<span id="letterFileDel" href="javascript:void(0)" style="${empty letterInfo.letterFile?'display:none':''}">
 									<img id="img4" class="opBtn" title="删除" src="<s:url value="/css/skin/${skinPath}/images/del1.png" />"
 										 style="cursor: pointer;" onclick="delFile('letterFile');" />

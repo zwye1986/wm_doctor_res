@@ -62,7 +62,7 @@ function returnUrl(){
 		top.document['jbox-message-iframe'].$("#${param.operType}").removeClass("validate[required]");
 	}else{
 		if ('${roleFlag}' == 'teacher') {
-			window.parent.$('#${param.operType}').text("重新上传");
+			window.parent.$('#${param.operType}F').text("重新上传");
 			window.parent.$('#${param.operType}Value').val("${filePath}");
 			var filePath = "${sysCfgMap['upload_base_url']}/${filePath}";
 			window.parent.$('#${param.operType}Del').show();
@@ -71,7 +71,7 @@ function returnUrl(){
 			window.parent.$("#${param.operType}Se").hide();
 			window.parent.$("#${param.operType}").removeClass("validate[required]");
 		} else {
-			top.document['jbox-message-iframe'].$('#${param.operType}').text("重新上传");
+			top.document['jbox-message-iframe'].$('#${param.operType}F').text("重新上传");
 			top.document['jbox-message-iframe'].$('#${param.operType}Value').val("${filePath}");
 			var filePath = "${sysCfgMap['upload_base_url']}/${filePath}";
 			top.document['jbox-message-iframe'].$('#${param.operType}Del').show();

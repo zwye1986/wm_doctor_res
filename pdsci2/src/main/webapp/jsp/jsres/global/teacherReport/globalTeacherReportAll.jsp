@@ -57,6 +57,11 @@
             justify-content: center;
             align-items: center;
         }
+        .empty-data {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -88,12 +93,23 @@
         <div class="chart-row">
             <div style="flex: 1">
                 <div class="chart-title">师资数量排行榜（按专业）</div>
-                <div id="barChart1" style="height: 550px"></div>
+                <c:if test="${not empty teacherSpeCountDtoList}">
+                    <div id="barChart1" style="height: 550px"></div>
+                </c:if>
+                <c:if test="${empty teacherSpeCountDtoList}">
+                    <div class="empty-data">暂无数据...</div>
+                </c:if>
             </div>
-
+        </div>
+        <div class="chart-row">
             <div style="flex: 1">
                 <div class="chart-title">师资数量排行榜（按基地）</div>
-                <div id="barChart2" style="height: 1000px"></div>
+                <c:if test="${not empty teacherSpeCountDtoListForOrg}">
+                    <div id="barChart2" style="height: 1500px"></div>
+                </c:if>
+                <c:if test="${empty teacherSpeCountDtoListForOrg}">
+                    <div class="empty-data">暂无数据...</div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -102,6 +118,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var i = 0;
+        var j = 0;
         debugger;
         // 需要渲染的series数据
         var seriesData = [
@@ -187,7 +205,10 @@
             yData.push("${teacherSpeCountDto.speName}");
             xData1.push("${teacherSpeCountDto.generalNumber}");
             xData2.push("${teacherSpeCountDto.keyNumber}");
+            i = i + 1;
         </c:forEach>
+
+        $("#barChart1").attr("style", "height: " + (i * 60 + 100) + "px");
 
         var chart3 = echarts.init(
             document.getElementById("barChart1"),
@@ -219,11 +240,15 @@
                     stack: "total",
                     label: {
                         show: true,
+                        formatter: p=>{
+                            return p.value != 0 ? p.value : '';
+                        }
                     },
                     emphasis: {
                         focus: "series",
                     },
                     data: xData1,
+                    barWidth: '30px',
                 },
                 {
                     name: "骨干师资",
@@ -231,11 +256,15 @@
                     stack: "total",
                     label: {
                         show: true,
+                        formatter: p=>{
+                            return p.value != 0 ? p.value : '';
+                        }
                     },
                     emphasis: {
                         focus: "series",
                     },
                     data: xData2,
+                    barWidth: '30px',
                 },
             ],
         });
@@ -254,7 +283,10 @@
         yData1.push("${teacherSpeCountDto.speName}");
         xData3.push("${teacherSpeCountDto.generalNumber}");
         xData4.push("${teacherSpeCountDto.keyNumber}");
+        j = j + 1;
         </c:forEach>
+
+        $("#barChart2").attr("style", "height: " + (j * 60 + 100) + "px");
 
         const barOption2 = (option = {
             tooltip: {
@@ -284,11 +316,15 @@
                     stack: "total",
                     label: {
                         show: true,
+                        formatter: p=>{
+                            return p.value != 0 ? p.value : '';
+                        }
                     },
                     emphasis: {
                         focus: "series",
                     },
                     data: xData3,
+                    barWidth: '30px',
                 },
                 {
                     name: "骨干师资",
@@ -296,11 +332,15 @@
                     stack: "total",
                     label: {
                         show: true,
+                        formatter: p=>{
+                            return p.value != 0 ? p.value : '';
+                        }
                     },
                     emphasis: {
                         focus: "series",
                     },
                     data: xData4,
+                    barWidth: '30px',
                 },
             ],
         });
