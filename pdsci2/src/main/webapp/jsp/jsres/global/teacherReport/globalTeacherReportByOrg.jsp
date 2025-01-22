@@ -185,14 +185,15 @@
         // 使用刚指定的配置项和数据显示图表
         chart2.setOption(chartOption2);
 
+        <c:if test="${not empty teacherSpeCountDtoList}">
         var yData = [];
         var xData1 = [];
         var xData2 = [];
         <c:forEach items="${teacherSpeCountDtoList}" var="teacherSpeCountDto">
-            yData.push("${teacherSpeCountDto.speName}");
-            xData1.push("${teacherSpeCountDto.generalNumber}");
-            xData2.push("${teacherSpeCountDto.keyNumber}");
-            i = i + 1;
+        yData.push("${teacherSpeCountDto.speName}");
+        xData1.push("${teacherSpeCountDto.generalNumber}");
+        xData2.push("${teacherSpeCountDto.keyNumber}");
+        i = i + 1;
         </c:forEach>
 
         $("#barChart1").attr("style", "height: " + (i * 60 + 100) + "px");
@@ -257,6 +258,7 @@
         });
 
         chart3.setOption(barOption1);
+        </c:if>
     });
     function search() {
         var countType = $("#countType").val();

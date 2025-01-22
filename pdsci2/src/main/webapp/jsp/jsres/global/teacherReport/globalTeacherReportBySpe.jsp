@@ -177,6 +177,7 @@
         // 使用刚指定的配置项和数据显示图表
         chart2.setOption(chartOption2);
 
+        <c:if test="${not empty teacherSpeCountDtoList}">
         var yData = [];
         var xData1 = [];
         var xData2 = [];
@@ -251,6 +252,7 @@
             "customed"
         );
         chart4.setOption(barOption1);
+        </c:if>
     });
 </script>
 </body>

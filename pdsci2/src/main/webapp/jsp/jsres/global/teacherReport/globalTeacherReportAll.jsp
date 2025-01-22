@@ -198,6 +198,7 @@
         // 使用刚指定的配置项和数据显示图表
         chart2.setOption(chartOption2);
 
+        <c:if test="${not empty teacherSpeCountDtoList}">
         var yData = [];
         var xData1 = [];
         var xData2 = [];
@@ -270,7 +271,9 @@
         });
 
         chart3.setOption(barOption1);
+        </c:if>
 
+        <c:if test="${not empty teacherSpeCountDtoListForOrg}">
         var chart4 = echarts.init(
             document.getElementById("barChart2"),
             "customed"
@@ -346,6 +349,7 @@
         });
 
         chart4.setOption(barOption2);
+        </c:if>
     });
 
     function search() {

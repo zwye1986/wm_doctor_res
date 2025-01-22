@@ -283,10 +283,10 @@
                     <div class="form_content">
                         <select name="certificateLevelId" class="select" style="width: 160px;">
                             <option value="" >请选择</option>
-                            <option value="national" <c:if test="${param.certificateLevelId eq 'national'}">selected="selected"</c:if>>国家级</option>
-                            <option value="provincial" <c:if test="${param.certificateLevelId eq 'provincial'}">selected="selected"</c:if>>省级</option>
-                            <option value="city" <c:if test="${param.certificateLevelId eq 'city'}">selected="selected"</c:if>>市级</option>
-                            <option value="hospital" <c:if test="${param.certificateLevelId eq 'hospital'}">selected="selected"</c:if>>院级</option>
+                            <option value="1" <c:if test="${param.certificateLevelId eq '1'}">selected="selected"</c:if>>国家级</option>
+                            <option value="2" <c:if test="${param.certificateLevelId eq '2'}">selected="selected"</c:if>>省级</option>
+                            <option value="3" <c:if test="${param.certificateLevelId eq '3'}">selected="selected"</c:if>>市级</option>
+                            <option value="4" <c:if test="${param.certificateLevelId eq '4'}">selected="selected"</c:if>>院级</option>
                         </select>
                     </div>
                 </div>

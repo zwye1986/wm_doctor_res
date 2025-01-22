@@ -382,7 +382,7 @@
 		jboxConfirm("确认删除？" , function(){
 			$("#"+type+"Del").hide();
 			$("#"+type+"Span").hide();
-			$("#"+type).text("上传");
+			$("#"+type+"F").text("上传");
 			$("#"+type+"Value").val("");
 			$("#"+type+"Se").show();
 		});
