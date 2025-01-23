@@ -2279,6 +2279,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			int lcblsxzd = 0; int ssczzd = 0; int yxzdbgsxzd = 0; int lcwxyd = 0;
 			int ryjy = 0; int rzyjdjy = 0; int cjbg = 0;
 			int bgdfx=0;	int jxsj=0;	int sjys=0;
+			int ckkh = 0;
 			List<String> recTypes=new ArrayList<String>();
 			recTypes.add(recTypeIdt);
 			List<ResRec> recs= jswjwTeacherBiz.searchRecByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
@@ -2302,7 +2303,7 @@ public class JswjwWxTeacherController extends GeneralController {
 					}else if(Rkjy.equals(text)){
 						rkjy++;
 					}else if(Ckks.equals(text)){
-//						ckkh++;
+						ckkh++;
 					}else if(Jnpx.equals(text)){
 						jnpx++;
 					}else if(Yph.equals(text)){
@@ -2363,7 +2364,7 @@ public class JswjwWxTeacherController extends GeneralController {
 					}else if(Rkjy.equals(text)){
 						rkjy++;
 					}else if(Ckks.equals(text)){
-//						ckkh++;
+						ckkh++;
 					}else if(Jnpx.equals(text)){
 						jnpx++;
 					}else if(Yph.equals(text)){
@@ -2443,7 +2444,7 @@ public class JswjwWxTeacherController extends GeneralController {
 			dataMap.put("xjk",String.valueOf(xjk));
 //			dataMap.put("swbltl",String.valueOf(swbltl));
 			dataMap.put("rkjy",String.valueOf(rkjy));
-//			dataMap.put("ckkh",String.valueOf(ckkh));
+			dataMap.put("ckkh",String.valueOf(ckkh));
 			dataMap.put("jnpx",String.valueOf(jnpx));
 			dataMap.put("yph",String.valueOf(yph));
 			dataMap.put("jxhz",String.valueOf(jxhz));
@@ -2848,15 +2849,15 @@ public class JswjwWxTeacherController extends GeneralController {
 				cjhdMap.put("value",formDataMap.get("rkjy"));
 			}
 			activityList.add(cjhdMap);
-//			cjhdMap = new HashMap<>();
-//			cjhdMap.put("inputId", "ckkh");
-//			cjhdMap.put("label", "学员出科考核");
-//			if(null == formDataMap || null == formDataMap.get("ckkh") || formDataMap.get("ckkh").equals("0")){
-//				cjhdMap.put("value",null == dataMap ? "0" : null == dataMap.get("ckkh") ? "0" : dataMap.get("ckkh"));
-//			}else{
-//				cjhdMap.put("value",formDataMap.get("ckkh"));
-//			}
-//			activityList.add(cjhdMap);
+			cjhdMap = new HashMap<>();
+			cjhdMap.put("inputId", "ckkh");
+			cjhdMap.put("label", "出科考核");
+			if(null == formDataMap || null == formDataMap.get("ckkh") || formDataMap.get("ckkh").equals("0")){
+				cjhdMap.put("value",null == dataMap ? "0" : null == dataMap.get("ckkh") ? "0" : dataMap.get("ckkh"));
+			}else{
+				cjhdMap.put("value",formDataMap.get("ckkh"));
+			}
+			activityList.add(cjhdMap);
 			cjhdMap = new HashMap<>();
 			cjhdMap.put("inputId", "jnpx");
 			cjhdMap.put("label", "技能培训");
