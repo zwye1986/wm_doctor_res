@@ -15,6 +15,7 @@
 	$(document).ready(function(){
 		if ("${GlobalConstant.FLAG_Y}"=="${pageFlag}") {
 			window.parent.jboxTip("申请成功！");
+			window.parent.editCommonSzInfo('${sessionScope.currUser.userFlow}');
 			jboxClose();
 		}
 	});

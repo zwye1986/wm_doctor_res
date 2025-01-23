@@ -223,7 +223,7 @@
 		}
     });
 
-	function saveCommonSzInfo() {
+	function saveCommonSzInfo(obj) {
 		if ('${roleFlag}' != 'teacher') {
 			if(false==$("#excelForm").validationEngine("validate")){
 				return false ;
@@ -234,6 +234,8 @@
 
 		// 处理多条教育信息
 		var educationTrs = $('.educationTab').children();
+		var educationTrs1 = $(".educationTab").children().length;
+		var b = 0;
 		var educationList = [];
 		$.each(educationTrs, function (i, n) {
 			var educationFlow = $(n).find("input[name='educationFlow']").val();
@@ -246,6 +248,10 @@
 			var academicDegreeId = $(n).find("select[name='academicDegreeId']").find("option:selected").val();
 			var academicDegreeName = $(n).find("select[name='academicDegreeId']").find("option:selected").text();
 			var academicDegreeFile = $(n).find("input[name='educationInfo.academicDegreeFile']").val();
+
+			if (educationTrs1 > 1 && (graduationSchool == '' || graduationTime == '' || graduationSpe == '' || academicBackgroundId == '' || academicDegreeId == '')) {
+				b = 1;
+			}
 
 			var data = {
 				"educationFlow" : educationFlow,
@@ -261,10 +267,16 @@
 			};
 			educationList.push(data);
 		});
+		if (b == 1) {
+			jboxTip("多条教育信息请确保每条信息的完善！");
+			return false;
+		}
 		$("#educationData").val(JSON.stringify(educationList));
 
 		// 处理多条培训信息
 		var trainingTrs = $('.trainingTab').children();
+		var trainingTrs1 = $(".trainingTab").children().length;
+		var c = 0;
 		var trainingList = [];
 		$.each(trainingTrs, function (i, n) {
 			var trainingFlow = $(n).find("input[name='trainingFlow']").val();
@@ -277,6 +289,10 @@
 			var certificateNo = $(n).find("input[name='certificateNo']").val();
 			var certificateTime = $(n).find("input[name='certificateTime']").val();
 			var certificateFile = $(n).find("input[name='trainingInfo.certificateFile']").val();
+
+			if (trainingTrs1 > 1 && (trainingYear == '' || trainingUnit == '' || trainingSpeId == '' || certificateLevelId == '' || certificateNo == '' || certificateTime == '')) {
+				c = 1;
+			}
 
 			var data = {
 				"trainingFlow" : trainingFlow,
@@ -292,11 +308,16 @@
 			};
 			trainingList.push(data);
 		});
+		if (c == 1) {
+			jboxTip("多条培训信息请确保每条信息的完善！");
+			return false;
+		}
 		$("#trainingData").val(JSON.stringify(trainingList));
 
 		// 处理多条聘书信息
 		var letterTrs = $('.letterTab').children();
-		debugger;
+		var letterTrs1 = $(".letterTab").children().length;
+		var d = 0;
 		var letterList = [];
 		$.each(letterTrs, function (i, n) {
 			var letterFlow = $(n).find("input[name='letterFlow']").val();
@@ -305,6 +326,10 @@
 			var letterEndTime =  $(n).find("input[name='letterEndTime']").val();
 			var letterTime =  $(n).find("input[name='letterTime']").val();
 			var letterFile = $(n).find("input[name='letterInfo.letterFile']").val();
+
+			if (letterTrs1 > 1 && (letterPeriod == '' || letterStartTime == '' || letterTime =='')) {
+				d = 1;
+			}
 
 			var data = {
 				"letterFlow" : letterFlow,
@@ -316,6 +341,10 @@
 			};
 			letterList.push(data);
 		});
+		if (d == 1) {
+			jboxTip("多条聘书信息请确保每条信息的完善！");
+			return false;
+		}
 		$("#letterData").val(JSON.stringify(letterList));
 
 		$("#professionalTitleName").val($("select[name='professionalTitleId']").find("option:selected").text());
@@ -331,7 +360,7 @@
 						doClose();
 					}, 1000);
 				}
-				if ('${roleFlag}' == 'teacher') {
+				if ('${roleFlag}' == 'teacher' && obj != 'a') {
 					window.parent.editCommonSzInfo('${sessionScope.currUser.userFlow}');
 				}
 			} else {
@@ -400,7 +429,7 @@
 		if(false==$("#excelForm").validationEngine("validate")){
 			return false ;
 		}
-		saveCommonSzInfo();
+		saveCommonSzInfo('a');
 		var url = "<s:url value='/jsres/statistic/teacherApplication'/>?recordFlow=" + recordFlow;
 		jboxOpen(url, "师资申请", 800, 350);
 	}
