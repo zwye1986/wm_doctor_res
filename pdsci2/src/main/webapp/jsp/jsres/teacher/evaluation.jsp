@@ -806,6 +806,13 @@ function save(){
 								<input type="hidden" class="inputText  validate[required]"  name="ryjy" value="${dataMap['ryjy']}"/>
 								次
 							</label>
+							&#12288;&#12288;
+							<label style="margin-left: 70px;">
+								出科考核：
+								<lable>${dataMap['ckkh']}</lable>
+								<input type="hidden" class="inputText  validate[required]"  name="ckkh" value="${dataMap['ckkh']}"/>
+								次
+							</label>
 						</td>
 					</tr>
 					<tr>
