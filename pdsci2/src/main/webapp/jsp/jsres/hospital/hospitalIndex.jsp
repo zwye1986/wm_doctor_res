@@ -1604,7 +1604,12 @@
                                 <ul>
                                     <li class="score_frame">
                                         <h1 style="background:#e7f5fc;">人员信息概况</h1>
-                                        <c:set var="currYear" value="${pdfn:getCurrYear()}"></c:set>
+                                        <c:if test="${pdfn:getCurrDate() ge (pdfn:getCurrYear().concat('-09-01'))}">
+                                            <c:set var="currYear" value="${pdfn:getCurrYear()}"></c:set>
+                                        </c:if>
+                                        <c:if test="${pdfn:getCurrDate() lt (pdfn:getCurrYear().concat('-09-01'))}">
+                                            <c:set var="currYear" value="${pdfn:getCurrYear() - 1}"></c:set>
+                                        </c:if>
                                         <div class="grid">
                                             <c:forEach step="1" begin="${currYear-2}" end="${currYear}" varStatus="num"
                                                        var="doctor">

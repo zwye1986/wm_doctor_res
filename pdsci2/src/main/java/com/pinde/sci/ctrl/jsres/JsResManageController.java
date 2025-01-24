@@ -1082,7 +1082,16 @@ public class JsResManageController extends GeneralController {
 		Map<String, String> doctorCountMap = new HashMap<>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		for (int i = 0; i < 3; i++) {
+
 			String sessionNummber = DateUtil.getYear();
+			if ("hosipital".equals(roleId)) {
+				if (DateUtil.getCurrDate().compareTo(DateUtil.getYear() + "-09-01") >= 0) {
+					sessionNummber = DateUtil.getYear();
+				} else {
+					sessionNummber = String.valueOf(Integer.parseInt(DateUtil.getYear()) - 1);
+				}
+			}
+
 			sessionNummber = Integer.parseInt(sessionNummber) - i + "";
 			paramMap.put("sessionNumber", sessionNummber);
 			if ("hosipital".equals(roleId)) {

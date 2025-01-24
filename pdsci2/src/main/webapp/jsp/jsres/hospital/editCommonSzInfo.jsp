@@ -59,7 +59,19 @@
 	}
 </style>
 <script type="text/javascript">
-	function removeLetter(obj) {
+	function changeValidateStatus(param, i) {
+		var letterPeriod = $(param).find("option:selected").val();
+		if (letterPeriod == "有限时长") {
+			$("#letterEndTime" + i).addClass("validate[required]");
+			$("#letterEndTime" + i).removeAttr("disabled");
+		} else {
+			$("#letterEndTime" + i).removeClass("validate[required]");
+			$("#letterEndTime" + i).attr("disabled", "disabled");
+			$("#letterEndTime" + i).val("");
+		}
+	}
+
+function removeLetter(obj) {
 		jboxConfirm("确认删除？" , function(){
 			var tr=obj.parentNode.parentNode;
 			tr.remove();
@@ -150,6 +162,8 @@
 			$(n).find("img[id='img4']").attr("onclick", "delFile('letterFile" + i + "');");
 			$(n).find("input[id='letterFileValue']").attr("id", "letterFile" + i + "Value");
 			$(n).find("td[name='index']").text(i + 1);
+			$(n).find("input[id='letterEndTime']").attr("id", "letterEndTime" + i);
+			$(n).find("select[name='letterPeriod']").attr("onchange", "changeValidateStatus(this, '" + i + "')");
 		});
 	}
 
@@ -713,7 +727,7 @@
 							${status.index + 1}
 					</td>
 					<td style="text-align: center">
-						<select name="letterPeriod" class="select validate[required]" style="width: 90%;">
+						<select name="letterPeriod" class="select validate[required]" style="width: 90%;"  onchange="changeValidateStatus(this, '${status.index}')">
 							<option value="有限时长" <c:if test="${letterInfo.letterPeriod eq '有限时长'}">selected="selected"</c:if>>有限时长</option>
 							<option value="长期" <c:if test="${letterInfo.letterPeriod eq '长期'}">selected="selected"</c:if>>长期</option>
 						</select>
@@ -722,7 +736,7 @@
 						<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterStartTime}" placeholder="请选择" name="letterStartTime" />
 					</td>
 					<td style="text-align: center">
-						<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterEndTime}" placeholder="请选择" name="letterEndTime" />
+						<input id="letterEndTime" <c:if test="${letterInfo.letterPeriod eq '长期'}">disabled="disabled"</c:if> type="text" readonly class="select <c:if test="${letterInfo.letterPeriod eq '有限时长'}">validate[required]</c:if>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterEndTime}" placeholder="请选择" name="letterEndTime" />
 					</td>
 					<td style="text-align: center">
 						<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="${letterInfo.letterTime}" placeholder="请选择" name="letterTime" />
@@ -878,7 +892,7 @@
 			<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterStartTime" />
 		</td>
 		<td style="text-align: center">
-			<input type="text" readonly class="select" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterEndTime" />
+			<input id="letterEndTime" type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterEndTime" />
 		</td>
 		<td style="text-align: center">
 			<input type="text" readonly class="select validate[required]" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" style="text-align: left;width: 90%;" value="" placeholder="请选择" name="letterTime" />
