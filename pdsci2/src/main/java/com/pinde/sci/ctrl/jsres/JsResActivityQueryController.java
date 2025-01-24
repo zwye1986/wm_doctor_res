@@ -296,6 +296,7 @@ public class JsResActivityQueryController extends GeneralController {
 		}
 		HSSFPatriarch patriarch = sheet.createDrawingPatriarch();
         BufferedImage bufferedImage = null;
+		ByteArrayOutputStream byteArrayOutputStream = null;
 		int rowNum = 1;
 		String[] dataList = null;
 		if(list != null && list.size() > 0){
@@ -343,34 +344,43 @@ public class JsResActivityQueryController extends GeneralController {
 					cellFirst.setCellStyle(styleLeft);
 					if(j != titles.length - 1){
 						cellFirst.setCellValue(dataList[j]);
-					}else{
-						// 图片赋值
-						if(imageList != null && imageList.size() > 0){
-                            rowOne.setHeight((short) 1000);
-                            // 计算边距
-                            int mar = 10 + 10 + (imageList.size() - 1) * 10;
-                            // 大致平均值,每个图片宽度
-                            int ave = (1023 - mar) / imageList.size();
-                            for (int i = 0; i < imageList.size(); i++) {
-                                String imagePath = imageList.get(i).get("imageUrl");
-                                if(StringUtil.isBlank(imagePath)){
-                                    continue;
-                                }
-                                // 替换网络路径为物理路径
-                                imagePath = imagePath.replace(InitConfig.getSysCfg("upload_base_url"), InitConfig.getSysCfg("upload_base_dir"));
-                                File file = new File(imagePath);
-                                bufferedImage = ImageIO.read(file);
-                                if(bufferedImage == null){
-                                    continue;
-                                }
-                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                                ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-                                HSSFClientAnchor hSSFClientAnchor = new HSSFClientAnchor(10 * (i + 1) + ave * i, 10,
-                                        (10 + ave) * (i + 1), 245, (short) j, rowNum, (short) j, rowNum);
-                                patriarch.createPicture(hSSFClientAnchor,
-                                        wb.addPicture(byteArrayOutputStream.toByteArray(), wb.PICTURE_TYPE_JPEG));
+					}else {
+						try {
+							// 图片赋值
+							if (imageList != null && imageList.size() > 0) {
+								rowOne.setHeight((short) 1000);
+								// 计算边距
+								int mar = 10 + 10 + (imageList.size() - 1) * 10;
+								// 大致平均值,每个图片宽度
+								int ave = (1023 - mar) / imageList.size();
+								for (int i = 0; i < imageList.size(); i++) {
+									String imagePath = imageList.get(i).get("imageUrl");
+									if (StringUtil.isBlank(imagePath)) {
+										continue;
+									}
+									// 替换网络路径为物理路径
+									imagePath = imagePath.replace(InitConfig.getSysCfg("upload_base_url"), InitConfig.getSysCfg("upload_base_dir"));
+									File file = new File(imagePath);
+									bufferedImage = ImageIO.read(file);
+									if (bufferedImage == null) {
+										continue;
+									}
+									byteArrayOutputStream = new ByteArrayOutputStream();
+									ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+									HSSFClientAnchor hSSFClientAnchor = new HSSFClientAnchor(10 * (i + 1) + ave * i, 10,
+											(10 + ave) * (i + 1), 245, (short) j, rowNum, (short) j, rowNum);
+									patriarch.createPicture(hSSFClientAnchor,
+											wb.addPicture(byteArrayOutputStream.toByteArray(), wb.PICTURE_TYPE_JPEG));
+									byteArrayOutputStream.close();
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						} finally {
+							if(byteArrayOutputStream != null){
 								byteArrayOutputStream.close();
-                            }
+							}
 						}
 					}
 				}
