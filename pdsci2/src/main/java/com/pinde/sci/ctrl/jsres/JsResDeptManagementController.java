@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.PkUtil;
@@ -567,6 +568,8 @@ public class JsResDeptManagementController {
             // 校验编码和名称不能与其它的科室重复
             SysDept sysDept = new SysDept();
             sysDept.setDeptName(deptRelStdDeptVO.getDeptName());
+            sysDept.setOrgFlow(deptRelStdDeptVO.getOrgFlow());
+            sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
             PageHelper.startPage(1, 1, false);
             List<SysDept> sysDeptList = deptBiz.searchDept(sysDept);
             if(CollectionUtils.isNotEmpty(sysDeptList)) {
@@ -574,6 +577,8 @@ public class JsResDeptManagementController {
             }
             sysDept = new SysDept();
             sysDept.setDeptCode(deptRelStdDeptVO.getDeptCode());
+            sysDept.setOrgFlow(deptRelStdDeptVO.getOrgFlow());
+            sysDept.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
             PageHelper.startPage(1, 1, false);
             sysDeptList = deptBiz.searchDept(sysDept);
             if(CollectionUtils.isNotEmpty(sysDeptList)) {
@@ -600,7 +605,7 @@ public class JsResDeptManagementController {
             SysDeptExample example = new SysDeptExample();
             example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.FLAG_Y)
                             .andDeptNameEqualTo(deptRelStdDeptVO.getDeptName())
-                    .andOrgFlowEqualTo(GlobalContext.getCurrentUser().getOrgFlow());
+                    .andOrgFlowEqualTo(deptRelStdDeptVO.getOrgFlow());
             PageHelper.startPage(1, 2, false);
             List<SysDept> sysDeptList = deptBiz.selectByExample(example);
             for (SysDept dept : sysDeptList) {

@@ -22,7 +22,7 @@
 		<if test='deptName!=null and deptName!=""'>
 			and (sd.dept_name like CONCAT(CONCAT('%', #{deptName}),'%') or sder.rel_org_name like CONCAT(CONCAT('%', #{deptName}),'%'))
 		</if>
-		order by sd.dept_code
+		order by sd.dept_code, sd.org_flow
 	</select>
 	<select id="getHeadDeptList" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
 		select distinct sd.* from sys_dept sd
