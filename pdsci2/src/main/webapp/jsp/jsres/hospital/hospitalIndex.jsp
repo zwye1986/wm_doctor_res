@@ -503,7 +503,7 @@
         }
 
         function cycleResults(data) {
-            var url = "<s:url value='/jsres/doctorRecruit/doctorRecruitResult'/>";
+            var url = "<s:url value='/jsres/doctorRecruit/doctorRecruitResult'/>?trainingTypeId=DoctorTrainingSpe";
             jboxStartLoading();
             jboxPost(url, data, function (resp) {
                 $("#content").html(resp);
