@@ -3,7 +3,7 @@
 <html>
 <head>
     <jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
-        <jsp:param name="basic" value="true"/>
+        <jsp:param name="basic_bootstrap" value="true"/>
         <jsp:param name="jbox" value="true"/>
         <jsp:param name="font" value="true"/>
         <jsp:param name="login" value="true"/>
