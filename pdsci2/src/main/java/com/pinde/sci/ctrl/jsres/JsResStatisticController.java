@@ -4001,6 +4001,7 @@ public class JsResStatisticController extends GeneralController {
 			resTeacherTrainingInfoExample.setOrderByClause("certificate_level_id, certificate_time desc");
 			List<ResTeacherTrainingInfo> trainingInfoList = resTeacherTrainingInfoMapper.selectByExample(resTeacherTrainingInfoExample);
 			for (ResTeacherTrainingInfo resTeacherTrainingInfo : trainingInfoList) {
+				if (resTeacherTrainingInfo.getTrainingSpeId().equals(speId)) {
 					switch (resTeacherTrainingInfo.getCertificateLevelId()) {
 						case "1":
 							country++;
@@ -4018,6 +4019,7 @@ public class JsResStatisticController extends GeneralController {
 							break;
 					}
 				}
+			}
 
 			for (String orgName : orgNames) {
 				if (!orgCount.containsKey(orgName)) {
