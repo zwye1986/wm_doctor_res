@@ -1872,6 +1872,9 @@ public class JswjwWxKzrController extends GeneralController {
 				if(roleId.equals("TeachingSeretary") && StringUtil.isNotBlank(rec.getManagerAuditUserFlow())){
 					showSave = true;
 				}
+				if(roleId.equals("TeachingHead") && StringUtil.isNotBlank(rec.getManagerAuditUserFlow())){
+					showSave = true;
+				}
 			}
 
 			boolean readonly = false;
@@ -1900,15 +1903,15 @@ public class JswjwWxKzrController extends GeneralController {
 			resultMap.put("headAuditStatusId","HeadAuditY");
 			resultMap.put("teacherName", null == formDataMap ? "" : null == formDataMap.get("teacherName") ? "" : formDataMap.get("teacherName"));
 			resultMap.put("teacherDate", null == formDataMap ? "" : null == formDataMap.get("teacherDate") ? "" : formDataMap.get("teacherDate"));
-			if(roleId.equals("Head")){
+			if(roleId.equals("Head") || roleId.equals("TeachingHead")){
 				resultMap.put("directorName",currUser.getUserName());
 				resultMap.put("directorDate", null == formDataMap ? DateUtil.getCurrDate() :  StringUtil.isBlank((String)formDataMap.get("directorDate")) ? DateUtil.getCurrDate() : formDataMap.get("directorDate"));
 			}
-			if(roleId.equals("Seretary")){
+			if(roleId.equals("Seretary") || roleId.equals("TeachingSeretary")){
 				resultMap.put("directorName",currUser.getUserName()+"/"+resDoctorSchProcess.getHeadUserName());
 				resultMap.put("directorDate", null == formDataMap ? DateUtil.getCurrDate() : StringUtil.isBlank((String)formDataMap.get("directorDate")) ? DateUtil.getCurrDate() : formDataMap.get("directorDate"));
 			}
-			if(!roleId.equals("Head") && !roleId.equals("Seretary")){
+			if(!roleId.equals("Head") && !roleId.equals("Seretary") && !roleId.equals("TeachingHead") && !roleId.equals("TeachingSeretary")){
 				resultMap.put("directorName",null == formDataMap ? "" : StringUtil.isBlank((String)formDataMap.get("directorName")) ? "" : formDataMap.get("directorName"));
 				resultMap.put("directorDate", null == formDataMap ? "" : StringUtil.isBlank((String)formDataMap.get("directorDate")) ? "" : formDataMap.get("directorDate"));
 			}
