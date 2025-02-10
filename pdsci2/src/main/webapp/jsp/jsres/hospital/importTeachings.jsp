@@ -86,12 +86,12 @@ function checkFile(file){
 	  	</tr>
 		<tr>
 			<th>模板文件</th>
-			<td style="padding-left:10px;"><a href="<s:url value='/jsp/sys/impactorFactor/template/teacherTemplate.xlsx'/>">师资导入模板.xlsx</a></td>
+			<td style="padding-left:10px;"><a href="<s:url value='/jsp/sys/impactorFactor/template/teacherTemplate.xlsx'/>">用户导入模板.xlsx</a></td>
 		</tr>
 	</table>
 	<br/>
 	<p style="text-align: center;">
-		<input type="button" onclick="importUsers();" value="师资导入" class="btn_green"/>
+		<input type="button" onclick="importUsers();" value="用户导入" class="btn_green"/>
 	</p>
 </form>
 </body>
