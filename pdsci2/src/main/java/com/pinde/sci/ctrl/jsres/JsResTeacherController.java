@@ -1,5 +1,6 @@
 package com.pinde.sci.ctrl.jsres;
 
+import com.google.common.collect.Lists;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;
@@ -1947,56 +1948,38 @@ public class JsResTeacherController extends GeneralController{
 	@RequestMapping(value="/batchAudit",method=RequestMethod.POST)
 	@ResponseBody
 	public String batchAudit(String auditResult,String docFlow,String processFlow,String recType){
-		List<ResRec> recList=iResRecBiz.searchRecByProcess(processFlow,docFlow);
-		if(null != recList && recList.size() > 0){
-			int i = 0;
-			for (ResRec rec : recList) {
-				if(rec.getRecTypeId().equals(recType)){
-//					ResRec re=iResRecBiz.readResRecByType(rec.getRecFlow(),recType);
-					ResRec re=iResRecBiz.readResRec(rec.getRecFlow());
-					String time=DateUtil.getCurrDateTime();
-					SysUser sysUser=GlobalContext.getCurrentUser();
-					re.setAuditTime(time);
-					re.setAuditUserFlow(sysUser.getUserFlow());
-					re.setAuditUserName(sysUser.getUserName());
-					re.setAuditStatusId(auditResult);
-					re.setAuditStatusName(RecStatusEnum.getNameById(auditResult));
-//					i+=iResRecBiz.editByType(re, recType);
-					i+=iResRecBiz.edit(re);
-				}
-			}
-            if (i >= com.pinde.core.common.GlobalConstant.ONE_LINE) {
-                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
-			}
-		}
-        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
+
+		return iResRecBiz.batchAudit( auditResult, docFlow, processFlow, recType);
+
+
+
+//		if(null != recList && recList.size() > 0){
+//			int i = 0;
+//			for (ResRec rec : recList) {
+//				if(rec.getRecTypeId().equals(recType)){
+////					ResRec re=iResRecBiz.readResRecByType(rec.getRecFlow(),recType);
+//					ResRec re=iResRecBiz.readResRec(rec.getRecFlow());
+//					String time=DateUtil.getCurrDateTime();
+//					SysUser sysUser=GlobalContext.getCurrentUser();
+//					re.setAuditTime(time);
+//					re.setAuditUserFlow(sysUser.getUserFlow());
+//					re.setAuditUserName(sysUser.getUserName());
+//					re.setAuditStatusId(auditResult);
+//					re.setAuditStatusName(RecStatusEnum.getNameById(auditResult));
+////					i+=iResRecBiz.editByType(re, recType);
+//					i+=iResRecBiz.edit(re);
+//				}
+//			}
+//            if (i >= com.pinde.core.common.GlobalConstant.ONE_LINE) {
+//                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
+//			}
+//		}
+//        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
 	}
 	@RequestMapping(value="/batchAuditBack",method=RequestMethod.POST)
 	@ResponseBody
 	public String batchAuditBack(String auditResult,String docFlow,String processFlow,String recType){
-		List<ResRec> recList=iResRecBiz.searchRecByProcess(processFlow,docFlow);
-		if(null != recList && recList.size() > 0){
-			int i = 0;
-			for (ResRec rec : recList) {
-				if(rec.getRecTypeId().equals(recType)){
-//					ResRec re=iResRecBiz.readResRecByType(rec.getRecFlow(),recType);
-					ResRec re=iResRecBiz.readResRec(rec.getRecFlow());
-					String time=DateUtil.getCurrDateTime();
-					SysUser sysUser=GlobalContext.getCurrentUser();
-					re.setAuditTime(time);
-					re.setAuditUserFlow(sysUser.getUserFlow());
-					re.setAuditUserName(sysUser.getUserName());
-					re.setAuditStatusId(auditResult);
-					re.setAuditStatusName("");
-//					i+=iResRecBiz.editByType(re, recType);
-					i+=iResRecBiz.edit(re);
-				}
-			}
-            if (i >= com.pinde.core.common.GlobalConstant.ONE_LINE) {
-                return com.pinde.core.common.GlobalConstant.OPRE_SUCCESSED_FLAG;
-			}
-		}
-        return com.pinde.core.common.GlobalConstant.OPRE_FAIL_FLAG;
+		return iResRecBiz.batchAudit( auditResult, docFlow, processFlow, recType);
 	}
 
 	/**
