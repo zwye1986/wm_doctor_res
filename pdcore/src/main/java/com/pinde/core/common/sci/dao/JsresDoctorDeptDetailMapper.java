@@ -15,7 +15,7 @@ public interface JsresDoctorDeptDetailMapper {
 
     int insert(JsresDoctorDeptDetail record);
 
-    int insertSelective(JsresDoctorDeptDetail record);
+//    int insertSelective(JsresDoctorDeptDetail record);
 
     List<JsresDoctorDeptDetail> selectByExample(JsresDoctorDeptDetailExample example);
 

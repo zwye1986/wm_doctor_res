@@ -488,7 +488,8 @@
                           FROM RES_REC rr
                          INNER JOIN SCH_ROTATION_DEPT srd
                             ON rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW
-                         WHERE rr.RECORD_STATUS = 'Y'
+                         WHERE   rr.OPER_USER_FLOW = #{doctorFlow}
+                            AND rr.RECORD_STATUS = 'Y'
                            AND srd.RECORD_STATUS = 'Y'
                            AND rr.REC_TYPE_ID IN
                                ('CaseRegistry',
@@ -509,7 +510,8 @@
                    LEFT JOIN SCH_ROTATION_DEPT D
                      ON R.STANDARD_DEPT_ID = D.STANDARD_DEPT_ID
                     AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
-                  WHERE R.RECORD_STATUS = 'Y'
+                  WHERE  R.DOCTOR_FLOW = #{doctorFlow}
+                    AND R.RECORD_STATUS = 'Y'
                     AND D.RECORD_STATUS = 'Y'
                     AND R.SCH_END_DATE <![CDATA[<]]> #{applyYear}||'-05-31'
                   GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
@@ -541,7 +543,7 @@
                       COMP.IN_COMPLETE_NUM,
                       COMP.AUDIT_NUM,
                       IC.QTY) A
-    </insert>
+    </insert><!--
     <insert id="insertDeptDetail">
        insert into JSRES_DOCTOR_DEPT_DETAIL
     (RECORD_FLOW,
@@ -801,7 +803,7 @@
                       COMP.IN_COMPLETE_NUM,
                       COMP.AUDIT_NUM,
                       IC.QTY) A
-    </insert>
+    </insert>-->
     <delete id="deleteUriAuditInfo">
         delete from JSRES_org_teacher_audit_TEMP
     </delete>
