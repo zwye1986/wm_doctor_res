@@ -7415,7 +7415,7 @@ public class JswjwWxController extends GeneralController {
             return ResultDataThrow("结业考核年份不是当前年，无法申请！");
         }
         JsresGraduationApply jsresGraduationApply = jswjwBiz.searchByRecruitFlow(recruitFlow, "");
-        if (null != jsresGraduationApply) {
+        if (null == jsresGraduationApply) {
 
             PubUserResume pubUserResume = jswjwBiz.readPubUserResume(recruit.getDoctorFlow());
             Map<String, String> practicingMap = new HashMap<>();
@@ -7961,7 +7961,7 @@ public class JswjwWxController extends GeneralController {
             map.put("allMonth", allMonth);
             if (jsresGraduationApply != null) {
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(rotation.getRotationFlow(), doctorFlow, applyYear);
+                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetail(rotation.getRotationFlow(), doctorFlow, applyYear);
                 if (details != null && details.size() > 0) {
                     for (JsresDoctorDeptDetail d : details) {
                         biMap.put(d.getSchStandardDeptFlow(), d);
