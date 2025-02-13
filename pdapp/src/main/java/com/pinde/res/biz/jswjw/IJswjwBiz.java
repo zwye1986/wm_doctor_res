@@ -822,4 +822,7 @@ public interface IJswjwBiz {
 	 * @Date 2025/1/6
 	 */
 	SysUser getUserByUserPhone(String userPhone);
+
+	// 查询算好的数据比例信息
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetail(String rotationFlow, String doctorFlow, String applyYear);
 }

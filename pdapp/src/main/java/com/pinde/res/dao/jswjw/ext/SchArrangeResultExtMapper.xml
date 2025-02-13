@@ -320,6 +320,7 @@
                             ON rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW
                          WHERE rr.RECORD_STATUS = 'Y'
                            AND srd.RECORD_STATUS = 'Y'
+                           AND RR.OPER_USER_FLOW = #{doctorFlow}
                            AND rr.REC_TYPE_ID IN
                                ('CaseRegistry',
                                 'DiseaseRegistry',
@@ -341,6 +342,7 @@
                     AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
                   WHERE R.RECORD_STATUS = 'Y'
                     AND D.RECORD_STATUS = 'Y'
+                    AND R.DOCTOR_FLOW = #{doctorFlow}
                     AND R.SCH_END_DATE <![CDATA[<=]]> #{applyYear}||'-05-31'
                   GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
                ) IC

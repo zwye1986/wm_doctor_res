@@ -8520,7 +8520,7 @@ public class JswjwAppController {
             model.addAttribute("allMonth", allMonth);
             if (jsresGraduationApply != null) {
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(rotation.getRotationFlow(), doctorFlow, applyYear);
+                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetail(rotation.getRotationFlow(), doctorFlow, applyYear);
                 if (details != null && details.size() > 0) {
                     for (JsresDoctorDeptDetail d : details) {
                         biMap.put(d.getSchStandardDeptFlow(), d);
