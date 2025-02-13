@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.sci.dao.jsres.GraduationDoctorStatisticsMapper">
+
+    <!-- 学员统计信息 -->
+    <resultMap id="graduationDoctorMap" type="com.pinde.sci.form.jsres.GraduationDoctorStatisticsInfo">
+        <result property="speId" column="SPE_ID" jdbcType="VARCHAR" />
+        <result property="speName" column="SPE_NAME" jdbcType="VARCHAR" />
+        <result property="orgFlow" column="ORG_FLOW" jdbcType="VARCHAR" />
+        <result property="orgName" column="ORG_NAME" jdbcType="VARCHAR" />
+        <result property="graduationNum" column="GRADUATION_NUM" jdbcType="VARCHAR" />
+        <result property="applyNum" column="APPLY_NUM" jdbcType="VARCHAR" />
+        <result property="localAuditNum" column="LOCAL_AUDIT_NUM" jdbcType="VARCHAR" />
+        <result property="cityAuditNum" column="CITY_AUDIT_NUM" jdbcType="VARCHAR" />
+        <result property="globalAuditNum" column="GLOBAL_AUDIT_NUM" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- 按专业统计应结业学员信息 -->
+    <select id="searchGraduationDoctorStatisticsBySpe" parameterType="map" resultMap="graduationDoctorMap">
+        SELECT
+            R.SPE_ID,
+            R.SPE_NAME,
+            COUNT (DISTINCT R.DOCTOR_FLOW) AS GRADUATION_NUM,
+            COUNT (A.APPLY_FLOW) AS APPLY_NUM,
+            COUNT (
+                CASE
+                WHEN A.LOCAL_AUDIT_STATUS_ID = 'Passed' THEN
+                    1
+                ELSE
+                    NULL
+                END
+            ) AS LOCAL_AUDIT_NUM,
+            COUNT (
+                CASE
+                WHEN A.CITY_AUDIT_STATUS_ID = 'Passed' THEN
+                    1
+                ELSE
+                    NULL
+                END
+            ) AS CITY_AUDIT_NUM,
+            COUNT (
+                CASE
+                WHEN A.GLOBAL_AUDIT_STATUS_ID = 'Passed' THEN
+                    1
+                ELSE
+                    NULL
+                END
+            ) AS GLOBAL_AUDIT_NUM
+        FROM
+            RES_DOCTOR_RECRUIT R
+            LEFT JOIN JSRES_GRADUATION_APPLY A ON A.RECRUIT_FLOW = R.RECRUIT_FLOW
+            AND A.RECORD_STATUS = 'Y'
+            AND A.APPLY_YEAR = #{applyYear},
+            RES_DOCTOR D
+        WHERE
+            R.DOCTOR_FLOW = D.DOCTOR_FLOW
+        AND R.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        AND R.DOCTOR_STATUS_ID = '20'
+        AND R.GRADUATION_YEAR = #{applyYear}
+        AND R.CAT_SPE_ID = #{catSpeId}
+        AND NOT EXISTS (
+            SELECT
+                1
+            FROM
+                RES_DOCOTR_DELAY_TETURN DT
+            WHERE
+                DT.RECORD_STATUS = 'Y'
+            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.TYPE_ID = 'ReturnTraining'
+        )
+        <if test="sessionNumber != null and sessionNumber != ''">
+            AND D.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test="speIdList != null and speIdList.size() > 0">
+            AND R.SPE_ID IN
+            <foreach collection="speIdList" item="speId" open="(" close=")" separator=",">
+                #{speId}
+            </foreach>
+        </if>
+        <if test="doctorTypeId != null and doctorTypeId != ''">
+            AND D.DOCTOR_TYPE_ID = #{doctorTypeId}
+        </if>
+        <if test="orgFlow != null and orgFlow != ''">
+            AND R.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="examType != null and examType != '' and examType = 'firstExam'">
+            AND (
+                NOT EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        RES_SCORE S
+                    WHERE
+                        S.RECORD_STATUS = 'Y'
+                    AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                    AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
+                )
+                OR EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        RES_SCORE S
+                    WHERE
+                        S.RECORD_STATUS = 'Y'
+                    AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+--                     AND S.THEOTY_SCORE != '2'
+                    AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
+                )
+            )
+        </if>
+        <if test="examType != null and examType != '' and examType = 'reExam'">
+            AND EXISTS (
+                SELECT
+                    1
+                FROM
+                    RES_SCORE S
+                WHERE
+                    S.RECORD_STATUS = 'Y'
+                AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
+            )
+        </if>
+        GROUP BY
+            R.SPE_ID,
+            R.SPE_NAME
+        ORDER BY
+            R.SPE_ID
+    </select>
+
+</mapper>
