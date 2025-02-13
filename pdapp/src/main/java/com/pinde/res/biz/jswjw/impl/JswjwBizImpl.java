@@ -278,6 +278,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     private TeachingActivityInfoMapper activityInfoMapper;
     @Autowired
     private ResHospSupervSubjectMapper hospSupervSubjectMapper;
+    @Autowired
+    private JsresDoctorDeptDetailMapper doctorDeptDetailMapper;
 
     @Override
     public SysUser findByUserCode(String userCode) {
@@ -10513,5 +10515,15 @@ public class JswjwBizImpl implements IJswjwBiz {
             return sysUsers.get(0);
         }
         return null;
+    }
+
+    // 查询算好的数据比例信息
+    @Override
+    public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetail(String rotationFlow, String doctorFlow, String applyYear) {
+        JsresDoctorDeptDetailExample example=new JsresDoctorDeptDetailExample();
+        example.createCriteria().andRecordStatusEqualTo(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y)
+                .andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow).andApplyYearEqualTo(applyYear);
+        List<JsresDoctorDeptDetail> list = doctorDeptDetailMapper.selectByExample(example);
+        return list;
     }
 }
