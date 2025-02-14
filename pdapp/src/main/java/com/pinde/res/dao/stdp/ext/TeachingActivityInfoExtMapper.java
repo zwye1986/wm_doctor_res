@@ -12,7 +12,6 @@ public interface TeachingActivityInfoExtMapper {
 
 	List<Map<String,Object>> findActivityList2(Map<String, String> param);
 
-	List<Map<String,Object>> getTeacherActivityStatistics(Map<String, Object> param);
 
 	Map<String,Object> readActivity(@Param("activityFlow") String activityFlow);
 
@@ -26,15 +25,11 @@ public interface TeachingActivityInfoExtMapper {
 
 	List<Map<String,String>> getDeptActivityStatisticsMap(@Param("deptFlow") String deptFlow, @Param("startTime") String startTime, @Param("endTime") String endTime);
 
-	List<Map<String,String>> getTeacherActivityStatisticsMap(@Param("deptFlow") String deptFlow, @Param("teacherFlow") String teacherFlow, @Param("startTime") String startTime, @Param("endTime") String endTime);
 
-	int checkJoin(@Param("activityFlow") String activityFlow, @Param("userFlow") String userFlow);
 
 	int checkJoin2(@Param("activityFlow") String activityFlow, @Param("userFlow") String userFlow);
 
-	List<Map<String,Object>> readActivityRegists(@Param("activityFlow") String activityFlow);
 
-	List<Map<String,Object>> getDoctorActivityStatistics(Map<String, Object> parMp);
 
 	List<Map<String,String>> getDoctorActivityStatisticsMap(@Param("doctorFlow") String doctorFlow, @Param("startTime") String startTime, @Param("endTime") String endTime);
 

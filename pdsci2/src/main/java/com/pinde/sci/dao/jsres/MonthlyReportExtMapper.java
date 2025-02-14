@@ -106,8 +106,6 @@ public interface MonthlyReportExtMapper {
 
 	Integer getTrainerSum(/*@Param("orgFlow")String orgFlow*/Map<String,Object> paramMap);
 
-	List<Map<String,Object>> findActivityListyuh(/*@Param("orgFlow")String orgFlow*/Map<String,Object> paramMap);
-
 	List<TeachingActivityResult> getScanTime1AndScanTime2(@Param("activityFlow")String activityFlow);
 	List<TeachingActivityResult> getScanTime1AndScanTime2LeftjoinUserFlow(Map<String,Object> paramMap);
 
