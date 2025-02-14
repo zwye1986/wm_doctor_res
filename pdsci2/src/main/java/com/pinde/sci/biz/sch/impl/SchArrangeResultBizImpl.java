@@ -1309,8 +1309,8 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	}
 
 	@Override
-	public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String rotationFlow, String doctorFlow, String applyYear) {
-		return resultExtMapper.deptDoctorAllWorkDetailByNow(rotationFlow,doctorFlow,applyYear);
+	public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow) {
+		return resultExtMapper.deptDoctorAllWorkDetailByNow(recruitFlow,doctorFlow,applyYear, rotationFlow);
 	}
 
 	@Override

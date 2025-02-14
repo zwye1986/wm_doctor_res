@@ -574,13 +574,13 @@ public interface IJswjwBiz {
 
 	List<ResSchProcessExpress> searchByUserFlowAndTypeIdTwo(String operUserFlow,String recTypeId);
 
-	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear);
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
 
 	Map<String,Object> doctorDeptAvgWorkDetail(String recruitFlow, String applyYear);
 
 	ResDoctor readDoctor(String recordFlow);
 
-	int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap,SysUser user) throws DocumentException;
+	int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow) throws DocumentException;
 
 	ResDoctorRecruit readResDoctorRecruitBySessionNumber(String doctorFlow, String sessionNumber);
 

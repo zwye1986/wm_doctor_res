@@ -35,9 +35,9 @@ public interface IJsResGraduationApplyBiz {
 
     List<Map<String,Object>> chargeQueryListForExport(Map<String, Object> param);
 
-    void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap) throws DocumentException;
+    void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, String rotationFlow) throws DocumentException;
 
-    int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap) throws DocumentException;
+    int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, String rotationFlow) throws DocumentException;
 
     List<Map<String,Object>> chargeQueryApplyList(Map<String, Object> param);
 

@@ -6951,7 +6951,7 @@ public class JsResDoctorController extends GeneralController {
                     }
                 }
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear);
+                List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;
@@ -7400,7 +7400,7 @@ public class JsResDoctorController extends GeneralController {
                 return "当前时间没有正在进行的考试！";
             }
 
-            int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap);
+            int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, recruit.getRotationFlow());
 
             return i + "";
         } else {
@@ -8067,7 +8067,7 @@ public class JsResDoctorController extends GeneralController {
         Map<String, Object> avgBiMap = new HashMap<>();
         if (jsresGraduationApply == null) {
             //完成比例与审核比例
-            List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear);
+            List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
             if (details != null && details.size() > 0) {
                 int isShortY = 0;
                 int isShortN = 0;

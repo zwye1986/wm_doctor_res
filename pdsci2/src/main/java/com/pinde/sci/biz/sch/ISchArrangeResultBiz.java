@@ -214,7 +214,7 @@ public interface ISchArrangeResultBiz {
 
 	List<SchArrangeResult> searchSchArrangeResultByMap(Map<String, String> pMap);
 
-	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear);
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
 
 	List<SchArrangeResult> searchArrangeResultByDateAndOrgByMap(Map<String, String> param);
 

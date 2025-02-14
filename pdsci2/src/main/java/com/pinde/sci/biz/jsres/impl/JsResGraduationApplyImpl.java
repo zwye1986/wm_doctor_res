@@ -117,7 +117,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     }
 
     @Override
-    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap)  throws DocumentException {
+    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, String rotationFlow)  throws DocumentException {
         //学员出科考核表数据抽取
         selectAfter(applyYear,recruitFlow,doctorFlow);
         //更新学员相关证书信息
@@ -125,7 +125,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         practicingMap.put("doctorFlow",doctorFlow);
         tempMapper.updateRecruitAsseInfoByApplyYear2(practicingMap);
         //学员资格审查百分比
-        setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow);
+        setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow, rotationFlow);
 //        //完成比例与审核比例
 //        List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruitFlow, doctorFlow);
 //        if (details != null && details.size() > 0) {
@@ -193,7 +193,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     }
 
     @Override
-    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap) throws DocumentException {
+    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, String rotationFlow) throws DocumentException {
         int i=editGraduationApply(jsresGraduationApply);
         if(i==1)
         {
@@ -206,7 +206,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 doctorRecruitBiz.editDoctorRecruit(newRecruit);
             }
             //保存提交后的证书信息，百分比，出科考核表
-            addOldInfoByApplyYear(applyYear,recruitFlow,doctorFlow,jsresGraduationApply.getApplyFlow(),practicingMap);
+            addOldInfoByApplyYear(applyYear,recruitFlow,doctorFlow,jsresGraduationApply.getApplyFlow(),practicingMap, rotationFlow);
         }
         return i;
     }
@@ -227,10 +227,10 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         return graduationApplyExtMapper.queryGraduationInfoListExport(param);
     }
 
-    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow) {
+    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow) {
         //1
         tempMapper.deleteDeptDetailByApplyYear(applyYear,doctorFlow);
-        tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow);
+        tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
         //2
         tempMapper.deleteDeptTempByRecruitFlow(recruitFlow);
         tempMapper.updateDeptTempByRecruitFlow(recruitFlow,applyYear);

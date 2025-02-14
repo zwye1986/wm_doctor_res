@@ -441,13 +441,19 @@
                    CASE WHEN IC.QTY>0 THEN 'Y'
                      ELSE 'N'
                        END IS_ADD
-              FROM res_doctor_recruit RD
+              FROM (SELECT * FROM RES_DOCTOR_RECRUIT rdr
+              WHERE rdr.DOCTOR_FLOW = #{doctorFlow}
+		        AND rdr.RECRUIT_FLOW = #{recruitFlow}
+		        AND RDr.RECORD_STATUS = 'Y'
+		        AND rdr.rotation_flow = #{rotationFlow}
+		        AND RDr.AUDIT_STATUS_ID = 'Passed') RD
               LEFT JOIN SCH_ROTATION_DEPT SRD
                 ON RD.ROTATION_FLOW = SRD.ROTATION_FLOW
                AND SRD.ORG_FLOW IS NULL
                AND SRD.RECORD_STATUS = 'Y'
               LEFT JOIN SCH_ROTATION_DEPT_REQ REQ
                 ON REQ.REL_RECORD_FLOW = SRD.RECORD_FLOW
+                and REQ.rotation_flow = #{rotationFlow}
                AND REQ.RECORD_STATUS = 'Y'
                AND REQ.REC_TYPE_ID IN
                    ('CaseRegistry',
@@ -459,7 +465,7 @@
                 ON SDD.GROUP_FLOW = SRD.GROUP_FLOW
                AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
                AND SDD.ORG_FLOW = RD.ORG_FLOW
-               AND SDD.DOCTOR_FLOW = RD.DOCTOR_FLOW
+               AND SDD.DOCTOR_FLOW = #{doctorFlow}
                AND SDD.RECORD_STATUS = 'Y'
               LEFT JOIN (SELECT COUNT(1) COMPLETE_NUM,
                                RR.OPER_USER_FLOW,
@@ -469,8 +475,7 @@
                                      WHEN NVL((SELECT COUNT(1)
                                                 FROM RES_DOCTOR_SCH_PROCESS SAR
                                                WHERE SAR.RECORD_STATUS = 'Y'
-                                                 AND SAR.USER_FLOW =
-                                                     RR.OPER_USER_FLOW
+                                                 AND SAR.USER_FLOW = #{doctorFlow}
                                                  AND SAR.PROCESS_FLOW=RR.PROCESS_FLOW
                                                  AND TO_CHAR(TO_DATE(RR.OPER_TIME,
                                                                      'YYYYMMDDHH24MISS'),
@@ -485,11 +490,11 @@
                                      ELSE
                                       0
                                    END) IN_COMPLETE_NUM
-                          FROM RES_REC rr
-                         INNER JOIN SCH_ROTATION_DEPT srd
-                            ON rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW
-                         WHERE   rr.OPER_USER_FLOW = #{doctorFlow}
-                            AND rr.RECORD_STATUS = 'Y'
+                          FROM RES_REC rr, SCH_ROTATION_DEPT srd
+                         WHERE rr.RECORD_STATUS = 'Y'
+                         AND srd.rotation_flow = #{rotationFlow}
+                         and rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW
+                         AND RR.OPER_USER_FLOW = #{doctorFlow}
                            AND srd.RECORD_STATUS = 'Y'
                            AND rr.REC_TYPE_ID IN
                                ('CaseRegistry',
@@ -519,10 +524,6 @@
                ON IC.RECORD_FLOW= srd.record_flow
                and IC.DOCTOR_FLOW = RD.DOCTOR_FLOW
                AND IC.ROTATION_FLOW=SRD.ROTATION_FLOW
-             WHERE RD.RECORD_STATUS = 'Y'
-                and rd.RECRUIT_FLOW =#{recruitFlow,jdbcType=VARCHAR}
-                and rd.DOCTOR_FLOW =#{doctorFlow,jdbcType=VARCHAR}
-               AND RD.AUDIT_STATUS_ID = 'Passed'
              GROUP BY RD.RECRUIT_FLOW,
                       RD.DOCTOR_FLOW,
                       RD.CAT_SPE_ID,

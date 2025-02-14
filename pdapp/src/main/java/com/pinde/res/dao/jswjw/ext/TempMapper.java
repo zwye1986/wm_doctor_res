@@ -30,7 +30,7 @@ public interface TempMapper {
 
 	void deleteDeptDetailByApplyYear(@Param("applyYear") String applyYear, @Param("doctorFlow") String doctorFlow);
 
-	void insetDeptDetailByApplyYear(@Param("applyYear") String applyYear, @Param("doctorFlow") String doctorFlow, @Param("recruitFlow") String recruitFlow);
+	void insetDeptDetailByApplyYear(@Param("applyYear") String applyYear, @Param("doctorFlow") String doctorFlow, @Param("recruitFlow") String recruitFlow, @Param("rotationFlow") String rotationFlow);
 
 	void deleteDeptTempByRecruitFlow(@Param("recruitFlow") String recruitFlow);
 

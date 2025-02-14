@@ -8112,7 +8112,7 @@ public class JswjwAppController {
 //                return "当前时间没有正在进行的考试！";
             }
 
-            int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, user);
+            int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow());
             if (StringUtil.isNotEmpty(lawScore)) {
                 saveAsseScore(lawScore, "lawScore", recruitFlow, userFlow);
             }
@@ -8296,7 +8296,7 @@ public class JswjwAppController {
                 jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
             }
         }
-        int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, "", recruit.getDoctorFlow(), applyYear, practicingMap, user);
+        int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, "", recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow());
         if (StringUtil.isNotEmpty(lawScore)) {
             saveAsseScore(lawScore, "lawScore", recruitFlow, userFlow);
         }
@@ -8456,7 +8456,7 @@ public class JswjwAppController {
                     }
                 }
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear);
+                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;

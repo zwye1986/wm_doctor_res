@@ -7960,8 +7960,8 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String rotationFlow, String doctorFlow, String applyYear) {
-        return resultExtMapper.deptDoctorAllWorkDetailByNow(rotationFlow, doctorFlow, applyYear);
+    public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow) {
+        return resultExtMapper.deptDoctorAllWorkDetailByNow(recruitFlow, doctorFlow, applyYear, rotationFlow);
     }
 
     @Override
@@ -7975,7 +7975,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user) throws DocumentException {
+    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow) throws DocumentException {
         int i = editGraduationApply(jsresGraduationApply, user);
         if (i == 1) {
             if (StringUtil.isNotBlank(changeSpeId)) {
@@ -7986,7 +7986,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 editDoctorRecruit(newRecruit, user);
             }
             //保存提交后的证书信息，百分比，出科考核表
-            addOldInfoByApplyYear(applyYear, recruitFlow, doctorFlow, jsresGraduationApply.getApplyFlow(), practicingMap, user);
+            addOldInfoByApplyYear(applyYear, recruitFlow, doctorFlow, jsresGraduationApply.getApplyFlow(), practicingMap, user, rotationFlow);
         }
         return i;
     }
@@ -8025,7 +8025,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
-    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, SysUser user) throws DocumentException {
+    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, SysUser user, String rotationFlow) throws DocumentException {
         //学员出科考核表数据抽取
         selectAfter(applyYear, recruitFlow, doctorFlow, user);
         //更新学员相关证书信息
@@ -8033,7 +8033,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         practicingMap.put("doctorFlow", doctorFlow);
         tempMapper.updateRecruitAsseInfoByApplyYear2(practicingMap);
         //学员资格审查百分比
-        setFourStep(applyYear, recruitFlow, doctorFlow, applyFlow);
+        setFourStep(applyYear, recruitFlow, doctorFlow, applyFlow, rotationFlow);
     }
 
     private void selectAfter(String applyYear, String recruitFlow, String doctorFlow, SysUser user) throws DocumentException {
@@ -8109,10 +8109,10 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
     }
 
-    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow) {
+    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow) {
         //1
         tempMapper.deleteDeptDetailByApplyYear(applyYear, doctorFlow);
-        tempMapper.insetDeptDetailByApplyYear(applyYear, doctorFlow, recruitFlow);
+        tempMapper.insetDeptDetailByApplyYear(applyYear, doctorFlow, recruitFlow, rotationFlow);
         //2
         tempMapper.deleteDeptTempByRecruitFlow(recruitFlow);
         tempMapper.updateDeptTempByRecruitFlow(recruitFlow, applyYear);

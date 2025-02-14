@@ -42,7 +42,7 @@ public interface SchArrangeResultExtMapper {
 
 	List<DoctorUntiedRecording> queryDoctorUnLockDate(Map<String, Object> queryMap);
 
-	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(@Param("recruitFlow") String recruitFlow, @Param("doctorFlow") String doctorFlow, @Param("applyYear") String applyYear);
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(@Param("recruitFlow") String recruitFlow, @Param("doctorFlow") String doctorFlow, @Param("applyYear") String applyYear, @Param("rotationFlow") String rotationFlow);
 
 	/**
 	 * @Department：研发部

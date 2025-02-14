@@ -126,7 +126,7 @@ public interface SchArrangeResultExtMapper {
 
 	List<SchArrangeResult> searchSchArrangeResultByMap(Map<String, String> paramMap);
 
-	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(@Param("recruitFlow") String recruitFlow, @Param("doctorFlow") String doctorFlow, @Param("applyYear") String applyYear);
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(@Param("recruitFlow") String recruitFlow, @Param("doctorFlow") String doctorFlow, @Param("applyYear") String applyYear, @Param("rotationFlow") String rotationFlow);
 
 	List<SchArrangeResult> searchArrangeResultByDateAndOrgByMap(Map<String, String> param);
 
