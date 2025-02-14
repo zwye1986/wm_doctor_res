@@ -1,6 +1,5 @@
 package com.pinde.app.common.interceptor;
 
-import com.pinde.core.common.GlobalConstant;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +24,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
 
         if(!servletPath.contains("/wx")||servletPath.contains("/getOpenId")||servletPath.contains("/webLogin")
                 ||servletPath.contains("/login")||servletPath.contains("/sendPhoneCode")||servletPath.contains("/bindSysUser")
-                        ||servletPath.contains("/changePhone")) {
+                        ||servletPath.contains("/changePhone") || servletPath.contains("/api")) {
             return true;
         }
 
