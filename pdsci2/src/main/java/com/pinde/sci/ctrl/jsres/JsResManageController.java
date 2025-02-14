@@ -5,12 +5,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
 import com.pinde.core.common.GlobalConstant;
-import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
 import com.pinde.core.common.enums.pub.UserSexEnum;
 import com.pinde.core.common.enums.pub.UserStatusEnum;
 import com.pinde.core.common.enums.sys.OperTypeEnum;
 import com.pinde.core.common.enums.sys.ReqTypeEnum;
+import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.Page;
@@ -40,7 +40,6 @@ import com.pinde.sci.ctrl.res.ResMonthlyReportGlobalControllerClass;
 import com.pinde.sci.dao.jsres.MonthlyReportExtMapper;
 import com.pinde.sci.dao.jsres.SchdualTaskMapper;
 import com.pinde.sci.dao.res.ResDoctorRecruitExtMapper;
-import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -14955,8 +14954,6 @@ public class JsResManageController extends GeneralController {
 			}
 		}
 
-		//if ("isContain".equals(isContain)) {
-
 		//	} else {
 		for (int i = 0; i < doctorTrainingSpeList.size(); i++) {
 			JiaoxueActivePojoParam jiaoxueActivePojoParam = new JiaoxueActivePojoParam();
@@ -14996,32 +14993,6 @@ public class JsResManageController extends GeneralController {
 					shichangTotal = shichangTotal + Double.parseDouble(shichang);
 				}
 			}
-
-				/*for (Map<String, Object> li : activeInfoList) {
-					String activityFlow = (String) li.get("activityFlow");
-					String scanNum = ((BigDecimal) li.get("scanNum")).toString(); //签字个数
-					if (!"0".equals(scanNum)) {
-						manzuTiaojianMap.put("activityFlow",activityFlow);
-						List<TeachingActivityResult> teachingActivityResultListNew = monthlyReportExtMapper2.getScanTime1AndScanTime2LeftjoinUserFlow(manzuTiaojianMap);
-
-						String yearMonthshichang = maxminTime(teachingActivityResultListNew);
-						if ("".equals(yearMonthshichang)) {
-							throw new RuntimeException("同一个教学活动签到和签退不能跨年月！");
-						}
-						if (!"0".equals(yearMonthshichang)) {
-							String yearmonth = yearMonthshichang.split(",")[0];
-							String shichang = yearMonthshichang.split(",")[1];
-							if (monthDate.equals(yearmonth)) {
-								if (teachingActivityResultListNew.size() > 0) {
-									changci++;
-								}
-								alljoin = alljoin + teachingActivityResultListNew.size();
-								shichangTotal = shichangTotal + Double.parseDouble(shichang);
-							}
-						}
-
-					}
-				}*/
 			jiaoxueActivePojoParam.setTeachActiveSessionSum(changci);// 教学活动举办场次
 			jiaoxueActivePojoParam.setAllJoinSum(alljoin); //总参加人次
 			BigDecimal a = new BigDecimal(alljoin);
@@ -15050,186 +15021,6 @@ public class JsResManageController extends GeneralController {
 			jiaoxueActivePojoParam.setSpeId(doctorTrainingSpeList.get(i).getDictId());
 			jiaoxueActivePojoParam.setSpeName(doctorTrainingSpeList.get(i).getDictName());
 			bList.add(jiaoxueActivePojoParam);
-
-			/**年级*/
-				/*Map<String, Object> sessionNumbermap = new HashMap<>();
-				List<String> sessionNumberDistinct = new ArrayList<>();
-				sessionNumbermap.put("orgFlow", currOrg.getOrgFlow());
-				sessionNumbermap.put("docTypeList", doctype);
-				sessionNumbermap.put("speId", doctorTrainingSpeList.get(i).getDictId());
-				List<JsResDoctorRecruitExt> sessionNUmberList = monthlyReportExtMapper2.getTraincountbySpeNameSessionNumberDocType(sessionNumbermap);
-				for (JsResDoctorRecruitExt jrs : sessionNUmberList) {
-					if (!sessionNumberDistinct.contains(jrs.getSessionNumber())) {
-						sessionNumberDistinct.add(jrs.getSessionNumber());
-					}
-				}
-				for (int j = 0; j < sessionNumberDistinct.size(); j++) {
-					JiaoxueActivePojoParam jiaoxueActivePojoParam2 = new JiaoxueActivePojoParam();
-					Map<String, Object> sessionMap = new HashMap<>();
-					sessionMap.put("orgFlow", currOrg.getOrgFlow());
-					sessionMap.put("docTypeList", doctype);
-					sessionMap.put("speId", doctorTrainingSpeList.get(i).getDictId());
-					sessionMap.put("sessionNumber", sessionNumberDistinct.get(j));
-					List<JsResDoctorRecruitExt> sessionNUmberZaipeiList = monthlyReportExtMapper2.getTraincountbySpeNameSessionNumberDocType(sessionMap);
-					//TODO
-					Map<String, Object> mymap1 = new HashMap<>();
-					mymap1.put("orgFlow", currOrg.getOrgFlow());
-					Map<String, Object> manzuTiaojianMap1 = new HashMap<>();
-					manzuTiaojianMap1.put("orgFlow", currOrg.getOrgFlow());
-					manzuTiaojianMap1.put("speId", doctorTrainingSpeList.get(i).getDictId());
-					manzuTiaojianMap1.put("docTypeList", doctype);
-					manzuTiaojianMap1.put("sessionNumber", sessionNumberDistinct.get(j));
-					List<Map<String, Object>> activeInfoList1 = monthlyReportExtMapper2.findActivityListyuh(mymap1);
-					Integer changci1 = 0;//场次
-					Integer alljoin1 = 0;//总参加人次
-					Double shichangTotal1 = 0.00;//总时长
-					for (Map<String, Object> li : activeInfoList1) {
-						String activityFlow = (String) li.get("activityFlow");
-						String scanNum = ((BigDecimal) li.get("scanNum")).toString(); //签字个数
-						if (!"0".equals(scanNum)) {
-							List<TeachingActivityResult> teachingActivityResultList = monthlyReportExtMapper2.getScanTime1AndScanTime2(activityFlow);
-							List<TeachingActivityResult> teachingActivityResultListNew = new ArrayList<>();
-							for (TeachingActivityResult tt : teachingActivityResultList) {
-								manzuTiaojianMap1.put("userFlow", tt.getUserFlow());
-								List<DoctorInfoParam> doli = monthlyReportExtMapper2.findManzuTiaojianDoctor(manzuTiaojianMap1);
-								if (doli.size() > 0) {
-									teachingActivityResultListNew.add(tt);
-								}
-							}
-
-							String yearMonthshichang = maxminTime(teachingActivityResultListNew);
-							if ("".equals(yearMonthshichang)) {
-								throw new RuntimeException("同一个教学活动签到和签退不能跨年月！");
-							}
-							if (!"0".equals(yearMonthshichang)) {
-								String yearmonth = yearMonthshichang.split(",")[0];
-								String shichang = yearMonthshichang.split(",")[1];
-								if (monthDate.equals(yearmonth)) {
-									if (teachingActivityResultListNew.size() > 0) {
-										changci1++;
-									}
-									alljoin1 = alljoin1 + teachingActivityResultListNew.size();
-									shichangTotal1 = shichangTotal1 + Double.parseDouble(shichang);
-								}
-							}
-
-						}
-					}
-					jiaoxueActivePojoParam2.setTeachActiveSessionSum(changci1);// 教学活动举办场次
-					jiaoxueActivePojoParam2.setAllJoinSum(alljoin1); //总参加人次
-					BigDecimal a1 = new BigDecimal(alljoin1);
-					BigDecimal b1 = new BigDecimal(changci1);
-					Double cdValue1 = 0.0;
-					if (!changci1.equals(0)) {
-						BigDecimal c = a1.divide(b1, 2, BigDecimal.ROUND_HALF_UP);
-						cdValue1 = c.doubleValue();
-					}
-					jiaoxueActivePojoParam2.setAverJoinSum(cdValue1);//场均参加人次
-
-					BigDecimal sct1 = new BigDecimal(shichangTotal1);//总时长
-					Double averSctValue1 = 0.0;
-					if (!changci1.equals(0)) {
-						BigDecimal averSct = sct1.divide(b1, 2, BigDecimal.ROUND_HALF_UP);
-						averSctValue1 = averSct.doubleValue();
-					}
-					//BigDecimal averSct= sct.divide(b);
-					jiaoxueActivePojoParam2.setAverDureTime(averSctValue1);//场均时长（分钟）
-					jiaoxueActivePojoParam2.setDureTime(shichangTotal1);
-
-					jiaoxueActivePojoParam2.setId(i + "-" + j);
-					jiaoxueActivePojoParam2.setPid(jiaoxueActivePojoParam.getId());//
-					jiaoxueActivePojoParam2.setLevel("2");
-					jiaoxueActivePojoParam2.setSpeName(sessionNumberDistinct.get(j));//存sessionNumber
-					jiaoxueActivePojoParam2.setTrainerSum(sessionNUmberZaipeiList.size() + "");
-
-
-					bList.add(jiaoxueActivePojoParam2);
-					if (joinorgList.size() > 0) {
-						for (int k = 0; k < joinorgList.size(); k++) {
-							JiaoxueActivePojoParam jiaoxueActivePojoParam3 = new JiaoxueActivePojoParam();
-							Map<String, Object> joinOrgMap = new HashMap<>();
-							joinOrgMap.put("orgFlow", joinorgList.get(k).getOrgFlow());
-							joinOrgMap.put("docTypeList", doctype);
-							joinOrgMap.put("speId", doctorTrainingSpeList.get(i).getDictId());
-							joinOrgMap.put("sessionNumber", sessionNumberDistinct.get(j));
-							List<JsResDoctorRecruitExt> joinorgZaipeiList = monthlyReportExtMapper2.getTraincountbySpeNameSessionNumberDocType(joinOrgMap);
-							//TODO
-							Map<String, Object> mymap2 = new HashMap<>();
-							mymap2.put("orgFlow", joinorgList.get(k).getOrgFlow());
-							Map<String, Object> manzuTiaojianMap2 = new HashMap<>();
-							manzuTiaojianMap2.put("orgFlow", joinorgList.get(k).getOrgFlow());
-							manzuTiaojianMap2.put("speId", doctorTrainingSpeList.get(i).getDictId());
-							manzuTiaojianMap2.put("docTypeList", doctype);
-							manzuTiaojianMap2.put("sessionNumber", sessionNumberDistinct.get(j));
-							List<Map<String, Object>> activeInfoList2 = monthlyReportExtMapper2.findActivityListyuh(mymap2);
-							Integer changci2 = 0;//场次
-							Integer alljoin2 = 0;//总参加人次
-							Double shichangTotal2 = 0.00;//总时长
-							for (Map<String, Object> li : activeInfoList2) {
-								String activityFlow = (String) li.get("activityFlow");
-								String scanNum = ((BigDecimal) li.get("scanNum")).toString(); //签字个数
-								if (!"0".equals(scanNum)) {
-									List<TeachingActivityResult> teachingActivityResultList = monthlyReportExtMapper2.getScanTime1AndScanTime2(activityFlow);
-									List<TeachingActivityResult> teachingActivityResultListNew = new ArrayList<>();
-									for (TeachingActivityResult tt : teachingActivityResultList) {
-										manzuTiaojianMap2.put("userFlow", tt.getUserFlow());
-										List<DoctorInfoParam> doli = monthlyReportExtMapper2.findManzuTiaojianDoctor(manzuTiaojianMap2);
-										if (doli.size() > 0) {
-											teachingActivityResultListNew.add(tt);
-										}
-									}
-
-									String yearMonthshichang = maxminTime(teachingActivityResultListNew);
-									if ("".equals(yearMonthshichang)) {
-										throw new RuntimeException("同一个教学活动签到和签退不能跨年月！");
-									}
-									if (!"0".equals(yearMonthshichang)) {
-										String yearmonth = yearMonthshichang.split(",")[0];
-										String shichang = yearMonthshichang.split(",")[1];
-										if (monthDate.equals(yearmonth)) {
-											if (teachingActivityResultListNew.size() > 0) {
-												changci2++;
-											}
-											alljoin2 = alljoin2 + teachingActivityResultListNew.size();
-											shichangTotal2 = shichangTotal2 + Double.parseDouble(shichang);
-										}
-									}
-
-								}
-							}
-							jiaoxueActivePojoParam3.setTeachActiveSessionSum(changci2);// 教学活动举办场次
-							jiaoxueActivePojoParam3.setAllJoinSum(alljoin2); //总参加人次
-							BigDecimal a2 = new BigDecimal(alljoin2);
-							BigDecimal b2 = new BigDecimal(changci2);
-							Double cdValue2 = 0.0;
-							if (!changci2.equals(0)) {
-								BigDecimal c = a2.divide(b2, 2, BigDecimal.ROUND_HALF_UP);
-								cdValue2 = c.doubleValue();
-							}
-							jiaoxueActivePojoParam3.setAverJoinSum(cdValue2);//场均参加人次
-
-							BigDecimal sct2 = new BigDecimal(shichangTotal2);//总时长
-							Double averSctValue2 = 0.0;
-							if (!changci2.equals(0)) {
-								BigDecimal averSct = sct2.divide(b2, 2, BigDecimal.ROUND_HALF_UP);
-								averSctValue2 = averSct.doubleValue();
-							}
-							//BigDecimal averSct= sct.divide(b);
-							jiaoxueActivePojoParam3.setAverDureTime(averSctValue2);//场均时长（分钟）
-							jiaoxueActivePojoParam3.setDureTime(shichangTotal2);
-
-
-							jiaoxueActivePojoParam3.setId(i + "-" + j + "-" + k);
-							jiaoxueActivePojoParam3.setPid(jiaoxueActivePojoParam2.getId());//
-							jiaoxueActivePojoParam3.setLevel("3");
-							jiaoxueActivePojoParam3.setSpeName(joinorgList.get(k).getOrgName());//存协同基地
-							jiaoxueActivePojoParam3.setTrainerSum(joinorgZaipeiList.size() + "");
-
-							bList.add(jiaoxueActivePojoParam3);
-						}
-					}
-
-				}*/
 		}
 		bList=	sessionNumberSecond(currOrg.getOrgFlow(), doctype, monthDate, bList,joinorgList);/**年级*/
 		//如果包含协同

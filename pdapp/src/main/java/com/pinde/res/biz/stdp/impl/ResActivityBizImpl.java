@@ -93,21 +93,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		}
 		return map;
 	}
-	@Override
-	public Map<String, Object> getTeacherActivityStatisticsMap(String deptFlow,String teacherFlow,String startTime,String endTime) {
-
-		Map<String, Object> map=new HashMap<>();
-		List<Map<String,String>> datas=activityInfoExtMapper.getTeacherActivityStatisticsMap(deptFlow,teacherFlow,startTime,endTime);
-		if(datas!=null)
-		{
-			for(Map<String,String> d:datas)
-			{
-				map.put(d.get("typeId"),d.get("qty"));
-			}
-		}
-		return map;
-	}
-
 
 	@Override
 	public int countByActivity(String activityFlow) {
@@ -131,13 +116,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			return list.get(0);
 		}
 		return null;
-	}
-
-	@Override
-	public List<Map<String, Object>> getTeacherActivityStatistics(Map<String,Object> param) {
-
-		return activityInfoExtMapper.getTeacherActivityStatistics(param);
-
 	}
 	@Override
 	public List<Map<String, Object>> readActivityResults(String activityFlow, String searchStr) {
@@ -167,10 +145,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 		return resultMapper.selectByPrimaryKey(resultFlow);
 	}
 
-	@Override
-	public int checkJoin(String activityFlow, String userFlow) {
-		return activityInfoExtMapper.checkJoin(activityFlow,userFlow);
-	}
 
 	@Override
 	public int checkJoin2(String activityFlow, String userFlow) {
@@ -275,16 +249,6 @@ public class ResActivityBizImpl implements IResActivityBiz {
 			return imageList;
 		}
 		return null;
-	}
-
-	@Override
-	public List<Map<String, Object>> readActivityRegists(String activityFlow) {
-		return activityInfoExtMapper.readActivityRegists(activityFlow);
-	}
-
-	@Override
-	public List<Map<String, Object>> getDoctorActivityStatistics(Map<String, Object> parMp) {
-		return activityInfoExtMapper.getDoctorActivityStatistics(parMp);
 	}
 
 	@Override
