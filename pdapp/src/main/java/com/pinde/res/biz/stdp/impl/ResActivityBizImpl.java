@@ -13,7 +13,7 @@ import com.pinde.res.biz.stdp.ICfgBiz;
 import com.pinde.res.biz.stdp.IResActivityBiz;
 import com.pinde.res.biz.stdp.IResActivityTargetBiz;
 import com.pinde.res.ctrl.hbres.ActivityImageFileForm;
-import com.pinde.res.dao.stdp.ext.TeachingActivityInfoExtMapper;
+import com.pinde.core.common.sci.dao.TeachingActivityInfoExtMapper;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

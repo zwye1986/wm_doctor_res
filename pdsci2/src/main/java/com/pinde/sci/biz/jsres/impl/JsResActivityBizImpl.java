@@ -17,7 +17,6 @@ import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.ctrl.cfg.JsresPowerCfgController;
-import com.pinde.sci.dao.jsres.TeachingActivityInfoExtMapper;
 import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.core.model.SysOrgExt;
 import org.dom4j.Document;
@@ -106,7 +105,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 
 	@Override
 	public Map<String, Object> readActivity(String activityFlow) {
-		return activityInfoExtMapper.readActivity(activityFlow);
+		return activityInfoExtMapper.readActivityForWeb(activityFlow);
 	}
 	@Override
 	public Map<String, Object> getDeptActivityStatisticsMap(String deptFlow,String startTime,String endTime) {
