@@ -14,7 +14,6 @@ public interface IResActivityBiz {
 
     List<Map<String,Object>> findActivityList(Map<String, String> param);
 
-    List<Map<String,Object>> getTeacherActivityStatistics(Map<String, Object> param);
 
     Map<String,Object> readActivity(String activityFlow);
 
@@ -26,7 +25,6 @@ public interface IResActivityBiz {
 
     Map<String,Object> getDeptActivityStatisticsMap(String deptFlow, String startTime, String endTime);
 
-    Map<String,Object> getTeacherActivityStatisticsMap(String deptFlow, String teacherFlow, String startTime, String endTime);
 
     TeachingActivityResult readRegistInfo(String activityFlow, String userFlow);
 
@@ -36,7 +34,6 @@ public interface IResActivityBiz {
 
     TeachingActivityResult readResult(String resultFlow);
 
-    int checkJoin(String activityFlow, String userFlow);
 
     int checkJoin2(String activityFlow, String userFlow);
 
@@ -45,10 +42,6 @@ public interface IResActivityBiz {
     int saveResultEval(TeachingActivityEval eval,String userFlow);
 
     List<Map<String, String>> parseImageXml(String content) throws DocumentException;
-
-    List<Map<String,Object>> readActivityRegists(String activityFlow);
-
-    List<Map<String,Object>> getDoctorActivityStatistics(Map<String, Object> parMp);
 
     int saveActivityInfo(TeachingActivityInfo activity, SysUser userinfo);
     int saveActivityInfo2(TeachingActivityInfo activity, SysUser userinfo);

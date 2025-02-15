@@ -251,16 +251,6 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         tempMapper.updateRecruitAvgPerTempByRecruitFlow(recruitFlow,applyFlow);
     }
 
-    private void addJsresDoctorDeptDetail(JsresDoctorDeptDetail d) {
-        JsresDoctorDeptDetail old=getJsresDoctorDeptDetail(d.getApplyYear(),d.getDoctorFlow(),d.getSchStandardDeptFlow());
-        if(old==null) {
-            jsresDoctorDeptDetailMapper.insert(d);
-        }else{
-            d.setRecordFlow(old.getRecordFlow());
-            jsresDoctorDeptDetailMapper.updateByPrimaryKeySelective(d);
-        }
-    }
-
     private JsresDoctorDeptDetail getJsresDoctorDeptDetail(String applyYear, String doctorFlow, String schStandardDeptFlow) {
         JsresDoctorDeptDetailExample example=new JsresDoctorDeptDetailExample();
         example.createCriteria().andApplyYearEqualTo(applyYear).andDoctorFlowEqualTo(doctorFlow).andSchStandardDeptFlowEqualTo(schStandardDeptFlow);

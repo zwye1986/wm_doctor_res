@@ -44,7 +44,7 @@ public interface TempMapper {
 
 	void deleteDeptDetail(@Param("applyYear") String applyYear);
 
-	void insertDeptDetail(@Param("applyYear") String applyYear);
+//	void insertDeptDetail(@Param("applyYear") String applyYear);
 
 	void saveRegisteManua(@Param("registeManua") String registeManua, @Param("recruitFlow") String recruitFlow, @Param("applyYear") String applyYear);
 
