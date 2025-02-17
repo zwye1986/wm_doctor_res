@@ -228,6 +228,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         List<GraduationDoctorTemp> tempList = graduationDoctorTempMapper.selectByExample(graduationDoctorTempExample);
         if (CollectionUtils.isNotEmpty(tempList) && resDoctorRecruit != null && "20".equals(resDoctorRecruit.getDoctorStatusId()) && inTime) {
             isAllowApply = GlobalConstant.FLAG_Y;
+            model.addAttribute("isTempUser", GlobalConstant.FLAG_Y);
         } else {
             if (resDoctorRecruit != null && StringUtil.isNotBlank(resDoctorRecruit.getCatSpeId())) {
                 switch (resDoctorRecruit.getCatSpeId()){

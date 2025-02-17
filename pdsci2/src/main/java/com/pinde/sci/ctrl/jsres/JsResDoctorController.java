@@ -6082,6 +6082,10 @@ public class JsResDoctorController extends GeneralController {
                 }
             }
 
+            if (CollectionUtils.isNotEmpty(tempList)) {
+                model.addAttribute("isTempUser", GlobalConstant.FLAG_Y);
+            }
+
             String inApplyTime = resTestConfigList.size() > 0 ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N;
             // 判断学员有没有重新提交
             if (null != jsresGraduationApply) {
