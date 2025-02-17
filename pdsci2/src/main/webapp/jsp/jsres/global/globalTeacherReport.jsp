@@ -243,7 +243,7 @@
     </style>
 </head>
 <body>
-<div style="padding:20px;width:calc(90vw - 208px - 57px)">
+<div style="padding:0 20px;width:calc(90vw - 208px - 57px)">
     <!-- 统计 -->
     <div class="main-container" data-index="statistics">
             <div class="table-container">

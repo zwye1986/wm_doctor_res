@@ -562,6 +562,26 @@
                 setCookie('first',1,1)
             }
 		});
+
+		// 结业学员统计
+		function graduactionStatistics(){
+			jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_LOCAL}&catSpeId=DoctorTrainingSpe", true);
+		}
+
+		// 结业学员统计-助理全科
+		function graduactionStatisticsAcc(){
+			jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_LOCAL}&catSpeId=AssiGeneral", true);
+		}
+
+		// 应结业学员查询
+		function searchGraduactionDoctor(){
+			jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_LOCAL}&catSpeId=DoctorTrainingSpe", true);
+		}
+
+		// 应结业学员查询
+		function searchGraduactionDoctorAcc(){
+			jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_LOCAL}&catSpeId=AssiGeneral", true);
+		}
 	</script>
 	<style>
 		body{overflow:hidden;}
@@ -677,6 +697,8 @@
 								<i class="icon_menu menu_statistics"></i>住院医师结业信息管理
 							</dt>
 							<%--<dd class="menu_item"><a href="javascript:asseGraduation();">资格审查</a></dd>--%>
+							<dd class="menu_item"><a onclick="graduactionStatistics();">结业学员统计</a></dd>
+							<dd class="menu_item"><a onclick="searchGraduactionDoctor();">应结业学员查询</a></dd>
 							<dd class="menu_item"><a href="javascript:asseAuditForJointOrg();">结业考核资格审核</a>
 							<dd class="menu_item"><a onclick="asseAuditList();">结业考核资格查询</a></dd>
 							<%--<dd class="menu_item"><a href="javascript:skillTestManage();">技能考核管理</a></dd>--%>
@@ -689,6 +711,8 @@
 							<dt class="menu_title">
 								<i class="icon_menu menu_statistics"></i>助理全科结业信息管理
 							</dt>
+							<dd class="menu_item"><a onclick="graduactionStatisticsAcc();">结业学员统计</a></dd>
+							<dd class="menu_item"><a onclick="searchGraduactionDoctorAcc();">应结业学员查询</a></dd>
 							<dd class="menu_item"><a href="javascript:asseAuditForJointOrg2();">结业考核资格审核</a>
 							<dd class="menu_item"><a onclick="asseAuditList2();">结业考核资格查询</a></dd>
 							<%--<dd class="menu_item"><a href="javascript:skillTestManage();">技能考核管理</a></dd>--%>

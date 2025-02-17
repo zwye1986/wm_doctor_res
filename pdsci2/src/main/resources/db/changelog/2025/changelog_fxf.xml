@@ -1,0 +1,90 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-graduation-doctor-temp" author="fengxf">
+        <sql>
+            CREATE INDEX "PDSCI"."RES_SCORE_INDEX5"
+                ON "PDSCI"."RES_SCORE" ("DOCTOR_FLOW" ASC);
+
+            CREATE INDEX "PDSCI"."JSRES_GRADUATION_APPLY_INDEX3"
+                ON "PDSCI"."JSRES_GRADUATION_APPLY" ("TEST_ID" ASC);
+
+            CREATE INDEX "PDSCI"."JSRES_EXAM_SIGNUP_INDEX1"
+                ON "PDSCI"."JSRES_EXAM_SIGNUP" ("SIGNUP_YEAR" ASC);
+
+            CREATE INDEX "PDSCI"."JSRES_EXAM_SIGNUP_INDEX2"
+                ON "PDSCI"."JSRES_EXAM_SIGNUP" ("DOCTOR_FLOW" ASC);
+
+            CREATE INDEX "PDSCI"."JSRES_EXAM_SIGNUP_INDEX3"
+                ON "PDSCI"."JSRES_EXAM_SIGNUP" ("TEST_ID" ASC);
+
+            CREATE TABLE GRADUATION_DOCTOR_TEMP (
+                DOCTOR_FLOW VARCHAR2(40) NOT NULL ,
+                DOCTOR_NAME VARCHAR2(40) NULL ,
+                CERT_TYPE_ID VARCHAR2(40) NULL ,
+                CERT_TYPE_NAME VARCHAR2(40) NULL ,
+                ID_NO VARCHAR2(40) NULL ,
+                CAT_SPE_ID VARCHAR2(40) NOT NULL ,
+                CAT_SPE_NAME VARCHAR2(40) NULL ,
+                ORG_FLOW VARCHAR2(40) NOT NULL ,
+                ORG_NAME VARCHAR2(100) NULL ,
+                SPE_ID VARCHAR2(40) NOT NULL ,
+                SPE_NAME VARCHAR2(40) NULL ,
+                SESSION_NUMBER VARCHAR2(10) NOT NULL ,
+                TRAIN_YEAR VARCHAR2(40) NOT NULL ,
+                EXAM_TYPE VARCHAR2(40) NULL,
+                REMARK VARCHAR2(1000) NULL ,
+                RECORD_STATUS VARCHAR2(2) NOT NULL ,
+                CREATE_TIME VARCHAR2(40) NOT NULL ,
+                CREATE_USER_FLOW VARCHAR2(40) NOT NULL ,
+                MODIFY_TIME VARCHAR2(40) NULL ,
+                MODIFY_USER_FLOW VARCHAR2(40) NULL ,
+                PRIMARY KEY (DOCTOR_FLOW)
+            ) NOCOMPRESS;
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.DOCTOR_FLOW IS '医师主键';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.DOCTOR_NAME IS '医师姓名';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.CERT_TYPE_ID IS '证件类型ID';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.CERT_TYPE_NAME IS '证件类型';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.ID_NO IS '证件号码';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.CAT_SPE_ID IS '培训类别ID';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.CAT_SPE_NAME IS '培训类别';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.ORG_FLOW IS '培训机构flow';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.ORG_NAME IS '培训机构';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.SPE_ID IS '专业ID';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.SPE_NAME IS '专业';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.SESSION_NUMBER IS '年级';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.TRAIN_YEAR IS '培训年限';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.EXAM_TYPE IS '考核类型 首考：firstExam 补考：reExam';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.REMARK IS '备注';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.RECORD_STATUS IS '作废标记 Y可用 N已作废';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.CREATE_TIME IS '创建时间';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.CREATE_USER_FLOW IS '创建者';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.MODIFY_TIME IS '更新时间';
+
+            COMMENT ON COLUMN GRADUATION_DOCTOR_TEMP.MODIFY_USER_FLOW IS '更新者';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

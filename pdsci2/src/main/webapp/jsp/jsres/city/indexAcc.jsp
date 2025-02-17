@@ -424,6 +424,16 @@
             var roleFlag="${GlobalConstant.USER_LIST_CHARGE}";
             jboxLoad("content","<s:url value='/jsres/manage/personStatistic'/>?roleFlag="+roleFlag,true);
         }
+
+        // 结业学员统计
+        function graduactionStatisticsAcc(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_CHARGE}&catSpeId=AssiGeneral", true);
+        }
+
+        // 应结业学员查询
+        function searchGraduactionDoctorAcc(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_CHARGE}&catSpeId=AssiGeneral", true);
+        }
     </script>
     <style>
         body{overflow:hidden;}
@@ -559,6 +569,8 @@
                             <dt class="menu_title">
                                 <i class="icon_menu menu_management"></i>助理全科结业管理
                             </dt>
+                            <dd class="menu_item"><a onclick="graduactionStatisticsAcc();">结业学员统计</a></dd>
+                            <dd class="menu_item"><a onclick="searchGraduactionDoctorAcc();">应结业学员查询</a></dd>
                             <dd class="menu_item"><a onclick="asseWaitAudit2();">结业考核资格审核</a></dd>
                             <dd class="menu_item"><a onclick="asseAuditList2();">结业考核资格查询</a></dd>
                             <dd class="menu_item"><a onclick="scoreManage2()">结业成绩管理</a></dd>

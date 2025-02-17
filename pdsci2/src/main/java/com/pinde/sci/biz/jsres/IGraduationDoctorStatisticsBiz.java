@@ -13,5 +13,13 @@ public interface IGraduationDoctorStatisticsBiz {
      * @Author fengxf
      * @Date 2025/2/13
      */
-    List<GraduationDoctorStatisticsInfo> searchGraduationDoctorStatisticsBySpe(Map<String, Object> paramMap);
+    List<GraduationDoctorStatisticsInfo> searchGraduationDoctorStatistics(Map<String, Object> paramMap);
+
+    /**
+     * @Department：研发部
+     * @Description 查询应结业学员列表信息
+     * @Author fengxf
+     * @Date 2025/2/15
+     */
+    List<Map<String, String>> searchGraduationDoctorList(Map<String, Object> paramMap);
 }

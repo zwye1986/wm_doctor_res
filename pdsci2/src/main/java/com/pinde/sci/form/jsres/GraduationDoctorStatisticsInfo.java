@@ -1,23 +1,25 @@
 package com.pinde.sci.form.jsres;
 
 public class GraduationDoctorStatisticsInfo {
-
+    // 专业id
     private String speId;
-
+    // 专业名称
     private String speName;
-
+    // 基地flow
     private String orgFlow;
-
+    // 基地编码
+    private String orgCode;
+    // 基地名称
     private String orgName;
-
+    // 应结业人数
     private Integer graduationNum;
-
+    // 已申请人数
     private Integer applyNum;
-
+    // 基地审核通过人数
     private Integer localAuditNum;
-
+    // 市局审核通过人数
     private Integer cityAuditNum;
-
+    // 省厅审核通过人数
     private Integer globalAuditNum;
 
     public String getSpeId() {
@@ -42,6 +44,14 @@ public class GraduationDoctorStatisticsInfo {
 
     public void setOrgFlow(String orgFlow) {
         this.orgFlow = orgFlow;
+    }
+
+    public String getOrgCode() {
+        return orgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
     }
 
     public String getOrgName() {

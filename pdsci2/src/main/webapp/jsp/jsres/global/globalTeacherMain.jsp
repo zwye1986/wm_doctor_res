@@ -128,7 +128,7 @@
                      </div>
                  </div>
              </div>
-            <div style="margin-top: 15px;margin-bottom: 15px">
+            <div style="margin-top: 15px;">
                 <input type="button" class="btn_green" onclick="toPage(1)" value="查&#12288;询">
                 <input type="button" class="btn_green" onclick="exportUser()" value="导&#12288;出">
             </div>
