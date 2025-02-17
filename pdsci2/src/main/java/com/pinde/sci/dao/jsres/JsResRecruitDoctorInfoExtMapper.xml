@@ -26,7 +26,88 @@
 		<result column="DOCTOR_TYPE_NAME" property="doctorTypeName" jdbcType="VARCHAR" />
 		<result column="ARMY_TYPE" property="armyType" jdbcType="VARCHAR" />
 	</resultMap>
+
 	<select id="searchRecruitDoctorInfos" resultMap="doctorInfoMap">
+		SELECT
+		dr.ORG_NAME, dr.IS_SEND, dr.TRAIN_YEAR,
+		dr.CURR_DEGREE_CATEGORY_ID, dr.CURR_DEGREE_CATEGORY_NAME, dr.GRADUATION_YEAR,
+		dr.RECRUIT_FLOW, dr.DOCTOR_FLOW, dr.ORG_FLOW, ed.SPE_ID,
+		ed.SPE_NAME, dr.RECRUIT_DATE, dr.CAT_SPE_ID, dr.CAT_SPE_NAME,
+		dr.YET_TRAIN_YEAR, dr.DOCTOR_STATUS_ID, dr.DOCTOR_STATUS_NAME, dr.DOCTOR_STRIKE_ID,
+		dr.DOCTOR_STRIKE_NAME, u.USER_FLOW, u.USER_CODE, u.USER_NAME, u.SEX_ID,
+		u.SEX_NAME, u.USER_PHONE, u.USER_EMAIL, u.ID_NO, u.USER_BIRTHDAY, u.nation_name, u.cret_type_id,
+		u.EDUCATION_ID, u.user_qq, u.EDUCATION_NAME, rd.is_year_graduate, rd.foreign_skills,
+		rd.work_org_name, dr.session_number, ed.doctor_type_id,
+		ed.doctor_type_name, ed.org_flow as info_org_flow, pur.user_resume, dd.SIGNUP_WAY
+		<if test="isArmy!=null and isArmy!=''">
+			, EXTRACTVALUE(XMLTYPE(pur.user_resume), '/userResumeExtInfoForm/armyType') as ARMY_TYPE
+		</if>
+		FROM jsres_recruit_doc_info dr
+		INNER JOIN SYS_ORG s ON dr.ORG_FLOW = s.ORG_FLOW AND s.RECORD_STATUS = 'Y'
+		INNER JOIN SYS_USER u ON dr.DOCTOR_FLOW = u.USER_FLOW
+		INNER JOIN res_doctor rd ON dr.DOCTOR_FLOW = rd.DOCTOR_FLOW
+		INNER JOIN jsres_recruit_info ed
+		ON dr.doctor_flow = ed.doctor_flow
+		AND dr.session_number = ed.session_number
+		AND ed.RECORD_STATUS = 'Y'
+		INNER JOIN res_doctor_recruit dd
+		ON dr.doctor_flow = dd.doctor_flow
+		AND dr.session_number = dd.session_number
+		AND dd.recruit_flag = 'Y'
+		AND dd.AUDIT_STATUS_ID = 'Passed'
+		AND dd.RECORD_STATUS = 'Y'
+		LEFT JOIN PUB_USER_RESUME pur
+		ON pur.USER_FLOW = dr.DOCTOR_FLOW
+		AND pur.RECORD_STATUS = 'Y'
+		WHERE dr.RECORD_STATUS = 'Y'
+		AND dr.AUDIT_STATUS_ID = 'Passed'
+
+		<!-- 优化后的条件判断 -->
+		<choose>
+			<when test="isArmy == 'Y'.toString()">
+				AND pur.user_resume IS NOT NULL
+				AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') IS NOT NULL
+				AND EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') != 'NO'
+			</when>
+			<when test="isArmy == 'N'.toString()">
+				AND (pur.user_resume IS NULL
+				OR EXTRACTVALUE(XMLTYPE(pur.user_resume),'/userResumeExtInfoForm/armyType') = 'NO')
+			</when>
+		</choose>
+
+		<!-- 地理位置过滤 -->
+		<if test="orgProvId!=null and orgProvId!=''">AND s.ORG_PROV_ID = #{orgProvId}</if>
+		<if test="orgCityId!=null and orgCityId!=''">AND s.ORG_CITY_ID = #{orgCityId}</if>
+		<if test="orgLevel!=null and orgLevel!=''">AND s.ORG_LEVEL_ID = #{orgLevel}</if>
+		<if test="orgTypeId!=null and orgTypeId!=''">AND s.ORG_TYPE_ID = #{orgTypeId}</if>
+
+		<!-- 机构过滤优化 -->
+		<choose>
+			<when test="joinOrgFlow != null and joinOrgFlow != ''">
+				AND dr.ORG_FLOW = #{joinOrgFlow}
+			</when>
+			<when test="jointOrgFlowList != null and jointOrgFlowList.size > 0">
+				AND dr.ORG_FLOW IN
+				<foreach collection="jointOrgFlowList" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</when>
+		</choose>
+
+		<!-- 其他条件 -->
+		<if test="docTypeList != null and docTypeList.size > 0">
+			AND ed.DOCTOR_TYPE_ID IN
+			<foreach collection="docTypeList" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<!-- 其他过滤条件保持不变 -->
+		ORDER BY dr.session_number DESC, dr.org_flow, dr.spe_id,
+		NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'),
+		dr.doctor_flow, dr.CREATE_TIME DESC
+	</select>
+
+	<!--<select id="searchRecruitDoctorInfos" resultMap="doctorInfoMap">
 		select dr.ORG_NAME, dr.IS_SEND, dr.TRAIN_YEAR
 		, dr.CURR_DEGREE_CATEGORY_ID, dr.CURR_DEGREE_CATEGORY_NAME, dr.GRADUATION_YEAR
 		, dr.RECRUIT_FLOW, dr.DOCTOR_FLOW, dr.ORG_FLOW, ed.SPE_ID
@@ -76,9 +157,9 @@
 		<if test="orgCityId!=null and orgCityId!=''">
 			AND s.ORG_CITY_ID = #{orgCityId}
 		</if>
-<!--		<if test="orgFlow!=null and orgFlow!=''">-->
-<!--			AND s.ORG_FLOW = #{orgFlow}-->
-<!--		</if>-->
+&lt;!&ndash;		<if test="orgFlow!=null and orgFlow!=''">&ndash;&gt;
+&lt;!&ndash;			AND s.ORG_FLOW = #{orgFlow}&ndash;&gt;
+&lt;!&ndash;		</if>&ndash;&gt;
 		<if test="orgLevel!=null and orgLevel!=''">
 			AND s.ORG_LEVEL_ID = #{orgLevel}
 		</if>
@@ -117,9 +198,9 @@
 		<if test="trainingSpeId!=null and trainingSpeId!=''">
 			and dr.SPE_ID = #{trainingSpeId}
 		</if>
-<!--		<if test='orgFlow!=null and orgFlow!=""'>-->
-<!--			and dr.ORG_FLOW = #{orgFlow}-->
-<!--		</if>-->
+&lt;!&ndash;		<if test='orgFlow!=null and orgFlow!=""'>&ndash;&gt;
+&lt;!&ndash;			and dr.ORG_FLOW = #{orgFlow}&ndash;&gt;
+&lt;!&ndash;		</if>&ndash;&gt;
 		<if test="graduationYear!=null and graduationYear!=''">
 			and dr.GRADUATION_YEAR=#{graduationYear}
 		</if>
@@ -139,7 +220,7 @@
 			and dd.SIGNUP_WAY=#{signupWay}
 		</if>
 		order by  dr.session_number desc,dr.org_flow,dr.spe_id,NLSSORT(u.USER_NAME,'NLS_SORT = SCHINESE_PINYIN_M'), dr.doctor_flow,dr.CREATE_TIME desc
-	</select>
+	</select>-->
 
 	<resultMap type="HashMap" id="zlxytjMap">
 		<result  property="cityId" column="org_city_id" javaType="string"/>
