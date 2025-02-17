@@ -7440,6 +7440,10 @@ public class JswjwWxController extends GeneralController {
                 }
             }
 
+            if (CollectionUtils.isNotEmpty(tempList)) {
+                resultMap.put("isTempUser", GlobalConstant.FLAG_Y);
+            }
+
             String inApplyTime = resTestConfigList.size() > 0 ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N;
             // 判断学员有没有重新提交
             if (null != jsresGraduationApply) {
@@ -8362,6 +8366,7 @@ public class JswjwWxController extends GeneralController {
         List<GraduationDoctorTemp> tempList = graduationDoctorTempMapper.selectByExample(graduationDoctorTempExample);
         if (CollectionUtils.isNotEmpty(tempList) && resDoctorRecruit != null && "20".equals(resDoctorRecruit.getDoctorStatusId()) && inTime) {
             isAllowApply = GlobalConstant.FLAG_Y;
+            resultMap.put("isTempUser", GlobalConstant.FLAG_Y);
         } else {
             if (resDoctorRecruit != null && StringUtil.isNotBlank(resDoctorRecruit.getCatSpeId())) {
                 switch (resDoctorRecruit.getCatSpeId()){

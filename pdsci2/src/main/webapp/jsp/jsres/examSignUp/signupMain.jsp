@@ -56,12 +56,25 @@
     });
 
     function signUp() {
-        if (${isAllowApply eq "Y"}) {
-            var url = "<s:url value ='/jsres/examSignUp/signUp'/>?typeId=${param.typeId}";
-            jboxOpen(url, "补考认证", 800, 350);
+        var isTempUser = '${isTempUser}';
+        if (isTempUser == 'Y') {
+            jboxConfirm("您属于异常结业报考人员，审核时有被驳回风险，请关注最终审核结果。请问是否继续？",function(){
+                if (${isAllowApply eq "Y"}) {
+                    var url = "<s:url value ='/jsres/examSignUp/signUp'/>?typeId=${param.typeId}";
+                    jboxOpen(url, "补考认证", 800, 350);
+                } else {
+                    jboxTip("您不符合补考报名条件")
+                }
+            },null);
         } else {
-            jboxTip("您不符合补考报名条件")
+            if (${isAllowApply eq "Y"}) {
+                var url = "<s:url value ='/jsres/examSignUp/signUp'/>?typeId=${param.typeId}";
+                jboxOpen(url, "补考认证", 800, 350);
+            } else {
+                jboxTip("您不符合补考报名条件")
+            }
         }
+
     }
 
     function  showSignup(signupFlow) {
