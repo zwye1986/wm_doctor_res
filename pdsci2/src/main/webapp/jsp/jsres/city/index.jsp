@@ -424,6 +424,16 @@ function personStatistic(){
     var roleFlag="${GlobalConstant.USER_LIST_CHARGE}";
     jboxLoad("content","<s:url value='/jsres/manage/personStatistic'/>?roleFlag="+roleFlag,true);
 }
+
+// 结业学员统计
+function graduactionStatistics(){
+    jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_CHARGE}&catSpeId=DoctorTrainingSpe", true);
+}
+
+// 应结业学员查询
+function searchGraduactionDoctor(){
+    jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_CHARGE}&catSpeId=DoctorTrainingSpe", true);
+}
 </script>
 <style>
 body{overflow:hidden;}
@@ -547,6 +557,8 @@ body{overflow:hidden;}
                  <i class="icon_menu menu_management"></i>住院医师结业管理
              </dt>
              <%--<dd class="menu_item"><a onclick="asseAudit();">考核资格审核</a></dd>--%>
+             <dd class="menu_item"><a onclick="graduactionStatistics();">结业学员统计</a></dd>
+             <dd class="menu_item"><a onclick="searchGraduactionDoctor();">应结业学员查询</a></dd>
              <dd class="menu_item"><a onclick="asseWaitAudit();">结业考核资格审核</a></dd>
 <%--             <dd class="menu_item"><a onclick="searchAsseList();">考核资格查询</a></dd>--%>
              <%--<dd class="menu_item"><a href="javascript:signUpmain();">补考审核</a></dd>--%>

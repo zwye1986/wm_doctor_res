@@ -3158,7 +3158,7 @@
                             MONTHS_BETWEEN(to_date(substr(rdsp.sch_end_date,0,7),'yyyy-MM'),to_date(substr(rdsp.sch_start_date,0,7),'yyyy-MM'))+1
                             evl_count ,
                             (select count(1) from RES_DOCTOR_SCH_PROCESS_EVAL eval where eval.process_flow=rdsp.process_flow and
-                            eval.record_status='Y') evled_count
+                            eval.record_status='Y' and eval.START_TIME is not null and eval.END_TIME is not null) evled_count
                        FROM RES_DOCTOR_SCH_PROCESS rdsp
                        LEFT JOIN jsres_power_cfg cfg2 ON cfg2.record_status = 'Y'
                                                      AND cfg2.cfg_code =
@@ -6056,7 +6056,7 @@
         to_date(substr(sch_start_date, 0, 7), 'yyyy-MM')) + 1 !=
         (select count(1)
         from RES_DOCTOR_SCH_PROCESS_EVAL eval
-        where eval.process_flow = rdsp.process_flow
+        where eval.process_flow = rdsp.process_flow and eval.START_TIME is not null and eval.END_TIME is not null
         and eval.record_status = 'Y')
     </select>
     <select id="dayAttendListCount" resultType="java.lang.Integer">

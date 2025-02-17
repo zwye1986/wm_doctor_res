@@ -928,6 +928,15 @@
             currentJboxLoadNoData("content", url, true);
         }
 
+        // 结业学员统计-助理全科
+        function graduactionStatisticsAcc(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/graduationDoctorStatisticsMain'/>?roleFlag=${GlobalConstant.USER_LIST_GLOBAL}&catSpeId=AssiGeneral", true);
+        }
+
+        // 应结业学员查询
+        function searchGraduactionDoctorAcc(){
+            jboxLoad("content", "<s:url value='/jsres/graduationStatistics/searchGraduationDoctorList'/>?roleFlag=${GlobalConstant.USER_LIST_GLOBAL}&catSpeId=AssiGeneral", true);
+        }
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -1280,6 +1289,8 @@
                             <dt class="menu_title">
                                 <i class="icon_menu menu_management_complete"></i>助理全科结业管理
                             </dt>
+                            <dd class="menu_item"><a onclick="graduactionStatisticsAcc();">结业学员统计</a></dd>
+                            <dd class="menu_item"><a onclick="searchGraduactionDoctorAcc();">应结业学员查询</a></dd>
                             <%--<dd class="menu_item"><a onclick="testConfig()">考核配置</a></dd>--%>
                             <dd class="menu_item"><a onclick="asseWaitAudit2();">结业考核资格审核</a></dd>
                             <dd class="menu_item"><a onclick="asseAuditList2();">结业考核资格查询</a></dd>

@@ -9,7 +9,7 @@ import com.pinde.res.biz.jswjw.IJswjwBiz;
 import com.pinde.res.biz.jswjw.IJswjwTeacherBiz;
 import com.pinde.res.biz.jswjw.IResDoctorProcessBiz;
 import com.pinde.res.dao.jswjw.ext.*;
-import com.pinde.res.dao.stdp.ext.StdpResDoctorExtMapper;
+import com.pinde.core.common.sci.dao.StdpResDoctorExtMapper;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
