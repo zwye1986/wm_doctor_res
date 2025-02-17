@@ -2077,7 +2077,7 @@
         order by dr.org_flow,dr.session_number desc,DR.SPE_ID,su.user_name
     </select>
 
-    <select id="getDoctorActivityStatisticsMap" resultMap="DeptActivityMap">
+    <select id="getDoctorActivityStatisticsMapForWeb" resultMap="DeptActivityMap">
         SELECT result.user_flow||ACTIVITY_TYPE_ID TYPE_ID,
         ACTIVITY_TYPE_NAME,
         COUNT(1) QTY

@@ -161,7 +161,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 	public Map<String, Object> getDoctorActivityStatisticsMap(String doctorFlow, String startTime, String endTime, String isDept, String userFlow) {
 
 		Map<String, Object> map=new HashMap<>();
-		List<Map<String,String>> datas=activityInfoExtMapper.getDoctorActivityStatisticsMap(doctorFlow,startTime,endTime, isDept, userFlow);
+		List<Map<String,String>> datas=activityInfoExtMapper.getDoctorActivityStatisticsMapForWeb(doctorFlow,startTime,endTime, isDept, userFlow);
 		if(datas!=null)
 		{
 			for(Map<String,String> d:datas)

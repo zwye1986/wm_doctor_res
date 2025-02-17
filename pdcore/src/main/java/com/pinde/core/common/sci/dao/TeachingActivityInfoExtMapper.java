@@ -89,7 +89,7 @@ public interface TeachingActivityInfoExtMapper {
 
 	List<Map<String,Object>> getDoctorActivityStatistics(Map<String, Object> parMp);
 
-	List<Map<String,String>> getDoctorActivityStatisticsMap(@Param("doctorFlow") String doctorFlow, @Param("startTime") String startTime, @Param("endTime") String endTime, @Param("isDept") String isDept, @Param("userFlow") String userFlow);
+	List<Map<String,String>> getDoctorActivityStatisticsMapForWeb(@Param("doctorFlow") String doctorFlow, @Param("startTime") String startTime, @Param("endTime") String endTime, @Param("isDept") String isDept, @Param("userFlow") String userFlow);
 
 	List<Map<String,Object>> getResDoctorActivityStatistics(Map<String, Object> parMp);
 
