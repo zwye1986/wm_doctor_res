@@ -317,6 +317,14 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             model.addAttribute("scorelist", scorelist);
             ResDoctor doctor = resDoctorBiz.readDoctor(signup.getDoctorFlow());
             model.addAttribute("doctor", doctor);
+            // 是否在异常记录表中
+            GraduationDoctorTemp graduationDoctorTemp = jsresGraduationApplyBiz.getGraduationDoctorTemp(signup.getDoctorFlow());
+            // 默认不存在异常记录表
+            String tempDoctorFlag = GlobalConstant.FLAG_N;
+            if(graduationDoctorTemp != null){
+                tempDoctorFlag = GlobalConstant.FLAG_Y;
+            }
+            model.addAttribute("tempDoctorFlag", tempDoctorFlag);
         }
         List<JsresExamSignupLog> logs = doctorRecruitBiz.getAuditLogsBySignupFlow(signupFlow);
         model.addAttribute("logs", logs);
@@ -670,7 +678,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
     public String signList(Model model, String roleFlag,String typeId, Integer currentPage , HttpServletRequest request,
                            String signupYear, String orgFlow, String trainingTypeId,String trainingYears, String trainingSpeId, String datas[],
                            String sessionNumber,  String userName, String idNo, String auditStatusId, String cityId,String signUpTypeId,
-                           String testId,String jointOrgFlag,String tabTag, String joinOrgFlow,String isPostpone
+                           String testId,String jointOrgFlag,String tabTag, String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         SysUser currentUser = GlobalContext.getCurrentUser();
         //查询条件
@@ -874,6 +882,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         param.put("tabTag",tabTag);
         param.put("jointOrgFlow",joinOrgFlow);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         SysUser sysuser=GlobalContext.getCurrentUser();
         List<String> speIds=getSpeIds(sysuser);
         if(speIds!=null && speIds.size() > 0)

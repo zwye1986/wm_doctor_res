@@ -660,6 +660,7 @@
 		<result column="RECRUIT_DATE" jdbcType="VARCHAR"  property="recruitDate"/>
 		<result column="CURR_DEGREE_CATEGORY_NAME" jdbcType="VARCHAR"  property="currDegreeCategoryName"/>
 		<result column="GRADUATION_YEAR" jdbcType="VARCHAR"  property="graduationYear"/>
+		<result column="TEMP_DOCTOR_FLAG" property="tempDoctorFlag" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="queryExamSignUpList" resultMap="signUpMap">
 		SELECT JES.TRAINING_YEARS,
@@ -718,7 +719,8 @@
 		RDR.RECRUIT_DATE,
 		RDR.CURR_DEGREE_CATEGORY_NAME,
 		RD.GRADUATED_NAME,
-		SO.ORG_CITY_NAME
+		SO.ORG_CITY_NAME,
+		CASE WHEN GDT.DOCTOR_FLOW IS NOT NULL THEN '是' ELSE '否' END AS TEMP_DOCTOR_FLAG
 		FROM
 		JSRES_EXAM_SIGNUP JES LEFT JOIN SYS_USER SU ON JES.DOCTOR_FLOW = SU.USER_FLOW
 		LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = SU.USER_FLOW AND RD.RECORD_STATUS = 'Y'
@@ -726,7 +728,11 @@
 		LEFT JOIN PUB_USER_RESUME PUR ON RD.DOCTOR_FLOW = PUR.USER_FLOW AND PUR.RECORD_STATUS = 'Y'
 		LEFT JOIN RES_DOCTOR_RECRUIT RDR ON RD.DOCTOR_FLOW = RDR.DOCTOR_FLOW AND RDR.RECORD_STATUS = 'Y'
 		LEFT JOIN SYS_ORG SO ON RDR.ORG_FLOW = SO.ORG_FLOW AND SO.RECORD_STATUS = 'Y'
-		 WHERE JES.RECORD_STATUS='Y'
+		LEFT JOIN GRADUATION_DOCTOR_TEMP GDT
+		ON GDT.DOCTOR_FLOW = RD.DOCTOR_FLOW
+		AND GDT.RECORD_STATUS = 'Y'
+		AND GDT.EXAM_TYPE = 'reExam'
+	 	WHERE JES.RECORD_STATUS='Y'
 		<if test="org != null">
 			<if test="org.orgProvId != null and org.orgProvId != ''">
 				AND SO.ORG_PROV_ID = #{org.orgProvId}
@@ -826,6 +832,14 @@
 				WHERE T.RECORD_STATUS = 'Y'
 				AND T.TYPE_ID = 'Delay'
 				AND T.DOCTOR_FLOW = RD.DOCTOR_FLOW)
+			</if>
+		</if>
+		<if test="tempDoctorFlag != null and tempDoctorFlag != ''">
+			<if test="tempDoctorFlag == 'Y'.toString()">
+				AND GDT.DOCTOR_FLOW IS NOT NULL
+			</if>
+			<if test="tempDoctorFlag == 'N'.toString()">
+				AND GDT.DOCTOR_FLOW IS NULL
 			</if>
 		</if>
 		order by JES.SIGNUP_YEAR desc,JES.TRAINING_TYPE_ID,JES.TRAINING_SPE_ID,su.id_no

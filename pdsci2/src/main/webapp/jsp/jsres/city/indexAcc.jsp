@@ -4,7 +4,7 @@
 <head>
     <title>江苏省住院医师规范化培训管理平台</title>
     <jsp:include page="/jsp/jsres/htmlhead-jsres.jsp">
-        <jsp:param name="basic" value="true"/>
+        <jsp:param name="basic_bootstrap" value="true"/>
         <jsp:param name="consult" value="true"/>
         <jsp:param name="jbox" value="true"/>
         <jsp:param name="font" value="true"/>

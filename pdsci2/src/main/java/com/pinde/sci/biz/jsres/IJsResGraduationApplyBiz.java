@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
+import com.pinde.core.model.GraduationDoctorTemp;
 import com.pinde.core.model.JsresGraduationApply;
 import com.pinde.core.model.JsresGraduationApplyLog;
 import com.pinde.core.model.JsresGraduationInfo;
@@ -59,5 +60,13 @@ public interface IJsResGraduationApplyBiz {
     List<Map<String,Object>> chargeQueryListForExport2(Map<String, Object> param);
 
     List<Map<String,Object>> chargeQueryApplyList2(Map<String, Object> param);
+
+    /**
+     * @Department：研发部
+     * @Description 查询异常报考记录学员信息
+     * @Author fengxf
+     * @Date 2025/2/17
+     */
+    GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow);
 
 }

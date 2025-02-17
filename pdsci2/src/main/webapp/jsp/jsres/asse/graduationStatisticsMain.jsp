@@ -6,7 +6,6 @@
     <jsp:param name="font" value="true"/>
     <jsp:param name="jquery_form" value="true"/>
     <jsp:param name="jquery_datePicker" value="true"/>
-    <jsp:param name="basic_bootstrap" value="true"/>
     <jsp:param name="bootstrapSelect" value="true"/>
 </jsp:include>
 <head>

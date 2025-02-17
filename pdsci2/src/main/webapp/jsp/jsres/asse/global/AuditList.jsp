@@ -192,6 +192,7 @@ function showApplyImg(imgUrl1,imgUrl2)
                 <th style="min-width: 100px; max-width: 100px; " >报考资格材料编码</th>
                 <th style="min-width: 60px; max-width: 60px; " >培训专业</th>
                 <th style="min-width: 60px; max-width: 60px; " >执业范围</th>
+                <th style="min-width: 60px; max-width: 60px; ">异常报考</th>
                 <c:if test="${param.tabTag eq 'FristWait' or param.tabTag eq 'FristWait2'}">
                     <th style="min-width: 60px; max-width: 60px; ">审核</th>
                 </c:if>
@@ -249,6 +250,7 @@ function showApplyImg(imgUrl1,imgUrl2)
                         <%-- 培训专业 --%>
                     <td style="min-width: 60px; max-width: 60px; " >${doctor.practicingScopeName}</td>
                         <%-- 执业范围 --%>
+                    <td style="min-width: 60px; max-width: 60px; " >${doctor.tempDoctorFlag}</td>
                     <c:if test="${ f eq 'Y'}">
                         <td style="min-width: 60px; max-width: 60px; " >
                             <c:choose>
@@ -305,6 +307,7 @@ function showApplyImg(imgUrl1,imgUrl2)
                 <th>报考资格材料编码</th>
                 <th>培训专业</th>
                 <th>执业范围</th>
+                <th>异常报考</th>
                 <th>审核</th>
                 <c:if test="${param.tabTag ne 'FristWait' or param.tabTag ne 'FristWait2'}">
                     <th>审核状态</th>

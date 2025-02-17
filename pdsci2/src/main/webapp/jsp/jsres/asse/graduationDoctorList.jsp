@@ -157,7 +157,9 @@
                 <th>培训专业</th>
                 <th>年级</th>
                 <th>培训起止时间</th>
-                <th>操作</th>
+                <c:if test="${roleFlag != GlobalConstant.USER_LIST_CHARGE}">
+                    <th>操作</th>
+                </c:if>
             </tr>
             <c:forEach items="${graduationDoctorList}" var="graduationDoctor">
                 <tr>
@@ -170,9 +172,11 @@
                     <td>${graduationDoctor.speName}</td>
                     <td>${graduationDoctor.sessionNumber}</td>
                     <td>${graduationDoctor.trainingDate}</td>
-                    <td>
-                        <a onclick="doctorPassedList('${graduationDoctor.doctorFlow}','${graduationDoctor.recruitFlow}');">详情</a>
-                    </td>
+                    <c:if test="${roleFlag != GlobalConstant.USER_LIST_CHARGE}">
+                        <td>
+                            <a onclick="doctorPassedList('${graduationDoctor.doctorFlow}','${graduationDoctor.recruitFlow}');">详情</a>
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
             <c:if test="${empty graduationDoctorList}">
@@ -230,10 +234,9 @@
 
     // 学员详情
     function doctorPassedList(doctorFlow,recruitFlow){
-        var hideApprove="hideApprove";
+        var hideApprove = "hideApprove";
         var url = "<s:url value='/jsres/manage/province/doctor/doctorPassedList'/>?info=${GlobalConstant.FLAG_Y}&liId="+recruitFlow+"&recruitFlow="+recruitFlow+"&openType=open&doctorFlow="+doctorFlow+"&hideApprove="+hideApprove;
         jboxOpen(url,"学员信息",1050,600);
-
     }
-</script>
-</html>
+    </script>
+    </html>

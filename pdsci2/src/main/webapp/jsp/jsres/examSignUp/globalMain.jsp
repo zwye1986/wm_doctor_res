@@ -364,14 +364,14 @@
 				<td>
 					<select name="trainingSpeId" id="trainingSpeId"class="select" style="width: 128px;">
 						<option value="">全部</option>
-						<c:if test="${param.tabTag eq 'SecondWait'}">
+						<c:if test="${param.tabTag eq 'SecondList'}">
 							<c:forEach items="${dictTypeEnumDoctorTrainingSpeList}" var="dict">
 								<c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">
 									<option <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>
 								</c:if>
 							</c:forEach>
 						</c:if>
-						<c:if test="${param.tabTag eq 'SecondWait2'}">
+						<c:if test="${param.tabTag eq 'SecondList2'}">
 							<c:forEach items="${dictTypeEnumAssiGeneralList}" var="dict">
 								<c:if test="${empty speIds or (pdfn:contain(dict.dictId, speIds))}">
 									<option <c:if test="${param.trainingSpeId eq dict.dictId}">selected="selected"</c:if> value="${dict.dictId}">${dict.dictName}</option>
@@ -399,12 +399,12 @@
 					<%--<select name="trainingTypeId" id="trainingTypeId" class="select" onchange="changeTrainSpes('1')" style="width:128px;">--%>
 					<select name="trainingTypeId" id="trainingTypeId" class="select" style="width:128px;">
 						<%--<option value="">请选择</option>--%>
-						<c:if test="${param.tabTag eq 'SecondWait'}">
+						<c:if test="${param.tabTag eq 'SecondList'}">
 							<option value="DoctorTrainingSpe" selected="selected">住院医师</option>
 							<option value="WMFirst" <c:if test="${param.trainingTypeId eq 'WMFirst'}">selected="selected"</c:if>>一阶段</option>
 							<option value="WMSecond" <c:if test="${param.trainingTypeId eq 'WMSecond'}">selected="selected"</c:if>>二阶段</option>
 						</c:if>
-						<c:if test="${param.tabTag eq 'SecondWait2'}">
+						<c:if test="${param.tabTag eq 'SecondList2'}">
 							<option value="AssiGeneral" selected="selected">助理全科</option>
 						</c:if>
 					</select>
@@ -449,13 +449,25 @@
 						</c:forEach>
 					</select>
 				</td>
+				<td class="td_left">异常报考：</td>
+				<td>
+					<select class="select" name="tempDoctorFlag" style="width: 128px;">
+						<option value="">全部</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_Y}">是
+						</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_N}">否
+						</option>
+					</select>
+				</td>
 				<td class="td_left">人员类型：</td>
 				<td colspan="3">
 					<c:forEach items="${resDocTypeEnumList}" var="type">
 						<label><input type="checkbox" id="${type.id}"value="${type.id}" checked class="docType" name="datas" />${type.name}&nbsp;</label>
 					</c:forEach>
 				</td>
-				<td colspan="6">
+				<td colspan="4">
 					<input class="btn_green" type="button" value="查&#12288;询" onclick="toPage(1);"/>&#12288;
 					<input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>
 				</td>

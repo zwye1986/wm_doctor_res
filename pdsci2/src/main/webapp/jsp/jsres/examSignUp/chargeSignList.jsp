@@ -88,9 +88,10 @@
                 <th>考试编号</th>
                 <th>报考科目</th>
                 <th>培训起止时间</th>
+                <th>异常报考</th>
             </tr>
             <tr>
-                <td colspan="7">无记录！</td>
+                <td colspan="8">无记录！</td>
             </tr>
         </table>
     </div>
@@ -120,6 +121,7 @@
                 <th class="fixedBy">考试编号</th>
                 <th class="fixedBy">报考科目</th>
                 <th class="fixedBy">培训起止时间</th>
+                <th class="fixedBy">异常报考</th>
             </tr>
             </thead>
             <tbody>
@@ -177,6 +179,7 @@
                         <c:if test="${s.signupTypeId eq 'Skill'}">技能</c:if>
                     </td>
                     <td class="by">${trainMap[startDate]}&nbsp;~&nbsp;${trainMap[endTime]}</td>
+                    <td class="by">${s.tempDoctorFlag}</td>
                 </tr>
             </c:forEach>
             </tbody>

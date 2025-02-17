@@ -2255,7 +2255,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     public String auditList(Model model,String roleFlag,Integer currentPage ,HttpServletRequest request, String orgFlow,String trainingTypeId,
                             String trainingSpeId,String datas[], String sessionNumber, String graduationYear,String qualificationMaterialId,
                             String passFlag, String userName,String idNo, String completeBi,String auditBi,String auditStatusId,String testId,
-                            String isNotMatch,String applyYear,String tabTag,String joinOrgFlow,String isPostpone
+                            String isNotMatch,String applyYear,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         SysUser currentUser = GlobalContext.getCurrentUser();
 //        SysOrg currentOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
@@ -2313,6 +2313,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         param.put("tabTag",tabTag);
 
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         //判断是否是协同基地
         String isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResJointOrg> tempJoinOrgs = jointOrgBiz.searchResJointByJointOrgFlow(currentUser.getOrgFlow());

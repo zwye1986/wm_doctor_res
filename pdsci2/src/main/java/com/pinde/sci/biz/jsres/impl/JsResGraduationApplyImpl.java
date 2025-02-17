@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.sci.dao.GraduationDoctorTempMapper;
 import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
 import com.pinde.core.common.sci.dao.JsresGraduationApplyLogMapper;
 import com.pinde.core.common.sci.dao.JsresGraduationApplyMapper;
@@ -66,6 +67,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     private IPubUserResumeBiz userResumeBiz;
     @Resource
     private IResJointOrgBiz jointOrgBiz;
+    @Resource
+    private GraduationDoctorTempMapper graduationDoctorTempMapper;
+
 
     private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
 
@@ -347,6 +351,18 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Override
     public List<Map<String,Object>> chargeQueryApplyList2(Map<String, Object> param) {
         return graduationApplyExtMapper.chargeQueryApplyList2(param);
+    }
+
+    /**
+     * @param doctorFlow
+     * @Department：研发部
+     * @Description 查询异常报考记录学员信息
+     * @Author fengxf
+     * @Date 2025/2/17
+     */
+    @Override
+    public GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow) {
+        return graduationDoctorTempMapper.selectByPrimaryKey(doctorFlow);
     }
 
     @Override

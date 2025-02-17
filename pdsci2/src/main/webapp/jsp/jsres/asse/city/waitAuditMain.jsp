@@ -460,7 +460,19 @@ function exportInfo()
 									  name="datas"/>${type.name}&nbsp;</label>
 					</c:forEach>
 				</td>
-				<td colspan="3" style="text-align: left"><label><input type="checkbox" value="Y" name="isNotMatch" />培训专业与执业范围不匹配</label></td>
+				<td colspan="2" style="text-align: left"><label><input type="checkbox" value="Y" name="isNotMatch" />培训专业与执业范围不匹配</label></td>
+				<td class="td_left">异常报考：</td>
+				<td>
+					<select class="select" name="tempDoctorFlag" style="width: 128px;">
+						<option value="">全部</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_Y}">是
+						</option>
+						<option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+								value="${GlobalConstant.FLAG_N}">否
+						</option>
+					</select>
+				</td>
 			</tr>
 		</table>
 		<div>

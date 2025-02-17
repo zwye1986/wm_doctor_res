@@ -921,7 +921,7 @@
 		</div>
 		</c:if>
 		<div class="main_bd" >
-			<h4>审核意见</h4>
+			<h4>审核意见<c:if test="${tempDoctorFlag eq 'Y'}"><font color="red">（该学员为异常报考人员，请谨慎审核！）</font></c:if></h4>
 			<form id="myform">
 				<table border="0" cellpadding="0" cellspacing="0" style="border:none; width:99%;text-align: center;"class="base_info" >
 					<colgroup>

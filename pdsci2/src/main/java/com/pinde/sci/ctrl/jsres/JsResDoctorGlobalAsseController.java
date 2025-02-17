@@ -222,7 +222,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                                    String educationId,String trainYear,String materialName,String qualificationMaterialCode, String qualificationMaterialUrl,
                                    String schMonthSearch, String schMonth, String proveFileUrl, String AfterEvaluation,String skillScoreSearch,String skillScore,
                                    String avgCompleteSearch,String avgComplete,String avgAuditSearch,String avgAudit,String completeTime,String qualificationName,
-                                   String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone
+                                   String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         //查询条件
         Map<String,Object> param=new HashMap<>();
@@ -301,6 +301,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         param.put("roleFlag",roleFlag);
         param.put("jointOrgFlow",joinOrgFlow);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
         // stzyy 该省厅账号特殊处理 不允许查看审核全科和助理全科专业的学员  禅道需求316 提出人：徐开宏 2020年6月23日15:20:40
         // stqky 该省厅账号特殊处理 只允许查看审核全科和助理全科专业的学员
         List<String> speIds = getSpeIds(sysuser);
@@ -422,7 +423,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
                             String educationId,String trainYear,String materialName,String qualificationMaterialCode, String qualificationMaterialUrl,
                             String schMonthSearch, String schMonth, String proveFileUrl, String AfterEvaluation,String skillScoreSearch,String skillScore,
                             String avgCompleteSearch,String avgComplete,String avgAuditSearch,String avgAudit,String completeTime,String qualificationName,
-                            String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone
+                            String AfterEvaluationSearch,String AfterEvaluationScale,String passFile,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
     ){
         //查询条件
         Map<String,Object> param=new HashMap<>();
@@ -504,6 +505,7 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         param.put("AfterEvaluationSearch",AfterEvaluationSearch);
         param.put("AfterEvaluationScale",AfterEvaluationScale);
         param.put("isPostpone",isPostpone);
+        param.put("tempDoctorFlag", tempDoctorFlag);
 //        if(StringUtil.isNotBlank(AfterEvaluation)) {
 //            param.put("AfterEvaluation", DateUtil.getDate(AfterEvaluation));
 //        }

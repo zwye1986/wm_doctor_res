@@ -46,10 +46,10 @@
 
     .searchTable .td_left {
         word-wrap: break-word;
-        /*width: 6em;*/
+        width: 6em;
         height: auto;
         line-height: auto;
-        /*text-align: right;*/
+        text-align: right;
     }
 
     .searchTable .td_right{
@@ -326,15 +326,25 @@
                         </option>
                     </select>
                 </td>
+                <td class="td_left">异常报考：</td>
+                <td class="td_right">
+                    <select class="select" name="tempDoctorFlag">
+                        <option value="">全部</option>
+                        <option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_Y}">selected="selected"</c:if>
+                                value="${GlobalConstant.FLAG_Y}">是
+                        </option>
+                        <option <c:if test="${param.tempDoctorFlag eq GlobalConstant.FLAG_N}">selected="selected"</c:if>
+                                value="${GlobalConstant.FLAG_N}">否
+                        </option>
+                    </select>
+                </td>
                 <td class="td_left">人员类型：</td>
-                <td colspan="3">
+                <td colspan="3" style="text-align: left;">
                     <c:forEach items="${resDocTypeEnumList}" var="type">
                         <label><input type="checkbox" id="${type.id}" value="${type.id}" checked class="docType"
                                       name="datas"/>${type.name}&nbsp;</label>
                     </c:forEach>
                 </td>
-            </tr>
-            <tr>
                 <td colspan="2" >
                     <input class="btn_green" type="button" value="查&#12288;询" onclick="toPage();"/>&#12288;
                     <input class="btn_green" type="button" value="导&#12288;出" onclick="exportInfo();"/>

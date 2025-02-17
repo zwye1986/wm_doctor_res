@@ -99,9 +99,10 @@
 						<th>证件号码</th>
 						<th>审核状态</th>
 						<th>操作</th>
+						<th>异常报考</th>
 					</tr>
 					<tr>
-						<td colspan="12" >无记录！</td>
+						<td colspan="13" >无记录！</td>
 					</tr>
 				</table>
 			</div>
@@ -125,6 +126,7 @@
 				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">培训年限</th>
 				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">证件号码</th>
 				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">审核状态</th>
+				<th style="min-width: 150px; max-width: 150px; " class="fixedBy">异常报考</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -160,6 +162,7 @@
 					</td>
 					<td style="min-width: 150px; max-width: 150px; " class="by">${s.idNo}</td>
 					<td style="min-width: 150px; max-width: 150px; " class="by">${s.auditStatusName}</td>
+					<td style="min-width: 150px; max-width: 150px; " class="by">${s.tempDoctorFlag}</td>
 				</tr>
 			</c:forEach>
 			</tbody>
