@@ -1513,7 +1513,7 @@ function showReductionImg(recordFlow) {
 							   value="提交认证"/>&#12288;&#12288;
 					</c:if>
 
-					<c:if test="${doctorRecruit.catSpeId ne 'DoctorTrainingSpe' and submitBtnShow eq 'Y'}">
+					<c:if test="${doctorRecruit.catSpeId ne 'DoctorTrainingSpe'}">
 						<input type="button" class="btn_green" id="submitBtn" onclick="apply('${resDoctor.doctorFlow}','${canApply}');"
 							   value="提交认证"/>&#12288;&#12288;
 					</c:if>

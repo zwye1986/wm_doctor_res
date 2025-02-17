@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.pinde.app.common.GeneralController;
 import com.pinde.app.common.InitConfig;
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import com.pinde.core.common.PasswordHelper;
 import com.pinde.core.common.enums.*;
@@ -12,7 +13,7 @@ import com.pinde.core.common.enums.osca.AuditStatusEnum;
 import com.pinde.core.common.enums.osca.DoctorScoreEnum;
 import com.pinde.core.common.enums.osca.ScanDocStatusEnum;
 import com.pinde.core.common.enums.osca.SignStatusEnum;
-import com.pinde.core.common.sci.dao.VerificationCodeRecordMapper;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.utils.ObjectUtils;
@@ -25,9 +26,6 @@ import com.pinde.res.biz.osca.IOscaAppBiz;
 import com.pinde.res.biz.stdp.*;
 import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.res.dao.jswjw.ext.TempMapper;
-import com.pinde.core.common.sci.dao.ResOrgCkxzMapper;
-import com.pinde.core.common.sci.dao.SysCfgMapper;
-import com.pinde.core.common.sci.dao.SysDictMapper;
 import com.pinde.sci.util.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -135,6 +133,8 @@ public class JswjwWxController extends GeneralController {
     private RedisTemplate<String, String> redisTemplate;
     @Autowired
     private ResOrgCkxzMapper resOrgCkxzMapper;
+    @Autowired
+    private GraduationDoctorTempMapper graduationDoctorTempMapper;
 
     @Autowired
     IAccessTokenService accessTokenService;
@@ -6897,6 +6897,7 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("user", user);
         ResDoctor doctor = jswjwBiz.readResDoctor(userFlow);
         resultMap.put("doctor", doctor);
+        ResDoctorRecruit resDoctorRecruit = null;
         String currYear = DateUtil.getYear();
         resultMap.put("currYear", currYear);
         String currDateTime = DateUtil.getCurrDateTime2();
@@ -6918,86 +6919,137 @@ public class JswjwWxController extends GeneralController {
         List<JsresExamSignup> signups = jswjwBiz.readDoctorExanSignUps(user.getUserFlow());
         resultMap.put("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
-        String isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-        // 已结业学员 不允许补考报名 禅道bug：2648
-        if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+        String isAllowApply = GlobalConstant.FLAG_N;
+//        // 已结业学员 不允许补考报名 禅道bug：2648
+//        if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
+//            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//        }
+//        // isAllowApply为N 不能参加补考，无需在做结业申请判断
+//        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
+//            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
+//            recruit.setDoctorFlow(doctor.getDoctorFlow());
+//            recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+//            //在系统中是否有资格审核记录
+//            if (recruitList != null && recruitList.size() > 0) {
+//                ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
+//                if (resDoctorRecruit != null) {
+//                    JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
+//                    if (apply == null) {
+//                        // 2019级及以前助理全科学员走补考
+//                        if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
+//                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                        }else{
+//                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        // isAllowApply为N 不能参加补考，无需在做成绩判断
+//        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
+//            String isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            String isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            String isSkill = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//            String isTheory = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//            String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
+////            List<ResScore> resScoreList = resScoreBiz.selectByExampleWithBLOBs(userFlow);
+//            List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
+//            if (resScoreList != null && resScoreList.size() > 0) {
+//                //3年内的技能成绩集合
+//                List<ResScore> skillList = resScoreList.stream().filter(resScore -> "SkillScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
+//                //3年内的理论成绩集合
+//                List<ResScore> theoryList = resScoreList.stream().filter(resScore -> "TheoryScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
+//                if (skillList.size() > 0) {
+//                    for (ResScore resScore : skillList) {
+//                        if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
+//                            //3年内的技能成绩有合格的
+//                            isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                            break;
+//                        }
+//                    }
+//                } else {
+//                    isSkill = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//                // 如果技能考试没有合格记录 无需在判断理论成绩
+//                if (theoryList.size() > 0) {
+//                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(isSkillQualifed)) {
+//                        for (ResScore resScore : theoryList) {
+//                            if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
+//                                //3年内的理论成绩有合格的
+//                                isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    isTheory = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//            }
+//            // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
+//            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSkill) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isTheory)) {
+//                // 2019/2018/2017级助理全科全走补考报名
+//                if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
+//                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                }else{
+//                    //从未参加过考核
+//                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//            }
+//            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSkillQualifed) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
+//                //3年内理论成绩和技能成绩都合格
+//                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            }
+//        }
+        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        recruit.setDoctorFlow(doctor.getDoctorFlow());
+        recruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+        if (recruitList != null && recruitList.size() > 0) {
+            resDoctorRecruit = recruitList.get(0);
         }
-        // isAllowApply为N 不能参加补考，无需在做结业申请判断
-        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
-            recruit.setDoctorFlow(doctor.getDoctorFlow());
-            recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
-            //在系统中是否有资格审核记录
-            if (recruitList != null && recruitList.size() > 0) {
-                ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
-                if (resDoctorRecruit != null) {
-                    JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
-                    if (apply == null) {
-                        // 2019级及以前助理全科学员走补考
-                        if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                        }else{
-                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
-                        }
-                    }
-                }
+        boolean inStudy = true;
+        // 住院医师，在培并且年级在当前年-6跟-1之间
+        if (resDoctorRecruit == null || !"20".equals(resDoctorRecruit.getDoctorStatusId()) || !(resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 6)) >= 0 && resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 1)) <= 0)) {
+            inStudy = false;
+        }
+        // 助理全科，在培并且年级在当前年-5跟-2之间
+        boolean assiInStudy = true;
+        if (resDoctorRecruit == null || !"20".equals(resDoctorRecruit.getDoctorStatusId()) || !(resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 5)) >= 0 && resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 2)) <= 0)) {
+            assiInStudy = false;
+        }
+        // 学员本轮规培内，当前年-首次有成绩（即非“缺考”）的年份，小于3年
+        boolean hasFirstExamRecord = false;
+        List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
+        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && (!"2".equals(e.getTheoryScore().toString()) || !"2".equals(e.getSkillScore().toString()))).collect(Collectors.toList());
+        for (ResScore resScore : scoreList) {
+            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) <= 0) {
+                hasFirstExamRecord = true;
+                break;
             }
         }
-        // isAllowApply为N 不能参加补考，无需在做成绩判断
-        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
-            String isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
-            String isSkill = com.pinde.core.common.GlobalConstant.FLAG_Y;
-            String isTheory = com.pinde.core.common.GlobalConstant.FLAG_Y;
-            String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
-//            List<ResScore> resScoreList = resScoreBiz.selectByExampleWithBLOBs(userFlow);
-            List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
-            if (resScoreList != null && resScoreList.size() > 0) {
-                //3年内的技能成绩集合
-                List<ResScore> skillList = resScoreList.stream().filter(resScore -> "SkillScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
-                //3年内的理论成绩集合
-                List<ResScore> theoryList = resScoreList.stream().filter(resScore -> "TheoryScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
-                if (skillList.size() > 0) {
-                    for (ResScore resScore : skillList) {
-                        if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
-                            //3年内的技能成绩有合格的
-                            isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                            break;
+        // 特殊表中有确认补考记录优先级最高
+        GraduationDoctorTempExample graduationDoctorTempExample = new GraduationDoctorTempExample();
+        graduationDoctorTempExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow()).andExamTypeEqualTo("reExam");
+        List<GraduationDoctorTemp> tempList = graduationDoctorTempMapper.selectByExample(graduationDoctorTempExample);
+        if (CollectionUtils.isNotEmpty(tempList) && resDoctorRecruit != null && "20".equals(resDoctorRecruit.getDoctorStatusId()) && inTime) {
+            isAllowApply = GlobalConstant.FLAG_Y;
+        } else {
+            if (resDoctorRecruit != null && StringUtil.isNotBlank(resDoctorRecruit.getCatSpeId())) {
+                switch (resDoctorRecruit.getCatSpeId()){
+                    case "DoctorTrainingSpe" :
+                        if (inTime && inStudy && hasFirstExamRecord) {
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }
-                    }
-                } else {
-                    isSkill = com.pinde.core.common.GlobalConstant.FLAG_N;
-                }
-                // 如果技能考试没有合格记录 无需在判断理论成绩
-                if (theoryList.size() > 0) {
-                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(isSkillQualifed)) {
-                        for (ResScore resScore : theoryList) {
-                            if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
-                                //3年内的理论成绩有合格的
-                                isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                                break;
-                            }
+                        break;
+                    case "AssiGeneral" :
+                        if (inTime && assiInStudy && hasFirstExamRecord) {
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }
-                    }
-                } else {
-                    isTheory = com.pinde.core.common.GlobalConstant.FLAG_N;
+                        break;
+                    default:
+                        break;
                 }
-            }
-            // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSkill) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isTheory)) {
-                // 2019/2018/2017级助理全科全走补考报名
-                if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                }else{
-                    //从未参加过考核
-                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
-                }
-            }
-            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSkillQualifed) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
-                //3年内理论成绩和技能成绩都合格
-                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
             }
         }
         resultMap.put("isAllowApply", isAllowApply);
@@ -7316,38 +7368,84 @@ public class JswjwWxController extends GeneralController {
                 resultMap.put("startDate", startTime);
                 resultMap.put("endDate", endTime);
             }
-            String apply = com.pinde.core.common.GlobalConstant.FLAG_N;
+            String apply = GlobalConstant.FLAG_N;
+            GraduationDoctorTempExample graduationDoctorTempExample = new GraduationDoctorTempExample();
+            graduationDoctorTempExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(sysUser.getUserFlow()).andExamTypeEqualTo("firstExam");
+            List<GraduationDoctorTemp> tempList = graduationDoctorTempMapper.selectByExample(graduationDoctorTempExample);
             //判断为当前年，当前提交时间段内，学员非二阶段，且未提交的可以提交
             String currYear = DateUtil.getYear();
-            String currTime = DateUtil.getCurrDateTime();
-            String currDateTime = DateUtil.getCurrDateTime2();
+            // 是否在培
+            boolean inStudy = false;
+            if ("20".equals(recruit.getDoctorStatusId())) {
+                inStudy = true;
+            }
+            // 来源是否规范
+            // 住院医师
+            boolean isValidate = false;
+            if (CollectionUtils.isNotEmpty(tempList) || (recruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 6)) >= 0 && recruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 1)) <= 0)) {
+                isValidate = true;
+            }
+            // 助理全科
+            boolean isAssiValidate = false;
+            if (CollectionUtils.isNotEmpty(tempList) || (recruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 5)) >= 0 && recruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 2)) <= 0)) {
+                isAssiValidate = true;
+            }
+            // 结业年份是否是当前年
+            boolean isActualGraduate = false;
+            if (DateUtil.getYear().equals(recruit.getGraduationYear())) {
+                isActualGraduate = true;
+            }
+            // 结业成绩是否符合规范
+            List<ResScore> resScoreList = jswjwBiz.selectAllScore(sysUser.getUserFlow(), null);
+            List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && (!"2".equals(e.getTheoryScore().toString()) || !"2".equals(e.getSkillScore().toString()))).collect(Collectors.toList());
+            boolean isScoreValidate = false;
+            if (CollectionUtils.isEmpty(scoreList) || CollectionUtils.isNotEmpty(tempList)) {
+                isScoreValidate = true;
+            }
+
+            boolean isWaitAudit = false;//是否待审核
+            if (jsresGraduationApply != null && StringUtil.isNotBlank(jsresGraduationApply.getAuditStatusId())
+                    && (!"JointAuditing".equals(jsresGraduationApply.getAuditStatusId()) || !"Auditing".equals(jsresGraduationApply.getAuditStatusId())
+                    || !"WaitChargePass".equals(jsresGraduationApply.getAuditStatusId()) || !"WaitGlobalPass".equals(jsresGraduationApply.getAuditStatusId()))
+            ) {
+                isWaitAudit = true;
+            }
             String orgFlow = sysUser.getOrgFlow();
             if (StringUtil.isBlank(orgFlow)) {
                 orgFlow = resDoctor.getOrgFlow();
             }
-            List<ResJointOrg> resJointOrgList = jswjwBiz.searchResJointByJointOrgFlow(orgFlow);
+            List<ResJointOrg> resJointOrgList = jswjwBiz.selectByJointOrgFlow(orgFlow);
             if (resJointOrgList != null && resJointOrgList.size() > 0) {
                 orgFlow = resJointOrgList.get(0).getOrgFlow();
             }
-            SysOrg sysOrg = jswjwBiz.getOrg(orgFlow);
+            SysOrg sysOrg = jswjwBiz.readSysOrg(orgFlow);
+            String currDateTime = DateUtil.getCurrDateTime2();
             List<ResTestConfig> resTestConfigList = jswjwBiz.findEffective(currDateTime, sysOrg.getOrgCityId());
             //当前城市的学员有没有正在进行的考试
-            Boolean inTime = resTestConfigList.size() > 0 ? true : false;
+            boolean inTime = resTestConfigList.size() > 0;
+            if (StringUtil.isNotBlank(recruit.getCatSpeId())) {
+                switch (recruit.getCatSpeId()){
+                    case "DoctorTrainingSpe" :
+                        if (!TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId()) && inTime && inStudy && isValidate && isActualGraduate && isScoreValidate && !isWaitAudit) {
+                            apply = GlobalConstant.FLAG_Y;
+                        }
+                        break;
+                    case "AssiGeneral" :
+                        if (!TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId()) && inTime && inStudy && isAssiValidate && isActualGraduate && isScoreValidate && !isWaitAudit) {
+                            apply = GlobalConstant.FLAG_Y;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             String inApplyTime = resTestConfigList.size() > 0 ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N;
             // 判断学员有没有重新提交
             if (null != jsresGraduationApply) {
                 // 查询结业申请创建时间内的考试时间没有结束的考试信息
                 resTestConfigList = jswjwBiz.findEffectiveByParam(currDateTime, DateUtil.transDateTime(jsresGraduationApply.getCreateTime()), sysOrg.getOrgCityId());
                 inApplyTime = resTestConfigList.size() > 0 ? com.pinde.core.common.GlobalConstant.FLAG_Y : com.pinde.core.common.GlobalConstant.FLAG_N;
-            }
-            Boolean isWaitAudit = false;//是否待审核
-            if (jsresGraduationApply != null && StringUtil.isNotBlank(jsresGraduationApply.getAuditStatusId())) {
-                isWaitAudit = true;
-            }
-            if (recruit != null && currYear.equals(recruit.getGraduationYear()) && inTime
-                    && !com.pinde.core.common.enums.TrainCategoryEnum.WMSecond.getId().equals(recruit.getCatSpeId())
-                    && !isWaitAudit) {
-                apply = com.pinde.core.common.GlobalConstant.FLAG_Y;
             }
             //是否是全科、助理全科、全科方向（中医）、全科方向（西医）
             String isAssiGeneral = "";
@@ -7386,12 +7484,12 @@ public class JswjwWxController extends GeneralController {
             } else {
                 resultMap.put("needChange", com.pinde.core.common.GlobalConstant.FLAG_N);
             }
-            // 2019级以前的助理全科学员只能走补考报名
-            if("2019".compareTo(resDoctor.getSessionNumber()) >= 0 && "50".equals(resDoctor.getTrainingSpeId())){
-                resultMap.put("submitBtnShow", com.pinde.core.common.GlobalConstant.FLAG_N);
-            }else{
-                resultMap.put("submitBtnShow", com.pinde.core.common.GlobalConstant.FLAG_Y);
-            }
+//            // 2019级以前的助理全科学员只能走补考报名
+//            if("2019".compareTo(resDoctor.getSessionNumber()) >= 0 && "50".equals(resDoctor.getTrainingSpeId())){
+//                resultMap.put("submitBtnShow", com.pinde.core.common.GlobalConstant.FLAG_N);
+//            }else{
+//                resultMap.put("submitBtnShow", com.pinde.core.common.GlobalConstant.FLAG_Y);
+//            }
         }
         //处理轮转数据
         assDataList(resultMap);
@@ -8128,6 +8226,7 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("user", user);
         ResDoctor doctor = jswjwBiz.readDoctor(user.getUserFlow());
         resultMap.put("doctor", doctor);
+        ResDoctorRecruit resDoctorRecruit = null;
         String currYear = DateUtil.getYear();
         resultMap.put("currYear", currYear);
         String currDateTime = DateUtil.getCurrDateTime2();
@@ -8150,84 +8249,135 @@ public class JswjwWxController extends GeneralController {
         resultMap.put("signups", signups);
         //是否有补考报名的资格（在系统中有资格审核记录且学员为非合格人员才有资格）
         String isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-        // 已结业学员 不允许补考报名 禅道bug：2648
-        if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
-            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//        // 已结业学员 不允许补考报名 禅道bug：2648
+//        if (doctor != null && "21".equals(doctor.getDoctorStatusId())) {
+//            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//        }
+//        // isAllowApply为N 不能参加补考，无需在做结业申请判断
+//        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
+//            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
+//            recruit.setDoctorFlow(doctor.getDoctorFlow());
+//            recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+//            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+//            //在系统中是否有资格审核记录
+//            if (recruitList != null && recruitList.size() > 0) {
+//                ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
+//                if (resDoctorRecruit != null) {
+//                    JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
+//                    if (apply == null) {
+//                        // 2019级及以前助理全科学员走补考
+//                        if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
+//                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                        }else{
+//                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        // isAllowApply为N 不能参加补考，无需在做成绩判断
+//        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
+//            String isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            String isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            String isSkill = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//            String isTheory = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//            String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
+//            List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
+//            if (resScoreList != null && resScoreList.size() > 0) {
+//                //3年内的技能成绩集合
+//                List<ResScore> skillList = resScoreList.stream().filter(resScore -> "SkillScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
+//                //3年内的理论成绩集合
+//                List<ResScore> theoryList = resScoreList.stream().filter(resScore -> "TheoryScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
+//                if (skillList.size() > 0) {
+//                    for (ResScore resScore : skillList) {
+//                        if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
+//                            //3年内的技能成绩有合格的
+//                            isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                            break;
+//                        }
+//                    }
+//                } else {
+//                    isSkill = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//                // 如果技能考试没有合格记录 无需在判断理论成绩
+//                if (theoryList.size() > 0) {
+//                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(isSkillQualifed)) {
+//                        for (ResScore resScore : theoryList) {
+//                            if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
+//                                //3年内的理论成绩有合格的
+//                                isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    isTheory = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//            }
+//            // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
+//            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSkill) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isTheory)) {
+//                // 2019/2018/2017级助理全科全走补考报名
+//                if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
+//                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
+//                }else{
+//                    //从未参加过考核
+//                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//                }
+//            }
+//            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSkillQualifed) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
+//                //3年内理论成绩和技能成绩都合格
+//                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
+//            }
+//        }
+        ResDoctorRecruit recruit = new ResDoctorRecruit();
+        recruit.setDoctorFlow(doctor.getDoctorFlow());
+        recruit.setRecordStatus(GlobalConstant.RECORD_STATUS_Y);
+        List<ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
+        if (recruitList != null && recruitList.size() > 0) {
+            resDoctorRecruit = recruitList.get(0);
         }
-        // isAllowApply为N 不能参加补考，无需在做结业申请判断
-        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            com.pinde.core.model.ResDoctorRecruit recruit = new ResDoctorRecruit();
-            recruit.setDoctorFlow(doctor.getDoctorFlow());
-            recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-            List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
-            //在系统中是否有资格审核记录
-            if (recruitList != null && recruitList.size() > 0) {
-                ResDoctorRecruit resDoctorRecruit = recruitList.get(0);
-                if (resDoctorRecruit != null) {
-                    JsresGraduationApply apply = jswjwBiz.searchByRecruitFlow(resDoctorRecruit.getRecruitFlow(), "");
-                    if (apply == null) {
-                        // 2019级及以前助理全科学员走补考
-                        if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                        }else{
-                            isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
-                        }
-                    }
-                }
+        boolean inStudy = true;
+        // 住院医师，在培并且年级在当前年-6跟-1之间
+        if (resDoctorRecruit == null || !"20".equals(resDoctorRecruit.getDoctorStatusId()) || !(resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 6)) >= 0 && resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 1)) <= 0)) {
+            inStudy = false;
+        }
+        // 助理全科，在培并且年级在当前年-5跟-2之间
+        boolean assiInStudy = true;
+        if (resDoctorRecruit == null || !"20".equals(resDoctorRecruit.getDoctorStatusId()) || !(resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 5)) >= 0 && resDoctorRecruit.getSessionNumber().compareTo(String.valueOf(Integer.parseInt(currYear) - 2)) <= 0)) {
+            assiInStudy = false;
+        }
+        // 学员本轮规培内，当前年-首次有成绩（即非“缺考”）的年份，小于3年
+        boolean hasFirstExamRecord = false;
+        List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
+        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && (!"2".equals(e.getTheoryScore().toString()) || !"2".equals(e.getSkillScore().toString()))).collect(Collectors.toList());
+        for (ResScore resScore : scoreList) {
+            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) <= 0) {
+                hasFirstExamRecord = true;
+                break;
             }
         }
-        // isAllowApply为N 不能参加补考，无需在做成绩判断
-        if (!com.pinde.core.common.GlobalConstant.RECORD_STATUS_N.equals(isAllowApply)) {
-            String isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
-            String isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_N;
-            String isSkill = com.pinde.core.common.GlobalConstant.FLAG_Y;
-            String isTheory = com.pinde.core.common.GlobalConstant.FLAG_Y;
-            String validYear = String.valueOf(Integer.valueOf(DateUtil.getYear()) - 3);
-            List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
-            if (resScoreList != null && resScoreList.size() > 0) {
-                //3年内的技能成绩集合
-                List<ResScore> skillList = resScoreList.stream().filter(resScore -> "SkillScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
-                //3年内的理论成绩集合
-                List<ResScore> theoryList = resScoreList.stream().filter(resScore -> "TheoryScore".equals(resScore.getScoreTypeId()) && StringUtil.isNotBlank(resScore.getScorePhaseId()) && validYear.compareTo(resScore.getScorePhaseId()) < 0).collect(Collectors.toList());
-                if (skillList.size() > 0) {
-                    for (ResScore resScore : skillList) {
-                        if ("1".equals(String.valueOf(resScore.getSkillScore()))) {
-                            //3年内的技能成绩有合格的
-                            isSkillQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                            break;
+        // 特殊表中有确认补考记录优先级最高
+        GraduationDoctorTempExample graduationDoctorTempExample = new GraduationDoctorTempExample();
+        graduationDoctorTempExample.createCriteria().andRecordStatusEqualTo(GlobalConstant.FLAG_Y).andDoctorFlowEqualTo(user.getUserFlow()).andExamTypeEqualTo("reExam");
+        List<GraduationDoctorTemp> tempList = graduationDoctorTempMapper.selectByExample(graduationDoctorTempExample);
+        if (CollectionUtils.isNotEmpty(tempList) && resDoctorRecruit != null && "20".equals(resDoctorRecruit.getDoctorStatusId()) && inTime) {
+            isAllowApply = GlobalConstant.FLAG_Y;
+        } else {
+            if (resDoctorRecruit != null && StringUtil.isNotBlank(resDoctorRecruit.getCatSpeId())) {
+                switch (resDoctorRecruit.getCatSpeId()){
+                    case "DoctorTrainingSpe" :
+                        if (inTime && inStudy && hasFirstExamRecord) {
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }
-                    }
-                } else {
-                    isSkill = com.pinde.core.common.GlobalConstant.FLAG_N;
-                }
-                // 如果技能考试没有合格记录 无需在判断理论成绩
-                if (theoryList.size() > 0) {
-                    if (com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y.equals(isSkillQualifed)) {
-                        for (ResScore resScore : theoryList) {
-                            if ("1".equals(String.valueOf(resScore.getTheoryScore()))) {
-                                //3年内的理论成绩有合格的
-                                isTheoryQualifed = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                                break;
-                            }
+                        break;
+                    case "AssiGeneral" :
+                        if (inTime && assiInStudy && hasFirstExamRecord) {
+                            isAllowApply = GlobalConstant.FLAG_Y;
                         }
-                    }
-                } else {
-                    isTheory = com.pinde.core.common.GlobalConstant.FLAG_N;
+                        break;
+                    default:
+                        break;
                 }
-            }
-            // 需求变更2018（不含）届以前学员 不做该判断  未参加过考核也可以补考
-            if ("2018".compareTo(doctor.getSessionNumber()) <= 0 && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isSkill) && com.pinde.core.common.GlobalConstant.FLAG_N.equals(isTheory)) {
-                // 2019/2018/2017级助理全科全走补考报名
-                if("2019".compareTo(doctor.getSessionNumber()) >= 0 && doctor.getTrainingSpeId().equals("50")){
-                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_Y;
-                }else{
-                    //从未参加过考核
-                    isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
-                }
-            }
-            if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isSkillQualifed) && com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isTheoryQualifed)) {
-                //3年内理论成绩和技能成绩都合格
-                isAllowApply = com.pinde.core.common.GlobalConstant.FLAG_N;
             }
         }
         resultMap.put("isAllowApply", isAllowApply);
