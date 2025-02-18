@@ -18,7 +18,6 @@ import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;
 import com.pinde.res.dao.jswjw.ext.*;
-import com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.core.common.sci.dao.StdpResDoctorExtMapper;
 import com.pinde.core.common.sci.dao.TeachingActivityInfoExtMapper;
