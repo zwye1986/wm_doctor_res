@@ -1,4 +1,4 @@
-package com.pinde.res.dao.jswjw.ext;
+package com.pinde.core.common.sci.dao;
 
 import com.pinde.core.model.*;
 import org.apache.ibatis.annotations.Param;
@@ -10,11 +10,7 @@ public interface TempMapper {
 
 	int updateRecruitAsseInfo(@Param("applyYear") String applyYear);
 
-	int deleteUriAuditInfo();
-
 	void insertAuditInfo();
-
-	void callDeptDetail();
 
 	void deleteDeptTemp();
 
@@ -44,7 +40,7 @@ public interface TempMapper {
 
 	void deleteDeptDetail(@Param("applyYear") String applyYear);
 
-//	void insertDeptDetail(@Param("applyYear") String applyYear);
+	void insertDeptDetail(@Param("applyYear") String applyYear);
 
 	void saveRegisteManua(@Param("registeManua") String registeManua, @Param("recruitFlow") String recruitFlow, @Param("applyYear") String applyYear);
 

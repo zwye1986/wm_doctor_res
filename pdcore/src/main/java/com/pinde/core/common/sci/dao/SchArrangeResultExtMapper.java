@@ -1,9 +1,7 @@
-package com.pinde.sci.dao.sch;
+package com.pinde.core.common.sci.dao;
 
-
-import com.pinde.core.model.*;
 import com.pinde.core.common.form.SchGradeFrom;
-import com.pinde.core.model.GeneralIdNameModel;
+import com.pinde.core.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,10 +9,46 @@ import java.util.Map;
 
 public interface SchArrangeResultExtMapper {
 
+	/**
+	 * 验证轮转时间是否重叠
+	 * @param paramMap
+	 * @return
+     */
+	List<SchArrangeResult> checkResultDate(Map<String,Object> paramMap);
 
 
-	List<SchGradeFrom> searchGradeByDoctorFlow(@Param(value = "schDeptFlow") String schDeptFlow,@Param(value = "userFlow") String userFlow,@Param(value = "processFlow") String processFlow,@Param(value = "doctorFlow") String doctorFlow,@Param(value = "schStartDate") String schStartDate,
-                                               @Param(value = "schEndDate") String schEndDate,@Param(value = "resultFlow") String resultFlow);
+	List<SchArrangeResult> searchSchArrangeResults(Map<String, Object> paramMap);
+
+    String queryRotationPlan(Map<String, Object> map);
+
+    int queryStudentsFilldDta(Map<String, Object> paramMap);
+
+	List<DoctorUntiedRecording> queryDoctorUnLockDate(Map<String, Object> queryMap);
+
+
+	/**
+	 * @Department：研发部
+	 * @Description 查询轮转计划最早的开始时间
+	 * @Author fengxf
+	 * @Date 2022/3/3
+	 */
+	String getSchMinStartDate(@Param("rotationFlow") String rotationFlow, @Param("doctorFlow") String doctorFlow);
+
+	/**
+	 * @Department：研发部
+	 * @Description 查询学员轮转计划组总月数及条数
+	 * @Author fengxf
+	 * @Date 2022/3/3
+	 */
+	Map<String, String> getDoctorSchArrange(Map<String, String> param);
+
+
+	//--------------------------------------------
+	//--------------------------------------------
+
+
+	List<SchGradeFrom> searchGradeByDoctorFlow(@Param(value = "schDeptFlow") String schDeptFlow, @Param(value = "userFlow") String userFlow, @Param(value = "processFlow") String processFlow, @Param(value = "doctorFlow") String doctorFlow, @Param(value = "schStartDate") String schStartDate,
+											   @Param(value = "schEndDate") String schEndDate, @Param(value = "resultFlow") String resultFlow);
 
 	List<SchGradeFrom> searchGradeByOrgFlow(@Param(value = "doctorName") String doctorName,@Param(value = "processFlow") String processFlow,@Param(value = "orgFlow") String orgFlow,@Param(value = "schStartDate") String schStartDate,@Param(value = "schEndDate") String schEndDate);
 
@@ -23,21 +57,21 @@ public interface SchArrangeResultExtMapper {
 	 * 医师轮转培训查询
 	 * @param paramMap
 	 * @return
-     */
+	 */
 	List<Map<String,Object>> searchDocCycleList(Map<String,Object> paramMap);
 
 	/**
 	 * 医师轮转培训查询
 	 * @param paramMap
 	 * @return
-     */
+	 */
 	List<Map<String,Object>> searchDocCycleBaseList(Map<String,Object> paramMap);
 
 	/**
 	 * 医师培训成绩查询
 	 * @param paramMap
 	 * @return
-     */
+	 */
 	List<Map<String,Object>> searchDocResultsList(Map<String,Object> paramMap);
 	/**
 	 * 医师培训成绩查询 江苏西医优化采用此方法
@@ -49,13 +83,13 @@ public interface SchArrangeResultExtMapper {
 	List<ResOutOfficeLock> searchDocErrorResultsList(Map<String,Object> paramMap);
 
 	List<Map<String,Object>> countResultByUser(@Param(value="userFlows")List<String> userFlows);
-	
+
 	Map<String,String> countDateArea(@Param(value="doctor")ResDoctor doctor);
-	
+
 	List<Map<String,Object>> countMonthNum(@Param(value="month")String month,@Param(value="doctor")ResDoctor doctor);
-	
+
 	List<SchArrangeResult> searchInMonthResult(@Param(value="schDeptFlow")String schDeptFlow,@Param(value="month")String month,@Param(value="doctor")ResDoctor doctor);
-	
+
 	List<SchArrangeResult> willInDoctor(@Param(value="orgFlow")String orgFlow,@Param(value="userFlow")String userFlow);
 
 	List<SchArrangeResult> willInDoctor2(Map<String,Object> map);
@@ -74,14 +108,14 @@ public interface SchArrangeResultExtMapper {
 	 * @return
 	 */
 	int sortResult(@Param(value="doctorFlow")String doctorFlow);
-	
+
 	/**
 	 * 按条件查找排班
 	 * @param doctor
 	 * @return
 	 */
 	List<SchArrangeResult> searchResultByDoctor(@Param(value="doctor")ResDoctor doctor);
-	
+
 	/**
 	 * 查询过程或计划数据
 	 * @param paramMap

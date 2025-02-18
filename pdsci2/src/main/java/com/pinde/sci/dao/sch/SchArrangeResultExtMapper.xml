@@ -17,7 +17,7 @@
     </resultMap>
 
 
-    <resultMap id="gradeMap" type="com.pinde.sci.form.sch.SchGradeFrom"
+    <resultMap id="gradeMap" type="com.pinde.core.common.form.SchGradeFrom"
                extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
         <result column="isHead"   property="isHead" jdbcType="VARCHAR"/>
         <result column="isTeacher" property="isTeacher" jdbcType="VARCHAR"/>

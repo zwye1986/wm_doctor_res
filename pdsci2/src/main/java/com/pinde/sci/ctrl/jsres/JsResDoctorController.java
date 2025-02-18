@@ -31,7 +31,7 @@ import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
 import com.pinde.sci.common.util.ExcelUtile;
 import com.pinde.sci.ctrl.util.InitPasswordUtil;
-import com.pinde.sci.dao.jsres.TempMapper;
+import com.pinde.core.common.sci.dao.TempMapper;
 import com.pinde.sci.form.jsres.JsResDoctorInfoForm;
 import com.pinde.sci.form.jsres.JykhInfoForm;
 import com.pinde.sci.form.jsres.UserInfoExtForm;

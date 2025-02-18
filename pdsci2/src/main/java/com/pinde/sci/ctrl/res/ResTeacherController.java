@@ -18,7 +18,7 @@ import com.pinde.sci.dao.sys.SysOrgExtMapper;
 import com.pinde.sci.form.jszy.BaseUserResumeExtInfoForm;
 import com.pinde.core.model.ResAssessCfgItemForm;
 import com.pinde.core.model.ResAssessCfgTitleForm;
-import com.pinde.sci.form.sch.SchGradeFrom;
+import com.pinde.core.common.form.SchGradeFrom;
 import com.pinde.core.model.ResDoctor;
 import com.pinde.core.model.ResDoctorSchProcess;
 import com.pinde.core.model.ResRec;

@@ -16,7 +16,7 @@ import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
-import com.pinde.sci.dao.jsres.TempMapper;
+import com.pinde.core.common.sci.dao.TempMapper;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

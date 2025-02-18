@@ -1,0 +1,2148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinde.core.common.sci.dao.SchArrangeResultExtMapper">
+
+    <resultMap id="saResultMap" type="HashMap">
+        <result property="isTeacher" column="is_Teacher" javaType="string"/>
+        <result property="isDept" column="is_Dept" javaType="string"/>
+        <result property="processFlow" column="PROCESS_FLOW" javaType="string"/>
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schMonth" column="SCH_MONTH" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="resultFlow" column="RESULT_FLOW" javaType="string"/>
+        <result property="schDeptFlow" column="SCH_DEPT_FLOW" javaType="string"/>
+        <result property="evaluateFlag" column="EVALUATE_FLAG" javaType="string"/>
+    </resultMap>
+
+    <resultMap id="gradeMap" type="com.pinde.core.common.form.SchGradeFrom"
+               extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        <result column="isHead"   property="isHead" jdbcType="VARCHAR"/>
+        <result column="isTeacher" property="isTeacher" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="HashMap" id="docCycleMap">
+        <result property="userName" column="user_name" javaType="string"/>
+        <result property="trainingSpeName" column="training_spe_name" javaType="string"/>
+        <result property="sessionNumber" column="session_number" javaType="string"/>
+        <result property="trainingYears" column="training_years" javaType="string"/>
+        <result property="doctorFlow" column="doctor_flow" javaType="string"/>
+        <result property="trainingSpeId" column="training_spe_id" javaType="string"/>
+        <result property="trainingTypeName" column="training_type_name" javaType="string"/>
+    </resultMap>
+
+    <resultMap id="waringMap" type="hashmap">
+        <result property="userName" column="USER_NAME" javaType="string"/>
+        <result property="deptName" column="DEPT_NAME" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="trainingTypeName" column="TRAINING_TYPE_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="reason" column="REASON" javaType="string"/>
+    </resultMap>
+
+    <resultMap type="HashMap" id="countMonthNumMap">
+        <result property="schDeptFlow" column="SCH_DEPT_FLOW" javaType="string"/>
+        <result property="countNum" column="COUNT_NUM" javaType="java.math.BigDecimal"/>
+    </resultMap>
+
+	<select id="checkResultDate" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+		select *
+        from sch_arrange_result
+		where record_status = 'Y'
+		and doctor_flow = #{doctorFlow}
+		and (
+			(
+				sch_start_date <![CDATA[<=]]> #{startDate}
+				and  sch_end_date >= #{startDate}
+			)
+			or
+			(
+				sch_start_date <![CDATA[<=]]> #{endDate}
+				and  sch_end_date >= #{endDate}
+			)
+			or
+			(
+				sch_start_date <![CDATA[>=]]> #{startDate}
+				and  sch_end_date <![CDATA[<=]]> #{endDate}
+			)
+		)
+		<if test='subDeptFlow!=null and subDeptFlow!=""'>
+			and result_flow != #{subDeptFlow}
+		</if>
+		<if test='rotationFlow!=null and rotationFlow!=""'>
+			and rotation_flow = #{rotationFlow}
+		</if>
+	</select>
+	<select id="searchSchArrangeResults" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+		select *
+        from sch_arrange_result
+		where record_status = 'Y'
+		and doctor_flow = #{doctorFlow}
+        <if test='startDate!=null and startDate!=""'>
+            and sch_end_Date <![CDATA[<=]]> #{startDate}
+        </if>
+		<if test='rotationFlow!=null and rotationFlow!=""'>
+			and rotation_flow = #{rotationFlow}
+		</if>
+	</select>
+	<resultMap type="HashMap" id="resultCountMap">
+		<result property="key" column="DOCTOR_FLOW" javaType="string"/>
+		<result property="value" column="RESULT_COUNT" javaType="java.math.BigDecimal"/>
+	</resultMap>
+	<select id="countResultByUser" resultMap="resultCountMap">
+		SELECT DOCTOR_FLOW,COUNT(*) RESULT_COUNT
+        FROM SCH_ARRANGE_RESULT
+		WHERE DOCTOR_FLOW IN
+		<foreach collection="userFlows" item="userFlow" open="(" separator="," close=")">
+			#{userFlow}
+		</foreach>
+		AND RECORD_STATUS = 'Y'
+		GROUP BY DOCTOR_FLOW
+	</select>
+	<resultMap id="resultExtMap" type="com.pinde.core.model.SchArrangeResultExt"
+			   extends="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+		<association property="process" javaType="com.pinde.core.model.ResDoctorSchProcess"
+					 resultMap="com.pinde.core.common.sci.dao.ResDoctorSchProcessMapper.BaseResultMap"></association>
+	</resultMap>
+	<select id="getResults" resultMap="resultExtMap">
+		select sar.*,rdsp.*
+        from sch_arrange_result sar, res_doctor_sch_process rdsp
+		where sar.record_status = 'Y'
+		and rdsp.record_status = 'Y'
+		and sar.result_flow = rdsp.sch_result_flow
+
+		<if test='userFlow!=null and userFlow!=""'>
+			and sar.doctor_flow = #{userFlow}
+		</if>
+
+		<if test='resultFlow!=null and resultFlow!=""'>
+			and sar.result_flow = #{resultFlow}
+		</if>
+
+		<if test='processFlow!=null and processFlow!=""'>
+			and rdsp.process_flow = #{processFlow}
+		</if>
+	</select>
+	<update id="updateResultHaveAfter">
+		update sch_arrange_result sar
+		set have_after_pic = #{haveAfterPic}
+		WHERE sar.record_status = 'Y'
+		and sar.doctor_flow = #{operUserFlow}
+		and exists (select 1
+		from sch_rotation_dept dept
+		where sar.standard_group_flow = dept.group_flow
+		AND sar.standard_dept_id = dept.standard_dept_id
+		and dept.record_flow = #{schRotationDeptFlow})
+	</update>
+
+    <select id="searchGradeByDoctorFlow" resultMap="gradeMap" >
+        select sar.*,nvl((
+        select rec_flow from dept_teacher_grade_info where rec_type_id ='TeacherDoctorGrade'
+        and record_status='Y'
+        and process_flow = p.process_flow
+        <if test='processFlow!=null and processFlow!=""'>
+            and process_flow =#{processFlow}
+        </if>
+        <if test='userFlow!=null and userFlow!=""'>
+            and oper_user_flow =#{userFlow}
+        </if>
+
+        ),'') isTeacher,
+        nvl((select rec_flow from dept_teacher_grade_info where rec_type_id ='HeadDoctorGrade' and record_status='Y'
+        and process_flow = p.process_flow
+        <if test='processFlow!=null and processFlow!=""'>
+            and process_flow =#{processFlow}
+        </if>
+        <if test='userFlow!=null and userFlow!=""'>
+            and oper_user_flow =#{userFlow}
+        </if>
+        ),'') isHead
+        from sch_arrange_result sar
+        left join res_doctor_sch_process p
+        on sar.result_flow=p.sch_result_flow
+        where sar.record_status='Y'
+        and p.record_status='Y'
+        <if test='schDeptFlow!=null and schDeptFlow!=""'>
+            and p.sch_dept_flow =#{schDeptFlow}
+        </if>
+        <if test='doctorFlow!=null and doctorFlow!=""'>
+            and sar.doctor_flow =#{doctorFlow}
+        </if>
+        <if test='resultFlow!=null and resultFlow!=""'>
+            and sar.result_Flow =#{resultFlow}
+        </if>
+
+        <if test='schStartDate!=null and schStartDate!="" and schEndDate!=null and schEndDate!=""'>
+            and sar.SCH_START_DATE >= #{schStartDate}
+            and sar.SCH_END_DATE <![CDATA[<=]]>  #{schEndDate}
+        </if>
+
+    </select>
+
+    <select id="searchGradeByOrgFlow" resultMap="gradeMap" >
+        select sar.*,nvl((select rec_flow from dept_teacher_grade_info where rec_type_id ='TeacherDoctorGrade' and record_status='Y'
+        and process_flow = p.process_flow
+        and rownum=1
+        ),'') isTeacher,
+        nvl((select rec_flow from dept_teacher_grade_info where rec_type_id ='HeadDoctorGrade' and record_status='Y'
+        and process_flow = p.process_flow
+        and rownum=1
+        ),'') isHead,su.user_name
+        from sch_arrange_result sar
+        LEFT JOIN res_doctor_sch_process p ON sar.result_flow = p.sch_result_flow
+        LEFT JOIN res_doctor rd on rd.doctor_flow = sar.doctor_flow
+        LEFT JOIN SYS_USER SU ON SAR.DOCTOR_FLOW=SU.USER_FLOW
+        where sar.record_status='Y'
+        and p.record_status='Y'
+        and SU.record_status='Y'
+        and rd.record_status='Y'
+        and rd.doctor_category_id='Scholar'
+        <if test='doctorName!=null and doctorName!=""'>
+            and SU.USER_NAME LIKE CONCAT(CONCAT('%', #{doctorName}),'%')
+        </if>
+        <if test='schStartDate!=null and schStartDate!="" and schEndDate!=null and schEndDate!=""'>
+            and sar.SCH_START_DATE >= #{schStartDate}
+            and sar.SCH_END_DATE <![CDATA[<=]]>  #{schEndDate}
+        </if>
+
+    </select>
+
+	<select id="queryRotationPlan" resultType="java.lang.String">
+		SELECT
+			sch_month
+		FROM
+			sch_doctor_dept
+		WHERE
+			record_status = 'Y'
+		AND RECORD_FLOW = #{deptFlow}
+	</select>
+
+	<select id="queryStudentsFilldDta" resultType="java.lang.Integer">
+		select count(1) from RES_REC
+		where RECORD_STATUS = 'Y'
+		AND OPER_USER_FLOW =  #{doctorFlow}
+		AND REC_TYPE_ID in ('CaseRegistry','DiseaseRegistry','SkillRegistry','OperationRegistry','CampaignRegistry')
+		AND MODIFY_TIME >=  #{startTime}
+		AND #{endTime} >= MODIFY_TIME
+	</select>
+
+	<select id="queryDoctorUnLockDate" resultMap="com.pinde.core.common.sci.dao.DoctorUntiedRecordingMapper.BaseResultMap">
+		select * from DOCTOR_UNTIED_RECORDING
+		where RECORD_STATUS = 'Y'
+		AND LOCK_STATUS = 'UnLock'
+		AND DOCTOR_FLOW = #{doctorFlow}
+		ORDER BY MODIFY_TIME DESC
+	</select>
+
+	<select id="deptDoctorAllWorkDetailByNow"   resultMap="com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper.BaseResultMap">
+         SELECT sys_guid() RECORD_FLOW ,
+           A.RECRUIT_FLOW,
+           A.DOCTOR_FLOW,
+           A.CAT_SPE_ID,
+           A.CAT_SPE_NAME,
+           A.SPE_ID,
+           A.SPE_NAME,
+           A.TRAIN_YEAR,
+           A.SESSION_NUMBER,
+           A.ROTATION_FLOW,
+           A.RECORD_FLOW SCH_STANDARD_DEPT_FLOW,
+           A.GROUP_FLOW ,
+           A.STANDARD_DEPT_ID,
+           A.STANDARD_DEPT_NAME,
+           A.SCH_MONTH,
+           A.ORG_FLOW,
+           A.ORG_NAME,
+           A.COMPLETE_NUM,
+           A.OUT_COMPLETE_NUM,
+           A.IN_COMPLETE_NUM,
+           A.AUDIT_NUM,
+           A.IS_SHORT,
+           TO_CHAR(A.REQ_NUM) REQ_NUM,
+           TO_CHAR(A.OLD_REQ_NUM) OLD_REQ_NUM,
+           CASE
+             WHEN REQ_NUM = 0 THEN
+              '-'
+             ELSE
+              TO_CHAR(CASE WHEN ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100 END)
+           END COMPLETE_BI,
+           CASE
+             WHEN REQ_NUM = 0 THEN
+              '-'
+             ELSE
+              TO_CHAR(CASE WHEN ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100 END)
+           END OUT_COMPLETE_BI,
+           CASE
+             WHEN REQ_NUM = 0 THEN
+              '-'
+             ELSE
+
+              TO_CHAR(CASE WHEN ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100 END)
+           END IN_COMPLETE_BI,
+
+           CASE
+             WHEN REQ_NUM = 0 THEN
+              '-'
+             ELSE
+              TO_CHAR(ROUND(CASE
+                              WHEN REQ_NUM != 0 AND COMPLETE_NUM = 0 THEN
+                               0
+                              WHEN COMPLETE_NUM != 0 THEN
+                               AUDIT_NUM / COMPLETE_NUM
+                              ELSE
+                               0
+                            END,
+                            2) * 100)
+           END AUDIT_BI,
+           'Y',
+           to_char(sysdate, 'YYYYMMDDHH24MISS'),
+           'System',
+           to_char(sysdate, 'YYYYMMDDHH24MISS'),
+           'System',
+           IS_ADD
+      FROM (SELECT RD.RECRUIT_FLOW,
+                   RD.DOCTOR_FLOW,
+                   RD.CAT_SPE_ID,
+                   RD.CAT_SPE_NAME,
+                   RD.SPE_ID,
+                   RD.SPE_NAME,
+                   RD.TRAIN_YEAR,
+                   RD.SESSION_NUMBER,
+                   RD.ROTATION_FLOW,
+                   SRD.RECORD_FLOW,
+                   SRD.GROUP_FLOW,
+                   SRD.STANDARD_DEPT_ID,
+                   SRD.STANDARD_DEPT_NAME,
+                   SRD.SCH_MONTH,
+                   RD.ORG_FLOW,
+                   RD.ORG_NAME,
+                   TO_CHAR(NVL(COMP.COMPLETE_NUM, 0)) COMPLETE_NUM,
+                   TO_CHAR(NVL(COMP.IN_COMPLETE_NUM, 0)) IN_COMPLETE_NUM,
+                   TO_CHAR(NVL(COMP.COMPLETE_NUM, 0) -
+                           NVL(COMP.IN_COMPLETE_NUM, 0)) OUT_COMPLETE_NUM,
+                   TO_CHAR(NVL(COMP.AUDIT_NUM, 0)) AUDIT_NUM,
+                   case
+                     when (SELECT COUNT(1)
+                             FROM sch_doctor_dept sdd
+                            WHERE sdd.record_status = 'Y'
+                              AND sdd.doctor_flow = RD.doctor_flow
+                              AND sdd.rotation_flow = RD.rotation_flow
+                              and sdd.group_flow = srd.group_flow
+                              and sdd.standard_dept_id = srd.standard_dept_id
+                              AND sdd.org_flow = RD.org_flow) > 0 then
+                      'Y'
+                     else
+                      'N'
+                   end is_short,
+                   NVL((CASE
+                         WHEN RD.cat_spe_id = 'DoctorTrainingSpe' AND
+                              RD.session_number >= '2015' AND
+                              (RD.train_year = 'OneYear' OR
+                              RD.train_year = 'TwoYear') AND
+                              (SELECT COUNT(1)
+                                 FROM sch_doctor_dept sdd
+                                WHERE sdd.record_status = 'Y'
+                                  AND sdd.doctor_flow = RD.doctor_flow
+                                  AND sdd.rotation_flow = RD.rotation_flow
+                                  AND sdd.org_flow = RD.org_flow) > 0 THEN
+                          SUM(NVL(ROUND((CASE
+                                          WHEN NVL(SRD.SCH_MONTH, 0) = 0 THEN
+                                           0
+                                          ELSE
+                                           NVL(SDD.SCH_MONTH, 0) / SRD.SCH_MONTH * REQ.REQ_NUM
+                                        END),
+                                        0),
+                                  0))
+                         ELSE
+                          SUM(REQ.REQ_NUM)
+                       END),
+                       0) AS REQ_NUM,
+                   NVL(SUM(REQ.REQ_NUM), 0) OLD_REQ_NUM,
+                   CASE WHEN IC.QTY>0 THEN 'Y'
+                     ELSE 'N'
+                       END IS_ADD
+              FROM (SELECT * FROM RES_DOCTOR_RECRUIT rdr
+              WHERE rdr.DOCTOR_FLOW = #{doctorFlow}
+		        AND rdr.RECRUIT_FLOW = #{recruitFlow}
+		        AND RDr.RECORD_STATUS = 'Y'
+		        AND rdr.rotation_flow = #{rotationFlow}
+		        AND RDr.AUDIT_STATUS_ID = 'Passed') RD
+              LEFT JOIN SCH_ROTATION_DEPT SRD
+                ON RD.ROTATION_FLOW = SRD.ROTATION_FLOW
+               AND SRD.ORG_FLOW IS NULL
+               AND SRD.RECORD_STATUS = 'Y'
+              LEFT JOIN SCH_ROTATION_DEPT_REQ REQ
+                ON REQ.REL_RECORD_FLOW = SRD.RECORD_FLOW
+                and REQ.rotation_flow = #{rotationFlow}
+               AND REQ.RECORD_STATUS = 'Y'
+               AND REQ.REC_TYPE_ID IN
+                   ('CaseRegistry',
+                    'DiseaseRegistry',
+                    'SkillRegistry',
+                    'OperationRegistry',
+                    'CampaignRegistry')
+              LEFT JOIN SCH_DOCTOR_DEPT SDD
+                ON SDD.GROUP_FLOW = SRD.GROUP_FLOW
+               AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
+               AND SDD.ORG_FLOW = RD.ORG_FLOW
+               AND SDD.DOCTOR_FLOW = #{doctorFlow}
+               AND SDD.RECORD_STATUS = 'Y'
+              LEFT JOIN (SELECT COUNT(1) COMPLETE_NUM,
+                               RR.OPER_USER_FLOW,
+                               rr.SCH_ROTATION_DEPT_FLOW,
+                               NVL(COUNT(RR.AUDIT_STATUS_ID), 0) AUDIT_NUM,
+                               SUM(CASE
+                                     WHEN NVL((SELECT COUNT(1)
+                                                FROM RES_DOCTOR_SCH_PROCESS SAR
+                                               WHERE SAR.RECORD_STATUS = 'Y'
+                                                 AND SAR.USER_FLOW = #{doctorFlow}
+                                                 AND SAR.PROCESS_FLOW=RR.PROCESS_FLOW
+                                                 AND TO_CHAR(TO_DATE(RR.OPER_TIME,
+                                                                     'YYYYMMDDHH24MISS'),
+                                                             'YYYY-MM-DD') <![CDATA[<=]]>
+                                                     SAR.SCH_END_DATE
+                                                 AND TO_CHAR(TO_DATE(RR.OPER_TIME,
+                                                                     'YYYYMMDDHH24MISS'),
+                                                             'YYYY-MM-DD') >=
+                                                     SAR.SCH_START_DATE),
+                                              0) > 0 THEN
+                                      1
+                                     ELSE
+                                      0
+                                   END) IN_COMPLETE_NUM
+                          FROM RES_REC rr, SCH_ROTATION_DEPT srd
+                         WHERE rr.RECORD_STATUS = 'Y'
+                         AND srd.rotation_flow = #{rotationFlow}
+                         and rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW
+                           AND srd.RECORD_STATUS = 'Y'
+                           AND RR.OPER_USER_FLOW = #{doctorFlow}
+                           AND rr.REC_TYPE_ID IN
+                               ('CaseRegistry',
+                                'DiseaseRegistry',
+                                'SkillRegistry',
+                                'OperationRegistry',
+                                'CampaignRegistry')
+                         GROUP BY rr.SCH_ROTATION_DEPT_FLOW,
+                                  RR.OPER_USER_FLOW) COMP
+                ON COMP.SCH_ROTATION_DEPT_FLOW = srd.record_flow
+               and COMP.OPER_USER_FLOW = RD.DOCTOR_FLOW
+               LEFT JOIN (
+                 SELECT R.DOCTOR_FLOW,
+                        R.ROTATION_FLOW,
+                        D.RECORD_FLOW,
+                        COUNT(1) QTY
+                   FROM SCH_ARRANGE_RESULT R
+                   LEFT JOIN SCH_ROTATION_DEPT D
+                     ON R.STANDARD_DEPT_ID = D.STANDARD_DEPT_ID
+                    AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
+                  WHERE R.RECORD_STATUS = 'Y'
+                    AND D.RECORD_STATUS = 'Y'
+                    AND R.DOCTOR_FLOW = #{doctorFlow}
+                    AND R.SCH_END_DATE <![CDATA[<=]]> #{applyYear}||'-05-31'
+                  GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
+               ) IC
+               ON IC.RECORD_FLOW= srd.record_flow
+               and IC.DOCTOR_FLOW = RD.DOCTOR_FLOW
+               AND IC.ROTATION_FLOW=SRD.ROTATION_FLOW
+             GROUP BY RD.RECRUIT_FLOW,
+                      RD.DOCTOR_FLOW,
+                      RD.CAT_SPE_ID,
+                      RD.CAT_SPE_NAME,
+                      RD.SPE_ID,
+                      RD.SPE_NAME,
+                      RD.TRAIN_YEAR,
+                      RD.SESSION_NUMBER,
+                      RD.ROTATION_FLOW,
+                      SRD.RECORD_FLOW,
+                      SRD.GROUP_FLOW,
+                      SRD.STANDARD_DEPT_ID,
+                      SRD.STANDARD_DEPT_NAME,
+                      SRD.SCH_MONTH,
+                      RD.ORG_FLOW,
+                      RD.ORG_NAME,
+                      COMP.COMPLETE_NUM,
+                      COMP.IN_COMPLETE_NUM,
+                      COMP.AUDIT_NUM,
+                      IC.QTY) A
+    </select>
+
+    <!-- 查询轮转计划最早的开始时间 -->
+    <select id="getSchMinStartDate" parameterType="String" resultType="String">
+        SELECT
+            MIN (SCH_START_DATE)
+        FROM
+            SCH_ARRANGE_RESULT
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW = #{doctorFlow}
+        <if test="rotationFlow != null and rotationFlow != ''">
+            AND ROTATION_FLOW = #{rotationFlow}
+        </if>
+    </select>
+
+    <!-- 查询学员轮转计划组总月数及条数 -->
+    <select id="getDoctorSchArrange" parameterType="map" resultType="map">
+        SELECT
+            TO_CHAR(NVL(SUM(SCH_MONTH), 0)) AS REAL_MONTH,
+            TO_CHAR(NVL(COUNT(1), 0)) AS SCH_COUNT
+        FROM
+            SCH_ARRANGE_RESULT
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW = #{doctorFlow}
+        AND STANDARD_GROUP_FLOW = #{standardGroupFlow}
+        AND ROTATION_FLOW = #{rotationFlow}
+        AND STANDARD_DEPT_ID = #{standardDeptId}
+    </select>
+
+    <resultMap id="docResultsMap" type="HashMap">
+        <result property="userName" column="user_name" javaType="string"/>
+        <result property="trainingTypeName" column="training_Type_name" javaType="string"/>
+        <result property="trainingSpeName" column="training_spe_name" javaType="string"/>
+        <result property="sessionNumber" column="session_number" javaType="string"/>
+        <result property="graduationYear" column="graduation_year" javaType="string"/>
+        <result property="doctorFlow" column="doctor_flow" javaType="string"/>
+        <result property="orgName" column="org_name" javaType="string"/>
+        <result property="orgNameAll" column="ORG_NAME_ALL" javaType="string"/>
+        <result property="doctorTypeName" column="doctor_type_name" javaType="string"/>
+        <result property="jointOrgName" column="joint_org_name" javaType="string"/>
+        <result property="doctorTypeName" column="doctor_type_name" javaType="string"/>
+    </resultMap>
+
+    <select id="searchDocResultsListNew" parameterType="java.util.Map" resultMap="docResultsMap">
+        select u.USER_NAME user_name,dr.TRAINING_TYPE_NAME training_Type_name,dr.TRAINING_SPE_NAME training_spe_name,
+        dr.SESSION_NUMBER session_number,dr.DOCTOR_Flow doctor_flow,rdr.graduation_year graduation_year,dr.org_name org_name
+        from RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join (
+        select a.* , ROW_NUMBER() OVER ( PARTITION BY doctor_flow order by create_time desc) as rn
+        from RES_DOCTOR_RECRUIT a
+        where AUDIT_STATUS_ID='Passed' and RECORD_STATUS= 'Y'
+        ) rdr on dr.DOCTOR_FLOW =  rdr.DOCTOR_FLOW
+        and rn=1
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rdr.record_status='Y'
+        AND NOT EXISTS (
+        SELECT
+        1
+        FROM
+        RES_DOCOTR_DELAY_TETURN T
+        WHERE
+        T.RECORD_STATUS = 'Y'
+        AND T.TYPE_ID = 'ReturnTraining'
+        AND T.AUDIT_STATUS_ID = '1'
+        AND T.SESSION_NUMBER = rdr.SESSION_NUMBER
+        AND T.DOCTOR_FLOW = DR.DOCTOR_FLOW
+        )
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and exists
+            (select null
+            from res_doctor_sch_process p
+            where p.RECORD_STATUS = 'Y'
+            and p.user_flow = dr.doctor_flow
+            AND (EXISTS
+            (SELECT NULL
+            FROM SYS_USER_DEPT sud
+            WHERE sud.RECORD_STATUS = 'Y'
+            AND sud.USER_FLOW = #{kzrFlow}
+            AND p.DEPT_FLOW = sud.DEPT_FLOW) OR
+            p.DEPT_FLOW = #{deptFlow}))
+        </if>
+        <if test="deptList!=null and deptList.size>0">
+            and exists
+            (select null
+            from res_doctor_sch_process p
+            where p.RECORD_STATUS = 'Y'
+            and p.user_flow = dr.doctor_flow
+            AND (EXISTS
+            (SELECT NULL
+            FROM SYS_USER_DEPT sud
+            WHERE sud.RECORD_STATUS = 'Y'
+            AND sud.USER_FLOW = #{kzrFlow}
+            AND p.DEPT_FLOW = sud.DEPT_FLOW) OR
+            p.DEPT_FLOW in
+            <foreach collection="deptList" open="(" separator="," close=")" item="item">#{item.deptFlow}</foreach>))
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and dr.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='graduationYear!=null and graduationYear!=""'>
+            and rdr.graduation_year = #{graduationYear}
+        </if>
+        <choose >
+            <when test="jointOrgFlowList!=null and jointOrgFlowList.size>0 and baseFlag !=null and baseFlag !=''">
+                and dr.SECOND_ORG_FLOW IN
+                <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+            </when>
+            <when test="jointOrgFlowList!=null and jointOrgFlowList.size>0 and (baseFlag == null or baseFlag == '')">
+                and (rdr.ORG_FLOW in
+                <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+                or rdr.JOINT_ORG_FLOW in
+                <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>)
+            </when>
+        </choose>
+
+        order by dr.SESSION_NUMBER desc,dr.TRAINING_Type_ID,dr.TRAINING_SPE_ID,u.user_flow
+    </select>
+
+    <select id="searchSchArrangeResultByMap" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT *
+        FROM SCH_ARRANGE_RESULT sar
+        WHERE RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW = #{doctorFlow}
+        <if test='schStartDate!=null and schStartDate!=""'>
+            AND SCH_END_DATE >= #{schStartDate}
+        </if>
+        <if test='schEndDate!=null and schEndDate!=""'>
+            AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND (EXISTS
+            (SELECT NULL
+            FROM SYS_USER_DEPT sud
+            WHERE sud.RECORD_STATUS = 'Y'
+            AND sud.USER_FLOW = #{kzrFlow}
+            AND sar.DEPT_FLOW = sud.DEPT_FLOW) OR
+            sar.DEPT_FLOW = #{deptFlow})
+        </if>
+    </select>
+
+
+    <select id="searchDocCycleList" parameterType="java.util.Map" resultMap="docCycleMap">
+        select DISTINCT u.USER_NAME user_name,u.user_flow, dr.TRAINING_SPE_NAME training_spe_name,dr.DOCTOR_Flow doctor_flow,
+        dr.SESSION_NUMBER session_number, dr.TRAINING_YEARS training_years,dr.TRAINING_SPE_ID training_spe_id,dr.TRAINING_Type_ID,
+        dr.TRAINING_Type_name
+        from RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join RES_DOCTOR_RECRUIT  rdr
+        on dr.DOCTOR_FLOW =  rdr.DOCTOR_FLOW
+        and AUDIT_STATUS_ID='Passed'
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rdr.record_status='Y'
+        <if test='trainingTypeId==null or trainingTypeId==""'>
+            and dr.TRAINING_TYPE_ID in ('DoctorTrainingSpe','AssiGeneral')
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='trainingYears!=null and trainingYears!=""'>
+            and dr.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test='graduationTime!=null and graduationTime!=""'>
+            and rdr.graduation_year = #{graduationTime}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            and u.ID_NO = #{idNo}
+        </if>
+        <if test='docTypeList!=null'>
+            and dr.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='orgFlow!=null and orgFlow!="" and (secondOrgFlow == null or secondOrgFlow == "")'>
+            AND( dr.ORG_FLOW in (SELECT rjo.joint_org_flow
+            FROM res_joint_org rjo
+            WHERE rjo.record_status = 'Y'
+            AND rjo.org_flow =#{orgFlow})
+            or dr.org_flow=#{orgFlow})
+        </if>
+        <if test='secondOrgFlow!=null and secondOrgFlow!="" and (orgFlow == null or orgFlow == "")'>
+            AND( dr.SECOND_ORG_FLOW in (SELECT rjo.joint_org_flow
+            FROM res_joint_org rjo
+            WHERE rjo.record_status = 'Y'
+            AND rjo.org_flow =#{secondOrgFlow})
+            or dr.SECOND_ORG_FLOW=#{secondOrgFlow})
+        </if>
+        <if test='onlyProblem!=null and onlyProblem =="Y"'>
+            and exists(
+            select 1
+            from sch_arrange_result sar
+            where sar.record_status='Y'
+            <if test='startDate!=null and startDate!="" and endDate!=null and endDate!=""'>
+                AND ((sar.SCH_START_DATE <![CDATA[<=]]> #{startDate} AND
+                sar.SCH_END_DATE >= #{startDate}) OR
+                (sar.SCH_START_DATE <![CDATA[<=]]>  #{endDate} AND
+                sar.SCH_END_DATE >=  #{endDate}) OR
+                (sar.SCH_START_DATE >= #{startDate} AND
+                sar.SCH_END_DATE <![CDATA[<=]]>  #{endDate}))
+            </if>
+            and sar.sch_end_date <![CDATA[<=]]>  to_char(sysdate,'yyyy-mm-dd')
+            and sar.doctor_flow=dr.doctor_flow
+            and sar.have_After_pic='N'
+            )
+        </if>
+        order by dr.SESSION_NUMBER desc,dr.TRAINING_Type_ID,dr.TRAINING_SPE_ID,u.user_flow
+    </select>
+
+    <!--医师轮转培训查询 西医-->
+    <select id="searchDocCycleBaseList" parameterType="java.util.Map" resultMap="docCycleMap">
+        select DISTINCT u.USER_NAME user_name,u.user_flow, dr.TRAINING_SPE_NAME training_spe_name,dr.DOCTOR_Flow doctor_flow,
+        dr.SESSION_NUMBER session_number, dr.TRAINING_YEARS training_years,dr.TRAINING_SPE_ID training_spe_id,dr.TRAINING_Type_ID
+        ,dr.TRAINING_Type_name
+        from RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join RES_DOCTOR_RECRUIT  rdr
+        on dr.DOCTOR_FLOW =  rdr.DOCTOR_FLOW
+        and AUDIT_STATUS_ID='Passed'
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rdr.record_status='Y'
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='trainingYears!=null and trainingYears!=""'>
+            and dr.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test='graduationTime!=null and graduationTime!=""'>
+            and rdr.graduation_year = #{graduationTime}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            and u.ID_NO = #{idNo}
+        </if>
+        <if test='docTypeList!=null'>
+            and dr.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            AND dr.SECOND_ORG_FLOW =#{orgFlow}
+        </if>
+        <if test='onlyProblem!=null and onlyProblem =="Y"'>
+            and exists(
+            select 1
+            from sch_arrange_result sar
+            where sar.record_status='Y'
+            <if test='startDate!=null and startDate!="" and endDate!=null and endDate!=""'>
+                AND ((sar.SCH_START_DATE <![CDATA[<=]]> #{startDate} AND
+                sar.SCH_END_DATE >= #{startDate}) OR
+                (sar.SCH_START_DATE <![CDATA[<=]]>  #{endDate} AND
+                sar.SCH_END_DATE >=  #{endDate}) OR
+                (sar.SCH_START_DATE >= #{startDate} AND
+                sar.SCH_END_DATE <![CDATA[<=]]>  #{endDate}))
+            </if>
+            and sar.sch_end_date <![CDATA[<=]]>  to_char(sysdate,'yyyy-mm-dd')
+            and sar.doctor_flow=dr.doctor_flow
+            and sar.have_After_pic='N'
+            )
+        </if>
+        order by dr.SESSION_NUMBER desc,dr.TRAINING_Type_ID,dr.TRAINING_SPE_ID,u.user_flow
+    </select>
+
+    <select id="searchDocResultsList" parameterType="java.util.Map" resultMap="docResultsMap">
+        select u.USER_NAME user_name, dr.TRAINING_SPE_NAME training_spe_name,dr.SESSION_NUMBER session_number,dr.DOCTOR_Flow doctor_flow
+        from RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and (
+            dr.ORG_FLOW = #{orgFlow}
+            or exists(
+            select null from res_joint_org rjo
+            where rjo.record_status = 'Y'
+            and rjo.org_flow = #{orgFlow}
+            and dr.org_flow = rjo.joint_org_flow
+            )
+            )
+            order by dr.session_number desc,dr.TRAINING_SPE_ID,u.USER_NAME
+        </if>
+    </select>
+
+    <resultMap id="OutResultMap" type="com.pinde.core.model.ResOutOfficeLock">
+        <id column="RECORD_FLOW" property="recordFlow" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="USER_FLOW" property="userFlow" jdbcType="VARCHAR" />
+        <result column="ORG_FLOW" property="orgFlow" jdbcType="VARCHAR" />
+        <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+        <result column="TRAINING_TYPE_ID" property="trainingTypeId" jdbcType="VARCHAR" />
+        <result column="TRAINING_TYPE_NAME" property="trainingTypeName" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_ID" property="trainingSpeId" jdbcType="VARCHAR" />
+        <result column="TRAINING_SPE_NAME" property="trainingSpeName" jdbcType="VARCHAR" />
+        <result column="TIME_OUT_STATUS" property="timeOutStatus" jdbcType="VARCHAR" />
+        <result column="RECORD_STATUS" property="recordStatus" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+        <result column="CREATE_USER_FLOW" property="createUserFlow" jdbcType="VARCHAR" />
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="VARCHAR" />
+        <result column="MODIFY_USER_FLOW" property="modifyUserFlow" jdbcType="VARCHAR" />
+        <result column="SESSION_NUMBER" property="sessionNumber" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_NAME" property="auditStatusName" jdbcType="VARCHAR" />
+        <result column="AUDIT_STATUS_ID" property="auditStatusId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="searchDocErrorResultsList" parameterType="java.util.Map" resultMap="OutResultMap">
+        select *
+        from RES_OUT_OFFICE_LOCK ro
+        LEFT JOIN RES_DOCTOR rd ON rd.DOCTOR_FLOW = ro.USER_FLOW
+        where ro.RECORD_STATUS = 'Y'
+        AND rd.RECORD_STATUS = 'Y'
+        <if test="doctor != null">
+            <if test='doctor.userName!=null and doctor.userName!=""'>
+                and ro.USER_NAME like CONCAT(CONCAT('%', #{doctor.userName}),'%')
+            </if>
+            <if test='doctor.trainingTypeId!=null and doctor.trainingTypeId!=""'>
+                and ro.TRAINING_TYPE_ID = #{doctor.trainingTypeId}
+            </if>
+            <if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
+                and ro.TRAINING_SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test="doctor.orgFlow!=null and doctor.orgFlow!=''">
+                and ro.ORG_FLOW = #{doctor.orgFlow}
+            </if>
+            <if test='doctor.sessionNumber!=null and doctor.sessionNumber!=""'>
+                and ro.SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test="orgs!=null and orgs.size>0">
+            and ro.ORG_FLOW in
+            <foreach collection="orgs" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        ORDER BY ro.CREATE_TIME DESC
+    </select>
+    <resultMap type="HashMap" id="resultDateMap">
+        <result property="min" column="MIN_DATE" javaType="string"/>
+        <result property="max" column="MAX_DATE" javaType="string"/>
+    </resultMap>
+    <select id="countDateArea" resultMap="resultDateMap">
+        SELECT MIN(SCH_START_DATE) MIN_DATE,MAX(SCH_END_DATE) MAX_DATE
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW IN(
+        SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_STATUS_ID IS NOT NULL
+        <if test='doctor!=null'>
+            <if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
+                AND ORG_FLOW = #{doctor.orgFlow}
+            </if>
+            <if test='doctor.doctorCategoryId!=null and doctor.doctorCategoryId!=""'>
+                AND DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
+            </if>
+            <if test='doctor.sessionNumber!=null and doctor.sessionNumber!=""'>
+                AND SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
+                AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
+                AND DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
+            </if>
+        </if>
+        )
+    </select>
+
+    <select id="countMonthNum" resultMap="countMonthNumMap">
+        SELECT SCH_DEPT_FLOW,COUNT(SCH_DEPT_FLOW) COUNT_NUM
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW IN (
+        SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        <if test='doctor!=null'>
+            <if test='doctor.schStatusId!=null and doctor.schStatusId!=""'>
+                AND SCH_STATUS_ID = #{doctor.schStatusId}
+            </if>
+            <if test='doctor.schStatusId==null or doctor.schStatusId==""'>
+                AND SCH_STATUS_ID IS NOT NULL
+            </if>
+            <if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
+                AND ORG_FLOW = #{doctor.orgFlow}
+            </if>
+            <if test='doctor.doctorCategoryId!=null and doctor.doctorCategoryId!=""'>
+                AND DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
+            </if>
+            <if test='doctor.sessionNumber!=null and doctor.sessionNumber!=""'>
+                AND SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
+                AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
+                AND DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
+            </if>
+        </if>
+        )
+        AND SUBSTR(SCH_START_DATE,0,7) <![CDATA[<=]]> #{month}
+        AND SUBSTR(SCH_END_DATE,0,7) >= #{month}
+        GROUP BY SCH_DEPT_FLOW
+    </select>
+
+    <select id="searchInMonthResult" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT *
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW IN (
+        SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        <if test='doctor!=null'>
+            <if test='doctor.schStatusId!=null and doctor.schStatusId!=""'>
+                AND SCH_STATUS_ID = #{doctor.schStatusId}
+            </if>
+            <if test='doctor.schStatusId==null or doctor.schStatusId==""'>
+                AND SCH_STATUS_ID IS NOT NULL
+            </if>
+            <if test='doctor.orgFlow!=null and doctor.orgFlow!=""'>
+                AND ORG_FLOW = #{doctor.orgFlow}
+            </if>
+            <if test='doctor.doctorCategoryId!=null and doctor.doctorCategoryId!=""'>
+                AND DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
+            </if>
+            <if test='doctor.sessionNumber!=null and doctor.sessionNumber!=""'>
+                AND SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test='doctor.trainingSpeId!=null and doctor.trainingSpeId!=""'>
+                AND TRAINING_SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test='doctor.doctorName!=null and doctor.doctorName!=""'>
+                AND DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
+            </if>
+        </if>
+        )
+        AND SUBSTR(SCH_START_DATE,0,7) <![CDATA[<=]]> #{month}
+        AND SUBSTR(SCH_END_DATE,0,7) >= #{month}
+        AND SCH_DEPT_FLOW = #{schDeptFlow}
+        ORDER BY SCH_START_DATE
+    </select>
+
+    <select id="willInDoctor" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT *
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+        AND( DOCTOR_FLOW IN (
+        SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_FLAG = 'Y'
+        AND (
+        ORG_FLOW = #{orgFlow}
+        OR ORG_FLOW IN (
+        SELECT ORG_FLOW
+        FROM SCH_DEPT_EXTERNAL_REL
+        WHERE RECORD_STATUS = 'Y'
+        AND REL_ORG_FLOW = #{orgFlow}
+        )
+        )
+        <!-- 			AND DOCTOR_FLOW NOT IN ( -->
+        <!-- 				SELECT USER_FLOW  -->
+        <!-- 				FROM  RES_DOCTOR_SCH_PROCESS -->
+        <!-- 				WHERE RECORD_STATUS = 'Y' -->
+        <!-- 				AND IS_CURRENT_FLAG = 'Y' -->
+        <!-- 			) -->
+        ) or
+        (
+        org_flow=#{orgFlow}
+        and DOCTOR_FLOW IN (
+        SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_FLAG = 'Y'
+        )
+        )
+        )
+        AND (NOT EXISTS (
+        SELECT NULL
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW
+        <!-- 			AND IS_CURRENT_FLAG = 'N' -->
+        <!-- 			AND SCH_FLAG = 'Y' -->
+        )OR EXISTS(
+        SELECT NULL
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW
+        AND (
+        TEACHER_USER_FLOW IS NULL
+        OR HEAD_USER_FLOW is null
+        )
+        )
+        )
+        ORDER BY SCH_START_DATE
+    </select>
+
+    <select id="willInDoctor2" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT distinct a.*
+        FROM SCH_ARRANGE_RESULT a
+        left join res_doctor rd on a.doctor_flow=rd.doctor_flow
+        left join sys_user su on a.doctor_flow=su.user_flow
+        LEFT JOIN RES_POWER_CFG RPC ON 'res_doctor_web_'||su.USER_FLOW = RPC.CFG_CODE
+        left join RES_DOCTOR_SCH_PROCESS p
+        on  p.RECORD_STATUS = 'Y'
+        AND p.SCH_RESULT_FLOW = a.RESULT_FLOW
+        WHERE a.RECORD_STATUS = 'Y'
+        and a.sch_Start_Date is not null
+        and rd.record_status='Y'
+        and su.record_status='Y'
+        <if test='isOpen!=null and isOpen!="" and isOpen =="Y" '>
+            AND RPC.CFG_VALUE = 'Y'
+            AND RPC.RECORD_STATUS = 'Y'
+            AND
+            (
+            (RPC.POWER_START_TIME BETWEEN a.SCH_START_DATE AND a.SCH_END_DATE)
+            OR
+            (RPC.POWER_END_TIME BETWEEN a.SCH_START_DATE AND a.SCH_END_DATE)
+            OR
+            (a.SCH_START_DATE >= RPC.POWER_START_TIME AND a.SCH_END_DATE <![CDATA[<=]]> RPC.POWER_END_TIME)
+            )
+        </if>
+        <if test='doctorName != null and doctorName!=""'>
+            AND su.user_name LIKE CONCAT(CONCAT('%', #{doctorName}),'%')
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and rd.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        and (
+        p.process_Flow is null or TEACHER_USER_FLOW IS NULL or HEAD_USER_FLOW is null
+        )
+        AND (
+        EXISTS (SELECT NULL
+        FROM SYS_USER_DEPT sud
+        WHERE sud.RECORD_STATUS = 'Y'
+        AND sud.USER_FLOW =#{userFlow}
+        AND a.DEPT_FLOW = sud.DEPT_FLOW)
+        OR
+        a.DEPT_FLOW = #{deptFlow}
+        )
+        ORDER BY a.SCH_START_DATE
+    </select>
+
+    <!-- 按科室统计入科异常学员 -->
+    <select id="preWarningBefore" resultType="com.pinde.core.model.GeneralIdNameModel">
+        SELECT DEPT_FLOW AS ID, DEPT_NAME AS NAME, COUNT(1) AS QTY
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_START_DATE <![CDATA[<=]]> #{schEndDate}
+        AND SCH_START_DATE >= #{schStartDate}
+        AND (DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        AND SCH_FLAG = 'Y'
+        and DOCTOR_STATUS_ID in ('Training','20')
+        AND (ORG_FLOW = #{orgFlow}
+        OR ORG_FLOW IN (SELECT ORG_FLOW
+        FROM SCH_DEPT_EXTERNAL_REL
+        WHERE RECORD_STATUS = 'Y'
+        AND REL_ORG_FLOW = #{orgFlow})))
+        OR ORG_FLOW = #{orgFlow}
+        AND DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        AND SCH_FLAG = 'Y'
+        and DOCTOR_STATUS_ID in ('Training','20')))
+        AND (NOT EXISTS (SELECT NULL
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW)
+        OR EXISTS (SELECT NULL
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_RESULT_FLOW = SCH_ARRANGE_RESULT.RESULT_FLOW
+        AND (TEACHER_USER_FLOW IS NULL
+        OR HEAD_USER_FLOW IS NULL)))
+        GROUP BY DEPT_FLOW, DEPT_NAME
+        ORDER BY COUNT(1) DESC, DEPT_NAME
+    </select>
+    <!-- 按科室统计出科异常学员 -->
+    <select id="preWarningIng" resultType="com.pinde.core.model.GeneralIdNameModel">
+        SELECT DEPT_FLOW ID,DEPT_NAME NAME,COUNT(1) QTY
+        FROM RES_DOCTOR_SCH_PROCESS P
+        WHERE RECORD_STATUS = 'Y'
+        AND ORG_FLOW = #{orgFlow}
+        AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        AND SCH_END_DATE >= #{schStartDate}
+        AND IS_CURRENT_FLAG = 'Y'
+        AND EXISTS (
+        SELECT 1 FROM RES_DOCTOR WHERE DOCTOR_FLOW=P.USER_FLOW AND RECORD_STATUS='Y'
+
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        and DOCTOR_STATUS_ID  in ('Training','20')
+        )
+        AND  (
+        NOT EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND  RR.REC_TYPE_ID = 'AfterSummary')
+        OR EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND ( AUDIT_USER_FLOW IS NULL
+        OR HEAD_AUDIT_USER_FLOW IS NULL)
+        AND RR.REC_TYPE_ID = 'AfterSummary')
+
+        )
+        GROUP BY DEPT_FLOW,DEPT_NAME
+        ORDER BY COUNT(1) DESC, DEPT_NAME
+    </select>
+
+    <!-- 按科室统计出科考核异常学员 -->
+    <select id="preWarningAfter" resultType="com.pinde.core.model.GeneralIdNameModel">
+        SELECT DEPT_FLOW ID,DEPT_NAME NAME,COUNT(1) QTY
+        FROM RES_DOCTOR_SCH_PROCESS P
+        WHERE RECORD_STATUS = 'Y'
+        AND ORG_FLOW = #{orgFlow}
+        AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        AND SCH_END_DATE >= #{schStartDate}
+        AND IS_CURRENT_FLAG = 'Y'
+        AND EXISTS (
+        SELECT 1 FROM RES_DOCTOR WHERE DOCTOR_FLOW=P.USER_FLOW AND RECORD_STATUS='Y'
+
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        and DOCTOR_STATUS_ID  in ('Training','20')
+        )
+        AND  (
+        NOT EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND RR.REC_TYPE_ID = 'AfterEvaluation')
+        OR EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND AUDIT_USER_FLOW IS NOT NULL
+        AND HEAD_AUDIT_USER_FLOW IS NULL
+        AND RR.REC_TYPE_ID = 'AfterEvaluation')
+        )
+        GROUP BY DEPT_FLOW,DEPT_NAME
+        ORDER BY COUNT(1) DESC, DEPT_NAME
+    </select>
+
+    <select id="countRotationUse" resultType="int">
+        SELECT COUNT(DISTINCT DOCTOR_FLOW)
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+          AND DOCTOR_FLOW NOT IN (
+            SELECT DISTINCT DOCTOR_FLOW
+            FROM SCH_DOCTOR_DEPT
+            WHERE RECORD_STATUS = 'Y'
+              AND ROTATION_FLOW = #{rotationFlow}
+        )
+          AND ROTATION_FLOW = #{rotationFlow}
+    </select>
+
+
+    <update id="sortResult">
+        UPDATE SCH_ARRANGE_RESULT SARF
+        SET SCH_DEPT_ORDER = (
+            SELECT RW
+            FROM(
+                    SELECT ROWNUM RW,RESULT_FLOW
+                    FROM (
+                             SELECT SARS.RESULT_FLOW
+                             FROM SCH_ARRANGE_RESULT SARS,SYS_DICT SD
+                             WHERE SARS.RECORD_STATUS = 'Y'
+                               AND SD.RECORD_STATUS = 'Y'
+                               AND DICT_TYPE_ID = 'StandardDept'
+                               AND SARS.STANDARD_DEPT_ID = SD.DICT_ID
+                               AND SARS.DOCTOR_FLOW = #{doctorFlow}
+                             ORDER BY ORDINAL
+                         ) RES
+                ) RESS
+            WHERE SARF.RESULT_FLOW = RESS.RESULT_FLOW
+        )
+        WHERE RECORD_STATUS = 'Y' AND SARF.DOCTOR_FLOW = #{doctorFlow}
+    </update>
+
+    <select id="searchResultByDoctor" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT SAR.*
+        FROM SCH_ARRANGE_RESULT SAR, RES_DOCTOR RD
+        WHERE SAR.RECORD_STATUS = 'Y'
+        AND RD.RECORD_STATUS = 'Y'
+        AND SAR.DOCTOR_FLOW = RD.DOCTOR_FLOW
+        <if test='doctor!=null'>
+            <if test='doctor.doctorCategoryId!=null and doctor.doctorCategoryId!=""'>
+                AND RD.DOCTOR_CATEGORY_ID = #{doctor.doctorCategoryId}
+            </if>
+            <if test='doctor.sessionNumber != null and doctor.sessionNumber!=""'>
+                AND RD.SESSION_NUMBER = #{doctor.sessionNumber}
+            </if>
+            <if test='doctor.trainingSpeId != null and doctor.trainingSpeId!=""'>
+                AND RD.TRAINING_SPE_ID = #{doctor.trainingSpeId}
+            </if>
+            <if test='doctor.rotationFlow != null and doctor.rotationFlow!=""'>
+                AND RD.ROTATION_FLOW = #{doctor.rotationFlow}
+            </if>
+            <if test='doctor.doctorName != null and doctor.doctorName!=""'>
+                AND RD.DOCTOR_NAME LIKE CONCAT(CONCAT('%', #{doctor.doctorName}),'%')
+            </if>
+        </if>
+        ORDER BY SCH_DEPT_ORDER,SCH_START_DATE
+    </select>
+
+    <select id="searchCycleArrangeResultsForUni" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        select ar.*
+        from SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
+        dr.DOCTOR_FLOW = ar.DOCTOR_FLOW
+        and (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="workOrgId != null and workOrgId != ''">OR dr.work_org_id = #{workOrgId}</if>
+            <if test="workOrgName != null and workOrgName != ''">OR dr.work_org_name = #{workOrgName}</if>
+        </trim>
+        )
+        <if test="doctorTypeId!=null and doctorTypeId!=''">
+            and dr.DOCTOR_TYPE_ID = #{doctorTypeId}
+        </if>
+        <if test='startDate!=null and startDate!="" and endDate!=null and endDate!=""'>
+            and(
+            (ar.SCH_START_DATE>=#{startDate} and #{endDate}>=ar.SCH_START_DATE)
+            or
+            (ar.SCH_END_DATE>=#{startDate} and #{endDate}>=ar.SCH_END_DATE)
+            )
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME = #{userName}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and dr.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='school!=null and school!=""'>
+            and dr.SCHOOL = #{school}
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            and u.id_No = #{idNo}
+        </if>
+        and dr.org_flow is not null
+        order by u.USER_NAME
+    </select>
+
+    <!--/****************************高******校******管******理******员******角******色************************************************/-->
+
+    <select id="searchDocCycleListForUni" parameterType="java.util.Map" resultMap="docCycleMap">
+        select u.USER_NAME user_name, dr.TRAINING_SPE_NAME training_spe_name,dr.DOCTOR_Flow doctor_flow,
+        dr.SESSION_NUMBER session_number, dr.TRAINING_YEARS training_years,dr.TRAINING_SPE_ID training_spe_id,dr.school
+        from RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join (
+        select a.* from RES_DOCTOR_RECRUIT a,
+        (    select t.doctor_flow,max(t.create_time) as create_time from  RES_DOCTOR_RECRUIT t where t.record_status='Y'
+        and t.AUDIT_STATUS_ID='Passed'
+        group by t.doctor_flow) b
+        where a.doctor_flow=b.doctor_flow and  a.create_time=b.create_time
+        ) rdr on dr.DOCTOR_FLOW =  rdr.DOCTOR_FLOW
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+        and (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="workOrgId != null and workOrgId != ''">OR dr.work_org_id = #{workOrgId}</if>
+            <if test="workOrgName != null and workOrgName != ''">OR dr.work_org_name = #{workOrgName}</if>
+        </trim>
+        )
+        <if test="doctorTypeId!=null and doctorTypeId!=''">
+            and dr.DOCTOR_TYPE_ID = #{doctorTypeId}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='trainingYears!=null and trainingYears!=""'>
+            and dr.TRAINING_YEARS = #{trainingYears}
+        </if>
+        <if test='graduationTime!=null and graduationTime!=""'>
+            and rdr.graduation_year = #{graduationTime}
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME  LIKE CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='idNo!=null and idNo!=""'>
+            and u.ID_NO = #{idNo}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and dr.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test='school!=null and school!=""'>
+            <bind name="school" value="'%'+school+'%'"/>
+            and dr.school like #{school}
+        </if>
+        and dr.org_flow is not null
+        order by u.USER_NAME
+    </select>
+
+    <select id="searchDocResultsListForUni" parameterType="java.util.Map" resultMap="docResultsMap">
+        select u.USER_NAME user_name, dr.TRAINING_SPE_NAME training_spe_name,dr.SESSION_NUMBER session_number,dr.DOCTOR_Flow doctor_flow
+        from RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y'
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME = #{userName}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='school!=null and school!=""'>
+            and dr.SCHOOL = #{school}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and dr.ORG_FLOW = #{orgFlow}
+        </if>
+        and (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="workOrgId != null and workOrgId != ''">OR dr.work_org_id = #{workOrgId}</if>
+            <if test="workOrgName != null and workOrgName != ''">OR dr.work_org_name = #{workOrgName}</if>
+        </trim>
+        )
+        <if test="doctorTypeId!=null and doctorTypeId!=''">
+            and dr.DOCTOR_TYPE_ID = #{doctorTypeId}
+        </if>
+        and dr.org_flow is not null
+        order by u.USER_NAME
+    </select>
+
+    <select id="searchCycleArrangeResultsForUniTwo" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT ar.RESULT_FLOW,ar.DOCTOR_FLOW,ar.SCH_START_DATE,ar.SCH_END_DATE,ar.STANDARD_DEPT_ID,ar.STANDARD_GROUP_FLOW
+        FROM SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
+        dr.DOCTOR_FLOW = ar.DOCTOR_FLOW
+        and (
+        <trim prefix="" prefixOverrides="OR">
+            <if test="workOrgId != null and workOrgId != ''">OR dr.work_org_id = #{workOrgId}</if>
+            <if test="workOrgName != null and workOrgName != ''">OR dr.work_org_name = #{workOrgName}</if>
+        </trim>
+        )
+        <if test="doctorTypeId!=null and doctorTypeId!=''">
+            and dr.DOCTOR_TYPE_ID = #{doctorTypeId}
+        </if>
+        <if test='startDate!=null and startDate!="" and endDate!=null and endDate!=""'>
+            and(
+            (ar.SCH_START_DATE>=#{startDate} and #{endDate}>=ar.SCH_START_DATE)
+            or
+            (ar.SCH_END_DATE>=#{startDate} and #{endDate}>=ar.SCH_END_DATE)
+            )
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME = #{userName}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='orgFlow!=null and orgFlow!=""'>
+            and dr.ORG_FLOW = #{orgFlow}
+        </if>
+        and dr.org_flow is not null
+        order by u.USER_NAME
+    </select>
+
+    <update id="deleteResultNotInRotation" parameterType="map">
+        update sch_arrange_result r set record_status='N' where
+        doctor_flow=#{doctorFlow}
+        and record_status in ('Y')
+        and is_rotation='Y'
+        and session_number=#{sessionNumber}
+        and (
+        (
+        exists (
+        select 1 from sch_rotation_dept d
+        left join sch_rotation_group g
+        on d.group_flow=g.group_flow
+        where d.rotation_flow =#{rotationFlow}
+        and d.record_status ='N' and d.org_flow=#{orgFlow}
+        and g.record_status='Y'
+        and d.sch_dept_flow=r.sch_dept_flow
+        and r.standard_group_flow=g.standard_group_flow
+        and d.standard_dept_id=r.standard_dept_id
+        and d.session_number=r.session_number
+        )
+        or not exists (
+        select 1 from sch_rotation_dept d
+        left join sch_rotation_group g
+        on d.group_flow=g.group_flow
+        where d.rotation_flow =#{rotationFlow}
+        and d.org_flow=#{orgFlow}
+        and g.record_status='Y'
+        and d.sch_dept_flow=r.sch_dept_flow
+        and r.standard_group_flow=g.standard_group_flow
+        and d.standard_dept_id=r.standard_dept_id
+        and d.session_number=r.session_number
+        )
+        )
+        <if test="secondRotationFlow !=null and secondRotationFlow!=''">
+            or
+            (
+            exists (
+            select 1 from sch_rotation_dept d
+            left join sch_rotation_group g
+            on d.group_flow=g.group_flow
+            where d.rotation_flow =#{secondRotationFlow}
+            and d.record_status ='N' and d.org_flow=#{orgFlow}
+            and g.record_status='Y'
+            and d.sch_dept_flow=r.sch_dept_flow
+            and r.standard_group_flow=g.standard_group_flow
+            and d.standard_dept_id=r.standard_dept_id
+            and d.session_number=r.session_number
+            )
+            or not exists(
+            select 1 from sch_rotation_dept d
+            left join sch_rotation_group g
+            on d.group_flow=g.group_flow
+            where d.rotation_flow =#{secondRotationFlow}
+            and d.org_flow=#{orgFlow}
+            and g.record_status='Y'
+            and d.sch_dept_flow=r.sch_dept_flow
+            and r.standard_group_flow=g.standard_group_flow
+            and d.standard_dept_id=r.standard_dept_id
+            and d.session_number=r.session_number
+            )
+            )
+        </if>
+        )
+        and not exists(
+        select 1 from res_doctor_sch_process p where p.user_flow=#{doctorFlow}
+        and p.record_status='Y'
+        and p.sch_result_flow=r.result_flow
+        and (p.sch_flag='Y' or p.is_external='Y')
+        )
+    </update>
+
+    <select id="getResultBySchRotationDept" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        select ar.*
+        from SCH_ARRANGE_RESULT ar
+        where session_number=#{sessionNumber}
+          and is_rotation='Y'
+          and rotation_flow=#{rotationFlow}
+          and doctor_flow=#{doctorFlow}
+          and sch_dept_flow=#{schDeptFlow}
+          and standard_group_flow=#{standardGroupFlow}
+          and standard_dept_id=#{standardDeptId}
+          and org_flow=#{orgFlow}
+        order by create_time desc
+    </select>
+
+    <!-- 按科室统计入科异常学员 -->
+    <select id="preWarningBeforeList" resultMap="waringMap">
+        SELECT  U.USER_NAME,
+        R.DEPT_NAME,
+        R.SESSION_NUMBER,
+        R.SCH_START_DATE,
+        R.SCH_END_DATE,
+        RD.TRAINING_TYPE_NAME,
+        RD.TRAINING_SPE_NAME
+        FROM SCH_ARRANGE_RESULT R
+        LEFT JOIN SYS_USER U
+        ON U.USER_FLOW=R.DOCTOR_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = R.DOCTOR_FLOW
+        WHERE R.RECORD_STATUS = 'Y'
+        and rd.DOCTOR_STATUS_ID in ('Training','20')
+        AND SCH_START_DATE <![CDATA[<=]]> #{schEndDate}
+        AND SCH_START_DATE >= #{schStartDate}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND R.DEPT_FLOW=#{deptFlow}
+        </if>
+        AND (R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        AND SCH_FLAG = 'Y'
+        AND (ORG_FLOW = #{orgFlow}
+        OR ORG_FLOW IN (SELECT ORG_FLOW
+        FROM SCH_DEPT_EXTERNAL_REL
+        WHERE RECORD_STATUS = 'Y'
+        AND REL_ORG_FLOW = #{orgFlow})))
+        OR R.ORG_FLOW = #{orgFlow}
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND R.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        AND R.DOCTOR_FLOW IN (SELECT DOCTOR_FLOW
+        FROM RES_DOCTOR
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_FLAG = 'Y'))
+        AND (NOT EXISTS (SELECT NULL
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_RESULT_FLOW = R.RESULT_FLOW)
+        OR EXISTS (SELECT NULL
+        FROM RES_DOCTOR_SCH_PROCESS
+        WHERE RECORD_STATUS = 'Y'
+        AND SCH_RESULT_FLOW = R.RESULT_FLOW
+        AND (TEACHER_USER_FLOW IS NULL
+        OR HEAD_USER_FLOW IS NULL)))
+        ORDER BY SCH_START_DATE,SCH_END_DATE
+    </select>
+
+    <!-- 按科室统计出科异常学员 -->
+    <select id="preWarningIngList" resultMap="waringMap">
+        SELECT     U.USER_NAME,
+        P.DEPT_NAME,
+        RD.SESSION_NUMBER,
+        P.SCH_START_DATE,
+        P.SCH_END_DATE,
+        RD.TRAINING_TYPE_NAME,
+        RD.TRAINING_SPE_NAME,
+        CASE WHEN RR.REC_FLOW IS NULL THEN '学员未提交出科小结'
+        WHEN RR.REC_FLOW IS NOT  NULL AND  RR.AUDIT_USER_FLOW IS NULL THEN '带教老师未审核出科小结'
+        WHEN RR.REC_FLOW IS NOT  NULL AND  RR.HEAD_AUDIT_USER_FLOW IS NULL THEN '科主任未审核出科小结'
+        ELSE '' END REASON
+        FROM RES_DOCTOR_SCH_PROCESS P
+        LEFT JOIN SYS_USER U
+        ON U.USER_FLOW=P.USER_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = P.USER_FLOW
+        LEFT JOIN  RES_SCH_PROCESS_EXPRESS RR
+        ON RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND  RR.REC_TYPE_ID = 'AfterSummary'
+        WHERE P.RECORD_STATUS = 'Y'
+        and rd.DOCTOR_STATUS_ID in ('Training','20')
+        AND P.ORG_FLOW = #{orgFlow}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND P.DEPT_FLOW=#{deptFlow}
+        </if>
+        AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        AND SCH_END_DATE >= #{schStartDate}
+        AND IS_CURRENT_FLAG = 'Y'
+        AND EXISTS (
+        SELECT 1 FROM RES_DOCTOR WHERE DOCTOR_FLOW=P.USER_FLOW AND RECORD_STATUS='Y'
+
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        )
+        AND  (
+        NOT EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND  RR.REC_TYPE_ID = 'AfterSummary')
+        OR EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND ( AUDIT_USER_FLOW IS NULL
+        OR HEAD_AUDIT_USER_FLOW IS NULL)
+        AND RR.REC_TYPE_ID = 'AfterSummary')
+        )
+        AND EXISTS (
+        SELECT 1 FROM RES_DOCTOR WHERE DOCTOR_FLOW=P.USER_FLOW AND RECORD_STATUS='Y'
+
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        )
+        ORDER BY SCH_START_DATE,SCH_END_DATE
+    </select>
+
+    <!-- 按科室统计出科考核异常学员 -->
+    <select id="preWarningAfterList" resultMap="waringMap">
+        SELECT U.USER_NAME,
+        P.DEPT_NAME,
+        RD.SESSION_NUMBER,
+        P.SCH_START_DATE,
+        P.SCH_END_DATE,
+        RD.TRAINING_TYPE_NAME,
+        RD.TRAINING_SPE_NAME,
+        CASE WHEN RR.REC_FLOW IS NULL THEN '带教老师未审核出科考核表'
+        WHEN RR.REC_FLOW IS NOT  NULL  AND  RR.HEAD_AUDIT_USER_FLOW IS NULL THEN '科主任未审核出科考核表'
+        ELSE '' END REASON
+        FROM RES_DOCTOR_SCH_PROCESS P
+        LEFT JOIN SYS_USER U
+        ON U.USER_FLOW=P.USER_FLOW
+        LEFT JOIN RES_DOCTOR RD ON RD.DOCTOR_FLOW = P.USER_FLOW
+        LEFT JOIN  RES_SCH_PROCESS_EXPRESS RR
+        ON RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND  RR.REC_TYPE_ID = 'AfterEvaluation'
+        WHERE P.RECORD_STATUS = 'Y'
+        and rd.DOCTOR_STATUS_ID in ('Training','20')
+        AND P.ORG_FLOW = #{orgFlow}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND P.DEPT_FLOW=#{deptFlow}
+        </if>
+        AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        AND SCH_END_DATE >= #{schStartDate}
+        AND IS_CURRENT_FLAG = 'Y'
+        AND EXISTS (
+        SELECT 1 FROM RES_DOCTOR WHERE DOCTOR_FLOW=P.USER_FLOW AND RECORD_STATUS='Y'
+
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        )
+        AND  (
+        NOT EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND RR.REC_TYPE_ID = 'AfterEvaluation')
+        OR EXISTS (
+        SELECT 1 FROM RES_SCH_PROCESS_EXPRESS RR
+        WHERE RR.RECORD_STATUS = 'Y'
+        AND RR.PROCESS_FLOW = P.PROCESS_FLOW
+        AND AUDIT_USER_FLOW IS NOT NULL
+        AND HEAD_AUDIT_USER_FLOW IS NULL
+        AND RR.REC_TYPE_ID = 'AfterEvaluation')
+        )
+        AND EXISTS (
+        SELECT 1 FROM RES_DOCTOR WHERE DOCTOR_FLOW=P.USER_FLOW AND RECORD_STATUS='Y'
+
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            AND SESSION_NUMBER = #{sessionNumber}
+        </if>
+        )
+        ORDER BY SCH_START_DATE,SCH_END_DATE
+    </select>
+
+    <select id="querySchArrangeResultByDoctor" resultMap="saResultMap">
+        select rdsp.process_flow,sar.sch_Dept_Name,sar.sch_Month,sar.sch_Start_Date,sar.sch_End_Date,sar.result_Flow,sar.sch_Dept_Flow,
+               decode((select count(1) from dept_teacher_grade_info dtgi where record_status='Y' and rdsp.process_flow=dtgi.process_flow),2,'是','否') evaluate_flag,
+               (select rec_flow from dept_teacher_grade_info dtgi where record_status='Y' and rdsp.process_flow=dtgi.process_flow AND REC_TYPE_ID IN ('TeacherGrade')) is_Teacher,
+               (select rec_flow from dept_teacher_grade_info dtgi where record_status='Y' and rdsp.process_flow=dtgi.process_flow AND REC_TYPE_ID IN ('DeptGrade')) is_Dept
+        from sch_arrange_result sar
+                 left join res_doctor_sch_process rdsp on rdsp.sch_result_flow = sar.result_flow
+        where sar.record_status = 'Y'
+          and sar.doctor_flow=#{doctorFlow}
+    </select>
+
+    <select id="searchDocResultsByMonth" parameterType="java.util.Map" resultMap="docResultsMap">
+        SELECT ( case when b.ORG_NAME is not null then A.org_name ||'('||B.ORG_NAME||')' else A.org_name end )AS ORG_NAME_ALL
+        , A.* FROM (
+        SELECT U.USER_NAME, U.ID_NO,U.CRET_TYPE_NAME,DR.TRAINING_TYPE_NAME, DR.TRAINING_SPE_NAME, DR.SESSION_NUMBER, DR.DOCTOR_FLOW
+        , RDR.GRADUATION_YEAR, DR.ORG_NAME,DR.ORG_FLOW,DR.DOCTOR_TYPE_NAME
+        FROM RES_DOCTOR dr
+        inner join SYS_USER u
+        on dr.DOCTOR_FLOW = u.USER_FLOW
+        left join (
+        select A.RECRUIT_FLOW,A.DOCTOR_FLOW,A.ORG_FLOW,A.GRADUATION_YEAR,row_number() over(partition by doctor_flow order by create_time desc) as rn
+        from RES_DOCTOR_RECRUIT a
+        where RECORD_STATUS= 'Y' AND AUDIT_STATUS_ID='Passed'
+        <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+            and a.ORG_FLOW in
+            <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        ) rdr on dr.DOCTOR_FLOW =  rdr.DOCTOR_FLOW
+
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and rn=1
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='trainingTypeId!=null and trainingTypeId!=""'>
+            and dr.TRAINING_TYPE_ID = #{trainingTypeId}
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and dr.DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber}
+        </if>
+        <if test='graduationYear!=null and graduationYear!=""'>
+            and rdr.graduation_year = #{graduationYear}
+        </if>
+        <if test="jointOrgFlowList!=null and jointOrgFlowList.size>0">
+            and dr.ORG_FLOW in
+            <foreach collection="jointOrgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+        <if test='deptFlow!=null and deptFlow!=""'>
+            and exists
+            (select null
+            from res_doctor_sch_process p
+            where p.RECORD_STATUS = 'Y'
+            and p.user_flow = dr.doctor_flow
+            AND (EXISTS
+            (SELECT NULL
+            FROM SYS_USER_DEPT sud
+            WHERE sud.RECORD_STATUS = 'Y'
+            AND sud.USER_FLOW = #{kzrFlow}
+            AND p.DEPT_FLOW = sud.DEPT_FLOW) OR
+            p.DEPT_FLOW = #{deptFlow}))
+        </if>
+        <if test="deptList!=null and deptList.size>0">
+            and exists
+            (select null
+            from res_doctor_sch_process p
+            where p.RECORD_STATUS = 'Y'
+            and p.user_flow = dr.doctor_flow
+            AND (EXISTS
+            (SELECT NULL
+            FROM SYS_USER_DEPT sud
+            WHERE sud.RECORD_STATUS = 'Y'
+            AND sud.USER_FLOW = #{kzrFlow}
+            AND p.DEPT_FLOW = sud.DEPT_FLOW) OR
+            p.DEPT_FLOW in
+            <foreach collection="deptList" open="(" separator="," close=")" item="item">#{item.deptFlow}</foreach>))
+        </if>
+        and exists (
+        select 1 from SCH_ARRANGE_RESULT sar where sar.doctor_flow = dr.doctor_flow
+        and sar.record_status='Y'
+        AND sar.SCH_END_DATE >= #{schStartDate}
+        AND sar.SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        )
+        order by dr.SESSION_NUMBER desc,dr.TRAINING_Type_ID,dr.TRAINING_SPE_ID,u.user_flow
+        ) A
+        LEFT JOIN RES_JOINT_ORG B on B.JOINT_ORG_FLOW = a.ORG_FLOW and B.RECORD_STATUS = 'Y'
+    </select>
+
+    <select id="searchSchArrangeResultByDoctorAndDate" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        SELECT *
+        FROM SCH_ARRANGE_RESULT
+        WHERE RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW = #{doctorFlow}
+        <if test='deptFlow!=null and deptFlow!=""'>
+            AND DEPT_FLOW = #{deptFlow}
+        </if>
+        AND SCH_END_DATE >= #{schStartDate}
+        AND SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        ORDER BY SCH_START_DATE
+    </select>
+
+    <select id="searchArrangeResultByDateAndOrgByMap" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        select sar.*
+        from sch_arrange_result sar
+        where sar.RECORD_STATUS='Y'
+        <if test="doctorName!=null and doctorName!=''">
+            <bind name="doctorName" value="'%'+doctorName+'%'"/>
+            and sar.DOCTOR_NAME like #{doctorName}
+        </if>
+
+        <if test="deptFlow!=null and deptFlow!=''">
+            and sar.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and sar.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            and sar.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+
+        <if test='schStartDate!=null and schStartDate!=""'>
+            and sar.SCH_START_DATE <![CDATA[>=]]> #{schStartDate}
+        </if>
+        <if test='SchEndDate!=null and SchEndDate!=""'>
+            and sar.SCH_END_DATE <![CDATA[<=]]> #{SchEndDate}
+        </if>
+        <if test='medicineTypeId!=null and medicineTypeId!=""'>
+            and EXISTS (SELECT 1 FROM SYS_USER SU WHERE SU.USER_FLOW=DOCTOR_FLOW AND
+            instr(#{medicineTypeId},su.medicine_Type_Id)>0)
+        </if>
+        ORDER BY sar.SCH_START_DATE DESC
+    </select>
+
+    <select id="findDeptsByDoctor" resultMap="com.pinde.core.common.sci.dao.SysDeptMapper.BaseResultMap">
+        SELECT * FROM SYS_DEPT
+        WHERE RECORD_STATUS='Y'
+        AND DEPT_FLOW IN (
+        select dept_flow
+        from sch_arrange_result sar
+        where sar.RECORD_STATUS='Y'
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            and sar.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+        )
+        ORDER BY ORG_FLOW,DEPT_FLOW DESC
+    </select>
+
+    <select id="searchArrangeResultByDateAndOrgByMapNew" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        select * from (
+        select rd.DOCTOR_TYPE_ID,sar.*,rd.DOCTOR_STATUS_ID
+        from sch_arrange_result sar
+        left join res_doctor rd
+        on sar.doctor_flow=rd.doctor_flow
+        where sar.RECORD_STATUS='Y'
+        <if test="doctorName!=null and doctorName!=''">
+            <bind name="doctorName" value="'%'+doctorName+'%'"/>
+            and sar.DOCTOR_NAME like #{doctorName}
+        </if>
+        <if test="deptFlow!=null and deptFlow!=''">
+            and sar.DEPT_FLOW = #{deptFlow}
+        </if>
+        <if test="orgFlow!=null and orgFlow!=''">
+            and sar.ORG_FLOW = #{orgFlow}
+        </if>
+        <if test="doctorFlow!=null and doctorFlow!=''">
+            and sar.DOCTOR_FLOW = #{doctorFlow}
+        </if>
+
+        <if test='schStartDate!=null and schStartDate!=""'>
+            and sar.SCH_START_DATE <![CDATA[>=]]> #{schStartDate}
+        </if>
+        <if test='SchEndDate!=null and SchEndDate!=""'>
+            and sar.SCH_END_DATE <![CDATA[<=]]> #{SchEndDate}
+        </if>
+        <if test='schStartDate!=null and schStartDate!="" and SchEndDate!=null and SchEndDate!=""'>
+            or (sar.SCH_START_DATE <![CDATA[<=]]> #{schStartDate} and sar.SCH_END_DATE >= #{schStartDate})
+            or (sar.SCH_START_DATE <![CDATA[<=]]> #{SchEndDate} and sar.SCH_END_DATE >= #{SchEndDate})
+        </if>
+        <if test='medicineTypeId!=null and medicineTypeId!=""'>
+            and EXISTS (SELECT 1 FROM SYS_USER SU WHERE SU.USER_FLOW=DOCTOR_FLOW AND
+            instr(#{medicineTypeId},su.medicine_Type_Id)>0)
+        </if>
+        <if test="workOrgId!=null and workOrgId!=''">
+            and rd.work_org_id = #{workOrgId}
+        </if>
+        <if test="trainingSpeId!=null and trainingSpeId!=''">
+            and rd.TRAINING_SPE_ID = #{trainingSpeId}
+        </if>
+        ORDER BY sar.SCH_START_DATE DESC
+        )where RECORD_STATUS='Y'
+        <if test="docTypeList!=null and docTypeList.size>0">
+            and DOCTOR_TYPE_ID in
+            <foreach collection="docTypeList" open="(" separator="," close=")" item="item">#{item}</foreach>
+        </if>
+
+        <if test='doctorStatusId != null and doctorStatusId != ""'>
+            AND DOCTOR_STATUS_ID = TO_CHAR(#{doctorStatusId})
+        </if>
+    </select>
+
+    <!-- 查询学员轮转月数 -->
+    <select id="getDoctorSchMonthSumInfo" resultType="float">
+        SELECT  NVL(SUM (R.SCH_MONTH),0)
+        <!--CASE
+        WHEN NVL(SUM (R.SCH_MONTH),0) > 33 THEN
+            33
+        ELSE
+            NVL(SUM (R.SCH_MONTH),0)
+        END AS SCH_MONTH -->
+        FROM
+        SCH_ARRANGE_RESULT R
+        WHERE
+        R.RECORD_STATUS = 'Y'
+        AND R.DOCTOR_FLOW = #{doctorFlow}
+        AND EXISTS (
+        SELECT
+        1
+        FROM
+        SCH_ROTATION_DEPT D
+        WHERE
+        D.RECORD_STATUS = 'Y'
+        AND R.STANDARD_GROUP_FLOW = D.GROUP_FLOW
+        AND R.STANDARD_DEPT_ID = D.STANDARD_DEPT_ID
+        AND D.ROTATION_FLOW = #{rotationFlow}
+        AND D.ORG_FLOW IS NULL
+        )
+    </select>
+
+    <resultMap id="schedulingSearchDeptMap" type="HashMap">
+        <result property="schDeptFlow" column="SCH_DEPT_FLOW" javaType="string"/>
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="num" column="NUM" javaType="string"/>
+    </resultMap>
+
+    <select id="schedulingSearchDeptList" parameterType="java.util.Map" resultMap="schedulingSearchDeptMap">
+        SELECT S.SCH_DEPT_FLOW,S.SCH_DEPT_NAME,COUNT(*) AS  NUM
+        FROM SCH_ARRANGE_RESULT S
+        LEFT JOIN RES_DOCTOR_SCH_PROCESS P ON S.RESULT_FLOW=P.SCH_RESULT_FLOW
+        LEFT JOIN RES_DOCTOR D ON S.DOCTOR_FLOW=D.DOCTOR_FLOW
+        WHERE S.RECORD_STATUS = 'Y'
+        AND P.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        AND D.TRAINING_TYPE_ID = 'DoctorTrainingSpe'
+        AND D.ORG_FLOW= #{orgFlow}
+        <if test='deptFlow != null and deptFlow != ""'>
+            AND S.DEPT_FLOW= #{deptFlow}
+        </if>
+        <!--        AND SUBSTR(S.SCH_START_DATE, 0, 7)  <![CDATA[ <= ]]>  #{month}-->
+        <!--        AND SUBSTR(S.SCH_END_DATE, 0, 7)  <![CDATA[ >= ]]>  #{month}-->
+        and S.SCH_START_DATE <![CDATA[ <= ]]> #{lastDayOfMonth}
+        and S.SCH_END_DATE <![CDATA[ >= ]]>  #{firstDayOfMonth}
+        GROUP BY S.SCH_DEPT_FLOW, S.SCH_DEPT_NAME
+        ORDER BY S.SCH_DEPT_FLOW
+    </select>
+
+    <select id="schedulingSearchDeptList2" parameterType="java.util.Map" resultMap="schedulingSearchDeptMap">
+        SELECT S.SCH_DEPT_FLOW,S.SCH_DEPT_NAME,COUNT(*) AS  NUM
+        FROM SCH_ARRANGE_RESULT S
+        LEFT JOIN RES_DOCTOR_SCH_PROCESS P ON S.RESULT_FLOW=P.SCH_RESULT_FLOW
+        LEFT JOIN RES_DOCTOR D ON S.DOCTOR_FLOW=D.DOCTOR_FLOW
+        WHERE S.RECORD_STATUS = 'Y'
+        AND P.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        AND D.TRAINING_TYPE_ID = 'AssiGeneral'
+        AND D.ORG_FLOW= #{orgFlow}
+        <if test='deptFlow != null and deptFlow != ""'>
+            AND S.DEPT_FLOW= #{deptFlow}
+        </if>
+        and S.SCH_START_DATE <![CDATA[ <= ]]> #{lastDayOfMonth}
+        and S.SCH_END_DATE <![CDATA[ >= ]]>  #{firstDayOfMonth}
+        GROUP BY S.SCH_DEPT_FLOW, S.SCH_DEPT_NAME
+        ORDER BY S.SCH_DEPT_FLOW
+    </select>
+
+    <resultMap id="schedulingSearchDeptUserMap" type="HashMap">
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="teacherUserName" column="TEACHER_USER_NAME" javaType="string"/>
+        <result property="schMonth" column="SCH_MONTH" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+    </resultMap>
+    <select id="schedulingSearchDeptUserList" parameterType="java.util.Map" resultMap="schedulingSearchDeptUserMap">
+        SELECT D.DOCTOR_NAME,D.TRAINING_SPE_NAME,P.TEACHER_USER_NAME,SCH_MONTH,S.SCH_START_DATE,S.SCH_END_DATE
+        FROM SCH_ARRANGE_RESULT S
+        LEFT JOIN RES_DOCTOR_SCH_PROCESS P ON S.RESULT_FLOW=P.SCH_RESULT_FLOW
+        LEFT JOIN RES_DOCTOR D ON S.DOCTOR_FLOW=D.DOCTOR_FLOW
+        WHERE S.RECORD_STATUS = 'Y'
+        AND P.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        AND D.ORG_FLOW= #{orgFlow}
+        AND D.TRAINING_TYPE_ID= #{trainingTypeId}
+        <if test='deptFlow != null and deptFlow != ""'>
+            AND S.DEPT_FLOW= #{deptFlow}
+        </if>
+        and S.SCH_START_DATE <![CDATA[ <= ]]> #{lastDayOfMonth}
+        and S.SCH_END_DATE <![CDATA[ >= ]]>  #{firstDayOfMonth}
+        ORDER BY D.TRAINING_SPE_ID
+    </select>
+
+    <resultMap id="schedulingSearchDoctorMap" type="HashMap">
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="sessionNumber" column="SESSION_NUMBER" javaType="string"/>
+        <result property="trainingSpeName" column="TRAINING_SPE_NAME" javaType="string"/>
+        <result property="sexName" column="SEX_NAME" javaType="string"/>
+        <result property="doctorTypeName" column="DOCTOR_TYPE_NAME" javaType="string"/>
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+    </resultMap>
+    <select id="schedulingSearchDoctorList" parameterType="java.util.Map" resultMap="schedulingSearchDoctorMap">
+        SELECT DISTINCT D.DOCTOR_NAME,D.SESSION_NUMBER, D.TRAINING_SPE_NAME,U.SEX_NAME,D.DOCTOR_TYPE_NAME,S.SCH_DEPT_NAME,S.SCH_START_DATE,S.SCH_END_DATE,D.TRAINING_SPE_ID
+        FROM SCH_ARRANGE_RESULT S
+        LEFT JOIN RES_DOCTOR D ON S.DOCTOR_FLOW = D.DOCTOR_FLOW
+        LEFT JOIN SYS_USER U ON U.USER_FLOW = D.DOCTOR_FLOW
+        WHERE S.RECORD_STATUS = 'Y'
+        AND D.RECORD_STATUS = 'Y'
+        AND D.ORG_FLOW = #{orgFlow}
+        and S.SCH_START_DATE <![CDATA[ <= ]]> #{lastDayOfMonth}
+        and S.SCH_END_DATE <![CDATA[ >= ]]>  #{firstDayOfMonth}
+        <if test='doctorTypeId != null and doctorTypeId != ""'>
+            AND D.DOCTOR_TYPE_ID= #{doctorTypeId}
+        </if>
+        <if test='trainingSpeId != null and trainingSpeId != ""'>
+            AND D.TRAINING_SPE_ID= #{trainingSpeId}
+        </if>
+        <if test='sessionNumber != null and sessionNumber != ""'>
+            AND D.SESSION_NUMBER= #{sessionNumber}
+        </if>
+        <if test='userName != null and userName != ""'>
+            AND D.DOCTOR_NAME= #{userName}
+        </if>
+        <if test='trainingTypeId != null and trainingTypeId != ""'>
+            AND D.TRAINING_TYPE_ID= #{trainingTypeId}
+        </if>
+        ORDER BY D.TRAINING_SPE_ID
+    </select>
+
+    <resultMap id="schedulingSearchAuditListMap" type="HashMap">
+        <result property="doctorFlow" column="DOCTOR_FLOW" javaType="string"/>
+        <result property="resultFlow" column="RESULT_FLOW" javaType="string"/>
+        <result property="doctorName" column="DOCTOR_NAME" javaType="string"/>
+        <result property="doctorTypeName" column="DOCTOR_TYPE_NAME" javaType="string"/>
+        <result property="stageName" column="SCH_STAGE_NAME" javaType="string"/>
+        <result property="groupName" column="GROUP_NAME" javaType="string"/>
+        <result property="standardDeptName" column="STANDARD_DEPT_NAME" javaType="string"/>
+        <result property="schDeptName" column="SCH_DEPT_NAME" javaType="string"/>
+        <result property="schStartDate" column="SCH_START_DATE" javaType="string"/>
+        <result property="schEndDate" column="SCH_END_DATE" javaType="string"/>
+        <result property="baseAudit" column="BASE_AUDIT" javaType="string"/>
+    </resultMap>
+    <select id="schedulingSearchAuditList" parameterType="java.util.Map" resultMap="schedulingSearchAuditListMap">
+        SELECT SAR.RESULT_FLOW,RD.DOCTOR_FLOW,RD.DOCTOR_NAME,RD.DOCTOR_TYPE_NAME,RD.TRAINING_SPE_ID,SAR.SCH_DEPT_NAME,SRG.SCH_STAGE_NAME,
+        SRG.GROUP_NAME,SRD.STANDARD_DEPT_NAME,SAR.BASE_AUDIT,SAR.SCH_START_DATE,SAR.SCH_END_DATE
+        FROM RES_DOCTOR RD
+        LEFT JOIN SCH_ARRANGE_RESULT SAR ON RD.DOCTOR_FLOW=SAR.DOCTOR_FLOW
+        LEFT JOIN SCH_ROTATION_GROUP SRG ON SAR.STANDARD_GROUP_FLOW=SRG.GROUP_FLOW
+        LEFT JOIN SCH_ROTATION_DEPT SRD ON SAR.STANDARD_GROUP_FLOW=SRD.GROUP_FLOW AND SAR.STANDARD_DEPT_ID=SRD.STANDARD_DEPT_ID
+        WHERE RD.RECORD_STATUS = 'Y' AND SAR.RECORD_STATUS = 'Y' AND SRG.RECORD_STATUS = 'Y' AND SRD.RECORD_STATUS = 'Y'
+        <if test='resultFlow != null and resultFlow != ""'>
+            AND SAR.RESULT_FLOW = #{resultFlow}
+        </if>
+        <if test='orgFlow != null and orgFlow != ""'>
+            AND RD.ORG_FLOW= #{orgFlow}
+        </if>
+        <if test='userName != null and userName != ""'>
+            AND RD.DOCTOR_NAME= #{userName}
+        </if>
+        <if test='sessionNumber != null and sessionNumber != ""'>
+            AND RD.SESSION_NUMBER= #{sessionNumber}
+        </if>
+        <if test='speId != null and speId != ""'>
+            AND RD.TRAINING_SPE_ID= #{speId}
+        </if>
+        <if test='trainingTypeId != null and trainingTypeId != ""'>
+            AND RD.TRAINING_TYPE_ID= #{trainingTypeId}
+        </if>
+        <if test='schDeptFlow != null and schDeptFlow != ""'>
+            AND SAR.SCH_DEPT_FLOW= #{schDeptFlow}
+        </if>
+        <if test='schStartDate != null and schStartDate != ""'>
+            AND SAR.SCH_START_DATE <![CDATA[>=]]> #{schStartDate}
+        </if>
+        <if test='schEndDate != null and schEndDate != ""'>
+            AND SAR.SCH_END_DATE <![CDATA[<=]]> #{schEndDate}
+        </if>
+        <if test='baseAudit != null and baseAudit != ""'>
+            AND BASE_AUDIT= #{baseAudit}
+        </if>
+        ORDER BY SAR.SCH_START_DATE
+    </select>
+
+    <select id="checkResultDateList" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        select *
+        from sch_arrange_result
+        where record_status = 'Y'
+        and doctor_flow = #{doctorFlow}
+        and (
+        (
+        sch_start_date <![CDATA[<=]]> #{startDate}
+        and  sch_end_date >= #{startDate}
+        )
+        or
+        (
+        sch_start_date <![CDATA[<=]]> #{endDate}
+        and  sch_end_date >= #{endDate}
+        )
+        or
+        (
+        sch_start_date <![CDATA[>=]]> #{startDate}
+        and  sch_end_date <![CDATA[<=]]> #{endDate}
+        )
+        )
+        <if test='subDeptFlow!=null and subDeptFlow!=""'>
+            and result_flow != #{subDeptFlow}
+        </if>
+        <if test='rotationFlow!=null and rotationFlow!=""'>
+            and rotation_flow = #{rotationFlow}
+        </if>
+    </select>
+
+    <update id="updateSchArrangeResultToDel"   parameterType="java.util.List">
+        UPDATE SCH_ARRANGE_RESULT SET RECORD_STATUS='N' WHERE RESULT_FLOW IN
+        <foreach collection="resultFlows" item="r" open="(" separator="," close=")">
+            #{r}
+        </foreach>
+    </update>
+
+
+    <update id="updateResDoctorSchProcessToDel"   parameterType="java.util.List">
+        UPDATE RES_DOCTOR_SCH_PROCESS SET RECORD_STATUS='N'  WHERE SCH_RESULT_FLOW IN
+        <foreach collection="resultFlows" item="r" open="(" separator="," close=")">
+            #{r}
+        </foreach>
+    </update>
+
+    <select id="getAllByDoctorFlow" resultType="com.pinde.core.model.SchArrangeResult">
+        SELECT * FROM SCH_ARRANGE_RESULT
+        WHERE DOCTOR_FLOW = #{doctorFlow}
+        <choose>
+            <when test="null != delFlag">
+                <if test="delFlag">
+                    AND RECORD_STATUS = 'Y'
+                </if>
+                <if test="!delFlag">
+                    AND RECORD_STATUS = 'N'
+                </if>
+            </when>
+        </choose>
+        order by SCH_START_DATE ASC
+    </select>
+
+    <select id="selectDoctorSchDate" resultType="com.pinde.core.model.SchArrangeResult">
+        select sar.* from SCH_ARRANGE_RESULT sar
+        where sar.record_status = 'Y'
+        and sar.doctor_flow in
+        <foreach collection="doctorFlowList" item="doctorFlow" open="(" close=")" separator=",">
+            #{doctorFlow}
+        </foreach>
+        <choose>
+            <when test="schStartDate != null and schStartDate != '' and schEndDate != null and schEndDate != ''">
+                and sar.sch_start_date &lt;= #{schEndDate} and #{schStartDate} &lt;= sar.sch_end_date
+            </when>
+            <when test="schStartDate != null and schStartDate != ''">
+                and sar.sch_start_date >= #{schStartDate}
+            </when>
+            <when test="schEndDate != null and schEndDate != ''">
+                and sar.sch_end_date &lt;= #{schEndDate}
+            </when>
+            <otherwise></otherwise>
+        </choose>
+    </select>
+
+</mapper>

@@ -1,4 +1,4 @@
-package com.pinde.sci.form.sch;
+package com.pinde.core.common.form;
 
 
 import com.pinde.core.model.SchArrangeResult;
