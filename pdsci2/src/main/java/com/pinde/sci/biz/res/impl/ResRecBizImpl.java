@@ -24,7 +24,6 @@ import com.pinde.sci.common.util.JspFormUtil;
 import com.pinde.sci.dao.res.ResAppealExtMapper;
 import com.pinde.sci.dao.res.ResDoctorSchProcessExtMapper;
 import com.pinde.sci.dao.res.ResRecExtMapper;
-import com.pinde.sci.dao.sch.SchArrangeResultExtMapper;
 import com.pinde.sci.keyUtil.PdUtil;
 import com.pinde.core.model.ResDoctorSchProcessExt;
 import com.pinde.core.model.ResRecExt;
