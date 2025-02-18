@@ -87,334 +87,334 @@
         </sql>
     </changeSet>
 
-    <changeSet id="create-jsres_doctor_detail_statistics" author="fengxf">
-        <sql>
-            CREATE TABLE JSRES_DOCTOR_DETAIL_STATISTICS (
-                 RECORD_FLOW VARCHAR2 (40 BYTE) NOT NULL,
-                 RECRUIT_FLOW VARCHAR2 (40 BYTE) NULL,
-                 DOCTOR_FLOW VARCHAR2 (40 BYTE) NULL,
-                 CAT_SPE_ID VARCHAR2 (40 BYTE) NULL,
-                 CAT_SPE_NAME VARCHAR2 (40 BYTE) NULL,
-                 SPE_ID VARCHAR2 (40 BYTE) NULL,
-                 SPE_NAME VARCHAR2 (40 BYTE) NULL,
-                 TRAIN_YEAR VARCHAR2 (20 BYTE) NULL,
-                 SESSION_NUMBER VARCHAR2 (10 BYTE) NULL,
-                 ROTATION_FLOW VARCHAR2 (40 BYTE) NULL,
-                 SCH_STANDARD_DEPT_FLOW VARCHAR2 (40 BYTE) NULL,
-                 GROUP_FLOW VARCHAR2 (40 BYTE) NULL,
-                 STANDARD_DEPT_ID VARCHAR2 (40 BYTE) NULL,
-                 STANDARD_DEPT_NAME VARCHAR2 (40 BYTE) NULL,
-                 SCH_MONTH VARCHAR2 (10 BYTE) NULL,
-                 ORG_FLOW VARCHAR2 (40 BYTE) NULL,
-                 ORG_NAME VARCHAR2 (100 BYTE) NULL,
-                 COMPLETE_NUM VARCHAR2 (10 BYTE) NULL,
-                 AUDIT_NUM VARCHAR2 (10 BYTE) NULL,
-                 IS_SHORT VARCHAR2 (2 BYTE) NULL,
-                 REQ_NUM VARCHAR2 (10 BYTE) NULL,
-                 OLD_REQ_NUM VARCHAR2 (10 BYTE) NULL,
-                 COMPLETE_BI VARCHAR2 (10 BYTE) NULL,
-                 AUDIT_BI VARCHAR2 (10 BYTE) NULL,
-                 RECORD_STATUS VARCHAR2 (2 BYTE) NULL,
-                 CREATE_TIME VARCHAR2 (20 BYTE) NULL,
-                 CREATE_USER_FLOW VARCHAR2 (40 BYTE) NULL,
-                 MODIFY_TIME VARCHAR2 (20 BYTE) NULL,
-                 MODIFY_USER_FLOW VARCHAR2 (40 BYTE) NULL,
-                 APPLY_YEAR VARCHAR2 (10 BYTE) NULL,
-                 OUT_COMPLETE_NUM VARCHAR2 (10 BYTE) NULL,
-                 IN_COMPLETE_NUM VARCHAR2 (10 BYTE) NULL,
-                 OUT_COMPLETE_BI VARCHAR2 (10 BYTE) NULL,
-                 IN_COMPLETE_BI VARCHAR2 (10 BYTE) NULL,
-                 IS_ADD VARCHAR2 (2 BYTE) NULL,
-                 COMPLETE_BI_PER VARCHAR2 (10 BYTE) NULL,
-                 OUT_COMPLETE_BI_PER VARCHAR2 (10 BYTE) NULL,
-                 IN_COMPLETE_BI_PER VARCHAR2 (10 BYTE) NULL
-            );
+<!--    <changeSet id="create-jsres_doctor_detail_statistics" author="fengxf">-->
+<!--        <sql>-->
+<!--            CREATE TABLE JSRES_DOCTOR_DETAIL_STATISTICS (-->
+<!--                 RECORD_FLOW VARCHAR2 (40 BYTE) NOT NULL,-->
+<!--                 RECRUIT_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 DOCTOR_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 CAT_SPE_ID VARCHAR2 (40 BYTE) NULL,-->
+<!--                 CAT_SPE_NAME VARCHAR2 (40 BYTE) NULL,-->
+<!--                 SPE_ID VARCHAR2 (40 BYTE) NULL,-->
+<!--                 SPE_NAME VARCHAR2 (40 BYTE) NULL,-->
+<!--                 TRAIN_YEAR VARCHAR2 (20 BYTE) NULL,-->
+<!--                 SESSION_NUMBER VARCHAR2 (10 BYTE) NULL,-->
+<!--                 ROTATION_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 SCH_STANDARD_DEPT_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 GROUP_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 STANDARD_DEPT_ID VARCHAR2 (40 BYTE) NULL,-->
+<!--                 STANDARD_DEPT_NAME VARCHAR2 (40 BYTE) NULL,-->
+<!--                 SCH_MONTH VARCHAR2 (10 BYTE) NULL,-->
+<!--                 ORG_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 ORG_NAME VARCHAR2 (100 BYTE) NULL,-->
+<!--                 COMPLETE_NUM VARCHAR2 (10 BYTE) NULL,-->
+<!--                 AUDIT_NUM VARCHAR2 (10 BYTE) NULL,-->
+<!--                 IS_SHORT VARCHAR2 (2 BYTE) NULL,-->
+<!--                 REQ_NUM VARCHAR2 (10 BYTE) NULL,-->
+<!--                 OLD_REQ_NUM VARCHAR2 (10 BYTE) NULL,-->
+<!--                 COMPLETE_BI VARCHAR2 (10 BYTE) NULL,-->
+<!--                 AUDIT_BI VARCHAR2 (10 BYTE) NULL,-->
+<!--                 RECORD_STATUS VARCHAR2 (2 BYTE) NULL,-->
+<!--                 CREATE_TIME VARCHAR2 (20 BYTE) NULL,-->
+<!--                 CREATE_USER_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 MODIFY_TIME VARCHAR2 (20 BYTE) NULL,-->
+<!--                 MODIFY_USER_FLOW VARCHAR2 (40 BYTE) NULL,-->
+<!--                 APPLY_YEAR VARCHAR2 (10 BYTE) NULL,-->
+<!--                 OUT_COMPLETE_NUM VARCHAR2 (10 BYTE) NULL,-->
+<!--                 IN_COMPLETE_NUM VARCHAR2 (10 BYTE) NULL,-->
+<!--                 OUT_COMPLETE_BI VARCHAR2 (10 BYTE) NULL,-->
+<!--                 IN_COMPLETE_BI VARCHAR2 (10 BYTE) NULL,-->
+<!--                 IS_ADD VARCHAR2 (2 BYTE) NULL,-->
+<!--                 COMPLETE_BI_PER VARCHAR2 (10 BYTE) NULL,-->
+<!--                 OUT_COMPLETE_BI_PER VARCHAR2 (10 BYTE) NULL,-->
+<!--                 IN_COMPLETE_BI_PER VARCHAR2 (10 BYTE) NULL-->
+<!--            );-->
 
-            ALTER TABLE JSRES_DOCTOR_DETAIL_STATISTICS ADD PRIMARY KEY (RECORD_FLOW);
+<!--            ALTER TABLE JSRES_DOCTOR_DETAIL_STATISTICS ADD PRIMARY KEY (RECORD_FLOW);-->
 
-            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX1
-                ON JSRES_DOCTOR_DETAIL_STATISTICS (RECRUIT_FLOW ASC);
+<!--            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX1-->
+<!--                ON JSRES_DOCTOR_DETAIL_STATISTICS (RECRUIT_FLOW ASC);-->
 
-            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX2
-                ON JSRES_DOCTOR_DETAIL_STATISTICS (DOCTOR_FLOW ASC);
+<!--            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX2-->
+<!--                ON JSRES_DOCTOR_DETAIL_STATISTICS (DOCTOR_FLOW ASC);-->
 
-            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX3
-                ON JSRES_DOCTOR_DETAIL_STATISTICS (APPLY_YEAR ASC);
+<!--            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX3-->
+<!--                ON JSRES_DOCTOR_DETAIL_STATISTICS (APPLY_YEAR ASC);-->
 
-            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX4
-                ON JSRES_DOCTOR_DETAIL_STATISTICS (ROTATION_FLOW ASC);
-        </sql>
-    </changeSet>
+<!--            CREATE INDEX JSRES_DOCTOR_STATISTICS_INDEX4-->
+<!--                ON JSRES_DOCTOR_DETAIL_STATISTICS (ROTATION_FLOW ASC);-->
+<!--        </sql>-->
+<!--    </changeSet>-->
 
-    <changeSet id="create-jsres_doctor_statistics_pro" author="fengxf">
-        <sql endDelimiter="/">
-            CREATE OR REPLACE
-            PROCEDURE JSRES_DOCTOR_STATISTICS_PRO IS
-            BEGIN
-            DELETE FROM JSRES_DOCTOR_DETAIL_STATISTICS;
+<!--    <changeSet id="create-jsres_doctor_statistics_pro" author="fengxf">-->
+<!--        <sql endDelimiter="/">-->
+<!--            CREATE OR REPLACE-->
+<!--            PROCEDURE JSRES_DOCTOR_STATISTICS_PRO IS-->
+<!--            BEGIN-->
+<!--            DELETE FROM JSRES_DOCTOR_DETAIL_STATISTICS;-->
 
-            insert into JSRES_DOCTOR_DETAIL_STATISTICS
-            (RECORD_FLOW,
-             RECRUIT_FLOW,
-             DOCTOR_FLOW,
-             CAT_SPE_ID,
-             CAT_SPE_NAME,
-             SPE_ID,
-             SPE_NAME,
-             TRAIN_YEAR,
-             SESSION_NUMBER,
-             ROTATION_FLOW,
-             SCH_STANDARD_DEPT_FLOW,
-             GROUP_FLOW,
-             STANDARD_DEPT_ID,
-             STANDARD_DEPT_NAME,
-             SCH_MONTH,
-             ORG_FLOW,
-             ORG_NAME,
-             COMPLETE_NUM,
-             OUT_COMPLETE_NUM,
-             IN_COMPLETE_NUM,
-             AUDIT_NUM,
-             IS_SHORT,
-             REQ_NUM,
-             OLD_REQ_NUM,
-             COMPLETE_BI,
-             OUT_COMPLETE_BI,
-             IN_COMPLETE_BI,
-             AUDIT_BI,
-             APPLY_YEAR,
-             RECORD_STATUS,
-             CREATE_TIME,
-             CREATE_USER_FLOW,
-             MODIFY_TIME,
-             MODIFY_USER_FLOW,
-             IS_ADD)
-            SELECT rawtohex(sys_guid()),
-                   A.RECRUIT_FLOW,
-                   A.DOCTOR_FLOW,
-                   A.CAT_SPE_ID,
-                   A.CAT_SPE_NAME,
-                   A.SPE_ID,
-                   A.SPE_NAME,
-                   A.TRAIN_YEAR,
-                   A.SESSION_NUMBER,
-                   A.ROTATION_FLOW,
-                   A.RECORD_FLOW,
-                   A.GROUP_FLOW,
-                   A.STANDARD_DEPT_ID,
-                   A.STANDARD_DEPT_NAME,
-                   A.SCH_MONTH,
-                   A.ORG_FLOW,
-                   A.ORG_NAME,
-                   A.COMPLETE_NUM,
-                   A.OUT_COMPLETE_NUM,
-                   A.IN_COMPLETE_NUM,
-                   A.AUDIT_NUM,
-                   A.IS_SHORT,
-                   TO_CHAR(A.REQ_NUM) REQ_NUM,
-                   TO_CHAR(A.OLD_REQ_NUM) OLD_REQ_NUM,
-                   CASE
-                       WHEN REQ_NUM = 0 THEN
-                           '-'
-                       ELSE
-                           TO_CHAR(CASE WHEN ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100 END)
-                       END COMPLETE_BI,
-                   CASE
-                       WHEN REQ_NUM = 0 THEN
-                           '-'
-                       ELSE
-                           TO_CHAR(CASE WHEN ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100 END)
-                       END OUT_COMPLETE_BI,
-                   CASE
-                       WHEN REQ_NUM = 0 THEN
-                           '-'
-                       ELSE
-                           TO_CHAR(CASE WHEN ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100 END)
-                       END IN_COMPLETE_BI,
+<!--            insert into JSRES_DOCTOR_DETAIL_STATISTICS-->
+<!--            (RECORD_FLOW,-->
+<!--             RECRUIT_FLOW,-->
+<!--             DOCTOR_FLOW,-->
+<!--             CAT_SPE_ID,-->
+<!--             CAT_SPE_NAME,-->
+<!--             SPE_ID,-->
+<!--             SPE_NAME,-->
+<!--             TRAIN_YEAR,-->
+<!--             SESSION_NUMBER,-->
+<!--             ROTATION_FLOW,-->
+<!--             SCH_STANDARD_DEPT_FLOW,-->
+<!--             GROUP_FLOW,-->
+<!--             STANDARD_DEPT_ID,-->
+<!--             STANDARD_DEPT_NAME,-->
+<!--             SCH_MONTH,-->
+<!--             ORG_FLOW,-->
+<!--             ORG_NAME,-->
+<!--             COMPLETE_NUM,-->
+<!--             OUT_COMPLETE_NUM,-->
+<!--             IN_COMPLETE_NUM,-->
+<!--             AUDIT_NUM,-->
+<!--             IS_SHORT,-->
+<!--             REQ_NUM,-->
+<!--             OLD_REQ_NUM,-->
+<!--             COMPLETE_BI,-->
+<!--             OUT_COMPLETE_BI,-->
+<!--             IN_COMPLETE_BI,-->
+<!--             AUDIT_BI,-->
+<!--             APPLY_YEAR,-->
+<!--             RECORD_STATUS,-->
+<!--             CREATE_TIME,-->
+<!--             CREATE_USER_FLOW,-->
+<!--             MODIFY_TIME,-->
+<!--             MODIFY_USER_FLOW,-->
+<!--             IS_ADD)-->
+<!--            SELECT rawtohex(sys_guid()),-->
+<!--                   A.RECRUIT_FLOW,-->
+<!--                   A.DOCTOR_FLOW,-->
+<!--                   A.CAT_SPE_ID,-->
+<!--                   A.CAT_SPE_NAME,-->
+<!--                   A.SPE_ID,-->
+<!--                   A.SPE_NAME,-->
+<!--                   A.TRAIN_YEAR,-->
+<!--                   A.SESSION_NUMBER,-->
+<!--                   A.ROTATION_FLOW,-->
+<!--                   A.RECORD_FLOW,-->
+<!--                   A.GROUP_FLOW,-->
+<!--                   A.STANDARD_DEPT_ID,-->
+<!--                   A.STANDARD_DEPT_NAME,-->
+<!--                   A.SCH_MONTH,-->
+<!--                   A.ORG_FLOW,-->
+<!--                   A.ORG_NAME,-->
+<!--                   A.COMPLETE_NUM,-->
+<!--                   A.OUT_COMPLETE_NUM,-->
+<!--                   A.IN_COMPLETE_NUM,-->
+<!--                   A.AUDIT_NUM,-->
+<!--                   A.IS_SHORT,-->
+<!--                   TO_CHAR(A.REQ_NUM) REQ_NUM,-->
+<!--                   TO_CHAR(A.OLD_REQ_NUM) OLD_REQ_NUM,-->
+<!--                   CASE-->
+<!--                       WHEN REQ_NUM = 0 THEN-->
+<!--                           '-'-->
+<!--                       ELSE-->
+<!--                           TO_CHAR(CASE WHEN ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(COMPLETE_NUM / REQ_NUM, 2) * 100 END)-->
+<!--                       END COMPLETE_BI,-->
+<!--                   CASE-->
+<!--                       WHEN REQ_NUM = 0 THEN-->
+<!--                           '-'-->
+<!--                       ELSE-->
+<!--                           TO_CHAR(CASE WHEN ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(OUT_COMPLETE_NUM / REQ_NUM, 2) * 100 END)-->
+<!--                       END OUT_COMPLETE_BI,-->
+<!--                   CASE-->
+<!--                       WHEN REQ_NUM = 0 THEN-->
+<!--                           '-'-->
+<!--                       ELSE-->
+<!--                           TO_CHAR(CASE WHEN ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100>100 THEN 100 ELSE ROUND(IN_COMPLETE_NUM / REQ_NUM, 2) * 100 END)-->
+<!--                       END IN_COMPLETE_BI,-->
 
-                   CASE
-                       WHEN REQ_NUM = 0 THEN
-                           '-'
-                       ELSE
-                           TO_CHAR(ROUND(CASE
-                                             WHEN REQ_NUM != 0 AND COMPLETE_NUM = 0 THEN
-                               0
-                              WHEN COMPLETE_NUM != 0 THEN
-                               AUDIT_NUM / COMPLETE_NUM
-                              ELSE
-                               0
-                            END,
-                                         2) * 100)
-                       END AUDIT_BI,
-                   to_char(sysdate,'yyyy'),
-                   'Y',
-                   to_char(sysdate, 'YYYYMMDDHH24MISS'),
-                   'System',
-                   to_char(sysdate, 'YYYYMMDDHH24MISS'),
-                   'System',
-                   IS_ADD
-            FROM (SELECT RD.RECRUIT_FLOW,
-                         RD.DOCTOR_FLOW,
-                         RD.CAT_SPE_ID,
-                         RD.CAT_SPE_NAME,
-                         RD.SPE_ID,
-                         RD.SPE_NAME,
-                         RD.TRAIN_YEAR,
-                         RD.SESSION_NUMBER,
-                         RD.ROTATION_FLOW,
-                         SRD.RECORD_FLOW,
-                         SRD.GROUP_FLOW,
-                         SRD.STANDARD_DEPT_ID,
-                         SRD.STANDARD_DEPT_NAME,
-                         SRD.SCH_MONTH,
-                         RD.ORG_FLOW,
-                         RD.ORG_NAME,
-                         TO_CHAR(NVL(COMP.COMPLETE_NUM, 0)) COMPLETE_NUM,
-                         TO_CHAR(NVL(COMP.IN_COMPLETE_NUM, 0)) IN_COMPLETE_NUM,
-                         TO_CHAR(NVL(COMP.COMPLETE_NUM, 0) -
-                                 NVL(COMP.IN_COMPLETE_NUM, 0)) OUT_COMPLETE_NUM,
-                         TO_CHAR(NVL(COMP.AUDIT_NUM, 0)) AUDIT_NUM,
-                         case
-                             when (SELECT COUNT(1)
-                                   FROM sch_doctor_dept sdd
-                                   WHERE sdd.record_status = 'Y'
-                                     AND sdd.doctor_flow = RD.doctor_flow
-                                     AND sdd.rotation_flow = RD.rotation_flow
-                                     and sdd.group_flow = srd.group_flow
-                                     and sdd.standard_dept_id = srd.standard_dept_id
-                                     AND sdd.org_flow = RD.org_flow) > 0 then
-                                 'Y'
-                             else
-                                 'N'
-                             end is_short,
-                         NVL((CASE
-                                  WHEN RD.cat_spe_id = 'DoctorTrainingSpe' AND
-                                       RD.session_number >= '2015' AND
-                                       (RD.train_year = 'OneYear' OR
-                                        RD.train_year = 'TwoYear') AND
-                                       (SELECT COUNT(1)
-                                        FROM sch_doctor_dept sdd
-                                        WHERE sdd.record_status = 'Y'
-                                          AND sdd.doctor_flow = RD.doctor_flow
-                                          AND sdd.rotation_flow = RD.rotation_flow
-                                          AND sdd.org_flow = RD.org_flow) > 0 THEN
-                                      SUM(NVL(ROUND((CASE
-                                                         WHEN NVL(SRD.SCH_MONTH, 0) = 0 THEN
-                                                             0
-                                                         ELSE
-                                                             NVL(SDD.SCH_MONTH, 0) / SRD.SCH_MONTH * REQ.REQ_NUM
-                                          END),
-                                                    0),
-                                              0))
-                                  ELSE
-                                      SUM(REQ.REQ_NUM)
-                             END),
-                             0) AS REQ_NUM,
-                         NVL(SUM(REQ.REQ_NUM), 0) OLD_REQ_NUM,
-                         CASE WHEN IC.QTY>0 THEN 'Y'
-                              ELSE 'N'
-                             END IS_ADD
-                  FROM res_doctor_recruit RD
-                           LEFT JOIN SCH_ROTATION_DEPT SRD
-                                     ON RD.ROTATION_FLOW = SRD.ROTATION_FLOW
-                                         AND SRD.ORG_FLOW IS NULL
-                                         AND SRD.RECORD_STATUS = 'Y'
-                           LEFT JOIN SCH_ROTATION_DEPT_REQ REQ
-                                     ON REQ.REL_RECORD_FLOW = SRD.RECORD_FLOW
-                                         AND REQ.RECORD_STATUS = 'Y'
-                                         AND REQ.REC_TYPE_ID IN
-                                             ('CaseRegistry',
-                                              'DiseaseRegistry',
-                                              'SkillRegistry',
-                                              'OperationRegistry',
-                                              'CampaignRegistry')
-                           LEFT JOIN SCH_DOCTOR_DEPT SDD
-                                     ON SDD.GROUP_FLOW = SRD.GROUP_FLOW
-                                         AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID
-                                         AND SDD.ORG_FLOW = RD.ORG_FLOW
-                                         AND SDD.DOCTOR_FLOW = RD.DOCTOR_FLOW
-                                         AND SDD.RECORD_STATUS = 'Y'
-                           LEFT JOIN (SELECT COUNT(1) COMPLETE_NUM,
-                                             RR.OPER_USER_FLOW,
-                                             rr.SCH_ROTATION_DEPT_FLOW,
-                                             NVL(COUNT(RR.AUDIT_STATUS_ID), 0) AUDIT_NUM,
-                                             SUM(CASE
-                                                     WHEN NVL((SELECT COUNT(1)
-                                                               FROM RES_DOCTOR_SCH_PROCESS SAR
-                                                               WHERE SAR.RECORD_STATUS = 'Y'
-                                                                 AND SAR.USER_FLOW =
-                                                                     RR.OPER_USER_FLOW
-                                                                 AND SAR.PROCESS_FLOW=RR.PROCESS_FLOW
-                                                                 AND TO_CHAR(TO_DATE(RR.OPER_TIME,
-                                                                                     'YYYYMMDDHH24MISS'),
-                                                                             'YYYY-MM-DD') &lt;=
-                                                     SAR.SCH_END_DATE
-                                                 AND TO_CHAR(TO_DATE(RR.OPER_TIME,
-                                                                     'YYYYMMDDHH24MISS'),
-                                                             'YYYY-MM-DD') >=
-                                                     SAR.SCH_START_DATE),
-                                              0) > 0 THEN
-                                      1
-                                     ELSE
-                                      0
-        END) IN_COMPLETE_NUM
-                          FROM RES_REC rr
-                         INNER JOIN SCH_ROTATION_DEPT srd
-                            ON rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW
-                         WHERE rr.RECORD_STATUS = 'Y'
-                           AND srd.RECORD_STATUS = 'Y'
-                           AND rr.REC_TYPE_ID IN
-                               ('CaseRegistry',
-                                'DiseaseRegistry',
-                                'SkillRegistry',
-                                'OperationRegistry',
-                                'CampaignRegistry')
-                         GROUP BY rr.SCH_ROTATION_DEPT_FLOW,
-                                  RR.OPER_USER_FLOW) COMP
-                ON COMP.SCH_ROTATION_DEPT_FLOW = srd.record_flow
-               and COMP.OPER_USER_FLOW = RD.DOCTOR_FLOW
-               LEFT JOIN (
-                 SELECT R.DOCTOR_FLOW,
-                        R.ROTATION_FLOW,
-                        D.RECORD_FLOW,
-                        COUNT(1) QTY
-                   FROM SCH_ARRANGE_RESULT R
-                   LEFT JOIN SCH_ROTATION_DEPT D
-                     ON R.STANDARD_DEPT_ID = D.STANDARD_DEPT_ID
-                    AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW
-                  WHERE R.RECORD_STATUS = 'Y'
-                    AND D.RECORD_STATUS = 'Y'
-                    AND R.SCH_END_DATE  &lt; to_char(sysdate,'yyyy')||'-05-31'
-                  GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW
-               ) IC
-               ON IC.RECORD_FLOW= srd.record_flow
-               and IC.DOCTOR_FLOW = RD.DOCTOR_FLOW
-               AND IC.ROTATION_FLOW=SRD.ROTATION_FLOW
-             WHERE RD.RECORD_STATUS = 'Y'
-               AND RD.AUDIT_STATUS_ID = 'Passed'
-             GROUP BY RD.RECRUIT_FLOW,
-                      RD.DOCTOR_FLOW,
-                      RD.CAT_SPE_ID,
-                      RD.CAT_SPE_NAME,
-                      RD.SPE_ID,
-                      RD.SPE_NAME,
-                      RD.TRAIN_YEAR,
-                      RD.SESSION_NUMBER,
-                      RD.ROTATION_FLOW,
-                      SRD.RECORD_FLOW,
-                      SRD.GROUP_FLOW,
-                      SRD.STANDARD_DEPT_ID,
-                      SRD.STANDARD_DEPT_NAME,
-                      SRD.SCH_MONTH,
-                      RD.ORG_FLOW,
-                      RD.ORG_NAME,
-                      COMP.COMPLETE_NUM,
-                      COMP.IN_COMPLETE_NUM,
-                      COMP.AUDIT_NUM,
-                      IC.QTY) A;
-        COMMIT;
-        end;
-        </sql>
-    </changeSet>
+<!--                   CASE-->
+<!--                       WHEN REQ_NUM = 0 THEN-->
+<!--                           '-'-->
+<!--                       ELSE-->
+<!--                           TO_CHAR(ROUND(CASE-->
+<!--                                             WHEN REQ_NUM != 0 AND COMPLETE_NUM = 0 THEN-->
+<!--                               0-->
+<!--                              WHEN COMPLETE_NUM != 0 THEN-->
+<!--                               AUDIT_NUM / COMPLETE_NUM-->
+<!--                              ELSE-->
+<!--                               0-->
+<!--                            END,-->
+<!--                                         2) * 100)-->
+<!--                       END AUDIT_BI,-->
+<!--                   to_char(sysdate,'yyyy'),-->
+<!--                   'Y',-->
+<!--                   to_char(sysdate, 'YYYYMMDDHH24MISS'),-->
+<!--                   'System',-->
+<!--                   to_char(sysdate, 'YYYYMMDDHH24MISS'),-->
+<!--                   'System',-->
+<!--                   IS_ADD-->
+<!--            FROM (SELECT RD.RECRUIT_FLOW,-->
+<!--                         RD.DOCTOR_FLOW,-->
+<!--                         RD.CAT_SPE_ID,-->
+<!--                         RD.CAT_SPE_NAME,-->
+<!--                         RD.SPE_ID,-->
+<!--                         RD.SPE_NAME,-->
+<!--                         RD.TRAIN_YEAR,-->
+<!--                         RD.SESSION_NUMBER,-->
+<!--                         RD.ROTATION_FLOW,-->
+<!--                         SRD.RECORD_FLOW,-->
+<!--                         SRD.GROUP_FLOW,-->
+<!--                         SRD.STANDARD_DEPT_ID,-->
+<!--                         SRD.STANDARD_DEPT_NAME,-->
+<!--                         SRD.SCH_MONTH,-->
+<!--                         RD.ORG_FLOW,-->
+<!--                         RD.ORG_NAME,-->
+<!--                         TO_CHAR(NVL(COMP.COMPLETE_NUM, 0)) COMPLETE_NUM,-->
+<!--                         TO_CHAR(NVL(COMP.IN_COMPLETE_NUM, 0)) IN_COMPLETE_NUM,-->
+<!--                         TO_CHAR(NVL(COMP.COMPLETE_NUM, 0) - -->
+<!--                                 NVL(COMP.IN_COMPLETE_NUM, 0)) OUT_COMPLETE_NUM,-->
+<!--                         TO_CHAR(NVL(COMP.AUDIT_NUM, 0)) AUDIT_NUM,-->
+<!--                         case-->
+<!--                             when (SELECT COUNT(1)-->
+<!--                                   FROM sch_doctor_dept sdd-->
+<!--                                   WHERE sdd.record_status = 'Y'-->
+<!--                                     AND sdd.doctor_flow = RD.doctor_flow-->
+<!--                                     AND sdd.rotation_flow = RD.rotation_flow-->
+<!--                                     and sdd.group_flow = srd.group_flow-->
+<!--                                     and sdd.standard_dept_id = srd.standard_dept_id-->
+<!--                                     AND sdd.org_flow = RD.org_flow) > 0 then-->
+<!--                                 'Y'-->
+<!--                             else-->
+<!--                                 'N'-->
+<!--                             end is_short,-->
+<!--                         NVL((CASE-->
+<!--                                  WHEN RD.cat_spe_id = 'DoctorTrainingSpe' AND-->
+<!--                                       RD.session_number >= '2015' AND-->
+<!--                                       (RD.train_year = 'OneYear' OR-->
+<!--                                        RD.train_year = 'TwoYear') AND-->
+<!--                                       (SELECT COUNT(1)-->
+<!--                                        FROM sch_doctor_dept sdd-->
+<!--                                        WHERE sdd.record_status = 'Y'-->
+<!--                                          AND sdd.doctor_flow = RD.doctor_flow-->
+<!--                                          AND sdd.rotation_flow = RD.rotation_flow-->
+<!--                                          AND sdd.org_flow = RD.org_flow) > 0 THEN-->
+<!--                                      SUM(NVL(ROUND((CASE-->
+<!--                                                         WHEN NVL(SRD.SCH_MONTH, 0) = 0 THEN-->
+<!--                                                             0-->
+<!--                                                         ELSE-->
+<!--                                                             NVL(SDD.SCH_MONTH, 0) / SRD.SCH_MONTH * REQ.REQ_NUM-->
+<!--                                          END),-->
+<!--                                                    0),-->
+<!--                                              0))-->
+<!--                                  ELSE-->
+<!--                                      SUM(REQ.REQ_NUM)-->
+<!--                             END),-->
+<!--                             0) AS REQ_NUM,-->
+<!--                         NVL(SUM(REQ.REQ_NUM), 0) OLD_REQ_NUM,-->
+<!--                         CASE WHEN IC.QTY>0 THEN 'Y'-->
+<!--                              ELSE 'N'-->
+<!--                             END IS_ADD-->
+<!--                  FROM res_doctor_recruit RD-->
+<!--                           LEFT JOIN SCH_ROTATION_DEPT SRD-->
+<!--                                     ON RD.ROTATION_FLOW = SRD.ROTATION_FLOW-->
+<!--                                         AND SRD.ORG_FLOW IS NULL-->
+<!--                                         AND SRD.RECORD_STATUS = 'Y'-->
+<!--                           LEFT JOIN SCH_ROTATION_DEPT_REQ REQ-->
+<!--                                     ON REQ.REL_RECORD_FLOW = SRD.RECORD_FLOW-->
+<!--                                         AND REQ.RECORD_STATUS = 'Y'-->
+<!--                                         AND REQ.REC_TYPE_ID IN-->
+<!--                                             ('CaseRegistry',-->
+<!--                                              'DiseaseRegistry',-->
+<!--                                              'SkillRegistry',-->
+<!--                                              'OperationRegistry',-->
+<!--                                              'CampaignRegistry')-->
+<!--                           LEFT JOIN SCH_DOCTOR_DEPT SDD-->
+<!--                                     ON SDD.GROUP_FLOW = SRD.GROUP_FLOW-->
+<!--                                         AND SDD.STANDARD_DEPT_ID = SRD.STANDARD_DEPT_ID-->
+<!--                                         AND SDD.ORG_FLOW = RD.ORG_FLOW-->
+<!--                                         AND SDD.DOCTOR_FLOW = RD.DOCTOR_FLOW-->
+<!--                                         AND SDD.RECORD_STATUS = 'Y'-->
+<!--                           LEFT JOIN (SELECT COUNT(1) COMPLETE_NUM,-->
+<!--                                             RR.OPER_USER_FLOW,-->
+<!--                                             rr.SCH_ROTATION_DEPT_FLOW,-->
+<!--                                             NVL(COUNT(RR.AUDIT_STATUS_ID), 0) AUDIT_NUM,-->
+<!--                                             SUM(CASE-->
+<!--                                                     WHEN NVL((SELECT COUNT(1)-->
+<!--                                                               FROM RES_DOCTOR_SCH_PROCESS SAR-->
+<!--                                                               WHERE SAR.RECORD_STATUS = 'Y'-->
+<!--                                                                 AND SAR.USER_FLOW =-->
+<!--                                                                     RR.OPER_USER_FLOW-->
+<!--                                                                 AND SAR.PROCESS_FLOW=RR.PROCESS_FLOW-->
+<!--                                                                 AND TO_CHAR(TO_DATE(RR.OPER_TIME,-->
+<!--                                                                                     'YYYYMMDDHH24MISS'),-->
+<!--                                                                             'YYYY-MM-DD') &lt;=-->
+<!--                                                     SAR.SCH_END_DATE-->
+<!--                                                 AND TO_CHAR(TO_DATE(RR.OPER_TIME,-->
+<!--                                                                     'YYYYMMDDHH24MISS'),-->
+<!--                                                             'YYYY-MM-DD') >=-->
+<!--                                                     SAR.SCH_START_DATE),-->
+<!--                                              0) > 0 THEN-->
+<!--                                      1-->
+<!--                                     ELSE-->
+<!--                                      0-->
+<!--        END) IN_COMPLETE_NUM-->
+<!--                          FROM RES_REC rr-->
+<!--                         INNER JOIN SCH_ROTATION_DEPT srd-->
+<!--                            ON rr.SCH_ROTATION_DEPT_FLOW = srd.RECORD_FLOW-->
+<!--                         WHERE rr.RECORD_STATUS = 'Y'-->
+<!--                           AND srd.RECORD_STATUS = 'Y'-->
+<!--                           AND rr.REC_TYPE_ID IN-->
+<!--                               ('CaseRegistry',-->
+<!--                                'DiseaseRegistry',-->
+<!--                                'SkillRegistry',-->
+<!--                                'OperationRegistry',-->
+<!--                                'CampaignRegistry')-->
+<!--                         GROUP BY rr.SCH_ROTATION_DEPT_FLOW,-->
+<!--                                  RR.OPER_USER_FLOW) COMP-->
+<!--                ON COMP.SCH_ROTATION_DEPT_FLOW = srd.record_flow-->
+<!--               and COMP.OPER_USER_FLOW = RD.DOCTOR_FLOW-->
+<!--               LEFT JOIN (-->
+<!--                 SELECT R.DOCTOR_FLOW,-->
+<!--                        R.ROTATION_FLOW,-->
+<!--                        D.RECORD_FLOW,-->
+<!--                        COUNT(1) QTY-->
+<!--                   FROM SCH_ARRANGE_RESULT R-->
+<!--                   LEFT JOIN SCH_ROTATION_DEPT D-->
+<!--                     ON R.STANDARD_DEPT_ID = D.STANDARD_DEPT_ID-->
+<!--                    AND D.GROUP_FLOW = R.STANDARD_GROUP_FLOW-->
+<!--                  WHERE R.RECORD_STATUS = 'Y'-->
+<!--                    AND D.RECORD_STATUS = 'Y'-->
+<!--                    AND R.SCH_END_DATE  &lt; to_char(sysdate,'yyyy')||'-05-31'-->
+<!--                  GROUP BY R.DOCTOR_FLOW, R.ROTATION_FLOW, D.RECORD_FLOW-->
+<!--               ) IC-->
+<!--               ON IC.RECORD_FLOW= srd.record_flow-->
+<!--               and IC.DOCTOR_FLOW = RD.DOCTOR_FLOW-->
+<!--               AND IC.ROTATION_FLOW=SRD.ROTATION_FLOW-->
+<!--             WHERE RD.RECORD_STATUS = 'Y'-->
+<!--               AND RD.AUDIT_STATUS_ID = 'Passed'-->
+<!--             GROUP BY RD.RECRUIT_FLOW,-->
+<!--                      RD.DOCTOR_FLOW,-->
+<!--                      RD.CAT_SPE_ID,-->
+<!--                      RD.CAT_SPE_NAME,-->
+<!--                      RD.SPE_ID,-->
+<!--                      RD.SPE_NAME,-->
+<!--                      RD.TRAIN_YEAR,-->
+<!--                      RD.SESSION_NUMBER,-->
+<!--                      RD.ROTATION_FLOW,-->
+<!--                      SRD.RECORD_FLOW,-->
+<!--                      SRD.GROUP_FLOW,-->
+<!--                      SRD.STANDARD_DEPT_ID,-->
+<!--                      SRD.STANDARD_DEPT_NAME,-->
+<!--                      SRD.SCH_MONTH,-->
+<!--                      RD.ORG_FLOW,-->
+<!--                      RD.ORG_NAME,-->
+<!--                      COMP.COMPLETE_NUM,-->
+<!--                      COMP.IN_COMPLETE_NUM,-->
+<!--                      COMP.AUDIT_NUM,-->
+<!--                      IC.QTY) A;-->
+<!--        COMMIT;-->
+<!--        end;-->
+<!--        </sql>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>
