@@ -4064,6 +4064,19 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
 	}
 
+	/**
+	 * @param rotationFlow
+	 * @param doctorFlow
+	 * @param applyYear
+	 * @Department：研发部
+	 * @Description 查询计算好的学员培训数据统计信息
+	 * @Author fengxf
+	 * @Date 2025/2/18
+	 */
+	@Override
+	public List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear) {
+		return resultExtMapper.searchDeptDoctorAllWorkDetailList(rotationFlow,doctorFlow,applyYear);
+	}
 
 
 	private List<JSONObject> updateJSONList(List<JSONObject> data,

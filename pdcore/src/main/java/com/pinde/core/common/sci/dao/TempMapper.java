@@ -128,4 +128,6 @@ public interface TempMapper {
 
 	void updateStudentCourseSchedule();
 
+	// 第一次提交从统计结果插入数据
+	void insetDeptDetailByStatistics(@Param("applyYear") String applyYear, @Param("doctorFlow") String doctorFlow, @Param("rotationFlow") String rotationFlow);
 }

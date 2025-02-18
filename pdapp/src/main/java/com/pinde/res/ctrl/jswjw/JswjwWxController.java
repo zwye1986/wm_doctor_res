@@ -7657,7 +7657,7 @@ public class JswjwWxController extends GeneralController {
 //                return "当前时间没有正在进行的考试！";
             }
 
-            int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow());
+            int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow(), "N");
             if (StringUtil.isNotEmpty(lawScore)) {
                 saveAsseScore(lawScore, "lawScore", recruitFlow, userFlow);
             }
@@ -7839,7 +7839,7 @@ public class JswjwWxController extends GeneralController {
                 jsresGraduationApply.setAuditStatusName(com.pinde.core.common.enums.JsResAuditStatusEnum.WaitGlobalPass.getName());
             }
         }
-        int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, "", recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow());
+        int i = jswjwBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, "", recruit.getDoctorFlow(), applyYear, practicingMap, user, recruit.getRotationFlow(), "Y");
         if (StringUtil.isNotEmpty(lawScore)) {
             saveAsseScore(lawScore, "lawScore", recruitFlow, userFlow);
         }
@@ -7999,7 +7999,9 @@ public class JswjwWxController extends GeneralController {
                     }
                 }
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+//                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                // 查询定时任务统计好的数据比例信息
+                List<JsresDoctorDeptDetail> details = jswjwBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;

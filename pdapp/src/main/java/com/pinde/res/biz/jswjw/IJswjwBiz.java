@@ -580,7 +580,7 @@ public interface IJswjwBiz {
 
 	ResDoctor readDoctor(String recordFlow);
 
-	int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow) throws DocumentException;
+	int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow, String reSubmitFlag) throws DocumentException;
 
 	ResDoctorRecruit readResDoctorRecruitBySessionNumber(String doctorFlow, String sessionNumber);
 
@@ -825,4 +825,12 @@ public interface IJswjwBiz {
 
 	// 查询算好的数据比例信息
 	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetail(String rotationFlow, String doctorFlow, String applyYear);
+
+	/**
+	 * @Department：研发部
+	 * @Description 查询计算好的学员培训数据统计信息
+	 * @Author fengxf
+	 * @Date 2025/2/18
+	 */
+	List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear);
 }

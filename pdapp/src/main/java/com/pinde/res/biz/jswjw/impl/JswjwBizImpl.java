@@ -18,6 +18,7 @@ import com.pinde.res.biz.stdp.IResSchProcessExpressBiz;
 import com.pinde.res.ctrl.jswjw.ActivityImageFileForm;
 import com.pinde.res.ctrl.jswjw.ImageFileForm;
 import com.pinde.res.dao.jswjw.ext.*;
+import com.pinde.res.dao.jswjw.ext.SchArrangeResultExtMapper;
 import com.pinde.res.dao.sctcm120.ext.ResDoctorKqExtMapper;
 import com.pinde.core.common.sci.dao.StdpResDoctorExtMapper;
 import com.pinde.core.common.sci.dao.TeachingActivityInfoExtMapper;
@@ -7975,7 +7976,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow) throws DocumentException {
+    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, SysUser user, String rotationFlow, String reSubmitFlag) throws DocumentException {
         int i = editGraduationApply(jsresGraduationApply, user);
         if (i == 1) {
             if (StringUtil.isNotBlank(changeSpeId)) {
@@ -7986,7 +7987,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                 editDoctorRecruit(newRecruit, user);
             }
             //保存提交后的证书信息，百分比，出科考核表
-            addOldInfoByApplyYear(applyYear, recruitFlow, doctorFlow, jsresGraduationApply.getApplyFlow(), practicingMap, user, rotationFlow);
+            addOldInfoByApplyYear(applyYear, recruitFlow, doctorFlow, jsresGraduationApply.getApplyFlow(), practicingMap, user, rotationFlow, reSubmitFlag);
         }
         return i;
     }
@@ -8025,7 +8026,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         return com.pinde.core.common.GlobalConstant.ZERO_LINE;
     }
 
-    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, SysUser user, String rotationFlow) throws DocumentException {
+    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, SysUser user, String rotationFlow, String reSubmitFlag) throws DocumentException {
         //学员出科考核表数据抽取
         selectAfter(applyYear, recruitFlow, doctorFlow, user);
         //更新学员相关证书信息
@@ -8033,7 +8034,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         practicingMap.put("doctorFlow", doctorFlow);
         tempMapper.updateRecruitAsseInfoByApplyYear2(practicingMap);
         //学员资格审查百分比
-        setFourStep(applyYear, recruitFlow, doctorFlow, applyFlow, rotationFlow);
+        setFourStep(applyYear, recruitFlow, doctorFlow, applyFlow, rotationFlow, reSubmitFlag);
     }
 
     private void selectAfter(String applyYear, String recruitFlow, String doctorFlow, SysUser user) throws DocumentException {
@@ -8109,10 +8110,15 @@ public class JswjwBizImpl implements IJswjwBiz {
         }
     }
 
-    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow) {
+    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow, String reSubmitFlag) {
         //1
         tempMapper.deleteDeptDetailByApplyYear(applyYear, doctorFlow);
-        tempMapper.insetDeptDetailByApplyYear(applyYear, doctorFlow, recruitFlow, rotationFlow);
+        // 非重新提交从计算好的学员比例插入数据
+        if(StringUtil.isNotBlank(reSubmitFlag) && GlobalConstant.FLAG_N.equals(reSubmitFlag)){
+            tempMapper.insetDeptDetailByStatistics(applyYear, doctorFlow, rotationFlow);
+        }else{
+            tempMapper.insetDeptDetailByApplyYear(applyYear, doctorFlow, recruitFlow, rotationFlow);
+        }
         //2
         tempMapper.deleteDeptTempByRecruitFlow(recruitFlow);
         tempMapper.updateDeptTempByRecruitFlow(recruitFlow, applyYear);
@@ -10525,5 +10531,19 @@ public class JswjwBizImpl implements IJswjwBiz {
                 .andDoctorFlowEqualTo(doctorFlow).andRotationFlowEqualTo(rotationFlow).andApplyYearEqualTo(applyYear);
         List<JsresDoctorDeptDetail> list = doctorDeptDetailMapper.selectByExample(example);
         return list;
+    }
+
+    /**
+     * @param rotationFlow
+     * @param doctorFlow
+     * @param applyYear
+     * @Department：研发部
+     * @Description 查询计算好的学员培训数据统计信息
+     * @Author fengxf
+     * @Date 2025/2/18
+     */
+    @Override
+    public List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear) {
+        return resultExtMapper.searchDeptDoctorAllWorkDetailList(rotationFlow,doctorFlow,applyYear);
     }
 }

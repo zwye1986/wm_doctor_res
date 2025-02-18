@@ -7049,7 +7049,9 @@ public class JsResDoctorController extends GeneralController {
                     }
                 }
                 //完成比例与审核比例
-                List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+//                List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                // 查询定时任务统计好的数据比例信息
+                List<JsresDoctorDeptDetail> details = resultBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;
@@ -7498,7 +7500,7 @@ public class JsResDoctorController extends GeneralController {
                 return "当前时间没有正在进行的考试！";
             }
 
-            int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, recruit.getRotationFlow());
+            int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply, recruitFlow, changeSpeId, recruit.getDoctorFlow(), applyYear, practicingMap, recruit.getRotationFlow(), "N");
 
             return i + "";
         } else {

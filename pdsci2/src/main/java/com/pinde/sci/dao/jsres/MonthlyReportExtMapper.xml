@@ -605,7 +605,7 @@ ORDER BY
         ) A
     </select>
     <!--(学员出科情况)查询住院医生所有学员出科信息yuh-->
-    <select id="findOutOfficeDoctorInfo" parameterType="java.util.Map" resultMap="com.pinde.sci.dao.sch.SchArrangeResultExtMapper.docResultsMap">
+    <select id="findOutOfficeDoctorInfo" parameterType="java.util.Map" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultExtMapper.docResultsMap">
         SELECT
         U .USER_NAME AS user_name,
         dr.TRAINING_TYPE_NAME AS training_Type_name,

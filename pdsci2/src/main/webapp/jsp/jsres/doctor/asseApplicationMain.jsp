@@ -115,6 +115,10 @@ $(document).ready(function(){
     if ('${file.filePath}') {
         flag = 'Y';
     }
+	if("${apply}" == 'Y'){
+		// 更新提示信息
+		$("#graduationMsg").html("当前数据补填人数较多，数据填报比例计算会有延迟（当日补填数据次日早上6点后更新填报比例），请优先进行数据填报。");
+	}
 });
 
 $(function () {
@@ -1340,7 +1344,7 @@ function showReductionImg(recordFlow) {
 
 			<div class="main_bd doctorInfo" style="padding-top: 15px;" >
 				<h4 style="float:none;">轮转详情</h4>
-				<div style="overflow:auto;max-width: 930px;max-height: 550px;border: medium;">
+				<div style="overflow:auto;max-height: 550px;border: medium;">
 					<table cellpadding="0" cellspacing="0" class="grid" style="width: 100%;padding:0px;margin: 0px;">
 						<tr>
 							<th style="width: 100px;min-width: 100px;max-width: 100px;">轮转类型</th>
@@ -1348,7 +1352,7 @@ function showReductionImg(recordFlow) {
 							<th style="width: 100px;min-width: 100px;max-width: 100px;">要求时间(月)/实际时间(月)</th>
 							<th style="width: 100px;min-width: 100px;max-width: 100px;">轮转科室</th>
 							<th style="width: 300px;min-width: 200px;max-width: 300px;">轮转时间</th>
-							<th style="width: 400px;min-width: 400px;max-width: 400px;">出科考核表</th>
+							<th style="width: 300px;min-width: 200px;max-width: 300px;">出科考核表</th>
 							<th style="width: 60px;min-width: 60px;max-width: 60px;">总比例</th>
 							<th style="width: 60px;min-width: 60px;max-width: 60px;">补填比例</th>
 							<th style="width: 60px;min-width: 60px;max-width: 60px;">审核比例</th>

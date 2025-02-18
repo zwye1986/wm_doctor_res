@@ -200,4 +200,12 @@ public interface SchArrangeResultExtMapper {
 											  @Param("delFlag")Boolean delFlag);
 
 	List<SchArrangeResult> selectDoctorSchDate(@Param("doctorFlowList") List<String> doctorFlowList, @Param("schStartDate") String schStartDate, @Param("schEndDate") String schEndDate);
+
+	/**
+	 * @Department：研发部
+	 * @Description 查询计算好的学员培训数据统计信息
+	 * @Author fengxf
+	 * @Date 2025/2/18
+	 */
+	List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(@Param("rotationFlow") String rotationFlow, @Param("doctorFlow") String doctorFlow, @Param("applyYear") String applyYear);
 }

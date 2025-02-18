@@ -593,7 +593,7 @@ public class JsResTempController extends GeneralController{
 				jsresGraduationApply.setGlobalAuditStatusName("");
 				jsresGraduationApply.setGlobalReason("");
 			}
-			int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply,recruitFlow,"",recruit.getDoctorFlow(),applyYear, practicingMap, recruit.getRotationFlow());
+			int i = jsresGraduationApplyBiz.editGraduationApply2(jsresGraduationApply,recruitFlow,"",recruit.getDoctorFlow(),applyYear, practicingMap, recruit.getRotationFlow(), "Y");
 			return i+"";
 	}
 	@RequestMapping(value={"/updatePer"})//更新不超过100的百分比

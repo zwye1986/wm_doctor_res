@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.sci.dao.GraduationDoctorTempMapper;
 import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
@@ -121,7 +122,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     }
 
     @Override
-    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, String rotationFlow)  throws DocumentException {
+    public void addOldInfoByApplyYear(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, Map<String, String> practicingMap, String rotationFlow, String reSubmitFlag)  throws DocumentException {
         //学员出科考核表数据抽取
         selectAfter(applyYear,recruitFlow,doctorFlow);
         //更新学员相关证书信息
@@ -129,7 +130,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         practicingMap.put("doctorFlow",doctorFlow);
         tempMapper.updateRecruitAsseInfoByApplyYear2(practicingMap);
         //学员资格审查百分比
-        setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow, rotationFlow);
+        setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow, rotationFlow, reSubmitFlag);
 //        //完成比例与审核比例
 //        List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruitFlow, doctorFlow);
 //        if (details != null && details.size() > 0) {
@@ -197,7 +198,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     }
 
     @Override
-    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, String rotationFlow) throws DocumentException {
+    public int editGraduationApply2(JsresGraduationApply jsresGraduationApply, String recruitFlow, String changeSpeId, String doctorFlow, String applyYear, Map<String, String> practicingMap, String rotationFlow, String reSubmitFlag) throws DocumentException {
         int i=editGraduationApply(jsresGraduationApply);
         if(i==1)
         {
@@ -210,7 +211,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 doctorRecruitBiz.editDoctorRecruit(newRecruit);
             }
             //保存提交后的证书信息，百分比，出科考核表
-            addOldInfoByApplyYear(applyYear,recruitFlow,doctorFlow,jsresGraduationApply.getApplyFlow(),practicingMap, rotationFlow);
+            addOldInfoByApplyYear(applyYear,recruitFlow,doctorFlow,jsresGraduationApply.getApplyFlow(),practicingMap, rotationFlow, reSubmitFlag);
         }
         return i;
     }
@@ -231,10 +232,15 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         return graduationApplyExtMapper.queryGraduationInfoListExport(param);
     }
 
-    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow) {
+    private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow, String reSubmitFlag) {
         //1
         tempMapper.deleteDeptDetailByApplyYear(applyYear,doctorFlow);
-        tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
+        // 非重新提交从计算好的学员比例插入数据
+        if(StringUtil.isNotBlank(reSubmitFlag) && GlobalConstant.FLAG_N.equals(reSubmitFlag)){
+            tempMapper.insetDeptDetailByStatistics(applyYear, doctorFlow, rotationFlow);
+        }else{
+            tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
+        }
         //2
         tempMapper.deleteDeptTempByRecruitFlow(recruitFlow);
         tempMapper.updateDeptTempByRecruitFlow(recruitFlow,applyYear);

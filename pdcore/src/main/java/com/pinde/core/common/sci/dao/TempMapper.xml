@@ -300,9 +300,6 @@
         WHERE DR.RECORD_STATUS='Y' AND APPLY_FLOW=#{applyFlow,jdbcType=VARCHAR}
     </update>
 
-    <delete id="deleteDeptDetailByApplyYear">
-        delete from jsres_doctor_dept_detail where doctor_flow=#{doctorFlow} and apply_year=#{applyYear}
-    </delete>
     <insert id="insetDeptDetailByApplyYear">
        insert into JSRES_DOCTOR_DEPT_DETAIL
     (RECORD_FLOW,
@@ -636,17 +633,6 @@
             GROUP BY T.RECRUIT_FLOW) A
     </insert>
 
-    <update id="updateRecruitAvgTempByRecruitFlow">
-        update JSRES_GRADUATION_APPLY dr set
-        AVG_COMPLETE=( select nvl(AVG_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR}),
-        AVG_OUT_COMPLETE=( select nvl(AVG_OUT_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR}),
-        AVG_IN_COMPLETE=( select nvl(AVG_IN_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR}),
-        AVG_COMPLETE_BI_PER=( select nvl(AVG_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR}),
-        AVG_OUT_COMPLETE_BI_PER=( select nvl(AVG_OUT_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR}),
-        AVG_IN_COMPLETE_BI_PER=( select nvl(AVG_IN_COMPLETE_BI_PER,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR}),
-        AVG_AUDIT=( select nvl(AVG_AUDIT,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= #{recruitFlow,jdbcType=VARCHAR})
-        WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_FLOW=#{applyFlow,jdbcType=VARCHAR}
-    </update>
     <update id="saveRegisteManua">
         update JSRES_GRADUATION_APPLY dr set
         REGISTE_MANUA=#{registeManua}
@@ -1031,12 +1017,6 @@
                                                           )
                 )order by sch_start_date
     </select>
-
-    <update id="backProcessType">
-        update res_sch_process_express set record_status='Y',modify_user_flow='TEMP-delProcessType'
-        where process_flow =#{processFlow}
-          and record_status='N' and rec_type_id=#{recTypeId} and modify_user_flow='TEMP-delProcessType'
-    </update>
 
     <update id="backExpressNotType">
         update res_sch_process_express p set record_status='Y'
@@ -1559,5 +1539,94 @@
         update Edu_Course_Schedule set study_status_Id = 'Finish',study_status_name='已完成',CHAPTER_FINISH_FLAG='Y'
         where study_status_Id ! = 'Finish' and record_status='Y'
     </update>
+
+    <!-- 第一次提交从统计结果插入数据 -->
+    <insert id="insetDeptDetailByStatistics">
+        INSERT INTO JSRES_DOCTOR_DEPT_DETAIL (
+            RECORD_FLOW,
+            RECRUIT_FLOW,
+            DOCTOR_FLOW,
+            CAT_SPE_ID,
+            CAT_SPE_NAME,
+            SPE_ID,
+            SPE_NAME,
+            TRAIN_YEAR,
+            SESSION_NUMBER,
+            ROTATION_FLOW,
+            SCH_STANDARD_DEPT_FLOW,
+            GROUP_FLOW,
+            STANDARD_DEPT_ID,
+            STANDARD_DEPT_NAME,
+            SCH_MONTH,
+            ORG_FLOW,
+            ORG_NAME,
+            COMPLETE_NUM,
+            OUT_COMPLETE_NUM,
+            IN_COMPLETE_NUM,
+            AUDIT_NUM,
+            IS_SHORT,
+            REQ_NUM,
+            OLD_REQ_NUM,
+            COMPLETE_BI,
+            OUT_COMPLETE_BI,
+            IN_COMPLETE_BI,
+            COMPLETE_BI_PER,
+            OUT_COMPLETE_BI_PER,
+            IN_COMPLETE_BI_PER,
+            AUDIT_BI,
+            APPLY_YEAR,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW,
+            IS_ADD
+        ) SELECT
+            SYS_GUID() AS RECORD_FLOW,
+            RECRUIT_FLOW,
+            DOCTOR_FLOW,
+            CAT_SPE_ID,
+            CAT_SPE_NAME,
+            SPE_ID,
+            SPE_NAME,
+            TRAIN_YEAR,
+            SESSION_NUMBER,
+            ROTATION_FLOW,
+            SCH_STANDARD_DEPT_FLOW,
+            GROUP_FLOW,
+            STANDARD_DEPT_ID,
+            STANDARD_DEPT_NAME,
+            SCH_MONTH,
+            ORG_FLOW,
+            ORG_NAME,
+            COMPLETE_NUM,
+            OUT_COMPLETE_NUM,
+            IN_COMPLETE_NUM,
+            AUDIT_NUM,
+            IS_SHORT,
+            REQ_NUM,
+            OLD_REQ_NUM,
+            COMPLETE_BI,
+            OUT_COMPLETE_BI,
+            IN_COMPLETE_BI,
+            COMPLETE_BI_PER,
+            OUT_COMPLETE_BI_PER,
+            IN_COMPLETE_BI_PER,
+            AUDIT_BI,
+            APPLY_YEAR,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW,
+            IS_ADD
+        FROM
+            JSRES_DOCTOR_DETAIL_STATISTICS
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW = #{doctorFlow}
+        AND ROTATION_FLOW = #{rotationFlow}
+        AND APPLY_YEAR = #{applyYear}
+    </insert>
 
 </mapper>

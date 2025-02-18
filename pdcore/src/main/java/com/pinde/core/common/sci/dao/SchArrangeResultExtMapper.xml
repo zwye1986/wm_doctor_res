@@ -2145,4 +2145,53 @@
         </choose>
     </select>
 
+    <!-- 查询计算好的学员培训数据统计信息 -->
+    <select id="searchDeptDoctorAllWorkDetailList" parameterType="String" resultMap="com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper.BaseResultMap">
+        SELECT
+            RECORD_FLOW,
+            RECRUIT_FLOW,
+            DOCTOR_FLOW,
+            CAT_SPE_ID,
+            CAT_SPE_NAME,
+            SPE_ID,
+            SPE_NAME,
+            TRAIN_YEAR,
+            SESSION_NUMBER,
+            ROTATION_FLOW,
+            SCH_STANDARD_DEPT_FLOW,
+            GROUP_FLOW,
+            STANDARD_DEPT_ID,
+            STANDARD_DEPT_NAME,
+            SCH_MONTH,
+            ORG_FLOW,
+            ORG_NAME,
+            COMPLETE_NUM,
+            AUDIT_NUM,
+            IS_SHORT,
+            REQ_NUM,
+            OLD_REQ_NUM,
+            COMPLETE_BI,
+            AUDIT_BI,
+            RECORD_STATUS,
+            CREATE_TIME,
+            CREATE_USER_FLOW,
+            MODIFY_TIME,
+            MODIFY_USER_FLOW,
+            APPLY_YEAR,
+            OUT_COMPLETE_NUM,
+            IN_COMPLETE_NUM,
+            OUT_COMPLETE_BI,
+            IN_COMPLETE_BI,
+            IS_ADD,
+            COMPLETE_BI_PER,
+            OUT_COMPLETE_BI_PER,
+            IN_COMPLETE_BI_PER
+        FROM
+            JSRES_DOCTOR_DETAIL_STATISTICS
+        WHERE
+            RECORD_STATUS = 'Y'
+        AND DOCTOR_FLOW = #{doctorFlow}
+        AND ROTATION_FLOW = #{rotationFlow}
+        AND APPLY_YEAR = #{applyYear}
+    </select>
 </mapper>
