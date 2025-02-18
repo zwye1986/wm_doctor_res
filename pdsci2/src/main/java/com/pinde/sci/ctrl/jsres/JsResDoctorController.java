@@ -5746,9 +5746,9 @@ public class JsResDoctorController extends GeneralController {
         // 学员本轮规培内，当前年-首次有成绩（即非“缺考”）的年份，小于3年
         boolean hasFirstExamRecord = false;
         List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(user.getUserFlow(), null);
-        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && (!"2".equals(e.getTheoryScore().toString()) || !"2".equals(e.getSkillScore().toString()))).collect(Collectors.toList());
+        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString())))).collect(Collectors.toList());
         for (ResScore resScore : scoreList) {
-            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) <= 0) {
+            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) > 0) {
                 hasFirstExamRecord = true;
                 break;
             }
@@ -6039,7 +6039,7 @@ public class JsResDoctorController extends GeneralController {
             }
             // 结业成绩是否符合规范
             List<ResScore> resScoreList = doctorRecruitBiz.selectAllScore(sysUser.getUserFlow(), null);
-            List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && (!"2".equals(e.getTheoryScore().toString()) || !"2".equals(e.getSkillScore().toString()))).collect(Collectors.toList());
+            List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString())))).collect(Collectors.toList());
             boolean isScoreValidate = false;
             if (CollectionUtils.isEmpty(scoreList) || CollectionUtils.isNotEmpty(tempList)) {
                 isScoreValidate = true;
