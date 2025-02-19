@@ -472,7 +472,7 @@
 		<%--<input type="hidden" id="graduationMaterialName" name="materialName"/>--%>
 		<%--省厅市局查询条件--%>
 
-		<table class="searchTable" style="width: 100%;border-collapse:separate; border-spacing:0px 10px;">
+		<table class="searchTable" style="width: 92%;border-collapse:separate; border-spacing:0px 10px;">
 			<tr>
 				<td class="td_left">结业年份：</td>
 				<td>
@@ -1223,7 +1223,7 @@
 <%--		</table>--%>
 	</form>
 </div>
-<div id="doctorListZi" style="padding: 0 20px;box-sizing: border-box;width: 98%;overflow-x: auto;">
+<div id="doctorListZi" style="padding: 0 20px;box-sizing: border-box;width: 92%;overflow-x: auto;">
 </div>
 <div style="display: none;">
 	<select id="WMFirst_select">
