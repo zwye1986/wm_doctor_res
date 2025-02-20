@@ -8104,6 +8104,9 @@ public class JswjwBizImpl implements IJswjwBiz {
             tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
         }else {
             List<JsresDoctorDeptDetail> jsresDoctorDeptDetails = deptDoctorAllWorkDetailByNow_new(recruitFlow, doctorFlow, applyYear, rotationFlow);
+            LambdaQueryWrapper<JsresDoctorDeptDetail> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(JsresDoctorDeptDetail::getDoctorFlow,doctorFlow);
+            jsresDoctorDeptDetailMapper.delete(queryWrapper);
             if(CollectionUtils.isNotEmpty(jsresDoctorDeptDetails)) jsresDoctorDeptDetailMapper.insert(jsresDoctorDeptDetails);
 
         }
@@ -10577,7 +10580,7 @@ public class JswjwBizImpl implements IJswjwBiz {
                     .eq(ResDoctorSchProcess::getRecordStatus,"Y")
                     .in(ResDoctorSchProcess::getProcessFlow, value.stream().map(ResRec::getProcessFlow).collect(Collectors.toSet()));
             List<ResDoctorSchProcess> resDoctorSchProcesses = doctorSchProcessMapper.selectList(rdspLambdaQueryWrapper);
-            Map<String, List<ResRec>> processFlowMap = value.stream().collect(Collectors.groupingBy(ResRec::getProcessFlow));
+            Map<String, List<ResRec>> processFlowMap = value.stream().filter(resRec -> StringUtils.isNotEmpty(resRec.getProcessFlow())).collect(Collectors.groupingBy(ResRec::getProcessFlow));
             resDoctorSchProcesses.forEach(resDoctorSchProcess -> {
                 List<ResRec> rrList = processFlowMap.get(resDoctorSchProcess.getProcessFlow());
                 if(CollectionUtils.isEmpty(rrList)){

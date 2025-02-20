@@ -1360,7 +1360,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					.eq(ResDoctorSchProcess::getRecordStatus,"Y")
 					.in(ResDoctorSchProcess::getProcessFlow, value.stream().map(ResRec::getProcessFlow).collect(Collectors.toSet()));
 			List<ResDoctorSchProcess> resDoctorSchProcesses = doctorSchProcessMapper.selectList(rdspLambdaQueryWrapper);
-			Map<String, List<ResRec>> processFlowMap = value.stream().collect(Collectors.groupingBy(ResRec::getProcessFlow));
+			Map<String, List<ResRec>> processFlowMap = value.stream().filter(resRec -> StringUtils.isNotEmpty(resRec.getProcessFlow())).collect(Collectors.groupingBy(ResRec::getProcessFlow));
 			resDoctorSchProcesses.forEach(resDoctorSchProcess -> {
 				List<ResRec> rrList = processFlowMap.get(resDoctorSchProcess.getProcessFlow());
 				if(CollectionUtils.isEmpty(rrList)){

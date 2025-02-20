@@ -1,5 +1,6 @@
 package com.pinde.sci.biz.jsres.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.ExeMethod;
@@ -260,6 +261,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
             tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
         }else {
             List<JsresDoctorDeptDetail> jsresDoctorDeptDetails = schArrangeResultBizImpl.deptDoctorAllWorkDetailByNow_new(recruitFlow, doctorFlow, applyYear, rotationFlow);
+            LambdaQueryWrapper<JsresDoctorDeptDetail> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(JsresDoctorDeptDetail::getDoctorFlow,doctorFlow);
+            jsresDoctorDeptDetailMapper.delete(queryWrapper);
             if(CollectionUtils.isNotEmpty(jsresDoctorDeptDetails)) jsresDoctorDeptDetailMapper.insert(jsresDoctorDeptDetails);
 
         }

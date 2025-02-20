@@ -34,7 +34,7 @@ public class LicenseKey {
         issueDate = "issueDate=" + StringEscapeUtils.escapeJava("2021-01-01");
 
         String machineId = "";
-        machineId = "machineId=" + StringEscapeUtils.escapeJava("359ed804-75da-3fd1-bcb1-3ff64ae0844b");
+        machineId = "machineId=" + StringEscapeUtils.escapeJava("ce5fa786-f295-329b-889b-826e86539285");
         String workStationId = "";
 //        workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study");
         workStationId = "workStation=" + StringEscapeUtils.escapeJava("res,osca,portals");
@@ -75,11 +75,11 @@ public class LicenseKey {
                 "YuUJ58vXtz4xnKT2J23OdkGj92enXnRbZqIY5+4j+cVsdYXA9ip5A8Xq2LMtzyrb\n" +
                 "fVuC4/YHAABl8Hgl\n" +
                 "=6baZ\n" +
-                "-----END PGP MESSAGE-----");
+                "-----END PGP MESSAGE-----");*/
         getMachineId();
         checkValid();
         System.out.println("score1".substring(5));
-        System.out.println("11score1".indexOf("score"));*/
+        System.out.println("11score1".indexOf("score"));
     }
 
     public static byte[] calculatePublicKeyRingDigest(byte[] publicKeyRing) {
