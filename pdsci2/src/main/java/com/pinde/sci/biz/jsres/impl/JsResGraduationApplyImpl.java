@@ -79,7 +79,6 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 
 
     private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
-    @Qualifier("redisTemplate")
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
