@@ -1599,7 +1599,7 @@ function showReductionImg(recordFlow) {
 						<%--or ('TwoYear' eq doctorRecruit.trainYear and allMonth > 19)--%>
 						<%--or ('OneYear' eq doctorRecruit.trainYear and allMonth > 11)--%>
 						<%--and avgBiMap.avgComplete >= 80 and doctorRecruit.catSpeId eq 'DoctorTrainingSpe'}">--%>
-					<c:if test="${avgBiMap.avgComplete >= 80 and doctorRecruit.catSpeId eq 'DoctorTrainingSpe'}">
+					<c:if test="${avgBiMap.avgComplete >= 88 and doctorRecruit.catSpeId eq 'DoctorTrainingSpe'}">
 						<input type="button" class="btn_green" id="submitBtn" onclick="apply('${resDoctor.doctorFlow}','${canApply}');"
 							   value="提交认证"/>&#12288;&#12288;
 					</c:if>
