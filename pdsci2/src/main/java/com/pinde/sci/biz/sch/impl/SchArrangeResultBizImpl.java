@@ -1488,6 +1488,9 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		resDoctorRecruits.forEach(rd -> {
 			schRotationDepts.forEach(srd -> {
 				JsresDoctorDeptDetail jsresDoctorDeptDetail = new JsresDoctorDeptDetail();
+				jsresDoctorDeptDetail.setApplyYear(applyYear);
+				jsresDoctorDeptDetail.setRecordStatus("Y");
+				jsresDoctorDeptDetail.setRecordFlow(UUID.randomUUID().toString());
 				jsresDoctorDeptDetail.setRecruitFlow(rd.getRecruitFlow());
 				jsresDoctorDeptDetail.setDoctorFlow(rd.getDoctorFlow());
 				jsresDoctorDeptDetail.setCatSpeId(rd.getCatSpeId());
