@@ -1500,7 +1500,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				jsresDoctorDeptDetail.setTrainYear(rd.getTrainYear());
 				jsresDoctorDeptDetail.setSessionNumber(rd.getSessionNumber());
 				jsresDoctorDeptDetail.setRotationFlow(rd.getRotationFlow());
-				jsresDoctorDeptDetail.setRecordFlow(srd.getRecordFlow());
+//				jsresDoctorDeptDetail.setRecordFlow(srd.getRecordFlow());
 				jsresDoctorDeptDetail.setSchStandardDeptFlow(srd.getRecordFlow());
 				jsresDoctorDeptDetail.setGroupFlow(srd.getGroupFlow());
 				jsresDoctorDeptDetail.setStandardDeptId(srd.getStandardDeptId());
