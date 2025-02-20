@@ -10535,6 +10535,7 @@ public class JswjwBizImpl implements IJswjwBiz {
         return resultExtMapper.searchDeptDoctorAllWorkDetailList(rotationFlow,doctorFlow,applyYear);
     }
 
+    @Override
     public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow_new(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow) {
         LambdaQueryWrapper<ResDoctorRecruit> rdrLambdaWrapper = new LambdaQueryWrapper<>();
         rdrLambdaWrapper.eq(ResDoctorRecruit::getDoctorFlow,doctorFlow)
