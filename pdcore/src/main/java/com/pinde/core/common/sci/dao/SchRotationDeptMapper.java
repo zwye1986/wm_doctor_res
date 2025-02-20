@@ -1,12 +1,13 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.SchRotationDept;
 import com.pinde.core.model.SchRotationDeptExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface SchRotationDeptMapper {
+public interface SchRotationDeptMapper extends BaseMapper<SchRotationDept> {
     int countByExample(SchRotationDeptExample example);
 
     int deleteByExample(SchRotationDeptExample example);

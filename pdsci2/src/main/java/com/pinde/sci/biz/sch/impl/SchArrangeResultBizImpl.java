@@ -11,6 +11,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.collect.Lists;
 import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.sch.SchArrangeStatusEnum;
@@ -23,7 +24,6 @@ import com.pinde.core.model.SchArrangeResultExample.Criteria;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
-import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
 import com.pinde.sci.biz.res.IResDoctorProcessBiz;
 import com.pinde.sci.biz.res.IResRecBiz;
@@ -59,7 +59,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -92,69 +91,76 @@ import java.util.stream.Collectors;
 //@Transactional(rollbackFor=Exception.class)
 public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 
-	@Autowired
-	private IFileBiz fileBiz;
-	@Autowired
+	@Resource
+	private SchRotationDeptMapper schRotationDeptMapper;
+
+	@Resource
+	private SchRotationDeptReqMapper schRotationDeptReqMapper;
+
+	@Resource
+	private ResDoctorRecruitMapper resDoctorRecruitMapper;
+	@Resource
 	private JsresDoctorDeptDetailMapper doctorDeptDetailMapper;
-	@Autowired
+	@Resource
 	private SchArrangeResultMapper arrangeResultMapper;
-	@Autowired
+	@Resource
 	private ISchArrangeBiz arrangeBiz;
-	@Autowired
+	@Resource
 	private ISchArrangeDoctorBiz arrdocBiz;
-	@Autowired
+	@Resource
 	private ISchArrangeDoctorDeptBiz arrDocDeptBiz;
 
-	@Autowired
+	@Resource
 	private ISchRotationDeptBiz rotationDeptBiz;
-	@Autowired
+	@Resource
 	private ISchDoctorDeptBiz doctroDeptBiz;
-	@Autowired
+	@Resource
 	private SchArrangeResultExtMapper resultExtMapper;
-	@Autowired
+	@Resource
 	private ISchDeptBiz schDeptBiz;
-	@Autowired
+	@Resource
 	private IResDoctorBiz doctorBiz;
-	@Autowired
+	@Resource
 	private ISchRotationGroupBiz groupBiz;
-	@Autowired
+	@Resource
 	private ISchRotationBiz rotationBiz;
-	@Autowired
+	@Resource
 	private IResDoctorProcessBiz processBiz;
-	@Autowired
+	@Resource
 	private IUserBiz userBiz;
-	@Autowired
+	@Resource
 	private IOrgBiz orgBiz;
-	@Autowired
+	@Resource
 	private ResDoctorSchProcessMapper doctorSchProcessMapper;
-	@Autowired
+	@Resource
 	private ResRecMapper recMapper;
-	@Autowired
+	@Resource
 	private ResDoctorSchProcessExtMapper docSchProcessExtMapper;
-	@Autowired
+	@Resource
 	private ResOutOfficeLockMapper outsOutOfficeLockMapper;
-	@Autowired
+	@Resource
 	private CfgBizImpl cfgBizImpl;
-	@Autowired
+	@Resource
 	private IJsResPowerCfgBiz jsResPowerCfgBiz;
-	@Autowired
+	@Resource
 	protected ICfgBiz cfgBiz;
 	@Resource
 	private SchArrangeResultMapper schArrangeResultMapper;
-	@Autowired
+	@Resource
 	private IDeptBiz deptBiz;
-	@Autowired
-	private ResDoctorRecruitMapper resDoctorRecruitMapper;
-	@Autowired
+	@Resource
 	private ResSchProcessExpressMapper schProcessExpressMapper;
 
-	@Autowired
+	@Resource
 	private SysOrgMapper orgMapper;
-	@Autowired
+	@Resource
 	private SysDeptExtMapper sysDeptExtMapper;
 
-	@Autowired
+	@Resource
 	private IResRecBiz resRecBiz;
+
+	@Resource
+	private SchDoctorDeptMapper schDoctorDeptMapper;
 
 
     private static final Logger logger = LoggerFactory.getLogger(SchArrangeResultBizImpl.class);
@@ -1311,6 +1317,261 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow) {
 		return resultExtMapper.deptDoctorAllWorkDetailByNow(recruitFlow,doctorFlow,applyYear, rotationFlow);
 	}
+
+	@Override
+	public List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow_new(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow) {
+		LambdaQueryWrapper<ResDoctorRecruit> rdrLambdaWrapper = new LambdaQueryWrapper<>();
+		rdrLambdaWrapper.eq(ResDoctorRecruit::getDoctorFlow,doctorFlow)
+				.eq(ResDoctorRecruit::getRecruitFlow,recruitFlow)
+				.eq(ResDoctorRecruit::getRotationFlow,rotationFlow)
+				.eq(ResDoctorRecruit::getAuditStatusId,"Passed")
+				.eq(ResDoctorRecruit::getRecordStatus,"Y");
+		List<ResDoctorRecruit> resDoctorRecruits = resDoctorRecruitMapper.selectList(rdrLambdaWrapper);
+		if(CollectionUtils.isEmpty(resDoctorRecruits)) return Collections.emptyList();
+		//获取轮转方案下标准科室信息
+		LambdaQueryWrapper<SchRotationDept> srdLambdaQueryWrapper = new LambdaQueryWrapper<>();
+		srdLambdaQueryWrapper.eq(SchRotationDept::getRotationFlow,rotationFlow)
+				.eq(SchRotationDept::getRecordStatus,"Y")
+				.isNull(SchRotationDept::getOrgFlow);//只查询轮转方案下的标准科室
+		List<SchRotationDept> schRotationDepts = schRotationDeptMapper.selectList(srdLambdaQueryWrapper);
+		if(CollectionUtils.isEmpty(schRotationDepts)) return Collections.emptyList();
+
+		LambdaQueryWrapper<SchRotationDeptReq> srdrLambdaQueryWrapper = new LambdaQueryWrapper<>();
+		srdrLambdaQueryWrapper.eq(SchRotationDeptReq::getRotationFlow,rotationFlow)
+				.eq(SchRotationDeptReq::getRecordStatus,"Y")
+				.in(SchRotationDeptReq::getRecTypeId,new String[]{"CaseRegistry", "DiseaseRegistry", "SkillRegistry", "OperationRegistry", "CampaignRegistry"})
+				.in(SchRotationDeptReq::getRelRecordFlow,schRotationDepts.stream().map(SchRotationDept::getRecordFlow).collect(Collectors.toSet()));
+
+		List<SchRotationDeptReq> schRotationDeptReqs = schRotationDeptReqMapper.selectList(srdrLambdaQueryWrapper);
+
+		LambdaQueryWrapper<ResRec> resRecLambdaQueryWrapper = new LambdaQueryWrapper<>();
+		resRecLambdaQueryWrapper.eq(ResRec::getOperUserFlow,doctorFlow).eq(ResRec::getRecordStatus,"Y")
+				.in(ResRec::getSchRotationDeptFlow,schRotationDepts.stream().map(SchRotationDept::getRecordFlow).collect(Collectors.toSet()))
+				.in(ResRec::getRecTypeId,new String[]{"CaseRegistry", "DiseaseRegistry", "SkillRegistry", "OperationRegistry", "CampaignRegistry"});
+
+		List<ResRec> resRecs = recMapper.selectList(resRecLambdaQueryWrapper);
+		if(CollectionUtils.isEmpty(resRecs)) return Collections.emptyList();
+
+		Map<String, List<ResRec>> collect = resRecs.stream().collect(Collectors.groupingBy(ResRec::getSchRotationDeptFlow));
+		Map<String, Integer> rotationDeptInCompleteNumMap = new HashMap<>();
+		collect.forEach((key, value) -> {
+			LambdaQueryWrapper<ResDoctorSchProcess> rdspLambdaQueryWrapper = new LambdaQueryWrapper<>();
+			rdspLambdaQueryWrapper.eq(ResDoctorSchProcess::getUserFlow,doctorFlow)
+					.eq(ResDoctorSchProcess::getRecordStatus,"Y")
+					.in(ResDoctorSchProcess::getProcessFlow, value.stream().map(ResRec::getProcessFlow).collect(Collectors.toSet()));
+			List<ResDoctorSchProcess> resDoctorSchProcesses = doctorSchProcessMapper.selectList(rdspLambdaQueryWrapper);
+			Map<String, List<ResRec>> processFlowMap = value.stream().collect(Collectors.groupingBy(ResRec::getProcessFlow));
+			resDoctorSchProcesses.forEach(resDoctorSchProcess -> {
+				List<ResRec> rrList = processFlowMap.get(resDoctorSchProcess.getProcessFlow());
+				if(CollectionUtils.isEmpty(rrList)){
+					return;
+				}
+
+				for (ResRec resRec : rrList) {
+					String startTime = resDoctorSchProcess.getSchStartDate().replace("-", "");
+					String endTime = resDoctorSchProcess.getSchEndDate().replace("-", "");;
+					String operTime = resRec.getOperTime();
+					if(StringUtils.isNotBlank(operTime)){
+						operTime = operTime.substring(0, 8);
+						if(operTime.compareTo(startTime) >= 0 && operTime.compareTo(endTime) <= 0) {
+							int inCompleteNum = rotationDeptInCompleteNumMap.getOrDefault(key, 0);
+							rotationDeptInCompleteNumMap.put(key, inCompleteNum + 1);
+//							break;
+						}
+					}
+				}
+			});
+
+		});
+
+		List<Map<String, String>> icList = selectArrangeResultWithRotationDept(doctorFlow, applyYear + "-05-31");
+
+		Map<String, List<SchRotationDept>> groupDeptMap = schRotationDepts.stream().collect(Collectors.groupingBy(vo -> vo.getGroupFlow() + "," + vo.getStandardDeptId()));
+		List<SchDoctorDept> schDoctorDeptList = new ArrayList<>();
+		groupDeptMap.forEach((key, value) -> {
+			LambdaQueryWrapper<SchDoctorDept> schDoctorDeptLambdaQueryWrapper = new LambdaQueryWrapper<>();
+			String[] keys = key.split(",");
+			schDoctorDeptLambdaQueryWrapper.eq(SchDoctorDept::getDoctorFlow, doctorFlow)
+					.eq(SchDoctorDept::getRecordStatus, "Y")
+					.eq(SchDoctorDept::getGroupFlow, keys[0])
+//					.eq(SchDoctorDept::getOrgFlow, keys[1])
+					.eq(SchDoctorDept::getStandardDeptId, keys[1]);
+			List<SchDoctorDept> schDoctorDepts = schDoctorDeptMapper.selectList(schDoctorDeptLambdaQueryWrapper);
+			schDoctorDeptList.addAll(schDoctorDepts);
+		});
+
+		Map<String, String> isShortMap = new HashMap<>();
+		Map<String, List<SchRotationDept>> groupFlowMap = schRotationDepts.stream().collect(Collectors.groupingBy(vo->vo.getGroupFlow()+","+vo.getStandardDeptId()+","+vo.getRotationFlow()));
+		groupFlowMap.forEach((key, value) -> {
+			LambdaQueryWrapper<SchDoctorDept> schDoctorDeptLambdaQueryWrapper = new LambdaQueryWrapper<>();
+			String[] keys = key.split(",");
+			schDoctorDeptLambdaQueryWrapper.eq(SchDoctorDept::getGroupFlow, keys[0])
+					.eq(SchDoctorDept::getStandardDeptId, keys[1])
+					.eq(SchDoctorDept::getRecordStatus, "Y")
+					.eq(SchDoctorDept::getRotationFlow, keys[2])
+					.eq(SchDoctorDept::getDoctorFlow, doctorFlow);
+			List<SchDoctorDept> schDoctorDepts = schDoctorDeptMapper.selectList(schDoctorDeptLambdaQueryWrapper);
+			isShortMap.put(value.get(0).getRotationFlow()+keys[0]+keys[1],
+					schDoctorDepts.size() > 0 ? "Y" : "N");
+		});
+
+		Map<String, Integer> oldReqNumMap = new HashMap<>();
+		Map<String, List<SchRotationDeptReq>> deptReqMap2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo -> vo.getRotationFlow() + vo.getStandardDeptId()));
+		deptReqMap2.forEach((key, value) -> {
+			BigDecimal reqNumOld = value.stream().filter(vo2 -> vo2.getReqNum() != null).map(vo2 -> vo2.getReqNum()).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+			oldReqNumMap.put(key, reqNumOld.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
+		});
+
+		Map<String, Integer> reqNumMap = new HashMap<>();
+		Map<String, List<SchRotationDept>> rotationOrgMap = schRotationDepts.stream().collect(Collectors.groupingBy(vo->vo.getRotationFlow()+","+vo.getOrgFlow()));
+		rotationOrgMap.forEach((key, value) -> {
+			LambdaQueryWrapper<SchDoctorDept> schDoctorDeptLambdaQueryWrapper = new LambdaQueryWrapper<>();
+			String[] keys = key.split(",");
+			schDoctorDeptLambdaQueryWrapper.eq(SchDoctorDept::getRecordStatus, "Y")
+					.eq(SchDoctorDept::getRotationFlow, keys[0])
+					.eq(SchDoctorDept::getDoctorFlow, doctorFlow)
+					.eq(SchDoctorDept::getOrgFlow, keys[1]);
+			List<SchDoctorDept> schDoctorDepts = schDoctorDeptMapper.selectList(schDoctorDeptLambdaQueryWrapper);
+			Map<String, List<SchDoctorDept>> rotationOrgMap2 = schDoctorDepts.stream().collect(Collectors.groupingBy(vo -> vo.getRotationFlow()  ));
+			Map<String, List<SchRotationDeptReq>> reqDeptNumMap = schRotationDeptReqs.stream()
+					.collect(Collectors.groupingBy(vo -> vo.getRotationFlow()));
+			Map<String, List<SchRotationDept>> rotationOrgDeptMap2 = schRotationDepts.stream().collect(Collectors.groupingBy(vo -> vo.getRotationFlow()  ));
+			resDoctorRecruits.stream().forEach(vo -> {
+				if("DoctorTrainingSpe".equals(vo.getCatSpeId()) && "2015".compareTo(vo.getSessionNumber()) <= 0
+						&& (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(vo.getTrainYear()) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(vo.getTrainYear()))) {
+					List<SchDoctorDept> list = rotationOrgMap2.get(vo.getRotationFlow()  );
+					if(CollectionUtils.isEmpty(list)) {
+						List<SchRotationDeptReq> schRotationDeptReqs1 = reqDeptNumMap.get(vo.getRotationFlow());
+						Map<String, List<SchRotationDeptReq>> deptReqMap = schRotationDeptReqs1.stream().collect(Collectors.groupingBy(vo2 -> vo2.getStandardDeptId()));
+						deptReqMap.forEach((key2, value2) -> {
+							BigDecimal reqNum = value2.stream().filter(vo2 -> vo2.getReqNum() != null).map(vo2 -> vo2.getReqNum()).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+							reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + vo.getOrgFlow() + key2, reqNum.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
+						});
+					}else {
+						List<SchDoctorDept> list2 = rotationOrgMap2.get(vo.getRotationFlow()  );
+						List<SchRotationDept> list3 = rotationOrgDeptMap2.get(vo.getRotationFlow() );
+						Map<String, List<SchDoctorDept>> map2 = list2.stream().collect(Collectors.groupingBy(vo3 -> vo3.getStandardDeptId()));
+						Map<String, List<SchRotationDept>> map3 = list3.stream().collect(Collectors.groupingBy(vo3 -> vo3.getStandardDeptId()));
+						map3.forEach((key3, value3) -> {
+							if(map2.containsKey(key3)) {
+								List<SchDoctorDept> schDoctorDeptList1 = map2.get(key3);
+								String schMonth = schDoctorDeptList1.get(0).getSchMonth();
+								String schMonth2 = value3.get(0).getSchMonth();
+								Map<String, List<SchRotationDeptReq>> rotationReq2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo3 -> vo3.getRotationFlow() + vo3.getOrgFlow() + vo3.getStandardDeptId()));
+								List<SchRotationDeptReq> schRotationDeptReqs2 = rotationReq2.get(vo.getRotationFlow() + vo.getOrgFlow() + key3);
+								if(StringUtils.isNotEmpty(schMonth) && StringUtils.isNotEmpty(schMonth2) && CollectionUtils.isNotEmpty(schRotationDeptReqs2)) {
+									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + vo.getOrgFlow() + key3, Math.round(Float.parseFloat(schMonth2) / Float.parseFloat(schMonth2) * Float.parseFloat(schRotationDeptReqs2.get(0).getReqNum().toString())));
+								}else {
+									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + vo.getOrgFlow() + key3, 0);
+								}
+							}else {
+								reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + vo.getOrgFlow() + key3, 0);
+							}
+						});
+
+					}
+				}else {
+					List<SchRotationDeptReq> schRotationDeptReqs1 = reqDeptNumMap.get(vo.getRotationFlow());
+					Map<String, List<SchRotationDeptReq>> deptReqMap = schRotationDeptReqs1.stream().collect(Collectors.groupingBy(vo2 -> vo2.getStandardDeptId()));
+					deptReqMap.forEach((key2, value2) -> {
+						BigDecimal reqNum = value2.stream().filter(vo2 -> vo2.getReqNum() != null).map(vo2 -> vo2.getReqNum()).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+						reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + vo.getOrgFlow() + key2, reqNum.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
+					});
+				}
+			});
+		});
+
+		//
+		Map<String, List<ResRec>> resRecMap = resRecs.stream().collect(Collectors.groupingBy(vo -> vo.getOrgFlow() + vo.getSchRotationDeptFlow()));
+		Map<String, List<Map<String, String>>> icMap = icList.stream().collect(Collectors.groupingBy(map -> map.get("DOCTOR_FLOW") + map.get("ROTATION_FLOW") + map.get("RECORD_FLOW")));
+		List<JsresDoctorDeptDetail> jsresDoctorWorkDetails = new ArrayList<>();
+		resDoctorRecruits.forEach(rd -> {
+			schRotationDepts.forEach(srd -> {
+				JsresDoctorDeptDetail jsresDoctorDeptDetail = new JsresDoctorDeptDetail();
+				jsresDoctorDeptDetail.setRecruitFlow(rd.getRecruitFlow());
+				jsresDoctorDeptDetail.setDoctorFlow(rd.getDoctorFlow());
+				jsresDoctorDeptDetail.setCatSpeId(rd.getCatSpeId());
+				jsresDoctorDeptDetail.setCatSpeName(rd.getCatSpeName());
+				jsresDoctorDeptDetail.setSpeId(rd.getSpeId());
+				jsresDoctorDeptDetail.setSpeName(rd.getSpeName());
+				jsresDoctorDeptDetail.setTrainYear(rd.getTrainYear());
+				jsresDoctorDeptDetail.setSessionNumber(rd.getSessionNumber());
+				jsresDoctorDeptDetail.setRotationFlow(rd.getRotationFlow());
+				jsresDoctorDeptDetail.setRecordFlow(srd.getRecordFlow());
+				jsresDoctorDeptDetail.setSchStandardDeptFlow(srd.getRecordFlow());
+				jsresDoctorDeptDetail.setGroupFlow(srd.getGroupFlow());
+				jsresDoctorDeptDetail.setStandardDeptId(srd.getStandardDeptId());
+				jsresDoctorDeptDetail.setStandardDeptName(srd.getStandardDeptName());
+				jsresDoctorDeptDetail.setSchMonth(srd.getSchMonth());
+				jsresDoctorDeptDetail.setOrgFlow(rd.getOrgFlow());
+				jsresDoctorDeptDetail.setOrgName(rd.getOrgName());
+				List<ResRec> resRecs1 = resRecMap.getOrDefault(rd.getOrgFlow() + srd.getRecordFlow(), new ArrayList<>());
+				jsresDoctorDeptDetail.setCompleteNum(String.valueOf(resRecs1.size()));
+                Integer inCompleteNum = rotationDeptInCompleteNumMap.getOrDefault(srd.getRecordFlow(), 0);
+				jsresDoctorDeptDetail.setInCompleteNum(String.valueOf(inCompleteNum));
+				jsresDoctorDeptDetail.setOutCompleteNum(String.valueOf(resRecs1.size() - inCompleteNum));
+				int auditNum = (int)resRecs1.stream().filter(vo -> StringUtils.isNotEmpty(vo.getAuditStatusId())).count();
+				jsresDoctorDeptDetail.setAuditNum(String.valueOf(auditNum));
+				jsresDoctorDeptDetail.setIsShort(isShortMap.get(rd.getRotationFlow()+srd.getGroupFlow()+srd.getStandardDeptId()));
+				jsresDoctorDeptDetail.setReqNum(String.valueOf(reqNumMap.getOrDefault(rd.getRecruitFlow() + rd.getRotationFlow() + rd.getOrgFlow() + srd.getStandardDeptId(), 0)));
+				jsresDoctorDeptDetail.setOldReqNum(String.valueOf(oldReqNumMap.getOrDefault(rd.getRotationFlow() + srd.getStandardDeptId(), 0)));
+				List<Map<String, String>> icListTemp = icMap.getOrDefault(rd.getDoctorFlow() + rd.getRotationFlow() + srd.getRecordFlow(), new ArrayList<>());
+				jsresDoctorDeptDetail.setIsAdd(icListTemp.size() > 0 ? "Y" : "N");
+
+				// 计算比例
+
+				jsresDoctorDeptDetail.setCompleteBi(getProportion(jsresDoctorDeptDetail.getCompleteNum(), jsresDoctorDeptDetail.getReqNum()));
+				jsresDoctorDeptDetail.setInCompleteBi(getProportion(jsresDoctorDeptDetail.getInCompleteNum(), jsresDoctorDeptDetail.getReqNum()));
+				jsresDoctorDeptDetail.setOutCompleteBi(getProportion(jsresDoctorDeptDetail.getOutCompleteNum(), jsresDoctorDeptDetail.getReqNum()));
+				String auditBi = "-";
+				if(StringUtils.isNotEmpty(jsresDoctorDeptDetail.getReqNum()) && !"0".equals(jsresDoctorDeptDetail.getReqNum())) {
+					auditBi = "0";
+					if(StringUtils.isNotEmpty(jsresDoctorDeptDetail.getCompleteNum()) && !"0".equals(jsresDoctorDeptDetail.getCompleteNum())) {
+						float auditNumF = Float.parseFloat(jsresDoctorDeptDetail.getAuditNum());
+						float completeNumF = Float.parseFloat(jsresDoctorDeptDetail.getCompleteNum());
+						auditBi = String.valueOf(Math.round(auditNumF / completeNumF * 100));
+					}
+				}
+				jsresDoctorDeptDetail.setAuditBi(auditBi);
+
+                jsresDoctorWorkDetails.add(jsresDoctorDeptDetail);
+			});
+		});
+
+		return jsresDoctorWorkDetails;
+	}
+
+
+	/**
+	 * 计算两个数字的比例
+	 *
+	 * 此方法用于接收两个字符串形式的数字，计算它们相除后的比例，并将结果四舍五入为整数返回
+	 * 如果输入的数字字符串为空或者无法转换为浮点数，则返回 "-"
+	 *
+	 * @param num1 第一个数字字符串，代表分子
+	 * @param num2 第二个数字字符串，代表分母
+	 * @return 返回计算出的比例的字符串形式，如果输入不合法则返回 "-"
+	 */
+	private String getProportion(String num1, String num2) {
+		// 检查输入的两个数字字符串是否都不为空
+		if(StringUtils.isNotEmpty(num1) && StringUtils.isNotEmpty(num2)) {
+			// 将数字字符串转换为浮点数
+			float num1F = Float.parseFloat(num1);
+			float num2F = Float.parseFloat(num2);
+
+			if(num2F == 0f) return "-";
+
+			// 计算比例并四舍五入为整数
+			int res = Math.round(num1F / num2F * 100);
+			if(res > 100) res = 100;
+			// 返回计算结果的字符串形式
+			return String.valueOf(res);
+		}
+
+		// 如果输入不合法，返回 "-"
+		return "-";
+	}
+
 
 	@Override
 	public List<SchArrangeResult> searchArrangeResultByDateAndOrgByMap(Map<String, String> param) {
@@ -3466,7 +3727,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return resp;
 	}
 
-	@Autowired
+	@Resource
 	private PaiBanImportService paiBanImportService;
 	private boolean checkArrangTdVo(Map<String, ArrangTdVo> item,
 									Map<String, SysUser> userMapByName,
@@ -3955,7 +4216,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		return item;
 	}
 
-	@Autowired
+	@Resource
 	private Environment env;
 	@Resource
 	private ISchDeptExternalRelBiz deptExternalRelBiz;
@@ -4077,41 +4338,15 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 	public List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear) {
 		return resultExtMapper.searchDeptDoctorAllWorkDetailList(rotationFlow,doctorFlow,applyYear);
 	}
-
-
-	private List<JSONObject> updateJSONList(List<JSONObject> data,
-											List<String> deptList,
-											String keyName){
-		if (CollectionUtil.isEmpty(data)) {
-			JSONObject item = new JSONObject();
-			data.add(item);
-		}
-		if (CollectionUtil.isEmpty(deptList)) {
-			JSONObject item = data.get(0);
-			item.put(keyName,"");
-			return data;
-		}
-		for (int i = 0; i < deptList.size(); i++) {
-			if (i<data.size()) {
-				JSONObject item = data.get(i);
-				item.put(keyName,deptList.get(i));
-			}else {
-				JSONObject item = new JSONObject();
-				item.put(keyName,deptList.get(i));
-				data.add(item);
-			}
-		}
-		for (JSONObject item : data) {
-			for (int i = 0; i < 50; i++) {
-				String speDeptKey = "speDept"+i;
-				Object o = item.get(speDeptKey);
-				if (ObjectUtil.isEmpty(o)) {
-					item.put(speDeptKey,"");
-				}
-			}
-		}
-		return data;
+	@Override
+	public List<Map<String, String>> selectArrangeResultWithRotationDept(String doctorFlow,String schEndDate) {
+		LambdaQueryWrapper<SchArrangeResult> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+		lambdaQueryWrapper.eq(SchArrangeResult::getDoctorFlow,doctorFlow)
+				.le(SchArrangeResult::getSchEndDate,schEndDate);
+		List<Map<String, String>> maps = schArrangeResultMapper.selectArrangeResultWithRotationDept(lambdaQueryWrapper);
+		return maps;
 	}
+
 
 
 

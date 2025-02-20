@@ -18,6 +18,7 @@ import com.pinde.core.page.PageHelper;
 import com.pinde.core.pdf.DocumentVo;
 import com.pinde.core.pdf.PdfDocumentGenerator;
 import com.pinde.core.pdf.utils.ResourceLoader;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.inx.INoticeBiz;

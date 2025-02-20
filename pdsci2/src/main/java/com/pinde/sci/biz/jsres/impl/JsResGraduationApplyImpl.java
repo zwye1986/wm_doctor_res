@@ -2,6 +2,7 @@ package com.pinde.sci.biz.jsres.impl;
 
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.ExeMethod;
 import com.pinde.core.common.sci.dao.GraduationDoctorTempMapper;
 import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
 import com.pinde.core.common.sci.dao.JsresGraduationApplyLogMapper;
@@ -15,6 +16,7 @@ import com.pinde.sci.biz.pub.IPubUserResumeBiz;
 import com.pinde.sci.biz.res.IResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResJointOrgBiz;
 import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
+import com.pinde.sci.biz.sch.impl.SchArrangeResultBizImpl;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
 import com.pinde.core.common.sci.dao.TempMapper;
@@ -30,6 +32,10 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -73,6 +79,11 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
 
 
     private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
+    @Qualifier("redisTemplate")
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private SchArrangeResultBizImpl schArrangeResultBizImpl;
 
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
@@ -235,11 +246,23 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     private void setFourStep(String applyYear, String recruitFlow, String doctorFlow, String applyFlow, String rotationFlow, String reSubmitFlag) {
         //1
         tempMapper.deleteDeptDetailByApplyYear(applyYear,doctorFlow);
-        // 非重新提交从计算好的学员比例插入数据
-        if(StringUtil.isNotBlank(reSubmitFlag) && GlobalConstant.FLAG_N.equals(reSubmitFlag)){
-            tempMapper.insetDeptDetailByStatistics(applyYear, doctorFlow, rotationFlow);
-        }else{
+        String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
+        if(StringUtils.isEmpty(exeMethodInRedis)) {
+            exeMethodInRedis = ExeMethod.SQL.getValue();
+        }
+        if(ExeMethod.JOB.getValue().equals(exeMethodInRedis)) {
+            // 非重新提交从计算好的学员比例插入数据
+            if(StringUtil.isNotBlank(reSubmitFlag) && GlobalConstant.FLAG_N.equals(reSubmitFlag)){
+                tempMapper.insetDeptDetailByStatistics(applyYear, doctorFlow, rotationFlow);
+            }else{
+                tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
+            }
+        }else if(ExeMethod.SQL.getValue().equals(exeMethodInRedis)){
             tempMapper.insetDeptDetailByApplyYear(applyYear,doctorFlow,recruitFlow, rotationFlow);
+        }else {
+            List<JsresDoctorDeptDetail> jsresDoctorDeptDetails = schArrangeResultBizImpl.deptDoctorAllWorkDetailByNow_new(recruitFlow, doctorFlow, applyYear, rotationFlow);
+            if(CollectionUtils.isNotEmpty(jsresDoctorDeptDetails)) jsresDoctorDeptDetailMapper.insert(jsresDoctorDeptDetails);
+
         }
         //2
         tempMapper.deleteDeptTempByRecruitFlow(recruitFlow);

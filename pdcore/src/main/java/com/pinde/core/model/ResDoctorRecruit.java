@@ -1,8 +1,12 @@
 package com.pinde.core.model;
 
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.math.BigDecimal;
+@TableName("res_doctor_recruit")
 public class ResDoctorRecruit implements java.io.Serializable {
+    @TableId
     private String recruitFlow;
 
     private String doctorFlow;

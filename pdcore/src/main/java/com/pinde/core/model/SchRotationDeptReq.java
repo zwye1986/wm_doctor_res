@@ -1,8 +1,12 @@
 package com.pinde.core.model;
 
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.math.BigDecimal;
+@TableName("sch_rotation_dept_req")
 public class SchRotationDeptReq implements java.io.Serializable {
+    @TableId
     private String reqFlow;
 
     private String rotationFlow;

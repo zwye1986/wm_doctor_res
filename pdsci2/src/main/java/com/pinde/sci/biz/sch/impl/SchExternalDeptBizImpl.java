@@ -5,6 +5,7 @@ import com.pinde.core.common.sci.dao.SchRotationDeptMapper;
 import com.pinde.core.common.sci.dao.SchRotationMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.model.SchExternalDeptExample.Criteria;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.core.util.TimeUtil;

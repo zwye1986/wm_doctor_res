@@ -215,8 +215,11 @@ public interface ISchArrangeResultBiz {
 	List<SchArrangeResult> searchSchArrangeResultByMap(Map<String, String> pMap);
 
 	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow_new(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
 
 	List<SchArrangeResult> searchArrangeResultByDateAndOrgByMap(Map<String, String> param);
+
+
 
 	List<SysDept> findDeptsByDoctor(String doctorFlow);
 
@@ -276,5 +279,7 @@ public interface ISchArrangeResultBiz {
 	 * @Date 2025/2/18
 	 */
 	List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear);
+
+	List<Map<String, String>> selectArrangeResultWithRotationDept(String doctorFlow,String schEndDate);
 
 }

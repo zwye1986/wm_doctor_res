@@ -1,5 +1,6 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.ResDoctorRecruit;
 import com.pinde.core.model.ResDoctorRecruitExample;
 import com.pinde.core.model.ResDoctorRecruitWithBLOBs;
@@ -7,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ResDoctorRecruitMapper {
+public interface ResDoctorRecruitMapper extends BaseMapper<ResDoctorRecruit> {
     int countByExample(ResDoctorRecruitExample example);
 
     int deleteByExample(ResDoctorRecruitExample example);

@@ -1,6 +1,5 @@
 package com.pinde.sci.ctrl.jsres;
 
-import com.google.common.collect.Lists;
 import com.pinde.core.common.enums.RecStatusEnum;
 import com.pinde.core.common.sci.dao.JsresPowerCfgMapper;
 import com.pinde.core.model.*;

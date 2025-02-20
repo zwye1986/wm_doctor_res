@@ -4,6 +4,7 @@ import com.pinde.core.common.enums.*;
 import com.pinde.core.common.sci.dao.SysUserDeptMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.pub.IFileBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
