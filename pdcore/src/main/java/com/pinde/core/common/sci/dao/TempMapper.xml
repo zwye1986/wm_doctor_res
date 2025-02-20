@@ -1629,4 +1629,51 @@
         AND APPLY_YEAR = #{applyYear}
     </insert>
 
+    <update id="delProcess">
+        update res_doctor_sch_process set record_status='N',modify_user_flow='TEMP-delProcess-delProcess'
+        where process_flow =#{processFlow}
+          and record_status='Y'
+    </update>
+
+    <update id="delResult">
+        update sch_arrange_result set record_status='N',modify_user_flow='TEMP-delProcess-delResult'
+        where result_flow in (
+            select sch_result_flow from res_doctor_sch_process where process_flow =#{processFlow}
+        )
+          and record_status='Y'
+    </update>
+
+    <select id="examTeaRole" resultMap="com.pinde.core.common.sci.dao.SysUserMapper.BaseResultMap">
+        select * from sys_user where is_exam_tea='Y'
+    </select>
+
+    <update id="backResult">
+        update sch_arrange_result set record_status='Y'
+        where modify_user_flow='TEMP-delProcess-delResult'
+          and record_status='N'
+          and  result_flow in (
+            select sch_result_flow from res_doctor_sch_process where process_flow =#{processFlow}
+        )
+    </update>
+
+    <update id="backProcess">
+        update res_doctor_sch_process set record_status='Y'
+        where modify_user_flow='TEMP-delProcess-delProcess'
+          and process_flow=#{processFlow}
+          and record_status='N'
+    </update>
+
+    <delete id="deleteDeptDetail">
+        delete from jsres_doctor_dept_detail where  apply_year=#{applyYear}
+    </delete>
+
+    <update id="updateRecruitAvgTemp">
+        update JSRES_GRADUATION_APPLY dr set
+         AVG_COMPLETE=( select nvl(AVG_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow),
+         AVG_OUT_COMPLETE=( select nvl(AVG_OUT_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow),
+         AVG_IN_COMPLETE=( select nvl(AVG_IN_COMPLETE,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow),
+         AVG_AUDIT=( select nvl(AVG_AUDIT,0) from JSRES_DOCTOR_DEPT_AVG_TEMP t where t.recruit_flow= dr.recruit_flow)
+        WHERE DR.RECORD_STATUS='Y' AND DR.APPLY_YEAR=#{applyYear}
+    </update>
+
 </mapper>
