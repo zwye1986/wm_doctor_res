@@ -105,7 +105,7 @@
                         <select name="orgFlow" id="orgFlow" class="notBlank city select" style="width: 128px;margin-left: 0px;">
                             <option value="">全部</option>
                             <c:forEach items="${orgList}" var="org">
-                                <option value="${org.orgFlow}">${org.orgName}</option>
+                                <option value="${org.orgFlow}" ${param.orgFlow == org.orgFlow ? 'selected' : ''}>${org.orgName}</option>
                             </c:forEach>
                         </select>
                     </div>
