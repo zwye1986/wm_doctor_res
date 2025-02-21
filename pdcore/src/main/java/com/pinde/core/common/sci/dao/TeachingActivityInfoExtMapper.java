@@ -20,7 +20,6 @@ public interface TeachingActivityInfoExtMapper {
 
 	List<Map<String,Object>> readActivityTargetEvals(@Param("activityFlow") String activityFlow);
 
-	List<Map<String,Object>> readActivityResults2(@Param("activityFlow") String activityFlow);
 
 	int checkTime(@Param("activity") TeachingActivityInfo activity);
 
@@ -32,7 +31,6 @@ public interface TeachingActivityInfoExtMapper {
 
 
 
-	List<Map<String,String>> getDoctorActivityStatisticsMap(@Param("doctorFlow") String doctorFlow, @Param("startTime") String startTime, @Param("endTime") String endTime);
 
 	List<Map<String,Object>> findActivityTypeList(Map<String, String> param);
 
@@ -66,10 +64,6 @@ public interface TeachingActivityInfoExtMapper {
 
 	Map<String,Object> readActivityForWeb(@Param("activityFlow") String activityFlow);
 
-	List<Map<String,Object>> readActivityResults(@Param("activityFlow") String activityFlow);
-
-//	List<Map<String,Object>> readActivityTargetEvals(@Param("activityFlow") String activityFlow);
-
 	List<TeachingActivityEval> readTeachingEvals(@Param("activityFlow") String activityFlow);
 
 
@@ -78,8 +72,6 @@ public interface TeachingActivityInfoExtMapper {
 	List<Map<String,String>> getTeacherActivityStatisticsMap(@Param("deptFlow") String deptFlow, @Param("teacherFlow") String teacherFlow, @Param("startTime") String startTime, @Param("endTime") String endTime);
 
 	List<Map<String,String>> getTeacherActivityStatisticsReport(Map<String, Object> param);
-
-	String getRealitSpeaker(@Param("userFlow")String userFlow,@Param("deptFlow")String deptFlow,@Param("orgFlow")String orgFlow);
 
 	String getRealitSpeaker2(@Param("userFlow")String userFlow,@Param("deptFlow")String deptFlow,@Param("orgFlow")String orgFlow ,@Param("startTime") String startTime, @Param("endTime") String endTime);
 
@@ -112,10 +104,5 @@ public interface TeachingActivityInfoExtMapper {
 	List<Map<String, Object>> readResults(Map<String, Object> param);
 
 	void activityBat();
-
-	int delFileByProductFlow(@Param("productType") String productType,@Param("productFlow") String productFlow,@Param("fileFlows") List<String> fileFlows);
-
-	int delFileByProductFlow2(@Param("productType") String productType,@Param("productFlow") String productFlow,@Param("fileFlows") List<String> fileFlows,@Param("fileUpType") String fileUpType);
-
 
 }

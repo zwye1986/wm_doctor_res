@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 
 @SpringBootApplication(exclude = { FreeMarkerAutoConfiguration.class, MustacheAutoConfiguration.class, TransactionAutoConfiguration.class, QuartzAutoConfiguration.class })
 //@ComponentScan(basePackages = {"com.pinde"})
-@PropertySource(value = {"classpath:jdbc.properties", "classpath:pdapp.properties", "classpath:wxConfig.properties"}, ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath:jdbc.properties", "classpath:pdapp.properties", "classpath:dev/wxConfig.properties"}, ignoreResourceNotFound = true)
 @ImportResource({"classpath:spring-context.xml"/*,"classpath:spring-mvc.xml","classpath:spring-mybatis.xml"*/})
 @MapperScan({"com.pinde.**.dao.**"})
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600, redisNamespace = "pdsci-jsres-app")

@@ -198,7 +198,7 @@ public class JsResActivityBizImpl implements IJsResActivityBiz {
 
 	@Override
 	public List<Map<String, Object>> readActivityResults(String activityFlow) {
-		return activityInfoExtMapper.readActivityResults(activityFlow);
+		return activityInfoExtMapper.readActivityResults(activityFlow,null);
 	}
 	@Override
 	public List<Map<String, Object>> readActivityRegists(String activityFlow) {
