@@ -115,7 +115,7 @@ $(document).ready(function(){
     if ('${file.filePath}') {
         flag = 'Y';
     }
-	if("${apply}" == 'Y'){
+	if("${apply}" == 'Y' && "${exeMethodInRedis}" == "job"){
 		// 更新提示信息
 		$("#graduationMsg").html("当前数据补填人数较多，数据填报比例计算会有延迟（当日补填数据次日早上6点后更新填报比例），请优先进行数据填报。");
 	}

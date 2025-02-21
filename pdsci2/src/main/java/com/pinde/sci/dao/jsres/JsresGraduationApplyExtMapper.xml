@@ -495,11 +495,46 @@
         ON DR.ORG_FLOW = SO.ORG_FLOW
         INNER JOIN SYS_USER SU
         ON RD.DOCTOR_FLOW = SU.USER_FLOW
-        LEFT JOIN RES_SCORE SCORE
-        ON SCORE.RECRUIT_FLOW = DR.RECRUIT_FLOW
-        AND SCORE.DOCTOR_FLOW = DR.DOCTOR_FLOW
-        AND SCORE.SCORE_TYPE_ID = 'PublicScore'
-        AND SCORE.RECORD_STATUS='Y'
+        LEFT JOIN (
+            SELECT
+                SCORE_FLOW,
+                DOCTOR_FLOW,
+                RECRUIT_FLOW,
+                SKILL_SCORE,
+                RN
+            FROM
+            (
+                SELECT
+                    SCORE_FLOW,
+                    DOCTOR_FLOW,
+                    RECRUIT_FLOW,
+                    SKILL_SCORE,
+                    ROW_NUMBER () OVER (
+                        PARTITION BY RECRUIT_FLOW
+                        ORDER BY
+                        CREATE_TIME DESC
+                    ) RN
+                FROM
+                    RES_SCORE S
+                WHERE
+                    RECORD_STATUS = 'Y'
+                AND SCORE_TYPE_ID = 'PublicScore'
+                AND EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        JSRES_GRADUATION_APPLY A
+                    WHERE
+                        A.RECORD_STATUS = 'Y'
+                    <if test="applyYear != null and applyYear != ''">
+                        AND A.APPLY_YEAR = #{applyYear}
+                    </if>
+                    AND A.RECRUIT_FLOW = S.RECRUIT_FLOW
+                )
+            )
+            WHERE
+                RN = 1
+        ) SCORE ON SCORE.Recruit_Flow = DR.RECRUIT_FLOW
         LEFT JOIN GRADUATION_DOCTOR_TEMP GDT
         ON GDT.DOCTOR_FLOW = RD.DOCTOR_FLOW
         AND GDT.RECORD_STATUS = 'Y'
@@ -1186,10 +1221,46 @@
         ON DR.ORG_FLOW = SO.ORG_FLOW
         INNER JOIN SYS_USER SU
         ON RD.DOCTOR_FLOW = SU.USER_FLOW
-        LEFT JOIN RES_SCORE SCORE
-        ON SCORE.Recruit_Flow = DR.RECRUIT_FLOW
-        AND SCORE.SCORE_TYPE_ID = 'PublicScore'
-        AND SCORE.RECORD_STATUS='Y'
+        LEFT JOIN (
+            SELECT
+                SCORE_FLOW,
+                DOCTOR_FLOW,
+                RECRUIT_FLOW,
+                SKILL_SCORE,
+                RN
+            FROM
+            (
+                SELECT
+                    SCORE_FLOW,
+                    DOCTOR_FLOW,
+                    RECRUIT_FLOW,
+                    SKILL_SCORE,
+                    ROW_NUMBER () OVER (
+                        PARTITION BY RECRUIT_FLOW
+                        ORDER BY
+                        CREATE_TIME DESC
+                    ) RN
+                FROM
+                    RES_SCORE S
+                WHERE
+                    RECORD_STATUS = 'Y'
+                AND SCORE_TYPE_ID = 'PublicScore'
+                AND EXISTS (
+                    SELECT
+                        1
+                    FROM
+                        JSRES_GRADUATION_APPLY A
+                    WHERE
+                        A.RECORD_STATUS = 'Y'
+                    <if test="applyYear != null and applyYear != ''">
+                        AND A.APPLY_YEAR = #{applyYear}
+                    </if>
+                    AND A.RECRUIT_FLOW = S.RECRUIT_FLOW
+                )
+            )
+            WHERE
+            RN = 1
+        ) SCORE ON SCORE.Recruit_Flow = DR.RECRUIT_FLOW
         LEFT JOIN GRADUATION_DOCTOR_TEMP GDT
         ON GDT.DOCTOR_FLOW = RD.DOCTOR_FLOW
         AND GDT.RECORD_STATUS = 'Y'
