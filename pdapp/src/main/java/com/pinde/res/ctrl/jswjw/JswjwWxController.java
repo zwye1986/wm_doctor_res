@@ -28,6 +28,7 @@ import com.pinde.res.dao.jswjw.ext.JsResUserBalckListExtMapper;
 import com.pinde.core.common.sci.dao.TempMapper;
 import com.pinde.sci.util.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.dom4j.Document;
@@ -38,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -73,6 +76,8 @@ public class JswjwWxController extends GeneralController {
 //    private static String appId = "wx85a06561c53844ee";
 //    private static String secret = "9b8decc6ab8cda83f56b915803e7ec9b";
 
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private IResLiveTrainingBiz resLiveTrainingBiz;
     @Autowired
@@ -8000,10 +8005,20 @@ public class JswjwWxController extends GeneralController {
                         afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
                     }
                 }
-                //完成比例与审核比例
-//                List<JsresDoctorDeptDetail> details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
-                // 查询定时任务统计好的数据比例信息
-                List<JsresDoctorDeptDetail> details = jswjwBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
+                String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
+                if(StringUtils.isEmpty(exeMethodInRedis)) {
+                    exeMethodInRedis = ExeMethod.SQL.getValue();
+                }
+                List<JsresDoctorDeptDetail> details;
+                if(ExeMethod.JOB.getValue().equals(exeMethodInRedis)) {
+                    // 查询定时任务统计好的数据比例信息
+                    details = jswjwBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
+                }else if(ExeMethod.SQL.getValue().equals(exeMethodInRedis)){
+                    //完成比例与审核比例
+                    details = jswjwBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                }else {
+                    details = jswjwBiz.deptDoctorAllWorkDetailByNow_new(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                }
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;

@@ -2,7 +2,7 @@
 <%@ tag body-content="scriptless" pageEncoding="UTF-8"%>
 <%@ attribute name="toPage" required="true" %>
 <script type="text/javascript">
-<!--
+// <!--
 function topage(page){
 	if(parseInt(page)>parseInt('${pageView.totalpage}')){
 		jboxTip("已至最后一页!");

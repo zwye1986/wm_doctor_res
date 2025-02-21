@@ -4,6 +4,7 @@ import com.pinde.core.common.enums.RecDocCategoryEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.inx.INoticeBiz;

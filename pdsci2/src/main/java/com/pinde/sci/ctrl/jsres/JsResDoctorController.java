@@ -14,6 +14,7 @@ import com.pinde.core.common.sci.dao.SchRotationDeptMapper;
 import com.pinde.core.jspform.ItemGroupData;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.core.util.*;
 import com.pinde.sci.biz.jsres.*;
 import com.pinde.sci.biz.jszy.IJszyDoctorAuthBiz;
@@ -54,6 +55,8 @@ import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -167,7 +170,7 @@ public class JsResDoctorController extends GeneralController {
     @Autowired
     private ISchRotationBiz schRotationtBiz;
     @Autowired
-    private IResOrgSpeAssignBiz speAssignBiz;
+    private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private IJszyDoctorReductionBiz reductionBiz;
     @Autowired
@@ -7050,10 +7053,24 @@ public class JsResDoctorController extends GeneralController {
                         afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
                     }
                 }
-                //完成比例与审核比例
-//                List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
-                // 查询定时任务统计好的数据比例信息
-                List<JsresDoctorDeptDetail> details = resultBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
+
+                String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
+                if(StringUtils.isEmpty(exeMethodInRedis)) {
+                    exeMethodInRedis = ExeMethod.SQL.getValue();
+                }
+                List<JsresDoctorDeptDetail> details;
+                if(ExeMethod.JOB.getValue().equals(exeMethodInRedis)) {
+                    // 查询定时任务统计好的数据比例信息
+                     details = resultBiz.searchDeptDoctorAllWorkDetailList(recruit.getRotationFlow(), doctorFlow, applyYear);
+                }else if(ExeMethod.SQL.getValue().equals(exeMethodInRedis)){
+                    //完成比例与审核比例
+                     details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+                }else {
+                    details = resultBiz.deptDoctorAllWorkDetailByNow_new(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+
+                }
+
+
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
                     int isShortN = 0;
@@ -8168,8 +8185,18 @@ public class JsResDoctorController extends GeneralController {
 
         Map<String, Object> avgBiMap = new HashMap<>();
         if (jsresGraduationApply == null) {
+            List<JsresDoctorDeptDetail> details = new ArrayList<>();
             //完成比例与审核比例
-            List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+            String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
+            if(StringUtils.isEmpty(exeMethodInRedis)) {
+                exeMethodInRedis = ExeMethod.SQL.getValue();
+            }
+            if(ExeMethod.SQL.getValue().equals(exeMethodInRedis)){
+                details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+            }else {
+                details = resultBiz.deptDoctorAllWorkDetailByNow_new(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
+            }
+//            List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
             if (details != null && details.size() > 0) {
                 int isShortY = 0;
                 int isShortN = 0;

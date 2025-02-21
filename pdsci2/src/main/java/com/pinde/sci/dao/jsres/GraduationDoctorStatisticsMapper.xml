@@ -163,9 +163,9 @@
             R.SPE_NAME,
             COUNT (DISTINCT R.DOCTOR_FLOW) AS GRADUATION_NUM,
             COUNT (A.DOCTOR_FLOW) AS APPLY_NUM,
-            COUNT (A.LOCAL_AUDIT_NUM) AS LOCAL_AUDIT_NUM,
-            COUNT (A.CITY_AUDIT_NUM) AS CITY_AUDIT_NUM,
-            COUNT (A.GLOBAL_AUDIT_NUM) AS GLOBAL_AUDIT_NUM
+            NVL (MAX (A.LOCAL_AUDIT_NUM),0) AS LOCAL_AUDIT_NUM,
+            NVL (MAX (A.CITY_AUDIT_NUM),0) AS CITY_AUDIT_NUM,
+            NVL (MAX (A.GLOBAL_AUDIT_NUM),0) AS GLOBAL_AUDIT_NUM
         FROM
             RES_DOCTOR_RECRUIT R
         LEFT JOIN (
@@ -387,7 +387,7 @@
             SELECT
                 DOCTOR_FLOW,
                 MAX(TEST_ID) AS TEST_ID,
-                COUNT (1) AS APPLY_NUM,
+                COUNT (DISTINCT DOCTOR_FLOW) AS APPLY_NUM,
                 COUNT (
                     DISTINCT CASE
                     WHEN LOCAL_AUDIT_STATUS_ID = 'Passed' THEN
@@ -696,9 +696,9 @@
             O.ORG_NAME,
             COUNT (DISTINCT R.DOCTOR_FLOW) AS GRADUATION_NUM,
             COUNT (A.DOCTOR_FLOW) AS APPLY_NUM,
-            COUNT (A.LOCAL_AUDIT_NUM) AS LOCAL_AUDIT_NUM,
-            COUNT (A.CITY_AUDIT_NUM) AS CITY_AUDIT_NUM,
-            COUNT (A.GLOBAL_AUDIT_NUM) AS GLOBAL_AUDIT_NUM
+            NVL (MAX (A.LOCAL_AUDIT_NUM),0) AS LOCAL_AUDIT_NUM,
+            NVL (MAX (A.CITY_AUDIT_NUM),0) AS CITY_AUDIT_NUM,
+            NVL (MAX (A.GLOBAL_AUDIT_NUM),0) AS GLOBAL_AUDIT_NUM
         FROM
             RES_DOCTOR_RECRUIT R
         LEFT JOIN (
@@ -912,7 +912,7 @@
             SELECT
                 DOCTOR_FLOW,
                 MAX(TEST_ID) AS TEST_ID,
-                COUNT (1) AS APPLY_NUM,
+                COUNT (DISTINCT DOCTOR_FLOW) AS APPLY_NUM,
                 COUNT (
                     DISTINCT CASE
                     WHEN LOCAL_AUDIT_STATUS_ID = 'Passed' THEN

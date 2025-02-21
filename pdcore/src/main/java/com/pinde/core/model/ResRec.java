@@ -1,6 +1,12 @@
 package com.pinde.core.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName("res_rec")
 public class ResRec implements java.io.Serializable {
+    @TableId
     private String recFlow;
 
     private String orgFlow;
@@ -98,6 +104,7 @@ public class ResRec implements java.io.Serializable {
     /**
      * 查询类型 ：2 教学活动
      */
+    @TableField(exist = false)
     private String queryType;
 
     public String getQueryType() {

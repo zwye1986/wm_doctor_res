@@ -1,6 +1,11 @@
 package com.pinde.core.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+@TableName("sch_doctor_dept")
 public class SchDoctorDept implements java.io.Serializable {
+    @TableId
     private String recordFlow;
 
     private String doctorFlow;

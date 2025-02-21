@@ -1,8 +1,12 @@
 package com.pinde.core.model;
 
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.math.BigDecimal;
+@TableName("sch_arrange_result")
 public class SchArrangeResult implements java.io.Serializable {
+    @TableId
     private String resultFlow;
 
     private String arrangeFlow;

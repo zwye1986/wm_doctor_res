@@ -833,4 +833,6 @@ public interface IJswjwBiz {
 	 * @Date 2025/2/18
 	 */
 	List<JsresDoctorDeptDetail> searchDeptDoctorAllWorkDetailList(String rotationFlow, String doctorFlow, String applyYear);
+
+	List<JsresDoctorDeptDetail> deptDoctorAllWorkDetailByNow_new(String recruitFlow, String doctorFlow, String applyYear, String rotationFlow);
 }
