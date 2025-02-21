@@ -50,8 +50,8 @@
         FROM
             RES_DOCTOR_RECRUIT R
         LEFT JOIN JSRES_GRADUATION_APPLY A ON A.RECRUIT_FLOW = R.RECRUIT_FLOW
-            AND A.RECORD_STATUS = 'Y'
-            AND A.APPLY_YEAR = #{applyYear},
+        AND A.RECORD_STATUS = 'Y'
+        AND A.APPLY_YEAR = #{applyYear},
             RES_DOCTOR D
         WHERE
             R.DOCTOR_FLOW = D.DOCTOR_FLOW
@@ -117,6 +117,7 @@
                     WHERE
                         S.RECORD_STATUS = 'Y'
                     AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                    AND S.SESSION_NUMBER = R.SESSION_NUMBER
                     AND (
                         S.SCORE_PHASE_ID != #{applyYear}
                         OR S.TEST_ID = A.TEST_ID
@@ -271,6 +272,7 @@
                     WHERE
                         S.RECORD_STATUS = 'Y'
                     AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                    AND S.SESSION_NUMBER = R.SESSION_NUMBER
                     AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
                     AND (
                         S.SCORE_PHASE_ID != #{applyYear}
@@ -493,6 +495,7 @@
                             WHERE
                                 S.RECORD_STATUS = 'Y'
                             AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                            AND S.SESSION_NUMBER = R.SESSION_NUMBER
                             AND (
                                 S.SCORE_PHASE_ID != #{applyYear}
                                 OR S.TEST_ID = A.TEST_ID
@@ -512,6 +515,7 @@
                         WHERE
                             S.RECORD_STATUS = 'Y'
                         AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                        AND S.SESSION_NUMBER = R.SESSION_NUMBER
                         AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
                         AND (
                             S.SCORE_PHASE_ID != #{applyYear}
@@ -650,6 +654,7 @@
                     WHERE
                         S.RECORD_STATUS = 'Y'
                     AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                    AND S.SESSION_NUMBER = R.SESSION_NUMBER
                     AND (
                         S.SCORE_PHASE_ID != #{applyYear}
                         OR S.TEST_ID = A.TEST_ID
@@ -796,6 +801,7 @@
                     WHERE
                         S.RECORD_STATUS = 'Y'
                     AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                    AND S.SESSION_NUMBER = R.SESSION_NUMBER
                     AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
                     AND (
                         S.SCORE_PHASE_ID != #{applyYear}
@@ -1012,6 +1018,7 @@
                             WHERE
                                 S.RECORD_STATUS = 'Y'
                             AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                            AND S.SESSION_NUMBER = R.SESSION_NUMBER
                             AND (
                                 S.SCORE_PHASE_ID != #{applyYear}
                                 OR S.TEST_ID = A.TEST_ID
@@ -1031,6 +1038,7 @@
                         WHERE
                             S.RECORD_STATUS = 'Y'
                         AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                        AND S.SESSION_NUMBER = R.SESSION_NUMBER
                         AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
                         AND (
                             S.SCORE_PHASE_ID != #{applyYear}
@@ -1227,6 +1235,7 @@
                                 WHERE
                                     S.RECORD_STATUS = 'Y'
                                 AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                                AND S.SESSION_NUMBER = R.SESSION_NUMBER
                                 AND (
                                     S.SCORE_PHASE_ID != #{applyYear}
                                     OR EXISTS (
@@ -1260,6 +1269,7 @@
                             WHERE
                                 S.RECORD_STATUS = 'Y'
                             AND S.DOCTOR_FLOW = D.DOCTOR_FLOW
+                            AND S.SESSION_NUMBER = R.SESSION_NUMBER
                             AND S.SCORE_TYPE_ID IN ('SkillScore', 'TheoryScore')
                             AND (
                                 S.SCORE_PHASE_ID != #{applyYear}
