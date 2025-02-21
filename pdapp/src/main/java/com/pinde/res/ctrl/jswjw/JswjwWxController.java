@@ -7129,7 +7129,7 @@ public class JswjwWxController extends GeneralController {
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         // 在培
-//		recruit.setDoctorStatusId("20");
+		recruit.setDoctorStatusId("20");
         List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
 
         if (recruitList != null && !recruitList.isEmpty()) {

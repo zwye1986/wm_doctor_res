@@ -5798,7 +5798,7 @@ public class JsResDoctorController extends GeneralController {
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         // 在培
-//		recruit.setDoctorStatusId("20");
+		recruit.setDoctorStatusId("20");
         List<com.pinde.core.model.ResDoctorRecruit> recruitList = jsResDoctorRecruitBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
 
         if (recruitList != null && !recruitList.isEmpty()) {
