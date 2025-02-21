@@ -5948,10 +5948,10 @@ public class JsResDoctorController extends GeneralController {
             }
             model.addAttribute("practicingMap", practicingMap);
             //结业考核年份不空且小于当前年份的
-            if (recruit != null && StringUtil.isNotBlank(recruit.getGraduationYear()) && recruit.getGraduationYear().compareTo(applyYear) < 0) {
-                applyYear = recruit.getGraduationYear();
-            }
-            JsresGraduationApply jsresGraduationApply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, "");
+//            if (recruit != null && StringUtil.isNotBlank(recruit.getGraduationYear()) && recruit.getGraduationYear().compareTo(applyYear) < 0) {
+//                applyYear = recruit.getGraduationYear();
+//            }
+            JsresGraduationApply jsresGraduationApply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, applyYear);
             //保存医师培训时间
             if (recruit != null) {
                 String endTime = "";
