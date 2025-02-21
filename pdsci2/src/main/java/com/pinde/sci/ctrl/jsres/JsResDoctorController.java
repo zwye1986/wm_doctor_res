@@ -7069,7 +7069,7 @@ public class JsResDoctorController extends GeneralController {
                     details = resultBiz.deptDoctorAllWorkDetailByNow_new(recruit.getRecruitFlow(), doctorFlow, applyYear, recruit.getRotationFlow());
 
                 }
-
+                model.addAttribute("exeMethodInRedis", exeMethodInRedis);
 
                 if (details != null && details.size() > 0) {
                     int isShortY = 0;
