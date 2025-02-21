@@ -16,7 +16,7 @@ public class LicenseKey {
     private static final String VALID_DATE = "validDate";//到期时间
     private static final String WORK_STATION = "workStation";
 
-    private static String machineId = "a65757cd-76b3-3fef-95a5-81d090f4563a";
+    private static String machineId = "17a567b5-66de-3c0e-9dfa-d7057a171773";
     private static String issueDate = "2014-04-01";
     private static String validDate = "2014-04-30";
     private static String workStation = "";
@@ -34,7 +34,7 @@ public class LicenseKey {
         issueDate = "issueDate=" + StringEscapeUtils.escapeJava("2021-01-01");
 
         String machineId = "";
-        machineId = "machineId=" + StringEscapeUtils.escapeJava("ce5fa786-f295-329b-889b-826e86539285");
+        machineId = "machineId=" + StringEscapeUtils.escapeJava("17a567b5-66de-3c0e-9dfa-d7057a171773");
         String workStationId = "";
 //        workStationId = "workStation=" + StringEscapeUtils.escapeJava("srm,edc,gcp,irb,sch,edu,njmuedu,erp,exam,res,test,fstu,cmis,osca,lcjn,eval,zsey,zseylcjn,portals,study");
         workStationId = "workStation=" + StringEscapeUtils.escapeJava("res,osca,portals");
@@ -75,11 +75,11 @@ public class LicenseKey {
                 "YuUJ58vXtz4xnKT2J23OdkGj92enXnRbZqIY5+4j+cVsdYXA9ip5A8Xq2LMtzyrb\n" +
                 "fVuC4/YHAABl8Hgl\n" +
                 "=6baZ\n" +
-                "-----END PGP MESSAGE-----");*/
+                "-----END PGP MESSAGE-----");
         getMachineId();
         checkValid();
         System.out.println("score1".substring(5));
-        System.out.println("11score1".indexOf("score"));
+        System.out.println("11score1".indexOf("score"));*/
     }
 
     public static byte[] calculatePublicKeyRingDigest(byte[] publicKeyRing) {

@@ -7025,8 +7025,9 @@ public class JswjwWxController extends GeneralController {
         }
         // 学员本轮规培内，当前年-首次有成绩（即非“缺考”）的年份，小于3年
         boolean hasFirstExamRecord = false;
+        String sessionNumber = resDoctorRecruit.getSessionNumber();
         List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
-        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString())))).collect(Collectors.toList());
+        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString()))) && (e.getSessionNumber() != null && sessionNumber.equals(e.getSessionNumber()))).collect(Collectors.toList());
         for (ResScore resScore : scoreList) {
             if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) > 0) {
                 hasFirstExamRecord = true;
@@ -7128,7 +7129,7 @@ public class JswjwWxController extends GeneralController {
         recruit.setDoctorFlow(doctorFlow);
         recruit.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
         // 在培
-//		recruit.setDoctorStatusId("20");
+		recruit.setDoctorStatusId("20");
         List<com.pinde.core.model.ResDoctorRecruit> recruitList = jswjwBiz.searchResDoctorRecruitList(recruit, "CREATE_TIME DESC");
 
         if (recruitList != null && !recruitList.isEmpty()) {
@@ -7401,8 +7402,9 @@ public class JswjwWxController extends GeneralController {
                 isActualGraduate = true;
             }
             // 结业成绩是否符合规范
+            String sessionNumber = recruit.getSessionNumber();
             List<ResScore> resScoreList = jswjwBiz.selectAllScore(sysUser.getUserFlow(), null);
-            List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString())))).collect(Collectors.toList());
+            List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString()))) && (e.getSessionNumber() != null && sessionNumber.equals(e.getSessionNumber()))).collect(Collectors.toList());
             boolean isScoreValidate = false;
             if (CollectionUtils.isEmpty(scoreList) || CollectionUtils.isNotEmpty(tempList)) {
                 isScoreValidate = true;
@@ -8368,12 +8370,13 @@ public class JswjwWxController extends GeneralController {
             assiInStudy = false;
         }
         // 学员本轮规培内，当前年-首次有成绩（即非“缺考”）的年份，小于3年
-        boolean hasFirstExamRecord = false;
+        boolean hasFirstExamRecord = true;
+        String sessionNumber = resDoctorRecruit.getSessionNumber();
         List<ResScore> resScoreList = jswjwBiz.selectAllScore(user.getUserFlow(), null);
-        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString())))).collect(Collectors.toList());
+        List<ResScore> scoreList = resScoreList.stream().filter(e -> ("SkillScore".equals(e.getScoreTypeId()) || "TheoryScore".equals(e.getScoreTypeId())) && ((e.getTheoryScore() != null && !"2".equals(e.getTheoryScore().toString())) || (e.getSkillScore() != null && !"2".equals(e.getSkillScore().toString()))) && (e.getSessionNumber() != null && sessionNumber.equals(e.getSessionNumber()))).collect(Collectors.toList());
         for (ResScore resScore : scoreList) {
-            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) > 0) {
-                hasFirstExamRecord = true;
+            if (resScore.getScorePhaseId().compareTo(String.valueOf(Integer.parseInt(currYear) - 3)) <= 0) {
+                hasFirstExamRecord = false;
                 break;
             }
         }
