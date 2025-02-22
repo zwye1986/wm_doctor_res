@@ -3,6 +3,7 @@ package com.pinde.core.common;
 public class GlobalConstant {
 
     public static final String exeMethod = "exeMethod";
+    public static final String WX_APPID = "wx_appid";
 
     public static final String RECORD_STATUS_Y = com.pinde.core.common.GlobalConstant.FLAG_Y;
     public static final String RECORD_STATUS_N = com.pinde.core.common.GlobalConstant.FLAG_N;

@@ -2209,7 +2209,7 @@
         INFO.OPINION,
         INFO.MANUAL_END_STATUS,
         INFO.MANUAL_END_TIEM,
-        INFO.JOIN_NUM,
+        to_char(INFO.JOIN_NUM) as JOIN_NUM,
         INFO.ADD_ROLE_FLOW,
         INFO.AUDIT_ROLE_FLOW,
         INFO.ROLE_ID,
@@ -2227,8 +2227,9 @@
         SU.USER_NAME,
         D.DEPT_NAME,
         RESULT.EVAL_SCORE,
-        F.FILE_NAME,RESULT.SCAN_NUM,
-        RESULT2.REGIEST_NUM
+        F.FILE_NAME,
+        to_char(RESULT.SCAN_NUM) as SCAN_NUM,
+        to_char(RESULT2.REGIEST_NUM) as REGIEST_NUM
 
         <if test="roleFlag=='doctor'.toString()">
             ,R.RESULT_FLOW,R.IS_REGIEST,R.IS_SCAN,R.IS_SCAN2,R.EVAL_SCORE EVAL_SCORE2,R.IS_EFFECTIVE IS_EFFECTIVE2

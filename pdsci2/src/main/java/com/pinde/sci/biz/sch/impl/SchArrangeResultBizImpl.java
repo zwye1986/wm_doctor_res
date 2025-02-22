@@ -1423,20 +1423,21 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		});
 
 		Map<String, Integer> reqNumMap = new HashMap<>();
-		Map<String, List<SchRotationDept>> rotationOrgMap = schRotationDepts.stream().collect(Collectors.groupingBy(vo->vo.getRotationFlow()+","+vo.getOrgFlow()+","+vo.getGroupFlow()));
+		Map<String, List<SchRotationDept>> rotationOrgMap = schRotationDepts.stream().collect(Collectors.groupingBy(vo->vo.getRotationFlow()+","+vo.getGroupFlow()));
 		rotationOrgMap.forEach((key, value) -> {
 			LambdaQueryWrapper<SchDoctorDept> schDoctorDeptLambdaQueryWrapper = new LambdaQueryWrapper<>();
 			String[] keys = key.split(",");
 			schDoctorDeptLambdaQueryWrapper.eq(SchDoctorDept::getRecordStatus, "Y")
 					.eq(SchDoctorDept::getRotationFlow, keys[0])
 					.eq(SchDoctorDept::getDoctorFlow, doctorFlow)
-					.eq(SchDoctorDept::getOrgFlow, keys[1]).eq(SchDoctorDept::getGroupFlow, keys[2]);
+					.eq(SchDoctorDept::getGroupFlow, keys[1]);
 			List<SchDoctorDept> schDoctorDepts = schDoctorDeptMapper.selectList(schDoctorDeptLambdaQueryWrapper);
 			Map<String, List<SchDoctorDept>> rotationOrgMap2 = schDoctorDepts.stream().collect(Collectors.groupingBy(vo -> vo.getRotationFlow()  ));
 			Map<String, List<SchRotationDeptReq>> reqDeptNumMap = schRotationDeptReqs.stream()
 					.collect(Collectors.groupingBy(vo -> vo.getRotationFlow()));
 			Map<String, List<SchRotationDept>> rotationOrgDeptMap2 = schRotationDepts.stream().collect(Collectors.groupingBy(vo -> vo.getRotationFlow()  ));
 			resDoctorRecruits.stream().forEach(vo -> {
+				//减免的情况
 				if("DoctorTrainingSpe".equals(vo.getCatSpeId()) && "2015".compareTo(vo.getSessionNumber()) <= 0
 						&& (com.pinde.core.common.enums.JsResTrainYearEnum.OneYear.getId().equals(vo.getTrainYear()) || com.pinde.core.common.enums.JsResTrainYearEnum.TwoYear.getId().equals(vo.getTrainYear()))) {
 					List<SchDoctorDept> list = rotationOrgMap2.get(vo.getRotationFlow()  );
@@ -1456,12 +1457,15 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							String[] key3Arr = key3.split(",");
 							if(map2.containsKey(key3Arr[1] +","+key3Arr[2])) {
 								List<SchDoctorDept> schDoctorDeptList1 = map2.get(key3Arr[1] +","+key3Arr[2]);
+								//减免后的月份
 								String schMonth = schDoctorDeptList1.get(0).getSchMonth();
+								//减免前的月份
 								String schMonth2 = value3.get(0).getSchMonth();
 								Map<String, List<SchRotationDeptReq>> rotationReq2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo3 -> vo3.getRotationFlow() + vo3.getRelRecordFlow() + vo3.getStandardDeptId()));
 								List<SchRotationDeptReq> schRotationDeptReqs2 = rotationReq2.get(vo.getRotationFlow() + key3Arr[0] + key3Arr[2]);
-								if(StringUtils.isNotEmpty(schMonth) && StringUtils.isNotEmpty(schMonth2) && CollectionUtils.isNotEmpty(schRotationDeptReqs2)) {
-									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], Math.round(Float.parseFloat(schMonth2) / Float.parseFloat(schMonth2) * Float.parseFloat(schRotationDeptReqs2.get(0).getReqNum().toString())));
+								BigDecimal reqNum = schRotationDeptReqs2.stream().filter(vo3 -> vo3.getReqNum() != null).map(vo3 -> vo3.getReqNum()).reduce(BigDecimal.ZERO, (vo1, vo2) -> BigDecimal.ZERO.add(vo1).add(vo2));
+								if(StringUtils.isNotEmpty(schMonth) && StringUtils.isNotEmpty(schMonth2) && reqNum != null) {
+									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], Math.round(Float.parseFloat(schMonth) / Float.parseFloat(schMonth2) * Float.parseFloat(reqNum.toString())));
 								}else {
 									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], 0);
 								}
@@ -1483,7 +1487,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 		});
 
 		//
-		Map<String, List<ResRec>> resRecMap = resRecs.stream().collect(Collectors.groupingBy(vo -> vo.getOrgFlow() + vo.getSchRotationDeptFlow()));
+		Map<String, List<ResRec>> resRecMap = resRecs.stream().collect(Collectors.groupingBy(vo -> vo.getSchRotationDeptFlow()));
 		Map<String, List<Map<String, String>>> icMap = icList.stream().collect(Collectors.groupingBy(map -> map.get("DOCTOR_FLOW") + map.get("ROTATION_FLOW") + map.get("RECORD_FLOW")));
 		List<JsresDoctorDeptDetail> jsresDoctorWorkDetails = new ArrayList<>();
 		resDoctorRecruits.forEach(rd -> {
@@ -1509,7 +1513,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				jsresDoctorDeptDetail.setSchMonth(srd.getSchMonth());
 				jsresDoctorDeptDetail.setOrgFlow(rd.getOrgFlow());
 				jsresDoctorDeptDetail.setOrgName(rd.getOrgName());
-				List<ResRec> resRecs1 = resRecMap.getOrDefault(rd.getOrgFlow() + srd.getRecordFlow(), new ArrayList<>());
+				List<ResRec> resRecs1 = resRecMap.getOrDefault( srd.getRecordFlow(), new ArrayList<>());
 				jsresDoctorDeptDetail.setCompleteNum(String.valueOf(resRecs1.size()));
                 Integer inCompleteNum = rotationDeptInCompleteNumMap.getOrDefault(srd.getRecordFlow(), 0);
 				jsresDoctorDeptDetail.setInCompleteNum(String.valueOf(inCompleteNum));
