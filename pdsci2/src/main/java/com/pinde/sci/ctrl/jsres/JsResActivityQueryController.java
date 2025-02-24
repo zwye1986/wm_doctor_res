@@ -282,7 +282,7 @@ public class JsResActivityQueryController extends GeneralController {
 		HSSFSheet sheet = wb.createSheet("sheet1");
 		//第一行
 		HSSFRow row = sheet.createRow(0);
-		String[] titles = new String[]{"活动名称","活动形式","活动地点","主讲人","用户名","实际主讲人","所在科室","活动开始时间","活动结束时间","报名人数","签到人数","评价","是否认可","是否有照片",""};
+		String[] titles = new String[]{"活动名称","活动形式","活动地点","主讲人","用户名","实际主讲人","所在科室","活动开始时间","活动结束时间","报名人数","签到人数","评价","是否认可","是否有照片","是否有附件","附件上传时间",""};
 		HSSFCell cellTitle = null;
 		for (int i = 0; i < titles.length; i++) {
 			cellTitle = row.createCell(i);
@@ -322,6 +322,21 @@ public class JsResActivityQueryController extends GeneralController {
 					}
 					imageList = activityBiz.parseImageXml(elem.asXML());
 				}
+
+				if(!"doctor".equals(roleFlag))
+				{
+					//查询附件
+					List<PubFile> fileList = fileBiz.findFileByTypeFlow("activity", (String) map.get("activityFlow"));
+					map.put("fileFlag", (fileList != null && fileList.size() > 0 ? "是" : "否"));
+					if(CollectionUtils.isNotEmpty(fileList)){
+						map.put("uploadFileTime",fileList.stream().map(
+								file ->{
+									return DateUtil.transDate(file.getCreateTime(), "yyyy-MM-dd HH:mm:ss");
+								}
+						).collect(Collectors.joining(";")));
+					}
+				}
+
 				HSSFRow rowOne = sheet.createRow(rowNum);
 				dataList = new String[]{
 						(String)map.get("activityName"),
@@ -337,7 +352,9 @@ public class JsResActivityQueryController extends GeneralController {
 						(String)map.get("scanNum"),
 						(String)map.get("evalScore"),
 						(String)map.get("effectiveName"),
-						(String)map.get("HaveImg")
+						(String)map.get("HaveImg"),
+						(String)map.get("fileFlag"),
+						(String)map.get("uploadFileTime")
 				};
 				for (int j = 0; j < titles.length; j++) {
 					HSSFCell cellFirst = rowOne.createCell(j);
