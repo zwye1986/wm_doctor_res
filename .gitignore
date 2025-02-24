@@ -16,3 +16,4 @@ gen
 *.lst
 .gitlab-ci.yml
 *.LicenseKey.java
+rebel.xml

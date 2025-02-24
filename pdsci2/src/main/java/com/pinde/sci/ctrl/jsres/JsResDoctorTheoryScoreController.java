@@ -1,8 +1,10 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
+import com.pinde.core.common.sci.dao.ResJointOrgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
 import com.pinde.core.util.DateUtil;
@@ -25,6 +27,7 @@ import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResTestConfig;
+import org.apache.commons.collections4.CollectionUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -62,7 +65,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     @Autowired
     private IResDoctorBiz resDoctorBiz;
     @Autowired
-    private IPubUserResumeBiz userResumeBiz;
+    private ResJointOrgMapper resJointOrgMapper;
     @Autowired
     private OrgBizImpl orgBiz;
     @Autowired
@@ -2255,7 +2258,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     public String auditList(Model model,String roleFlag,Integer currentPage ,HttpServletRequest request, String orgFlow,String trainingTypeId,
                             String trainingSpeId,String datas[], String sessionNumber, String graduationYear,String qualificationMaterialId,
                             String passFlag, String userName,String idNo, String completeBi,String auditBi,String auditStatusId,String testId,
-                            String isNotMatch,String applyYear,String tabTag,String joinOrgFlow,String isPostpone, String tempDoctorFlag
+                            String isNotMatch,String applyYear,String tabTag,String isPostpone, String tempDoctorFlag
     ){
         SysUser currentUser = GlobalContext.getCurrentUser();
 //        SysOrg currentOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
@@ -2264,28 +2267,12 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         Map<String,Object> param = new HashMap<>();
         List<String> orgFlowList = new ArrayList();
 //        List<String> jointOrgFlowList = new ArrayList();
-        SysOrg org = orgBiz.readSysOrg(orgFlow);
-        // 助理全科不区分主协
-        if("AssiGeneral".equals(trainingTypeId)){
-            joinOrgFlow = currentUser.getOrgFlow();
-        }else{
-            if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
-                orgFlowList.add(orgFlow);
-                if(StringUtil.isNotBlank(joinOrgFlow) && orgFlow.equals(joinOrgFlow)) {
-                    joinOrgFlow = "isNull";
-                }
-            }else{
-                List<ResJointOrg> jointOrgList = jointOrgBiz.selectByJointOrgFlow(orgFlow);
-                if(null != jointOrgList && jointOrgList.size()>0){
-                    if("DoctorTrainingSpe".equals(trainingTypeId)) {
-                        orgFlowList.add(jointOrgList.get(0).getOrgFlow());
-                        joinOrgFlow = jointOrgList.get(0).getJointOrgFlow();
-                    }else{
-                        orgFlowList.add(jointOrgList.get(0).getJointOrgFlow());
-                        joinOrgFlow = jointOrgList.get(0).getJointOrgFlow();
-                    }
-                }
-            }
+        orgFlowList.add(orgFlow);
+        LambdaQueryWrapper<ResJointOrg> resJointOrgLambdaQueryWrapper = new LambdaQueryWrapper();
+        resJointOrgLambdaQueryWrapper.eq(ResJointOrg::getOrgFlow, orgFlow).eq(ResJointOrg::getRecordStatus,"Y");
+        List<ResJointOrg> jointOrgList = resJointOrgMapper.selectList(resJointOrgLambdaQueryWrapper);
+        if(CollectionUtils.isNotEmpty(jointOrgList)) {
+            jointOrgList.stream().forEach(e -> orgFlowList.add(e.getJointOrgFlow()));
         }
 //        param.put("jointOrgFlowList",jointOrgFlowList);//协同基地
         List<String>docTypeList=new ArrayList<String>();//人员类型
@@ -2327,7 +2314,6 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
             }
         }
         param.put("orgFlowList",orgFlowList);//培训基地
-        param.put("jointOrgFlow",joinOrgFlow);
         param.put("isJointOrg",isJointOrg);
 
         PageHelper.startPage(currentPage,getPageSize(request));

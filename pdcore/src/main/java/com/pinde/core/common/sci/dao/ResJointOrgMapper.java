@@ -1,12 +1,13 @@
 package com.pinde.core.common.sci.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pinde.core.model.ResJointOrg;
 import com.pinde.core.model.ResJointOrgExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface ResJointOrgMapper {
+public interface ResJointOrgMapper extends BaseMapper<ResJointOrg> {
     int countByExample(ResJointOrgExample example);
 
     int deleteByExample(ResJointOrgExample example);

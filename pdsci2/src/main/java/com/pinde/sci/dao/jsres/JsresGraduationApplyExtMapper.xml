@@ -1485,12 +1485,12 @@
         <if test="orgFlow!=null and orgFlow!=''">
             AND DR.org_flow = #{orgFlow}
         </if>
-        <if test="jointOrgFlow!=null and jointOrgFlow!='' and jointOrgFlow != 'isNull'.toString()">
+        <!--<if test="jointOrgFlow!=null and jointOrgFlow!='' and jointOrgFlow != 'isNull'.toString()">
             AND DR.joint_org_flow = #{jointOrgFlow}
         </if>
         <if test="jointOrgFlow!=null and jointOrgFlow!='' and jointOrgFlow == 'isNull'.toString()">
             AND DR.joint_org_flow is null
-        </if>
+        </if>-->
         <!--<if test="orgFlowList!=null and orgFlowList.size>0 and isJointOrg == 'Y'.toString()">
             and DR.joint_org_flow in
             <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
