@@ -33,6 +33,7 @@ import com.pinde.core.model.SchArrangeResult;
 import com.pinde.core.model.SchRotationDept;
 import com.pinde.core.model.SchRotationGroup;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -2141,6 +2142,8 @@ public class JsResTeacherController extends GeneralController{
 				List<ResRec> recs= iResRecBiz.searchRecAuditByProcessWithBLOBs(recTypes,processFlow,operUser.getUserFlow());
 			for (ResRec resRec : recs) {
 				String content=resRec.getRecContent();
+				content = StringEscapeUtils.unescapeHtml4(content);
+				content = content.replaceAll("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]", "");
 				Document document=DocumentHelper.parseText(content);
 				Element root=document.getRootElement();
 				Element ec = root.element("activity_way");

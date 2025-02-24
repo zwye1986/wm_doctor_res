@@ -1463,14 +1463,22 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								String schMonth2 = value3.get(0).getSchMonth();
 								Map<String, List<SchRotationDeptReq>> rotationReq2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo3 -> vo3.getRotationFlow() + vo3.getRelRecordFlow() + vo3.getStandardDeptId()));
 								List<SchRotationDeptReq> schRotationDeptReqs2 = rotationReq2.get(vo.getRotationFlow() + key3Arr[0] + key3Arr[2]);
-								BigDecimal reqNum = schRotationDeptReqs2.stream().filter(vo3 -> vo3.getReqNum() != null).map(vo3 -> vo3.getReqNum()).reduce(BigDecimal.ZERO, (vo1, vo2) -> BigDecimal.ZERO.add(vo1).add(vo2));
+								BigDecimal reqNum;
+								if(CollectionUtils.isEmpty(schRotationDeptReqs2)) reqNum = BigDecimal.ZERO;
+								else reqNum = schRotationDeptReqs2.stream().filter(vo3 -> vo3.getReqNum() != null).map(vo3 -> vo3.getReqNum()).reduce(BigDecimal.ZERO, (vo1, vo2) -> BigDecimal.ZERO.add(vo1).add(vo2));
 								if(StringUtils.isNotEmpty(schMonth) && StringUtils.isNotEmpty(schMonth2) && reqNum != null) {
 									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], Math.round(Float.parseFloat(schMonth) / Float.parseFloat(schMonth2) * Float.parseFloat(reqNum.toString())));
 								}else {
 									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], 0);
 								}
 							}else {
-								reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], 0);
+								Map<String, List<SchRotationDeptReq>> rotationReq2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo3 -> vo3.getRotationFlow() + vo3.getRelRecordFlow() + vo3.getStandardDeptId()));
+								List<SchRotationDeptReq> schRotationDeptReqs2 = rotationReq2.get(vo.getRotationFlow() + key3Arr[0] + key3Arr[2]);
+								BigDecimal reqNum;
+								if(CollectionUtils.isEmpty(schRotationDeptReqs2)) reqNum = BigDecimal.ZERO;
+								else reqNum = schRotationDeptReqs2.stream().filter(vo3 -> vo3.getReqNum() != null).map(vo3 -> vo3.getReqNum()).reduce(BigDecimal.ZERO, (vo1, vo2) -> BigDecimal.ZERO.add(vo1).add(vo2));
+
+								reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], reqNum.intValue());
 							}
 						});
 
