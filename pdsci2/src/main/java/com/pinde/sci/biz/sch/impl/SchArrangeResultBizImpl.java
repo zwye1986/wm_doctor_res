@@ -1446,7 +1446,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 						Map<String, List<SchRotationDeptReq>> deptReqMap = schRotationDeptReqs1.stream().collect(Collectors.groupingBy(vo2 -> vo2.getRelRecordFlow() + vo2.getStandardDeptId()));
 						deptReqMap.forEach((key2, value2) -> {
 							BigDecimal reqNum = value2.stream().filter(vo2 -> vo2.getReqNum() != null).map(vo2 -> vo2.getReqNum()).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-							reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key2, reqNum.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
+							reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + keys[1] + key2, reqNum.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
 						});
 					}else {
 						List<SchDoctorDept> list2 = rotationOrgMap2.get(vo.getRotationFlow()  );
@@ -1458,18 +1458,18 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 							if(map2.containsKey(key3Arr[1] +","+key3Arr[2])) {
 								List<SchDoctorDept> schDoctorDeptList1 = map2.get(key3Arr[1] +","+key3Arr[2]);
 								//减免后的月份
-								String schMonth = schDoctorDeptList1.get(0).getSchMonth();
+								Float schMonth = schDoctorDeptList1.stream().filter(vo3 -> vo3.getSchMonth() != null).map(vo3 -> Float.parseFloat(vo3.getSchMonth())).reduce(0f, (vo2, vo3)->vo2+vo3);
 								//减免前的月份
-								String schMonth2 = value3.get(0).getSchMonth();
+								Float schMonth2 = value3.stream().filter(vo3 -> vo3.getSchMonth() != null).map(vo3 -> Float.parseFloat(vo3.getSchMonth())).reduce(0f, (vo2, vo3)->vo2+vo3);
 								Map<String, List<SchRotationDeptReq>> rotationReq2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo3 -> vo3.getRotationFlow() + vo3.getRelRecordFlow() + vo3.getStandardDeptId()));
 								List<SchRotationDeptReq> schRotationDeptReqs2 = rotationReq2.get(vo.getRotationFlow() + key3Arr[0] + key3Arr[2]);
 								BigDecimal reqNum;
 								if(CollectionUtils.isEmpty(schRotationDeptReqs2)) reqNum = BigDecimal.ZERO;
 								else reqNum = schRotationDeptReqs2.stream().filter(vo3 -> vo3.getReqNum() != null).map(vo3 -> vo3.getReqNum()).reduce(BigDecimal.ZERO, (vo1, vo2) -> BigDecimal.ZERO.add(vo1).add(vo2));
-								if(StringUtils.isNotEmpty(schMonth) && StringUtils.isNotEmpty(schMonth2) && reqNum != null) {
-									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], Math.round(Float.parseFloat(schMonth) / Float.parseFloat(schMonth2) * Float.parseFloat(reqNum.toString())));
+								if(schMonth!=null && schMonth2!=null && reqNum != null) {
+									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + keys[1] + key3Arr[0] + key3Arr[2], Math.round(schMonth / schMonth2 * reqNum.floatValue()));
 								}else {
-									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], 0);
+									reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + keys[1] + key3Arr[0] + key3Arr[2], 0);
 								}
 							}else {
 								Map<String, List<SchRotationDeptReq>> rotationReq2 = schRotationDeptReqs.stream().collect(Collectors.groupingBy(vo3 -> vo3.getRotationFlow() + vo3.getRelRecordFlow() + vo3.getStandardDeptId()));
@@ -1478,7 +1478,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 								if(CollectionUtils.isEmpty(schRotationDeptReqs2)) reqNum = BigDecimal.ZERO;
 								else reqNum = schRotationDeptReqs2.stream().filter(vo3 -> vo3.getReqNum() != null).map(vo3 -> vo3.getReqNum()).reduce(BigDecimal.ZERO, (vo1, vo2) -> BigDecimal.ZERO.add(vo1).add(vo2));
 
-								reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key3Arr[0] + key3Arr[2], reqNum.intValue());
+								reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + keys[1] + key3Arr[0] + key3Arr[2], reqNum.intValue());
 							}
 						});
 
@@ -1488,7 +1488,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 					Map<String, List<SchRotationDeptReq>> deptReqMap = schRotationDeptReqs1.stream().collect(Collectors.groupingBy(vo2 -> vo2.getRelRecordFlow() + vo2.getStandardDeptId()));
 					deptReqMap.forEach((key2, value2) -> {
 						BigDecimal reqNum = value2.stream().filter(vo2 -> vo2.getReqNum() != null).map(vo2 -> vo2.getReqNum()).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
-						reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + key2, reqNum.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
+						reqNumMap.put(vo.getRecruitFlow() + vo.getRotationFlow() + keys[1] + key2, reqNum.setScale(0, BigDecimal.ROUND_HALF_UP).intValue());
 					});
 				}
 			});
@@ -1529,7 +1529,7 @@ public class SchArrangeResultBizImpl implements ISchArrangeResultBiz {
 				int auditNum = (int)resRecs1.stream().filter(vo -> StringUtils.isNotEmpty(vo.getAuditStatusId())).count();
 				jsresDoctorDeptDetail.setAuditNum(String.valueOf(auditNum));
 				jsresDoctorDeptDetail.setIsShort(isShortMap.get(rd.getRotationFlow()+srd.getGroupFlow()+srd.getStandardDeptId()));
-				jsresDoctorDeptDetail.setReqNum(String.valueOf(reqNumMap.getOrDefault(rd.getRecruitFlow() + rd.getRotationFlow() + srd.getRecordFlow() + srd.getStandardDeptId(), 0)));
+				jsresDoctorDeptDetail.setReqNum(String.valueOf(reqNumMap.getOrDefault(rd.getRecruitFlow() + rd.getRotationFlow() + srd.getGroupFlow() + srd.getRecordFlow() + srd.getStandardDeptId(), 0)));
 				jsresDoctorDeptDetail.setOldReqNum(String.valueOf(oldReqNumMap.getOrDefault(rd.getRotationFlow() + srd.getRecordFlow() + srd.getStandardDeptId(), 0)));
 				List<Map<String, String>> icListTemp = icMap.getOrDefault(rd.getDoctorFlow() + rd.getRotationFlow() + srd.getRecordFlow(), new ArrayList<>());
 				jsresDoctorDeptDetail.setIsAdd(icListTemp.size() > 0 ? "Y" : "N");
