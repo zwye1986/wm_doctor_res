@@ -7523,7 +7523,7 @@ public class JswjwWxController extends GeneralController {
         if (!applyYear.equals(recruit.getGraduationYear())) {
             return ResultDataThrow("结业考核年份不是当前年，无法申请！");
         }
-        JsresGraduationApply jsresGraduationApply = jswjwBiz.searchByRecruitFlow(recruitFlow, "");
+        JsresGraduationApply jsresGraduationApply = jswjwBiz.searchByRecruitFlow(recruitFlow, applyYear);
         if (null == jsresGraduationApply) {
 
             PubUserResume pubUserResume = jswjwBiz.readPubUserResume(recruit.getDoctorFlow());
