@@ -6946,7 +6946,7 @@ public class JsResDoctorController extends GeneralController {
             List<SchRotationDept> deptList = rotationDeptBiz.searchSchRotationDept(rotationFlow);
 
             Map<String, List<SchRotationDept>> rotationDeptMap = new HashMap<String, List<SchRotationDept>>();
-            Map<String, Object> afterImgMap = new HashMap<String, Object>();
+            Map<String, List<Map<String, Object>>> afterImgMap = new HashMap<>();
             Map<String, List<SchArrangeResult>> resultMap = new HashMap<String, List<SchArrangeResult>>();
             Map<String, Float> realMonthMap = new HashMap<String, Float>();
             Map<String, Object> biMap = new HashMap<>();
@@ -7028,30 +7028,43 @@ public class JsResDoctorController extends GeneralController {
             if (jsresGraduationApply == null) {
                 //出科考核表
                 List<ResSchProcessExpress> recs = expressBiz.searchByUserFlowAndTypeId(doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
-                if (recs != null && recs.size() > 0) {
-                    for (ResSchProcessExpress rec : recs) {
-                        List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
-                        String content = null == rec ? "" : rec.getRecContent();
-                        if (StringUtil.isNotBlank(content)) {
-                            Document doc = DocumentHelper.parseText(content);
-                            Element root = doc.getRootElement();
-                            List<Element> imageEles = root.elements();
-                            if (imageEles != null && imageEles.size() > 0) {
-                                for (Element image : imageEles) {
-                                    Map<String, Object> recContent = new HashMap<String, Object>();
-                                    String imageFlow = image.attributeValue("imageFlow");
-                                    List<Element> elements = image.elements();
-                                    for (Element attr : elements) {
-                                        String attrName = attr.getName();
-                                        String attrValue = attr.getText();
-                                        recContent.put(attrName, attrValue);
+                if(CollectionUtils.isNotEmpty(recs)){
+                    recs.stream().filter(r-> StringUtils.isNotEmpty(r.getRecContent()) && r.getRecContent().contains("imageFlow") && r.getRecContent().contains("imageUrl"))
+                            .forEach(rec->{
+                                List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
+                                String content = null == rec ? "" : rec.getRecContent();
+                                if (StringUtil.isNotBlank(content)) {
+                                    Document doc = null;
+                                    try {
+                                        doc = DocumentHelper.parseText(content);
+                                    } catch (DocumentException e) {
+                                        logger.error("出科考核表图片解析异常", e);
+                                        return;
                                     }
-                                    imagelist.add(recContent);
+                                    Element root = doc.getRootElement();
+                                    List<Element> imageEles = root.elements();
+                                    if (imageEles != null && imageEles.size() > 0) {
+                                        for (Element image : imageEles) {
+                                            Map<String, Object> recContent = new HashMap<String, Object>();
+                                            String imageFlow = image.attributeValue("imageFlow");
+                                            List<Element> elements = image.elements();
+                                            for (Element attr : elements) {
+                                                String attrName = attr.getName();
+                                                String attrValue = attr.getText();
+                                                recContent.put(attrName, attrValue);
+                                            }
+                                            imagelist.add(recContent);
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                        afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
-                    }
+                                if(!afterImgMap.containsKey(rec.getSchRotationDeptFlow())){
+                                    afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
+                                }else{
+                                    List<Map<String, Object>> maps = afterImgMap.get(rec.getSchRotationDeptFlow());
+                                    maps.addAll(imagelist);
+                                    afterImgMap.put(rec.getSchRotationDeptFlow(),maps);
+                                }
+                            });
                 }
 
                 String exeMethodInRedis =  stringRedisTemplate.opsForValue().get(GlobalConstant.exeMethod);
@@ -7146,7 +7159,45 @@ public class JsResDoctorController extends GeneralController {
 
                 //出科考核表
                 List<ResSchProcessExpress> recs = expressBiz.searchByUserFlowAndTypeId(doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
-                if (recs != null && recs.size() > 0) {
+                if(CollectionUtils.isNotEmpty(recs)){
+                    recs.stream().filter(r-> StringUtils.isNotEmpty(r.getRecContent()) && r.getRecContent().contains("imageFlow") && r.getRecContent().contains("imageUrl"))
+                            .forEach(rec->{
+                                List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
+                                String content = null == rec ? "" : rec.getRecContent();
+                                if (StringUtil.isNotBlank(content)) {
+                                    Document doc = null;
+                                    try {
+                                        doc = DocumentHelper.parseText(content);
+                                    } catch (DocumentException e) {
+                                        logger.error("出科考核表图片解析异常", e);
+                                        return;
+                                    }
+                                    Element root = doc.getRootElement();
+                                    List<Element> imageEles = root.elements();
+                                    if (imageEles != null && imageEles.size() > 0) {
+                                        for (Element image : imageEles) {
+                                            Map<String, Object> recContent = new HashMap<String, Object>();
+                                            String imageFlow = image.attributeValue("imageFlow");
+                                            List<Element> elements = image.elements();
+                                            for (Element attr : elements) {
+                                                String attrName = attr.getName();
+                                                String attrValue = attr.getText();
+                                                recContent.put(attrName, attrValue);
+                                            }
+                                            imagelist.add(recContent);
+                                        }
+                                    }
+                                }
+                                if(!afterImgMap.containsKey(rec.getSchRotationDeptFlow())){
+                                    afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
+                                }else{
+                                    List<Map<String, Object>> maps = afterImgMap.get(rec.getSchRotationDeptFlow());
+                                    maps.addAll(imagelist);
+                                    afterImgMap.put(rec.getSchRotationDeptFlow(),maps);
+                                }
+                            });
+                }
+                /*if (recs != null && recs.size() > 0) {
                     for (ResSchProcessExpress rec : recs) {
                         List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
                         String content = null == rec ? "" : rec.getRecContent();
@@ -7170,7 +7221,7 @@ public class JsResDoctorController extends GeneralController {
                         }
                         afterImgMap.put(rec.getSchRotationDeptFlow(), imagelist);
                     }
-                }
+                }*/
             }
 //            if (jsresGraduationApply != null) {
 //                //平均完成比例与平均审核比例

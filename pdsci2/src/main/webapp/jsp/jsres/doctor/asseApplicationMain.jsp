@@ -1427,11 +1427,11 @@ function showReductionImg(recordFlow) {
 															<c:forEach var="image" items="${imagelist}" varStatus="status">
 																<%--<a href="${image.imageUrl}" target="_blank"><img width="80px" height="80px"--%>
 																												 <%--src="${image.thumbUrl}"></a>&nbsp;--%>
-																<ul>
-																	<li class="ratateImg">
+<%--																<ul>--%>
+<%--																	<li class="ratateImg">--%>
 																		<img width="80px" height="80px" src="${image.imageUrl}">&nbsp;
-																	</li>
-																</ul>
+<%--																	</li>--%>
+<%--																</ul>--%>
 															</c:forEach>
 														</div>
 													</td>
