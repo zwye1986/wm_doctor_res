@@ -425,7 +425,7 @@ public class JsResTempController extends GeneralController{
 		{
 			return "结业考核年份不是当前年，无法更新数据！";
 		}
-		JsresGraduationApply jsresGraduationApply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, "");
+		JsresGraduationApply jsresGraduationApply = jsresGraduationApplyBiz.searchByRecruitFlow(recruitFlow, applyYear);
 		if(jsresGraduationApply == null) {
 			return "未提交过申请，无法更新数据！";
 		}
