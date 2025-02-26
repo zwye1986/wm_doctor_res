@@ -12,11 +12,9 @@ import com.pinde.core.common.sci.dao.ResScoreMapper;
 import com.pinde.core.common.sci.dao.SchRotationDeptMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
-import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
+import com.pinde.core.util.*;
 import com.pinde.core.util.DateUtil;
-import com.pinde.core.util.PkUtil;
-import com.pinde.core.util.StringUtil;
-import com.pinde.core.util.ZipUtil;
+import com.pinde.sci.biz.sch.ISchArrangeResultBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorBiz;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.jsres.IJsResPowerCfgBiz;
@@ -462,26 +460,8 @@ public class JsResDoctorRecruitController extends GeneralController {
 			SchRotationDept schRotationDept=readStandardRotationDept(resultFlow);
 			if (result != null&&StringUtil.isNotBlank(result.getDoctorFlow())&&schRotationDept!=null&&StringUtil.isNotBlank(schRotationDept.getRecordFlow())) {
 //				ResRec rec =resRecBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(),AfterRecTypeEnum.AfterSummary.getId());
-				ResSchProcessExpress rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(),AfterRecTypeEnum.AfterSummary.getId());
-				String content = null == rec ? "" : rec.getRecContent();
-				if (StringUtil.isNotBlank(content)) {
-					Document doc = DocumentHelper.parseText(content);
-					Element root = doc.getRootElement();
-					List<Element> imageEles = root.elements();
-					if (imageEles != null && imageEles.size() > 0) {
-						for (Element image : imageEles) {
-							Map<String, Object> recContent = new HashMap<String, Object>();
-							String imageFlow = image.attributeValue("imageFlow");
-							List<Element> elements = image.elements();
-							for (Element attr : elements) {
-								String attrName = attr.getName();
-								String attrValue = attr.getText();
-								recContent.put(attrName, attrValue);
-							}
-							imagelist.add(recContent);
-						}
-					}
-				}
+				List<ResSchProcessExpress> rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(),AfterRecTypeEnum.AfterSummary.getId());
+				BusinessUtil.getImageList(rec, imagelist);
 			}
 			model.addAttribute("imagelist",imagelist);
 		}else {
@@ -1468,12 +1448,18 @@ public class JsResDoctorRecruitController extends GeneralController {
 				SchRotationDept schRotationDept = schRotationDeptBiz.searchGroupFlowAndStandardDeptIdQuery(standardGroupFlow, standardDeptId);
 				String recordFlow = schRotationDept.getRecordFlow();
 //				ResRec resRec = resRecBiz.queryResRec(recordFlow, doctorFlow, recTypeId);
-				ResSchProcessExpress resRec = expressBiz.queryResRec(recordFlow, doctorFlow, recTypeId);
-				if(resRec!=null) {
-					String content = resRec.getRecContent();
-					List<Map<String, String>> imageList = resRecBiz.parseImageXml(content);
-					model.addAttribute("imageList", imageList);
-				}
+				List<ResSchProcessExpress> resRec = expressBiz.queryResRec(recordFlow, doctorFlow, recTypeId);
+				List<Map<String, String>> imageList = new ArrayList<Map<String, String>>();
+				resRec.stream().filter(r -> StringUtils.isNotEmpty(r.getRecContent()))
+						.forEach(r ->{
+							String content = r.getRecContent();
+                            try {
+                                imageList.addAll(resRecBiz.parseImageXml(content));
+                            } catch (DocumentException e) {
+                                logger.error("parse xml error,content={}", content, e);
+                            }
+                        });
+				model.addAttribute("imageList", imageList);
 			}
 		}else {
 			ResDoctorSchProcess resDoctorSchProcess = resDoctorProcessBiz.searchByResultFlow(resultFlow);

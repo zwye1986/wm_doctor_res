@@ -48,6 +48,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
@@ -1779,7 +1780,7 @@ public class JsResBaseManagerController extends GeneralController {
 			List<ResRec> recs = resRecBiz.searchRecByProcessWithBLOBs(recTypes, processFlow, user.getUserFlow());
 			for (ResRec resRec : recs) {
 				String content = resRec.getRecContent();
-				Document document = DocumentHelper.parseText(content);
+				Document document = DocumentHelper.parseText(content.replaceAll("&","").replaceAll("#",""));
 				Element root = document.getRootElement();
 				Element ec = root.element("activity_way");
 				if (ec != null) {
@@ -5159,26 +5160,9 @@ public class JsResBaseManagerController extends GeneralController {
 				SchRotationDept schRotationDept = readStandardRotationDept(resultFlow);
 				if (result != null && StringUtil.isNotBlank(result.getDoctorFlow()) && schRotationDept != null && StringUtil.isNotBlank(schRotationDept.getRecordFlow())) {
 //					ResRec rec =resRecBiz.queryResRec(schRotationDept.getRecordFlow(),result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
-					ResSchProcessExpress rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
-					String content = null == rec ? "" : rec.getRecContent();
-					if (StringUtil.isNotBlank(content)) {
-						Document doc = DocumentHelper.parseText(content);
-						Element root = doc.getRootElement();
-						List<Element> imageEles = root.elements();
-						if (imageEles != null && imageEles.size() > 0) {
-							for (Element image : imageEles) {
-								Map<String, Object> recContent = new HashMap<String, Object>();
-								String imageFlow = image.attributeValue("imageFlow");
-								List<Element> elements = image.elements();
-								for (Element attr : elements) {
-									String attrName = attr.getName();
-									String attrValue = attr.getText();
-									recContent.put(attrName, attrValue);
-								}
-								imagelist.add(recContent);
-							}
-						}
-					}
+					List<ResSchProcessExpress> rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
+//					String content = null == rec ? "" : rec.getRecContent();
+					BusinessUtil.getImageList(rec, imagelist);
 				}
 				if (imagelist.size() > 0) {
 					if (resultInAndOutDoc.get(i).getResRec() != null && resultInAndOutDoc.get(i).getResRec().getAuditStatusId() != "") {

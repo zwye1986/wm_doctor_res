@@ -14201,8 +14201,28 @@ public class JsResManageController extends GeneralController {
 					SchArrangeResult result=schArrangeResultBiz.readSchArrangeResult(schr.getResultFlow());
 					SchRotationDept schRotationDept=readStandardRotationDept(schr.getResultFlow());
 					if (result != null&&StringUtil.isNotBlank(result.getDoctorFlow())&&schRotationDept!=null&&StringUtil.isNotBlank(schRotationDept.getRecordFlow())) {
-						ResSchProcessExpress rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
-						content = null == rec ? "" : rec.getRecContent();
+						List<ResSchProcessExpress> rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
+						for(ResSchProcessExpress res:rec){
+							content = res.getRecContent();
+							if(StringUtils.isEmpty(res.getRecContent()) || !res.getRecContent().contains("imageUrl")){
+								content = "";
+							}
+						}
+						//出科异常
+						if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPayCurrentOrg)) {
+							if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
+								if(!outExceptionDoctorflowCount.contains(schr.getDoctorFlow())){
+									outExceptionDoctorflowCount.add(schr.getDoctorFlow());
+								}
+							}
+						}else{
+							if (StringUtil.isBlank(content)) {
+								if(!outExceptionDoctorflowCount.contains(schr.getDoctorFlow())){
+									outExceptionDoctorflowCount.add(schr.getDoctorFlow());
+								}
+							}
+						}
+
 					}
 					//出科考核表（出科考核异常）
 					ResDoctorSchProcess resDoctorSchProcess = resDoctorProcessBiz.searchByResultFlow(schr.getResultFlow());
@@ -14216,20 +14236,7 @@ public class JsResManageController extends GeneralController {
 							outExamExceptionDoctorflowCount.add(schr.getDoctorFlow());
 						}
 					}
-					//出科异常
-                    if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPayCurrentOrg)) {
-						if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
-							if(!outExceptionDoctorflowCount.contains(schr.getDoctorFlow())){
-								outExceptionDoctorflowCount.add(schr.getDoctorFlow());
-							}
-						}
-					}else{
-						if (StringUtil.isBlank(content)) {
-							if(!outExceptionDoctorflowCount.contains(schr.getDoctorFlow())){
-								outExceptionDoctorflowCount.add(schr.getDoctorFlow());
-							}
-						}
-					}
+
 				}
 			}
 			doctorLunZhuanExceptionParam.setId(i+"");
@@ -14293,8 +14300,27 @@ public class JsResManageController extends GeneralController {
 						SchArrangeResult result=schArrangeResultBiz.readSchArrangeResult(schr.getResultFlow());
 						SchRotationDept schRotationDept=readStandardRotationDept(schr.getResultFlow());
 						if (result != null&&StringUtil.isNotBlank(result.getDoctorFlow())&&schRotationDept!=null&&StringUtil.isNotBlank(schRotationDept.getRecordFlow())) {
-							ResSchProcessExpress rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
-							content = null == rec ? "" : rec.getRecContent();
+							List<ResSchProcessExpress> rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
+							for(ResSchProcessExpress res:rec){
+								content = res.getRecContent();
+								if(StringUtils.isEmpty(res.getRecContent()) || !res.getRecContent().contains("imageUrl")){
+									content = "";
+								}
+							}
+							//出科异常
+							if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPayCurrentOrg)) {
+								if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
+									if(!outExceptionDoctorflowCount1.contains(schr.getDoctorFlow())){
+										outExceptionDoctorflowCount1.add(schr.getDoctorFlow());
+									}
+								}
+							}else{
+								if (StringUtil.isBlank(content)) {
+									if(!outExceptionDoctorflowCount1.contains(schr.getDoctorFlow())){
+										outExceptionDoctorflowCount1.add(schr.getDoctorFlow());
+									}
+								}
+							}
 						}
 						//出科考核表（出科考核异常）
 						ResDoctorSchProcess resDoctorSchProcess = resDoctorProcessBiz.searchByResultFlow(schr.getResultFlow());
@@ -14308,20 +14334,7 @@ public class JsResManageController extends GeneralController {
 								outExamExceptionDoctorflowCount1.add(schr.getDoctorFlow());
 							}
 						}
-						//出科异常
-                        if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPayCurrentOrg)) {
-							if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
-								if(!outExceptionDoctorflowCount1.contains(schr.getDoctorFlow())){
-									outExceptionDoctorflowCount1.add(schr.getDoctorFlow());
-								}
-							}
-						}else{
-							if (StringUtil.isBlank(content)) {
-								if(!outExceptionDoctorflowCount1.contains(schr.getDoctorFlow())){
-									outExceptionDoctorflowCount1.add(schr.getDoctorFlow());
-								}
-							}
-						}
+
 					}
 				}
 
@@ -14374,8 +14387,27 @@ public class JsResManageController extends GeneralController {
 								SchArrangeResult result=schArrangeResultBiz.readSchArrangeResult(schr.getResultFlow());
 								SchRotationDept schRotationDept=readStandardRotationDept(schr.getResultFlow());
 								if (result != null&&StringUtil.isNotBlank(result.getDoctorFlow())&&schRotationDept!=null&&StringUtil.isNotBlank(schRotationDept.getRecordFlow())) {
-									ResSchProcessExpress rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
-									content = null == rec ? "" : rec.getRecContent();
+									List<ResSchProcessExpress> rec = expressBiz.queryResRec(schRotationDept.getRecordFlow(), result.getDoctorFlow(), AfterRecTypeEnum.AfterSummary.getId());
+									for(ResSchProcessExpress res:rec){
+										content = res.getRecContent();
+										if(StringUtils.isEmpty(res.getRecContent()) || !res.getRecContent().contains("imageUrl")){
+											content = "";
+										}
+									}
+									//出科异常
+									if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPayCurrentOrg2)) {
+										if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
+											if(!outExceptionDoctorflowCount2.contains(schr.getDoctorFlow())){
+												outExceptionDoctorflowCount2.add(schr.getDoctorFlow());
+											}
+										}
+									}else{
+										if (StringUtil.isBlank(content)) {
+											if(!outExceptionDoctorflowCount2.contains(schr.getDoctorFlow())){
+												outExceptionDoctorflowCount2.add(schr.getDoctorFlow());
+											}
+										}
+									}
 								}
 								//出科考核表（出科考核异常）
 								ResDoctorSchProcess resDoctorSchProcess = resDoctorProcessBiz.searchByResultFlow(schr.getResultFlow());
@@ -14389,20 +14421,7 @@ public class JsResManageController extends GeneralController {
 										outExamExceptionDoctorflowCount2.add(schr.getDoctorFlow());
 									}
 								}
-								//出科异常
-                                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(isPayCurrentOrg2)) {
-									if(resRecList.size()==0 || null == resRecList || StringUtil.isBlank(content)){
-										if(!outExceptionDoctorflowCount2.contains(schr.getDoctorFlow())){
-											outExceptionDoctorflowCount2.add(schr.getDoctorFlow());
-										}
-									}
-								}else{
-									if (StringUtil.isBlank(content)) {
-										if(!outExceptionDoctorflowCount2.contains(schr.getDoctorFlow())){
-											outExceptionDoctorflowCount2.add(schr.getDoctorFlow());
-										}
-									}
-								}
+
 							}
 						}
 
