@@ -16,6 +16,8 @@ import com.pinde.sci.biz.sch.ISchDoctorAbsenceBiz;
 import com.pinde.sci.biz.sch.ISchRotationDeptBiz;
 import com.pinde.sci.biz.sys.IUserBiz;
 import com.pinde.sci.common.*;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.docx4j.openpackaging.io.SaveToZipFile;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.dom4j.*;
@@ -102,8 +104,8 @@ public class ResRecController extends GeneralController {
         String recTypeId = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId();
         String recTypeName = com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getName();
 //		ResRec rec= resRecBiz.queryResRec(recordFlow,user.getUserFlow(),recTypeId);
-		ResSchProcessExpress rec = expressBiz.queryResRec(recordFlow,user.getUserFlow(),recTypeId);
-		if (rec==null) {
+		List<ResSchProcessExpress> rec = expressBiz.queryResRec(recordFlow,user.getUserFlow(),recTypeId);
+		if (CollectionUtils.isEmpty(rec)) {
 			express.setOrgFlow(user.getOrgFlow());
 			express.setOrgName(user.getOrgName());
 			express.setRecTypeId(recTypeId);
@@ -118,13 +120,25 @@ public class ResRecController extends GeneralController {
 			express.setRecContent(root.asXML());
 			expressBiz.edit(express);
 //			rec= resRecBiz.querySun(recordFlow,user.getUserFlow(),recTypeId);
-			rec= express;
+			rec.add(express) ;
 		}
-		String content=rec.getRecContent();
-		List<Map<String, String>> imageList=resRecBiz.parseImageXml(content);
-		model.addAttribute("rec", rec);
+		List<Map<String, String>> imageList = new ArrayList<>();
+		Map<String,String> recFlowImagFlowMap = new HashMap<>();
+		rec.stream().filter(r -> StringUtils.isNotEmpty(r.getRecContent())).forEach(r -> {
+            try {
+				List<Map<String, String>> maps = resRecBiz.parseImageXml(r.getRecContent());
+				for (Map<String, String> map : maps) {
+					recFlowImagFlowMap.put(map.get("imageFlow"),r.getRecFlow());
+				}
+				imageList.addAll(maps);
+            } catch (DocumentException e) {
+                logger.error("解析xml异常，content={}",r.getRecContent(),e);
+            }
+        });
+		model.addAttribute("rec", rec.get(0));
 		model.addAttribute("hideApprove", hideApprove);
 		model.addAttribute("imageList", imageList);
+		model.addAttribute("recFlowImagFlowMap", recFlowImagFlowMap);
 		return "jsres/doctor/uploadCkkhb";
 	}
 

@@ -4327,6 +4327,10 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("user", sysUser);
             if (doctorRecruit != null) {
                 applyYear = doctorRecruit.getGraduationYear();
+                if(TrainCategoryEnum.AssiGeneral.getId().equals(doctorRecruit.getCatSpeId())){
+                    doctorRecruit.setOrgFlow(doctorRecruit.getJointOrgFlow());
+                    doctorRecruit.setOrgName(doctorRecruit.getJointOrgName());
+                }
                 model.addAttribute("doctorRecruit", doctorRecruit);
                 if (StringUtil.isNotBlank(doctorRecruit.getDoctorFlow()) && !StringUtil.isNotBlank(doctorRecruit.getProveFileUrl())) {
                     ResDoctor doctor = resDoctorBiz.readDoctor(doctorRecruit.getDoctorFlow());
@@ -5808,6 +5812,10 @@ public class JsResDoctorController extends GeneralController {
             String applyYear = com.pinde.core.util.DateUtil.getYear();
 
             model.addAttribute("auditStatusId", recruit.getAuditStatusId());
+            if(TrainCategoryEnum.AssiGeneral.getId().equals(recruit.getCatSpeId())){
+                if(StringUtils.isNotEmpty(recruit.getJointOrgFlow())) recruit.setOrgFlow(recruit.getJointOrgFlow());
+                if(StringUtils.isNotEmpty(recruit.getJointOrgName())) recruit.setOrgName(recruit.getJointOrgName());
+            }
             model.addAttribute("doctorRecruit", recruit);
 
             //查询减免信息
@@ -6572,9 +6580,7 @@ public class JsResDoctorController extends GeneralController {
             String xmlContent = pubUserResume.getUserResume();
             if (StringUtil.isNotBlank(xmlContent)) {
                 //xml转换成JavaBean
-                UserResumeExtInfoForm userResumeExt = null;
-                userResumeExt = userResumeBiz.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
-//				UserResumeExtInfoForm  userResumeExt = JaxbUtil.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
+                UserResumeExtInfoForm userResumeExt = userResumeBiz.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
                 if (userResumeExt != null) {
                     if (StringUtil.isNotBlank(userResumeExt.getGraduatedId())) {
                         List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.GraduateSchool.getId());
@@ -8677,27 +8683,9 @@ public class JsResDoctorController extends GeneralController {
                     afterMap.put(dept.getRecordFlow(), com.pinde.core.common.GlobalConstant.FLAG_N);
                     List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
 //						ResRec rec =resRecBiz.queryResRec(dept.getRecordFlow(),doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
-                    ResSchProcessExpress rec = expressBiz.queryResRec(dept.getRecordFlow(), doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
-                    String content = null == rec ? "" : rec.getRecContent();
-                    if (StringUtil.isNotBlank(content)) {
-                        Document doc = DocumentHelper.parseText(content);
-                        Element root = doc.getRootElement();
-                        List<Element> imageEles = root.elements();
-                        if (imageEles != null && imageEles.size() > 0) {
-                            for (Element image : imageEles) {
-                                Map<String, Object> recContent = new HashMap<String, Object>();
-                                String imageFlow = image.attributeValue("imageFlow");
-                                List<Element> elements = image.elements();
-                                for (Element attr : elements) {
-                                    String attrName = attr.getName();
-                                    String attrValue = attr.getText();
-                                    recContent.put(attrName, attrValue);
-                                }
-                                imagelist.add(recContent);
-                            }
-                        }
-                    }
-                    if (imagelist.size() > 0) {
+                    List<ResSchProcessExpress> rec = expressBiz.queryResRec(dept.getRecordFlow(), doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
+                    BusinessUtil.getImageList(rec, imagelist);
+                    if (CollectionUtils.isNotEmpty(imagelist)) {
                         afterMap.put(dept.getRecordFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
                 }
@@ -8810,6 +8798,8 @@ public class JsResDoctorController extends GeneralController {
         return "jsres/doctor/process";
     }
 
+
+
     /**
      * 培训登记
      *
@@ -8916,26 +8906,8 @@ public class JsResDoctorController extends GeneralController {
                 if (StringUtil.isNotBlank(hideApprove)) {
                     afterMap.put(dept.getRecordFlow(), com.pinde.core.common.GlobalConstant.FLAG_N);
                     List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
-                    ResSchProcessExpress rec = expressBiz.queryResRec(dept.getRecordFlow(), doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
-                    String content = null == rec ? "" : rec.getRecContent();
-                    if (StringUtil.isNotBlank(content)) {
-                        Document doc = DocumentHelper.parseText(content);
-                        Element root = doc.getRootElement();
-                        List<Element> imageEles = root.elements();
-                        if (imageEles != null && imageEles.size() > 0) {
-                            for (Element image : imageEles) {
-                                Map<String, Object> recContent = new HashMap<String, Object>();
-                                String imageFlow = image.attributeValue("imageFlow");
-                                List<Element> elements = image.elements();
-                                for (Element attr : elements) {
-                                    String attrName = attr.getName();
-                                    String attrValue = attr.getText();
-                                    recContent.put(attrName, attrValue);
-                                }
-                                imagelist.add(recContent);
-                            }
-                        }
-                    }
+                    List<ResSchProcessExpress> rec = expressBiz.queryResRec(dept.getRecordFlow(), doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
+                    BusinessUtil.getImageList(rec, imagelist);
                     if (imagelist.size() > 0) {
                         afterMap.put(dept.getRecordFlow(), com.pinde.core.common.GlobalConstant.FLAG_Y);
                     }
@@ -9897,10 +9869,16 @@ public class JsResDoctorController extends GeneralController {
                     dataMap3.put("operaPlanTargetList", operaPlanTargetList);
                 }
 
-                ResSchProcessExpress rec = expressBiz.queryResRec(relRecordFlow, doctorFlow, com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
-                if (rec != null) {
-                    String content = rec.getRecContent();
-                    Document document = DocumentHelper.parseText(content);
+                List<ResSchProcessExpress> rec = expressBiz.queryResRec(relRecordFlow, doctorFlow, com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+                rec.stream().filter(r -> StringUtils.isNotEmpty(r.getRecContent())).forEach(r -> {
+                    String content = r.getRecContent();
+                    Document document = null;
+                    try {
+                        document = DocumentHelper.parseText(content);
+                    } catch (DocumentException e) {
+                        logger.error("解析失败,content={}", content,e);
+                        return;
+                    }
                     Element elem = document.getRootElement();
                     List<Element> ec = elem.elements();
                     for (Element element : ec) {
@@ -9911,7 +9889,7 @@ public class JsResDoctorController extends GeneralController {
                             dataMap3.put("imageUrl", imageUrl);
                         }
                     }
-                }
+                });
                 WordprocessingMLPackage temeplete4 = new WordprocessingMLPackage();
                 String path4 = "/jsp/jsres/daochu/daochuTemeplete4.docx";//模板
                 temeplete4 = Docx4jUtil.convert(new File(context.getRealPath(path4)), dataMap3, watermark, true);
@@ -10322,10 +10300,16 @@ public class JsResDoctorController extends GeneralController {
                         dataMap3.put("operaPlanTargetList", operaPlanTargetList);
                     }
 
-                    ResSchProcessExpress rec = expressBiz.queryResRec(relRecordFlow, doctorFlow, com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
-                    if (rec != null) {
-                        String content = rec.getRecContent();
-                        Document document = DocumentHelper.parseText(content);
+                    List<ResSchProcessExpress> rec = expressBiz.queryResRec(relRecordFlow, doctorFlow, com.pinde.core.common.enums.ResRecTypeEnum.AfterSummary.getId());
+                    rec.stream().filter(r -> StringUtils.isNotEmpty(r.getRecContent())).forEach(r -> {
+                        String content = r.getRecContent();
+                        Document document = null;
+                        try {
+                            document = DocumentHelper.parseText(content);
+                        } catch (DocumentException e) {
+                            logger.error("解析失败,content={}",content, e);
+                            return;
+                        }
                         Element elem = document.getRootElement();
                         List<Element> ec = elem.elements();
                         for (Element element : ec) {
@@ -10336,7 +10320,7 @@ public class JsResDoctorController extends GeneralController {
                                 dataMap3.put("imageUrl", imageUrl);
                             }
                         }
-                    }
+                    });
                     WordprocessingMLPackage temeplete4 = new WordprocessingMLPackage();
                     String path4 = "/jsp/jsres/daochu/daochuTemeplete4.docx";//模板
                     temeplete4 = Docx4jUtil.convert(new File(context.getRealPath(path4)), dataMap3, watermark, true);

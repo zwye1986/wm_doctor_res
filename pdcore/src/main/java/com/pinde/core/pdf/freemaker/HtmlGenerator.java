@@ -1,5 +1,6 @@
 package com.pinde.core.pdf.freemaker;
 
+import com.pinde.core.pdf.utils.ResourceLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -27,6 +28,7 @@ public class HtmlGenerator {
         try{
         	Configuration config = FreemarkerConfiguration.getConfiguation();  
         	config.setDefaultEncoding("UTF-8");
+			config.setDirectoryForTemplateLoading(new java.io.File(ResourceLoader.getPath("/")));
         	Template tp = config.getTemplate(template);     
         	StringWriter stringWriter = new StringWriter();       
         	writer = new BufferedWriter(stringWriter);  

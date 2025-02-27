@@ -5,6 +5,7 @@ import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.RegistryTypeEnum;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.util.BusinessUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.biz.jsres.IJsResDoctorRecruitBiz;
 import com.pinde.sci.biz.res.IResDoctorBiz;
@@ -214,26 +215,8 @@ public class JsResDoctorWorkController extends GeneralController {
                     afterMap.put(recordFlow, com.pinde.core.common.GlobalConstant.FLAG_N);
 					List<Map<String, Object>> imagelist = new ArrayList<Map<String, Object>>();
 //					ResRec rec = resRecBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
-					ResSchProcessExpress rec = expressBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
-					String content = null == rec ? "" : rec.getRecContent();
-					if (StringUtil.isNotBlank(content)) {
-						Document doc = DocumentHelper.parseText(content);
-						Element root = doc.getRootElement();
-						List<Element> imageEles = root.elements();
-						if (imageEles != null && imageEles.size() > 0) {
-							for (Element image : imageEles) {
-								Map<String, Object> recContent = new HashMap<String, Object>();
-								String imageFlow = image.attributeValue("imageFlow");
-								List<Element> elements = image.elements();
-								for (Element attr : elements) {
-									String attrName = attr.getName();
-									String attrValue = attr.getText();
-									recContent.put(attrName, attrValue);
-								}
-								imagelist.add(recContent);
-							}
-						}
-					}
+					List<ResSchProcessExpress> rec = expressBiz.queryResRec(recordFlow, userFlow, AfterRecTypeEnum.AfterSummary.getId());
+					BusinessUtil.getImageList(rec, imagelist);
 					if (imagelist.size() > 0) {
                         afterMap.put(recordFlow, com.pinde.core.common.GlobalConstant.FLAG_Y);
 					}
