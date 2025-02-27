@@ -4327,6 +4327,10 @@ public class JsResDoctorController extends GeneralController {
             model.addAttribute("user", sysUser);
             if (doctorRecruit != null) {
                 applyYear = doctorRecruit.getGraduationYear();
+                if(TrainCategoryEnum.AssiGeneral.getId().equals(doctorRecruit.getCatSpeId())){
+                    doctorRecruit.setOrgFlow(doctorRecruit.getJointOrgFlow());
+                    doctorRecruit.setOrgName(doctorRecruit.getJointOrgName());
+                }
                 model.addAttribute("doctorRecruit", doctorRecruit);
                 if (StringUtil.isNotBlank(doctorRecruit.getDoctorFlow()) && !StringUtil.isNotBlank(doctorRecruit.getProveFileUrl())) {
                     ResDoctor doctor = resDoctorBiz.readDoctor(doctorRecruit.getDoctorFlow());
@@ -5808,6 +5812,10 @@ public class JsResDoctorController extends GeneralController {
             String applyYear = com.pinde.core.util.DateUtil.getYear();
 
             model.addAttribute("auditStatusId", recruit.getAuditStatusId());
+            if(TrainCategoryEnum.AssiGeneral.getId().equals(recruit.getCatSpeId())){
+                if(StringUtils.isNotEmpty(recruit.getJointOrgFlow())) recruit.setOrgFlow(recruit.getJointOrgFlow());
+                if(StringUtils.isNotEmpty(recruit.getJointOrgName())) recruit.setOrgName(recruit.getJointOrgName());
+            }
             model.addAttribute("doctorRecruit", recruit);
 
             //查询减免信息
@@ -6572,9 +6580,7 @@ public class JsResDoctorController extends GeneralController {
             String xmlContent = pubUserResume.getUserResume();
             if (StringUtil.isNotBlank(xmlContent)) {
                 //xml转换成JavaBean
-                UserResumeExtInfoForm userResumeExt = null;
-                userResumeExt = userResumeBiz.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
-//				UserResumeExtInfoForm  userResumeExt = JaxbUtil.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
+                UserResumeExtInfoForm userResumeExt = userResumeBiz.converyToJavaBean(xmlContent, UserResumeExtInfoForm.class);
                 if (userResumeExt != null) {
                     if (StringUtil.isNotBlank(userResumeExt.getGraduatedId())) {
                         List<SysDict> sysDictList = dictBiz.searchDictListByDictTypeId(com.pinde.core.common.enums.DictTypeEnum.GraduateSchool.getId());

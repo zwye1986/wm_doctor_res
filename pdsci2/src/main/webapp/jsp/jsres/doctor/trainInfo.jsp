@@ -620,8 +620,7 @@
 							培训基地：
 						</th>
 						<td>
-							<c:if test="${!empty doctorRecruit.jointOrgFlow}">${doctorRecruit.jointOrgName}</c:if>
-							<c:if test="${empty doctorRecruit.jointOrgFlow}">${doctorRecruit.orgName}</c:if>
+							${doctorRecruit.orgName}
 							<!--培训记录 ： 最新 && 审核通过 -->
 							<c:if test="${isLatest && resDoctorAuditStatusEnumPassed.id eq doctorRecruit.auditStatusId && not empty doctorRecruit.orgFlow &&( applyFlag )}">
 								<!-- 最新变更记录：  (非待转出审核 && 非待转入审核) && 当前用户-->
