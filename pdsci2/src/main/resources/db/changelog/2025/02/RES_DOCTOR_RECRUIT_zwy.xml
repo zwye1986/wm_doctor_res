@@ -1,0 +1,14 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="update_RES_DOCTOR_RECRUIT_org_not_matched" author="zhangwy">
+        <sql>
+            UPDATE RES_DOCTOR_RECRUIT rdr SET rdr.ORG_FLOW  = rdr.JOINT_ORG_FLOW ,rdr.ORG_NAME = rdr.JOINT_ORG_NAME   WHERE rdr.CAT_SPE_ID = 'AssiGeneral' AND  RDR.ORG_FLOW != RDR.JOINT_ORG_FLOW ;
+        </sql>
+    </changeSet>
+
+
+</databaseChangeLog>
