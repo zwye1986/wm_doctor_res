@@ -9023,6 +9023,7 @@ public class JsResManageController extends GeneralController {
 					List<ResRec> recs = resRecBiz.searchRecByProcessWithBLOBs(recTypes, processFlow, operUserFlow);
 					for (ResRec resRec2 : recs) {
 						String content = resRec2.getRecContent();
+						if(content.contains("activity_content")) content = content.replaceAll("<activity_content>", "<activity_content><![CDATA[").replaceAll("</activity_content>", "]]></activity_content>");
 						Document document = DocumentHelper.parseText(content);
 						Element root = document.getRootElement();
 						Element ec = root.element("activity_way");

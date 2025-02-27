@@ -2144,6 +2144,7 @@ public class JsResTeacherController extends GeneralController{
 				String content=resRec.getRecContent();
 				content = StringEscapeUtils.unescapeHtml4(content);
 				content = content.replaceAll("[\\x00-\\x08\\x0B\\x0C\\x0E-\\x1F]", "");
+				if(content.contains("activity_content")) content = content.replaceAll("<activity_content>", "<activity_content><![CDATA[").replaceAll("</activity_content>", "]]></activity_content>");
 				Document document=DocumentHelper.parseText(content);
 				Element root=document.getRootElement();
 				Element ec = root.element("activity_way");
