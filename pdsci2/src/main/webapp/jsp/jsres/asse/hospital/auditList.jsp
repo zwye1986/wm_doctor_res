@@ -183,7 +183,15 @@
 					<th style="width: 10%; " class="fixedBy">审核状态</th>
 				</c:if>
 				<th style="width: 10%; " class="toFiexdDept">姓名</th>
-				<th style="width: 20%; " class="fixedBy">协同单位</th>
+				<th style="width: 20%; " class="fixedBy">
+				<c:choose>
+					<c:when test="${trainingTypeId eq 'AssiGeneral'}">
+						培训基地
+					</c:when>
+					<c:otherwise>
+						协同单位
+					</c:otherwise>
+				</c:choose></th>
 				<th style="width: 10%; " class="fixedBy">报考专业</th>
 				<th style="width: 20%; " class="fixedBy">培训起止时间</th>
 				<th style="width: 10%;" class="fixedBy">异常报考</th>
