@@ -2342,6 +2342,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         model.addAttribute("f",f);
         model.addAttribute("currentUser",currentUser);
         model.addAttribute("roleFlag",roleFlag);
+        model.addAttribute("trainingTypeId",trainingTypeId);
         return "jsres/asse/hospital/auditList";
     }
 
