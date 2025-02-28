@@ -147,7 +147,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         GROUP BY
@@ -164,9 +164,9 @@
             R.SPE_NAME,
             COUNT (DISTINCT R.DOCTOR_FLOW) AS GRADUATION_NUM,
             COUNT (A.DOCTOR_FLOW) AS APPLY_NUM,
-            NVL (MAX (A.LOCAL_AUDIT_NUM),0) AS LOCAL_AUDIT_NUM,
-            NVL (MAX (A.CITY_AUDIT_NUM),0) AS CITY_AUDIT_NUM,
-            NVL (MAX (A.GLOBAL_AUDIT_NUM),0) AS GLOBAL_AUDIT_NUM
+            COUNT (CASE WHEN A.LOCAL_AUDIT_NUM = 1 THEN 1 ELSE NULL END) AS LOCAL_AUDIT_NUM,
+            COUNT (CASE WHEN A.CITY_AUDIT_NUM = 1 THEN 1 ELSE NULL END) AS CITY_AUDIT_NUM,
+            COUNT (CASE WHEN A.GLOBAL_AUDIT_NUM = 1 THEN 1 ELSE NULL END) AS GLOBAL_AUDIT_NUM
         FROM
             RES_DOCTOR_RECRUIT R
         LEFT JOIN (
@@ -315,7 +315,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         GROUP BY
@@ -549,7 +549,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         GROUP BY
@@ -684,7 +684,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         GROUP BY
@@ -701,9 +701,9 @@
             O.ORG_NAME,
             COUNT (DISTINCT R.DOCTOR_FLOW) AS GRADUATION_NUM,
             COUNT (A.DOCTOR_FLOW) AS APPLY_NUM,
-            NVL (MAX (A.LOCAL_AUDIT_NUM),0) AS LOCAL_AUDIT_NUM,
-            NVL (MAX (A.CITY_AUDIT_NUM),0) AS CITY_AUDIT_NUM,
-            NVL (MAX (A.GLOBAL_AUDIT_NUM),0) AS GLOBAL_AUDIT_NUM
+            COUNT (CASE WHEN A.LOCAL_AUDIT_NUM = 1 THEN 1 ELSE NULL END) AS LOCAL_AUDIT_NUM,
+            COUNT (CASE WHEN A.CITY_AUDIT_NUM = 1 THEN 1 ELSE NULL END) AS CITY_AUDIT_NUM,
+            COUNT (CASE WHEN A.GLOBAL_AUDIT_NUM = 1 THEN 1 ELSE NULL END) AS GLOBAL_AUDIT_NUM
         FROM
             RES_DOCTOR_RECRUIT R
         LEFT JOIN (
@@ -844,7 +844,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         GROUP BY
@@ -1072,7 +1072,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         GROUP BY
@@ -1313,7 +1313,7 @@
                 RES_DOCOTR_DELAY_TETURN DT
             WHERE
                 DT.RECORD_STATUS = 'Y'
-            AND DT.DOCTOR_FLOW = D.DOCTOR_FLOW
+            AND DT.DOCTOR_FLOW = R.RECRUIT_FLOW
             AND DT.TYPE_ID = 'ReturnTraining'
         )
         ORDER BY
