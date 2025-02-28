@@ -2862,7 +2862,7 @@
             AND DR.joint_org_flow is null
         </if>
         <if test="orgFlowList!=null and orgFlowList.size>0">
-            and DR.org_flow in
+            and SU.org_flow in
             <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test="docTypeList!=null and docTypeList.size>0">
@@ -4265,6 +4265,5 @@
        </if>
    ORDER BY NLSSORT(dr.org_name, 'NLS_SORT = SCHINESE_PINYIN_M'), DR.SPE_ID, NLSSORT(su.USER_NAME, 'NLS_SORT = SCHINESE_PINYIN_M'), DR.SESSION_NUMBER
    </select>
-
 
 </mapper>
