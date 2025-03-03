@@ -2194,4 +2194,72 @@
         AND ROTATION_FLOW = #{rotationFlow}
         AND APPLY_YEAR = #{applyYear}
     </select>
+
+    <select id="searchCycleArrangeResults" resultMap="com.pinde.core.common.sci.dao.SchArrangeResultMapper.BaseResultMap">
+        select ar.*
+        from SCH_ARRANGE_RESULT ar,RES_DOCTOR dr,SYS_USER u
+        where dr.RECORD_STATUS= 'Y' and u.RECORD_STATUS= 'Y' and ar.RECORD_STATUS= 'Y' and dr.DOCTOR_FLOW = u.USER_FLOW and
+        dr.DOCTOR_FLOW = ar.DOCTOR_FLOW
+        <if test='startDate!=null and startDate!="" and endDate!=null and endDate!=""'>
+            AND ((ar.SCH_START_DATE <![CDATA[<=]]> #{startDate,jdbcType=VARCHAR} AND
+            ar.SCH_END_DATE >= #{startDate,jdbcType=VARCHAR}) OR
+            (ar.SCH_START_DATE <![CDATA[<=]]>  #{endDate,jdbcType=VARCHAR} AND
+            ar.SCH_END_DATE >=  #{endDate,jdbcType=VARCHAR}) OR
+            (ar.SCH_START_DATE >= #{startDate,jdbcType=VARCHAR} AND
+            ar.SCH_END_DATE <![CDATA[<=]]>  #{endDate,jdbcType=VARCHAR}))
+        </if>
+        <if test='userName!=null and userName!=""'>
+            and u.USER_NAME like CONCAT(CONCAT('%', #{userName}),'%')
+        </if>
+        <if test='trainingSpeId!=null and trainingSpeId!=""'>
+            and dr.TRAINING_SPE_ID = #{trainingSpeId,jdbcType=VARCHAR}
+        </if>
+        <if test='sessionNumber!=null and sessionNumber!=""'>
+            and dr.SESSION_NUMBER = #{sessionNumber,jdbcType=VARCHAR}
+        </if>
+        <choose >
+            <when test="baseFlag !=null and baseFlag !=''and orgFlow != null">
+                and dr.SECOND_ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+            </when>
+            <when test='orgFlow != null and orgFlow !="" and  (baseFlag == null or baseFlag == "") '>
+                and (
+                dr.ORG_FLOW = #{orgFlow,jdbcType=VARCHAR}
+                or exists(
+                select null from res_joint_org rjo
+                where rjo.record_status = 'Y'
+                and rjo.org_flow = #{orgFlow,jdbcType=VARCHAR}
+                and dr.org_flow = rjo.joint_org_flow
+                )
+                )
+            </when>
+        </choose>
+        <if test='secondOrgFlow != null and secondOrgFlow !="" and  (orgFlow == null or orgFlow == "")'>
+            AND( dr.SECOND_ORG_FLOW in (SELECT rjo.joint_org_flow
+            FROM res_joint_org rjo
+            WHERE rjo.record_status = 'Y'
+            AND rjo.org_flow =#{secondOrgFlow,jdbcType=VARCHAR})
+            or dr.SECOND_ORG_FLOW=#{secondOrgFlow,jdbcType=VARCHAR})
+        </if>
+
+        <if test='onlyProblem!=null and onlyProblem =="Y"'>
+
+            and exists(
+            select 1
+            from sch_arrange_result sar
+            where sar.record_status='Y'
+            <if test='startDate!=null and startDate!="" and endDate!=null and endDate!=""'>
+                AND ((sar.SCH_START_DATE <![CDATA[<=]]> #{startDate,jdbcType=VARCHAR} AND
+                sar.SCH_END_DATE >= #{startDate,jdbcType=VARCHAR}) OR
+                (sar.SCH_START_DATE <![CDATA[<=]]>  #{endDate,jdbcType=VARCHAR} AND
+                sar.SCH_END_DATE >=  #{endDate,jdbcType=VARCHAR}) OR
+                (sar.SCH_START_DATE >= #{startDate,jdbcType=VARCHAR} AND
+                sar.SCH_END_DATE <![CDATA[<=]]>  #{endDate,jdbcType=VARCHAR}))
+            </if>
+            and sar.sch_end_date <![CDATA[<=]]>  to_char(sysdate,'yyyy-mm-dd')
+            and sar.result_flow=ar.result_flow
+            and sar.have_After_pic='N'
+            )
+        </if>
+        order by u.USER_NAME
+    </select>
 </mapper>

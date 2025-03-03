@@ -3,6 +3,7 @@ package com.pinde.sci.ctrl.jsres;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
+import com.pinde.core.common.enums.TrainCategoryEnum;
 import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
 import com.pinde.core.common.sci.dao.ResJointOrgMapper;
 import com.pinde.core.model.*;
@@ -28,6 +29,7 @@ import com.pinde.core.model.ResPassScoreCfg;
 import com.pinde.core.model.ResScore;
 import com.pinde.core.model.ResTestConfig;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -50,6 +52,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/doctorTheoryScore")
@@ -2105,6 +2108,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         Map<String,Object> param = new HashMap<>();
         //查询条件
         List<String> orgFlowList = new ArrayList();
+        if(StringUtils.isNotEmpty(orgFlow)) orgFlowList.add(orgFlow);
         SysOrg org = orgBiz.readSysOrg(orgFlow);
         if (com.pinde.core.common.enums.OrgLevelEnum.CountryOrg.getId().equals(org.getOrgLevelId())) {
             orgFlowList.add(orgFlow);
@@ -2139,7 +2143,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         if(!tempJoinOrgs.isEmpty() && tempJoinOrgs.size()>0){
             isJointOrg = com.pinde.core.common.GlobalConstant.FLAG_Y;
         }
-        param.put("isJointOrg",isJointOrg);
+        if(TrainCategoryEnum.AssiGeneral.getId().equals(trainingTypeId)) param.put("isJointOrg",isJointOrg);
         param.put("trainingTypeId",trainingTypeId);
         param.put("trainingSpeId",trainingSpeId);
         param.put("sessionNumber",sessionNumber);
@@ -2158,7 +2162,9 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         param.put("roleFlag",roleFlag);
         param.put("tabTag",tabTag);
         List<Map<String,Object>> list = graduationApplyBiz.chargeQueryListForExport(param);
-        graduationApplyBiz.chargeExportListTwo(list,response,isWaitAudit);
+        Map<Object, List<Map<String, Object>>> list2 = list.stream().collect(Collectors.groupingBy(e -> e.get("idNo")));
+        List<Map<String,Object>> list3 = list2.entrySet().stream().map(e -> e.getValue().get(0)).collect(Collectors.toList());
+        graduationApplyBiz.chargeExportListTwo(list3,response,isWaitAudit);
 
     }
 

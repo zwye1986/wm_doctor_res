@@ -154,7 +154,6 @@ public class RSAUtils {
         try {
             //这里需要进行编码转换.注:在前端js对明文加密前需要先进行转码-可自行百度"编码转换"
             decode = URLDecoder.decode(reverse, "UTF-8");
-            System.out.println("解密后文字：" + decode);
         } catch (UnsupportedEncodingException e) {
             logger.error("", e);
         }
@@ -172,7 +171,6 @@ public class RSAUtils {
         try {
             //这里需要进行编码转换.注:在前端js对明文加密前需要先进行转码-可自行百度"编码转换"
             decode = URLDecoder.decode(reverse, "UTF-8");
-            System.out.println("解密后文字：" + decode);
         } catch (UnsupportedEncodingException e) {
             logger.error("", e);
         }
