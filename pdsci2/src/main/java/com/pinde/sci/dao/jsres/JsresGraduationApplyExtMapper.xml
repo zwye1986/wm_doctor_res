@@ -2862,7 +2862,7 @@
             AND DR.joint_org_flow is null
         </if>
         <if test="orgFlowList!=null and orgFlowList.size>0">
-            and SU.org_flow in
+            and DR.org_flow in
             <foreach collection="orgFlowList" open="(" separator="," close=")" item="item">#{item}</foreach>
         </if>
         <if test="docTypeList!=null and docTypeList.size>0">

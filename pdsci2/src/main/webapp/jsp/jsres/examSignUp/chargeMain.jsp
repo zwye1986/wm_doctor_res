@@ -135,6 +135,7 @@
                 //改变协同医院状态
                 $("select[name=trainingSpeId] option[value != '']").remove();
                 $("select[name=trainingTypeId] option[value = '']").attr('selected','selected');
+                changeTrainSpes();
                 var orgFlag=$("#trainOrg").val();
                 var orgFlow=$("#orgFlow").val();
                 if(orgFlag.replace(/(^\s*)|(\s*$)/g, "")==""){
