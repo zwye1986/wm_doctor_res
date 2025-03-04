@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="RES_REC_CHECK_CONFIG_create" author="zhangwy">
+        <sql>
+
+            CREATE TABLE "RES_REC_CHECK_CONFIG"
+            (	"ID" NUMBER(*,0) NOT NULL ENABLE,
+                 "REGISTRY_TYPE_ID" VARCHAR2(100) NOT NULL ENABLE,
+                 "REGISTRY_TYPE_NAME" VARCHAR2(100) NOT NULL ENABLE,
+                 "CHECK_ITEM" VARCHAR2(100) NOT NULL ENABLE,
+                 "CHECK_RULES" VARCHAR2(100),
+                 "CHECK_RULES_SINGLE" VARCHAR2(1024),
+                 "RECORD_STATUS" VARCHAR2(100) DEFAULT 'Y' NOT NULL ENABLE,
+                 CONSTRAINT "RES_REC_CHECK_CONFIG_PK" PRIMARY KEY ("ID")
+            );
+
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.ID IS '主键';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.REGISTRY_TYPE_ID IS '轮转手册填写类型';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.REGISTRY_TYPE_NAME IS '轮转手册填写名称';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.CHECK_ITEM IS '需要校验的字段';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.CHECK_RULES IS '匹配规则（正则表达式）';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.CHECK_RULES_SINGLE IS '特殊制定的规则（多个字符串，用,隔开）';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.RECORD_STATUS IS '启用状态';
+
+        </sql>
+
+        <sql>
+            INSERT INTO RES_REC_CHECK_CONFIG (ID,REGISTRY_TYPE_ID,REGISTRY_TYPE_NAME,CHECK_ITEM,CHECK_RULES,CHECK_RULES_SINGLE,RECORD_STATUS) VALUES
+                (1,'SkillRegistry','操作技能','skill_operName','^[\u4e00-\u9fa5][\u4e00-\u9fa5·]{1,14}$',NULL,'Y');
+        </sql>
+    </changeSet>
+
+    <changeSet id="RES_REC_CHECK_CONFIG_add" author="zhangwy">
+        <sql>
+            ALTER TABLE RES_REC_CHECK_CONFIG ADD (
+                CHECK_ITEM_NAME VARCHAR(100),
+                CHECK_RULES_EXP VARCHAR(1024));
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.CHECK_ITEM IS '需要校验的字段名称';
+            COMMENT ON COLUMN RES_REC_CHECK_CONFIG.CHECK_RULES_EXP IS '例外的情况，可以配置多个用","分隔；只要匹配上就算合规';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

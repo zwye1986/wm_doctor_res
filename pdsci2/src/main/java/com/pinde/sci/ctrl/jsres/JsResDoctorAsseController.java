@@ -1021,7 +1021,14 @@ public class JsResDoctorAsseController extends GeneralController {
         param.put("tempDoctorFlag", tempDoctorFlag);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        list.stream().forEach(e->{
+            Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
+            nonComplianceRecordsMap.putAll(doctorFlowMap);
+
+        });
         model.addAttribute("list",list);
+        model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> testConfigList = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
         if (testConfigList.size() > 0) {

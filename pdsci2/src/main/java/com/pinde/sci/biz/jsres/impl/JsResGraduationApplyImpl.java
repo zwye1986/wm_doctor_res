@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.ExeMethod;
-import com.pinde.core.common.sci.dao.GraduationDoctorTempMapper;
-import com.pinde.core.common.sci.dao.JsresDoctorDeptDetailMapper;
-import com.pinde.core.common.sci.dao.JsresGraduationApplyLogMapper;
-import com.pinde.core.common.sci.dao.JsresGraduationApplyMapper;
+import com.pinde.core.common.enums.ResRecTypeEnum;
+import com.pinde.core.common.sci.dao.*;
 import com.pinde.core.model.*;
+import com.pinde.core.service.impl.ResRecCheckConfigService;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
+import com.pinde.core.util.XmlUtils;
 import com.pinde.sci.biz.jsres.IJsResGraduationApplyBiz;
 import com.pinde.sci.biz.jsres.ISchRotationDeptAfterBiz;
 import com.pinde.sci.biz.pub.IPubUserResumeBiz;
@@ -20,7 +20,6 @@ import com.pinde.sci.biz.res.IResSchProcessExpressBiz;
 import com.pinde.sci.biz.sch.impl.SchArrangeResultBizImpl;
 import com.pinde.sci.common.GeneralMethod;
 import com.pinde.sci.dao.jsres.JsresGraduationApplyExtMapper;
-import com.pinde.core.common.sci.dao.TempMapper;
 import com.pinde.core.common.form.UserResumeExtInfoForm;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -45,9 +44,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by czz on 2017/2/27.
@@ -77,6 +76,11 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     private IResJointOrgBiz jointOrgBiz;
     @Resource
     private GraduationDoctorTempMapper graduationDoctorTempMapper;
+    @Resource
+    private ResRecMapper resRecMapper;
+
+    @Resource
+    private ResRecCheckConfigMapper resRecCheckConfigMapper;
 
 
     private static final Logger logger = LoggerFactory.getLogger(JsResGraduationApplyImpl.class);
@@ -287,17 +291,6 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         tempMapper.updateRecruitAvgPerTempByRecruitFlow(recruitFlow,applyFlow);
     }
 
-    private JsresDoctorDeptDetail getJsresDoctorDeptDetail(String applyYear, String doctorFlow, String schStandardDeptFlow) {
-        JsresDoctorDeptDetailExample example=new JsresDoctorDeptDetailExample();
-        example.createCriteria().andApplyYearEqualTo(applyYear).andDoctorFlowEqualTo(doctorFlow).andSchStandardDeptFlowEqualTo(schStandardDeptFlow);
-        List<JsresDoctorDeptDetail> list=jsresDoctorDeptDetailMapper.selectByExample(example);
-        if(list!=null&&list.size()>0)
-        {
-            return list.get(0);
-        }
-        return null;
-    }
-
     private void selectAfter(String applyYear, String recruitFlow, String doctorFlow) throws DocumentException {
         List<ResSchProcessExpress> recs = expressBiz.searchByUserFlowAndTypeId( doctorFlow, AfterRecTypeEnum.AfterSummary.getId());
         List<SchRotationDeptAfterWithBLOBs> afters=afterBiz.getAfterByDoctorFlow(doctorFlow,applyYear);
@@ -395,6 +388,64 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     @Override
     public GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow) {
         return graduationDoctorTempMapper.selectByPrimaryKey(doctorFlow);
+    }
+
+    @Override
+    public Map<String, List<ResRec>> getNonComplianceRecords(String doctorFlow) {
+        List<ResRec> resRecList = new ArrayList<>();
+        LambdaQueryWrapper<ResRec> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ResRec::getOperUserFlow,doctorFlow).eq(ResRec::getRecordStatus,"Y")
+                .in(ResRec::getRecTypeId,new String[]{ResRecTypeEnum.CaseRegistry.getId(),
+                        ResRecTypeEnum.DiseaseRegistry.getId(),
+                        ResRecTypeEnum.SkillRegistry.getId(),
+                        ResRecTypeEnum.OperationRegistry.getId(), ResRecTypeEnum.CampaignRegistry.getId()});
+        List<ResRec> resRecs = resRecMapper.selectList(lambdaQueryWrapper);
+
+        LambdaQueryWrapper<ResRecCheckConfig> resRecCheckConfigLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        resRecCheckConfigLambdaQueryWrapper.eq(ResRecCheckConfig::getRecordStatus,com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+        List<ResRecCheckConfig> resRecCheckConfigs = resRecCheckConfigMapper.selectList(resRecCheckConfigLambdaQueryWrapper);
+        Map<String, List<ResRecCheckConfig>> configMap = resRecCheckConfigs.stream().collect(Collectors.groupingBy(resRecCheckConfig -> resRecCheckConfig.getRegistryTypeId()));
+        resRecs.forEach(resRec -> {
+            //如果resRec.getRecContent()是空，直接加入不合规的记录中
+            if(StringUtils.isBlank(resRec.getRecContent())){
+                resRecList.add(resRec);
+            }else{
+
+                if(CollectionUtils.isEmpty(resRecCheckConfigs)) return;
+                //遍历配置项,针对每种检查项，判断是否为空，为空则加入不合规的记录中
+                List<ResRecCheckConfig> resRecCheckConfigs2 = configMap.get(resRec.getRecTypeId());
+                if(CollectionUtils.isEmpty(resRecCheckConfigs2)) return;
+                resRecCheckConfigs2.forEach(rrcc2  -> {
+                    String valueByTag = XmlUtils.getValueByTag(rrcc2.getCheckItem(), resRec.getRecContent());
+                    if(StringUtils.isEmpty(valueByTag)){
+                        resRecList.add(resRec);
+                    }else{
+                        //例外的情形
+                        if(StringUtils.isNotEmpty(rrcc2.getCheckRulesExa())){
+                            String[] split = rrcc2.getCheckRulesExa().split(",");
+                            Arrays.asList(split).stream().forEach(e -> {
+                                if(e.equals(valueByTag)) return;
+                            });
+                        }
+
+                        String pattern = rrcc2.getCheckRules();
+                        //如果配置的正则表达式为空，再看是否有其他制定的检查规则
+                        if(StringUtils.isNotEmpty(pattern)){
+                            boolean matches = Pattern.compile(pattern).matcher(valueByTag).matches();
+                            if(!matches) resRecList.add(resRec);
+                        }
+                        String checkRulesSingle = rrcc2.getCheckRulesSingle();
+                        if(StringUtils.isEmpty(checkRulesSingle)) return;
+                        String[] split = checkRulesSingle.split(",");
+                        for (String s : split) {
+                            if(valueByTag.equals(s)) resRecList.add(resRec);
+                        }
+                    }
+                });
+            }
+        });
+        Map<String, List<ResRec>> resultMap = resRecList.stream().collect(Collectors.groupingBy(resRec -> resRec.getOperUserFlow()));
+        return resultMap;
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.pinde.core.common.enums.jsres.CertificateStatusEnum;
 import com.pinde.core.common.sci.dao.ResJointOrgMapper;
 import com.pinde.core.model.*;
 import com.pinde.core.page.PageHelper;
+import com.pinde.core.service.impl.ResRecCheckConfigService;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.ExcleUtile;
 import com.pinde.core.util.StringUtil;
@@ -44,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,12 +79,14 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
     private IResRecBiz resRecBiz;
     @Autowired
     private IResScoreBiz resScoreBiz;
-    @Autowired
+    @Resource
     private IJsResGraduationApplyBiz graduationApplyBiz;
     @Autowired
     private IResDoctorRecruitBiz resDoctorRecruitBiz;
     @Autowired
     private IResTestConfigBiz resTestConfigBiz;
+
+
     public static final String SCOREYEAR_NOT_FIND="请选择成绩年份";
 
     @RequestMapping(value="/doctorTheoryList")
@@ -2325,12 +2329,19 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         //禅道2143 主基地查询数据不包含协同基地助理全科
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList2(param);
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        list.stream().forEach(e->{
+            Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
+            nonComplianceRecordsMap.putAll(doctorFlowMap);
+
+        });
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyListNew(param);
         if(StringUtil.isNotBlank(roleFlag)){
             model.addAttribute("roleFlag",roleFlag);
         }
         model.addAttribute("list",list);
+        model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
        /* String nowTime=DateUtil.transDateTime(DateUtil.getCurrentTime());
         String startDate=InitConfig.getSysCfg("local_submit_start_time");
         String endDate=InitConfig.getSysCfg("local_submit_end_time");*/
@@ -2349,6 +2360,7 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         model.addAttribute("currentUser",currentUser);
         model.addAttribute("roleFlag",roleFlag);
         model.addAttribute("trainingTypeId",trainingTypeId);
+
         return "jsres/asse/hospital/auditList";
     }
 

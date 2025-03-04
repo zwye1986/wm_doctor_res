@@ -161,6 +161,7 @@ function showApplyImg(imgUrl1,imgUrl2)
 				<c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
 					<th>审核状态</th>
 				</c:if>
+				<th>轮转数据是否合规</th>
 				<th>姓名</th>
 				<th>报考专业</th>
 				<th>培训起止时间</th>
@@ -195,6 +196,7 @@ function showApplyImg(imgUrl1,imgUrl2)
 			<c:if test="${param.tabTag ne 'FristWait' and param.tabTag ne 'FristWait2'}">
 				<th style="width: 10%; " class="fixedBy">审核状态</th>
 			</c:if>
+			<th class="fixedBy">轮转数据是否合规</th>
 			<th style="width: 20%; " class="fixedBy">培训基地</th>
 			<th style="width: 20%; " class="toFiexdDept">姓名</th>
 			<th style="width: 20%; " class="fixedBy">报考专业</th>
@@ -255,6 +257,16 @@ function showApplyImg(imgUrl1,imgUrl2)
 						</c:choose>
 					</td>
 				</c:if>
+				<td style="min-width: 80px; max-width: 80px; " class="by">
+						<c:choose>
+                            <c:when test="${not empty nonComplianceRecordsMap[s.doctorFlow]}">
+                                否
+                            </c:when>
+                            <c:otherwise>
+                                是
+                            </c:otherwise>
+                        </c:choose>
+					</td>
 				<td style="min-width: 170px; max-width: 170px; " class="by">
 					<c:if test="${empty doctor.jointOrgName}">${doctor.orgName}</c:if>
 					<c:if test="${not empty doctor.jointOrgName}">${doctor.jointOrgName}</c:if>

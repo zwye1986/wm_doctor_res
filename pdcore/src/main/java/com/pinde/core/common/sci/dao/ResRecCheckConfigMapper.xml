@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pinde.core.common.sci.dao.ResRecCheckConfigMapper">
+  <resultMap id="BaseResultMap" type="com.pinde.core.model.ResRecCheckConfig">
+    <!--@mbg.generated-->
+    <!--@Table RES_REC_CHECK_CONFIG-->
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="REGISTRY_TYPE_ID" jdbcType="VARCHAR" property="registryTypeId" />
+    <result column="REGISTRY_TYPE_NAME" jdbcType="VARCHAR" property="registryTypeName" />
+    <result column="CHECK_ITEM" jdbcType="VARCHAR" property="checkItem" />
+    <result column="CHECK_RULES" jdbcType="VARCHAR" property="checkRules" />
+    <result column="CHECK_RULES_SINGLE" jdbcType="VARCHAR" property="checkRulesSingle" />
+    <result column="RECORD_STATUS" jdbcType="VARCHAR" property="recordStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    ID, REGISTRY_TYPE_ID, REGISTRY_TYPE_NAME, CHECK_ITEM, CHECK_RULES, CHECK_RULES_SINGLE, 
+    RECORD_STATUS
+  </sql>
+</mapper>

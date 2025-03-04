@@ -644,6 +644,7 @@
 	</select>
 	<resultMap id="signUpMap" type="hashmap" extends="com.pinde.core.common.sci.dao.JsresExamSignupMapper.BaseResultMap">
 		<result column="ID_NO" jdbcType="VARCHAR" property="idNo" />
+		<result column="USER_FLOW" jdbcType="VARCHAR" property="doctorFlow" />
 		<result column="USER_PHONE" jdbcType="VARCHAR" property="userPhone" />
 		<result column="SU_USER_NAME" jdbcType="VARCHAR"  property="userName"/>
 		<result column="ORG_CITY_NAME" jdbcType="VARCHAR"  property="orgCityName"/>
@@ -663,7 +664,7 @@
 		<result column="TEMP_DOCTOR_FLAG" property="tempDoctorFlag" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="queryExamSignUpList" resultMap="signUpMap">
-		SELECT JES.TRAINING_YEARS,
+		SELECT JES.TRAINING_YEARS,SU.USER_FLOW
 		JES.TRAINING_TYPE_ID,
 		JES.TRAINING_TYPE_NAME,
 		JES.TRAINING_SPE_ID,

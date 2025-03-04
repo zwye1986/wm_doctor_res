@@ -24,6 +24,7 @@
 <!--    <includeAll path="classpath:db/changelog/2024/" relativeToChangelogFile="false"/>-->
 <!--    <includeAll path="classpath:db/changelog/2025/" relativeToChangelogFile="false"/>-->
     <includeAll path="classpath:db/changelog/2025/02/" relativeToChangelogFile="false"/>
+    <includeAll path="classpath:db/changelog/2025/03/" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
 

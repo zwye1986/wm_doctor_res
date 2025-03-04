@@ -113,6 +113,7 @@
 			<thead>
 			<tr>
 				<th style="min-width: 100px; max-width: 100px; "   class="toFiexdDept">操作</th>
+				<th style="width: 100px; ">轮转数据是否合规</th>
 				<th style="min-width: 80px; max-width: 80px; "   class="toFiexdDept">姓名</th>
 				<c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">
 					<th style="min-width: 120px; max-width: 120px; " class="fixedBy">地市</th>
@@ -144,6 +145,16 @@
 						<c:if test="${roleFlag ne GlobalConstant.USER_LIST_GLOBAL}">
 							<a class="btn"  onclick="showSignup('${s.signupFlow}');" style="margin-top: 5px;margin-bottom: 5px;">查看</a>
 						</c:if>
+					</td>
+					<td style="min-width: 80px; max-width: 80px; " class="by">
+						<c:choose>
+                            <c:when test="${not empty nonComplianceRecordsMap[s.doctorFlow]}">
+                                否
+                            </c:when>
+                            <c:otherwise>
+                                是
+                            </c:otherwise>
+                        </c:choose>
 					</td>
 					<td style="min-width: 80px; max-width: 80px; " class="by">${s.userName}</td>
 					<c:if test="${roleFlag eq GlobalConstant.USER_LIST_GLOBAL}">

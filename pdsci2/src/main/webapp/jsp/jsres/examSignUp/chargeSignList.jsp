@@ -116,6 +116,7 @@
                 <c:if test="${param.tabTag ne 'SecondWait' and param.tabTag ne 'SecondWait2'}">
                     <th class="fixedBy">审核状态</th>
                 </c:if>
+                <th class="fixedBy">轮转数据是否合规</th>
                 <th class="fixedBy">姓名</th>
                 <th class="fixedBy">培训基地</th>
                 <th class="fixedBy">考试编号</th>
@@ -171,6 +172,16 @@
                             </c:when>
                         </c:choose>
                     </c:if>
+                    <td style="min-width: 80px; max-width: 80px; " class="by">
+						<c:choose>
+                            <c:when test="${not empty nonComplianceRecordsMap[s.doctorFlow]}">
+                                否
+                            </c:when>
+                            <c:otherwise>
+                                是
+                            </c:otherwise>
+                        </c:choose>
+					</td>
                     <td class="by">${s.userName}</td>
                     <td class="by">${s.orgName}</td>
                     <td class="by">${s.testId}</td>

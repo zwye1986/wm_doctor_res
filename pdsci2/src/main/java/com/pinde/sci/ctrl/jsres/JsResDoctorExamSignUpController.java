@@ -39,6 +39,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -709,18 +710,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         } else if (com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE.equals(roleFlag)) {
             SysUser sysuser = GlobalContext.getCurrentUser();
             SysOrg org = orgBiz.readSysOrg(sysuser.getOrgFlow());
-//            model.addAttribute("org", org);
             SysOrg sysorg = new SysOrg();
             sysorg.setOrgProvId(org.getOrgProvId());
             sysorg.setOrgCityId(org.getOrgCityId());
             param.put("org",sysorg);
-//            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//            List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
-//            if (orgs != null) {
-//                for (SysOrg sysOrg : orgs) {
-//                    orgFlowList.add(sysOrg.getOrgFlow());
-//                }
-//            }
             List<ResTestConfig> chargeEffective = resTestConfigBiz.findChargeEffective(DateUtil.getCurrDateTime2());
             if (chargeEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
@@ -737,13 +730,6 @@ public class JsResDoctorExamSignUpController extends GeneralController {
                 sysorg.setOrgCityId(cityId);
             }
             param.put("org",sysorg);
-//            sysorg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//            List<SysOrg> orgs = orgBiz.searchOrg(sysorg);
-//            if (orgs != null) {
-//                for (SysOrg sysOrg : orgs) {
-//                    orgFlowList.add(sysOrg.getOrgFlow());
-//                }
-//            }
             List<ResTestConfig> globalEffective = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
             if (globalEffective.size() > 0) {
                 if (DateUtil.getYear().equals(signupYear)) {
@@ -752,113 +738,6 @@ public class JsResDoctorExamSignUpController extends GeneralController {
             }
         }
 
-//        List<String> jointOrgFlowList = new ArrayList<>();
-        //新增需求，市局（只有市局要加协同基地限制，详见禅道BUG3391）
-//        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//            if (StringUtil.isBlank(orgFlow)) {
-//                SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
-//                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
-//                    jointOrgFlowList.add(currentUser.getOrgFlow());
-//                    SysOrg searchOrg = new SysOrg();
-//                    searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-//                    if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                        searchOrg.setOrgCityId(sysOrg.getOrgCityId());
-//                    }
-//                    List<SysOrg> exitOrgs = orgBiz.searchOrg(searchOrg);
-//                    for (SysOrg g : exitOrgs) {
-//                        List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(g.getOrgFlow());
-//                        if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                            for (ResJointOrg jointOrg : resJointOrgList) {
-//                                if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                                    cityId = orgBiz.readSysOrg(jointOrg.getJointOrgFlow()).getOrgCityId();
-//                                    if (StringUtil.isNotBlank(cityId) && cityId.equals(sysOrg.getOrgCityId())) {
-//                                        jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                                    }
-//                                } else {
-//                                    jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                                }
-//                            }
-//                        }
-//                        jointOrgFlowList.add(g.getOrgFlow());
-//                    }
-//                }
-//            } else {
-//                jointOrgFlowList.add(orgFlow);
-//                if (com.pinde.core.common.GlobalConstant.FLAG_Y.equals(jointOrgFlag)) {
-//                    List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(orgFlow);
-//                    if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                        for (ResJointOrg jointOrg : resJointOrgList) {
-//                            jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                        }
-//                    }
-//                }
-//            }
-//            orgFlowList.addAll(jointOrgFlowList);
-//        }
-//        if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)
-//                || getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_GLOBAL)) {
-//            if(StringUtil.isNotBlank(orgFlow)){
-//                jointOrgFlowList.add(orgFlow);
-//                List<ResJointOrg> resJointOrgList = jointOrgBiz.searchResJointByOrgFlow(orgFlow);
-//                if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                    for (ResJointOrg jointOrg : resJointOrgList) {
-//                        jointOrgFlowList.add(jointOrg.getJointOrgFlow());
-//                    }
-//                }
-//            }else{
-//                SysOrg sysOrg = orgBiz.readSysOrg(currentUser.getOrgFlow());
-//                jointOrgFlowList.add(currentUser.getOrgFlow());
-//                SysOrg searchOrg = new SysOrg();
-//                searchOrg.setOrgProvId(sysOrg.getOrgProvId());
-//                searchOrg.setOrgTypeId(com.pinde.core.common.enums.OrgTypeEnum.Hospital.getId());
-//                if(getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                    searchOrg.setOrgCityId(sysOrg.getOrgCityId());
-//                }
-//                List<SysOrg> exitOrgs = orgBiz.searchOrg(searchOrg);
-//                for (SysOrg g : exitOrgs) {
-//                    List<SysOrg> resJointOrgList = orgBiz.searchJointOrgsByOrg(g.getOrgFlow());
-//                    if (resJointOrgList != null && !resJointOrgList.isEmpty()) {
-//                        if(roleFlag.equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)){
-//                            jointOrgFlowList.add(g.getOrgFlow());
-//                        }else{
-//                            if(StringUtil.isNotBlank(cityId)){
-//                                if(cityId.equals(g.getOrgCityId())) {
-//                                    jointOrgFlowList.add(g.getOrgFlow());
-//                                }
-//                            }else {
-//                                jointOrgFlowList.add(g.getOrgFlow());
-//                            }
-//                        }
-////                        jointOrgFlowList.add(g.getOrgFlow());
-//                        for (SysOrg so : resJointOrgList) {
-//                            if (getSessionAttribute(com.pinde.core.common.GlobalConstant.USER_LIST_SCOPE).equals(com.pinde.core.common.GlobalConstant.USER_LIST_CHARGE)) {
-//                                cityId = so.getOrgCityId();
-//                                if (StringUtil.isNotBlank(cityId) && cityId.equals(so.getOrgCityId())) {
-//                                    jointOrgFlowList.add(so.getOrgFlow());
-//                                }
-//                            } else {
-//                                if(StringUtil.isNotBlank(cityId)){
-//                                    if(cityId.equals(so.getOrgCityId())) {
-//                                        jointOrgFlowList.add(so.getOrgFlow());
-//                                    }
-//                                }else {
-//                                    jointOrgFlowList.add(so.getOrgFlow());
-//                                }
-//                            }
-//                        }
-//                    }else{
-//                        if(StringUtil.isNotBlank(cityId)){
-//                            if(cityId.equals(g.getOrgCityId())) {
-//                                jointOrgFlowList.add(g.getOrgFlow());
-//                            }
-//                        }else {
-//                            jointOrgFlowList.add(g.getOrgFlow());
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        orgFlowList.addAll(jointOrgFlowList);
         // bug 市局账号 地区数据权限限制有误，与省厅查询到一样数据
         param.put("orgFlowList",orgFlowList);//培训基地list
         List<String>docTypeList=new ArrayList<String>();//人员类型
@@ -893,6 +772,13 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=doctorRecruitBiz.queryExamSignUpList(param);
+        Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
+        list.stream().forEach(e->{
+            Map<String, List<ResRec>> doctorFlowMap = jsresGraduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
+            nonComplianceRecordsMap.putAll(doctorFlowMap);
+
+        });
+
         Map<String,String> trainMap = new HashMap<>();
         if (list.size() > 0) {
             for (Map<String, Object> stringObjectMap : list) {
@@ -967,6 +853,7 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         model.addAttribute("trainMap", trainMap);
         model.addAttribute("typeId", typeId);
         model.addAttribute("list", list);
+        model.addAttribute("nonComplianceRecordsMap", nonComplianceRecordsMap);
         model.addAttribute("f", f);
         model.addAttribute("roleFlag", roleFlag);
         if (com.pinde.core.common.GlobalConstant.USER_LIST_LOCAL.equals(roleFlag)) {

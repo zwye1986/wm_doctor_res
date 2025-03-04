@@ -1,9 +1,6 @@
 package com.pinde.sci.biz.jsres;
 
-import com.pinde.core.model.GraduationDoctorTemp;
-import com.pinde.core.model.JsresGraduationApply;
-import com.pinde.core.model.JsresGraduationApplyLog;
-import com.pinde.core.model.JsresGraduationInfo;
+import com.pinde.core.model.*;
 import org.dom4j.DocumentException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -68,5 +65,7 @@ public interface IJsResGraduationApplyBiz {
      * @Date 2025/2/17
      */
     GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow);
+
+    Map<String, List<ResRec>> getNonComplianceRecords(String doctorFlow);
 
 }
