@@ -1162,14 +1162,14 @@
                             <dd class="menu_item"><a onclick="baseExpertSuperVisio();">专业基地自评汇总</a></dd>
                         </dl>
                         <c:if test="${hospitalSupervisor eq 'Y'}" >
-                            <dl class="menu">
+                            <%--<dl class="menu">
                                 <dt class="menu_title">
                                     <i class="icon_menu menu_360check"></i>院级督导管理
                                 </dt>
                                 <dd class="menu_item"><a onclick="hospitalLeaderMain();">评审专家维护</a></dd>
                                 <dd class="menu_item"><a onclick="hospitalSubjectMain();">评审项目配置</a></dd>
                                 <dd class="menu_item"><a onclick="hospitalStatisticsMain();">评审结果汇总</a></dd>
-                            </dl>
+                            </dl>--%>
                         </c:if>
                         <dl class="menu">
                             <dt class="menu_title">
