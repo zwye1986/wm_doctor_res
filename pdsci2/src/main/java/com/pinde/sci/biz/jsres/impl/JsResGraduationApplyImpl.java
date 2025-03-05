@@ -418,9 +418,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 List<ResRecCheckConfig> resRecCheckConfigs2 = configMap.get(resRec.getRecTypeId());
                 if(CollectionUtils.isEmpty(resRecCheckConfigs2)) return;
                 resRecCheckConfigs2.forEach(rrcc2  -> {
+                    resRec.setCheckItemName(rrcc2.getCheckItemName());
                     String valueByTag = XmlUtils.getValueByTag(rrcc2.getCheckItem(), resRec.getRecContent());
                     if(StringUtils.isEmpty(valueByTag)){
-                        resRec.setCheckItemName(rrcc2.getCheckItemName());
                         resRec.setInvalidContent(valueByTag);
                         resRecList.add(resRec);
                     }else{
@@ -443,13 +443,19 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                             //如果配置的正则表达式为空，再看是否有其他制定的检查规则
                             if(StringUtils.isNotEmpty(pattern)){
                                 boolean matches = Pattern.compile(pattern).matcher(valueByTag).matches();
-                                if(!matches) resRecList.add(resRec);
+                                if(!matches) {
+                                    resRec.setInvalidContent(valueByTag);
+                                    resRecList.add(resRec);
+                                }
                             }
                             String checkRulesSingle = rrcc2.getCheckRulesSingle();
                             if(StringUtils.isEmpty(checkRulesSingle)) return;
                             String[] split = checkRulesSingle.split(",");
                             for (String s : split) {
-                                if(valueByTag.equals(s)) resRecList.add(resRec);
+                                if(valueByTag.equals(s)) {
+                                    resRec.setInvalidContent(valueByTag);
+                                    resRecList.add(resRec);
+                                }
                             }
                         }
                     }

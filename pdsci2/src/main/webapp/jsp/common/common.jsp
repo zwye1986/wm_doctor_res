@@ -35,14 +35,14 @@
             var list = map[doctorFlow];
             var content = "";
             for(var i=0;i<list.length;i++){
-                content += "在<span class='item'>"+list[i].orgName+"</span><span class='item'>"+list[i].schDeptName+"</span>轮转时<span class='item'>"+list[i].recTypeName+"</span><span class='item'>"+list[i].checkItemName+"</span>的填写存在问题：";
+                content += "在<span class='item'>"+list[i].orgName+"</span><span class='item'>"+list[i].schDeptName+"</span>轮转时<span class='item'>"+list[i].recTypeName+"</span>中的<span class='item'>"+list[i].checkItemName+"</span>的填写的是：";
                 if(list[i].invalidContent === "" || list[i].invalidContent === null || list[i].invalidContent === undefined){
-                    content += "<span class='item'>填写内容为空</span>";
+                    content += "<span class='item'>空</span>";
                 }else{
                     content += "<span class='item'>"+list[i].invalidContent+"</span>";
                 }
 
-                content += ";记录ID="+list[i].recFlow+"<br>";
+                content += ",不合规范！记录ID="+list[i].recFlow+"<br>";
             }
             jboxOpenContent(content, '不合规数据', 1000, 600, true);
         }
