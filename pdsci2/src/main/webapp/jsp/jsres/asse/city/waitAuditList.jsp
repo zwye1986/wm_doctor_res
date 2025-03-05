@@ -14,7 +14,7 @@
 	<jsp:param name="jquery_placeholder" value="true"/>
 	<jsp:param name="jquery_iealert" value="false"/>
 </jsp:include>
-
+<%@include file="/jsp/common/common.jsp"%>
 <script type="text/javascript" src="<s:url value='/js/Scoll/Scorll2.js'/>?v=${applicationScope.sysCfgMap['sys_version']}"></script>
 <script type="text/javascript">
 
@@ -260,7 +260,7 @@ function showApplyImg(imgUrl1,imgUrl2)
 				<td style="min-width: 80px; max-width: 80px; " class="by">
 						<c:choose>
                             <c:when test="${not empty nonComplianceRecordsMap[s.doctorFlow]}">
-                                否
+                                <a onclick="showNonComplianceRecords('${s.doctorFlow}')">否</a>
                             </c:when>
                             <c:otherwise>
                                 是

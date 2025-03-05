@@ -66,6 +66,6 @@ public class InitPasswordUtil extends GeneralController {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("根据输入的规则"+password+"加密后的密文是:"+PasswordHelper.encryptPassword("db768debaaf94d77b078ec24ac4bbca7","Tswcbyyqjsjhfl#8848"));
+		System.out.println("根据输入的规则"+password+"加密后的密文是:"+PasswordHelper.encryptPassword("db768debaaf94d77b078ec24ac4bbca7","@teh666"));
 	}
 }

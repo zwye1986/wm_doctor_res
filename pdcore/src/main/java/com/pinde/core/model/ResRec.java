@@ -100,6 +100,26 @@ public class ResRec implements java.io.Serializable {
     private String medicineType;
 
     private String recContent;
+    @TableField(exist = false)
+    private  String checkItemName;
+    @TableField(exist = false)
+    private String invalidContent;
+
+    public String getCheckItemName() {
+        return checkItemName;
+    }
+
+    public void setCheckItemName(String checkItemName) {
+        this.checkItemName = checkItemName;
+    }
+
+    public String getInvalidContent() {
+        return invalidContent;
+    }
+
+    public void setInvalidContent(String invalidContent) {
+        this.invalidContent = invalidContent;
+    }
 
     /**
      * 查询类型 ：2 教学活动

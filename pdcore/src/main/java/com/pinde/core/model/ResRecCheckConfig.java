@@ -55,8 +55,8 @@ public class ResRecCheckConfig {
     /**
      * 例外的情况，可以配置多个用","分隔；只要匹配上就算合规
      */
-    @TableField(value = "CHECK_RULES_EXA")
-    private String checkRulesExa;
+    @TableField(value = "CHECK_RULES_EXp")
+    private String checkRulesExp;
 
     /**
      * 启用状态

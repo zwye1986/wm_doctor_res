@@ -408,6 +408,8 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         resRecs.forEach(resRec -> {
             //如果resRec.getRecContent()是空，直接加入不合规的记录中
             if(StringUtils.isBlank(resRec.getRecContent())){
+                resRec.setCheckItemName("填写内容");
+                resRec.setInvalidContent("");
                 resRecList.add(resRec);
             }else{
 
@@ -418,27 +420,37 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 resRecCheckConfigs2.forEach(rrcc2  -> {
                     String valueByTag = XmlUtils.getValueByTag(rrcc2.getCheckItem(), resRec.getRecContent());
                     if(StringUtils.isEmpty(valueByTag)){
+                        resRec.setCheckItemName(rrcc2.getCheckItemName());
+                        resRec.setInvalidContent(valueByTag);
                         resRecList.add(resRec);
                     }else{
+                        int[] i = new int[]{0};
                         //例外的情形
-                        if(StringUtils.isNotEmpty(rrcc2.getCheckRulesExa())){
-                            String[] split = rrcc2.getCheckRulesExa().split(",");
+                        if(StringUtils.isNotEmpty(rrcc2.getCheckRulesExp())){
+                            String[] split = rrcc2.getCheckRulesExp().split(",");
+
                             Arrays.asList(split).stream().forEach(e -> {
-                                if(e.equals(valueByTag)) return;
+                                if(e.equals(valueByTag)) {
+                                    i[0] = 1;
+                                    return;
+                                }
                             });
+
                         }
 
-                        String pattern = rrcc2.getCheckRules();
-                        //如果配置的正则表达式为空，再看是否有其他制定的检查规则
-                        if(StringUtils.isNotEmpty(pattern)){
-                            boolean matches = Pattern.compile(pattern).matcher(valueByTag).matches();
-                            if(!matches) resRecList.add(resRec);
-                        }
-                        String checkRulesSingle = rrcc2.getCheckRulesSingle();
-                        if(StringUtils.isEmpty(checkRulesSingle)) return;
-                        String[] split = checkRulesSingle.split(",");
-                        for (String s : split) {
-                            if(valueByTag.equals(s)) resRecList.add(resRec);
+                        if( i[0] == 0){
+                            String pattern = rrcc2.getCheckRules();
+                            //如果配置的正则表达式为空，再看是否有其他制定的检查规则
+                            if(StringUtils.isNotEmpty(pattern)){
+                                boolean matches = Pattern.compile(pattern).matcher(valueByTag).matches();
+                                if(!matches) resRecList.add(resRec);
+                            }
+                            String checkRulesSingle = rrcc2.getCheckRulesSingle();
+                            if(StringUtils.isEmpty(checkRulesSingle)) return;
+                            String[] split = checkRulesSingle.split(",");
+                            for (String s : split) {
+                                if(valueByTag.equals(s)) resRecList.add(resRec);
+                            }
                         }
                     }
                 });
