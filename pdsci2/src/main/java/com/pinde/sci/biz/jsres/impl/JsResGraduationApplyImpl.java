@@ -390,6 +390,11 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         return graduationDoctorTempMapper.selectByPrimaryKey(doctorFlow);
     }
 
+    /**
+     * @Description: 根据doctorFlow查询不合规范的填写记录
+     * @param doctorFlow
+     * @return
+     */
     @Override
     public Map<String, List<ResRec>> getNonComplianceRecords(String doctorFlow) {
         List<ResRec> resRecList = new ArrayList<>();
