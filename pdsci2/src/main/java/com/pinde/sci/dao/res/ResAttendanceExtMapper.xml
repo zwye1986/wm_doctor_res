@@ -986,9 +986,9 @@
         select su.user_flow,su.user_name,rd.session_number,rd.training_type_name,rd.training_spe_name,
         p.dept_name,rd.doctor_type_name,
         count(a.date_day) all_num,
-        sum(case when nvl(t.attend_status,1)='1' then 1 else 0 end) AS cq_num,
-        sum(case when nvl(t.attend_status,1)='0' then 1 else 0 end) AS qq_num,
-        sum(case when nvl(t.attend_status,1)='-1' then 1 else 0 end) AS lx_num
+        sum(case when nvl(t.attend_status,0)='1' then 1 else 0 end) AS cq_num,
+        sum(case when nvl(t.attend_status,0)='0' then 1 else 0 end) AS qq_num,
+        sum(case when nvl(t.attend_status,0)='-1' then 1 else 0 end) AS lx_num
     from sys_user su
     left join res_doctor rd on su.user_flow=rd.doctor_flow
     left join Sys_Date_info A
