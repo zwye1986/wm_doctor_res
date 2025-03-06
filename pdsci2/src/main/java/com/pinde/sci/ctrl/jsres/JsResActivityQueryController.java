@@ -1,7 +1,9 @@
 package com.pinde.sci.ctrl.jsres;
 
 
+import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.ActivityTypeEnum;
 import com.pinde.core.common.sci.dao.TeachingActivitySpeakerMapper;
@@ -21,6 +23,7 @@ import com.pinde.sci.biz.sys.*;
 import com.pinde.sci.common.GeneralController;
 import com.pinde.sci.common.GlobalContext;
 import com.pinde.sci.common.InitConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
@@ -54,6 +57,7 @@ import java.util.stream.Collectors;
  *
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("/jsres/activityQuery")
 public class JsResActivityQueryController extends GeneralController {
@@ -300,6 +304,18 @@ public class JsResActivityQueryController extends GeneralController {
 		int rowNum = 1;
 		String[] dataList = null;
 		if(list != null && list.size() > 0){
+			List<String> activityList = new ArrayList<>();
+			for (Map<String, Object> map : list) {
+				activityList.add((String) map.get("activityFlow"));
+			}
+			List<PubFile> pubFileList = new ArrayList<>();
+			Lists.partition(activityList.stream().distinct().collect(Collectors.toList()), 1000).forEach(subList -> {
+				List<PubFile> tempList = fileBiz.findFileByTypeFlows("activity", subList);
+				if(CollectionUtils.isNotEmpty(tempList)) {
+					pubFileList.addAll(tempList);
+				}
+			});
+			Map<String, List<PubFile>> fileMap = pubFileList.stream().collect(Collectors.groupingBy(PubFile::getProductFlow));
 			for (Map<String, Object> map : list) {
 				if (map.containsKey("IS_EFFECTIVE")) {
 					if (map.get("IS_EFFECTIVE").equals(com.pinde.core.common.GlobalConstant.FLAG_Y)) {
@@ -326,7 +342,8 @@ public class JsResActivityQueryController extends GeneralController {
 				if(!"doctor".equals(roleFlag))
 				{
 					//查询附件
-					List<PubFile> fileList = fileBiz.findFileByTypeFlow("activity", (String) map.get("activityFlow"));
+//					List<PubFile> fileList = fileBiz.findFileByTypeFlow("activity", (String) map.get("activityFlow"));
+					List<PubFile> fileList = fileMap.get((String) map.get("activityFlow"));
 					map.put("fileFlag", (fileList != null && fileList.size() > 0 ? "是" : "否"));
 					if(CollectionUtils.isNotEmpty(fileList)){
 						map.put("uploadFileTime",fileList.stream().map(
@@ -378,6 +395,7 @@ public class JsResActivityQueryController extends GeneralController {
 									// 替换网络路径为物理路径
 									imagePath = imagePath.replace(InitConfig.getSysCfg("upload_base_url"), InitConfig.getSysCfg("upload_base_dir"));
 									File file = new File(imagePath);
+									if(!FileUtil.exist(imagePath)) continue;
 									bufferedImage = ImageIO.read(file);
 									if (bufferedImage == null) {
 										continue;
@@ -392,8 +410,7 @@ public class JsResActivityQueryController extends GeneralController {
 								}
 							}
 						} catch (Exception e) {
-							e.printStackTrace();
-							continue;
+							log.error("pictures export error",e);
 						} finally {
 							if(byteArrayOutputStream != null){
 								byteArrayOutputStream.close();
