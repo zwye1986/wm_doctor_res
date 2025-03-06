@@ -44,4 +44,10 @@
         </sql>
     </changeSet>
 
+    <changeSet id="RES_REC_CHECK_CONFIG_not_null" author="zhangwy">
+        <sql>
+            ALTER TABLE RES_REC_CHECK_CONFIG  MODIFY CHECK_ITEM_NAME NOT NULL;
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
