@@ -146,70 +146,6 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         tempMapper.updateRecruitAsseInfoByApplyYear2(practicingMap);
         //学员资格审查百分比
         setFourStep(applyYear,recruitFlow,doctorFlow,applyFlow, rotationFlow, reSubmitFlag);
-//        //完成比例与审核比例
-//        List<JsresDoctorDeptDetail> details = resultBiz.deptDoctorAllWorkDetailByNow(recruitFlow, doctorFlow);
-//        if (details != null && details.size() > 0) {
-//            int isShortY=0;
-//            int isShortN=0;
-//            int shortYCount=0;
-//            int shortNCount=0;
-//            double shortYCBSum=0;//完成比例
-//            double shortNCBSum=0;
-//            double shortYOCBSum=0;//补填比例
-//            double shortNOCBSum=0;
-//            double shortYICBSum=0;//正常比例
-//            double shortNICBSum=0;
-//            double shortYABSum=0;//审核 比例
-//            double shortNABSum=0;
-//            double avgComBi=0;//平均完成比例
-//            double avgOutComBi=0;//平均补填比例
-//            double avgInComBi=0;//平均正常比例
-//            double avgAuditComBi=0;//平均审核比例
-//            for (JsresDoctorDeptDetail d : details) {
-//                if(com.pinde.core.common.GlobalConstant.FLAG_Y.equals(d.getIsShort())) {
-//                    shortYCount++;
-//                    shortYCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
-//                    shortYOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
-//                    shortYICBSum+=StringUtil.isBlank(d.getInCompleteBi())?0:"-".equals(d.getInCompleteBi())?0:Double.valueOf(d.getInCompleteBi());
-//                    shortYABSum+=StringUtil.isBlank(d.getAuditBi())?0:"-".equals(d.getAuditBi())?0:Double.valueOf(d.getAuditBi());
-//                    if (isShortY == 0) {
-//                        isShortY = 1;
-//                    }
-//                }
-//                if(com.pinde.core.common.GlobalConstant.FLAG_N.equals(d.getIsShort())) {
-//                    shortNCount++;
-//                    shortNCBSum+=StringUtil.isBlank(d.getCompleteBi())?0:"-".equals(d.getCompleteBi())?0:Double.valueOf(d.getCompleteBi());
-//                    shortNOCBSum+=StringUtil.isBlank(d.getOutCompleteBi())?0:"-".equals(d.getOutCompleteBi())?0:Double.valueOf(d.getOutCompleteBi());
-//                    shortNICBSum+=StringUtil.isBlank(d.getInCompleteBi())?0:"-".equals(d.getInCompleteBi())?0:Double.valueOf(d.getInCompleteBi());
-//                    shortNABSum+=StringUtil.isBlank(d.getAuditBi())?0:"-".equals(d.getAuditBi())?0:Double.valueOf(d.getAuditBi());
-//                    if (isShortN == 0) {
-//                        isShortN = 1;
-//                    }
-//                }
-//                d.setApplyYear(applyYear);
-//                addJsresDoctorDeptDetail(d);
-//            }
-//            //平均完成比例与平均审核比例
-//            if((isShortY+isShortN)>1)
-//            {
-//                avgComBi=new BigDecimal(shortYCBSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgOutComBi=new BigDecimal(shortYOCBSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgInComBi=new BigDecimal(shortYICBSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgAuditComBi=new BigDecimal(shortYABSum/shortYCount).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//            }else{
-//                avgComBi=new BigDecimal((shortYCBSum+shortNCBSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgOutComBi=new BigDecimal((shortYOCBSum+shortNOCBSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgInComBi=new BigDecimal((shortYICBSum+shortNICBSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//                avgAuditComBi=new BigDecimal((shortYABSum+shortNABSum)/(shortYCount+shortNCount)).setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();
-//            }
-//            JsresGraduationApply apply=new JsresGraduationApply();
-//            apply.setApplyFlow(applyFlow);
-//            apply.setAvgComplete(avgComBi+"");
-//            apply.setAvgOutComplete(avgOutComBi+"");
-//            apply.setAvgInComplete(avgInComBi+"");
-//            apply.setAvgAudit(avgAuditComBi+"");
-//            editGraduationApply(apply);
-//        }
     }
 
     @Override
@@ -400,10 +336,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         List<ResRec> resRecList = new ArrayList<>();
         LambdaQueryWrapper<ResRec> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(ResRec::getOperUserFlow,doctorFlow).eq(ResRec::getRecordStatus,"Y")
-                .in(ResRec::getRecTypeId,new String[]{ResRecTypeEnum.CaseRegistry.getId(),
-                        ResRecTypeEnum.DiseaseRegistry.getId(),
-                        ResRecTypeEnum.SkillRegistry.getId(),
-                        ResRecTypeEnum.OperationRegistry.getId(), ResRecTypeEnum.CampaignRegistry.getId()});
+                .in(ResRec::getRecTypeId,new String[]{ResRecTypeEnum.CaseRegistry.getId(), ResRecTypeEnum.DiseaseRegistry.getId(), ResRecTypeEnum.SkillRegistry.getId(), ResRecTypeEnum.OperationRegistry.getId(), ResRecTypeEnum.CampaignRegistry.getId()});
         List<ResRec> resRecs = resRecMapper.selectList(lambdaQueryWrapper);
 
         LambdaQueryWrapper<ResRecCheckConfig> resRecCheckConfigLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -423,10 +356,10 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 List<ResRecCheckConfig> resRecCheckConfigs2 = configMap.get(resRec.getRecTypeId());
                 if(CollectionUtils.isEmpty(resRecCheckConfigs2)) return;
                 resRecCheckConfigs2.forEach(rrcc2  -> {
-                    resRec.setCheckItemName(rrcc2.getCheckItemName());
                     String valueByTag = XmlUtils.getValueByTag(rrcc2.getCheckItem(), resRec.getRecContent());
                     if(StringUtils.isEmpty(valueByTag)){
                         resRec.setInvalidContent(valueByTag);
+                        resRec.setCheckItemName(rrcc2.getCheckItemName());
                         resRecList.add(resRec);
                     }else{
                         int[] i = new int[]{0};
@@ -450,6 +383,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                                 boolean matches = Pattern.compile(pattern).matcher(valueByTag).matches();
                                 if(!matches) {
                                     resRec.setInvalidContent(valueByTag);
+                                    resRec.setCheckItemName(rrcc2.getCheckItemName());
                                     resRecList.add(resRec);
                                 }
                             }
@@ -459,6 +393,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                             for (String s : split) {
                                 if(valueByTag.equals(s)) {
                                     resRec.setInvalidContent(valueByTag);
+                                    resRec.setCheckItemName(rrcc2.getCheckItemName());
                                     resRecList.add(resRec);
                                 }
                             }

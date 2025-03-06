@@ -1,11 +1,13 @@
 package com.pinde.core.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.List;
 @TableName("RES_JOINT_ORG")
 public class ResJointOrg implements java.io.Serializable {
+    @TableId
     private String jointFlow;
 
     private String orgFlow;
