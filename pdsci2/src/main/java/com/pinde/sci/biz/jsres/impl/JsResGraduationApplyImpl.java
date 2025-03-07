@@ -1,6 +1,7 @@
 package com.pinde.sci.biz.jsres.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.google.common.collect.Lists;
 import com.pinde.core.common.GlobalConstant;
 import com.pinde.core.common.enums.AfterRecTypeEnum;
 import com.pinde.core.common.enums.ExeMethod;
@@ -88,6 +89,9 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private SchArrangeResultBizImpl schArrangeResultBizImpl;
+
+    @Resource
+    private ResDoctorSchProcessMapper resDoctorSchProcessMapper;
 
     @Override
     public JsresGraduationApply searchByRecruitFlow(String recruitFlow, String applyYear) {
@@ -332,10 +336,10 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
      * @return
      */
     @Override
-    public Map<String, List<ResRec>> getNonComplianceRecords(String doctorFlow) {
+    public Map<String, List<ResRec>> getNonComplianceRecords(List<String> doctorFlowList) {
         List<ResRec> resRecList = new ArrayList<>();
         LambdaQueryWrapper<ResRec> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(ResRec::getOperUserFlow,doctorFlow).eq(ResRec::getRecordStatus,"Y")
+        lambdaQueryWrapper.in(ResRec::getOperUserFlow,doctorFlowList).eq(ResRec::getRecordStatus,"Y")
                 .in(ResRec::getRecTypeId,new String[]{ResRecTypeEnum.CaseRegistry.getId(), ResRecTypeEnum.DiseaseRegistry.getId(), ResRecTypeEnum.SkillRegistry.getId(), ResRecTypeEnum.OperationRegistry.getId(), ResRecTypeEnum.CampaignRegistry.getId()});
         List<ResRec> resRecs = resRecMapper.selectList(lambdaQueryWrapper);
 
@@ -402,7 +406,27 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
                 });
             }
         });
+
+        Set<String> proessFlowSet = resRecList.stream().map(resRec -> resRec.getProcessFlow()).collect(Collectors.toSet());
+        List<List<String>> partition = Lists.partition(new ArrayList<>(proessFlowSet), 1000);
+        List<ResDoctorSchProcess> resDoctorSchProcesses = new ArrayList<>();
+        partition.forEach(proessFlowList -> {
+            LambdaQueryWrapper<ResDoctorSchProcess> resDoctorSchProcessLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            resDoctorSchProcessLambdaQueryWrapper.in(ResDoctorSchProcess::getProcessFlow,proessFlowList)
+                    .eq(ResDoctorSchProcess::getRecordStatus,com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
+            resDoctorSchProcesses.addAll(resDoctorSchProcessMapper.selectList(resDoctorSchProcessLambdaQueryWrapper)) ;
+
+        });
+
+        Map<String, ResDoctorSchProcess> processMap = resDoctorSchProcesses.stream().collect(Collectors.toMap(ResDoctorSchProcess::getProcessFlow, resDoctorSchProcess -> resDoctorSchProcess));
+        resRecList.forEach(resRec -> {
+            ResDoctorSchProcess resDoctorSchProcess = processMap.get(resRec.getProcessFlow());
+            resRec.setStartDate(resDoctorSchProcess.getSchStartDate());
+            resRec.setEndDate(resDoctorSchProcess.getSchEndDate());
+        });
+
         Map<String, List<ResRec>> resultMap = resRecList.stream().collect(Collectors.groupingBy(resRec -> resRec.getOperUserFlow()));
+
         return resultMap;
     }
 

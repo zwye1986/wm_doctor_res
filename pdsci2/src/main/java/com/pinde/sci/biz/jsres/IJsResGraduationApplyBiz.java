@@ -66,6 +66,6 @@ public interface IJsResGraduationApplyBiz {
      */
     GraduationDoctorTemp getGraduationDoctorTemp(String doctorFlow);
 
-    Map<String, List<ResRec>> getNonComplianceRecords(String doctorFlow);
+    Map<String, List<ResRec>> getNonComplianceRecords(List<String> doctorFlow);
 
 }

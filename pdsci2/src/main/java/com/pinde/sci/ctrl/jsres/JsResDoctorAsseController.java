@@ -1021,12 +1021,10 @@ public class JsResDoctorAsseController extends GeneralController {
         param.put("tempDoctorFlag", tempDoctorFlag);
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
         Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
-        list.stream().forEach(e->{
-            Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
-            nonComplianceRecordsMap.putAll(doctorFlowMap);
-
-        });
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         model.addAttribute("list",list);
         model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;

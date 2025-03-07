@@ -2329,14 +2329,10 @@ public class JsResDoctorTheoryScoreController extends GeneralController {
         PageHelper.startPage(currentPage,getPageSize(request));
         //禅道2143 主基地查询数据不包含协同基地助理全科
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList2(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
         Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
-        list.stream().forEach(e->{
-            Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
-            nonComplianceRecordsMap.putAll(doctorFlowMap);
-
-        });
-//        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
-//        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyListNew(param);
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         if(StringUtil.isNotBlank(roleFlag)){
             model.addAttribute("roleFlag",roleFlag);
         }

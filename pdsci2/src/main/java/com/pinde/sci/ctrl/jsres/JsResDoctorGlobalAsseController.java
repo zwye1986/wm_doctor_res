@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/jsres/asseGlobal")
@@ -203,12 +204,10 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
         System.err.println(JSON.toJSON(param));
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
         Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
-        list.stream().forEach(e->{
-            Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
-            nonComplianceRecordsMap.putAll(doctorFlowMap);
-
-        });
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         model.addAttribute("list",list);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;
         List<ResTestConfig> resTestConfigList = resTestConfigBiz.findGlobalEffective(DateUtil.getCurrDateTime2());
@@ -319,12 +318,10 @@ public class JsResDoctorGlobalAsseController extends GeneralController {
   //      System.err.println(JSON.toJSON(param));
 //        List<Map<String,Object>> list=graduationApplyBiz.chargeQueryList(param);
         List<Map<String,Object>> list=graduationApplyBiz.chargeQueryApplyList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
         Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
-        list.stream().forEach(e->{
-            Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
-            nonComplianceRecordsMap.putAll(doctorFlowMap);
-
-        });
+        Map<String, List<ResRec>> doctorFlowMap = graduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
         model.addAttribute("list",list);
         model.addAttribute("nonComplianceRecordsMap",nonComplianceRecordsMap);
         String f = com.pinde.core.common.GlobalConstant.FLAG_N;

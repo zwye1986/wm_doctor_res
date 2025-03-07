@@ -104,6 +104,26 @@ public class ResRec implements java.io.Serializable {
     private  String checkItemName;
     @TableField(exist = false)
     private String invalidContent;
+    @TableField(exist = false)
+    private String startDate;
+    @TableField(exist = false)
+    private String endDate;
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 
     public String getCheckItemName() {
         return checkItemName;
