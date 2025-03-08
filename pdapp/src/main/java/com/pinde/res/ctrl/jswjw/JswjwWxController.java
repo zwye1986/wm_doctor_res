@@ -2128,6 +2128,8 @@ public class JswjwWxController extends GeneralController {
         if (StringUtil.isEmpty(deptFlow)) {
             return ResultDataThrow("科室标识符为空");
         }
+
+
         String dataType = dataExt.getDataType();
         if (StringUtil.isEmpty(dataType)) {
             return ResultDataThrow("dataType为空或不能识别");
@@ -2159,7 +2161,7 @@ public class JswjwWxController extends GeneralController {
                 }
             }
             ResDoctor doctor = jswjwBiz.readResDoctor(userFlow);
-            List<SchArrangeResult> resultList = jswjwBiz.searchSchArrangeResult(userFlow, deptFlow, null, null);
+//            List<SchArrangeResult> resultList = jswjwBiz.searchSchArrangeResult(userFlow, deptFlow, null, null);
             String limitMonth = "";
             //禅道3300当设置为是时,不论是否出科，学员都可以添加多个轮转科室,但是只有当前科室出科后,才可以添加下个轮转科室的轮转数据；
             String ckxz = jswjwBiz.getJsResCfgCode("jsres_" + doctor.getOrgFlow() + "_org_ckxz");
@@ -2202,7 +2204,15 @@ public class JswjwWxController extends GeneralController {
             }
         }
 
-        jswjwBiz.addData2(dataType, userFlow, deptFlow, cataFlow, dataExt, isChargeOrg);
+        try {
+            jswjwBiz.addData2(dataType, userFlow, deptFlow, cataFlow, dataExt, isChargeOrg);
+        } catch (Exception e) {
+
+            logger.error("addData2 error,dataType = "+dataType+", userFlow= "+userFlow+", deptFlow = "+ deptFlow+", cataFlow = "+ cataFlow +", dataExt = "+ dataExt +", isChargeOrg", e);
+            resultMap.put("resultId", "31104");
+            resultMap.put("resultType", "未选择科室");
+            return resultMap;
+        }
         return resultMap;
     }
 

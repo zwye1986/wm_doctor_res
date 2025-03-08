@@ -32,7 +32,7 @@ public interface IJswjwBiz {
 
 	public void addData(String dataType, String userFlow, String deptFlow, String cataFlow, Map<String, Object> paramMap, boolean isChargeOrg, String json);
 
-	public void addData2(String dataType, String userFlow, String deptFlow, String cataFlow, JsResDataExt dataExt, boolean isChargeOrg);
+	public void addData2(String dataType, String userFlow, String deptFlow, String cataFlow, JsResDataExt dataExt, boolean isChargeOrg) throws Exception;
 
 	public Map<String, Object> viewData(String dataType, String userFlow,String deptFlow, String dataFlow);
 

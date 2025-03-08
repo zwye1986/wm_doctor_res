@@ -1555,7 +1555,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     }
 
     @Override
-    public void addData2(String dataType, String userFlow, String deptFlow, String cataFlow, JsResDataExt dataExt, boolean isChargeOrg) {
+    public void addData2(String dataType, String userFlow, String deptFlow, String cataFlow, JsResDataExt dataExt, boolean isChargeOrg) throws Exception {
         String recTypeId = "";
         String recTypeName = "";
         String itemId = "";
@@ -1985,7 +1985,12 @@ public class JswjwBizImpl implements IJswjwBiz {
         record.setModifyTime(DateUtil.getCurrDateTime());
         record.setModifyUserFlow(userFlow);
         record.setRecordStatus(com.pinde.core.common.GlobalConstant.RECORD_STATUS_Y);
-        recMapper.insert(record);
+        if(StringUtils.isBlank(record.getProcessFlow())) {
+            logger.error("轮转科室未选择res_rec = "+ JSON.toJSONString(record));
+            throw new Exception("轮转科室未选择");
+        }
+        if(StringUtils.isBlank(dataExt.getDataFlow())) recMapper.insert(record);
+        else recMapper.updateByPrimaryKey(record);
         setRotationDeptPer(docote, deptFlow);
         //设置APP使用记录
         addAppUseInfo(userFlow);
@@ -5280,6 +5285,7 @@ public class JswjwBizImpl implements IJswjwBiz {
     public Map<String, String> getNewGradeMap(List<DeptTeacherGradeInfo> gradeList) {
         Map<String, String> gradeMap = new HashMap<String, String>();
         for (DeptTeacherGradeInfo rec : gradeList) {
+            if(StringUtils.isBlank(rec.getRecContent())) continue;
             try {
                 Document doc = DocumentHelper.parseText(rec.getRecContent());
                 String totalScore = StringUtil.defaultIfEmpty(doc.getRootElement().elementText("totalScore"), "未评价");
