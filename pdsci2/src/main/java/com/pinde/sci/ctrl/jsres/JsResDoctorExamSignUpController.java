@@ -772,12 +772,10 @@ public class JsResDoctorExamSignUpController extends GeneralController {
         }
         PageHelper.startPage(currentPage,getPageSize(request));
         List<Map<String,Object>> list=doctorRecruitBiz.queryExamSignUpList(param);
+        Set<String> doctorFlowSet = list.stream().map(kv -> kv.get("doctorFlow").toString()).collect(Collectors.toSet());
         Map<String,List<ResRec>> nonComplianceRecordsMap= new HashMap<String, List<ResRec>>();
-        list.stream().forEach(e->{
-            Map<String, List<ResRec>> doctorFlowMap = jsresGraduationApplyBiz.getNonComplianceRecords(e.get("doctorFlow").toString());
-            nonComplianceRecordsMap.putAll(doctorFlowMap);
-
-        });
+        Map<String, List<ResRec>> doctorFlowMap = jsresGraduationApplyBiz.getNonComplianceRecords(new ArrayList<>(doctorFlowSet));
+        nonComplianceRecordsMap.putAll(doctorFlowMap);
 
         Map<String,String> trainMap = new HashMap<>();
         if (list.size() > 0) {
