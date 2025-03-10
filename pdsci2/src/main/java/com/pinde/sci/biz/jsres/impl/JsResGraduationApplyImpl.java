@@ -337,6 +337,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
      */
     @Override
     public Map<String, List<ResRec>> getNonComplianceRecords(List<String> doctorFlowList) {
+        if(CollectionUtils.isEmpty(doctorFlowList)) return Collections.EMPTY_MAP;
         List<ResRec> resRecList = new ArrayList<>();
         LambdaQueryWrapper<ResRec> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.in(ResRec::getOperUserFlow,doctorFlowList).eq(ResRec::getRecordStatus,"Y")
