@@ -887,11 +887,6 @@
         on t.doctor_flow=rd.doctor_flow
         and t.attend_date=a.date_day
         and t.record_status='Y'
-        and exists(
-        select 1 from JSRES_ATTENDANCE_DETAIL d
-        where d.record_status='Y'
-        and d.attendance_flow=t.attendance_flow
-        )
         LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
         FROM res_doctor_sch_process p
         WHERE p.record_status = 'Y'
@@ -999,11 +994,6 @@
         on t.doctor_flow=rd.doctor_flow
         and t.attend_date=a.date_day
         and t.record_status='Y'
-    and exists(
-            select 1 from JSRES_ATTENDANCE_DETAIL d
-            where d.record_status='Y'
-            and d.attendance_flow=t.attendance_flow
-        )
         LEFT JOIN (SELECT p.user_flow, to_char(WM_CONCAT(DISTINCT p.dept_name)) AS dept_name
           FROM res_doctor_sch_process p
          WHERE p.record_status = 'Y'
@@ -1202,11 +1192,6 @@
             where t.doctor_flow = rd.doctor_flow
             and t.record_status='Y'
             AND t.attend_date = #{item}
-            and exists(
-            select 1 from JSRES_ATTENDANCE_DETAIL d
-            where d.record_status='Y'
-            and d.attendance_flow=t.attendance_flow
-            )
             ) AS "${item}"
 
         </foreach>
@@ -1292,11 +1277,6 @@
             where t.doctor_flow = rd.doctor_flow
             and t.record_status='Y'
             AND t.attend_date = #{item}
-            and exists(
-            select 1 from JSRES_ATTENDANCE_DETAIL d
-            where d.record_status='Y'
-            and d.attendance_flow=t.attendance_flow
-            )
             ) AS "${item}"
 
         </foreach>

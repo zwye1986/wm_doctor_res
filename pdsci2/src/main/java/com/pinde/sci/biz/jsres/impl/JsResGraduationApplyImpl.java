@@ -341,6 +341,7 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         List<ResRec> resRecList = new ArrayList<>();
         LambdaQueryWrapper<ResRec> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.in(ResRec::getOperUserFlow,doctorFlowList).eq(ResRec::getRecordStatus,"Y")
+                .isNotNull(ResRec::getProcessFlow)
                 .in(ResRec::getRecTypeId,new String[]{ResRecTypeEnum.CaseRegistry.getId(), ResRecTypeEnum.DiseaseRegistry.getId(), ResRecTypeEnum.SkillRegistry.getId(), ResRecTypeEnum.OperationRegistry.getId(), ResRecTypeEnum.CampaignRegistry.getId()});
         List<ResRec> resRecs = resRecMapper.selectList(lambdaQueryWrapper);
 
@@ -422,8 +423,10 @@ public class JsResGraduationApplyImpl implements IJsResGraduationApplyBiz {
         Map<String, ResDoctorSchProcess> processMap = resDoctorSchProcesses.stream().collect(Collectors.toMap(ResDoctorSchProcess::getProcessFlow, resDoctorSchProcess -> resDoctorSchProcess));
         resRecList.forEach(resRec -> {
             ResDoctorSchProcess resDoctorSchProcess = processMap.get(resRec.getProcessFlow());
-            resRec.setStartDate(resDoctorSchProcess.getSchStartDate());
-            resRec.setEndDate(resDoctorSchProcess.getSchEndDate());
+            if(resDoctorSchProcess != null) {
+                resRec.setStartDate(resDoctorSchProcess.getSchStartDate());
+                resRec.setEndDate(resDoctorSchProcess.getSchEndDate());
+            }
         });
 
         Map<String, List<ResRec>> resultMap = resRecList.stream().collect(Collectors.groupingBy(resRec -> resRec.getOperUserFlow()));
