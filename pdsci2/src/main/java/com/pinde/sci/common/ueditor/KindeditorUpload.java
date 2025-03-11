@@ -1,11 +1,12 @@
 package com.pinde.sci.common.ueditor;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pinde.core.util.DateUtil;
 import com.pinde.core.util.PkUtil;
 import com.pinde.core.util.StringUtil;
 import com.pinde.sci.common.InitConfig;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.json.simple.JSONObject;
+//import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
