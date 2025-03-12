@@ -664,7 +664,8 @@
 		<result column="TEMP_DOCTOR_FLAG" property="tempDoctorFlag" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="queryExamSignUpList" resultMap="signUpMap">
-		SELECT JES.TRAINING_YEARS,SU.USER_FLOW
+		SELECT JES.TRAINING_YEARS,
+		       SU.USER_FLOW,
 		JES.TRAINING_TYPE_ID,
 		JES.TRAINING_TYPE_NAME,
 		JES.TRAINING_SPE_ID,

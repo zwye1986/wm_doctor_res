@@ -240,7 +240,7 @@
         val['轮转科室'] = "${item2.schDeptName}";
         val['轮转起止时间'] = "${item2.startDate}"+"至"+"${item2.endDate}";
         val['项目类别'] = "${item2.checkItemName}";
-        val['异常填写内容'] = "${item2.invalidContent}";
+        val['异常填写内容'] = `${item2.invalidContent}`;
         // val['schTime'] =
         <%--val['recFlow'] = "${item2.recFlow}";--%>
         </c:forEach>
