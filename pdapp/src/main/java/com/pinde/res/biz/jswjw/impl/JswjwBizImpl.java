@@ -1989,8 +1989,11 @@ public class JswjwBizImpl implements IJswjwBiz {
             logger.error("轮转科室未选择res_rec = "+ JSON.toJSONString(record));
             throw new Exception("轮转科室未选择");
         }
-        if(StringUtils.isBlank(dataExt.getDataFlow())) recMapper.insert(record);
-        else recMapper.updateByPrimaryKey(record);
+        synchronized (JswjwBizImpl.class){
+            if(StringUtils.isBlank(dataExt.getDataFlow())) recMapper.insert(record);
+            else recMapper.updateByPrimaryKey(record);
+        }
+
         setRotationDeptPer(docote, deptFlow);
         //设置APP使用记录
         addAppUseInfo(userFlow);
